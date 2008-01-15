@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<toc label="Getting Started" link_to="main.xml#gettingstarted_id">
+  <topic label="Method library overview" href="html/help/library_overview.html"/>
+   <topic label="Tool interface" href="html/help/userinterface_overview.html">
+      <topic label="Authoring perspective" href="html/help/authoring_perspective.html"/>
+      <topic label="Browsing perspective" href="html/help/browsing_perspective.html"/>
+      <topic label="Configuration View" href="html/help/configuration_view.html"/>
+      <topic label="Library view" href="html/help/library_view.html"/>
+      <topic label="Browse and preview method content" href="html/help/browse_content.html"/>
+      <topic label="Search for method content" href="html/help/search_content.html"/>
+   </topic>
+      <topic label="Create a method plug-in" href="html/help/create_method_plugin.html"/>
+      <topic label="Create a content package" href="html/help/create_contentpackage.html"/>
+      <topic label="Create a method configuration" href="html/help/create_method_configuration.html"/>
+</toc>

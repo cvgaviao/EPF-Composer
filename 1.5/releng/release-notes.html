@@ -1,0 +1,1279 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 10">
+<meta name=Originator content="Microsoft Word 10">
+<link rel=File-List href="release-notes_files/filelist.xml">
+<link rel=Edit-Time-Data href="release-notes_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>IBM Rational Method Composer - Release Notes</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>IBM_USER</o:Author>
+  <o:LastAuthor>IBM_USER</o:LastAuthor>
+  <o:Revision>9</o:Revision>
+  <o:TotalTime>24</o:TotalTime>
+  <o:Created>2006-04-19T22:55:00Z</o:Created>
+  <o:LastSaved>2006-04-21T22:16:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1958</o:Words>
+  <o:Characters>11163</o:Characters>
+  <o:Company>IBM</o:Company>
+  <o:Lines>93</o:Lines>
+  <o:Paragraphs>26</o:Paragraphs>
+  <o:CharactersWithSpaces>13095</o:CharactersWithSpaces>
+  <o:Version>10.6735</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h2
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+h3
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:3;
+	font-size:13.5pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+code
+	{font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:80880263;
+	mso-list-template-ids:2074100826;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:164712945;
+	mso-list-template-ids:-1306615696;}
+@list l1:level1
+	{mso-level-start-at:3;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2
+	{mso-list-id:207497567;
+	mso-list-template-ids:-834219532;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l2:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:320814423;
+	mso-list-template-ids:-477982726;}
+@list l3:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:396826824;
+	mso-list-template-ids:-456871430;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l4:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5
+	{mso-list-id:492183335;
+	mso-list-template-ids:-1818085256;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l6
+	{mso-list-id:515192783;
+	mso-list-template-ids:-1999468180;}
+@list l6:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7
+	{mso-list-id:580716713;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-917076132 67698703 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l7:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8
+	{mso-list-id:655450294;
+	mso-list-template-ids:-387170132;}
+@list l8:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l8:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9
+	{mso-list-id:875847284;
+	mso-list-template-ids:-1987675326;}
+@list l9:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l9:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l10
+	{mso-list-id:969016540;
+	mso-list-template-ids:1390943656;}
+@list l10:level1
+	{mso-level-start-at:4;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l11
+	{mso-list-id:995572997;
+	mso-list-template-ids:1613250442;}
+@list l11:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l12
+	{mso-list-id:1009794136;
+	mso-list-template-ids:1466713360;}
+@list l12:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l12:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l12:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13
+	{mso-list-id:1011109041;
+	mso-list-template-ids:-387405912;}
+@list l13:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l13:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14
+	{mso-list-id:1073238748;
+	mso-list-template-ids:-281095530;}
+@list l14:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l14:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15
+	{mso-list-id:1095318990;
+	mso-list-template-ids:2024680124;}
+@list l15:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l15:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16
+	{mso-list-id:1103458617;
+	mso-list-template-ids:-1238454362;}
+@list l16:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l16:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l17
+	{mso-list-id:1498954557;
+	mso-list-template-ids:-1612949150;}
+@list l17:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l18
+	{mso-list-id:1826778503;
+	mso-list-template-ids:760893520;}
+@list l18:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l19
+	{mso-list-id:2044208640;
+	mso-list-template-ids:299129598;}
+@list l19:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l20
+	{mso-list-id:2089183746;
+	mso-list-template-ids:360636480;}
+@list l20:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l20:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l20:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l20:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l20:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l20:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l20:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l20:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l20:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]-->
+<meta name=copyright content="(C) Copyright IBM Corporation 2006">
+<meta name=DC.rights.owner content="(C) Copyright IBM Corporation 2006">
+<meta name=security content=public>
+<meta name=Robots content="index,follow">
+<meta http-equiv=PICS-Label
+content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))">
+<meta name=DC.Format content=XHTML>
+<meta name=DC.Language content=en-us>
+<!-- All rights reserved. Licensed Materials Property of IBM --><!-- US Government Users Restricted Rights --><!-- Use, duplication or disclosure restricted by --><!-- GSA ADP Schedule Contract with IBM Corp. -->
+</head>
+
+<body lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<h1>EPF Composer Release Notes</h1>
+
+<p><strong>Release 1.0-M2</strong></p>
+
+<h2><a name=intro></a><o:p>&nbsp;</o:p></h2>
+
+<h2>Introduction</h2>
+
+<p>This is an updated version of EPF Composer. The main features added in this
+release include the following:</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo3;tab-stops:list .5in'>Support for Linux platforms</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l2 level1 lfo3;tab-stops:list .5in'>Several functional
+     improvements and fixes</li>
+</ul>
+
+<h2><a name=requirements></a>System Requirements</h2>
+
+<h3><a name=hardware></a>Hardware Requirements</h3>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo6;tab-stops:list .5in'><span class=GramE>Intel(TM)
+     Pentium® III 800 MHz or higher processor.</span> </li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo6;tab-stops:list .5in'><span class=GramE>768</span>
+     MB RAM minimum. More memory <span class=GramE>is recommended</span> as it
+     improves responsiveness. </li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo6;tab-stops:list .5in'>Disk space: </li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l4 level2 lfo6;tab-stops:list 1.0in'><span class=GramE>50
+      MB to install EPF Composer.</span> </li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo6;tab-stops:list .5in'><span class=GramE>Display
+     resolution of 1024 x 768 x 256-color video resolution, or higher.</span>
+     High-color or true-color recommended</li>
+</ul>
+
+<h3><a name=software></a>Software Requirements</h3>
+
+<p>The following software <span class=GramE>must be installed</span> before you
+install EPF Composer: </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l12 level1 lfo9;tab-stops:list .5in'>One of the following
+     operating systems: </li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'>Windows® XP
+      Professional with Service Packs 1 and 2 </li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'>Windows 2000
+      Professional with Service Pack 4 </li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'>Windows 2003
+      Enterprise Edition with Service Pack 1</li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'>Red Hat Enterprise
+      Linux 4 WS</li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'>SUSE Linux SLES 9 SP3</li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l12 level1 lfo9;tab-stops:list .5in'>One of the following
+     browsers:</li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'>Internet Explorer®
+      6.0 with Service Pack 1</li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'>Internet Explorer 5.5
+      with Service Pack 2</li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'><span class=SpellE>Mozilla</span>
+      1.7.12</li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l12 level2 lfo9;tab-stops:list 1.0in'><span class=SpellE>Firefox</span>
+      1.0.7 or 1.5<a name=other></a></li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l12 level1 lfo9;tab-stops:list .5in'>Minimum SUN® JRE 1.4.2, or
+     later, is recommended. </li>
+</ul>
+
+<h2><a name=installing></a><a name=features></a>New Features</h2>
+
+<p class=MsoNormal>The main new features in EPF Composer <span class=GramE>are
+described</span> below. </p>
+
+<h3>Export to Microsoft Project</h3>
+
+<p>You can now export a process to Microsoft Project. You can do this as
+follows:</p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo12;tab-stops:list .5in'>Start EPF Composer and open
+     the library containing the process you want to export.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo12;tab-stops:list .5in'>Select <strong>File-&gt;Export</strong>.
+     This starts the Export wizard.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo12;tab-stops:list .5in'>Select <strong>Microsoft
+     Project Template</strong> and click <span class=GramE><strong>Next</strong></span>.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo12;tab-stops:list .5in'>Choose the type of process
+     to export - Capability Pattern or Delivery Process and select the process
+     you want to export. If there <span class=GramE>is</span> more than one
+     Configuration associated with the process, select the configuration you
+     want to use.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo12;tab-stops:list .5in'>You can choose to publish
+     the configuration at the same time by checking the &quot;Publish the
+     configuration files&quot; checkbox. You can also choose to only export
+     tasks and activities with the Planned attribute set to true. If you do not
+     check this box, all activities and tasks in the selected process <span
+     class=GramE>will be exported</span>.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo12;tab-stops:list .5in'>Provide a name for your exported
+     template file and select a location for the file. Click <strong>Finish</strong>.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l8 level1 lfo12;tab-stops:list .5in'>You can open the XML file
+     that <span class=GramE>is exported</span> using Microsoft Project 2003 or
+     later. The XML file format <span class=GramE>is not officially supported</span>
+     in earlier versions.</li>
+</ol>
+
+<h3><a name=synchronization></a>Synchronization of Processes to Method Elements</h3>
+
+<p>When a descriptor <span class=GramE>is created</span> in a process, it has
+the same properties as its corresponding base element. If the base element is
+changed, the changes <span class=GramE>are not automatically reflected</span>
+in corresponding descriptors. Synchronization allows you to update descriptors
+in a process with the latest version of the corresponding base method element.
+This makes it easier to keep processes up to date with changes made to method
+elements after they <span class=GramE>are used</span> in processes.</p>
+
+<p>Each descriptor has a new property, the &quot;Synchronized with source&quot;
+flag, which can be set if you want to synchronize the element with its base
+method element.</p>
+
+<p><span class=GramE>There is a new synchronization wizard that</span> allows
+you to choose the properties to update in a descriptor from the corresponding
+base element.</p>
+
+<p><span class=GramE>To open the synchronization wizard, in the process editor,
+right-click on any breakdown element and select &quot;Custom
+Synchronization&quot;.</span> The wizard explains the feature and allows you to
+select which properties to update from the base element.</p>
+
+<p>You can also update all elements by <span class=GramE>right-clicking</span>
+on a breakdown element and selecting &quot;Default Synchronization from Method
+Content&quot;.</p>
+
+<p>The synchronization features are available for descriptors and activities.
+If you apply synchronization for an activity, all descriptors within the
+activity that have the &quot;Synchronized with source&quot; flag checked <span
+class=GramE>will be synchronized</span>.</p>
+
+<h3>Improvements to Diagrams</h3>
+
+<p>When an element in an extended Capability Pattern <span class=GramE>is
+suppressed</span> in the Work Breakdown Structure, the element is removed from
+the corresponding diagrams. When elements <span class=GramE>are removed</span>
+from a diagram, the resulting diagram may not be satisfactory. For example, you
+may have large empty spaces that seem inappropriate. You may also have nodes
+that <span class=GramE>are not connected</span> to anything. You can manually
+modify these diagrams to improve their appearance. You <span class=GramE>won't</span>
+be able to make connections to nodes that are extensions to other process
+elements (they appear with green italic text under the node). To enable the
+ability to connect to these nodes on your diagram, locate the node in the work
+breakdown structure (WBS) view. Choose 'Local Contribution' from this element's
+context menu.</p>
+
+<p>It is now possible to associate a diagram produced in an external graphics
+tool with an element in a breakdown structure. <span class=GramE>To use this
+facility, in the process editor, right-click on an activity and select
+Diagrams&gt;User Defined Diagrams.</span> You can select which type of user
+defined diagram you want to use and select the diagram file.</p>
+
+<p>You can now resize the nodes on an activity diagram to wrap the name of the
+node. <span class=GramE>On an activity diagram click on an activity or a task
+descriptor.</span> A box with handles <span class=GramE>is displayed</span>
+around the node. Use the handles on the side of the box to reduce or increase
+the width of the box. The name of the activity or task descriptor will wrap
+within the new size.</p>
+
+<h3>Improvements to Guidance</h3>
+
+<p>A new type of guidance - estimating considerations <span class=GramE>has
+been added</span>. The estimating considerations guidance allows you to add
+guidance around how to estimate effort for tasks and work products. </p>
+
+<p>A guidance element can now have associated guidance elements. We now support
+adding guidance elements to other guidance elements using a new Guidance tab on
+the guidance element editor.</p>
+
+<p>A Template can now have multiple file attachments.</p>
+
+<h3>Support for Team Profiles</h3>
+
+<p>In a process, roles <span class=GramE>can now be organized</span> into
+teams. You do this as follows:</p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l16 level1 lfo15;tab-stops:list .5in'><span class=GramE>On the
+     Team Allocation view in the process editor, right-click on an activity.</span>
+     Select New Child or New Sibling, and then select Team Profile. The Team
+     Profile <span class=GramE>will be added</span> as a breakdown element and
+     you can edit its information in the properties view.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l16 level1 lfo15;tab-stops:list .5in'>Select a role descriptor
+     and open the properties view. The Team tab allows you to assign the role
+     to one or more teams.</li>
+</ol>
+
+<p>You can use this feature to organize the roles in a process into teams and
+sub-teams. The make-up of teams can be different in different parts of a
+process.</p>
+
+<h3>Improvements to Published Web Sites</h3>
+
+<p>The publication of process information <span class=GramE>has been improved</span>
+as follows:</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l20 level1 lfo18;tab-stops:list .5in'>The Work Breakdown
+     Structure tab now shows a &quot;consolidated view&quot; of tasks with
+     their roles and work products. The display is limited to <span
+     class=GramE>3</span> levels, so sometimes the tasks and roles may not be
+     visible because they are too deep in the hierarchy to be seen. To see the
+     deeper levels, hyperlink to a lower level.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l20 level1 lfo18;tab-stops:list .5in'>The Team Allocation tab now
+     shows all roles 'rolled-up' to the selected activity with their associated
+     work products and tasks.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l20 level1 lfo18;tab-stops:list .5in'>The Work Product Usage tab
+     now shows all work products 'rolled-up' to the selected activity with
+     their associated work products and tasks.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l20 level1 lfo18;tab-stops:list .5in'>Each of the above tab
+     displays provide collapse / expand at the activity/task, role and work
+     product.</li>
+</ul>
+
+<p>These changes provide clearer information about the <span class=GramE>process
+and improve the information about roles</span> and work products.</p>
+
+<h3>Improved Navigation between Views and Elements</h3>
+
+<p>In the library view, you can navigate to variability elements for a base
+element. <span class=GramE>Right-click on an element and select &quot;Open via
+Variability Elements&quot;.</span> A select dialog <span class=GramE>is opened</span>
+that lists the base element and all variability elements that are based on the
+selected element. You can then open an element by double-clicking on it. You
+can also do this from a variability element to find the base element.</p>
+
+<p>The ability to link between the library view and other views <span
+class=GramE>has been enhanced</span> as follows:</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l14 level1 lfo21;tab-stops:list .5in'>While in the process
+     editor, you can link from a descriptor to the base method element. <span
+     class=GramE>Right-click on a descriptor in a breakdown and select
+     &quot;Show Linked Element in Library View&quot;.</span> <span class=GramE>There
+     is also a toolbar button that</span> can be used instead of the context
+     menu item.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l14 level1 lfo21;tab-stops:list .5in'>While in the configuration
+     view, you can locate a method element in the library view. <span
+     class=GramE>Right-click on a process element and select &quot;Show in
+     Library View&quot;.</span></li>
+</ul>
+
+<p>In each case, the corresponding base method element <span class=GramE>is
+highlighted</span> in the library view. There could be contributors to this
+element that add additional information, roles, or work products. You can use
+&quot;Open via Variability Elements&quot; described above to locate variability
+elements.</p>
+
+<h3>A few other improvements</h3>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l13 level1 lfo24;tab-stops:list .5in'>There are now toolbar
+     buttons in the process editor to move activities/tasks up or down.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l13 level1 lfo24;tab-stops:list .5in'>&quot;Contributes to<span
+     class=GramE>..&quot;</span> information is now on all tabs in editors.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l13 level1 lfo24;tab-stops:list .5in'>User can customize what
+     columns to display in the process editors</li>
+</ul>
+
+<h2><a name=localized></a><a name=tooling></a>Known EPF Composer Issues</h2>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>When using the new <a
+     href="#synchronization">synchronization feature</a>, after each
+     synchronization operation on a capability pattern or delivery process,
+     please save it before doing another synchronization operation. This is to
+     prevent too many objects being stored in the undo command stack. Having
+     too much in the undo command stack may cause too much memory consumption.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>EPF Composer (EPF) <span
+     class=GramE>is not designed</span> for concurrent team authoring on the
+     same instance of a method library. However, there is a <span class=SpellE>whitepaper</span>
+     on &quot;Using EPF with a Version Control System&quot; available on the
+     EPF project web site at: </li>
+</ol>
+
+<p style='margin-left:.5in'><a href="http://www.eclipse.org/epf/">http://www.eclipse.org/epf/</a></p>
+
+<p style='margin-left:.5in'>This explains how you can use a version control
+system to maintain your EPF Composer library.</p>
+
+<ol start=3 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>If you use one of the
+     following EPF 7.0.1 features in your content library, you may not be able
+     open the library using EPF 7.0 tool. </li>
+</ol>
+
+<p style='margin-left:.5in'>A: Added more than one attachment to a template</p>
+
+<p style='margin-left:.5in'>B: Created team profile</p>
+
+<p style='margin-left:.5in'><span class=GramE>C: Customized activity diagrams
+that contain suppressed activities or tasks.</span> These diagrams will not
+have a desirable look when viewed using EPF 7.0, because the suppressed
+elements will reappear.</p>
+
+<p style='margin-left:.5in'>You must use EPF Composer to use a library with
+these features.</p>
+
+<ol start=4 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>&quot;Link with
+     Editor&quot; button does not locate Custom Categories, but will expand
+     down to the &quot;Custom Categories&quot; UI folder in the Library View.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>Editor text fields <span
+     class=GramE>cannot be read</span> in High contrast mode. When High
+     Contrast mode is <span class=GramE>activated</span> as EPF is running,
+     text in non-rich-text fields becomes unreadable. This is an Eclipse platform
+     bug. The workaround is to restart EPF.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>If you make changes to a
+     configuration that <span class=GramE>is used</span> by an active process
+     editor, the changes to the configuration are not automatically refreshed
+     in the process editor. The workaround is to re-select the configuration
+     again in the combo box in the toolbar or use refresh in the context menu
+     or close and reopen the process editor.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>Drag and drop a capability
+     pattern or delivery process from library view to a rich-text editor may
+     not create the desired method element link. To create a method element
+     link to a capability pattern or delivery process, expand a rich-text
+     editor, click on 'add link' button, select the desired link type, click
+     Browse, navigate to the capability pattern or delivery process, expand it
+     and select the first child of the capability pattern or delivery process.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>Windows has a limited
+     overall number of system handles. When the system runs out of system
+     handles, EPF will not function properly. For example, double-clicking on a
+     method element will not bring up the editor. You need to close EPF and
+     close other applications to bring the available system handles to a
+     reasonable level and start EPF again.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>Changes made to the base
+     Activity Diagram of an activity <span class=GramE>are not automatically
+     reflected</span> in any extensions of the activity. To see the changes,
+     open the Activity Diagram of each activity that extends the modified one,
+     right click on the background of the diagram and choose &quot;Refresh from
+     Base&quot;. This will update the diagram. Save the change.</li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>In the Rich Text Editor, it
+     is not possible to input accented characters that require <span
+     class=GramE>2</span> key combinations. <span class=GramE>For example, '`'
+     and 'a' to produce '<span class=SpellE>à</span>'.</span> <span
+     class=GramE>This is a limitation of the Eclipse SWT Browser widget that we
+     use.</span> See <code><span style='font-size:10.0pt'>https://bugs.eclipse.org/bugs/show_bug.cgi?id=131017</span></code>
+     for more info. Workarounds are:</li>
+ <ul type=circle>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l15 level2 lfo27;tab-stops:list 1.0in'>Use Alt key codes to
+      enter the accented characters. For a listing of Alt key codes on Windows,
+      see <code><span style='font-size:10.0pt'>http://tlt.its.psu.edu/suggestions/international/accents/codealt.html</span></code>.</li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l15 level2 lfo27;tab-stops:list 1.0in'>Type the accented
+      characters in a <span class=GramE>non rich</span> text field (like Brief
+      Description), and cut and paste the characters onto the rich text field
+      or editor.</li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l15 level2 lfo27;tab-stops:list 1.0in'>Expand the rich text
+      field, select the HTML tab and enter the accented characters in the HTML
+      source editor.</li>
+ </ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l15 level1 lfo27;tab-stops:list .5in'>In the Rich Text Editor,
+     formatting of text inside &lt;pre&gt;...&lt;/pre&gt; may not be fully
+     preserved.</li>
+</ol>
+
+<h2>Version control support in EPF<o:p></o:p></h2>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><span class=SpellE><b><i>ClearCase</i></b></span><b><i>
+Remote Client (CCRC)<o:p></o:p></i></b></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><b>Install CCRC from <span class=SpellE>ClearCase</span>
+server<o:p></o:p></b></p>
+
+<ol start=1 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo30;tab-stops:list .5in'><span class=GramE>Menu Help
+     / Software Updates / Find and Install…</span><o:p></o:p></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo30;tab-stops:list .5in'>Select <b style='mso-bidi-font-weight:
+     normal'>Search for new features to install </b>then click <b
+     style='mso-bidi-font-weight:normal'>Next</b><br>
+     <!--[if gte vml 1]><v:shapetype id="_x0000_t75" coordsize="21600,21600"
+      o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f"
+      stroked="f">
+      <v:stroke joinstyle="miter"/>
+      <v:formulas>
+       <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+       <v:f eqn="sum @0 1 0"/>
+       <v:f eqn="sum 0 0 @1"/>
+       <v:f eqn="prod @2 1 2"/>
+       <v:f eqn="prod @3 21600 pixelWidth"/>
+       <v:f eqn="prod @3 21600 pixelHeight"/>
+       <v:f eqn="sum @0 0 1"/>
+       <v:f eqn="prod @6 1 2"/>
+       <v:f eqn="prod @7 21600 pixelWidth"/>
+       <v:f eqn="sum @8 21600 0"/>
+       <v:f eqn="prod @7 21600 pixelHeight"/>
+       <v:f eqn="sum @10 21600 0"/>
+      </v:formulas>
+      <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+      <o:lock v:ext="edit" aspectratio="t"/>
+     </v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:6in;
+      height:381.75pt'>
+      <v:imagedata src="release-notes_files/image001.png" o:title=""/>
+     </v:shape><![endif]--><![if !vml]><img border=0 width=576 height=509
+     src="release-notes_files/image002.jpg" v:shapes="_x0000_i1025"><![endif]></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><o:p>&nbsp;</o:p></p>
+
+<ol start=3 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo30;tab-stops:list .5in'>Enter new remote update site
+     for CCRC<br>
+     <!--[if gte vml 1]><v:shape id="_x0000_i1026" type="#_x0000_t75" style='width:267pt;
+      height:110.25pt'>
+      <v:imagedata src="release-notes_files/image003.png" o:title=""/>
+     </v:shape><![endif]--><![if !vml]><img border=0 width=356 height=147
+     src="release-notes_files/image004.jpg" v:shapes="_x0000_i1026"><![endif]><br>
+     <br>
+     <!--[if gte vml 1]><v:shape id="_x0000_i1033" type="#_x0000_t75" style='width:6in;
+      height:381.75pt'>
+      <v:imagedata src="release-notes_files/image005.png" o:title=""/>
+     </v:shape><![endif]--><![if !vml]><img border=0 width=576 height=509
+     src="release-notes_files/image006.jpg" v:shapes="_x0000_i1033"><![endif]><br>
+     then click <b style='mso-bidi-font-weight:normal'>Finish</b><o:p></o:p></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><o:p>&nbsp;</o:p></p>
+
+<ol start=4 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo30;tab-stops:list .5in'>Select <b style='mso-bidi-font-weight:
+     normal'>Rational <span class=SpellE>ClearCase</span> Remote Client for
+     Eclipse</b> then click <b style='mso-bidi-font-weight:normal'>Next</b><br>
+     <!--[if gte vml 1]><v:shape id="_x0000_i1032" type="#_x0000_t75" style='width:6in;
+      height:5in'>
+      <v:imagedata src="release-notes_files/image007.png" o:title=""/>
+     </v:shape><![endif]--><![if !vml]><img border=0 width=576 height=480
+     src="release-notes_files/image008.jpg" v:shapes="_x0000_i1032"><![endif]></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><o:p>&nbsp;</o:p></p>
+
+<ol start=5 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo30;tab-stops:list .5in'>Follow the on-screen
+     instructions to install CCRC to RMC<br>
+     <!--[if gte vml 1]><v:shape id="_x0000_i1031" type="#_x0000_t75" style='width:6in;
+      height:5in'>
+      <v:imagedata src="release-notes_files/image009.png" o:title=""/>
+     </v:shape><![endif]--><![if !vml]><img border=0 width=576 height=480
+     src="release-notes_files/image010.jpg" v:shapes="_x0000_i1031"><![endif]><br
+     style='mso-special-character:line-break'>
+     <![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+     <![endif]></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in'><!--[if gte vml 1]><v:shape id="_x0000_i1030" type="#_x0000_t75"
+ style='width:6in;height:5in'>
+ <v:imagedata src="release-notes_files/image011.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=576 height=480
+src="release-notes_files/image012.jpg" v:shapes="_x0000_i1030"><![endif]><br
+style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><o:p>&nbsp;</o:p></p>
+
+<ol start=6 type=1>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l7 level1 lfo30;tab-stops:list .5in'>Click on <b
+     style='mso-bidi-font-weight:normal'>Install All</b> when you see the below
+     screen<br>
+     <!--[if gte vml 1]><v:shape id="_x0000_i1029" type="#_x0000_t75" style='width:6in;
+      height:5in'>
+      <v:imagedata src="release-notes_files/image013.png" o:title=""/>
+     </v:shape><![endif]--><![if !vml]><img border=0 width=576 height=480
+     src="release-notes_files/image014.jpg" v:shapes="_x0000_i1029"><![endif]><br
+     style='mso-special-character:line-break'>
+     <![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+     <![endif]></li>
+</ol>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.5in'>Click on <b style='mso-bidi-font-weight:normal'>Apply Changes</b>
+when you see the following dialog box<br>
+<!--[if gte vml 1]><v:shape id="_x0000_i1027" type="#_x0000_t75" style='width:330.75pt;
+ height:109.5pt'>
+ <v:imagedata src="release-notes_files/image015.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=441 height=146
+src="release-notes_files/image016.jpg" v:shapes="_x0000_i1027"><![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><b><i>CVS<o:p></o:p></i></b></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><b>Setting up<br>
+</b><!--[if gte vml 1]><v:shape id="_x0000_i1028" type="#_x0000_t75" style='width:6in;
+ height:390.75pt'>
+ <v:imagedata src="release-notes_files/image017.png" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=576 height=521
+src="release-notes_files/image018.jpg" v:shapes="_x0000_i1028"><![endif]><b><o:p></o:p></b></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.epf.rcp.ui; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.eclipse.epf.rcp.ui.RCPUIPlugin
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Eclipse-LazyStart: true
+Export-Package: 
+ org.eclipse.epf.rcp.ui,
+ org.eclipse.epf.rcp.ui.actions,
+ org.eclipse.epf.rcp.ui.wizards
+Require-Bundle: org.eclipse.epf.authoring.ui;visibility:=reexport,
+ org.eclipse.epf.library.ui,
+ org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.edit,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.intro,
+ org.eclipse.help.ui,
+ org.eclipse.help.webapp,
+ org.eclipse.tomcat,
+ org.eclipse.epf.publishing.ui,
+ org.eclipse.epf.common.ui
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

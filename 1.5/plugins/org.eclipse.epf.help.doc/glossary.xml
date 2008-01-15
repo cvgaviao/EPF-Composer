@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<toc label="Glossary" link_to="main.xml#glossary_id">
+   <topic label="Activity" href="html/topics/g_activity.html"/>
+   <topic label="Artifact" href="html/topics/g_artifact.html"/>
+   <topic label="Checklist" href="html/topics/g_checklist.html"/>
+   <topic label="Concept" href="html/topics/g_concept.html"/>
+   <topic label="Deep copy" href="html/topics/g_deep_copy.html"/>
+   <topic label="Deliverable" href="html/topics/g_deliverable.html"/>
+   <topic label="Delivery process" href="html/topics/g_delivery_process.html"/>
+   <topic label="Discipline" href="html/topics/g_discipline.html"/>
+   <topic label="Domain" href="html/topics/g_domain.html"/>
+   <topic label="Estimating considerations" href="html/topics/g_estimating_considerations.html"/>
+   <topic label="Estimating guideline" href="html/topics/g_estimating_guideline.html"/>
+   <topic label="Example" href="html/topics/g_example.html"/>
+   <topic label="Guideline" href="html/topics/g_guideline.html"/>
+   <topic label="Iteration" href="html/topics/g_iteration.html"/>
+   <topic label="Library view" href="html/topics/g_library_view.html"/>
+   <topic label="Milestone" href="html/topics/g_milestone.html"/>
+   <topic label="Outcome" href="html/topics/g_outcome.html"/>
+   <topic label="Phase" href="html/topics/g_phase.html"/>
+   <topic label="Practice" href="html/topics/g_practice.html"/>
+   <topic label="Preview" href="html/topics/g_preview.html"/>
+   <topic label="Report" href="html/topics/g_report.html"/>
+   <topic label="Reusable asset" href="html/topics/g_reusable_asset.html"/>
+   <topic label="Roadmap" href="html/topics/g_roadmap.html"/>
+   <topic label="Role" href="html/topics/g_role.html"/>
+   <topic label="Role set" href="html/topics/g_roleset.html"/>
+   <topic label="Role set grouping" href="html/topics/g_roleset_grouping.html"/>
+   <topic label="Step" href="html/topics/g_step.html"/>
+   <topic label="Supporting material" href="html/topics/g_supporting_material.html"/>
+   <topic label="Synchronization" href="html/topics/g_synchronization.html"/>
+   <topic label="Task" href="html/topics/g_task.html"/>
+   <topic label="Template" href="html/topics/g_template.html"/>
+   <topic label="Term definition" href="html/topics/g_term_definition.html"/>
+   <topic label="Tool mentor" href="html/topics/g_tool_mentor.html"/>
+   <topic label="White paper" href="html/topics/g_whitepaper.html"/>
+   <topic label="Work product" href="html/topics/g_work_product.html"/>
+   <topic label="Work product descriptor" href="html/topics/g_work_product_descriptor.html"/>
+   <topic label="Work product kind" href="html/topics/g_work_product_kind.html"/>
+</toc>

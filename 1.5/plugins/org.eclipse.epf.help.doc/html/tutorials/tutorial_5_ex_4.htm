@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h2><a>Exercise 4: Create a new delivery Process using capability patterns. </a></h2>
+<p>The purpose of this exercise is to learn how to create a delivery process using <strong>Capability Patterns </strong>. </p>
+<p>A Capability Pattern is a process ‘fragment'. It represents a process that can be reused many times in the same process and / or in different processes. Organizing core method content into capability patterns and then using the capability patterns to construct full life-cycle delivery processes is a key feature of Eclipse Process Framework Composer. </p>
+<p>A capability pattern can be included in another process (another capability pattern or a delivery process) in two ways: </p>
+<blockquote>
+  <p>&#149;&nbsp; Copy – this creates a full copy of the capability pattern in the target process but does not retain any links back to the original capability pattern. The capability pattern can be customized in the new process. Any changes that are subsequently made to the capability pattern are not reflected in the process into which it was copied. </p>
+  <p>&#149;&nbsp; Extends – this extends the capability pattern into the process. The process retains links to the capability pattern and any subsequent changes to the capability pattern are reflected in the process into which it is extended. The capability pattern can be customized by suppressing tasks, roles, and work products. Other changes cannot be made. </p>
+</blockquote>
+<p>We will add some Capability Patterns to the Delivery Process you created in Exercise 3. </p>
+<p>To add a Capability Pattern using Copy: </p>
+<ol>
+  <li>
+    <p> Switch to the authoring perspective and open the My RUP delivery process you created in Exercise 3. </p>
+  </li>
+  <li>
+    <p> In the Configurations View click <strong>Processes &gt; Capability Patterns &gt; Classic RUP &gt; Discipline Workflows &gt; Project Management. </strong></p>
+  </li>
+  <li>
+    <p> Drag and drop the <strong>Project Management </strong> Capability Pattern onto the Inception phase in My RUP delivery process. </p>
+  </li>
+  <li>
+    <p> Select <strong>Copy </strong> in the pop-up box. </p>
+  </li>
+  <li>   Expand one of the activities in the Project Management capability pattern to the Task level. Note that the task name is displayed in black. This indicates that the task is available for you to edit. Any changes in the Capability Pattern will not be reflected in your process. You can edit the task in the Properties view. </li>
+</ol>
+<p>To add a Capability Pattern using Extends:  </p>
+<ol start="6">
+  <li>
+    <p> Create a new Phase in the My RUP delivery process. Right-click on the first row and select <strong>New Child &gt; Phase </strong>. Call the phase, Elaboration. </p>
+  </li>
+  <li>
+    <p> Create a new Iteration in the Elaboration phase. Right-click on the Elaboration phase and select <strong>New Child &gt; Iteration </strong>. Call the iteration, Elaboration Iteration 1. </p>
+  </li>
+  <li>
+    <p> In the Configurations View, click <strong>Processes &gt; Capability Patterns &gt; Classic RUP &gt; Discipline Workflows &gt; Project Management. </strong></p>
+  </li>
+  <li>
+    <p> Drag and drop the <strong>Project Management </strong> Capability Pattern onto the Elaboration Iteration 1 iteration in My RUP Process. </p>
+  </li>
+  <li>
+    <p> Select <strong>Extend </strong> in the pop-up box. </p>
+  </li>
+  <li>
+    <p> Expand one of the activities in the Project Management capability pattern you have just added to the Task level. Note that the task name is displayed in green italics. This indicates that the task is in a part of a process defined elsewhere – a Capability Pattern. Any changes to the Capability Pattern will be reflected in your process. Also, the Properties view shows the task details, but they cannot be edited. </p>
+  </li>
+  <li>Right click on a task in the extended capability pattern and select <strong>Suppress </strong>. The task is grayed out. The task will not appear in the published version of the delivery process, nor will it be included in an export of the process.</li>
+</ol>
+</body>
+</html>

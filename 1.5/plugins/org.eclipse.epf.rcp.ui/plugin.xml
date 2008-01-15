@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         id="MainApplication"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+            class="org.eclipse.epf.rcp.ui.MainApplication">
+         </run>
+      </application>
+   </extension>
+   
+   <extension
+         id="composer"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.epf.rcp.ui.MainApplication"
+            name="Eclipse Process Framework Composer">
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini"/>
+         <property
+               name="startupForegroundColor"
+               value="C8D5EA"/>
+         <property
+               name="startupMessageRect"
+               value="7,220,441,20"/>
+         <property
+               name="startupProgressRect"
+               value="0,280,455,15"/>
+         <property
+               name="aboutImage"
+               value="icons/about.gif"/>
+         <property
+               name="aboutText"
+               value="%aboutText"/>
+         <property
+               name="windowImages"
+               value="icons/full/obj16/product.gif,icons/full/obj32/product32.gif"/>
+         <property
+               name="appName"
+               value="Eclipse Process Framework Composer">
+         </property>
+      </product>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            name="edit"
+            description="Open a method element"
+            categoryId="org.eclipse.ui.category.edit"
+            id="org.eclipse.epf.rcp.ui.actions.openElement"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="%actionSet.description"
+            id="org.eclipse.help.ui.actions"
+            label="%actionSet.label"
+            visible="true">
+        <action
+               class="org.eclipse.help.ui.internal.SearchAction"
+               icon="$nl$/icons/etool16/search_menu.gif"
+               id="org.eclipse.help.ui.search"
+               label="%searchAction.label"
+               menubarPath="help/group.help"
+               style="push"
+               toolbarPath="org.eclipse.ui.workbench.file/build.group"
+               tooltip="%searchAction.tooltip"/>
+         <action
+               class="org.eclipse.help.ui.internal.DynamicHelpAction"
+               icon="$nl$/icons/etool16/help.gif"
+               id="org.eclipse.help.ui.dynamicHelp"
+               label="%dynamicHelpAction.label"
+               menubarPath="help/group.help"
+               style="push"
+               toolbarPath="org.eclipse.ui.workbench.file/build.group"
+               tooltip="%dynamicHelpAction.tooltip"/>
+      </actionSet>
+   </extension>
+   
+	<extension point="org.eclipse.ui.activities">
+    	<activity
+ 			id="activity.externaltool"
+ 			name="hideExternaltoolMenus">
+ 		</activity>
+ 		<activityPatternBinding
+	 		activityId="activity.externaltool"
+			pattern="org\.eclipse\.ui\.externaltools/org\.eclipse\.ui\.externaltools\.ExternalToolMenuDelegate.*">
+ 		</activityPatternBinding>
+	</extension>
+	
+</plugin>

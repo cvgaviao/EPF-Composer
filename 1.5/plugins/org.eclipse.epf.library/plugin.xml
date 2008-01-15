@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.core.resources.natures"
+         id="project.MethodLibraryProjectNature"
+         name="Method Library Project Nature">
+      <runtime>
+         <run class="org.eclipse.epf.library.project.MethodLibraryProjectNature">
+         </run>
+      </runtime>
+   </extension>
+   
+   <extension-point
+         id="libraryManagers"
+         name="Method Library Managers"
+         schema="schema/LibraryManagers.exsd"/>
+   <extension-point id="elementLayoutExtensions" name="Element layout Extensions" schema="schema/elementLayoutExtensions.exsd"/>
+   <extension
+         point="org.eclipse.epf.library.edit.textReferenceReplacer">
+      <textReferenceReplacer class="org.eclipse.epf.library.util.TextReferenceReplacerImpl"/>
+   </extension>   
+   
+</plugin>

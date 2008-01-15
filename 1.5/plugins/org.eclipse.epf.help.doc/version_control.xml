@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2007 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+
+<toc label="Using version control systems" link_to="main.xml#version_control_id">
+   <topic label="Using Rational ClearCase" >
+   	<topic label="Integration with Rational ClearCase" href="html/topics/c_clearcase_overview.html"/>
+ 	<topic label="Installing and configuring Rational ClearCase" href="html/topics/t_clearcase_install.html"/>
+	<topic label="Installing and configuring Rational CCRC" href="html/topics/t_clearcase_ccrc_install.html"/>   
+    	<topic label="Creating a ClearCase view" href="html/topics/t_clearcase_create_view.html"/>
+   	<topic label="Creating a view" href="html/topics/t_clearcase_new_view.html"/>
+ 	<topic label="Using ClearCase dynamic views" href="html/topics/t_clearcase_dynamic_views.html"/>
+   	<topic label="Adding a new library to ClearCase" href="html/topics/t_clearcase_new_library.html"/>
+	<topic label="Adding an existing library to ClearCase" href="html/topics/t_clearcase_existing_library.html"/>
+   	<topic label="Importing a library configuration with ClearCase" href="html/topics/t_clearcase_import_configuration.html"/>
+  	<topic label="Adding a plug-in to ClearCase" href="html/topics/t_clearcase_add_plugin.html"/>
+  	<topic label="Creating a new configuration with ClearCase" href="html/topics/t_clearcase_new_configuration.html"/>
+   	<topic label="Adding a content package to ClearCase" href="html/topics/t_clearcase_content_package.html"/> 
+   	<topic label="Adding a new method element to ClearCase" href="html/topics/t_clearcase_add_element.html"/>
+  	<topic label="Editing method elements with ClearCase" href="html/topics/t_clearcase_edit_element.html"/>
+   	<topic label="Deleting method elements with ClearCase" href="html/topics/t_clearcase_delete_element.html"/>
+   	<topic label="Moving method elements with ClearCase" href="html/topics/t_clearcase_move_element.html"/>
+   	<topic label="Creating a capability pattern with ClearCase" href="html/topics/t_clearcase_capability_pattern.html"/>
+ 	<topic label="Multi-User scenarios with ClearCase" href="html/topics/c_clearcase_multiuser.html"/>
+  	<topic label="Disabling Rational CCRC" href="html/topics/t_clearcase_ccrc_disable.html"/>
+   </topic>
+   <topic label="Using CVS" >
+   	<topic label="Installing and configuring CVS" href="html/topics/t_cvs_install.html"/>
+   	<topic label="Creating a new view with CVS" href="html/topics/t_cvs_new_view.html"/>
+   	<topic label="Adding a new library to CVS" href="html/topics/t_cvs_new_library.html"/>
+   	<topic label="Adding a plug-in to CVS" href="html/topics/t_cvs_add_plugin.html"/>
+   	<topic label="Adding an element to CVS" href="html/topics/t_cvs_add_element.html"/>
+   	<topic label="Deleting an element under CVS" href="html/topics/t_cvs_delete_element.html"/>
+   	<topic label="Editing an element under CVS" href="html/topics/t_cvs_edit_element.html"/>
+   	<topic label="Moving an element under CVS" href="html/topics/t_cvs_move_element.html"/>
+   </topic>
+   <topic label="Version control reference" >
+   	<topic label="Version control for specific files" href="html/topics/r_clearcase_files.html"/>
+   	<topic label="Common actions impact on specific files" href="html/topics/r_clearcase_actions.html"/>
+   </topic>
+</toc>

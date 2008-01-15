@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content="(C) Copyright Eclipse contributors 2005, 2006" />
+<meta name="DC.rights.owner" content="(C) Copyright Eclipse contributors 2005, 2006" />
+<meta name="security" content="public" />
+<meta name="Robots" content="index,follow" />
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))' />
+<meta name="DC.Type" content="task" />
+<meta name="DC.Title" content="Develop a Work Product Usage Structure" />
+<meta name="DC.Relation" scheme="URI" content="developaworkbreakdownstructure.html#developaworkbreakdownstructure" />
+<meta name="DC.Relation" scheme="URI" content="developateamallocationstructure.html#developateamallocationstructure" />
+<meta name="DC.Format" content="XHTML" />
+<meta name="DC.Identifier" content="developaworkproductusagestructure" />
+<meta name="DC.Language" content="en-us" />
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css" />
+<title>Develop a Work Product Usage Structure</title>
+</head>
+<body id="developaworkproductusagestructure"><a name="developaworkproductusagestructure"><!-- --></a>
+
+<h1 class="topictitle1">Develop a Work Product Usage Structure</h1>
+<div><div class="p">In the Work Product Usage view, you can create a process by defining
+which work products will be created and used in the process, and then finding
+responsible roles and tasks from there. You can also review the work products
+in a process that has been created by adding tasks or roles to the process.<p>Before
+you create a work product usage structure, ensure the configuration selected
+in the tool bar is the same as the configuration you selected as the default
+configuration for your process.</p>
+</div>
+<div class="section">To develop a work product usage structure:</div>
+<ol><li class="stepexpand"><span>To access the work product usage editor, select the <strong>Work Product
+Usage</strong> tab in the process editor.</span> <div class="note"><span class="notetitle">Note:</span> For the purposes of
+this topic, the breakdown element example used is <a href="activity.html#activity">Activity</a>. Other breakdown elements include (but are not limited
+to) <a href="phase.html#phase">Phase</a> and <a href="iteration.html#iteration">Iteration</a>. The element you use depends on the scope of the process
+you create.</div>
+</li>
+<li class="stepexpand"><span>Right click the element (either a <a href="capabilitypattern.html#capabilitypattern">Capability Pattern</a> or <a href="deliveryprocess.html#deliveryprocess">Delivery Process</a>) to which you want to add structure, and then click <strong>New
+Child &gt; Activity</strong> to create a new activity. If needed, create more activities
+to set up your breakdown structure. Activities (as well as phases and iterations)
+can be nested inside each other according to how each relates in the hierarchy.</span></li>
+<li class="stepexpand"><span>Review the list of work products in the <a href="configurationview.html#configurationview">Configuration View</a>. In this view, work products are sorted by domain as
+well as work product kinds. Drill into either of these hierarchies to see
+which work products are available in this configuration.</span></li>
+<li class="stepexpand"><span>Select a work product to add to activity and then drag it on top
+of the activity which you want it to belong. The work product is added as
+a work product descriptor to that activity. If the work product is an output
+to one or more tasks in the configuration, a wizard appears prompting you
+to add the task. </span> <div class="note"><span class="notetitle">Note:</span> It is not required to add a task. A valid
+process can contain just roles and work products.</div>
+</li>
+<li class="stepexpand"><span>Specify the entry and exit states of the work product for the activity
+to which it was added.</span></li>
+<li class="stepexpand"><span>Review the new work product descriptor details in the properties
+view. If the properties view is not displayed, right click the work product
+descriptor in the process editor, and then select <strong>Properties</strong>. Use the
+tabs on the side of the properties view to review different aspects of the
+work product descriptor. In the Properties view, you can also perform individual
+modifications of the role descriptor, such as change the presentation name,
+add textual descriptions, add entry and exit states, and more. When changing
+the role descriptor's relationships under the Roles or Work Products tabs,
+you can add new elements from your method content by clicking the <strong>Add...</strong> button,
+or connect your role descriptor with tasks already present in this activity.
+For more information, see <a href="processelementpropertiesview.html#processelementpropertiesview">Process Element Properties View</a>.</span></li>
+<li class="stepexpand"><span>Continue adding work products to your activities. </span></li>
+</ol>
+<div class="section">See also:</div>
+</div>
+<div><div class="reltasks"><strong>Related tasks</strong><br />
+<div><a href="developaworkbreakdownstructure.html#developaworkbreakdownstructure">Develop a Work Breakdown Structure</a></div>
+<div><a href="developateamallocationstructure.html#developateamallocationstructure">Develop a Team Allocation Structure</a></div>
+</div>
+</div>
+</body>
+</html>

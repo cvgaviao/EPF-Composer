@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<toc label="Creating Processes" link_to="main.xml#creatingprocesses_id">
+      <topic label="Process authoring overview" href="html/help/processauthoringoverview.html">
+      <topic label="Process" href="html/help/process.html"/>
+   </topic>
+   <topic label="Create a reusable capability pattern" href="html/help/create_capability_pattern.html">
+      <topic label="Capability pattern" href="html/help/capabilitypattern.html"/>
+   </topic>
+   <topic label="Create a delivery process" href="html/help/create_delivery_process.html">
+      <topic label="Delivery process" href="html/help/delivery_process.html"/>
+   </topic>
+   <topic label="Develop a work breakdown structure" href="html/help/develop_wbs.html"/>
+   <topic label="Develop a team allocation structure" href="html/help/develop_team_structure.html"/>
+   <topic label="Develop a work product usage structure" href="html/help/develop_workproduct_structure.html"/>
+   <topic label="Apply a capability pattern" href="html/help/apply_capabilitypattern.html"/>
+   <topic label="Process element properties view" href="html/help/properties_view.html"/>
+   <topic label="Working with process diagrams" href="html/help/process_diagrams.html">
+      <topic label="Working with activity diagrams" href="html/help/activity_diagrams.html"/>
+      <topic label="Working with activity detail diagrams" href="html/help/activity_detail_diagrams.html"/>
+   </topic>
+</toc>

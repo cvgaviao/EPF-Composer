@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content="(C) Copyright Eclipse contributors 2005, 2006" />
+<meta name="DC.rights.owner" content="(C) Copyright Eclipse contributors 2005, 2006" />
+<meta name="security" content="public" />
+<meta name="Robots" content="index,follow" />
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))' />
+<meta name="DC.Type" content="task" />
+<meta name="DC.Title" content="Create a Task" />
+<meta name="DC.Relation" scheme="URI" content="methodcontent.html#creatingreusablemethodcontents" />
+<meta name="DC.Relation" scheme="URI" content="createarole.html#createarole" />
+<meta name="DC.Relation" scheme="URI" content="createaworkproduct.html#createaworkproduct" />
+<meta name="DC.Relation" scheme="URI" content="createguidance.html#createguidance" />
+<meta name="DC.Relation" scheme="URI" content="variability.html#variability" />
+<meta name="DC.Relation" scheme="URI" content="createmethodcontent.html" />
+<meta name="DC.Format" content="XHTML" />
+<meta name="DC.Identifier" content="createatask" />
+<meta name="DC.Language" content="en-us" />
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css" />
+<title>Create a Task</title>
+</head>
+<body id="createatask"><a name="createatask"><!-- --></a>
+
+<h1 class="topictitle1">Create a Task</h1>
+<div><div class="p"><p>A task is an assignable unit of work. Every task is assigned to
+a specific role. The granularity of a task is generally a few hours to a few
+days and usually affects one or only a small umber of work products.</p>
+You
+should always create new method content in a <a href="methodplugin.html#methodplugin">Method Plug-in</a> that you produce. </div>
+<div class="section">To create a task:</div>
+<ol><li class="stepexpand"><span>Expand the content package in which you want to create the task.</span></li>
+<li class="stepexpand"><span>Right click <strong>Tasks</strong>, and then select <strong>New &gt; Task</strong>. The
+task editor appears with the <strong>Description</strong> tab set as the default.</span></li>
+<li class="stepexpand"><span>In the Name field, type a unique name for your task. the task name
+is the file name that appears in the <a href="libraryview.html#libraryview">Library View</a>.</span></li>
+<li class="stepexpand"><span>In the Presentation name field, type a presentation name. The presentation
+name is the name that appears in your published content and in the <a href="configurationview.html">Configuration View</a>.
+You can also make this name appear in the Library view by toggling the <strong>Show
+Presentation Names</strong> button in the Library view toolbar.</span> </li>
+<li class="stepexpand"><span>In the Brief Description field, type a short description of the
+new task.</span></li>
+<li class="stepexpand"><span>Type a more detailed description of the new task in the Main Description
+field. The main description is a more detailed version of the description
+you typed into the Brief Description field. There are three ways you can create
+text for the description:</span> <ul><li>Directly, by typing it manually in the editor.</li>
+<li>Copy from another similar role and then modify by using the editor.</li>
+<li>Copy from an HTML source such as a published OpenUP/Basic Web site.</li>
+</ul>
+<div class="note"><span class="notetitle">Note:</span> You can use the Rich Text Editor to edit or enter the text for
+any field that has a twisty symbol <img src="collapsed.gif" alt="" />. Simply click the symbol to access the Rich Text Editor. Click the
+symbol again to close the Rich Text Editor. For more information see <a href="richtexteditor.html#richtexteditor">Rich Text Editor</a>.</div>
+</li>
+<li class="stepexpand"><span>Complete the other task specific fields in Detail Information as
+needed. See <a href="variability.html#variability">Variability</a> for
+information on creating variability. </span></li>
+<li class="stepexpand"><span>Click the <strong>Steps</strong> tab. The Steps Editor appears.</span> <div class="p">A
+task can have a series of steps that detail how to perform that task. The
+Step Editor allows you to:<ul><li>Create a new step<ul><li>Click the <strong>New</strong> button.</li>
+<li>Give the Task a name in the <strong>Name</strong> field.</li>
+<li>Describe the Task in the <strong>Description</strong> field.</li>
+</ul>
+</li>
+<li>Remove a step<ul><li>Select the step to remove in the <strong>Steps</strong> field.</li>
+<li>Click the <strong>Delete</strong> button.</li>
+</ul>
+</li>
+<li>Move a step up the list<ul><li>Select the step you want to move up.</li>
+<li>Click the <strong>Move Up</strong> button.</li>
+</ul>
+</li>
+<li>Move a step down the list<ul><li>Select the step you want to move down.</li>
+<li>Click the <strong>Move Down</strong> button</li>
+</ul>
+</li>
+</ul>
+</div>
+</li>
+<li class="stepexpand"><span>Click the <strong>Roles</strong> tab. This part of the editor allows you
+to define the roles that perform the task. You should select a role as the
+Performing Role for this task. You can also add one or more roles as Additional
+Performers. To add a role, click the <strong>Select</strong> or <strong>Add</strong> button as
+appropriate, select the role you want to add, and then click <strong>OK</strong>. To
+remove a role, select it in the Guidance box, and then click <strong>Clear</strong> or <strong>Remove</strong> as
+appropriate. When you select a role the brief description of that role is
+displayed.</span></li>
+<li class="stepexpand"><span>Click the <strong>Work Products</strong> tab. This part of the editor allows
+you to define the work products that are inputs and outputs for this task.
+You can select any number of work products as Mandatory Inputs, Optional Inputs,
+and Outputs. To add a work product, click the appropriate <strong>Add</strong> button,
+select the work products you want to add, and then click <strong>OK</strong>. To remove
+a work product, select it in the appropriate box and then click the corresponding <strong>Remove</strong> button.
+When you select a work product the brief description of the work product is
+displayed.</span></li>
+<li class="stepexpand"><span>Click the <strong>Guidance</strong> tab. This part of the editor allows you
+to add and remove guidance for the task. To add guidance, click the <strong>Add</strong> button,
+select the guidance you want to add, and then click <strong>OK</strong>. To remove guidance,
+select it in the Guidance box and then click <strong>Remove</strong>. When you select
+a guidance element the brief description of the guidance is displayed.</span></li>
+<li class="stepexpand"><span>Click the <strong>Categories</strong> tab. A task can be included in one
+discipline and any number of custom categories. Open the Select dialog by
+clicking the appropriate <strong>Select</strong> or <strong>Add</strong> button next to the category
+lists. Select a single discipline or any number of custom categories, and
+then click <strong>OK</strong>. You can remove a task from a category by selecting it
+and then clicking the appropriate <strong>Remove</strong> button.</span></li>
+<li class="stepexpand"><span>Click the <strong>Preview</strong> tab to view the newly created task as
+it will appear in a published Web page, and then save by closing the tab.</span></li>
+</ol>
+</div>
+<div>
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a href="createmethodcontent.html">Create Method Content</a></div>
+</div>
+<div class="relconcepts"><strong>Related concepts</strong><br />
+<div><a href="methodcontent.html#creatingreusablemethodcontents">Method Content</a></div>
+<div><a href="variability.html#variability" title="Variability allows elements in one content package to influence or modify elements in other content packages without actually directly modifying the original content. Variability enables changes to the content while keeping the changes separate and optional.">Variability</a></div>
+</div>
+<div class="reltasks"><strong>Related tasks</strong><br />
+<div><a href="createarole.html#createarole">Create a Role</a></div>
+<div><a href="createaworkproduct.html#createaworkproduct">Create a Work Product</a></div>
+<div><a href="createguidance.html#createguidance">Create Guidance</a></div>
+</div>
+</div>
+</body>
+</html>

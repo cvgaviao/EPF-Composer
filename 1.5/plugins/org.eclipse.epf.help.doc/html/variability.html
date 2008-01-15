@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us" xml:lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content="(C) Copyright Eclipse contributors 2005, 2006" />
+<meta name="DC.rights.owner" content="(C) Copyright Eclipse contributors 2005, 2006" />
+<meta name="security" content="public" />
+<meta name="Robots" content="index,follow" />
+<meta http-equiv="PICS-Label" content='(PICS-1.1 "http://www.icra.org/ratingsv02.html" l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) "http://www.rsac.org/ratingsv01.html" l gen true r (n 0 s 0 v 0 l 0) "http://www.classify.org/safesurf/" l gen true r (SS~~000 1))' />
+<meta name="DC.Type" content="concept" />
+<meta name="DC.Title" content="Variability" />
+<meta name="abstract" content="Variability allows elements in one content package to influence or modify elements in other content packages without actually directly modifying the original content. Variability enables changes to the content while keeping the changes separate and optional." />
+<meta name="description" content="Variability allows elements in one content package to influence or modify elements in other content packages without actually directly modifying the original content. Variability enables changes to the content while keeping the changes separate and optional." />
+<meta name="DC.Relation" scheme="URI" content="variabilityassociations.html#variabilityassociations" />
+<meta name="DC.Relation" scheme="URI" content="contributes.html" />
+<meta name="DC.Relation" scheme="URI" content="replace.html#replaces" />
+<meta name="DC.Relation" scheme="URI" content="extends.html#extends" />
+<meta name="DC.Format" content="XHTML" />
+<meta name="DC.Identifier" content="variability" />
+<meta name="DC.Language" content="en-us" />
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css" />
+<title>Variability</title>
+</head>
+<body id="variability"><a name="variability"><!-- --></a>
+
+<h1 class="topictitle1">Variability</h1>
+<div><p>Variability allows elements in one content package to influence
+or modify elements in other content packages without actually directly modifying
+the original content. Variability enables changes to the content while keeping
+the changes separate and optional.</p>
+<p>Variability allows you to factor your method content and processes in interrelated
+units and to architect method content and processes in layers that extend
+each other with new capabilities. Variability also allows you to extend and
+tailor method content and processes you do not own and cannot directly modify,
+and to easily upgrade to newer versions by simply reapplying your personal
+changes to the upgrades.</p>
+<p>The use of variability affects two characteristics of a method element:
+its attributes and its relationships with other content elements. If an element
+allows variability, the specification is shown at the bottom of the element's
+description view.</p>
+<div class="p">For the purposes of variability, there are three groups of information
+for any element to be considered:<ul><li><strong>Attributes</strong> - pieces of data about an element such as Main Description.</li>
+<li><strong>Incoming Associations</strong> - associations to other elements where the
+association reference is held in the other element. In other words, the other
+element has references to the subject element.</li>
+<li><strong>Outgoing Associations</strong> - associations to other elements where the
+association reference is held in the subject element. In other words, the
+subject element has references to the other element.</li>
+</ul>
+In addition, associations can be one-to-one or one-to-many. See <a href="variabilityassociations.html#variabilityassociations">Variability Associations</a> for
+a full list of the associations for each type of element.</div>
+<div class="section"><h4 class="sectiontitle">Variability Type</h4><div class="p">Variability
+type defines the nature of how one element affects another element using variability.
+The variability types are:<ul><li><strong>Not Applicable</strong> - The element is a base element and does not affect
+another element through variability. This is the default value of an element's
+variability type.</li>
+</ul>
+<ul><li><strong><span class="keyword">Contributes</span></strong> -
+A contributing element adds to the base element. Contributes provides a way
+for elements to contribute their properties into their base element without
+directly changing any of its existing properties, such as in an additive fashion.
+The effect, after contribution, is that the base element is logically replaced
+with an element that combines the attributes and associations of the contributing
+element with the base element.</li>
+</ul>
+<ul><li><strong><span class="keyword">Replaces</span></strong> -
+A replacing element replaces parts of the base element. Replaces provides
+a way for an element to replace a base element without directly changing any
+of the base element's existing properties. This is, in most cases, used for
+method plug-ins that aim to replace specific content elements such as roles,
+tasks, or activities with either a completely new variant or to change the
+fundamental relationships of these elements. The effect of this, is that the
+base content element is logically replaced with the new replacing element
+to which all incoming associations still point as before, but which has potentially
+new attribute values and outgoing association properties.</li>
+</ul>
+<ul><li><strong><span class="keyword">Extends</span></strong> -
+An extending element inherits characteristics of the base element. Extension
+allows Method Plug-ins to easily reuse elements from a base plug-in by providing
+a kind of inheritance for the extending element. Attribute values and association
+instances are inherited from the "based-on" element to the extending element.
+The result is that the extending element has the same properties as the "based-on"
+element, but might define its own additions. Extends is not used to modify
+content of the base plug-in, but to provide the ability for the extending
+plug-in to define its own content which is a variant of content already defined.
+For example, a special version of a generic Review Record for a specific type
+of review. The effect of this is that the base element and any number of extending
+elements can be used side by side, but refer to each other through the extends
+relationship. Extends also provides the key mechanism for binding capability
+patterns to processes: A pattern is applied by defining an extends relationship
+from an activity of the applying processes to the capability pattern. The
+activity inherits association instances from the pattern and the pattern appears
+to be part of the resulting process after interpretation.</li>
+</ul>
+</div>
+</div>
+</div>
+<div><div class="relconcepts"><strong>Related concepts</strong><br />
+<div><a href="variabilityassociations.html#variabilityassociations">Variability Associations</a></div>
+<div><a href="contributes.html">Contributes</a></div>
+<div><a href="replace.html#replaces">Replaces</a></div>
+<div><a href="extends.html#extends">Extends</a></div>
+</div>
+</div>
+</body>
+</html>

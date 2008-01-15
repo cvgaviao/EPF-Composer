@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<toc label="Tasks" link_to="main.xml#tasks_id">  
+
+  <!-- Creating reusable method content -->
+  <topic label="Creating reusable method content">
+   <topic label="Method content categories" href="html/help/content_categories.html"/>
+   <topic label="Create a method view with custom categories" href="html/help/create_custom_categories.html"/> 
+   <topic label="Create method content" href="html/help/create_method_content.html">
+      <topic label="Create a role" href="html/help/create_role.html"/>
+      <topic label="Create a task" href="html/help/create_task.html"/>
+      <topic label="Create a work product" href="html/help/create_workproduct.html"/>
+      <topic label="Create guidance" href="html/help/create_guidance.html"/>
+      <topic label="Method Content Variability" href="html/help/variability.html">
+         <topic label="Contributes" href="html/help/variability_contributes.html"/>
+         <topic label="Extends" href="html/help/variability_extends.html"/>
+         <topic label="Replaces" href="html/help/variability_replace.html"/>
+         <topic label="Associations impacted by variability" href="html/help/variability_associations.html"/>
+         <topic label="Browsing variability associations" href="html/help/variability_browsing.html"/>
+      </topic>
+   </topic>
+   <topic label="Browse and preview method content" href="html/help/browse_content.html"/>
+   <topic label="Creating index entries" href="html/help/indexing.html"/>
+   <topic label="Creating glossary entries" href="html/help/glossary_entries.html"/>
+   <topic label="Changing copyright notices" href="html/help/changing_copyright.html"/>
+</topic>
+
+  <!-- Categorizing method content -->
+  <topic label="Categorizing method content">
+  <topic label="Method content categories" href="html/help/content_categories.html"/>
+  <topic label="Create a method view with custom categories" href="html/help/create_custom_categories.html"/></topic>
+
+  <!-- Creating processes -->
+  <topic label="Creating processes">
+  <topic label="Create a reusable capability pattern" href="html/help/create_capability_pattern.html"/>
+  <topic label="Create a delivery process" href="html/help/create_delivery_process.html">
+  <topic label="Develop a work breakdown structure" href="html/help/develop_wbs.html"/>
+  <topic label="Develop a team allocation structure" href="html/help/develop_team_structure.html"/>
+  <topic label="Develop a work product usage structure" href="html/help/develop_workproduct_structure.html"/>
+  <topic label="Apply a capability pattern" href="html/help/apply_capabilitypattern.html"/>
+  <topic label="Process element properties View" href="html/help/properties_view.html"/>
+  <topic label="Using deep copy" href="html/help/using_deep_copy.html"/>
+  <topic label="Using activity variability" href="html/help/using_activity_variability.html"/>
+  <topic label="Working with process diagrams" href="html/help/process_diagrams.html">
+  <topic label="Working with activity diagrams" href="html/help/activity_diagrams.html"/>
+  <topic label="Working with activity detail diagrams" href="html/help/activity_detail_diagrams.html"/>
+
+  </topic>
+
+  <!-- Publishing Method Content -->
+  <topic label="Publishing and exporting method content">
+   <topic label="Publishing a method configuration to a method web" href="html/help/publishing.html"/>
+   <topic label="Exporting to Microsoft Project" href="html/help/export_to_msproject.html"/>
+   <topic label="XML Import/Export" href="html/help/export_to_xml.html"/>
+ </topic>
+
+  <!-- Working with Textual Descriptions -->
+ <topic label="Rich text editor" href="html/help/richtexteditor.html"/>
+   <topic label="Add a reference or hyperlink" href="html/help/add_hyperlink.html"/>
+  </topic>
+  </topic>
+</toc>

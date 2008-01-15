@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2007 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<toc label="EPF Composer" >
+<topic label="Overview">
+	<anchor id="overview_id"/>
+</topic>
+<topic label="Getting started">
+	<anchor id="getting_started_id"/>
+</topic>
+<topic label="Creating reusable method content">
+	<anchor id="creating_method_content_id"/>
+</topic>
+<topic label="Categorizing reusable method content">
+	<anchor id="categorizing_method_content_id"/>
+</topic>
+<topic label="Creating processes">
+	<anchor id="creating_processes_id"/>
+</topic>
+<topic label="Publishing and exporting">
+	<anchor id="publishing_exporting_id"/>
+</topic>
+<topic label="Using version control system" >
+	<anchor id="version_control_id"/>
+</topic>
+<topic label="Accessibility" >
+	<anchor id="accessibility_id"/>
+</topic>
+<topic label="Glossary">
+	<anchor id="glossary_id"/>
+</topic>
+<topic label="Tutorials" >
+	<anchor id="tutorials_id"/>
+</topic>
+</toc>

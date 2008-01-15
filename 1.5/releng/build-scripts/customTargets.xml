@@ -1,0 +1,237 @@
+<project name="Build specific targets and properties" default="noDefault">
+
+	<!-- ===================================================================== -->
+	<!-- Run a given ${target} on all elements being built -->
+	<!-- Add on <ant> task for each top level element being built. -->
+	<!-- ===================================================================== -->
+	<property name="allElementsFile" value="${builder}/allElements.xml"/>
+	<import file="${allElementsFile}"/>
+
+	<target name="allElements">
+		<antcall target="allElementsDelegator"/>
+	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- ===================================================================== -->
+	<target name="getBaseComponents" depends="checkLocalBase" unless="skipBase">
+		<get src="${eclipseBaseURL}" dest="${buildDirectory}/../temp-base.zip"/>
+		<unzip dest="${base}" overwrite="true" src="${buildDirectory}/../temp-base.zip"/>
+	</target>
+
+	<target name="checkLocalBase">
+		<available file="${base}" property="skipBase"/>
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Check out map files from correct repository -->
+	<!-- Replace values for mapsCheckoutTag as desired. -->
+	<!-- ===================================================================== -->
+	<target name="getMapFiles" depends="checkLocalMaps" unless="skipMaps">
+		<!-- <property name="mapsCheckoutTag" value="HEAD"/> -->
+		<cvs cvsRoot="${mapsRepo}" package="${mapsRoot}" dest="${buildDirectory}/maps" tag="${mapsCheckoutTag}"/>
+	</target>
+
+	<target name="checkLocalMaps">
+		<available property="skipMaps" file="${buildDirectory}/maps"/>
+	</target>
+
+	<target name="tagMapFiles" if="tagMaps">
+		<cvs dest="${buildDirectory}/maps/${mapsRoot}" command="tag ${mapsTagTag}"/>
+	</target>
+
+	<!-- ===================================================================== -->
+
+	<target name="clean" unless="noclean">
+		<antcall target="allElements">
+			<param name="target" value="cleanElement"/>
+		</antcall>
+	</target>
+
+	<target name="cleanBuildDir">
+		<delete includeemptydirs="true">
+			<fileset dir="${buildDirectory}" 
+				includes="**/*"
+				defaultexcludes="no"
+			/>
+		</delete>
+	</target>
+
+	<target name="gatherLogs">
+		<mkdir dir="${buildDirectory}/${buildLabel}/compilelogs"/>
+		<antcall target="allElements">
+			<param name="target" value="gatherLogs"/>
+		</antcall>
+		<unzip dest="${buildDirectory}/${buildLabel}/compilelogs" overwrite="true">
+			<fileset dir="${buildDirectory}/features">
+				<include name="**/*.log.zip"/>
+			</fileset>
+		</unzip>
+	</target>
+	
+	<target name="generateAboutMappings">
+		<replace dir="${buildDirectory}/plugins" value="${buildId}" token="@buildId@">
+			<include name="**/about.mappings" />
+		</replace>
+	</target>
+	
+	<target name="updateRcpIniFile">
+		<replace dir="${buildDirectory}" value="${buildId}" token="@buildId@">
+			<include name="**/epf.ini" />
+		</replace>
+	</target>
+	
+	<target name="updateBuildState">
+		<tstamp>
+			<format property="buildDate" pattern="yyyy-MM-d"/>
+		</tstamp>
+		<property name="currentBuildStateFile" value="${buildStateDir}/tag.current.properties"/>
+		<property file="${currentBuildStateFile}" prefix="prev"/>
+		<property name="prev.buildDate" value="${buildDate}"/>
+		<path id="buildDirTempPath" location="${buildDirectory}"/>
+		<pathconvert dirsep="/" property="buildDirectoryPath" refid="buildDirTempPath"/>
+		<propertyfile
+		    file="${currentBuildStateFile}"
+		    comment="Last build ID and date">
+		  <entry key="buildId" value="${buildId}"/>
+		  <entry key="buildDate" value="${buildDate}"/>
+		  <entry key="buildDir" value="${buildDirectoryPath}"/>
+		</propertyfile>
+		<echo file="${buildStateDir}/../${buildId}.bugs">https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced&amp;short_desc_type=allwordssubstr&amp;short_desc=&amp;product=EPF&amp;long_desc_type=allwordssubstr&amp;long_desc=&amp;bug_file_loc_type=allwordssubstr&amp;bug_file_loc=&amp;status_whiteboard_type=allwordssubstr&amp;status_whiteboard=&amp;keywords_type=allwords&amp;keywords=&amp;emailtype1=substring&amp;email1=&amp;emailtype2=substring&amp;email2=&amp;bugidtype=include&amp;bug_id=&amp;votes=&amp;chfieldfrom=${prev.buildDate}&amp;chfieldto=${buildDate}&amp;chfield=resolution&amp;chfieldvalue=&amp;cmdtype=doit&amp;order=Reuse+same+sort+as+last+time&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=
+</echo>
+	</target>
+
+	<!--
+	<target name="push2Site">
+		<property name="upScriptArgs" value="..."/>
+		<exec dir="${builder}" executable="${upScript}" output="epf_push2svr.output.txt">
+			<arg line="${upScriptArgs}"/>
+		</exec>
+	</target>
+
+	<target name="checkoutDLPg">
+		<cvs cvsRoot="${updateSiteRepo}" dest="${buildDirectory}/epfSite" package="${updateSiteFile}"/>
+	</target>
+
+	<target name="updateDLPg" depends="checkoutDLPg">
+		<property name="commitMsg" value="Nightly_Builds"/>
+		<property name="updatePageArgs" value="${tgtVer} ${tgtMilestone} ${epf.buildId} ${buildDirectory}/epfSite/${updateSiteFile}"/>
+		<exec dir="${builder}" executable="s:/bin/epf_changepage.cmd" output="epf_changepage.output.txt">
+			<arg line="${updatePageArgs}"/>
+		</exec>
+	</target>
+
+	<target name="commitDLPg" depends="updateDLPg" unless="noDLPg">
+		<cvs cvsRoot="${updateSiteRepo}" dest="${buildDirectory}/epfSite/${updateSiteFile}" command="checkin -m ${commitMsg} ${updateSiteFile}"/>
+	</target>
+	-->
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before setup -->
+	<!-- ===================================================================== -->
+	<target name="preSetup">
+		<antcall target="cleanBuildDir"/>
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after setup but before starting the build proper -->
+	<!-- ===================================================================== -->
+	<target name="postSetup">
+		<antcall target="getBaseComponents"/>
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before fetching the build elements -->
+	<!-- ===================================================================== -->
+	<target name="preFetch">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after fetching the build elements -->
+	<!-- ===================================================================== -->
+	<target name="postFetch">
+		<antcall target="tagMapFiles"/>
+		<antcall target="generateAboutMappings"/>
+		<antcall target="updateRcpIniFile"/>
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before generating the build scripts. -->
+	<!-- ===================================================================== -->
+	<target name="preGenerate">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after generating the build scripts. -->
+	<!-- ===================================================================== -->
+	<target name="postGenerate">
+		<antcall target="clean"/>
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before running the build.xmls for the elements being built. -->
+	<!-- ===================================================================== -->
+	<target name="preProcess">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after running the build.xmls for the elements being built. -->
+	<!-- ===================================================================== -->
+	<target name="postProcess">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before running assemble. -->
+	<!-- ===================================================================== -->
+	<target name="preAssemble">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after  running assemble. -->
+	<!-- ===================================================================== -->
+	<target name="postAssemble">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do before running package. -->
+	<!-- ===================================================================== -->
+	<target name="prePackage">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after  running package. -->
+	<!-- ===================================================================== -->
+	<target name="postPackage">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do after the build is done. -->
+	<!-- ===================================================================== -->
+	<target name="postBuild">
+		<antcall target="gatherLogs"/>
+		<antcall target="updateBuildState"/>
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do to test the build results -->
+	<!-- ===================================================================== -->
+	<target name="test">
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Steps to do to publish the build results -->
+	<!-- ===================================================================== -->
+	<target name="publish">
+		<!--
+		<antcall target="push2Site"/>
+		<antcall target="commitDLPg"/>
+		-->
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- Default target                                                        -->
+	<!-- ===================================================================== -->
+	<target name="noDefault">
+		<echo message="You must specify a target when invoking this file"/>
+	</target>
+
+</project>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<toc label="Tutorials" link_to="main.xml#tutorials_id">
+   <topic label="Explore the user interface" href="html/tutorials/tut1_intro.htm">
+	<topic label="Concepts" href="html/tutorials/tut1_concepts.htm" /> 
+   	<topic label="Basic navigation" href="html/tutorials/tut1_ex1.htm" />
+   	<topic label="Browse method content" href="html/tutorials/tut1_ex2.htm" />
+   	<topic label="Browse process content" href="html/tutorials/tut1_ex3.htm" />
+   	<topic label="Browse while authoring" href="html/tutorials/tut1_ex4.htm" />
+   	<topic label="Search" href="html/tutorials/tut1_ex5.htm" />
+   </topic>
+   <topic label="Create method content" href="html/tutorials/tut2_intro.htm">
+	<topic label="Concepts" href="html/tutorials/tut2_concepts.htm" /> 
+	<topic label="Create a content package" href="html/tutorials/tut2_ex1.htm" />
+	<topic label="Create a work product" href="html/tutorials/tut2_ex2.htm" />
+	<topic label="Create a role" href="html/tutorials/tut2_ex3.htm" />
+	<topic label="Create a task" href="html/tutorials/tut2_ex4.htm" />
+	<topic label="Work with steps" href="html/tutorials/tut2_ex5.htm" />
+   	<topic label="Create a guidance" href="html/tutorials/tut2_ex6.htm" />
+   	<topic label="Manage guidance" href="html/tutorials/tut2_ex7.htm" />
+   	<topic label="Create a standard category" href="html/tutorials/tut2_ex8.htm" />
+   	<topic label="Add a plug-in" href="html/tutorials/tut2_ex9.htm" />
+   </topic>
+   <topic label="Reuse method content" href="html/tutorials/tut3_intro.htm">
+   	<topic label="Concepts" href="html/tutorials/tut3_concepts.htm" /> 
+   	<topic label="Contribute to a role" href="html/tutorials/tut3_ex1.htm" />
+   	<topic label="Contribute to a work product" href="html/tutorials/tut3_ex2.htm" />
+   	<topic label="Contribute to a task" href="html/tutorials/tut3_ex3.htm" />
+   	<topic label="Extend a role" href="html/tutorials/tut3_ex4.htm" />
+   	<topic label="Extend a work product" href="html/tutorials/tut3_ex5.htm" />
+   	<topic label="Extend a task" href="html/tutorials/tut3_ex6.htm" />
+   	<topic label="Replace a role" href="html/tutorials/tut3_ex7.htm" />
+   </topic>
+   <topic label="Working with processes" href="html/tutorials/tut5_intro.htm">
+       	<topic label="Concepts" href="html/tutorials/tut5_concepts.htm" /> 
+   	<topic label="Browse process content" href="html/tutorials/tut5_ex1.htm" />
+   	<topic label="Explore process content" href="html/tutorials/tut5_ex2.htm" />
+   	<topic label="Create a delivery process" href="html/tutorials/tut5_ex3.htm" />
+   	<topic label="Use capability patterns" href="html/tutorials/tut5_ex4.htm" />
+   	<topic label="Create a process diagram" href="html/tutorials/tut5_ex5.htm" />
+   </topic>
+   <topic label="Publishing method content" href="html/tutorials/tut4_intro.htm">
+       	<topic label="Concepts" href="html/tutorials/tut4_concepts.htm" /> 
+   	<topic label="Publish a configuration" href="html/tutorials/tut4_ex1.htm" />
+   	<topic label="Create a custom category" href="html/tutorials/tut4_ex2.htm" />
+   	<topic label="Create a custom configuration" href="html/tutorials/tut4_ex3.htm" />
+   	<topic label="Publish a custom configuration" href="html/tutorials/tut4_ex4.htm" />
+   </topic>
+</toc>

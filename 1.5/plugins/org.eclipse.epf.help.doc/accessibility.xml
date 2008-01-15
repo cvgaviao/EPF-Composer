@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2007 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<toc label="Accessibility" link_to="main.xml#accessibility_id">
+   <topic label="Accessibility overview" href="html/topics/c_accessibility.html"/>
+   <topic label="Setting accessibility preferences" href="html/topics/t_accessibility_preferences.html"/>
+   <topic label="Selecting an alternate browser" href="html/topics/t_accessibility_set_browser.html"/>
+   <topic label="Keyboard navigation" href="html/topics/r_accessibility_navigation.html"/>
+   <topic label="Fonts and colors" href="html/topics/r_accessibility_fonts.html"/>
+</toc>

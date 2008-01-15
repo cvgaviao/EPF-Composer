@@ -1,0 +1,44 @@
+package org.eclipse.epf.migration.diagram.ad.map;
+
+import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
+import org.eclipse.epf.diagram.model.Node;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Milestone;
+import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.uml2.uml.ActivityParameterNode;
+import org.eclipse.uml2.uml.UMLPackage;
+
+/**
+ * @author Shilpa Toraskar
+ * @since 1.2
+ */
+public class ActivityParameterMapeNode extends MapNode {
+
+	public ActivityParameterMapeNode(Node node) {
+		super(node);
+	}
+
+	/**
+	 * Update uml node
+	 */
+	public void updateNode() {
+		super.updateNode();
+		umlNode = (ActivityParameterNode) getActivity().createNode(name,
+				UMLPackage.eINSTANCE.getActivityParameterNode());
+		Object obj = (Object) node.getObject();
+		if (obj instanceof MethodElement) {
+			BridgeHelper.addEAnnotation(umlNode, ((MethodElement) obj));
+		}
+		if (obj instanceof Milestone) {
+			BridgeHelper.addEAnnotationType(umlNode, 
+					BridgeHelper.UMA_MILESTONE);
+		} else if (obj instanceof TaskDescriptor) {
+			BridgeHelper.addEAnnotationType(umlNode, 
+					BridgeHelper.UMA_TASK_DESCRIPTOR);
+		}
+
+		if (umlNode != null) {
+			graphUMLNodeMap.put(node, umlNode);
+		}
+	}
+}

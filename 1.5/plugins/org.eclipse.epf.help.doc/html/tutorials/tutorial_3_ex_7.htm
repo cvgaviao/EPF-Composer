@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.style1 {font-family: "Courier New", Courier, mono}
+-->
+</style>
+</head>
+
+<body>
+<h2><a>Exercise 7: Extending base method content using <u>Replace</u> variability </a></h2>
+<p>The purpose of this exercise is to extend base method content using replace variability. </p>
+<ol>
+  <li>
+    <p>Switch to the <strong>Authoring </strong> perspective. </p>
+  </li>
+  <li>
+    <p> Create a new <strong>content package </strong> named, <span class="style1">Replace Test</span>, in the My Plugin plug-in. </p>
+  </li>
+  <li>
+    <p> Create a new <strong>role </strong>: <span class="style1">my_replace_ui_designer role</span> with presentation name, <span class="style1">My Replace UI Designer</span>. </p>
+  </li>
+  <li>
+    <p> In the <strong>Variability Type </strong> select <strong>replaces </strong> and then choose the <strong>base role </strong>: <span class="style1">rup_user_interface_designer</span>. </p>
+  </li>
+  <li>
+    <p> Add a <strong>Brief Description </strong>: <span class="style1">Replace Brief Description.</span> </p>
+  </li>
+  <li>
+    <p> Add a <strong>Main Description </strong>: <span class="style1">Replace Main Description</span>. </p>
+  </li>
+  <li>
+    <p> Save the role by closing the role editor. </p>
+  </li>
+  <li>    Update the Variability Test Configuration: </li>
+  <blockquote>
+    <p> &#149;&nbsp;Open the Variability Configuration and expand <strong>My Plugin &gt; Method Content &gt; Content Packages</strong>. </p>
+    <p>&#149;&nbsp;Uncheck <strong>Extends Test</strong>. </p>
+    <p>&#149;&nbsp;Check <strong>Replace Test</strong>. This is done so there are no conflicting extensions in the same method element. </p>
+  </blockquote>
+  <li>
+    <p> Switch to the <strong>Browsing </strong> perspective. </p>
+  </li>
+  <li>In the <strong>Configuration View</strong>, you will see that there is no longer a (RUP) <span class="style1">User-Interface Designer</span> role in the <strong>Role Sets </strong> folder. It was replaced by <span class="style1">My Replace UI Designer</span> role. Moreover, other content elements in the base plug-in that referenced the (RUP) <span class="style1">User-Interface Designer</span> role now reference the replacing role instead (e.g., if you open the disciplines folder and view the task <span class="style1">Design The User Interface</span> you will see that the <strong>Performing Role </strong> is now <span class="style1">My Replace UI Designer</span>.) <strong>Replace </strong> works in a similar way for <strong>tasks</strong>, <strong>artifacts </strong>, <strong>guidance </strong> and <strong>categories </strong> (feel free to try it out). </li>
+</ol>
+</body>
+</html>

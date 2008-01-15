@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2006 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<contexts> 
+	<context  id="file_new_library_context"> 
+		<description></description> 
+        <topic href="html/help/library_overview.html"  label="Method library overview"/>  
+	</context> 
+	
+	<context  id="file_new_plugin_context"> 
+		<description></description> 
+        <topic href="html/help/create_method_plugin.html"  label="Create a method plug-in"/> 
+	</context> 
+	
+	<context  id="file_new_configuration_context"> 
+		<description></description> 
+        <topic href="html/help/methodconfigurations.html"  label="Method configurations overview"/> 
+	</context> 
+	
+	<context  id="file_open_library_context"> 
+		<description></description> 
+        <topic href="html/help/library_overview.html"  label="Method library overview"/> 
+	</context> 
+	
+	<context  id="file_open_configuration_context"> 
+		<description></description> 
+        <topic href="html/help/methodconfigurations.html"  label="Method configurations overview"/> 
+	</context> 
+	
+	<context  id="library_navigator_view_context"> 
+		<description> </description> 
+        <topic href="html/help/library_view.html"  label="Library view"/> 
+        <topic href="html/help/authoring_perspective.html"  label="Authoring perspective"/> 
+	</context> 
+
+	<context  id="configuration_view_context"> 
+		<description></description> 
+        <topic href="html/help/configuration_view.html"  label="Configuration view"/> 
+        <topic href="html/help/browsingperspective.html"  label="Browsing perspective"/> 
+	</context> 
+	
+			<!-- beginning of the library navigator node sensitive F1 context helps -->
+			<context  id="library_view_method_plugin_context"> 
+				<description> This is a sample F1 help text for library view method plug-in node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_content_package_context"> 
+				<description> This is a sample F1 help text for library view ContentPackage node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_task_context"> 
+				<description> This is a sample F1 help text for library view method Task node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_work_product_context"> 
+				<description> This is a sample F1 help text for library view WorkProduct node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_guidance_context"> 
+				<description> This is a sample F1 help text for library view Guidance node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_discipline_context"> 
+				<description> This is a sample F1 help text for library view Discipline node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_discipline_grouping_context"> 
+				<description> This is a sample F1 help text for library view DisciplineGrouping node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_domain_context"> 
+				<description> This is a sample F1 help text for library view Domain node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_role_context"> 
+				<description> This is a sample F1 help text for library view Role node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_work_product_type_context"> 
+				<description> This is a sample F1 help text for library view WorkProductType node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+			<context  id="library_view_role_set_context"> 
+				<description> This is a sample F1 help text for library view RoleSet node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+			
+			<context  id="library_view_tool_context"> 
+				<description> This is a sample F1 help text for library view method Tool node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+			<context  id="library_view_role_set_grouping_context"> 
+				<description> This is a sample F1 help text for library view RoleSetGrouping node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+			<context  id="library_view_custom_category_context"> 
+				<description> This is a sample F1 help text for library view CustomCategory node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+			<context  id="library_view_process_component_context"> 
+				<description> This is a sample F1 help text for library view ProcessComponent node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_process_context"> 
+				<description> This is a sample F1 help text for library view Process node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="library_view_method_configuration_context"> 
+				<description> This is a sample F1 help text for library view MethodConfiguration node.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			<!-- end of the library navigator node sensitive F1 context helps -->
+	
+	
+	<!-- form editor section context help -->
+	
+	<context  id="plugin_editor_description_all_context"> 
+		<description> </description> 
+        <topic href="html/help/create_method_plugin.html"  label="Create a method plug-in"/> 
+        <topic href="html/help/methodplugin.html"  label="Method plug-in"/> 
+	</context> 
+	
+	<context  id="configuration_editor_all_context"> 
+		<description></description> 
+        <topic href="html/help/create_method_configuration.html"  label="Create a method configuration"/> 
+        <topic href="html/help/methodconfigurations.html"  label="Method configurations overview"/> 
+	</context> 
+	
+	<context  id="content_package_editor_all_context"> 
+		<description></description> 
+        <topic href="html/help/create_contentpackage.html"  label="Creating a content package"/> 
+        <topic href="html/help/methodcontentpackage.html"  label="Method content package"/> 
+	</context> 
+	
+	
+	<context  id="editor_role_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/create_role.html"  label="Create a role"/> 
+	</context> 
+
+	<context  id="editor_task_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/create_task.html"  label="Create a task"/>  
+	</context> 
+
+	<context  id="editor_work_product_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/create_workproduct.html"  label="Create work product"/> 
+	</context> 
+
+	<context  id="editor_guidance_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/create_guidance.html"  label="Creating guidance"/> 
+	</context> 
+
+	<context  id="editor_discipline_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+
+	<context  id="editor_discipline_grouping_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+
+	<context  id="editor_domain_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+
+	<context  id="editor_work_product_type_context_help_ID"> 
+		<description> </description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+
+	<context  id="editor_role_set_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+
+	<context  id="editor_rolse_set_grouping_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+
+	<context  id="editor_tool_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+
+	<context  id="editor_custom_category_context_help_ID"> 
+		<description></description> 
+        <topic href="html/help/content_categories.html"  label="Method content categories"/> 
+	</context> 
+	
+			<!-- beginning of section based F1 context help -->
+			<context  id="form_editor_description_general_context"> 
+				<description> This is a sample F1 help text for form_editor_description_general_context.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="form_editor_description_detail_context"> 
+				<description> This is a sample F1 help text for form_editor_description_detail_context.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="form_editor_description_notation_context"> 
+				<description> This is a sample F1 help text for form_editor_description_notation_context.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="form_editor_description_tailoring_context"> 
+				<description> This is a sample F1 help text for form_editor_description_tailoring_context.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+				<context  id="form_editor_description_version_context"> 
+				<description> This is a sample F1 help text for form_editor_description_version_context.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+			<context  id="form_editor_description_element_context"> 
+				<description> This is a sample F1 help text for form_editor_description_element_context.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			
+			<context  id="form_editor_description_icon_context"> 
+				<description> This is a sample F1 help text for form_editor_description_icon_context.</description> 
+		        <topic href="html/help/maintopic.html"  label="HelpTopic1"/> 
+		        <topic href="html/help/subtopic2.html"  label="HelpTopic2"/> 
+			</context> 
+			<!-- end of section based F1 context help -->
+	
+	<context  id="editor_cp_description_context_help_ID"> 
+		<description></description> 
+		<topic href="html/help/capabilitypattern.html"  label="Capability pattern"/> 
+        <topic href="html/help/create_capability_pattern.html"  label="Create a reusable capability pattern"/> 
+	</context> 
+	
+	<context  id="editor_dp_description_context_help_ID"> 
+		<description></description> 
+		<topic href="html/help/delivery_process.html"  label="Delivery process"/> 
+        <topic href="html/help/create_delivery_process.html"  label="Create a delivery process"/> 
+	</context> 
+	
+	<context  id="form_editor_process_wbs_context"> 
+		<description></description> 
+        <topic href="html/help/develop_wbs.html"  label="Develop a work breakdown structure"/> 
+	</context> 
+	
+	<context  id="form_editor_process_obs_context"> 
+		<description></description> 
+        <topic href="html/help/develop_team_structure.html"  label="Develop a team allocation structure"/> 
+	</context> 
+	
+	<context  id="form_editor_process_pbs_context"> 
+		<description></description> 
+        <topic href="html/help/develop_workproduct_structure.html"  label="Develop a work product usage structure"/> 
+	</context> 
+
+	
+	<context  id="configuration_publish_wizard_all_pages_context"> 
+		<description></description> 
+        <topic href="html/help/publishingoverview.html"  label="Publishing overview"/> 
+	</context> 
+	
+	<context  id="rich_text_editor_context_ID"> 
+		<description></description> 
+        <topic href="html/help/richtexteditor.html"  label="Rich text editor"/> 
+        <topic href="html/help/add_hyperlink.html"  label="Adding a reference or hyperlink"/> 
+	</context> 
+	
+</contexts> 

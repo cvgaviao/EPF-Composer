@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<!-- 
+    Copyright (c) 2005, 2007 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
+-->
+<toc label="Creating processes" link_to="main.xml#creating_processes_id">  
+  <topic label="Create a reusable capability pattern" href="html/topics/t_capability_pattern_create.html"/>
+  <topic label="Create a delivery process" href="html/topics/t_create_delivery_process.html"/>
+  <topic label="Develop a work breakdown structure" href="html/topics/t_develop_wbs.html"/>
+  <topic label="Develop a team allocation structure" href="html/topics/t_develop_team_structure.html"/>
+  <topic label="Develop a work product usage structure" href="html/topics/t_develop_workproduct_structure.html"/>
+  <topic label="Applying capability patterns" href="html/topics/c_capability_pattern.html">
+    <topic label="Copying a capability pattern" href="html/topics/t_capability_pattern_copy.html"/>
+    <topic label="Extending a capability pattern" href="html/topics/t_capability_pattern_extend.html"/>
+    <topic label="Deep copying a capability pattern" href="html/topics/t_capability_pattern_deep_copy.html"/>
+    </topic>
+  <topic label="Process element properties view" href="html/topics/c_properties_view.html"/>
+  <topic label="Using activity variability" href="html/topics/c_activity_variability.html"/>
+  <topic label="Using process to method synchronization" href="html/topics/t_using_synchronization.html"/>
+  <topic label="Working with process diagrams" href="html/topics/c_process_diagrams.html">
+     <topic label="Working with activity diagrams" href="html/topics/c_activity_diagrams.html"/>
+     <topic label="Working with activity detail diagrams" href="html/topics/c_activity_detail_diagrams.html"/>
+  </topic>
+</toc>
