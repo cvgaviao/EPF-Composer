@@ -1564,7 +1564,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		}
 	}
 
-	private void setDirty() {
+	public void setDirty() {
 		dirty = true;
 		firePropertyChange(PROP_DIRTY);
 	}

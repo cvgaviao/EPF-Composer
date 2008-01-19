@@ -10,6 +10,8 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.editors;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.ui.IMethodElementProvider;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -27,6 +29,12 @@ public class MethodElementEditorInput implements IEditorInput, IMethodElementPro
 	private MethodElement methodElement;
 
 	private ImageDescriptor imageDescriptor = null;
+
+	// the current object being edited by the RTE
+	private EObject fModalObject;
+
+	// the current feature being edited by the RTE
+	private EStructuralFeature fModalObjectFeature;
 
 	public MethodElementEditorInput(MethodElement e) {
 		methodElement = e;
@@ -57,6 +65,19 @@ public class MethodElementEditorInput implements IEditorInput, IMethodElementPro
 	public String getName() {
 		return methodElement.getName();
 	}
+	
+	/**
+	 * 
+	 * @return Name of method element + "." + name of feature being edited
+	 */
+	public String getFullName() {
+		String result = getName();
+		if (fModalObjectFeature != null) {
+			result += ".";
+			result += fModalObjectFeature.getName();
+		}
+		return result;
+	}
 
 	/**
 	 * @see org.eclipse.ui.IEditorInput#getPersistable()
@@ -86,8 +107,9 @@ public class MethodElementEditorInput implements IEditorInput, IMethodElementPro
 		if (this == obj)
 			return true;
 		if (getClass().isInstance(obj)) {
-			return methodElement == ((MethodElementEditorInput) obj)
-					.getMethodElement();
+			return methodElement == ((MethodElementEditorInput) obj).getMethodElement() &&
+			fModalObject == ((MethodElementEditorInput) obj).getModalObject() &&
+			fModalObjectFeature == ((MethodElementEditorInput) obj).getModalObjectFeature();
 		}
 		return false;
 	}
@@ -95,7 +117,30 @@ public class MethodElementEditorInput implements IEditorInput, IMethodElementPro
 	@Override
 	public int hashCode() {
 		int result = methodElement.hashCode();
+		if (fModalObject != null) {
+			result ^= fModalObject.hashCode();
+		}
+		if (fModalObjectFeature != null) {
+			result ^= fModalObjectFeature.hashCode();
+		}
 		return result;
+	}
+
+	public EObject getModalObject() {
+		return fModalObject;
+	}
+
+	public void setModalObject(EObject object) {
+		fModalObject = object;
+	}
+
+	
+	public EStructuralFeature getModalObjectFeature() {
+		return fModalObjectFeature;
+	}
+
+	public void setModalObjectFeature(EStructuralFeature feature) {
+		fModalObjectFeature = feature;
 	}
 
 }

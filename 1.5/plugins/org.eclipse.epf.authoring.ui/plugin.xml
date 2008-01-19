@@ -28,6 +28,8 @@
          schema="schema/wizardRegistryProvider.exsd"/>
    <extension-point id="EditorOpener" name="Editor Opener" schema="schema/editorOpener.exsd"/>
    <extension-point id="CustomizedLocker" name="Customized Locker" schema="schema/CustomizedLocker.exsd"/>
+   <extension-point id="methodRichText" name="Method Rich Text Extension" schema="schema/methodRichText.exsd"/>
+   <extension-point id="methodRichTextEditor" name="Method Rich Text Editor Extension" schema="schema/methodRichTextEditor.exsd"/>
 
    <extension point="org.eclipse.ui.perspectives">
       <perspective
@@ -619,5 +621,19 @@
    <extension
          point="org.eclipse.epf.library.edit.userInteractionHandler">
       <userInteractionHandler class="org.eclipse.epf.authoring.ui.actions.UserInteractionHandler"/>
+   </extension>
+   <extension
+         point="org.eclipse.epf.authoring.ui.methodRichText">
+      <methodRichText
+            class="org.eclipse.epf.authoring.ui.editors.MethodRichText"
+            version="0">
+      </methodRichText>
+   </extension>
+   <extension
+         point="org.eclipse.epf.authoring.ui.methodRichTextEditor">
+      <methodRichTextEditor
+            class="org.eclipse.epf.authoring.ui.editors.MethodRichTextEditor"
+            version="0">
+      </methodRichTextEditor>
    </extension>
 </plugin>

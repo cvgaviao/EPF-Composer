@@ -15,11 +15,18 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.common.html.HTMLFormatter;
 import org.eclipse.epf.common.serviceability.Logger;
@@ -57,6 +64,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Bundle;
 
 /**
  * The default rich text control implementation.
@@ -102,6 +110,10 @@ public class RichText implements IRichText {
 	private static final int STATUS_EXEC_CMD = 9;
 
 	private static final int STATUS_REFORMAT_LINKS = 10;
+	
+	private static final String richTextJavaScriptExtensionPointName = "org.eclipse.epf.richtext.richTextJavaScript"; //$NON-NLS-1$
+	
+	protected static final IConfigurationElement[] scriptExtensions = getJavaScriptExtensions();
 
 	// The default base path used for resolving links (<href>, <img>, etc.)
 	private static final String DEFAULT_BASE_PATH = System
@@ -190,6 +202,12 @@ public class RichText implements IRichText {
 	
 	// The control's IE flag
 	protected boolean isIE = false;
+	
+	/**
+	 * Creates a new instance.  Must call init(..) before using this widget.
+	 */
+	public RichText() {
+	}
 
 	/**
 	 * Creates a new instance.
@@ -202,6 +220,22 @@ public class RichText implements IRichText {
 	 *            the path used for resolving links
 	 */
 	public RichText(Composite parent, int style, String basePath) {
+		init(parent, style, basePath);
+	}
+
+	/**
+	 * Creates a new instance.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 * @param style
+	 *            the style for this control
+	 */
+	public RichText(Composite parent, int style) {
+		this(parent, style, null);
+	}
+	
+	public void init(Composite parent, int style, String basePath) {
 		debug = RichTextPlugin.getDefault().isDebugging();
 		logger = RichTextPlugin.getDefault().getLogger();
 		findReplaceAction = new FindReplaceAction(this);
@@ -216,7 +250,7 @@ public class RichText implements IRichText {
 			}
 			editor.setLayoutData(new GridData(GridData.FILL_BOTH));
 			editor.setData(PROPERTY_NAME, this);
-			init(parent, style);
+			initControl(parent, style);
 		} catch (Exception e) {
 			editor = null;
 			String msg = "Failed to create RichText with basePath=" + basePath; //$NON-NLS-1$
@@ -226,18 +260,6 @@ public class RichText implements IRichText {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	/**
-	 * Creates a new instance.
-	 * 
-	 * @param parent
-	 *            the parent composite
-	 * @param style
-	 *            the style for this control
-	 */
-	public RichText(Composite parent, int style) {
-		this(parent, style, null);
 	}
 
 	/**
@@ -269,7 +291,7 @@ public class RichText implements IRichText {
 	 * @throws Exception
 	 *             when an error has occurred while initialzing this control
 	 */
-	protected void init(Composite parent, int style) throws Exception {
+	protected void initControl(Composite parent, int style) throws Exception {
 		try {
 			addStatusTextListener();
 			if (debug) {
@@ -621,18 +643,19 @@ public class RichText implements IRichText {
 	protected int execute(final String script) {
 		status = 0;
 		if (editor != null && script != null && script.length() > 0) {
+			final String scriptToRun = "rte." + script;
 			try {
 				if (!isIE && processingJSEvent) {
 					Display.getCurrent().asyncExec(new Runnable() {
 						public void run() {
-							editor.execute(script);
+							editor.execute(scriptToRun);
 						}
 					});
 				} else {
-					editor.execute(script);
+					editor.execute(scriptToRun);
 				}
 				if (debug) {
-					printDebugMessage("execute", script); //$NON-NLS-1$				
+					printDebugMessage("execute", scriptToRun); //$NON-NLS-1$				
 				}
 			} catch (Exception e) {
 				String msg = "Failed to execute " + script; //$NON-NLS-1$
@@ -1045,8 +1068,9 @@ public class RichText implements IRichText {
 								}
 
 								hasSelection = true;
-								if (hasFocus())
+								if (hasFocus()) {
 									notifyListeners(SWT.SELECTED, new Event());
+								}
 							} else {
 								richTextSelection.setText(""); //$NON-NLS-1$
 								hasSelection = false;
@@ -1129,14 +1153,48 @@ public class RichText implements IRichText {
 		StringBuffer rteXML = new StringBuffer();
 		rteXML.append("<rte id=\"").append("rte") //$NON-NLS-1$ //$NON-NLS-2$
 				.append("\" css=\"").append(escapedRteUTL + "rte.css") //$NON-NLS-1$ //$NON-NLS-2$
-				.append("\" js=\"").append(escapedRteUTL + "rte.js") //$NON-NLS-1$ //$NON-NLS-2$
 				.append("\" baseURL=\"").append(escapedBasePath) //$NON-NLS-1$
-				.append("\"/>"); //$NON-NLS-1$
+				.append("\">"); //$NON-NLS-1$
+		
+		for (int i = 0;i < scriptExtensions.length;i++) {
+			IConfigurationElement extension = scriptExtensions[i];
+			final String path = extension.getAttribute("path"); //$NON-NLS-1$
+			
+			Bundle contributor = Platform.getBundle(
+					extension.getNamespaceIdentifier());
+			URL scriptURL = FileLocator.find(contributor, new Path(path), null);
+			scriptURL = FileLocator.toFileURL(scriptURL);
+			rteXML.append("<rte_js"); //$NON-NLS-1$
+			rteXML.append(" js=\"").append(scriptURL.toExternalForm()); //$NON-NLS-1$
+			rteXML.append("\"/>"); //$NON-NLS-1$
+		}
+		rteXML.append("</rte>"); //$NON-NLS-1$
+
 		StringWriter result = new StringWriter();
 		XSLTProcessor.transform(
 				rteFolder + "rte.xsl", rteXML.toString(), result); //$NON-NLS-1$
 		return result.toString();
 	}
+	
+	protected static IConfigurationElement[] getJavaScriptExtensions() {
+		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		IConfigurationElement[] extensions = extensionRegistry.getConfigurationElementsFor(richTextJavaScriptExtensionPointName);
+		
+		List<IConfigurationElement> extensionsList = Arrays.asList(extensions);
+		Collections.sort(extensionsList, new Comparator<IConfigurationElement>() {
+			public int compare(IConfigurationElement o1,
+					IConfigurationElement o2) {
+				String order1 = o1.getAttribute("order");
+				if (order1 == null) order1 = "0";
+				String order2 = o2.getAttribute("order");
+				if (order2 == null) order2 = "0";
+				
+				return order1.compareTo(order2);
+			}
+		});
+		return extensionsList.toArray(extensions);
+	}
+	
 
 	/**
 	 * Fills the context menu with menu items.

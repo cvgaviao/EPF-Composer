@@ -36,6 +36,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
+import org.eclipse.epf.authoring.ui.editors.MethodElementEditorInput;
 import org.eclipse.epf.authoring.ui.filters.ContentFilter;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
@@ -1611,6 +1612,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						.saveModifiedRichText(ctrl_expanded);
 			}
 			richText.setFocus();
+			IEditorInput input = getEditorInput();
+			if (input instanceof MethodElementEditorInput) {
+				((MethodElementEditorInput)input).setModalObject(null);
+				((MethodElementEditorInput)input).setModalObjectFeature(null);
+			}
+
 		} else {
 			sectionComposite.setVisible(false);
 			expandedComposite.setVisible(true);
@@ -1635,6 +1642,11 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				ctrl_expanded.setFocus();
 			}
 			setActiveRichTextControl(richText);
+			IEditorInput input = getEditorInput();
+			if (input instanceof MethodElementEditorInput) {
+				((MethodElementEditorInput)input).setModalObject(richText.getModalObject());
+				((MethodElementEditorInput)input).setModalObjectFeature(richText.getModalObjectFeature());
+			}
 		}
 		form.getBody().layout(true, true);
 		descExpandFlag = !descExpandFlag;
