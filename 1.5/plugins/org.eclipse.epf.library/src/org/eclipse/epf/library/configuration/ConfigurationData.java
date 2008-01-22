@@ -48,6 +48,7 @@ import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.RoleSet;
 import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.Tool;
+import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProductType;
@@ -307,7 +308,7 @@ public class ConfigurationData {
 		}
 	}	
 	
-	private Collection<ContentCategory> getChildCC(ContentCategory cc) {
+	private Collection<? extends ContentCategory> getChildCC(ContentCategory cc) {
 		if (cc instanceof CustomCategory) {
 			return ((CustomCategory) cc).getSubCategories();
 		}
@@ -518,7 +519,7 @@ public class ConfigurationData {
 	}
 
 	private boolean contributedBaseInSubstracted(VariabilityElement ve) {
-		if (ve.getVariabilityType() != VariabilityType.CONTRIBUTES_LITERAL) {
+		if (ve.getVariabilityType() != VariabilityType.CONTRIBUTES) {
 			return false;
 		}
 		
