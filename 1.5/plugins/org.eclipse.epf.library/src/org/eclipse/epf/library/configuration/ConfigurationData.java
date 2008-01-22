@@ -326,9 +326,6 @@ public class ConfigurationData {
 		if (cc instanceof RoleSetGrouping) {
 			return ((RoleSetGrouping) cc).getRoleSets();
 		}
-		if (cc instanceof Tool) {
-			return ((Tool) cc).getToolMentors();
-		}
 		if (cc instanceof WorkProductType) {
 		}
 		return null;
