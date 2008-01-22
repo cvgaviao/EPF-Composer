@@ -983,7 +983,7 @@ public class LibraryImportManager {
 				error = configFolderError || ! fileCheckedOutStatus.isOK();
 				if (!error) {
 					MethodLibrary lib = (MethodLibrary)owner;
-					lib.getPredefinedConfigurations().add(newObj);
+					lib.getPredefinedConfigurations().add((MethodConfiguration)newObj);
 					ILibraryPersister persister = ((MultiFileResourceSetImpl) lib.eResource().getResourceSet()).getPersister();
 					if (persister instanceof IFileBasedLibraryPersister) {
 						IFileBasedLibraryPersister ip = (IFileBasedLibraryPersister) persister;
@@ -1010,7 +1010,7 @@ public class LibraryImportManager {
 		} else if ( (owner instanceof MethodPackage) 
 				&& (owner.eContainer() != null) 
 				&& (newObj instanceof MethodPackage) ) {
-			((MethodPackage)owner).getChildPackages().add(newObj);
+			((MethodPackage)owner).getChildPackages().add((MethodPackage)newObj);
 		} else {
 			error = true;
 		}

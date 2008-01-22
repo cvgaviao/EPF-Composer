@@ -45,6 +45,7 @@ import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.CapabilityPattern;
+import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
@@ -60,6 +61,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.RoleSet;
 import org.eclipse.epf.uma.RoleSetGrouping;
@@ -175,7 +177,7 @@ public class UmaLibrary {
 		setElement(id, obj);
 
 		ContentPackage rootPkg = (ContentPackage) getRootPackage(plugin, obj);
-		rootPkg.getContentElements().add(obj);
+		rootPkg.getContentElements().add((ContentCategory)obj);
 		return obj;
 	}
 
@@ -349,7 +351,7 @@ public class UmaLibrary {
 
 			// also need to add the element into the container of the owner
 			((ProcessPackage) container.eContainer()).getProcessElements().add(
-					obj);
+					(WorkOrder)obj);
 		}
 
 		setElement(id, obj);
@@ -363,18 +365,18 @@ public class UmaLibrary {
 					// content package
 					MethodPackage pkg_core_content = UmaUtil.findMethodPackage(
 							plugin, ModelStructure.DEFAULT.coreContentPath);
-					pkg_core_content.getChildPackages().add(obj);
+					pkg_core_content.getChildPackages().add((ContentPackage)obj);
 				} else if (obj instanceof ProcessComponent) {
 					MethodPackage pkg_cp = UmaUtil.findMethodPackage(plugin,
 							ModelStructure.DEFAULT.capabilityPatternPath);
-					pkg_cp.getChildPackages().add(obj);
+					pkg_cp.getChildPackages().add((ProcessComponent)obj);
 
 				} else if (obj instanceof ProcessPackage) {
 					// this is a root process package
 					// put into the root delivery processes package
 					MethodPackage pkg_dp = UmaUtil.findMethodPackage(plugin,
 							ModelStructure.DEFAULT.deliveryProcessPath);
-					pkg_dp.getChildPackages().add(obj);
+					pkg_dp.getChildPackages().add((ProcessPackage)obj);
 				}
 			} else {
 
@@ -414,7 +416,7 @@ public class UmaLibrary {
 						pkg = pp;
 					}
 
-					((ProcessPackage) pkg).getProcessElements().add(obj);
+					((ProcessPackage) pkg).getProcessElements().add((ProcessElement)obj);
 				}
 
 				// note: all element references are string type (id)

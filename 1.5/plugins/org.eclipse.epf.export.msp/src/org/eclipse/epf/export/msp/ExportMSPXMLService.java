@@ -1014,9 +1014,12 @@ public class ExportMSPXMLService {
 	private List getRolesForTaskD(TaskDescriptor taskDescriptor) {
 		ArrayList rolesList = new ArrayList();
 
+		List<RoleDescriptor> list = taskDescriptor.getPerformedPrimarilyBy();
+		RoleDescriptor rd = list == null || list.isEmpty() ? null : list.get(0);
+		
 		// RoleDescriptor roleDescrp = taskDescriptor.getPerformedPrimarilyBy();
 		RoleDescriptor roleDescrp = (RoleDescriptor) ConfigurationHelper
-				.getCalculatedElement(taskDescriptor.getPerformedPrimarilyBy(),
+				.getCalculatedElement(rd,
 						breakdownElementFilter.getMethodConfiguration());
 
 		if (roleDescrp != null) {
@@ -1038,7 +1041,8 @@ public class ExportMSPXMLService {
 	private List getRolesForTask(org.eclipse.epf.uma.Task umaTask) {
 		ArrayList rolesList = new ArrayList();
 
-		Role role = umaTask.getPerformedBy();
+		List<Role> roleList = umaTask.getPerformedBy();
+		Role role = roleList == null || roleList.isEmpty() ? null : roleList.get(0);
 		if (role != null) {
 			rolesList.add(getDisplayName(role));
 		}
@@ -1218,16 +1222,16 @@ public class ExportMSPXMLService {
 			return null;
 		}
 		WorkOrderType woType = wo.getLinkType();
-		if (woType == WorkOrderType.FINISH_TO_START_LITERAL) {
+		if (woType == WorkOrderType.FINISH_TO_START) {
 			return new BigInteger("1"); //$NON-NLS-1$
 		} 
-		if (woType == WorkOrderType.START_TO_START_LITERAL) {
+		if (woType == WorkOrderType.START_TO_START) {
 			return new BigInteger("3"); //$NON-NLS-1$
 		} 
-		if (woType == WorkOrderType.FINISH_TO_FINISH_LITERAL) {
+		if (woType == WorkOrderType.FINISH_TO_FINISH) {
 			return new BigInteger("0"); //$NON-NLS-1$
 		}
-		if (woType == WorkOrderType.START_TO_FINISH_LITERAL) {
+		if (woType == WorkOrderType.START_TO_FINISH) {
 			return new BigInteger("2"); //$NON-NLS-1$
 		}
 		return null;
