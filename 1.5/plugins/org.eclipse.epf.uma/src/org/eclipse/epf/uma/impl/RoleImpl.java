@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
@@ -29,6 +30,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.epf.uma.impl.RoleImpl#getFulfills <em>Fulfills</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.RoleImpl#getModifies <em>Modifies</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.RoleImpl#getResponsibleFor <em>Responsible For</em>}</li>
  * </ul>
@@ -45,6 +47,16 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * The cached value of the '{@link #getFulfills() <em>Fulfills</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFulfills()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<FulfillableElement> fulfills;
+
+	/**
 	 * The cached value of the '{@link #getResponsibleFor() <em>Responsible For</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -52,7 +64,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList responsibleFor = null;
+	protected EList<WorkProduct> responsibleFor;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -61,10 +73,6 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 */
 	protected RoleImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -72,8 +80,22 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ROLE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<FulfillableElement> getFulfills() {
+		if (fulfills == null) {
+			fulfills = new EObjectResolvingEList<FulfillableElement>(
+					FulfillableElement.class, this, UmaPackage.ROLE__FULFILLS);
+		}
+		return fulfills;
 	}
 
 	/**
@@ -89,10 +111,10 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getResponsibleFor() {
+	public List<WorkProduct> getResponsibleFor() {
 		if (responsibleFor == null) {
-			responsibleFor = new EObjectResolvingEList(WorkProduct.class, this,
-					UmaPackage.ROLE__RESPONSIBLE_FOR);
+			responsibleFor = new EObjectResolvingEList<WorkProduct>(
+					WorkProduct.class, this, UmaPackage.ROLE__RESPONSIBLE_FOR);
 		}
 		return responsibleFor;
 	}
@@ -102,8 +124,11 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case UmaPackage.ROLE__FULFILLS:
+			return getFulfills();
 		case UmaPackage.ROLE__MODIFIES:
 			return getModifies();
 		case UmaPackage.ROLE__RESPONSIBLE_FOR:
@@ -117,11 +142,23 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+		case UmaPackage.ROLE__FULFILLS:
+			getFulfills().clear();
+			getFulfills().addAll(
+					(Collection<? extends FulfillableElement>) newValue);
+			return;
+		case UmaPackage.ROLE__MODIFIES:
+			getModifies().clear();
+			getModifies().addAll((Collection<? extends WorkProduct>) newValue);
+			return;
 		case UmaPackage.ROLE__RESPONSIBLE_FOR:
 			getResponsibleFor().clear();
-			getResponsibleFor().addAll((Collection) newValue);
+			getResponsibleFor().addAll(
+					(Collection<? extends WorkProduct>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -132,8 +169,15 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+		case UmaPackage.ROLE__FULFILLS:
+			getFulfills().clear();
+			return;
+		case UmaPackage.ROLE__MODIFIES:
+			getModifies().clear();
+			return;
 		case UmaPackage.ROLE__RESPONSIBLE_FOR:
 			getResponsibleFor().clear();
 			return;
@@ -146,20 +190,53 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
+		case UmaPackage.ROLE__FULFILLS:
+			return fulfills != null && !fulfills.isEmpty();
 		case UmaPackage.ROLE__MODIFIES:
 			return !getModifies().isEmpty();
 		case UmaPackage.ROLE__RESPONSIBLE_FOR:
 			return responsibleFor != null && !responsibleFor.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == FulfillableElement.class) {
+			switch (derivedFeatureID) {
+			case UmaPackage.ROLE__FULFILLS:
+				return UmaPackage.FULFILLABLE_ELEMENT__FULFILLS;
+			default:
+				return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == FulfillableElement.class) {
+			switch (baseFeatureID) {
+			case UmaPackage.FULFILLABLE_ELEMENT__FULFILLS:
+				return UmaPackage.ROLE__FULFILLS;
+			default:
+				return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //RoleImpl

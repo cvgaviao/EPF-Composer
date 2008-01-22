@@ -20,6 +20,10 @@ import java.util.List;
  * <!-- begin-model-doc -->
  * A Discipline is a categorization of work (i.e. Tasks for Method Content), based upon similarity of concerns and cooperation of work effort.
  * A discipline is a collection of Tasks that are related to a major 'area of concern' within the overall project. The grouping of Tasks into disciplines is mainly an aid to understanding the project from a 'traditional' waterfall perspective. However, typically, for example, it is more common to perform certain requirements activities in close coordination with analysis and design activities. Separating these activities into separate disciplines makes the activities easier to comprehend.
+ * 
+ * Discipline is a categorization of Tasks based upon similarity of concerns and cooperation of work effort.  This is the extensions of Discipline defined in the Method Core package adding an additional association to Activities, which represent typical standard or reference ways of meaningful groupings of the Discipline's Tasks into workflows.
+ * Tasks represent descriptions of work, which are categorized by Disciplines.  The reason that several Tasks are all categorized by the same Discipline is that they all represent a part in achieving a higher goal or performing work that is all related to each other.  Every Discipline defines standard ways of doing the work it categorizes.  Such standard ways are express by Activities or Capability Patterns defining how the Tasks categorized by the Discipline 'work together' in the most generic way.  These reference workflows are often used for educating and teaching practitioners. 
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -47,10 +51,10 @@ public interface Discipline extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tasks</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiscipline_Tasks()
-	 * @model type="org.eclipse.epf.uma.Task" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getTasks();
+	List<Task> getTasks();
 
 	/**
 	 * Returns the value of the '<em><b>Subdiscipline</b></em>' containment reference list.
@@ -63,10 +67,10 @@ public interface Discipline extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Subdiscipline</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiscipline_Subdiscipline()
-	 * @model type="org.eclipse.epf.uma.Discipline" containment="true" resolveProxies="true" ordered="false"
+	 * @model containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getSubdiscipline();
+	List<Discipline> getSubdiscipline();
 
 	/**
 	 * Returns the value of the '<em><b>Reference Workflows</b></em>' reference list.
@@ -79,9 +83,9 @@ public interface Discipline extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reference Workflows</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiscipline_ReferenceWorkflows()
-	 * @model type="org.eclipse.epf.uma.Activity" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getReferenceWorkflows();
+	List<Activity> getReferenceWorkflows();
 
 } // Discipline

@@ -61,6 +61,15 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	protected String purpose = PURPOSE_EDEFAULT;
 
 	/**
+	 * This is true if the Purpose attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean purposeESet;
+
+	/**
 	 * The default value of the '{@link #getAlternatives() <em>Alternatives</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -81,16 +90,21 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	protected String alternatives = ALTERNATIVES_EDEFAULT;
 
 	/**
+	 * This is true if the Alternatives attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean alternativesESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected TaskDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -98,6 +112,7 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TASK_DESCRIPTION;
 	}
@@ -119,9 +134,37 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	public void setPurpose(String newPurpose) {
 		String oldPurpose = purpose;
 		purpose = newPurpose;
+		boolean oldPurposeESet = purposeESet;
+		purposeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.TASK_DESCRIPTION__PURPOSE, oldPurpose, purpose));
+					UmaPackage.TASK_DESCRIPTION__PURPOSE, oldPurpose, purpose,
+					!oldPurposeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetPurpose() {
+		String oldPurpose = purpose;
+		boolean oldPurposeESet = purposeESet;
+		purpose = PURPOSE_EDEFAULT;
+		purposeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.TASK_DESCRIPTION__PURPOSE, oldPurpose,
+					PURPOSE_EDEFAULT, oldPurposeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetPurpose() {
+		return purposeESet;
 	}
 
 	/**
@@ -141,10 +184,12 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	public void setAlternatives(String newAlternatives) {
 		String oldAlternatives = alternatives;
 		alternatives = newAlternatives;
+		boolean oldAlternativesESet = alternativesESet;
+		alternativesESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.TASK_DESCRIPTION__ALTERNATIVES, oldAlternatives,
-					alternatives));
+					alternatives, !oldAlternativesESet));
 	}
 
 	/**
@@ -152,6 +197,32 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetAlternatives() {
+		String oldAlternatives = alternatives;
+		boolean oldAlternativesESet = alternativesESet;
+		alternatives = ALTERNATIVES_EDEFAULT;
+		alternativesESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.TASK_DESCRIPTION__ALTERNATIVES, oldAlternatives,
+					ALTERNATIVES_EDEFAULT, oldAlternativesESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetAlternatives() {
+		return alternativesESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTION__PURPOSE:
@@ -167,6 +238,7 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTION__PURPOSE:
@@ -184,13 +256,14 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTION__PURPOSE:
-			setPurpose(PURPOSE_EDEFAULT);
+			unsetPurpose();
 			return;
 		case UmaPackage.TASK_DESCRIPTION__ALTERNATIVES:
-			setAlternatives(ALTERNATIVES_EDEFAULT);
+			unsetAlternatives();
 			return;
 		}
 		super.eUnset(featureID);
@@ -201,20 +274,13 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTION__PURPOSE:
-			return PURPOSE_EDEFAULT == null ? purpose != null
-					: !PURPOSE_EDEFAULT.equals(purpose);
+			return isSetPurpose();
 		case UmaPackage.TASK_DESCRIPTION__ALTERNATIVES:
-			return ALTERNATIVES_EDEFAULT == null ? alternatives != null
-					: !ALTERNATIVES_EDEFAULT.equals(alternatives);
+			return isSetAlternatives();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -224,15 +290,22 @@ public class TaskDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (purpose: "); //$NON-NLS-1$
-		result.append(purpose);
+		if (purposeESet)
+			result.append(purpose);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", alternatives: "); //$NON-NLS-1$
-		result.append(alternatives);
+		if (alternativesESet)
+			result.append(alternatives);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

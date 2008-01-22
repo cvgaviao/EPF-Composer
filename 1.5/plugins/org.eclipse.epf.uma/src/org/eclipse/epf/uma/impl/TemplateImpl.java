@@ -38,10 +38,6 @@ public class TemplateImpl extends GuidanceImpl implements Template {
 	 */
 	protected TemplateImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class TemplateImpl extends GuidanceImpl implements Template {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TEMPLATE;
 	}

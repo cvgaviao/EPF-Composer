@@ -904,7 +904,7 @@ public class ProcessDescription extends ProcessFormPage {
 										IActionManager.SET,
 										process,
 										UmaPackage.eINSTANCE
-												.getDescribableElement_PresentationName(),
+												.getMethodElement_PresentationName(),
 										ctrl_presentation_name.getText(), -1);
 						if (!status) {
 							ctrl_presentation_name.setText(oldContent);
@@ -938,7 +938,7 @@ public class ProcessDescription extends ProcessFormPage {
 		ctrl_presentation_name.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
 				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-						UmaPackage.eINSTANCE.getDescribableElement_PresentationName());
+						UmaPackage.eINSTANCE.getMethodElement_PresentationName());
 			}
 		});
 

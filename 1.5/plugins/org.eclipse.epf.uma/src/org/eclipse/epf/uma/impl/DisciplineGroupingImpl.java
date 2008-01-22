@@ -51,7 +51,7 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList disciplines = null;
+	protected EList<Discipline> disciplines;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -60,10 +60,6 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 */
 	protected DisciplineGroupingImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -71,6 +67,7 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DISCIPLINE_GROUPING;
 	}
@@ -80,9 +77,10 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getDisciplines() {
+	public List<Discipline> getDisciplines() {
 		if (disciplines == null) {
-			disciplines = new EObjectResolvingEList(Discipline.class, this,
+			disciplines = new EObjectResolvingEList<Discipline>(
+					Discipline.class, this,
 					UmaPackage.DISCIPLINE_GROUPING__DISCIPLINES);
 		}
 		return disciplines;
@@ -93,6 +91,7 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DISCIPLINE_GROUPING__DISCIPLINES:
@@ -106,11 +105,14 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DISCIPLINE_GROUPING__DISCIPLINES:
 			getDisciplines().clear();
-			getDisciplines().addAll((Collection) newValue);
+			getDisciplines()
+					.addAll((Collection<? extends Discipline>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -121,6 +123,7 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DISCIPLINE_GROUPING__DISCIPLINES:
@@ -135,13 +138,8 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DISCIPLINE_GROUPING__DISCIPLINES:
 			return disciplines != null && !disciplines.isEmpty();

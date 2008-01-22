@@ -57,7 +57,7 @@ public class ReusableAssetLayout extends AbstractElementLayout {
 					layoutManager.getElementRealizer());
 			
 			List activities = ConfigurationHelper.calc0nFeatureValue(super.element,
-					AssociationHelper.ReusableAsset_Activities, layoutManager
+					AssociationHelper.ReusableAsset_BreakdownElements, layoutManager
 							.getElementRealizer());
 
 			contentElements.addAll(activities);

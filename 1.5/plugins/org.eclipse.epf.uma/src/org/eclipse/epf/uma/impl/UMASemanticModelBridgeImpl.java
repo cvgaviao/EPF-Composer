@@ -50,7 +50,7 @@ public class UMASemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected MethodElement element = null;
+	protected MethodElement element;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,10 +59,6 @@ public class UMASemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 */
 	protected UMASemanticModelBridgeImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -70,6 +66,7 @@ public class UMASemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.UMA_SEMANTIC_MODEL_BRIDGE;
 	}
@@ -121,6 +118,7 @@ public class UMASemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.UMA_SEMANTIC_MODEL_BRIDGE__ELEMENT:
@@ -136,6 +134,7 @@ public class UMASemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.UMA_SEMANTIC_MODEL_BRIDGE__ELEMENT:
@@ -150,6 +149,7 @@ public class UMASemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.UMA_SEMANTIC_MODEL_BRIDGE__ELEMENT:
@@ -164,13 +164,8 @@ public class UMASemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.UMA_SEMANTIC_MODEL_BRIDGE__ELEMENT:
 			return element != null;

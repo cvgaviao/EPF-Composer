@@ -1514,15 +1514,15 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 		// all guidances
 		items = new ArrayList();
 		items.addAll(calc0nFeatureValue(element, UmaPackage.eINSTANCE
-				.getActivity_Checklists()));
+				.getBreakdownElement_Checklists()));
 		items.addAll(calc0nFeatureValue(element, UmaPackage.eINSTANCE
-				.getActivity_Concepts()));
+				.getBreakdownElement_Concepts()));
 		items.addAll(calc0nFeatureValue(element, UmaPackage.eINSTANCE
-				.getActivity_Examples()));
+				.getBreakdownElement_Examples()));
 		items.addAll(calc0nFeatureValue(element, UmaPackage.eINSTANCE
-				.getActivity_Guidelines()));
+				.getBreakdownElement_Guidelines()));
 		items.addAll(calc0nFeatureValue(element, UmaPackage.eINSTANCE
-				.getActivity_ReusableAssets()));
+				.getBreakdownElement_ReusableAssets()));
 		items.addAll(calc0nFeatureValue(element, UmaPackage.eINSTANCE
 				.getActivity_Roadmaps()));
 
@@ -1532,7 +1532,7 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 		org.eclipse.epf.diagram.model.util.DiagramInfo userDiagramInfo = 
 				new org.eclipse.epf.diagram.model.util.DiagramInfo(element);
 		List v = calc0nFeatureValue(element, UmaPackage.eINSTANCE
-				.getActivity_SupportingMaterials());
+				.getBreakdownElement_SupportingMaterials());
 		for ( Iterator it = v.iterator(); it.hasNext(); ) {
 			SupportingMaterial s = (SupportingMaterial)it.next();
 			if ( !userDiagramInfo.isDiagram( (SupportingMaterial)s ) ) {
@@ -1634,7 +1634,7 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 
 	class EObjectComparator implements Comparator {
 		private EStructuralFeature pName = UmaPackage.eINSTANCE
-				.getDescribableElement_PresentationName();
+				.getMethodElement_PresentationName();
 		private EStructuralFeature name = UmaPackage.eINSTANCE
 				.getNamedElement_Name();
 

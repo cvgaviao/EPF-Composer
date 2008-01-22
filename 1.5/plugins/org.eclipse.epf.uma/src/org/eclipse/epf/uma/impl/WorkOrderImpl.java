@@ -51,7 +51,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final WorkOrderType LINK_TYPE_EDEFAULT = WorkOrderType.FINISH_TO_START_LITERAL;
+	protected static final WorkOrderType LINK_TYPE_EDEFAULT = WorkOrderType.FINISH_TO_START;
 
 	/**
 	 * The cached value of the '{@link #getLinkType() <em>Link Type</em>}' attribute.
@@ -64,6 +64,15 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	protected WorkOrderType linkType = LINK_TYPE_EDEFAULT;
 
 	/**
+	 * This is true if the Link Type attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean linkTypeESet;
+
+	/**
 	 * The cached value of the '{@link #getPred() <em>Pred</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -71,7 +80,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * @generated
 	 * @ordered
 	 */
-	protected WorkBreakdownElement pred = null;
+	protected WorkBreakdownElement pred;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -80,10 +89,6 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 */
 	protected WorkOrderImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -91,6 +96,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_ORDER;
 	}
@@ -112,9 +118,37 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	public void setLinkType(WorkOrderType newLinkType) {
 		WorkOrderType oldLinkType = linkType;
 		linkType = newLinkType == null ? LINK_TYPE_EDEFAULT : newLinkType;
+		boolean oldLinkTypeESet = linkTypeESet;
+		linkTypeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.WORK_ORDER__LINK_TYPE, oldLinkType, linkType));
+					UmaPackage.WORK_ORDER__LINK_TYPE, oldLinkType, linkType,
+					!oldLinkTypeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetLinkType() {
+		WorkOrderType oldLinkType = linkType;
+		boolean oldLinkTypeESet = linkTypeESet;
+		linkType = LINK_TYPE_EDEFAULT;
+		linkTypeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_ORDER__LINK_TYPE, oldLinkType,
+					LINK_TYPE_EDEFAULT, oldLinkTypeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetLinkType() {
+		return linkTypeESet;
 	}
 
 	/**
@@ -162,6 +196,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.WORK_ORDER__LINK_TYPE:
@@ -179,6 +214,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.WORK_ORDER__LINK_TYPE:
@@ -196,10 +232,11 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_ORDER__LINK_TYPE:
-			setLinkType(LINK_TYPE_EDEFAULT);
+			unsetLinkType();
 			return;
 		case UmaPackage.WORK_ORDER__PRED:
 			setPred((WorkBreakdownElement) null);
@@ -213,16 +250,11 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_ORDER__LINK_TYPE:
-			return linkType != LINK_TYPE_EDEFAULT;
+			return isSetLinkType();
 		case UmaPackage.WORK_ORDER__PRED:
 			return pred != null;
 		}
@@ -234,13 +266,17 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (linkType: "); //$NON-NLS-1$
-		result.append(linkType);
+		if (linkTypeESet)
+			result.append(linkType);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

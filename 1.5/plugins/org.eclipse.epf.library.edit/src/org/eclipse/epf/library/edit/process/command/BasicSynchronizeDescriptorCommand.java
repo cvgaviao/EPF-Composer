@@ -45,7 +45,7 @@ public class BasicSynchronizeDescriptorCommand extends AbstractCommand
 	public static final Set NONEMPTY_ATTRIBUTES = new HashSet(Arrays.asList(
 			new EStructuralFeature[] {
 					UmaPackage.eINSTANCE.getNamedElement_Name(),
-					UmaPackage.eINSTANCE.getDescribableElement_PresentationName()
+					UmaPackage.eINSTANCE.getMethodElement_PresentationName()
 			}
 	));
 	
@@ -124,7 +124,7 @@ public class BasicSynchronizeDescriptorCommand extends AbstractCommand
 								(String) Providers.getConfigurationApplicator().getAttribute((VariabilityElement) e, attrib, config) 
 								: e.eGet(attrib);
 						// if attriubute is presentation name and new value is blank, copy name over
-						if ((descAttrib.equals(UmaPackage.eINSTANCE.getDescribableElement_PresentationName())) && (value == null || value.equals(""))) //$NON-NLS-1$
+						if ((descAttrib.equals(UmaPackage.eINSTANCE.getMethodElement_PresentationName())) && (value == null || value.equals(""))) //$NON-NLS-1$
 							value = e instanceof VariabilityElement ? 
 									(String) Providers.getConfigurationApplicator().getAttribute((VariabilityElement) e, UmaPackage.eINSTANCE.getNamedElement_Name(), config) 
 									: e.eGet(UmaPackage.eINSTANCE.getNamedElement_Name());

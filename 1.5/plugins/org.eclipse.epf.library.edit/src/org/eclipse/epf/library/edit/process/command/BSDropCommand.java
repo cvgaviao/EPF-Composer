@@ -66,7 +66,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 			new EStructuralFeature[] {
 					UmaPackage.eINSTANCE.getNamedElement_Name(),
 					UmaPackage.eINSTANCE.getMethodElement_BriefDescription(),
-					UmaPackage.eINSTANCE.getDescribableElement_PresentationName(),
+					UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
 					UmaPackage.eINSTANCE.getTask_OptionalInput(),
 					UmaPackage.eINSTANCE.getTask_MandatoryInput(),
 					UmaPackage.eINSTANCE.getTask_Output(),
@@ -86,7 +86,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 	static {
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getNamedElement_Name(), UmaPackage.eINSTANCE.getNamedElement_Name());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getMethodElement_BriefDescription(), UmaPackage.eINSTANCE.getMethodElement_BriefDescription());
-		FEATURE_MAP.put(UmaPackage.eINSTANCE.getDescribableElement_PresentationName(), UmaPackage.eINSTANCE.getDescribableElement_PresentationName());
+		FEATURE_MAP.put(UmaPackage.eINSTANCE.getMethodElement_PresentationName(), UmaPackage.eINSTANCE.getMethodElement_PresentationName());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getTask_OptionalInput(), UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getTask_MandatoryInput(), UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getTask_Output(), UmaPackage.eINSTANCE.getTaskDescriptor_Output());

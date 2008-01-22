@@ -50,10 +50,10 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Plugin Selection</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodConfiguration_MethodPluginSelection()
-	 * @model type="org.eclipse.epf.uma.MethodPlugin" ordered="false"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
-	List getMethodPluginSelection();
+	List<MethodPlugin> getMethodPluginSelection();
 
 	/**
 	 * Returns the value of the '<em><b>Method Package Selection</b></em>' reference list.
@@ -66,10 +66,10 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Package Selection</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodConfiguration_MethodPackageSelection()
-	 * @model type="org.eclipse.epf.uma.MethodPackage" ordered="false"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
-	List getMethodPackageSelection();
+	List<MethodPackage> getMethodPackageSelection();
 
 	/**
 	 * Returns the value of the '<em><b>Process Views</b></em>' reference list.
@@ -82,10 +82,10 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Process Views</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodConfiguration_ProcessViews()
-	 * @model type="org.eclipse.epf.uma.ContentCategory" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getProcessViews();
+	List<ContentCategory> getProcessViews();
 
 	/**
 	 * Returns the value of the '<em><b>Default View</b></em>' reference.
@@ -98,7 +98,7 @@ public interface MethodConfiguration extends MethodUnit {
 	 * @return the value of the '<em>Default View</em>' reference.
 	 * @see #setDefaultView(ContentCategory)
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodConfiguration_DefaultView()
-	 * @model
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	ContentCategory getDefaultView();
@@ -124,10 +124,10 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Configurations</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodConfiguration_BaseConfigurations()
-	 * @model type="org.eclipse.epf.uma.MethodConfiguration" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getBaseConfigurations();
+	List<MethodConfiguration> getBaseConfigurations();
 
 	/**
 	 * Returns the value of the '<em><b>Subtracted Category</b></em>' reference list.
@@ -140,10 +140,10 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Subtracted Category</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodConfiguration_SubtractedCategory()
-	 * @model type="org.eclipse.epf.uma.ContentCategory" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getSubtractedCategory();
+	List<ContentCategory> getSubtractedCategory();
 
 	/**
 	 * Returns the value of the '<em><b>Added Category</b></em>' reference list.
@@ -156,9 +156,9 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Added Category</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodConfiguration_AddedCategory()
-	 * @model type="org.eclipse.epf.uma.ContentCategory" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getAddedCategory();
+	List<ContentCategory> getAddedCategory();
 
 } // MethodConfiguration

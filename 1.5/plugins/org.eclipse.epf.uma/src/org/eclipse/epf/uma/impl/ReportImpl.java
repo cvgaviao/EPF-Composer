@@ -38,10 +38,6 @@ public class ReportImpl extends GuidanceImpl implements Report {
 	 */
 	protected ReportImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class ReportImpl extends GuidanceImpl implements Report {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.REPORT;
 	}

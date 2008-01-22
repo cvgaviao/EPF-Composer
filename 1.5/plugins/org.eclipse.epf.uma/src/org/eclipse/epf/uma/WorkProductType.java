@@ -19,6 +19,7 @@ import java.util.List;
  *
  * <!-- begin-model-doc -->
  * Work Product Type is a second category for work products, which in contrast to Domain is more presentation oriented.  A work product can have many Work Product Types.  Examples, for a Work Product Type is "Class Diagram", which categorizes the Artifacts Analysis Model, Design Model, User Experience Model, or "Specification", which categorizes requirements specifications that define a system with a well-defined system boundary, such as use case or functional requirements specification.  A Work Product can be categorized to be of many Work Product Types.  For example, a use case model can be categorized as a Specification as well as Diagram Work Product Type.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -44,9 +45,9 @@ public interface WorkProductType extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Work Products</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductType_WorkProducts()
-	 * @model type="org.eclipse.epf.uma.WorkProduct" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getWorkProducts();
+	List<WorkProduct> getWorkProducts();
 
 } // WorkProductType

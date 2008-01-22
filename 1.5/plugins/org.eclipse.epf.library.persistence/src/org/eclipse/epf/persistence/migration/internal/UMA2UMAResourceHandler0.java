@@ -83,7 +83,7 @@ public class UMA2UMAResourceHandler0 extends UMA2UMAResourceHandler {
 	protected EStructuralFeature getNewFeature(EObject owner, String featureName) {
 		if ("presentationName".equals(featureName) && owner instanceof ContentDescription) { //$NON-NLS-1$
 			return UmaPackage.eINSTANCE
-					.getDescribableElement_PresentationName();
+					.getMethodElement_PresentationName();
 		}
 		if (procMovedFeatureNames.contains(featureName)) {
 			if (owner instanceof ProcessElement) {

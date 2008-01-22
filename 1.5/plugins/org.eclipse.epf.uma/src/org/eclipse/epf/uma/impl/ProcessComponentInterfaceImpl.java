@@ -56,7 +56,7 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected EList interfaceSpecifications = null;
+	protected EList<TaskDescriptor> interfaceSpecifications;
 
 	/**
 	 * The cached value of the '{@link #getInterfaceIO() <em>Interface IO</em>}' containment reference list.
@@ -66,7 +66,7 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected EList interfaceIO = null;
+	protected EList<WorkProductDescriptor> interfaceIO;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,10 +75,6 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 */
 	protected ProcessComponentInterfaceImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -86,6 +82,7 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_COMPONENT_INTERFACE;
 	}
@@ -95,9 +92,9 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getInterfaceSpecifications() {
+	public List<TaskDescriptor> getInterfaceSpecifications() {
 		if (interfaceSpecifications == null) {
-			interfaceSpecifications = new EObjectContainmentEList.Resolving(
+			interfaceSpecifications = new EObjectContainmentEList.Resolving<TaskDescriptor>(
 					TaskDescriptor.class,
 					this,
 					UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS);
@@ -110,9 +107,9 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getInterfaceIO() {
+	public List<WorkProductDescriptor> getInterfaceIO() {
 		if (interfaceIO == null) {
-			interfaceIO = new EObjectContainmentEList.Resolving(
+			interfaceIO = new EObjectContainmentEList.Resolving<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_IO);
 		}
@@ -124,14 +121,15 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS:
-			return ((InternalEList) getInterfaceSpecifications()).basicRemove(
-					otherEnd, msgs);
+			return ((InternalEList<?>) getInterfaceSpecifications())
+					.basicRemove(otherEnd, msgs);
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_IO:
-			return ((InternalEList) getInterfaceIO()).basicRemove(otherEnd,
+			return ((InternalEList<?>) getInterfaceIO()).basicRemove(otherEnd,
 					msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -142,6 +140,7 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS:
@@ -157,15 +156,19 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS:
 			getInterfaceSpecifications().clear();
-			getInterfaceSpecifications().addAll((Collection) newValue);
+			getInterfaceSpecifications().addAll(
+					(Collection<? extends TaskDescriptor>) newValue);
 			return;
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_IO:
 			getInterfaceIO().clear();
-			getInterfaceIO().addAll((Collection) newValue);
+			getInterfaceIO().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -176,6 +179,7 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS:
@@ -193,13 +197,8 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS:
 			return interfaceSpecifications != null

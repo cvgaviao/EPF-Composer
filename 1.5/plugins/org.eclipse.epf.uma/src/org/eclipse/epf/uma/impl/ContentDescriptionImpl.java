@@ -72,6 +72,15 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	protected String mainDescription = MAIN_DESCRIPTION_EDEFAULT;
 
 	/**
+	 * This is true if the Main Description attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean mainDescriptionESet;
+
+	/**
 	 * The cached value of the '{@link #getSections() <em>Sections</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -79,7 +88,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList sections = null;
+	protected EList<Section> sections;
 
 	/**
 	 * The default value of the '{@link #getExternalId() <em>External Id</em>}' attribute.
@@ -102,6 +111,15 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	protected String externalId = EXTERNAL_ID_EDEFAULT;
 
 	/**
+	 * This is true if the External Id attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean externalIdESet;
+
+	/**
 	 * The default value of the '{@link #getKeyConsiderations() <em>Key Considerations</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -122,16 +140,21 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	protected String keyConsiderations = KEY_CONSIDERATIONS_EDEFAULT;
 
 	/**
+	 * This is true if the Key Considerations attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean keyConsiderationsESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ContentDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -139,6 +162,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CONTENT_DESCRIPTION;
 	}
@@ -160,10 +184,13 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public void setMainDescription(String newMainDescription) {
 		String oldMainDescription = mainDescription;
 		mainDescription = newMainDescription;
+		boolean oldMainDescriptionESet = mainDescriptionESet;
+		mainDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION,
-					oldMainDescription, mainDescription));
+					oldMainDescription, mainDescription,
+					!oldMainDescriptionESet));
 	}
 
 	/**
@@ -171,10 +198,37 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getSections() {
+	public void unsetMainDescription() {
+		String oldMainDescription = mainDescription;
+		boolean oldMainDescriptionESet = mainDescriptionESet;
+		mainDescription = MAIN_DESCRIPTION_EDEFAULT;
+		mainDescriptionESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION,
+					oldMainDescription, MAIN_DESCRIPTION_EDEFAULT,
+					oldMainDescriptionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetMainDescription() {
+		return mainDescriptionESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Section> getSections() {
 		if (sections == null) {
-			sections = new EObjectContainmentEList.Resolving(Section.class,
-					this, UmaPackage.CONTENT_DESCRIPTION__SECTIONS);
+			sections = new EObjectContainmentEList.Resolving<Section>(
+					Section.class, this,
+					UmaPackage.CONTENT_DESCRIPTION__SECTIONS);
 		}
 		return sections;
 	}
@@ -196,10 +250,37 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public void setExternalId(String newExternalId) {
 		String oldExternalId = externalId;
 		externalId = newExternalId;
+		boolean oldExternalIdESet = externalIdESet;
+		externalIdESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID, oldExternalId,
-					externalId));
+					externalId, !oldExternalIdESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetExternalId() {
+		String oldExternalId = externalId;
+		boolean oldExternalIdESet = externalIdESet;
+		externalId = EXTERNAL_ID_EDEFAULT;
+		externalIdESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID, oldExternalId,
+					EXTERNAL_ID_EDEFAULT, oldExternalIdESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetExternalId() {
+		return externalIdESet;
 	}
 
 	/**
@@ -219,10 +300,13 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public void setKeyConsiderations(String newKeyConsiderations) {
 		String oldKeyConsiderations = keyConsiderations;
 		keyConsiderations = newKeyConsiderations;
+		boolean oldKeyConsiderationsESet = keyConsiderationsESet;
+		keyConsiderationsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS,
-					oldKeyConsiderations, keyConsiderations));
+					oldKeyConsiderations, keyConsiderations,
+					!oldKeyConsiderationsESet));
 	}
 
 	/**
@@ -230,11 +314,39 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetKeyConsiderations() {
+		String oldKeyConsiderations = keyConsiderations;
+		boolean oldKeyConsiderationsESet = keyConsiderationsESet;
+		keyConsiderations = KEY_CONSIDERATIONS_EDEFAULT;
+		keyConsiderationsESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS,
+					oldKeyConsiderations, KEY_CONSIDERATIONS_EDEFAULT,
+					oldKeyConsiderationsESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetKeyConsiderations() {
+		return keyConsiderationsESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__SECTIONS:
-			return ((InternalEList) getSections()).basicRemove(otherEnd, msgs);
+			return ((InternalEList<?>) getSections()).basicRemove(otherEnd,
+					msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -244,6 +356,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
@@ -263,6 +376,8 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
@@ -270,7 +385,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__SECTIONS:
 			getSections().clear();
-			getSections().addAll((Collection) newValue);
+			getSections().addAll((Collection<? extends Section>) newValue);
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID:
 			setExternalId((String) newValue);
@@ -287,19 +402,20 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
-			setMainDescription(MAIN_DESCRIPTION_EDEFAULT);
+			unsetMainDescription();
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__SECTIONS:
 			getSections().clear();
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID:
-			setExternalId(EXTERNAL_ID_EDEFAULT);
+			unsetExternalId();
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS:
-			setKeyConsiderations(KEY_CONSIDERATIONS_EDEFAULT);
+			unsetKeyConsiderations();
 			return;
 		}
 		super.eUnset(featureID);
@@ -310,25 +426,17 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
-			return MAIN_DESCRIPTION_EDEFAULT == null ? mainDescription != null
-					: !MAIN_DESCRIPTION_EDEFAULT.equals(mainDescription);
+			return isSetMainDescription();
 		case UmaPackage.CONTENT_DESCRIPTION__SECTIONS:
 			return sections != null && !sections.isEmpty();
 		case UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID:
-			return EXTERNAL_ID_EDEFAULT == null ? externalId != null
-					: !EXTERNAL_ID_EDEFAULT.equals(externalId);
+			return isSetExternalId();
 		case UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS:
-			return KEY_CONSIDERATIONS_EDEFAULT == null ? keyConsiderations != null
-					: !KEY_CONSIDERATIONS_EDEFAULT.equals(keyConsiderations);
+			return isSetKeyConsiderations();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -338,17 +446,27 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (mainDescription: "); //$NON-NLS-1$
-		result.append(mainDescription);
+		if (mainDescriptionESet)
+			result.append(mainDescription);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", externalId: "); //$NON-NLS-1$
-		result.append(externalId);
+		if (externalIdESet)
+			result.append(externalId);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", keyConsiderations: "); //$NON-NLS-1$
-		result.append(keyConsiderations);
+		if (keyConsiderationsESet)
+			result.append(keyConsiderations);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

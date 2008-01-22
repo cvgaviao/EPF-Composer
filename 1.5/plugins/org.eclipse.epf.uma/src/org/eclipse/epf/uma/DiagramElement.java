@@ -100,10 +100,10 @@ public interface DiagramElement extends MethodElement {
 	 * @return the value of the '<em>Reference</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramElement_Reference()
 	 * @see org.eclipse.epf.uma.Reference#getReferenced
-	 * @model type="org.eclipse.epf.uma.Reference" opposite="referenced" ordered="false"
+	 * @model opposite="referenced" ordered="false"
 	 * @generated
 	 */
-	List getReference();
+	List<Reference> getReference();
 
 	/**
 	 * Returns the value of the '<em><b>Property</b></em>' containment reference list.
@@ -116,9 +116,9 @@ public interface DiagramElement extends MethodElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Property</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramElement_Property()
-	 * @model type="org.eclipse.epf.uma.Property" containment="true" resolveProxies="true" ordered="false"
+	 * @model containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getProperty();
+	List<Property> getProperty();
 
 } // DiagramElement

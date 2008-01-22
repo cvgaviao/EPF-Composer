@@ -20,6 +20,8 @@ import java.util.List;
  * <!-- begin-model-doc -->
  * Work Product is an abstract class which provides a generalization for the content element types Artifact, Outcome, and Deliverable.  The meta-model class Work Product actually represents work product types, i.e. an instance of Work Product is a description of a specific type of work product and not an individual work product instance.  However, for simplicity reasons and because of low risk of misinterpretation we did not append the word 'type' to every meta-class.
  * A work product is an abstraction for descriptions of content elements that are used to define anything used, produced, or modified by a task.
+ * 
+ * This is the Guidance Types package's extension of Work Product (defined in Content Elements) providing additonal associations.
  * <!-- end-model-doc -->
  *
  * <p>
@@ -33,10 +35,10 @@ import java.util.List;
  * </p>
  *
  * @see org.eclipse.epf.uma.UmaPackage#getWorkProduct()
- * @model abstract="true"
+ * @model
  * @generated
  */
-public interface WorkProduct extends ContentElement {
+public interface WorkProduct extends ContentElement, FulfillableElement {
 	/**
 	 * Returns the value of the '<em><b>Reports</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.epf.uma.Report}.
@@ -48,10 +50,10 @@ public interface WorkProduct extends ContentElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reports</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProduct_Reports()
-	 * @model type="org.eclipse.epf.uma.Report" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getReports();
+	List<Report> getReports();
 
 	/**
 	 * Returns the value of the '<em><b>Templates</b></em>' reference list.
@@ -64,10 +66,10 @@ public interface WorkProduct extends ContentElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Templates</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProduct_Templates()
-	 * @model type="org.eclipse.epf.uma.Template" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getTemplates();
+	List<Template> getTemplates();
 
 	/**
 	 * Returns the value of the '<em><b>Tool Mentors</b></em>' reference list.
@@ -80,10 +82,10 @@ public interface WorkProduct extends ContentElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tool Mentors</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProduct_ToolMentors()
-	 * @model type="org.eclipse.epf.uma.ToolMentor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getToolMentors();
+	List<ToolMentor> getToolMentors();
 
 	/**
 	 * Returns the value of the '<em><b>Estimation Considerations</b></em>' reference list.
@@ -96,9 +98,9 @@ public interface WorkProduct extends ContentElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Estimation Considerations</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProduct_EstimationConsiderations()
-	 * @model type="org.eclipse.epf.uma.EstimationConsiderations" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getEstimationConsiderations();
+	List<EstimationConsiderations> getEstimationConsiderations();
 
 } // WorkProduct

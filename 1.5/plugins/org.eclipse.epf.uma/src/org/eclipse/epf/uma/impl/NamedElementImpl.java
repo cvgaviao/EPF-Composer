@@ -60,16 +60,21 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	protected String name = NAME_EDEFAULT;
 
 	/**
+	 * This is true if the Name attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean nameESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected NamedElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -77,6 +82,7 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.NAMED_ELEMENT;
 	}
@@ -98,9 +104,11 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
+		boolean oldNameESet = nameESet;
+		nameESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.NAMED_ELEMENT__NAME, oldName, name));
+					UmaPackage.NAMED_ELEMENT__NAME, oldName, name, !oldNameESet));
 	}
 
 	/**
@@ -108,6 +116,32 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetName() {
+		String oldName = name;
+		boolean oldNameESet = nameESet;
+		name = NAME_EDEFAULT;
+		nameESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.NAMED_ELEMENT__NAME, oldName, NAME_EDEFAULT,
+					oldNameESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetName() {
+		return nameESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.NAMED_ELEMENT__NAME:
@@ -121,6 +155,7 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.NAMED_ELEMENT__NAME:
@@ -135,10 +170,11 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.NAMED_ELEMENT__NAME:
-			setName(NAME_EDEFAULT);
+			unsetName();
 			return;
 		}
 		super.eUnset(featureID);
@@ -149,17 +185,11 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.NAMED_ELEMENT__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
-					.equals(name);
+			return isSetName();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -169,13 +199,17 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
-		result.append(name);
+		if (nameESet)
+			result.append(name);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

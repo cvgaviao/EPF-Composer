@@ -39,10 +39,6 @@ public abstract class GuidanceImpl extends ContentElementImpl implements
 	 */
 	protected GuidanceImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public abstract class GuidanceImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.GUIDANCE;
 	}

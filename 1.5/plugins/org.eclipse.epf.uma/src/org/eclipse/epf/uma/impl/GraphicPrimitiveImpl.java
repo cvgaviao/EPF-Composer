@@ -39,10 +39,6 @@ public abstract class GraphicPrimitiveImpl extends LeafElementImpl implements
 	 */
 	protected GraphicPrimitiveImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public abstract class GraphicPrimitiveImpl extends LeafElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.GRAPHIC_PRIMITIVE;
 	}

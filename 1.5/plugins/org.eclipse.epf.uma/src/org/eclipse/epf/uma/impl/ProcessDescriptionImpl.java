@@ -61,6 +61,15 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	protected String scope = SCOPE_EDEFAULT;
 
 	/**
+	 * This is true if the Scope attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean scopeESet;
+
+	/**
 	 * The default value of the '{@link #getUsageNotes() <em>Usage Notes</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -81,16 +90,21 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	protected String usageNotes = USAGE_NOTES_EDEFAULT;
 
 	/**
+	 * This is true if the Usage Notes attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean usageNotesESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ProcessDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -98,6 +112,7 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_DESCRIPTION;
 	}
@@ -119,9 +134,37 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	public void setScope(String newScope) {
 		String oldScope = scope;
 		scope = newScope;
+		boolean oldScopeESet = scopeESet;
+		scopeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.PROCESS_DESCRIPTION__SCOPE, oldScope, scope));
+					UmaPackage.PROCESS_DESCRIPTION__SCOPE, oldScope, scope,
+					!oldScopeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetScope() {
+		String oldScope = scope;
+		boolean oldScopeESet = scopeESet;
+		scope = SCOPE_EDEFAULT;
+		scopeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.PROCESS_DESCRIPTION__SCOPE, oldScope,
+					SCOPE_EDEFAULT, oldScopeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetScope() {
+		return scopeESet;
 	}
 
 	/**
@@ -141,10 +184,12 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	public void setUsageNotes(String newUsageNotes) {
 		String oldUsageNotes = usageNotes;
 		usageNotes = newUsageNotes;
+		boolean oldUsageNotesESet = usageNotesESet;
+		usageNotesESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES, oldUsageNotes,
-					usageNotes));
+					usageNotes, !oldUsageNotesESet));
 	}
 
 	/**
@@ -152,6 +197,32 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetUsageNotes() {
+		String oldUsageNotes = usageNotes;
+		boolean oldUsageNotesESet = usageNotesESet;
+		usageNotes = USAGE_NOTES_EDEFAULT;
+		usageNotesESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES, oldUsageNotes,
+					USAGE_NOTES_EDEFAULT, oldUsageNotesESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetUsageNotes() {
+		return usageNotesESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_DESCRIPTION__SCOPE:
@@ -167,6 +238,7 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_DESCRIPTION__SCOPE:
@@ -184,13 +256,14 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_DESCRIPTION__SCOPE:
-			setScope(SCOPE_EDEFAULT);
+			unsetScope();
 			return;
 		case UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES:
-			setUsageNotes(USAGE_NOTES_EDEFAULT);
+			unsetUsageNotes();
 			return;
 		}
 		super.eUnset(featureID);
@@ -201,20 +274,13 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_DESCRIPTION__SCOPE:
-			return SCOPE_EDEFAULT == null ? scope != null : !SCOPE_EDEFAULT
-					.equals(scope);
+			return isSetScope();
 		case UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES:
-			return USAGE_NOTES_EDEFAULT == null ? usageNotes != null
-					: !USAGE_NOTES_EDEFAULT.equals(usageNotes);
+			return isSetUsageNotes();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -224,15 +290,22 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (scope: "); //$NON-NLS-1$
-		result.append(scope);
+		if (scopeESet)
+			result.append(scope);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", usageNotes: "); //$NON-NLS-1$
-		result.append(usageNotes);
+		if (usageNotesESet)
+			result.append(usageNotes);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

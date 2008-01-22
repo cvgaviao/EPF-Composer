@@ -52,7 +52,7 @@ public class StepImpl extends SectionImpl implements Step {
 	 * @generated
 	 * @ordered
 	 */
-	protected Constraint precondition = null;
+	protected Constraint precondition;
 
 	/**
 	 * The cached value of the '{@link #getPostcondition() <em>Postcondition</em>}' containment reference.
@@ -62,7 +62,7 @@ public class StepImpl extends SectionImpl implements Step {
 	 * @generated
 	 * @ordered
 	 */
-	protected Constraint postcondition = null;
+	protected Constraint postcondition;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -71,10 +71,6 @@ public class StepImpl extends SectionImpl implements Step {
 	 */
 	protected StepImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -82,6 +78,7 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.STEP;
 	}
@@ -262,6 +259,7 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -278,6 +276,7 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.STEP__PRECONDITION:
@@ -297,6 +296,7 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.STEP__PRECONDITION:
@@ -314,6 +314,7 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.STEP__PRECONDITION:
@@ -331,13 +332,8 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.STEP__PRECONDITION:
 			return precondition != null;
@@ -352,7 +348,8 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class baseClass) {
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == WorkDefinition.class) {
 			switch (derivedFeatureID) {
 			case UmaPackage.STEP__PRECONDITION:
@@ -371,7 +368,8 @@ public class StepImpl extends SectionImpl implements Step {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class baseClass) {
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == WorkDefinition.class) {
 			switch (baseFeatureID) {
 			case UmaPackage.WORK_DEFINITION__PRECONDITION:

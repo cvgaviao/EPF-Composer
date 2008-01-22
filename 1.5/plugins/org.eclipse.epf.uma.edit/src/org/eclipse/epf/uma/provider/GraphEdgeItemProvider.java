@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -53,7 +54,8 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -78,7 +80,7 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_GraphEdge_anchor_feature", "_UI_GraphEdge_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.GRAPH_EDGE__ANCHOR, true, false,
-						false, null, null, null));
+						true, null, null, null));
 	}
 
 	/**
@@ -89,7 +91,9 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(
+			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(UmaPackage.Literals.GRAPH_EDGE__WAYPOINTS);
@@ -102,6 +106,7 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -115,6 +120,7 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage(
 				"full/obj16/GraphEdge")); //$NON-NLS-1$
@@ -126,6 +132,7 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((GraphEdge) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_GraphEdge_type") : //$NON-NLS-1$
@@ -139,6 +146,7 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -158,8 +166,9 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(
@@ -173,8 +182,9 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection selection) {
+			Object child, Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 
@@ -200,6 +210,7 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

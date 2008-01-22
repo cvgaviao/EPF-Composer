@@ -43,10 +43,10 @@ public interface GraphEdge extends GraphElement {
 	 * @return the value of the '<em>Anchor</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphEdge_Anchor()
 	 * @see org.eclipse.epf.uma.GraphConnector#getGraphEdge
-	 * @model type="org.eclipse.epf.uma.GraphConnector" opposite="graphEdge" upper="2" ordered="false"
+	 * @model opposite="graphEdge" lower="2" upper="2" ordered="false"
 	 * @generated
 	 */
-	List getAnchor();
+	List<GraphConnector> getAnchor();
 
 	/**
 	 * Returns the value of the '<em><b>Waypoints</b></em>' containment reference list.
@@ -59,9 +59,9 @@ public interface GraphEdge extends GraphElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Waypoints</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphEdge_Waypoints()
-	 * @model type="org.eclipse.epf.uma.Point" containment="true" resolveProxies="true" ordered="false"
+	 * @model containment="true" resolveProxies="true" lower="2" ordered="false"
 	 * @generated
 	 */
-	List getWaypoints();
+	List<Point> getWaypoints();
 
 } // GraphEdge

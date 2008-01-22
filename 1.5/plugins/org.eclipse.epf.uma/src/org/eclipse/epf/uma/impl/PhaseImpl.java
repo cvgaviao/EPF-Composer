@@ -38,10 +38,6 @@ public class PhaseImpl extends ActivityImpl implements Phase {
 	 */
 	protected PhaseImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class PhaseImpl extends ActivityImpl implements Phase {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PHASE;
 	}

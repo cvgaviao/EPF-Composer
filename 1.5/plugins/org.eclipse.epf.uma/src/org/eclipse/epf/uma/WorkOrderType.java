@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.AbstractEnumerator;
+import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,110 +28,101 @@ import org.eclipse.emf.common.util.AbstractEnumerator;
  * @model
  * @generated
  */
-public final class WorkOrderType extends AbstractEnumerator {
-	/**
-	 * The '<em><b>Finish To Start</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Finish To Start</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #FINISH_TO_START_LITERAL
-	 * @model name="finishToStart"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int FINISH_TO_START = 0;
-
-	/**
-	 * The '<em><b>Finish To Finish</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Finish To Finish</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #FINISH_TO_FINISH_LITERAL
-	 * @model name="finishToFinish"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int FINISH_TO_FINISH = 1;
-
-	/**
-	 * The '<em><b>Start To Start</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Start To Start</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #START_TO_START_LITERAL
-	 * @model name="startToStart"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int START_TO_START = 2;
-
-	/**
-	 * The '<em><b>Start To Finish</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Start To Finish</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @see #START_TO_FINISH_LITERAL
-	 * @model name="startToFinish"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int START_TO_FINISH = 3;
-
+public enum WorkOrderType implements Enumerator {
 	/**
 	 * The '<em><b>Finish To Start</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #FINISH_TO_START
+	 * @see #FINISH_TO_START_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final WorkOrderType FINISH_TO_START_LITERAL = new WorkOrderType(
-			FINISH_TO_START, "finishToStart", "finishToStart");
-
+	FINISH_TO_START(0, "finishToStart", "finishToStart"),
 	/**
 	 * The '<em><b>Finish To Finish</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #FINISH_TO_FINISH
+	 * @see #FINISH_TO_FINISH_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final WorkOrderType FINISH_TO_FINISH_LITERAL = new WorkOrderType(
-			FINISH_TO_FINISH, "finishToFinish", "finishToFinish");
-
+	FINISH_TO_FINISH(1, "finishToFinish", "finishToFinish"),
 	/**
 	 * The '<em><b>Start To Start</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #START_TO_START
+	 * @see #START_TO_START_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final WorkOrderType START_TO_START_LITERAL = new WorkOrderType(
-			START_TO_START, "startToStart", "startToStart");
-
+	START_TO_START(2, "startToStart", "startToStart"),
 	/**
 	 * The '<em><b>Start To Finish</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #START_TO_FINISH
+	 * @see #START_TO_FINISH_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final WorkOrderType START_TO_FINISH_LITERAL = new WorkOrderType(
-			START_TO_FINISH, "startToFinish", "startToFinish");
+	START_TO_FINISH(3, "startToFinish", "startToFinish");
+	/**
+	 * The '<em><b>Finish To Start</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Breakdown Element (B) cannot start until Breakdown Element (A) finishes. For example, if you have two Breakdown Elements, "Construct fence" and "Paint fence," "Paint fence" can't start until "Construct fence" finishes. This is the most common type of dependency and the default for a new Work Order instance.
+	 * 
+	 * <!-- end-model-doc -->
+	 * @see #FINISH_TO_START
+	 * @model name="finishToStart"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FINISH_TO_START_VALUE = 0;
+
+	/**
+	 * The '<em><b>Finish To Finish</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Breakdown Element (B) cannot finish until Breakdown Element (A) finishes. For example, if you have two Breakdown Elements, "Add wiring" and "Inspect electrical," "Inspect electrical" can't finish until "Add wiring" finishes.
+	 * 
+	 * <!-- end-model-doc -->
+	 * @see #FINISH_TO_FINISH
+	 * @model name="finishToFinish"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int FINISH_TO_FINISH_VALUE = 1;
+
+	/**
+	 * The '<em><b>Start To Start</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Breakdown Element (B) cannot start until Breakdown Element (A) starts. For example, if you have two Breakdown Elements, "Pour foundation" and "Level concrete," "Level concrete" can't begin until "Pour foundation" begins.
+	 * 
+	 * <!-- end-model-doc -->
+	 * @see #START_TO_START
+	 * @model name="startToStart"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int START_TO_START_VALUE = 2;
+
+	/**
+	 * The '<em><b>Start To Finish</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Breakdown Element (B) cannot finish until Breakdown Element (A) starts. This dependency type can be used for just-in-time scheduling up to a milestone or the project finish date to minimize the risk of a Breakdown Element finishing late if its dependent Breakdown Elements slip. If a related Breakdown Element needs to finish before the milestone or project finish date, but it doesn't matter exactly when and you don't want a late finish to affect the just-in-time Breakdown Element, you can create an SF dependency between the Breakdown Element you want scheduled just in time (the predecessor) and its related Breakdown Element (the successor). Then if you update progress on the successor Breakdown Element, it won't affect the scheduled dates of the predecessor Breakdown Element.
+	 * <!-- end-model-doc -->
+	 * @see #START_TO_FINISH
+	 * @model name="startToFinish"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int START_TO_FINISH_VALUE = 3;
 
 	/**
 	 * An array of all the '<em><b>Work Order Type</b></em>' enumerators.
@@ -140,8 +131,7 @@ public final class WorkOrderType extends AbstractEnumerator {
 	 * @generated
 	 */
 	private static final WorkOrderType[] VALUES_ARRAY = new WorkOrderType[] {
-			FINISH_TO_START_LITERAL, FINISH_TO_FINISH_LITERAL,
-			START_TO_START_LITERAL, START_TO_FINISH_LITERAL, };
+			FINISH_TO_START, FINISH_TO_FINISH, START_TO_START, START_TO_FINISH, };
 
 	/**
 	 * A public read-only list of all the '<em><b>Work Order Type</b></em>' enumerators.
@@ -149,8 +139,8 @@ public final class WorkOrderType extends AbstractEnumerator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final List VALUES = Collections.unmodifiableList(Arrays
-			.asList(VALUES_ARRAY));
+	public static final List<WorkOrderType> VALUES = Collections
+			.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
 	 * Returns the '<em><b>Work Order Type</b></em>' literal with the specified literal value.
@@ -192,17 +182,38 @@ public final class WorkOrderType extends AbstractEnumerator {
 	 */
 	public static WorkOrderType get(int value) {
 		switch (value) {
-		case FINISH_TO_START:
-			return FINISH_TO_START_LITERAL;
-		case FINISH_TO_FINISH:
-			return FINISH_TO_FINISH_LITERAL;
-		case START_TO_START:
-			return START_TO_START_LITERAL;
-		case START_TO_FINISH:
-			return START_TO_FINISH_LITERAL;
+		case FINISH_TO_START_VALUE:
+			return FINISH_TO_START;
+		case FINISH_TO_FINISH_VALUE:
+			return FINISH_TO_FINISH;
+		case START_TO_START_VALUE:
+			return START_TO_START;
+		case START_TO_FINISH_VALUE:
+			return START_TO_FINISH;
 		}
 		return null;
 	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private final int value;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private final String name;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private final String literal;
 
 	/**
 	 * Only this class can construct instances.
@@ -211,7 +222,46 @@ public final class WorkOrderType extends AbstractEnumerator {
 	 * @generated
 	 */
 	private WorkOrderType(int value, String name, String literal) {
-		super(value, name, literal);
+		this.value = value;
+		this.name = name;
+		this.literal = literal;
 	}
 
-} //WorkOrderType
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getValue() {
+		return value;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getLiteral() {
+		return literal;
+	}
+
+	/**
+	 * Returns the literal value of the enumerator, which is its string representation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		return literal;
+	}
+}

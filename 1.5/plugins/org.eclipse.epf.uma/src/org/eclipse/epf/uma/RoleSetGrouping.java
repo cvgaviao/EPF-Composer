@@ -44,9 +44,9 @@ public interface RoleSetGrouping extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Role Sets</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getRoleSetGrouping_RoleSets()
-	 * @model type="org.eclipse.epf.uma.RoleSet" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getRoleSets();
+	List<RoleSet> getRoleSets();
 
 } // RoleSetGrouping

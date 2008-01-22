@@ -88,10 +88,6 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 */
 	protected ImageImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -99,6 +95,7 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.IMAGE;
 	}
@@ -152,6 +149,7 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.IMAGE__URI:
@@ -167,6 +165,7 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.IMAGE__URI:
@@ -184,6 +183,7 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.IMAGE__URI:
@@ -201,13 +201,8 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.IMAGE__URI:
 			return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT
@@ -224,6 +219,7 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

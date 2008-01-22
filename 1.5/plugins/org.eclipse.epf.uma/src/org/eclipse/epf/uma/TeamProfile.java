@@ -21,6 +21,7 @@ import java.util.List;
  * A Team Profile is a Breakdown Element that groups Role Descriptors or Resource Definitions defining a nested hierarchy of teams and team members.
  * Work assignments and Work Product responsibilities can be different from Activity to Activity in a development project. Different phases require different staffing profiles, i.e. different skills and resources doing different types of work.  Therefore, a process needs to define such different profiles in a flexible manner.  Whereas Core Method Content defines standard responsibilities and assignments, a process express by a breakdown structures needs to be able refine and redefine these throughout its definition.  Role Descriptors, Resource Definitions, as well as Team Profiles provide the data structure necessary to achieve this flexibility and to provide a process user with the capability to define different teams and role relationships for every Activity (including Activities on any nesting-level as well as Iterations or Phases).
  * Hence, in addition to the work breakdown and work product breakdown structures defined so far, Team Profiles are used to define a third type of breakdown structure: team breakdown structures.  These are created as an Activity specific hierarchy of Team Profiles comprising of Role Descriptors and Resource Definitions.  These structures can be presented as well-known Org-Charts.  Just as with any other Breakdown Element and Descriptors, Team Profiles can be defined within the scope of any Activity in a breakdown structure.  In other words every Activity can define its own Team Profiles consisting of Activity specific Role Descriptors and Resource Definitions.  Typically, Team Profiles are defined on the level of Iterations or Phases or other higher-level Activity.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -48,10 +49,10 @@ public interface TeamProfile extends BreakdownElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Team Roles</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTeamProfile_TeamRoles()
-	 * @model type="org.eclipse.epf.uma.RoleDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getTeamRoles();
+	List<RoleDescriptor> getTeamRoles();
 
 	/**
 	 * Returns the value of the '<em><b>Super Team</b></em>' reference.
@@ -66,7 +67,7 @@ public interface TeamProfile extends BreakdownElement {
 	 * @see #setSuperTeam(TeamProfile)
 	 * @see org.eclipse.epf.uma.UmaPackage#getTeamProfile_SuperTeam()
 	 * @see org.eclipse.epf.uma.TeamProfile#getSubTeam
-	 * @model opposite="subTeam" required="true"
+	 * @model opposite="subTeam" required="true" ordered="false"
 	 * @generated
 	 */
 	TeamProfile getSuperTeam();
@@ -94,9 +95,9 @@ public interface TeamProfile extends BreakdownElement {
 	 * @return the value of the '<em>Sub Team</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTeamProfile_SubTeam()
 	 * @see org.eclipse.epf.uma.TeamProfile#getSuperTeam
-	 * @model type="org.eclipse.epf.uma.TeamProfile" opposite="superTeam" ordered="false"
+	 * @model opposite="superTeam" ordered="false"
 	 * @generated
 	 */
-	List getSubTeam();
+	List<TeamProfile> getSubTeam();
 
 } // TeamProfile

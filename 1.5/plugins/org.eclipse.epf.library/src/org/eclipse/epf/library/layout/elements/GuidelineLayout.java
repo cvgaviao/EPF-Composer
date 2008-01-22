@@ -48,7 +48,7 @@ public class GuidelineLayout extends AbstractElementLayout {
 							.getElementRealizer());
 			
 			List activities = ConfigurationHelper.calc0nFeatureValue(super.element,
-					AssociationHelper.Guideline_Activities, layoutManager
+					AssociationHelper.Guideline_BreakdownElements, layoutManager
 							.getElementRealizer());
 
 			contentElements.addAll(activities);

@@ -50,7 +50,7 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * @generated
 	 * @ordered
 	 */
-	protected Dimension size = null;
+	protected Dimension size;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,10 +59,6 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 */
 	protected GraphNodeImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -70,6 +66,7 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.GRAPH_NODE;
 	}
@@ -161,6 +158,7 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -175,6 +173,7 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_NODE__SIZE:
@@ -190,6 +189,7 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_NODE__SIZE:
@@ -204,6 +204,7 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_NODE__SIZE:
@@ -218,13 +219,8 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GRAPH_NODE__SIZE:
 			return size != null;

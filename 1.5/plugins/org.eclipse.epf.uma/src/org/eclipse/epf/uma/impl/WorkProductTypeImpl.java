@@ -51,7 +51,7 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList workProducts = null;
+	protected EList<WorkProduct> workProducts;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -60,10 +60,6 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 */
 	protected WorkProductTypeImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -71,6 +67,7 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_PRODUCT_TYPE;
 	}
@@ -80,9 +77,10 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getWorkProducts() {
+	public List<WorkProduct> getWorkProducts() {
 		if (workProducts == null) {
-			workProducts = new EObjectResolvingEList(WorkProduct.class, this,
+			workProducts = new EObjectResolvingEList<WorkProduct>(
+					WorkProduct.class, this,
 					UmaPackage.WORK_PRODUCT_TYPE__WORK_PRODUCTS);
 		}
 		return workProducts;
@@ -93,6 +91,7 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_TYPE__WORK_PRODUCTS:
@@ -106,11 +105,14 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_TYPE__WORK_PRODUCTS:
 			getWorkProducts().clear();
-			getWorkProducts().addAll((Collection) newValue);
+			getWorkProducts().addAll(
+					(Collection<? extends WorkProduct>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -121,6 +123,7 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_TYPE__WORK_PRODUCTS:
@@ -135,13 +138,8 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_TYPE__WORK_PRODUCTS:
 			return workProducts != null && !workProducts.isEmpty();

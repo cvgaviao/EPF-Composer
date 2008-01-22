@@ -21,6 +21,7 @@ import java.util.List;
  * A Task Descriptor is a Descriptor and Work Breakdown Element that represents a proxy for a Task in the context of one specific Activity.  Every breakdown structure can define different relationships of Task Descriptors to Work Product Descriptors and Role Descriptors. Therefore one Task can be represented by many Task Descriptors each within the context of an Activity with its own set of relationships.
  * A key difference between Method Content and Process is that a Content Element such as Task describes all aspects of doing work defined around this Task.  This description is managed in steps, which are modeled as Sections of the Tasks' Content Descriptions.  When applying a Task in a Process' Activity with a Task Descriptor a Process Engineer needs to indicate that at that particular point in time in the Process definition for which the Task Descriptor has been created, only a subset of steps shall be performed.  He defines this selection using the selectedSteps association.  If he wants to add steps to a Task Descriptor, he can describe these either pragmatically in the refinedDescription attribute or 'properly' create a contributing Task to the Task the Task Descriptor refers to.
  * 
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -54,7 +55,7 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * @return the value of the '<em>Task</em>' reference.
 	 * @see #setTask(Task)
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_Task()
-	 * @model
+	 * @model ordered="false"
 	 * @generated
 	 */
 	Task getTask();
@@ -80,10 +81,10 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Additionally Performed By</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_AdditionallyPerformedBy()
-	 * @model type="org.eclipse.epf.uma.RoleDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getAdditionallyPerformedBy();
+	List<RoleDescriptor> getAdditionallyPerformedBy();
 
 	/**
 	 * Returns the value of the '<em><b>Assisted By</b></em>' reference list.
@@ -96,10 +97,10 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Assisted By</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_AssistedBy()
-	 * @model type="org.eclipse.epf.uma.RoleDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getAssistedBy();
+	List<RoleDescriptor> getAssistedBy();
 
 	/**
 	 * Returns the value of the '<em><b>External Input</b></em>' reference list.
@@ -112,10 +113,10 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>External Input</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_ExternalInput()
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getExternalInput();
+	List<WorkProductDescriptor> getExternalInput();
 
 	/**
 	 * Returns the value of the '<em><b>Mandatory Input</b></em>' reference list.
@@ -128,10 +129,10 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mandatory Input</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_MandatoryInput()
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getMandatoryInput();
+	List<WorkProductDescriptor> getMandatoryInput();
 
 	/**
 	 * Returns the value of the '<em><b>Optional Input</b></em>' reference list.
@@ -144,10 +145,10 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Optional Input</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_OptionalInput()
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getOptionalInput();
+	List<WorkProductDescriptor> getOptionalInput();
 
 	/**
 	 * Returns the value of the '<em><b>Output</b></em>' reference list.
@@ -160,36 +161,26 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Output</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_Output()
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getOutput();
+	List<WorkProductDescriptor> getOutput();
 
 	/**
-	 * Returns the value of the '<em><b>Performed Primarily By</b></em>' reference.
+	 * Returns the value of the '<em><b>Performed Primarily By</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.RoleDescriptor}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Performed Primarily By</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Performed Primarily By</em>' reference.
-	 * @see #setPerformedPrimarilyBy(RoleDescriptor)
+	 * @return the value of the '<em>Performed Primarily By</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_PerformedPrimarilyBy()
-	 * @model
+	 * @model ordered="false"
 	 * @generated
 	 */
-	RoleDescriptor getPerformedPrimarilyBy();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyBy <em>Performed Primarily By</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Performed Primarily By</em>' reference.
-	 * @see #getPerformedPrimarilyBy()
-	 * @generated
-	 */
-	void setPerformedPrimarilyBy(RoleDescriptor value);
+	List<RoleDescriptor> getPerformedPrimarilyBy();
 
 	/**
 	 * Returns the value of the '<em><b>Selected Steps</b></em>' reference list.
@@ -202,9 +193,9 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Selected Steps</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_SelectedSteps()
-	 * @model type="org.eclipse.epf.uma.Section" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getSelectedSteps();
+	List<Section> getSelectedSteps();
 
 } // TaskDescriptor

@@ -63,7 +63,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methodPluginSelection = null;
+	protected EList<MethodPlugin> methodPluginSelection;
 
 	/**
 	 * The cached value of the '{@link #getMethodPackageSelection() <em>Method Package Selection</em>}' reference list.
@@ -73,7 +73,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methodPackageSelection = null;
+	protected EList<MethodPackage> methodPackageSelection;
 
 	/**
 	 * The cached value of the '{@link #getProcessViews() <em>Process Views</em>}' reference list.
@@ -83,7 +83,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList processViews = null;
+	protected EList<ContentCategory> processViews;
 
 	/**
 	 * The cached value of the '{@link #getDefaultView() <em>Default View</em>}' reference.
@@ -93,7 +93,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected ContentCategory defaultView = null;
+	protected ContentCategory defaultView;
 
 	/**
 	 * The cached value of the '{@link #getBaseConfigurations() <em>Base Configurations</em>}' reference list.
@@ -103,7 +103,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList baseConfigurations = null;
+	protected EList<MethodConfiguration> baseConfigurations;
 
 	/**
 	 * The cached value of the '{@link #getSubtractedCategory() <em>Subtracted Category</em>}' reference list.
@@ -113,7 +113,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList subtractedCategory = null;
+	protected EList<ContentCategory> subtractedCategory;
 
 	/**
 	 * The cached value of the '{@link #getAddedCategory() <em>Added Category</em>}' reference list.
@@ -123,7 +123,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList addedCategory = null;
+	protected EList<ContentCategory> addedCategory;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -132,10 +132,6 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 */
 	protected MethodConfigurationImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -143,6 +139,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_CONFIGURATION;
 	}
@@ -152,9 +149,9 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getMethodPluginSelection() {
+	public List<MethodPlugin> getMethodPluginSelection() {
 		if (methodPluginSelection == null) {
-			methodPluginSelection = new EObjectResolvingEList(
+			methodPluginSelection = new EObjectResolvingEList<MethodPlugin>(
 					MethodPlugin.class, this,
 					UmaPackage.METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION);
 		}
@@ -166,9 +163,9 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getMethodPackageSelection() {
+	public List<MethodPackage> getMethodPackageSelection() {
 		if (methodPackageSelection == null) {
-			methodPackageSelection = new EObjectResolvingEList(
+			methodPackageSelection = new EObjectResolvingEList<MethodPackage>(
 					MethodPackage.class, this,
 					UmaPackage.METHOD_CONFIGURATION__METHOD_PACKAGE_SELECTION);
 		}
@@ -180,10 +177,11 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getProcessViews() {
+	public List<ContentCategory> getProcessViews() {
 		if (processViews == null) {
-			processViews = new EObjectResolvingEList(ContentCategory.class,
-					this, UmaPackage.METHOD_CONFIGURATION__PROCESS_VIEWS);
+			processViews = new EObjectResolvingEList<ContentCategory>(
+					ContentCategory.class, this,
+					UmaPackage.METHOD_CONFIGURATION__PROCESS_VIEWS);
 		}
 		return processViews;
 	}
@@ -235,9 +233,9 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getBaseConfigurations() {
+	public List<MethodConfiguration> getBaseConfigurations() {
 		if (baseConfigurations == null) {
-			baseConfigurations = new EObjectResolvingEList(
+			baseConfigurations = new EObjectResolvingEList<MethodConfiguration>(
 					MethodConfiguration.class, this,
 					UmaPackage.METHOD_CONFIGURATION__BASE_CONFIGURATIONS);
 		}
@@ -249,9 +247,9 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getSubtractedCategory() {
+	public List<ContentCategory> getSubtractedCategory() {
 		if (subtractedCategory == null) {
-			subtractedCategory = new EObjectResolvingEList(
+			subtractedCategory = new EObjectResolvingEList<ContentCategory>(
 					ContentCategory.class, this,
 					UmaPackage.METHOD_CONFIGURATION__SUBTRACTED_CATEGORY);
 		}
@@ -263,10 +261,11 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getAddedCategory() {
+	public List<ContentCategory> getAddedCategory() {
 		if (addedCategory == null) {
-			addedCategory = new EObjectResolvingEList(ContentCategory.class,
-					this, UmaPackage.METHOD_CONFIGURATION__ADDED_CATEGORY);
+			addedCategory = new EObjectResolvingEList<ContentCategory>(
+					ContentCategory.class, this,
+					UmaPackage.METHOD_CONFIGURATION__ADDED_CATEGORY);
 		}
 		return addedCategory;
 	}
@@ -276,6 +275,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION:
@@ -303,34 +303,42 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION:
 			getMethodPluginSelection().clear();
-			getMethodPluginSelection().addAll((Collection) newValue);
+			getMethodPluginSelection().addAll(
+					(Collection<? extends MethodPlugin>) newValue);
 			return;
 		case UmaPackage.METHOD_CONFIGURATION__METHOD_PACKAGE_SELECTION:
 			getMethodPackageSelection().clear();
-			getMethodPackageSelection().addAll((Collection) newValue);
+			getMethodPackageSelection().addAll(
+					(Collection<? extends MethodPackage>) newValue);
 			return;
 		case UmaPackage.METHOD_CONFIGURATION__PROCESS_VIEWS:
 			getProcessViews().clear();
-			getProcessViews().addAll((Collection) newValue);
+			getProcessViews().addAll(
+					(Collection<? extends ContentCategory>) newValue);
 			return;
 		case UmaPackage.METHOD_CONFIGURATION__DEFAULT_VIEW:
 			setDefaultView((ContentCategory) newValue);
 			return;
 		case UmaPackage.METHOD_CONFIGURATION__BASE_CONFIGURATIONS:
 			getBaseConfigurations().clear();
-			getBaseConfigurations().addAll((Collection) newValue);
+			getBaseConfigurations().addAll(
+					(Collection<? extends MethodConfiguration>) newValue);
 			return;
 		case UmaPackage.METHOD_CONFIGURATION__SUBTRACTED_CATEGORY:
 			getSubtractedCategory().clear();
-			getSubtractedCategory().addAll((Collection) newValue);
+			getSubtractedCategory().addAll(
+					(Collection<? extends ContentCategory>) newValue);
 			return;
 		case UmaPackage.METHOD_CONFIGURATION__ADDED_CATEGORY:
 			getAddedCategory().clear();
-			getAddedCategory().addAll((Collection) newValue);
+			getAddedCategory().addAll(
+					(Collection<? extends ContentCategory>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -341,6 +349,7 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION:
@@ -373,13 +382,8 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION:
 			return methodPluginSelection != null

@@ -39,10 +39,6 @@ public abstract class ProcessElementImpl extends DescribableElementImpl
 	 */
 	protected ProcessElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public abstract class ProcessElementImpl extends DescribableElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_ELEMENT;
 	}

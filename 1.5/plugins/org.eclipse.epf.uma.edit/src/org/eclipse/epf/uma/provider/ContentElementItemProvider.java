@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -52,7 +53,8 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -64,7 +66,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 			addGuidelinesPropertyDescriptor(object);
 			addExamplesPropertyDescriptor(object);
 			addAssetsPropertyDescriptor(object);
-			addTermDefinitionPropertyDescriptor(object);
+			addTermdefinitionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -105,7 +107,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_VariabilityElement_variabilityBasedOnElement_feature", "_UI_VariabilityElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.VARIABILITY_ELEMENT__VARIABILITY_BASED_ON_ELEMENT,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -124,7 +126,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ContentElement_conceptsAndPapers_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.CONTENT_ELEMENT__CONCEPTS_AND_PAPERS,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -143,7 +145,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ContentElement_checklists_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.CONTENT_ELEMENT__CHECKLISTS, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
@@ -162,7 +164,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ContentElement_guidelines_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.CONTENT_ELEMENT__GUIDELINES, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
@@ -181,7 +183,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ContentElement_examples_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.CONTENT_ELEMENT__EXAMPLES, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
@@ -200,26 +202,26 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ContentElement_assets_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.CONTENT_ELEMENT__ASSETS, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Term Definition feature.
+	 * This adds a property descriptor for the Termdefinition feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTermDefinitionPropertyDescriptor(Object object) {
+	protected void addTermdefinitionPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 				.add(createItemPropertyDescriptor(
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_ContentElement_termDefinition_feature"), //$NON-NLS-1$
+						getString("_UI_ContentElement_termdefinition_feature"), //$NON-NLS-1$
 						getString(
-								"_UI_PropertyDescriptor_description", "_UI_ContentElement_termDefinition_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						UmaPackage.Literals.CONTENT_ELEMENT__TERM_DEFINITION,
-						true, false, false, null, null, null));
+								"_UI_PropertyDescriptor_description", "_UI_ContentElement_termdefinition_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.CONTENT_ELEMENT__TERMDEFINITION,
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -238,18 +240,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ContentElement_supportingMaterials_feature", "_UI_ContentElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.CONTENT_ELEMENT__SUPPORTING_MATERIALS,
-						true, false, false, null, null, null));
-	}
-
-	/**
-	 * This returns ContentElement.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage(
-				"full/obj16/ContentElement")); //$NON-NLS-1$
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -258,6 +249,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((ContentElement) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_ContentElement_type") : //$NON-NLS-1$
@@ -271,6 +263,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -290,8 +283,9 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -301,6 +295,7 @@ public class ContentElementItemProvider extends DescribableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

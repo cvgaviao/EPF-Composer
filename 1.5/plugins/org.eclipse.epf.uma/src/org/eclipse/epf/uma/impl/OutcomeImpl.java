@@ -38,10 +38,6 @@ public class OutcomeImpl extends WorkProductImpl implements Outcome {
 	 */
 	protected OutcomeImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class OutcomeImpl extends WorkProductImpl implements Outcome {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.OUTCOME;
 	}

@@ -19,6 +19,7 @@ import java.util.List;
  *
  * <!-- begin-model-doc -->
  * A Custom Category is a category introduced by a method content author to structure any number of method Content Elements of any subtype based on user-defined criteria.  Because Content Categories (and therefore Custom Categories, too) are Content Elements themselves, Custom Categories can be used to recursively categorize Content Categories as well.  Custom Categories can also be nested with any Content Category.  Custom categories can be used to categorize content based on the user's criteria as well as to define whole tree-structures of nested categories allowing the user to systematically navigate and browse method content and processes based on these categories.  For example, one could create a custom category to logically organize content relevant for the user's development organization departments; e.g. a "Testing" category that groups together all roles, work products, tasks, and guidance element relevant to testing.  Another example would be categories that express licensing levels of the content grouping freely distributable method content versus content that represent intellectual property and requires a license to be purchased to be able to use it.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -45,10 +46,10 @@ public interface CustomCategory extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Categorized Elements</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getCustomCategory_CategorizedElements()
-	 * @model type="org.eclipse.epf.uma.DescribableElement" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getCategorizedElements();
+	List<DescribableElement> getCategorizedElements();
 
 	/**
 	 * Returns the value of the '<em><b>Sub Categories</b></em>' reference list.
@@ -61,9 +62,9 @@ public interface CustomCategory extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Sub Categories</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getCustomCategory_SubCategories()
-	 * @model type="org.eclipse.epf.uma.ContentCategory" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getSubCategories();
+	List<ContentCategory> getSubCategories();
 
 } // CustomCategory

@@ -667,7 +667,7 @@ public class ConfigurationHelper {
 				|| feature == UmaPackage.eINSTANCE.getNamedElement_Name()
 				|| feature == UmaPackage.eINSTANCE
 						.getContentDescription_ExternalId() 
-				|| feature == UmaPackage.eINSTANCE.getDescribableElement_PresentationName()) {
+				|| feature == UmaPackage.eINSTANCE.getMethodElement_PresentationName()) {
 			return false;
 		}
 
@@ -1421,7 +1421,7 @@ public class ConfigurationHelper {
 //				}
 //
 //				if (feature == UmaPackage.eINSTANCE
-//						.getDescribableElement_PresentationName()) {
+//						.getMethodElement_PresentationName()) {
 //					if (values.size() > 1) {
 //						// something wrong here, will not happen but put test
 //						// message here just in case
@@ -1754,7 +1754,7 @@ public class ConfigurationHelper {
 //		List values = new ArrayList();
 //		VariabilityElement base;
 //		VariabilityType variabilityType;	
-//		boolean concat = attrib != UmaPackage.eINSTANCE.getDescribableElement_PresentationName();
+//		boolean concat = attrib != UmaPackage.eINSTANCE.getMethodElement_PresentationName();
 //		while(true) {
 //			base = ve.getVariabilityBasedOnElement();
 //			if(base == null) {

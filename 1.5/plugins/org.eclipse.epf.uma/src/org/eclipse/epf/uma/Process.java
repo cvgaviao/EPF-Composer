@@ -20,6 +20,10 @@ import java.util.List;
  * <!-- begin-model-doc -->
  * A Process is a special Activity that describes a structure for particular types of development projects.  To perform such a development project a Processes would be 'instantiated' and adapted for the specific situation.  Process is an abstract class and this meta-model defines different special types of Processes for different process management applications and different situations of process reuse.  Every Process comprises of and is the top-level element of an n-level breakdown structure using the Nesting association defined on Activity.
  * Core Method Content provides step-by-step explanations, describing how very specific development goals are achieved independent of the placement of these steps within a development lifecycle.  Processes take these method elements and relate them into semi-ordered sequences that are customized to specific types of projects.  Thus, a process is a set of partially ordered work descriptions intended to reach a higher development goal, such as the release of a specific software system.  A process and the process meta-model structure defined in this specification focuses on the lifecycle and the sequencing of work in breakdown structures.  To achieve this it uses the Descriptor concept referencing method content and allowing defining time-specific customizations of the referenced content (e.g. defining a focus on different steps of the same Task and providing input Work Products in different states within the different Phases of a process lifecycle in which the same Task is performed).
+ * 
+ * Process in the package Library Configuration extends the class Process with association relating a Process to one default and many optional valid Configurations.
+ * These configurations describe valid contexts for the Process within a Method Library indicating under which Configurations a Process is well defined.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -47,10 +51,10 @@ public interface Process extends Activity {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Includes Patterns</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcess_IncludesPatterns()
-	 * @model type="org.eclipse.epf.uma.CapabilityPattern" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getIncludesPatterns();
+	List<CapabilityPattern> getIncludesPatterns();
 
 	/**
 	 * Returns the value of the '<em><b>Default Context</b></em>' reference.
@@ -63,7 +67,7 @@ public interface Process extends Activity {
 	 * @return the value of the '<em>Default Context</em>' reference.
 	 * @see #setDefaultContext(MethodConfiguration)
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcess_DefaultContext()
-	 * @model required="true"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	MethodConfiguration getDefaultContext();
@@ -89,9 +93,9 @@ public interface Process extends Activity {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Valid Context</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcess_ValidContext()
-	 * @model type="org.eclipse.epf.uma.MethodConfiguration" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getValidContext();
+	List<MethodConfiguration> getValidContext();
 
 } // Process

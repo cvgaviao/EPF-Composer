@@ -86,10 +86,6 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 */
 	protected PropertyImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -97,6 +93,7 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROPERTY;
 	}
@@ -150,6 +147,7 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.PROPERTY__KEY:
@@ -165,6 +163,7 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.PROPERTY__KEY:
@@ -182,6 +181,7 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROPERTY__KEY:
@@ -199,13 +199,8 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROPERTY__KEY:
 			return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT
@@ -222,6 +217,7 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

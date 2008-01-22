@@ -20,6 +20,7 @@ package org.eclipse.epf.uma;
  * Variability Element of the meta-model package Method Plugins adds the capabilities of variation and extension to Method Elements that derive from it.  By default all Content Elements such as Role, Task, Guidance Types, or Activities are defined to be Variability Elements.
  * Variability and extension provides unique mechanisms for customizing method content without actually directly modifying the original content, but by just be able to describe with separate objects the differences (additions, changes, omissions) relative to the original.  This plug-in concept allows users to factor their method content and processes in interrelated units and even to architect method content and processes in layers that extend each other with new capabilities.  The resulting method and process design can be dynamically combined and applied on demand using the interpretation rules defined for Variability Element Specializations assembling to process practitioners the most accurate method and process descriptions possible.  It also allows process practitioners to extends and tailor method content and processes they do not own and to easily upgrade to newer versions by simply reapply their personal changes to these upgrades.
  * Variability Element defines two types of variability and one type of extension which are formally defined for the enumeration Variability Type.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -46,9 +47,11 @@ public interface VariabilityElement extends MethodElement {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Variability Type</em>' attribute.
 	 * @see org.eclipse.epf.uma.VariabilityType
+	 * @see #isSetVariabilityType()
+	 * @see #unsetVariabilityType()
 	 * @see #setVariabilityType(VariabilityType)
 	 * @see org.eclipse.epf.uma.UmaPackage#getVariabilityElement_VariabilityType()
-	 * @model default="na" unique="false"
+	 * @model default="na" unsettable="true" required="true" ordered="false"
 	 * @generated
 	 */
 	VariabilityType getVariabilityType();
@@ -59,10 +62,35 @@ public interface VariabilityElement extends MethodElement {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Variability Type</em>' attribute.
 	 * @see org.eclipse.epf.uma.VariabilityType
+	 * @see #isSetVariabilityType()
+	 * @see #unsetVariabilityType()
 	 * @see #getVariabilityType()
 	 * @generated
 	 */
 	void setVariabilityType(VariabilityType value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.VariabilityElement#getVariabilityType <em>Variability Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetVariabilityType()
+	 * @see #getVariabilityType()
+	 * @see #setVariabilityType(VariabilityType)
+	 * @generated
+	 */
+	void unsetVariabilityType();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.VariabilityElement#getVariabilityType <em>Variability Type</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Variability Type</em>' attribute is set.
+	 * @see #unsetVariabilityType()
+	 * @see #getVariabilityType()
+	 * @see #setVariabilityType(VariabilityType)
+	 * @generated
+	 */
+	boolean isSetVariabilityType();
 
 	/**
 	 * Returns the value of the '<em><b>Variability Based On Element</b></em>' reference.
@@ -75,7 +103,7 @@ public interface VariabilityElement extends MethodElement {
 	 * @return the value of the '<em>Variability Based On Element</em>' reference.
 	 * @see #setVariabilityBasedOnElement(VariabilityElement)
 	 * @see org.eclipse.epf.uma.UmaPackage#getVariabilityElement_VariabilityBasedOnElement()
-	 * @model
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	VariabilityElement getVariabilityBasedOnElement();

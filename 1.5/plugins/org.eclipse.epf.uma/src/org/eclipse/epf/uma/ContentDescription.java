@@ -45,9 +45,11 @@ public interface ContentDescription extends MethodUnit {
 	 * This attribute store the main descriptive text for the Content Element.  All text that is not part of any of the more specific attributes shall be stored here.  If the Content Description is divided into sections using the Section class, then only the text from the 'start' of the content description to the first section will be stored here (similar to a normal document where you can place text between its beginning to its first diction heading).
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Main Description</em>' attribute.
+	 * @see #isSetMainDescription()
+	 * @see #unsetMainDescription()
 	 * @see #setMainDescription(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentDescription_MainDescription()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getMainDescription();
@@ -57,10 +59,35 @@ public interface ContentDescription extends MethodUnit {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Main Description</em>' attribute.
+	 * @see #isSetMainDescription()
+	 * @see #unsetMainDescription()
 	 * @see #getMainDescription()
 	 * @generated
 	 */
 	void setMainDescription(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.ContentDescription#getMainDescription <em>Main Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetMainDescription()
+	 * @see #getMainDescription()
+	 * @see #setMainDescription(String)
+	 * @generated
+	 */
+	void unsetMainDescription();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.ContentDescription#getMainDescription <em>Main Description</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Main Description</em>' attribute is set.
+	 * @see #unsetMainDescription()
+	 * @see #getMainDescription()
+	 * @see #setMainDescription(String)
+	 * @generated
+	 */
+	boolean isSetMainDescription();
 
 	/**
 	 * Returns the value of the '<em><b>Sections</b></em>' containment reference list.
@@ -73,10 +100,10 @@ public interface ContentDescription extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Sections</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentDescription_Sections()
-	 * @model type="org.eclipse.epf.uma.Section" containment="true" resolveProxies="true" ordered="false"
+	 * @model containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getSections();
+	List<Section> getSections();
 
 	/**
 	 * Returns the value of the '<em><b>External Id</b></em>' attribute.
@@ -84,12 +111,14 @@ public interface ContentDescription extends MethodUnit {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * An external visible number that is used to reference this artifact. Used like a synonym.
+	 * An external visible number that is used to reference this delivery patterns and models. It is used like a synonym.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>External Id</em>' attribute.
+	 * @see #isSetExternalId()
+	 * @see #unsetExternalId()
 	 * @see #setExternalId(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentDescription_ExternalId()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getExternalId();
@@ -99,10 +128,35 @@ public interface ContentDescription extends MethodUnit {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>External Id</em>' attribute.
+	 * @see #isSetExternalId()
+	 * @see #unsetExternalId()
 	 * @see #getExternalId()
 	 * @generated
 	 */
 	void setExternalId(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.ContentDescription#getExternalId <em>External Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetExternalId()
+	 * @see #getExternalId()
+	 * @see #setExternalId(String)
+	 * @generated
+	 */
+	void unsetExternalId();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.ContentDescription#getExternalId <em>External Id</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>External Id</em>' attribute is set.
+	 * @see #unsetExternalId()
+	 * @see #getExternalId()
+	 * @see #setExternalId(String)
+	 * @generated
+	 */
+	boolean isSetExternalId();
 
 	/**
 	 * Returns the value of the '<em><b>Key Considerations</b></em>' attribute.
@@ -113,9 +167,11 @@ public interface ContentDescription extends MethodUnit {
 	 * Key Considerations provides advise and guidance of a critical nature for the content element as well as warnings, cautions, pitfalls, dangers.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Key Considerations</em>' attribute.
+	 * @see #isSetKeyConsiderations()
+	 * @see #unsetKeyConsiderations()
 	 * @see #setKeyConsiderations(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentDescription_KeyConsiderations()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getKeyConsiderations();
@@ -125,9 +181,34 @@ public interface ContentDescription extends MethodUnit {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Key Considerations</em>' attribute.
+	 * @see #isSetKeyConsiderations()
+	 * @see #unsetKeyConsiderations()
 	 * @see #getKeyConsiderations()
 	 * @generated
 	 */
 	void setKeyConsiderations(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.ContentDescription#getKeyConsiderations <em>Key Considerations</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetKeyConsiderations()
+	 * @see #getKeyConsiderations()
+	 * @see #setKeyConsiderations(String)
+	 * @generated
+	 */
+	void unsetKeyConsiderations();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.ContentDescription#getKeyConsiderations <em>Key Considerations</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Key Considerations</em>' attribute is set.
+	 * @see #unsetKeyConsiderations()
+	 * @see #getKeyConsiderations()
+	 * @see #setKeyConsiderations(String)
+	 * @generated
+	 */
+	boolean isSetKeyConsiderations();
 
 } // ContentDescription

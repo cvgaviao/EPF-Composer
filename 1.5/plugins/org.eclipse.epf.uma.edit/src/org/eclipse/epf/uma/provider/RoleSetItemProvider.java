@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -50,7 +51,8 @@ public class RoleSetItemProvider extends ContentCategoryItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -74,8 +76,8 @@ public class RoleSetItemProvider extends ContentCategoryItemProvider implements
 						getString("_UI_RoleSet_roles_feature"), //$NON-NLS-1$
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_RoleSet_roles_feature", "_UI_RoleSet_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						UmaPackage.Literals.ROLE_SET__ROLES, true, false,
-						false, null, null, null));
+						UmaPackage.Literals.ROLE_SET__ROLES, true, false, true,
+						null, null, null));
 	}
 
 	/**
@@ -84,6 +86,7 @@ public class RoleSetItemProvider extends ContentCategoryItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage(
 				"full/obj16/RoleSet")); //$NON-NLS-1$
@@ -95,6 +98,7 @@ public class RoleSetItemProvider extends ContentCategoryItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((RoleSet) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_RoleSet_type") : //$NON-NLS-1$
@@ -108,6 +112,7 @@ public class RoleSetItemProvider extends ContentCategoryItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
@@ -120,8 +125,9 @@ public class RoleSetItemProvider extends ContentCategoryItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -131,6 +137,7 @@ public class RoleSetItemProvider extends ContentCategoryItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

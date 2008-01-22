@@ -69,6 +69,15 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	protected Boolean isRepeatable = IS_REPEATABLE_EDEFAULT;
 
 	/**
+	 * This is true if the Is Repeatable attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isRepeatableESet;
+
+	/**
 	 * The default value of the '{@link #getIsOngoing() <em>Is Ongoing</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,6 +96,15 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * @ordered
 	 */
 	protected Boolean isOngoing = IS_ONGOING_EDEFAULT;
+
+	/**
+	 * This is true if the Is Ongoing attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isOngoingESet;
 
 	/**
 	 * The default value of the '{@link #getIsEventDriven() <em>Is Event Driven</em>}' attribute.
@@ -109,6 +127,15 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	protected Boolean isEventDriven = IS_EVENT_DRIVEN_EDEFAULT;
 
 	/**
+	 * This is true if the Is Event Driven attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isEventDrivenESet;
+
+	/**
 	 * The cached value of the '{@link #getLinkToPredecessor() <em>Link To Predecessor</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -116,7 +143,7 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected EList linkToPredecessor = null;
+	protected EList<WorkOrder> linkToPredecessor;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -125,10 +152,6 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 */
 	protected WorkBreakdownElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -136,6 +159,7 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_BREAKDOWN_ELEMENT;
 	}
@@ -157,10 +181,38 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public void setIsRepeatable(Boolean newIsRepeatable) {
 		Boolean oldIsRepeatable = isRepeatable;
 		isRepeatable = newIsRepeatable;
+		boolean oldIsRepeatableESet = isRepeatableESet;
+		isRepeatableESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE,
-					oldIsRepeatable, isRepeatable));
+					oldIsRepeatable, isRepeatable, !oldIsRepeatableESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsRepeatable() {
+		Boolean oldIsRepeatable = isRepeatable;
+		boolean oldIsRepeatableESet = isRepeatableESet;
+		isRepeatable = IS_REPEATABLE_EDEFAULT;
+		isRepeatableESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE,
+					oldIsRepeatable, IS_REPEATABLE_EDEFAULT,
+					oldIsRepeatableESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsRepeatable() {
+		return isRepeatableESet;
 	}
 
 	/**
@@ -180,10 +232,37 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public void setIsOngoing(Boolean newIsOngoing) {
 		Boolean oldIsOngoing = isOngoing;
 		isOngoing = newIsOngoing;
+		boolean oldIsOngoingESet = isOngoingESet;
+		isOngoingESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING,
-					oldIsOngoing, isOngoing));
+					oldIsOngoing, isOngoing, !oldIsOngoingESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsOngoing() {
+		Boolean oldIsOngoing = isOngoing;
+		boolean oldIsOngoingESet = isOngoingESet;
+		isOngoing = IS_ONGOING_EDEFAULT;
+		isOngoingESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING,
+					oldIsOngoing, IS_ONGOING_EDEFAULT, oldIsOngoingESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsOngoing() {
+		return isOngoingESet;
 	}
 
 	/**
@@ -203,10 +282,12 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public void setIsEventDriven(Boolean newIsEventDriven) {
 		Boolean oldIsEventDriven = isEventDriven;
 		isEventDriven = newIsEventDriven;
+		boolean oldIsEventDrivenESet = isEventDrivenESet;
+		isEventDrivenESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN,
-					oldIsEventDriven, isEventDriven));
+					oldIsEventDriven, isEventDriven, !oldIsEventDrivenESet));
 	}
 
 	/**
@@ -214,10 +295,36 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getLinkToPredecessor() {
+	public void unsetIsEventDriven() {
+		Boolean oldIsEventDriven = isEventDriven;
+		boolean oldIsEventDrivenESet = isEventDrivenESet;
+		isEventDriven = IS_EVENT_DRIVEN_EDEFAULT;
+		isEventDrivenESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN,
+					oldIsEventDriven, IS_EVENT_DRIVEN_EDEFAULT,
+					oldIsEventDrivenESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsEventDriven() {
+		return isEventDrivenESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkOrder> getLinkToPredecessor() {
 		if (linkToPredecessor == null) {
-			linkToPredecessor = new EObjectResolvingEList(WorkOrder.class,
-					this,
+			linkToPredecessor = new EObjectResolvingEList<WorkOrder>(
+					WorkOrder.class, this,
 					UmaPackage.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR);
 		}
 		return linkToPredecessor;
@@ -228,6 +335,7 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE:
@@ -247,6 +355,8 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE:
@@ -260,7 +370,8 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 			return;
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR:
 			getLinkToPredecessor().clear();
-			getLinkToPredecessor().addAll((Collection) newValue);
+			getLinkToPredecessor().addAll(
+					(Collection<? extends WorkOrder>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -271,16 +382,17 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE:
-			setIsRepeatable(IS_REPEATABLE_EDEFAULT);
+			unsetIsRepeatable();
 			return;
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING:
-			setIsOngoing(IS_ONGOING_EDEFAULT);
+			unsetIsOngoing();
 			return;
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN:
-			setIsEventDriven(IS_EVENT_DRIVEN_EDEFAULT);
+			unsetIsEventDriven();
 			return;
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR:
 			getLinkToPredecessor().clear();
@@ -294,23 +406,15 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE:
-			return IS_REPEATABLE_EDEFAULT == null ? isRepeatable != null
-					: !IS_REPEATABLE_EDEFAULT.equals(isRepeatable);
+			return isSetIsRepeatable();
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING:
-			return IS_ONGOING_EDEFAULT == null ? isOngoing != null
-					: !IS_ONGOING_EDEFAULT.equals(isOngoing);
+			return isSetIsOngoing();
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN:
-			return IS_EVENT_DRIVEN_EDEFAULT == null ? isEventDriven != null
-					: !IS_EVENT_DRIVEN_EDEFAULT.equals(isEventDriven);
+			return isSetIsEventDriven();
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR:
 			return linkToPredecessor != null && !linkToPredecessor.isEmpty();
 		}
@@ -322,17 +426,27 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isRepeatable: "); //$NON-NLS-1$
-		result.append(isRepeatable);
+		if (isRepeatableESet)
+			result.append(isRepeatable);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", isOngoing: "); //$NON-NLS-1$
-		result.append(isOngoing);
+		if (isOngoingESet)
+			result.append(isOngoing);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", isEventDriven: "); //$NON-NLS-1$
-		result.append(isEventDriven);
+		if (isEventDrivenESet)
+			result.append(isEventDriven);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

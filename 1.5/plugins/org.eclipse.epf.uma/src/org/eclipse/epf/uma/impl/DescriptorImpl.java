@@ -60,16 +60,21 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	protected Boolean isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
 
 	/**
+	 * This is true if the Is Synchronized With Source attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isSynchronizedWithSourceESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected DescriptorImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -77,6 +82,7 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DESCRIPTOR;
 	}
@@ -98,10 +104,13 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	public void setIsSynchronizedWithSource(Boolean newIsSynchronizedWithSource) {
 		Boolean oldIsSynchronizedWithSource = isSynchronizedWithSource;
 		isSynchronizedWithSource = newIsSynchronizedWithSource;
+		boolean oldIsSynchronizedWithSourceESet = isSynchronizedWithSourceESet;
+		isSynchronizedWithSourceESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
-					oldIsSynchronizedWithSource, isSynchronizedWithSource));
+					oldIsSynchronizedWithSource, isSynchronizedWithSource,
+					!oldIsSynchronizedWithSourceESet));
 	}
 
 	/**
@@ -109,6 +118,34 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetIsSynchronizedWithSource() {
+		Boolean oldIsSynchronizedWithSource = isSynchronizedWithSource;
+		boolean oldIsSynchronizedWithSourceESet = isSynchronizedWithSourceESet;
+		isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
+		isSynchronizedWithSourceESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
+					oldIsSynchronizedWithSource,
+					IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT,
+					oldIsSynchronizedWithSourceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsSynchronizedWithSource() {
+		return isSynchronizedWithSourceESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
@@ -122,6 +159,7 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
@@ -136,10 +174,11 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			setIsSynchronizedWithSource(IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT);
+			unsetIsSynchronizedWithSource();
 			return;
 		}
 		super.eUnset(featureID);
@@ -150,18 +189,11 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			return IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT == null ? isSynchronizedWithSource != null
-					: !IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT
-							.equals(isSynchronizedWithSource);
+			return isSetIsSynchronizedWithSource();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -171,13 +203,17 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isSynchronizedWithSource: "); //$NON-NLS-1$
-		result.append(isSynchronizedWithSource);
+		if (isSynchronizedWithSourceESet)
+			result.append(isSynchronizedWithSource);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

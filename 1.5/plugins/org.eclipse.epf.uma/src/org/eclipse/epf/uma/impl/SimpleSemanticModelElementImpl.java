@@ -66,10 +66,6 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 */
 	protected SimpleSemanticModelElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -77,6 +73,7 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.SIMPLE_SEMANTIC_MODEL_ELEMENT;
 	}
@@ -109,6 +106,7 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.SIMPLE_SEMANTIC_MODEL_ELEMENT__TYPE_INFO:
@@ -122,6 +120,7 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.SIMPLE_SEMANTIC_MODEL_ELEMENT__TYPE_INFO:
@@ -136,6 +135,7 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.SIMPLE_SEMANTIC_MODEL_ELEMENT__TYPE_INFO:
@@ -150,13 +150,8 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.SIMPLE_SEMANTIC_MODEL_ELEMENT__TYPE_INFO:
 			return TYPE_INFO_EDEFAULT == null ? typeInfo != null
@@ -170,6 +165,7 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

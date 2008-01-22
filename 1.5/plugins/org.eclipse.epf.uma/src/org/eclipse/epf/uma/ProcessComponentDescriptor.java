@@ -22,7 +22,7 @@ package org.eclipse.epf.uma;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.ProcessComponentDescriptor#getProcessComponent <em>Process Component</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.ProcessComponentDescriptor#get_processComponent <em>process Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,29 +32,29 @@ package org.eclipse.epf.uma;
  */
 public interface ProcessComponentDescriptor extends Descriptor {
 	/**
-	 * Returns the value of the '<em><b>Process Component</b></em>' reference.
+	 * Returns the value of the '<em><b>process Component</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Process Component</em>' reference isn't clear,
+	 * If the meaning of the '<em>process Component</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Process Component</em>' reference.
-	 * @see #setProcessComponent(ProcessComponent)
-	 * @see org.eclipse.epf.uma.UmaPackage#getProcessComponentDescriptor_ProcessComponent()
-	 * @model required="true"
+	 * @return the value of the '<em>process Component</em>' reference.
+	 * @see #set_processComponent(ProcessComponent)
+	 * @see org.eclipse.epf.uma.UmaPackage#getProcessComponentDescriptor__processComponent()
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
-	ProcessComponent getProcessComponent();
+	ProcessComponent get_processComponent();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.epf.uma.ProcessComponentDescriptor#getProcessComponent <em>Process Component</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.epf.uma.ProcessComponentDescriptor#get_processComponent <em>process Component</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Process Component</em>' reference.
-	 * @see #getProcessComponent()
+	 * @param value the new value of the '<em>process Component</em>' reference.
+	 * @see #get_processComponent()
 	 * @generated
 	 */
-	void setProcessComponent(ProcessComponent value);
+	void set_processComponent(ProcessComponent value);
 
 } // ProcessComponentDescriptor

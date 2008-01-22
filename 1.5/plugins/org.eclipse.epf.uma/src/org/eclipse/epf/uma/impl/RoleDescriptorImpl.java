@@ -63,7 +63,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected Role role = null;
+	protected Role role;
 
 	/**
 	 * The cached value of the '{@link #getResponsibleFor() <em>Responsible For</em>}' reference list.
@@ -73,7 +73,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList responsibleFor = null;
+	protected EList<WorkProductDescriptor> responsibleFor;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -82,10 +82,6 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 */
 	protected RoleDescriptorImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -93,6 +89,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ROLE_DESCRIPTOR;
 	}
@@ -172,9 +169,9 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getResponsibleFor() {
+	public List<WorkProductDescriptor> getResponsibleFor() {
 		if (responsibleFor == null) {
-			responsibleFor = new EObjectResolvingEList(
+			responsibleFor = new EObjectResolvingEList<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR);
 		}
@@ -186,6 +183,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTOR__ROLE:
@@ -205,14 +203,22 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTOR__ROLE:
 			setRole((Role) newValue);
 			return;
+		case UmaPackage.ROLE_DESCRIPTOR__MODIFIES:
+			getModifies().clear();
+			getModifies().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
 		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR:
 			getResponsibleFor().clear();
-			getResponsibleFor().addAll((Collection) newValue);
+			getResponsibleFor().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -223,10 +229,14 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTOR__ROLE:
 			setRole((Role) null);
+			return;
+		case UmaPackage.ROLE_DESCRIPTOR__MODIFIES:
+			getModifies().clear();
 			return;
 		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR:
 			getResponsibleFor().clear();
@@ -240,13 +250,8 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTOR__ROLE:
 			return role != null;

@@ -61,6 +61,15 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	protected String externalDescription = EXTERNAL_DESCRIPTION_EDEFAULT;
 
 	/**
+	 * This is true if the External Description attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean externalDescriptionESet;
+
+	/**
 	 * The default value of the '{@link #getPackagingGuidance() <em>Packaging Guidance</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -81,16 +90,21 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	protected String packagingGuidance = PACKAGING_GUIDANCE_EDEFAULT;
 
 	/**
+	 * This is true if the Packaging Guidance attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean packagingGuidanceESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected DeliverableDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -98,6 +112,7 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DELIVERABLE_DESCRIPTION;
 	}
@@ -119,10 +134,39 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	public void setExternalDescription(String newExternalDescription) {
 		String oldExternalDescription = externalDescription;
 		externalDescription = newExternalDescription;
+		boolean oldExternalDescriptionESet = externalDescriptionESet;
+		externalDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DELIVERABLE_DESCRIPTION__EXTERNAL_DESCRIPTION,
-					oldExternalDescription, externalDescription));
+					oldExternalDescription, externalDescription,
+					!oldExternalDescriptionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetExternalDescription() {
+		String oldExternalDescription = externalDescription;
+		boolean oldExternalDescriptionESet = externalDescriptionESet;
+		externalDescription = EXTERNAL_DESCRIPTION_EDEFAULT;
+		externalDescriptionESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.DELIVERABLE_DESCRIPTION__EXTERNAL_DESCRIPTION,
+					oldExternalDescription, EXTERNAL_DESCRIPTION_EDEFAULT,
+					oldExternalDescriptionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetExternalDescription() {
+		return externalDescriptionESet;
 	}
 
 	/**
@@ -142,10 +186,13 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	public void setPackagingGuidance(String newPackagingGuidance) {
 		String oldPackagingGuidance = packagingGuidance;
 		packagingGuidance = newPackagingGuidance;
+		boolean oldPackagingGuidanceESet = packagingGuidanceESet;
+		packagingGuidanceESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DELIVERABLE_DESCRIPTION__PACKAGING_GUIDANCE,
-					oldPackagingGuidance, packagingGuidance));
+					oldPackagingGuidance, packagingGuidance,
+					!oldPackagingGuidanceESet));
 	}
 
 	/**
@@ -153,6 +200,33 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetPackagingGuidance() {
+		String oldPackagingGuidance = packagingGuidance;
+		boolean oldPackagingGuidanceESet = packagingGuidanceESet;
+		packagingGuidance = PACKAGING_GUIDANCE_EDEFAULT;
+		packagingGuidanceESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.DELIVERABLE_DESCRIPTION__PACKAGING_GUIDANCE,
+					oldPackagingGuidance, PACKAGING_GUIDANCE_EDEFAULT,
+					oldPackagingGuidanceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetPackagingGuidance() {
+		return packagingGuidanceESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DELIVERABLE_DESCRIPTION__EXTERNAL_DESCRIPTION:
@@ -168,6 +242,7 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DELIVERABLE_DESCRIPTION__EXTERNAL_DESCRIPTION:
@@ -185,13 +260,14 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DELIVERABLE_DESCRIPTION__EXTERNAL_DESCRIPTION:
-			setExternalDescription(EXTERNAL_DESCRIPTION_EDEFAULT);
+			unsetExternalDescription();
 			return;
 		case UmaPackage.DELIVERABLE_DESCRIPTION__PACKAGING_GUIDANCE:
-			setPackagingGuidance(PACKAGING_GUIDANCE_EDEFAULT);
+			unsetPackagingGuidance();
 			return;
 		}
 		super.eUnset(featureID);
@@ -202,21 +278,13 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DELIVERABLE_DESCRIPTION__EXTERNAL_DESCRIPTION:
-			return EXTERNAL_DESCRIPTION_EDEFAULT == null ? externalDescription != null
-					: !EXTERNAL_DESCRIPTION_EDEFAULT
-							.equals(externalDescription);
+			return isSetExternalDescription();
 		case UmaPackage.DELIVERABLE_DESCRIPTION__PACKAGING_GUIDANCE:
-			return PACKAGING_GUIDANCE_EDEFAULT == null ? packagingGuidance != null
-					: !PACKAGING_GUIDANCE_EDEFAULT.equals(packagingGuidance);
+			return isSetPackagingGuidance();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -226,15 +294,22 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (externalDescription: "); //$NON-NLS-1$
-		result.append(externalDescription);
+		if (externalDescriptionESet)
+			result.append(externalDescription);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", packagingGuidance: "); //$NON-NLS-1$
-		result.append(packagingGuidance);
+		if (packagingGuidanceESet)
+			result.append(packagingGuidance);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

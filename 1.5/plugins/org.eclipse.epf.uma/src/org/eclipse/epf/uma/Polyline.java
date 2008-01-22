@@ -68,9 +68,9 @@ public interface Polyline extends GraphicPrimitive {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Waypoints</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getPolyline_Waypoints()
-	 * @model type="org.eclipse.epf.uma.Point" containment="true" resolveProxies="true" lower="2" ordered="false"
+	 * @model containment="true" resolveProxies="true" lower="2" ordered="false"
 	 * @generated
 	 */
-	List getWaypoints();
+	List<Point> getWaypoints();
 
 } // Polyline

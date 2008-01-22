@@ -38,10 +38,6 @@ public class ChecklistImpl extends GuidanceImpl implements Checklist {
 	 */
 	protected ChecklistImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class ChecklistImpl extends GuidanceImpl implements Checklist {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CHECKLIST;
 	}

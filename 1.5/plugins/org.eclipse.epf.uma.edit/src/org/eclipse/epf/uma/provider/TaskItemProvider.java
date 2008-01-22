@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -53,7 +54,8 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -85,7 +87,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_performedBy_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK__PERFORMED_BY, true, false,
-						false, null, null, null));
+						true, null, null, null));
 	}
 
 	/**
@@ -104,7 +106,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_mandatoryInput_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK__MANDATORY_INPUT, true, false,
-						false, null, null, null));
+						true, null, null, null));
 	}
 
 	/**
@@ -122,7 +124,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString("_UI_Task_output_feature"), //$NON-NLS-1$
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_output_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						UmaPackage.Literals.TASK__OUTPUT, true, false, false,
+						UmaPackage.Literals.TASK__OUTPUT, true, false, true,
 						null, null, null));
 	}
 
@@ -142,7 +144,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_additionallyPerformedBy_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK__ADDITIONALLY_PERFORMED_BY,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -161,7 +163,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_optionalInput_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK__OPTIONAL_INPUT, true, false,
-						false, null, null, null));
+						true, null, null, null));
 	}
 
 	/**
@@ -179,7 +181,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString("_UI_Task_steps_feature"), //$NON-NLS-1$
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_steps_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						UmaPackage.Literals.TASK__STEPS, false, false, false,
+						UmaPackage.Literals.TASK__STEPS, true, false, true,
 						null, null, null));
 	}
 
@@ -199,7 +201,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_toolMentors_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK__TOOL_MENTORS, true, false,
-						false, null, null, null));
+						true, null, null, null));
 	}
 
 	/**
@@ -218,7 +220,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Task_estimationConsiderations_feature", "_UI_Task_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK__ESTIMATION_CONSIDERATIONS,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -229,7 +231,9 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(
+			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures
@@ -245,6 +249,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -258,6 +263,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage(
 				"full/obj16/Task")); //$NON-NLS-1$
@@ -269,6 +275,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((Task) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_Task_type") : //$NON-NLS-1$
@@ -282,6 +289,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -302,8 +310,9 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(
@@ -321,8 +330,9 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection selection) {
+			Object child, Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 
@@ -344,6 +354,7 @@ public class TaskItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

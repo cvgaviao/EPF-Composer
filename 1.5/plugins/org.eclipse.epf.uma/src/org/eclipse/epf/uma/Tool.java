@@ -44,9 +44,9 @@ public interface Tool extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Tool Mentors</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getTool_ToolMentors()
-	 * @model type="org.eclipse.epf.uma.ToolMentor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getToolMentors();
+	List<ToolMentor> getToolMentors();
 
 } // Tool

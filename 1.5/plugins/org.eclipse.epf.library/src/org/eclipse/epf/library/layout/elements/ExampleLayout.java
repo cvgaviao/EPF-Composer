@@ -57,7 +57,7 @@ public class ExampleLayout extends AbstractElementLayout {
 							.getElementRealizer());
 			
 			List activities = ConfigurationHelper.calc0nFeatureValue(super.element,
-					AssociationHelper.Example_Activities, layoutManager
+					AssociationHelper.Example_BreakdownElements, layoutManager
 							.getElementRealizer());
 
 			contentElements.addAll(activities);

@@ -38,10 +38,6 @@ public class TermDefinitionImpl extends GuidanceImpl implements TermDefinition {
 	 */
 	protected TermDefinitionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class TermDefinitionImpl extends GuidanceImpl implements TermDefinition {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TERM_DEFINITION;
 	}

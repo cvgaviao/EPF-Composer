@@ -99,7 +99,7 @@ public class AttributeFeatureValue extends FeatureValue {
 			}
 			
 			if (feature == UmaPackage.eINSTANCE
-					.getDescribableElement_PresentationName()) {
+					.getMethodElement_PresentationName()) {
 				if (size() > 1) {
 					// something wrong here, will not happen but put test
 					// message here just in case

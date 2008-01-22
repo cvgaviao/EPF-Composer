@@ -51,7 +51,7 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList aggregatedRoles = null;
+	protected EList<Role> aggregatedRoles;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -60,10 +60,6 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 */
 	protected CompositeRoleImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -71,6 +67,7 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.COMPOSITE_ROLE;
 	}
@@ -80,9 +77,9 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getAggregatedRoles() {
+	public List<Role> getAggregatedRoles() {
 		if (aggregatedRoles == null) {
-			aggregatedRoles = new EObjectResolvingEList(Role.class, this,
+			aggregatedRoles = new EObjectResolvingEList<Role>(Role.class, this,
 					UmaPackage.COMPOSITE_ROLE__AGGREGATED_ROLES);
 		}
 		return aggregatedRoles;
@@ -93,6 +90,7 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.COMPOSITE_ROLE__AGGREGATED_ROLES:
@@ -106,11 +104,13 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.COMPOSITE_ROLE__AGGREGATED_ROLES:
 			getAggregatedRoles().clear();
-			getAggregatedRoles().addAll((Collection) newValue);
+			getAggregatedRoles().addAll((Collection<? extends Role>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -121,6 +121,7 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.COMPOSITE_ROLE__AGGREGATED_ROLES:
@@ -135,13 +136,8 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.COMPOSITE_ROLE__AGGREGATED_ROLES:
 			return aggregatedRoles != null && !aggregatedRoles.isEmpty();

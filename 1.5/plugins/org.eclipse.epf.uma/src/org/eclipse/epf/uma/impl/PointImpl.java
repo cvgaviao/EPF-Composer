@@ -87,10 +87,6 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 */
 	protected PointImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -98,6 +94,7 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.POINT;
 	}
@@ -151,6 +148,7 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.POINT__X:
@@ -166,6 +164,7 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.POINT__X:
@@ -183,6 +182,7 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.POINT__X:
@@ -200,13 +200,8 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.POINT__X:
 			return X_EDEFAULT == null ? x != null : !X_EDEFAULT.equals(x);
@@ -221,6 +216,7 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

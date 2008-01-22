@@ -39,10 +39,6 @@ public abstract class ContentCategoryImpl extends ContentElementImpl implements
 	 */
 	protected ContentCategoryImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public abstract class ContentCategoryImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CONTENT_CATEGORY;
 	}

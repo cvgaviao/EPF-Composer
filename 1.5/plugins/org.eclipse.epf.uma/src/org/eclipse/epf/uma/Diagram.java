@@ -97,10 +97,10 @@ public interface Diagram extends GraphNode {
 	 * @return the value of the '<em>Diagram Link</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagram_DiagramLink()
 	 * @see org.eclipse.epf.uma.DiagramLink#getDiagram
-	 * @model type="org.eclipse.epf.uma.DiagramLink" opposite="diagram" ordered="false"
+	 * @model opposite="diagram" ordered="false"
 	 * @generated
 	 */
-	List getDiagramLink();
+	List<DiagramLink> getDiagramLink();
 
 	/**
 	 * Returns the value of the '<em><b>Namespace</b></em>' containment reference.
@@ -115,7 +115,7 @@ public interface Diagram extends GraphNode {
 	 * @see #setNamespace(SemanticModelBridge)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagram_Namespace()
 	 * @see org.eclipse.epf.uma.SemanticModelBridge#getDiagram
-	 * @model opposite="diagram" containment="true" resolveProxies="true"
+	 * @model opposite="diagram" containment="true" resolveProxies="true" required="true"
 	 * @generated
 	 */
 	SemanticModelBridge getNamespace();

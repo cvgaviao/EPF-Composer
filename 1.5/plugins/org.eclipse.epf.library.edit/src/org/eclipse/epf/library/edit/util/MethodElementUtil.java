@@ -99,11 +99,11 @@ public class MethodElementUtil {
 	/**
 	 * Returns a map built from the given elements. The map has guids as keys
 	 */
-	public static Map<String, MethodElement> buildMap(Collection<MethodElement> elements) {
+	public static Map<String, MethodElement> buildMap(Collection<? extends MethodElement> elements) {
 		Map<String, MethodElement> map = new HashMap<String, MethodElement>();
 		
 		if (elements != null && !elements.isEmpty()) {
-			for (Iterator<MethodElement> it = elements.iterator(); it.hasNext();) {
+			for (Iterator<? extends MethodElement> it = elements.iterator(); it.hasNext();) {
 				MethodElement element = it.next();
 				map.put(element.getGuid(), element);
 			}

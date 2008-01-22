@@ -62,6 +62,15 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	protected String purpose = PURPOSE_EDEFAULT;
 
 	/**
+	 * This is true if the Purpose attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean purposeESet;
+
+	/**
 	 * The default value of the '{@link #getImpactOfNotHaving() <em>Impact Of Not Having</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -80,6 +89,15 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 * @ordered
 	 */
 	protected String impactOfNotHaving = IMPACT_OF_NOT_HAVING_EDEFAULT;
+
+	/**
+	 * This is true if the Impact Of Not Having attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean impactOfNotHavingESet;
 
 	/**
 	 * The default value of the '{@link #getReasonsForNotNeeding() <em>Reasons For Not Needing</em>}' attribute.
@@ -102,16 +120,21 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	protected String reasonsForNotNeeding = REASONS_FOR_NOT_NEEDING_EDEFAULT;
 
 	/**
+	 * This is true if the Reasons For Not Needing attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean reasonsForNotNeedingESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected WorkProductDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -119,6 +142,7 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_PRODUCT_DESCRIPTION;
 	}
@@ -140,10 +164,37 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	public void setPurpose(String newPurpose) {
 		String oldPurpose = purpose;
 		purpose = newPurpose;
+		boolean oldPurposeESet = purposeESet;
+		purposeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_PRODUCT_DESCRIPTION__PURPOSE, oldPurpose,
-					purpose));
+					purpose, !oldPurposeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetPurpose() {
+		String oldPurpose = purpose;
+		boolean oldPurposeESet = purposeESet;
+		purpose = PURPOSE_EDEFAULT;
+		purposeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_PRODUCT_DESCRIPTION__PURPOSE, oldPurpose,
+					PURPOSE_EDEFAULT, oldPurposeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetPurpose() {
+		return purposeESet;
 	}
 
 	/**
@@ -163,10 +214,39 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	public void setImpactOfNotHaving(String newImpactOfNotHaving) {
 		String oldImpactOfNotHaving = impactOfNotHaving;
 		impactOfNotHaving = newImpactOfNotHaving;
+		boolean oldImpactOfNotHavingESet = impactOfNotHavingESet;
+		impactOfNotHavingESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_PRODUCT_DESCRIPTION__IMPACT_OF_NOT_HAVING,
-					oldImpactOfNotHaving, impactOfNotHaving));
+					oldImpactOfNotHaving, impactOfNotHaving,
+					!oldImpactOfNotHavingESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetImpactOfNotHaving() {
+		String oldImpactOfNotHaving = impactOfNotHaving;
+		boolean oldImpactOfNotHavingESet = impactOfNotHavingESet;
+		impactOfNotHaving = IMPACT_OF_NOT_HAVING_EDEFAULT;
+		impactOfNotHavingESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_PRODUCT_DESCRIPTION__IMPACT_OF_NOT_HAVING,
+					oldImpactOfNotHaving, IMPACT_OF_NOT_HAVING_EDEFAULT,
+					oldImpactOfNotHavingESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetImpactOfNotHaving() {
+		return impactOfNotHavingESet;
 	}
 
 	/**
@@ -186,12 +266,15 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	public void setReasonsForNotNeeding(String newReasonsForNotNeeding) {
 		String oldReasonsForNotNeeding = reasonsForNotNeeding;
 		reasonsForNotNeeding = newReasonsForNotNeeding;
+		boolean oldReasonsForNotNeedingESet = reasonsForNotNeedingESet;
+		reasonsForNotNeedingESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(
 					this,
 					Notification.SET,
 					UmaPackage.WORK_PRODUCT_DESCRIPTION__REASONS_FOR_NOT_NEEDING,
-					oldReasonsForNotNeeding, reasonsForNotNeeding));
+					oldReasonsForNotNeeding, reasonsForNotNeeding,
+					!oldReasonsForNotNeedingESet));
 	}
 
 	/**
@@ -199,6 +282,35 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetReasonsForNotNeeding() {
+		String oldReasonsForNotNeeding = reasonsForNotNeeding;
+		boolean oldReasonsForNotNeedingESet = reasonsForNotNeedingESet;
+		reasonsForNotNeeding = REASONS_FOR_NOT_NEEDING_EDEFAULT;
+		reasonsForNotNeedingESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(
+					this,
+					Notification.UNSET,
+					UmaPackage.WORK_PRODUCT_DESCRIPTION__REASONS_FOR_NOT_NEEDING,
+					oldReasonsForNotNeeding, REASONS_FOR_NOT_NEEDING_EDEFAULT,
+					oldReasonsForNotNeedingESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetReasonsForNotNeeding() {
+		return reasonsForNotNeedingESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__PURPOSE:
@@ -216,6 +328,7 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__PURPOSE:
@@ -236,16 +349,17 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__PURPOSE:
-			setPurpose(PURPOSE_EDEFAULT);
+			unsetPurpose();
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__IMPACT_OF_NOT_HAVING:
-			setImpactOfNotHaving(IMPACT_OF_NOT_HAVING_EDEFAULT);
+			unsetImpactOfNotHaving();
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__REASONS_FOR_NOT_NEEDING:
-			setReasonsForNotNeeding(REASONS_FOR_NOT_NEEDING_EDEFAULT);
+			unsetReasonsForNotNeeding();
 			return;
 		}
 		super.eUnset(featureID);
@@ -256,24 +370,15 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__PURPOSE:
-			return PURPOSE_EDEFAULT == null ? purpose != null
-					: !PURPOSE_EDEFAULT.equals(purpose);
+			return isSetPurpose();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__IMPACT_OF_NOT_HAVING:
-			return IMPACT_OF_NOT_HAVING_EDEFAULT == null ? impactOfNotHaving != null
-					: !IMPACT_OF_NOT_HAVING_EDEFAULT.equals(impactOfNotHaving);
+			return isSetImpactOfNotHaving();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__REASONS_FOR_NOT_NEEDING:
-			return REASONS_FOR_NOT_NEEDING_EDEFAULT == null ? reasonsForNotNeeding != null
-					: !REASONS_FOR_NOT_NEEDING_EDEFAULT
-							.equals(reasonsForNotNeeding);
+			return isSetReasonsForNotNeeding();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -283,17 +388,27 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (purpose: "); //$NON-NLS-1$
-		result.append(purpose);
+		if (purposeESet)
+			result.append(purpose);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", impactOfNotHaving: "); //$NON-NLS-1$
-		result.append(impactOfNotHaving);
+		if (impactOfNotHavingESet)
+			result.append(impactOfNotHaving);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", reasonsForNotNeeding: "); //$NON-NLS-1$
-		result.append(reasonsForNotNeeding);
+		if (reasonsForNotNeedingESet)
+			result.append(reasonsForNotNeeding);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

@@ -38,10 +38,6 @@ public class PackageImpl extends NamespaceImpl implements
 	 */
 	protected PackageImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class PackageImpl extends NamespaceImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PACKAGE;
 	}

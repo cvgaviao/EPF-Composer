@@ -38,10 +38,6 @@ public class ToolMentorImpl extends GuidanceImpl implements ToolMentor {
 	 */
 	protected ToolMentorImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class ToolMentorImpl extends GuidanceImpl implements ToolMentor {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TOOL_MENTOR;
 	}

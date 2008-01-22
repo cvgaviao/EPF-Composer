@@ -52,7 +52,7 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected Constraint precondition = null;
+	protected Constraint precondition;
 
 	/**
 	 * The cached value of the '{@link #getPostcondition() <em>Postcondition</em>}' containment reference.
@@ -62,7 +62,7 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected Constraint postcondition = null;
+	protected Constraint postcondition;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -71,10 +71,6 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 */
 	protected WorkDefinitionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -82,6 +78,7 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_DEFINITION;
 	}
@@ -272,6 +269,7 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -288,6 +286,7 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.WORK_DEFINITION__PRECONDITION:
@@ -307,6 +306,7 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.WORK_DEFINITION__PRECONDITION:
@@ -324,6 +324,7 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_DEFINITION__PRECONDITION:
@@ -341,13 +342,8 @@ public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_DEFINITION__PRECONDITION:
 			return precondition != null;

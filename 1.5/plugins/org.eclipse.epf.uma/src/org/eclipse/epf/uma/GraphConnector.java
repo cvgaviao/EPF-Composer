@@ -71,9 +71,9 @@ public interface GraphConnector extends GraphElement {
 	 * @return the value of the '<em>Graph Edge</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphConnector_GraphEdge()
 	 * @see org.eclipse.epf.uma.GraphEdge#getAnchor
-	 * @model type="org.eclipse.epf.uma.GraphEdge" opposite="anchor" ordered="false"
+	 * @model opposite="anchor" ordered="false"
 	 * @generated
 	 */
-	List getGraphEdge();
+	List<GraphEdge> getGraphEdge();
 
 } // GraphConnector

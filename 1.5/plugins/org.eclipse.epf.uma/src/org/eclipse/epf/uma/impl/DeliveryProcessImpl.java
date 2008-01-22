@@ -51,7 +51,7 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * @generated
 	 * @ordered
 	 */
-	protected EList educationMaterials = null;
+	protected EList<SupportingMaterial> educationMaterials;
 
 	/**
 	 * The cached value of the '{@link #getCommunicationsMaterials() <em>Communications Materials</em>}' reference list.
@@ -61,7 +61,7 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * @generated
 	 * @ordered
 	 */
-	protected EList communicationsMaterials = null;
+	protected EList<SupportingMaterial> communicationsMaterials;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -70,10 +70,6 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 */
 	protected DeliveryProcessImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -81,6 +77,7 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DELIVERY_PROCESS;
 	}
@@ -90,9 +87,9 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getEducationMaterials() {
+	public List<SupportingMaterial> getEducationMaterials() {
 		if (educationMaterials == null) {
-			educationMaterials = new EObjectResolvingEList(
+			educationMaterials = new EObjectResolvingEList<SupportingMaterial>(
 					SupportingMaterial.class, this,
 					UmaPackage.DELIVERY_PROCESS__EDUCATION_MATERIALS);
 		}
@@ -104,9 +101,9 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getCommunicationsMaterials() {
+	public List<SupportingMaterial> getCommunicationsMaterials() {
 		if (communicationsMaterials == null) {
-			communicationsMaterials = new EObjectResolvingEList(
+			communicationsMaterials = new EObjectResolvingEList<SupportingMaterial>(
 					SupportingMaterial.class, this,
 					UmaPackage.DELIVERY_PROCESS__COMMUNICATIONS_MATERIALS);
 		}
@@ -118,6 +115,7 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS__EDUCATION_MATERIALS:
@@ -133,15 +131,19 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS__EDUCATION_MATERIALS:
 			getEducationMaterials().clear();
-			getEducationMaterials().addAll((Collection) newValue);
+			getEducationMaterials().addAll(
+					(Collection<? extends SupportingMaterial>) newValue);
 			return;
 		case UmaPackage.DELIVERY_PROCESS__COMMUNICATIONS_MATERIALS:
 			getCommunicationsMaterials().clear();
-			getCommunicationsMaterials().addAll((Collection) newValue);
+			getCommunicationsMaterials().addAll(
+					(Collection<? extends SupportingMaterial>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -152,6 +154,7 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS__EDUCATION_MATERIALS:
@@ -169,13 +172,8 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS__EDUCATION_MATERIALS:
 			return educationMaterials != null && !educationMaterials.isEmpty();

@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -61,12 +62,15 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addGuidPropertyDescriptor(object);
+			addPresentationNamePropertyDescriptor(object);
 			addBriefDescriptionPropertyDescriptor(object);
+			addKindPropertyDescriptor(object);
 			addSuppressedPropertyDescriptor(object);
 			addOrderingGuidePropertyDescriptor(object);
 		}
@@ -94,6 +98,26 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Presentation Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPresentationNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_MethodElement_presentationName_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_MethodElement_presentationName_feature", "_UI_MethodElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME,
+						true, false, false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	}
+
+	/**
 	 * This adds a property descriptor for the Brief Description feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,6 +135,25 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 						UmaPackage.Literals.METHOD_ELEMENT__BRIEF_DESCRIPTION,
 						true, false, false,
 						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Kind feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addKindPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_MethodElement_kind_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_MethodElement_kind_feature", "_UI_MethodElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.METHOD_ELEMENT__KIND, true, false,
+						true, null, null, null));
 	}
 
 	/**
@@ -161,7 +204,9 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(
+			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures
@@ -177,6 +222,7 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -185,22 +231,12 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	}
 
 	/**
-	 * This returns MethodElement.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage(
-				"full/obj16/MethodElement")); //$NON-NLS-1$
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((MethodElement) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_MethodElement_type") : //$NON-NLS-1$
@@ -214,11 +250,13 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(MethodElement.class)) {
 		case UmaPackage.METHOD_ELEMENT__GUID:
+		case UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME:
 		case UmaPackage.METHOD_ELEMENT__BRIEF_DESCRIPTION:
 		case UmaPackage.METHOD_ELEMENT__SUPPRESSED:
 		case UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE:
@@ -241,8 +279,9 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(
@@ -260,6 +299,7 @@ public class MethodElementItemProvider extends PackageableElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

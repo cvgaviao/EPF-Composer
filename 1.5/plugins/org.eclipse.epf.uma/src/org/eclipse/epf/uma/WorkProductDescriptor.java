@@ -46,11 +46,14 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- begin-model-doc -->
 	 * Given that an instance of Work Product Descriptor has been created for a specific Activity, then the Activity Entry State attribute specifies the desired state of instances of the referenced Work Product when work on the Activity is initiated (i.e. work on the Activity's Task Descriptors is being initiated that use this Work Product Descriptor as input).  
 	 * For some Work Products state is expressed in percentage of completion, compliance to work product checklist, informal state descriptions, etc.  Others have very specific states expressed as enumerations such as [identified, briefly described, outlined, detailed] for use cases.  Other Work Product states relate to some quality measures or lifecycle states such as [reviewed, implemented, tested].
+	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Activity Entry State</em>' attribute.
+	 * @see #isSetActivityEntryState()
+	 * @see #unsetActivityEntryState()
 	 * @see #setActivityEntryState(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_ActivityEntryState()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getActivityEntryState();
@@ -60,10 +63,35 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Activity Entry State</em>' attribute.
+	 * @see #isSetActivityEntryState()
+	 * @see #unsetActivityEntryState()
 	 * @see #getActivityEntryState()
 	 * @generated
 	 */
 	void setActivityEntryState(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityEntryState <em>Activity Entry State</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetActivityEntryState()
+	 * @see #getActivityEntryState()
+	 * @see #setActivityEntryState(String)
+	 * @generated
+	 */
+	void unsetActivityEntryState();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityEntryState <em>Activity Entry State</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Activity Entry State</em>' attribute is set.
+	 * @see #unsetActivityEntryState()
+	 * @see #getActivityEntryState()
+	 * @see #setActivityEntryState(String)
+	 * @generated
+	 */
+	boolean isSetActivityEntryState();
 
 	/**
 	 * Returns the value of the '<em><b>Activity Exit State</b></em>' attribute.
@@ -73,11 +101,14 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- begin-model-doc -->
 	 * Given that an instance of Work Product Descriptor has been created for a specific Activity, then the Activity Exist State attribute specifies the desired state of instances of the referenced Work Product when work on the Activity is finished (i.e. work on the Activity's Task Descriptors has finished that have this Work Product Descriptor as output).
 	 * For some Work Products state is expressed in percentage of completion, compliance to work product checklist, informal state descriptions, etc.  Others have very specific states expressed as enumerations such as [identified, briefly described, outlined, detailed] for use cases.  Other Work Product states relate to some quality measures or lifecycle states such as [reviewed, implemented, tested].
+	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Activity Exit State</em>' attribute.
+	 * @see #isSetActivityExitState()
+	 * @see #unsetActivityExitState()
 	 * @see #setActivityExitState(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_ActivityExitState()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getActivityExitState();
@@ -87,10 +118,35 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Activity Exit State</em>' attribute.
+	 * @see #isSetActivityExitState()
+	 * @see #unsetActivityExitState()
 	 * @see #getActivityExitState()
 	 * @generated
 	 */
 	void setActivityExitState(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityExitState <em>Activity Exit State</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetActivityExitState()
+	 * @see #getActivityExitState()
+	 * @see #setActivityExitState(String)
+	 * @generated
+	 */
+	void unsetActivityExitState();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityExitState <em>Activity Exit State</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Activity Exit State</em>' attribute is set.
+	 * @see #unsetActivityExitState()
+	 * @see #getActivityExitState()
+	 * @see #setActivityExitState(String)
+	 * @generated
+	 */
+	boolean isSetActivityExitState();
 
 	/**
 	 * Returns the value of the '<em><b>Work Product</b></em>' reference.
@@ -103,7 +159,7 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @return the value of the '<em>Work Product</em>' reference.
 	 * @see #setWorkProduct(WorkProduct)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_WorkProduct()
-	 * @model
+	 * @model ordered="false"
 	 * @generated
 	 */
 	WorkProduct getWorkProduct();
@@ -131,10 +187,10 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @return the value of the '<em>Impacted By</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_ImpactedBy()
 	 * @see org.eclipse.epf.uma.WorkProductDescriptor#getImpacts
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" opposite="impacts" ordered="false"
+	 * @model opposite="impacts" ordered="false"
 	 * @generated
 	 */
-	List getImpactedBy();
+	List<WorkProductDescriptor> getImpactedBy();
 
 	/**
 	 * Returns the value of the '<em><b>Impacts</b></em>' reference list.
@@ -149,10 +205,10 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @return the value of the '<em>Impacts</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_Impacts()
 	 * @see org.eclipse.epf.uma.WorkProductDescriptor#getImpactedBy
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" opposite="impactedBy" ordered="false"
+	 * @model opposite="impactedBy" ordered="false"
 	 * @generated
 	 */
-	List getImpacts();
+	List<WorkProductDescriptor> getImpacts();
 
 	/**
 	 * Returns the value of the '<em><b>Deliverable Parts</b></em>' reference list.
@@ -165,9 +221,9 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Deliverable Parts</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_DeliverableParts()
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getDeliverableParts();
+	List<WorkProductDescriptor> getDeliverableParts();
 
 } // WorkProductDescriptor

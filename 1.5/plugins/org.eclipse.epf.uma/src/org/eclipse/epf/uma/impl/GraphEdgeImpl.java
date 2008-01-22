@@ -56,7 +56,7 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList anchor = null;
+	protected EList<GraphConnector> anchor;
 
 	/**
 	 * The cached value of the '{@link #getWaypoints() <em>Waypoints</em>}' containment reference list.
@@ -66,7 +66,7 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList waypoints = null;
+	protected EList<Point> waypoints;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,10 +75,6 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 */
 	protected GraphEdgeImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -86,6 +82,7 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.GRAPH_EDGE;
 	}
@@ -95,9 +92,9 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getAnchor() {
+	public List<GraphConnector> getAnchor() {
 		if (anchor == null) {
-			anchor = new EObjectWithInverseResolvingEList.ManyInverse(
+			anchor = new EObjectWithInverseResolvingEList.ManyInverse<GraphConnector>(
 					GraphConnector.class, this, UmaPackage.GRAPH_EDGE__ANCHOR,
 					UmaPackage.GRAPH_CONNECTOR__GRAPH_EDGE);
 		}
@@ -109,10 +106,10 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getWaypoints() {
+	public List<Point> getWaypoints() {
 		if (waypoints == null) {
-			waypoints = new EObjectContainmentEList.Resolving(Point.class,
-					this, UmaPackage.GRAPH_EDGE__WAYPOINTS);
+			waypoints = new EObjectContainmentEList.Resolving<Point>(
+					Point.class, this, UmaPackage.GRAPH_EDGE__WAYPOINTS);
 		}
 		return waypoints;
 	}
@@ -122,11 +119,14 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_EDGE__ANCHOR:
-			return ((InternalEList) getAnchor()).basicAdd(otherEnd, msgs);
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getAnchor())
+					.basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -136,13 +136,15 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_EDGE__ANCHOR:
-			return ((InternalEList) getAnchor()).basicRemove(otherEnd, msgs);
+			return ((InternalEList<?>) getAnchor()).basicRemove(otherEnd, msgs);
 		case UmaPackage.GRAPH_EDGE__WAYPOINTS:
-			return ((InternalEList) getWaypoints()).basicRemove(otherEnd, msgs);
+			return ((InternalEList<?>) getWaypoints()).basicRemove(otherEnd,
+					msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -152,6 +154,7 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_EDGE__ANCHOR:
@@ -167,15 +170,17 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_EDGE__ANCHOR:
 			getAnchor().clear();
-			getAnchor().addAll((Collection) newValue);
+			getAnchor().addAll((Collection<? extends GraphConnector>) newValue);
 			return;
 		case UmaPackage.GRAPH_EDGE__WAYPOINTS:
 			getWaypoints().clear();
-			getWaypoints().addAll((Collection) newValue);
+			getWaypoints().addAll((Collection<? extends Point>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -186,6 +191,7 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.GRAPH_EDGE__ANCHOR:
@@ -203,13 +209,8 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GRAPH_EDGE__ANCHOR:
 			return anchor != null && !anchor.isEmpty();

@@ -65,10 +65,6 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 */
 	protected TextElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -76,6 +72,7 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TEXT_ELEMENT;
 	}
@@ -107,6 +104,7 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.TEXT_ELEMENT__TEXT:
@@ -120,6 +118,7 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.TEXT_ELEMENT__TEXT:
@@ -134,6 +133,7 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.TEXT_ELEMENT__TEXT:
@@ -148,13 +148,8 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.TEXT_ELEMENT__TEXT:
 			return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT
@@ -168,6 +163,7 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

@@ -19,15 +19,18 @@ import java.util.List;
  *
  * <!-- begin-model-doc -->
  * Every class defined in this specification is derived from Method Element.  In other words Method Element is the root generalization for all UMA classes and defines a common set of attributes inherited by every other element type of this model.  Method Element itself is derived from Packageable Element from the UML 2.0 Infrastructure.  Method Element inherits the Name attribute from Packageable Element's super class.  Every element defined as a UMA instance is derived from Model Element.  Every Method Element in-stance is at least defined by a unique id, a name, as well as brief description.
+ * Method Element in the package Method Plugin adds additional properties via package merge to Method Element defined in Method Core needed for the variability and extensibility capabilities introduces in this package.
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.MethodElement#getGuid <em>Guid</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.MethodElement#getPresentationName <em>Presentation Name</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.MethodElement#getBriefDescription <em>Brief Description</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.MethodElement#getOwnedRules <em>Owned Rules</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.MethodElement#getMethodElementProperty <em>Method Element Property</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.MethodElement#getKind <em>Kind</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.MethodElement#getSuppressed <em>Suppressed</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.MethodElement#getOrderingGuide <em>Ordering Guide</em>}</li>
  * </ul>
@@ -47,9 +50,11 @@ public interface MethodElement extends PackageableElement {
 	 * Every instance of Method Element has a global unique id.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Guid</em>' attribute.
+	 * @see #isSetGuid()
+	 * @see #unsetGuid()
 	 * @see #setGuid(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_Guid()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" id="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getGuid();
@@ -59,10 +64,89 @@ public interface MethodElement extends PackageableElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Guid</em>' attribute.
+	 * @see #isSetGuid()
+	 * @see #unsetGuid()
 	 * @see #getGuid()
 	 * @generated
 	 */
 	void setGuid(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.MethodElement#getGuid <em>Guid</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetGuid()
+	 * @see #getGuid()
+	 * @see #setGuid(String)
+	 * @generated
+	 */
+	void unsetGuid();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.MethodElement#getGuid <em>Guid</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Guid</em>' attribute is set.
+	 * @see #unsetGuid()
+	 * @see #getGuid()
+	 * @see #setGuid(String)
+	 * @generated
+	 */
+	boolean isSetGuid();
+
+	/**
+	 * Returns the value of the '<em><b>Presentation Name</b></em>' attribute.
+	 * The default value is <code>""</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Every Describable Element has a presentation name, which is used for external presentation of the element.  For example, name (the internal representation) might be set to "rup_architecture_document" to differentiate from a "j2ee_architcture_document" whereas the external presentation would always be "Architecture Document".
+	 * 
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Presentation Name</em>' attribute.
+	 * @see #isSetPresentationName()
+	 * @see #unsetPresentationName()
+	 * @see #setPresentationName(String)
+	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_PresentationName()
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @generated
+	 */
+	String getPresentationName();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.epf.uma.MethodElement#getPresentationName <em>Presentation Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Presentation Name</em>' attribute.
+	 * @see #isSetPresentationName()
+	 * @see #unsetPresentationName()
+	 * @see #getPresentationName()
+	 * @generated
+	 */
+	void setPresentationName(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.MethodElement#getPresentationName <em>Presentation Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetPresentationName()
+	 * @see #getPresentationName()
+	 * @see #setPresentationName(String)
+	 * @generated
+	 */
+	void unsetPresentationName();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.MethodElement#getPresentationName <em>Presentation Name</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Presentation Name</em>' attribute is set.
+	 * @see #unsetPresentationName()
+	 * @see #getPresentationName()
+	 * @see #setPresentationName(String)
+	 * @generated
+	 */
+	boolean isSetPresentationName();
 
 	/**
 	 * Returns the value of the '<em><b>Brief Description</b></em>' attribute.
@@ -73,9 +157,11 @@ public interface MethodElement extends PackageableElement {
 	 * Every instance of Method Element shall be briefly described with one or two sentences summarizing the element.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Brief Description</em>' attribute.
+	 * @see #isSetBriefDescription()
+	 * @see #unsetBriefDescription()
 	 * @see #setBriefDescription(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_BriefDescription()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getBriefDescription();
@@ -85,10 +171,35 @@ public interface MethodElement extends PackageableElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Brief Description</em>' attribute.
+	 * @see #isSetBriefDescription()
+	 * @see #unsetBriefDescription()
 	 * @see #getBriefDescription()
 	 * @generated
 	 */
 	void setBriefDescription(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.MethodElement#getBriefDescription <em>Brief Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetBriefDescription()
+	 * @see #getBriefDescription()
+	 * @see #setBriefDescription(String)
+	 * @generated
+	 */
+	void unsetBriefDescription();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.MethodElement#getBriefDescription <em>Brief Description</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Brief Description</em>' attribute is set.
+	 * @see #unsetBriefDescription()
+	 * @see #getBriefDescription()
+	 * @see #setBriefDescription(String)
+	 * @generated
+	 */
+	boolean isSetBriefDescription();
 
 	/**
 	 * Returns the value of the '<em><b>Owned Rules</b></em>' containment reference list.
@@ -101,10 +212,10 @@ public interface MethodElement extends PackageableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Rules</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_OwnedRules()
-	 * @model type="org.eclipse.epf.uma.Constraint" containment="true" resolveProxies="true" ordered="false"
+	 * @model containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getOwnedRules();
+	List<Constraint> getOwnedRules();
 
 	/**
 	 * Returns the value of the '<em><b>Method Element Property</b></em>' containment reference list.
@@ -117,10 +228,26 @@ public interface MethodElement extends PackageableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Element Property</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_MethodElementProperty()
-	 * @model type="org.eclipse.epf.uma.MethodElementProperty" containment="true" resolveProxies="true" ordered="false"
+	 * @model containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getMethodElementProperty();
+	List<MethodElementProperty> getMethodElementProperty();
+
+	/**
+	 * Returns the value of the '<em><b>Kind</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Kind}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Kind</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Kind</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_Kind()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<Kind> getKind();
 
 	/**
 	 * Returns the value of the '<em><b>Suppressed</b></em>' attribute.
@@ -131,9 +258,11 @@ public interface MethodElement extends PackageableElement {
 	 * If a Variability Element is derived from another Variability Element using the Extends Variability Specialization then this attribute can be used to suppress inherited Method Elements that were part of the based-on Variability Element, which can be any type of Method Element.  In other words, if this attribute is set to true on a Method Element that has the same name than an inherited method element then it will not be regarded as inherited at all.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Suppressed</em>' attribute.
+	 * @see #isSetSuppressed()
+	 * @see #unsetSuppressed()
 	 * @see #setSuppressed(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_Suppressed()
-	 * @model default="false"
+	 * @model default="false" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getSuppressed();
@@ -143,10 +272,35 @@ public interface MethodElement extends PackageableElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Suppressed</em>' attribute.
+	 * @see #isSetSuppressed()
+	 * @see #unsetSuppressed()
 	 * @see #getSuppressed()
 	 * @generated
 	 */
 	void setSuppressed(Boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.MethodElement#getSuppressed <em>Suppressed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetSuppressed()
+	 * @see #getSuppressed()
+	 * @see #setSuppressed(Boolean)
+	 * @generated
+	 */
+	void unsetSuppressed();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.MethodElement#getSuppressed <em>Suppressed</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Suppressed</em>' attribute is set.
+	 * @see #unsetSuppressed()
+	 * @see #getSuppressed()
+	 * @see #setSuppressed(Boolean)
+	 * @generated
+	 */
+	boolean isSetSuppressed();
 
 	/**
 	 * Returns the value of the '<em><b>Ordering Guide</b></em>' attribute.
@@ -157,9 +311,11 @@ public interface MethodElement extends PackageableElement {
 	 * This attribute is used for CASE tool realizations of this model to contain information about layout and ordering of the method element and its parts.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Ordering Guide</em>' attribute.
+	 * @see #isSetOrderingGuide()
+	 * @see #unsetOrderingGuide()
 	 * @see #setOrderingGuide(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodElement_OrderingGuide()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getOrderingGuide();
@@ -169,9 +325,34 @@ public interface MethodElement extends PackageableElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Ordering Guide</em>' attribute.
+	 * @see #isSetOrderingGuide()
+	 * @see #unsetOrderingGuide()
 	 * @see #getOrderingGuide()
 	 * @generated
 	 */
 	void setOrderingGuide(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.MethodElement#getOrderingGuide <em>Ordering Guide</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetOrderingGuide()
+	 * @see #getOrderingGuide()
+	 * @see #setOrderingGuide(String)
+	 * @generated
+	 */
+	void unsetOrderingGuide();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.MethodElement#getOrderingGuide <em>Ordering Guide</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Ordering Guide</em>' attribute is set.
+	 * @see #unsetOrderingGuide()
+	 * @see #getOrderingGuide()
+	 * @see #setOrderingGuide(String)
+	 * @generated
+	 */
+	boolean isSetOrderingGuide();
 
 } // MethodElement

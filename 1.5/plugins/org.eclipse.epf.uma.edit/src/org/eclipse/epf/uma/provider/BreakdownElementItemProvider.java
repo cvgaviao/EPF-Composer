@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -54,7 +55,8 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -65,6 +67,12 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 			addPresentedAfterPropertyDescriptor(object);
 			addPresentedBeforePropertyDescriptor(object);
 			addSuperActivitiesPropertyDescriptor(object);
+			addChecklistsPropertyDescriptor(object);
+			addConceptsPropertyDescriptor(object);
+			addExamplesPropertyDescriptor(object);
+			addGuidelinesPropertyDescriptor(object);
+			addReusableAssetsPropertyDescriptor(object);
+			addSupportingMaterialsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -165,7 +173,7 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_presentedAfter_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.BREAKDOWN_ELEMENT__PRESENTED_AFTER,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -184,7 +192,7 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_presentedBefore_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.BREAKDOWN_ELEMENT__PRESENTED_BEFORE,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -203,7 +211,121 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_superActivities_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.BREAKDOWN_ELEMENT__SUPER_ACTIVITIES,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Checklists feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addChecklistsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_checklists_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_checklists_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__CHECKLISTS,
+						true, false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Concepts feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addConceptsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_concepts_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_concepts_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__CONCEPTS, true,
+						false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Examples feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addExamplesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_examples_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_examples_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__EXAMPLES, true,
+						false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Guidelines feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGuidelinesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_guidelines_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_guidelines_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__GUIDELINES,
+						true, false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Reusable Assets feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addReusableAssetsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_reusableAssets_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_reusableAssets_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__REUSABLE_ASSETS,
+						true, false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Supporting Materials feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSupportingMaterialsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_supportingMaterials_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_supportingMaterials_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS,
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -214,7 +336,9 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Collection getChildrenFeatures(Object object) {
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(
+			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures
@@ -228,6 +352,7 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
@@ -236,22 +361,12 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 	}
 
 	/**
-	 * This returns BreakdownElement.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage(
-				"full/obj16/BreakdownElement")); //$NON-NLS-1$
-	}
-
-	/**
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((BreakdownElement) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_BreakdownElement_type") : //$NON-NLS-1$
@@ -265,6 +380,7 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -291,8 +407,9 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(
@@ -306,6 +423,7 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

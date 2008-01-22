@@ -38,10 +38,6 @@ public class RoadmapImpl extends GuidanceImpl implements Roadmap {
 	 */
 	protected RoadmapImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class RoadmapImpl extends GuidanceImpl implements Roadmap {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ROADMAP;
 	}

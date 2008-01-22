@@ -51,7 +51,7 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList deliveryProcesses = null;
+	protected EList<DeliveryProcess> deliveryProcesses;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -60,10 +60,6 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 */
 	protected ProcessFamilyImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -71,6 +67,7 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_FAMILY;
 	}
@@ -80,9 +77,9 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getDeliveryProcesses() {
+	public List<DeliveryProcess> getDeliveryProcesses() {
 		if (deliveryProcesses == null) {
-			deliveryProcesses = new EObjectResolvingEList(
+			deliveryProcesses = new EObjectResolvingEList<DeliveryProcess>(
 					DeliveryProcess.class, this,
 					UmaPackage.PROCESS_FAMILY__DELIVERY_PROCESSES);
 		}
@@ -94,6 +91,7 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_FAMILY__DELIVERY_PROCESSES:
@@ -107,11 +105,14 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_FAMILY__DELIVERY_PROCESSES:
 			getDeliveryProcesses().clear();
-			getDeliveryProcesses().addAll((Collection) newValue);
+			getDeliveryProcesses().addAll(
+					(Collection<? extends DeliveryProcess>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -122,6 +123,7 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_FAMILY__DELIVERY_PROCESSES:
@@ -136,13 +138,8 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_FAMILY__DELIVERY_PROCESSES:
 			return deliveryProcesses != null && !deliveryProcesses.isEmpty();

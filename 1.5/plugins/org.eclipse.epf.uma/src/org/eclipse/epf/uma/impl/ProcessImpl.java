@@ -57,7 +57,7 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList includesPatterns = null;
+	protected EList<CapabilityPattern> includesPatterns;
 
 	/**
 	 * The cached value of the '{@link #getDefaultContext() <em>Default Context</em>}' reference.
@@ -67,7 +67,7 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected MethodConfiguration defaultContext = null;
+	protected MethodConfiguration defaultContext;
 
 	/**
 	 * The cached value of the '{@link #getValidContext() <em>Valid Context</em>}' reference list.
@@ -77,7 +77,7 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList validContext = null;
+	protected EList<MethodConfiguration> validContext;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -86,10 +86,6 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 */
 	protected ProcessImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -97,6 +93,7 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS;
 	}
@@ -106,9 +103,9 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getIncludesPatterns() {
+	public List<CapabilityPattern> getIncludesPatterns() {
 		if (includesPatterns == null) {
-			includesPatterns = new EObjectResolvingEList(
+			includesPatterns = new EObjectResolvingEList<CapabilityPattern>(
 					CapabilityPattern.class, this,
 					UmaPackage.PROCESS__INCLUDES_PATTERNS);
 		}
@@ -162,10 +159,11 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getValidContext() {
+	public List<MethodConfiguration> getValidContext() {
 		if (validContext == null) {
-			validContext = new EObjectResolvingEList(MethodConfiguration.class,
-					this, UmaPackage.PROCESS__VALID_CONTEXT);
+			validContext = new EObjectResolvingEList<MethodConfiguration>(
+					MethodConfiguration.class, this,
+					UmaPackage.PROCESS__VALID_CONTEXT);
 		}
 		return validContext;
 	}
@@ -175,6 +173,7 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.PROCESS__INCLUDES_PATTERNS:
@@ -194,18 +193,22 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.PROCESS__INCLUDES_PATTERNS:
 			getIncludesPatterns().clear();
-			getIncludesPatterns().addAll((Collection) newValue);
+			getIncludesPatterns().addAll(
+					(Collection<? extends CapabilityPattern>) newValue);
 			return;
 		case UmaPackage.PROCESS__DEFAULT_CONTEXT:
 			setDefaultContext((MethodConfiguration) newValue);
 			return;
 		case UmaPackage.PROCESS__VALID_CONTEXT:
 			getValidContext().clear();
-			getValidContext().addAll((Collection) newValue);
+			getValidContext().addAll(
+					(Collection<? extends MethodConfiguration>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -216,6 +219,7 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS__INCLUDES_PATTERNS:
@@ -236,13 +240,8 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS__INCLUDES_PATTERNS:
 			return includesPatterns != null && !includesPatterns.isEmpty();

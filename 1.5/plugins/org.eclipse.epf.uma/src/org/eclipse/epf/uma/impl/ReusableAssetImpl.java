@@ -38,10 +38,6 @@ public class ReusableAssetImpl extends GuidanceImpl implements ReusableAsset {
 	 */
 	protected ReusableAssetImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class ReusableAssetImpl extends GuidanceImpl implements ReusableAsset {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.REUSABLE_ASSET;
 	}

@@ -39,10 +39,6 @@ public abstract class LeafElementImpl extends DiagramElementImpl implements
 	 */
 	protected LeafElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public abstract class LeafElementImpl extends DiagramElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.LEAF_ELEMENT;
 	}

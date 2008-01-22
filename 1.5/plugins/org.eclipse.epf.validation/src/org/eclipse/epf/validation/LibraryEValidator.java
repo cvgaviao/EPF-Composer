@@ -80,7 +80,7 @@ public class LibraryEValidator extends EObjectValidator {
 	private static Map createFeatureToAttributeMap() {
 		Map map = new HashMap();
 		map.put(UmaPackage.Literals.NAMED_ELEMENT__NAME, IBSItemProvider.COL_NAME);
-		map.put(UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME, IBSItemProvider.COL_PRESENTATION_NAME);
+		map.put(UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME, IBSItemProvider.COL_PRESENTATION_NAME);
 		return map;
 	}
 	
@@ -239,7 +239,7 @@ public class LibraryEValidator extends EObjectValidator {
 							ArrayList features = new ArrayList();
 							features.add(UmaPackage.Literals.NAMED_ELEMENT__NAME);
 							if(child instanceof DescribableElement) {
-								features.add(UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME);
+								features.add(UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME);
 							}
 							NamedElement e = (NamedElement) child;
 							if (e instanceof BreakdownElement) {

@@ -57,6 +57,15 @@ public interface UmaFactory extends EFactory {
 	MethodElementProperty createMethodElementProperty();
 
 	/**
+	 * Returns a new object of class '<em>Kind</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Kind</em>'.
+	 * @generated
+	 */
+	Kind createKind();
+
+	/**
 	 * Returns a new object of class '<em>Content Description</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -109,6 +118,24 @@ public interface UmaFactory extends EFactory {
 	 * @generated
 	 */
 	Artifact createArtifact();
+
+	/**
+	 * Returns a new object of class '<em>Work Product</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Work Product</em>'.
+	 * @generated
+	 */
+	WorkProduct createWorkProduct();
+
+	/**
+	 * Returns a new object of class '<em>Fulfillable Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Fulfillable Element</em>'.
+	 * @generated
+	 */
+	FulfillableElement createFulfillableElement();
 
 	/**
 	 * Returns a new object of class '<em>Deliverable</em>'.
@@ -199,150 +226,6 @@ public interface UmaFactory extends EFactory {
 	 * @generated
 	 */
 	PracticeDescription createPracticeDescription();
-
-	/**
-	 * Returns a new object of class '<em>Point</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Point</em>'.
-	 * @generated
-	 */
-	Point createPoint();
-
-	/**
-	 * Returns a new object of class '<em>Diagram Link</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Diagram Link</em>'.
-	 * @generated
-	 */
-	DiagramLink createDiagramLink();
-
-	/**
-	 * Returns a new object of class '<em>Graph Connector</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Graph Connector</em>'.
-	 * @generated
-	 */
-	GraphConnector createGraphConnector();
-
-	/**
-	 * Returns a new object of class '<em>Dimension</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Dimension</em>'.
-	 * @generated
-	 */
-	Dimension createDimension();
-
-	/**
-	 * Returns a new object of class '<em>Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Reference</em>'.
-	 * @generated
-	 */
-	Reference createReference();
-
-	/**
-	 * Returns a new object of class '<em>Property</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Property</em>'.
-	 * @generated
-	 */
-	Property createProperty();
-
-	/**
-	 * Returns a new object of class '<em>Graph Edge</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Graph Edge</em>'.
-	 * @generated
-	 */
-	GraphEdge createGraphEdge();
-
-	/**
-	 * Returns a new object of class '<em>Diagram</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Diagram</em>'.
-	 * @generated
-	 */
-	Diagram createDiagram();
-
-	/**
-	 * Returns a new object of class '<em>Graph Node</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Graph Node</em>'.
-	 * @generated
-	 */
-	GraphNode createGraphNode();
-
-	/**
-	 * Returns a new object of class '<em>Simple Semantic Model Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Simple Semantic Model Element</em>'.
-	 * @generated
-	 */
-	SimpleSemanticModelElement createSimpleSemanticModelElement();
-
-	/**
-	 * Returns a new object of class '<em>UMA Semantic Model Bridge</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>UMA Semantic Model Bridge</em>'.
-	 * @generated
-	 */
-	UMASemanticModelBridge createUMASemanticModelBridge();
-
-	/**
-	 * Returns a new object of class '<em>Core Semantic Model Bridge</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Core Semantic Model Bridge</em>'.
-	 * @generated
-	 */
-	CoreSemanticModelBridge createCoreSemanticModelBridge();
-
-	/**
-	 * Returns a new object of class '<em>Text Element</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Text Element</em>'.
-	 * @generated
-	 */
-	TextElement createTextElement();
-
-	/**
-	 * Returns a new object of class '<em>Image</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Image</em>'.
-	 * @generated
-	 */
-	Image createImage();
-
-	/**
-	 * Returns a new object of class '<em>Polyline</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Polyline</em>'.
-	 * @generated
-	 */
-	Polyline createPolyline();
-
-	/**
-	 * Returns a new object of class '<em>Ellipse</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Ellipse</em>'.
-	 * @generated
-	 */
-	Ellipse createEllipse();
 
 	/**
 	 * Returns a new object of class '<em>Activity</em>'.
@@ -606,60 +489,6 @@ public interface UmaFactory extends EFactory {
 	ReusableAsset createReusableAsset();
 
 	/**
-	 * Returns a new object of class '<em>State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>State</em>'.
-	 * @generated
-	 */
-	State createState();
-
-	/**
-	 * Returns a new object of class '<em>Vertex</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Vertex</em>'.
-	 * @generated
-	 */
-	Vertex createVertex();
-
-	/**
-	 * Returns a new object of class '<em>Region</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Region</em>'.
-	 * @generated
-	 */
-	Region createRegion();
-
-	/**
-	 * Returns a new object of class '<em>State Machine</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>State Machine</em>'.
-	 * @generated
-	 */
-	StateMachine createStateMachine();
-
-	/**
-	 * Returns a new object of class '<em>Transition</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Transition</em>'.
-	 * @generated
-	 */
-	Transition createTransition();
-
-	/**
-	 * Returns a new object of class '<em>Pseudo State</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Pseudo State</em>'.
-	 * @generated
-	 */
-	PseudoState createPseudoState();
-
-	/**
 	 * Returns a new object of class '<em>Discipline</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -838,6 +667,150 @@ public interface UmaFactory extends EFactory {
 	 * @generated
 	 */
 	MethodLibrary createMethodLibrary();
+
+	/**
+	 * Returns a new object of class '<em>Point</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Point</em>'.
+	 * @generated
+	 */
+	Point createPoint();
+
+	/**
+	 * Returns a new object of class '<em>Diagram Link</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Diagram Link</em>'.
+	 * @generated
+	 */
+	DiagramLink createDiagramLink();
+
+	/**
+	 * Returns a new object of class '<em>Graph Connector</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Graph Connector</em>'.
+	 * @generated
+	 */
+	GraphConnector createGraphConnector();
+
+	/**
+	 * Returns a new object of class '<em>Dimension</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dimension</em>'.
+	 * @generated
+	 */
+	Dimension createDimension();
+
+	/**
+	 * Returns a new object of class '<em>Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Reference</em>'.
+	 * @generated
+	 */
+	Reference createReference();
+
+	/**
+	 * Returns a new object of class '<em>Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Property</em>'.
+	 * @generated
+	 */
+	Property createProperty();
+
+	/**
+	 * Returns a new object of class '<em>Graph Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Graph Edge</em>'.
+	 * @generated
+	 */
+	GraphEdge createGraphEdge();
+
+	/**
+	 * Returns a new object of class '<em>Diagram</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Diagram</em>'.
+	 * @generated
+	 */
+	Diagram createDiagram();
+
+	/**
+	 * Returns a new object of class '<em>Graph Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Graph Node</em>'.
+	 * @generated
+	 */
+	GraphNode createGraphNode();
+
+	/**
+	 * Returns a new object of class '<em>Simple Semantic Model Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Simple Semantic Model Element</em>'.
+	 * @generated
+	 */
+	SimpleSemanticModelElement createSimpleSemanticModelElement();
+
+	/**
+	 * Returns a new object of class '<em>UMA Semantic Model Bridge</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>UMA Semantic Model Bridge</em>'.
+	 * @generated
+	 */
+	UMASemanticModelBridge createUMASemanticModelBridge();
+
+	/**
+	 * Returns a new object of class '<em>Core Semantic Model Bridge</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Core Semantic Model Bridge</em>'.
+	 * @generated
+	 */
+	CoreSemanticModelBridge createCoreSemanticModelBridge();
+
+	/**
+	 * Returns a new object of class '<em>Text Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Text Element</em>'.
+	 * @generated
+	 */
+	TextElement createTextElement();
+
+	/**
+	 * Returns a new object of class '<em>Image</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Image</em>'.
+	 * @generated
+	 */
+	Image createImage();
+
+	/**
+	 * Returns a new object of class '<em>Polyline</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Polyline</em>'.
+	 * @generated
+	 */
+	Polyline createPolyline();
+
+	/**
+	 * Returns a new object of class '<em>Ellipse</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Ellipse</em>'.
+	 * @generated
+	 */
+	Ellipse createEllipse();
 
 	/**
 	 * Returns the package supported by this factory.

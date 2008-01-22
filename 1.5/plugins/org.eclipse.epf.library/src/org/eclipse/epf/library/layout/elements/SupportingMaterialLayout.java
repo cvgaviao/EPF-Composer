@@ -48,7 +48,7 @@ public class SupportingMaterialLayout extends AbstractElementLayout {
 					layoutManager.getElementRealizer());
 			
 			List activities = ConfigurationHelper.calc0nFeatureValue(super.element,
-					AssociationHelper.SupportingMaterial_Activities, layoutManager
+					AssociationHelper.SupportingMaterial_BreakdownElements, layoutManager
 							.getElementRealizer());
 
 			contentElements.addAll(activities);

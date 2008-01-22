@@ -37,9 +37,11 @@ public interface ProcessDescription extends ActivityDescription {
 	 * Defines the scope of the Process, i.e. which types of projects does it address and which not.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Scope</em>' attribute.
+	 * @see #isSetScope()
+	 * @see #unsetScope()
 	 * @see #setScope(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcessDescription_Scope()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getScope();
@@ -49,10 +51,35 @@ public interface ProcessDescription extends ActivityDescription {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Scope</em>' attribute.
+	 * @see #isSetScope()
+	 * @see #unsetScope()
 	 * @see #getScope()
 	 * @generated
 	 */
 	void setScope(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.ProcessDescription#getScope <em>Scope</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetScope()
+	 * @see #getScope()
+	 * @see #setScope(String)
+	 * @generated
+	 */
+	void unsetScope();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.ProcessDescription#getScope <em>Scope</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Scope</em>' attribute is set.
+	 * @see #unsetScope()
+	 * @see #getScope()
+	 * @see #setScope(String)
+	 * @generated
+	 */
+	boolean isSetScope();
 
 	/**
 	 * Returns the value of the '<em><b>Usage Notes</b></em>' attribute.
@@ -63,9 +90,11 @@ public interface ProcessDescription extends ActivityDescription {
 	 * Any additional notes on how to apply and instantiate this process for a project.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Usage Notes</em>' attribute.
+	 * @see #isSetUsageNotes()
+	 * @see #unsetUsageNotes()
 	 * @see #setUsageNotes(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcessDescription_UsageNotes()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getUsageNotes();
@@ -75,9 +104,34 @@ public interface ProcessDescription extends ActivityDescription {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Usage Notes</em>' attribute.
+	 * @see #isSetUsageNotes()
+	 * @see #unsetUsageNotes()
 	 * @see #getUsageNotes()
 	 * @generated
 	 */
 	void setUsageNotes(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.ProcessDescription#getUsageNotes <em>Usage Notes</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetUsageNotes()
+	 * @see #getUsageNotes()
+	 * @see #setUsageNotes(String)
+	 * @generated
+	 */
+	void unsetUsageNotes();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.ProcessDescription#getUsageNotes <em>Usage Notes</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Usage Notes</em>' attribute is set.
+	 * @see #unsetUsageNotes()
+	 * @see #getUsageNotes()
+	 * @see #setUsageNotes(String)
+	 * @generated
+	 */
+	boolean isSetUsageNotes();
 
 } // ProcessDescription

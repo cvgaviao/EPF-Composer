@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -675,13 +674,13 @@ public class WorkBreakdownElementGeneralSection extends
 						return name;
 					}
 					if (i == 2) {
-						if (wo.getLinkType().getValue() == WorkOrderType.FINISH_TO_FINISH)
+						if (wo.getLinkType() == WorkOrderType.FINISH_TO_FINISH)
 							return FINISH_TO_FINISH;
-						else if (wo.getLinkType().getValue() == WorkOrderType.FINISH_TO_START)
+						else if (wo.getLinkType() == WorkOrderType.FINISH_TO_START)
 							return FINISH_TO_START;
-						else if (wo.getLinkType().getValue() == WorkOrderType.START_TO_START)
+						else if (wo.getLinkType() == WorkOrderType.START_TO_START)
 							return START_TO_START;
-						else if (wo.getLinkType().getValue() == WorkOrderType.START_TO_FINISH)
+						else if (wo.getLinkType() == WorkOrderType.START_TO_FINISH)
 							return START_TO_FINISH;
 						return wo.getLinkType().getName();
 					}
@@ -802,11 +801,11 @@ public class WorkBreakdownElementGeneralSection extends
 				case ColumnDescriptor.CELL_EDITOR_TYPE_COMBO_BOOLEAN:
 					int value = (((PredecessorMap) element).getWorkOrder())
 							.getLinkType().getValue();
-					if (WorkOrderType.FINISH_TO_START == value) {
+					if (WorkOrderType.FINISH_TO_START_VALUE == value) {
 						return new Integer(0);
-					} else if (WorkOrderType.FINISH_TO_FINISH == value) {
+					} else if (WorkOrderType.FINISH_TO_FINISH_VALUE == value) {
 						return new Integer(1);
-					} else if (WorkOrderType.START_TO_START == value) {
+					} else if (WorkOrderType.START_TO_START_VALUE == value) {
 						return new Integer(2);
 					} else
 						return new Integer(3);

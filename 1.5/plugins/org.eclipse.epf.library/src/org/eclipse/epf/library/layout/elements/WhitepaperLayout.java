@@ -57,7 +57,7 @@ public class WhitepaperLayout extends AbstractElementLayout {
 					layoutManager.getElementRealizer());
 			
 			List activities = ConfigurationHelper.calc0nFeatureValue(super.element,
-					AssociationHelper.Concept_Activities, layoutManager
+					AssociationHelper.Concept_BreakdownElements, layoutManager
 							.getElementRealizer());
 
 			contentElements.addAll(activities);

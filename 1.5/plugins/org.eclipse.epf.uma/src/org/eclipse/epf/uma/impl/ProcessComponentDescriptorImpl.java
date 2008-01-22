@@ -27,7 +27,7 @@ import org.eclipse.epf.uma.UmaPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.impl.ProcessComponentDescriptorImpl#getProcessComponent <em>Process Component</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.ProcessComponentDescriptorImpl#get_processComponent <em>process Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,14 +43,14 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The cached value of the '{@link #getProcessComponent() <em>Process Component</em>}' reference.
+	 * The cached value of the '{@link #get_processComponent() <em>process Component</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getProcessComponent()
+	 * @see #get_processComponent()
 	 * @generated
 	 * @ordered
 	 */
-	protected ProcessComponent processComponent = null;
+	protected ProcessComponent _processComponent;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,10 +59,6 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 */
 	protected ProcessComponentDescriptorImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -70,6 +66,7 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_COMPONENT_DESCRIPTOR;
 	}
@@ -79,20 +76,21 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProcessComponent getProcessComponent() {
-		if (processComponent != null && ((EObject) processComponent).eIsProxy()) {
-			InternalEObject oldProcessComponent = (InternalEObject) processComponent;
-			processComponent = (ProcessComponent) eResolveProxy(oldProcessComponent);
-			if (processComponent != oldProcessComponent) {
+	public ProcessComponent get_processComponent() {
+		if (_processComponent != null
+				&& ((EObject) _processComponent).eIsProxy()) {
+			InternalEObject old_processComponent = (InternalEObject) _processComponent;
+			_processComponent = (ProcessComponent) eResolveProxy(old_processComponent);
+			if (_processComponent != old_processComponent) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(
 							this,
 							Notification.RESOLVE,
 							UmaPackage.PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT,
-							oldProcessComponent, processComponent));
+							old_processComponent, _processComponent));
 			}
 		}
-		return processComponent;
+		return _processComponent;
 	}
 
 	/**
@@ -100,8 +98,8 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ProcessComponent basicGetProcessComponent() {
-		return processComponent;
+	public ProcessComponent basicGet_processComponent() {
+		return _processComponent;
 	}
 
 	/**
@@ -109,13 +107,13 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setProcessComponent(ProcessComponent newProcessComponent) {
-		ProcessComponent oldProcessComponent = processComponent;
-		processComponent = newProcessComponent;
+	public void set_processComponent(ProcessComponent new_processComponent) {
+		ProcessComponent old_processComponent = _processComponent;
+		_processComponent = new_processComponent;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT,
-					oldProcessComponent, processComponent));
+					old_processComponent, _processComponent));
 	}
 
 	/**
@@ -123,12 +121,13 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT:
 			if (resolve)
-				return getProcessComponent();
-			return basicGetProcessComponent();
+				return get_processComponent();
+			return basicGet_processComponent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -138,10 +137,11 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT:
-			setProcessComponent((ProcessComponent) newValue);
+			set_processComponent((ProcessComponent) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -152,10 +152,11 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT:
-			setProcessComponent((ProcessComponent) null);
+			set_processComponent((ProcessComponent) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -166,16 +167,11 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT:
-			return processComponent != null;
+			return _processComponent != null;
 		}
 		return super.eIsSet(featureID);
 	}

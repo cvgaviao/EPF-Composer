@@ -38,10 +38,6 @@ public abstract class TypeImpl extends PackageableElementImpl implements Type {
 	 */
 	protected TypeImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public abstract class TypeImpl extends PackageableElementImpl implements Type {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TYPE;
 	}

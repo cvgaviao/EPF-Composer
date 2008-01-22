@@ -40,10 +40,6 @@ public abstract class ElementImpl extends MultiResourceEObject implements
 	 */
 	protected ElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -51,6 +47,7 @@ public abstract class ElementImpl extends MultiResourceEObject implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ELEMENT;
 	}

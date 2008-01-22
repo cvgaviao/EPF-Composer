@@ -14,12 +14,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.epf.uma.EstimationConsiderations;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
@@ -36,6 +36,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.epf.uma.impl.WorkProductImpl#getFulfills <em>Fulfills</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductImpl#getReports <em>Reports</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductImpl#getTemplates <em>Templates</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductImpl#getToolMentors <em>Tool Mentors</em>}</li>
@@ -45,14 +46,23 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  *
  * @generated
  */
-public abstract class WorkProductImpl extends ContentElementImpl implements
-		WorkProduct {
+public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The cached value of the '{@link #getFulfills() <em>Fulfills</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFulfills()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<FulfillableElement> fulfills;
 
 	/**
 	 * The cached value of the '{@link #getReports() <em>Reports</em>}' reference list.
@@ -62,7 +72,7 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList reports = null;
+	protected EList<Report> reports;
 
 	/**
 	 * The cached value of the '{@link #getTemplates() <em>Templates</em>}' reference list.
@@ -72,7 +82,7 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList templates = null;
+	protected EList<Template> templates;
 
 	/**
 	 * The cached value of the '{@link #getToolMentors() <em>Tool Mentors</em>}' reference list.
@@ -82,7 +92,7 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList toolMentors = null;
+	protected EList<ToolMentor> toolMentors;
 
 	/**
 	 * The cached value of the '{@link #getEstimationConsiderations() <em>Estimation Considerations</em>}' reference list.
@@ -92,7 +102,7 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList estimationConsiderations = null;
+	protected EList<EstimationConsiderations> estimationConsiderations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -101,10 +111,6 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 */
 	protected WorkProductImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -112,6 +118,7 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_PRODUCT;
 	}
@@ -119,23 +126,15 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
 	 */
-	public List getModifiedBy() {
-		List outputFrom = AssociationHelper.getOutputtingTasks(this); //this.getOutputFrom();
-		List modifies = new BasicEList();
-		if (outputFrom != null && outputFrom.size() > 0) {
-			for (Iterator it = outputFrom.iterator(); it.hasNext();) {
-				//	for each task get, get primary performer role
-				Task task = (Task) it.next();
-				Role modifiedByRole = task.getPerformedBy();
-				if (modifiedByRole != null) {
-					if (!modifies.contains(modifiedByRole)) {
-						modifies.add(modifiedByRole);
-					}
-				}
-			}
+	public List<FulfillableElement> getFulfills() {
+		if (fulfills == null) {
+			fulfills = new EObjectResolvingEList<FulfillableElement>(
+					FulfillableElement.class, this,
+					UmaPackage.WORK_PRODUCT__FULFILLS);
 		}
-		return modifies;
+		return fulfills;
 	}
 
 	/**
@@ -143,9 +142,9 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getReports() {
+	public List<Report> getReports() {
 		if (reports == null) {
-			reports = new EObjectResolvingEList(Report.class, this,
+			reports = new EObjectResolvingEList<Report>(Report.class, this,
 					UmaPackage.WORK_PRODUCT__REPORTS);
 		}
 		return reports;
@@ -156,10 +155,10 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getTemplates() {
+	public List<Template> getTemplates() {
 		if (templates == null) {
-			templates = new EObjectResolvingEList(Template.class, this,
-					UmaPackage.WORK_PRODUCT__TEMPLATES);
+			templates = new EObjectResolvingEList<Template>(Template.class,
+					this, UmaPackage.WORK_PRODUCT__TEMPLATES);
 		}
 		return templates;
 	}
@@ -169,9 +168,10 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getToolMentors() {
+	public List<ToolMentor> getToolMentors() {
 		if (toolMentors == null) {
-			toolMentors = new EObjectResolvingEList(ToolMentor.class, this,
+			toolMentors = new EObjectResolvingEList<ToolMentor>(
+					ToolMentor.class, this,
 					UmaPackage.WORK_PRODUCT__TOOL_MENTORS);
 		}
 		return toolMentors;
@@ -182,9 +182,9 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getEstimationConsiderations() {
+	public List<EstimationConsiderations> getEstimationConsiderations() {
 		if (estimationConsiderations == null) {
-			estimationConsiderations = new EObjectResolvingEList(
+			estimationConsiderations = new EObjectResolvingEList<EstimationConsiderations>(
 					EstimationConsiderations.class, this,
 					UmaPackage.WORK_PRODUCT__ESTIMATION_CONSIDERATIONS);
 		}
@@ -196,8 +196,11 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case UmaPackage.WORK_PRODUCT__FULFILLS:
+			return getFulfills();
 		case UmaPackage.WORK_PRODUCT__REPORTS:
 			return getReports();
 		case UmaPackage.WORK_PRODUCT__TEMPLATES:
@@ -215,23 +218,32 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+		case UmaPackage.WORK_PRODUCT__FULFILLS:
+			getFulfills().clear();
+			getFulfills().addAll(
+					(Collection<? extends FulfillableElement>) newValue);
+			return;
 		case UmaPackage.WORK_PRODUCT__REPORTS:
 			getReports().clear();
-			getReports().addAll((Collection) newValue);
+			getReports().addAll((Collection<? extends Report>) newValue);
 			return;
 		case UmaPackage.WORK_PRODUCT__TEMPLATES:
 			getTemplates().clear();
-			getTemplates().addAll((Collection) newValue);
+			getTemplates().addAll((Collection<? extends Template>) newValue);
 			return;
 		case UmaPackage.WORK_PRODUCT__TOOL_MENTORS:
 			getToolMentors().clear();
-			getToolMentors().addAll((Collection) newValue);
+			getToolMentors()
+					.addAll((Collection<? extends ToolMentor>) newValue);
 			return;
 		case UmaPackage.WORK_PRODUCT__ESTIMATION_CONSIDERATIONS:
 			getEstimationConsiderations().clear();
-			getEstimationConsiderations().addAll((Collection) newValue);
+			getEstimationConsiderations().addAll(
+					(Collection<? extends EstimationConsiderations>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -242,8 +254,12 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+		case UmaPackage.WORK_PRODUCT__FULFILLS:
+			getFulfills().clear();
+			return;
 		case UmaPackage.WORK_PRODUCT__REPORTS:
 			getReports().clear();
 			return;
@@ -265,14 +281,11 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
+		case UmaPackage.WORK_PRODUCT__FULFILLS:
+			return fulfills != null && !fulfills.isEmpty();
 		case UmaPackage.WORK_PRODUCT__REPORTS:
 			return reports != null && !reports.isEmpty();
 		case UmaPackage.WORK_PRODUCT__TEMPLATES:
@@ -284,6 +297,42 @@ public abstract class WorkProductImpl extends ContentElementImpl implements
 					&& !estimationConsiderations.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == FulfillableElement.class) {
+			switch (derivedFeatureID) {
+			case UmaPackage.WORK_PRODUCT__FULFILLS:
+				return UmaPackage.FULFILLABLE_ELEMENT__FULFILLS;
+			default:
+				return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == FulfillableElement.class) {
+			switch (baseFeatureID) {
+			case UmaPackage.FULFILLABLE_ELEMENT__FULFILLS:
+				return UmaPackage.WORK_PRODUCT__FULFILLS;
+			default:
+				return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //WorkProductImpl

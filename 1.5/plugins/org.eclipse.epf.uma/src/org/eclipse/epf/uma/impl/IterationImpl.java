@@ -38,10 +38,6 @@ public class IterationImpl extends ActivityImpl implements Iteration {
 	 */
 	protected IterationImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class IterationImpl extends ActivityImpl implements Iteration {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ITERATION;
 	}

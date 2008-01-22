@@ -76,6 +76,15 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	protected String activityEntryState = ACTIVITY_ENTRY_STATE_EDEFAULT;
 
 	/**
+	 * This is true if the Activity Entry State attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean activityEntryStateESet;
+
+	/**
 	 * The default value of the '{@link #getActivityExitState() <em>Activity Exit State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,6 +105,15 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	protected String activityExitState = ACTIVITY_EXIT_STATE_EDEFAULT;
 
 	/**
+	 * This is true if the Activity Exit State attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean activityExitStateESet;
+
+	/**
 	 * The cached value of the '{@link #getWorkProduct() <em>Work Product</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,7 +121,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected WorkProduct workProduct = null;
+	protected WorkProduct workProduct;
 
 	/**
 	 * The cached value of the '{@link #getImpactedBy() <em>Impacted By</em>}' reference list.
@@ -113,7 +131,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList impactedBy = null;
+	protected EList<WorkProductDescriptor> impactedBy;
 
 	/**
 	 * The cached value of the '{@link #getImpacts() <em>Impacts</em>}' reference list.
@@ -123,7 +141,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList impacts = null;
+	protected EList<WorkProductDescriptor> impacts;
 
 	/**
 	 * The cached value of the '{@link #getDeliverableParts() <em>Deliverable Parts</em>}' reference list.
@@ -133,7 +151,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList deliverableParts = null;
+	protected EList<WorkProductDescriptor> deliverableParts;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -142,10 +160,6 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 */
 	protected WorkProductDescriptorImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -153,6 +167,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR;
 	}
@@ -174,10 +189,39 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	public void setActivityEntryState(String newActivityEntryState) {
 		String oldActivityEntryState = activityEntryState;
 		activityEntryState = newActivityEntryState;
+		boolean oldActivityEntryStateESet = activityEntryStateESet;
+		activityEntryStateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE,
-					oldActivityEntryState, activityEntryState));
+					oldActivityEntryState, activityEntryState,
+					!oldActivityEntryStateESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetActivityEntryState() {
+		String oldActivityEntryState = activityEntryState;
+		boolean oldActivityEntryStateESet = activityEntryStateESet;
+		activityEntryState = ACTIVITY_ENTRY_STATE_EDEFAULT;
+		activityEntryStateESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE,
+					oldActivityEntryState, ACTIVITY_ENTRY_STATE_EDEFAULT,
+					oldActivityEntryStateESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetActivityEntryState() {
+		return activityEntryStateESet;
 	}
 
 	/**
@@ -197,10 +241,39 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	public void setActivityExitState(String newActivityExitState) {
 		String oldActivityExitState = activityExitState;
 		activityExitState = newActivityExitState;
+		boolean oldActivityExitStateESet = activityExitStateESet;
+		activityExitStateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE,
-					oldActivityExitState, activityExitState));
+					oldActivityExitState, activityExitState,
+					!oldActivityExitStateESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetActivityExitState() {
+		String oldActivityExitState = activityExitState;
+		boolean oldActivityExitStateESet = activityExitStateESet;
+		activityExitState = ACTIVITY_EXIT_STATE_EDEFAULT;
+		activityExitStateESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE,
+					oldActivityExitState, ACTIVITY_EXIT_STATE_EDEFAULT,
+					oldActivityExitStateESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetActivityExitState() {
+		return activityExitStateESet;
 	}
 
 	/**
@@ -250,9 +323,9 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getImpactedBy() {
+	public List<WorkProductDescriptor> getImpactedBy() {
 		if (impactedBy == null) {
-			impactedBy = new EObjectWithInverseResolvingEList.ManyInverse(
+			impactedBy = new EObjectWithInverseResolvingEList.ManyInverse<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTS);
@@ -265,9 +338,9 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getImpacts() {
+	public List<WorkProductDescriptor> getImpacts() {
 		if (impacts == null) {
-			impacts = new EObjectWithInverseResolvingEList.ManyInverse(
+			impacts = new EObjectWithInverseResolvingEList.ManyInverse<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTS,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY);
@@ -280,9 +353,9 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getDeliverableParts() {
+	public List<WorkProductDescriptor> getDeliverableParts() {
 		if (deliverableParts == null) {
-			deliverableParts = new EObjectResolvingEList(
+			deliverableParts = new EObjectResolvingEList<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS);
 		}
@@ -294,13 +367,17 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
-			return ((InternalEList) getImpactedBy()).basicAdd(otherEnd, msgs);
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getImpactedBy())
+					.basicAdd(otherEnd, msgs);
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTS:
-			return ((InternalEList) getImpacts()).basicAdd(otherEnd, msgs);
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getImpacts())
+					.basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -310,14 +387,16 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
-			return ((InternalEList) getImpactedBy())
-					.basicRemove(otherEnd, msgs);
+			return ((InternalEList<?>) getImpactedBy()).basicRemove(otherEnd,
+					msgs);
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTS:
-			return ((InternalEList) getImpacts()).basicRemove(otherEnd, msgs);
+			return ((InternalEList<?>) getImpacts())
+					.basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -327,6 +406,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
@@ -352,6 +432,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
@@ -365,15 +447,18 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
 			getImpactedBy().clear();
-			getImpactedBy().addAll((Collection) newValue);
+			getImpactedBy().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTS:
 			getImpacts().clear();
-			getImpacts().addAll((Collection) newValue);
+			getImpacts().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS:
 			getDeliverableParts().clear();
-			getDeliverableParts().addAll((Collection) newValue);
+			getDeliverableParts().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -384,13 +469,14 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
-			setActivityEntryState(ACTIVITY_ENTRY_STATE_EDEFAULT);
+			unsetActivityEntryState();
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE:
-			setActivityExitState(ACTIVITY_EXIT_STATE_EDEFAULT);
+			unsetActivityExitState();
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
 			setWorkProduct((WorkProduct) null);
@@ -413,20 +499,13 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
-			return ACTIVITY_ENTRY_STATE_EDEFAULT == null ? activityEntryState != null
-					: !ACTIVITY_ENTRY_STATE_EDEFAULT.equals(activityEntryState);
+			return isSetActivityEntryState();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE:
-			return ACTIVITY_EXIT_STATE_EDEFAULT == null ? activityExitState != null
-					: !ACTIVITY_EXIT_STATE_EDEFAULT.equals(activityExitState);
+			return isSetActivityExitState();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
 			return workProduct != null;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
@@ -444,15 +523,22 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (activityEntryState: "); //$NON-NLS-1$
-		result.append(activityEntryState);
+		if (activityEntryStateESet)
+			result.append(activityEntryState);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", activityExitState: "); //$NON-NLS-1$
-		result.append(activityExitState);
+		if (activityExitStateESet)
+			result.append(activityExitState);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

@@ -20,6 +20,7 @@ import java.util.List;
  * <!-- begin-model-doc -->
  * A Process Planning Template is a special Process that is prepared for instantiation by a project planning tool.  Typically, it is created based on a Process such as a Delivery Process as a whole (e.g. in case of a waterfall-based development approach) or in parts (e.g. in case of an iterative development approach).
  * A Process Planning Template represents a partially finished plan for a concrete project.  It uses the same information structures as all other Process Types to represent templates for project plans.  However, certain planning decisions have already been applied to the template as well as information has been removed and/or reformatted to be ready for export to a specific planning tool.  Examples for such decisions are: a template has been created to represent a plan for a particular Iteration in an iterative development project, which fr example distinguishes early from late iterations in the Elaboration phase of a project; if the targeted planning tool cannot represent input and output of Task, then these have been removed from the structure; certain repetitions have been already applied, e.g. stating that a cycle of specific Task grouped in an Activity have to be repeated n-times; etc.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -45,9 +46,9 @@ public interface ProcessPlanningTemplate extends org.eclipse.epf.uma.Process {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Based On Processes</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcessPlanningTemplate_BasedOnProcesses()
-	 * @model type="org.eclipse.epf.uma.Process" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getBasedOnProcesses();
+	List<org.eclipse.epf.uma.Process> getBasedOnProcesses();
 
 } // ProcessPlanningTemplate

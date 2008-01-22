@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -53,7 +54,8 @@ public class TaskDescriptorItemProvider extends
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -103,11 +105,11 @@ public class TaskDescriptorItemProvider extends
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_TaskDescriptor_Task_feature"), //$NON-NLS-1$
+						getString("_UI_TaskDescriptor_task_feature"), //$NON-NLS-1$
 						getString(
-								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_Task_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_task_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__TASK, true, false,
-						false, null, null, null));
+						true, null, null, null));
 	}
 
 	/**
@@ -126,7 +128,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_additionallyPerformedBy_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -145,7 +147,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_assistedBy_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__ASSISTED_BY, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
@@ -164,7 +166,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_externalInput_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__EXTERNAL_INPUT,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -183,7 +185,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_mandatoryInput_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__MANDATORY_INPUT,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -202,7 +204,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_optionalInput_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__OPTIONAL_INPUT,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -221,7 +223,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_output_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__OUTPUT, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
@@ -240,7 +242,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_performedPrimarilyBy_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -259,7 +261,7 @@ public class TaskDescriptorItemProvider extends
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_selectedSteps_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__SELECTED_STEPS,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -268,6 +270,7 @@ public class TaskDescriptorItemProvider extends
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage(
 				"full/obj16/TaskDescriptor")); //$NON-NLS-1$
@@ -279,6 +282,7 @@ public class TaskDescriptorItemProvider extends
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((TaskDescriptor) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_TaskDescriptor_type") : //$NON-NLS-1$
@@ -292,6 +296,7 @@ public class TaskDescriptorItemProvider extends
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -311,8 +316,9 @@ public class TaskDescriptorItemProvider extends
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -322,6 +328,7 @@ public class TaskDescriptorItemProvider extends
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

@@ -102,7 +102,7 @@ implements IWorkbenchPartAction
 			syncSet.add(UmaPackage.eINSTANCE.getNamedElement_Name());
 		}
 		if (choices.getSyncPresName() == SynchronizationChoices.SYNC_FROM_CONETNT){
-			syncSet.add(UmaPackage.eINSTANCE.getDescribableElement_PresentationName());
+			syncSet.add(UmaPackage.eINSTANCE.getMethodElement_PresentationName());
 		}
 		if (choices.getSyncBriefDesc() == SynchronizationChoices.SYNC_FROM_CONETNT){
 			syncSet.add(UmaPackage.eINSTANCE.getMethodElement_BriefDescription());

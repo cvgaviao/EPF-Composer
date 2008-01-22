@@ -59,16 +59,21 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	protected String body = BODY_EDEFAULT;
 
 	/**
+	 * This is true if the Body attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean bodyESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected ConstraintImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -76,6 +81,7 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CONSTRAINT;
 	}
@@ -97,9 +103,11 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	public void setBody(String newBody) {
 		String oldBody = body;
 		body = newBody;
+		boolean oldBodyESet = bodyESet;
+		bodyESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.CONSTRAINT__BODY, oldBody, body));
+					UmaPackage.CONSTRAINT__BODY, oldBody, body, !oldBodyESet));
 	}
 
 	/**
@@ -107,6 +115,32 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetBody() {
+		String oldBody = body;
+		boolean oldBodyESet = bodyESet;
+		body = BODY_EDEFAULT;
+		bodyESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.CONSTRAINT__BODY, oldBody, BODY_EDEFAULT,
+					oldBodyESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetBody() {
+		return bodyESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.CONSTRAINT__BODY:
@@ -120,6 +154,7 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.CONSTRAINT__BODY:
@@ -134,10 +169,11 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CONSTRAINT__BODY:
-			setBody(BODY_EDEFAULT);
+			unsetBody();
 			return;
 		}
 		super.eUnset(featureID);
@@ -148,17 +184,11 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CONSTRAINT__BODY:
-			return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT
-					.equals(body);
+			return isSetBody();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -168,13 +198,17 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (body: "); //$NON-NLS-1$
-		result.append(body);
+		if (bodyESet)
+			result.append(body);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

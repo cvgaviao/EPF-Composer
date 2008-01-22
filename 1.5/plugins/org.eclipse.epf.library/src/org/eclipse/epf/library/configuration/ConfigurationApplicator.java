@@ -36,7 +36,7 @@ public class ConfigurationApplicator implements IConfigurationApplicator {
 			MethodConfiguration config) {
 		// special handling for presentation name of breakdown element
 		//
-		if(attribute == UmaPackage.eINSTANCE.getDescribableElement_PresentationName()) {
+		if(attribute == UmaPackage.eINSTANCE.getMethodElement_PresentationName()) {
 			if(e instanceof BreakdownElement) {
 				return ProcessUtil.getPresentationName((BreakdownElement) e);
 			}

@@ -122,7 +122,7 @@ public class NameConstraint extends AbstractModelConstraint {
 					validator = IValidatorFactory.INSTANCE.createPresentationNameValidator(parent, cc);
 					msg = validator.isValid(cc.getPresentationName());
 					if(msg != null) {
-						multiStatus.add(new ValidationStatus(IStatus.ERROR, 0, msg, cc, UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME));
+						multiStatus.add(new ValidationStatus(IStatus.ERROR, 0, msg, cc, UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME));
 					}
 				}
 			}
@@ -139,7 +139,7 @@ public class NameConstraint extends AbstractModelConstraint {
 					validator = IValidatorFactory.INSTANCE.createPresentationNameValidator(eObj.eContainer(), de);
 					msg = validator.isValid(de.getPresentationName());
 					if(msg != null) {
-						multiStatus.add(new ValidationStatus(IStatus.ERROR, 0, msg, e, UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME));
+						multiStatus.add(new ValidationStatus(IStatus.ERROR, 0, msg, e, UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME));
 					}
 				}*/
 			}
@@ -263,7 +263,7 @@ public class NameConstraint extends AbstractModelConstraint {
 								childFeature,
 								childFilter,
 								child,
-								UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME);
+								UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME);
 				DescribableElement e = (DescribableElement) child;
 				String msg = validator.isValid(e.getPresentationName());
 				if (msg != null) {
@@ -273,7 +273,7 @@ public class NameConstraint extends AbstractModelConstraint {
 									0,
 									msg,
 									e,
-									UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME));
+									UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME));
 				}
 			}
 		}

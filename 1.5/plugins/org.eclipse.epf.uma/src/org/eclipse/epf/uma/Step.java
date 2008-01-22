@@ -18,6 +18,7 @@ package org.eclipse.epf.uma;
  * <!-- begin-model-doc -->
  * A Step is a Section and Work Definition that is used to organize Tasks into parts or subunits of work.  Steps inherit the subSections decomposition from Section and can therefore describe Sub-Steps nested into Steps.
  * A Step describes a meaningful and consist part of the overall work described for a Task.  The collection of Steps defined for a Task represents all the work that should be done to achieve the overall development goal of the Task.  Not all steps are necessarily performed each time a Task is invoked in a Process (see Task Descriptor), so they can also be expressed in the form of alternate 'flows' of work.  Different ways of achieving the same development goal can then be 'assembled' by selecting different combinations of steps when applying the Task in a Process.  Typical kinds of steps a Task author should consider are: Thinking steps: where the individual roles understand the nature of the task, gathers and examines the input artifacts, and formulates the outcome. Performing steps: where the individual roles create or update some artifacts. Reviewing steps: where the individual roles inspects the results against some criteria.
+ * 
  * <!-- end-model-doc -->
  *
  *

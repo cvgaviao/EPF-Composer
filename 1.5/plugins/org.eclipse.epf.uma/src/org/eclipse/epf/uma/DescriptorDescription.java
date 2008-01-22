@@ -36,9 +36,11 @@ public interface DescriptorDescription extends BreakdownElementDescription {
 	 * A Descriptor might add refinements to the main description of the Content Element it refers to.  For example, it could provide additional information about a Work Product relevant for the specific point in time in the process this Work Product type is being used.  It could describe additional skills needed for a Role at that particular point in time in a process, etc. 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Refined Description</em>' attribute.
+	 * @see #isSetRefinedDescription()
+	 * @see #unsetRefinedDescription()
 	 * @see #setRefinedDescription(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDescriptorDescription_RefinedDescription()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getRefinedDescription();
@@ -48,9 +50,34 @@ public interface DescriptorDescription extends BreakdownElementDescription {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Refined Description</em>' attribute.
+	 * @see #isSetRefinedDescription()
+	 * @see #unsetRefinedDescription()
 	 * @see #getRefinedDescription()
 	 * @generated
 	 */
 	void setRefinedDescription(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.DescriptorDescription#getRefinedDescription <em>Refined Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetRefinedDescription()
+	 * @see #getRefinedDescription()
+	 * @see #setRefinedDescription(String)
+	 * @generated
+	 */
+	void unsetRefinedDescription();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.DescriptorDescription#getRefinedDescription <em>Refined Description</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Refined Description</em>' attribute is set.
+	 * @see #unsetRefinedDescription()
+	 * @see #getRefinedDescription()
+	 * @see #setRefinedDescription(String)
+	 * @generated
+	 */
+	boolean isSetRefinedDescription();
 
 } // DescriptorDescription

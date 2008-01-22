@@ -286,7 +286,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 										IActionManager.SET,
 										element,
 										UmaPackage.eINSTANCE
-												.getDescribableElement_PresentationName(),
+												.getMethodElement_PresentationName(),
 										presentationNameText.getText(), -1);
 						if (!status) {
 							return;
@@ -312,7 +312,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 									IActionManager.SET,
 									element,
 									UmaPackage.eINSTANCE
-											.getDescribableElement_PresentationName(),
+											.getMethodElement_PresentationName(),
 									presentationNameText.getText(), -1);
 					if (!status) {
 						return;
@@ -390,7 +390,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 
 			public void handleEvent(Event event) {
 				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(event.widget,
-						UmaPackage.eINSTANCE.getDescribableElement_PresentationName());
+						UmaPackage.eINSTANCE.getMethodElement_PresentationName());
 			}
 			
 		});		

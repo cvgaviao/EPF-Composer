@@ -79,7 +79,7 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList reusedPackages = null;
+	protected EList<MethodPackage> reusedPackages;
 
 	/**
 	 * The cached value of the '{@link #getChildPackages() <em>Child Packages</em>}' containment reference list.
@@ -89,7 +89,7 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList childPackages = null;
+	protected EList<MethodPackage> childPackages;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -98,10 +98,6 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 */
 	protected MethodPackageImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -109,6 +105,7 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_PACKAGE;
 	}
@@ -140,10 +137,11 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getReusedPackages() {
+	public List<MethodPackage> getReusedPackages() {
 		if (reusedPackages == null) {
-			reusedPackages = new EObjectResolvingEList(MethodPackage.class,
-					this, UmaPackage.METHOD_PACKAGE__REUSED_PACKAGES);
+			reusedPackages = new EObjectResolvingEList<MethodPackage>(
+					MethodPackage.class, this,
+					UmaPackage.METHOD_PACKAGE__REUSED_PACKAGES);
 		}
 		return reusedPackages;
 	}
@@ -153,9 +151,9 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getChildPackages() {
+	public List<MethodPackage> getChildPackages() {
 		if (childPackages == null) {
-			childPackages = new EObjectContainmentEList.Resolving(
+			childPackages = new EObjectContainmentEList.Resolving<MethodPackage>(
 					MethodPackage.class, this,
 					UmaPackage.METHOD_PACKAGE__CHILD_PACKAGES);
 		}
@@ -167,12 +165,13 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PACKAGE__CHILD_PACKAGES:
-			return ((InternalEList) getChildPackages()).basicRemove(otherEnd,
-					msgs);
+			return ((InternalEList<?>) getChildPackages()).basicRemove(
+					otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -182,6 +181,7 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PACKAGE__GLOBAL:
@@ -199,6 +199,8 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PACKAGE__GLOBAL:
@@ -206,11 +208,13 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 			return;
 		case UmaPackage.METHOD_PACKAGE__REUSED_PACKAGES:
 			getReusedPackages().clear();
-			getReusedPackages().addAll((Collection) newValue);
+			getReusedPackages().addAll(
+					(Collection<? extends MethodPackage>) newValue);
 			return;
 		case UmaPackage.METHOD_PACKAGE__CHILD_PACKAGES:
 			getChildPackages().clear();
-			getChildPackages().addAll((Collection) newValue);
+			getChildPackages().addAll(
+					(Collection<? extends MethodPackage>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -221,6 +225,7 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PACKAGE__GLOBAL:
@@ -241,13 +246,8 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_PACKAGE__GLOBAL:
 			return GLOBAL_EDEFAULT == null ? global != null : !GLOBAL_EDEFAULT
@@ -265,6 +265,7 @@ public abstract class MethodPackageImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

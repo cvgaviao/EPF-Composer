@@ -71,7 +71,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * @generated
 	 * @ordered
 	 */
-	protected DiagramElement referenced = null;
+	protected DiagramElement referenced;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -80,10 +80,6 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 */
 	protected ReferenceImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -91,6 +87,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.REFERENCE;
 	}
@@ -198,6 +195,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -216,6 +214,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -230,6 +229,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.REFERENCE__IS_INDIVIDUAL_REPRESENTATION:
@@ -247,6 +247,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.REFERENCE__IS_INDIVIDUAL_REPRESENTATION:
@@ -264,6 +265,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.REFERENCE__IS_INDIVIDUAL_REPRESENTATION:
@@ -281,13 +283,8 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.REFERENCE__IS_INDIVIDUAL_REPRESENTATION:
 			return IS_INDIVIDUAL_REPRESENTATION_EDEFAULT == null ? isIndividualRepresentation != null
@@ -304,6 +301,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

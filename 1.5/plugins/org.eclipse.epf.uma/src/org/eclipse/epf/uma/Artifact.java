@@ -20,6 +20,7 @@ import java.util.List;
  * <!-- begin-model-doc -->
  * Artifact is a Work Product that provides a description and definition for tangible work product types. Artifacts may be composed of other artifacts. For example, a model artifact can be composed of model elements, which are also artifacts.
  * Artifacts are tangible work products consumed, produced, or modified by Tasks.  It may serve as a basis for defining reusable assets.  Roles use Artifacts to perform Tasks and produce Artifacts in the course of performing Tasks.  Artifacts are the responsibility of a single Role, making responsibility easy to identify and understand, and promoting the idea that every piece of information produced in the method requires the appropriate set of skills. Even though one role might "own" a specific type of Artifacts, other roles can still use the Artifacts; perhaps even update them if the Role has been given permission to do so.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -48,7 +49,7 @@ public interface Artifact extends WorkProduct {
 	 * @see #setContainerArtifact(Artifact)
 	 * @see org.eclipse.epf.uma.UmaPackage#getArtifact_ContainerArtifact()
 	 * @see org.eclipse.epf.uma.Artifact#getContainedArtifacts
-	 * @model opposite="containedArtifacts"
+	 * @model opposite="containedArtifacts" transient="false" ordered="false"
 	 * @generated
 	 */
 	Artifact getContainerArtifact();
@@ -76,9 +77,9 @@ public interface Artifact extends WorkProduct {
 	 * @return the value of the '<em>Contained Artifacts</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getArtifact_ContainedArtifacts()
 	 * @see org.eclipse.epf.uma.Artifact#getContainerArtifact
-	 * @model type="org.eclipse.epf.uma.Artifact" opposite="containerArtifact" containment="true" resolveProxies="true" ordered="false"
+	 * @model opposite="containerArtifact" containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getContainedArtifacts();
+	List<Artifact> getContainedArtifacts();
 
 } // Artifact

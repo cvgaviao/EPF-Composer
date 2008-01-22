@@ -10,16 +10,26 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma.impl;
 
+import java.util.Collection;
+import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Checklist;
+import org.eclipse.epf.uma.Concept;
+import org.eclipse.epf.uma.Example;
+import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.PlanningData;
+import org.eclipse.epf.uma.ReusableAsset;
+import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.UmaPackage;
 
 /**
@@ -37,6 +47,12 @@ import org.eclipse.epf.uma.UmaPackage;
  *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getPresentedBefore <em>Presented Before</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getPlanningData <em>Planning Data</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getSuperActivities <em>Super Activities</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getChecklists <em>Checklists</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getConcepts <em>Concepts</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getExamples <em>Examples</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getGuidelines <em>Guidelines</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getReusableAssets <em>Reusable Assets</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getSupportingMaterials <em>Supporting Materials</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,6 +88,15 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	protected String prefix = PREFIX_EDEFAULT;
 
 	/**
+	 * This is true if the Prefix attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean prefixESet;
+
+	/**
 	 * The default value of the '{@link #getIsPlanned() <em>Is Planned</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,6 +115,15 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @ordered
 	 */
 	protected Boolean isPlanned = IS_PLANNED_EDEFAULT;
+
+	/**
+	 * This is true if the Is Planned attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isPlannedESet;
 
 	/**
 	 * The default value of the '{@link #getHasMultipleOccurrences() <em>Has Multiple Occurrences</em>}' attribute.
@@ -112,6 +146,15 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	protected Boolean hasMultipleOccurrences = HAS_MULTIPLE_OCCURRENCES_EDEFAULT;
 
 	/**
+	 * This is true if the Has Multiple Occurrences attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean hasMultipleOccurrencesESet;
+
+	/**
 	 * The default value of the '{@link #getIsOptional() <em>Is Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -132,6 +175,15 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	protected Boolean isOptional = IS_OPTIONAL_EDEFAULT;
 
 	/**
+	 * This is true if the Is Optional attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isOptionalESet;
+
+	/**
 	 * The cached value of the '{@link #getPresentedAfter() <em>Presented After</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -139,7 +191,7 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected BreakdownElement presentedAfter = null;
+	protected BreakdownElement presentedAfter;
 
 	/**
 	 * The cached value of the '{@link #getPresentedBefore() <em>Presented Before</em>}' reference.
@@ -149,7 +201,7 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected BreakdownElement presentedBefore = null;
+	protected BreakdownElement presentedBefore;
 
 	/**
 	 * The cached value of the '{@link #getPlanningData() <em>Planning Data</em>}' containment reference.
@@ -159,7 +211,7 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected PlanningData planningData = null;
+	protected PlanningData planningData;
 
 	/**
 	 * The cached value of the '{@link #getSuperActivities() <em>Super Activities</em>}' reference.
@@ -169,7 +221,67 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected Activity superActivities = null;
+	protected Activity superActivities;
+
+	/**
+	 * The cached value of the '{@link #getChecklists() <em>Checklists</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getChecklists()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Checklist> checklists;
+
+	/**
+	 * The cached value of the '{@link #getConcepts() <em>Concepts</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConcepts()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Concept> concepts;
+
+	/**
+	 * The cached value of the '{@link #getExamples() <em>Examples</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExamples()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Example> examples;
+
+	/**
+	 * The cached value of the '{@link #getGuidelines() <em>Guidelines</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGuidelines()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Guideline> guidelines;
+
+	/**
+	 * The cached value of the '{@link #getReusableAssets() <em>Reusable Assets</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReusableAssets()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ReusableAsset> reusableAssets;
+
+	/**
+	 * The cached value of the '{@link #getSupportingMaterials() <em>Supporting Materials</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSupportingMaterials()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SupportingMaterial> supportingMaterials;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -178,10 +290,6 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 */
 	protected BreakdownElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -189,6 +297,7 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.BREAKDOWN_ELEMENT;
 	}
@@ -210,9 +319,37 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setPrefix(String newPrefix) {
 		String oldPrefix = prefix;
 		prefix = newPrefix;
+		boolean oldPrefixESet = prefixESet;
+		prefixESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.BREAKDOWN_ELEMENT__PREFIX, oldPrefix, prefix));
+					UmaPackage.BREAKDOWN_ELEMENT__PREFIX, oldPrefix, prefix,
+					!oldPrefixESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetPrefix() {
+		String oldPrefix = prefix;
+		boolean oldPrefixESet = prefixESet;
+		prefix = PREFIX_EDEFAULT;
+		prefixESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.BREAKDOWN_ELEMENT__PREFIX, oldPrefix,
+					PREFIX_EDEFAULT, oldPrefixESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetPrefix() {
+		return prefixESet;
 	}
 
 	/**
@@ -232,10 +369,37 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setIsPlanned(Boolean newIsPlanned) {
 		Boolean oldIsPlanned = isPlanned;
 		isPlanned = newIsPlanned;
+		boolean oldIsPlannedESet = isPlannedESet;
+		isPlannedESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED, oldIsPlanned,
-					isPlanned));
+					isPlanned, !oldIsPlannedESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsPlanned() {
+		Boolean oldIsPlanned = isPlanned;
+		boolean oldIsPlannedESet = isPlannedESet;
+		isPlanned = IS_PLANNED_EDEFAULT;
+		isPlannedESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED, oldIsPlanned,
+					IS_PLANNED_EDEFAULT, oldIsPlannedESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsPlanned() {
+		return isPlannedESet;
 	}
 
 	/**
@@ -255,10 +419,40 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setHasMultipleOccurrences(Boolean newHasMultipleOccurrences) {
 		Boolean oldHasMultipleOccurrences = hasMultipleOccurrences;
 		hasMultipleOccurrences = newHasMultipleOccurrences;
+		boolean oldHasMultipleOccurrencesESet = hasMultipleOccurrencesESet;
+		hasMultipleOccurrencesESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES,
-					oldHasMultipleOccurrences, hasMultipleOccurrences));
+					oldHasMultipleOccurrences, hasMultipleOccurrences,
+					!oldHasMultipleOccurrencesESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetHasMultipleOccurrences() {
+		Boolean oldHasMultipleOccurrences = hasMultipleOccurrences;
+		boolean oldHasMultipleOccurrencesESet = hasMultipleOccurrencesESet;
+		hasMultipleOccurrences = HAS_MULTIPLE_OCCURRENCES_EDEFAULT;
+		hasMultipleOccurrencesESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES,
+					oldHasMultipleOccurrences,
+					HAS_MULTIPLE_OCCURRENCES_EDEFAULT,
+					oldHasMultipleOccurrencesESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetHasMultipleOccurrences() {
+		return hasMultipleOccurrencesESet;
 	}
 
 	/**
@@ -278,10 +472,37 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setIsOptional(Boolean newIsOptional) {
 		Boolean oldIsOptional = isOptional;
 		isOptional = newIsOptional;
+		boolean oldIsOptionalESet = isOptionalESet;
+		isOptionalESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL, oldIsOptional,
-					isOptional));
+					isOptional, !oldIsOptionalESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsOptional() {
+		Boolean oldIsOptional = isOptional;
+		boolean oldIsOptionalESet = isOptionalESet;
+		isOptional = IS_OPTIONAL_EDEFAULT;
+		isOptionalESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL, oldIsOptional,
+					IS_OPTIONAL_EDEFAULT, oldIsOptionalESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsOptional() {
+		return isOptionalESet;
 	}
 
 	/**
@@ -540,6 +761,87 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<Checklist> getChecklists() {
+		if (checklists == null) {
+			checklists = new EObjectResolvingEList<Checklist>(Checklist.class,
+					this, UmaPackage.BREAKDOWN_ELEMENT__CHECKLISTS);
+		}
+		return checklists;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Concept> getConcepts() {
+		if (concepts == null) {
+			concepts = new EObjectResolvingEList<Concept>(Concept.class, this,
+					UmaPackage.BREAKDOWN_ELEMENT__CONCEPTS);
+		}
+		return concepts;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Example> getExamples() {
+		if (examples == null) {
+			examples = new EObjectResolvingEList<Example>(Example.class, this,
+					UmaPackage.BREAKDOWN_ELEMENT__EXAMPLES);
+		}
+		return examples;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Guideline> getGuidelines() {
+		if (guidelines == null) {
+			guidelines = new EObjectResolvingEList<Guideline>(Guideline.class,
+					this, UmaPackage.BREAKDOWN_ELEMENT__GUIDELINES);
+		}
+		return guidelines;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<ReusableAsset> getReusableAssets() {
+		if (reusableAssets == null) {
+			reusableAssets = new EObjectResolvingEList<ReusableAsset>(
+					ReusableAsset.class, this,
+					UmaPackage.BREAKDOWN_ELEMENT__REUSABLE_ASSETS);
+		}
+		return reusableAssets;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<SupportingMaterial> getSupportingMaterials() {
+		if (supportingMaterials == null) {
+			supportingMaterials = new EObjectResolvingEList<SupportingMaterial>(
+					SupportingMaterial.class, this,
+					UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS);
+		}
+		return supportingMaterials;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -558,6 +860,7 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -574,6 +877,7 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT__PREFIX:
@@ -600,6 +904,18 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 			if (resolve)
 				return getSuperActivities();
 			return basicGetSuperActivities();
+		case UmaPackage.BREAKDOWN_ELEMENT__CHECKLISTS:
+			return getChecklists();
+		case UmaPackage.BREAKDOWN_ELEMENT__CONCEPTS:
+			return getConcepts();
+		case UmaPackage.BREAKDOWN_ELEMENT__EXAMPLES:
+			return getExamples();
+		case UmaPackage.BREAKDOWN_ELEMENT__GUIDELINES:
+			return getGuidelines();
+		case UmaPackage.BREAKDOWN_ELEMENT__REUSABLE_ASSETS:
+			return getReusableAssets();
+		case UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS:
+			return getSupportingMaterials();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -609,6 +925,8 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT__PREFIX:
@@ -635,6 +953,32 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 		case UmaPackage.BREAKDOWN_ELEMENT__SUPER_ACTIVITIES:
 			setSuperActivities((Activity) newValue);
 			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__CHECKLISTS:
+			getChecklists().clear();
+			getChecklists().addAll((Collection<? extends Checklist>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__CONCEPTS:
+			getConcepts().clear();
+			getConcepts().addAll((Collection<? extends Concept>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__EXAMPLES:
+			getExamples().clear();
+			getExamples().addAll((Collection<? extends Example>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__GUIDELINES:
+			getGuidelines().clear();
+			getGuidelines().addAll((Collection<? extends Guideline>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__REUSABLE_ASSETS:
+			getReusableAssets().clear();
+			getReusableAssets().addAll(
+					(Collection<? extends ReusableAsset>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS:
+			getSupportingMaterials().clear();
+			getSupportingMaterials().addAll(
+					(Collection<? extends SupportingMaterial>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -644,19 +988,20 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT__PREFIX:
-			setPrefix(PREFIX_EDEFAULT);
+			unsetPrefix();
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED:
-			setIsPlanned(IS_PLANNED_EDEFAULT);
+			unsetIsPlanned();
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES:
-			setHasMultipleOccurrences(HAS_MULTIPLE_OCCURRENCES_EDEFAULT);
+			unsetHasMultipleOccurrences();
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL:
-			setIsOptional(IS_OPTIONAL_EDEFAULT);
+			unsetIsOptional();
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__PRESENTED_AFTER:
 			setPresentedAfter((BreakdownElement) null);
@@ -670,6 +1015,24 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 		case UmaPackage.BREAKDOWN_ELEMENT__SUPER_ACTIVITIES:
 			setSuperActivities((Activity) null);
 			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__CHECKLISTS:
+			getChecklists().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__CONCEPTS:
+			getConcepts().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__EXAMPLES:
+			getExamples().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__GUIDELINES:
+			getGuidelines().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__REUSABLE_ASSETS:
+			getReusableAssets().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS:
+			getSupportingMaterials().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -679,27 +1042,17 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT__PREFIX:
-			return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT
-					.equals(prefix);
+			return isSetPrefix();
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED:
-			return IS_PLANNED_EDEFAULT == null ? isPlanned != null
-					: !IS_PLANNED_EDEFAULT.equals(isPlanned);
+			return isSetIsPlanned();
 		case UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES:
-			return HAS_MULTIPLE_OCCURRENCES_EDEFAULT == null ? hasMultipleOccurrences != null
-					: !HAS_MULTIPLE_OCCURRENCES_EDEFAULT
-							.equals(hasMultipleOccurrences);
+			return isSetHasMultipleOccurrences();
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL:
-			return IS_OPTIONAL_EDEFAULT == null ? isOptional != null
-					: !IS_OPTIONAL_EDEFAULT.equals(isOptional);
+			return isSetIsOptional();
 		case UmaPackage.BREAKDOWN_ELEMENT__PRESENTED_AFTER:
 			return presentedAfter != null;
 		case UmaPackage.BREAKDOWN_ELEMENT__PRESENTED_BEFORE:
@@ -708,6 +1061,19 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 			return planningData != null;
 		case UmaPackage.BREAKDOWN_ELEMENT__SUPER_ACTIVITIES:
 			return superActivities != null;
+		case UmaPackage.BREAKDOWN_ELEMENT__CHECKLISTS:
+			return checklists != null && !checklists.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__CONCEPTS:
+			return concepts != null && !concepts.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__EXAMPLES:
+			return examples != null && !examples.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__GUIDELINES:
+			return guidelines != null && !guidelines.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__REUSABLE_ASSETS:
+			return reusableAssets != null && !reusableAssets.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS:
+			return supportingMaterials != null
+					&& !supportingMaterials.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -717,19 +1083,32 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (prefix: "); //$NON-NLS-1$
-		result.append(prefix);
+		if (prefixESet)
+			result.append(prefix);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", isPlanned: "); //$NON-NLS-1$
-		result.append(isPlanned);
+		if (isPlannedESet)
+			result.append(isPlanned);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", hasMultipleOccurrences: "); //$NON-NLS-1$
-		result.append(hasMultipleOccurrences);
+		if (hasMultipleOccurrencesESet)
+			result.append(hasMultipleOccurrences);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", isOptional: "); //$NON-NLS-1$
-		result.append(isOptional);
+		if (isOptionalESet)
+			result.append(isOptional);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

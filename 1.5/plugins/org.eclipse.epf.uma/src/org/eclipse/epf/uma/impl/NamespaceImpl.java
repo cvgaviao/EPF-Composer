@@ -39,10 +39,6 @@ public abstract class NamespaceImpl extends NamedElementImpl implements
 	 */
 	protected NamespaceImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public abstract class NamespaceImpl extends NamedElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.NAMESPACE;
 	}

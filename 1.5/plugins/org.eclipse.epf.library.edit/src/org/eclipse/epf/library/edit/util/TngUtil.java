@@ -418,7 +418,7 @@ public final class TngUtil {
 			return null;
 		return NameChecker.checkName(TngAdapterFactory.INSTANCE
 				.getWBS_ComposedAdapterFactory(), (BreakdownElement) act, Activity.class,
-				UmaPackage.eINSTANCE.getDescribableElement_PresentationName(),
+				UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
 				name, suppression);
 	}
 
@@ -429,7 +429,7 @@ public final class TngUtil {
 		return NameChecker.checkName(TngAdapterFactory.INSTANCE
 				.getWBS_ComposedAdapterFactory(), (BreakdownElement) e,
 				WorkBreakdownElement.class, UmaPackage.eINSTANCE
-						.getDescribableElement_PresentationName(), name, suppression);
+						.getMethodElement_PresentationName(), name, suppression);
 	}
 
 	public static String checkWorkProductDescriptorPresentationName(Object e,
@@ -439,7 +439,7 @@ public final class TngUtil {
 		return NameChecker.checkName(TngAdapterFactory.INSTANCE
 				.getPBS_ComposedAdapterFactory(), (BreakdownElement) e,
 				WorkProductDescriptor.class, UmaPackage.eINSTANCE
-						.getDescribableElement_PresentationName(), name, suppression);
+						.getMethodElement_PresentationName(), name, suppression);
 	}
 
 	public static String checkRoleDescriptorPresentationName(Object e,
@@ -448,7 +448,7 @@ public final class TngUtil {
 			return null;
 		return NameChecker.checkName(TngAdapterFactory.INSTANCE
 				.getOBS_ComposedAdapterFactory(), (BreakdownElement) e, RoleDescriptor.class,
-				UmaPackage.eINSTANCE.getDescribableElement_PresentationName(),
+				UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
 				name, suppression);
 	}
 

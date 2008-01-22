@@ -155,7 +155,7 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * @generated
 	 * @ordered
 	 */
-	protected Point center = null;
+	protected Point center;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -164,10 +164,6 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 */
 	protected EllipseImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -175,6 +171,7 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ELLIPSE;
 	}
@@ -376,6 +373,7 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -390,6 +388,7 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.ELLIPSE__RADIUS_X:
@@ -415,6 +414,7 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.ELLIPSE__RADIUS_X:
@@ -444,6 +444,7 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ELLIPSE__RADIUS_X:
@@ -473,13 +474,8 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ELLIPSE__RADIUS_X:
 			return RADIUS_X_EDEFAULT == null ? radiusX != null
@@ -507,6 +503,7 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

@@ -179,13 +179,13 @@ public class PredecessorDialog extends Dialog {
 		dependency.setItems(dependencyList);
 
 		String depedencyName = wo.getLinkType().getName();
-		if (wo.getLinkType().getValue() == WorkOrderType.FINISH_TO_FINISH) {
+		if (wo.getLinkType() == WorkOrderType.FINISH_TO_FINISH) {
 			depedencyName = FINISH_TO_FINISH;
-		} else if (wo.getLinkType().getValue() == WorkOrderType.FINISH_TO_START) {
+		} else if (wo.getLinkType() == WorkOrderType.FINISH_TO_START) {
 			depedencyName = FINISH_TO_START;
-		} else if (wo.getLinkType().getValue() == WorkOrderType.START_TO_FINISH) {
+		} else if (wo.getLinkType() == WorkOrderType.START_TO_FINISH) {
 			depedencyName = START_TO_FINISH;
-		} else if (wo.getLinkType().getValue() == WorkOrderType.START_TO_START) {
+		} else if (wo.getLinkType() == WorkOrderType.START_TO_START) {
 			depedencyName = START_TO_START;
 		}
 		dependency.setText(depedencyName);

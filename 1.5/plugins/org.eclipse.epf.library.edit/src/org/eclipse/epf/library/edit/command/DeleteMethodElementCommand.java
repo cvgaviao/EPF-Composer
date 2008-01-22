@@ -1195,7 +1195,7 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 						batchCommand
 								.addFeatureValue(
 										act,
-										UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME,
+										UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME,
 										ProcessUtil.getPresentationName(base));
 					}
 				}

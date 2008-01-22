@@ -29,6 +29,7 @@ import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
 import org.eclipse.epf.uma.Constraint;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.ReusableAsset;
@@ -46,19 +47,13 @@ import org.eclipse.epf.uma.WorkDefinition;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getFulfills <em>Fulfills</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getVariabilityType <em>Variability Type</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getVariabilityBasedOnElement <em>Variability Based On Element</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getPrecondition <em>Precondition</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getPostcondition <em>Postcondition</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getBreakdownElements <em>Breakdown Elements</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getRoadmaps <em>Roadmaps</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getSupportingMaterials <em>Supporting Materials</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getChecklists <em>Checklists</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getConcepts <em>Concepts</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getExamples <em>Examples</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getGuidelines <em>Guidelines</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getReusableAssets <em>Reusable Assets</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.ActivityImpl#getIsEnactable <em>Is Enactable</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,6 +68,16 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * The cached value of the '{@link #getFulfills() <em>Fulfills</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFulfills()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<FulfillableElement> fulfills;
+
+	/**
 	 * The default value of the '{@link #getVariabilityType() <em>Variability Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -80,7 +85,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final VariabilityType VARIABILITY_TYPE_EDEFAULT = VariabilityType.NA_LITERAL;
+	protected static final VariabilityType VARIABILITY_TYPE_EDEFAULT = VariabilityType.NA;
 
 	/**
 	 * The cached value of the '{@link #getVariabilityType() <em>Variability Type</em>}' attribute.
@@ -93,6 +98,15 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	protected VariabilityType variabilityType = VARIABILITY_TYPE_EDEFAULT;
 
 	/**
+	 * This is true if the Variability Type attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean variabilityTypeESet;
+
+	/**
 	 * The cached value of the '{@link #getVariabilityBasedOnElement() <em>Variability Based On Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -100,7 +114,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * @generated
 	 * @ordered
 	 */
-	protected VariabilityElement variabilityBasedOnElement = null;
+	protected VariabilityElement variabilityBasedOnElement;
 
 	/**
 	 * The cached value of the '{@link #getPrecondition() <em>Precondition</em>}' containment reference.
@@ -110,7 +124,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * @generated
 	 * @ordered
 	 */
-	protected Constraint precondition = null;
+	protected Constraint precondition;
 
 	/**
 	 * The cached value of the '{@link #getPostcondition() <em>Postcondition</em>}' containment reference.
@@ -120,7 +134,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * @generated
 	 * @ordered
 	 */
-	protected Constraint postcondition = null;
+	protected Constraint postcondition;
 
 	/**
 	 * The cached value of the '{@link #getBreakdownElements() <em>Breakdown Elements</em>}' reference list.
@@ -130,7 +144,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList breakdownElements = null;
+	protected EList<BreakdownElement> breakdownElements;
 
 	/**
 	 * The cached value of the '{@link #getRoadmaps() <em>Roadmaps</em>}' reference list.
@@ -140,87 +154,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList roadmaps = null;
-
-	/**
-	 * The cached value of the '{@link #getSupportingMaterials() <em>Supporting Materials</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSupportingMaterials()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList supportingMaterials = null;
-
-	/**
-	 * The cached value of the '{@link #getChecklists() <em>Checklists</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getChecklists()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList checklists = null;
-
-	/**
-	 * The cached value of the '{@link #getConcepts() <em>Concepts</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getConcepts()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList concepts = null;
-
-	/**
-	 * The cached value of the '{@link #getExamples() <em>Examples</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getExamples()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList examples = null;
-
-	/**
-	 * The cached value of the '{@link #getGuidelines() <em>Guidelines</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGuidelines()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList guidelines = null;
-
-	/**
-	 * The cached value of the '{@link #getReusableAssets() <em>Reusable Assets</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getReusableAssets()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList reusableAssets = null;
-
-	/**
-	 * The default value of the '{@link #getIsEnactable() <em>Is Enactable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIsEnactable()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Boolean IS_ENACTABLE_EDEFAULT = Boolean.FALSE;
-
-	/**
-	 * The cached value of the '{@link #getIsEnactable() <em>Is Enactable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIsEnactable()
-	 * @generated
-	 * @ordered
-	 */
-	protected Boolean isEnactable = IS_ENACTABLE_EDEFAULT;
+	protected EList<Roadmap> roadmaps;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -229,10 +163,6 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 */
 	protected ActivityImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -240,6 +170,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ACTIVITY;
 	}
@@ -249,25 +180,13 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getChecklists() {
-		if (checklists == null) {
-			checklists = new EObjectResolvingEList(Checklist.class, this,
-					UmaPackage.ACTIVITY__CHECKLISTS);
+	public List<FulfillableElement> getFulfills() {
+		if (fulfills == null) {
+			fulfills = new EObjectResolvingEList<FulfillableElement>(
+					FulfillableElement.class, this,
+					UmaPackage.ACTIVITY__FULFILLS);
 		}
-		return checklists;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public List getConcepts() {
-		if (concepts == null) {
-			concepts = new EObjectResolvingEList(Concept.class, this,
-					UmaPackage.ACTIVITY__CONCEPTS);
-		}
-		return concepts;
+		return fulfills;
 	}
 
 	/**
@@ -288,10 +207,37 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 		VariabilityType oldVariabilityType = variabilityType;
 		variabilityType = newVariabilityType == null ? VARIABILITY_TYPE_EDEFAULT
 				: newVariabilityType;
+		boolean oldVariabilityTypeESet = variabilityTypeESet;
+		variabilityTypeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ACTIVITY__VARIABILITY_TYPE, oldVariabilityType,
-					variabilityType));
+					variabilityType, !oldVariabilityTypeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetVariabilityType() {
+		VariabilityType oldVariabilityType = variabilityType;
+		boolean oldVariabilityTypeESet = variabilityTypeESet;
+		variabilityType = VARIABILITY_TYPE_EDEFAULT;
+		variabilityTypeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.ACTIVITY__VARIABILITY_TYPE, oldVariabilityType,
+					VARIABILITY_TYPE_EDEFAULT, oldVariabilityTypeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetVariabilityType() {
+		return variabilityTypeESet;
 	}
 
 	/**
@@ -519,9 +465,9 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getBreakdownElements() {
+	public List<BreakdownElement> getBreakdownElements() {
 		if (breakdownElements == null) {
-			breakdownElements = new EObjectWithInverseResolvingEList(
+			breakdownElements = new EObjectWithInverseResolvingEList<BreakdownElement>(
 					BreakdownElement.class, this,
 					UmaPackage.ACTIVITY__BREAKDOWN_ELEMENTS,
 					UmaPackage.BREAKDOWN_ELEMENT__SUPER_ACTIVITIES);
@@ -534,9 +480,9 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getRoadmaps() {
+	public List<Roadmap> getRoadmaps() {
 		if (roadmaps == null) {
-			roadmaps = new EObjectResolvingEList(Roadmap.class, this,
+			roadmaps = new EObjectResolvingEList<Roadmap>(Roadmap.class, this,
 					UmaPackage.ACTIVITY__ROADMAPS);
 		}
 		return roadmaps;
@@ -547,88 +493,14 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getSupportingMaterials() {
-		if (supportingMaterials == null) {
-			supportingMaterials = new EObjectResolvingEList(
-					SupportingMaterial.class, this,
-					UmaPackage.ACTIVITY__SUPPORTING_MATERIALS);
-		}
-		return supportingMaterials;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public List getExamples() {
-		if (examples == null) {
-			examples = new EObjectResolvingEList(Example.class, this,
-					UmaPackage.ACTIVITY__EXAMPLES);
-		}
-		return examples;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public List getGuidelines() {
-		if (guidelines == null) {
-			guidelines = new EObjectResolvingEList(Guideline.class, this,
-					UmaPackage.ACTIVITY__GUIDELINES);
-		}
-		return guidelines;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public List getReusableAssets() {
-		if (reusableAssets == null) {
-			reusableAssets = new EObjectResolvingEList(ReusableAsset.class,
-					this, UmaPackage.ACTIVITY__REUSABLE_ASSETS);
-		}
-		return reusableAssets;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Boolean getIsEnactable() {
-		return isEnactable;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setIsEnactable(Boolean newIsEnactable) {
-		Boolean oldIsEnactable = isEnactable;
-		isEnactable = newIsEnactable;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.ACTIVITY__IS_ENACTABLE, oldIsEnactable,
-					isEnactable));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.ACTIVITY__BREAKDOWN_ELEMENTS:
-			return ((InternalEList) getBreakdownElements()).basicAdd(otherEnd,
-					msgs);
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getBreakdownElements())
+					.basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -638,6 +510,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -646,7 +519,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 		case UmaPackage.ACTIVITY__POSTCONDITION:
 			return basicSetPostcondition(null, msgs);
 		case UmaPackage.ACTIVITY__BREAKDOWN_ELEMENTS:
-			return ((InternalEList) getBreakdownElements()).basicRemove(
+			return ((InternalEList<?>) getBreakdownElements()).basicRemove(
 					otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -657,8 +530,11 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case UmaPackage.ACTIVITY__FULFILLS:
+			return getFulfills();
 		case UmaPackage.ACTIVITY__VARIABILITY_TYPE:
 			return getVariabilityType();
 		case UmaPackage.ACTIVITY__VARIABILITY_BASED_ON_ELEMENT:
@@ -677,20 +553,6 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 			return getBreakdownElements();
 		case UmaPackage.ACTIVITY__ROADMAPS:
 			return getRoadmaps();
-		case UmaPackage.ACTIVITY__SUPPORTING_MATERIALS:
-			return getSupportingMaterials();
-		case UmaPackage.ACTIVITY__CHECKLISTS:
-			return getChecklists();
-		case UmaPackage.ACTIVITY__CONCEPTS:
-			return getConcepts();
-		case UmaPackage.ACTIVITY__EXAMPLES:
-			return getExamples();
-		case UmaPackage.ACTIVITY__GUIDELINES:
-			return getGuidelines();
-		case UmaPackage.ACTIVITY__REUSABLE_ASSETS:
-			return getReusableAssets();
-		case UmaPackage.ACTIVITY__IS_ENACTABLE:
-			return getIsEnactable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -700,8 +562,15 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+		case UmaPackage.ACTIVITY__FULFILLS:
+			getFulfills().clear();
+			getFulfills().addAll(
+					(Collection<? extends FulfillableElement>) newValue);
+			return;
 		case UmaPackage.ACTIVITY__VARIABILITY_TYPE:
 			setVariabilityType((VariabilityType) newValue);
 			return;
@@ -716,38 +585,12 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 			return;
 		case UmaPackage.ACTIVITY__BREAKDOWN_ELEMENTS:
 			getBreakdownElements().clear();
-			getBreakdownElements().addAll((Collection) newValue);
+			getBreakdownElements().addAll(
+					(Collection<? extends BreakdownElement>) newValue);
 			return;
 		case UmaPackage.ACTIVITY__ROADMAPS:
 			getRoadmaps().clear();
-			getRoadmaps().addAll((Collection) newValue);
-			return;
-		case UmaPackage.ACTIVITY__SUPPORTING_MATERIALS:
-			getSupportingMaterials().clear();
-			getSupportingMaterials().addAll((Collection) newValue);
-			return;
-		case UmaPackage.ACTIVITY__CHECKLISTS:
-			getChecklists().clear();
-			getChecklists().addAll((Collection) newValue);
-			return;
-		case UmaPackage.ACTIVITY__CONCEPTS:
-			getConcepts().clear();
-			getConcepts().addAll((Collection) newValue);
-			return;
-		case UmaPackage.ACTIVITY__EXAMPLES:
-			getExamples().clear();
-			getExamples().addAll((Collection) newValue);
-			return;
-		case UmaPackage.ACTIVITY__GUIDELINES:
-			getGuidelines().clear();
-			getGuidelines().addAll((Collection) newValue);
-			return;
-		case UmaPackage.ACTIVITY__REUSABLE_ASSETS:
-			getReusableAssets().clear();
-			getReusableAssets().addAll((Collection) newValue);
-			return;
-		case UmaPackage.ACTIVITY__IS_ENACTABLE:
-			setIsEnactable((Boolean) newValue);
+			getRoadmaps().addAll((Collection<? extends Roadmap>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -758,10 +601,14 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+		case UmaPackage.ACTIVITY__FULFILLS:
+			getFulfills().clear();
+			return;
 		case UmaPackage.ACTIVITY__VARIABILITY_TYPE:
-			setVariabilityType(VARIABILITY_TYPE_EDEFAULT);
+			unsetVariabilityType();
 			return;
 		case UmaPackage.ACTIVITY__VARIABILITY_BASED_ON_ELEMENT:
 			setVariabilityBasedOnElement((VariabilityElement) null);
@@ -778,27 +625,6 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 		case UmaPackage.ACTIVITY__ROADMAPS:
 			getRoadmaps().clear();
 			return;
-		case UmaPackage.ACTIVITY__SUPPORTING_MATERIALS:
-			getSupportingMaterials().clear();
-			return;
-		case UmaPackage.ACTIVITY__CHECKLISTS:
-			getChecklists().clear();
-			return;
-		case UmaPackage.ACTIVITY__CONCEPTS:
-			getConcepts().clear();
-			return;
-		case UmaPackage.ACTIVITY__EXAMPLES:
-			getExamples().clear();
-			return;
-		case UmaPackage.ACTIVITY__GUIDELINES:
-			getGuidelines().clear();
-			return;
-		case UmaPackage.ACTIVITY__REUSABLE_ASSETS:
-			getReusableAssets().clear();
-			return;
-		case UmaPackage.ACTIVITY__IS_ENACTABLE:
-			setIsEnactable(IS_ENACTABLE_EDEFAULT);
-			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -808,16 +634,13 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
+		case UmaPackage.ACTIVITY__FULFILLS:
+			return fulfills != null && !fulfills.isEmpty();
 		case UmaPackage.ACTIVITY__VARIABILITY_TYPE:
-			return variabilityType != VARIABILITY_TYPE_EDEFAULT;
+			return isSetVariabilityType();
 		case UmaPackage.ACTIVITY__VARIABILITY_BASED_ON_ELEMENT:
 			return variabilityBasedOnElement != null;
 		case UmaPackage.ACTIVITY__PRECONDITION:
@@ -828,22 +651,6 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 			return breakdownElements != null && !breakdownElements.isEmpty();
 		case UmaPackage.ACTIVITY__ROADMAPS:
 			return roadmaps != null && !roadmaps.isEmpty();
-		case UmaPackage.ACTIVITY__SUPPORTING_MATERIALS:
-			return supportingMaterials != null
-					&& !supportingMaterials.isEmpty();
-		case UmaPackage.ACTIVITY__CHECKLISTS:
-			return checklists != null && !checklists.isEmpty();
-		case UmaPackage.ACTIVITY__CONCEPTS:
-			return concepts != null && !concepts.isEmpty();
-		case UmaPackage.ACTIVITY__EXAMPLES:
-			return examples != null && !examples.isEmpty();
-		case UmaPackage.ACTIVITY__GUIDELINES:
-			return guidelines != null && !guidelines.isEmpty();
-		case UmaPackage.ACTIVITY__REUSABLE_ASSETS:
-			return reusableAssets != null && !reusableAssets.isEmpty();
-		case UmaPackage.ACTIVITY__IS_ENACTABLE:
-			return IS_ENACTABLE_EDEFAULT == null ? isEnactable != null
-					: !IS_ENACTABLE_EDEFAULT.equals(isEnactable);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -853,7 +660,16 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class baseClass) {
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == FulfillableElement.class) {
+			switch (derivedFeatureID) {
+			case UmaPackage.ACTIVITY__FULFILLS:
+				return UmaPackage.FULFILLABLE_ELEMENT__FULFILLS;
+			default:
+				return -1;
+			}
+		}
 		if (baseClass == VariabilityElement.class) {
 			switch (derivedFeatureID) {
 			case UmaPackage.ACTIVITY__VARIABILITY_TYPE:
@@ -882,7 +698,16 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class baseClass) {
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == FulfillableElement.class) {
+			switch (baseFeatureID) {
+			case UmaPackage.FULFILLABLE_ELEMENT__FULFILLS:
+				return UmaPackage.ACTIVITY__FULFILLS;
+			default:
+				return -1;
+			}
+		}
 		if (baseClass == VariabilityElement.class) {
 			switch (baseFeatureID) {
 			case UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_TYPE:
@@ -911,15 +736,17 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (variabilityType: "); //$NON-NLS-1$
-		result.append(variabilityType);
-		result.append(", isEnactable: "); //$NON-NLS-1$
-		result.append(isEnactable);
+		if (variabilityTypeESet)
+			result.append(variabilityType);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

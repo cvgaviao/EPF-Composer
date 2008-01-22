@@ -11,11 +11,13 @@
 package org.eclipse.epf.uma.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.epf.uma.CoreSemanticModelBridge;
 import org.eclipse.epf.uma.Element;
 import org.eclipse.epf.uma.UmaPackage;
@@ -50,7 +52,7 @@ public class CoreSemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected Element element = null;
+	protected Element element;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,10 +61,6 @@ public class CoreSemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 */
 	protected CoreSemanticModelBridgeImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -70,6 +68,7 @@ public class CoreSemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CORE_SEMANTIC_MODEL_BRIDGE;
 	}
@@ -121,6 +120,7 @@ public class CoreSemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.CORE_SEMANTIC_MODEL_BRIDGE__ELEMENT:
@@ -136,6 +136,7 @@ public class CoreSemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.CORE_SEMANTIC_MODEL_BRIDGE__ELEMENT:
@@ -150,6 +151,7 @@ public class CoreSemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CORE_SEMANTIC_MODEL_BRIDGE__ELEMENT:
@@ -164,13 +166,8 @@ public class CoreSemanticModelBridgeImpl extends SemanticModelBridgeImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CORE_SEMANTIC_MODEL_BRIDGE__ELEMENT:
 			return element != null;

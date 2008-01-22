@@ -58,7 +58,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
 public final class ProcessCommandUtil {
 	public static final EStructuralFeature[] DESCRIPTOR_REFRESHABLE_FEATURES = {
 		// UmaPackage.eINSTANCE.getNamedElement_Name(),
-		// UmaPackage.eINSTANCE.getDescribableElement_PresentationName(),
+		// UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
 		UmaPackage.eINSTANCE.getMethodElement_BriefDescription() 
 	};
 

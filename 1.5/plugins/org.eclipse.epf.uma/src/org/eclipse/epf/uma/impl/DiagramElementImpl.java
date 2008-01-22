@@ -15,16 +15,20 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.epf.uma.DiagramElement;
 import org.eclipse.epf.uma.GraphElement;
 import org.eclipse.epf.uma.Property;
@@ -84,7 +88,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList reference = null;
+	protected EList<Reference> reference;
 
 	/**
 	 * The cached value of the '{@link #getProperty() <em>Property</em>}' containment reference list.
@@ -94,7 +98,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList property = null;
+	protected EList<Property> property;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -103,10 +107,6 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 */
 	protected DiagramElementImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -114,6 +114,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DIAGRAM_ELEMENT;
 	}
@@ -207,10 +208,11 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getReference() {
+	public List<Reference> getReference() {
 		if (reference == null) {
-			reference = new EObjectWithInverseResolvingEList(Reference.class,
-					this, UmaPackage.DIAGRAM_ELEMENT__REFERENCE,
+			reference = new EObjectWithInverseResolvingEList<Reference>(
+					Reference.class, this,
+					UmaPackage.DIAGRAM_ELEMENT__REFERENCE,
 					UmaPackage.REFERENCE__REFERENCED);
 		}
 		return reference;
@@ -221,10 +223,10 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getProperty() {
+	public List<Property> getProperty() {
 		if (property == null) {
-			property = new EObjectContainmentEList.Resolving(Property.class,
-					this, UmaPackage.DIAGRAM_ELEMENT__PROPERTY);
+			property = new EObjectContainmentEList.Resolving<Property>(
+					Property.class, this, UmaPackage.DIAGRAM_ELEMENT__PROPERTY);
 		}
 		return property;
 	}
@@ -234,6 +236,8 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -242,7 +246,8 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 				msgs = eBasicRemoveFromContainer(msgs);
 			return basicSetContainer((GraphElement) otherEnd, msgs);
 		case UmaPackage.DIAGRAM_ELEMENT__REFERENCE:
-			return ((InternalEList) getReference()).basicAdd(otherEnd, msgs);
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getReference())
+					.basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -252,15 +257,18 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_ELEMENT__CONTAINER:
 			return basicSetContainer(null, msgs);
 		case UmaPackage.DIAGRAM_ELEMENT__REFERENCE:
-			return ((InternalEList) getReference()).basicRemove(otherEnd, msgs);
+			return ((InternalEList<?>) getReference()).basicRemove(otherEnd,
+					msgs);
 		case UmaPackage.DIAGRAM_ELEMENT__PROPERTY:
-			return ((InternalEList) getProperty()).basicRemove(otherEnd, msgs);
+			return ((InternalEList<?>) getProperty()).basicRemove(otherEnd,
+					msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -270,6 +278,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(
 			NotificationChain msgs) {
 		switch (eContainerFeatureID) {
@@ -286,6 +295,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE:
@@ -307,6 +317,8 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE:
@@ -317,11 +329,11 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 			return;
 		case UmaPackage.DIAGRAM_ELEMENT__REFERENCE:
 			getReference().clear();
-			getReference().addAll((Collection) newValue);
+			getReference().addAll((Collection<? extends Reference>) newValue);
 			return;
 		case UmaPackage.DIAGRAM_ELEMENT__PROPERTY:
 			getProperty().clear();
-			getProperty().addAll((Collection) newValue);
+			getProperty().addAll((Collection<? extends Property>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -332,6 +344,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE:
@@ -355,13 +368,8 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE:
 			return IS_VISIBLE_EDEFAULT == null ? isVisible != null
@@ -381,6 +389,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

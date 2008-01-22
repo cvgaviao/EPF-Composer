@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -49,7 +50,8 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -76,7 +78,7 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Process_includesPatterns_feature", "_UI_Process_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.PROCESS__INCLUDES_PATTERNS, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
@@ -95,7 +97,7 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Process_defaultContext_feature", "_UI_Process_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.PROCESS__DEFAULT_CONTEXT, true,
-						false, false, null, null, null));
+						false, true, null, null, null));
 	}
 
 	/**
@@ -114,18 +116,7 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_Process_validContext_feature", "_UI_Process_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.PROCESS__VALID_CONTEXT, true,
-						false, false, null, null, null));
-	}
-
-	/**
-	 * This returns Process.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage(
-				"full/obj16/Process")); //$NON-NLS-1$
+						false, true, null, null, null));
 	}
 
 	/**
@@ -134,6 +125,7 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((org.eclipse.epf.uma.Process) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_Process_type") : //$NON-NLS-1$
@@ -147,6 +139,7 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
@@ -159,8 +152,9 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -170,8 +164,9 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection selection) {
+			Object child, Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 
@@ -193,6 +188,7 @@ public class ProcessItemProvider extends ActivityItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

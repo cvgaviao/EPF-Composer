@@ -39,10 +39,6 @@ public class SupportingMaterialImpl extends GuidanceImpl implements
 	 */
 	protected SupportingMaterialImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public class SupportingMaterialImpl extends GuidanceImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.SUPPORTING_MATERIAL;
 	}

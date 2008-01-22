@@ -98,7 +98,7 @@ public class ValidatorFactory implements IValidatorFactory {
 				}
 				return new UniquenessValidator((EObject) parent, reference,
 						childFilter, e, UmaPackage.eINSTANCE
-								.getDescribableElement_PresentationName()) {
+								.getMethodElement_PresentationName()) {
 					/*
 					 * (non-Javadoc)
 					 * 
@@ -327,7 +327,7 @@ public class ValidatorFactory implements IValidatorFactory {
 			final AdapterFactory adapterFactory) {
 		if (object instanceof BreakdownElement) {
 			if (feature == UmaPackage.Literals.NAMED_ELEMENT__NAME
-					|| feature == UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME) {
+					|| feature == UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME) {
 				final BreakdownElement be = (BreakdownElement) object;
 				Process proc = TngUtil.getOwningProcess(parent);
 				if (proc != null) {
@@ -428,7 +428,7 @@ public class ValidatorFactory implements IValidatorFactory {
 			}
 
 			return validator;
-		} else if (feature == UmaPackage.Literals.DESCRIBABLE_ELEMENT__PRESENTATION_NAME) {
+		} else if (feature == UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME) {
 			return createPresentationNameValidator(parent,
 					(DescribableElement) object);
 		}

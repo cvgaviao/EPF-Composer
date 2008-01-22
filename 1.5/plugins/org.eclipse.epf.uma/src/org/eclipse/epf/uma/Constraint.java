@@ -40,9 +40,11 @@ public interface Constraint extends MethodElement {
 	 * This attribute stores the definition of the constraint.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Body</em>' attribute.
+	 * @see #isSetBody()
+	 * @see #unsetBody()
 	 * @see #setBody(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getConstraint_Body()
-	 * @model default="" unique="false" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getBody();
@@ -52,9 +54,34 @@ public interface Constraint extends MethodElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Body</em>' attribute.
+	 * @see #isSetBody()
+	 * @see #unsetBody()
 	 * @see #getBody()
 	 * @generated
 	 */
 	void setBody(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.Constraint#getBody <em>Body</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetBody()
+	 * @see #getBody()
+	 * @see #setBody(String)
+	 * @generated
+	 */
+	void unsetBody();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Constraint#getBody <em>Body</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Body</em>' attribute is set.
+	 * @see #unsetBody()
+	 * @see #getBody()
+	 * @see #setBody(String)
+	 * @generated
+	 */
+	boolean isSetBody();
 
 } // Constraint

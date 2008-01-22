@@ -38,10 +38,6 @@ public class WhitepaperImpl extends ConceptImpl implements Whitepaper {
 	 */
 	protected WhitepaperImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class WhitepaperImpl extends ConceptImpl implements Whitepaper {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WHITEPAPER;
 	}

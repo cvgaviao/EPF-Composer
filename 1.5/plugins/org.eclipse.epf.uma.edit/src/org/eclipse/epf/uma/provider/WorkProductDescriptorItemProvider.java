@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -52,7 +53,8 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -118,11 +120,11 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_WorkProductDescriptor_WorkProduct_feature"), //$NON-NLS-1$
+						getString("_UI_WorkProductDescriptor_workProduct_feature"), //$NON-NLS-1$
 						getString(
-								"_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptor_WorkProduct_feature", "_UI_WorkProductDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								"_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptor_workProduct_feature", "_UI_WorkProductDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -141,7 +143,7 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptor_impactedBy_feature", "_UI_WorkProductDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -160,7 +162,7 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptor_impacts_feature", "_UI_WorkProductDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__IMPACTS,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -179,7 +181,7 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptor_deliverableParts_feature", "_UI_WorkProductDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -188,6 +190,7 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage(
 				"full/obj16/WorkProductDescriptor")); //$NON-NLS-1$
@@ -199,6 +202,7 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((WorkProductDescriptor) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_WorkProductDescriptor_type") : //$NON-NLS-1$
@@ -212,6 +216,7 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
@@ -232,8 +237,9 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -243,6 +249,7 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

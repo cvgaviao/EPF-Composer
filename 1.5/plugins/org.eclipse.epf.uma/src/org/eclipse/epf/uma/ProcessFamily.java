@@ -44,9 +44,9 @@ public interface ProcessFamily extends MethodConfiguration {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Delivery Processes</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcessFamily_DeliveryProcesses()
-	 * @model type="org.eclipse.epf.uma.DeliveryProcess" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getDeliveryProcesses();
+	List<DeliveryProcess> getDeliveryProcesses();
 
 } // ProcessFamily

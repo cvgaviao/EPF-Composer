@@ -38,10 +38,6 @@ public class GuidelineImpl extends GuidanceImpl implements Guideline {
 	 */
 	protected GuidelineImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class GuidelineImpl extends GuidanceImpl implements Guideline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.GUIDELINE;
 	}

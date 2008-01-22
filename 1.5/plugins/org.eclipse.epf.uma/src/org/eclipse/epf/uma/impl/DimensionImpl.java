@@ -87,10 +87,6 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 */
 	protected DimensionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -98,6 +94,7 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DIMENSION;
 	}
@@ -151,6 +148,7 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DIMENSION__WIDTH:
@@ -166,6 +164,7 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DIMENSION__WIDTH:
@@ -183,6 +182,7 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIMENSION__WIDTH:
@@ -200,13 +200,8 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DIMENSION__WIDTH:
 			return WIDTH_EDEFAULT == null ? width != null : !WIDTH_EDEFAULT
@@ -223,6 +218,7 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

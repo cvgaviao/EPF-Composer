@@ -55,7 +55,7 @@ public class ChecklistLayout extends AbstractElementLayout {
 							.getElementRealizer());
 			
 			List activities = ConfigurationHelper.calc0nFeatureValue(super.element,
-					AssociationHelper.Checklist_Activities, layoutManager
+					AssociationHelper.Checklist_BreakdownElements, layoutManager
 							.getElementRealizer());
 
 			contentElements.addAll(activities);

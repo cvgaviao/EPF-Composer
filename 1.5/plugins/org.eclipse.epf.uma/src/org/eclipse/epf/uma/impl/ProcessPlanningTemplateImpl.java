@@ -50,7 +50,7 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList basedOnProcesses = null;
+	protected EList<org.eclipse.epf.uma.Process> basedOnProcesses;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,10 +59,6 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 */
 	protected ProcessPlanningTemplateImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -70,6 +66,7 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_PLANNING_TEMPLATE;
 	}
@@ -79,9 +76,9 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getBasedOnProcesses() {
+	public List<org.eclipse.epf.uma.Process> getBasedOnProcesses() {
 		if (basedOnProcesses == null) {
-			basedOnProcesses = new EObjectResolvingEList(
+			basedOnProcesses = new EObjectResolvingEList<org.eclipse.epf.uma.Process>(
 					org.eclipse.epf.uma.Process.class, this,
 					UmaPackage.PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES);
 		}
@@ -93,6 +90,7 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES:
@@ -106,11 +104,15 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES:
 			getBasedOnProcesses().clear();
-			getBasedOnProcesses().addAll((Collection) newValue);
+			getBasedOnProcesses()
+					.addAll(
+							(Collection<? extends org.eclipse.epf.uma.Process>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -121,6 +123,7 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES:
@@ -135,13 +138,8 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES:
 			return basedOnProcesses != null && !basedOnProcesses.isEmpty();

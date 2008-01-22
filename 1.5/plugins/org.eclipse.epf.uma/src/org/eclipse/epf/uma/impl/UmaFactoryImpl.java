@@ -49,6 +49,7 @@ import org.eclipse.epf.uma.Domain;
 import org.eclipse.epf.uma.Ellipse;
 import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.GraphConnector;
 import org.eclipse.epf.uma.GraphEdge;
 import org.eclipse.epf.uma.GraphNode;
@@ -56,6 +57,7 @@ import org.eclipse.epf.uma.GuidanceDescription;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.Image;
 import org.eclipse.epf.uma.Iteration;
+import org.eclipse.epf.uma.Kind;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -76,10 +78,7 @@ import org.eclipse.epf.uma.ProcessFamily;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.ProcessPlanningTemplate;
 import org.eclipse.epf.uma.Property;
-import org.eclipse.epf.uma.PseudoState;
-import org.eclipse.epf.uma.PseudoStateKind;
 import org.eclipse.epf.uma.Reference;
-import org.eclipse.epf.uma.Region;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
@@ -90,8 +89,6 @@ import org.eclipse.epf.uma.RoleSet;
 import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.SimpleSemanticModelElement;
-import org.eclipse.epf.uma.State;
-import org.eclipse.epf.uma.StateMachine;
 import org.eclipse.epf.uma.Step;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.Task;
@@ -103,15 +100,14 @@ import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.TextElement;
 import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.ToolMentor;
-import org.eclipse.epf.uma.Transition;
 import org.eclipse.epf.uma.UMASemanticModelBridge;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityType;
-import org.eclipse.epf.uma.Vertex;
 import org.eclipse.epf.uma.Whitepaper;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescription;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.WorkProductType;
@@ -132,7 +128,7 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	public static UmaFactory init() {
 		try {
 			UmaFactory theUmaFactory = (UmaFactory) EPackage.Registry.INSTANCE
-					.getEFactory("http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"); //$NON-NLS-1$ 
+					.getEFactory("http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"); //$NON-NLS-1$ 
 			if (theUmaFactory != null) {
 				return theUmaFactory;
 			}
@@ -157,6 +153,7 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 		case UmaPackage.PACKAGE:
@@ -165,24 +162,52 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 			return (EObject) createConstraint();
 		case UmaPackage.METHOD_ELEMENT_PROPERTY:
 			return (EObject) createMethodElementProperty();
+		case UmaPackage.KIND:
+			return (EObject) createKind();
 		case UmaPackage.CONTENT_DESCRIPTION:
 			return (EObject) createContentDescription();
+		case UmaPackage.SUPPORTING_MATERIAL:
+			return (EObject) createSupportingMaterial();
 		case UmaPackage.SECTION:
 			return (EObject) createSection();
-		case UmaPackage.ROLE:
-			return (EObject) createRole();
-		case UmaPackage.TASK:
-			return (EObject) createTask();
-		case UmaPackage.STEP:
-			return (EObject) createStep();
+		case UmaPackage.CONCEPT:
+			return (EObject) createConcept();
+		case UmaPackage.CHECKLIST:
+			return (EObject) createChecklist();
+		case UmaPackage.GUIDELINE:
+			return (EObject) createGuideline();
+		case UmaPackage.EXAMPLE:
+			return (EObject) createExample();
+		case UmaPackage.REUSABLE_ASSET:
+			return (EObject) createReusableAsset();
+		case UmaPackage.TERM_DEFINITION:
+			return (EObject) createTermDefinition();
 		case UmaPackage.ARTIFACT:
 			return (EObject) createArtifact();
+		case UmaPackage.WORK_PRODUCT:
+			return (EObject) createWorkProduct();
+		case UmaPackage.FULFILLABLE_ELEMENT:
+			return (EObject) createFulfillableElement();
+		case UmaPackage.REPORT:
+			return (EObject) createReport();
+		case UmaPackage.TEMPLATE:
+			return (EObject) createTemplate();
+		case UmaPackage.TOOL_MENTOR:
+			return (EObject) createToolMentor();
+		case UmaPackage.ESTIMATION_CONSIDERATIONS:
+			return (EObject) createEstimationConsiderations();
 		case UmaPackage.DELIVERABLE:
 			return (EObject) createDeliverable();
 		case UmaPackage.OUTCOME:
 			return (EObject) createOutcome();
-		case UmaPackage.CONTENT_PACKAGE:
-			return (EObject) createContentPackage();
+		case UmaPackage.STEP:
+			return (EObject) createStep();
+		case UmaPackage.WHITEPAPER:
+			return (EObject) createWhitepaper();
+		case UmaPackage.TASK:
+			return (EObject) createTask();
+		case UmaPackage.ROLE:
+			return (EObject) createRole();
 		case UmaPackage.ARTIFACT_DESCRIPTION:
 			return (EObject) createArtifactDescription();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION:
@@ -197,6 +222,82 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 			return (EObject) createGuidanceDescription();
 		case UmaPackage.PRACTICE_DESCRIPTION:
 			return (EObject) createPracticeDescription();
+		case UmaPackage.ROLE_SET:
+			return (EObject) createRoleSet();
+		case UmaPackage.DOMAIN:
+			return (EObject) createDomain();
+		case UmaPackage.WORK_PRODUCT_TYPE:
+			return (EObject) createWorkProductType();
+		case UmaPackage.DISCIPLINE_GROUPING:
+			return (EObject) createDisciplineGrouping();
+		case UmaPackage.DISCIPLINE:
+			return (EObject) createDiscipline();
+		case UmaPackage.ACTIVITY:
+			return (EObject) createActivity();
+		case UmaPackage.PLANNING_DATA:
+			return (EObject) createPlanningData();
+		case UmaPackage.WORK_ORDER:
+			return (EObject) createWorkOrder();
+		case UmaPackage.ROADMAP:
+			return (EObject) createRoadmap();
+		case UmaPackage.TOOL:
+			return (EObject) createTool();
+		case UmaPackage.ROLE_SET_GROUPING:
+			return (EObject) createRoleSetGrouping();
+		case UmaPackage.CUSTOM_CATEGORY:
+			return (EObject) createCustomCategory();
+		case UmaPackage.CONTENT_PACKAGE:
+			return (EObject) createContentPackage();
+		case UmaPackage.MILESTONE:
+			return (EObject) createMilestone();
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR:
+			return (EObject) createWorkProductDescriptor();
+		case UmaPackage.ITERATION:
+			return (EObject) createIteration();
+		case UmaPackage.PHASE:
+			return (EObject) createPhase();
+		case UmaPackage.TEAM_PROFILE:
+			return (EObject) createTeamProfile();
+		case UmaPackage.ROLE_DESCRIPTOR:
+			return (EObject) createRoleDescriptor();
+		case UmaPackage.TASK_DESCRIPTOR:
+			return (EObject) createTaskDescriptor();
+		case UmaPackage.COMPOSITE_ROLE:
+			return (EObject) createCompositeRole();
+		case UmaPackage.DELIVERY_PROCESS:
+			return (EObject) createDeliveryProcess();
+		case UmaPackage.CAPABILITY_PATTERN:
+			return (EObject) createCapabilityPattern();
+		case UmaPackage.METHOD_CONFIGURATION:
+			return (EObject) createMethodConfiguration();
+		case UmaPackage.METHOD_PLUGIN:
+			return (EObject) createMethodPlugin();
+		case UmaPackage.PROCESS_PLANNING_TEMPLATE:
+			return (EObject) createProcessPlanningTemplate();
+		case UmaPackage.PRACTICE:
+			return (EObject) createPractice();
+		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION:
+			return (EObject) createBreakdownElementDescription();
+		case UmaPackage.ACTIVITY_DESCRIPTION:
+			return (EObject) createActivityDescription();
+		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION:
+			return (EObject) createDeliveryProcessDescription();
+		case UmaPackage.PROCESS_DESCRIPTION:
+			return (EObject) createProcessDescription();
+		case UmaPackage.DESCRIPTOR_DESCRIPTION:
+			return (EObject) createDescriptorDescription();
+		case UmaPackage.PROCESS_COMPONENT_DESCRIPTOR:
+			return (EObject) createProcessComponentDescriptor();
+		case UmaPackage.PROCESS_COMPONENT:
+			return (EObject) createProcessComponent();
+		case UmaPackage.PROCESS_PACKAGE:
+			return (EObject) createProcessPackage();
+		case UmaPackage.PROCESS_COMPONENT_INTERFACE:
+			return (EObject) createProcessComponentInterface();
+		case UmaPackage.PROCESS_FAMILY:
+			return (EObject) createProcessFamily();
+		case UmaPackage.METHOD_LIBRARY:
+			return (EObject) createMethodLibrary();
 		case UmaPackage.POINT:
 			return (EObject) createPoint();
 		case UmaPackage.DIAGRAM_LINK:
@@ -229,116 +330,6 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 			return (EObject) createPolyline();
 		case UmaPackage.ELLIPSE:
 			return (EObject) createEllipse();
-		case UmaPackage.ACTIVITY:
-			return (EObject) createActivity();
-		case UmaPackage.MILESTONE:
-			return (EObject) createMilestone();
-		case UmaPackage.ITERATION:
-			return (EObject) createIteration();
-		case UmaPackage.PHASE:
-			return (EObject) createPhase();
-		case UmaPackage.TEAM_PROFILE:
-			return (EObject) createTeamProfile();
-		case UmaPackage.ROLE_DESCRIPTOR:
-			return (EObject) createRoleDescriptor();
-		case UmaPackage.WORK_ORDER:
-			return (EObject) createWorkOrder();
-		case UmaPackage.PLANNING_DATA:
-			return (EObject) createPlanningData();
-		case UmaPackage.WORK_PRODUCT_DESCRIPTOR:
-			return (EObject) createWorkProductDescriptor();
-		case UmaPackage.TASK_DESCRIPTOR:
-			return (EObject) createTaskDescriptor();
-		case UmaPackage.COMPOSITE_ROLE:
-			return (EObject) createCompositeRole();
-		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION:
-			return (EObject) createBreakdownElementDescription();
-		case UmaPackage.ACTIVITY_DESCRIPTION:
-			return (EObject) createActivityDescription();
-		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION:
-			return (EObject) createDeliveryProcessDescription();
-		case UmaPackage.PROCESS_DESCRIPTION:
-			return (EObject) createProcessDescription();
-		case UmaPackage.DESCRIPTOR_DESCRIPTION:
-			return (EObject) createDescriptorDescription();
-		case UmaPackage.CONCEPT:
-			return (EObject) createConcept();
-		case UmaPackage.CHECKLIST:
-			return (EObject) createChecklist();
-		case UmaPackage.EXAMPLE:
-			return (EObject) createExample();
-		case UmaPackage.GUIDELINE:
-			return (EObject) createGuideline();
-		case UmaPackage.REPORT:
-			return (EObject) createReport();
-		case UmaPackage.TEMPLATE:
-			return (EObject) createTemplate();
-		case UmaPackage.SUPPORTING_MATERIAL:
-			return (EObject) createSupportingMaterial();
-		case UmaPackage.TOOL_MENTOR:
-			return (EObject) createToolMentor();
-		case UmaPackage.WHITEPAPER:
-			return (EObject) createWhitepaper();
-		case UmaPackage.TERM_DEFINITION:
-			return (EObject) createTermDefinition();
-		case UmaPackage.PRACTICE:
-			return (EObject) createPractice();
-		case UmaPackage.ESTIMATION_CONSIDERATIONS:
-			return (EObject) createEstimationConsiderations();
-		case UmaPackage.REUSABLE_ASSET:
-			return (EObject) createReusableAsset();
-		case UmaPackage.STATE:
-			return (EObject) createState();
-		case UmaPackage.VERTEX:
-			return (EObject) createVertex();
-		case UmaPackage.REGION:
-			return (EObject) createRegion();
-		case UmaPackage.STATE_MACHINE:
-			return (EObject) createStateMachine();
-		case UmaPackage.TRANSITION:
-			return (EObject) createTransition();
-		case UmaPackage.PSEUDO_STATE:
-			return (EObject) createPseudoState();
-		case UmaPackage.DISCIPLINE:
-			return (EObject) createDiscipline();
-		case UmaPackage.ROLE_SET:
-			return (EObject) createRoleSet();
-		case UmaPackage.DOMAIN:
-			return (EObject) createDomain();
-		case UmaPackage.WORK_PRODUCT_TYPE:
-			return (EObject) createWorkProductType();
-		case UmaPackage.DISCIPLINE_GROUPING:
-			return (EObject) createDisciplineGrouping();
-		case UmaPackage.TOOL:
-			return (EObject) createTool();
-		case UmaPackage.ROLE_SET_GROUPING:
-			return (EObject) createRoleSetGrouping();
-		case UmaPackage.CUSTOM_CATEGORY:
-			return (EObject) createCustomCategory();
-		case UmaPackage.DELIVERY_PROCESS:
-			return (EObject) createDeliveryProcess();
-		case UmaPackage.CAPABILITY_PATTERN:
-			return (EObject) createCapabilityPattern();
-		case UmaPackage.PROCESS_PLANNING_TEMPLATE:
-			return (EObject) createProcessPlanningTemplate();
-		case UmaPackage.ROADMAP:
-			return (EObject) createRoadmap();
-		case UmaPackage.PROCESS_COMPONENT:
-			return (EObject) createProcessComponent();
-		case UmaPackage.PROCESS_PACKAGE:
-			return (EObject) createProcessPackage();
-		case UmaPackage.PROCESS_COMPONENT_INTERFACE:
-			return (EObject) createProcessComponentInterface();
-		case UmaPackage.PROCESS_COMPONENT_DESCRIPTOR:
-			return (EObject) createProcessComponentDescriptor();
-		case UmaPackage.METHOD_PLUGIN:
-			return (EObject) createMethodPlugin();
-		case UmaPackage.METHOD_CONFIGURATION:
-			return (EObject) createMethodConfiguration();
-		case UmaPackage.PROCESS_FAMILY:
-			return (EObject) createProcessFamily();
-		case UmaPackage.METHOD_LIBRARY:
-			return (EObject) createMethodLibrary();
 		default:
 			throw new IllegalArgumentException(
 					"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -350,30 +341,29 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-		case UmaPackage.WORK_ORDER_TYPE:
-			return createWorkOrderTypeFromString(eDataType, initialValue);
-		case UmaPackage.PSEUDO_STATE_KIND:
-			return createPseudoStateKindFromString(eDataType, initialValue);
 		case UmaPackage.VARIABILITY_TYPE:
 			return createVariabilityTypeFromString(eDataType, initialValue);
+		case UmaPackage.WORK_ORDER_TYPE:
+			return createWorkOrderTypeFromString(eDataType, initialValue);
+		case UmaPackage.STRING:
+			return createStringFromString(eDataType, initialValue);
+		case UmaPackage.BOOLEAN:
+			return createBooleanFromString(eDataType, initialValue);
 		case UmaPackage.DATE:
 			return createDateFromString(eDataType, initialValue);
 		case UmaPackage.URI:
 			return createUriFromString(eDataType, initialValue);
-		case UmaPackage.UNLIMITED_NATURAL:
-			return createUnlimitedNaturalFromString(eDataType, initialValue);
-		case UmaPackage.STRING:
-			return createStringFromString(eDataType, initialValue);
 		case UmaPackage.SET:
 			return createSetFromString(eDataType, initialValue);
 		case UmaPackage.SEQUENCE:
 			return createSequenceFromString(eDataType, initialValue);
 		case UmaPackage.INTEGER:
 			return createIntegerFromString(eDataType, initialValue);
-		case UmaPackage.FLOAT:
-			return createFloatFromString(eDataType, initialValue);
+		case UmaPackage.DOUBLE:
+			return createDoubleFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException(
 					"The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -385,30 +375,29 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-		case UmaPackage.WORK_ORDER_TYPE:
-			return convertWorkOrderTypeToString(eDataType, instanceValue);
-		case UmaPackage.PSEUDO_STATE_KIND:
-			return convertPseudoStateKindToString(eDataType, instanceValue);
 		case UmaPackage.VARIABILITY_TYPE:
 			return convertVariabilityTypeToString(eDataType, instanceValue);
+		case UmaPackage.WORK_ORDER_TYPE:
+			return convertWorkOrderTypeToString(eDataType, instanceValue);
+		case UmaPackage.STRING:
+			return convertStringToString(eDataType, instanceValue);
+		case UmaPackage.BOOLEAN:
+			return convertBooleanToString(eDataType, instanceValue);
 		case UmaPackage.DATE:
 			return convertDateToString(eDataType, instanceValue);
 		case UmaPackage.URI:
 			return convertUriToString(eDataType, instanceValue);
-		case UmaPackage.UNLIMITED_NATURAL:
-			return convertUnlimitedNaturalToString(eDataType, instanceValue);
-		case UmaPackage.STRING:
-			return convertStringToString(eDataType, instanceValue);
 		case UmaPackage.SET:
 			return convertSetToString(eDataType, instanceValue);
 		case UmaPackage.SEQUENCE:
 			return convertSequenceToString(eDataType, instanceValue);
 		case UmaPackage.INTEGER:
 			return convertIntegerToString(eDataType, instanceValue);
-		case UmaPackage.FLOAT:
-			return convertFloatToString(eDataType, instanceValue);
+		case UmaPackage.DOUBLE:
+			return convertDoubleToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException(
 					"The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -443,6 +432,16 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	public MethodElementProperty createMethodElementProperty() {
 		MethodElementPropertyImpl methodElementProperty = new MethodElementPropertyImpl();
 		return methodElementProperty;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Kind createKind() {
+		KindImpl kind = new KindImpl();
+		return kind;
 	}
 
 	/**
@@ -503,6 +502,26 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	public Artifact createArtifact() {
 		ArtifactImpl artifact = new ArtifactImpl();
 		return artifact;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public WorkProduct createWorkProduct() {
+		WorkProductImpl workProduct = new WorkProductImpl();
+		return workProduct;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FulfillableElement createFulfillableElement() {
+		FulfillableElementImpl fulfillableElement = new FulfillableElementImpl();
+		return fulfillableElement;
 	}
 
 	/**
@@ -603,166 +622,6 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	public PracticeDescription createPracticeDescription() {
 		PracticeDescriptionImpl practiceDescription = new PracticeDescriptionImpl();
 		return practiceDescription;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Point createPoint() {
-		PointImpl point = new PointImpl();
-		return point;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DiagramLink createDiagramLink() {
-		DiagramLinkImpl diagramLink = new DiagramLinkImpl();
-		return diagramLink;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public GraphConnector createGraphConnector() {
-		GraphConnectorImpl graphConnector = new GraphConnectorImpl();
-		return graphConnector;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Dimension createDimension() {
-		DimensionImpl dimension = new DimensionImpl();
-		return dimension;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Reference createReference() {
-		ReferenceImpl reference = new ReferenceImpl();
-		return reference;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Property createProperty() {
-		PropertyImpl property = new PropertyImpl();
-		return property;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public GraphEdge createGraphEdge() {
-		GraphEdgeImpl graphEdge = new GraphEdgeImpl();
-		return graphEdge;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Diagram createDiagram() {
-		DiagramImpl diagram = new DiagramImpl();
-		return diagram;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public GraphNode createGraphNode() {
-		GraphNodeImpl graphNode = new GraphNodeImpl();
-		return graphNode;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public SimpleSemanticModelElement createSimpleSemanticModelElement() {
-		SimpleSemanticModelElementImpl simpleSemanticModelElement = new SimpleSemanticModelElementImpl();
-		return simpleSemanticModelElement;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public UMASemanticModelBridge createUMASemanticModelBridge() {
-		UMASemanticModelBridgeImpl umaSemanticModelBridge = new UMASemanticModelBridgeImpl();
-		return umaSemanticModelBridge;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public CoreSemanticModelBridge createCoreSemanticModelBridge() {
-		CoreSemanticModelBridgeImpl coreSemanticModelBridge = new CoreSemanticModelBridgeImpl();
-		return coreSemanticModelBridge;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TextElement createTextElement() {
-		TextElementImpl textElement = new TextElementImpl();
-		return textElement;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Image createImage() {
-		ImageImpl image = new ImageImpl();
-		return image;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Polyline createPolyline() {
-		PolylineImpl polyline = new PolylineImpl();
-		return polyline;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Ellipse createEllipse() {
-		EllipseImpl ellipse = new EllipseImpl();
-		return ellipse;
 	}
 
 	/**
@@ -1060,66 +919,6 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public State createState() {
-		StateImpl state = new StateImpl();
-		return state;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Vertex createVertex() {
-		VertexImpl vertex = new VertexImpl();
-		return vertex;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Region createRegion() {
-		RegionImpl region = new RegionImpl();
-		return region;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public StateMachine createStateMachine() {
-		StateMachineImpl stateMachine = new StateMachineImpl();
-		return stateMachine;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Transition createTransition() {
-		TransitionImpl transition = new TransitionImpl();
-		return transition;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PseudoState createPseudoState() {
-		PseudoStateImpl pseudoState = new PseudoStateImpl();
-		return pseudoState;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Discipline createDiscipline() {
 		DisciplineImpl discipline = new DisciplineImpl();
 		return discipline;
@@ -1320,6 +1119,166 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Point createPoint() {
+		PointImpl point = new PointImpl();
+		return point;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DiagramLink createDiagramLink() {
+		DiagramLinkImpl diagramLink = new DiagramLinkImpl();
+		return diagramLink;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphConnector createGraphConnector() {
+		GraphConnectorImpl graphConnector = new GraphConnectorImpl();
+		return graphConnector;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Dimension createDimension() {
+		DimensionImpl dimension = new DimensionImpl();
+		return dimension;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Reference createReference() {
+		ReferenceImpl reference = new ReferenceImpl();
+		return reference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Property createProperty() {
+		PropertyImpl property = new PropertyImpl();
+		return property;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphEdge createGraphEdge() {
+		GraphEdgeImpl graphEdge = new GraphEdgeImpl();
+		return graphEdge;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Diagram createDiagram() {
+		DiagramImpl diagram = new DiagramImpl();
+		return diagram;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GraphNode createGraphNode() {
+		GraphNodeImpl graphNode = new GraphNodeImpl();
+		return graphNode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SimpleSemanticModelElement createSimpleSemanticModelElement() {
+		SimpleSemanticModelElementImpl simpleSemanticModelElement = new SimpleSemanticModelElementImpl();
+		return simpleSemanticModelElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UMASemanticModelBridge createUMASemanticModelBridge() {
+		UMASemanticModelBridgeImpl umaSemanticModelBridge = new UMASemanticModelBridgeImpl();
+		return umaSemanticModelBridge;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public CoreSemanticModelBridge createCoreSemanticModelBridge() {
+		CoreSemanticModelBridgeImpl coreSemanticModelBridge = new CoreSemanticModelBridgeImpl();
+		return coreSemanticModelBridge;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TextElement createTextElement() {
+		TextElementImpl textElement = new TextElementImpl();
+		return textElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Image createImage() {
+		ImageImpl image = new ImageImpl();
+		return image;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Polyline createPolyline() {
+		PolylineImpl polyline = new PolylineImpl();
+		return polyline;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Ellipse createEllipse() {
+		EllipseImpl ellipse = new EllipseImpl();
+		return ellipse;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public WorkOrderType createWorkOrderTypeFromString(EDataType eDataType,
 			String initialValue) {
 		WorkOrderType result = WorkOrderType.get(initialValue);
@@ -1335,30 +1294,6 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * @generated
 	 */
 	public String convertWorkOrderTypeToString(EDataType eDataType,
-			Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PseudoStateKind createPseudoStateKindFromString(EDataType eDataType,
-			String initialValue) {
-		PseudoStateKind result = PseudoStateKind.get(initialValue);
-		if (result == null)
-			throw new IllegalArgumentException(
-					"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		return result;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertPseudoStateKindToString(EDataType eDataType,
 			Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
@@ -1428,26 +1363,6 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Integer createUnlimitedNaturalFromString(EDataType eDataType,
-			String initialValue) {
-		return (Integer) super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertUnlimitedNaturalToString(EDataType eDataType,
-			Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String createStringFromString(EDataType eDataType,
 			String initialValue) {
 		return (String) super.createFromString(eDataType, initialValue);
@@ -1459,6 +1374,26 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * @generated
 	 */
 	public String convertStringToString(EDataType eDataType,
+			Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Boolean createBooleanFromString(EDataType eDataType,
+			String initialValue) {
+		return (Boolean) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertBooleanToString(EDataType eDataType,
 			Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
@@ -1526,8 +1461,9 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Float createFloatFromString(EDataType eDataType, String initialValue) {
-		return (Float) super.createFromString(eDataType, initialValue);
+	public Double createDoubleFromString(EDataType eDataType,
+			String initialValue) {
+		return (Double) super.createFromString(eDataType, initialValue);
 	}
 
 	/**
@@ -1535,7 +1471,8 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertFloatToString(EDataType eDataType, Object instanceValue) {
+	public String convertDoubleToString(EDataType eDataType,
+			Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 
@@ -1554,6 +1491,7 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 * @deprecated
 	 * @generated
 	 */
+	@Deprecated
 	public static UmaPackage getPackage() {
 		return UmaPackage.eINSTANCE;
 	}

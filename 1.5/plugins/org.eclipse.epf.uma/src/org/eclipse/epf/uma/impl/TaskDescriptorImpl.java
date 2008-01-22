@@ -80,6 +80,15 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	protected Boolean isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
 
 	/**
+	 * This is true if the Is Synchronized With Source attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isSynchronizedWithSourceESet;
+
+	/**
 	 * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,7 +96,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected Task task = null;
+	protected Task task;
 
 	/**
 	 * The cached value of the '{@link #getAdditionallyPerformedBy() <em>Additionally Performed By</em>}' reference list.
@@ -97,7 +106,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList additionallyPerformedBy = null;
+	protected EList<RoleDescriptor> additionallyPerformedBy;
 
 	/**
 	 * The cached value of the '{@link #getAssistedBy() <em>Assisted By</em>}' reference list.
@@ -107,7 +116,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList assistedBy = null;
+	protected EList<RoleDescriptor> assistedBy;
 
 	/**
 	 * The cached value of the '{@link #getExternalInput() <em>External Input</em>}' reference list.
@@ -117,7 +126,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList externalInput = null;
+	protected EList<WorkProductDescriptor> externalInput;
 
 	/**
 	 * The cached value of the '{@link #getMandatoryInput() <em>Mandatory Input</em>}' reference list.
@@ -127,7 +136,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList mandatoryInput = null;
+	protected EList<WorkProductDescriptor> mandatoryInput;
 
 	/**
 	 * The cached value of the '{@link #getOptionalInput() <em>Optional Input</em>}' reference list.
@@ -137,7 +146,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList optionalInput = null;
+	protected EList<WorkProductDescriptor> optionalInput;
 
 	/**
 	 * The cached value of the '{@link #getOutput() <em>Output</em>}' reference list.
@@ -147,17 +156,17 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList output = null;
+	protected EList<WorkProductDescriptor> output;
 
 	/**
-	 * The cached value of the '{@link #getPerformedPrimarilyBy() <em>Performed Primarily By</em>}' reference.
+	 * The cached value of the '{@link #getPerformedPrimarilyBy() <em>Performed Primarily By</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getPerformedPrimarilyBy()
 	 * @generated
 	 * @ordered
 	 */
-	protected RoleDescriptor performedPrimarilyBy = null;
+	protected EList<RoleDescriptor> performedPrimarilyBy;
 
 	/**
 	 * The cached value of the '{@link #getSelectedSteps() <em>Selected Steps</em>}' reference list.
@@ -167,7 +176,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList selectedSteps = null;
+	protected EList<Section> selectedSteps;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -176,10 +185,6 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 */
 	protected TaskDescriptorImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -187,6 +192,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TASK_DESCRIPTOR;
 	}
@@ -208,10 +214,40 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	public void setIsSynchronizedWithSource(Boolean newIsSynchronizedWithSource) {
 		Boolean oldIsSynchronizedWithSource = isSynchronizedWithSource;
 		isSynchronizedWithSource = newIsSynchronizedWithSource;
+		boolean oldIsSynchronizedWithSourceESet = isSynchronizedWithSourceESet;
+		isSynchronizedWithSourceESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
-					oldIsSynchronizedWithSource, isSynchronizedWithSource));
+					oldIsSynchronizedWithSource, isSynchronizedWithSource,
+					!oldIsSynchronizedWithSourceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsSynchronizedWithSource() {
+		Boolean oldIsSynchronizedWithSource = isSynchronizedWithSource;
+		boolean oldIsSynchronizedWithSourceESet = isSynchronizedWithSourceESet;
+		isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
+		isSynchronizedWithSourceESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
+					oldIsSynchronizedWithSource,
+					IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT,
+					oldIsSynchronizedWithSourceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsSynchronizedWithSource() {
+		return isSynchronizedWithSourceESet;
 	}
 
 	/**
@@ -259,9 +295,9 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getAdditionallyPerformedBy() {
+	public List<RoleDescriptor> getAdditionallyPerformedBy() {
 		if (additionallyPerformedBy == null) {
-			additionallyPerformedBy = new EObjectResolvingEList(
+			additionallyPerformedBy = new EObjectResolvingEList<RoleDescriptor>(
 					RoleDescriptor.class, this,
 					UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY);
 		}
@@ -273,9 +309,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getAssistedBy() {
+	public List<RoleDescriptor> getAssistedBy() {
 		if (assistedBy == null) {
-			assistedBy = new EObjectResolvingEList(RoleDescriptor.class, this,
+			assistedBy = new EObjectResolvingEList<RoleDescriptor>(
+					RoleDescriptor.class, this,
 					UmaPackage.TASK_DESCRIPTOR__ASSISTED_BY);
 		}
 		return assistedBy;
@@ -286,9 +323,9 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getExternalInput() {
+	public List<WorkProductDescriptor> getExternalInput() {
 		if (externalInput == null) {
-			externalInput = new EObjectResolvingEList(
+			externalInput = new EObjectResolvingEList<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.TASK_DESCRIPTOR__EXTERNAL_INPUT);
 		}
@@ -300,9 +337,9 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getMandatoryInput() {
+	public List<WorkProductDescriptor> getMandatoryInput() {
 		if (mandatoryInput == null) {
-			mandatoryInput = new EObjectResolvingEList(
+			mandatoryInput = new EObjectResolvingEList<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT);
 		}
@@ -314,9 +351,9 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getOptionalInput() {
+	public List<WorkProductDescriptor> getOptionalInput() {
 		if (optionalInput == null) {
-			optionalInput = new EObjectResolvingEList(
+			optionalInput = new EObjectResolvingEList<WorkProductDescriptor>(
 					WorkProductDescriptor.class, this,
 					UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT);
 		}
@@ -328,10 +365,11 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getOutput() {
+	public List<WorkProductDescriptor> getOutput() {
 		if (output == null) {
-			output = new EObjectResolvingEList(WorkProductDescriptor.class,
-					this, UmaPackage.TASK_DESCRIPTOR__OUTPUT);
+			output = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__OUTPUT);
 		}
 		return output;
 	}
@@ -341,17 +379,11 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RoleDescriptor getPerformedPrimarilyBy() {
-		if (performedPrimarilyBy != null
-				&& ((EObject) performedPrimarilyBy).eIsProxy()) {
-			InternalEObject oldPerformedPrimarilyBy = (InternalEObject) performedPrimarilyBy;
-			performedPrimarilyBy = (RoleDescriptor) eResolveProxy(oldPerformedPrimarilyBy);
-			if (performedPrimarilyBy != oldPerformedPrimarilyBy) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY,
-							oldPerformedPrimarilyBy, performedPrimarilyBy));
-			}
+	public List<RoleDescriptor> getPerformedPrimarilyBy() {
+		if (performedPrimarilyBy == null) {
+			performedPrimarilyBy = new EObjectResolvingEList<RoleDescriptor>(
+					RoleDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
 		}
 		return performedPrimarilyBy;
 	}
@@ -361,33 +393,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RoleDescriptor basicGetPerformedPrimarilyBy() {
-		return performedPrimarilyBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPerformedPrimarilyBy(RoleDescriptor newPerformedPrimarilyBy) {
-		RoleDescriptor oldPerformedPrimarilyBy = performedPrimarilyBy;
-		performedPrimarilyBy = newPerformedPrimarilyBy;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY,
-					oldPerformedPrimarilyBy, performedPrimarilyBy));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public List getSelectedSteps() {
+	public List<Section> getSelectedSteps() {
 		if (selectedSteps == null) {
-			selectedSteps = new EObjectResolvingEList(Section.class, this,
-					UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS);
+			selectedSteps = new EObjectResolvingEList<Section>(Section.class,
+					this, UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS);
 		}
 		return selectedSteps;
 	}
@@ -397,6 +406,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
@@ -418,9 +428,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 		case UmaPackage.TASK_DESCRIPTOR__OUTPUT:
 			return getOutput();
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-			if (resolve)
-				return getPerformedPrimarilyBy();
-			return basicGetPerformedPrimarilyBy();
+			return getPerformedPrimarilyBy();
 		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS:
 			return getSelectedSteps();
 		}
@@ -432,6 +440,8 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
@@ -442,34 +452,42 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
 			getAdditionallyPerformedBy().clear();
-			getAdditionallyPerformedBy().addAll((Collection) newValue);
+			getAdditionallyPerformedBy().addAll(
+					(Collection<? extends RoleDescriptor>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__ASSISTED_BY:
 			getAssistedBy().clear();
-			getAssistedBy().addAll((Collection) newValue);
+			getAssistedBy().addAll(
+					(Collection<? extends RoleDescriptor>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__EXTERNAL_INPUT:
 			getExternalInput().clear();
-			getExternalInput().addAll((Collection) newValue);
+			getExternalInput().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT:
 			getMandatoryInput().clear();
-			getMandatoryInput().addAll((Collection) newValue);
+			getMandatoryInput().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT:
 			getOptionalInput().clear();
-			getOptionalInput().addAll((Collection) newValue);
+			getOptionalInput().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__OUTPUT:
 			getOutput().clear();
-			getOutput().addAll((Collection) newValue);
+			getOutput().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-			setPerformedPrimarilyBy((RoleDescriptor) newValue);
+			getPerformedPrimarilyBy().clear();
+			getPerformedPrimarilyBy().addAll(
+					(Collection<? extends RoleDescriptor>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS:
 			getSelectedSteps().clear();
-			getSelectedSteps().addAll((Collection) newValue);
+			getSelectedSteps().addAll((Collection<? extends Section>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -480,10 +498,11 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			setIsSynchronizedWithSource(IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT);
+			unsetIsSynchronizedWithSource();
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			setTask((Task) null);
@@ -507,7 +526,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			getOutput().clear();
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-			setPerformedPrimarilyBy((RoleDescriptor) null);
+			getPerformedPrimarilyBy().clear();
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS:
 			getSelectedSteps().clear();
@@ -521,18 +540,11 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			return IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT == null ? isSynchronizedWithSource != null
-					: !IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT
-							.equals(isSynchronizedWithSource);
+			return isSetIsSynchronizedWithSource();
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			return task != null;
 		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
@@ -549,7 +561,8 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 		case UmaPackage.TASK_DESCRIPTOR__OUTPUT:
 			return output != null && !output.isEmpty();
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-			return performedPrimarilyBy != null;
+			return performedPrimarilyBy != null
+					&& !performedPrimarilyBy.isEmpty();
 		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS:
 			return selectedSteps != null && !selectedSteps.isEmpty();
 		}
@@ -561,7 +574,8 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class baseClass) {
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
 		if (baseClass == Descriptor.class) {
 			switch (derivedFeatureID) {
 			case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
@@ -578,7 +592,8 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class baseClass) {
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
 		if (baseClass == Descriptor.class) {
 			switch (baseFeatureID) {
 			case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
@@ -595,13 +610,17 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isSynchronizedWithSource: "); //$NON-NLS-1$
-		result.append(isSynchronizedWithSource);
+		if (isSynchronizedWithSourceESet)
+			result.append(isSynchronizedWithSource);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

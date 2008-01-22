@@ -19,6 +19,7 @@ package org.eclipse.epf.uma;
  * Work Order is a Method Element that represents a relationship between two Breakdown Elements in which one Breakdown Elements depends on the start or finish of another Breakdown Elements in order to begin or end.  
  * (Note, Work Order is not modeled as an Association Class to provide a straightforward mapping  to XMI and EMF.)
  * The Work Order class defines predecessor and successor relations amongst Breakdown Elements.  This information is in particular critical for planning applications.  See more details on different types of Work Order relationships at Work Order Type.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -45,9 +46,11 @@ public interface WorkOrder extends ProcessElement {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Link Type</em>' attribute.
 	 * @see org.eclipse.epf.uma.WorkOrderType
+	 * @see #isSetLinkType()
+	 * @see #unsetLinkType()
 	 * @see #setLinkType(WorkOrderType)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkOrder_LinkType()
-	 * @model default="finishToStart" unique="false"
+	 * @model default="finishToStart" unsettable="true" required="true" ordered="false"
 	 * @generated
 	 */
 	WorkOrderType getLinkType();
@@ -58,10 +61,35 @@ public interface WorkOrder extends ProcessElement {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Link Type</em>' attribute.
 	 * @see org.eclipse.epf.uma.WorkOrderType
+	 * @see #isSetLinkType()
+	 * @see #unsetLinkType()
 	 * @see #getLinkType()
 	 * @generated
 	 */
 	void setLinkType(WorkOrderType value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkOrder#getLinkType <em>Link Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetLinkType()
+	 * @see #getLinkType()
+	 * @see #setLinkType(WorkOrderType)
+	 * @generated
+	 */
+	void unsetLinkType();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkOrder#getLinkType <em>Link Type</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Link Type</em>' attribute is set.
+	 * @see #unsetLinkType()
+	 * @see #getLinkType()
+	 * @see #setLinkType(WorkOrderType)
+	 * @generated
+	 */
+	boolean isSetLinkType();
 
 	/**
 	 * Returns the value of the '<em><b>Pred</b></em>' reference.
@@ -74,7 +102,7 @@ public interface WorkOrder extends ProcessElement {
 	 * @return the value of the '<em>Pred</em>' reference.
 	 * @see #setPred(WorkBreakdownElement)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkOrder_Pred()
-	 * @model required="true"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	WorkBreakdownElement getPred();

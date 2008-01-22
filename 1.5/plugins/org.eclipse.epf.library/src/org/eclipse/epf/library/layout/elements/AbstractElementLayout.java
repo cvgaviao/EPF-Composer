@@ -233,21 +233,21 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		} else if ( this.element instanceof WorkProduct ) {
 			oppositeFeatures.add(AssociationHelper.WorkProduct_WorkProductDescriptors);
 		} else if ( this.element instanceof Checklist ) {
-			oppositeFeatures.add(AssociationHelper.Checklist_Activities);
+			oppositeFeatures.add(AssociationHelper.Checklist_BreakdownElements);
 		} else if ( this.element instanceof Concept || this.element instanceof Whitepaper ) {
-			oppositeFeatures.add(AssociationHelper.Concept_Activities);
+			oppositeFeatures.add(AssociationHelper.Concept_BreakdownElements);
 		} else if ( this.element instanceof Checklist ) {
-			oppositeFeatures.add(AssociationHelper.Checklist_Activities);
+			oppositeFeatures.add(AssociationHelper.Checklist_BreakdownElements);
 		} else if ( this.element instanceof Example ) {
-			oppositeFeatures.add(AssociationHelper.Example_Activities);
+			oppositeFeatures.add(AssociationHelper.Example_BreakdownElements);
 		} else if ( this.element instanceof Guideline ) {
-			oppositeFeatures.add(AssociationHelper.Guideline_Activities);
+			oppositeFeatures.add(AssociationHelper.Guideline_BreakdownElements);
 		} else if ( this.element instanceof ReusableAsset ) {
-			oppositeFeatures.add(AssociationHelper.ReusableAsset_Activities);
+			oppositeFeatures.add(AssociationHelper.ReusableAsset_BreakdownElements);
 		} else if ( this.element instanceof Roadmap ) {
 			oppositeFeatures.add(AssociationHelper.Roadmap_Activites);
 		} else if ( this.element instanceof SupportingMaterial ) {
-			oppositeFeatures.add(AssociationHelper.SupportingMaterial_Activities);
+			oppositeFeatures.add(AssociationHelper.SupportingMaterial_BreakdownElements);
 		} 
 	
 		if ( oppositeFeatures.size() > 0 ) {

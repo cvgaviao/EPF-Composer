@@ -60,16 +60,21 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	protected String refinedDescription = REFINED_DESCRIPTION_EDEFAULT;
 
 	/**
+	 * This is true if the Refined Description attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean refinedDescriptionESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected DescriptorDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -77,6 +82,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DESCRIPTOR_DESCRIPTION;
 	}
@@ -98,10 +104,13 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	public void setRefinedDescription(String newRefinedDescription) {
 		String oldRefinedDescription = refinedDescription;
 		refinedDescription = newRefinedDescription;
+		boolean oldRefinedDescriptionESet = refinedDescriptionESet;
+		refinedDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION,
-					oldRefinedDescription, refinedDescription));
+					oldRefinedDescription, refinedDescription,
+					!oldRefinedDescriptionESet));
 	}
 
 	/**
@@ -109,6 +118,33 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetRefinedDescription() {
+		String oldRefinedDescription = refinedDescription;
+		boolean oldRefinedDescriptionESet = refinedDescriptionESet;
+		refinedDescription = REFINED_DESCRIPTION_EDEFAULT;
+		refinedDescriptionESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION,
+					oldRefinedDescription, REFINED_DESCRIPTION_EDEFAULT,
+					oldRefinedDescriptionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetRefinedDescription() {
+		return refinedDescriptionESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
@@ -122,6 +158,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
@@ -136,10 +173,11 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
-			setRefinedDescription(REFINED_DESCRIPTION_EDEFAULT);
+			unsetRefinedDescription();
 			return;
 		}
 		super.eUnset(featureID);
@@ -150,17 +188,11 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
-			return REFINED_DESCRIPTION_EDEFAULT == null ? refinedDescription != null
-					: !REFINED_DESCRIPTION_EDEFAULT.equals(refinedDescription);
+			return isSetRefinedDescription();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -170,13 +202,17 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (refinedDescription: "); //$NON-NLS-1$
-		result.append(refinedDescription);
+		if (refinedDescriptionESet)
+			result.append(refinedDescription);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

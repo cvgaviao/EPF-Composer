@@ -55,7 +55,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methodPlugins = null;
+	protected EList<MethodPlugin> methodPlugins;
 
 	/**
 	 * The cached value of the '{@link #getPredefinedConfigurations() <em>Predefined Configurations</em>}' containment reference list.
@@ -65,7 +65,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList predefinedConfigurations = null;
+	protected EList<MethodConfiguration> predefinedConfigurations;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -74,10 +74,6 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 */
 	protected MethodLibraryImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -85,6 +81,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_LIBRARY;
 	}
@@ -94,9 +91,9 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getMethodPlugins() {
+	public List<MethodPlugin> getMethodPlugins() {
 		if (methodPlugins == null) {
-			methodPlugins = new EObjectContainmentEList.Resolving(
+			methodPlugins = new EObjectContainmentEList.Resolving<MethodPlugin>(
 					MethodPlugin.class, this,
 					UmaPackage.METHOD_LIBRARY__METHOD_PLUGINS);
 		}
@@ -108,9 +105,9 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPredefinedConfigurations() {
+	public List<MethodConfiguration> getPredefinedConfigurations() {
 		if (predefinedConfigurations == null) {
-			predefinedConfigurations = new EObjectContainmentEList.Resolving(
+			predefinedConfigurations = new EObjectContainmentEList.Resolving<MethodConfiguration>(
 					MethodConfiguration.class, this,
 					UmaPackage.METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS);
 		}
@@ -122,15 +119,16 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.METHOD_LIBRARY__METHOD_PLUGINS:
-			return ((InternalEList) getMethodPlugins()).basicRemove(otherEnd,
-					msgs);
-		case UmaPackage.METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS:
-			return ((InternalEList) getPredefinedConfigurations()).basicRemove(
+			return ((InternalEList<?>) getMethodPlugins()).basicRemove(
 					otherEnd, msgs);
+		case UmaPackage.METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS:
+			return ((InternalEList<?>) getPredefinedConfigurations())
+					.basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -140,6 +138,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.METHOD_LIBRARY__METHOD_PLUGINS:
@@ -155,15 +154,19 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.METHOD_LIBRARY__METHOD_PLUGINS:
 			getMethodPlugins().clear();
-			getMethodPlugins().addAll((Collection) newValue);
+			getMethodPlugins().addAll(
+					(Collection<? extends MethodPlugin>) newValue);
 			return;
 		case UmaPackage.METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS:
 			getPredefinedConfigurations().clear();
-			getPredefinedConfigurations().addAll((Collection) newValue);
+			getPredefinedConfigurations().addAll(
+					(Collection<? extends MethodConfiguration>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -174,6 +177,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_LIBRARY__METHOD_PLUGINS:
@@ -191,13 +195,8 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_LIBRARY__METHOD_PLUGINS:
 			return methodPlugins != null && !methodPlugins.isEmpty();

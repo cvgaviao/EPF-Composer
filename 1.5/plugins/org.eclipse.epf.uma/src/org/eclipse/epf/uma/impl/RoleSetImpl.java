@@ -50,7 +50,7 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList roles = null;
+	protected EList<Role> roles;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -59,10 +59,6 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 */
 	protected RoleSetImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -70,6 +66,7 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ROLE_SET;
 	}
@@ -79,9 +76,9 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getRoles() {
+	public List<Role> getRoles() {
 		if (roles == null) {
-			roles = new EObjectResolvingEList(Role.class, this,
+			roles = new EObjectResolvingEList<Role>(Role.class, this,
 					UmaPackage.ROLE_SET__ROLES);
 		}
 		return roles;
@@ -92,6 +89,7 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.ROLE_SET__ROLES:
@@ -105,11 +103,13 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.ROLE_SET__ROLES:
 			getRoles().clear();
-			getRoles().addAll((Collection) newValue);
+			getRoles().addAll((Collection<? extends Role>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -120,6 +120,7 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ROLE_SET__ROLES:
@@ -134,13 +135,8 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ROLE_SET__ROLES:
 			return roles != null && !roles.isEmpty();

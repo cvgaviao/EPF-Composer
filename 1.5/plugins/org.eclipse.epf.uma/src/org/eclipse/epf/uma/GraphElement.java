@@ -72,10 +72,10 @@ public interface GraphElement extends DiagramElement {
 	 * @return the value of the '<em>Contained</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphElement_Contained()
 	 * @see org.eclipse.epf.uma.DiagramElement#getContainer_
-	 * @model type="org.eclipse.epf.uma.DiagramElement" opposite="container" containment="true" resolveProxies="true" ordered="false"
+	 * @model opposite="container" containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getContained();
+	List<DiagramElement> getContained();
 
 	/**
 	 * Returns the value of the '<em><b>Link</b></em>' containment reference list.
@@ -90,10 +90,10 @@ public interface GraphElement extends DiagramElement {
 	 * @return the value of the '<em>Link</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphElement_Link()
 	 * @see org.eclipse.epf.uma.DiagramLink#getGraphElement
-	 * @model type="org.eclipse.epf.uma.DiagramLink" opposite="graphElement" containment="true" resolveProxies="true" ordered="false"
+	 * @model opposite="graphElement" containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getLink();
+	List<DiagramLink> getLink();
 
 	/**
 	 * Returns the value of the '<em><b>Anchorage</b></em>' containment reference list.
@@ -108,10 +108,10 @@ public interface GraphElement extends DiagramElement {
 	 * @return the value of the '<em>Anchorage</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphElement_Anchorage()
 	 * @see org.eclipse.epf.uma.GraphConnector#getGraphElement
-	 * @model type="org.eclipse.epf.uma.GraphConnector" opposite="graphElement" containment="true" resolveProxies="true" ordered="false"
+	 * @model opposite="graphElement" containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	List getAnchorage();
+	List<GraphConnector> getAnchorage();
 
 	/**
 	 * Returns the value of the '<em><b>Semantic Model</b></em>' containment reference.
@@ -126,7 +126,7 @@ public interface GraphElement extends DiagramElement {
 	 * @see #setSemanticModel(SemanticModelBridge)
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphElement_SemanticModel()
 	 * @see org.eclipse.epf.uma.SemanticModelBridge#getGraphElement
-	 * @model opposite="graphElement" containment="true" resolveProxies="true"
+	 * @model opposite="graphElement" containment="true" resolveProxies="true" required="true"
 	 * @generated
 	 */
 	SemanticModelBridge getSemanticModel();

@@ -56,6 +56,7 @@ import org.eclipse.epf.uma.Element;
 import org.eclipse.epf.uma.Ellipse;
 import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.GraphConnector;
 import org.eclipse.epf.uma.GraphEdge;
 import org.eclipse.epf.uma.GraphElement;
@@ -66,6 +67,7 @@ import org.eclipse.epf.uma.GuidanceDescription;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.Image;
 import org.eclipse.epf.uma.Iteration;
+import org.eclipse.epf.uma.Kind;
 import org.eclipse.epf.uma.LeafElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -94,10 +96,7 @@ import org.eclipse.epf.uma.ProcessFamily;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.ProcessPlanningTemplate;
 import org.eclipse.epf.uma.Property;
-import org.eclipse.epf.uma.PseudoState;
-import org.eclipse.epf.uma.PseudoStateKind;
 import org.eclipse.epf.uma.Reference;
-import org.eclipse.epf.uma.Region;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
@@ -109,8 +108,6 @@ import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.SemanticModelBridge;
 import org.eclipse.epf.uma.SimpleSemanticModelElement;
-import org.eclipse.epf.uma.State;
-import org.eclipse.epf.uma.StateMachine;
 import org.eclipse.epf.uma.Step;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.Task;
@@ -122,14 +119,12 @@ import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.TextElement;
 import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.ToolMentor;
-import org.eclipse.epf.uma.Transition;
 import org.eclipse.epf.uma.Type;
 import org.eclipse.epf.uma.UMASemanticModelBridge;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
-import org.eclipse.epf.uma.Vertex;
 import org.eclipse.epf.uma.Whitepaper;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkDefinition;
@@ -139,7 +134,6 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescription;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.WorkProductType;
-
 import org.eclipse.epf.uma.*;
 
 /**
@@ -224,6 +218,13 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass kindEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass contentElementEClass = null;
 
 	/**
@@ -260,6 +261,13 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	private EClass workProductEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass fulfillableElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -372,153 +380,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	private EClass practiceDescriptionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass pointEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass graphElementEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass diagramElementEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass diagramLinkEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass graphConnectorEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass semanticModelBridgeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass dimensionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass referenceEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass propertyEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass graphEdgeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass diagramEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass graphNodeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass simpleSemanticModelElementEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass umaSemanticModelBridgeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass coreSemanticModelBridgeEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass leafElementEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass textElementEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass imageEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass graphicPrimitiveEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass polylineEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass ellipseEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -756,48 +617,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass stateEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass vertexEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass regionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass stateMachineEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass transitionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass pseudoStateEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass disciplineEClass = null;
 
 	/**
@@ -966,14 +785,154 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum workOrderTypeEEnum = null;
+	private EClass pointEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum pseudoStateKindEEnum = null;
+	private EClass graphElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass diagramElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass diagramLinkEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass graphConnectorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass semanticModelBridgeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dimensionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass referenceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass propertyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass graphEdgeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass diagramEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass graphNodeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass simpleSemanticModelElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass umaSemanticModelBridgeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass coreSemanticModelBridgeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass leafElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass textElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass imageEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass graphicPrimitiveEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass polylineEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ellipseEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum workOrderTypeEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1001,14 +960,14 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType unlimitedNaturalEDataType = null;
+	private EDataType stringEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType stringEDataType = null;
+	private EDataType booleanEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1036,7 +995,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EDataType floatEDataType = null;
+	private EDataType doubleEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -1125,6 +1084,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getClassifier_IsAbstract() {
+		return (EAttribute) classifierEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getType() {
 		return typeEClass;
 	}
@@ -1206,7 +1174,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMethodElement_BriefDescription() {
+	public EAttribute getMethodElement_PresentationName() {
 		return (EAttribute) methodElementEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -1215,8 +1183,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMethodElement_OwnedRules() {
-		return (EReference) methodElementEClass.getEStructuralFeatures().get(2);
+	public EAttribute getMethodElement_BriefDescription() {
+		return (EAttribute) methodElementEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -1224,7 +1192,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getMethodElement_MethodElementProperty() {
+	public EReference getMethodElement_OwnedRules() {
 		return (EReference) methodElementEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -1233,8 +1201,26 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getMethodElement_MethodElementProperty() {
+		return (EReference) methodElementEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMethodElement_Kind() {
+		return (EReference) methodElementEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getMethodElement_Suppressed() {
-		return (EAttribute) methodElementEClass.getEStructuralFeatures().get(4);
+		return (EAttribute) methodElementEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -1243,7 +1229,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EAttribute getMethodElement_OrderingGuide() {
-		return (EAttribute) methodElementEClass.getEStructuralFeatures().get(5);
+		return (EAttribute) methodElementEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -1281,6 +1267,33 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	public EAttribute getMethodElementProperty_Value() {
 		return (EAttribute) methodElementPropertyEClass
 				.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getKind() {
+		return kindEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getKind_ApplicableMetaClass() {
+		return (EAttribute) kindEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getKind_IsPrimaryKind() {
+		return (EAttribute) kindEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1357,7 +1370,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getContentElement_TermDefinition() {
+	public EReference getContentElement_Termdefinition() {
 		return (EReference) contentElementEClass.getEStructuralFeatures()
 				.get(6);
 	}
@@ -1376,19 +1389,9 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDescribableElement_PresentationName() {
-		return (EAttribute) describableElementEClass.getEStructuralFeatures()
-				.get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getDescribableElement_Presentation() {
 		return (EReference) describableElementEClass.getEStructuralFeatures()
-				.get(1);
+				.get(0);
 	}
 
 	/**
@@ -1398,7 +1401,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EAttribute getDescribableElement_Shapeicon() {
 		return (EAttribute) describableElementEClass.getEStructuralFeatures()
-				.get(2);
+				.get(1);
 	}
 
 	/**
@@ -1408,7 +1411,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EAttribute getDescribableElement_Nodeicon() {
 		return (EAttribute) describableElementEClass.getEStructuralFeatures()
-				.get(3);
+				.get(2);
 	}
 
 	/**
@@ -1575,6 +1578,25 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EReference getWorkProduct_EstimationConsiderations() {
 		return (EReference) workProductEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFulfillableElement() {
+		return fulfillableElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getFulfillableElement_Fulfills() {
+		return (EReference) fulfillableElementEClass.getEStructuralFeatures()
+				.get(0);
 	}
 
 	/**
@@ -2092,630 +2114,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getPoint() {
-		return pointEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPoint_X() {
-		return (EAttribute) pointEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPoint_Y() {
-		return (EAttribute) pointEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGraphElement() {
-		return graphElementEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphElement_Position() {
-		return (EReference) graphElementEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphElement_Contained() {
-		return (EReference) graphElementEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphElement_Link() {
-		return (EReference) graphElementEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphElement_Anchorage() {
-		return (EReference) graphElementEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphElement_SemanticModel() {
-		return (EReference) graphElementEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getDiagramElement() {
-		return diagramElementEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDiagramElement_IsVisible() {
-		return (EAttribute) diagramElementEClass.getEStructuralFeatures()
-				.get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagramElement_Container() {
-		return (EReference) diagramElementEClass.getEStructuralFeatures()
-				.get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagramElement_Reference() {
-		return (EReference) diagramElementEClass.getEStructuralFeatures()
-				.get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagramElement_Property() {
-		return (EReference) diagramElementEClass.getEStructuralFeatures()
-				.get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getDiagramLink() {
-		return diagramLinkEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDiagramLink_Zoom() {
-		return (EAttribute) diagramLinkEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagramLink_Viewport() {
-		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagramLink_GraphElement() {
-		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagramLink_Diagram() {
-		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGraphConnector() {
-		return graphConnectorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphConnector_GraphElement() {
-		return (EReference) graphConnectorEClass.getEStructuralFeatures()
-				.get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphConnector_GraphEdge() {
-		return (EReference) graphConnectorEClass.getEStructuralFeatures()
-				.get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getSemanticModelBridge() {
-		return semanticModelBridgeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getSemanticModelBridge_Presentation() {
-		return (EAttribute) semanticModelBridgeEClass.getEStructuralFeatures()
-				.get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSemanticModelBridge_GraphElement() {
-		return (EReference) semanticModelBridgeEClass.getEStructuralFeatures()
-				.get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getSemanticModelBridge_Diagram() {
-		return (EReference) semanticModelBridgeEClass.getEStructuralFeatures()
-				.get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getDimension() {
-		return dimensionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDimension_Width() {
-		return (EAttribute) dimensionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDimension_Height() {
-		return (EAttribute) dimensionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getReference() {
-		return referenceEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getReference_IsIndividualRepresentation() {
-		return (EAttribute) referenceEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getReference_Referenced() {
-		return (EReference) referenceEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getProperty() {
-		return propertyEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getProperty_Key() {
-		return (EAttribute) propertyEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getProperty_Value() {
-		return (EAttribute) propertyEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGraphEdge() {
-		return graphEdgeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphEdge_Anchor() {
-		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphEdge_Waypoints() {
-		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getDiagram() {
-		return diagramEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDiagram_Zoom() {
-		return (EAttribute) diagramEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagram_Viewpoint() {
-		return (EReference) diagramEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagram_DiagramLink() {
-		return (EReference) diagramEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDiagram_Namespace() {
-		return (EReference) diagramEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGraphNode() {
-		return graphNodeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getGraphNode_Size() {
-		return (EReference) graphNodeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getSimpleSemanticModelElement() {
-		return simpleSemanticModelElementEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getSimpleSemanticModelElement_TypeInfo() {
-		return (EAttribute) simpleSemanticModelElementEClass
-				.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getUMASemanticModelBridge() {
-		return umaSemanticModelBridgeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getUMASemanticModelBridge_Element() {
-		return (EReference) umaSemanticModelBridgeEClass
-				.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getCoreSemanticModelBridge() {
-		return coreSemanticModelBridgeEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getCoreSemanticModelBridge_Element() {
-		return (EReference) coreSemanticModelBridgeEClass
-				.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getLeafElement() {
-		return leafElementEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTextElement() {
-		return textElementEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getTextElement_Text() {
-		return (EAttribute) textElementEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getImage() {
-		return imageEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getImage_Uri() {
-		return (EAttribute) imageEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getImage_MimeType() {
-		return (EAttribute) imageEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getGraphicPrimitive() {
-		return graphicPrimitiveEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getPolyline() {
-		return polylineEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getPolyline_Closed() {
-		return (EAttribute) polylineEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getPolyline_Waypoints() {
-		return (EReference) polylineEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getEllipse() {
-		return ellipseEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEllipse_RadiusX() {
-		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEllipse_RadiusY() {
-		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEllipse_Rotation() {
-		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEllipse_StartAngle() {
-		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEllipse_EndAngle() {
-		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getEllipse_Center() {
-		return (EReference) ellipseEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getActivity() {
 		return activityEClass;
 	}
@@ -2736,69 +2134,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EReference getActivity_Roadmaps() {
 		return (EReference) activityEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActivity_SupportingMaterials() {
-		return (EReference) activityEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActivity_Checklists() {
-		return (EReference) activityEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActivity_Concepts() {
-		return (EReference) activityEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActivity_Examples() {
-		return (EReference) activityEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActivity_Guidelines() {
-		return (EReference) activityEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getActivity_ReusableAssets() {
-		return (EReference) activityEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getActivity_IsEnactable() {
-		return (EAttribute) activityEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -2944,8 +2279,77 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getBreakdownElement_Checklists() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_Concepts() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_Examples() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_Guidelines() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_ReusableAssets() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_SupportingMaterials() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getMilestone() {
 		return milestoneEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMilestone_RequiredResults() {
+		return (EReference) milestoneEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3641,195 +3045,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getState() {
-		return stateEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getState_WorkProduct() {
-		return (EReference) stateEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getState_Region() {
-		return (EReference) stateEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getState_Submachine() {
-		return (EReference) stateEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getVertex() {
-		return vertexEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVertex_Container() {
-		return (EReference) vertexEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVertex_Outgoing() {
-		return (EReference) vertexEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVertex_Incoming() {
-		return (EReference) vertexEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getRegion() {
-		return regionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRegion_Vertex() {
-		return (EReference) regionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRegion_Transition() {
-		return (EReference) regionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRegion_State() {
-		return (EReference) regionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRegion_StateMachine() {
-		return (EReference) regionEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getStateMachine() {
-		return stateMachineEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getStateMachine_Region() {
-		return (EReference) stateMachineEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTransition() {
-		return transitionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTransition_WorkDefinition() {
-		return (EReference) transitionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTransition_Container() {
-		return (EReference) transitionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTransition_Source() {
-		return (EReference) transitionEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTransition_Target() {
-		return (EReference) transitionEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getPseudoState() {
-		return pseudoStateEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getDiscipline() {
 		return disciplineEClass;
 	}
@@ -4222,7 +3437,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getProcessComponentDescriptor_ProcessComponent() {
+	public EReference getProcessComponentDescriptor__processComponent() {
 		return (EReference) processComponentDescriptorEClass
 				.getEStructuralFeatures().get(0);
 	}
@@ -4475,8 +3690,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getWorkOrderType() {
-		return workOrderTypeEEnum;
+	public EClass getPoint() {
+		return pointEClass;
 	}
 
 	/**
@@ -4484,8 +3699,623 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getPseudoStateKind() {
-		return pseudoStateKindEEnum;
+	public EAttribute getPoint_X() {
+		return (EAttribute) pointEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPoint_Y() {
+		return (EAttribute) pointEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphElement() {
+		return graphElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphElement_Position() {
+		return (EReference) graphElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphElement_Contained() {
+		return (EReference) graphElementEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphElement_Link() {
+		return (EReference) graphElementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphElement_Anchorage() {
+		return (EReference) graphElementEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphElement_SemanticModel() {
+		return (EReference) graphElementEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDiagramElement() {
+		return diagramElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDiagramElement_IsVisible() {
+		return (EAttribute) diagramElementEClass.getEStructuralFeatures()
+				.get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagramElement_Container() {
+		return (EReference) diagramElementEClass.getEStructuralFeatures()
+				.get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagramElement_Reference() {
+		return (EReference) diagramElementEClass.getEStructuralFeatures()
+				.get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagramElement_Property() {
+		return (EReference) diagramElementEClass.getEStructuralFeatures()
+				.get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDiagramLink() {
+		return diagramLinkEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDiagramLink_Zoom() {
+		return (EAttribute) diagramLinkEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagramLink_Viewport() {
+		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagramLink_GraphElement() {
+		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagramLink_Diagram() {
+		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphConnector() {
+		return graphConnectorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphConnector_GraphElement() {
+		return (EReference) graphConnectorEClass.getEStructuralFeatures()
+				.get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphConnector_GraphEdge() {
+		return (EReference) graphConnectorEClass.getEStructuralFeatures()
+				.get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSemanticModelBridge() {
+		return semanticModelBridgeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSemanticModelBridge_Presentation() {
+		return (EAttribute) semanticModelBridgeEClass.getEStructuralFeatures()
+				.get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSemanticModelBridge_GraphElement() {
+		return (EReference) semanticModelBridgeEClass.getEStructuralFeatures()
+				.get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSemanticModelBridge_Diagram() {
+		return (EReference) semanticModelBridgeEClass.getEStructuralFeatures()
+				.get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDimension() {
+		return dimensionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDimension_Width() {
+		return (EAttribute) dimensionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDimension_Height() {
+		return (EAttribute) dimensionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getReference() {
+		return referenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getReference_IsIndividualRepresentation() {
+		return (EAttribute) referenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getReference_Referenced() {
+		return (EReference) referenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProperty() {
+		return propertyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProperty_Key() {
+		return (EAttribute) propertyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProperty_Value() {
+		return (EAttribute) propertyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphEdge() {
+		return graphEdgeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphEdge_Anchor() {
+		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphEdge_Waypoints() {
+		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDiagram() {
+		return diagramEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getDiagram_Zoom() {
+		return (EAttribute) diagramEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagram_Viewpoint() {
+		return (EReference) diagramEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagram_DiagramLink() {
+		return (EReference) diagramEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDiagram_Namespace() {
+		return (EReference) diagramEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphNode() {
+		return graphNodeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGraphNode_Size() {
+		return (EReference) graphNodeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSimpleSemanticModelElement() {
+		return simpleSemanticModelElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSimpleSemanticModelElement_TypeInfo() {
+		return (EAttribute) simpleSemanticModelElementEClass
+				.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getUMASemanticModelBridge() {
+		return umaSemanticModelBridgeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getUMASemanticModelBridge_Element() {
+		return (EReference) umaSemanticModelBridgeEClass
+				.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCoreSemanticModelBridge() {
+		return coreSemanticModelBridgeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCoreSemanticModelBridge_Element() {
+		return (EReference) coreSemanticModelBridgeEClass
+				.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLeafElement() {
+		return leafElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTextElement() {
+		return textElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getTextElement_Text() {
+		return (EAttribute) textElementEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getImage() {
+		return imageEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImage_Uri() {
+		return (EAttribute) imageEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImage_MimeType() {
+		return (EAttribute) imageEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGraphicPrimitive() {
+		return graphicPrimitiveEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPolyline() {
+		return polylineEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPolyline_Closed() {
+		return (EAttribute) polylineEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPolyline_Waypoints() {
+		return (EReference) polylineEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getEllipse() {
+		return ellipseEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEllipse_RadiusX() {
+		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEllipse_RadiusY() {
+		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEllipse_Rotation() {
+		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEllipse_StartAngle() {
+		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getEllipse_EndAngle() {
+		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getEllipse_Center() {
+		return (EReference) ellipseEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getWorkOrderType() {
+		return workOrderTypeEEnum;
 	}
 
 	/**
@@ -4520,8 +4350,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EDataType getUnlimitedNatural() {
-		return unlimitedNaturalEDataType;
+	public EDataType getString() {
+		return stringEDataType;
 	}
 
 	/**
@@ -4529,8 +4359,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EDataType getString() {
-		return stringEDataType;
+	public EDataType getBoolean() {
+		return booleanEDataType;
 	}
 
 	/**
@@ -4565,8 +4395,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EDataType getFloat() {
-		return floatEDataType;
+	public EDataType getDouble() {
+		return doubleEDataType;
 	}
 
 	/**
@@ -4599,35 +4429,42 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 
 		// Create classes and their features
 		classifierEClass = createEClass(CLASSIFIER);
+		createEAttribute(classifierEClass, CLASSIFIER__IS_ABSTRACT);
 
 		typeEClass = createEClass(TYPE);
 
-		elementEClass = createEClass(ELEMENT);
+		packageableElementEClass = createEClass(PACKAGEABLE_ELEMENT);
 
 		namedElementEClass = createEClass(NAMED_ELEMENT);
 		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
 
-		packageableElementEClass = createEClass(PACKAGEABLE_ELEMENT);
+		elementEClass = createEClass(ELEMENT);
 
 		packageEClass = createEClass(PACKAGE);
 
 		namespaceEClass = createEClass(NAMESPACE);
 
+		constraintEClass = createEClass(CONSTRAINT);
+		createEAttribute(constraintEClass, CONSTRAINT__BODY);
+
 		methodElementEClass = createEClass(METHOD_ELEMENT);
 		createEAttribute(methodElementEClass, METHOD_ELEMENT__GUID);
+		createEAttribute(methodElementEClass, METHOD_ELEMENT__PRESENTATION_NAME);
 		createEAttribute(methodElementEClass, METHOD_ELEMENT__BRIEF_DESCRIPTION);
 		createEReference(methodElementEClass, METHOD_ELEMENT__OWNED_RULES);
 		createEReference(methodElementEClass,
 				METHOD_ELEMENT__METHOD_ELEMENT_PROPERTY);
+		createEReference(methodElementEClass, METHOD_ELEMENT__KIND);
 		createEAttribute(methodElementEClass, METHOD_ELEMENT__SUPPRESSED);
 		createEAttribute(methodElementEClass, METHOD_ELEMENT__ORDERING_GUIDE);
-
-		constraintEClass = createEClass(CONSTRAINT);
-		createEAttribute(constraintEClass, CONSTRAINT__BODY);
 
 		methodElementPropertyEClass = createEClass(METHOD_ELEMENT_PROPERTY);
 		createEAttribute(methodElementPropertyEClass,
 				METHOD_ELEMENT_PROPERTY__VALUE);
+
+		kindEClass = createEClass(KIND);
+		createEAttribute(kindEClass, KIND__APPLICABLE_META_CLASS);
+		createEAttribute(kindEClass, KIND__IS_PRIMARY_KIND);
 
 		contentElementEClass = createEClass(CONTENT_ELEMENT);
 		createEReference(contentElementEClass,
@@ -4638,11 +4475,9 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(contentElementEClass, CONTENT_ELEMENT__GUIDELINES);
 		createEReference(contentElementEClass, CONTENT_ELEMENT__EXAMPLES);
 		createEReference(contentElementEClass, CONTENT_ELEMENT__ASSETS);
-		createEReference(contentElementEClass, CONTENT_ELEMENT__TERM_DEFINITION);
+		createEReference(contentElementEClass, CONTENT_ELEMENT__TERMDEFINITION);
 
 		describableElementEClass = createEClass(DESCRIBABLE_ELEMENT);
-		createEAttribute(describableElementEClass,
-				DESCRIBABLE_ELEMENT__PRESENTATION_NAME);
 		createEReference(describableElementEClass,
 				DESCRIBABLE_ELEMENT__PRESENTATION);
 		createEAttribute(describableElementEClass,
@@ -4660,15 +4495,44 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEAttribute(contentDescriptionEClass,
 				CONTENT_DESCRIPTION__KEY_CONSIDERATIONS);
 
+		methodUnitEClass = createEClass(METHOD_UNIT);
+		createEAttribute(methodUnitEClass, METHOD_UNIT__AUTHORS);
+		createEAttribute(methodUnitEClass, METHOD_UNIT__CHANGE_DATE);
+		createEAttribute(methodUnitEClass, METHOD_UNIT__CHANGE_DESCRIPTION);
+		createEAttribute(methodUnitEClass, METHOD_UNIT__VERSION);
+		createEReference(methodUnitEClass, METHOD_UNIT__COPYRIGHT_STATEMENT);
+
+		supportingMaterialEClass = createEClass(SUPPORTING_MATERIAL);
+
+		guidanceEClass = createEClass(GUIDANCE);
+
 		sectionEClass = createEClass(SECTION);
 		createEAttribute(sectionEClass, SECTION__SECTION_NAME);
 		createEAttribute(sectionEClass, SECTION__SECTION_DESCRIPTION);
 		createEReference(sectionEClass, SECTION__SUB_SECTIONS);
 		createEReference(sectionEClass, SECTION__PREDECESSOR);
 
-		roleEClass = createEClass(ROLE);
-		createEReference(roleEClass, ROLE__MODIFIES);
-		createEReference(roleEClass, ROLE__RESPONSIBLE_FOR);
+		variabilityElementEClass = createEClass(VARIABILITY_ELEMENT);
+		createEAttribute(variabilityElementEClass,
+				VARIABILITY_ELEMENT__VARIABILITY_TYPE);
+		createEReference(variabilityElementEClass,
+				VARIABILITY_ELEMENT__VARIABILITY_BASED_ON_ELEMENT);
+
+		conceptEClass = createEClass(CONCEPT);
+
+		checklistEClass = createEClass(CHECKLIST);
+
+		guidelineEClass = createEClass(GUIDELINE);
+
+		exampleEClass = createEClass(EXAMPLE);
+
+		reusableAssetEClass = createEClass(REUSABLE_ASSET);
+
+		termDefinitionEClass = createEClass(TERM_DEFINITION);
+
+		artifactEClass = createEClass(ARTIFACT);
+		createEReference(artifactEClass, ARTIFACT__CONTAINER_ARTIFACT);
+		createEReference(artifactEClass, ARTIFACT__CONTAINED_ARTIFACTS);
 
 		workProductEClass = createEClass(WORK_PRODUCT);
 		createEReference(workProductEClass, WORK_PRODUCT__REPORTS);
@@ -4676,6 +4540,32 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(workProductEClass, WORK_PRODUCT__TOOL_MENTORS);
 		createEReference(workProductEClass,
 				WORK_PRODUCT__ESTIMATION_CONSIDERATIONS);
+
+		fulfillableElementEClass = createEClass(FULFILLABLE_ELEMENT);
+		createEReference(fulfillableElementEClass,
+				FULFILLABLE_ELEMENT__FULFILLS);
+
+		reportEClass = createEClass(REPORT);
+
+		templateEClass = createEClass(TEMPLATE);
+
+		toolMentorEClass = createEClass(TOOL_MENTOR);
+
+		estimationConsiderationsEClass = createEClass(ESTIMATION_CONSIDERATIONS);
+
+		deliverableEClass = createEClass(DELIVERABLE);
+		createEReference(deliverableEClass,
+				DELIVERABLE__DELIVERED_WORK_PRODUCTS);
+
+		outcomeEClass = createEClass(OUTCOME);
+
+		stepEClass = createEClass(STEP);
+
+		workDefinitionEClass = createEClass(WORK_DEFINITION);
+		createEReference(workDefinitionEClass, WORK_DEFINITION__PRECONDITION);
+		createEReference(workDefinitionEClass, WORK_DEFINITION__POSTCONDITION);
+
+		whitepaperEClass = createEClass(WHITEPAPER);
 
 		taskEClass = createEClass(TASK);
 		createEReference(taskEClass, TASK__PERFORMED_BY);
@@ -4687,32 +4577,9 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(taskEClass, TASK__TOOL_MENTORS);
 		createEReference(taskEClass, TASK__ESTIMATION_CONSIDERATIONS);
 
-		workDefinitionEClass = createEClass(WORK_DEFINITION);
-		createEReference(workDefinitionEClass, WORK_DEFINITION__PRECONDITION);
-		createEReference(workDefinitionEClass, WORK_DEFINITION__POSTCONDITION);
-
-		stepEClass = createEClass(STEP);
-
-		guidanceEClass = createEClass(GUIDANCE);
-
-		artifactEClass = createEClass(ARTIFACT);
-		createEReference(artifactEClass, ARTIFACT__CONTAINER_ARTIFACT);
-		createEReference(artifactEClass, ARTIFACT__CONTAINED_ARTIFACTS);
-
-		deliverableEClass = createEClass(DELIVERABLE);
-		createEReference(deliverableEClass,
-				DELIVERABLE__DELIVERED_WORK_PRODUCTS);
-
-		outcomeEClass = createEClass(OUTCOME);
-
-		methodPackageEClass = createEClass(METHOD_PACKAGE);
-		createEAttribute(methodPackageEClass, METHOD_PACKAGE__GLOBAL);
-		createEReference(methodPackageEClass, METHOD_PACKAGE__REUSED_PACKAGES);
-		createEReference(methodPackageEClass, METHOD_PACKAGE__CHILD_PACKAGES);
-
-		contentPackageEClass = createEClass(CONTENT_PACKAGE);
-		createEReference(contentPackageEClass,
-				CONTENT_PACKAGE__CONTENT_ELEMENTS);
+		roleEClass = createEClass(ROLE);
+		createEReference(roleEClass, ROLE__MODIFIES);
+		createEReference(roleEClass, ROLE__RESPONSIBLE_FOR);
 
 		artifactDescriptionEClass = createEClass(ARTIFACT_DESCRIPTION);
 		createEAttribute(artifactDescriptionEClass,
@@ -4764,6 +4631,255 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				PRACTICE_DESCRIPTION__APPLICATION);
 		createEAttribute(practiceDescriptionEClass,
 				PRACTICE_DESCRIPTION__LEVELS_OF_ADOPTION);
+
+		roleSetEClass = createEClass(ROLE_SET);
+		createEReference(roleSetEClass, ROLE_SET__ROLES);
+
+		contentCategoryEClass = createEClass(CONTENT_CATEGORY);
+
+		domainEClass = createEClass(DOMAIN);
+		createEReference(domainEClass, DOMAIN__WORK_PRODUCTS);
+		createEReference(domainEClass, DOMAIN__SUBDOMAINS);
+
+		workProductTypeEClass = createEClass(WORK_PRODUCT_TYPE);
+		createEReference(workProductTypeEClass,
+				WORK_PRODUCT_TYPE__WORK_PRODUCTS);
+
+		disciplineGroupingEClass = createEClass(DISCIPLINE_GROUPING);
+		createEReference(disciplineGroupingEClass,
+				DISCIPLINE_GROUPING__DISCIPLINES);
+
+		disciplineEClass = createEClass(DISCIPLINE);
+		createEReference(disciplineEClass, DISCIPLINE__TASKS);
+		createEReference(disciplineEClass, DISCIPLINE__SUBDISCIPLINE);
+		createEReference(disciplineEClass, DISCIPLINE__REFERENCE_WORKFLOWS);
+
+		activityEClass = createEClass(ACTIVITY);
+		createEReference(activityEClass, ACTIVITY__BREAKDOWN_ELEMENTS);
+		createEReference(activityEClass, ACTIVITY__ROADMAPS);
+
+		workBreakdownElementEClass = createEClass(WORK_BREAKDOWN_ELEMENT);
+		createEAttribute(workBreakdownElementEClass,
+				WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE);
+		createEAttribute(workBreakdownElementEClass,
+				WORK_BREAKDOWN_ELEMENT__IS_ONGOING);
+		createEAttribute(workBreakdownElementEClass,
+				WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN);
+		createEReference(workBreakdownElementEClass,
+				WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR);
+
+		breakdownElementEClass = createEClass(BREAKDOWN_ELEMENT);
+		createEAttribute(breakdownElementEClass, BREAKDOWN_ELEMENT__PREFIX);
+		createEAttribute(breakdownElementEClass, BREAKDOWN_ELEMENT__IS_PLANNED);
+		createEAttribute(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES);
+		createEAttribute(breakdownElementEClass, BREAKDOWN_ELEMENT__IS_OPTIONAL);
+		createEReference(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__PRESENTED_AFTER);
+		createEReference(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__PRESENTED_BEFORE);
+		createEReference(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__PLANNING_DATA);
+		createEReference(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__SUPER_ACTIVITIES);
+		createEReference(breakdownElementEClass, BREAKDOWN_ELEMENT__CHECKLISTS);
+		createEReference(breakdownElementEClass, BREAKDOWN_ELEMENT__CONCEPTS);
+		createEReference(breakdownElementEClass, BREAKDOWN_ELEMENT__EXAMPLES);
+		createEReference(breakdownElementEClass, BREAKDOWN_ELEMENT__GUIDELINES);
+		createEReference(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__REUSABLE_ASSETS);
+		createEReference(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS);
+
+		processElementEClass = createEClass(PROCESS_ELEMENT);
+
+		planningDataEClass = createEClass(PLANNING_DATA);
+		createEAttribute(planningDataEClass, PLANNING_DATA__START_DATE);
+		createEAttribute(planningDataEClass, PLANNING_DATA__FINISH_DATE);
+		createEAttribute(planningDataEClass, PLANNING_DATA__RANK);
+
+		workOrderEClass = createEClass(WORK_ORDER);
+		createEAttribute(workOrderEClass, WORK_ORDER__LINK_TYPE);
+		createEReference(workOrderEClass, WORK_ORDER__PRED);
+
+		roadmapEClass = createEClass(ROADMAP);
+
+		toolEClass = createEClass(TOOL);
+		createEReference(toolEClass, TOOL__TOOL_MENTORS);
+
+		roleSetGroupingEClass = createEClass(ROLE_SET_GROUPING);
+		createEReference(roleSetGroupingEClass, ROLE_SET_GROUPING__ROLE_SETS);
+
+		customCategoryEClass = createEClass(CUSTOM_CATEGORY);
+		createEReference(customCategoryEClass,
+				CUSTOM_CATEGORY__CATEGORIZED_ELEMENTS);
+		createEReference(customCategoryEClass, CUSTOM_CATEGORY__SUB_CATEGORIES);
+
+		methodPackageEClass = createEClass(METHOD_PACKAGE);
+		createEAttribute(methodPackageEClass, METHOD_PACKAGE__GLOBAL);
+		createEReference(methodPackageEClass, METHOD_PACKAGE__REUSED_PACKAGES);
+		createEReference(methodPackageEClass, METHOD_PACKAGE__CHILD_PACKAGES);
+
+		contentPackageEClass = createEClass(CONTENT_PACKAGE);
+		createEReference(contentPackageEClass,
+				CONTENT_PACKAGE__CONTENT_ELEMENTS);
+
+		milestoneEClass = createEClass(MILESTONE);
+		createEReference(milestoneEClass, MILESTONE__REQUIRED_RESULTS);
+
+		workProductDescriptorEClass = createEClass(WORK_PRODUCT_DESCRIPTOR);
+		createEAttribute(workProductDescriptorEClass,
+				WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE);
+		createEAttribute(workProductDescriptorEClass,
+				WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE);
+		createEReference(workProductDescriptorEClass,
+				WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT);
+		createEReference(workProductDescriptorEClass,
+				WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY);
+		createEReference(workProductDescriptorEClass,
+				WORK_PRODUCT_DESCRIPTOR__IMPACTS);
+		createEReference(workProductDescriptorEClass,
+				WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS);
+
+		descriptorEClass = createEClass(DESCRIPTOR);
+		createEAttribute(descriptorEClass,
+				DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE);
+
+		iterationEClass = createEClass(ITERATION);
+
+		phaseEClass = createEClass(PHASE);
+
+		teamProfileEClass = createEClass(TEAM_PROFILE);
+		createEReference(teamProfileEClass, TEAM_PROFILE__TEAM_ROLES);
+		createEReference(teamProfileEClass, TEAM_PROFILE__SUPER_TEAM);
+		createEReference(teamProfileEClass, TEAM_PROFILE__SUB_TEAM);
+
+		roleDescriptorEClass = createEClass(ROLE_DESCRIPTOR);
+		createEReference(roleDescriptorEClass, ROLE_DESCRIPTOR__ROLE);
+		createEReference(roleDescriptorEClass, ROLE_DESCRIPTOR__MODIFIES);
+		createEReference(roleDescriptorEClass, ROLE_DESCRIPTOR__RESPONSIBLE_FOR);
+
+		taskDescriptorEClass = createEClass(TASK_DESCRIPTOR);
+		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__TASK);
+		createEReference(taskDescriptorEClass,
+				TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY);
+		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__ASSISTED_BY);
+		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__EXTERNAL_INPUT);
+		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__MANDATORY_INPUT);
+		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__OPTIONAL_INPUT);
+		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__OUTPUT);
+		createEReference(taskDescriptorEClass,
+				TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
+		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__SELECTED_STEPS);
+
+		compositeRoleEClass = createEClass(COMPOSITE_ROLE);
+		createEReference(compositeRoleEClass, COMPOSITE_ROLE__AGGREGATED_ROLES);
+
+		deliveryProcessEClass = createEClass(DELIVERY_PROCESS);
+		createEReference(deliveryProcessEClass,
+				DELIVERY_PROCESS__EDUCATION_MATERIALS);
+		createEReference(deliveryProcessEClass,
+				DELIVERY_PROCESS__COMMUNICATIONS_MATERIALS);
+
+		processEClass = createEClass(PROCESS);
+		createEReference(processEClass, PROCESS__INCLUDES_PATTERNS);
+		createEReference(processEClass, PROCESS__DEFAULT_CONTEXT);
+		createEReference(processEClass, PROCESS__VALID_CONTEXT);
+
+		capabilityPatternEClass = createEClass(CAPABILITY_PATTERN);
+
+		methodConfigurationEClass = createEClass(METHOD_CONFIGURATION);
+		createEReference(methodConfigurationEClass,
+				METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION);
+		createEReference(methodConfigurationEClass,
+				METHOD_CONFIGURATION__METHOD_PACKAGE_SELECTION);
+		createEReference(methodConfigurationEClass,
+				METHOD_CONFIGURATION__PROCESS_VIEWS);
+		createEReference(methodConfigurationEClass,
+				METHOD_CONFIGURATION__DEFAULT_VIEW);
+		createEReference(methodConfigurationEClass,
+				METHOD_CONFIGURATION__BASE_CONFIGURATIONS);
+		createEReference(methodConfigurationEClass,
+				METHOD_CONFIGURATION__SUBTRACTED_CATEGORY);
+		createEReference(methodConfigurationEClass,
+				METHOD_CONFIGURATION__ADDED_CATEGORY);
+
+		methodPluginEClass = createEClass(METHOD_PLUGIN);
+		createEAttribute(methodPluginEClass, METHOD_PLUGIN__USER_CHANGEABLE);
+		createEReference(methodPluginEClass, METHOD_PLUGIN__METHOD_PACKAGES);
+		createEReference(methodPluginEClass, METHOD_PLUGIN__BASES);
+
+		processPlanningTemplateEClass = createEClass(PROCESS_PLANNING_TEMPLATE);
+		createEReference(processPlanningTemplateEClass,
+				PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES);
+
+		practiceEClass = createEClass(PRACTICE);
+		createEReference(practiceEClass, PRACTICE__SUB_PRACTICES);
+		createEReference(practiceEClass, PRACTICE__CONTENT_REFERENCES);
+		createEReference(practiceEClass, PRACTICE__ACTIVITY_REFERENCES);
+
+		breakdownElementDescriptionEClass = createEClass(BREAKDOWN_ELEMENT_DESCRIPTION);
+		createEAttribute(breakdownElementDescriptionEClass,
+				BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE);
+
+		activityDescriptionEClass = createEClass(ACTIVITY_DESCRIPTION);
+		createEAttribute(activityDescriptionEClass,
+				ACTIVITY_DESCRIPTION__PURPOSE);
+		createEAttribute(activityDescriptionEClass,
+				ACTIVITY_DESCRIPTION__ALTERNATIVES);
+		createEAttribute(activityDescriptionEClass,
+				ACTIVITY_DESCRIPTION__HOWTO_STAFF);
+
+		deliveryProcessDescriptionEClass = createEClass(DELIVERY_PROCESS_DESCRIPTION);
+		createEAttribute(deliveryProcessDescriptionEClass,
+				DELIVERY_PROCESS_DESCRIPTION__SCALE);
+		createEAttribute(deliveryProcessDescriptionEClass,
+				DELIVERY_PROCESS_DESCRIPTION__PROJECT_CHARACTERISTICS);
+		createEAttribute(deliveryProcessDescriptionEClass,
+				DELIVERY_PROCESS_DESCRIPTION__RISK_LEVEL);
+		createEAttribute(deliveryProcessDescriptionEClass,
+				DELIVERY_PROCESS_DESCRIPTION__ESTIMATING_TECHNIQUE);
+		createEAttribute(deliveryProcessDescriptionEClass,
+				DELIVERY_PROCESS_DESCRIPTION__PROJECT_MEMBER_EXPERTISE);
+		createEAttribute(deliveryProcessDescriptionEClass,
+				DELIVERY_PROCESS_DESCRIPTION__TYPE_OF_CONTRACT);
+
+		processDescriptionEClass = createEClass(PROCESS_DESCRIPTION);
+		createEAttribute(processDescriptionEClass, PROCESS_DESCRIPTION__SCOPE);
+		createEAttribute(processDescriptionEClass,
+				PROCESS_DESCRIPTION__USAGE_NOTES);
+
+		descriptorDescriptionEClass = createEClass(DESCRIPTOR_DESCRIPTION);
+		createEAttribute(descriptorDescriptionEClass,
+				DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION);
+
+		processComponentDescriptorEClass = createEClass(PROCESS_COMPONENT_DESCRIPTOR);
+		createEReference(processComponentDescriptorEClass,
+				PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT);
+
+		processComponentEClass = createEClass(PROCESS_COMPONENT);
+		createEReference(processComponentEClass, PROCESS_COMPONENT__INTERFACES);
+		createEReference(processComponentEClass, PROCESS_COMPONENT__PROCESS);
+
+		processPackageEClass = createEClass(PROCESS_PACKAGE);
+		createEReference(processPackageEClass,
+				PROCESS_PACKAGE__PROCESS_ELEMENTS);
+		createEReference(processPackageEClass, PROCESS_PACKAGE__DIAGRAMS);
+
+		processComponentInterfaceEClass = createEClass(PROCESS_COMPONENT_INTERFACE);
+		createEReference(processComponentInterfaceEClass,
+				PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS);
+		createEReference(processComponentInterfaceEClass,
+				PROCESS_COMPONENT_INTERFACE__INTERFACE_IO);
+
+		processFamilyEClass = createEClass(PROCESS_FAMILY);
+		createEReference(processFamilyEClass,
+				PROCESS_FAMILY__DELIVERY_PROCESSES);
+
+		methodLibraryEClass = createEClass(METHOD_LIBRARY);
+		createEReference(methodLibraryEClass, METHOD_LIBRARY__METHOD_PLUGINS);
+		createEReference(methodLibraryEClass,
+				METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS);
 
 		pointEClass = createEClass(POINT);
 		createEAttribute(pointEClass, POINT__X);
@@ -4861,322 +4977,19 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEAttribute(ellipseEClass, ELLIPSE__END_ANGLE);
 		createEReference(ellipseEClass, ELLIPSE__CENTER);
 
-		activityEClass = createEClass(ACTIVITY);
-		createEReference(activityEClass, ACTIVITY__BREAKDOWN_ELEMENTS);
-		createEReference(activityEClass, ACTIVITY__ROADMAPS);
-		createEReference(activityEClass, ACTIVITY__SUPPORTING_MATERIALS);
-		createEReference(activityEClass, ACTIVITY__CHECKLISTS);
-		createEReference(activityEClass, ACTIVITY__CONCEPTS);
-		createEReference(activityEClass, ACTIVITY__EXAMPLES);
-		createEReference(activityEClass, ACTIVITY__GUIDELINES);
-		createEReference(activityEClass, ACTIVITY__REUSABLE_ASSETS);
-		createEAttribute(activityEClass, ACTIVITY__IS_ENACTABLE);
-
-		workBreakdownElementEClass = createEClass(WORK_BREAKDOWN_ELEMENT);
-		createEAttribute(workBreakdownElementEClass,
-				WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE);
-		createEAttribute(workBreakdownElementEClass,
-				WORK_BREAKDOWN_ELEMENT__IS_ONGOING);
-		createEAttribute(workBreakdownElementEClass,
-				WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN);
-		createEReference(workBreakdownElementEClass,
-				WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR);
-
-		breakdownElementEClass = createEClass(BREAKDOWN_ELEMENT);
-		createEAttribute(breakdownElementEClass, BREAKDOWN_ELEMENT__PREFIX);
-		createEAttribute(breakdownElementEClass, BREAKDOWN_ELEMENT__IS_PLANNED);
-		createEAttribute(breakdownElementEClass,
-				BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES);
-		createEAttribute(breakdownElementEClass, BREAKDOWN_ELEMENT__IS_OPTIONAL);
-		createEReference(breakdownElementEClass,
-				BREAKDOWN_ELEMENT__PRESENTED_AFTER);
-		createEReference(breakdownElementEClass,
-				BREAKDOWN_ELEMENT__PRESENTED_BEFORE);
-		createEReference(breakdownElementEClass,
-				BREAKDOWN_ELEMENT__PLANNING_DATA);
-		createEReference(breakdownElementEClass,
-				BREAKDOWN_ELEMENT__SUPER_ACTIVITIES);
-
-		milestoneEClass = createEClass(MILESTONE);
-
-		iterationEClass = createEClass(ITERATION);
-
-		phaseEClass = createEClass(PHASE);
-
-		teamProfileEClass = createEClass(TEAM_PROFILE);
-		createEReference(teamProfileEClass, TEAM_PROFILE__TEAM_ROLES);
-		createEReference(teamProfileEClass, TEAM_PROFILE__SUPER_TEAM);
-		createEReference(teamProfileEClass, TEAM_PROFILE__SUB_TEAM);
-
-		roleDescriptorEClass = createEClass(ROLE_DESCRIPTOR);
-		createEReference(roleDescriptorEClass, ROLE_DESCRIPTOR__ROLE);
-		createEReference(roleDescriptorEClass, ROLE_DESCRIPTOR__MODIFIES);
-		createEReference(roleDescriptorEClass, ROLE_DESCRIPTOR__RESPONSIBLE_FOR);
-
-		workOrderEClass = createEClass(WORK_ORDER);
-		createEAttribute(workOrderEClass, WORK_ORDER__LINK_TYPE);
-		createEReference(workOrderEClass, WORK_ORDER__PRED);
-
-		processElementEClass = createEClass(PROCESS_ELEMENT);
-
-		planningDataEClass = createEClass(PLANNING_DATA);
-		createEAttribute(planningDataEClass, PLANNING_DATA__START_DATE);
-		createEAttribute(planningDataEClass, PLANNING_DATA__FINISH_DATE);
-		createEAttribute(planningDataEClass, PLANNING_DATA__RANK);
-
-		descriptorEClass = createEClass(DESCRIPTOR);
-		createEAttribute(descriptorEClass,
-				DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE);
-
-		workProductDescriptorEClass = createEClass(WORK_PRODUCT_DESCRIPTOR);
-		createEAttribute(workProductDescriptorEClass,
-				WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE);
-		createEAttribute(workProductDescriptorEClass,
-				WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE);
-		createEReference(workProductDescriptorEClass,
-				WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT);
-		createEReference(workProductDescriptorEClass,
-				WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY);
-		createEReference(workProductDescriptorEClass,
-				WORK_PRODUCT_DESCRIPTOR__IMPACTS);
-		createEReference(workProductDescriptorEClass,
-				WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS);
-
-		taskDescriptorEClass = createEClass(TASK_DESCRIPTOR);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__TASK);
-		createEReference(taskDescriptorEClass,
-				TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__ASSISTED_BY);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__EXTERNAL_INPUT);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__MANDATORY_INPUT);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__OPTIONAL_INPUT);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__OUTPUT);
-		createEReference(taskDescriptorEClass,
-				TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__SELECTED_STEPS);
-
-		compositeRoleEClass = createEClass(COMPOSITE_ROLE);
-		createEReference(compositeRoleEClass, COMPOSITE_ROLE__AGGREGATED_ROLES);
-
-		breakdownElementDescriptionEClass = createEClass(BREAKDOWN_ELEMENT_DESCRIPTION);
-		createEAttribute(breakdownElementDescriptionEClass,
-				BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE);
-
-		activityDescriptionEClass = createEClass(ACTIVITY_DESCRIPTION);
-		createEAttribute(activityDescriptionEClass,
-				ACTIVITY_DESCRIPTION__PURPOSE);
-		createEAttribute(activityDescriptionEClass,
-				ACTIVITY_DESCRIPTION__ALTERNATIVES);
-		createEAttribute(activityDescriptionEClass,
-				ACTIVITY_DESCRIPTION__HOWTO_STAFF);
-
-		deliveryProcessDescriptionEClass = createEClass(DELIVERY_PROCESS_DESCRIPTION);
-		createEAttribute(deliveryProcessDescriptionEClass,
-				DELIVERY_PROCESS_DESCRIPTION__SCALE);
-		createEAttribute(deliveryProcessDescriptionEClass,
-				DELIVERY_PROCESS_DESCRIPTION__PROJECT_CHARACTERISTICS);
-		createEAttribute(deliveryProcessDescriptionEClass,
-				DELIVERY_PROCESS_DESCRIPTION__RISK_LEVEL);
-		createEAttribute(deliveryProcessDescriptionEClass,
-				DELIVERY_PROCESS_DESCRIPTION__ESTIMATING_TECHNIQUE);
-		createEAttribute(deliveryProcessDescriptionEClass,
-				DELIVERY_PROCESS_DESCRIPTION__PROJECT_MEMBER_EXPERTISE);
-		createEAttribute(deliveryProcessDescriptionEClass,
-				DELIVERY_PROCESS_DESCRIPTION__TYPE_OF_CONTRACT);
-
-		processDescriptionEClass = createEClass(PROCESS_DESCRIPTION);
-		createEAttribute(processDescriptionEClass, PROCESS_DESCRIPTION__SCOPE);
-		createEAttribute(processDescriptionEClass,
-				PROCESS_DESCRIPTION__USAGE_NOTES);
-
-		descriptorDescriptionEClass = createEClass(DESCRIPTOR_DESCRIPTION);
-		createEAttribute(descriptorDescriptionEClass,
-				DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION);
-
-		conceptEClass = createEClass(CONCEPT);
-
-		checklistEClass = createEClass(CHECKLIST);
-
-		exampleEClass = createEClass(EXAMPLE);
-
-		guidelineEClass = createEClass(GUIDELINE);
-
-		reportEClass = createEClass(REPORT);
-
-		templateEClass = createEClass(TEMPLATE);
-
-		supportingMaterialEClass = createEClass(SUPPORTING_MATERIAL);
-
-		toolMentorEClass = createEClass(TOOL_MENTOR);
-
-		whitepaperEClass = createEClass(WHITEPAPER);
-
-		termDefinitionEClass = createEClass(TERM_DEFINITION);
-
-		practiceEClass = createEClass(PRACTICE);
-		createEReference(practiceEClass, PRACTICE__SUB_PRACTICES);
-		createEReference(practiceEClass, PRACTICE__CONTENT_REFERENCES);
-		createEReference(practiceEClass, PRACTICE__ACTIVITY_REFERENCES);
-
-		estimationConsiderationsEClass = createEClass(ESTIMATION_CONSIDERATIONS);
-
-		reusableAssetEClass = createEClass(REUSABLE_ASSET);
-
-		stateEClass = createEClass(STATE);
-		createEReference(stateEClass, STATE__WORK_PRODUCT);
-		createEReference(stateEClass, STATE__REGION);
-		createEReference(stateEClass, STATE__SUBMACHINE);
-
-		vertexEClass = createEClass(VERTEX);
-		createEReference(vertexEClass, VERTEX__CONTAINER);
-		createEReference(vertexEClass, VERTEX__OUTGOING);
-		createEReference(vertexEClass, VERTEX__INCOMING);
-
-		regionEClass = createEClass(REGION);
-		createEReference(regionEClass, REGION__VERTEX);
-		createEReference(regionEClass, REGION__TRANSITION);
-		createEReference(regionEClass, REGION__STATE);
-		createEReference(regionEClass, REGION__STATE_MACHINE);
-
-		stateMachineEClass = createEClass(STATE_MACHINE);
-		createEReference(stateMachineEClass, STATE_MACHINE__REGION);
-
-		transitionEClass = createEClass(TRANSITION);
-		createEReference(transitionEClass, TRANSITION__WORK_DEFINITION);
-		createEReference(transitionEClass, TRANSITION__CONTAINER);
-		createEReference(transitionEClass, TRANSITION__SOURCE);
-		createEReference(transitionEClass, TRANSITION__TARGET);
-
-		pseudoStateEClass = createEClass(PSEUDO_STATE);
-
-		disciplineEClass = createEClass(DISCIPLINE);
-		createEReference(disciplineEClass, DISCIPLINE__TASKS);
-		createEReference(disciplineEClass, DISCIPLINE__SUBDISCIPLINE);
-		createEReference(disciplineEClass, DISCIPLINE__REFERENCE_WORKFLOWS);
-
-		contentCategoryEClass = createEClass(CONTENT_CATEGORY);
-
-		roleSetEClass = createEClass(ROLE_SET);
-		createEReference(roleSetEClass, ROLE_SET__ROLES);
-
-		domainEClass = createEClass(DOMAIN);
-		createEReference(domainEClass, DOMAIN__WORK_PRODUCTS);
-		createEReference(domainEClass, DOMAIN__SUBDOMAINS);
-
-		workProductTypeEClass = createEClass(WORK_PRODUCT_TYPE);
-		createEReference(workProductTypeEClass,
-				WORK_PRODUCT_TYPE__WORK_PRODUCTS);
-
-		disciplineGroupingEClass = createEClass(DISCIPLINE_GROUPING);
-		createEReference(disciplineGroupingEClass,
-				DISCIPLINE_GROUPING__DISCIPLINES);
-
-		toolEClass = createEClass(TOOL);
-		createEReference(toolEClass, TOOL__TOOL_MENTORS);
-
-		roleSetGroupingEClass = createEClass(ROLE_SET_GROUPING);
-		createEReference(roleSetGroupingEClass, ROLE_SET_GROUPING__ROLE_SETS);
-
-		customCategoryEClass = createEClass(CUSTOM_CATEGORY);
-		createEReference(customCategoryEClass,
-				CUSTOM_CATEGORY__CATEGORIZED_ELEMENTS);
-		createEReference(customCategoryEClass, CUSTOM_CATEGORY__SUB_CATEGORIES);
-
-		deliveryProcessEClass = createEClass(DELIVERY_PROCESS);
-		createEReference(deliveryProcessEClass,
-				DELIVERY_PROCESS__EDUCATION_MATERIALS);
-		createEReference(deliveryProcessEClass,
-				DELIVERY_PROCESS__COMMUNICATIONS_MATERIALS);
-
-		processEClass = createEClass(PROCESS);
-		createEReference(processEClass, PROCESS__INCLUDES_PATTERNS);
-		createEReference(processEClass, PROCESS__DEFAULT_CONTEXT);
-		createEReference(processEClass, PROCESS__VALID_CONTEXT);
-
-		capabilityPatternEClass = createEClass(CAPABILITY_PATTERN);
-
-		processPlanningTemplateEClass = createEClass(PROCESS_PLANNING_TEMPLATE);
-		createEReference(processPlanningTemplateEClass,
-				PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES);
-
-		roadmapEClass = createEClass(ROADMAP);
-
-		processComponentEClass = createEClass(PROCESS_COMPONENT);
-		createEReference(processComponentEClass, PROCESS_COMPONENT__INTERFACES);
-		createEReference(processComponentEClass, PROCESS_COMPONENT__PROCESS);
-
-		processPackageEClass = createEClass(PROCESS_PACKAGE);
-		createEReference(processPackageEClass,
-				PROCESS_PACKAGE__PROCESS_ELEMENTS);
-		createEReference(processPackageEClass, PROCESS_PACKAGE__DIAGRAMS);
-
-		processComponentInterfaceEClass = createEClass(PROCESS_COMPONENT_INTERFACE);
-		createEReference(processComponentInterfaceEClass,
-				PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS);
-		createEReference(processComponentInterfaceEClass,
-				PROCESS_COMPONENT_INTERFACE__INTERFACE_IO);
-
-		processComponentDescriptorEClass = createEClass(PROCESS_COMPONENT_DESCRIPTOR);
-		createEReference(processComponentDescriptorEClass,
-				PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT);
-
-		methodPluginEClass = createEClass(METHOD_PLUGIN);
-		createEAttribute(methodPluginEClass, METHOD_PLUGIN__USER_CHANGEABLE);
-		createEReference(methodPluginEClass, METHOD_PLUGIN__METHOD_PACKAGES);
-		createEReference(methodPluginEClass, METHOD_PLUGIN__BASES);
-
-		variabilityElementEClass = createEClass(VARIABILITY_ELEMENT);
-		createEAttribute(variabilityElementEClass,
-				VARIABILITY_ELEMENT__VARIABILITY_TYPE);
-		createEReference(variabilityElementEClass,
-				VARIABILITY_ELEMENT__VARIABILITY_BASED_ON_ELEMENT);
-
-		methodUnitEClass = createEClass(METHOD_UNIT);
-		createEAttribute(methodUnitEClass, METHOD_UNIT__AUTHORS);
-		createEAttribute(methodUnitEClass, METHOD_UNIT__CHANGE_DATE);
-		createEAttribute(methodUnitEClass, METHOD_UNIT__CHANGE_DESCRIPTION);
-		createEAttribute(methodUnitEClass, METHOD_UNIT__VERSION);
-		createEReference(methodUnitEClass, METHOD_UNIT__COPYRIGHT_STATEMENT);
-
-		methodConfigurationEClass = createEClass(METHOD_CONFIGURATION);
-		createEReference(methodConfigurationEClass,
-				METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION);
-		createEReference(methodConfigurationEClass,
-				METHOD_CONFIGURATION__METHOD_PACKAGE_SELECTION);
-		createEReference(methodConfigurationEClass,
-				METHOD_CONFIGURATION__PROCESS_VIEWS);
-		createEReference(methodConfigurationEClass,
-				METHOD_CONFIGURATION__DEFAULT_VIEW);
-		createEReference(methodConfigurationEClass,
-				METHOD_CONFIGURATION__BASE_CONFIGURATIONS);
-		createEReference(methodConfigurationEClass,
-				METHOD_CONFIGURATION__SUBTRACTED_CATEGORY);
-		createEReference(methodConfigurationEClass,
-				METHOD_CONFIGURATION__ADDED_CATEGORY);
-
-		processFamilyEClass = createEClass(PROCESS_FAMILY);
-		createEReference(processFamilyEClass,
-				PROCESS_FAMILY__DELIVERY_PROCESSES);
-
-		methodLibraryEClass = createEClass(METHOD_LIBRARY);
-		createEReference(methodLibraryEClass, METHOD_LIBRARY__METHOD_PLUGINS);
-		createEReference(methodLibraryEClass,
-				METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS);
-
 		// Create enums
-		workOrderTypeEEnum = createEEnum(WORK_ORDER_TYPE);
-		pseudoStateKindEEnum = createEEnum(PSEUDO_STATE_KIND);
 		variabilityTypeEEnum = createEEnum(VARIABILITY_TYPE);
+		workOrderTypeEEnum = createEEnum(WORK_ORDER_TYPE);
 
 		// Create data types
+		stringEDataType = createEDataType(STRING);
+		booleanEDataType = createEDataType(BOOLEAN);
 		dateEDataType = createEDataType(DATE);
 		uriEDataType = createEDataType(URI);
-		unlimitedNaturalEDataType = createEDataType(UNLIMITED_NATURAL);
-		stringEDataType = createEDataType(STRING);
 		setEDataType = createEDataType(SET);
 		sequenceEDataType = createEDataType(SEQUENCE);
 		integerEDataType = createEDataType(INTEGER);
-		floatEDataType = createEDataType(FLOAT);
+		doubleEDataType = createEDataType(DOUBLE);
 	}
 
 	/**
@@ -5203,38 +5016,58 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
+		// Create type parameters
+
+		// Set bounds for type parameters
+
 		// Add supertypes to classes
 		classifierEClass.getESuperTypes().add(this.getType());
 		typeEClass.getESuperTypes().add(this.getPackageableElement());
-		namedElementEClass.getESuperTypes().add(this.getElement());
 		packageableElementEClass.getESuperTypes().add(this.getNamedElement());
+		namedElementEClass.getESuperTypes().add(this.getElement());
 		packageEClass.getESuperTypes().add(this.getNamespace());
 		packageEClass.getESuperTypes().add(this.getPackageableElement());
 		namespaceEClass.getESuperTypes().add(this.getNamedElement());
-		methodElementEClass.getESuperTypes().add(this.getPackageableElement());
 		constraintEClass.getESuperTypes().add(this.getMethodElement());
+		methodElementEClass.getESuperTypes().add(this.getPackageableElement());
 		methodElementPropertyEClass.getESuperTypes().add(
 				this.getPackageableElement());
+		kindEClass.getESuperTypes().add(this.getContentElement());
 		contentElementEClass.getESuperTypes().add(this.getDescribableElement());
 		contentElementEClass.getESuperTypes().add(this.getVariabilityElement());
 		describableElementEClass.getESuperTypes().add(this.getMethodElement());
 		describableElementEClass.getESuperTypes().add(this.getClassifier());
 		contentDescriptionEClass.getESuperTypes().add(this.getMethodUnit());
-		sectionEClass.getESuperTypes().add(this.getVariabilityElement());
-		roleEClass.getESuperTypes().add(this.getContentElement());
-		workProductEClass.getESuperTypes().add(this.getContentElement());
-		taskEClass.getESuperTypes().add(this.getContentElement());
-		taskEClass.getESuperTypes().add(this.getWorkDefinition());
-		workDefinitionEClass.getESuperTypes().add(this.getMethodElement());
-		stepEClass.getESuperTypes().add(this.getSection());
-		stepEClass.getESuperTypes().add(this.getWorkDefinition());
+		methodUnitEClass.getESuperTypes().add(this.getMethodElement());
+		supportingMaterialEClass.getESuperTypes().add(this.getGuidance());
 		guidanceEClass.getESuperTypes().add(this.getContentElement());
+		sectionEClass.getESuperTypes().add(this.getVariabilityElement());
+		variabilityElementEClass.getESuperTypes().add(this.getMethodElement());
+		conceptEClass.getESuperTypes().add(this.getGuidance());
+		checklistEClass.getESuperTypes().add(this.getGuidance());
+		guidelineEClass.getESuperTypes().add(this.getGuidance());
+		exampleEClass.getESuperTypes().add(this.getGuidance());
+		reusableAssetEClass.getESuperTypes().add(this.getGuidance());
+		termDefinitionEClass.getESuperTypes().add(this.getGuidance());
 		artifactEClass.getESuperTypes().add(this.getWorkProduct());
+		workProductEClass.getESuperTypes().add(this.getContentElement());
+		workProductEClass.getESuperTypes().add(this.getFulfillableElement());
+		fulfillableElementEClass.getESuperTypes().add(
+				this.getDescribableElement());
+		reportEClass.getESuperTypes().add(this.getGuidance());
+		templateEClass.getESuperTypes().add(this.getGuidance());
+		toolMentorEClass.getESuperTypes().add(this.getGuidance());
+		estimationConsiderationsEClass.getESuperTypes().add(this.getGuidance());
 		deliverableEClass.getESuperTypes().add(this.getWorkProduct());
 		outcomeEClass.getESuperTypes().add(this.getWorkProduct());
-		methodPackageEClass.getESuperTypes().add(this.getMethodElement());
-		methodPackageEClass.getESuperTypes().add(this.getPackage());
-		contentPackageEClass.getESuperTypes().add(this.getMethodPackage());
+		stepEClass.getESuperTypes().add(this.getSection());
+		stepEClass.getESuperTypes().add(this.getWorkDefinition());
+		workDefinitionEClass.getESuperTypes().add(this.getMethodElement());
+		whitepaperEClass.getESuperTypes().add(this.getConcept());
+		taskEClass.getESuperTypes().add(this.getContentElement());
+		taskEClass.getESuperTypes().add(this.getWorkDefinition());
+		roleEClass.getESuperTypes().add(this.getContentElement());
+		roleEClass.getESuperTypes().add(this.getFulfillableElement());
 		artifactDescriptionEClass.getESuperTypes().add(
 				this.getWorkProductDescription());
 		workProductDescriptionEClass.getESuperTypes().add(
@@ -5249,6 +5082,69 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				this.getContentDescription());
 		practiceDescriptionEClass.getESuperTypes().add(
 				this.getContentDescription());
+		roleSetEClass.getESuperTypes().add(this.getContentCategory());
+		contentCategoryEClass.getESuperTypes().add(this.getContentElement());
+		domainEClass.getESuperTypes().add(this.getContentCategory());
+		workProductTypeEClass.getESuperTypes().add(this.getContentCategory());
+		disciplineGroupingEClass.getESuperTypes()
+				.add(this.getContentCategory());
+		disciplineEClass.getESuperTypes().add(this.getContentCategory());
+		activityEClass.getESuperTypes().add(this.getWorkBreakdownElement());
+		activityEClass.getESuperTypes().add(this.getFulfillableElement());
+		activityEClass.getESuperTypes().add(this.getVariabilityElement());
+		activityEClass.getESuperTypes().add(this.getWorkDefinition());
+		workBreakdownElementEClass.getESuperTypes().add(
+				this.getBreakdownElement());
+		breakdownElementEClass.getESuperTypes().add(this.getProcessElement());
+		processElementEClass.getESuperTypes().add(this.getDescribableElement());
+		planningDataEClass.getESuperTypes().add(this.getProcessElement());
+		workOrderEClass.getESuperTypes().add(this.getProcessElement());
+		roadmapEClass.getESuperTypes().add(this.getGuidance());
+		toolEClass.getESuperTypes().add(this.getContentCategory());
+		roleSetGroupingEClass.getESuperTypes().add(this.getContentCategory());
+		customCategoryEClass.getESuperTypes().add(this.getContentCategory());
+		methodPackageEClass.getESuperTypes().add(this.getMethodElement());
+		methodPackageEClass.getESuperTypes().add(this.getPackage());
+		contentPackageEClass.getESuperTypes().add(this.getMethodPackage());
+		milestoneEClass.getESuperTypes().add(this.getWorkBreakdownElement());
+		workProductDescriptorEClass.getESuperTypes().add(this.getDescriptor());
+		descriptorEClass.getESuperTypes().add(this.getBreakdownElement());
+		iterationEClass.getESuperTypes().add(this.getActivity());
+		phaseEClass.getESuperTypes().add(this.getActivity());
+		teamProfileEClass.getESuperTypes().add(this.getBreakdownElement());
+		roleDescriptorEClass.getESuperTypes().add(this.getDescriptor());
+		taskDescriptorEClass.getESuperTypes().add(
+				this.getWorkBreakdownElement());
+		taskDescriptorEClass.getESuperTypes().add(this.getDescriptor());
+		compositeRoleEClass.getESuperTypes().add(this.getRoleDescriptor());
+		deliveryProcessEClass.getESuperTypes().add(this.getProcess());
+		processEClass.getESuperTypes().add(this.getActivity());
+		capabilityPatternEClass.getESuperTypes().add(this.getProcess());
+		methodConfigurationEClass.getESuperTypes().add(this.getMethodUnit());
+		methodPluginEClass.getESuperTypes().add(this.getMethodUnit());
+		methodPluginEClass.getESuperTypes().add(this.getPackage());
+		processPlanningTemplateEClass.getESuperTypes().add(this.getProcess());
+		practiceEClass.getESuperTypes().add(this.getGuidance());
+		breakdownElementDescriptionEClass.getESuperTypes().add(
+				this.getContentDescription());
+		activityDescriptionEClass.getESuperTypes().add(
+				this.getBreakdownElementDescription());
+		deliveryProcessDescriptionEClass.getESuperTypes().add(
+				this.getProcessDescription());
+		processDescriptionEClass.getESuperTypes().add(
+				this.getActivityDescription());
+		descriptorDescriptionEClass.getESuperTypes().add(
+				this.getBreakdownElementDescription());
+		processComponentDescriptorEClass.getESuperTypes().add(
+				this.getDescriptor());
+		processComponentEClass.getESuperTypes().add(this.getProcessPackage());
+		processComponentEClass.getESuperTypes().add(this.getMethodUnit());
+		processPackageEClass.getESuperTypes().add(this.getMethodPackage());
+		processComponentInterfaceEClass.getESuperTypes().add(
+				this.getBreakdownElement());
+		processFamilyEClass.getESuperTypes().add(this.getMethodConfiguration());
+		methodLibraryEClass.getESuperTypes().add(this.getMethodUnit());
+		methodLibraryEClass.getESuperTypes().add(this.getPackage());
 		graphElementEClass.getESuperTypes().add(this.getDiagramElement());
 		diagramElementEClass.getESuperTypes().add(this.getMethodElement());
 		diagramLinkEClass.getESuperTypes().add(this.getDiagramElement());
@@ -5272,96 +5168,24 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		graphicPrimitiveEClass.getESuperTypes().add(this.getLeafElement());
 		polylineEClass.getESuperTypes().add(this.getGraphicPrimitive());
 		ellipseEClass.getESuperTypes().add(this.getGraphicPrimitive());
-		activityEClass.getESuperTypes().add(this.getWorkBreakdownElement());
-		activityEClass.getESuperTypes().add(this.getVariabilityElement());
-		activityEClass.getESuperTypes().add(this.getWorkDefinition());
-		workBreakdownElementEClass.getESuperTypes().add(
-				this.getBreakdownElement());
-		breakdownElementEClass.getESuperTypes().add(this.getProcessElement());
-		milestoneEClass.getESuperTypes().add(this.getWorkBreakdownElement());
-		iterationEClass.getESuperTypes().add(this.getActivity());
-		phaseEClass.getESuperTypes().add(this.getActivity());
-		teamProfileEClass.getESuperTypes().add(this.getBreakdownElement());
-		roleDescriptorEClass.getESuperTypes().add(this.getDescriptor());
-		workOrderEClass.getESuperTypes().add(this.getProcessElement());
-		processElementEClass.getESuperTypes().add(this.getDescribableElement());
-		planningDataEClass.getESuperTypes().add(this.getProcessElement());
-		descriptorEClass.getESuperTypes().add(this.getBreakdownElement());
-		workProductDescriptorEClass.getESuperTypes().add(this.getDescriptor());
-		taskDescriptorEClass.getESuperTypes().add(
-				this.getWorkBreakdownElement());
-		taskDescriptorEClass.getESuperTypes().add(this.getDescriptor());
-		compositeRoleEClass.getESuperTypes().add(this.getRoleDescriptor());
-		breakdownElementDescriptionEClass.getESuperTypes().add(
-				this.getContentDescription());
-		activityDescriptionEClass.getESuperTypes().add(
-				this.getBreakdownElementDescription());
-		deliveryProcessDescriptionEClass.getESuperTypes().add(
-				this.getProcessDescription());
-		processDescriptionEClass.getESuperTypes().add(
-				this.getActivityDescription());
-		descriptorDescriptionEClass.getESuperTypes().add(
-				this.getBreakdownElementDescription());
-		conceptEClass.getESuperTypes().add(this.getGuidance());
-		checklistEClass.getESuperTypes().add(this.getGuidance());
-		exampleEClass.getESuperTypes().add(this.getGuidance());
-		guidelineEClass.getESuperTypes().add(this.getGuidance());
-		reportEClass.getESuperTypes().add(this.getGuidance());
-		templateEClass.getESuperTypes().add(this.getGuidance());
-		supportingMaterialEClass.getESuperTypes().add(this.getGuidance());
-		toolMentorEClass.getESuperTypes().add(this.getGuidance());
-		whitepaperEClass.getESuperTypes().add(this.getConcept());
-		termDefinitionEClass.getESuperTypes().add(this.getGuidance());
-		practiceEClass.getESuperTypes().add(this.getGuidance());
-		estimationConsiderationsEClass.getESuperTypes().add(this.getGuidance());
-		reusableAssetEClass.getESuperTypes().add(this.getGuidance());
-		stateEClass.getESuperTypes().add(this.getVertex());
-		stateMachineEClass.getESuperTypes().add(this.getWorkDefinition());
-		pseudoStateEClass.getESuperTypes().add(this.getVertex());
-		disciplineEClass.getESuperTypes().add(this.getContentCategory());
-		contentCategoryEClass.getESuperTypes().add(this.getContentElement());
-		roleSetEClass.getESuperTypes().add(this.getContentCategory());
-		domainEClass.getESuperTypes().add(this.getContentCategory());
-		workProductTypeEClass.getESuperTypes().add(this.getContentCategory());
-		disciplineGroupingEClass.getESuperTypes()
-				.add(this.getContentCategory());
-		toolEClass.getESuperTypes().add(this.getContentCategory());
-		roleSetGroupingEClass.getESuperTypes().add(this.getContentCategory());
-		customCategoryEClass.getESuperTypes().add(this.getContentCategory());
-		deliveryProcessEClass.getESuperTypes().add(this.getProcess());
-		processEClass.getESuperTypes().add(this.getActivity());
-		capabilityPatternEClass.getESuperTypes().add(this.getProcess());
-		processPlanningTemplateEClass.getESuperTypes().add(this.getProcess());
-		roadmapEClass.getESuperTypes().add(this.getGuidance());
-		processComponentEClass.getESuperTypes().add(this.getProcessPackage());
-		processComponentEClass.getESuperTypes().add(this.getMethodUnit());
-		processPackageEClass.getESuperTypes().add(this.getMethodPackage());
-		processComponentInterfaceEClass.getESuperTypes().add(
-				this.getBreakdownElement());
-		processComponentDescriptorEClass.getESuperTypes().add(
-				this.getDescriptor());
-		methodPluginEClass.getESuperTypes().add(this.getMethodUnit());
-		methodPluginEClass.getESuperTypes().add(this.getPackage());
-		variabilityElementEClass.getESuperTypes().add(this.getMethodElement());
-		methodUnitEClass.getESuperTypes().add(this.getMethodElement());
-		methodConfigurationEClass.getESuperTypes().add(this.getMethodUnit());
-		processFamilyEClass.getESuperTypes().add(this.getMethodConfiguration());
-		methodLibraryEClass.getESuperTypes().add(this.getMethodUnit());
-		methodLibraryEClass.getESuperTypes().add(this.getPackage());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(
 				classifierEClass,
 				Classifier.class,
 				"Classifier", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getClassifier_IsAbstract(),
+				this.getBoolean(),
+				"isAbstract", "false", 1, 1, Classifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(typeEClass, Type.class,
 				"Type", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(
-				elementEClass,
-				Element.class,
-				"Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				packageableElementEClass,
+				PackageableElement.class,
+				"PackageableElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(
 				namedElementEClass,
@@ -5370,12 +5194,12 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getNamedElement_Name(),
 				this.getString(),
-				"name", "", 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"name", "", 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
-				packageableElementEClass,
-				PackageableElement.class,
-				"PackageableElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				elementEClass,
+				Element.class,
+				"Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(
 				packageEClass,
@@ -5388,17 +5212,30 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"Namespace", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(
+				constraintEClass,
+				Constraint.class,
+				"Constraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getConstraint_Body(),
+				this.getString(),
+				"body", "", 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
 				methodElementEClass,
 				MethodElement.class,
 				"MethodElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 				getMethodElement_Guid(),
 				this.getString(),
-				"guid", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"guid", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getMethodElement_PresentationName(),
+				this.getString(),
+				"presentationName", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getMethodElement_BriefDescription(),
 				this.getString(),
-				"briefDescription", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"briefDescription", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getMethodElement_OwnedRules(),
 				this.getConstraint(),
@@ -5409,23 +5246,19 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				this.getMethodElementProperty(),
 				null,
 				"methodElementProperty", null, 0, -1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodElement_Kind(),
+				this.getKind(),
+				null,
+				"kind", null, 0, -1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getMethodElement_Suppressed(),
-				ecorePackage.getEBooleanObject(),
-				"suppressed", "false", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				this.getBoolean(),
+				"suppressed", "false", 1, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getMethodElement_OrderingGuide(),
 				this.getString(),
-				"orderingGuide", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				constraintEClass,
-				Constraint.class,
-				"Constraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getConstraint_Body(),
-				this.getString(),
-				"body", "", 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"orderingGuide", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				methodElementPropertyEClass,
@@ -5434,7 +5267,20 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getMethodElementProperty_Value(),
 				this.getString(),
-				"value", "", 0, 1, MethodElementProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"value", "", 0, 1, MethodElementProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				kindEClass,
+				Kind.class,
+				"Kind", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getKind_ApplicableMetaClass(),
+				this.getString(),
+				"applicableMetaClass", "", 1, 1, Kind.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getKind_IsPrimaryKind(),
+				this.getBoolean(),
+				"isPrimaryKind", "false", 1, 1, Kind.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				contentElementEClass,
@@ -5471,32 +5317,28 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				null,
 				"assets", null, 0, -1, ContentElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
-				getContentElement_TermDefinition(),
+				getContentElement_Termdefinition(),
 				this.getTermDefinition(),
 				null,
-				"termDefinition", null, 0, -1, ContentElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"termdefinition", null, 0, -1, ContentElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				describableElementEClass,
 				DescribableElement.class,
 				"DescribableElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDescribableElement_PresentationName(),
-				this.getString(),
-				"presentationName", "", 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getDescribableElement_Presentation(),
 				this.getContentDescription(),
 				null,
-				"presentation", null, 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"presentation", null, 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getDescribableElement_Shapeicon(),
 				this.getUri(),
-				"shapeicon", null, 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"shapeicon", "", 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDescribableElement_Nodeicon(),
 				this.getUri(),
-				"nodeicon", null, 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"nodeicon", "", 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				contentDescriptionEClass,
@@ -5505,7 +5347,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getContentDescription_MainDescription(),
 				this.getString(),
-				"mainDescription", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"mainDescription", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getContentDescription_Sections(),
 				this.getSection(),
@@ -5514,11 +5356,47 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getContentDescription_ExternalId(),
 				this.getString(),
-				"externalId", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"externalId", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getContentDescription_KeyConsiderations(),
 				this.getString(),
-				"keyConsiderations", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"keyConsiderations", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				methodUnitEClass,
+				MethodUnit.class,
+				"MethodUnit", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getMethodUnit_Authors(),
+				this.getString(),
+				"authors", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getMethodUnit_ChangeDate(),
+				this.getDate(),
+				"changeDate", null, 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getMethodUnit_ChangeDescription(),
+				this.getString(),
+				"changeDescription", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getMethodUnit_Version(),
+				this.getString(),
+				"version", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getMethodUnit_CopyrightStatement(),
+				this.getSupportingMaterial(),
+				null,
+				"copyrightStatement", null, 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				supportingMaterialEClass,
+				SupportingMaterial.class,
+				"SupportingMaterial", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				guidanceEClass,
+				Guidance.class,
+				"Guidance", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(
 				sectionEClass,
@@ -5527,11 +5405,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getSection_SectionName(),
 				this.getString(),
-				"sectionName", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"sectionName", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getSection_SectionDescription(),
 				this.getString(),
-				"sectionDescription", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"sectionDescription", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getSection_SubSections(),
 				this.getSection(),
@@ -5541,27 +5419,71 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				getSection_Predecessor(),
 				this.getSection(),
 				null,
-				"predecessor", null, 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"predecessor", null, 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
-				roleEClass,
-				Role.class,
-				"Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				variabilityElementEClass,
+				VariabilityElement.class,
+				"VariabilityElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getVariabilityElement_VariabilityType(),
+				this.getVariabilityType(),
+				"variabilityType", "na", 1, 1, VariabilityElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
-				getRole_Modifies(),
-				this.getWorkProduct(),
+				getVariabilityElement_VariabilityBasedOnElement(),
+				this.getVariabilityElement(),
 				null,
-				"modifies", null, 0, -1, Role.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"variabilityBasedOnElement", null, 1, 1, VariabilityElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				conceptEClass,
+				Concept.class,
+				"Concept", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				checklistEClass,
+				Checklist.class,
+				"Checklist", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				guidelineEClass,
+				Guideline.class,
+				"Guideline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				exampleEClass,
+				Example.class,
+				"Example", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				reusableAssetEClass,
+				ReusableAsset.class,
+				"ReusableAsset", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				termDefinitionEClass,
+				TermDefinition.class,
+				"TermDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				artifactEClass,
+				Artifact.class,
+				"Artifact", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
-				getRole_ResponsibleFor(),
-				this.getWorkProduct(),
-				null,
-				"responsibleFor", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				getArtifact_ContainerArtifact(),
+				this.getArtifact(),
+				this.getArtifact_ContainedArtifacts(),
+				"containerArtifact", null, 0, 1, Artifact.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getArtifact_ContainedArtifacts(),
+				this.getArtifact(),
+				this.getArtifact_ContainerArtifact(),
+				"containedArtifacts", null, 0, -1, Artifact.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				workProductEClass,
 				WorkProduct.class,
-				"WorkProduct", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				"WorkProduct", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 				getWorkProduct_Reports(),
 				this.getReport(),
@@ -5584,6 +5506,76 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"estimationConsiderations", null, 0, -1, WorkProduct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
+				fulfillableElementEClass,
+				FulfillableElement.class,
+				"FulfillableElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getFulfillableElement_Fulfills(),
+				this.getFulfillableElement(),
+				null,
+				"fulfills", null, 0, -1, FulfillableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				reportEClass,
+				Report.class,
+				"Report", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				templateEClass,
+				Template.class,
+				"Template", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				toolMentorEClass,
+				ToolMentor.class,
+				"ToolMentor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				estimationConsiderationsEClass,
+				EstimationConsiderations.class,
+				"EstimationConsiderations", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				deliverableEClass,
+				Deliverable.class,
+				"Deliverable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getDeliverable_DeliveredWorkProducts(),
+				this.getWorkProduct(),
+				null,
+				"deliveredWorkProducts", null, 0, -1, Deliverable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				outcomeEClass,
+				Outcome.class,
+				"Outcome", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				stepEClass,
+				Step.class,
+				"Step", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				workDefinitionEClass,
+				WorkDefinition.class,
+				"WorkDefinition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getWorkDefinition_Precondition(),
+				this.getConstraint(),
+				null,
+				"precondition", null, 0, 1, WorkDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getWorkDefinition_Postcondition(),
+				this.getConstraint(),
+				null,
+				"postcondition", null, 0, 1, WorkDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				whitepaperEClass,
+				Whitepaper.class,
+				"Whitepaper", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
 				taskEClass,
 				Task.class,
 				"Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -5591,7 +5583,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				getTask_PerformedBy(),
 				this.getRole(),
 				null,
-				"performedBy", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"performedBy", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getTask_MandatoryInput(),
 				this.getWorkProduct(),
@@ -5616,7 +5608,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				getTask_Steps(),
 				this.getStep(),
 				null,
-				"steps", null, 0, -1, Task.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"steps", null, 0, -1, Task.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getTask_ToolMentors(),
 				this.getToolMentor(),
@@ -5629,59 +5621,392 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"estimationConsiderations", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
-				workDefinitionEClass,
-				WorkDefinition.class,
-				"WorkDefinition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				roleEClass,
+				Role.class,
+				"Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
-				getWorkDefinition_Precondition(),
-				this.getConstraint(),
-				null,
-				"precondition", null, 0, 1, WorkDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getWorkDefinition_Postcondition(),
-				this.getConstraint(),
-				null,
-				"postcondition", null, 0, 1, WorkDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				stepEClass,
-				Step.class,
-				"Step", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				guidanceEClass,
-				Guidance.class,
-				"Guidance", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				artifactEClass,
-				Artifact.class,
-				"Artifact", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getArtifact_ContainerArtifact(),
-				this.getArtifact(),
-				this.getArtifact_ContainedArtifacts(),
-				"containerArtifact", null, 0, 1, Artifact.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getArtifact_ContainedArtifacts(),
-				this.getArtifact(),
-				this.getArtifact_ContainerArtifact(),
-				"containedArtifacts", null, 0, -1, Artifact.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				deliverableEClass,
-				Deliverable.class,
-				"Deliverable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getDeliverable_DeliveredWorkProducts(),
+				getRole_Modifies(),
 				this.getWorkProduct(),
 				null,
-				"deliveredWorkProducts", null, 0, -1, Deliverable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"modifies", null, 0, -1, Role.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getRole_ResponsibleFor(),
+				this.getWorkProduct(),
+				null,
+				"responsibleFor", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
-				outcomeEClass,
-				Outcome.class,
-				"Outcome", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				artifactDescriptionEClass,
+				ArtifactDescription.class,
+				"ArtifactDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getArtifactDescription_BriefOutline(),
+				this.getString(),
+				"briefOutline", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getArtifactDescription_RepresentationOptions(),
+				this.getString(),
+				"representationOptions", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getArtifactDescription_Representation(),
+				this.getString(),
+				"representation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getArtifactDescription_Notation(),
+				this.getString(),
+				"notation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				workProductDescriptionEClass,
+				WorkProductDescription.class,
+				"WorkProductDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getWorkProductDescription_Purpose(),
+				this.getString(),
+				"purpose", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getWorkProductDescription_ImpactOfNotHaving(),
+				this.getString(),
+				"impactOfNotHaving", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getWorkProductDescription_ReasonsForNotNeeding(),
+				this.getString(),
+				"reasonsForNotNeeding", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				deliverableDescriptionEClass,
+				DeliverableDescription.class,
+				"DeliverableDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getDeliverableDescription_ExternalDescription(),
+				this.getString(),
+				"externalDescription", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getDeliverableDescription_PackagingGuidance(),
+				this.getString(),
+				"packagingGuidance", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				roleDescriptionEClass,
+				RoleDescription.class,
+				"RoleDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getRoleDescription_Skills(),
+				this.getString(),
+				"skills", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getRoleDescription_AssignmentApproaches(),
+				this.getString(),
+				"assignmentApproaches", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getRoleDescription_Synonyms(),
+				this.getString(),
+				"synonyms", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				taskDescriptionEClass,
+				TaskDescription.class,
+				"TaskDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getTaskDescription_Purpose(),
+				this.getString(),
+				"purpose", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getTaskDescription_Alternatives(),
+				this.getString(),
+				"alternatives", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				guidanceDescriptionEClass,
+				GuidanceDescription.class,
+				"GuidanceDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getGuidanceDescription_Attachments(),
+				this.getString(),
+				"attachments", "", 0, 1, GuidanceDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				practiceDescriptionEClass,
+				PracticeDescription.class,
+				"PracticeDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getPracticeDescription_AdditionalInfo(),
+				this.getString(),
+				"additionalInfo", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getPracticeDescription_Problem(),
+				this.getString(),
+				"problem", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getPracticeDescription_Background(),
+				this.getString(),
+				"background", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getPracticeDescription_Goals(),
+				this.getString(),
+				"goals", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getPracticeDescription_Application(),
+				this.getString(),
+				"application", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getPracticeDescription_LevelsOfAdoption(),
+				this.getString(),
+				"levelsOfAdoption", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				roleSetEClass,
+				RoleSet.class,
+				"RoleSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getRoleSet_Roles(),
+				this.getRole(),
+				null,
+				"roles", null, 0, -1, RoleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				contentCategoryEClass,
+				ContentCategory.class,
+				"ContentCategory", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				domainEClass,
+				Domain.class,
+				"Domain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getDomain_WorkProducts(),
+				this.getWorkProduct(),
+				null,
+				"workProducts", null, 0, -1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDomain_Subdomains(),
+				this.getDomain(),
+				null,
+				"subdomains", null, 0, -1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				workProductTypeEClass,
+				WorkProductType.class,
+				"WorkProductType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getWorkProductType_WorkProducts(),
+				this.getWorkProduct(),
+				null,
+				"workProducts", null, 0, -1, WorkProductType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				disciplineGroupingEClass,
+				DisciplineGrouping.class,
+				"DisciplineGrouping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getDisciplineGrouping_Disciplines(),
+				this.getDiscipline(),
+				null,
+				"disciplines", null, 0, -1, DisciplineGrouping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				disciplineEClass,
+				Discipline.class,
+				"Discipline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getDiscipline_Tasks(),
+				this.getTask(),
+				null,
+				"tasks", null, 0, -1, Discipline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiscipline_Subdiscipline(),
+				this.getDiscipline(),
+				null,
+				"subdiscipline", null, 0, -1, Discipline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiscipline_ReferenceWorkflows(),
+				this.getActivity(),
+				null,
+				"referenceWorkflows", null, 0, -1, Discipline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				activityEClass,
+				Activity.class,
+				"Activity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getActivity_BreakdownElements(),
+				this.getBreakdownElement(),
+				this.getBreakdownElement_SuperActivities(),
+				"breakdownElements", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getActivity_Roadmaps(),
+				this.getRoadmap(),
+				null,
+				"roadmaps", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				workBreakdownElementEClass,
+				WorkBreakdownElement.class,
+				"WorkBreakdownElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getWorkBreakdownElement_IsRepeatable(),
+				this.getBoolean(),
+				"isRepeatable", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getWorkBreakdownElement_IsOngoing(),
+				this.getBoolean(),
+				"isOngoing", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getWorkBreakdownElement_IsEventDriven(),
+				this.getBoolean(),
+				"isEventDriven", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getWorkBreakdownElement_LinkToPredecessor(),
+				this.getWorkOrder(),
+				null,
+				"linkToPredecessor", null, 0, -1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				breakdownElementEClass,
+				BreakdownElement.class,
+				"BreakdownElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getBreakdownElement_Prefix(),
+				this.getString(),
+				"prefix", "", 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getBreakdownElement_IsPlanned(),
+				this.getBoolean(),
+				"isPlanned", "true", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getBreakdownElement_HasMultipleOccurrences(),
+				this.getBoolean(),
+				"hasMultipleOccurrences", "false", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getBreakdownElement_IsOptional(),
+				this.getBoolean(),
+				"isOptional", "false", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getBreakdownElement_PresentedAfter(),
+				this.getBreakdownElement(),
+				null,
+				"presentedAfter", null, 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_PresentedBefore(),
+				this.getBreakdownElement(),
+				null,
+				"presentedBefore", null, 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_PlanningData(),
+				this.getPlanningData(),
+				null,
+				"planningData", null, 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_SuperActivities(),
+				this.getActivity(),
+				this.getActivity_BreakdownElements(),
+				"superActivities", null, 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Checklists(),
+				this.getChecklist(),
+				null,
+				"checklists", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Concepts(),
+				this.getConcept(),
+				null,
+				"concepts", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Examples(),
+				this.getExample(),
+				null,
+				"examples", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Guidelines(),
+				this.getGuideline(),
+				null,
+				"guidelines", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_ReusableAssets(),
+				this.getReusableAsset(),
+				null,
+				"reusableAssets", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_SupportingMaterials(),
+				this.getSupportingMaterial(),
+				null,
+				"supportingMaterials", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				processElementEClass,
+				ProcessElement.class,
+				"ProcessElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				planningDataEClass,
+				PlanningData.class,
+				"PlanningData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getPlanningData_StartDate(),
+				this.getDate(),
+				"startDate", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getPlanningData_FinishDate(),
+				this.getDate(),
+				"finishDate", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getPlanningData_Rank(),
+				this.getInteger(),
+				"rank", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				workOrderEClass,
+				WorkOrder.class,
+				"WorkOrder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getWorkOrder_LinkType(),
+				this.getWorkOrderType(),
+				"linkType", "finishToStart", 1, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getWorkOrder_Pred(),
+				this.getWorkBreakdownElement(),
+				null,
+				"pred", null, 1, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				roadmapEClass,
+				Roadmap.class,
+				"Roadmap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				toolEClass,
+				Tool.class,
+				"Tool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getTool_ToolMentors(),
+				this.getToolMentor(),
+				null,
+				"toolMentors", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				roleSetGroupingEClass,
+				RoleSetGrouping.class,
+				"RoleSetGrouping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getRoleSetGrouping_RoleSets(),
+				this.getRoleSet(),
+				null,
+				"roleSets", null, 0, -1, RoleSetGrouping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				customCategoryEClass,
+				CustomCategory.class,
+				"CustomCategory", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getCustomCategory_CategorizedElements(),
+				this.getDescribableElement(),
+				null,
+				"categorizedElements", null, 0, -1, CustomCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getCustomCategory_SubCategories(),
+				this.getContentCategory(),
+				null,
+				"subCategories", null, 0, -1, CustomCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				methodPackageEClass,
@@ -5689,8 +6014,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"MethodPackage", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 				getMethodPackage_Global(),
-				ecorePackage.getEBooleanObject(),
-				"global", "false", 0, 1, MethodPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				this.getBoolean(),
+				"global", "false", 1, 1, MethodPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getMethodPackage_ReusedPackages(),
 				this.getMethodPackage(),
@@ -5713,123 +6038,452 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"contentElements", null, 0, -1, ContentPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
-				artifactDescriptionEClass,
-				ArtifactDescription.class,
-				"ArtifactDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getArtifactDescription_BriefOutline(),
-				this.getString(),
-				"briefOutline", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getArtifactDescription_RepresentationOptions(),
-				this.getString(),
-				"representationOptions", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getArtifactDescription_Representation(),
-				this.getString(),
-				"representation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getArtifactDescription_Notation(),
-				this.getString(),
-				"notation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				milestoneEClass,
+				Milestone.class,
+				"Milestone", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getMilestone_RequiredResults(),
+				this.getWorkProductDescriptor(),
+				null,
+				"requiredResults", null, 0, -1, Milestone.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
-				workProductDescriptionEClass,
-				WorkProductDescription.class,
-				"WorkProductDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				workProductDescriptorEClass,
+				WorkProductDescriptor.class,
+				"WorkProductDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
-				getWorkProductDescription_Purpose(),
+				getWorkProductDescriptor_ActivityEntryState(),
 				this.getString(),
-				"purpose", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"activityEntryState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
-				getWorkProductDescription_ImpactOfNotHaving(),
+				getWorkProductDescriptor_ActivityExitState(),
 				this.getString(),
-				"impactOfNotHaving", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getWorkProductDescription_ReasonsForNotNeeding(),
-				this.getString(),
-				"reasonsForNotNeeding", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"activityExitState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getWorkProductDescriptor_WorkProduct(),
+				this.getWorkProduct(),
+				null,
+				"workProduct", null, 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getWorkProductDescriptor_ImpactedBy(),
+				this.getWorkProductDescriptor(),
+				this.getWorkProductDescriptor_Impacts(),
+				"impactedBy", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getWorkProductDescriptor_Impacts(),
+				this.getWorkProductDescriptor(),
+				this.getWorkProductDescriptor_ImpactedBy(),
+				"impacts", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getWorkProductDescriptor_DeliverableParts(),
+				this.getWorkProductDescriptor(),
+				null,
+				"deliverableParts", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
-				deliverableDescriptionEClass,
-				DeliverableDescription.class,
-				"DeliverableDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				descriptorEClass,
+				org.eclipse.epf.uma.Descriptor.class,
+				"Descriptor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
-				getDeliverableDescription_ExternalDescription(),
-				this.getString(),
-				"externalDescription", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getDeliverableDescription_PackagingGuidance(),
-				this.getString(),
-				"packagingGuidance", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				getDescriptor_IsSynchronizedWithSource(),
+				this.getBoolean(),
+				"isSynchronizedWithSource", "true", 1, 1, org.eclipse.epf.uma.Descriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
-				roleDescriptionEClass,
-				RoleDescription.class,
-				"RoleDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getRoleDescription_Skills(),
-				this.getString(),
-				"skills", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getRoleDescription_AssignmentApproaches(),
-				this.getString(),
-				"assignmentApproaches", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getRoleDescription_Synonyms(),
-				this.getString(),
-				"synonyms", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				iterationEClass,
+				Iteration.class,
+				"Iteration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(
-				taskDescriptionEClass,
-				TaskDescription.class,
-				"TaskDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getTaskDescription_Purpose(),
-				this.getString(),
-				"purpose", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getTaskDescription_Alternatives(),
-				this.getString(),
-				"alternatives", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				phaseEClass,
+				Phase.class,
+				"Phase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(
-				guidanceDescriptionEClass,
-				GuidanceDescription.class,
-				"GuidanceDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getGuidanceDescription_Attachments(),
-				this.getString(),
-				"attachments", "", 0, 1, GuidanceDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				teamProfileEClass,
+				TeamProfile.class,
+				"TeamProfile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getTeamProfile_TeamRoles(),
+				this.getRoleDescriptor(),
+				null,
+				"teamRoles", null, 0, -1, TeamProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTeamProfile_SuperTeam(),
+				this.getTeamProfile(),
+				this.getTeamProfile_SubTeam(),
+				"superTeam", null, 1, 1, TeamProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTeamProfile_SubTeam(),
+				this.getTeamProfile(),
+				this.getTeamProfile_SuperTeam(),
+				"subTeam", null, 0, -1, TeamProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
-				practiceDescriptionEClass,
-				PracticeDescription.class,
-				"PracticeDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				roleDescriptorEClass,
+				RoleDescriptor.class,
+				"RoleDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getRoleDescriptor_Role(),
+				this.getRole(),
+				null,
+				"role", null, 0, 1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getRoleDescriptor_Modifies(),
+				this.getWorkProductDescriptor(),
+				null,
+				"modifies", null, 0, -1, RoleDescriptor.class, !IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getRoleDescriptor_ResponsibleFor(),
+				this.getWorkProductDescriptor(),
+				null,
+				"responsibleFor", null, 0, -1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				taskDescriptorEClass,
+				TaskDescriptor.class,
+				"TaskDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_Task(),
+				this.getTask(),
+				null,
+				"task", null, 0, 1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_AdditionallyPerformedBy(),
+				this.getRoleDescriptor(),
+				null,
+				"additionallyPerformedBy", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_AssistedBy(),
+				this.getRoleDescriptor(),
+				null,
+				"assistedBy", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_ExternalInput(),
+				this.getWorkProductDescriptor(),
+				null,
+				"externalInput", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_MandatoryInput(),
+				this.getWorkProductDescriptor(),
+				null,
+				"mandatoryInput", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_OptionalInput(),
+				this.getWorkProductDescriptor(),
+				null,
+				"optionalInput", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_Output(),
+				this.getWorkProductDescriptor(),
+				null,
+				"output", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_PerformedPrimarilyBy(),
+				this.getRoleDescriptor(),
+				null,
+				"performedPrimarilyBy", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_SelectedSteps(),
+				this.getSection(),
+				null,
+				"selectedSteps", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				compositeRoleEClass,
+				CompositeRole.class,
+				"CompositeRole", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getCompositeRole_AggregatedRoles(),
+				this.getRole(),
+				null,
+				"aggregatedRoles", null, 0, -1, CompositeRole.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				deliveryProcessEClass,
+				DeliveryProcess.class,
+				"DeliveryProcess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getDeliveryProcess_EducationMaterials(),
+				this.getSupportingMaterial(),
+				null,
+				"educationMaterials", null, 0, -1, DeliveryProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDeliveryProcess_CommunicationsMaterials(),
+				this.getSupportingMaterial(),
+				null,
+				"communicationsMaterials", null, 0, -1, DeliveryProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				processEClass,
+				org.eclipse.epf.uma.Process.class,
+				"Process", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getProcess_IncludesPatterns(),
+				this.getCapabilityPattern(),
+				null,
+				"includesPatterns", null, 0, -1, org.eclipse.epf.uma.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getProcess_DefaultContext(),
+				this.getMethodConfiguration(),
+				null,
+				"defaultContext", null, 1, 1, org.eclipse.epf.uma.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getProcess_ValidContext(),
+				this.getMethodConfiguration(),
+				null,
+				"validContext", null, 0, -1, org.eclipse.epf.uma.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				capabilityPatternEClass,
+				CapabilityPattern.class,
+				"CapabilityPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				methodConfigurationEClass,
+				MethodConfiguration.class,
+				"MethodConfiguration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getMethodConfiguration_MethodPluginSelection(),
+				this.getMethodPlugin(),
+				null,
+				"methodPluginSelection", null, 1, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodConfiguration_MethodPackageSelection(),
+				this.getMethodPackage(),
+				null,
+				"methodPackageSelection", null, 1, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodConfiguration_ProcessViews(),
+				this.getContentCategory(),
+				null,
+				"processViews", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodConfiguration_DefaultView(),
+				this.getContentCategory(),
+				null,
+				"defaultView", null, 1, 1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodConfiguration_BaseConfigurations(),
+				this.getMethodConfiguration(),
+				null,
+				"baseConfigurations", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodConfiguration_SubtractedCategory(),
+				this.getContentCategory(),
+				null,
+				"subtractedCategory", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodConfiguration_AddedCategory(),
+				this.getContentCategory(),
+				null,
+				"addedCategory", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				methodPluginEClass,
+				MethodPlugin.class,
+				"MethodPlugin", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
-				getPracticeDescription_AdditionalInfo(),
-				this.getString(),
-				"additionalInfo", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				getMethodPlugin_UserChangeable(),
+				this.getBoolean(),
+				"userChangeable", "true", 1, 1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getMethodPlugin_MethodPackages(),
+				this.getMethodPackage(),
+				null,
+				"methodPackages", null, 1, -1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodPlugin_Bases(),
+				this.getMethodPlugin(),
+				null,
+				"bases", null, 0, -1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				processPlanningTemplateEClass,
+				ProcessPlanningTemplate.class,
+				"ProcessPlanningTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getProcessPlanningTemplate_BasedOnProcesses(),
+				this.getProcess(),
+				null,
+				"basedOnProcesses", null, 0, -1, ProcessPlanningTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				practiceEClass,
+				Practice.class,
+				"Practice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getPractice_SubPractices(),
+				this.getPractice(),
+				null,
+				"subPractices", null, 0, -1, Practice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getPractice_ContentReferences(),
+				this.getContentElement(),
+				null,
+				"contentReferences", null, 0, -1, Practice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getPractice_ActivityReferences(),
+				this.getActivity(),
+				null,
+				"activityReferences", null, 0, -1, Practice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				breakdownElementDescriptionEClass,
+				BreakdownElementDescription.class,
+				"BreakdownElementDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
-				getPracticeDescription_Problem(),
+				getBreakdownElementDescription_UsageGuidance(),
 				this.getString(),
-				"problem", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"usageGuidance", "", 0, 1, BreakdownElementDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				activityDescriptionEClass,
+				ActivityDescription.class,
+				"ActivityDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
-				getPracticeDescription_Background(),
+				getActivityDescription_Purpose(),
 				this.getString(),
-				"background", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"purpose", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
-				getPracticeDescription_Goals(),
+				getActivityDescription_Alternatives(),
 				this.getString(),
-				"goals", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"alternatives", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
-				getPracticeDescription_Application(),
+				getActivityDescription_HowtoStaff(),
 				this.getString(),
-				"application", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"howtoStaff", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				deliveryProcessDescriptionEClass,
+				DeliveryProcessDescription.class,
+				"DeliveryProcessDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
-				getPracticeDescription_LevelsOfAdoption(),
+				getDeliveryProcessDescription_Scale(),
 				this.getString(),
-				"levelsOfAdoption", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"scale", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getDeliveryProcessDescription_ProjectCharacteristics(),
+				this.getString(),
+				"projectCharacteristics", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getDeliveryProcessDescription_RiskLevel(),
+				this.getString(),
+				"riskLevel", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getDeliveryProcessDescription_EstimatingTechnique(),
+				this.getString(),
+				"estimatingTechnique", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getDeliveryProcessDescription_ProjectMemberExpertise(),
+				this.getString(),
+				"projectMemberExpertise", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getDeliveryProcessDescription_TypeOfContract(),
+				this.getString(),
+				"typeOfContract", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				processDescriptionEClass,
+				ProcessDescription.class,
+				"ProcessDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getProcessDescription_Scope(),
+				this.getString(),
+				"scope", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getProcessDescription_UsageNotes(),
+				this.getString(),
+				"usageNotes", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				descriptorDescriptionEClass,
+				DescriptorDescription.class,
+				"DescriptorDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getDescriptorDescription_RefinedDescription(),
+				this.getString(),
+				"refinedDescription", "", 0, 1, DescriptorDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				processComponentDescriptorEClass,
+				ProcessComponentDescriptor.class,
+				"ProcessComponentDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getProcessComponentDescriptor__processComponent(),
+				this.getProcessComponent(),
+				null,
+				"_processComponent", null, 1, 1, ProcessComponentDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				processComponentEClass,
+				ProcessComponent.class,
+				"ProcessComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getProcessComponent_Interfaces(),
+				this.getProcessComponentInterface(),
+				null,
+				"interfaces", null, 1, -1, ProcessComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getProcessComponent_Process(),
+				this.getProcess(),
+				null,
+				"process", null, 1, 1, ProcessComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				processPackageEClass,
+				ProcessPackage.class,
+				"ProcessPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getProcessPackage_ProcessElements(),
+				this.getProcessElement(),
+				null,
+				"processElements", null, 0, -1, ProcessPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getProcessPackage_Diagrams(),
+				this.getDiagram(),
+				null,
+				"diagrams", null, 0, -1, ProcessPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				processComponentInterfaceEClass,
+				ProcessComponentInterface.class,
+				"ProcessComponentInterface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getProcessComponentInterface_InterfaceSpecifications(),
+				this.getTaskDescriptor(),
+				null,
+				"interfaceSpecifications", null, 0, -1, ProcessComponentInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getProcessComponentInterface_InterfaceIO(),
+				this.getWorkProductDescriptor(),
+				null,
+				"interfaceIO", null, 0, -1, ProcessComponentInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				processFamilyEClass,
+				ProcessFamily.class,
+				"ProcessFamily", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getProcessFamily_DeliveryProcesses(),
+				this.getDeliveryProcess(),
+				null,
+				"deliveryProcesses", null, 0, -1, ProcessFamily.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				methodLibraryEClass,
+				MethodLibrary.class,
+				"MethodLibrary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getMethodLibrary_MethodPlugins(),
+				this.getMethodPlugin(),
+				null,
+				"methodPlugins", null, 0, -1, MethodLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getMethodLibrary_PredefinedConfigurations(),
+				this.getMethodConfiguration(),
+				null,
+				"predefinedConfigurations", null, 0, -1, MethodLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				pointEClass,
@@ -6150,969 +6804,41 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				null,
 				"center", null, 0, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(
-				activityEClass,
-				Activity.class,
-				"Activity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getActivity_BreakdownElements(),
-				this.getBreakdownElement(),
-				this.getBreakdownElement_SuperActivities(),
-				"breakdownElements", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getActivity_Roadmaps(),
-				this.getRoadmap(),
-				null,
-				"roadmaps", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getActivity_SupportingMaterials(),
-				this.getSupportingMaterial(),
-				null,
-				"supportingMaterials", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getActivity_Checklists(),
-				this.getChecklist(),
-				null,
-				"checklists", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getActivity_Concepts(),
-				this.getConcept(),
-				null,
-				"concepts", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getActivity_Examples(),
-				this.getExample(),
-				null,
-				"examples", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getActivity_Guidelines(),
-				this.getGuideline(),
-				null,
-				"guidelines", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getActivity_ReusableAssets(),
-				this.getReusableAsset(),
-				null,
-				"reusableAssets", null, 0, -1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getActivity_IsEnactable(),
-				ecorePackage.getEBooleanObject(),
-				"isEnactable", "false", 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				workBreakdownElementEClass,
-				WorkBreakdownElement.class,
-				"WorkBreakdownElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getWorkBreakdownElement_IsRepeatable(),
-				ecorePackage.getEBooleanObject(),
-				"isRepeatable", "false", 0, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getWorkBreakdownElement_IsOngoing(),
-				ecorePackage.getEBooleanObject(),
-				"isOngoing", "false", 0, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getWorkBreakdownElement_IsEventDriven(),
-				ecorePackage.getEBooleanObject(),
-				"isEventDriven", "false", 0, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getWorkBreakdownElement_LinkToPredecessor(),
-				this.getWorkOrder(),
-				null,
-				"linkToPredecessor", null, 0, -1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				breakdownElementEClass,
-				BreakdownElement.class,
-				"BreakdownElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getBreakdownElement_Prefix(),
-				this.getString(),
-				"prefix", "", 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getBreakdownElement_IsPlanned(),
-				ecorePackage.getEBooleanObject(),
-				"isPlanned", "true", 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getBreakdownElement_HasMultipleOccurrences(),
-				ecorePackage.getEBooleanObject(),
-				"hasMultipleOccurrences", "false", 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getBreakdownElement_IsOptional(),
-				ecorePackage.getEBooleanObject(),
-				"isOptional", "false", 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getBreakdownElement_PresentedAfter(),
-				this.getBreakdownElement(),
-				null,
-				"presentedAfter", null, 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getBreakdownElement_PresentedBefore(),
-				this.getBreakdownElement(),
-				null,
-				"presentedBefore", null, 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getBreakdownElement_PlanningData(),
-				this.getPlanningData(),
-				null,
-				"planningData", null, 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getBreakdownElement_SuperActivities(),
-				this.getActivity(),
-				this.getActivity_BreakdownElements(),
-				"superActivities", null, 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				milestoneEClass,
-				Milestone.class,
-				"Milestone", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				iterationEClass,
-				Iteration.class,
-				"Iteration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				phaseEClass,
-				Phase.class,
-				"Phase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				teamProfileEClass,
-				TeamProfile.class,
-				"TeamProfile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getTeamProfile_TeamRoles(),
-				this.getRoleDescriptor(),
-				null,
-				"teamRoles", null, 0, -1, TeamProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTeamProfile_SuperTeam(),
-				this.getTeamProfile(),
-				this.getTeamProfile_SubTeam(),
-				"superTeam", null, 1, 1, TeamProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTeamProfile_SubTeam(),
-				this.getTeamProfile(),
-				this.getTeamProfile_SuperTeam(),
-				"subTeam", null, 0, -1, TeamProfile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				roleDescriptorEClass,
-				RoleDescriptor.class,
-				"RoleDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getRoleDescriptor_Role(),
-				this.getRole(),
-				null,
-				"Role", null, 0, 1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getRoleDescriptor_Modifies(),
-				this.getWorkProductDescriptor(),
-				null,
-				"modifies", null, 0, -1, RoleDescriptor.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getRoleDescriptor_ResponsibleFor(),
-				this.getWorkProductDescriptor(),
-				null,
-				"responsibleFor", null, 0, -1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				workOrderEClass,
-				WorkOrder.class,
-				"WorkOrder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getWorkOrder_LinkType(),
-				this.getWorkOrderType(),
-				"linkType", "finishToStart", 0, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getWorkOrder_Pred(),
-				this.getWorkBreakdownElement(),
-				null,
-				"pred", null, 1, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				processElementEClass,
-				ProcessElement.class,
-				"ProcessElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				planningDataEClass,
-				PlanningData.class,
-				"PlanningData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getPlanningData_StartDate(),
-				this.getDate(),
-				"startDate", null, 0, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getPlanningData_FinishDate(),
-				this.getDate(),
-				"finishDate", null, 0, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getPlanningData_Rank(),
-				this.getInteger(),
-				"rank", null, 0, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				descriptorEClass,
-				org.eclipse.epf.uma.Descriptor.class,
-				"Descriptor", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDescriptor_IsSynchronizedWithSource(),
-				ecorePackage.getEBooleanObject(),
-				"isSynchronizedWithSource", "true", 0, 1, org.eclipse.epf.uma.Descriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				workProductDescriptorEClass,
-				WorkProductDescriptor.class,
-				"WorkProductDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getWorkProductDescriptor_ActivityEntryState(),
-				this.getString(),
-				"activityEntryState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getWorkProductDescriptor_ActivityExitState(),
-				this.getString(),
-				"activityExitState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getWorkProductDescriptor_WorkProduct(),
-				this.getWorkProduct(),
-				null,
-				"WorkProduct", null, 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getWorkProductDescriptor_ImpactedBy(),
-				this.getWorkProductDescriptor(),
-				this.getWorkProductDescriptor_Impacts(),
-				"impactedBy", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getWorkProductDescriptor_Impacts(),
-				this.getWorkProductDescriptor(),
-				this.getWorkProductDescriptor_ImpactedBy(),
-				"impacts", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getWorkProductDescriptor_DeliverableParts(),
-				this.getWorkProductDescriptor(),
-				null,
-				"deliverableParts", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				taskDescriptorEClass,
-				TaskDescriptor.class,
-				"TaskDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_Task(),
-				this.getTask(),
-				null,
-				"Task", null, 0, 1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_AdditionallyPerformedBy(),
-				this.getRoleDescriptor(),
-				null,
-				"additionallyPerformedBy", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_AssistedBy(),
-				this.getRoleDescriptor(),
-				null,
-				"assistedBy", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_ExternalInput(),
-				this.getWorkProductDescriptor(),
-				null,
-				"externalInput", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_MandatoryInput(),
-				this.getWorkProductDescriptor(),
-				null,
-				"mandatoryInput", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_OptionalInput(),
-				this.getWorkProductDescriptor(),
-				null,
-				"optionalInput", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_Output(),
-				this.getWorkProductDescriptor(),
-				null,
-				"output", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_PerformedPrimarilyBy(),
-				this.getRoleDescriptor(),
-				null,
-				"performedPrimarilyBy", null, 0, 1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_SelectedSteps(),
-				this.getSection(),
-				null,
-				"selectedSteps", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				compositeRoleEClass,
-				CompositeRole.class,
-				"CompositeRole", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getCompositeRole_AggregatedRoles(),
-				this.getRole(),
-				null,
-				"aggregatedRoles", null, 0, -1, CompositeRole.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				breakdownElementDescriptionEClass,
-				BreakdownElementDescription.class,
-				"BreakdownElementDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getBreakdownElementDescription_UsageGuidance(),
-				this.getString(),
-				"usageGuidance", "", 0, 1, BreakdownElementDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				activityDescriptionEClass,
-				ActivityDescription.class,
-				"ActivityDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getActivityDescription_Purpose(),
-				this.getString(),
-				"purpose", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getActivityDescription_Alternatives(),
-				this.getString(),
-				"alternatives", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getActivityDescription_HowtoStaff(),
-				this.getString(),
-				"howtoStaff", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				deliveryProcessDescriptionEClass,
-				DeliveryProcessDescription.class,
-				"DeliveryProcessDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDeliveryProcessDescription_Scale(),
-				this.getString(),
-				"scale", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getDeliveryProcessDescription_ProjectCharacteristics(),
-				this.getString(),
-				"projectCharacteristics", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getDeliveryProcessDescription_RiskLevel(),
-				this.getString(),
-				"riskLevel", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getDeliveryProcessDescription_EstimatingTechnique(),
-				this.getString(),
-				"estimatingTechnique", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getDeliveryProcessDescription_ProjectMemberExpertise(),
-				this.getString(),
-				"projectMemberExpertise", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getDeliveryProcessDescription_TypeOfContract(),
-				this.getString(),
-				"typeOfContract", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				processDescriptionEClass,
-				ProcessDescription.class,
-				"ProcessDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getProcessDescription_Scope(),
-				this.getString(),
-				"scope", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getProcessDescription_UsageNotes(),
-				this.getString(),
-				"usageNotes", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				descriptorDescriptionEClass,
-				DescriptorDescription.class,
-				"DescriptorDescription", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDescriptorDescription_RefinedDescription(),
-				this.getString(),
-				"refinedDescription", "", 0, 1, DescriptorDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				conceptEClass,
-				Concept.class,
-				"Concept", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				checklistEClass,
-				Checklist.class,
-				"Checklist", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				exampleEClass,
-				Example.class,
-				"Example", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				guidelineEClass,
-				Guideline.class,
-				"Guideline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				reportEClass,
-				Report.class,
-				"Report", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				templateEClass,
-				Template.class,
-				"Template", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				supportingMaterialEClass,
-				SupportingMaterial.class,
-				"SupportingMaterial", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				toolMentorEClass,
-				ToolMentor.class,
-				"ToolMentor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				whitepaperEClass,
-				Whitepaper.class,
-				"Whitepaper", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				termDefinitionEClass,
-				TermDefinition.class,
-				"TermDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				practiceEClass,
-				Practice.class,
-				"Practice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getPractice_SubPractices(),
-				this.getPractice(),
-				null,
-				"subPractices", null, 0, -1, Practice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getPractice_ContentReferences(),
-				this.getContentElement(),
-				null,
-				"contentReferences", null, 0, -1, Practice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getPractice_ActivityReferences(),
-				this.getActivity(),
-				null,
-				"activityReferences", null, 0, -1, Practice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				estimationConsiderationsEClass,
-				EstimationConsiderations.class,
-				"EstimationConsiderations", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				reusableAssetEClass,
-				ReusableAsset.class,
-				"ReusableAsset", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				stateEClass,
-				State.class,
-				"State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getState_WorkProduct(),
-				this.getWorkProduct(),
-				null,
-				"WorkProduct", null, 1, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getState_Region(),
-				this.getRegion(),
-				this.getRegion_State(),
-				"Region", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getState_Submachine(),
-				this.getStateMachine(),
-				null,
-				"submachine", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				vertexEClass,
-				Vertex.class,
-				"Vertex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getVertex_Container(),
-				this.getRegion(),
-				this.getRegion_Vertex(),
-				"container", null, 0, 1, Vertex.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getVertex_Outgoing(),
-				this.getTransition(),
-				this.getTransition_Source(),
-				"outgoing", null, 0, -1, Vertex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getVertex_Incoming(),
-				this.getTransition(),
-				this.getTransition_Target(),
-				"incoming", null, 0, -1, Vertex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				regionEClass,
-				Region.class,
-				"Region", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getRegion_Vertex(),
-				this.getVertex(),
-				this.getVertex_Container(),
-				"Vertex", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getRegion_Transition(),
-				this.getTransition(),
-				this.getTransition_Container(),
-				"Transition", null, 0, -1, Region.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getRegion_State(),
-				this.getState(),
-				this.getState_Region(),
-				"State", null, 0, 1, Region.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getRegion_StateMachine(),
-				this.getStateMachine(),
-				this.getStateMachine_Region(),
-				"StateMachine", null, 0, 1, Region.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				stateMachineEClass,
-				StateMachine.class,
-				"StateMachine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getStateMachine_Region(),
-				this.getRegion(),
-				this.getRegion_StateMachine(),
-				"Region", null, 1, -1, StateMachine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				transitionEClass,
-				Transition.class,
-				"Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getTransition_WorkDefinition(),
-				this.getWorkDefinition(),
-				null,
-				"WorkDefinition", null, 1, -1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTransition_Container(),
-				this.getRegion(),
-				this.getRegion_Transition(),
-				"container", null, 1, 1, Transition.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTransition_Source(),
-				this.getVertex(),
-				this.getVertex_Outgoing(),
-				"source", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTransition_Target(),
-				this.getVertex(),
-				this.getVertex_Incoming(),
-				"target", null, 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				pseudoStateEClass,
-				PseudoState.class,
-				"PseudoState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				disciplineEClass,
-				Discipline.class,
-				"Discipline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getDiscipline_Tasks(),
-				this.getTask(),
-				null,
-				"tasks", null, 0, -1, Discipline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiscipline_Subdiscipline(),
-				this.getDiscipline(),
-				null,
-				"subdiscipline", null, 0, -1, Discipline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiscipline_ReferenceWorkflows(),
-				this.getActivity(),
-				null,
-				"referenceWorkflows", null, 0, -1, Discipline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				contentCategoryEClass,
-				ContentCategory.class,
-				"ContentCategory", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				roleSetEClass,
-				RoleSet.class,
-				"RoleSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getRoleSet_Roles(),
-				this.getRole(),
-				null,
-				"roles", null, 0, -1, RoleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				domainEClass,
-				Domain.class,
-				"Domain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getDomain_WorkProducts(),
-				this.getWorkProduct(),
-				null,
-				"workProducts", null, 0, -1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDomain_Subdomains(),
-				this.getDomain(),
-				null,
-				"subdomains", null, 0, -1, Domain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				workProductTypeEClass,
-				WorkProductType.class,
-				"WorkProductType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getWorkProductType_WorkProducts(),
-				this.getWorkProduct(),
-				null,
-				"workProducts", null, 0, -1, WorkProductType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				disciplineGroupingEClass,
-				DisciplineGrouping.class,
-				"DisciplineGrouping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getDisciplineGrouping_Disciplines(),
-				this.getDiscipline(),
-				null,
-				"disciplines", null, 0, -1, DisciplineGrouping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				toolEClass,
-				Tool.class,
-				"Tool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getTool_ToolMentors(),
-				this.getToolMentor(),
-				null,
-				"toolMentors", null, 0, -1, Tool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				roleSetGroupingEClass,
-				RoleSetGrouping.class,
-				"RoleSetGrouping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getRoleSetGrouping_RoleSets(),
-				this.getRoleSet(),
-				null,
-				"roleSets", null, 0, -1, RoleSetGrouping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				customCategoryEClass,
-				CustomCategory.class,
-				"CustomCategory", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getCustomCategory_CategorizedElements(),
-				this.getDescribableElement(),
-				null,
-				"categorizedElements", null, 0, -1, CustomCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getCustomCategory_SubCategories(),
-				this.getContentCategory(),
-				null,
-				"subCategories", null, 0, -1, CustomCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				deliveryProcessEClass,
-				DeliveryProcess.class,
-				"DeliveryProcess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getDeliveryProcess_EducationMaterials(),
-				this.getSupportingMaterial(),
-				null,
-				"educationMaterials", null, 0, -1, DeliveryProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDeliveryProcess_CommunicationsMaterials(),
-				this.getSupportingMaterial(),
-				null,
-				"communicationsMaterials", null, 0, -1, DeliveryProcess.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				processEClass,
-				org.eclipse.epf.uma.Process.class,
-				"Process", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getProcess_IncludesPatterns(),
-				this.getCapabilityPattern(),
-				null,
-				"includesPatterns", null, 0, -1, org.eclipse.epf.uma.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getProcess_DefaultContext(),
-				this.getMethodConfiguration(),
-				null,
-				"defaultContext", null, 1, 1, org.eclipse.epf.uma.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getProcess_ValidContext(),
-				this.getMethodConfiguration(),
-				null,
-				"validContext", null, 0, -1, org.eclipse.epf.uma.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				capabilityPatternEClass,
-				CapabilityPattern.class,
-				"CapabilityPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				processPlanningTemplateEClass,
-				ProcessPlanningTemplate.class,
-				"ProcessPlanningTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getProcessPlanningTemplate_BasedOnProcesses(),
-				this.getProcess(),
-				null,
-				"basedOnProcesses", null, 0, -1, ProcessPlanningTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				roadmapEClass,
-				Roadmap.class,
-				"Roadmap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				processComponentEClass,
-				ProcessComponent.class,
-				"ProcessComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getProcessComponent_Interfaces(),
-				this.getProcessComponentInterface(),
-				null,
-				"interfaces", null, 1, -1, ProcessComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getProcessComponent_Process(),
-				this.getProcess(),
-				null,
-				"process", null, 1, 1, ProcessComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				processPackageEClass,
-				ProcessPackage.class,
-				"ProcessPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getProcessPackage_ProcessElements(),
-				this.getProcessElement(),
-				null,
-				"processElements", null, 0, -1, ProcessPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getProcessPackage_Diagrams(),
-				this.getDiagram(),
-				null,
-				"diagrams", null, 0, -1, ProcessPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				processComponentInterfaceEClass,
-				ProcessComponentInterface.class,
-				"ProcessComponentInterface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getProcessComponentInterface_InterfaceSpecifications(),
-				this.getTaskDescriptor(),
-				null,
-				"interfaceSpecifications", null, 0, -1, ProcessComponentInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getProcessComponentInterface_InterfaceIO(),
-				this.getWorkProductDescriptor(),
-				null,
-				"interfaceIO", null, 0, -1, ProcessComponentInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				processComponentDescriptorEClass,
-				ProcessComponentDescriptor.class,
-				"ProcessComponentDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getProcessComponentDescriptor_ProcessComponent(),
-				this.getProcessComponent(),
-				null,
-				"ProcessComponent", null, 1, 1, ProcessComponentDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				methodPluginEClass,
-				MethodPlugin.class,
-				"MethodPlugin", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getMethodPlugin_UserChangeable(),
-				ecorePackage.getEBooleanObject(),
-				"userChangeable", "true", 0, 1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getMethodPlugin_MethodPackages(),
-				this.getMethodPackage(),
-				null,
-				"methodPackages", null, 1, -1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodPlugin_Bases(),
-				this.getMethodPlugin(),
-				null,
-				"bases", null, 0, -1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				variabilityElementEClass,
-				VariabilityElement.class,
-				"VariabilityElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getVariabilityElement_VariabilityType(),
-				this.getVariabilityType(),
-				"variabilityType", "na", 0, 1, VariabilityElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getVariabilityElement_VariabilityBasedOnElement(),
-				this.getVariabilityElement(),
-				null,
-				"variabilityBasedOnElement", null, 1, 1, VariabilityElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				methodUnitEClass,
-				MethodUnit.class,
-				"MethodUnit", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getMethodUnit_Authors(),
-				this.getString(),
-				"authors", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getMethodUnit_ChangeDate(),
-				this.getDate(),
-				"changeDate", null, 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getMethodUnit_ChangeDescription(),
-				this.getString(),
-				"changeDescription", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getMethodUnit_Version(),
-				this.getString(),
-				"version", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getMethodUnit_CopyrightStatement(),
-				this.getSupportingMaterial(),
-				null,
-				"copyrightStatement", null, 1, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				methodConfigurationEClass,
-				MethodConfiguration.class,
-				"MethodConfiguration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getMethodConfiguration_MethodPluginSelection(),
-				this.getMethodPlugin(),
-				null,
-				"methodPluginSelection", null, 1, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodConfiguration_MethodPackageSelection(),
-				this.getMethodPackage(),
-				null,
-				"methodPackageSelection", null, 1, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodConfiguration_ProcessViews(),
-				this.getContentCategory(),
-				null,
-				"processViews", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodConfiguration_DefaultView(),
-				this.getContentCategory(),
-				null,
-				"defaultView", null, 1, 1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodConfiguration_BaseConfigurations(),
-				this.getMethodConfiguration(),
-				null,
-				"baseConfigurations", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodConfiguration_SubtractedCategory(),
-				this.getContentCategory(),
-				null,
-				"subtractedCategory", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodConfiguration_AddedCategory(),
-				this.getContentCategory(),
-				null,
-				"addedCategory", null, 0, -1, MethodConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				processFamilyEClass,
-				ProcessFamily.class,
-				"ProcessFamily", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getProcessFamily_DeliveryProcesses(),
-				this.getDeliveryProcess(),
-				null,
-				"deliveryProcesses", null, 0, -1, ProcessFamily.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				methodLibraryEClass,
-				MethodLibrary.class,
-				"MethodLibrary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getMethodLibrary_MethodPlugins(),
-				this.getMethodPlugin(),
-				null,
-				"methodPlugins", null, 0, -1, MethodLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getMethodLibrary_PredefinedConfigurations(),
-				this.getMethodConfiguration(),
-				null,
-				"predefinedConfigurations", null, 0, -1, MethodLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
 		// Initialize enums and add enum literals
-		initEEnum(workOrderTypeEEnum, WorkOrderType.class, "WorkOrderType"); //$NON-NLS-1$
-		addEEnumLiteral(workOrderTypeEEnum,
-				WorkOrderType.FINISH_TO_START_LITERAL);
-		addEEnumLiteral(workOrderTypeEEnum,
-				WorkOrderType.FINISH_TO_FINISH_LITERAL);
-		addEEnumLiteral(workOrderTypeEEnum,
-				WorkOrderType.START_TO_START_LITERAL);
-		addEEnumLiteral(workOrderTypeEEnum,
-				WorkOrderType.START_TO_FINISH_LITERAL);
-
-		initEEnum(pseudoStateKindEEnum, PseudoStateKind.class,
-				"PseudoStateKind"); //$NON-NLS-1$
-		addEEnumLiteral(pseudoStateKindEEnum, PseudoStateKind.INITIAL_LITERAL);
-		addEEnumLiteral(pseudoStateKindEEnum, PseudoStateKind.JOIN_LITERAL);
-		addEEnumLiteral(pseudoStateKindEEnum, PseudoStateKind.FORK_LITERAL);
-		addEEnumLiteral(pseudoStateKindEEnum, PseudoStateKind.JUNCTION_LITERAL);
-		addEEnumLiteral(pseudoStateKindEEnum, PseudoStateKind.CHOICE_LITERAL);
-		addEEnumLiteral(pseudoStateKindEEnum,
-				PseudoStateKind.ENTRY_POINT_LITERAL);
-		addEEnumLiteral(pseudoStateKindEEnum,
-				PseudoStateKind.EXIT_POINT_LITERAL);
-		addEEnumLiteral(pseudoStateKindEEnum, PseudoStateKind.TERMINATE_LITERAL);
-
 		initEEnum(variabilityTypeEEnum, VariabilityType.class,
 				"VariabilityType"); //$NON-NLS-1$
-		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.NA_LITERAL);
+		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.NA);
+		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.CONTRIBUTES);
+		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.EXTENDS);
+		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.REPLACES);
 		addEEnumLiteral(variabilityTypeEEnum,
-				VariabilityType.CONTRIBUTES_LITERAL);
-		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.EXTENDS_LITERAL);
-		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.REPLACES_LITERAL);
-		addEEnumLiteral(variabilityTypeEEnum,
-				VariabilityType.LOCAL_CONTRIBUTION_LITERAL);
-		addEEnumLiteral(variabilityTypeEEnum,
-				VariabilityType.LOCAL_REPLACEMENT_LITERAL);
-		addEEnumLiteral(variabilityTypeEEnum,
-				VariabilityType.EXTENDS_REPLACES_LITERAL);
+				VariabilityType.LOCAL_CONTRIBUTION);
+		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.LOCAL_REPLACEMENT);
+		addEEnumLiteral(variabilityTypeEEnum, VariabilityType.EXTENDS_REPLACES);
+
+		initEEnum(workOrderTypeEEnum, WorkOrderType.class, "WorkOrderType"); //$NON-NLS-1$
+		addEEnumLiteral(workOrderTypeEEnum, WorkOrderType.FINISH_TO_START);
+		addEEnumLiteral(workOrderTypeEEnum, WorkOrderType.FINISH_TO_FINISH);
+		addEEnumLiteral(workOrderTypeEEnum, WorkOrderType.START_TO_START);
+		addEEnumLiteral(workOrderTypeEEnum, WorkOrderType.START_TO_FINISH);
 
 		// Initialize data types
+		initEDataType(stringEDataType, String.class,
+				"String", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(booleanEDataType, Boolean.class,
+				"Boolean", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(dateEDataType, Date.class,
 				"Date", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(uriEDataType, java.net.URI.class,
 				"Uri", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEDataType(
-				unlimitedNaturalEDataType,
-				int.class,
-				"UnlimitedNatural", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEDataType(stringEDataType, String.class,
-				"String", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(setEDataType, Set.class,
 				"Set", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(sequenceEDataType, List.class,
 				"Sequence", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEDataType(integerEDataType, int.class,
 				"Integer", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEDataType(floatEDataType, Float.class,
-				"Float", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEDataType(doubleEDataType, Double.class,
+				"Double", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

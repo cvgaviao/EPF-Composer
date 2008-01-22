@@ -20,6 +20,7 @@ import java.util.List;
  * <!-- begin-model-doc -->
  * A Process Component is a special Process Package that applies the principles of encapsulation.  A Process Component realizes one or more Interfaces which specify inputs and outputs of the component. There might be many components realizing the same interfaces, but using different techniques to achieve similar outputs for similar inputs.  Whereas the Component Interfaces represent component specifications (black box descriptions of the component), good candidates for component realizations can be found in Capability Patterns (white box descriptions for the component).
  * UMA supports replaceable and reusable Process Components realizing the principles of encapsulation. Certain situations in a software development project might require that concrete realizations of parts of the process remain undecided or will be decided by the executing team itself (e.g. in outsourcing situations).  UMA provides a unique component concept defining interfaces for work product input and output, allowing treating the actual definition of the work that produces the outputs as a "black box".  At any point during a project the component "realization" detailing the work can be added to the process.  The component approach also allows that different styles or techniques of doing work can be replaced with one another.  For example, a software code output of a component could be produced with a model-driven development or a code-centric technique.  The component concept encapsulates the actual work and lets the development team choose the appropriate technique and fill the component's realization with their choice of Activities that produce the required outputs.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -46,10 +47,10 @@ public interface ProcessComponent extends ProcessPackage, MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Interfaces</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcessComponent_Interfaces()
-	 * @model type="org.eclipse.epf.uma.ProcessComponentInterface" ordered="false"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
-	List getInterfaces();
+	List<ProcessComponentInterface> getInterfaces();
 
 	/**
 	 * Returns the value of the '<em><b>Process</b></em>' containment reference.
@@ -62,7 +63,7 @@ public interface ProcessComponent extends ProcessPackage, MethodUnit {
 	 * @return the value of the '<em>Process</em>' containment reference.
 	 * @see #setProcess(org.eclipse.epf.uma.Process)
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcessComponent_Process()
-	 * @model containment="true" resolveProxies="true" required="true"
+	 * @model containment="true" resolveProxies="true" required="true" ordered="false"
 	 * @generated
 	 */
 	org.eclipse.epf.uma.Process getProcess();

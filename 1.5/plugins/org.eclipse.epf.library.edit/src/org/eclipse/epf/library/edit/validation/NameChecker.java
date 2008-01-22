@@ -159,7 +159,7 @@ public final class NameChecker {
 	private static INameProvider createNameProvider(
 			final EStructuralFeature nameFeature) {
 		if(nameFeature == UmaPackage.eINSTANCE
-								.getDescribableElement_PresentationName()) {
+								.getMethodElement_PresentationName()) {
 			return presentationNameProvider; 
 		}
 		

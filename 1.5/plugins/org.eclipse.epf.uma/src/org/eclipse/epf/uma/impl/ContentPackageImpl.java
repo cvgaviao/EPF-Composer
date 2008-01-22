@@ -54,7 +54,7 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList contentElements = null;
+	protected EList<ContentElement> contentElements;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -63,10 +63,6 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 */
 	protected ContentPackageImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -74,6 +70,7 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CONTENT_PACKAGE;
 	}
@@ -83,9 +80,9 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getContentElements() {
+	public List<ContentElement> getContentElements() {
 		if (contentElements == null) {
-			contentElements = new EObjectContainmentEList.Resolving(
+			contentElements = new EObjectContainmentEList.Resolving<ContentElement>(
 					ContentElement.class, this,
 					UmaPackage.CONTENT_PACKAGE__CONTENT_ELEMENTS);
 		}
@@ -97,12 +94,13 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_PACKAGE__CONTENT_ELEMENTS:
-			return ((InternalEList) getContentElements()).basicRemove(otherEnd,
-					msgs);
+			return ((InternalEList<?>) getContentElements()).basicRemove(
+					otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -112,6 +110,7 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_PACKAGE__CONTENT_ELEMENTS:
@@ -125,11 +124,14 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_PACKAGE__CONTENT_ELEMENTS:
 			getContentElements().clear();
-			getContentElements().addAll((Collection) newValue);
+			getContentElements().addAll(
+					(Collection<? extends ContentElement>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -140,6 +142,7 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_PACKAGE__CONTENT_ELEMENTS:
@@ -154,13 +157,8 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CONTENT_PACKAGE__CONTENT_ELEMENTS:
 			return contentElements != null && !contentElements.isEmpty();

@@ -15,14 +15,18 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.eclipse.epf.uma.Diagram;
 import org.eclipse.epf.uma.DiagramLink;
 import org.eclipse.epf.uma.Point;
@@ -81,7 +85,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * @generated
 	 * @ordered
 	 */
-	protected Point viewpoint = null;
+	protected Point viewpoint;
 
 	/**
 	 * The cached value of the '{@link #getDiagramLink() <em>Diagram Link</em>}' reference list.
@@ -91,7 +95,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList diagramLink = null;
+	protected EList<DiagramLink> diagramLink;
 
 	/**
 	 * The cached value of the '{@link #getNamespace() <em>Namespace</em>}' containment reference.
@@ -101,7 +105,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * @generated
 	 * @ordered
 	 */
-	protected SemanticModelBridge namespace = null;
+	protected SemanticModelBridge namespace;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -110,10 +114,6 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 */
 	protected DiagramImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -121,6 +121,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DIAGRAM;
 	}
@@ -236,9 +237,9 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getDiagramLink() {
+	public List<DiagramLink> getDiagramLink() {
 		if (diagramLink == null) {
-			diagramLink = new EObjectWithInverseResolvingEList(
+			diagramLink = new EObjectWithInverseResolvingEList<DiagramLink>(
 					DiagramLink.class, this, UmaPackage.DIAGRAM__DIAGRAM_LINK,
 					UmaPackage.DIAGRAM_LINK__DIAGRAM);
 		}
@@ -334,11 +335,14 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
-			return ((InternalEList) getDiagramLink()).basicAdd(otherEnd, msgs);
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getDiagramLink())
+					.basicAdd(otherEnd, msgs);
 		case UmaPackage.DIAGRAM__NAMESPACE:
 			if (namespace != null)
 				msgs = ((InternalEObject) namespace).eInverseRemove(this,
@@ -354,13 +358,14 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM__VIEWPOINT:
 			return basicSetViewpoint(null, msgs);
 		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
-			return ((InternalEList) getDiagramLink()).basicRemove(otherEnd,
+			return ((InternalEList<?>) getDiagramLink()).basicRemove(otherEnd,
 					msgs);
 		case UmaPackage.DIAGRAM__NAMESPACE:
 			return basicSetNamespace(null, msgs);
@@ -373,6 +378,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM__ZOOM:
@@ -396,6 +402,8 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM__ZOOM:
@@ -406,7 +414,8 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 			return;
 		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
 			getDiagramLink().clear();
-			getDiagramLink().addAll((Collection) newValue);
+			getDiagramLink().addAll(
+					(Collection<? extends DiagramLink>) newValue);
 			return;
 		case UmaPackage.DIAGRAM__NAMESPACE:
 			setNamespace((SemanticModelBridge) newValue);
@@ -420,6 +429,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM__ZOOM:
@@ -443,13 +453,8 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DIAGRAM__ZOOM:
 			return ZOOM_EDEFAULT == null ? zoom != null : !ZOOM_EDEFAULT
@@ -469,6 +474,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

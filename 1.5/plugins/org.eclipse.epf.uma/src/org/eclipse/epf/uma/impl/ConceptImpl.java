@@ -38,10 +38,6 @@ public class ConceptImpl extends GuidanceImpl implements Concept {
 	 */
 	protected ConceptImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class ConceptImpl extends GuidanceImpl implements Concept {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CONCEPT;
 	}

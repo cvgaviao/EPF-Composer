@@ -71,6 +71,15 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	protected Boolean userChangeable = USER_CHANGEABLE_EDEFAULT;
 
 	/**
+	 * This is true if the User Changeable attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean userChangeableESet;
+
+	/**
 	 * The cached value of the '{@link #getMethodPackages() <em>Method Packages</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -78,7 +87,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methodPackages = null;
+	protected EList<MethodPackage> methodPackages;
 
 	/**
 	 * The cached value of the '{@link #getBases() <em>Bases</em>}' reference list.
@@ -88,7 +97,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList bases = null;
+	protected EList<MethodPlugin> bases;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -97,10 +106,6 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 */
 	protected MethodPluginImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -108,6 +113,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_PLUGIN;
 	}
@@ -129,10 +135,12 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	public void setUserChangeable(Boolean newUserChangeable) {
 		Boolean oldUserChangeable = userChangeable;
 		userChangeable = newUserChangeable;
+		boolean oldUserChangeableESet = userChangeableESet;
+		userChangeableESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE,
-					oldUserChangeable, userChangeable));
+					oldUserChangeable, userChangeable, !oldUserChangeableESet));
 	}
 
 	/**
@@ -140,9 +148,35 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getMethodPackages() {
+	public void unsetUserChangeable() {
+		Boolean oldUserChangeable = userChangeable;
+		boolean oldUserChangeableESet = userChangeableESet;
+		userChangeable = USER_CHANGEABLE_EDEFAULT;
+		userChangeableESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE,
+					oldUserChangeable, USER_CHANGEABLE_EDEFAULT,
+					oldUserChangeableESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetUserChangeable() {
+		return userChangeableESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<MethodPackage> getMethodPackages() {
 		if (methodPackages == null) {
-			methodPackages = new EObjectContainmentEList.Resolving(
+			methodPackages = new EObjectContainmentEList.Resolving<MethodPackage>(
 					MethodPackage.class, this,
 					UmaPackage.METHOD_PLUGIN__METHOD_PACKAGES);
 		}
@@ -154,10 +188,10 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getBases() {
+	public List<MethodPlugin> getBases() {
 		if (bases == null) {
-			bases = new EObjectResolvingEList(MethodPlugin.class, this,
-					UmaPackage.METHOD_PLUGIN__BASES);
+			bases = new EObjectResolvingEList<MethodPlugin>(MethodPlugin.class,
+					this, UmaPackage.METHOD_PLUGIN__BASES);
 		}
 		return bases;
 	}
@@ -167,12 +201,13 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGES:
-			return ((InternalEList) getMethodPackages()).basicRemove(otherEnd,
-					msgs);
+			return ((InternalEList<?>) getMethodPackages()).basicRemove(
+					otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -182,6 +217,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
@@ -199,6 +235,8 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
@@ -206,11 +244,12 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 			return;
 		case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGES:
 			getMethodPackages().clear();
-			getMethodPackages().addAll((Collection) newValue);
+			getMethodPackages().addAll(
+					(Collection<? extends MethodPackage>) newValue);
 			return;
 		case UmaPackage.METHOD_PLUGIN__BASES:
 			getBases().clear();
-			getBases().addAll((Collection) newValue);
+			getBases().addAll((Collection<? extends MethodPlugin>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -221,10 +260,11 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
-			setUserChangeable(USER_CHANGEABLE_EDEFAULT);
+			unsetUserChangeable();
 			return;
 		case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGES:
 			getMethodPackages().clear();
@@ -241,17 +281,11 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
-			return USER_CHANGEABLE_EDEFAULT == null ? userChangeable != null
-					: !USER_CHANGEABLE_EDEFAULT.equals(userChangeable);
+			return isSetUserChangeable();
 		case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGES:
 			return methodPackages != null && !methodPackages.isEmpty();
 		case UmaPackage.METHOD_PLUGIN__BASES:
@@ -265,13 +299,17 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (userChangeable: "); //$NON-NLS-1$
-		result.append(userChangeable);
+		if (userChangeableESet)
+			result.append(userChangeable);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

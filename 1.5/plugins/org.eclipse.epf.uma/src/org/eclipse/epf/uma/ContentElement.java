@@ -20,6 +20,11 @@ import java.util.List;
  * <!-- begin-model-doc -->
  * Content Element is a Describable Element that represents an abstract generalization for all elements that are considered to be and managed as Method Content.
  * Content Elements represents reusable Method Content that is supposed to be managed in Content Packages.  The separation of Content Element from Process Element allows to clearly distinguish between pure method content from content that is represented in processes.
+ * 
+ * This is the Guidance Types package's extension of Content Element (defined in Content Elements) providing additonal associations.
+ * Content Element in the package Method Plugin inherits from Variability Element and not directly from Method Element anymore.  This is achieved using UML 2.0 package merge semantics.  Only if an adopter of this meta-model decides to realize Method Plugins, he would get the variability and extension capabilities for all Content Elements.
+ * Content Element inherits the semantics of Variability Element.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -31,7 +36,7 @@ import java.util.List;
  *   <li>{@link org.eclipse.epf.uma.ContentElement#getGuidelines <em>Guidelines</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.ContentElement#getExamples <em>Examples</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.ContentElement#getAssets <em>Assets</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.ContentElement#getTermDefinition <em>Term Definition</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.ContentElement#getTermdefinition <em>Termdefinition</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,10 +56,10 @@ public interface ContentElement extends DescribableElement, VariabilityElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Supporting Materials</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_SupportingMaterials()
-	 * @model type="org.eclipse.epf.uma.SupportingMaterial" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getSupportingMaterials();
+	List<SupportingMaterial> getSupportingMaterials();
 
 	/**
 	 * Returns the value of the '<em><b>Concepts And Papers</b></em>' reference list.
@@ -67,10 +72,10 @@ public interface ContentElement extends DescribableElement, VariabilityElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Concepts And Papers</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_ConceptsAndPapers()
-	 * @model type="org.eclipse.epf.uma.Concept" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getConceptsAndPapers();
+	List<Concept> getConceptsAndPapers();
 
 	/**
 	 * Returns the value of the '<em><b>Checklists</b></em>' reference list.
@@ -83,10 +88,10 @@ public interface ContentElement extends DescribableElement, VariabilityElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Checklists</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_Checklists()
-	 * @model type="org.eclipse.epf.uma.Checklist" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getChecklists();
+	List<Checklist> getChecklists();
 
 	/**
 	 * Returns the value of the '<em><b>Guidelines</b></em>' reference list.
@@ -99,10 +104,10 @@ public interface ContentElement extends DescribableElement, VariabilityElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Guidelines</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_Guidelines()
-	 * @model type="org.eclipse.epf.uma.Guideline" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getGuidelines();
+	List<Guideline> getGuidelines();
 
 	/**
 	 * Returns the value of the '<em><b>Examples</b></em>' reference list.
@@ -115,10 +120,10 @@ public interface ContentElement extends DescribableElement, VariabilityElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Examples</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_Examples()
-	 * @model type="org.eclipse.epf.uma.Example" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getExamples();
+	List<Example> getExamples();
 
 	/**
 	 * Returns the value of the '<em><b>Assets</b></em>' reference list.
@@ -131,25 +136,25 @@ public interface ContentElement extends DescribableElement, VariabilityElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Assets</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_Assets()
-	 * @model type="org.eclipse.epf.uma.ReusableAsset" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getAssets();
+	List<ReusableAsset> getAssets();
 
 	/**
-	 * Returns the value of the '<em><b>Term Definition</b></em>' reference list.
+	 * Returns the value of the '<em><b>Termdefinition</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.epf.uma.TermDefinition}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Term Definition</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Termdefinition</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Term Definition</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_TermDefinition()
-	 * @model type="org.eclipse.epf.uma.TermDefinition" ordered="false"
+	 * @return the value of the '<em>Termdefinition</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getContentElement_Termdefinition()
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getTermDefinition();
+	List<TermDefinition> getTermdefinition();
 
 } // ContentElement

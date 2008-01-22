@@ -60,16 +60,21 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	protected String usageGuidance = USAGE_GUIDANCE_EDEFAULT;
 
 	/**
+	 * This is true if the Usage Guidance attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean usageGuidanceESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected BreakdownElementDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -77,6 +82,7 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.BREAKDOWN_ELEMENT_DESCRIPTION;
 	}
@@ -98,10 +104,12 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	public void setUsageGuidance(String newUsageGuidance) {
 		String oldUsageGuidance = usageGuidance;
 		usageGuidance = newUsageGuidance;
+		boolean oldUsageGuidanceESet = usageGuidanceESet;
+		usageGuidanceESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE,
-					oldUsageGuidance, usageGuidance));
+					oldUsageGuidance, usageGuidance, !oldUsageGuidanceESet));
 	}
 
 	/**
@@ -109,6 +117,33 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetUsageGuidance() {
+		String oldUsageGuidance = usageGuidance;
+		boolean oldUsageGuidanceESet = usageGuidanceESet;
+		usageGuidance = USAGE_GUIDANCE_EDEFAULT;
+		usageGuidanceESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE,
+					oldUsageGuidance, USAGE_GUIDANCE_EDEFAULT,
+					oldUsageGuidanceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetUsageGuidance() {
+		return usageGuidanceESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE:
@@ -122,6 +157,7 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE:
@@ -136,10 +172,11 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE:
-			setUsageGuidance(USAGE_GUIDANCE_EDEFAULT);
+			unsetUsageGuidance();
 			return;
 		}
 		super.eUnset(featureID);
@@ -150,17 +187,11 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE:
-			return USAGE_GUIDANCE_EDEFAULT == null ? usageGuidance != null
-					: !USAGE_GUIDANCE_EDEFAULT.equals(usageGuidance);
+			return isSetUsageGuidance();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -170,13 +201,17 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (usageGuidance: "); //$NON-NLS-1$
-		result.append(usageGuidance);
+		if (usageGuidanceESet)
+			result.append(usageGuidance);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

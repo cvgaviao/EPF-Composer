@@ -12,12 +12,15 @@ package org.eclipse.epf.uma.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import org.eclipse.epf.uma.Diagram;
 import org.eclipse.epf.uma.DiagramLink;
 import org.eclipse.epf.uma.GraphElement;
@@ -76,7 +79,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * @generated
 	 * @ordered
 	 */
-	protected Point viewport = null;
+	protected Point viewport;
 
 	/**
 	 * The cached value of the '{@link #getDiagram() <em>Diagram</em>}' reference.
@@ -86,7 +89,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * @generated
 	 * @ordered
 	 */
-	protected Diagram diagram = null;
+	protected Diagram diagram;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -95,10 +98,6 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 */
 	protected DiagramLinkImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -106,6 +105,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DIAGRAM_LINK;
 	}
@@ -352,6 +352,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -373,6 +374,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -391,6 +393,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(
 			NotificationChain msgs) {
 		switch (eContainerFeatureID) {
@@ -406,6 +409,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
@@ -431,6 +435,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
@@ -454,6 +459,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
@@ -477,13 +483,8 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
 			return ZOOM_EDEFAULT == null ? zoom != null : !ZOOM_EDEFAULT
@@ -503,6 +504,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();

@@ -156,14 +156,14 @@ public final class ProcessUtil {
 			}
 		}
 		return NameChecker.checkName(adapterFactory, e, UmaPackage.eINSTANCE
-				.getDescribableElement_PresentationName(), name, suppression);
+				.getMethodElement_PresentationName(), name, suppression);
 	}
 	
 	public static String checkBreakdownElementPresentationName(
 			AdapterFactory adapterFactory, BreakdownElement e, String name, Suppression suppression, boolean ignoreSuppressed) {
 
 		return NameChecker.checkName(adapterFactory, e, UmaPackage.eINSTANCE
-				.getDescribableElement_PresentationName(), name, suppression, ignoreSuppressed);
+				.getMethodElement_PresentationName(), name, suppression, ignoreSuppressed);
 	}
 
 	public static Object getRootProcess(AdapterFactory adapterFactory,
@@ -1392,7 +1392,7 @@ public final class ProcessUtil {
 					.valueOf(txt), -1);
 		} else if (prop == IBSItemProvider.COL_PRESENTATION_NAME) {
 			actionMgr.doAction(IActionManager.SET, e, UmaPackage.eINSTANCE
-					.getDescribableElement_PresentationName(), txt, -1);
+					.getMethodElement_PresentationName(), txt, -1);
 		} else if (prop == IBSItemProvider.COL_IS_OPTIONAL) {
 			actionMgr
 					.doAction(IActionManager.SET, e, UmaPackage.eINSTANCE

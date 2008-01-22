@@ -38,10 +38,6 @@ public class ExampleImpl extends GuidanceImpl implements Example {
 	 */
 	protected ExampleImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -49,6 +45,7 @@ public class ExampleImpl extends GuidanceImpl implements Example {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.EXAMPLE;
 	}

@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -50,7 +51,8 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getPropertyDescriptors(Object object) {
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
@@ -75,7 +77,7 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ProcessPlanningTemplate_basedOnProcesses_feature", "_UI_ProcessPlanningTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES,
-						true, false, false, null, null, null));
+						true, false, true, null, null, null));
 	}
 
 	/**
@@ -84,6 +86,7 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage(
 				"full/obj16/ProcessPlanningTemplate")); //$NON-NLS-1$
@@ -95,6 +98,7 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getText(Object object) {
 		String label = ((ProcessPlanningTemplate) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_ProcessPlanningTemplate_type") : //$NON-NLS-1$
@@ -108,6 +112,7 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
@@ -120,8 +125,9 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
-			Object object) {
+	@Override
+	protected void collectNewChildDescriptors(
+			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -131,8 +137,9 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getCreateChildText(Object owner, Object feature,
-			Object child, Collection selection) {
+			Object child, Collection<?> selection) {
 		Object childFeature = feature;
 		Object childObject = child;
 
@@ -154,6 +161,7 @@ public class ProcessPlanningTemplateItemProvider extends ProcessItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return UmaEditPlugin.INSTANCE;
 	}

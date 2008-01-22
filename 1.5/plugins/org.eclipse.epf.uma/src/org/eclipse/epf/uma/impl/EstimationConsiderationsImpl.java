@@ -39,10 +39,6 @@ public class EstimationConsiderationsImpl extends GuidanceImpl implements
 	 */
 	protected EstimationConsiderationsImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public class EstimationConsiderationsImpl extends GuidanceImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ESTIMATION_CONSIDERATIONS;
 	}

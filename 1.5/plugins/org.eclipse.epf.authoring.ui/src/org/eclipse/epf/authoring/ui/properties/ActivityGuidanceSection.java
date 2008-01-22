@@ -864,28 +864,28 @@ public class ActivityGuidanceSection extends AbstractSection {
 				// guidances for activity
 				if (item instanceof Checklist) {
 					actionMgr.doAction(IActionManager.REMOVE, element,
-							UmaPackage.eINSTANCE.getActivity_Checklists(),
+							UmaPackage.eINSTANCE.getBreakdownElement_Checklists(),
 							item, -1);
 				} else if (item instanceof Concept) {
 					actionMgr.doAction(IActionManager.REMOVE, element,
-							UmaPackage.eINSTANCE.getActivity_Concepts(), item,
+							UmaPackage.eINSTANCE.getBreakdownElement_Concepts(), item,
 							-1);
 				} else if (item instanceof Example) {
 					actionMgr.doAction(IActionManager.REMOVE, element,
-							UmaPackage.eINSTANCE.getActivity_Examples(), item,
+							UmaPackage.eINSTANCE.getBreakdownElement_Examples(), item,
 							-1);
 				} else if (item instanceof SupportingMaterial) {
 					actionMgr.doAction(IActionManager.REMOVE, element,
 							UmaPackage.eINSTANCE
-									.getActivity_SupportingMaterials(), item,
+									.getBreakdownElement_SupportingMaterials(), item,
 							-1);
 				} else if (item instanceof Guideline) {
 					actionMgr.doAction(IActionManager.REMOVE, element,
-							UmaPackage.eINSTANCE.getActivity_Guidelines(),
+							UmaPackage.eINSTANCE.getBreakdownElement_Guidelines(),
 							item, -1);
 				} else if (item instanceof ReusableAsset) {
 					actionMgr.doAction(IActionManager.REMOVE, element,
-							UmaPackage.eINSTANCE.getActivity_ReusableAssets(),
+							UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets(),
 							item, -1);
 				} else if (item instanceof Roadmap) {
 					actionMgr.doAction(IActionManager.REMOVE, element,

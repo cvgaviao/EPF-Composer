@@ -69,6 +69,15 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	protected String authors = AUTHORS_EDEFAULT;
 
 	/**
+	 * This is true if the Authors attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean authorsESet;
+
+	/**
 	 * The default value of the '{@link #getChangeDate() <em>Change Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,6 +96,15 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * @ordered
 	 */
 	protected Date changeDate = CHANGE_DATE_EDEFAULT;
+
+	/**
+	 * This is true if the Change Date attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean changeDateESet;
 
 	/**
 	 * The default value of the '{@link #getChangeDescription() <em>Change Description</em>}' attribute.
@@ -109,6 +127,15 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	protected String changeDescription = CHANGE_DESCRIPTION_EDEFAULT;
 
 	/**
+	 * This is true if the Change Description attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean changeDescriptionESet;
+
+	/**
 	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -129,6 +156,15 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	protected String version = VERSION_EDEFAULT;
 
 	/**
+	 * This is true if the Version attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean versionESet;
+
+	/**
 	 * The cached value of the '{@link #getCopyrightStatement() <em>Copyright Statement</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -136,7 +172,7 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected SupportingMaterial copyrightStatement = null;
+	protected SupportingMaterial copyrightStatement;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -145,10 +181,6 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 */
 	protected MethodUnitImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -156,6 +188,7 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_UNIT;
 	}
@@ -177,9 +210,37 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	public void setAuthors(String newAuthors) {
 		String oldAuthors = authors;
 		authors = newAuthors;
+		boolean oldAuthorsESet = authorsESet;
+		authorsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.METHOD_UNIT__AUTHORS, oldAuthors, authors));
+					UmaPackage.METHOD_UNIT__AUTHORS, oldAuthors, authors,
+					!oldAuthorsESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetAuthors() {
+		String oldAuthors = authors;
+		boolean oldAuthorsESet = authorsESet;
+		authors = AUTHORS_EDEFAULT;
+		authorsESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.METHOD_UNIT__AUTHORS, oldAuthors,
+					AUTHORS_EDEFAULT, oldAuthorsESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetAuthors() {
+		return authorsESet;
 	}
 
 	/**
@@ -199,10 +260,37 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	public void setChangeDate(Date newChangeDate) {
 		Date oldChangeDate = changeDate;
 		changeDate = newChangeDate;
+		boolean oldChangeDateESet = changeDateESet;
+		changeDateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_UNIT__CHANGE_DATE, oldChangeDate,
-					changeDate));
+					changeDate, !oldChangeDateESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetChangeDate() {
+		Date oldChangeDate = changeDate;
+		boolean oldChangeDateESet = changeDateESet;
+		changeDate = CHANGE_DATE_EDEFAULT;
+		changeDateESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.METHOD_UNIT__CHANGE_DATE, oldChangeDate,
+					CHANGE_DATE_EDEFAULT, oldChangeDateESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetChangeDate() {
+		return changeDateESet;
 	}
 
 	/**
@@ -222,10 +310,39 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	public void setChangeDescription(String newChangeDescription) {
 		String oldChangeDescription = changeDescription;
 		changeDescription = newChangeDescription;
+		boolean oldChangeDescriptionESet = changeDescriptionESet;
+		changeDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_UNIT__CHANGE_DESCRIPTION,
-					oldChangeDescription, changeDescription));
+					oldChangeDescription, changeDescription,
+					!oldChangeDescriptionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetChangeDescription() {
+		String oldChangeDescription = changeDescription;
+		boolean oldChangeDescriptionESet = changeDescriptionESet;
+		changeDescription = CHANGE_DESCRIPTION_EDEFAULT;
+		changeDescriptionESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.METHOD_UNIT__CHANGE_DESCRIPTION,
+					oldChangeDescription, CHANGE_DESCRIPTION_EDEFAULT,
+					oldChangeDescriptionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetChangeDescription() {
+		return changeDescriptionESet;
 	}
 
 	/**
@@ -245,9 +362,37 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	public void setVersion(String newVersion) {
 		String oldVersion = version;
 		version = newVersion;
+		boolean oldVersionESet = versionESet;
+		versionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.METHOD_UNIT__VERSION, oldVersion, version));
+					UmaPackage.METHOD_UNIT__VERSION, oldVersion, version,
+					!oldVersionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetVersion() {
+		String oldVersion = version;
+		boolean oldVersionESet = versionESet;
+		version = VERSION_EDEFAULT;
+		versionESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.METHOD_UNIT__VERSION, oldVersion,
+					VERSION_EDEFAULT, oldVersionESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetVersion() {
+		return versionESet;
 	}
 
 	/**
@@ -298,6 +443,7 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.METHOD_UNIT__AUTHORS:
@@ -321,6 +467,7 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.METHOD_UNIT__AUTHORS:
@@ -347,19 +494,20 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_UNIT__AUTHORS:
-			setAuthors(AUTHORS_EDEFAULT);
+			unsetAuthors();
 			return;
 		case UmaPackage.METHOD_UNIT__CHANGE_DATE:
-			setChangeDate(CHANGE_DATE_EDEFAULT);
+			unsetChangeDate();
 			return;
 		case UmaPackage.METHOD_UNIT__CHANGE_DESCRIPTION:
-			setChangeDescription(CHANGE_DESCRIPTION_EDEFAULT);
+			unsetChangeDescription();
 			return;
 		case UmaPackage.METHOD_UNIT__VERSION:
-			setVersion(VERSION_EDEFAULT);
+			unsetVersion();
 			return;
 		case UmaPackage.METHOD_UNIT__COPYRIGHT_STATEMENT:
 			setCopyrightStatement((SupportingMaterial) null);
@@ -373,26 +521,17 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_UNIT__AUTHORS:
-			return AUTHORS_EDEFAULT == null ? authors != null
-					: !AUTHORS_EDEFAULT.equals(authors);
+			return isSetAuthors();
 		case UmaPackage.METHOD_UNIT__CHANGE_DATE:
-			return CHANGE_DATE_EDEFAULT == null ? changeDate != null
-					: !CHANGE_DATE_EDEFAULT.equals(changeDate);
+			return isSetChangeDate();
 		case UmaPackage.METHOD_UNIT__CHANGE_DESCRIPTION:
-			return CHANGE_DESCRIPTION_EDEFAULT == null ? changeDescription != null
-					: !CHANGE_DESCRIPTION_EDEFAULT.equals(changeDescription);
+			return isSetChangeDescription();
 		case UmaPackage.METHOD_UNIT__VERSION:
-			return VERSION_EDEFAULT == null ? version != null
-					: !VERSION_EDEFAULT.equals(version);
+			return isSetVersion();
 		case UmaPackage.METHOD_UNIT__COPYRIGHT_STATEMENT:
 			return copyrightStatement != null;
 		}
@@ -404,19 +543,32 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (authors: "); //$NON-NLS-1$
-		result.append(authors);
+		if (authorsESet)
+			result.append(authors);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", changeDate: "); //$NON-NLS-1$
-		result.append(changeDate);
+		if (changeDateESet)
+			result.append(changeDate);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", changeDescription: "); //$NON-NLS-1$
-		result.append(changeDescription);
+		if (changeDescriptionESet)
+			result.append(changeDescription);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", version: "); //$NON-NLS-1$
-		result.append(version);
+		if (versionESet)
+			result.append(version);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

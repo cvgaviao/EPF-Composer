@@ -21,6 +21,7 @@ import java.util.List;
  * A Method Plugin is a Method Element that represents a physical container for Method Packages.  It defines a granularity level for the modularization and organization of method content and processes.  A Method Plugin can extend many other Method Plugins and it can be extended by many Method Plugins.  It can also be used stand-alone, i.e. with no Extension relationship to other plug-ins.
  * Method Plugin conceptually represents a unit for configuration, modularization, extension, packaging, and deployment of method content and processes.  A Process Engineer shall design his Plugins and allocate his content to these Plugins with requirements for extensibility, modularity, reuse, and maintainability in mind.
  * Special extensibility mechanisms defined for the meta-classes Variability Element and Process Contribution allow Plugin content to directly contribute new content, replace existing content, or to cross-reference to any Content Element or Process within another Plugin that it extends.  Similar to UML 2.0's 'package merge' mechanism transformation interpretations, interpreting these Method Plugin mechanisms results into new extended Method Content and Processes.
+ * 
  * <!-- end-model-doc -->
  *
  * <p>
@@ -47,9 +48,11 @@ public interface MethodPlugin extends MethodUnit, org.eclipse.epf.uma.Package {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>User Changeable</em>' attribute.
+	 * @see #isSetUserChangeable()
+	 * @see #unsetUserChangeable()
 	 * @see #setUserChangeable(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodPlugin_UserChangeable()
-	 * @model default="true"
+	 * @model default="true" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getUserChangeable();
@@ -59,10 +62,35 @@ public interface MethodPlugin extends MethodUnit, org.eclipse.epf.uma.Package {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>User Changeable</em>' attribute.
+	 * @see #isSetUserChangeable()
+	 * @see #unsetUserChangeable()
 	 * @see #getUserChangeable()
 	 * @generated
 	 */
 	void setUserChangeable(Boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.MethodPlugin#getUserChangeable <em>User Changeable</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetUserChangeable()
+	 * @see #getUserChangeable()
+	 * @see #setUserChangeable(Boolean)
+	 * @generated
+	 */
+	void unsetUserChangeable();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.MethodPlugin#getUserChangeable <em>User Changeable</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>User Changeable</em>' attribute is set.
+	 * @see #unsetUserChangeable()
+	 * @see #getUserChangeable()
+	 * @see #setUserChangeable(Boolean)
+	 * @generated
+	 */
+	boolean isSetUserChangeable();
 
 	/**
 	 * Returns the value of the '<em><b>Method Packages</b></em>' containment reference list.
@@ -75,10 +103,10 @@ public interface MethodPlugin extends MethodUnit, org.eclipse.epf.uma.Package {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Packages</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodPlugin_MethodPackages()
-	 * @model type="org.eclipse.epf.uma.MethodPackage" containment="true" resolveProxies="true" ordered="false"
+	 * @model containment="true" resolveProxies="true" required="true" ordered="false"
 	 * @generated
 	 */
-	List getMethodPackages();
+	List<MethodPackage> getMethodPackages();
 
 	/**
 	 * Returns the value of the '<em><b>Bases</b></em>' reference list.
@@ -91,9 +119,9 @@ public interface MethodPlugin extends MethodUnit, org.eclipse.epf.uma.Package {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Bases</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodPlugin_Bases()
-	 * @model type="org.eclipse.epf.uma.MethodPlugin" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getBases();
+	List<MethodPlugin> getBases();
 
 } // MethodPlugin

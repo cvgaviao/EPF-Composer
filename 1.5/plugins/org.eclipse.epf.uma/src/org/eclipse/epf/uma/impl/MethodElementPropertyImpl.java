@@ -63,16 +63,21 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	protected String value = VALUE_EDEFAULT;
 
 	/**
+	 * This is true if the Value attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean valueESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected MethodElementPropertyImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -80,6 +85,7 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_ELEMENT_PROPERTY;
 	}
@@ -101,9 +107,12 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	public void setValue(String newValue) {
 		String oldValue = value;
 		value = newValue;
+		boolean oldValueESet = valueESet;
+		valueESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE, oldValue, value));
+					UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE, oldValue, value,
+					!oldValueESet));
 	}
 
 	/**
@@ -111,6 +120,32 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetValue() {
+		String oldValue = value;
+		boolean oldValueESet = valueESet;
+		value = VALUE_EDEFAULT;
+		valueESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE, oldValue,
+					VALUE_EDEFAULT, oldValueESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetValue() {
+		return valueESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE:
@@ -124,6 +159,7 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE:
@@ -138,10 +174,11 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE:
-			setValue(VALUE_EDEFAULT);
+			unsetValue();
 			return;
 		}
 		super.eUnset(featureID);
@@ -152,17 +189,11 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE:
-			return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT
-					.equals(value);
+			return isSetValue();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -172,13 +203,17 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (value: "); //$NON-NLS-1$
-		result.append(value);
+		if (valueESet)
+			result.append(value);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

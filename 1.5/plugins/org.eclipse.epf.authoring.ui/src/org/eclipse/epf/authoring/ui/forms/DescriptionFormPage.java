@@ -1247,7 +1247,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				if (!newContent.equals(oldContent)) {
 					boolean success = actionMgr.doAction(IActionManager.SET,
 							contentElement, UmaPackage.eINSTANCE
-									.getDescribableElement_PresentationName(),
+									.getMethodElement_PresentationName(),
 							newContent, -1);
 					if (success) {
 						ctrl_presentation_name.setText(newContent);
@@ -1259,7 +1259,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			 * @see org.eclipse.swt.events.FocusAdapter#focusGained(org.eclipse.swt.events.FocusEvent)
 			 */
 			public void focusGained(FocusEvent e) {
-				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget, UmaPackage.eINSTANCE.getDescribableElement_PresentationName());
+				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget, UmaPackage.eINSTANCE.getMethodElement_PresentationName());
 			}
 		});
 

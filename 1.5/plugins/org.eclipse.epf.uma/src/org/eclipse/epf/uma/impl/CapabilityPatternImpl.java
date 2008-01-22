@@ -39,10 +39,6 @@ public class CapabilityPatternImpl extends ProcessImpl implements
 	 */
 	protected CapabilityPatternImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -50,6 +46,7 @@ public class CapabilityPatternImpl extends ProcessImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CAPABILITY_PATTERN;
 	}

@@ -44,9 +44,9 @@ public interface Deliverable extends WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Delivered Work Products</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getDeliverable_DeliveredWorkProducts()
-	 * @model type="org.eclipse.epf.uma.WorkProduct" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getDeliveredWorkProducts();
+	List<WorkProduct> getDeliveredWorkProducts();
 
 } // Deliverable

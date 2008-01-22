@@ -60,16 +60,21 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	protected String attachments = ATTACHMENTS_EDEFAULT;
 
 	/**
+	 * This is true if the Attachments attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean attachmentsESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected GuidanceDescriptionImpl() {
 		super();
-
-		//UMA-->
-		reassignDefaultValues();
-		//UMA<--
 	}
 
 	/**
@@ -77,6 +82,7 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.GUIDANCE_DESCRIPTION;
 	}
@@ -98,10 +104,12 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	public void setAttachments(String newAttachments) {
 		String oldAttachments = attachments;
 		attachments = newAttachments;
+		boolean oldAttachmentsESet = attachmentsESet;
+		attachmentsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS,
-					oldAttachments, attachments));
+					oldAttachments, attachments, !oldAttachmentsESet));
 	}
 
 	/**
@@ -109,6 +117,32 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public void unsetAttachments() {
+		String oldAttachments = attachments;
+		boolean oldAttachmentsESet = attachmentsESet;
+		attachments = ATTACHMENTS_EDEFAULT;
+		attachmentsESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS,
+					oldAttachments, ATTACHMENTS_EDEFAULT, oldAttachmentsESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetAttachments() {
+		return attachmentsESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS:
@@ -122,6 +156,7 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS:
@@ -136,10 +171,11 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS:
-			setAttachments(ATTACHMENTS_EDEFAULT);
+			unsetAttachments();
 			return;
 		}
 		super.eUnset(featureID);
@@ -150,17 +186,11 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
-		//UMA-->
-		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
-		if (feature != null) {
-			return isFeatureWithOverridenDefaultValueSet(feature);
-		}
-		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS:
-			return ATTACHMENTS_EDEFAULT == null ? attachments != null
-					: !ATTACHMENTS_EDEFAULT.equals(attachments);
+			return isSetAttachments();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -170,13 +200,17 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy())
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (attachments: "); //$NON-NLS-1$
-		result.append(attachments);
+		if (attachmentsESet)
+			result.append(attachments);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

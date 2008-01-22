@@ -46,7 +46,7 @@ public interface RoleDescriptor extends Descriptor {
 	 * @return the value of the '<em>Role</em>' reference.
 	 * @see #setRole(Role)
 	 * @see org.eclipse.epf.uma.UmaPackage#getRoleDescriptor_Role()
-	 * @model
+	 * @model ordered="false"
 	 * @generated
 	 */
 	Role getRole();
@@ -72,10 +72,10 @@ public interface RoleDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Modifies</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getRoleDescriptor_Modifies()
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
+	 * @model volatile="true" derived="true" ordered="false"
 	 * @generated
 	 */
-	List getModifies();
+	List<WorkProductDescriptor> getModifies();
 
 	/**
 	 * Returns the value of the '<em><b>Responsible For</b></em>' reference list.
@@ -88,9 +88,9 @@ public interface RoleDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Responsible For</em>' reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getRoleDescriptor_ResponsibleFor()
-	 * @model type="org.eclipse.epf.uma.WorkProductDescriptor" ordered="false"
+	 * @model ordered="false"
 	 * @generated
 	 */
-	List getResponsibleFor();
+	List<WorkProductDescriptor> getResponsibleFor();
 
 } // RoleDescriptor
