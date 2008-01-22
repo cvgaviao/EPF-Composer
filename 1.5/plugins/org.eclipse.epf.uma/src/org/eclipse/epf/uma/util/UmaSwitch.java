@@ -2272,74 +2272,42 @@ public class UmaSwitch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case UmaPackage.PROCESS_COMPONENT_INTERFACE: {
-			ProcessComponentInterface processComponentInterface = (ProcessComponentInterface) theEObject;
-			T result = caseProcessComponentInterface(processComponentInterface);
+		case UmaPackage.DIAGRAM: {
+			Diagram diagram = (Diagram) theEObject;
+			T result = caseDiagram(diagram);
 			if (result == null)
-				result = caseBreakdownElement(processComponentInterface);
+				result = caseGraphNode(diagram);
 			if (result == null)
-				result = caseProcessElement(processComponentInterface);
+				result = caseGraphElement(diagram);
 			if (result == null)
-				result = caseDescribableElement(processComponentInterface);
+				result = caseDiagramElement(diagram);
 			if (result == null)
-				result = caseMethodElement(processComponentInterface);
+				result = caseMethodElement(diagram);
 			if (result == null)
-				result = caseClassifier(processComponentInterface);
+				result = casePackageableElement(diagram);
 			if (result == null)
-				result = casePackageableElement(processComponentInterface);
+				result = caseNamedElement(diagram);
 			if (result == null)
-				result = caseType(processComponentInterface);
-			if (result == null)
-				result = caseNamedElement(processComponentInterface);
-			if (result == null)
-				result = caseElement(processComponentInterface);
+				result = caseElement(diagram);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case UmaPackage.PROCESS_FAMILY: {
-			ProcessFamily processFamily = (ProcessFamily) theEObject;
-			T result = caseProcessFamily(processFamily);
+		case UmaPackage.GRAPH_NODE: {
+			GraphNode graphNode = (GraphNode) theEObject;
+			T result = caseGraphNode(graphNode);
 			if (result == null)
-				result = caseMethodConfiguration(processFamily);
+				result = caseGraphElement(graphNode);
 			if (result == null)
-				result = caseMethodUnit(processFamily);
+				result = caseDiagramElement(graphNode);
 			if (result == null)
-				result = caseMethodElement(processFamily);
+				result = caseMethodElement(graphNode);
 			if (result == null)
-				result = casePackageableElement(processFamily);
+				result = casePackageableElement(graphNode);
 			if (result == null)
-				result = caseNamedElement(processFamily);
+				result = caseNamedElement(graphNode);
 			if (result == null)
-				result = caseElement(processFamily);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case UmaPackage.METHOD_LIBRARY: {
-			MethodLibrary methodLibrary = (MethodLibrary) theEObject;
-			T result = caseMethodLibrary(methodLibrary);
-			if (result == null)
-				result = caseMethodUnit(methodLibrary);
-			if (result == null)
-				result = casePackage(methodLibrary);
-			if (result == null)
-				result = caseMethodElement(methodLibrary);
-			if (result == null)
-				result = caseNamespace(methodLibrary);
-			if (result == null)
-				result = casePackageableElement(methodLibrary);
-			if (result == null)
-				result = caseNamedElement(methodLibrary);
-			if (result == null)
-				result = caseElement(methodLibrary);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case UmaPackage.POINT: {
-			Point point = (Point) theEObject;
-			T result = casePoint(point);
+				result = caseElement(graphNode);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -2372,6 +2340,47 @@ public class UmaSwitch<T> {
 				result = caseNamedElement(diagramElement);
 			if (result == null)
 				result = caseElement(diagramElement);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case UmaPackage.REFERENCE: {
+			Reference reference = (Reference) theEObject;
+			T result = caseReference(reference);
+			if (result == null)
+				result = caseDiagramElement(reference);
+			if (result == null)
+				result = caseMethodElement(reference);
+			if (result == null)
+				result = casePackageableElement(reference);
+			if (result == null)
+				result = caseNamedElement(reference);
+			if (result == null)
+				result = caseElement(reference);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case UmaPackage.PROPERTY: {
+			Property property = (Property) theEObject;
+			T result = caseProperty(property);
+			if (result == null)
+				result = caseDiagramElement(property);
+			if (result == null)
+				result = caseMethodElement(property);
+			if (result == null)
+				result = casePackageableElement(property);
+			if (result == null)
+				result = caseNamedElement(property);
+			if (result == null)
+				result = caseElement(property);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case UmaPackage.POINT: {
+			Point point = (Point) theEObject;
+			T result = casePoint(point);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -2412,6 +2421,25 @@ public class UmaSwitch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case UmaPackage.GRAPH_EDGE: {
+			GraphEdge graphEdge = (GraphEdge) theEObject;
+			T result = caseGraphEdge(graphEdge);
+			if (result == null)
+				result = caseGraphElement(graphEdge);
+			if (result == null)
+				result = caseDiagramElement(graphEdge);
+			if (result == null)
+				result = caseMethodElement(graphEdge);
+			if (result == null)
+				result = casePackageableElement(graphEdge);
+			if (result == null)
+				result = caseNamedElement(graphEdge);
+			if (result == null)
+				result = caseElement(graphEdge);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		case UmaPackage.SEMANTIC_MODEL_BRIDGE: {
 			SemanticModelBridge semanticModelBridge = (SemanticModelBridge) theEObject;
 			T result = caseSemanticModelBridge(semanticModelBridge);
@@ -2436,95 +2464,27 @@ public class UmaSwitch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case UmaPackage.REFERENCE: {
-			Reference reference = (Reference) theEObject;
-			T result = caseReference(reference);
+		case UmaPackage.PROCESS_COMPONENT_INTERFACE: {
+			ProcessComponentInterface processComponentInterface = (ProcessComponentInterface) theEObject;
+			T result = caseProcessComponentInterface(processComponentInterface);
 			if (result == null)
-				result = caseDiagramElement(reference);
+				result = caseBreakdownElement(processComponentInterface);
 			if (result == null)
-				result = caseMethodElement(reference);
+				result = caseProcessElement(processComponentInterface);
 			if (result == null)
-				result = casePackageableElement(reference);
+				result = caseDescribableElement(processComponentInterface);
 			if (result == null)
-				result = caseNamedElement(reference);
+				result = caseMethodElement(processComponentInterface);
 			if (result == null)
-				result = caseElement(reference);
+				result = caseClassifier(processComponentInterface);
 			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case UmaPackage.PROPERTY: {
-			Property property = (Property) theEObject;
-			T result = caseProperty(property);
+				result = casePackageableElement(processComponentInterface);
 			if (result == null)
-				result = caseDiagramElement(property);
+				result = caseType(processComponentInterface);
 			if (result == null)
-				result = caseMethodElement(property);
+				result = caseNamedElement(processComponentInterface);
 			if (result == null)
-				result = casePackageableElement(property);
-			if (result == null)
-				result = caseNamedElement(property);
-			if (result == null)
-				result = caseElement(property);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case UmaPackage.GRAPH_EDGE: {
-			GraphEdge graphEdge = (GraphEdge) theEObject;
-			T result = caseGraphEdge(graphEdge);
-			if (result == null)
-				result = caseGraphElement(graphEdge);
-			if (result == null)
-				result = caseDiagramElement(graphEdge);
-			if (result == null)
-				result = caseMethodElement(graphEdge);
-			if (result == null)
-				result = casePackageableElement(graphEdge);
-			if (result == null)
-				result = caseNamedElement(graphEdge);
-			if (result == null)
-				result = caseElement(graphEdge);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case UmaPackage.DIAGRAM: {
-			Diagram diagram = (Diagram) theEObject;
-			T result = caseDiagram(diagram);
-			if (result == null)
-				result = caseGraphNode(diagram);
-			if (result == null)
-				result = caseGraphElement(diagram);
-			if (result == null)
-				result = caseDiagramElement(diagram);
-			if (result == null)
-				result = caseMethodElement(diagram);
-			if (result == null)
-				result = casePackageableElement(diagram);
-			if (result == null)
-				result = caseNamedElement(diagram);
-			if (result == null)
-				result = caseElement(diagram);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case UmaPackage.GRAPH_NODE: {
-			GraphNode graphNode = (GraphNode) theEObject;
-			T result = caseGraphNode(graphNode);
-			if (result == null)
-				result = caseGraphElement(graphNode);
-			if (result == null)
-				result = caseDiagramElement(graphNode);
-			if (result == null)
-				result = caseMethodElement(graphNode);
-			if (result == null)
-				result = casePackageableElement(graphNode);
-			if (result == null)
-				result = caseNamedElement(graphNode);
-			if (result == null)
-				result = caseElement(graphNode);
+				result = caseElement(processComponentInterface);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -2698,6 +2658,46 @@ public class UmaSwitch<T> {
 				result = caseNamedElement(ellipse);
 			if (result == null)
 				result = caseElement(ellipse);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case UmaPackage.PROCESS_FAMILY: {
+			ProcessFamily processFamily = (ProcessFamily) theEObject;
+			T result = caseProcessFamily(processFamily);
+			if (result == null)
+				result = caseMethodConfiguration(processFamily);
+			if (result == null)
+				result = caseMethodUnit(processFamily);
+			if (result == null)
+				result = caseMethodElement(processFamily);
+			if (result == null)
+				result = casePackageableElement(processFamily);
+			if (result == null)
+				result = caseNamedElement(processFamily);
+			if (result == null)
+				result = caseElement(processFamily);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case UmaPackage.METHOD_LIBRARY: {
+			MethodLibrary methodLibrary = (MethodLibrary) theEObject;
+			T result = caseMethodLibrary(methodLibrary);
+			if (result == null)
+				result = caseMethodUnit(methodLibrary);
+			if (result == null)
+				result = casePackage(methodLibrary);
+			if (result == null)
+				result = caseMethodElement(methodLibrary);
+			if (result == null)
+				result = caseNamespace(methodLibrary);
+			if (result == null)
+				result = casePackageableElement(methodLibrary);
+			if (result == null)
+				result = caseNamedElement(methodLibrary);
+			if (result == null)
+				result = caseElement(methodLibrary);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;

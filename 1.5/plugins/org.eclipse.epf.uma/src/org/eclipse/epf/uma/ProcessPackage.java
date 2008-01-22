@@ -63,7 +63,7 @@ public interface ProcessPackage extends MethodPackage {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Diagrams</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getProcessPackage_Diagrams()
-	 * @model containment="true" resolveProxies="true"
+	 * @model containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
 	List<Diagram> getDiagrams();

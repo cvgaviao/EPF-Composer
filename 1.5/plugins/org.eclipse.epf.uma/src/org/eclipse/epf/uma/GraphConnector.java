@@ -20,8 +20,8 @@ import java.util.List;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.GraphConnector#getGraphElement <em>Graph Element</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.GraphConnector#getGraphEdge <em>Graph Edge</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.GraphConnector#getGraphElement <em>Graph Element</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,7 +43,7 @@ public interface GraphConnector extends GraphElement {
 	 * @see #setGraphElement(GraphElement)
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphConnector_GraphElement()
 	 * @see org.eclipse.epf.uma.GraphElement#getAnchorage
-	 * @model opposite="anchorage" required="true"
+	 * @model opposite="anchorage" required="true" transient="false" ordered="false"
 	 * @generated
 	 */
 	GraphElement getGraphElement();

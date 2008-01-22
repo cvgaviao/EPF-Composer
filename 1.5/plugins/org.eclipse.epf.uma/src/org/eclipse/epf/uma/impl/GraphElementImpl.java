@@ -38,8 +38,8 @@ import org.eclipse.epf.uma.UmaPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.impl.GraphElementImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.GraphElementImpl#getContained <em>Contained</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.GraphElementImpl#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.GraphElementImpl#getLink <em>Link</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.GraphElementImpl#getAnchorage <em>Anchorage</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.GraphElementImpl#getSemanticModel <em>Semantic Model</em>}</li>
@@ -58,16 +58,6 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The cached value of the '{@link #getPosition() <em>Position</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPosition()
-	 * @generated
-	 * @ordered
-	 */
-	protected Point position;
-
-	/**
 	 * The cached value of the '{@link #getContained() <em>Contained</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -76,6 +66,16 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	 * @ordered
 	 */
 	protected EList<DiagramElement> contained;
+
+	/**
+	 * The cached value of the '{@link #getPosition() <em>Position</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPosition()
+	 * @generated
+	 * @ordered
+	 */
+	protected Point position;
 
 	/**
 	 * The cached value of the '{@link #getLink() <em>Link</em>}' containment reference list.
@@ -136,17 +136,6 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 			InternalEObject oldPosition = (InternalEObject) position;
 			position = (Point) eResolveProxy(oldPosition);
 			if (position != oldPosition) {
-				InternalEObject newPosition = (InternalEObject) position;
-				NotificationChain msgs = oldPosition.eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE
-								- UmaPackage.GRAPH_ELEMENT__POSITION, null,
-						null);
-				if (newPosition.eInternalContainer() == null) {
-					msgs = newPosition.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-							- UmaPackage.GRAPH_ELEMENT__POSITION, null, msgs);
-				}
-				if (msgs != null)
-					msgs.dispatch();
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 							UmaPackage.GRAPH_ELEMENT__POSITION, oldPosition,
@@ -170,47 +159,12 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetPosition(Point newPosition,
-			NotificationChain msgs) {
+	public void setPosition(Point newPosition) {
 		Point oldPosition = position;
 		position = newPosition;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this,
-					Notification.SET, UmaPackage.GRAPH_ELEMENT__POSITION,
-					oldPosition, newPosition);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPosition(Point newPosition) {
-		if (newPosition != position) {
-			NotificationChain msgs = null;
-			if (position != null)
-				msgs = ((InternalEObject) position).eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE
-								- UmaPackage.GRAPH_ELEMENT__POSITION, null,
-						msgs);
-			if (newPosition != null)
-				msgs = ((InternalEObject) newPosition).eInverseAdd(this,
-						EOPPOSITE_FEATURE_BASE
-								- UmaPackage.GRAPH_ELEMENT__POSITION, null,
-						msgs);
-			msgs = basicSetPosition(newPosition, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.GRAPH_ELEMENT__POSITION, newPosition,
-					newPosition));
+					UmaPackage.GRAPH_ELEMENT__POSITION, oldPosition, position));
 	}
 
 	/**
@@ -381,8 +335,6 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case UmaPackage.GRAPH_ELEMENT__POSITION:
-			return basicSetPosition(null, msgs);
 		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
 			return ((InternalEList<?>) getContained()).basicRemove(otherEnd,
 					msgs);
@@ -405,12 +357,12 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
+			return getContained();
 		case UmaPackage.GRAPH_ELEMENT__POSITION:
 			if (resolve)
 				return getPosition();
 			return basicGetPosition();
-		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
-			return getContained();
 		case UmaPackage.GRAPH_ELEMENT__LINK:
 			return getLink();
 		case UmaPackage.GRAPH_ELEMENT__ANCHORAGE:
@@ -432,13 +384,13 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case UmaPackage.GRAPH_ELEMENT__POSITION:
-			setPosition((Point) newValue);
-			return;
 		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
 			getContained().clear();
 			getContained().addAll(
 					(Collection<? extends DiagramElement>) newValue);
+			return;
+		case UmaPackage.GRAPH_ELEMENT__POSITION:
+			setPosition((Point) newValue);
 			return;
 		case UmaPackage.GRAPH_ELEMENT__LINK:
 			getLink().clear();
@@ -464,11 +416,11 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case UmaPackage.GRAPH_ELEMENT__POSITION:
-			setPosition((Point) null);
-			return;
 		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
 			getContained().clear();
+			return;
+		case UmaPackage.GRAPH_ELEMENT__POSITION:
+			setPosition((Point) null);
 			return;
 		case UmaPackage.GRAPH_ELEMENT__LINK:
 			getLink().clear();
@@ -491,10 +443,10 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case UmaPackage.GRAPH_ELEMENT__POSITION:
-			return position != null;
 		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
 			return contained != null && !contained.isEmpty();
+		case UmaPackage.GRAPH_ELEMENT__POSITION:
+			return position != null;
 		case UmaPackage.GRAPH_ELEMENT__LINK:
 			return link != null && !link.isEmpty();
 		case UmaPackage.GRAPH_ELEMENT__ANCHORAGE:

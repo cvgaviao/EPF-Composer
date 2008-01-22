@@ -1292,15 +1292,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getKind_IsPrimaryKind() {
-		return (EAttribute) kindEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getContentElement() {
 		return contentElementEClass;
 	}
@@ -2332,6 +2323,46 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	public EReference getBreakdownElement_SupportingMaterials() {
 		return (EReference) breakdownElementEClass.getEStructuralFeatures()
 				.get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_Templates() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(14);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_Reports() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(15);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_Estimationconsiderations() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(16);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBreakdownElement_Toolmentor() {
+		return (EReference) breakdownElementEClass.getEStructuralFeatures()
+				.get(17);
 	}
 
 	/**
@@ -3727,7 +3758,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getGraphElement_Position() {
-		return (EReference) graphElementEClass.getEStructuralFeatures().get(0);
+		return (EReference) graphElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -3736,7 +3767,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getGraphElement_Contained() {
-		return (EReference) graphElementEClass.getEStructuralFeatures().get(1);
+		return (EReference) graphElementEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3848,7 +3879,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getDiagramLink_GraphElement() {
-		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(2);
+		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -3857,7 +3888,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getDiagramLink_Diagram() {
-		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(3);
+		return (EReference) diagramLinkEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -3876,7 +3907,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EReference getGraphConnector_GraphElement() {
 		return (EReference) graphConnectorEClass.getEStructuralFeatures()
-				.get(0);
+				.get(1);
 	}
 
 	/**
@@ -3886,7 +3917,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EReference getGraphConnector_GraphEdge() {
 		return (EReference) graphConnectorEClass.getEStructuralFeatures()
-				.get(1);
+				.get(0);
 	}
 
 	/**
@@ -3915,7 +3946,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EReference getSemanticModelBridge_GraphElement() {
 		return (EReference) semanticModelBridgeEClass.getEStructuralFeatures()
-				.get(1);
+				.get(2);
 	}
 
 	/**
@@ -3925,7 +3956,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 */
 	public EReference getSemanticModelBridge_Diagram() {
 		return (EReference) semanticModelBridgeEClass.getEStructuralFeatures()
-				.get(2);
+				.get(1);
 	}
 
 	/**
@@ -4024,7 +4055,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getGraphEdge_Anchor() {
-		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(0);
+		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -4033,7 +4064,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getGraphEdge_Waypoints() {
-		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(1);
+		return (EReference) graphEdgeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -4051,7 +4082,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EAttribute getDiagram_Zoom() {
-		return (EAttribute) diagramEClass.getEStructuralFeatures().get(0);
+		return (EAttribute) diagramEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -4060,7 +4091,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getDiagram_Viewpoint() {
-		return (EReference) diagramEClass.getEStructuralFeatures().get(1);
+		return (EReference) diagramEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -4069,7 +4100,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getDiagram_DiagramLink() {
-		return (EReference) diagramEClass.getEStructuralFeatures().get(2);
+		return (EReference) diagramEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -4078,7 +4109,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EReference getDiagram_Namespace() {
-		return (EReference) diagramEClass.getEStructuralFeatures().get(3);
+		return (EReference) diagramEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -4261,15 +4292,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EAttribute getEllipse_RadiusX() {
-		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getEllipse_RadiusY() {
 		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -4278,7 +4300,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEllipse_Rotation() {
+	public EAttribute getEllipse_RadiusY() {
 		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -4287,7 +4309,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEllipse_StartAngle() {
+	public EAttribute getEllipse_Rotation() {
 		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -4296,7 +4318,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getEllipse_EndAngle() {
+	public EAttribute getEllipse_StartAngle() {
 		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -4305,8 +4327,17 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getEllipse_EndAngle() {
+		return (EAttribute) ellipseEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getEllipse_Center() {
-		return (EReference) ellipseEClass.getEStructuralFeatures().get(5);
+		return (EReference) ellipseEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -4464,7 +4495,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 
 		kindEClass = createEClass(KIND);
 		createEAttribute(kindEClass, KIND__APPLICABLE_META_CLASS);
-		createEAttribute(kindEClass, KIND__IS_PRIMARY_KIND);
 
 		contentElementEClass = createEClass(CONTENT_ELEMENT);
 		createEReference(contentElementEClass,
@@ -4690,6 +4720,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				BREAKDOWN_ELEMENT__REUSABLE_ASSETS);
 		createEReference(breakdownElementEClass,
 				BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS);
+		createEReference(breakdownElementEClass, BREAKDOWN_ELEMENT__TEMPLATES);
+		createEReference(breakdownElementEClass, BREAKDOWN_ELEMENT__REPORTS);
+		createEReference(breakdownElementEClass,
+				BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS);
+		createEReference(breakdownElementEClass, BREAKDOWN_ELEMENT__TOOLMENTOR);
 
 		processElementEClass = createEClass(PROCESS_ELEMENT);
 
@@ -4866,28 +4901,18 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				PROCESS_PACKAGE__PROCESS_ELEMENTS);
 		createEReference(processPackageEClass, PROCESS_PACKAGE__DIAGRAMS);
 
-		processComponentInterfaceEClass = createEClass(PROCESS_COMPONENT_INTERFACE);
-		createEReference(processComponentInterfaceEClass,
-				PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS);
-		createEReference(processComponentInterfaceEClass,
-				PROCESS_COMPONENT_INTERFACE__INTERFACE_IO);
+		diagramEClass = createEClass(DIAGRAM);
+		createEReference(diagramEClass, DIAGRAM__DIAGRAM_LINK);
+		createEReference(diagramEClass, DIAGRAM__NAMESPACE);
+		createEAttribute(diagramEClass, DIAGRAM__ZOOM);
+		createEReference(diagramEClass, DIAGRAM__VIEWPOINT);
 
-		processFamilyEClass = createEClass(PROCESS_FAMILY);
-		createEReference(processFamilyEClass,
-				PROCESS_FAMILY__DELIVERY_PROCESSES);
-
-		methodLibraryEClass = createEClass(METHOD_LIBRARY);
-		createEReference(methodLibraryEClass, METHOD_LIBRARY__METHOD_PLUGINS);
-		createEReference(methodLibraryEClass,
-				METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS);
-
-		pointEClass = createEClass(POINT);
-		createEAttribute(pointEClass, POINT__X);
-		createEAttribute(pointEClass, POINT__Y);
+		graphNodeEClass = createEClass(GRAPH_NODE);
+		createEReference(graphNodeEClass, GRAPH_NODE__SIZE);
 
 		graphElementEClass = createEClass(GRAPH_ELEMENT);
-		createEReference(graphElementEClass, GRAPH_ELEMENT__POSITION);
 		createEReference(graphElementEClass, GRAPH_ELEMENT__CONTAINED);
+		createEReference(graphElementEClass, GRAPH_ELEMENT__POSITION);
 		createEReference(graphElementEClass, GRAPH_ELEMENT__LINK);
 		createEReference(graphElementEClass, GRAPH_ELEMENT__ANCHORAGE);
 		createEReference(graphElementEClass, GRAPH_ELEMENT__SEMANTIC_MODEL);
@@ -4898,28 +4923,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(diagramElementEClass, DIAGRAM_ELEMENT__REFERENCE);
 		createEReference(diagramElementEClass, DIAGRAM_ELEMENT__PROPERTY);
 
-		diagramLinkEClass = createEClass(DIAGRAM_LINK);
-		createEAttribute(diagramLinkEClass, DIAGRAM_LINK__ZOOM);
-		createEReference(diagramLinkEClass, DIAGRAM_LINK__VIEWPORT);
-		createEReference(diagramLinkEClass, DIAGRAM_LINK__GRAPH_ELEMENT);
-		createEReference(diagramLinkEClass, DIAGRAM_LINK__DIAGRAM);
-
-		graphConnectorEClass = createEClass(GRAPH_CONNECTOR);
-		createEReference(graphConnectorEClass, GRAPH_CONNECTOR__GRAPH_ELEMENT);
-		createEReference(graphConnectorEClass, GRAPH_CONNECTOR__GRAPH_EDGE);
-
-		semanticModelBridgeEClass = createEClass(SEMANTIC_MODEL_BRIDGE);
-		createEAttribute(semanticModelBridgeEClass,
-				SEMANTIC_MODEL_BRIDGE__PRESENTATION);
-		createEReference(semanticModelBridgeEClass,
-				SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT);
-		createEReference(semanticModelBridgeEClass,
-				SEMANTIC_MODEL_BRIDGE__DIAGRAM);
-
-		dimensionEClass = createEClass(DIMENSION);
-		createEAttribute(dimensionEClass, DIMENSION__WIDTH);
-		createEAttribute(dimensionEClass, DIMENSION__HEIGHT);
-
 		referenceEClass = createEClass(REFERENCE);
 		createEAttribute(referenceEClass,
 				REFERENCE__IS_INDIVIDUAL_REPRESENTATION);
@@ -4929,18 +4932,41 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEAttribute(propertyEClass, PROPERTY__KEY);
 		createEAttribute(propertyEClass, PROPERTY__VALUE);
 
+		pointEClass = createEClass(POINT);
+		createEAttribute(pointEClass, POINT__X);
+		createEAttribute(pointEClass, POINT__Y);
+
+		diagramLinkEClass = createEClass(DIAGRAM_LINK);
+		createEAttribute(diagramLinkEClass, DIAGRAM_LINK__ZOOM);
+		createEReference(diagramLinkEClass, DIAGRAM_LINK__VIEWPORT);
+		createEReference(diagramLinkEClass, DIAGRAM_LINK__DIAGRAM);
+		createEReference(diagramLinkEClass, DIAGRAM_LINK__GRAPH_ELEMENT);
+
+		graphConnectorEClass = createEClass(GRAPH_CONNECTOR);
+		createEReference(graphConnectorEClass, GRAPH_CONNECTOR__GRAPH_EDGE);
+		createEReference(graphConnectorEClass, GRAPH_CONNECTOR__GRAPH_ELEMENT);
+
 		graphEdgeEClass = createEClass(GRAPH_EDGE);
-		createEReference(graphEdgeEClass, GRAPH_EDGE__ANCHOR);
 		createEReference(graphEdgeEClass, GRAPH_EDGE__WAYPOINTS);
+		createEReference(graphEdgeEClass, GRAPH_EDGE__ANCHOR);
 
-		diagramEClass = createEClass(DIAGRAM);
-		createEAttribute(diagramEClass, DIAGRAM__ZOOM);
-		createEReference(diagramEClass, DIAGRAM__VIEWPOINT);
-		createEReference(diagramEClass, DIAGRAM__DIAGRAM_LINK);
-		createEReference(diagramEClass, DIAGRAM__NAMESPACE);
+		semanticModelBridgeEClass = createEClass(SEMANTIC_MODEL_BRIDGE);
+		createEAttribute(semanticModelBridgeEClass,
+				SEMANTIC_MODEL_BRIDGE__PRESENTATION);
+		createEReference(semanticModelBridgeEClass,
+				SEMANTIC_MODEL_BRIDGE__DIAGRAM);
+		createEReference(semanticModelBridgeEClass,
+				SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT);
 
-		graphNodeEClass = createEClass(GRAPH_NODE);
-		createEReference(graphNodeEClass, GRAPH_NODE__SIZE);
+		dimensionEClass = createEClass(DIMENSION);
+		createEAttribute(dimensionEClass, DIMENSION__WIDTH);
+		createEAttribute(dimensionEClass, DIMENSION__HEIGHT);
+
+		processComponentInterfaceEClass = createEClass(PROCESS_COMPONENT_INTERFACE);
+		createEReference(processComponentInterfaceEClass,
+				PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS);
+		createEReference(processComponentInterfaceEClass,
+				PROCESS_COMPONENT_INTERFACE__INTERFACE_IO);
 
 		simpleSemanticModelElementEClass = createEClass(SIMPLE_SEMANTIC_MODEL_ELEMENT);
 		createEAttribute(simpleSemanticModelElementEClass,
@@ -4970,12 +4996,21 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(polylineEClass, POLYLINE__WAYPOINTS);
 
 		ellipseEClass = createEClass(ELLIPSE);
+		createEReference(ellipseEClass, ELLIPSE__CENTER);
 		createEAttribute(ellipseEClass, ELLIPSE__RADIUS_X);
 		createEAttribute(ellipseEClass, ELLIPSE__RADIUS_Y);
 		createEAttribute(ellipseEClass, ELLIPSE__ROTATION);
 		createEAttribute(ellipseEClass, ELLIPSE__START_ANGLE);
 		createEAttribute(ellipseEClass, ELLIPSE__END_ANGLE);
-		createEReference(ellipseEClass, ELLIPSE__CENTER);
+
+		processFamilyEClass = createEClass(PROCESS_FAMILY);
+		createEReference(processFamilyEClass,
+				PROCESS_FAMILY__DELIVERY_PROCESSES);
+
+		methodLibraryEClass = createEClass(METHOD_LIBRARY);
+		createEReference(methodLibraryEClass, METHOD_LIBRARY__METHOD_PLUGINS);
+		createEReference(methodLibraryEClass,
+				METHOD_LIBRARY__PREDEFINED_CONFIGURATIONS);
 
 		// Create enums
 		variabilityTypeEEnum = createEEnum(VARIABILITY_TYPE);
@@ -5140,22 +5175,19 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		processComponentEClass.getESuperTypes().add(this.getProcessPackage());
 		processComponentEClass.getESuperTypes().add(this.getMethodUnit());
 		processPackageEClass.getESuperTypes().add(this.getMethodPackage());
-		processComponentInterfaceEClass.getESuperTypes().add(
-				this.getBreakdownElement());
-		processFamilyEClass.getESuperTypes().add(this.getMethodConfiguration());
-		methodLibraryEClass.getESuperTypes().add(this.getMethodUnit());
-		methodLibraryEClass.getESuperTypes().add(this.getPackage());
-		graphElementEClass.getESuperTypes().add(this.getDiagramElement());
-		diagramElementEClass.getESuperTypes().add(this.getMethodElement());
-		diagramLinkEClass.getESuperTypes().add(this.getDiagramElement());
-		graphConnectorEClass.getESuperTypes().add(this.getGraphElement());
-		semanticModelBridgeEClass.getESuperTypes()
-				.add(this.getDiagramElement());
-		referenceEClass.getESuperTypes().add(this.getDiagramElement());
-		propertyEClass.getESuperTypes().add(this.getDiagramElement());
-		graphEdgeEClass.getESuperTypes().add(this.getGraphElement());
 		diagramEClass.getESuperTypes().add(this.getGraphNode());
 		graphNodeEClass.getESuperTypes().add(this.getGraphElement());
+		graphElementEClass.getESuperTypes().add(this.getDiagramElement());
+		diagramElementEClass.getESuperTypes().add(this.getMethodElement());
+		referenceEClass.getESuperTypes().add(this.getDiagramElement());
+		propertyEClass.getESuperTypes().add(this.getDiagramElement());
+		diagramLinkEClass.getESuperTypes().add(this.getDiagramElement());
+		graphConnectorEClass.getESuperTypes().add(this.getGraphElement());
+		graphEdgeEClass.getESuperTypes().add(this.getGraphElement());
+		semanticModelBridgeEClass.getESuperTypes()
+				.add(this.getDiagramElement());
+		processComponentInterfaceEClass.getESuperTypes().add(
+				this.getBreakdownElement());
 		simpleSemanticModelElementEClass.getESuperTypes().add(
 				this.getSemanticModelBridge());
 		umaSemanticModelBridgeEClass.getESuperTypes().add(
@@ -5168,6 +5200,9 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		graphicPrimitiveEClass.getESuperTypes().add(this.getLeafElement());
 		polylineEClass.getESuperTypes().add(this.getGraphicPrimitive());
 		ellipseEClass.getESuperTypes().add(this.getGraphicPrimitive());
+		processFamilyEClass.getESuperTypes().add(this.getMethodConfiguration());
+		methodLibraryEClass.getESuperTypes().add(this.getMethodUnit());
+		methodLibraryEClass.getESuperTypes().add(this.getPackage());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(
@@ -5275,12 +5310,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"Kind", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 				getKind_ApplicableMetaClass(),
-				this.getString(),
-				"applicableMetaClass", "", 1, 1, Kind.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getKind_IsPrimaryKind(),
-				this.getBoolean(),
-				"isPrimaryKind", "false", 1, 1, Kind.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				this.getSet(),
+				"applicableMetaClass", null, 1, 1, Kind.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				contentElementEClass,
@@ -5931,6 +5962,26 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				this.getSupportingMaterial(),
 				null,
 				"supportingMaterials", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Templates(),
+				this.getTemplate(),
+				null,
+				"templates", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Reports(),
+				this.getReport(),
+				null,
+				"reports", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Estimationconsiderations(),
+				this.getEstimationConsiderations(),
+				null,
+				"estimationconsiderations", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getBreakdownElement_Toolmentor(),
+				this.getToolMentor(),
+				null,
+				"toolmentor", null, 0, -1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				processElementEClass,
@@ -6443,7 +6494,221 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				getProcessPackage_Diagrams(),
 				this.getDiagram(),
 				null,
-				"diagrams", null, 0, -1, ProcessPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"diagrams", null, 0, -1, ProcessPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				diagramEClass,
+				Diagram.class,
+				"Diagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getDiagram_DiagramLink(),
+				this.getDiagramLink(),
+				this.getDiagramLink_Diagram(),
+				"diagramLink", null, 0, -1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiagram_Namespace(),
+				this.getSemanticModelBridge(),
+				this.getSemanticModelBridge_Diagram(),
+				"namespace", null, 1, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getDiagram_Zoom(),
+				this.getDouble(),
+				"zoom", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiagram_Viewpoint(),
+				this.getPoint(),
+				null,
+				"viewpoint", null, 1, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				graphNodeEClass,
+				GraphNode.class,
+				"GraphNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getGraphNode_Size(),
+				this.getDimension(),
+				null,
+				"size", null, 1, 1, GraphNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				graphElementEClass,
+				GraphElement.class,
+				"GraphElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getGraphElement_Contained(),
+				this.getDiagramElement(),
+				this.getDiagramElement_Container(),
+				"contained", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getGraphElement_Position(),
+				this.getPoint(),
+				null,
+				"position", null, 1, 1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getGraphElement_Link(),
+				this.getDiagramLink(),
+				this.getDiagramLink_GraphElement(),
+				"link", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getGraphElement_Anchorage(),
+				this.getGraphConnector(),
+				this.getGraphConnector_GraphElement(),
+				"anchorage", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getGraphElement_SemanticModel(),
+				this.getSemanticModelBridge(),
+				this.getSemanticModelBridge_GraphElement(),
+				"semanticModel", null, 1, 1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				diagramElementEClass,
+				DiagramElement.class,
+				"DiagramElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getDiagramElement_IsVisible(),
+				this.getBoolean(),
+				"isVisible", "true", 1, 1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getDiagramElement_Container(),
+				this.getGraphElement(),
+				this.getGraphElement_Contained(),
+				"container", null, 0, 1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiagramElement_Reference(),
+				this.getReference(),
+				this.getReference_Referenced(),
+				"reference", null, 0, -1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiagramElement_Property(),
+				this.getProperty(),
+				null,
+				"property", null, 0, -1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				referenceEClass,
+				Reference.class,
+				"Reference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getReference_IsIndividualRepresentation(),
+				this.getBoolean(),
+				"isIndividualRepresentation", "false", 1, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getReference_Referenced(),
+				this.getDiagramElement(),
+				this.getDiagramElement_Reference(),
+				"referenced", null, 1, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				propertyEClass,
+				Property.class,
+				"Property", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getProperty_Key(),
+				this.getString(),
+				"key", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getProperty_Value(),
+				this.getString(),
+				"value", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				pointEClass,
+				Point.class,
+				"Point", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getPoint_X(),
+				this.getDouble(),
+				"x", null, 1, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getPoint_Y(),
+				this.getDouble(),
+				"y", null, 1, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				diagramLinkEClass,
+				DiagramLink.class,
+				"DiagramLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getDiagramLink_Zoom(),
+				this.getDouble(),
+				"zoom", null, 1, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiagramLink_Viewport(),
+				this.getPoint(),
+				null,
+				"viewport", null, 1, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiagramLink_Diagram(),
+				this.getDiagram(),
+				this.getDiagram_DiagramLink(),
+				"diagram", null, 1, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDiagramLink_GraphElement(),
+				this.getGraphElement(),
+				this.getGraphElement_Link(),
+				"graphElement", null, 1, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				graphConnectorEClass,
+				GraphConnector.class,
+				"GraphConnector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getGraphConnector_GraphEdge(),
+				this.getGraphEdge(),
+				this.getGraphEdge_Anchor(),
+				"graphEdge", null, 0, -1, GraphConnector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getGraphConnector_GraphElement(),
+				this.getGraphElement(),
+				this.getGraphElement_Anchorage(),
+				"graphElement", null, 1, 1, GraphConnector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				graphEdgeEClass,
+				GraphEdge.class,
+				"GraphEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getGraphEdge_Waypoints(),
+				this.getPoint(),
+				null,
+				"waypoints", null, 2, -1, GraphEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getGraphEdge_Anchor(),
+				this.getGraphConnector(),
+				this.getGraphConnector_GraphEdge(),
+				"anchor", null, 2, 2, GraphEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				semanticModelBridgeEClass,
+				SemanticModelBridge.class,
+				"SemanticModelBridge", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getSemanticModelBridge_Presentation(),
+				this.getString(),
+				"presentation", "", 0, 1, SemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getSemanticModelBridge_Diagram(),
+				this.getDiagram(),
+				this.getDiagram_Namespace(),
+				"diagram", null, 0, 1, SemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getSemanticModelBridge_GraphElement(),
+				this.getGraphElement(),
+				this.getGraphElement_SemanticModel(),
+				"graphElement", null, 0, 1, SemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				dimensionEClass,
+				Dimension.class,
+				"Dimension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getDimension_Width(),
+				this.getDouble(),
+				"width", null, 1, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getDimension_Height(),
+				this.getDouble(),
+				"height", null, 1, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				processComponentInterfaceEClass,
@@ -6459,6 +6724,111 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				this.getWorkProductDescriptor(),
 				null,
 				"interfaceIO", null, 0, -1, ProcessComponentInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				simpleSemanticModelElementEClass,
+				SimpleSemanticModelElement.class,
+				"SimpleSemanticModelElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getSimpleSemanticModelElement_TypeInfo(),
+				this.getString(),
+				"typeInfo", "", 0, 1, SimpleSemanticModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				umaSemanticModelBridgeEClass,
+				UMASemanticModelBridge.class,
+				"UMASemanticModelBridge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getUMASemanticModelBridge_Element(),
+				this.getMethodElement(),
+				null,
+				"element", null, 1, 1, UMASemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				coreSemanticModelBridgeEClass,
+				CoreSemanticModelBridge.class,
+				"CoreSemanticModelBridge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getCoreSemanticModelBridge_Element(),
+				this.getElement(),
+				null,
+				"element", null, 1, 1, CoreSemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				leafElementEClass,
+				LeafElement.class,
+				"LeafElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				textElementEClass,
+				TextElement.class,
+				"TextElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getTextElement_Text(),
+				this.getString(),
+				"text", "", 0, 1, TextElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				imageEClass,
+				Image.class,
+				"Image", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getImage_Uri(),
+				this.getUri(),
+				"uri", "", 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getImage_MimeType(),
+				this.getString(),
+				"mimeType", "", 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		initEClass(
+				graphicPrimitiveEClass,
+				GraphicPrimitive.class,
+				"GraphicPrimitive", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				polylineEClass,
+				Polyline.class,
+				"Polyline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getPolyline_Closed(),
+				this.getBoolean(),
+				"closed", "true", 1, 1, Polyline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getPolyline_Waypoints(),
+				this.getPoint(),
+				null,
+				"waypoints", null, 2, -1, Polyline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(
+				ellipseEClass,
+				Ellipse.class,
+				"Ellipse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+				getEllipse_Center(),
+				this.getPoint(),
+				null,
+				"center", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getEllipse_RadiusX(),
+				this.getDouble(),
+				"radiusX", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getEllipse_RadiusY(),
+				this.getDouble(),
+				"radiusY", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getEllipse_Rotation(),
+				this.getDouble(),
+				"rotation", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getEllipse_StartAngle(),
+				this.getDouble(),
+				"startAngle", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getEllipse_EndAngle(),
+				this.getDouble(),
+				"endAngle", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				processFamilyEClass,
@@ -6484,325 +6854,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				this.getMethodConfiguration(),
 				null,
 				"predefinedConfigurations", null, 0, -1, MethodLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				pointEClass,
-				Point.class,
-				"Point", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getPoint_X(),
-				ecorePackage.getEDoubleObject(),
-				"x", null, 0, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getPoint_Y(),
-				ecorePackage.getEDoubleObject(),
-				"y", null, 0, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				graphElementEClass,
-				GraphElement.class,
-				"GraphElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getGraphElement_Position(),
-				this.getPoint(),
-				null,
-				"position", null, 0, 1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getGraphElement_Contained(),
-				this.getDiagramElement(),
-				this.getDiagramElement_Container(),
-				"contained", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getGraphElement_Link(),
-				this.getDiagramLink(),
-				this.getDiagramLink_GraphElement(),
-				"link", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getGraphElement_Anchorage(),
-				this.getGraphConnector(),
-				this.getGraphConnector_GraphElement(),
-				"anchorage", null, 0, -1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getGraphElement_SemanticModel(),
-				this.getSemanticModelBridge(),
-				this.getSemanticModelBridge_GraphElement(),
-				"semanticModel", null, 1, 1, GraphElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				diagramElementEClass,
-				DiagramElement.class,
-				"DiagramElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDiagramElement_IsVisible(),
-				ecorePackage.getEBooleanObject(),
-				"isVisible", "true", 0, 1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getDiagramElement_Container(),
-				this.getGraphElement(),
-				this.getGraphElement_Contained(),
-				"container", null, 0, 1, DiagramElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagramElement_Reference(),
-				this.getReference(),
-				this.getReference_Referenced(),
-				"reference", null, 0, -1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagramElement_Property(),
-				this.getProperty(),
-				null,
-				"property", null, 0, -1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				diagramLinkEClass,
-				DiagramLink.class,
-				"DiagramLink", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDiagramLink_Zoom(),
-				ecorePackage.getEDoubleObject(),
-				"zoom", null, 0, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagramLink_Viewport(),
-				this.getPoint(),
-				null,
-				"viewport", null, 0, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagramLink_GraphElement(),
-				this.getGraphElement(),
-				this.getGraphElement_Link(),
-				"graphElement", null, 1, 1, DiagramLink.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagramLink_Diagram(),
-				this.getDiagram(),
-				this.getDiagram_DiagramLink(),
-				"diagram", null, 1, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				graphConnectorEClass,
-				GraphConnector.class,
-				"GraphConnector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getGraphConnector_GraphElement(),
-				this.getGraphElement(),
-				this.getGraphElement_Anchorage(),
-				"graphElement", null, 1, 1, GraphConnector.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getGraphConnector_GraphEdge(),
-				this.getGraphEdge(),
-				this.getGraphEdge_Anchor(),
-				"graphEdge", null, 0, -1, GraphConnector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				semanticModelBridgeEClass,
-				SemanticModelBridge.class,
-				"SemanticModelBridge", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getSemanticModelBridge_Presentation(),
-				this.getString(),
-				"presentation", "", 0, 1, SemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getSemanticModelBridge_GraphElement(),
-				this.getGraphElement(),
-				this.getGraphElement_SemanticModel(),
-				"graphElement", null, 0, 1, SemanticModelBridge.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getSemanticModelBridge_Diagram(),
-				this.getDiagram(),
-				this.getDiagram_Namespace(),
-				"diagram", null, 0, 1, SemanticModelBridge.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				dimensionEClass,
-				Dimension.class,
-				"Dimension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDimension_Width(),
-				ecorePackage.getEDoubleObject(),
-				"width", null, 0, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getDimension_Height(),
-				ecorePackage.getEDoubleObject(),
-				"height", null, 0, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				referenceEClass,
-				Reference.class,
-				"Reference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getReference_IsIndividualRepresentation(),
-				ecorePackage.getEBooleanObject(),
-				"isIndividualRepresentation", null, 0, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getReference_Referenced(),
-				this.getDiagramElement(),
-				this.getDiagramElement_Reference(),
-				"referenced", null, 1, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				propertyEClass,
-				Property.class,
-				"Property", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getProperty_Key(),
-				this.getString(),
-				"key", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-				getProperty_Value(),
-				this.getString(),
-				"value", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				graphEdgeEClass,
-				GraphEdge.class,
-				"GraphEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getGraphEdge_Anchor(),
-				this.getGraphConnector(),
-				this.getGraphConnector_GraphEdge(),
-				"anchor", null, 2, 2, GraphEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getGraphEdge_Waypoints(),
-				this.getPoint(),
-				null,
-				"waypoints", null, 2, -1, GraphEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				diagramEClass,
-				Diagram.class,
-				"Diagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getDiagram_Zoom(),
-				ecorePackage.getEDoubleObject(),
-				"zoom", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagram_Viewpoint(),
-				this.getPoint(),
-				null,
-				"viewpoint", null, 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagram_DiagramLink(),
-				this.getDiagramLink(),
-				this.getDiagramLink_Diagram(),
-				"diagramLink", null, 0, -1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getDiagram_Namespace(),
-				this.getSemanticModelBridge(),
-				this.getSemanticModelBridge_Diagram(),
-				"namespace", null, 1, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				graphNodeEClass,
-				GraphNode.class,
-				"GraphNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getGraphNode_Size(),
-				this.getDimension(),
-				null,
-				"size", null, 0, 1, GraphNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				simpleSemanticModelElementEClass,
-				SimpleSemanticModelElement.class,
-				"SimpleSemanticModelElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getSimpleSemanticModelElement_TypeInfo(),
-				this.getString(),
-				"typeInfo", "", 0, 1, SimpleSemanticModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				umaSemanticModelBridgeEClass,
-				UMASemanticModelBridge.class,
-				"UMASemanticModelBridge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getUMASemanticModelBridge_Element(),
-				this.getMethodElement(),
-				null,
-				"element", null, 1, 1, UMASemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				coreSemanticModelBridgeEClass,
-				CoreSemanticModelBridge.class,
-				"CoreSemanticModelBridge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-				getCoreSemanticModelBridge_Element(),
-				this.getElement(),
-				null,
-				"element", null, 1, 1, CoreSemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				leafElementEClass,
-				LeafElement.class,
-				"LeafElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				textElementEClass,
-				TextElement.class,
-				"TextElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getTextElement_Text(),
-				this.getString(),
-				"text", "", 0, 1, TextElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				imageEClass,
-				Image.class,
-				"Image", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getImage_Uri(),
-				this.getUri(),
-				"uri", null, 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getImage_MimeType(),
-				this.getString(),
-				"mimeType", "", 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-
-		initEClass(
-				graphicPrimitiveEClass,
-				GraphicPrimitive.class,
-				"GraphicPrimitive", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
-		initEClass(
-				polylineEClass,
-				Polyline.class,
-				"Polyline", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getPolyline_Closed(),
-				ecorePackage.getEBooleanObject(),
-				"closed", "true", 0, 1, Polyline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(
-				getPolyline_Waypoints(),
-				this.getPoint(),
-				null,
-				"waypoints", null, 2, -1, Polyline.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(
-				ellipseEClass,
-				Ellipse.class,
-				"Ellipse", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getEllipse_RadiusX(),
-				ecorePackage.getEDoubleObject(),
-				"radiusX", null, 0, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getEllipse_RadiusY(),
-				ecorePackage.getEDoubleObject(),
-				"radiusY", null, 0, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getEllipse_Rotation(),
-				ecorePackage.getEDoubleObject(),
-				"rotation", null, 0, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getEllipse_StartAngle(),
-				ecorePackage.getEDoubleObject(),
-				"startAngle", null, 0, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-				getEllipse_EndAngle(),
-				ecorePackage.getEDoubleObject(),
-				"endAngle", null, 0, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getEllipse_Center(),
-				this.getPoint(),
-				null,
-				"center", null, 0, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(variabilityTypeEEnum, VariabilityType.class,

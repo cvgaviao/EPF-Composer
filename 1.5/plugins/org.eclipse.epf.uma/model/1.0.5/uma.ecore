@@ -4,7 +4,7 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="uma"
     nsURI="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" nsPrefix="org.eclipse.epf.uma">
   <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-    <details key="documentation" value="&lt;HTML>&lt;HEAD>&#xD;&#xA;&lt;META content=&quot;MSHTML 6.00.2900.3243&quot; name=GENERATOR>&lt;/HEAD>&#xD;&#xA;&lt;BODY>&#xD;&#xA;&lt;P>&amp;nbsp;&lt;/P>&lt;/BODY>&lt;/HTML>&#xD;&#xA;05&#xD;&#xA;04&#xD;&#xA;03&#xD;&#xA;01&#xD;&#xA;02"/>
+    <details key="documentation" value="&lt;HTML>&lt;HEAD>&#xD;&#xA;&lt;META content=&quot;MSHTML 6.00.2900.3243&quot; name=GENERATOR>&lt;/HEAD>&#xD;&#xA;&lt;BODY>&#xD;&#xA;&lt;P>&amp;nbsp;&lt;/P>&lt;/BODY>&lt;/HTML>&#xD;&#xA;04&#xD;&#xA;03&#xD;&#xA;01&#xD;&#xA;02"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Classifier" abstract="true" eSuperTypes="#//Type">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -132,9 +132,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Kind" eSuperTypes="#//ContentElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="applicableMetaClass" ordered="false"
-        lowerBound="1" eType="#//String" defaultValueLiteral="" unsettable="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isPrimaryKind" ordered="false"
-        lowerBound="1" eType="#//Boolean" defaultValueLiteral="false" unsettable="true"/>
+        lowerBound="1" eType="#//Set" unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ContentElement" abstract="true" eSuperTypes="#//DescribableElement #//VariabilityElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -190,7 +188,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalId" ordered="false"
         eType="#//String" defaultValueLiteral="" unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="An external visible number that is used to reference this delivery patterns and models. It is used like a synonym."/>
+        <details key="documentation" value="An external visible number or label that is used to reference this element. Used like a synonym to the name."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyConsiderations" ordered="false"
@@ -703,6 +701,14 @@
         upperBound="-1" eType="#//ReusableAsset"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="supportingMaterials" ordered="false"
         upperBound="-1" eType="#//SupportingMaterial"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="templates" ordered="false"
+        upperBound="-1" eType="#//Template"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reports" ordered="false"
+        upperBound="-1" eType="#//Report"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="estimationconsiderations"
+        ordered="false" upperBound="-1" eType="#//EstimationConsiderations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="toolmentor" ordered="false"
+        upperBound="-1" eType="#//ToolMentor"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessElement" abstract="true" eSuperTypes="#//DescribableElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1104,8 +1110,98 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="processElements" ordered="false"
         upperBound="-1" eType="#//ProcessElement" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="diagrams" upperBound="-1"
-        eType="#//Diagram" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="diagrams" ordered="false"
+        upperBound="-1" eType="#//Diagram" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//GraphNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="diagramLink" ordered="false"
+        upperBound="-1" eType="#//DiagramLink" eOpposite="#//DiagramLink/diagram"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" ordered="false"
+        lowerBound="1" eType="#//SemanticModelBridge" containment="true" eOpposite="#//SemanticModelBridge/diagram"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zoom" ordered="false" eType="#//Double"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="viewpoint" ordered="false"
+        lowerBound="1" eType="#//Point"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphNode" eSuperTypes="#//GraphElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="size" ordered="false" lowerBound="1"
+        eType="#//Dimension"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphElement" abstract="true" eSuperTypes="#//DiagramElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contained" ordered="false"
+        upperBound="-1" eType="#//DiagramElement" containment="true" eOpposite="#//DiagramElement/container"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="position" ordered="false"
+        lowerBound="1" eType="#//Point"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="link" ordered="false" upperBound="-1"
+        eType="#//DiagramLink" containment="true" eOpposite="#//DiagramLink/graphElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="anchorage" ordered="false"
+        upperBound="-1" eType="#//GraphConnector" containment="true" eOpposite="#//GraphConnector/graphElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="semanticModel" ordered="false"
+        lowerBound="1" eType="#//SemanticModelBridge" containment="true" eOpposite="#//SemanticModelBridge/graphElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiagramElement" abstract="true" eSuperTypes="#//MethodElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isVisible" ordered="false"
+        lowerBound="1" eType="#//Boolean" defaultValueLiteral="true" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" ordered="false"
+        eType="#//GraphElement" eOpposite="#//GraphElement/contained"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" ordered="false"
+        upperBound="-1" eType="#//Reference" eOpposite="#//Reference/referenced"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="property" ordered="false"
+        upperBound="-1" eType="#//Property" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Reference" eSuperTypes="#//DiagramElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isIndividualRepresentation"
+        ordered="false" lowerBound="1" eType="#//Boolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenced" ordered="false"
+        lowerBound="1" eType="#//DiagramElement" eOpposite="#//DiagramElement/reference"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//DiagramElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" ordered="false" eType="#//String"
+        defaultValueLiteral="" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" ordered="false"
+        eType="#//String" defaultValueLiteral="" unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Point">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" ordered="false" lowerBound="1"
+        eType="#//Double" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" ordered="false" lowerBound="1"
+        eType="#//Double" unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DiagramLink" eSuperTypes="#//DiagramElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zoom" ordered="false" lowerBound="1"
+        eType="#//Double" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="viewport" ordered="false"
+        lowerBound="1" eType="#//Point"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="diagram" ordered="false"
+        lowerBound="1" eType="#//Diagram" eOpposite="#//Diagram/diagramLink"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphElement" ordered="false"
+        lowerBound="1" eType="#//GraphElement" eOpposite="#//GraphElement/link"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphConnector" eSuperTypes="#//GraphElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphEdge" ordered="false"
+        upperBound="-1" eType="#//GraphEdge" eOpposite="#//GraphEdge/anchor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphElement" ordered="false"
+        lowerBound="1" eType="#//GraphElement" eOpposite="#//GraphElement/anchorage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphEdge" eSuperTypes="#//GraphElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="waypoints" ordered="false"
+        lowerBound="2" upperBound="-1" eType="#//Point" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="anchor" ordered="false"
+        lowerBound="2" upperBound="2" eType="#//GraphConnector" eOpposite="#//GraphConnector/graphEdge"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SemanticModelBridge" abstract="true"
+      eSuperTypes="#//DiagramElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentation" ordered="false"
+        eType="#//String" defaultValueLiteral="" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="diagram" ordered="false"
+        eType="#//Diagram" eOpposite="#//Diagram/namespace"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="graphElement" ordered="false"
+        eType="#//GraphElement" eOpposite="#//GraphElement/semanticModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dimension">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" ordered="false"
+        lowerBound="1" eType="#//Double" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" ordered="false"
+        lowerBound="1" eType="#//Double" unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessComponentInterface" eSuperTypes="#//BreakdownElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1115,6 +1211,50 @@
         ordered="false" upperBound="-1" eType="#//TaskDescriptor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceIO" ordered="false"
         upperBound="-1" eType="#//WorkProductDescriptor" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleSemanticModelElement" eSuperTypes="#//SemanticModelBridge">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeInfo" ordered="false"
+        eType="#//String" defaultValueLiteral="" unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UMASemanticModelBridge" eSuperTypes="#//SemanticModelBridge">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" ordered="false"
+        lowerBound="1" eType="#//MethodElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CoreSemanticModelBridge" eSuperTypes="#//SemanticModelBridge">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" ordered="false"
+        lowerBound="1" eType="#//Element"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LeafElement" abstract="true" eSuperTypes="#//DiagramElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextElement" eSuperTypes="#//LeafElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" ordered="false" eType="#//String"
+        defaultValueLiteral="" unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//LeafElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" ordered="false" eType="#//Uri"
+        defaultValueLiteral="" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mimeType" ordered="false"
+        eType="#//String" defaultValueLiteral="" unsettable="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphicPrimitive" abstract="true" eSuperTypes="#//LeafElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Polyline" eSuperTypes="#//GraphicPrimitive">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="closed" ordered="false"
+        lowerBound="1" eType="#//Boolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="waypoints" ordered="false"
+        lowerBound="2" upperBound="-1" eType="#//Point" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Ellipse" eSuperTypes="#//GraphicPrimitive">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="center" ordered="false"
+        lowerBound="1" eType="#//Point"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radiusX" ordered="false"
+        lowerBound="1" eType="#//Double" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radiusY" ordered="false"
+        lowerBound="1" eType="#//Double" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotation" ordered="false"
+        lowerBound="1" eType="#//Double" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startAngle" ordered="false"
+        lowerBound="1" eType="#//Double" unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endAngle" ordered="false"
+        lowerBound="1" eType="#//Double" unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessFamily" eSuperTypes="#//MethodConfiguration">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1131,128 +1271,5 @@
         upperBound="-1" eType="#//MethodPlugin" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="predefinedConfigurations"
         ordered="false" upperBound="-1" eType="#//MethodConfiguration" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Point">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphElement" abstract="true" eSuperTypes="#//DiagramElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="position" eType="#//Point"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="contained" ordered="false"
-        upperBound="-1" eType="#//DiagramElement" containment="true" eOpposite="#//DiagramElement/container"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="link" ordered="false" upperBound="-1"
-        eType="#//DiagramLink" containment="true" eOpposite="#//DiagramLink/graphElement"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="anchorage" ordered="false"
-        upperBound="-1" eType="#//GraphConnector" containment="true" eOpposite="#//GraphConnector/graphElement"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="semanticModel" lowerBound="1"
-        eType="#//SemanticModelBridge" containment="true" eOpposite="#//SemanticModelBridge/graphElement"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DiagramElement" abstract="true" eSuperTypes="#//MethodElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isVisible" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"
-        defaultValueLiteral="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="container" eType="#//GraphElement"
-        transient="true" eOpposite="#//GraphElement/contained"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" ordered="false"
-        upperBound="-1" eType="#//Reference" eOpposite="#//Reference/referenced"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="property" ordered="false"
-        upperBound="-1" eType="#//Property" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DiagramLink" eSuperTypes="#//DiagramElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zoom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="viewport" eType="#//Point"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="graphElement" lowerBound="1"
-        eType="#//GraphElement" transient="true" eOpposite="#//GraphElement/link"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="diagram" lowerBound="1"
-        eType="#//Diagram" eOpposite="#//Diagram/diagramLink"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphConnector" eSuperTypes="#//GraphElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="graphElement" lowerBound="1"
-        eType="#//GraphElement" transient="true" eOpposite="#//GraphElement/anchorage"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="graphEdge" ordered="false"
-        upperBound="-1" eType="#//GraphEdge" eOpposite="#//GraphEdge/anchor"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SemanticModelBridge" abstract="true"
-      eSuperTypes="#//DiagramElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentation" eType="#//String"
-        defaultValueLiteral=""/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="graphElement" eType="#//GraphElement"
-        transient="true" eOpposite="#//GraphElement/semanticModel"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="diagram" eType="#//Diagram"
-        transient="true" eOpposite="#//Diagram/namespace"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Dimension">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Reference" eSuperTypes="#//DiagramElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isIndividualRepresentation"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referenced" lowerBound="1"
-        eType="#//DiagramElement" eOpposite="#//DiagramElement/reference"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//DiagramElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="#//String"
-        defaultValueLiteral=""/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//String"
-        defaultValueLiteral=""/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphEdge" eSuperTypes="#//GraphElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="anchor" ordered="false"
-        lowerBound="2" upperBound="2" eType="#//GraphConnector" eOpposite="#//GraphConnector/graphEdge"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="waypoints" ordered="false"
-        lowerBound="2" upperBound="-1" eType="#//Point" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//GraphNode">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zoom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="viewpoint" eType="#//Point"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="diagramLink" ordered="false"
-        upperBound="-1" eType="#//DiagramLink" eOpposite="#//DiagramLink/diagram"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" lowerBound="1"
-        eType="#//SemanticModelBridge" containment="true" eOpposite="#//SemanticModelBridge/diagram"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphNode" eSuperTypes="#//GraphElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="size" eType="#//Dimension"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleSemanticModelElement" eSuperTypes="#//SemanticModelBridge">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeInfo" eType="#//String"
-        defaultValueLiteral=""/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UMASemanticModelBridge" eSuperTypes="#//SemanticModelBridge">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
-        eType="#//MethodElement"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CoreSemanticModelBridge" eSuperTypes="#//SemanticModelBridge">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
-        eType="#//Element"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LeafElement" abstract="true" eSuperTypes="#//DiagramElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TextElement" eSuperTypes="#//LeafElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="#//String"
-        defaultValueLiteral=""/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//LeafElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="#//Uri"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mimeType" eType="#//String"
-        defaultValueLiteral=""/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GraphicPrimitive" abstract="true" eSuperTypes="#//LeafElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Polyline" eSuperTypes="#//GraphicPrimitive">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="closed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"
-        defaultValueLiteral="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="waypoints" ordered="false"
-        lowerBound="2" upperBound="-1" eType="#//Point" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Ellipse" eSuperTypes="#//GraphicPrimitive">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radiusX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="radiusY" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rotation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startAngle" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endAngle" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDoubleObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="center" eType="#//Point"
-        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

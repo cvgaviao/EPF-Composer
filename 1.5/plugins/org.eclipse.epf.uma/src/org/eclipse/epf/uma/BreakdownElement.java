@@ -38,6 +38,10 @@ import java.util.List;
  *   <li>{@link org.eclipse.epf.uma.BreakdownElement#getGuidelines <em>Guidelines</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.BreakdownElement#getReusableAssets <em>Reusable Assets</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.BreakdownElement#getSupportingMaterials <em>Supporting Materials</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.BreakdownElement#getTemplates <em>Templates</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.BreakdownElement#getReports <em>Reports</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.BreakdownElement#getEstimationconsiderations <em>Estimationconsiderations</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.BreakdownElement#getToolmentor <em>Toolmentor</em>}</li>
  * </ul>
  * </p>
  *
@@ -464,5 +468,69 @@ public interface BreakdownElement extends ProcessElement {
 	 * @generated
 	 */
 	List<SupportingMaterial> getSupportingMaterials();
+
+	/**
+	 * Returns the value of the '<em><b>Templates</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Template}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Templates</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Templates</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_Templates()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<Template> getTemplates();
+
+	/**
+	 * Returns the value of the '<em><b>Reports</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Report}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Reports</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Reports</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_Reports()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<Report> getReports();
+
+	/**
+	 * Returns the value of the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.EstimationConsiderations}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Estimationconsiderations</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Estimationconsiderations</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_Estimationconsiderations()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<EstimationConsiderations> getEstimationconsiderations();
+
+	/**
+	 * Returns the value of the '<em><b>Toolmentor</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.ToolMentor}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Toolmentor</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Toolmentor</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_Toolmentor()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<ToolMentor> getToolmentor();
 
 } // BreakdownElement

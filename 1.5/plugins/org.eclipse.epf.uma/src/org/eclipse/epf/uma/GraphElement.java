@@ -20,8 +20,8 @@ import java.util.List;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.GraphElement#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.GraphElement#getContained <em>Contained</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.GraphElement#getPosition <em>Position</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.GraphElement#getLink <em>Link</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.GraphElement#getAnchorage <em>Anchorage</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.GraphElement#getSemanticModel <em>Semantic Model</em>}</li>
@@ -34,26 +34,26 @@ import java.util.List;
  */
 public interface GraphElement extends DiagramElement {
 	/**
-	 * Returns the value of the '<em><b>Position</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Position</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Position</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Position</em>' containment reference.
+	 * @return the value of the '<em>Position</em>' reference.
 	 * @see #setPosition(Point)
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphElement_Position()
-	 * @model containment="true" resolveProxies="true"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	Point getPosition();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.epf.uma.GraphElement#getPosition <em>Position</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.epf.uma.GraphElement#getPosition <em>Position</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Position</em>' containment reference.
+	 * @param value the new value of the '<em>Position</em>' reference.
 	 * @see #getPosition()
 	 * @generated
 	 */
@@ -126,7 +126,7 @@ public interface GraphElement extends DiagramElement {
 	 * @see #setSemanticModel(SemanticModelBridge)
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphElement_SemanticModel()
 	 * @see org.eclipse.epf.uma.SemanticModelBridge#getGraphElement
-	 * @model opposite="graphElement" containment="true" resolveProxies="true" required="true"
+	 * @model opposite="graphElement" containment="true" resolveProxies="true" required="true" ordered="false"
 	 * @generated
 	 */
 	SemanticModelBridge getSemanticModel();

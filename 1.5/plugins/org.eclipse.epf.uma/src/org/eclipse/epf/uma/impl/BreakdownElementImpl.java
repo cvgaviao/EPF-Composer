@@ -25,11 +25,15 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
+import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.PlanningData;
+import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.Template;
+import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 
 /**
@@ -53,6 +57,10 @@ import org.eclipse.epf.uma.UmaPackage;
  *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getGuidelines <em>Guidelines</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getReusableAssets <em>Reusable Assets</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getSupportingMaterials <em>Supporting Materials</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getTemplates <em>Templates</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getReports <em>Reports</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getEstimationconsiderations <em>Estimationconsiderations</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.BreakdownElementImpl#getToolmentor <em>Toolmentor</em>}</li>
  * </ul>
  * </p>
  *
@@ -282,6 +290,46 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @ordered
 	 */
 	protected EList<SupportingMaterial> supportingMaterials;
+
+	/**
+	 * The cached value of the '{@link #getTemplates() <em>Templates</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTemplates()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Template> templates;
+
+	/**
+	 * The cached value of the '{@link #getReports() <em>Reports</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReports()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Report> reports;
+
+	/**
+	 * The cached value of the '{@link #getEstimationconsiderations() <em>Estimationconsiderations</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEstimationconsiderations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<EstimationConsiderations> estimationconsiderations;
+
+	/**
+	 * The cached value of the '{@link #getToolmentor() <em>Toolmentor</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getToolmentor()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ToolMentor> toolmentor;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -841,6 +889,60 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<Template> getTemplates() {
+		if (templates == null) {
+			templates = new EObjectResolvingEList<Template>(Template.class,
+					this, UmaPackage.BREAKDOWN_ELEMENT__TEMPLATES);
+		}
+		return templates;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Report> getReports() {
+		if (reports == null) {
+			reports = new EObjectResolvingEList<Report>(Report.class, this,
+					UmaPackage.BREAKDOWN_ELEMENT__REPORTS);
+		}
+		return reports;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<EstimationConsiderations> getEstimationconsiderations() {
+		if (estimationconsiderations == null) {
+			estimationconsiderations = new EObjectResolvingEList<EstimationConsiderations>(
+					EstimationConsiderations.class, this,
+					UmaPackage.BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS);
+		}
+		return estimationconsiderations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<ToolMentor> getToolmentor() {
+		if (toolmentor == null) {
+			toolmentor = new EObjectResolvingEList<ToolMentor>(
+					ToolMentor.class, this,
+					UmaPackage.BREAKDOWN_ELEMENT__TOOLMENTOR);
+		}
+		return toolmentor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
@@ -916,6 +1018,14 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 			return getReusableAssets();
 		case UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS:
 			return getSupportingMaterials();
+		case UmaPackage.BREAKDOWN_ELEMENT__TEMPLATES:
+			return getTemplates();
+		case UmaPackage.BREAKDOWN_ELEMENT__REPORTS:
+			return getReports();
+		case UmaPackage.BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS:
+			return getEstimationconsiderations();
+		case UmaPackage.BREAKDOWN_ELEMENT__TOOLMENTOR:
+			return getToolmentor();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -979,6 +1089,23 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 			getSupportingMaterials().addAll(
 					(Collection<? extends SupportingMaterial>) newValue);
 			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__TEMPLATES:
+			getTemplates().clear();
+			getTemplates().addAll((Collection<? extends Template>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__REPORTS:
+			getReports().clear();
+			getReports().addAll((Collection<? extends Report>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS:
+			getEstimationconsiderations().clear();
+			getEstimationconsiderations().addAll(
+					(Collection<? extends EstimationConsiderations>) newValue);
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__TOOLMENTOR:
+			getToolmentor().clear();
+			getToolmentor().addAll((Collection<? extends ToolMentor>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -1033,6 +1160,18 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 		case UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS:
 			getSupportingMaterials().clear();
 			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__TEMPLATES:
+			getTemplates().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__REPORTS:
+			getReports().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS:
+			getEstimationconsiderations().clear();
+			return;
+		case UmaPackage.BREAKDOWN_ELEMENT__TOOLMENTOR:
+			getToolmentor().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -1074,6 +1213,15 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 		case UmaPackage.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS:
 			return supportingMaterials != null
 					&& !supportingMaterials.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__TEMPLATES:
+			return templates != null && !templates.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__REPORTS:
+			return reports != null && !reports.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS:
+			return estimationconsiderations != null
+					&& !estimationconsiderations.isEmpty();
+		case UmaPackage.BREAKDOWN_ELEMENT__TOOLMENTOR:
+			return toolmentor != null && !toolmentor.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

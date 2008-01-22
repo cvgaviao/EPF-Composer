@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EReference;
  * <META content="MSHTML 6.00.2900.3243" name=GENERATOR></HEAD>
  * <BODY>
  * <P>&nbsp;</P></BODY></HTML>
- * 05
  * 04
  * 03
  * 01
@@ -1099,22 +1098,13 @@ public interface UmaPackage extends EPackage {
 	int KIND__APPLICABLE_META_CLASS = CONTENT_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Is Primary Kind</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int KIND__IS_PRIMARY_KIND = CONTENT_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The number of structural features of the '<em>Kind</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int KIND_FEATURE_COUNT = CONTENT_ELEMENT_FEATURE_COUNT + 2;
+	int KIND_FEATURE_COUNT = CONTENT_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.MethodUnitImpl <em>Method Unit</em>}' class.
@@ -3634,7 +3624,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessComponentInterface()
 	 * @generated
 	 */
-	int PROCESS_COMPONENT_INTERFACE = 88;
+	int PROCESS_COMPONENT_INTERFACE = 100;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessComponentDescriptorImpl <em>Process Component Descriptor</em>}' class.
@@ -10200,13 +10190,49 @@ public interface UmaPackage extends EPackage {
 	int BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS = PROCESS_ELEMENT_FEATURE_COUNT + 13;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__TEMPLATES = PROCESS_ELEMENT_FEATURE_COUNT + 14;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__REPORTS = PROCESS_ELEMENT_FEATURE_COUNT + 15;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS = PROCESS_ELEMENT_FEATURE_COUNT + 16;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__TOOLMENTOR = PROCESS_ELEMENT_FEATURE_COUNT + 17;
+
+	/**
 	 * The number of structural features of the '<em>Breakdown Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BREAKDOWN_ELEMENT_FEATURE_COUNT = PROCESS_ELEMENT_FEATURE_COUNT + 14;
+	int BREAKDOWN_ELEMENT_FEATURE_COUNT = PROCESS_ELEMENT_FEATURE_COUNT + 18;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10450,6 +10476,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS = BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__TEMPLATES = BREAKDOWN_ELEMENT__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__REPORTS = BREAKDOWN_ELEMENT__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS = BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__TOOLMENTOR = BREAKDOWN_ELEMENT__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -10738,6 +10800,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ACTIVITY__SUPPORTING_MATERIALS = WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__TEMPLATES = WORK_BREAKDOWN_ELEMENT__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__REPORTS = WORK_BREAKDOWN_ELEMENT__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__ESTIMATIONCONSIDERATIONS = WORK_BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__TOOLMENTOR = WORK_BREAKDOWN_ELEMENT__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -12495,6 +12593,42 @@ public interface UmaPackage extends EPackage {
 	int MILESTONE__SUPPORTING_MATERIALS = WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__TEMPLATES = WORK_BREAKDOWN_ELEMENT__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__REPORTS = WORK_BREAKDOWN_ELEMENT__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__ESTIMATIONCONSIDERATIONS = WORK_BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__TOOLMENTOR = WORK_BREAKDOWN_ELEMENT__TOOLMENTOR;
+
+	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12792,6 +12926,42 @@ public interface UmaPackage extends EPackage {
 	int DESCRIPTOR__SUPPORTING_MATERIALS = BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__TEMPLATES = BREAKDOWN_ELEMENT__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__REPORTS = BREAKDOWN_ELEMENT__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__ESTIMATIONCONSIDERATIONS = BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__TOOLMENTOR = BREAKDOWN_ELEMENT__TOOLMENTOR;
+
+	/**
 	 * The feature id for the '<em><b>Is Synchronized With Source</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13051,6 +13221,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_PRODUCT_DESCRIPTOR__SUPPORTING_MATERIALS = DESCRIPTOR__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__TEMPLATES = DESCRIPTOR__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__REPORTS = DESCRIPTOR__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__ESTIMATIONCONSIDERATIONS = DESCRIPTOR__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__TOOLMENTOR = DESCRIPTOR__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Synchronized With Source</b></em>' attribute.
@@ -13366,6 +13572,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ITERATION__SUPPORTING_MATERIALS = ACTIVITY__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__TEMPLATES = ACTIVITY__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__REPORTS = ACTIVITY__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__ESTIMATIONCONSIDERATIONS = ACTIVITY__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__TOOLMENTOR = ACTIVITY__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -13719,6 +13961,42 @@ public interface UmaPackage extends EPackage {
 	int PHASE__SUPPORTING_MATERIALS = ACTIVITY__SUPPORTING_MATERIALS;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__TEMPLATES = ACTIVITY__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__REPORTS = ACTIVITY__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__ESTIMATIONCONSIDERATIONS = ACTIVITY__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__TOOLMENTOR = ACTIVITY__TOOLMENTOR;
+
+	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14070,6 +14348,42 @@ public interface UmaPackage extends EPackage {
 	int TEAM_PROFILE__SUPPORTING_MATERIALS = BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__TEMPLATES = BREAKDOWN_ELEMENT__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__REPORTS = BREAKDOWN_ELEMENT__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__ESTIMATIONCONSIDERATIONS = BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__TOOLMENTOR = BREAKDOWN_ELEMENT__TOOLMENTOR;
+
+	/**
 	 * The feature id for the '<em><b>Team Roles</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14347,6 +14661,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROLE_DESCRIPTOR__SUPPORTING_MATERIALS = DESCRIPTOR__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__TEMPLATES = DESCRIPTOR__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__REPORTS = DESCRIPTOR__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__ESTIMATIONCONSIDERATIONS = DESCRIPTOR__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__TOOLMENTOR = DESCRIPTOR__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Synchronized With Source</b></em>' attribute.
@@ -14635,6 +14985,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TASK_DESCRIPTOR__SUPPORTING_MATERIALS = WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__TEMPLATES = WORK_BREAKDOWN_ELEMENT__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__REPORTS = WORK_BREAKDOWN_ELEMENT__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__ESTIMATIONCONSIDERATIONS = WORK_BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__TOOLMENTOR = WORK_BREAKDOWN_ELEMENT__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -15015,6 +15401,42 @@ public interface UmaPackage extends EPackage {
 	int COMPOSITE_ROLE__SUPPORTING_MATERIALS = ROLE_DESCRIPTOR__SUPPORTING_MATERIALS;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__TEMPLATES = ROLE_DESCRIPTOR__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__REPORTS = ROLE_DESCRIPTOR__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__ESTIMATIONCONSIDERATIONS = ROLE_DESCRIPTOR__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__TOOLMENTOR = ROLE_DESCRIPTOR__TOOLMENTOR;
+
+	/**
 	 * The feature id for the '<em><b>Is Synchronized With Source</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15310,6 +15732,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS__SUPPORTING_MATERIALS = ACTIVITY__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__TEMPLATES = ACTIVITY__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__REPORTS = ACTIVITY__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__ESTIMATIONCONSIDERATIONS = ACTIVITY__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__TOOLMENTOR = ACTIVITY__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -15688,6 +16146,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELIVERY_PROCESS__SUPPORTING_MATERIALS = PROCESS__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__TEMPLATES = PROCESS__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__REPORTS = PROCESS__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__ESTIMATIONCONSIDERATIONS = PROCESS__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__TOOLMENTOR = PROCESS__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -16084,6 +16578,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CAPABILITY_PATTERN__SUPPORTING_MATERIALS = PROCESS__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__TEMPLATES = PROCESS__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__REPORTS = PROCESS__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__ESTIMATIONCONSIDERATIONS = PROCESS__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__TOOLMENTOR = PROCESS__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -16832,6 +17362,42 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_PLANNING_TEMPLATE__SUPPORTING_MATERIALS = PROCESS__SUPPORTING_MATERIALS;
+
+	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__TEMPLATES = PROCESS__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__REPORTS = PROCESS__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__ESTIMATIONCONSIDERATIONS = PROCESS__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__TOOLMENTOR = PROCESS__TOOLMENTOR;
 
 	/**
 	 * The feature id for the '<em><b>Is Repeatable</b></em>' attribute.
@@ -18535,6 +19101,42 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_DESCRIPTOR__SUPPORTING_MATERIALS = DESCRIPTOR__SUPPORTING_MATERIALS;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_DESCRIPTOR__TEMPLATES = DESCRIPTOR__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_DESCRIPTOR__REPORTS = DESCRIPTOR__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_DESCRIPTOR__ESTIMATIONCONSIDERATIONS = DESCRIPTOR__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_DESCRIPTOR__TOOLMENTOR = DESCRIPTOR__TOOLMENTOR;
+
+	/**
 	 * The feature id for the '<em><b>Is Synchronized With Source</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18895,6 +19497,1874 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_FEATURE_COUNT = PROCESS_PACKAGE_FEATURE_COUNT + 7;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessFamilyImpl <em>Process Family</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.ProcessFamilyImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessFamily()
+	 * @generated
+	 */
+	int PROCESS_FAMILY = 110;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.MethodLibraryImpl <em>Method Library</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.MethodLibraryImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getMethodLibrary()
+	 * @generated
+	 */
+	int METHOD_LIBRARY = 111;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PointImpl <em>Point</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.PointImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPoint()
+	 * @generated
+	 */
+	int POINT = 94;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DiagramElementImpl <em>Diagram Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.DiagramElementImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagramElement()
+	 * @generated
+	 */
+	int DIAGRAM_ELEMENT = 91;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__NAME = METHOD_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__GUID = METHOD_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__BRIEF_DESCRIPTION = METHOD_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__OWNED_RULES = METHOD_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY = METHOD_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__KIND = METHOD_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__SUPPRESSED = METHOD_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__IS_VISIBLE = METHOD_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__CONTAINER = METHOD_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__REFERENCE = METHOD_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT__PROPERTY = METHOD_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Diagram Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_ELEMENT_FEATURE_COUNT = METHOD_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphElementImpl <em>Graph Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.GraphElementImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphElement()
+	 * @generated
+	 */
+	int GRAPH_ELEMENT = 90;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__NAME = DIAGRAM_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__GUID = DIAGRAM_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__KIND = DIAGRAM_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__CONTAINED = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Position</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__POSITION = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__LINK = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__ANCHORAGE = DIAGRAM_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT__SEMANTIC_MODEL = DIAGRAM_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Graph Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_ELEMENT_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DiagramLinkImpl <em>Diagram Link</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.DiagramLinkImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagramLink()
+	 * @generated
+	 */
+	int DIAGRAM_LINK = 95;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphConnectorImpl <em>Graph Connector</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.GraphConnectorImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphConnector()
+	 * @generated
+	 */
+	int GRAPH_CONNECTOR = 96;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.SemanticModelBridgeImpl <em>Semantic Model Bridge</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.SemanticModelBridgeImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSemanticModelBridge()
+	 * @generated
+	 */
+	int SEMANTIC_MODEL_BRIDGE = 98;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DimensionImpl <em>Dimension</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.DimensionImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDimension()
+	 * @generated
+	 */
+	int DIMENSION = 99;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ReferenceImpl <em>Reference</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.ReferenceImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getReference()
+	 * @generated
+	 */
+	int REFERENCE = 92;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PropertyImpl <em>Property</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.PropertyImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProperty()
+	 * @generated
+	 */
+	int PROPERTY = 93;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphEdgeImpl <em>Graph Edge</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.GraphEdgeImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphEdge()
+	 * @generated
+	 */
+	int GRAPH_EDGE = 97;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphNodeImpl <em>Graph Node</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.GraphNodeImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphNode()
+	 * @generated
+	 */
+	int GRAPH_NODE = 89;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__NAME = GRAPH_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__GUID = GRAPH_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__PRESENTATION_NAME = GRAPH_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__BRIEF_DESCRIPTION = GRAPH_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__OWNED_RULES = GRAPH_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__METHOD_ELEMENT_PROPERTY = GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__KIND = GRAPH_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__SUPPRESSED = GRAPH_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__ORDERING_GUIDE = GRAPH_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__IS_VISIBLE = GRAPH_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__CONTAINER = GRAPH_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__REFERENCE = GRAPH_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__PROPERTY = GRAPH_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__CONTAINED = GRAPH_ELEMENT__CONTAINED;
+
+	/**
+	 * The feature id for the '<em><b>Position</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__POSITION = GRAPH_ELEMENT__POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__LINK = GRAPH_ELEMENT__LINK;
+
+	/**
+	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__ANCHORAGE = GRAPH_ELEMENT__ANCHORAGE;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__SEMANTIC_MODEL = GRAPH_ELEMENT__SEMANTIC_MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Size</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE__SIZE = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Graph Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_NODE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DiagramImpl <em>Diagram</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.DiagramImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagram()
+	 * @generated
+	 */
+	int DIAGRAM = 88;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__NAME = GRAPH_NODE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__GUID = GRAPH_NODE__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__PRESENTATION_NAME = GRAPH_NODE__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__BRIEF_DESCRIPTION = GRAPH_NODE__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__OWNED_RULES = GRAPH_NODE__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__METHOD_ELEMENT_PROPERTY = GRAPH_NODE__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__KIND = GRAPH_NODE__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__SUPPRESSED = GRAPH_NODE__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__ORDERING_GUIDE = GRAPH_NODE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__IS_VISIBLE = GRAPH_NODE__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__CONTAINER = GRAPH_NODE__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__REFERENCE = GRAPH_NODE__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__PROPERTY = GRAPH_NODE__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__CONTAINED = GRAPH_NODE__CONTAINED;
+
+	/**
+	 * The feature id for the '<em><b>Position</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__POSITION = GRAPH_NODE__POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__LINK = GRAPH_NODE__LINK;
+
+	/**
+	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__ANCHORAGE = GRAPH_NODE__ANCHORAGE;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__SEMANTIC_MODEL = GRAPH_NODE__SEMANTIC_MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Size</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__SIZE = GRAPH_NODE__SIZE;
+
+	/**
+	 * The feature id for the '<em><b>Diagram Link</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__DIAGRAM_LINK = GRAPH_NODE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Namespace</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__NAMESPACE = GRAPH_NODE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Zoom</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__ZOOM = GRAPH_NODE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Viewpoint</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM__VIEWPOINT = GRAPH_NODE_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Diagram</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_FEATURE_COUNT = GRAPH_NODE_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__NAME = DIAGRAM_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__GUID = DIAGRAM_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__KIND = DIAGRAM_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Is Individual Representation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__IS_INDIVIDUAL_REPRESENTATION = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Referenced</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE__REFERENCED = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Reference</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCE_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__NAME = DIAGRAM_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__GUID = DIAGRAM_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__KIND = DIAGRAM_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__KEY = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY__VALUE = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPERTY_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POINT__X = 0;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POINT__Y = 1;
+
+	/**
+	 * The number of structural features of the '<em>Point</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POINT_FEATURE_COUNT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__NAME = DIAGRAM_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__GUID = DIAGRAM_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__KIND = DIAGRAM_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Zoom</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__ZOOM = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Viewport</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__VIEWPORT = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Diagram</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__DIAGRAM = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK__GRAPH_ELEMENT = DIAGRAM_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Diagram Link</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIAGRAM_LINK_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__NAME = GRAPH_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__GUID = GRAPH_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__PRESENTATION_NAME = GRAPH_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__BRIEF_DESCRIPTION = GRAPH_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__OWNED_RULES = GRAPH_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__METHOD_ELEMENT_PROPERTY = GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__KIND = GRAPH_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__SUPPRESSED = GRAPH_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__ORDERING_GUIDE = GRAPH_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__IS_VISIBLE = GRAPH_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__CONTAINER = GRAPH_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__REFERENCE = GRAPH_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__PROPERTY = GRAPH_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__CONTAINED = GRAPH_ELEMENT__CONTAINED;
+
+	/**
+	 * The feature id for the '<em><b>Position</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__POSITION = GRAPH_ELEMENT__POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__LINK = GRAPH_ELEMENT__LINK;
+
+	/**
+	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__ANCHORAGE = GRAPH_ELEMENT__ANCHORAGE;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__SEMANTIC_MODEL = GRAPH_ELEMENT__SEMANTIC_MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Graph Edge</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__GRAPH_EDGE = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR__GRAPH_ELEMENT = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Graph Connector</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_CONNECTOR_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__NAME = GRAPH_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__GUID = GRAPH_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__PRESENTATION_NAME = GRAPH_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__BRIEF_DESCRIPTION = GRAPH_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__OWNED_RULES = GRAPH_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__METHOD_ELEMENT_PROPERTY = GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__KIND = GRAPH_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__SUPPRESSED = GRAPH_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__ORDERING_GUIDE = GRAPH_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__IS_VISIBLE = GRAPH_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__CONTAINER = GRAPH_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__REFERENCE = GRAPH_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__PROPERTY = GRAPH_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__CONTAINED = GRAPH_ELEMENT__CONTAINED;
+
+	/**
+	 * The feature id for the '<em><b>Position</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__POSITION = GRAPH_ELEMENT__POSITION;
+
+	/**
+	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__LINK = GRAPH_ELEMENT__LINK;
+
+	/**
+	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__ANCHORAGE = GRAPH_ELEMENT__ANCHORAGE;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__SEMANTIC_MODEL = GRAPH_ELEMENT__SEMANTIC_MODEL;
+
+	/**
+	 * The feature id for the '<em><b>Waypoints</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__WAYPOINTS = GRAPH_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Anchor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE__ANCHOR = GRAPH_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Graph Edge</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPH_EDGE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__NAME = DIAGRAM_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__GUID = DIAGRAM_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__KIND = DIAGRAM_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__PRESENTATION = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__DIAGRAM = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Semantic Model Bridge</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Width</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIMENSION__WIDTH = 0;
+
+	/**
+	 * The feature id for the '<em><b>Height</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIMENSION__HEIGHT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Dimension</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DIMENSION_FEATURE_COUNT = 2;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19138,6 +21608,42 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_INTERFACE__SUPPORTING_MATERIALS = BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS;
 
 	/**
+	 * The feature id for the '<em><b>Templates</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__TEMPLATES = BREAKDOWN_ELEMENT__TEMPLATES;
+
+	/**
+	 * The feature id for the '<em><b>Reports</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__REPORTS = BREAKDOWN_ELEMENT__REPORTS;
+
+	/**
+	 * The feature id for the '<em><b>Estimationconsiderations</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__ESTIMATIONCONSIDERATIONS = BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Toolmentor</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__TOOLMENTOR = BREAKDOWN_ELEMENT__TOOLMENTOR;
+
+	/**
 	 * The feature id for the '<em><b>Interface Specifications</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19165,14 +21671,1435 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_INTERFACE_FEATURE_COUNT = BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessFamilyImpl <em>Process Family</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.SimpleSemanticModelElementImpl <em>Simple Semantic Model Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.ProcessFamilyImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessFamily()
+	 * @see org.eclipse.epf.uma.impl.SimpleSemanticModelElementImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSimpleSemanticModelElement()
 	 * @generated
 	 */
-	int PROCESS_FAMILY = 89;
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT = 101;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__NAME = SEMANTIC_MODEL_BRIDGE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__GUID = SEMANTIC_MODEL_BRIDGE__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__PRESENTATION_NAME = SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__BRIEF_DESCRIPTION = SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__OWNED_RULES = SEMANTIC_MODEL_BRIDGE__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__METHOD_ELEMENT_PROPERTY = SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__KIND = SEMANTIC_MODEL_BRIDGE__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__SUPPRESSED = SEMANTIC_MODEL_BRIDGE__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__ORDERING_GUIDE = SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__IS_VISIBLE = SEMANTIC_MODEL_BRIDGE__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__CONTAINER = SEMANTIC_MODEL_BRIDGE__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__REFERENCE = SEMANTIC_MODEL_BRIDGE__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__PROPERTY = SEMANTIC_MODEL_BRIDGE__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__PRESENTATION = SEMANTIC_MODEL_BRIDGE__PRESENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__DIAGRAM = SEMANTIC_MODEL_BRIDGE__DIAGRAM;
+
+	/**
+	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__GRAPH_ELEMENT = SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Type Info</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT__TYPE_INFO = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Simple Semantic Model Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT_FEATURE_COUNT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.UMASemanticModelBridgeImpl <em>UMA Semantic Model Bridge</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.UMASemanticModelBridgeImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getUMASemanticModelBridge()
+	 * @generated
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE = 102;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__NAME = SEMANTIC_MODEL_BRIDGE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__GUID = SEMANTIC_MODEL_BRIDGE__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME = SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION = SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__OWNED_RULES = SEMANTIC_MODEL_BRIDGE__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY = SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__KIND = SEMANTIC_MODEL_BRIDGE__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__SUPPRESSED = SEMANTIC_MODEL_BRIDGE__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE = SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__IS_VISIBLE = SEMANTIC_MODEL_BRIDGE__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__CONTAINER = SEMANTIC_MODEL_BRIDGE__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__REFERENCE = SEMANTIC_MODEL_BRIDGE__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__PROPERTY = SEMANTIC_MODEL_BRIDGE__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__PRESENTATION = SEMANTIC_MODEL_BRIDGE__PRESENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__DIAGRAM = SEMANTIC_MODEL_BRIDGE__DIAGRAM;
+
+	/**
+	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT = SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE__ELEMENT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>UMA Semantic Model Bridge</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UMA_SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.CoreSemanticModelBridgeImpl <em>Core Semantic Model Bridge</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.CoreSemanticModelBridgeImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getCoreSemanticModelBridge()
+	 * @generated
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE = 103;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__NAME = SEMANTIC_MODEL_BRIDGE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__GUID = SEMANTIC_MODEL_BRIDGE__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME = SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION = SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__OWNED_RULES = SEMANTIC_MODEL_BRIDGE__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY = SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__KIND = SEMANTIC_MODEL_BRIDGE__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__SUPPRESSED = SEMANTIC_MODEL_BRIDGE__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE = SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__IS_VISIBLE = SEMANTIC_MODEL_BRIDGE__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__CONTAINER = SEMANTIC_MODEL_BRIDGE__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__REFERENCE = SEMANTIC_MODEL_BRIDGE__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__PROPERTY = SEMANTIC_MODEL_BRIDGE__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__PRESENTATION = SEMANTIC_MODEL_BRIDGE__PRESENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__DIAGRAM = SEMANTIC_MODEL_BRIDGE__DIAGRAM;
+
+	/**
+	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT = SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE__ELEMENT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Core Semantic Model Bridge</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CORE_SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.LeafElementImpl <em>Leaf Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.LeafElementImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getLeafElement()
+	 * @generated
+	 */
+	int LEAF_ELEMENT = 104;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__NAME = DIAGRAM_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__GUID = DIAGRAM_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__KIND = DIAGRAM_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
+
+	/**
+	 * The number of structural features of the '<em>Leaf Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_ELEMENT_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TextElementImpl <em>Text Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.TextElementImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTextElement()
+	 * @generated
+	 */
+	int TEXT_ELEMENT = 105;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__NAME = LEAF_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__GUID = LEAF_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__PRESENTATION_NAME = LEAF_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__BRIEF_DESCRIPTION = LEAF_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__OWNED_RULES = LEAF_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__METHOD_ELEMENT_PROPERTY = LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__KIND = LEAF_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__SUPPRESSED = LEAF_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__ORDERING_GUIDE = LEAF_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__IS_VISIBLE = LEAF_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__CONTAINER = LEAF_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__REFERENCE = LEAF_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__PROPERTY = LEAF_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT__TEXT = LEAF_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Text Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEXT_ELEMENT_FEATURE_COUNT = LEAF_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ImageImpl <em>Image</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.ImageImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getImage()
+	 * @generated
+	 */
+	int IMAGE = 106;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__NAME = LEAF_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__GUID = LEAF_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__PRESENTATION_NAME = LEAF_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__BRIEF_DESCRIPTION = LEAF_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__OWNED_RULES = LEAF_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__METHOD_ELEMENT_PROPERTY = LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__KIND = LEAF_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__SUPPRESSED = LEAF_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__ORDERING_GUIDE = LEAF_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__IS_VISIBLE = LEAF_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__CONTAINER = LEAF_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__REFERENCE = LEAF_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__PROPERTY = LEAF_ELEMENT__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Uri</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__URI = LEAF_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Mime Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE__MIME_TYPE = LEAF_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Image</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IMAGE_FEATURE_COUNT = LEAF_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphicPrimitiveImpl <em>Graphic Primitive</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.GraphicPrimitiveImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphicPrimitive()
+	 * @generated
+	 */
+	int GRAPHIC_PRIMITIVE = 107;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__NAME = LEAF_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__GUID = LEAF_ELEMENT__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__PRESENTATION_NAME = LEAF_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__BRIEF_DESCRIPTION = LEAF_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__OWNED_RULES = LEAF_ELEMENT__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__METHOD_ELEMENT_PROPERTY = LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__KIND = LEAF_ELEMENT__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__SUPPRESSED = LEAF_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__ORDERING_GUIDE = LEAF_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__IS_VISIBLE = LEAF_ELEMENT__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__CONTAINER = LEAF_ELEMENT__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__REFERENCE = LEAF_ELEMENT__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE__PROPERTY = LEAF_ELEMENT__PROPERTY;
+
+	/**
+	 * The number of structural features of the '<em>Graphic Primitive</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GRAPHIC_PRIMITIVE_FEATURE_COUNT = LEAF_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PolylineImpl <em>Polyline</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.PolylineImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPolyline()
+	 * @generated
+	 */
+	int POLYLINE = 108;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__NAME = GRAPHIC_PRIMITIVE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__GUID = GRAPHIC_PRIMITIVE__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__PRESENTATION_NAME = GRAPHIC_PRIMITIVE__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__BRIEF_DESCRIPTION = GRAPHIC_PRIMITIVE__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__OWNED_RULES = GRAPHIC_PRIMITIVE__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__METHOD_ELEMENT_PROPERTY = GRAPHIC_PRIMITIVE__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__KIND = GRAPHIC_PRIMITIVE__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__SUPPRESSED = GRAPHIC_PRIMITIVE__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__ORDERING_GUIDE = GRAPHIC_PRIMITIVE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__IS_VISIBLE = GRAPHIC_PRIMITIVE__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__CONTAINER = GRAPHIC_PRIMITIVE__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__REFERENCE = GRAPHIC_PRIMITIVE__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__PROPERTY = GRAPHIC_PRIMITIVE__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Closed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__CLOSED = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Waypoints</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE__WAYPOINTS = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Polyline</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYLINE_FEATURE_COUNT = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.EllipseImpl <em>Ellipse</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.EllipseImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getEllipse()
+	 * @generated
+	 */
+	int ELLIPSE = 109;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__NAME = GRAPHIC_PRIMITIVE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Guid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__GUID = GRAPHIC_PRIMITIVE__GUID;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__PRESENTATION_NAME = GRAPHIC_PRIMITIVE__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__BRIEF_DESCRIPTION = GRAPHIC_PRIMITIVE__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__OWNED_RULES = GRAPHIC_PRIMITIVE__OWNED_RULES;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__METHOD_ELEMENT_PROPERTY = GRAPHIC_PRIMITIVE__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Kind</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__KIND = GRAPHIC_PRIMITIVE__KIND;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__SUPPRESSED = GRAPHIC_PRIMITIVE__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__ORDERING_GUIDE = GRAPHIC_PRIMITIVE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__IS_VISIBLE = GRAPHIC_PRIMITIVE__IS_VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Container</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__CONTAINER = GRAPHIC_PRIMITIVE__CONTAINER;
+
+	/**
+	 * The feature id for the '<em><b>Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__REFERENCE = GRAPHIC_PRIMITIVE__REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__PROPERTY = GRAPHIC_PRIMITIVE__PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Center</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__CENTER = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Radius X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__RADIUS_X = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Radius Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__RADIUS_Y = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Rotation</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__ROTATION = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Start Angle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__START_ANGLE = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>End Angle</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE__END_ANGLE = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of structural features of the '<em>Ellipse</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELLIPSE_FEATURE_COUNT = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -19382,16 +23309,6 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_FAMILY_FEATURE_COUNT = METHOD_CONFIGURATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.MethodLibraryImpl <em>Method Library</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.MethodLibraryImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getMethodLibrary()
-	 * @generated
-	 */
-	int METHOD_LIBRARY = 90;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19543,3285 +23460,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int METHOD_LIBRARY_FEATURE_COUNT = METHOD_UNIT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PointImpl <em>Point</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.PointImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPoint()
-	 * @generated
-	 */
-	int POINT = 91;
-
-	/**
-	 * The feature id for the '<em><b>X</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POINT__X = 0;
-
-	/**
-	 * The feature id for the '<em><b>Y</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POINT__Y = 1;
-
-	/**
-	 * The number of structural features of the '<em>Point</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POINT_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DiagramElementImpl <em>Diagram Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.DiagramElementImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagramElement()
-	 * @generated
-	 */
-	int DIAGRAM_ELEMENT = 93;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__NAME = METHOD_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__GUID = METHOD_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__BRIEF_DESCRIPTION = METHOD_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__OWNED_RULES = METHOD_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY = METHOD_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__KIND = METHOD_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__SUPPRESSED = METHOD_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__IS_VISIBLE = METHOD_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__CONTAINER = METHOD_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__REFERENCE = METHOD_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT__PROPERTY = METHOD_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The number of structural features of the '<em>Diagram Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_ELEMENT_FEATURE_COUNT = METHOD_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphElementImpl <em>Graph Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.GraphElementImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphElement()
-	 * @generated
-	 */
-	int GRAPH_ELEMENT = 92;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__NAME = DIAGRAM_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__GUID = DIAGRAM_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__KIND = DIAGRAM_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Position</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__POSITION = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__CONTAINED = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__LINK = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__ANCHORAGE = DIAGRAM_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT__SEMANTIC_MODEL = DIAGRAM_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The number of structural features of the '<em>Graph Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_ELEMENT_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 5;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DiagramLinkImpl <em>Diagram Link</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.DiagramLinkImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagramLink()
-	 * @generated
-	 */
-	int DIAGRAM_LINK = 94;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__NAME = DIAGRAM_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__GUID = DIAGRAM_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__KIND = DIAGRAM_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Zoom</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__ZOOM = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Viewport</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__VIEWPORT = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__GRAPH_ELEMENT = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Diagram</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK__DIAGRAM = DIAGRAM_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The number of structural features of the '<em>Diagram Link</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_LINK_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphConnectorImpl <em>Graph Connector</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.GraphConnectorImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphConnector()
-	 * @generated
-	 */
-	int GRAPH_CONNECTOR = 95;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__NAME = GRAPH_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__GUID = GRAPH_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__PRESENTATION_NAME = GRAPH_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__BRIEF_DESCRIPTION = GRAPH_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__OWNED_RULES = GRAPH_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__METHOD_ELEMENT_PROPERTY = GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__KIND = GRAPH_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__SUPPRESSED = GRAPH_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__ORDERING_GUIDE = GRAPH_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__IS_VISIBLE = GRAPH_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__CONTAINER = GRAPH_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__REFERENCE = GRAPH_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__PROPERTY = GRAPH_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Position</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__POSITION = GRAPH_ELEMENT__POSITION;
-
-	/**
-	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__CONTAINED = GRAPH_ELEMENT__CONTAINED;
-
-	/**
-	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__LINK = GRAPH_ELEMENT__LINK;
-
-	/**
-	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__ANCHORAGE = GRAPH_ELEMENT__ANCHORAGE;
-
-	/**
-	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__SEMANTIC_MODEL = GRAPH_ELEMENT__SEMANTIC_MODEL;
-
-	/**
-	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__GRAPH_ELEMENT = GRAPH_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Graph Edge</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR__GRAPH_EDGE = GRAPH_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Graph Connector</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_CONNECTOR_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.SemanticModelBridgeImpl <em>Semantic Model Bridge</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.SemanticModelBridgeImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSemanticModelBridge()
-	 * @generated
-	 */
-	int SEMANTIC_MODEL_BRIDGE = 96;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__NAME = DIAGRAM_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__GUID = DIAGRAM_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__KIND = DIAGRAM_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__PRESENTATION = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE__DIAGRAM = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Semantic Model Bridge</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DimensionImpl <em>Dimension</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.DimensionImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDimension()
-	 * @generated
-	 */
-	int DIMENSION = 97;
-
-	/**
-	 * The feature id for the '<em><b>Width</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIMENSION__WIDTH = 0;
-
-	/**
-	 * The feature id for the '<em><b>Height</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIMENSION__HEIGHT = 1;
-
-	/**
-	 * The number of structural features of the '<em>Dimension</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIMENSION_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ReferenceImpl <em>Reference</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.ReferenceImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getReference()
-	 * @generated
-	 */
-	int REFERENCE = 98;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__NAME = DIAGRAM_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__GUID = DIAGRAM_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__KIND = DIAGRAM_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Is Individual Representation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__IS_INDIVIDUAL_REPRESENTATION = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Referenced</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE__REFERENCED = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Reference</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REFERENCE_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PropertyImpl <em>Property</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.PropertyImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProperty()
-	 * @generated
-	 */
-	int PROPERTY = 99;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__NAME = DIAGRAM_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__GUID = DIAGRAM_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__KIND = DIAGRAM_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Key</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__KEY = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY__VALUE = DIAGRAM_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Property</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROPERTY_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphEdgeImpl <em>Graph Edge</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.GraphEdgeImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphEdge()
-	 * @generated
-	 */
-	int GRAPH_EDGE = 100;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__NAME = GRAPH_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__GUID = GRAPH_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__PRESENTATION_NAME = GRAPH_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__BRIEF_DESCRIPTION = GRAPH_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__OWNED_RULES = GRAPH_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__METHOD_ELEMENT_PROPERTY = GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__KIND = GRAPH_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__SUPPRESSED = GRAPH_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__ORDERING_GUIDE = GRAPH_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__IS_VISIBLE = GRAPH_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__CONTAINER = GRAPH_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__REFERENCE = GRAPH_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__PROPERTY = GRAPH_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Position</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__POSITION = GRAPH_ELEMENT__POSITION;
-
-	/**
-	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__CONTAINED = GRAPH_ELEMENT__CONTAINED;
-
-	/**
-	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__LINK = GRAPH_ELEMENT__LINK;
-
-	/**
-	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__ANCHORAGE = GRAPH_ELEMENT__ANCHORAGE;
-
-	/**
-	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__SEMANTIC_MODEL = GRAPH_ELEMENT__SEMANTIC_MODEL;
-
-	/**
-	 * The feature id for the '<em><b>Anchor</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__ANCHOR = GRAPH_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Waypoints</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE__WAYPOINTS = GRAPH_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Graph Edge</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_EDGE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphNodeImpl <em>Graph Node</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.GraphNodeImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphNode()
-	 * @generated
-	 */
-	int GRAPH_NODE = 102;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__NAME = GRAPH_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__GUID = GRAPH_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__PRESENTATION_NAME = GRAPH_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__BRIEF_DESCRIPTION = GRAPH_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__OWNED_RULES = GRAPH_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__METHOD_ELEMENT_PROPERTY = GRAPH_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__KIND = GRAPH_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__SUPPRESSED = GRAPH_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__ORDERING_GUIDE = GRAPH_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__IS_VISIBLE = GRAPH_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__CONTAINER = GRAPH_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__REFERENCE = GRAPH_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__PROPERTY = GRAPH_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Position</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__POSITION = GRAPH_ELEMENT__POSITION;
-
-	/**
-	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__CONTAINED = GRAPH_ELEMENT__CONTAINED;
-
-	/**
-	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__LINK = GRAPH_ELEMENT__LINK;
-
-	/**
-	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__ANCHORAGE = GRAPH_ELEMENT__ANCHORAGE;
-
-	/**
-	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__SEMANTIC_MODEL = GRAPH_ELEMENT__SEMANTIC_MODEL;
-
-	/**
-	 * The feature id for the '<em><b>Size</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE__SIZE = GRAPH_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Graph Node</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPH_NODE_FEATURE_COUNT = GRAPH_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DiagramImpl <em>Diagram</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.DiagramImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagram()
-	 * @generated
-	 */
-	int DIAGRAM = 101;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__NAME = GRAPH_NODE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__GUID = GRAPH_NODE__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__PRESENTATION_NAME = GRAPH_NODE__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__BRIEF_DESCRIPTION = GRAPH_NODE__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__OWNED_RULES = GRAPH_NODE__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__METHOD_ELEMENT_PROPERTY = GRAPH_NODE__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__KIND = GRAPH_NODE__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__SUPPRESSED = GRAPH_NODE__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__ORDERING_GUIDE = GRAPH_NODE__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__IS_VISIBLE = GRAPH_NODE__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__CONTAINER = GRAPH_NODE__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__REFERENCE = GRAPH_NODE__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__PROPERTY = GRAPH_NODE__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Position</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__POSITION = GRAPH_NODE__POSITION;
-
-	/**
-	 * The feature id for the '<em><b>Contained</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__CONTAINED = GRAPH_NODE__CONTAINED;
-
-	/**
-	 * The feature id for the '<em><b>Link</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__LINK = GRAPH_NODE__LINK;
-
-	/**
-	 * The feature id for the '<em><b>Anchorage</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__ANCHORAGE = GRAPH_NODE__ANCHORAGE;
-
-	/**
-	 * The feature id for the '<em><b>Semantic Model</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__SEMANTIC_MODEL = GRAPH_NODE__SEMANTIC_MODEL;
-
-	/**
-	 * The feature id for the '<em><b>Size</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__SIZE = GRAPH_NODE__SIZE;
-
-	/**
-	 * The feature id for the '<em><b>Zoom</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__ZOOM = GRAPH_NODE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Viewpoint</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__VIEWPOINT = GRAPH_NODE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Diagram Link</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__DIAGRAM_LINK = GRAPH_NODE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Namespace</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM__NAMESPACE = GRAPH_NODE_FEATURE_COUNT + 3;
-
-	/**
-	 * The number of structural features of the '<em>Diagram</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DIAGRAM_FEATURE_COUNT = GRAPH_NODE_FEATURE_COUNT + 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.SimpleSemanticModelElementImpl <em>Simple Semantic Model Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.SimpleSemanticModelElementImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSimpleSemanticModelElement()
-	 * @generated
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT = 103;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__NAME = SEMANTIC_MODEL_BRIDGE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__GUID = SEMANTIC_MODEL_BRIDGE__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__PRESENTATION_NAME = SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__BRIEF_DESCRIPTION = SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__OWNED_RULES = SEMANTIC_MODEL_BRIDGE__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__METHOD_ELEMENT_PROPERTY = SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__KIND = SEMANTIC_MODEL_BRIDGE__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__SUPPRESSED = SEMANTIC_MODEL_BRIDGE__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__ORDERING_GUIDE = SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__IS_VISIBLE = SEMANTIC_MODEL_BRIDGE__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__CONTAINER = SEMANTIC_MODEL_BRIDGE__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__REFERENCE = SEMANTIC_MODEL_BRIDGE__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__PROPERTY = SEMANTIC_MODEL_BRIDGE__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__PRESENTATION = SEMANTIC_MODEL_BRIDGE__PRESENTATION;
-
-	/**
-	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__GRAPH_ELEMENT = SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT;
-
-	/**
-	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__DIAGRAM = SEMANTIC_MODEL_BRIDGE__DIAGRAM;
-
-	/**
-	 * The feature id for the '<em><b>Type Info</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT__TYPE_INFO = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Simple Semantic Model Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT_FEATURE_COUNT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.UMASemanticModelBridgeImpl <em>UMA Semantic Model Bridge</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.UMASemanticModelBridgeImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getUMASemanticModelBridge()
-	 * @generated
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE = 104;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__NAME = SEMANTIC_MODEL_BRIDGE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__GUID = SEMANTIC_MODEL_BRIDGE__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME = SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION = SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__OWNED_RULES = SEMANTIC_MODEL_BRIDGE__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY = SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__KIND = SEMANTIC_MODEL_BRIDGE__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__SUPPRESSED = SEMANTIC_MODEL_BRIDGE__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE = SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__IS_VISIBLE = SEMANTIC_MODEL_BRIDGE__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__CONTAINER = SEMANTIC_MODEL_BRIDGE__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__REFERENCE = SEMANTIC_MODEL_BRIDGE__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__PROPERTY = SEMANTIC_MODEL_BRIDGE__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__PRESENTATION = SEMANTIC_MODEL_BRIDGE__PRESENTATION;
-
-	/**
-	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT = SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT;
-
-	/**
-	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__DIAGRAM = SEMANTIC_MODEL_BRIDGE__DIAGRAM;
-
-	/**
-	 * The feature id for the '<em><b>Element</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE__ELEMENT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>UMA Semantic Model Bridge</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.CoreSemanticModelBridgeImpl <em>Core Semantic Model Bridge</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.CoreSemanticModelBridgeImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getCoreSemanticModelBridge()
-	 * @generated
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE = 105;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__NAME = SEMANTIC_MODEL_BRIDGE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__GUID = SEMANTIC_MODEL_BRIDGE__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME = SEMANTIC_MODEL_BRIDGE__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION = SEMANTIC_MODEL_BRIDGE__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__OWNED_RULES = SEMANTIC_MODEL_BRIDGE__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY = SEMANTIC_MODEL_BRIDGE__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__KIND = SEMANTIC_MODEL_BRIDGE__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__SUPPRESSED = SEMANTIC_MODEL_BRIDGE__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE = SEMANTIC_MODEL_BRIDGE__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__IS_VISIBLE = SEMANTIC_MODEL_BRIDGE__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__CONTAINER = SEMANTIC_MODEL_BRIDGE__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__REFERENCE = SEMANTIC_MODEL_BRIDGE__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__PROPERTY = SEMANTIC_MODEL_BRIDGE__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Presentation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__PRESENTATION = SEMANTIC_MODEL_BRIDGE__PRESENTATION;
-
-	/**
-	 * The feature id for the '<em><b>Graph Element</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT = SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT;
-
-	/**
-	 * The feature id for the '<em><b>Diagram</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__DIAGRAM = SEMANTIC_MODEL_BRIDGE__DIAGRAM;
-
-	/**
-	 * The feature id for the '<em><b>Element</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE__ELEMENT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Core Semantic Model Bridge</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT = SEMANTIC_MODEL_BRIDGE_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.LeafElementImpl <em>Leaf Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.LeafElementImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getLeafElement()
-	 * @generated
-	 */
-	int LEAF_ELEMENT = 106;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__NAME = DIAGRAM_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__GUID = DIAGRAM_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__PRESENTATION_NAME = DIAGRAM_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__BRIEF_DESCRIPTION = DIAGRAM_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__OWNED_RULES = DIAGRAM_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY = DIAGRAM_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__KIND = DIAGRAM_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__SUPPRESSED = DIAGRAM_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__ORDERING_GUIDE = DIAGRAM_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__IS_VISIBLE = DIAGRAM_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__CONTAINER = DIAGRAM_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__REFERENCE = DIAGRAM_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT__PROPERTY = DIAGRAM_ELEMENT__PROPERTY;
-
-	/**
-	 * The number of structural features of the '<em>Leaf Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LEAF_ELEMENT_FEATURE_COUNT = DIAGRAM_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TextElementImpl <em>Text Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.TextElementImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTextElement()
-	 * @generated
-	 */
-	int TEXT_ELEMENT = 107;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__NAME = LEAF_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__GUID = LEAF_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__PRESENTATION_NAME = LEAF_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__BRIEF_DESCRIPTION = LEAF_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__OWNED_RULES = LEAF_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__METHOD_ELEMENT_PROPERTY = LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__KIND = LEAF_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__SUPPRESSED = LEAF_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__ORDERING_GUIDE = LEAF_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__IS_VISIBLE = LEAF_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__CONTAINER = LEAF_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__REFERENCE = LEAF_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__PROPERTY = LEAF_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Text</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT__TEXT = LEAF_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Text Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEXT_ELEMENT_FEATURE_COUNT = LEAF_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ImageImpl <em>Image</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.ImageImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getImage()
-	 * @generated
-	 */
-	int IMAGE = 108;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__NAME = LEAF_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__GUID = LEAF_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__PRESENTATION_NAME = LEAF_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__BRIEF_DESCRIPTION = LEAF_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__OWNED_RULES = LEAF_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__METHOD_ELEMENT_PROPERTY = LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__KIND = LEAF_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__SUPPRESSED = LEAF_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__ORDERING_GUIDE = LEAF_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__IS_VISIBLE = LEAF_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__CONTAINER = LEAF_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__REFERENCE = LEAF_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__PROPERTY = LEAF_ELEMENT__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Uri</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__URI = LEAF_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Mime Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__MIME_TYPE = LEAF_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Image</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE_FEATURE_COUNT = LEAF_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphicPrimitiveImpl <em>Graphic Primitive</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.GraphicPrimitiveImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphicPrimitive()
-	 * @generated
-	 */
-	int GRAPHIC_PRIMITIVE = 109;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__NAME = LEAF_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__GUID = LEAF_ELEMENT__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__PRESENTATION_NAME = LEAF_ELEMENT__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__BRIEF_DESCRIPTION = LEAF_ELEMENT__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__OWNED_RULES = LEAF_ELEMENT__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__METHOD_ELEMENT_PROPERTY = LEAF_ELEMENT__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__KIND = LEAF_ELEMENT__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__SUPPRESSED = LEAF_ELEMENT__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__ORDERING_GUIDE = LEAF_ELEMENT__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__IS_VISIBLE = LEAF_ELEMENT__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__CONTAINER = LEAF_ELEMENT__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__REFERENCE = LEAF_ELEMENT__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE__PROPERTY = LEAF_ELEMENT__PROPERTY;
-
-	/**
-	 * The number of structural features of the '<em>Graphic Primitive</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GRAPHIC_PRIMITIVE_FEATURE_COUNT = LEAF_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PolylineImpl <em>Polyline</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.PolylineImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPolyline()
-	 * @generated
-	 */
-	int POLYLINE = 110;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__NAME = GRAPHIC_PRIMITIVE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__GUID = GRAPHIC_PRIMITIVE__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__PRESENTATION_NAME = GRAPHIC_PRIMITIVE__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__BRIEF_DESCRIPTION = GRAPHIC_PRIMITIVE__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__OWNED_RULES = GRAPHIC_PRIMITIVE__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__METHOD_ELEMENT_PROPERTY = GRAPHIC_PRIMITIVE__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__KIND = GRAPHIC_PRIMITIVE__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__SUPPRESSED = GRAPHIC_PRIMITIVE__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__ORDERING_GUIDE = GRAPHIC_PRIMITIVE__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__IS_VISIBLE = GRAPHIC_PRIMITIVE__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__CONTAINER = GRAPHIC_PRIMITIVE__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__REFERENCE = GRAPHIC_PRIMITIVE__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__PROPERTY = GRAPHIC_PRIMITIVE__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Closed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__CLOSED = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Waypoints</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE__WAYPOINTS = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Polyline</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POLYLINE_FEATURE_COUNT = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.EllipseImpl <em>Ellipse</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.epf.uma.impl.EllipseImpl
-	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getEllipse()
-	 * @generated
-	 */
-	int ELLIPSE = 111;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__NAME = GRAPHIC_PRIMITIVE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Guid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__GUID = GRAPHIC_PRIMITIVE__GUID;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__PRESENTATION_NAME = GRAPHIC_PRIMITIVE__PRESENTATION_NAME;
-
-	/**
-	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__BRIEF_DESCRIPTION = GRAPHIC_PRIMITIVE__BRIEF_DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__OWNED_RULES = GRAPHIC_PRIMITIVE__OWNED_RULES;
-
-	/**
-	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__METHOD_ELEMENT_PROPERTY = GRAPHIC_PRIMITIVE__METHOD_ELEMENT_PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Kind</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__KIND = GRAPHIC_PRIMITIVE__KIND;
-
-	/**
-	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__SUPPRESSED = GRAPHIC_PRIMITIVE__SUPPRESSED;
-
-	/**
-	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__ORDERING_GUIDE = GRAPHIC_PRIMITIVE__ORDERING_GUIDE;
-
-	/**
-	 * The feature id for the '<em><b>Is Visible</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__IS_VISIBLE = GRAPHIC_PRIMITIVE__IS_VISIBLE;
-
-	/**
-	 * The feature id for the '<em><b>Container</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__CONTAINER = GRAPHIC_PRIMITIVE__CONTAINER;
-
-	/**
-	 * The feature id for the '<em><b>Reference</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__REFERENCE = GRAPHIC_PRIMITIVE__REFERENCE;
-
-	/**
-	 * The feature id for the '<em><b>Property</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__PROPERTY = GRAPHIC_PRIMITIVE__PROPERTY;
-
-	/**
-	 * The feature id for the '<em><b>Radius X</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__RADIUS_X = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Radius Y</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__RADIUS_Y = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Rotation</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__ROTATION = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Start Angle</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__START_ANGLE = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>End Angle</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__END_ANGLE = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Center</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE__CENTER = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 5;
-
-	/**
-	 * The number of structural features of the '<em>Ellipse</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ELLIPSE_FEATURE_COUNT = GRAPHIC_PRIMITIVE_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.WorkOrderType <em>Work Order Type</em>}' enum.
@@ -23174,17 +23812,6 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getKind_ApplicableMetaClass();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epf.uma.Kind#getIsPrimaryKind <em>Is Primary Kind</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Primary Kind</em>'.
-	 * @see org.eclipse.epf.uma.Kind#getIsPrimaryKind()
-	 * @see #getKind()
-	 * @generated
-	 */
-	EAttribute getKind_IsPrimaryKind();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.ContentElement <em>Content Element</em>}'.
@@ -24358,6 +24985,50 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getBreakdownElement_SupportingMaterials();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.BreakdownElement#getTemplates <em>Templates</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Templates</em>'.
+	 * @see org.eclipse.epf.uma.BreakdownElement#getTemplates()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EReference getBreakdownElement_Templates();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.BreakdownElement#getReports <em>Reports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Reports</em>'.
+	 * @see org.eclipse.epf.uma.BreakdownElement#getReports()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EReference getBreakdownElement_Reports();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.BreakdownElement#getEstimationconsiderations <em>Estimationconsiderations</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Estimationconsiderations</em>'.
+	 * @see org.eclipse.epf.uma.BreakdownElement#getEstimationconsiderations()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EReference getBreakdownElement_Estimationconsiderations();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.BreakdownElement#getToolmentor <em>Toolmentor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Toolmentor</em>'.
+	 * @see org.eclipse.epf.uma.BreakdownElement#getToolmentor()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EReference getBreakdownElement_Toolmentor();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.Milestone <em>Milestone</em>}'.
@@ -25932,10 +26603,10 @@ public interface UmaPackage extends EPackage {
 	EClass getGraphElement();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.epf.uma.GraphElement#getPosition <em>Position</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.epf.uma.GraphElement#getPosition <em>Position</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Position</em>'.
+	 * @return the meta object for the reference '<em>Position</em>'.
 	 * @see org.eclipse.epf.uma.GraphElement#getPosition()
 	 * @see #getGraphElement()
 	 * @generated
@@ -26062,10 +26733,10 @@ public interface UmaPackage extends EPackage {
 	EAttribute getDiagramLink_Zoom();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.epf.uma.DiagramLink#getViewport <em>Viewport</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.epf.uma.DiagramLink#getViewport <em>Viewport</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Viewport</em>'.
+	 * @return the meta object for the reference '<em>Viewport</em>'.
 	 * @see org.eclipse.epf.uma.DiagramLink#getViewport()
 	 * @see #getDiagramLink()
 	 * @generated
@@ -26319,10 +26990,10 @@ public interface UmaPackage extends EPackage {
 	EAttribute getDiagram_Zoom();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.epf.uma.Diagram#getViewpoint <em>Viewpoint</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.epf.uma.Diagram#getViewpoint <em>Viewpoint</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Viewpoint</em>'.
+	 * @return the meta object for the reference '<em>Viewpoint</em>'.
 	 * @see org.eclipse.epf.uma.Diagram#getViewpoint()
 	 * @see #getDiagram()
 	 * @generated
@@ -26362,10 +27033,10 @@ public interface UmaPackage extends EPackage {
 	EClass getGraphNode();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.epf.uma.GraphNode#getSize <em>Size</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.epf.uma.GraphNode#getSize <em>Size</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Size</em>'.
+	 * @return the meta object for the reference '<em>Size</em>'.
 	 * @see org.eclipse.epf.uma.GraphNode#getSize()
 	 * @see #getGraphNode()
 	 * @generated
@@ -26606,10 +27277,10 @@ public interface UmaPackage extends EPackage {
 	EAttribute getEllipse_EndAngle();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.epf.uma.Ellipse#getCenter <em>Center</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.epf.uma.Ellipse#getCenter <em>Center</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Center</em>'.
+	 * @return the meta object for the reference '<em>Center</em>'.
 	 * @see org.eclipse.epf.uma.Ellipse#getCenter()
 	 * @see #getEllipse()
 	 * @generated
@@ -26967,14 +27638,6 @@ public interface UmaPackage extends EPackage {
 		 */
 		EAttribute KIND__APPLICABLE_META_CLASS = eINSTANCE
 				.getKind_ApplicableMetaClass();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Primary Kind</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute KIND__IS_PRIMARY_KIND = eINSTANCE.getKind_IsPrimaryKind();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.ContentElementImpl <em>Content Element</em>}' class.
@@ -27968,6 +28631,42 @@ public interface UmaPackage extends EPackage {
 		 */
 		EReference BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS = eINSTANCE
 				.getBreakdownElement_SupportingMaterials();
+
+		/**
+		 * The meta object literal for the '<em><b>Templates</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BREAKDOWN_ELEMENT__TEMPLATES = eINSTANCE
+				.getBreakdownElement_Templates();
+
+		/**
+		 * The meta object literal for the '<em><b>Reports</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BREAKDOWN_ELEMENT__REPORTS = eINSTANCE
+				.getBreakdownElement_Reports();
+
+		/**
+		 * The meta object literal for the '<em><b>Estimationconsiderations</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS = eINSTANCE
+				.getBreakdownElement_Estimationconsiderations();
+
+		/**
+		 * The meta object literal for the '<em><b>Toolmentor</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference BREAKDOWN_ELEMENT__TOOLMENTOR = eINSTANCE
+				.getBreakdownElement_Toolmentor();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.MilestoneImpl <em>Milestone</em>}' class.
@@ -29347,7 +30046,7 @@ public interface UmaPackage extends EPackage {
 		EClass GRAPH_ELEMENT = eINSTANCE.getGraphElement();
 
 		/**
-		 * The meta object literal for the '<em><b>Position</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Position</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -29455,7 +30154,7 @@ public interface UmaPackage extends EPackage {
 		EAttribute DIAGRAM_LINK__ZOOM = eINSTANCE.getDiagramLink_Zoom();
 
 		/**
-		 * The meta object literal for the '<em><b>Viewport</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Viewport</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -29668,7 +30367,7 @@ public interface UmaPackage extends EPackage {
 		EAttribute DIAGRAM__ZOOM = eINSTANCE.getDiagram_Zoom();
 
 		/**
-		 * The meta object literal for the '<em><b>Viewpoint</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Viewpoint</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -29702,7 +30401,7 @@ public interface UmaPackage extends EPackage {
 		EClass GRAPH_NODE = eINSTANCE.getGraphNode();
 
 		/**
-		 * The meta object literal for the '<em><b>Size</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Size</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -29910,7 +30609,7 @@ public interface UmaPackage extends EPackage {
 		EAttribute ELLIPSE__END_ANGLE = eINSTANCE.getEllipse_EndAngle();
 
 		/**
-		 * The meta object literal for the '<em><b>Center</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Center</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

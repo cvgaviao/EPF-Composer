@@ -60,8 +60,9 @@ public class DiagramItemProvider extends GraphNodeItemProvider implements
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addZoomPropertyDescriptor(object);
 			addDiagramLinkPropertyDescriptor(object);
+			addZoomPropertyDescriptor(object);
+			addViewpointPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -83,6 +84,25 @@ public class DiagramItemProvider extends GraphNodeItemProvider implements
 								"_UI_PropertyDescriptor_description", "_UI_Diagram_zoom_feature", "_UI_Diagram_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.DIAGRAM__ZOOM, true, false, false,
 						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Viewpoint feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addViewpointPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_Diagram_viewpoint_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_Diagram_viewpoint_feature", "_UI_Diagram_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.DIAGRAM__VIEWPOINT, true, false,
+						true, null, null, null));
 	}
 
 	/**
@@ -117,7 +137,6 @@ public class DiagramItemProvider extends GraphNodeItemProvider implements
 			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(UmaPackage.Literals.DIAGRAM__VIEWPOINT);
 			childrenFeatures.add(UmaPackage.Literals.DIAGRAM__NAMESPACE);
 		}
 		return childrenFeatures;
@@ -177,7 +196,6 @@ public class DiagramItemProvider extends GraphNodeItemProvider implements
 			fireNotifyChanged(new ViewerNotification(notification, notification
 					.getNotifier(), false, true));
 			return;
-		case UmaPackage.DIAGRAM__VIEWPOINT:
 		case UmaPackage.DIAGRAM__NAMESPACE:
 			fireNotifyChanged(new ViewerNotification(notification, notification
 					.getNotifier(), true, false));
@@ -197,10 +215,6 @@ public class DiagramItemProvider extends GraphNodeItemProvider implements
 	protected void collectNewChildDescriptors(
 			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add(createChildParameter(
-				UmaPackage.Literals.DIAGRAM__VIEWPOINT, UmaFactory.eINSTANCE
-						.createPoint()));
 
 		newChildDescriptors.add(createChildParameter(
 				UmaPackage.Literals.DIAGRAM__NAMESPACE, UmaFactory.eINSTANCE
@@ -229,8 +243,6 @@ public class DiagramItemProvider extends GraphNodeItemProvider implements
 
 		boolean qualify = childFeature == UmaPackage.Literals.DIAGRAM_ELEMENT__PROPERTY
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED
-				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__POSITION
-				|| childFeature == UmaPackage.Literals.DIAGRAM__VIEWPOINT
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__LINK
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__ANCHORAGE
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__SEMANTIC_MODEL

@@ -43,7 +43,7 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The cached value of the '{@link #getSize() <em>Size</em>}' containment reference.
+	 * The cached value of the '{@link #getSize() <em>Size</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getSize()
@@ -81,16 +81,6 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 			InternalEObject oldSize = (InternalEObject) size;
 			size = (Dimension) eResolveProxy(oldSize);
 			if (size != oldSize) {
-				InternalEObject newSize = (InternalEObject) size;
-				NotificationChain msgs = oldSize.eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE - UmaPackage.GRAPH_NODE__SIZE,
-						null, null);
-				if (newSize.eInternalContainer() == null) {
-					msgs = newSize.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-							- UmaPackage.GRAPH_NODE__SIZE, null, msgs);
-				}
-				if (msgs != null)
-					msgs.dispatch();
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 							UmaPackage.GRAPH_NODE__SIZE, oldSize, size));
@@ -113,59 +103,12 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetSize(Dimension newSize,
-			NotificationChain msgs) {
+	public void setSize(Dimension newSize) {
 		Dimension oldSize = size;
 		size = newSize;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this,
-					Notification.SET, UmaPackage.GRAPH_NODE__SIZE, oldSize,
-					newSize);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSize(Dimension newSize) {
-		if (newSize != size) {
-			NotificationChain msgs = null;
-			if (size != null)
-				msgs = ((InternalEObject) size).eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE - UmaPackage.GRAPH_NODE__SIZE,
-						null, msgs);
-			if (newSize != null)
-				msgs = ((InternalEObject) newSize).eInverseAdd(this,
-						EOPPOSITE_FEATURE_BASE - UmaPackage.GRAPH_NODE__SIZE,
-						null, msgs);
-			msgs = basicSetSize(newSize, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.GRAPH_NODE__SIZE, newSize, newSize));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd,
-			int featureID, NotificationChain msgs) {
-		switch (featureID) {
-		case UmaPackage.GRAPH_NODE__SIZE:
-			return basicSetSize(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
+					UmaPackage.GRAPH_NODE__SIZE, oldSize, size));
 	}
 
 	/**

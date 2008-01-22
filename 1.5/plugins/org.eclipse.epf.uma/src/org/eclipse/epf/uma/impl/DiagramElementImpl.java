@@ -81,6 +81,15 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	protected Boolean isVisible = IS_VISIBLE_EDEFAULT;
 
 	/**
+	 * This is true if the Is Visible attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isVisibleESet;
+
+	/**
 	 * The cached value of the '{@link #getReference() <em>Reference</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -136,10 +145,37 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	public void setIsVisible(Boolean newIsVisible) {
 		Boolean oldIsVisible = isVisible;
 		isVisible = newIsVisible;
+		boolean oldIsVisibleESet = isVisibleESet;
+		isVisibleESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE, oldIsVisible,
-					isVisible));
+					isVisible, !oldIsVisibleESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetIsVisible() {
+		Boolean oldIsVisible = isVisible;
+		boolean oldIsVisibleESet = isVisibleESet;
+		isVisible = IS_VISIBLE_EDEFAULT;
+		isVisibleESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE, oldIsVisible,
+					IS_VISIBLE_EDEFAULT, oldIsVisibleESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetIsVisible() {
+		return isVisibleESet;
 	}
 
 	/**
@@ -348,7 +384,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE:
-			setIsVisible(IS_VISIBLE_EDEFAULT);
+			unsetIsVisible();
 			return;
 		case UmaPackage.DIAGRAM_ELEMENT__CONTAINER:
 			setContainer((GraphElement) null);
@@ -372,8 +408,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_ELEMENT__IS_VISIBLE:
-			return IS_VISIBLE_EDEFAULT == null ? isVisible != null
-					: !IS_VISIBLE_EDEFAULT.equals(isVisible);
+			return isSetIsVisible();
 		case UmaPackage.DIAGRAM_ELEMENT__CONTAINER:
 			return basicGetContainer() != null;
 		case UmaPackage.DIAGRAM_ELEMENT__REFERENCE:
@@ -396,7 +431,10 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isVisible: "); //$NON-NLS-1$
-		result.append(isVisible);
+		if (isVisibleESet)
+			result.append(isVisible);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

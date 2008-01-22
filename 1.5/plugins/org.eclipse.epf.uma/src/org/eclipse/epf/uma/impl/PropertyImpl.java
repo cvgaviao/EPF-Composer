@@ -60,6 +60,15 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	protected String key = KEY_EDEFAULT;
 
 	/**
+	 * This is true if the Key attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean keyESet;
+
+	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -78,6 +87,15 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 * @ordered
 	 */
 	protected String value = VALUE_EDEFAULT;
+
+	/**
+	 * This is true if the Value attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean valueESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -115,9 +133,35 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	public void setKey(String newKey) {
 		String oldKey = key;
 		key = newKey;
+		boolean oldKeyESet = keyESet;
+		keyESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.PROPERTY__KEY, oldKey, key));
+					UmaPackage.PROPERTY__KEY, oldKey, key, !oldKeyESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetKey() {
+		String oldKey = key;
+		boolean oldKeyESet = keyESet;
+		key = KEY_EDEFAULT;
+		keyESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.PROPERTY__KEY, oldKey, KEY_EDEFAULT, oldKeyESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetKey() {
+		return keyESet;
 	}
 
 	/**
@@ -137,9 +181,36 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	public void setValue(String newValue) {
 		String oldValue = value;
 		value = newValue;
+		boolean oldValueESet = valueESet;
+		valueESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.PROPERTY__VALUE, oldValue, value));
+					UmaPackage.PROPERTY__VALUE, oldValue, value, !oldValueESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetValue() {
+		String oldValue = value;
+		boolean oldValueESet = valueESet;
+		value = VALUE_EDEFAULT;
+		valueESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.PROPERTY__VALUE, oldValue, VALUE_EDEFAULT,
+					oldValueESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetValue() {
+		return valueESet;
 	}
 
 	/**
@@ -185,10 +256,10 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROPERTY__KEY:
-			setKey(KEY_EDEFAULT);
+			unsetKey();
 			return;
 		case UmaPackage.PROPERTY__VALUE:
-			setValue(VALUE_EDEFAULT);
+			unsetValue();
 			return;
 		}
 		super.eUnset(featureID);
@@ -203,11 +274,9 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROPERTY__KEY:
-			return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT
-					.equals(key);
+			return isSetKey();
 		case UmaPackage.PROPERTY__VALUE:
-			return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT
-					.equals(value);
+			return isSetValue();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -224,9 +293,15 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (key: "); //$NON-NLS-1$
-		result.append(key);
+		if (keyESet)
+			result.append(key);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(", value: "); //$NON-NLS-1$
-		result.append(value);
+		if (valueESet)
+			result.append(value);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

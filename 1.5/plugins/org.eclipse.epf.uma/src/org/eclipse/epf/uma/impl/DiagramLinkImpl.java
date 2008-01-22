@@ -36,8 +36,8 @@ import org.eclipse.epf.uma.UmaPackage;
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramLinkImpl#getZoom <em>Zoom</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramLinkImpl#getViewport <em>Viewport</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.DiagramLinkImpl#getGraphElement <em>Graph Element</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramLinkImpl#getDiagram <em>Diagram</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.DiagramLinkImpl#getGraphElement <em>Graph Element</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,7 +72,16 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	protected Double zoom = ZOOM_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getViewport() <em>Viewport</em>}' containment reference.
+	 * This is true if the Zoom attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean zoomESet;
+
+	/**
+	 * The cached value of the '{@link #getViewport() <em>Viewport</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getViewport()
@@ -127,9 +136,36 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public void setZoom(Double newZoom) {
 		Double oldZoom = zoom;
 		zoom = newZoom;
+		boolean oldZoomESet = zoomESet;
+		zoomESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.DIAGRAM_LINK__ZOOM, oldZoom, zoom));
+					UmaPackage.DIAGRAM_LINK__ZOOM, oldZoom, zoom, !oldZoomESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetZoom() {
+		Double oldZoom = zoom;
+		boolean oldZoomESet = zoomESet;
+		zoom = ZOOM_EDEFAULT;
+		zoomESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.DIAGRAM_LINK__ZOOM, oldZoom, ZOOM_EDEFAULT,
+					oldZoomESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetZoom() {
+		return zoomESet;
 	}
 
 	/**
@@ -142,16 +178,6 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 			InternalEObject oldViewport = (InternalEObject) viewport;
 			viewport = (Point) eResolveProxy(oldViewport);
 			if (viewport != oldViewport) {
-				InternalEObject newViewport = (InternalEObject) viewport;
-				NotificationChain msgs = oldViewport
-						.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-								- UmaPackage.DIAGRAM_LINK__VIEWPORT, null, null);
-				if (newViewport.eInternalContainer() == null) {
-					msgs = newViewport.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-							- UmaPackage.DIAGRAM_LINK__VIEWPORT, null, msgs);
-				}
-				if (msgs != null)
-					msgs.dispatch();
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 							UmaPackage.DIAGRAM_LINK__VIEWPORT, oldViewport,
@@ -175,44 +201,12 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetViewport(Point newViewport,
-			NotificationChain msgs) {
+	public void setViewport(Point newViewport) {
 		Point oldViewport = viewport;
 		viewport = newViewport;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this,
-					Notification.SET, UmaPackage.DIAGRAM_LINK__VIEWPORT,
-					oldViewport, newViewport);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setViewport(Point newViewport) {
-		if (newViewport != viewport) {
-			NotificationChain msgs = null;
-			if (viewport != null)
-				msgs = ((InternalEObject) viewport)
-						.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-								- UmaPackage.DIAGRAM_LINK__VIEWPORT, null, msgs);
-			if (newViewport != null)
-				msgs = ((InternalEObject) newViewport)
-						.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-								- UmaPackage.DIAGRAM_LINK__VIEWPORT, null, msgs);
-			msgs = basicSetViewport(newViewport, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.DIAGRAM_LINK__VIEWPORT, newViewport, newViewport));
+					UmaPackage.DIAGRAM_LINK__VIEWPORT, oldViewport, viewport));
 	}
 
 	/**
@@ -356,15 +350,15 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			return basicSetGraphElement((GraphElement) otherEnd, msgs);
 		case UmaPackage.DIAGRAM_LINK__DIAGRAM:
 			if (diagram != null)
 				msgs = ((InternalEObject) diagram).eInverseRemove(this,
 						UmaPackage.DIAGRAM__DIAGRAM_LINK, Diagram.class, msgs);
 			return basicSetDiagram((Diagram) otherEnd, msgs);
+		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			return basicSetGraphElement((GraphElement) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -378,12 +372,10 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case UmaPackage.DIAGRAM_LINK__VIEWPORT:
-			return basicSetViewport(null, msgs);
-		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
-			return basicSetGraphElement(null, msgs);
 		case UmaPackage.DIAGRAM_LINK__DIAGRAM:
 			return basicSetDiagram(null, msgs);
+		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
+			return basicSetGraphElement(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -418,14 +410,14 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 			if (resolve)
 				return getViewport();
 			return basicGetViewport();
-		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
-			if (resolve)
-				return getGraphElement();
-			return basicGetGraphElement();
 		case UmaPackage.DIAGRAM_LINK__DIAGRAM:
 			if (resolve)
 				return getDiagram();
 			return basicGetDiagram();
+		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
+			if (resolve)
+				return getGraphElement();
+			return basicGetGraphElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -444,11 +436,11 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 		case UmaPackage.DIAGRAM_LINK__VIEWPORT:
 			setViewport((Point) newValue);
 			return;
-		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
-			setGraphElement((GraphElement) newValue);
-			return;
 		case UmaPackage.DIAGRAM_LINK__DIAGRAM:
 			setDiagram((Diagram) newValue);
+			return;
+		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
+			setGraphElement((GraphElement) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -463,16 +455,16 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
-			setZoom(ZOOM_EDEFAULT);
+			unsetZoom();
 			return;
 		case UmaPackage.DIAGRAM_LINK__VIEWPORT:
 			setViewport((Point) null);
 			return;
-		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
-			setGraphElement((GraphElement) null);
-			return;
 		case UmaPackage.DIAGRAM_LINK__DIAGRAM:
 			setDiagram((Diagram) null);
+			return;
+		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
+			setGraphElement((GraphElement) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -487,14 +479,13 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
-			return ZOOM_EDEFAULT == null ? zoom != null : !ZOOM_EDEFAULT
-					.equals(zoom);
+			return isSetZoom();
 		case UmaPackage.DIAGRAM_LINK__VIEWPORT:
 			return viewport != null;
-		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
-			return basicGetGraphElement() != null;
 		case UmaPackage.DIAGRAM_LINK__DIAGRAM:
 			return diagram != null;
+		case UmaPackage.DIAGRAM_LINK__GRAPH_ELEMENT:
+			return basicGetGraphElement() != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -511,7 +502,10 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (zoom: "); //$NON-NLS-1$
-		result.append(zoom);
+		if (zoomESet)
+			result.append(zoom);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

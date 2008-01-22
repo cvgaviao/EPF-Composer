@@ -51,7 +51,7 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean IS_INDIVIDUAL_REPRESENTATION_EDEFAULT = null;
+	protected static final Boolean IS_INDIVIDUAL_REPRESENTATION_EDEFAULT = Boolean.FALSE;
 
 	/**
 	 * The cached value of the '{@link #getIsIndividualRepresentation() <em>Is Individual Representation</em>}' attribute.

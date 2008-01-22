@@ -73,6 +73,10 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 			addGuidelinesPropertyDescriptor(object);
 			addReusableAssetsPropertyDescriptor(object);
 			addSupportingMaterialsPropertyDescriptor(object);
+			addTemplatesPropertyDescriptor(object);
+			addReportsPropertyDescriptor(object);
+			addEstimationconsiderationsPropertyDescriptor(object);
+			addToolmentorPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -325,6 +329,82 @@ public class BreakdownElementItemProvider extends ProcessElementItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_supportingMaterials_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.BREAKDOWN_ELEMENT__SUPPORTING_MATERIALS,
+						true, false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Templates feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addTemplatesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_templates_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_templates_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__TEMPLATES, true,
+						false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Reports feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addReportsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_reports_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_reports_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__REPORTS, true,
+						false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Estimationconsiderations feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addEstimationconsiderationsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_estimationconsiderations_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_estimationconsiderations_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__ESTIMATIONCONSIDERATIONS,
+						true, false, true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Toolmentor feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addToolmentorPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_BreakdownElement_toolmentor_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_BreakdownElement_toolmentor_feature", "_UI_BreakdownElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.BREAKDOWN_ELEMENT__TOOLMENTOR,
 						true, false, true, null, null, null));
 	}
 

@@ -190,8 +190,6 @@ public class GraphEdgeItemProvider extends GraphElementItemProvider implements
 
 		boolean qualify = childFeature == UmaPackage.Literals.DIAGRAM_ELEMENT__PROPERTY
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED
-				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__POSITION
-				|| childFeature == UmaPackage.Literals.GRAPH_EDGE__WAYPOINTS
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__LINK
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__ANCHORAGE
 				|| childFeature == UmaPackage.Literals.GRAPH_ELEMENT__SEMANTIC_MODEL;

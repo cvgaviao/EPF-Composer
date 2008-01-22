@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -58,8 +59,28 @@ public class GraphElementItemProvider extends DiagramElementItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addPositionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Position feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addPositionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_GraphElement_position_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_GraphElement_position_feature", "_UI_GraphElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.GRAPH_ELEMENT__POSITION, true,
+						false, true, null, null, null));
 	}
 
 	/**
@@ -75,7 +96,6 @@ public class GraphElementItemProvider extends DiagramElementItemProvider
 			Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(UmaPackage.Literals.GRAPH_ELEMENT__POSITION);
 			childrenFeatures.add(UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED);
 			childrenFeatures.add(UmaPackage.Literals.GRAPH_ELEMENT__LINK);
 			childrenFeatures.add(UmaPackage.Literals.GRAPH_ELEMENT__ANCHORAGE);
@@ -123,7 +143,6 @@ public class GraphElementItemProvider extends DiagramElementItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(GraphElement.class)) {
-		case UmaPackage.GRAPH_ELEMENT__POSITION:
 		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
 		case UmaPackage.GRAPH_ELEMENT__LINK:
 		case UmaPackage.GRAPH_ELEMENT__ANCHORAGE:
@@ -148,16 +167,12 @@ public class GraphElementItemProvider extends DiagramElementItemProvider
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(
-				UmaPackage.Literals.GRAPH_ELEMENT__POSITION,
-				UmaFactory.eINSTANCE.createPoint()));
+				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
+				UmaFactory.eINSTANCE.createGraphNode()));
 
 		newChildDescriptors.add(createChildParameter(
 				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
-				UmaFactory.eINSTANCE.createDiagramLink()));
-
-		newChildDescriptors.add(createChildParameter(
-				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
-				UmaFactory.eINSTANCE.createGraphConnector()));
+				UmaFactory.eINSTANCE.createDiagram()));
 
 		newChildDescriptors.add(createChildParameter(
 				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
@@ -169,15 +184,15 @@ public class GraphElementItemProvider extends DiagramElementItemProvider
 
 		newChildDescriptors.add(createChildParameter(
 				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
+				UmaFactory.eINSTANCE.createDiagramLink()));
+
+		newChildDescriptors.add(createChildParameter(
+				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
+				UmaFactory.eINSTANCE.createGraphConnector()));
+
+		newChildDescriptors.add(createChildParameter(
+				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
 				UmaFactory.eINSTANCE.createGraphEdge()));
-
-		newChildDescriptors.add(createChildParameter(
-				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
-				UmaFactory.eINSTANCE.createGraphNode()));
-
-		newChildDescriptors.add(createChildParameter(
-				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,
-				UmaFactory.eINSTANCE.createDiagram()));
 
 		newChildDescriptors.add(createChildParameter(
 				UmaPackage.Literals.GRAPH_ELEMENT__CONTAINED,

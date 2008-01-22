@@ -19,8 +19,8 @@ package org.eclipse.epf.uma;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.SemanticModelBridge#getPresentation <em>Presentation</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.SemanticModelBridge#getGraphElement <em>Graph Element</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.SemanticModelBridge#getDiagram <em>Diagram</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.SemanticModelBridge#getGraphElement <em>Graph Element</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,9 +39,11 @@ public interface SemanticModelBridge extends DiagramElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Presentation</em>' attribute.
+	 * @see #isSetPresentation()
+	 * @see #unsetPresentation()
 	 * @see #setPresentation(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getSemanticModelBridge_Presentation()
-	 * @model default="" dataType="org.eclipse.epf.uma.String"
+	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getPresentation();
@@ -51,10 +53,35 @@ public interface SemanticModelBridge extends DiagramElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Presentation</em>' attribute.
+	 * @see #isSetPresentation()
+	 * @see #unsetPresentation()
 	 * @see #getPresentation()
 	 * @generated
 	 */
 	void setPresentation(String value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.SemanticModelBridge#getPresentation <em>Presentation</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetPresentation()
+	 * @see #getPresentation()
+	 * @see #setPresentation(String)
+	 * @generated
+	 */
+	void unsetPresentation();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.SemanticModelBridge#getPresentation <em>Presentation</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Presentation</em>' attribute is set.
+	 * @see #unsetPresentation()
+	 * @see #getPresentation()
+	 * @see #setPresentation(String)
+	 * @generated
+	 */
+	boolean isSetPresentation();
 
 	/**
 	 * Returns the value of the '<em><b>Graph Element</b></em>' container reference.
@@ -69,7 +96,7 @@ public interface SemanticModelBridge extends DiagramElement {
 	 * @see #setGraphElement(GraphElement)
 	 * @see org.eclipse.epf.uma.UmaPackage#getSemanticModelBridge_GraphElement()
 	 * @see org.eclipse.epf.uma.GraphElement#getSemanticModel
-	 * @model opposite="semanticModel"
+	 * @model opposite="semanticModel" transient="false" ordered="false"
 	 * @generated
 	 */
 	GraphElement getGraphElement();
@@ -97,7 +124,7 @@ public interface SemanticModelBridge extends DiagramElement {
 	 * @see #setDiagram(Diagram)
 	 * @see org.eclipse.epf.uma.UmaPackage#getSemanticModelBridge_Diagram()
 	 * @see org.eclipse.epf.uma.Diagram#getNamespace
-	 * @model opposite="namespace"
+	 * @model opposite="namespace" transient="false" ordered="false"
 	 * @generated
 	 */
 	Diagram getDiagram();

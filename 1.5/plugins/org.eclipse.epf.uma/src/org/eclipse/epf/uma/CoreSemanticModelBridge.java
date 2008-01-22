@@ -38,7 +38,7 @@ public interface CoreSemanticModelBridge extends SemanticModelBridge {
 	 * @return the value of the '<em>Element</em>' reference.
 	 * @see #setElement(Element)
 	 * @see org.eclipse.epf.uma.UmaPackage#getCoreSemanticModelBridge_Element()
-	 * @model required="true"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	Element getElement();

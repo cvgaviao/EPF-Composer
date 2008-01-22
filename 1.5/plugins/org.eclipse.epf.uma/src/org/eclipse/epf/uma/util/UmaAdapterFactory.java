@@ -629,24 +629,13 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseProcessComponentInterface(
-				ProcessComponentInterface object) {
-			return createProcessComponentInterfaceAdapter();
+		public Adapter caseDiagram(Diagram object) {
+			return createDiagramAdapter();
 		}
 
 		@Override
-		public Adapter caseProcessFamily(ProcessFamily object) {
-			return createProcessFamilyAdapter();
-		}
-
-		@Override
-		public Adapter caseMethodLibrary(MethodLibrary object) {
-			return createMethodLibraryAdapter();
-		}
-
-		@Override
-		public Adapter casePoint(Point object) {
-			return createPointAdapter();
+		public Adapter caseGraphNode(GraphNode object) {
+			return createGraphNodeAdapter();
 		}
 
 		@Override
@@ -660,6 +649,21 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseReference(Reference object) {
+			return createReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseProperty(Property object) {
+			return createPropertyAdapter();
+		}
+
+		@Override
+		public Adapter casePoint(Point object) {
+			return createPointAdapter();
+		}
+
+		@Override
 		public Adapter caseDiagramLink(DiagramLink object) {
 			return createDiagramLinkAdapter();
 		}
@@ -667,6 +671,11 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseGraphConnector(GraphConnector object) {
 			return createGraphConnectorAdapter();
+		}
+
+		@Override
+		public Adapter caseGraphEdge(GraphEdge object) {
+			return createGraphEdgeAdapter();
 		}
 
 		@Override
@@ -680,28 +689,9 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseReference(Reference object) {
-			return createReferenceAdapter();
-		}
-
-		@Override
-		public Adapter caseProperty(Property object) {
-			return createPropertyAdapter();
-		}
-
-		@Override
-		public Adapter caseGraphEdge(GraphEdge object) {
-			return createGraphEdgeAdapter();
-		}
-
-		@Override
-		public Adapter caseDiagram(Diagram object) {
-			return createDiagramAdapter();
-		}
-
-		@Override
-		public Adapter caseGraphNode(GraphNode object) {
-			return createGraphNodeAdapter();
+		public Adapter caseProcessComponentInterface(
+				ProcessComponentInterface object) {
+			return createProcessComponentInterfaceAdapter();
 		}
 
 		@Override
@@ -749,6 +739,16 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseEllipse(Ellipse object) {
 			return createEllipseAdapter();
+		}
+
+		@Override
+		public Adapter caseProcessFamily(ProcessFamily object) {
+			return createProcessFamilyAdapter();
+		}
+
+		@Override
+		public Adapter caseMethodLibrary(MethodLibrary object) {
+			return createMethodLibraryAdapter();
 		}
 
 		@Override

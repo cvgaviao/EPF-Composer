@@ -40,10 +40,10 @@ import org.eclipse.epf.uma.UmaPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.impl.DiagramImpl#getZoom <em>Zoom</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.DiagramImpl#getViewpoint <em>Viewpoint</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramImpl#getDiagramLink <em>Diagram Link</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramImpl#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.DiagramImpl#getZoom <em>Zoom</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.DiagramImpl#getViewpoint <em>Viewpoint</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,6 +56,26 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * @generated
 	 */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * The cached value of the '{@link #getDiagramLink() <em>Diagram Link</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDiagramLink()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<DiagramLink> diagramLink;
+
+	/**
+	 * The cached value of the '{@link #getNamespace() <em>Namespace</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNamespace()
+	 * @generated
+	 * @ordered
+	 */
+	protected SemanticModelBridge namespace;
 
 	/**
 	 * The default value of the '{@link #getZoom() <em>Zoom</em>}' attribute.
@@ -78,7 +98,7 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	protected Double zoom = ZOOM_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getViewpoint() <em>Viewpoint</em>}' containment reference.
+	 * The cached value of the '{@link #getViewpoint() <em>Viewpoint</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getViewpoint()
@@ -86,26 +106,6 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * @ordered
 	 */
 	protected Point viewpoint;
-
-	/**
-	 * The cached value of the '{@link #getDiagramLink() <em>Diagram Link</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDiagramLink()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<DiagramLink> diagramLink;
-
-	/**
-	 * The cached value of the '{@link #getNamespace() <em>Namespace</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getNamespace()
-	 * @generated
-	 * @ordered
-	 */
-	protected SemanticModelBridge namespace;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -158,17 +158,6 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 			InternalEObject oldViewpoint = (InternalEObject) viewpoint;
 			viewpoint = (Point) eResolveProxy(oldViewpoint);
 			if (viewpoint != oldViewpoint) {
-				InternalEObject newViewpoint = (InternalEObject) viewpoint;
-				NotificationChain msgs = oldViewpoint.eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE - UmaPackage.DIAGRAM__VIEWPOINT,
-						null, null);
-				if (newViewpoint.eInternalContainer() == null) {
-					msgs = newViewpoint
-							.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-									- UmaPackage.DIAGRAM__VIEWPOINT, null, msgs);
-				}
-				if (msgs != null)
-					msgs.dispatch();
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 							UmaPackage.DIAGRAM__VIEWPOINT, oldViewpoint,
@@ -192,44 +181,12 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetViewpoint(Point newViewpoint,
-			NotificationChain msgs) {
+	public void setViewpoint(Point newViewpoint) {
 		Point oldViewpoint = viewpoint;
 		viewpoint = newViewpoint;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this,
-					Notification.SET, UmaPackage.DIAGRAM__VIEWPOINT,
-					oldViewpoint, newViewpoint);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setViewpoint(Point newViewpoint) {
-		if (newViewpoint != viewpoint) {
-			NotificationChain msgs = null;
-			if (viewpoint != null)
-				msgs = ((InternalEObject) viewpoint).eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE - UmaPackage.DIAGRAM__VIEWPOINT,
-						null, msgs);
-			if (newViewpoint != null)
-				msgs = ((InternalEObject) newViewpoint).eInverseAdd(this,
-						EOPPOSITE_FEATURE_BASE - UmaPackage.DIAGRAM__VIEWPOINT,
-						null, msgs);
-			msgs = basicSetViewpoint(newViewpoint, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.DIAGRAM__VIEWPOINT, newViewpoint, newViewpoint));
+					UmaPackage.DIAGRAM__VIEWPOINT, oldViewpoint, viewpoint));
 	}
 
 	/**
@@ -362,8 +319,6 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case UmaPackage.DIAGRAM__VIEWPOINT:
-			return basicSetViewpoint(null, msgs);
 		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
 			return ((InternalEList<?>) getDiagramLink()).basicRemove(otherEnd,
 					msgs);
@@ -381,18 +336,18 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case UmaPackage.DIAGRAM__ZOOM:
-			return getZoom();
-		case UmaPackage.DIAGRAM__VIEWPOINT:
-			if (resolve)
-				return getViewpoint();
-			return basicGetViewpoint();
 		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
 			return getDiagramLink();
 		case UmaPackage.DIAGRAM__NAMESPACE:
 			if (resolve)
 				return getNamespace();
 			return basicGetNamespace();
+		case UmaPackage.DIAGRAM__ZOOM:
+			return getZoom();
+		case UmaPackage.DIAGRAM__VIEWPOINT:
+			if (resolve)
+				return getViewpoint();
+			return basicGetViewpoint();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -406,12 +361,6 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case UmaPackage.DIAGRAM__ZOOM:
-			setZoom((Double) newValue);
-			return;
-		case UmaPackage.DIAGRAM__VIEWPOINT:
-			setViewpoint((Point) newValue);
-			return;
 		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
 			getDiagramLink().clear();
 			getDiagramLink().addAll(
@@ -419,6 +368,12 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 			return;
 		case UmaPackage.DIAGRAM__NAMESPACE:
 			setNamespace((SemanticModelBridge) newValue);
+			return;
+		case UmaPackage.DIAGRAM__ZOOM:
+			setZoom((Double) newValue);
+			return;
+		case UmaPackage.DIAGRAM__VIEWPOINT:
+			setViewpoint((Point) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -432,17 +387,17 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case UmaPackage.DIAGRAM__ZOOM:
-			setZoom(ZOOM_EDEFAULT);
-			return;
-		case UmaPackage.DIAGRAM__VIEWPOINT:
-			setViewpoint((Point) null);
-			return;
 		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
 			getDiagramLink().clear();
 			return;
 		case UmaPackage.DIAGRAM__NAMESPACE:
 			setNamespace((SemanticModelBridge) null);
+			return;
+		case UmaPackage.DIAGRAM__ZOOM:
+			setZoom(ZOOM_EDEFAULT);
+			return;
+		case UmaPackage.DIAGRAM__VIEWPOINT:
+			setViewpoint((Point) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -456,15 +411,15 @@ public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
+			return diagramLink != null && !diagramLink.isEmpty();
+		case UmaPackage.DIAGRAM__NAMESPACE:
+			return namespace != null;
 		case UmaPackage.DIAGRAM__ZOOM:
 			return ZOOM_EDEFAULT == null ? zoom != null : !ZOOM_EDEFAULT
 					.equals(zoom);
 		case UmaPackage.DIAGRAM__VIEWPOINT:
 			return viewpoint != null;
-		case UmaPackage.DIAGRAM__DIAGRAM_LINK:
-			return diagramLink != null && !diagramLink.isEmpty();
-		case UmaPackage.DIAGRAM__NAMESPACE:
-			return namespace != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -59,6 +59,15 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	protected String text = TEXT_EDEFAULT;
 
 	/**
+	 * This is true if the Text attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean textESet;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -94,9 +103,36 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	public void setText(String newText) {
 		String oldText = text;
 		text = newText;
+		boolean oldTextESet = textESet;
+		textESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.TEXT_ELEMENT__TEXT, oldText, text));
+					UmaPackage.TEXT_ELEMENT__TEXT, oldText, text, !oldTextESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetText() {
+		String oldText = text;
+		boolean oldTextESet = textESet;
+		text = TEXT_EDEFAULT;
+		textESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+					UmaPackage.TEXT_ELEMENT__TEXT, oldText, TEXT_EDEFAULT,
+					oldTextESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetText() {
+		return textESet;
 	}
 
 	/**
@@ -137,7 +173,7 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.TEXT_ELEMENT__TEXT:
-			setText(TEXT_EDEFAULT);
+			unsetText();
 			return;
 		}
 		super.eUnset(featureID);
@@ -152,8 +188,7 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.TEXT_ELEMENT__TEXT:
-			return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT
-					.equals(text);
+			return isSetText();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -170,7 +205,10 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (text: "); //$NON-NLS-1$
-		result.append(text);
+		if (textESet)
+			result.append(text);
+		else
+			result.append("<unset>"); //$NON-NLS-1$
 		result.append(')');
 		return result.toString();
 	}

@@ -20,8 +20,8 @@ package org.eclipse.epf.uma;
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.DiagramLink#getZoom <em>Zoom</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.DiagramLink#getViewport <em>Viewport</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.DiagramLink#getGraphElement <em>Graph Element</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.DiagramLink#getDiagram <em>Diagram</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.DiagramLink#getGraphElement <em>Graph Element</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,9 +39,11 @@ public interface DiagramLink extends DiagramElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Zoom</em>' attribute.
+	 * @see #isSetZoom()
+	 * @see #unsetZoom()
 	 * @see #setZoom(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramLink_Zoom()
-	 * @model
+	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getZoom();
@@ -51,32 +53,57 @@ public interface DiagramLink extends DiagramElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Zoom</em>' attribute.
+	 * @see #isSetZoom()
+	 * @see #unsetZoom()
 	 * @see #getZoom()
 	 * @generated
 	 */
 	void setZoom(Double value);
 
 	/**
-	 * Returns the value of the '<em><b>Viewport</b></em>' containment reference.
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.DiagramLink#getZoom <em>Zoom</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetZoom()
+	 * @see #getZoom()
+	 * @see #setZoom(Double)
+	 * @generated
+	 */
+	void unsetZoom();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.DiagramLink#getZoom <em>Zoom</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Zoom</em>' attribute is set.
+	 * @see #unsetZoom()
+	 * @see #getZoom()
+	 * @see #setZoom(Double)
+	 * @generated
+	 */
+	boolean isSetZoom();
+
+	/**
+	 * Returns the value of the '<em><b>Viewport</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Viewport</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Viewport</em>' containment reference.
+	 * @return the value of the '<em>Viewport</em>' reference.
 	 * @see #setViewport(Point)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramLink_Viewport()
-	 * @model containment="true" resolveProxies="true"
+	 * @model required="true" ordered="false"
 	 * @generated
 	 */
 	Point getViewport();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.epf.uma.DiagramLink#getViewport <em>Viewport</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.epf.uma.DiagramLink#getViewport <em>Viewport</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Viewport</em>' containment reference.
+	 * @param value the new value of the '<em>Viewport</em>' reference.
 	 * @see #getViewport()
 	 * @generated
 	 */
@@ -95,7 +122,7 @@ public interface DiagramLink extends DiagramElement {
 	 * @see #setGraphElement(GraphElement)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramLink_GraphElement()
 	 * @see org.eclipse.epf.uma.GraphElement#getLink
-	 * @model opposite="link" required="true"
+	 * @model opposite="link" required="true" transient="false" ordered="false"
 	 * @generated
 	 */
 	GraphElement getGraphElement();
@@ -123,7 +150,7 @@ public interface DiagramLink extends DiagramElement {
 	 * @see #setDiagram(Diagram)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramLink_Diagram()
 	 * @see org.eclipse.epf.uma.Diagram#getDiagramLink
-	 * @model opposite="diagramLink" required="true"
+	 * @model opposite="diagramLink" required="true" ordered="false"
 	 * @generated
 	 */
 	Diagram getDiagram();

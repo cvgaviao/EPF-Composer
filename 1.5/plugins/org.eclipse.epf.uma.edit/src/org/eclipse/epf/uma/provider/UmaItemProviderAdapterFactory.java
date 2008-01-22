@@ -2343,30 +2343,26 @@ public class UmaItemProviderAdapterFactory extends UmaAdapterFactory implements
 			processComponentItemProvider.dispose();
 		if (processPackageItemProvider != null)
 			processPackageItemProvider.dispose();
-		if (processComponentInterfaceItemProvider != null)
-			processComponentInterfaceItemProvider.dispose();
-		if (processFamilyItemProvider != null)
-			processFamilyItemProvider.dispose();
-		if (methodLibraryItemProvider != null)
-			methodLibraryItemProvider.dispose();
+		if (diagramItemProvider != null)
+			diagramItemProvider.dispose();
+		if (graphNodeItemProvider != null)
+			graphNodeItemProvider.dispose();
+		if (referenceItemProvider != null)
+			referenceItemProvider.dispose();
+		if (propertyItemProvider != null)
+			propertyItemProvider.dispose();
 		if (pointItemProvider != null)
 			pointItemProvider.dispose();
 		if (diagramLinkItemProvider != null)
 			diagramLinkItemProvider.dispose();
 		if (graphConnectorItemProvider != null)
 			graphConnectorItemProvider.dispose();
-		if (dimensionItemProvider != null)
-			dimensionItemProvider.dispose();
-		if (referenceItemProvider != null)
-			referenceItemProvider.dispose();
-		if (propertyItemProvider != null)
-			propertyItemProvider.dispose();
 		if (graphEdgeItemProvider != null)
 			graphEdgeItemProvider.dispose();
-		if (diagramItemProvider != null)
-			diagramItemProvider.dispose();
-		if (graphNodeItemProvider != null)
-			graphNodeItemProvider.dispose();
+		if (dimensionItemProvider != null)
+			dimensionItemProvider.dispose();
+		if (processComponentInterfaceItemProvider != null)
+			processComponentInterfaceItemProvider.dispose();
 		if (simpleSemanticModelElementItemProvider != null)
 			simpleSemanticModelElementItemProvider.dispose();
 		if (umaSemanticModelBridgeItemProvider != null)
@@ -2381,6 +2377,10 @@ public class UmaItemProviderAdapterFactory extends UmaAdapterFactory implements
 			polylineItemProvider.dispose();
 		if (ellipseItemProvider != null)
 			ellipseItemProvider.dispose();
+		if (processFamilyItemProvider != null)
+			processFamilyItemProvider.dispose();
+		if (methodLibraryItemProvider != null)
+			methodLibraryItemProvider.dispose();
 	}
 
 }

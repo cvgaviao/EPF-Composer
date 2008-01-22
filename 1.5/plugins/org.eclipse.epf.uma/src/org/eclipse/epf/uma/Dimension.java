@@ -40,9 +40,11 @@ public interface Dimension extends IModelObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Width</em>' attribute.
+	 * @see #isSetWidth()
+	 * @see #unsetWidth()
 	 * @see #setWidth(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDimension_Width()
-	 * @model
+	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getWidth();
@@ -52,10 +54,35 @@ public interface Dimension extends IModelObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Width</em>' attribute.
+	 * @see #isSetWidth()
+	 * @see #unsetWidth()
 	 * @see #getWidth()
 	 * @generated
 	 */
 	void setWidth(Double value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.Dimension#getWidth <em>Width</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetWidth()
+	 * @see #getWidth()
+	 * @see #setWidth(Double)
+	 * @generated
+	 */
+	void unsetWidth();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Dimension#getWidth <em>Width</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Width</em>' attribute is set.
+	 * @see #unsetWidth()
+	 * @see #getWidth()
+	 * @see #setWidth(Double)
+	 * @generated
+	 */
+	boolean isSetWidth();
 
 	/**
 	 * Returns the value of the '<em><b>Height</b></em>' attribute.
@@ -66,9 +93,11 @@ public interface Dimension extends IModelObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Height</em>' attribute.
+	 * @see #isSetHeight()
+	 * @see #unsetHeight()
 	 * @see #setHeight(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDimension_Height()
-	 * @model
+	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getHeight();
@@ -78,9 +107,34 @@ public interface Dimension extends IModelObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Height</em>' attribute.
+	 * @see #isSetHeight()
+	 * @see #unsetHeight()
 	 * @see #getHeight()
 	 * @generated
 	 */
 	void setHeight(Double value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.Dimension#getHeight <em>Height</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetHeight()
+	 * @see #getHeight()
+	 * @see #setHeight(Double)
+	 * @generated
+	 */
+	void unsetHeight();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Dimension#getHeight <em>Height</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Height</em>' attribute is set.
+	 * @see #unsetHeight()
+	 * @see #getHeight()
+	 * @see #setHeight(Double)
+	 * @generated
+	 */
+	boolean isSetHeight();
 
 } // Dimension

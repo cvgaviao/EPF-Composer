@@ -292,30 +292,26 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 			return (EObject) createProcessComponent();
 		case UmaPackage.PROCESS_PACKAGE:
 			return (EObject) createProcessPackage();
-		case UmaPackage.PROCESS_COMPONENT_INTERFACE:
-			return (EObject) createProcessComponentInterface();
-		case UmaPackage.PROCESS_FAMILY:
-			return (EObject) createProcessFamily();
-		case UmaPackage.METHOD_LIBRARY:
-			return (EObject) createMethodLibrary();
+		case UmaPackage.DIAGRAM:
+			return (EObject) createDiagram();
+		case UmaPackage.GRAPH_NODE:
+			return (EObject) createGraphNode();
+		case UmaPackage.REFERENCE:
+			return (EObject) createReference();
+		case UmaPackage.PROPERTY:
+			return (EObject) createProperty();
 		case UmaPackage.POINT:
 			return (EObject) createPoint();
 		case UmaPackage.DIAGRAM_LINK:
 			return (EObject) createDiagramLink();
 		case UmaPackage.GRAPH_CONNECTOR:
 			return (EObject) createGraphConnector();
-		case UmaPackage.DIMENSION:
-			return (EObject) createDimension();
-		case UmaPackage.REFERENCE:
-			return (EObject) createReference();
-		case UmaPackage.PROPERTY:
-			return (EObject) createProperty();
 		case UmaPackage.GRAPH_EDGE:
 			return (EObject) createGraphEdge();
-		case UmaPackage.DIAGRAM:
-			return (EObject) createDiagram();
-		case UmaPackage.GRAPH_NODE:
-			return (EObject) createGraphNode();
+		case UmaPackage.DIMENSION:
+			return (EObject) createDimension();
+		case UmaPackage.PROCESS_COMPONENT_INTERFACE:
+			return (EObject) createProcessComponentInterface();
 		case UmaPackage.SIMPLE_SEMANTIC_MODEL_ELEMENT:
 			return (EObject) createSimpleSemanticModelElement();
 		case UmaPackage.UMA_SEMANTIC_MODEL_BRIDGE:
@@ -330,6 +326,10 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 			return (EObject) createPolyline();
 		case UmaPackage.ELLIPSE:
 			return (EObject) createEllipse();
+		case UmaPackage.PROCESS_FAMILY:
+			return (EObject) createProcessFamily();
+		case UmaPackage.METHOD_LIBRARY:
+			return (EObject) createMethodLibrary();
 		default:
 			throw new IllegalArgumentException(
 					"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

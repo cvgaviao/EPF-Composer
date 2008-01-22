@@ -20,8 +20,8 @@ import java.util.List;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.GraphEdge#getAnchor <em>Anchor</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.GraphEdge#getWaypoints <em>Waypoints</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.GraphEdge#getAnchor <em>Anchor</em>}</li>
  * </ul>
  * </p>
  *

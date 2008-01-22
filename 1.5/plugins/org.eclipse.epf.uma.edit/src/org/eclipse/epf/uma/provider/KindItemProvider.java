@@ -62,7 +62,6 @@ public class KindItemProvider extends ContentElementItemProvider implements
 			super.getPropertyDescriptors(object);
 
 			addApplicableMetaClassPropertyDescriptor(object);
-			addIsPrimaryKindPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -85,26 +84,6 @@ public class KindItemProvider extends ContentElementItemProvider implements
 						UmaPackage.Literals.KIND__APPLICABLE_META_CLASS, true,
 						false, false,
 						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Is Primary Kind feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addIsPrimaryKindPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(
-						((ComposeableAdapterFactory) adapterFactory)
-								.getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_Kind_isPrimaryKind_feature"), //$NON-NLS-1$
-						getString(
-								"_UI_PropertyDescriptor_description", "_UI_Kind_isPrimaryKind_feature", "_UI_Kind_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						UmaPackage.Literals.KIND__IS_PRIMARY_KIND, true, false,
-						false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-						null, null));
 	}
 
 	/**
@@ -145,7 +124,6 @@ public class KindItemProvider extends ContentElementItemProvider implements
 
 		switch (notification.getFeatureID(Kind.class)) {
 		case UmaPackage.KIND__APPLICABLE_META_CLASS:
-		case UmaPackage.KIND__IS_PRIMARY_KIND:
 			fireNotifyChanged(new ViewerNotification(notification, notification
 					.getNotifier(), false, true));
 			return;

@@ -42,7 +42,7 @@ public interface Polyline extends GraphicPrimitive {
 	 * @return the value of the '<em>Closed</em>' attribute.
 	 * @see #setClosed(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getPolyline_Closed()
-	 * @model default="true"
+	 * @model default="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getClosed();

@@ -40,9 +40,11 @@ public interface Point extends IModelObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>X</em>' attribute.
+	 * @see #isSetX()
+	 * @see #unsetX()
 	 * @see #setX(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getPoint_X()
-	 * @model
+	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getX();
@@ -52,10 +54,35 @@ public interface Point extends IModelObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>X</em>' attribute.
+	 * @see #isSetX()
+	 * @see #unsetX()
 	 * @see #getX()
 	 * @generated
 	 */
 	void setX(Double value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.Point#getX <em>X</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetX()
+	 * @see #getX()
+	 * @see #setX(Double)
+	 * @generated
+	 */
+	void unsetX();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Point#getX <em>X</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>X</em>' attribute is set.
+	 * @see #unsetX()
+	 * @see #getX()
+	 * @see #setX(Double)
+	 * @generated
+	 */
+	boolean isSetX();
 
 	/**
 	 * Returns the value of the '<em><b>Y</b></em>' attribute.
@@ -66,9 +93,11 @@ public interface Point extends IModelObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Y</em>' attribute.
+	 * @see #isSetY()
+	 * @see #unsetY()
 	 * @see #setY(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getPoint_Y()
-	 * @model
+	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getY();
@@ -78,9 +107,34 @@ public interface Point extends IModelObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Y</em>' attribute.
+	 * @see #isSetY()
+	 * @see #unsetY()
 	 * @see #getY()
 	 * @generated
 	 */
 	void setY(Double value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.uma.Point#getY <em>Y</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetY()
+	 * @see #getY()
+	 * @see #setY(Double)
+	 * @generated
+	 */
+	void unsetY();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Point#getY <em>Y</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Y</em>' attribute is set.
+	 * @see #unsetY()
+	 * @see #getY()
+	 * @see #setY(Double)
+	 * @generated
+	 */
+	boolean isSetY();
 
 } // Point

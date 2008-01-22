@@ -111,7 +111,7 @@ public interface ContentDescription extends MethodUnit {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * An external visible number that is used to reference this delivery patterns and models. It is used like a synonym.
+	 * An external visible number or label that is used to reference this element. Used like a synonym to the name.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>External Id</em>' attribute.
 	 * @see #isSetExternalId()
