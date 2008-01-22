@@ -2324,7 +2324,7 @@ public class ProcessEditorActionBarContributor extends
 				return;
 
 			while (!activity.getVariabilityType().equals(
-					VariabilityType.NA_LITERAL)) {
+					VariabilityType.NA)) {
 
 				VariabilityElement ve = activity.getVariabilityBasedOnElement();
 				// If Activity is set to local contribution,
@@ -2445,7 +2445,7 @@ public class ProcessEditorActionBarContributor extends
 			//TODO: check for existing diagrams in immediate base instead of root base
 			
 			while (!activity.getVariabilityType().equals(
-					VariabilityType.NA_LITERAL)) {
+					VariabilityType.NA)) {
 
 				VariabilityElement ve = activity.getVariabilityBasedOnElement();
 				list.addAll(activity.getBreakdownElements());
