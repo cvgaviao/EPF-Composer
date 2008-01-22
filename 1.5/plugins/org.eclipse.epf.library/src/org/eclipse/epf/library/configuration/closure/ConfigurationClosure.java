@@ -829,10 +829,10 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		boolean selected = true;
 		if (element instanceof MethodPlugin 
 				&& !config.getMethodPluginSelection().contains(element)) {
-			config.getMethodPluginSelection().add(element);
+			config.getMethodPluginSelection().add((MethodPlugin) element);
 		} else if ( element instanceof MethodPackage 
 				&& !config.getMethodPackageSelection().contains(element)){
-			config.getMethodPackageSelection().add(element);
+			config.getMethodPackageSelection().add((MethodPackage) element);
 		} else {
 			selected = false;
 		}

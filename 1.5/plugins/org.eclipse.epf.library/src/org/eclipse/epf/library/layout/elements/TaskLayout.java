@@ -46,20 +46,24 @@ public class TaskLayout extends AbstractElementLayout {
 		XmlElement elementXml = super.getXmlElement(includeReferences);
 		if (includeReferences) {
 			Task task = (Task) super.element;
-			Role performingRole = task.getPerformedBy();
-			if (performingRole != null) {
-				MethodElement role = ConfigurationHelper.getCalculatedElement(
-						(MethodElement) performingRole, layoutManager
-								.getConfiguration());
-				if (role != null) {
-					String roleName = ((Role) role).getPresentationName();
-					if (roleName == null || roleName.length() == 0) {
-						roleName = role.getName();
+			List performingRoles = task.getPerformedBy();
+			for (java.util.Iterator itor = performingRoles.iterator(); itor.hasNext();) {
+				Role performingRole = (Role) itor.next();
+				if (performingRole != null) {
+					MethodElement role = ConfigurationHelper.getCalculatedElement(
+							(MethodElement) performingRole, layoutManager
+									.getConfiguration());
+					if (role != null) {
+						String roleName = ((Role) role).getPresentationName();
+						if (roleName == null || roleName.length() == 0) {
+							roleName = role.getName();
+						}
+						elementXml.setAttribute("performingRoleName", roleName); //$NON-NLS-1$
+						addReference(UmaPackage.eINSTANCE.getTask_PerformedBy(), elementXml, "performingRole", role); //$NON-NLS-1$
 					}
-					elementXml.setAttribute("performingRoleName", roleName); //$NON-NLS-1$
-					addReference(UmaPackage.eINSTANCE.getTask_PerformedBy(), elementXml, "performingRole", role); //$NON-NLS-1$
 				}
 			}
+			
 
 			// calculate the categories opposite feature
 			// multiplicity change for opposite features
