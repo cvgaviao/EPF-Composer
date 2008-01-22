@@ -118,13 +118,13 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getText(Object object) {
 			VariabilityType varObject = (VariabilityType) object;
-			if (varObject == VariabilityType.NA_LITERAL)
+			if (varObject == VariabilityType.NA)
 				return NOT_APPLICABLE_TEXT;
-			if (varObject == VariabilityType.CONTRIBUTES_LITERAL)
+			if (varObject == VariabilityType.CONTRIBUTES)
 				return CONTRIBUTES_TEXT;
-			if (varObject == VariabilityType.EXTENDS_LITERAL)
+			if (varObject == VariabilityType.EXTENDS)
 				return EXTENDS_TEXT;
-			if (varObject == VariabilityType.REPLACES_LITERAL)
+			if (varObject == VariabilityType.REPLACES)
 				return REPLACES_TEXT;
 			return null;
 		}
@@ -135,10 +135,10 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public Object[] getElements(Object object) {
 			List variabilityTypesList = new ArrayList();
-			variabilityTypesList.add(VariabilityType.NA_LITERAL);
-			variabilityTypesList.add(VariabilityType.CONTRIBUTES_LITERAL);
-			variabilityTypesList.add(VariabilityType.EXTENDS_LITERAL);
-			variabilityTypesList.add(VariabilityType.REPLACES_LITERAL);
+			variabilityTypesList.add(VariabilityType.NA);
+			variabilityTypesList.add(VariabilityType.CONTRIBUTES);
+			variabilityTypesList.add(VariabilityType.EXTENDS);
+			variabilityTypesList.add(VariabilityType.REPLACES);
 			return variabilityTypesList.toArray();
 		}
 	};
@@ -373,7 +373,7 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 //						return;
 //					}
 					
-					if(type != VariabilityType.NA_LITERAL) {
+					if(type != VariabilityType.NA) {
 						IStatus state = DependencyChecker.checkCircularDependencyAfterFilterSelection(element, (Activity) ve, type);
 						if(!state.isOK()) {
 							String title = AuthoringUIResources.activity_variability_error_title;
@@ -394,21 +394,21 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 					if (!status) {
 						if (element.getPresentationName() == null
 								|| element.getPresentationName().equals("")) { //$NON-NLS-1$
-							if (type.equals(VariabilityType.NA_LITERAL))
+							if (type.equals(VariabilityType.NA))
 								element.setPresentationName(element.getName());
 						}
 						return;
 					}
 					if (element.getPresentationName() == null
 							|| element.getPresentationName().equals("")) { //$NON-NLS-1$
-						if (type.equals(VariabilityType.CONTRIBUTES_LITERAL)
-								|| type.equals(VariabilityType.REPLACES_LITERAL)
-								|| type.equals(VariabilityType.NA_LITERAL))
+						if (type.equals(VariabilityType.CONTRIBUTES)
+								|| type.equals(VariabilityType.REPLACES)
+								|| type.equals(VariabilityType.NA))
 							element.setPresentationName(element.getName());
 					}
 				}
 
-				if (type == VariabilityType.NA_LITERAL) {
+				if (type == VariabilityType.NA) {
 					if (ve != null) {
 						boolean status = actionMgr
 								.doAction(
@@ -571,7 +571,7 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 
 		ctrl_variability.setEnabled(editable);
 		if (((IStructuredSelection) viewer_variability.getSelection())
-				.getFirstElement() == VariabilityType.NA_LITERAL) {
+				.getFirstElement() == VariabilityType.NA) {
 			selectButton.setEnabled(false);
 		}
 	}
@@ -617,11 +617,11 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 				
 				// make variability type combo disabled incase type is either local contributes or local replaces.
 				if (variabilityType
-						.equals(VariabilityType.LOCAL_CONTRIBUTION_LITERAL)
+						.equals(VariabilityType.LOCAL_CONTRIBUTION)
 						|| (variabilityType
-								.equals(VariabilityType.LOCAL_REPLACEMENT_LITERAL))) {
+								.equals(VariabilityType.LOCAL_REPLACEMENT))) {
 					IStructuredSelection selection = new StructuredSelection(
-							VariabilityType.NA_LITERAL);
+							VariabilityType.NA);
 					viewer_variability.setSelection(selection);
 					ctrl_variability.setEnabled(false);
 				} else

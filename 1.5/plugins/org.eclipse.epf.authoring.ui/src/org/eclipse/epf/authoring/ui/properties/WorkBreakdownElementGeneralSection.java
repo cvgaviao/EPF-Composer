@@ -354,7 +354,7 @@ public class WorkBreakdownElementGeneralSection extends
 			public void widgetSelected(SelectionEvent e) {
 				// List predList = element.getLinkToPredecessor();
 				WorkOrder o = UmaFactory.eINSTANCE.createWorkOrder();
-				o.setLinkType(WorkOrderType.FINISH_TO_START_LITERAL);
+				o.setLinkType(WorkOrderType.FINISH_TO_START);
 
 				// predList.add(o);
 
@@ -921,13 +921,13 @@ public class WorkBreakdownElementGeneralSection extends
 					}					
 										
 					if (index == 0) {
-						type = WorkOrderType.FINISH_TO_START_LITERAL;
+						type = WorkOrderType.FINISH_TO_START;
 					} else if (index == 1) {
-						type = WorkOrderType.FINISH_TO_FINISH_LITERAL;
+						type = WorkOrderType.FINISH_TO_FINISH;
 					} else if (index == 2) {
-						type = WorkOrderType.START_TO_START_LITERAL;
+						type = WorkOrderType.START_TO_START;
 					} else {
-						type = WorkOrderType.START_TO_FINISH_LITERAL;
+						type = WorkOrderType.START_TO_FINISH;
 					}
 					
 					if (removed && wbeCopy != null) {					
@@ -951,7 +951,7 @@ public class WorkBreakdownElementGeneralSection extends
 					break;
 
 				default:
-					type = WorkOrderType.FINISH_TO_FINISH_LITERAL;
+					type = WorkOrderType.FINISH_TO_FINISH;
 				}
 
 				viewer.refresh();

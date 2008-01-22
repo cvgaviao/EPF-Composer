@@ -277,7 +277,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 				VariabilityElement ve = (VariabilityElement) element;
 				if (ve.getVariabilityBasedOnElement() != null
 						&& ve.getVariabilityType().equals(
-								VariabilityType.EXTENDS_LITERAL)) {
+								VariabilityType.EXTENDS)) {
 					
 					e.doit = true;
 					if (!presentationNameText.getText().equals(oldContent)) {

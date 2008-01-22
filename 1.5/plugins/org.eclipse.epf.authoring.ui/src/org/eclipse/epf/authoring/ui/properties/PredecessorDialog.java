@@ -413,13 +413,13 @@ public class PredecessorDialog extends Dialog {
 		int index = dependency.getSelectionIndex();
 		WorkOrderType type;
 		if (index == 0) {
-			type = WorkOrderType.FINISH_TO_START_LITERAL;
+			type = WorkOrderType.FINISH_TO_START;
 		} else if (index == 1) {
-			type = WorkOrderType.FINISH_TO_FINISH_LITERAL;
+			type = WorkOrderType.FINISH_TO_FINISH;
 		} else if (index == 2) {
-			type = WorkOrderType.START_TO_START_LITERAL;
+			type = WorkOrderType.START_TO_START;
 		} else {
-			type = WorkOrderType.START_TO_FINISH_LITERAL;
+			type = WorkOrderType.START_TO_FINISH;
 		}
 
 		return type;
