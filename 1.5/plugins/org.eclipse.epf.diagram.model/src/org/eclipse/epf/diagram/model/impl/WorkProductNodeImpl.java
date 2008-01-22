@@ -243,7 +243,7 @@ public class WorkProductNodeImpl extends NamedNodeImpl implements
 		boolean notifyTarget = target.notificationEnabled;
 		try {
 			source.notificationEnabled = target.notificationEnabled = false;
-			descriptor.getImpacts().add(link.getTarget().getObject());
+			descriptor.getImpacts().add((WorkProductDescriptor) link.getTarget().getObject());
 		} finally {
 			source.notificationEnabled = notifySource;
 			target.notificationEnabled = notifyTarget;

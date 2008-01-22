@@ -181,7 +181,7 @@ public class WorkProductDependencyDiagramImpl extends DiagramImpl implements
 	protected void addToUmaModel(int position, Node addedNode) {		
 		if (addedNode.getObject() instanceof BreakdownElement) {
 			((Activity) getObject()).getBreakdownElements().add(
-					addedNode.getObject());
+					(BreakdownElement) addedNode.getObject());
 		}
 		super.addToUmaModel(position, addedNode);
 	}

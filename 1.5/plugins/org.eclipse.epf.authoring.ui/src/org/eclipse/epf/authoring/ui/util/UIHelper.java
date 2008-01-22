@@ -395,7 +395,7 @@ public class UIHelper {
 	 */
 	public static VariabilityElement getBaseActivity(Activity activity){
 		while (!activity.getVariabilityType().equals(
-				VariabilityType.NA_LITERAL)) {
+				VariabilityType.NA)) {
 
 			VariabilityElement ve = activity
 					.getVariabilityBasedOnElement();

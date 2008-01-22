@@ -382,10 +382,10 @@ public class GraphicalDataHelper {
 			GraphNode srcNode = link.getSource().getGraphNode();
 			GraphNode targetNode = link.getTarget().getGraphNode();
 			Object srcConnector = edge.getAnchor().get(0);
-			srcNode.getAnchorage().add(srcConnector);
+			srcNode.getAnchorage().add((GraphConnector) srcConnector);
 			srcNode.getContained().add(edge);
 			Object targetConnector = edge.getAnchor().get(1);
-			targetNode.getAnchorage().add(targetConnector);
+			targetNode.getAnchorage().add((GraphConnector) targetConnector);
 		}
 	}
 
@@ -571,7 +571,7 @@ public class GraphicalDataHelper {
 			Activity act = (Activity) umaModelBridge.getElement();
 			Activity base = (Activity) act.getVariabilityBasedOnElement();
 			if (base == null
-					|| act.getVariabilityType() == VariabilityType.LOCAL_REPLACEMENT_LITERAL) {
+					|| act.getVariabilityType() == VariabilityType.LOCAL_REPLACEMENT) {
 				return false;
 			}
 			int diagramType = GraphicalDataManager.getInstance()

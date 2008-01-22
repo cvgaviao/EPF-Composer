@@ -584,7 +584,7 @@ public final class GraphicalDataManager {
 						}
 					}
 					
-					if(act.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION_LITERAL) {
+					if(act.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION) {
 						// copy diagrams and their publishing options
 						//
 						for (int i = 0; i < GraphicalDataHelper.DIAGRAM_TYPES.length; i++) {

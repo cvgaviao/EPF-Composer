@@ -509,9 +509,9 @@ public class ActivityDiagramImpl extends DiagramImpl implements ActivityDiagram 
 			// System.out.println("DiagramImpl.addToUmaModel():
 			// WorkBreakdownElement index: " + i);
 			if (i == -1) {
-				act.getBreakdownElements().add(addedNode.getObject());
+				act.getBreakdownElements().add((BreakdownElement) addedNode.getObject());
 			} else {
-				act.getBreakdownElements().add(i, addedNode.getObject());
+				act.getBreakdownElements().add(i, (BreakdownElement) addedNode.getObject());
 			}
 		}
 
