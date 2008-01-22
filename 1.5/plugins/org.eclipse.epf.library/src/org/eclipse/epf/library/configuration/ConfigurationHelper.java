@@ -180,7 +180,7 @@ public class ConfigurationHelper {
 							base).iterator(); it.hasNext();) {
 						VariabilityElement e = (VariabilityElement) it.next();
 						if ((e != element)
-								&& (e.getVariabilityType() == VariabilityType.REPLACES_LITERAL)
+								&& (e.getVariabilityType() == VariabilityType.REPLACES)
 								&& isOwnerSelected(e, config, checkSubtracted)) {
 							if (debug) {
 								System.out
@@ -314,7 +314,7 @@ public class ConfigurationHelper {
 		if (element == null || element.getVariabilityBasedOnElement() == null)
 			return false;
 
-		return element.getVariabilityType() == VariabilityType.CONTRIBUTES_LITERAL;
+		return element.getVariabilityType() == VariabilityType.CONTRIBUTES;
 	}
 
 	/**
@@ -326,7 +326,7 @@ public class ConfigurationHelper {
 		if (element == null || element.getVariabilityBasedOnElement() == null)
 			return false;
 
-		return element.getVariabilityType() == VariabilityType.REPLACES_LITERAL;
+		return element.getVariabilityType() == VariabilityType.REPLACES;
 	}
 
 	/**
@@ -338,7 +338,7 @@ public class ConfigurationHelper {
 		if (element == null || element.getVariabilityBasedOnElement() == null)
 			return false;
 
-		return element.getVariabilityType() == VariabilityType.EXTENDS_REPLACES_LITERAL;
+		return element.getVariabilityType() == VariabilityType.EXTENDS_REPLACES;
 	}
 	
 	/**
@@ -350,7 +350,7 @@ public class ConfigurationHelper {
 		if (element == null || element.getVariabilityBasedOnElement() == null)
 			return false;
 
-		return element.getVariabilityType() == VariabilityType.EXTENDS_LITERAL;
+		return element.getVariabilityType() == VariabilityType.EXTENDS;
 	}
 
 	/**
@@ -381,8 +381,8 @@ public class ConfigurationHelper {
 			}
 
 			VariabilityType type = e.getVariabilityType();
-			if ( type == VariabilityType.REPLACES_LITERAL 
-					|| type == VariabilityType.EXTENDS_REPLACES_LITERAL) {
+			if ( type == VariabilityType.REPLACES 
+					|| type == VariabilityType.EXTENDS_REPLACES) {
 				if (ve != null) {
 					if (debug) {
 						System.out
@@ -421,7 +421,7 @@ public class ConfigurationHelper {
 				.iterator(); it.hasNext();) {
 			VariabilityElement e = (VariabilityElement) it.next();
 			if ((e != null)
-					&& (e.getVariabilityType() == VariabilityType.CONTRIBUTES_LITERAL)
+					&& (e.getVariabilityType() == VariabilityType.CONTRIBUTES)
 					&& inConfig(e, config)) {
 				VariabilityElement replacer = getReplacer(e, config);
 				if (replacer != null) {
@@ -447,7 +447,7 @@ public class ConfigurationHelper {
 				.iterator(); it.hasNext();) {
 			VariabilityElement e = (VariabilityElement) it.next();
 			if ((e != null)
-					&& (e.getVariabilityType() == VariabilityType.EXTENDS_LITERAL)
+					&& (e.getVariabilityType() == VariabilityType.EXTENDS)
 					&& inConfig(e, config)) {
 					items.add(e);
 			}
@@ -1727,7 +1727,7 @@ public class ConfigurationHelper {
 					
 		VariabilityElement base = ve.getVariabilityBasedOnElement();
 		VariabilityType variabilityType = ve.getVariabilityType();
-		if( base != null && variabilityType == VariabilityType.LOCAL_CONTRIBUTION_LITERAL) {
+		if( base != null && variabilityType == VariabilityType.LOCAL_CONTRIBUTION) {
 			// for local contribution, append the text to the base
 			Object strBase;
 			if ( isDesc ) {

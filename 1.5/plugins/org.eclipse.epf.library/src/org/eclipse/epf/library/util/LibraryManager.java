@@ -814,15 +814,15 @@ public class LibraryManager {
 	 * @return List
 	 */
 	public List getStepList(Task task) {
-		if (task.getVariabilityType() == VariabilityType.EXTENDS_LITERAL
-				|| task.getVariabilityType() == VariabilityType.CONTRIBUTES_LITERAL) {
+		if (task.getVariabilityType() == VariabilityType.EXTENDS
+				|| task.getVariabilityType() == VariabilityType.CONTRIBUTES) {
 			VariabilityElement base = TngUtil.getBase(task);
 			final List types = new ArrayList();
 			if (types.isEmpty()) {
 				synchronized (types) {
 					if (types.isEmpty()) {
-						types.add(VariabilityType.CONTRIBUTES_LITERAL);
-						types.add(VariabilityType.EXTENDS_LITERAL);
+						types.add(VariabilityType.CONTRIBUTES);
+						types.add(VariabilityType.EXTENDS);
 					}
 				}
 			}

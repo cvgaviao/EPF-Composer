@@ -297,19 +297,19 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getText(Object object) {
 			VariabilityType varObject = (VariabilityType) object;
-			if (varObject == VariabilityType.NA_LITERAL)
+			if (varObject == VariabilityType.NA)
 				return NOT_APPLICABLE_TEXT;
-			if (varObject == VariabilityType.CONTRIBUTES_LITERAL)
+			if (varObject == VariabilityType.CONTRIBUTES)
 				return CONTRIBUTES_TEXT;
-			if (varObject == VariabilityType.LOCAL_CONTRIBUTION_LITERAL)
+			if (varObject == VariabilityType.LOCAL_CONTRIBUTION)
 				return LOCAL_CONTRIBUTES_TEXT;
-			if (varObject == VariabilityType.EXTENDS_LITERAL)
+			if (varObject == VariabilityType.EXTENDS)
 				return EXTENDS_TEXT;
-			if (varObject == VariabilityType.REPLACES_LITERAL)
+			if (varObject == VariabilityType.REPLACES)
 				return REPLACES_TEXT;
-			if (varObject == VariabilityType.LOCAL_REPLACEMENT_LITERAL)
+			if (varObject == VariabilityType.LOCAL_REPLACEMENT)
 				return LOCAL_REPLACES_TEXT;
-			if (varObject == VariabilityType.EXTENDS_REPLACES_LITERAL)
+			if (varObject == VariabilityType.EXTENDS_REPLACES)
 				return EXTENDS_REPLACES_TEXT;
 			
 			return null;
@@ -517,18 +517,18 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		VariabilityType[] types;
 		if (contentElement instanceof ContentCategory) {
 			types = new VariabilityType[] {
-					VariabilityType.NA_LITERAL,
-					VariabilityType.CONTRIBUTES_LITERAL,
-					VariabilityType.REPLACES_LITERAL,
-					VariabilityType.EXTENDS_REPLACES_LITERAL
+					VariabilityType.NA,
+					VariabilityType.CONTRIBUTES,
+					VariabilityType.REPLACES,
+					VariabilityType.EXTENDS
 			};
 		} else {
 			types = new VariabilityType[] {
-					VariabilityType.NA_LITERAL,
-					VariabilityType.CONTRIBUTES_LITERAL,
-					VariabilityType.EXTENDS_LITERAL,
-					VariabilityType.REPLACES_LITERAL,
-					VariabilityType.EXTENDS_REPLACES_LITERAL
+					VariabilityType.NA,
+					VariabilityType.CONTRIBUTES,
+					VariabilityType.EXTENDS,
+					VariabilityType.REPLACES,
+					VariabilityType.EXTENDS_REPLACES
 			};
 		}
 		contentProviderVariability = new VariabilityTypeContentProvider(
@@ -565,22 +565,22 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (preferBase && object.getVariabilityBasedOnElement() != null) {
 			VariabilityType type = object.getVariabilityType();
 			String variabilityTxt = null;
-			if (type == VariabilityType.CONTRIBUTES_LITERAL) {
+			if (type == VariabilityType.CONTRIBUTES) {
 				variabilityTxt = AuthoringUIResources
 						.contributes_to_text; 
-			} else if (type == VariabilityType.LOCAL_CONTRIBUTION_LITERAL) {
+			} else if (type == VariabilityType.LOCAL_CONTRIBUTION) {
 				variabilityTxt = AuthoringUIResources
 					.localContributes_text; 			
-			} else if (type == VariabilityType.EXTENDS_LITERAL) {					
+			} else if (type == VariabilityType.EXTENDS) {					
 				variabilityTxt = AuthoringUIResources
 						.extends_text;
-			} else if (type == VariabilityType.REPLACES_LITERAL) {
+			} else if (type == VariabilityType.REPLACES) {
 				variabilityTxt = AuthoringUIResources
 						.replaces_text; 
-			} else if (type == VariabilityType.LOCAL_REPLACEMENT_LITERAL) {
+			} else if (type == VariabilityType.LOCAL_REPLACEMENT) {
 				variabilityTxt = AuthoringUIResources
 						.localReplaces_text; 
-			} else if (type == VariabilityType.EXTENDS_REPLACES_LITERAL) {
+			} else if (type == VariabilityType.EXTENDS_REPLACES) {
 				variabilityTxt = AuthoringUIResources
 				.extendsReplaces_text; 
 			}
@@ -886,7 +886,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			ctrl_variability.setEnabled(editable);
 			ctrl_base_button.setEnabled(editable);
 			if (((IStructuredSelection) viewer_variability.getSelection())
-					.getFirstElement() == VariabilityType.NA_LITERAL) {
+					.getFirstElement() == VariabilityType.NA) {
 				ctrl_base_button.setEnabled(false);
 			}
 		}
@@ -1063,7 +1063,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 								return;
 							}
 						}
-						if (selection.getFirstElement() == VariabilityType.NA_LITERAL) {
+						if (selection.getFirstElement() == VariabilityType.NA) {
 							if (contentElement.getVariabilityBasedOnElement() != null) {
 								boolean status = editor
 										.getActionManager()

@@ -125,7 +125,7 @@ public class RefreshFromBaseAction implements IObjectActionDelegate {
 				if(e instanceof Activity){
 					if(((Activity)e).getVariabilityBasedOnElement() == null
 							|| (((Activity)e).getVariabilityBasedOnElement() != null
-							&& ((Activity)e).getVariabilityType() != VariabilityType.EXTENDS_LITERAL)){
+							&& ((Activity)e).getVariabilityType() != VariabilityType.EXTENDS)){
 						action.setEnabled(false);
 						return;
 					}
@@ -490,7 +490,7 @@ public class RefreshFromBaseAction implements IObjectActionDelegate {
 		EObject model = diagram.getElement();
 		Activity base = (Activity) act.getVariabilityBasedOnElement();
 		if (base == null
-				|| act.getVariabilityType() == VariabilityType.LOCAL_REPLACEMENT_LITERAL) {
+				|| act.getVariabilityType() == VariabilityType.LOCAL_REPLACEMENT) {
 			return false;
 		}
 		int type = DiagramHelper.getDiagramType(diagram);

@@ -111,17 +111,17 @@ public class ConfigurationErrorMatrix {
 		int errorLevel = ErrorInfo.WARNING;
 		String messageId = LibraryResources.ElementError_missing_element;
 
-		if ( type == VariabilityType.CONTRIBUTES_LITERAL ) {
+		if ( type == VariabilityType.CONTRIBUTES ) {
 			if ( e instanceof ContentCategory || e instanceof Guidance ) {
 				errorLevel = ErrorInfo.INFO;
 			}
 			
 			messageId = LibraryResources.ElementError_contributor_missing_base;
-		} else if ( type == VariabilityType.EXTENDS_LITERAL ) {
+		} else if ( type == VariabilityType.EXTENDS ) {
 			messageId = LibraryResources.ElementError_extender_missing_base;
 			
-		} else if ( type == VariabilityType.REPLACES_LITERAL 
-				|| type == VariabilityType.EXTENDS_REPLACES_LITERAL) {
+		} else if ( type == VariabilityType.REPLACES 
+				|| type == VariabilityType.EXTENDS_REPLACES) {
 			messageId = LibraryResources.ElementError_replacer_missing_base;
 		}
 		

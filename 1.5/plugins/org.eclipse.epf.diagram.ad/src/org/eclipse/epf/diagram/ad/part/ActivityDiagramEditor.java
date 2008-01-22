@@ -577,7 +577,7 @@ public class ActivityDiagramEditor extends AbstractDiagramEditor {
 			if (activity == null)
 				return false;
 			while (!activity.getVariabilityType().equals(
-					VariabilityType.NA_LITERAL)) {
+					VariabilityType.NA)) {
 
 				VariabilityElement ve = activity.getVariabilityBasedOnElement();
 				list.addAll(activity.getBreakdownElements());
@@ -588,7 +588,7 @@ public class ActivityDiagramEditor extends AbstractDiagramEditor {
 					break;
 				}
 			}
-			//Collect the breakdown elements to verifty taskdescriptors are
+			//Collect the breakdown elements to verify taskdescriptors are
 			// not.
 			list.addAll(activity.getBreakdownElements());
 			Diagram diagram = getDiagram(activity,
