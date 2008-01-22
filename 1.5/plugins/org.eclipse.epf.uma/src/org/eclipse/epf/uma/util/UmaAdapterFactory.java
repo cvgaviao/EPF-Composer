@@ -50,6 +50,7 @@ import org.eclipse.epf.uma.Element;
 import org.eclipse.epf.uma.Ellipse;
 import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.GraphConnector;
 import org.eclipse.epf.uma.GraphEdge;
 import org.eclipse.epf.uma.GraphElement;
@@ -60,6 +61,7 @@ import org.eclipse.epf.uma.GuidanceDescription;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.Image;
 import org.eclipse.epf.uma.Iteration;
+import org.eclipse.epf.uma.Kind;
 import org.eclipse.epf.uma.LeafElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -88,9 +90,7 @@ import org.eclipse.epf.uma.ProcessFamily;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.ProcessPlanningTemplate;
 import org.eclipse.epf.uma.Property;
-import org.eclipse.epf.uma.PseudoState;
 import org.eclipse.epf.uma.Reference;
-import org.eclipse.epf.uma.Region;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
@@ -102,8 +102,6 @@ import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.SemanticModelBridge;
 import org.eclipse.epf.uma.SimpleSemanticModelElement;
-import org.eclipse.epf.uma.State;
-import org.eclipse.epf.uma.StateMachine;
 import org.eclipse.epf.uma.Step;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.Task;
@@ -115,12 +113,10 @@ import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.TextElement;
 import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.ToolMentor;
-import org.eclipse.epf.uma.Transition;
 import org.eclipse.epf.uma.Type;
 import org.eclipse.epf.uma.UMASemanticModelBridge;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
-import org.eclipse.epf.uma.Vertex;
 import org.eclipse.epf.uma.Whitepaper;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkDefinition;
@@ -129,7 +125,6 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescription;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.WorkProductType;
-
 import org.eclipse.epf.uma.*;
 
 /**
@@ -170,6 +165,7 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
+	@Override
 	public boolean isFactoryForType(Object object) {
 		if (object == modelPackage) {
 			return true;
@@ -186,478 +182,577 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected UmaSwitch modelSwitch = new UmaSwitch() {
-		public Object caseClassifier(Classifier object) {
+	protected UmaSwitch<Adapter> modelSwitch = new UmaSwitch<Adapter>() {
+		@Override
+		public Adapter caseClassifier(Classifier object) {
 			return createClassifierAdapter();
 		}
 
-		public Object caseType(Type object) {
+		@Override
+		public Adapter caseType(Type object) {
 			return createTypeAdapter();
 		}
 
-		public Object caseElement(Element object) {
-			return createElementAdapter();
-		}
-
-		public Object caseNamedElement(NamedElement object) {
-			return createNamedElementAdapter();
-		}
-
-		public Object casePackageableElement(PackageableElement object) {
+		@Override
+		public Adapter casePackageableElement(PackageableElement object) {
 			return createPackageableElementAdapter();
 		}
 
-		public Object casePackage(org.eclipse.epf.uma.Package object) {
+		@Override
+		public Adapter caseNamedElement(NamedElement object) {
+			return createNamedElementAdapter();
+		}
+
+		@Override
+		public Adapter caseElement(Element object) {
+			return createElementAdapter();
+		}
+
+		@Override
+		public Adapter casePackage(org.eclipse.epf.uma.Package object) {
 			return createPackageAdapter();
 		}
 
-		public Object caseNamespace(Namespace object) {
+		@Override
+		public Adapter caseNamespace(Namespace object) {
 			return createNamespaceAdapter();
 		}
 
-		public Object caseMethodElement(MethodElement object) {
-			return createMethodElementAdapter();
-		}
-
-		public Object caseConstraint(Constraint object) {
+		@Override
+		public Adapter caseConstraint(Constraint object) {
 			return createConstraintAdapter();
 		}
 
-		public Object caseMethodElementProperty(MethodElementProperty object) {
+		@Override
+		public Adapter caseMethodElement(MethodElement object) {
+			return createMethodElementAdapter();
+		}
+
+		@Override
+		public Adapter caseMethodElementProperty(MethodElementProperty object) {
 			return createMethodElementPropertyAdapter();
 		}
 
-		public Object caseContentElement(ContentElement object) {
+		@Override
+		public Adapter caseKind(Kind object) {
+			return createKindAdapter();
+		}
+
+		@Override
+		public Adapter caseContentElement(ContentElement object) {
 			return createContentElementAdapter();
 		}
 
-		public Object caseDescribableElement(DescribableElement object) {
+		@Override
+		public Adapter caseDescribableElement(DescribableElement object) {
 			return createDescribableElementAdapter();
 		}
 
-		public Object caseContentDescription(ContentDescription object) {
+		@Override
+		public Adapter caseContentDescription(ContentDescription object) {
 			return createContentDescriptionAdapter();
 		}
 
-		public Object caseSection(Section object) {
-			return createSectionAdapter();
+		@Override
+		public Adapter caseMethodUnit(MethodUnit object) {
+			return createMethodUnitAdapter();
 		}
 
-		public Object caseRole(Role object) {
-			return createRoleAdapter();
-		}
-
-		public Object caseWorkProduct(WorkProduct object) {
-			return createWorkProductAdapter();
-		}
-
-		public Object caseTask(Task object) {
-			return createTaskAdapter();
-		}
-
-		public Object caseWorkDefinition(WorkDefinition object) {
-			return createWorkDefinitionAdapter();
-		}
-
-		public Object caseStep(Step object) {
-			return createStepAdapter();
-		}
-
-		public Object caseGuidance(Guidance object) {
-			return createGuidanceAdapter();
-		}
-
-		public Object caseArtifact(Artifact object) {
-			return createArtifactAdapter();
-		}
-
-		public Object caseDeliverable(Deliverable object) {
-			return createDeliverableAdapter();
-		}
-
-		public Object caseOutcome(Outcome object) {
-			return createOutcomeAdapter();
-		}
-
-		public Object caseMethodPackage(MethodPackage object) {
-			return createMethodPackageAdapter();
-		}
-
-		public Object caseContentPackage(ContentPackage object) {
-			return createContentPackageAdapter();
-		}
-
-		public Object caseArtifactDescription(ArtifactDescription object) {
-			return createArtifactDescriptionAdapter();
-		}
-
-		public Object caseWorkProductDescription(WorkProductDescription object) {
-			return createWorkProductDescriptionAdapter();
-		}
-
-		public Object caseDeliverableDescription(DeliverableDescription object) {
-			return createDeliverableDescriptionAdapter();
-		}
-
-		public Object caseRoleDescription(RoleDescription object) {
-			return createRoleDescriptionAdapter();
-		}
-
-		public Object caseTaskDescription(TaskDescription object) {
-			return createTaskDescriptionAdapter();
-		}
-
-		public Object caseGuidanceDescription(GuidanceDescription object) {
-			return createGuidanceDescriptionAdapter();
-		}
-
-		public Object casePracticeDescription(PracticeDescription object) {
-			return createPracticeDescriptionAdapter();
-		}
-
-		public Object casePoint(Point object) {
-			return createPointAdapter();
-		}
-
-		public Object caseGraphElement(GraphElement object) {
-			return createGraphElementAdapter();
-		}
-
-		public Object caseDiagramElement(DiagramElement object) {
-			return createDiagramElementAdapter();
-		}
-
-		public Object caseDiagramLink(DiagramLink object) {
-			return createDiagramLinkAdapter();
-		}
-
-		public Object caseGraphConnector(GraphConnector object) {
-			return createGraphConnectorAdapter();
-		}
-
-		public Object caseSemanticModelBridge(SemanticModelBridge object) {
-			return createSemanticModelBridgeAdapter();
-		}
-
-		public Object caseDimension(Dimension object) {
-			return createDimensionAdapter();
-		}
-
-		public Object caseReference(Reference object) {
-			return createReferenceAdapter();
-		}
-
-		public Object caseProperty(Property object) {
-			return createPropertyAdapter();
-		}
-
-		public Object caseGraphEdge(GraphEdge object) {
-			return createGraphEdgeAdapter();
-		}
-
-		public Object caseDiagram(Diagram object) {
-			return createDiagramAdapter();
-		}
-
-		public Object caseGraphNode(GraphNode object) {
-			return createGraphNodeAdapter();
-		}
-
-		public Object caseSimpleSemanticModelElement(
-				SimpleSemanticModelElement object) {
-			return createSimpleSemanticModelElementAdapter();
-		}
-
-		public Object caseUMASemanticModelBridge(UMASemanticModelBridge object) {
-			return createUMASemanticModelBridgeAdapter();
-		}
-
-		public Object caseCoreSemanticModelBridge(CoreSemanticModelBridge object) {
-			return createCoreSemanticModelBridgeAdapter();
-		}
-
-		public Object caseLeafElement(LeafElement object) {
-			return createLeafElementAdapter();
-		}
-
-		public Object caseTextElement(TextElement object) {
-			return createTextElementAdapter();
-		}
-
-		public Object caseImage(Image object) {
-			return createImageAdapter();
-		}
-
-		public Object caseGraphicPrimitive(GraphicPrimitive object) {
-			return createGraphicPrimitiveAdapter();
-		}
-
-		public Object casePolyline(Polyline object) {
-			return createPolylineAdapter();
-		}
-
-		public Object caseEllipse(Ellipse object) {
-			return createEllipseAdapter();
-		}
-
-		public Object caseActivity(Activity object) {
-			return createActivityAdapter();
-		}
-
-		public Object caseWorkBreakdownElement(WorkBreakdownElement object) {
-			return createWorkBreakdownElementAdapter();
-		}
-
-		public Object caseBreakdownElement(BreakdownElement object) {
-			return createBreakdownElementAdapter();
-		}
-
-		public Object caseMilestone(Milestone object) {
-			return createMilestoneAdapter();
-		}
-
-		public Object caseIteration(Iteration object) {
-			return createIterationAdapter();
-		}
-
-		public Object casePhase(Phase object) {
-			return createPhaseAdapter();
-		}
-
-		public Object caseTeamProfile(TeamProfile object) {
-			return createTeamProfileAdapter();
-		}
-
-		public Object caseRoleDescriptor(RoleDescriptor object) {
-			return createRoleDescriptorAdapter();
-		}
-
-		public Object caseWorkOrder(WorkOrder object) {
-			return createWorkOrderAdapter();
-		}
-
-		public Object caseProcessElement(ProcessElement object) {
-			return createProcessElementAdapter();
-		}
-
-		public Object casePlanningData(PlanningData object) {
-			return createPlanningDataAdapter();
-		}
-
-		public Object caseDescriptor(Descriptor object) {
-			return createDescriptorAdapter();
-		}
-
-		public Object caseWorkProductDescriptor(WorkProductDescriptor object) {
-			return createWorkProductDescriptorAdapter();
-		}
-
-		public Object caseTaskDescriptor(TaskDescriptor object) {
-			return createTaskDescriptorAdapter();
-		}
-
-		public Object caseCompositeRole(CompositeRole object) {
-			return createCompositeRoleAdapter();
-		}
-
-		public Object caseBreakdownElementDescription(
-				BreakdownElementDescription object) {
-			return createBreakdownElementDescriptionAdapter();
-		}
-
-		public Object caseActivityDescription(ActivityDescription object) {
-			return createActivityDescriptionAdapter();
-		}
-
-		public Object caseDeliveryProcessDescription(
-				DeliveryProcessDescription object) {
-			return createDeliveryProcessDescriptionAdapter();
-		}
-
-		public Object caseProcessDescription(ProcessDescription object) {
-			return createProcessDescriptionAdapter();
-		}
-
-		public Object caseDescriptorDescription(DescriptorDescription object) {
-			return createDescriptorDescriptionAdapter();
-		}
-
-		public Object caseConcept(Concept object) {
-			return createConceptAdapter();
-		}
-
-		public Object caseChecklist(Checklist object) {
-			return createChecklistAdapter();
-		}
-
-		public Object caseExample(Example object) {
-			return createExampleAdapter();
-		}
-
-		public Object caseGuideline(Guideline object) {
-			return createGuidelineAdapter();
-		}
-
-		public Object caseReport(Report object) {
-			return createReportAdapter();
-		}
-
-		public Object caseTemplate(Template object) {
-			return createTemplateAdapter();
-		}
-
-		public Object caseSupportingMaterial(SupportingMaterial object) {
+		@Override
+		public Adapter caseSupportingMaterial(SupportingMaterial object) {
 			return createSupportingMaterialAdapter();
 		}
 
-		public Object caseToolMentor(ToolMentor object) {
-			return createToolMentorAdapter();
+		@Override
+		public Adapter caseGuidance(Guidance object) {
+			return createGuidanceAdapter();
 		}
 
-		public Object caseWhitepaper(Whitepaper object) {
-			return createWhitepaperAdapter();
+		@Override
+		public Adapter caseSection(Section object) {
+			return createSectionAdapter();
 		}
 
-		public Object caseTermDefinition(TermDefinition object) {
+		@Override
+		public Adapter caseVariabilityElement(VariabilityElement object) {
+			return createVariabilityElementAdapter();
+		}
+
+		@Override
+		public Adapter caseConcept(Concept object) {
+			return createConceptAdapter();
+		}
+
+		@Override
+		public Adapter caseChecklist(Checklist object) {
+			return createChecklistAdapter();
+		}
+
+		@Override
+		public Adapter caseGuideline(Guideline object) {
+			return createGuidelineAdapter();
+		}
+
+		@Override
+		public Adapter caseExample(Example object) {
+			return createExampleAdapter();
+		}
+
+		@Override
+		public Adapter caseReusableAsset(ReusableAsset object) {
+			return createReusableAssetAdapter();
+		}
+
+		@Override
+		public Adapter caseTermDefinition(TermDefinition object) {
 			return createTermDefinitionAdapter();
 		}
 
-		public Object casePractice(Practice object) {
-			return createPracticeAdapter();
+		@Override
+		public Adapter caseArtifact(Artifact object) {
+			return createArtifactAdapter();
 		}
 
-		public Object caseEstimationConsiderations(
+		@Override
+		public Adapter caseWorkProduct(WorkProduct object) {
+			return createWorkProductAdapter();
+		}
+
+		@Override
+		public Adapter caseFulfillableElement(FulfillableElement object) {
+			return createFulfillableElementAdapter();
+		}
+
+		@Override
+		public Adapter caseReport(Report object) {
+			return createReportAdapter();
+		}
+
+		@Override
+		public Adapter caseTemplate(Template object) {
+			return createTemplateAdapter();
+		}
+
+		@Override
+		public Adapter caseToolMentor(ToolMentor object) {
+			return createToolMentorAdapter();
+		}
+
+		@Override
+		public Adapter caseEstimationConsiderations(
 				EstimationConsiderations object) {
 			return createEstimationConsiderationsAdapter();
 		}
 
-		public Object caseReusableAsset(ReusableAsset object) {
-			return createReusableAssetAdapter();
+		@Override
+		public Adapter caseDeliverable(Deliverable object) {
+			return createDeliverableAdapter();
 		}
 
-		public Object caseState(State object) {
-			return createStateAdapter();
+		@Override
+		public Adapter caseOutcome(Outcome object) {
+			return createOutcomeAdapter();
 		}
 
-		public Object caseVertex(Vertex object) {
-			return createVertexAdapter();
+		@Override
+		public Adapter caseStep(Step object) {
+			return createStepAdapter();
 		}
 
-		public Object caseRegion(Region object) {
-			return createRegionAdapter();
+		@Override
+		public Adapter caseWorkDefinition(WorkDefinition object) {
+			return createWorkDefinitionAdapter();
 		}
 
-		public Object caseStateMachine(StateMachine object) {
-			return createStateMachineAdapter();
+		@Override
+		public Adapter caseWhitepaper(Whitepaper object) {
+			return createWhitepaperAdapter();
 		}
 
-		public Object caseTransition(Transition object) {
-			return createTransitionAdapter();
+		@Override
+		public Adapter caseTask(Task object) {
+			return createTaskAdapter();
 		}
 
-		public Object casePseudoState(PseudoState object) {
-			return createPseudoStateAdapter();
+		@Override
+		public Adapter caseRole(Role object) {
+			return createRoleAdapter();
 		}
 
-		public Object caseDiscipline(Discipline object) {
-			return createDisciplineAdapter();
+		@Override
+		public Adapter caseArtifactDescription(ArtifactDescription object) {
+			return createArtifactDescriptionAdapter();
 		}
 
-		public Object caseContentCategory(ContentCategory object) {
-			return createContentCategoryAdapter();
+		@Override
+		public Adapter caseWorkProductDescription(WorkProductDescription object) {
+			return createWorkProductDescriptionAdapter();
 		}
 
-		public Object caseRoleSet(RoleSet object) {
+		@Override
+		public Adapter caseDeliverableDescription(DeliverableDescription object) {
+			return createDeliverableDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseRoleDescription(RoleDescription object) {
+			return createRoleDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseTaskDescription(TaskDescription object) {
+			return createTaskDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseGuidanceDescription(GuidanceDescription object) {
+			return createGuidanceDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter casePracticeDescription(PracticeDescription object) {
+			return createPracticeDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseRoleSet(RoleSet object) {
 			return createRoleSetAdapter();
 		}
 
-		public Object caseDomain(Domain object) {
+		@Override
+		public Adapter caseContentCategory(ContentCategory object) {
+			return createContentCategoryAdapter();
+		}
+
+		@Override
+		public Adapter caseDomain(Domain object) {
 			return createDomainAdapter();
 		}
 
-		public Object caseWorkProductType(WorkProductType object) {
+		@Override
+		public Adapter caseWorkProductType(WorkProductType object) {
 			return createWorkProductTypeAdapter();
 		}
 
-		public Object caseDisciplineGrouping(DisciplineGrouping object) {
+		@Override
+		public Adapter caseDisciplineGrouping(DisciplineGrouping object) {
 			return createDisciplineGroupingAdapter();
 		}
 
-		public Object caseTool(Tool object) {
-			return createToolAdapter();
+		@Override
+		public Adapter caseDiscipline(Discipline object) {
+			return createDisciplineAdapter();
 		}
 
-		public Object caseRoleSetGrouping(RoleSetGrouping object) {
-			return createRoleSetGroupingAdapter();
+		@Override
+		public Adapter caseActivity(Activity object) {
+			return createActivityAdapter();
 		}
 
-		public Object caseCustomCategory(CustomCategory object) {
-			return createCustomCategoryAdapter();
+		@Override
+		public Adapter caseWorkBreakdownElement(WorkBreakdownElement object) {
+			return createWorkBreakdownElementAdapter();
 		}
 
-		public Object caseDeliveryProcess(DeliveryProcess object) {
-			return createDeliveryProcessAdapter();
+		@Override
+		public Adapter caseBreakdownElement(BreakdownElement object) {
+			return createBreakdownElementAdapter();
 		}
 
-		public Object caseProcess(org.eclipse.epf.uma.Process object) {
-			return createProcessAdapter();
+		@Override
+		public Adapter caseProcessElement(ProcessElement object) {
+			return createProcessElementAdapter();
 		}
 
-		public Object caseCapabilityPattern(CapabilityPattern object) {
-			return createCapabilityPatternAdapter();
+		@Override
+		public Adapter casePlanningData(PlanningData object) {
+			return createPlanningDataAdapter();
 		}
 
-		public Object caseProcessPlanningTemplate(ProcessPlanningTemplate object) {
-			return createProcessPlanningTemplateAdapter();
+		@Override
+		public Adapter caseWorkOrder(WorkOrder object) {
+			return createWorkOrderAdapter();
 		}
 
-		public Object caseRoadmap(Roadmap object) {
+		@Override
+		public Adapter caseRoadmap(Roadmap object) {
 			return createRoadmapAdapter();
 		}
 
-		public Object caseProcessComponent(ProcessComponent object) {
-			return createProcessComponentAdapter();
+		@Override
+		public Adapter caseTool(Tool object) {
+			return createToolAdapter();
 		}
 
-		public Object caseProcessPackage(ProcessPackage object) {
-			return createProcessPackageAdapter();
+		@Override
+		public Adapter caseRoleSetGrouping(RoleSetGrouping object) {
+			return createRoleSetGroupingAdapter();
 		}
 
-		public Object caseProcessComponentInterface(
-				ProcessComponentInterface object) {
-			return createProcessComponentInterfaceAdapter();
+		@Override
+		public Adapter caseCustomCategory(CustomCategory object) {
+			return createCustomCategoryAdapter();
 		}
 
-		public Object caseProcessComponentDescriptor(
+		@Override
+		public Adapter caseMethodPackage(MethodPackage object) {
+			return createMethodPackageAdapter();
+		}
+
+		@Override
+		public Adapter caseContentPackage(ContentPackage object) {
+			return createContentPackageAdapter();
+		}
+
+		@Override
+		public Adapter caseMilestone(Milestone object) {
+			return createMilestoneAdapter();
+		}
+
+		@Override
+		public Adapter caseWorkProductDescriptor(WorkProductDescriptor object) {
+			return createWorkProductDescriptorAdapter();
+		}
+
+		@Override
+		public Adapter caseDescriptor(Descriptor object) {
+			return createDescriptorAdapter();
+		}
+
+		@Override
+		public Adapter caseIteration(Iteration object) {
+			return createIterationAdapter();
+		}
+
+		@Override
+		public Adapter casePhase(Phase object) {
+			return createPhaseAdapter();
+		}
+
+		@Override
+		public Adapter caseTeamProfile(TeamProfile object) {
+			return createTeamProfileAdapter();
+		}
+
+		@Override
+		public Adapter caseRoleDescriptor(RoleDescriptor object) {
+			return createRoleDescriptorAdapter();
+		}
+
+		@Override
+		public Adapter caseTaskDescriptor(TaskDescriptor object) {
+			return createTaskDescriptorAdapter();
+		}
+
+		@Override
+		public Adapter caseCompositeRole(CompositeRole object) {
+			return createCompositeRoleAdapter();
+		}
+
+		@Override
+		public Adapter caseDeliveryProcess(DeliveryProcess object) {
+			return createDeliveryProcessAdapter();
+		}
+
+		@Override
+		public Adapter caseProcess(org.eclipse.epf.uma.Process object) {
+			return createProcessAdapter();
+		}
+
+		@Override
+		public Adapter caseCapabilityPattern(CapabilityPattern object) {
+			return createCapabilityPatternAdapter();
+		}
+
+		@Override
+		public Adapter caseMethodConfiguration(MethodConfiguration object) {
+			return createMethodConfigurationAdapter();
+		}
+
+		@Override
+		public Adapter caseMethodPlugin(MethodPlugin object) {
+			return createMethodPluginAdapter();
+		}
+
+		@Override
+		public Adapter caseProcessPlanningTemplate(
+				ProcessPlanningTemplate object) {
+			return createProcessPlanningTemplateAdapter();
+		}
+
+		@Override
+		public Adapter casePractice(Practice object) {
+			return createPracticeAdapter();
+		}
+
+		@Override
+		public Adapter caseBreakdownElementDescription(
+				BreakdownElementDescription object) {
+			return createBreakdownElementDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseActivityDescription(ActivityDescription object) {
+			return createActivityDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseDeliveryProcessDescription(
+				DeliveryProcessDescription object) {
+			return createDeliveryProcessDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseProcessDescription(ProcessDescription object) {
+			return createProcessDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseDescriptorDescription(DescriptorDescription object) {
+			return createDescriptorDescriptionAdapter();
+		}
+
+		@Override
+		public Adapter caseProcessComponentDescriptor(
 				ProcessComponentDescriptor object) {
 			return createProcessComponentDescriptorAdapter();
 		}
 
-		public Object caseMethodPlugin(MethodPlugin object) {
-			return createMethodPluginAdapter();
+		@Override
+		public Adapter caseProcessComponent(ProcessComponent object) {
+			return createProcessComponentAdapter();
 		}
 
-		public Object caseVariabilityElement(VariabilityElement object) {
-			return createVariabilityElementAdapter();
+		@Override
+		public Adapter caseProcessPackage(ProcessPackage object) {
+			return createProcessPackageAdapter();
 		}
 
-		public Object caseMethodUnit(MethodUnit object) {
-			return createMethodUnitAdapter();
+		@Override
+		public Adapter caseProcessComponentInterface(
+				ProcessComponentInterface object) {
+			return createProcessComponentInterfaceAdapter();
 		}
 
-		public Object caseMethodConfiguration(MethodConfiguration object) {
-			return createMethodConfigurationAdapter();
-		}
-
-		public Object caseProcessFamily(ProcessFamily object) {
+		@Override
+		public Adapter caseProcessFamily(ProcessFamily object) {
 			return createProcessFamilyAdapter();
 		}
 
-		public Object caseMethodLibrary(MethodLibrary object) {
+		@Override
+		public Adapter caseMethodLibrary(MethodLibrary object) {
 			return createMethodLibraryAdapter();
 		}
 
-		public Object defaultCase(EObject object) {
+		@Override
+		public Adapter casePoint(Point object) {
+			return createPointAdapter();
+		}
+
+		@Override
+		public Adapter caseGraphElement(GraphElement object) {
+			return createGraphElementAdapter();
+		}
+
+		@Override
+		public Adapter caseDiagramElement(DiagramElement object) {
+			return createDiagramElementAdapter();
+		}
+
+		@Override
+		public Adapter caseDiagramLink(DiagramLink object) {
+			return createDiagramLinkAdapter();
+		}
+
+		@Override
+		public Adapter caseGraphConnector(GraphConnector object) {
+			return createGraphConnectorAdapter();
+		}
+
+		@Override
+		public Adapter caseSemanticModelBridge(SemanticModelBridge object) {
+			return createSemanticModelBridgeAdapter();
+		}
+
+		@Override
+		public Adapter caseDimension(Dimension object) {
+			return createDimensionAdapter();
+		}
+
+		@Override
+		public Adapter caseReference(Reference object) {
+			return createReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseProperty(Property object) {
+			return createPropertyAdapter();
+		}
+
+		@Override
+		public Adapter caseGraphEdge(GraphEdge object) {
+			return createGraphEdgeAdapter();
+		}
+
+		@Override
+		public Adapter caseDiagram(Diagram object) {
+			return createDiagramAdapter();
+		}
+
+		@Override
+		public Adapter caseGraphNode(GraphNode object) {
+			return createGraphNodeAdapter();
+		}
+
+		@Override
+		public Adapter caseSimpleSemanticModelElement(
+				SimpleSemanticModelElement object) {
+			return createSimpleSemanticModelElementAdapter();
+		}
+
+		@Override
+		public Adapter caseUMASemanticModelBridge(UMASemanticModelBridge object) {
+			return createUMASemanticModelBridgeAdapter();
+		}
+
+		@Override
+		public Adapter caseCoreSemanticModelBridge(
+				CoreSemanticModelBridge object) {
+			return createCoreSemanticModelBridgeAdapter();
+		}
+
+		@Override
+		public Adapter caseLeafElement(LeafElement object) {
+			return createLeafElementAdapter();
+		}
+
+		@Override
+		public Adapter caseTextElement(TextElement object) {
+			return createTextElementAdapter();
+		}
+
+		@Override
+		public Adapter caseImage(Image object) {
+			return createImageAdapter();
+		}
+
+		@Override
+		public Adapter caseGraphicPrimitive(GraphicPrimitive object) {
+			return createGraphicPrimitiveAdapter();
+		}
+
+		@Override
+		public Adapter casePolyline(Polyline object) {
+			return createPolylineAdapter();
+		}
+
+		@Override
+		public Adapter caseEllipse(Ellipse object) {
+			return createEllipseAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
 	};
@@ -670,8 +765,9 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
+	@Override
 	public Adapter createAdapter(Notifier target) {
-		return (Adapter) modelSwitch.doSwitch((EObject) target);
+		return modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**
@@ -815,6 +911,20 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Kind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Kind
+	 * @generated
+	 */
+	public Adapter createKindAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.ContentElement <em>Content Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -895,6 +1005,20 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createWorkProductAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.FulfillableElement <em>Fulfillable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.FulfillableElement
+	 * @generated
+	 */
+	public Adapter createFulfillableElementAdapter() {
 		return null;
 	}
 
@@ -1119,300 +1243,6 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPracticeDescriptionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Point <em>Point</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Point
-	 * @generated
-	 */
-	public Adapter createPointAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphElement <em>Graph Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.GraphElement
-	 * @generated
-	 */
-	public Adapter createGraphElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.DiagramElement <em>Diagram Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.DiagramElement
-	 * @generated
-	 */
-	public Adapter createDiagramElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.DiagramLink <em>Diagram Link</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.DiagramLink
-	 * @generated
-	 */
-	public Adapter createDiagramLinkAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphConnector <em>Graph Connector</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.GraphConnector
-	 * @generated
-	 */
-	public Adapter createGraphConnectorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.SemanticModelBridge <em>Semantic Model Bridge</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.SemanticModelBridge
-	 * @generated
-	 */
-	public Adapter createSemanticModelBridgeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Dimension <em>Dimension</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Dimension
-	 * @generated
-	 */
-	public Adapter createDimensionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Reference <em>Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Reference
-	 * @generated
-	 */
-	public Adapter createReferenceAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Property <em>Property</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Property
-	 * @generated
-	 */
-	public Adapter createPropertyAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphEdge <em>Graph Edge</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.GraphEdge
-	 * @generated
-	 */
-	public Adapter createGraphEdgeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Diagram <em>Diagram</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Diagram
-	 * @generated
-	 */
-	public Adapter createDiagramAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphNode <em>Graph Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.GraphNode
-	 * @generated
-	 */
-	public Adapter createGraphNodeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.SimpleSemanticModelElement <em>Simple Semantic Model Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.SimpleSemanticModelElement
-	 * @generated
-	 */
-	public Adapter createSimpleSemanticModelElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.UMASemanticModelBridge <em>UMA Semantic Model Bridge</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.UMASemanticModelBridge
-	 * @generated
-	 */
-	public Adapter createUMASemanticModelBridgeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.CoreSemanticModelBridge <em>Core Semantic Model Bridge</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.CoreSemanticModelBridge
-	 * @generated
-	 */
-	public Adapter createCoreSemanticModelBridgeAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.LeafElement <em>Leaf Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.LeafElement
-	 * @generated
-	 */
-	public Adapter createLeafElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.TextElement <em>Text Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.TextElement
-	 * @generated
-	 */
-	public Adapter createTextElementAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Image <em>Image</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Image
-	 * @generated
-	 */
-	public Adapter createImageAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphicPrimitive <em>Graphic Primitive</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.GraphicPrimitive
-	 * @generated
-	 */
-	public Adapter createGraphicPrimitiveAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Polyline <em>Polyline</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Polyline
-	 * @generated
-	 */
-	public Adapter createPolylineAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Ellipse <em>Ellipse</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Ellipse
-	 * @generated
-	 */
-	public Adapter createEllipseAdapter() {
 		return null;
 	}
 
@@ -1879,90 +1709,6 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.State <em>State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.State
-	 * @generated
-	 */
-	public Adapter createStateAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Vertex <em>Vertex</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Vertex
-	 * @generated
-	 */
-	public Adapter createVertexAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Region <em>Region</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Region
-	 * @generated
-	 */
-	public Adapter createRegionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.StateMachine <em>State Machine</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.StateMachine
-	 * @generated
-	 */
-	public Adapter createStateMachineAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Transition <em>Transition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.Transition
-	 * @generated
-	 */
-	public Adapter createTransitionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.PseudoState <em>Pseudo State</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.epf.uma.PseudoState
-	 * @generated
-	 */
-	public Adapter createPseudoStateAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Discipline <em>Discipline</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2295,6 +2041,300 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createMethodLibraryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Point <em>Point</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Point
+	 * @generated
+	 */
+	public Adapter createPointAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphElement <em>Graph Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.GraphElement
+	 * @generated
+	 */
+	public Adapter createGraphElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.DiagramElement <em>Diagram Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.DiagramElement
+	 * @generated
+	 */
+	public Adapter createDiagramElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.DiagramLink <em>Diagram Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.DiagramLink
+	 * @generated
+	 */
+	public Adapter createDiagramLinkAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphConnector <em>Graph Connector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.GraphConnector
+	 * @generated
+	 */
+	public Adapter createGraphConnectorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.SemanticModelBridge <em>Semantic Model Bridge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.SemanticModelBridge
+	 * @generated
+	 */
+	public Adapter createSemanticModelBridgeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Dimension <em>Dimension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Dimension
+	 * @generated
+	 */
+	public Adapter createDimensionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Reference <em>Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Reference
+	 * @generated
+	 */
+	public Adapter createReferenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Property <em>Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Property
+	 * @generated
+	 */
+	public Adapter createPropertyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphEdge <em>Graph Edge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.GraphEdge
+	 * @generated
+	 */
+	public Adapter createGraphEdgeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Diagram <em>Diagram</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Diagram
+	 * @generated
+	 */
+	public Adapter createDiagramAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphNode <em>Graph Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.GraphNode
+	 * @generated
+	 */
+	public Adapter createGraphNodeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.SimpleSemanticModelElement <em>Simple Semantic Model Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.SimpleSemanticModelElement
+	 * @generated
+	 */
+	public Adapter createSimpleSemanticModelElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.UMASemanticModelBridge <em>UMA Semantic Model Bridge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.UMASemanticModelBridge
+	 * @generated
+	 */
+	public Adapter createUMASemanticModelBridgeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.CoreSemanticModelBridge <em>Core Semantic Model Bridge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.CoreSemanticModelBridge
+	 * @generated
+	 */
+	public Adapter createCoreSemanticModelBridgeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.LeafElement <em>Leaf Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.LeafElement
+	 * @generated
+	 */
+	public Adapter createLeafElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.TextElement <em>Text Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.TextElement
+	 * @generated
+	 */
+	public Adapter createTextElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Image <em>Image</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Image
+	 * @generated
+	 */
+	public Adapter createImageAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.GraphicPrimitive <em>Graphic Primitive</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.GraphicPrimitive
+	 * @generated
+	 */
+	public Adapter createGraphicPrimitiveAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Polyline <em>Polyline</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Polyline
+	 * @generated
+	 */
+	public Adapter createPolylineAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.Ellipse <em>Ellipse</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.Ellipse
+	 * @generated
+	 */
+	public Adapter createEllipseAdapter() {
 		return null;
 	}
 

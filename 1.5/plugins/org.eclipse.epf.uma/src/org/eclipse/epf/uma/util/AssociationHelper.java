@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.uma.Activity;
@@ -200,33 +201,33 @@ public final class AssociationHelper {
 	 * An opposite feature used for retrieving the activities which a checklist is
 	 * associated with.
 	 */
-	public static final OppositeFeature Checklist_Activities = new OppositeFeature(
+	public static final OppositeFeature Checklist_BreakdownElements = new OppositeFeature(
 			Checklist.class,
-			"Checklist_Activities", UmaPackage.eINSTANCE.getActivity_Checklists(), true); //$NON-NLS-1$
+			"Checklist_BreakdownElements", UmaPackage.eINSTANCE.getBreakdownElement_Checklists(), true); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the activities which a concept is
 	 * associated with.
 	 */
-	public static final OppositeFeature Concept_Activities = new OppositeFeature(
+	public static final OppositeFeature Concept_BreakdownElements = new OppositeFeature(
 			Concept.class,
-			"Concept_Activities", UmaPackage.eINSTANCE.getActivity_Concepts(), true, false); //$NON-NLS-1$
+			"Concept_BreakdownElements", UmaPackage.eINSTANCE.getBreakdownElement_Concepts(), true, false); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the activities which an example is
 	 * associated with.
 	 */
-	public static final OppositeFeature Example_Activities = new OppositeFeature(
+	public static final OppositeFeature Example_BreakdownElements = new OppositeFeature(
 			Concept.class,
-			"Example_Activities", UmaPackage.eINSTANCE.getActivity_Examples(), true, false); //$NON-NLS-1$
+			"Example_BreakdownElements", UmaPackage.eINSTANCE.getBreakdownElement_Examples(), true, false); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the activities which a ReusableAsset is
 	 * associated with.
 	 */
-	public static final OppositeFeature ReusableAsset_Activities = new OppositeFeature(
+	public static final OppositeFeature ReusableAsset_BreakdownElements = new OppositeFeature(
 			Concept.class,
-			"ReusableAsset_Activities", UmaPackage.eINSTANCE.getActivity_ReusableAssets(), true, false); //$NON-NLS-1$
+			"ReusableAsset_BreakdownElements", UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets(), true, false); //$NON-NLS-1$
 
 
 	/**
@@ -289,9 +290,9 @@ public final class AssociationHelper {
 	 * An opposite feature used for retrieving the activities which a supporting
 	 * material is associated with.
 	 */
-	public static final OppositeFeature SupportingMaterial_Activities = new OppositeFeature(
+	public static final OppositeFeature SupportingMaterial_BreakdownElements = new OppositeFeature(
 			SupportingMaterial.class,
-			"SupportingMaterial_Activities", UmaPackage.eINSTANCE.getActivity_SupportingMaterials(), true, false); //$NON-NLS-1$
+			"SupportingMaterial_BreakdownElements", UmaPackage.eINSTANCE.getBreakdownElement_SupportingMaterials(), true, false); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the content elements which a
@@ -337,9 +338,9 @@ public final class AssociationHelper {
 	 * An opposite feature used for retrieving the activities which a guideline
 	 * is associated with.
 	 */
-	public static final OppositeFeature Guideline_Activities = new OppositeFeature(
+	public static final OppositeFeature Guideline_BreakdownElements = new OppositeFeature(
 			Guideline.class,
-			"Guideline_Activities", UmaPackage.eINSTANCE.getActivity_Guidelines(), true, false); //$NON-NLS-1$
+			"Guideline_BreakdownElements", UmaPackage.eINSTANCE.getBreakdownElement_Guidelines(), true, false); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the work products which a
@@ -977,18 +978,13 @@ public final class AssociationHelper {
 	 * @return a list of roles
 	 */
 	public static List getModifiedBy(WorkProduct wp) {
-		List outputFrom = AssociationHelper.getOutputtingTasks(wp); // this.getOutputFrom();
-		java.util.ArrayList modifies = new java.util.ArrayList();
+		List outputFrom = AssociationHelper.getOutputtingTasks(wp);
+		UniqueEList<Role> modifies = new UniqueEList<Role>();
 		if (outputFrom != null && outputFrom.size() > 0) {
 			for (Iterator it = outputFrom.iterator(); it.hasNext();) {
-				// for each task get, get primary performer role
+				//	for each task get, get primary performer role
 				Task task = (Task) it.next();
-				Role modifiedByRole = task.getPerformedBy();
-				if (modifiedByRole != null) {
-					if (!modifies.contains(modifiedByRole)) {
-						modifies.add(modifiedByRole);
-					}
-				}
+				modifies.addAll(task.getPerformedBy());
 			}
 		}
 		return modifies;
