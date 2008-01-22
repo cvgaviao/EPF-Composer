@@ -85,7 +85,7 @@ public class ActivityVariabilityCommand extends AddMethodElementCommand {
 		if (!elements.isEmpty()) {
 			// basically remove from configuration if anything was added
 			super.undo();
-			activity.setVariabilityType(VariabilityType.NA_LITERAL);
+			activity.setVariabilityType(VariabilityType.NA);
 			activity.setVariabilityBasedOnElement(null);
 		}
 	}

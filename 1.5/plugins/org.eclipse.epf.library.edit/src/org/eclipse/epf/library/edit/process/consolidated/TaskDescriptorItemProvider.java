@@ -215,8 +215,8 @@ public class TaskDescriptorItemProvider extends
 				if(parent instanceof VariabilityElement) {
 					for (Iterator iter = TngUtil.getGeneralizers(parent); iter.hasNext();) {
 						VariabilityElement ve = (VariabilityElement) iter.next();
-						if(ve.getVariabilityType() == VariabilityType.EXTENDS_LITERAL
-								|| ve.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION_LITERAL) {
+						if(ve.getVariabilityType() == VariabilityType.EXTENDS
+								|| ve.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION) {
 							adapter = TngUtil.getAdapterByType(ve, adapterFactory);
 							if (adapter instanceof ItemProviderAdapter) {
 								((ItemProviderAdapter) adapter)

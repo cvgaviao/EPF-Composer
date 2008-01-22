@@ -216,7 +216,7 @@ public final class DependencyChecker {
 			VariabilityElement ve = (VariabilityElement) iter.next();
 			VariabilityElement base = ve.getVariabilityBasedOnElement();
 			VariabilityType vType = ve.getVariabilityType();
-			if (base != null && (vType == VariabilityType.EXTENDS_LITERAL)) {
+			if (base != null && (vType == VariabilityType.EXTENDS)) {
 				Process proc = TngUtil
 						.getOwningProcess((BreakdownElement) base);
 				if (proc == process) {
@@ -268,7 +268,7 @@ public final class DependencyChecker {
 	private static IStatus checkCircularDependency(Activity act, Activity base,
 			VariabilityType type, boolean filtering) {
 		if((base instanceof Process)
-				&& (type == VariabilityType.REPLACES_LITERAL) && !(act instanceof Process)) {
+				&& (type == VariabilityType.REPLACES) && !(act instanceof Process)) {
 			String message = LibraryEditResources.activity_variability_error_msg3;
 			return new Status(IStatus.ERROR, LibraryEditPlugin.getDefault()
 					.getId(), 0, message, null);
@@ -309,7 +309,7 @@ public final class DependencyChecker {
 		}
 		// block for children
 		else if (ProcessUtil.hasContributorOrReplacer(base)
-				&& type == VariabilityType.EXTENDS_LITERAL) {
+				&& type == VariabilityType.EXTENDS) {
 			Object[] args = { act.getName(), base.getName() };
 			String message = NLS
 					.bind(
@@ -347,7 +347,7 @@ public final class DependencyChecker {
 		// standard check
 		//
 		VariabilityType type = base.getVariabilityType();
-		while (type != VariabilityType.NA_LITERAL) {
+		while (type != VariabilityType.NA) {
 			VariabilityElement ve = base.getVariabilityBasedOnElement();
 			if (ve != null && ve == element)
 				return true;
@@ -432,8 +432,8 @@ public final class DependencyChecker {
 	public static boolean checkCircularForArtifacts(Artifact destination,
 			Collection sourceElements) {
 		HashSet variantSet = new HashSet();
-		collectVariantSet(destination, variantSet, VariabilityType.REPLACES_LITERAL);
-		collectVariantSet(destination, variantSet, VariabilityType.EXTENDS_LITERAL);
+		collectVariantSet(destination, variantSet, VariabilityType.REPLACES);
+		collectVariantSet(destination, variantSet, VariabilityType.EXTENDS);
 		if (! checkCircularForArtifacts1(destination, sourceElements, variantSet)) {
 			return false;
 		}

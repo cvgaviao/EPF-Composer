@@ -11,16 +11,12 @@
 package org.eclipse.epf.library.edit.process;
 
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.Iterator;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.LibraryEditResources;
-import org.eclipse.epf.library.edit.command.ResourceAwareDragAndDropCommand;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -86,9 +82,9 @@ public class DescriptorItemProvider extends BreakdownElementItemProvider {
 						}
 						if (desc != null) {
 							String str = null;
-							if (ve.getVariabilityType() == VariabilityType.EXTENDS_LITERAL) {
+							if (ve.getVariabilityType() == VariabilityType.EXTENDS) {
 								str = LibraryEditResources.process_extends; 
-							} else if (ve.getVariabilityType() == VariabilityType.REPLACES_LITERAL) {
+							} else if (ve.getVariabilityType() == VariabilityType.REPLACES) {
 								str = LibraryEditResources.process_replaces; 
 							}
 							String name = ((DescribableElement) desc)

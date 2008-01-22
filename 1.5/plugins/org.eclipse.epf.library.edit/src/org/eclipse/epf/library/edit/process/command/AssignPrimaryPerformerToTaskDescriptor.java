@@ -70,7 +70,6 @@ public class AssignPrimaryPerformerToTaskDescriptor extends
 
 		this.role = role;
 		this.taskDesc = taskDesc;
-		this.oldRoleDesc = taskDesc.getPerformedPrimarilyBy();
 		this.config = config;
 
 		roles = new ArrayList();
@@ -128,7 +127,7 @@ public class AssignPrimaryPerformerToTaskDescriptor extends
 	 */
 	public void redo() {
 
-		taskDesc.setPerformedPrimarilyBy(newRoleDesc);
+		taskDesc.getPerformedPrimarilyBy().add(newRoleDesc);
 
 		if (isNewRoleDescriptor) {
 			activity.getBreakdownElements().add(newRoleDesc);
@@ -145,7 +144,7 @@ public class AssignPrimaryPerformerToTaskDescriptor extends
 			// remove from configuration if added
 			super.undo();
 
-			taskDesc.setPerformedPrimarilyBy(oldRoleDesc);
+			taskDesc.getPerformedPrimarilyBy().remove(newRoleDesc);
 
 			if (isNewRoleDescriptor) {
 				activity.getBreakdownElements().remove(newRoleDesc);

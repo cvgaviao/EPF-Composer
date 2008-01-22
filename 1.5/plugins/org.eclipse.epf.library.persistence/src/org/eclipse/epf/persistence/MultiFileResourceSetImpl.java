@@ -782,7 +782,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 								NLS.bind(PersistenceResources.loadConfiguration_couldNotLoad_logMsg, configFile));
 					}
 					else {
-						lib.getPredefinedConfigurations().add(e);
+						lib.getPredefinedConfigurations().add((MethodConfiguration) e);
 						return resource;
 					}
 				} else {
@@ -2019,16 +2019,14 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		for (Iterator iter = elements.iterator(); iter.hasNext();) {
 			EObject element = (EObject) iter.next();
 			if (!(element instanceof Activity) && element.eContainer() == null) {
-				parentPkg.getProcessElements().add(element);
+				parentPkg.getProcessElements().add((ProcessElement) element);
 			}
 		}
 
 		// add new WorkOrder objects or remove unused WorkOrder objects of this
 		// activity
 		//
-		for (Iterator iter = activity.getLinkToPredecessor().iterator(); iter
-				.hasNext();) {
-			WorkOrder workOrder = (WorkOrder) iter.next();
+		for (WorkOrder workOrder : activity.getLinkToPredecessor()) {
 			if (workOrder.eContainer() == null) {
 				if (workOrder.getPred() != null
 						&& getParent(workOrder.getPred()) != null) {

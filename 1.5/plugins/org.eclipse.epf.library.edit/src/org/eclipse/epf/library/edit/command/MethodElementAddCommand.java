@@ -1503,7 +1503,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					if (ref.feature == UmaPackage.eINSTANCE
 							.getVariabilityElement_VariabilityType()) {
 						//Should query the default value if extended for any attribute feature
-						ref.owner.eSet(ref.feature, VariabilityType.NA_LITERAL);
+						ref.owner.eSet(ref.feature, VariabilityType.NA);
 					} else {
 						ref.owner.eSet(ref.feature, null);
 					}

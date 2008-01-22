@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
 
@@ -38,11 +37,11 @@ public class UniqueNameHandler {
 	/**
 	 * @param elements
 	 */
-	public void registerNames(Collection<MethodElement> elements) {
+	public void registerNames(Collection<? extends MethodElement> elements) {
 		if (elements == null) {
 			return;
 		}
-		for (Iterator<MethodElement> it = elements.iterator(); it.hasNext();) {
+		for (Iterator<? extends MethodElement> it = elements.iterator(); it.hasNext();) {
 			MethodElement element = it.next();
 			register(element.getName());
 		}

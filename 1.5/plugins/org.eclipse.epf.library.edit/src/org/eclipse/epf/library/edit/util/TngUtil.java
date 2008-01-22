@@ -530,17 +530,17 @@ public final class TngUtil {
 		if (preferBase && object.getVariabilityBasedOnElement() != null) {
 			VariabilityType type = object.getVariabilityType();
 			String variabilityTxt = null;
-			if (type == VariabilityType.CONTRIBUTES_LITERAL) {
+			if (type == VariabilityType.CONTRIBUTES) {
 				variabilityTxt = LibraryEditResources.contributesTo_text; 
-			} else if (type == VariabilityType.LOCAL_CONTRIBUTION_LITERAL) {
+			} else if (type == VariabilityType.LOCAL_CONTRIBUTION) {
 					variabilityTxt = LibraryEditResources.localContributesTo_text; 
-			} else if (type == VariabilityType.EXTENDS_LITERAL) {
+			} else if (type == VariabilityType.EXTENDS) {
 				variabilityTxt = LibraryEditResources.extends_text; 
-			} else if (type == VariabilityType.REPLACES_LITERAL) {
+			} else if (type == VariabilityType.REPLACES) {
 				variabilityTxt = LibraryEditResources.replaces_text; 
-			} else if (type == VariabilityType.LOCAL_REPLACEMENT_LITERAL) {
+			} else if (type == VariabilityType.LOCAL_REPLACEMENT) {
 				variabilityTxt = LibraryEditResources.localReplaces_text; 
-			} else if (type == VariabilityType.EXTENDS_REPLACES_LITERAL){
+			} else if (type == VariabilityType.EXTENDS_REPLACES){
 				variabilityTxt = LibraryEditResources.extends_replaces_text;
 			}
 			if (variabilityTxt != null) {
@@ -858,7 +858,7 @@ public final class TngUtil {
 	}
 
 
-	public static void setDefaultName(List<MethodElement> siblings, MethodElement e,
+	public static void setDefaultName(List<? extends MethodElement> siblings, MethodElement e,
 			String baseName) {
 		if (e.getName() != null && e.getName().trim().length() > 0)
 			return;
@@ -910,7 +910,7 @@ public final class TngUtil {
 		}
 	}
 
-	private static boolean isNameTaken(List<MethodElement> siblings, MethodElement e,
+	private static boolean isNameTaken(List<? extends MethodElement> siblings, MethodElement e,
 			String name) {
 		for (int i = siblings.size() - 1; i > -1; i--) {
 			MethodElement sibling = (MethodElement) siblings.get(i);
@@ -1187,8 +1187,7 @@ public final class TngUtil {
 
 	public static List<Process> getAllProcesses(MethodPlugin plugin) {
 		List<Process> processes = new ArrayList<Process>();
-		for (Iterator<Process> it = plugin.getMethodPackages().iterator(); it.hasNext();) {
-			MethodPackage pkg = (MethodPackage) it.next();
+		for (MethodPackage pkg : plugin.getMethodPackages()) {
 			_iteratePackageForProcesses(pkg, processes);
 		}
 
@@ -1197,7 +1196,7 @@ public final class TngUtil {
 
 	public static List<Process> getAllProcesses(MethodPackage pkg) {
 		List<Process>  processes = new ArrayList<Process> ();
-			_iteratePackageForProcesses(pkg, processes);
+		_iteratePackageForProcesses(pkg, processes);
 
 		return processes;
 	}
@@ -1447,7 +1446,7 @@ public final class TngUtil {
 
 	public static boolean hasContributor(VariabilityElement e) {
 		return hasGeneralizer(e, Collections
-				.singleton(VariabilityType.CONTRIBUTES_LITERAL));
+				.singleton(VariabilityType.CONTRIBUTES));
 	}
 
 	public static boolean hasGeneralizer(VariabilityElement e,
@@ -1511,7 +1510,7 @@ public final class TngUtil {
 	}
 
 	public static Iterator getContributors(VariabilityElement e) {
-		return getGeneralizers(e, VariabilityType.CONTRIBUTES_LITERAL);
+		return getGeneralizers(e, VariabilityType.CONTRIBUTES);
 	}
 
 	public static ItemProviderAdapter getAdapter(MethodPlugin plugin,
@@ -1740,7 +1739,7 @@ public final class TngUtil {
 				.hasNext();) {
 			Object element = iter.next();
 			if (element instanceof CustomCategory) {
-				root.getCategorizedElements().add(element);
+				root.getCategorizedElements().add((DescribableElement) element);
 			}
 		}
 		return root;
@@ -2215,18 +2214,18 @@ public final class TngUtil {
 
 	public static boolean isContributor(VariabilityElement e) {
 		return e.getVariabilityBasedOnElement() != null
-		&& (e.getVariabilityType() == VariabilityType.CONTRIBUTES_LITERAL);
+		&& (e.getVariabilityType() == VariabilityType.CONTRIBUTES);
 	}
 	
 	public static boolean isReplacer(VariabilityElement e) {
 		return e.getVariabilityBasedOnElement() != null
-		&& (e.getVariabilityType() == VariabilityType.REPLACES_LITERAL);
+		&& (e.getVariabilityType() == VariabilityType.REPLACES);
 	}
 	
 	public static boolean isContributorOrReplacer(VariabilityElement e) {
 		VariabilityElement base = e.getVariabilityBasedOnElement();
 		VariabilityType type = e.getVariabilityType();
-		return base != null && (type == VariabilityType.CONTRIBUTES_LITERAL || type == VariabilityType.REPLACES_LITERAL);
+		return base != null && (type == VariabilityType.CONTRIBUTES || type == VariabilityType.REPLACES);
 	}
 
 	public static boolean isGeneralizer(Object obj, Collection types) {
@@ -2678,7 +2677,7 @@ public final class TngUtil {
 	 */
 	public static boolean isContributorOf(Object base, VariabilityElement e) {
 		for(VariabilityElement ve = (VariabilityElement) e;
-		ve != null && ve.getVariabilityType() == VariabilityType.CONTRIBUTES_LITERAL && ve.getVariabilityBasedOnElement() != null;
+		ve != null && ve.getVariabilityType() == VariabilityType.CONTRIBUTES && ve.getVariabilityBasedOnElement() != null;
 		ve = ve.getVariabilityBasedOnElement()) {
 			if(ve.getVariabilityBasedOnElement() == base) {
 				return true;

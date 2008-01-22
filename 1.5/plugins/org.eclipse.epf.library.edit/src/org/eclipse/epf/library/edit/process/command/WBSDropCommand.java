@@ -46,9 +46,9 @@ public class WBSDropCommand extends BSDropCommand {
 
 	private HashMap wpDescToDeliverableParts;
 
-	private HashMap wpdToDeliverableDescriptorMap;
+	private HashMap<WorkProductDescriptor, WorkProductDescriptor> wpdToDeliverableDescriptorMap;
 
-	private HashMap roleDescTeamProfileMap;
+	private HashMap<RoleDescriptor, TeamProfile> roleDescTeamProfileMap;
 	
 	private IExecutor executor;
 
@@ -106,9 +106,8 @@ public class WBSDropCommand extends BSDropCommand {
 			// automatically add work product descriptor to deliverable part
 			//
 			if (!wpdToDeliverableDescriptorMap.isEmpty()) {
-				for (Iterator iter = wpdToDeliverableDescriptorMap.entrySet()
-						.iterator(); iter.hasNext();) {
-					Map.Entry entry = (Map.Entry) iter.next();
+				for (Map.Entry<WorkProductDescriptor, WorkProductDescriptor> entry : 
+					wpdToDeliverableDescriptorMap.entrySet()) {
 					WorkProductDescriptor deliverable = (WorkProductDescriptor) entry
 							.getValue();
 					if (!deliverable.getDeliverableParts().contains(
@@ -162,9 +161,7 @@ public class WBSDropCommand extends BSDropCommand {
 			}
 			// add role descriptors to team profiles
 			//
-			for (Iterator iter = roleDescTeamProfileMap.entrySet().iterator(); iter
-					.hasNext();) {
-				Map.Entry entry = (Map.Entry) iter.next();
+			for (Map.Entry<RoleDescriptor, TeamProfile> entry : roleDescTeamProfileMap.entrySet()) {
 				TeamProfile team = (TeamProfile) entry.getValue();
 				team.getTeamRoles().add(entry.getKey());
 			}

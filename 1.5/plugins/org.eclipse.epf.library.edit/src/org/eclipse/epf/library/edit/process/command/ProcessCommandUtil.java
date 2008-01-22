@@ -601,7 +601,7 @@ public final class ProcessCommandUtil {
 					descriptorsToRefresh.add(primaryRoleDesc);
 				}
 				if (isNewTaskDescriptor && isNewRoleDescriptor) {
-					taskDesc.setPerformedPrimarilyBy(primaryRoleDesc);
+					taskDesc.getPerformedPrimarilyBy().add(primaryRoleDesc);
 				} else {
 					BatchCommand.addFeatureValue(descriptorToNewFeatureValuesMap, taskDesc,
 							UmaPackage.eINSTANCE
@@ -793,7 +793,7 @@ public final class ProcessCommandUtil {
 	 */
 	public static Object getInheritedDescriptor(Object obj, Activity activity, MethodConfiguration config) {
 		for (VariabilityType variabilityType = activity.getVariabilityType();
-			variabilityType == VariabilityType.EXTENDS_LITERAL || variabilityType == VariabilityType.LOCAL_CONTRIBUTION_LITERAL;
+			variabilityType == VariabilityType.EXTENDS || variabilityType == VariabilityType.LOCAL_CONTRIBUTION;
 			variabilityType = activity.getVariabilityType()) {
 			VariabilityElement element = activity.getVariabilityBasedOnElement();
 	

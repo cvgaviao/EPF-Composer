@@ -96,8 +96,8 @@ public class ContentElementOrderList extends BasicEList {
 		if (isContributor(e) || isExtended(e)) {
 			List supers = new ArrayList();
 			UmaUtil.getAllSupersBoth(supers, e,
-					VariabilityType.CONTRIBUTES_LITERAL,
-					VariabilityType.EXTENDS_LITERAL);
+					VariabilityType.CONTRIBUTES,
+					VariabilityType.EXTENDS);
 			supers.add(e);
 			iter = supers.iterator();
 		} else {
@@ -170,7 +170,7 @@ public class ContentElementOrderList extends BasicEList {
 							.iterator(); iterator.hasNext();) {
 						VariabilityElement element = (VariabilityElement) iterator
 								.next();
-						if (element.getVariabilityType() == VariabilityType.CONTRIBUTES_LITERAL) {
+						if (element.getVariabilityType() == VariabilityType.CONTRIBUTES) {
 							children.add(element);
 						}
 					}
@@ -182,7 +182,7 @@ public class ContentElementOrderList extends BasicEList {
 			System.out
 					.println("$$$ for " + e.getName() + " = extended is true"); //$NON-NLS-1$ //$NON-NLS-2$
 			List supers = new ArrayList();
-			UmaUtil.getAllSupers(supers, e, VariabilityType.EXTENDS_LITERAL);
+			UmaUtil.getAllSupers(supers, e, VariabilityType.EXTENDS);
 			supers.add(e);
 			iter = supers.iterator();
 		} else {
@@ -233,7 +233,7 @@ public class ContentElementOrderList extends BasicEList {
 
 	private static boolean isExtended(ContentElement e) {
 		return e.getVariabilityBasedOnElement() != null
-				&& e.getVariabilityType() == VariabilityType.EXTENDS_LITERAL;
+				&& e.getVariabilityType() == VariabilityType.EXTENDS;
 	}
 
 	/**

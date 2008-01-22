@@ -19,13 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.epf.library.edit.IConfigurator;
-import org.eclipse.epf.library.edit.LibraryEditPlugin;
-import org.eclipse.epf.library.edit.command.INestedCommandProvider;
-import org.eclipse.epf.library.edit.command.NestedCommandExcecutor;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
-import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.UniqueNamePNameHandler;
@@ -53,11 +48,11 @@ public class OBSDropCommand extends BSDropCommand {
 
 	private ArrayList roleDescList;
 
-	private Map roleDescTeamProfileMap;
+	private Map<RoleDescriptor, TeamProfile> roleDescTeamProfileMap;
 
 	private Map wpDescToDeliverableParts;
 
-	private HashMap wpdToDeliverableDescriptorMap;
+	private HashMap<WorkProductDescriptor, WorkProductDescriptor> wpdToDeliverableDescriptorMap;
 
 	private HashMap wpdToTaskFeaturesMap; // map of WorkProductDescriptor to
 
@@ -375,9 +370,7 @@ public class OBSDropCommand extends BSDropCommand {
 
 		// add role descriptors to team profiles
 		//
-		for (Iterator iter = roleDescTeamProfileMap.entrySet().iterator(); iter
-				.hasNext();) {
-			Map.Entry entry = (Map.Entry) iter.next();
+		for (Map.Entry<RoleDescriptor, TeamProfile> entry : roleDescTeamProfileMap.entrySet()) {
 			TeamProfile team = (TeamProfile) entry.getValue();
 			team.getTeamRoles().add(entry.getKey());
 		}
@@ -385,9 +378,8 @@ public class OBSDropCommand extends BSDropCommand {
 		// automatically add work product descriptor to deliverable part
 		//
 		if (!wpdToDeliverableDescriptorMap.isEmpty()) {
-			for (Iterator iter = wpdToDeliverableDescriptorMap.entrySet()
-					.iterator(); iter.hasNext();) {
-				Map.Entry entry = (Map.Entry) iter.next();
+			for (Map.Entry<WorkProductDescriptor, WorkProductDescriptor> entry :
+				wpdToDeliverableDescriptorMap.entrySet()) {
 				WorkProductDescriptor deliverable = (WorkProductDescriptor) entry
 						.getValue();
 				deliverable.getDeliverableParts().add(entry.getKey());

@@ -147,7 +147,7 @@ public class UMA2UMAResourceHandler0 extends UMA2UMAResourceHandler {
 			WorkBreakdownElement pred = (WorkBreakdownElement) resourceSet
 					.getEObject(predGuid);
 			workOrder.setPred(pred);
-			workOrder.setLinkType(WorkOrderType.FINISH_TO_FINISH_LITERAL);
+			workOrder.setLinkType(WorkOrderType.FINISH_TO_FINISH);
 			return workOrder;
 		}
 		return getText(value);

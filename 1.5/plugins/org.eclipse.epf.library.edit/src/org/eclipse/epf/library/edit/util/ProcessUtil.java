@@ -85,6 +85,7 @@ import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.Step;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
@@ -124,9 +125,9 @@ public final class ProcessUtil {
 		if (extendAndLocalContributionVariabilityTypes == null) {
 			extendAndLocalContributionVariabilityTypes = new ArrayList<VariabilityType>();
 			extendAndLocalContributionVariabilityTypes
-					.add(VariabilityType.EXTENDS_LITERAL);
+					.add(VariabilityType.EXTENDS);
 			extendAndLocalContributionVariabilityTypes
-					.add(VariabilityType.LOCAL_CONTRIBUTION_LITERAL);
+					.add(VariabilityType.LOCAL_CONTRIBUTION);
 		}
 		return extendAndLocalContributionVariabilityTypes;
 	}
@@ -827,13 +828,12 @@ public final class ProcessUtil {
 				.getConfigurationApplicator();
 		MethodConfiguration config = TngUtil.getOwningProcess(activity)
 				.getDefaultContext();
-		List steps = (List) configApplicator.getReference(task,
+		List<Step> steps = (List<Step>) configApplicator.getReference(task,
 				UmaPackage.eINSTANCE.getTask_Steps(), config);
 
 		// add those steps to TaskDescriptor if they are not there yet.
 		//
-		for (Iterator iter = steps.iterator(); iter.hasNext();) {
-			Object step = iter.next();
+		for (Step step : steps) {
 			if (!taskDesc.getSelectedSteps().contains(step)) {
 				taskDesc.getSelectedSteps().add(step);
 			}
@@ -1071,15 +1071,15 @@ public final class ProcessUtil {
 					modelInfo.append("; "); //$NON-NLS-1$
 				}
 				String pattern = null;
-				if (type == VariabilityType.CONTRIBUTES_LITERAL) {
+				if (type == VariabilityType.CONTRIBUTES) {
 					pattern = LibraryEditResources.util_ProcessUtil_contributesto; 
-				} else if (type == VariabilityType.LOCAL_CONTRIBUTION_LITERAL) {
+				} else if (type == VariabilityType.LOCAL_CONTRIBUTION) {
 					pattern = LibraryEditResources.util_ProcessUtil_localContributesto; 
-				} else if (type == VariabilityType.EXTENDS_LITERAL) {
+				} else if (type == VariabilityType.EXTENDS) {
 					pattern = LibraryEditResources.process_extends; 
-				} else if (type == VariabilityType.REPLACES_LITERAL) {
+				} else if (type == VariabilityType.REPLACES) {
 					pattern = LibraryEditResources.process_replaces; 
-				} else if (type == VariabilityType.LOCAL_REPLACEMENT_LITERAL) {
+				} else if (type == VariabilityType.LOCAL_REPLACEMENT) {
 					pattern = LibraryEditResources.process_localReplaces; 
 				}
 
@@ -1422,7 +1422,7 @@ public final class ProcessUtil {
 	public static Activity generalize(Activity base, VariabilityType type) {		
 		Activity act = (Activity) UmaFactory.eINSTANCE.create(base.eClass());
 		act.setName(base.getName());
-		if (type == VariabilityType.LOCAL_REPLACEMENT_LITERAL) {
+		if (type == VariabilityType.LOCAL_REPLACEMENT) {
 			String presentationName = getPresentationName(base);
 			act.setPresentationName(StrUtil.isBlank(presentationName) ? base
 					.getName() : presentationName);
@@ -1430,7 +1430,7 @@ public final class ProcessUtil {
 		act.setVariabilityBasedOnElement(base);
 		act.setVariabilityType(type);
 
-		if (type == VariabilityType.EXTENDS_LITERAL) {
+		if (type == VariabilityType.EXTENDS) {
 			// inherit boolean attributes from base
 			//
 			for (Iterator iter = base.eClass().getEAllAttributes().iterator(); iter
@@ -1963,7 +1963,7 @@ public final class ProcessUtil {
 //		if (owner instanceof Activity) {
 //			Activity activity = (Activity) owner;
 //			while (!activity.getVariabilityType().equals(
-//					VariabilityType.NA_LITERAL)) {
+//					VariabilityType.NA)) {
 //				VariabilityElement element = activity
 //						.getVariabilityBasedOnElement();
 //
@@ -2072,7 +2072,7 @@ public final class ProcessUtil {
 					createdActivities);
 		}
 		Activity act = ProcessUtil.generialize(adapter,
-				VariabilityType.LOCAL_CONTRIBUTION_LITERAL, prevAndNext);
+				VariabilityType.LOCAL_CONTRIBUTION, prevAndNext);
 		Activity parentAct = ((Activity) parent);
 		addToActivity(parentAct, act, prevAndNext);
 		createdActivities.add(act);
@@ -2096,7 +2096,7 @@ public final class ProcessUtil {
 					createdActivities);
 		}
 		Activity act = ProcessUtil.generialize(adapter,
-				VariabilityType.LOCAL_REPLACEMENT_LITERAL, prevAndNext);
+				VariabilityType.LOCAL_REPLACEMENT, prevAndNext);
 		Activity parentAct = ((Activity) parent);
 		addToActivity(parentAct, act, prevAndNext);
 		createdActivities.add(act);
@@ -2574,7 +2574,7 @@ public final class ProcessUtil {
 				VariabilityElement ve = act.getVariabilityBasedOnElement();
 				if(ve != null) {
 					VariabilityType type = act.getVariabilityType();
-					if(type == VariabilityType.EXTENDS_LITERAL || type == VariabilityType.LOCAL_CONTRIBUTION_LITERAL) {
+					if(type == VariabilityType.EXTENDS || type == VariabilityType.LOCAL_CONTRIBUTION) {
 						return true;
 					}
 				}
@@ -3091,7 +3091,7 @@ public final class ProcessUtil {
 			VariabilityElement ve = (VariabilityElement) iter.next();
 			VariabilityElement base = ve.getVariabilityBasedOnElement();
 			VariabilityType vType = ve.getVariabilityType();
-			if(base != null && (vType == VariabilityType.CONTRIBUTES_LITERAL || vType == VariabilityType.REPLACES_LITERAL)) {
+			if(base != null && (vType == VariabilityType.CONTRIBUTES || vType == VariabilityType.REPLACES)) {
 //				Process proc = TngUtil.getOwningProcess((BreakdownElement) base);
 //				if(proc != process) {
 //					return true;
@@ -3344,7 +3344,7 @@ public final class ProcessUtil {
 				return true;
 			}
 		}
-		else if(type == VariabilityType.EXTENDS_LITERAL || type == VariabilityType.LOCAL_CONTRIBUTION_LITERAL || type == VariabilityType.LOCAL_REPLACEMENT_LITERAL)
+		else if(type == VariabilityType.EXTENDS || type == VariabilityType.LOCAL_CONTRIBUTION || type == VariabilityType.LOCAL_REPLACEMENT)
 		{
 			// check owning process of base activity only for extends and local contribution/replacement
 			//
@@ -3355,8 +3355,8 @@ public final class ProcessUtil {
 				base = (Activity) base.getVariabilityBasedOnElement();
 			} while (ret
 					&& base != null
-					&& (type == VariabilityType.EXTENDS_LITERAL
-							|| type == VariabilityType.LOCAL_CONTRIBUTION_LITERAL || type == VariabilityType.LOCAL_REPLACEMENT_LITERAL));
+					&& (type == VariabilityType.EXTENDS
+							|| type == VariabilityType.LOCAL_CONTRIBUTION || type == VariabilityType.LOCAL_REPLACEMENT));
 			return ret;
 		}
 		else {

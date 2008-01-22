@@ -144,7 +144,7 @@ public class DeleteRoleDescriptor extends RemoveUnusedDescriptorsCommand {
 //		clear(roleDesc.getPerformsAsOwner());
 		for (Iterator iter = primaryTaskDescriptors.iterator(); iter.hasNext();) {
 			TaskDescriptor td = (TaskDescriptor) iter.next();
-			td.setPerformedPrimarilyBy(null);
+			td.getPerformedPrimarilyBy().remove(roleDesc);
 		}
 		clear(roleDesc.getResponsibleFor());
 

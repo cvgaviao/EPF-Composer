@@ -344,7 +344,7 @@ public class PersistenceUtil {
 	 * @param elements
 	 * @return true if the given method element has duplicate GUID
 	 */
-	public static boolean hasDuplicateGUID(MethodElement e, Collection<MethodElement> elements) {
+	public static boolean hasDuplicateGUID(MethodElement e, Collection<? extends MethodElement> elements) {
 		for (MethodElement element : elements) {
 			if(e.getGuid().equals(element.getGuid())) {
 				return true;

@@ -147,7 +147,7 @@ public class ActivityHandler {
 	
 	public void extend(Activity act) {
 		Activity extendedAct = ProcessUtil.generalize(act,
-				VariabilityType.EXTENDS_LITERAL);
+				VariabilityType.EXTENDS);
 		activities.add(extendedAct);
 	}
 	

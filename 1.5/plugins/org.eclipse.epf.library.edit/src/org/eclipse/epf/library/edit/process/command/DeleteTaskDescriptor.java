@@ -132,8 +132,7 @@ public class DeleteTaskDescriptor extends RemoveUnusedDescriptorsCommand {
 		clear(taskDesc.getExternalInput());
 		clear(taskDesc.getOptionalInput());
 		clear(taskDesc.getOutput());
-
-		taskDesc.setPerformedPrimarilyBy(null);
+		clear(taskDesc.getPerformedPrimarilyBy());
 
 		redo();
 	}

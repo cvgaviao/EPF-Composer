@@ -324,7 +324,7 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 									VariabilityElement ve = (VariabilityElement) e;
 									VariabilityElement baseElement = ve.getVariabilityBasedOnElement();
 									if(baseElement != null &&
-											(ve.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION_LITERAL || ve.getVariabilityType() == VariabilityType.LOCAL_REPLACEMENT_LITERAL))
+											(ve.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION || ve.getVariabilityType() == VariabilityType.LOCAL_REPLACEMENT))
 									{
 										helper.putVariabilityElement(baseElement, ve);
 										childBases.add(baseElement);
@@ -339,7 +339,7 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 								cmd.execute();
 
 								baseCopy = (Activity) helper.get(base);
-								if(activity.getVariabilityType() == VariabilityType.EXTENDS_LITERAL) {
+								if(activity.getVariabilityType() == VariabilityType.EXTENDS) {
 									// keep activity only as backup copy of base
 									//
 									helper.removeVariabilityElement(base);

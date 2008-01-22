@@ -318,8 +318,8 @@ public class Suppression {
 		if (e instanceof VariabilityElement) {
 			VariabilityElement ve = (VariabilityElement) e;
 			VariabilityType variabilityType = ve.getVariabilityType();
-			if (variabilityType == VariabilityType.EXTENDS_LITERAL
-					|| variabilityType == VariabilityType.CONTRIBUTES_LITERAL) {
+			if (variabilityType == VariabilityType.EXTENDS
+					|| variabilityType == VariabilityType.CONTRIBUTES) {
 				if (ve.getVariabilityBasedOnElement() != null) {
 					return isDirectlySuppressed(ve
 							.getVariabilityBasedOnElement());

@@ -183,7 +183,7 @@ public class UpwardReachableInfo implements IDependencyInfo {
 		collectParentList(element, list);
 		VariabilityElement ve = (VariabilityElement) element;
 		collectParentListByVariantPaths(ve, list);
-		if (ve.getVariabilityType() == VariabilityType.REPLACES_LITERAL ) {
+		if (ve.getVariabilityType() == VariabilityType.REPLACES ) {
 			mgr.addToReplacerMap(this);
 		}
 		return list;
@@ -224,7 +224,7 @@ public class UpwardReachableInfo implements IDependencyInfo {
 		if (! mgr.isFilterElement(ve)) {
 			VariabilityElement parentVe = ve.getVariabilityBasedOnElement();
 			VariabilityType type = parentVe == null ? null : ve.getVariabilityType();
-			if (type == VariabilityType.CONTRIBUTES_LITERAL || type == VariabilityType.REPLACES_LITERAL) {
+			if (type == VariabilityType.CONTRIBUTES || type == VariabilityType.REPLACES) {
 				list.add(parentVe);
 			}
 		}
@@ -233,7 +233,7 @@ public class UpwardReachableInfo implements IDependencyInfo {
 			return;
 		}
 				
-		for (Iterator it = TngUtil.getImmediateVarieties(ve, VariabilityType.EXTENDS_LITERAL) ; it.hasNext();) {
+		for (Iterator it = TngUtil.getImmediateVarieties(ve, VariabilityType.EXTENDS) ; it.hasNext();) {
 			VariabilityElement extender = (VariabilityElement) it.next();
 			if (! mgr.isFilterElement(extender)) {
 				list.add(extender);

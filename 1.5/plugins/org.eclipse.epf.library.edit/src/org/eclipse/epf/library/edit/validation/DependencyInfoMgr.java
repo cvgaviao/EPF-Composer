@@ -91,7 +91,7 @@ public class DependencyInfoMgr {
 		IDependencyInfo info = registerVariabilityElement(ve, false, false, true);
 		List cirList = getAndClearCircularList();
 		boolean loop = cirList != null && !cirList.isEmpty();
-		boolean replacingAncestor = info.inheritAncestor(VariabilityType.REPLACES_LITERAL);
+		boolean replacingAncestor = info.inheritAncestor(VariabilityType.REPLACES);
 		boolean actInherentingAncestor = getActInerentingAncestor(ve);
 		
 		MultiStatus multiStatus = new MultiStatus(LibraryEditPlugin.PLUGIN_ID, 0, "", null); //$NON-NLS-1$
@@ -216,7 +216,7 @@ public class DependencyInfoMgr {
 		if (replacerMap != null) {
 			for (Iterator it = replacerMap.values().iterator(); it.hasNext();) {
 				UpwardReachableInfo info = (UpwardReachableInfo) it.next();
-				if (info.inheritAncestor(VariabilityType.REPLACES_LITERAL)) {
+				if (info.inheritAncestor(VariabilityType.REPLACES)) {
 					replacingAcestor = true;
 				}
 			}
@@ -339,7 +339,7 @@ public class DependencyInfoMgr {
 					List cirList = getAndClearCircularList();
 					
 					boolean loop = cirList != null && !cirList.isEmpty();
-					boolean replacingAncestor = info.inheritAncestor(VariabilityType.REPLACES_LITERAL);
+					boolean replacingAncestor = info.inheritAncestor(VariabilityType.REPLACES);
 					
 					if (loop) {
 						tracer.trace("Error> Circular dependency detected: ");		//$NON-NLS-1$

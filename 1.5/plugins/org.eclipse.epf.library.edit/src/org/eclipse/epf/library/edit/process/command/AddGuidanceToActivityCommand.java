@@ -75,19 +75,19 @@ public class AddGuidanceToActivityCommand extends AddMethodElementCommand {
 
 					// guidances for content element
 					if (item instanceof Checklist) {
-						activity.getChecklists().add(item);
+						activity.getChecklists().add((Checklist) item);
 					} else if (item instanceof Concept) {
-						activity.getConcepts().add(item);
+						activity.getConcepts().add((Concept) item);
 					} else if (item instanceof Example) {
-						activity.getExamples().add(item);
+						activity.getExamples().add((Example) item);
 					} else if (item instanceof SupportingMaterial) {
-						activity.getSupportingMaterials().add(item);
+						activity.getSupportingMaterials().add((SupportingMaterial) item);
 					} else if (item instanceof Guideline) {
-						activity.getGuidelines().add(item);
+						activity.getGuidelines().add((Guideline) item);
 					} else if (item instanceof ReusableAsset) {
-						activity.getReusableAssets().add(item);
+						activity.getReusableAssets().add((ReusableAsset) item);
 					} else if (item instanceof Roadmap) {
-						activity.getRoadmaps().add(item);
+						activity.getRoadmaps().add((Roadmap) item);
 					} else {
 						LibraryEditPlugin.getDefault().getLogger()
 								.logError("Cant set guidance " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$

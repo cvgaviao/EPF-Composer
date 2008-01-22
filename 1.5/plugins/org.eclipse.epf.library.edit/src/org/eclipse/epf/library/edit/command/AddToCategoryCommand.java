@@ -139,7 +139,7 @@ public class AddToCategoryCommand extends AbstractCommand implements
 			ContentCategory contrib = (ContentCategory) UmaFactory.eINSTANCE
 					.create(category.eClass());
 			contrib.setVariabilityBasedOnElement(category);
-			contrib.setVariabilityType(VariabilityType.CONTRIBUTES_LITERAL);
+			contrib.setVariabilityType(VariabilityType.CONTRIBUTES);
 			categoryPkg.getContentElements().add(contrib);
 			usedCategory = contrib;
 			if (usedCategory instanceof CustomCategory) {

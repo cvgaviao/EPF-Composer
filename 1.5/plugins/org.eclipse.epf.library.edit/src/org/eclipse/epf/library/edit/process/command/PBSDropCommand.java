@@ -19,17 +19,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.IConfigurator;
-import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.command.BatchCommand;
-import org.eclipse.epf.library.edit.command.INestedCommandProvider;
-import org.eclipse.epf.library.edit.command.NestedCommandExcecutor;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
-import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.UniqueNamePNameHandler;
@@ -62,7 +57,7 @@ public class PBSDropCommand extends BSDropCommand {
 
 	private Map wpDescToDeliverableParts;
 
-	private HashMap wpdToDeliverableDescriptorMap;
+	private HashMap<WorkProductDescriptor, WorkProductDescriptor> wpdToDeliverableDescriptorMap;
 
 	private BatchCommand updateDeliverablePartsCmd;
 
@@ -377,9 +372,8 @@ public class PBSDropCommand extends BSDropCommand {
 		// automatically add work product descriptor to deliverable part
 		//
 		if (!wpdToDeliverableDescriptorMap.isEmpty()) {
-			for (Iterator iter = wpdToDeliverableDescriptorMap.entrySet()
-					.iterator(); iter.hasNext();) {
-				Map.Entry entry = (Map.Entry) iter.next();
+			for (Map.Entry<WorkProductDescriptor, WorkProductDescriptor> entry : 
+				wpdToDeliverableDescriptorMap.entrySet()) {
 				WorkProductDescriptor deliverable = (WorkProductDescriptor) entry
 						.getValue();
 				deliverable.getDeliverableParts().add(entry.getKey());

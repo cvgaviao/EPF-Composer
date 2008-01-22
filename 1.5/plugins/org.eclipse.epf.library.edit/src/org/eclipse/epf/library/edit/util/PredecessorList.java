@@ -622,11 +622,11 @@ public class PredecessorList extends ArrayList<Object> {
 
 	public static String toWorkOrderTypeAbbreviation(int workOrderType) {
 		switch(workOrderType) {
-		case WorkOrderType.FINISH_TO_FINISH:
+		case WorkOrderType.FINISH_TO_FINISH_VALUE:
 			return FINISH_TO_FINISH;
-		case WorkOrderType.START_TO_FINISH:
+		case WorkOrderType.START_TO_FINISH_VALUE:
 			return START_TO_FINISH;
-		case WorkOrderType.START_TO_START:
+		case WorkOrderType.START_TO_START_VALUE:
 			return START_TO_START;
 		}
 		return null;

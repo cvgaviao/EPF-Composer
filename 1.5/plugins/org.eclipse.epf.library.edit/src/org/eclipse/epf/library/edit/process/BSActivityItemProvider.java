@@ -59,6 +59,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Iteration;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
@@ -875,10 +876,10 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 			Activity baseAct = listenToBaseActivity();
 			if (baseAct != null) {
 				VariabilityType extendType = act.getVariabilityType();
-				if (extendType == VariabilityType.LOCAL_REPLACEMENT_LITERAL) {
+				if (extendType == VariabilityType.LOCAL_REPLACEMENT) {
 					return myChildren;
-				} else if (extendType == VariabilityType.LOCAL_CONTRIBUTION_LITERAL
-						|| extendType == VariabilityType.EXTENDS_LITERAL) {
+				} else if (extendType == VariabilityType.LOCAL_CONTRIBUTION
+						|| extendType == VariabilityType.EXTENDS) {
 					BSActivityItemProvider adapter = (BSActivityItemProvider) getRootAdapterFactory()
 						.adapt(baseAct, ITreeItemContentProvider.class);
 					List allChildren;					
@@ -1138,7 +1139,7 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 							.createProcessPackage();
 					newPkg.setName(act.getName());
 					pkg.getChildPackages().add(newPkg);
-					newPkg.getProcessElements().add(element);
+					newPkg.getProcessElements().add(act);
 				} else {
 					// Check if the activity's ProcessPackage is at the right
 					// place.
@@ -1149,8 +1150,8 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 						pkg.getChildPackages().add(oldPkg);
 					}
 				}
-			} else {
-				pkg.getProcessElements().add(element);
+			} else if(element instanceof ProcessElement) {
+				pkg.getProcessElements().add((ProcessElement) element);
 			}
 		}
 	}

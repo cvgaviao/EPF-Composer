@@ -473,7 +473,7 @@ public class UIHelper implements IUIHelper {
 		}
 
 		for (Iterator iter = TngUtil.getGeneralizers(process,
-				VariabilityType.EXTENDS_LITERAL); iter.hasNext();) {
+				VariabilityType.EXTENDS); iter.hasNext();) {
 			Object element = iter.next();
 			BSActivityItemProvider adapter = (BSActivityItemProvider) adapterFactory
 					.adapt(element, ITreeItemContentProvider.class);

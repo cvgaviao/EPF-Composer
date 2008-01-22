@@ -45,6 +45,7 @@ import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.TeamProfile;
@@ -349,13 +350,12 @@ public class ActivityDropCommand extends BSDropCommand {
 
 			if (act.eContainer() != null
 					&& act.eContainer().eContainer() != pkg) {
-				pkg.getChildPackages().add(act.eContainer());
+				pkg.getChildPackages().add((MethodPackage) act.eContainer());
 			}
 
 			if (patterns != null && !patterns.isEmpty()) {
 				DeliveryProcess proc = (DeliveryProcess) targetProcess;
-				for (Iterator iter = patterns.iterator(); iter.hasNext();) {
-					Object pattern = iter.next();
+				for (CapabilityPattern pattern : patterns) {
 					if (!proc.getIncludesPatterns().contains(pattern)) {
 						proc.getIncludesPatterns().add(pattern);
 					}

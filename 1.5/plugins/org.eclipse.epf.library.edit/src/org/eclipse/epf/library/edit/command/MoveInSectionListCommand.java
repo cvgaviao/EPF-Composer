@@ -23,6 +23,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -39,7 +40,7 @@ public class MoveInSectionListCommand extends AbstractCommand implements
 
 	private SectionList sectionList;
 
-	private List elementsList;
+	private List<? extends Section> elementsList;
 
 	private ContentElement usedContentElement = null;
 
@@ -61,7 +62,7 @@ public class MoveInSectionListCommand extends AbstractCommand implements
 	}
 
 	public MoveInSectionListCommand(ContentElement contentElement,
-			List elementsList, SectionList sectionList, int direction) {
+			List<? extends Section> elementsList, SectionList sectionList, int direction) {
 		this.contentElement = contentElement;
 		this.sectionList = sectionList;
 		this.elementsList = elementsList;
@@ -136,15 +137,15 @@ public class MoveInSectionListCommand extends AbstractCommand implements
 	public void redo() {
 		if (usedContentElement == null)
 			return;
-		for (Iterator it = elementsList.iterator(); it.hasNext();) {
-			Object object = it.next();
+		int size = elementsList.size();
+		for (Section object : elementsList) {
 			int index = sectionList.indexOf(object);
 			if (direction == UP) {
 				if (index > 0)
 					sectionList.move(index - 1, object);
 			} else if (direction == Down) {
 				if (index < sectionList.size())
-					sectionList.move(index + elementsList.size(), object);
+					sectionList.move(index + size, object);
 			}
 			moved = true;
 		}
@@ -154,12 +155,12 @@ public class MoveInSectionListCommand extends AbstractCommand implements
 
 	public void undo() {
 		if (moved) {
-			for (Iterator it = elementsList.iterator(); it.hasNext();) {
-				Object object = it.next();
+			int size = elementsList.size();
+			for (Section object : elementsList) {
 				int index = sectionList.indexOf(object);
 				if (direction == UP) {
 					if (index < sectionList.size())
-						sectionList.move(index + elementsList.size(), object);
+						sectionList.move(index + size, object);
 				} else if (direction == Down) {
 					if (index > 0)
 						sectionList.move(index - 1, object);

@@ -47,7 +47,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  * @author Phong Nguyen Le
  * @since 1.0
  */
-public class SectionList extends BasicEList {
+public class SectionList extends BasicEList<Section> {
 
 	/**
 	 * 
@@ -93,14 +93,14 @@ public class SectionList extends BasicEList {
 		// // System.out.println("$$$ for " + e.getName() + " = contributing is
 		// true");
 		// List supers = new ArrayList();
-		// UmaUtil.getAllSupers(supers, e, VariabilityType.CONTRIBUTES_LITERAL);
+		// UmaUtil.getAllSupers(supers, e, VariabilityType.CONTRIBUTES);
 		// supers.add(e);
 		// iter = supers.iterator();
 		// } else if(isExtended(e)) {
 		// // System.out.println("$$$ for " + e.getName() + " = extending is
 		// true");
 		// List supers = new ArrayList();
-		// UmaUtil.getAllSupers(supers, e, VariabilityType.EXTENDS_LITERAL);
+		// UmaUtil.getAllSupers(supers, e, VariabilityType.EXTENDS);
 		// supers.add(e);
 		// iter = supers.iterator();
 		// }
@@ -109,8 +109,8 @@ public class SectionList extends BasicEList {
 			// true");
 			List supers = new ArrayList();
 			UmaUtil.getAllSupersBoth(supers, e,
-					VariabilityType.CONTRIBUTES_LITERAL,
-					VariabilityType.EXTENDS_LITERAL);
+					VariabilityType.CONTRIBUTES,
+					VariabilityType.EXTENDS);
 			supers.add(e);
 			iter = supers.iterator();
 		} else {
@@ -121,7 +121,7 @@ public class SectionList extends BasicEList {
 			// create a map of GUID / contributor
 			//
 			OrderInfo latestInfo = null;
-			Map guidSectionMap = new HashMap();
+			Map<String, Section> guidSectionMap = new HashMap<String, Section>();
 			Set sects = new LinkedHashSet();
 			while (iter.hasNext()) {
 				ContentElement element = (ContentElement) iter.next();
@@ -150,7 +150,7 @@ public class SectionList extends BasicEList {
 				int size = latestInfo.getGUIDs().size();
 				for (int i = 0; i < size; i++) {
 					Object guid = latestInfo.getGUIDs().get(i);
-					Object sect = guidSectionMap.get(guid);
+					Section sect = guidSectionMap.get(guid);
 					if (sect != null) {
 						super.add(sect);
 						sects.remove(sect);
@@ -176,7 +176,7 @@ public class SectionList extends BasicEList {
 							.iterator(); iterator.hasNext();) {
 						VariabilityElement element = (VariabilityElement) iterator
 								.next();
-						if (element.getVariabilityType() == VariabilityType.CONTRIBUTES_LITERAL) {
+						if (element.getVariabilityType() == VariabilityType.CONTRIBUTES) {
 							children.add(element);
 						}
 					}
@@ -188,7 +188,7 @@ public class SectionList extends BasicEList {
 			System.out
 					.println("$$$ for " + e.getName() + " = extended is true"); //$NON-NLS-1$ //$NON-NLS-2$
 			List supers = new ArrayList();
-			UmaUtil.getAllSupers(supers, e, VariabilityType.EXTENDS_LITERAL);
+			UmaUtil.getAllSupers(supers, e, VariabilityType.EXTENDS);
 			supers.add(e);
 			iter = supers.iterator();
 		} else {
@@ -199,7 +199,7 @@ public class SectionList extends BasicEList {
 			// create a map of GUID / contributor
 			//
 			OrderInfo latestInfo = null;
-			Map guidSectionMap = new HashMap();
+			Map<String, Section> guidSectionMap = new HashMap<String, Section>();
 			List sects = new LinkedList();
 			while (iter.hasNext()) {
 				ContentElement element = (ContentElement) iter.next();
@@ -228,7 +228,7 @@ public class SectionList extends BasicEList {
 				int size = latestInfo.getGUIDs().size();
 				for (int i = 0; i < size; i++) {
 					Object guid = latestInfo.getGUIDs().get(i);
-					Object sect = guidSectionMap.get(guid);
+					Section sect = guidSectionMap.get(guid);
 					if (sect != null) {
 						super.add(sect);
 						sects.remove(sect);
@@ -245,7 +245,7 @@ public class SectionList extends BasicEList {
 
 	private static boolean isExtended(ContentElement e) {
 		return e.getVariabilityBasedOnElement() != null
-				&& e.getVariabilityType() == VariabilityType.EXTENDS_LITERAL;
+				&& e.getVariabilityType() == VariabilityType.EXTENDS;
 	}
 
 	/**
@@ -330,11 +330,11 @@ public class SectionList extends BasicEList {
 		return false;
 	}
 
-	public Object remove(int index) {
+	public Section remove(int index) {
 		if (mixed) {
 			if (!canRemove((Section) get(index)))
 				return null;
-			Object removed = super.remove(index);
+			Section removed = super.remove(index);
 			editElement.getPresentation().getSections().remove(removed);
 			return removed;
 		} else {
@@ -373,7 +373,7 @@ public class SectionList extends BasicEList {
 		}
 	}
 
-	public void add(int index, Object element) {
+	public void add(int index, Section element) {
 		if (mixed) {
 			super.add(index, element);
 			editElement.getPresentation().getSections().add(element);
@@ -383,7 +383,7 @@ public class SectionList extends BasicEList {
 		}
 	}
 
-	public boolean add(Object o) {
+	public boolean add(Section o) {
 		boolean b = editElement.getPresentation().getSections().add(o);
 		if (mixed) {
 			b = super.add(o);
@@ -392,8 +392,8 @@ public class SectionList extends BasicEList {
 		}
 		return b;
 	}
-
-	public boolean addAll(Collection c) {
+	
+	public boolean addAll(Collection<? extends Section> c) {
 		boolean b = editElement.getPresentation().getSections().addAll(c);
 		if (mixed) {
 			b = super.addAll(c);
@@ -403,7 +403,7 @@ public class SectionList extends BasicEList {
 		return b;
 	}
 
-	public boolean addAll(int index, Collection c) {
+	public boolean addAll(int index, Collection<? extends Section> c) {
 		if (mixed) {
 			editElement.getPresentation().getSections().addAll(c);
 			boolean b = super.addAll(index, c);
@@ -413,7 +413,7 @@ public class SectionList extends BasicEList {
 		return editElement.getPresentation().getSections().addAll(index, c);
 	}
 
-	public Object set(int index, Object element) {
+	public Section set(int index, Section element) {
 		if (mixed)
 			throw new UnsupportedOperationException();
 		return editElement.getPresentation().getSections().set(index, element);
@@ -425,7 +425,7 @@ public class SectionList extends BasicEList {
 		editElement.getPresentation().getSections().clear();
 	}
 
-	public void move(int index, Object object) {
+	public void move(int index, Section object) {
 		if (mixed) {
 			super.move(index, object);
 			changed = true;
@@ -435,18 +435,18 @@ public class SectionList extends BasicEList {
 		}
 	}
 
-	public Object move(int targetIndex, int sourceIndex) {
+	public Section move(int targetIndex, int sourceIndex) {
 		if (mixed) {
-			Object moved = super.move(targetIndex, sourceIndex);
+			Section moved = super.move(targetIndex, sourceIndex);
 			changed = true;
 			return moved;
 		} else {
-			return ((EList) editElement.getPresentation().getSections()).move(
+			return ((EList<Section>) editElement.getPresentation().getSections()).move(
 					targetIndex, sourceIndex);
 		}
 	}
 
-	public Object get(int index) {
+	public Section get(int index) {
 		if (mixed) {
 			return super.get(index);
 		} else {
@@ -477,7 +477,7 @@ public class SectionList extends BasicEList {
 		return editElement.getPresentation().getSections().contains(object);
 	}
 
-	public boolean containsAll(Collection collection) {
+	public boolean containsAll(Collection<?> collection) {
 		if (mixed)
 			return super.containsAll(collection);
 		return editElement.getPresentation().getSections().containsAll(

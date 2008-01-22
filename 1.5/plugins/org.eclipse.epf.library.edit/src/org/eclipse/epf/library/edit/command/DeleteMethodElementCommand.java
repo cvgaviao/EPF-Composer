@@ -1189,7 +1189,7 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 					//
 					Activity act = (Activity) ref.getOwner();
 					VariabilityType vType = act.getVariabilityType();
-					if ((vType == VariabilityType.EXTENDS_LITERAL || vType == VariabilityType.LOCAL_CONTRIBUTION_LITERAL)
+					if ((vType == VariabilityType.EXTENDS || vType == VariabilityType.LOCAL_CONTRIBUTION)
 							&& StrUtil.isNull(act.getPresentationName())) {
 						Activity base = (Activity) ref.getValue();
 						batchCommand
