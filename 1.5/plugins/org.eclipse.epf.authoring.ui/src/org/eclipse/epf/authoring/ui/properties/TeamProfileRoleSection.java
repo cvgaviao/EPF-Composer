@@ -451,7 +451,7 @@ public class TeamProfileRoleSection extends OBSRelationSection {
 	private List getBaseActivities(Activity activity) {
 		List list = new ArrayList();
 		while (!activity.getVariabilityType()
-				.equals(VariabilityType.NA_LITERAL)) {
+				.equals(VariabilityType.NA)) {
 			VariabilityElement ve = activity.getVariabilityBasedOnElement();
 
 			if ((ve != null) && (ve instanceof Activity)) {

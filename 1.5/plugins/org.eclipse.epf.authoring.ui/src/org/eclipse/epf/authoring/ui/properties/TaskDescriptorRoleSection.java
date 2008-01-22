@@ -75,12 +75,15 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	protected void initContentProvider1() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				List list = new ArrayList();
-				RoleDescriptor role = ((TaskDescriptor) element)
-						.getPerformedPrimarilyBy();
-				if (role != null)
-					list.add(role);
-				return getFilteredList(list).toArray();
+//				List list = new ArrayList();
+//				RoleDescriptor role = ((TaskDescriptor) element)
+//						.getPerformedPrimarilyBy();
+//				if (role != null)
+//					list.add(role);
+//				return getFilteredList(list).toArray();
+				return getFilteredList(
+						((TaskDescriptor) element).getPerformedPrimarilyBy())
+						.toArray();
 			}
 		};
 		tableViewer1.setContentProvider(contentProvider);
@@ -202,12 +205,17 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected void addItems2(List items) {
 		if (!items.isEmpty()) {
-			RoleDescriptor roleDesc = ((TaskDescriptor) element)
-					.getPerformedPrimarilyBy();
+//			RoleDescriptor roleDesc = ((TaskDescriptor) element)
+//					.getPerformedPrimarilyBy();
+//			List elementList = getRoles(((TaskDescriptor) element)
+//					.getAssistedBy());
+//			if (roleDesc != null)
+//				elementList.add(roleDesc.getRole());
 			List elementList = getRoles(((TaskDescriptor) element)
-					.getAssistedBy());
-			if (roleDesc != null)
-				elementList.add(roleDesc.getRole());
+					.getPerformedPrimarilyBy());
+			elementList.addAll(getRoles(((TaskDescriptor) element)
+					.getAssistedBy()));
+		
 
 			List newList = new ArrayList();
 			for (int i = 0; i < items.size(); i++) {
@@ -232,12 +240,17 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected void addItems3(List items) {
 		if (!items.isEmpty()) {
-			RoleDescriptor roleDesc = ((TaskDescriptor) element)
-					.getPerformedPrimarilyBy();
+//			RoleDescriptor roleDesc = ((TaskDescriptor) element)
+//					.getPerformedPrimarilyBy();
+//			List elementList = getRoles(((TaskDescriptor) element)
+//					.getAdditionallyPerformedBy());
+//			if (roleDesc != null)
+//				elementList.add(roleDesc.getRole());
+			
 			List elementList = getRoles(((TaskDescriptor) element)
-					.getAdditionallyPerformedBy());
-			if (roleDesc != null)
-				elementList.add(roleDesc.getRole());
+					.getPerformedPrimarilyBy());
+			elementList.addAll(getRoles(((TaskDescriptor) element)
+					.getAdditionallyPerformedBy()));
 
 			List newList = new ArrayList();
 			for (int i = 0; i < items.size(); i++) {
@@ -343,13 +356,15 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#getExistingElements1()
 	 */
 	protected List getExistingElements1() {
-		List list = new ArrayList();
-		RoleDescriptor roleDesc = ((TaskDescriptor) element)
-				.getPerformedPrimarilyBy();
-		if (roleDesc != null)
-			list.add(roleDesc);
-
-		return list;
+//		List list = new ArrayList();
+//		RoleDescriptor roleDesc = ((TaskDescriptor) element)
+//				.getPerformedPrimarilyBy();
+//		if (roleDesc != null)
+//			list.add(roleDesc);
+//
+//		return list;
+		
+		return ((TaskDescriptor) element).getPerformedPrimarilyBy();
 	};
 
 	/**

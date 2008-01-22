@@ -109,7 +109,9 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 		{
 			switch (featureID) {
 			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-				((TaskDescriptor) desc).setPerformedPrimarilyBy(null);
+//				((TaskDescriptor) desc).setPerformedPrimarilyBy(null);
+				((TaskDescriptor) desc).getPerformedPrimarilyBy().removeAll(
+						elements);
 				break;
 			case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
 				((TaskDescriptor) desc).getAdditionallyPerformedBy().removeAll(
@@ -173,9 +175,11 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 		{
 			switch (featureID) {
 			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-				Object o = elements.get(0);
-				if (o instanceof RoleDescriptor)
-					((TaskDescriptor) desc).setPerformedPrimarilyBy((RoleDescriptor)o);
+//				Object o = elements.get(0);
+//				if (o instanceof RoleDescriptor)
+//					((TaskDescriptor) desc).setPerformedPrimarilyBy((RoleDescriptor)o);
+				((TaskDescriptor) desc).getPerformedPrimarilyBy().addAll(
+						elements);
 				break;
 			case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
 				((TaskDescriptor) desc).getAdditionallyPerformedBy().addAll(
