@@ -45,7 +45,6 @@ import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.RoleDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.TaskDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.ui.UIHelper;
-import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -1014,24 +1013,27 @@ public class ExportMSPXMLService {
 	private List getRolesForTaskD(TaskDescriptor taskDescriptor) {
 		ArrayList rolesList = new ArrayList();
 
-		List<RoleDescriptor> list = taskDescriptor.getPerformedPrimarilyBy();
-		RoleDescriptor rd = list == null || list.isEmpty() ? null : list.get(0);
-		
-		// RoleDescriptor roleDescrp = taskDescriptor.getPerformedPrimarilyBy();
-		RoleDescriptor roleDescrp = (RoleDescriptor) ConfigurationHelper
-				.getCalculatedElement(rd,
-						breakdownElementFilter.getMethodConfiguration());
+		for (RoleDescriptor rd : taskDescriptor.getPerformedPrimarilyBy()) {
 
-		if (roleDescrp != null) {
-			rolesList.add(getDisplayName(roleDescrp));
+			// RoleDescriptor roleDescrp =
+			// taskDescriptor.getPerformedPrimarilyBy();
+			RoleDescriptor roleDescrp = (RoleDescriptor) ConfigurationHelper
+					.getCalculatedElement(rd, breakdownElementFilter
+							.getMethodConfiguration());
+
+			if (roleDescrp != null) {
+				rolesList.add(getDisplayName(roleDescrp));
+			}
 		}
-		// List roleDescrpList = taskDescriptor.getAdditionallyPerformedBy();
+
+		// List roleDescrpList =
+		// taskDescriptor.getAdditionallyPerformedBy();
 		List roleDescrpList = ConfigurationHelper.getCalculatedElements(
 				taskDescriptor.getAdditionallyPerformedBy(),
 				breakdownElementFilter.getMethodConfiguration());
 
 		for (Iterator iter = roleDescrpList.iterator(); iter.hasNext();) {
-			roleDescrp = (RoleDescriptor) iter.next();
+			RoleDescriptor roleDescrp = (RoleDescriptor) iter.next();
 			rolesList.add(getDisplayName(roleDescrp));
 		}
 
@@ -1041,14 +1043,15 @@ public class ExportMSPXMLService {
 	private List getRolesForTask(org.eclipse.epf.uma.Task umaTask) {
 		ArrayList rolesList = new ArrayList();
 
-		List<Role> roleList = umaTask.getPerformedBy();
-		Role role = roleList == null || roleList.isEmpty() ? null : roleList.get(0);
-		if (role != null) {
-			rolesList.add(getDisplayName(role));
+		for (Role role: umaTask.getPerformedBy()) {
+			if (role != null) {
+				rolesList.add(getDisplayName(role));
+			}
 		}
+
 		List list = umaTask.getAdditionallyPerformedBy();
 		for (Iterator iter = list.iterator(); iter.hasNext();) {
-			role = (Role) iter.next();
+			Role role = (Role) iter.next();
 			rolesList.add(getDisplayName(role));
 		}
 
