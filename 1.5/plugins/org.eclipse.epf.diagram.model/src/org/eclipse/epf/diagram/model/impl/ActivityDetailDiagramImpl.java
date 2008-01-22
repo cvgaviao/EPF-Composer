@@ -428,37 +428,41 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 				Object element = TngUtil.unwrap(object);
 				if (element instanceof TaskDescriptor) {
 					TaskDescriptor descriptor = (TaskDescriptor) element;
-					RoleDescriptor roleDescriptor = descriptor
+					List desc = descriptor
 							.getPerformedPrimarilyBy();
-					if (roleDescriptor != null
-							&& filter.accept(roleDescriptor)
-							// TODO: need to check if the role descriptor is
-							// inherited and locally suppressed
-							// if locally suppressed, check the wrapper of the
-							// role descriptor
-							//
-							&& !roleDescriptor.getSuppressed().booleanValue()
-							&& !roleDescriptors.contains(roleDescriptor)) {
-						roleDescriptors.add(roleDescriptor);
-						// newNode = createRoleTaskComposite(roleDescriptor);
-						// if(newNode != null) {
-						// if(ProcessUtil.isInherited(object)) {
-						// // task descriptor is inherited, its primary
-						// performer is not local
-						// // set role node of the RoleTaskComposite to
-						// read-only
-						// //
-						// Node roleNode = (Node)
-						// ((NodeContainer)newNode).getNodes().get(0);
-						// roleNode.setReadOnly(true);
-						// }
-						// nodes.add(newNode);
-						// }
-						createRoleTaskCompositeRows(roleDescriptor, object,
-								nodes);
-					}
-					if (roleDescriptors.contains(roleDescriptor)) {
-						createTaskInputOutputNodes(descriptor, nodes);
+					for (Iterator itor = desc.iterator(); itor.hasNext();)	{
+						RoleDescriptor roleDescriptor = (RoleDescriptor) itor.next();
+					
+						if (roleDescriptor != null
+								&& filter.accept(roleDescriptor)
+								// TODO: need to check if the role descriptor is
+								// inherited and locally suppressed
+								// if locally suppressed, check the wrapper of the
+								// role descriptor
+								//
+								&& !roleDescriptor.getSuppressed().booleanValue()
+								&& !roleDescriptors.contains(roleDescriptor)) {
+							roleDescriptors.add(roleDescriptor);
+							// newNode = createRoleTaskComposite(roleDescriptor);
+							// if(newNode != null) {
+							// if(ProcessUtil.isInherited(object)) {
+							// // task descriptor is inherited, its primary
+							// performer is not local
+							// // set role node of the RoleTaskComposite to
+							// read-only
+							// //
+							// Node roleNode = (Node)
+							// ((NodeContainer)newNode).getNodes().get(0);
+							// roleNode.setReadOnly(true);
+							// }
+							// nodes.add(newNode);
+							// }
+							createRoleTaskCompositeRows(roleDescriptor, object,
+									nodes);
+						}
+						if (roleDescriptors.contains(roleDescriptor)) {
+							createTaskInputOutputNodes(descriptor, nodes);
+						}
 					}
 				}
 			}
@@ -750,14 +754,16 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 			return null;
 		Node node = null;
 		if (obj instanceof TaskDescriptor) {
-			RoleDescriptor roleDescriptor = ((TaskDescriptor) obj)
-					.getPerformedPrimarilyBy();
-			node = findNode(this, roleDescriptor);
-			if (node == null) {
-				node = createRoleTaskComposite(roleDescriptor);
-				getNodes().add(node);
-			} else {
-				node = super.addNode(getNodes(), obj);
+			List desc = ((TaskDescriptor) obj).getPerformedPrimarilyBy();
+			for (Iterator itor = desc.iterator(); itor.hasNext();)	{
+				RoleDescriptor roleDescriptor = (RoleDescriptor) itor.next();
+				node = findNode(this, roleDescriptor);
+				if (node == null) {
+					node = createRoleTaskComposite(roleDescriptor);
+					getNodes().add(node);
+				} else {
+					node = super.addNode(getNodes(), obj);
+				}
 			}
 		} else {
 			node = super.addNode(getNodes(), obj);
@@ -811,9 +817,9 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 			System.out
 					.println("ActivityDetailDiagram.addToUmaModel(): WorkBreakdownElement index: " + i); //$NON-NLS-1$
 			if (i == -1) {
-				act.getBreakdownElements().add(addedNode.getObject());
+				act.getBreakdownElements().add((BreakdownElement) addedNode.getObject());
 			} else {
-				act.getBreakdownElements().add(i, addedNode.getObject());
+				act.getBreakdownElements().add(i, (BreakdownElement) addedNode.getObject());
 			}
 		}
 
@@ -891,38 +897,39 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 		if (!filter.accept(taskDescriptor.getPerformedPrimarilyBy()))
 			return;
 		
-		RoleDescriptor roleDescriptor = ((TaskDescriptor) movedObject)
-											.getPerformedPrimarilyBy();
-		Node roleNode = findNode(this, roleDescriptor);
-		if(roleNode == null) return;
-		
-		int oldPos = 0;
-		if(oldPosition instanceof Integer){
-			oldPos = ((Integer)oldPosition).intValue();
-		}
-		TaskNode taskNode = (TaskNode)GraphicalDataHelper.findNode(
-				(NodeContainer)roleNode, taskDescriptor,
-				TaskNode.class);
-		
-		//move up
-		if(oldPos > position){
-			int i = taskNode.getIndex();
-			Node prevNode = findTaskNode((RoleTaskComposite)roleNode, i-1);
-			if(prevNode != null){
-				taskNode.setIndex(i-1);
-				((TaskNode)prevNode).setIndex(i);
+		List desc = ((TaskDescriptor) movedObject).getPerformedPrimarilyBy();
+		for (Iterator itor = desc.iterator(); itor.hasNext();)	{
+			RoleDescriptor roleDescriptor = (RoleDescriptor) itor.next();
+			Node roleNode = findNode(this, roleDescriptor);
+			if(roleNode == null) return;
+			
+			int oldPos = 0;
+			if(oldPosition instanceof Integer){
+				oldPos = ((Integer)oldPosition).intValue();
+			}
+			TaskNode taskNode = (TaskNode)GraphicalDataHelper.findNode(
+			(NodeContainer)roleNode, taskDescriptor,
+			TaskNode.class);
+			
+			//move up
+			if(oldPos > position){
+				int i = taskNode.getIndex();
+				Node prevNode = findTaskNode((RoleTaskComposite)roleNode, i-1);
+				if(prevNode != null){
+					taskNode.setIndex(i-1);
+					((TaskNode)prevNode).setIndex(i);
 			}
 			
-		}else{
+			}else{
 			// move down
-			int i = taskNode.getIndex();
-			Node nextNode = findTaskNode((RoleTaskComposite)roleNode, i+1);
-			if(nextNode != null){
-				taskNode.setIndex(i+1);
-				((TaskNode)nextNode).setIndex(i);
+				int i = taskNode.getIndex();
+				Node nextNode = findTaskNode((RoleTaskComposite)roleNode, i+1);
+				if(nextNode != null){
+					taskNode.setIndex(i+1);
+					((TaskNode)nextNode).setIndex(i);
+				}
 			}
 		}
-		
 	}
 	
 	private Node findTaskNode(RoleTaskComposite container, int index) {

@@ -77,11 +77,13 @@ public class TaskRolesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				List list = new ArrayList();
-				Role role = ((Task) object).getPerformedBy();
-				if (role != null)
-					list.add(role);
-				return list.toArray();
+//				List list = new ArrayList();
+//				Role role = ((Task) object).getPerformedBy();
+//				if (role != null)
+//					list.add(role);
+//				return list.toArray();
+				
+				return ((Task) object).getPerformedBy().toArray();
 			}
 		};
 		viewer_selected.setContentProvider(contentProviderSelected);
@@ -214,10 +216,21 @@ public class TaskRolesPage extends AssociationFormPage {
 		return filter = new ContentFilter (){
 			protected boolean childAccept(Object obj) {
 				if(task.getPerformedBy() != null){
-					Role role = task.getPerformedBy();
-					if(obj == role) return false;
-					if(!checkContribution(role, obj))
-						return false;
+					
+					List list = task.getPerformedBy();
+					for(Iterator it = list.iterator(); it.hasNext();){
+						Object next = it.next();
+						if(next instanceof Role){
+							if(obj == next) return false;
+							if(!checkContribution((VariabilityElement)next, obj))
+								return false;
+						}
+					}
+					
+//					Role role = task.getPerformedBy();
+//					if(obj == role) return false;
+//					if(!checkContribution(role, obj))
+//						return false;
 				}
 				return (obj instanceof Role);
 			}
@@ -231,10 +244,20 @@ public class TaskRolesPage extends AssociationFormPage {
 	public class RoleFilter extends ContentFilter {
 		protected boolean childAccept(Object obj) {
 			if(task.getPerformedBy() != null){
-				Role role = task.getPerformedBy();
-				if(obj == role) return false;
-				if(!checkContribution(role, obj))
-					return false;
+//				Role role = task.getPerformedBy();
+//				if(obj == role) return false;
+//				if(!checkContribution(role, obj))
+//					return false;
+				
+				List list = task.getPerformedBy();
+				for(Iterator it = list.iterator(); it.hasNext();){
+					Object next = it.next();
+					if(next instanceof Role){
+						if(obj == next) return false;
+						if(!checkContribution((VariabilityElement)next, obj))
+							return false;
+					}
+				}
 			}
 			return (obj instanceof Role);
 		}

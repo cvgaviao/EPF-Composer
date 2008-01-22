@@ -845,7 +845,7 @@ public final class TngUtil {
 	 * @param baseName
 	 * @return baseName of baseName_X where is is the number starting from 2
 	 */
-	public static String getNextAvailableName(List<MethodElement> elements, String baseName) {
+	public static String getNextAvailableName(List<? extends MethodElement> elements, String baseName) {
 		if(isNameTaken(elements, null, baseName)) {
 			for (int i = 2; true; i++) {
 				String name = baseName + '_' + i;

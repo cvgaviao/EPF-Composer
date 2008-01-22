@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.actions;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,7 +24,6 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -38,6 +36,7 @@ import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.richtext.RichTextImages;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
@@ -144,7 +143,7 @@ public class IndentAction extends
 			//
 			if(element instanceof Activity) {
 				ProcessPackage parentPkg = (ProcessPackage) newParent.eContainer();
-				parentPkg.getChildPackages().add(element.eContainer());
+				parentPkg.getChildPackages().add((MethodPackage) element.eContainer());
 			}
 		}
 
@@ -163,7 +162,7 @@ public class IndentAction extends
 			oldParent.getBreakdownElements().add(oldIndex, element);			
 			if(element instanceof Activity) {
 				ProcessPackage parentPkg = (ProcessPackage) oldParent.eContainer();
-				parentPkg.getChildPackages().add(element.eContainer());
+				parentPkg.getChildPackages().add((MethodPackage) element.eContainer());
 			}
 		}
 		

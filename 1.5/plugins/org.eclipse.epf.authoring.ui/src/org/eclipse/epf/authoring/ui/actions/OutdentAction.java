@@ -41,6 +41,7 @@ import org.eclipse.epf.richtext.RichTextResources;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.VariabilityElement;
@@ -174,16 +175,18 @@ public class OutdentAction extends
 			newParent.getBreakdownElements().add(newIndex, element);
 			if(element instanceof Activity) {
 				ProcessPackage parentPkg = (ProcessPackage) newParent.eContainer();
-				parentPkg.getChildPackages().add(element.eContainer());
+				parentPkg.getChildPackages().add((MethodPackage)element.eContainer());
 
 				if(newChildren != null) {
-					((Activity)element).getBreakdownElements().addAll(newChildren);			
+//					((Activity)element).getBreakdownElements().addAll(newChildren);			
 					// move the process pacakge of the activity to new parent package
 					//
 					for (Iterator iter = newChildren.iterator(); iter.hasNext();) {
 						Object child = iter.next();
+						if (child instanceof BreakdownElement)
+							((Activity)element).getBreakdownElements().add((BreakdownElement) child);
 						if(child instanceof Activity) {
-							parentPkg.getChildPackages().add(((Activity)child).eContainer());
+							parentPkg.getChildPackages().add((MethodPackage)((Activity)child).eContainer());
 						}
 					}
 				}
@@ -199,13 +202,13 @@ public class OutdentAction extends
 			oldParent.getBreakdownElements().add(oldIndex, element);
 			if(element instanceof Activity) {
 				ProcessPackage parentPkg = (ProcessPackage) oldParent.eContainer();
-				parentPkg.getChildPackages().add(element.eContainer());
+				parentPkg.getChildPackages().add((MethodPackage)element.eContainer());
 				if(newChildren != null) {
 					((Activity) element).getBreakdownElements().removeAll(newChildren);
 					for (Iterator iter = newChildren.iterator(); iter.hasNext();) {
 						Object child = iter.next();
 						if(child instanceof Activity) {
-							parentPkg.getChildPackages().add(((Activity)child).eContainer());
+							parentPkg.getChildPackages().add((MethodPackage)((Activity)child).eContainer());
 						}
 					}
 				}
