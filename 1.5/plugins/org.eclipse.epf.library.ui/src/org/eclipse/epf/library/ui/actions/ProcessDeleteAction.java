@@ -195,7 +195,7 @@ public class ProcessDeleteAction extends MethodElementDeleteAction {
 			TaskDescriptor taskDesc = (TaskDescriptor) element;
 			descriptors.addAll(taskDesc.getAdditionallyPerformedBy());
 			descriptors.addAll(taskDesc.getAssistedBy());
-			descriptors.add(taskDesc.getPerformedPrimarilyBy());
+			descriptors.addAll(taskDesc.getPerformedPrimarilyBy());
 			descriptors.addAll(taskDesc.getMandatoryInput());
 			descriptors.addAll(taskDesc.getExternalInput());
 			descriptors.addAll(taskDesc.getOptionalInput());

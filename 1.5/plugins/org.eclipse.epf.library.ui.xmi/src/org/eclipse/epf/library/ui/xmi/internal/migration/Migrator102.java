@@ -676,12 +676,12 @@ public class Migrator102 extends MigratorImpl {
 		if (e instanceof Activity) {
 			Activity act = (Activity) e;
 			VariabilityType type = act.getVariabilityType();
-			if (type == VariabilityType.CONTRIBUTES_LITERAL) {
+			if (type == VariabilityType.CONTRIBUTES) {
 				act
-						.setVariabilityType(VariabilityType.LOCAL_CONTRIBUTION_LITERAL);
-			} else if (type == VariabilityType.REPLACES_LITERAL) {
+						.setVariabilityType(VariabilityType.LOCAL_CONTRIBUTION);
+			} else if (type == VariabilityType.REPLACES) {
 				act
-						.setVariabilityType(VariabilityType.LOCAL_REPLACEMENT_LITERAL);
+						.setVariabilityType(VariabilityType.LOCAL_REPLACEMENT);
 			}
 		}
 		if (! (this instanceof Migrator102_103)) {
