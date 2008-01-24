@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.epf.publishing
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.5.0.qualifier
 Bundle-ClassPath: publishing.jar, lib/rpwcore.jar
 Bundle-Activator: org.eclipse.epf.publishing.PublishingPlugin
 Bundle-Vendor: %providerName

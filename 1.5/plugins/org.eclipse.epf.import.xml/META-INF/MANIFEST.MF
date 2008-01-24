@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.epf.import.xml;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.5.0.qualifier
 Bundle-Activator: org.eclipse.epf.importing.xml.ImportXMLPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
