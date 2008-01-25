@@ -59,15 +59,6 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	protected String body = BODY_EDEFAULT;
 
 	/**
-	 * This is true if the Body attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean bodyESet;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -103,36 +94,9 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	public void setBody(String newBody) {
 		String oldBody = body;
 		body = newBody;
-		boolean oldBodyESet = bodyESet;
-		bodyESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.CONSTRAINT__BODY, oldBody, body, !oldBodyESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetBody() {
-		String oldBody = body;
-		boolean oldBodyESet = bodyESet;
-		body = BODY_EDEFAULT;
-		bodyESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.CONSTRAINT__BODY, oldBody, BODY_EDEFAULT,
-					oldBodyESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetBody() {
-		return bodyESet;
+					UmaPackage.CONSTRAINT__BODY, oldBody, body));
 	}
 
 	/**
@@ -173,7 +137,7 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CONSTRAINT__BODY:
-			unsetBody();
+			setBody(BODY_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -188,7 +152,8 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CONSTRAINT__BODY:
-			return isSetBody();
+			return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT
+					.equals(body);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -205,10 +170,7 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (body: "); //$NON-NLS-1$
-		if (bodyESet)
-			result.append(body);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(body);
 		result.append(')');
 		return result.toString();
 	}

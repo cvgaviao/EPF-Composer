@@ -60,15 +60,6 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	protected String usageGuidance = USAGE_GUIDANCE_EDEFAULT;
 
 	/**
-	 * This is true if the Usage Guidance attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean usageGuidanceESet;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -104,38 +95,10 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	public void setUsageGuidance(String newUsageGuidance) {
 		String oldUsageGuidance = usageGuidance;
 		usageGuidance = newUsageGuidance;
-		boolean oldUsageGuidanceESet = usageGuidanceESet;
-		usageGuidanceESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE,
-					oldUsageGuidance, usageGuidance, !oldUsageGuidanceESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetUsageGuidance() {
-		String oldUsageGuidance = usageGuidance;
-		boolean oldUsageGuidanceESet = usageGuidanceESet;
-		usageGuidance = USAGE_GUIDANCE_EDEFAULT;
-		usageGuidanceESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE,
-					oldUsageGuidance, USAGE_GUIDANCE_EDEFAULT,
-					oldUsageGuidanceESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetUsageGuidance() {
-		return usageGuidanceESet;
+					oldUsageGuidance, usageGuidance));
 	}
 
 	/**
@@ -176,7 +139,7 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE:
-			unsetUsageGuidance();
+			setUsageGuidance(USAGE_GUIDANCE_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -191,7 +154,8 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE:
-			return isSetUsageGuidance();
+			return USAGE_GUIDANCE_EDEFAULT == null ? usageGuidance != null
+					: !USAGE_GUIDANCE_EDEFAULT.equals(usageGuidance);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -208,10 +172,7 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (usageGuidance: "); //$NON-NLS-1$
-		if (usageGuidanceESet)
-			result.append(usageGuidance);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(usageGuidance);
 		result.append(')');
 		return result.toString();
 	}

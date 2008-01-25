@@ -75,15 +75,6 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	protected Boolean isAbstract = IS_ABSTRACT_EDEFAULT;
 
 	/**
-	 * This is true if the Is Abstract attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isAbstractESet;
-
-	/**
 	 * The cached value of the '{@link #getPresentation() <em>Presentation</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -115,15 +106,6 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	protected URI shapeicon = SHAPEICON_EDEFAULT;
 
 	/**
-	 * This is true if the Shapeicon attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean shapeiconESet;
-
-	/**
 	 * The default value of the '{@link #getNodeicon() <em>Nodeicon</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -143,15 +125,6 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	 * @ordered
 	 */
 	protected URI nodeicon = NODEICON_EDEFAULT;
-
-	/**
-	 * This is true if the Nodeicon attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean nodeiconESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -189,37 +162,10 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	public void setIsAbstract(Boolean newIsAbstract) {
 		Boolean oldIsAbstract = isAbstract;
 		isAbstract = newIsAbstract;
-		boolean oldIsAbstractESet = isAbstractESet;
-		isAbstractESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DESCRIBABLE_ELEMENT__IS_ABSTRACT, oldIsAbstract,
-					isAbstract, !oldIsAbstractESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsAbstract() {
-		Boolean oldIsAbstract = isAbstract;
-		boolean oldIsAbstractESet = isAbstractESet;
-		isAbstract = IS_ABSTRACT_EDEFAULT;
-		isAbstractESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DESCRIBABLE_ELEMENT__IS_ABSTRACT, oldIsAbstract,
-					IS_ABSTRACT_EDEFAULT, oldIsAbstractESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsAbstract() {
-		return isAbstractESet;
+					isAbstract));
 	}
 
 	/**
@@ -261,37 +207,10 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	public void setShapeicon(URI newShapeicon) {
 		URI oldShapeicon = shapeicon;
 		shapeicon = newShapeicon;
-		boolean oldShapeiconESet = shapeiconESet;
-		shapeiconESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DESCRIBABLE_ELEMENT__SHAPEICON, oldShapeicon,
-					shapeicon, !oldShapeiconESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetShapeicon() {
-		URI oldShapeicon = shapeicon;
-		boolean oldShapeiconESet = shapeiconESet;
-		shapeicon = SHAPEICON_EDEFAULT;
-		shapeiconESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DESCRIBABLE_ELEMENT__SHAPEICON, oldShapeicon,
-					SHAPEICON_EDEFAULT, oldShapeiconESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetShapeicon() {
-		return shapeiconESet;
+					shapeicon));
 	}
 
 	/**
@@ -311,37 +230,10 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	public void setNodeicon(URI newNodeicon) {
 		URI oldNodeicon = nodeicon;
 		nodeicon = newNodeicon;
-		boolean oldNodeiconESet = nodeiconESet;
-		nodeiconESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DESCRIBABLE_ELEMENT__NODEICON, oldNodeicon,
-					nodeicon, !oldNodeiconESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetNodeicon() {
-		URI oldNodeicon = nodeicon;
-		boolean oldNodeiconESet = nodeiconESet;
-		nodeicon = NODEICON_EDEFAULT;
-		nodeiconESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DESCRIBABLE_ELEMENT__NODEICON, oldNodeicon,
-					NODEICON_EDEFAULT, oldNodeiconESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetNodeicon() {
-		return nodeiconESet;
+					nodeicon));
 	}
 
 	/**
@@ -414,16 +306,16 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DESCRIBABLE_ELEMENT__IS_ABSTRACT:
-			unsetIsAbstract();
+			setIsAbstract(IS_ABSTRACT_EDEFAULT);
 			return;
 		case UmaPackage.DESCRIBABLE_ELEMENT__PRESENTATION:
 			setPresentation((ContentDescription) null);
 			return;
 		case UmaPackage.DESCRIBABLE_ELEMENT__SHAPEICON:
-			unsetShapeicon();
+			setShapeicon(SHAPEICON_EDEFAULT);
 			return;
 		case UmaPackage.DESCRIBABLE_ELEMENT__NODEICON:
-			unsetNodeicon();
+			setNodeicon(NODEICON_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -438,13 +330,16 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DESCRIBABLE_ELEMENT__IS_ABSTRACT:
-			return isSetIsAbstract();
+			return IS_ABSTRACT_EDEFAULT == null ? isAbstract != null
+					: !IS_ABSTRACT_EDEFAULT.equals(isAbstract);
 		case UmaPackage.DESCRIBABLE_ELEMENT__PRESENTATION:
 			return presentation != null;
 		case UmaPackage.DESCRIBABLE_ELEMENT__SHAPEICON:
-			return isSetShapeicon();
+			return SHAPEICON_EDEFAULT == null ? shapeicon != null
+					: !SHAPEICON_EDEFAULT.equals(shapeicon);
 		case UmaPackage.DESCRIBABLE_ELEMENT__NODEICON:
-			return isSetNodeicon();
+			return NODEICON_EDEFAULT == null ? nodeicon != null
+					: !NODEICON_EDEFAULT.equals(nodeicon);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -509,20 +404,11 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isAbstract: "); //$NON-NLS-1$
-		if (isAbstractESet)
-			result.append(isAbstract);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isAbstract);
 		result.append(", shapeicon: "); //$NON-NLS-1$
-		if (shapeiconESet)
-			result.append(shapeicon);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(shapeicon);
 		result.append(", nodeicon: "); //$NON-NLS-1$
-		if (nodeiconESet)
-			result.append(nodeicon);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(nodeicon);
 		result.append(')');
 		return result.toString();
 	}

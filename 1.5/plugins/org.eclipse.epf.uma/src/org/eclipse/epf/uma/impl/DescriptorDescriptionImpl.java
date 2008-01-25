@@ -60,15 +60,6 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	protected String refinedDescription = REFINED_DESCRIPTION_EDEFAULT;
 
 	/**
-	 * This is true if the Refined Description attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean refinedDescriptionESet;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -104,39 +95,10 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	public void setRefinedDescription(String newRefinedDescription) {
 		String oldRefinedDescription = refinedDescription;
 		refinedDescription = newRefinedDescription;
-		boolean oldRefinedDescriptionESet = refinedDescriptionESet;
-		refinedDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION,
-					oldRefinedDescription, refinedDescription,
-					!oldRefinedDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRefinedDescription() {
-		String oldRefinedDescription = refinedDescription;
-		boolean oldRefinedDescriptionESet = refinedDescriptionESet;
-		refinedDescription = REFINED_DESCRIPTION_EDEFAULT;
-		refinedDescriptionESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION,
-					oldRefinedDescription, REFINED_DESCRIPTION_EDEFAULT,
-					oldRefinedDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRefinedDescription() {
-		return refinedDescriptionESet;
+					oldRefinedDescription, refinedDescription));
 	}
 
 	/**
@@ -177,7 +139,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
-			unsetRefinedDescription();
+			setRefinedDescription(REFINED_DESCRIPTION_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -192,7 +154,8 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
-			return isSetRefinedDescription();
+			return REFINED_DESCRIPTION_EDEFAULT == null ? refinedDescription != null
+					: !REFINED_DESCRIPTION_EDEFAULT.equals(refinedDescription);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -209,10 +172,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (refinedDescription: "); //$NON-NLS-1$
-		if (refinedDescriptionESet)
-			result.append(refinedDescription);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(refinedDescription);
 		result.append(')');
 		return result.toString();
 	}

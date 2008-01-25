@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ActivityDescription;
+import org.eclipse.epf.uma.ApplicableMetaClassInfo;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ArtifactDescription;
 import org.eclipse.epf.uma.BreakdownElementDescription;
@@ -182,6 +183,8 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 			return (EObject) createReusableAsset();
 		case UmaPackage.TERM_DEFINITION:
 			return (EObject) createTermDefinition();
+		case UmaPackage.APPLICABLE_META_CLASS_INFO:
+			return (EObject) createApplicableMetaClassInfo();
 		case UmaPackage.ARTIFACT:
 			return (EObject) createArtifact();
 		case UmaPackage.WORK_PRODUCT:
@@ -892,6 +895,16 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	public TermDefinition createTermDefinition() {
 		TermDefinitionImpl termDefinition = new TermDefinitionImpl();
 		return termDefinition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ApplicableMetaClassInfo createApplicableMetaClassInfo() {
+		ApplicableMetaClassInfoImpl applicableMetaClassInfo = new ApplicableMetaClassInfoImpl();
+		return applicableMetaClassInfo;
 	}
 
 	/**

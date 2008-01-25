@@ -72,15 +72,6 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	protected Double zoom = ZOOM_EDEFAULT;
 
 	/**
-	 * This is true if the Zoom attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean zoomESet;
-
-	/**
 	 * The cached value of the '{@link #getViewport() <em>Viewport</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -136,36 +127,9 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public void setZoom(Double newZoom) {
 		Double oldZoom = zoom;
 		zoom = newZoom;
-		boolean oldZoomESet = zoomESet;
-		zoomESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.DIAGRAM_LINK__ZOOM, oldZoom, zoom, !oldZoomESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetZoom() {
-		Double oldZoom = zoom;
-		boolean oldZoomESet = zoomESet;
-		zoom = ZOOM_EDEFAULT;
-		zoomESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DIAGRAM_LINK__ZOOM, oldZoom, ZOOM_EDEFAULT,
-					oldZoomESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetZoom() {
-		return zoomESet;
+					UmaPackage.DIAGRAM_LINK__ZOOM, oldZoom, zoom));
 	}
 
 	/**
@@ -455,7 +419,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
-			unsetZoom();
+			setZoom(ZOOM_EDEFAULT);
 			return;
 		case UmaPackage.DIAGRAM_LINK__VIEWPORT:
 			setViewport((Point) null);
@@ -479,7 +443,8 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
-			return isSetZoom();
+			return ZOOM_EDEFAULT == null ? zoom != null : !ZOOM_EDEFAULT
+					.equals(zoom);
 		case UmaPackage.DIAGRAM_LINK__VIEWPORT:
 			return viewport != null;
 		case UmaPackage.DIAGRAM_LINK__DIAGRAM:
@@ -502,10 +467,7 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (zoom: "); //$NON-NLS-1$
-		if (zoomESet)
-			result.append(zoom);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(zoom);
 		result.append(')');
 		return result.toString();
 	}

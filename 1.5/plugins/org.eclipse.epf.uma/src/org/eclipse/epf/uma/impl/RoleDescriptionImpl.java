@@ -62,15 +62,6 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	protected String skills = SKILLS_EDEFAULT;
 
 	/**
-	 * This is true if the Skills attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean skillsESet;
-
-	/**
 	 * The default value of the '{@link #getAssignmentApproaches() <em>Assignment Approaches</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,15 +82,6 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	protected String assignmentApproaches = ASSIGNMENT_APPROACHES_EDEFAULT;
 
 	/**
-	 * This is true if the Assignment Approaches attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean assignmentApproachesESet;
-
-	/**
 	 * The default value of the '{@link #getSynonyms() <em>Synonyms</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,15 +100,6 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	 * @ordered
 	 */
 	protected String synonyms = SYNONYMS_EDEFAULT;
-
-	/**
-	 * This is true if the Synonyms attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean synonymsESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -164,37 +137,9 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	public void setSkills(String newSkills) {
 		String oldSkills = skills;
 		skills = newSkills;
-		boolean oldSkillsESet = skillsESet;
-		skillsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.ROLE_DESCRIPTION__SKILLS, oldSkills, skills,
-					!oldSkillsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetSkills() {
-		String oldSkills = skills;
-		boolean oldSkillsESet = skillsESet;
-		skills = SKILLS_EDEFAULT;
-		skillsESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ROLE_DESCRIPTION__SKILLS, oldSkills,
-					SKILLS_EDEFAULT, oldSkillsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetSkills() {
-		return skillsESet;
+					UmaPackage.ROLE_DESCRIPTION__SKILLS, oldSkills, skills));
 	}
 
 	/**
@@ -214,39 +159,10 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	public void setAssignmentApproaches(String newAssignmentApproaches) {
 		String oldAssignmentApproaches = assignmentApproaches;
 		assignmentApproaches = newAssignmentApproaches;
-		boolean oldAssignmentApproachesESet = assignmentApproachesESet;
-		assignmentApproachesESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ROLE_DESCRIPTION__ASSIGNMENT_APPROACHES,
-					oldAssignmentApproaches, assignmentApproaches,
-					!oldAssignmentApproachesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetAssignmentApproaches() {
-		String oldAssignmentApproaches = assignmentApproaches;
-		boolean oldAssignmentApproachesESet = assignmentApproachesESet;
-		assignmentApproaches = ASSIGNMENT_APPROACHES_EDEFAULT;
-		assignmentApproachesESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ROLE_DESCRIPTION__ASSIGNMENT_APPROACHES,
-					oldAssignmentApproaches, ASSIGNMENT_APPROACHES_EDEFAULT,
-					oldAssignmentApproachesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetAssignmentApproaches() {
-		return assignmentApproachesESet;
+					oldAssignmentApproaches, assignmentApproaches));
 	}
 
 	/**
@@ -266,37 +182,10 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	public void setSynonyms(String newSynonyms) {
 		String oldSynonyms = synonyms;
 		synonyms = newSynonyms;
-		boolean oldSynonymsESet = synonymsESet;
-		synonymsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ROLE_DESCRIPTION__SYNONYMS, oldSynonyms,
-					synonyms, !oldSynonymsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetSynonyms() {
-		String oldSynonyms = synonyms;
-		boolean oldSynonymsESet = synonymsESet;
-		synonyms = SYNONYMS_EDEFAULT;
-		synonymsESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ROLE_DESCRIPTION__SYNONYMS, oldSynonyms,
-					SYNONYMS_EDEFAULT, oldSynonymsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetSynonyms() {
-		return synonymsESet;
+					synonyms));
 	}
 
 	/**
@@ -347,13 +236,13 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTION__SKILLS:
-			unsetSkills();
+			setSkills(SKILLS_EDEFAULT);
 			return;
 		case UmaPackage.ROLE_DESCRIPTION__ASSIGNMENT_APPROACHES:
-			unsetAssignmentApproaches();
+			setAssignmentApproaches(ASSIGNMENT_APPROACHES_EDEFAULT);
 			return;
 		case UmaPackage.ROLE_DESCRIPTION__SYNONYMS:
-			unsetSynonyms();
+			setSynonyms(SYNONYMS_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -368,11 +257,15 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTION__SKILLS:
-			return isSetSkills();
+			return SKILLS_EDEFAULT == null ? skills != null : !SKILLS_EDEFAULT
+					.equals(skills);
 		case UmaPackage.ROLE_DESCRIPTION__ASSIGNMENT_APPROACHES:
-			return isSetAssignmentApproaches();
+			return ASSIGNMENT_APPROACHES_EDEFAULT == null ? assignmentApproaches != null
+					: !ASSIGNMENT_APPROACHES_EDEFAULT
+							.equals(assignmentApproaches);
 		case UmaPackage.ROLE_DESCRIPTION__SYNONYMS:
-			return isSetSynonyms();
+			return SYNONYMS_EDEFAULT == null ? synonyms != null
+					: !SYNONYMS_EDEFAULT.equals(synonyms);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -389,20 +282,11 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (skills: "); //$NON-NLS-1$
-		if (skillsESet)
-			result.append(skills);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(skills);
 		result.append(", assignmentApproaches: "); //$NON-NLS-1$
-		if (assignmentApproachesESet)
-			result.append(assignmentApproaches);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(assignmentApproaches);
 		result.append(", synonyms: "); //$NON-NLS-1$
-		if (synonymsESet)
-			result.append(synonyms);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(synonyms);
 		result.append(')');
 		return result.toString();
 	}

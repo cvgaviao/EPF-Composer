@@ -42,11 +42,9 @@ public interface DiagramElement extends MethodElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Visible</em>' attribute.
-	 * @see #isSetIsVisible()
-	 * @see #unsetIsVisible()
 	 * @see #setIsVisible(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramElement_IsVisible()
-	 * @model default="true" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsVisible();
@@ -56,35 +54,10 @@ public interface DiagramElement extends MethodElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Visible</em>' attribute.
-	 * @see #isSetIsVisible()
-	 * @see #unsetIsVisible()
 	 * @see #getIsVisible()
 	 * @generated
 	 */
 	void setIsVisible(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.DiagramElement#getIsVisible <em>Is Visible</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsVisible()
-	 * @see #getIsVisible()
-	 * @see #setIsVisible(Boolean)
-	 * @generated
-	 */
-	void unsetIsVisible();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.DiagramElement#getIsVisible <em>Is Visible</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Visible</em>' attribute is set.
-	 * @see #unsetIsVisible()
-	 * @see #getIsVisible()
-	 * @see #setIsVisible(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsVisible();
 
 	/**
 	 * Returns the value of the '<em><b>Container</b></em>' container reference.

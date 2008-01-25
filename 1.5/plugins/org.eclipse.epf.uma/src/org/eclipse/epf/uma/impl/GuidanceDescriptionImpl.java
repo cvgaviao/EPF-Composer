@@ -60,15 +60,6 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	protected String attachments = ATTACHMENTS_EDEFAULT;
 
 	/**
-	 * This is true if the Attachments attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean attachmentsESet;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -104,37 +95,10 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	public void setAttachments(String newAttachments) {
 		String oldAttachments = attachments;
 		attachments = newAttachments;
-		boolean oldAttachmentsESet = attachmentsESet;
-		attachmentsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS,
-					oldAttachments, attachments, !oldAttachmentsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetAttachments() {
-		String oldAttachments = attachments;
-		boolean oldAttachmentsESet = attachmentsESet;
-		attachments = ATTACHMENTS_EDEFAULT;
-		attachmentsESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS,
-					oldAttachments, ATTACHMENTS_EDEFAULT, oldAttachmentsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetAttachments() {
-		return attachmentsESet;
+					oldAttachments, attachments));
 	}
 
 	/**
@@ -175,7 +139,7 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS:
-			unsetAttachments();
+			setAttachments(ATTACHMENTS_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -190,7 +154,8 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS:
-			return isSetAttachments();
+			return ATTACHMENTS_EDEFAULT == null ? attachments != null
+					: !ATTACHMENTS_EDEFAULT.equals(attachments);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -207,10 +172,7 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (attachments: "); //$NON-NLS-1$
-		if (attachmentsESet)
-			result.append(attachments);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(attachments);
 		result.append(')');
 		return result.toString();
 	}

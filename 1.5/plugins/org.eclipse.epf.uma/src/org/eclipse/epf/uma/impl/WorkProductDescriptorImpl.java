@@ -76,15 +76,6 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	protected String activityEntryState = ACTIVITY_ENTRY_STATE_EDEFAULT;
 
 	/**
-	 * This is true if the Activity Entry State attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean activityEntryStateESet;
-
-	/**
 	 * The default value of the '{@link #getActivityExitState() <em>Activity Exit State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,15 +94,6 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * @ordered
 	 */
 	protected String activityExitState = ACTIVITY_EXIT_STATE_EDEFAULT;
-
-	/**
-	 * This is true if the Activity Exit State attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean activityExitStateESet;
 
 	/**
 	 * The cached value of the '{@link #getWorkProduct() <em>Work Product</em>}' reference.
@@ -189,39 +171,10 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	public void setActivityEntryState(String newActivityEntryState) {
 		String oldActivityEntryState = activityEntryState;
 		activityEntryState = newActivityEntryState;
-		boolean oldActivityEntryStateESet = activityEntryStateESet;
-		activityEntryStateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE,
-					oldActivityEntryState, activityEntryState,
-					!oldActivityEntryStateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetActivityEntryState() {
-		String oldActivityEntryState = activityEntryState;
-		boolean oldActivityEntryStateESet = activityEntryStateESet;
-		activityEntryState = ACTIVITY_ENTRY_STATE_EDEFAULT;
-		activityEntryStateESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE,
-					oldActivityEntryState, ACTIVITY_ENTRY_STATE_EDEFAULT,
-					oldActivityEntryStateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetActivityEntryState() {
-		return activityEntryStateESet;
+					oldActivityEntryState, activityEntryState));
 	}
 
 	/**
@@ -241,39 +194,10 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	public void setActivityExitState(String newActivityExitState) {
 		String oldActivityExitState = activityExitState;
 		activityExitState = newActivityExitState;
-		boolean oldActivityExitStateESet = activityExitStateESet;
-		activityExitStateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE,
-					oldActivityExitState, activityExitState,
-					!oldActivityExitStateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetActivityExitState() {
-		String oldActivityExitState = activityExitState;
-		boolean oldActivityExitStateESet = activityExitStateESet;
-		activityExitState = ACTIVITY_EXIT_STATE_EDEFAULT;
-		activityExitStateESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE,
-					oldActivityExitState, ACTIVITY_EXIT_STATE_EDEFAULT,
-					oldActivityExitStateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetActivityExitState() {
-		return activityExitStateESet;
+					oldActivityExitState, activityExitState));
 	}
 
 	/**
@@ -473,10 +397,10 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
-			unsetActivityEntryState();
+			setActivityEntryState(ACTIVITY_ENTRY_STATE_EDEFAULT);
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE:
-			unsetActivityExitState();
+			setActivityExitState(ACTIVITY_EXIT_STATE_EDEFAULT);
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
 			setWorkProduct((WorkProduct) null);
@@ -503,9 +427,11 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
-			return isSetActivityEntryState();
+			return ACTIVITY_ENTRY_STATE_EDEFAULT == null ? activityEntryState != null
+					: !ACTIVITY_ENTRY_STATE_EDEFAULT.equals(activityEntryState);
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE:
-			return isSetActivityExitState();
+			return ACTIVITY_EXIT_STATE_EDEFAULT == null ? activityExitState != null
+					: !ACTIVITY_EXIT_STATE_EDEFAULT.equals(activityExitState);
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
 			return workProduct != null;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
@@ -530,15 +456,9 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (activityEntryState: "); //$NON-NLS-1$
-		if (activityEntryStateESet)
-			result.append(activityEntryState);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(activityEntryState);
 		result.append(", activityExitState: "); //$NON-NLS-1$
-		if (activityExitStateESet)
-			result.append(activityExitState);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(activityExitState);
 		result.append(')');
 		return result.toString();
 	}

@@ -48,11 +48,9 @@ public interface MethodPlugin extends MethodUnit, org.eclipse.epf.uma.Package {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>User Changeable</em>' attribute.
-	 * @see #isSetUserChangeable()
-	 * @see #unsetUserChangeable()
 	 * @see #setUserChangeable(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getMethodPlugin_UserChangeable()
-	 * @model default="true" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getUserChangeable();
@@ -62,35 +60,10 @@ public interface MethodPlugin extends MethodUnit, org.eclipse.epf.uma.Package {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>User Changeable</em>' attribute.
-	 * @see #isSetUserChangeable()
-	 * @see #unsetUserChangeable()
 	 * @see #getUserChangeable()
 	 * @generated
 	 */
 	void setUserChangeable(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.MethodPlugin#getUserChangeable <em>User Changeable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetUserChangeable()
-	 * @see #getUserChangeable()
-	 * @see #setUserChangeable(Boolean)
-	 * @generated
-	 */
-	void unsetUserChangeable();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.MethodPlugin#getUserChangeable <em>User Changeable</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>User Changeable</em>' attribute is set.
-	 * @see #unsetUserChangeable()
-	 * @see #getUserChangeable()
-	 * @see #setUserChangeable(Boolean)
-	 * @generated
-	 */
-	boolean isSetUserChangeable();
 
 	/**
 	 * Returns the value of the '<em><b>Method Packages</b></em>' containment reference list.

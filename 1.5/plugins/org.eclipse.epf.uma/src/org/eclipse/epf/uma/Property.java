@@ -38,11 +38,9 @@ public interface Property extends DiagramElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Key</em>' attribute.
-	 * @see #isSetKey()
-	 * @see #unsetKey()
 	 * @see #setKey(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getProperty_Key()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getKey();
@@ -52,35 +50,10 @@ public interface Property extends DiagramElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Key</em>' attribute.
-	 * @see #isSetKey()
-	 * @see #unsetKey()
 	 * @see #getKey()
 	 * @generated
 	 */
 	void setKey(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Property#getKey <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetKey()
-	 * @see #getKey()
-	 * @see #setKey(String)
-	 * @generated
-	 */
-	void unsetKey();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Property#getKey <em>Key</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Key</em>' attribute is set.
-	 * @see #unsetKey()
-	 * @see #getKey()
-	 * @see #setKey(String)
-	 * @generated
-	 */
-	boolean isSetKey();
 
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
@@ -92,11 +65,9 @@ public interface Property extends DiagramElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #isSetValue()
-	 * @see #unsetValue()
 	 * @see #setValue(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getProperty_Value()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getValue();
@@ -106,34 +77,9 @@ public interface Property extends DiagramElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Value</em>' attribute.
-	 * @see #isSetValue()
-	 * @see #unsetValue()
 	 * @see #getValue()
 	 * @generated
 	 */
 	void setValue(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Property#getValue <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetValue()
-	 * @see #getValue()
-	 * @see #setValue(String)
-	 * @generated
-	 */
-	void unsetValue();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Property#getValue <em>Value</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Value</em>' attribute is set.
-	 * @see #unsetValue()
-	 * @see #getValue()
-	 * @see #setValue(String)
-	 * @generated
-	 */
-	boolean isSetValue();
 
 } // Property

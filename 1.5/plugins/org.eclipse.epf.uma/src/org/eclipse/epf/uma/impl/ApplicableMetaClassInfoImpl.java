@@ -11,27 +11,29 @@
 package org.eclipse.epf.uma.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.epf.uma.Descriptor;
+
+import org.eclipse.epf.uma.ApplicableMetaClassInfo;
 import org.eclipse.epf.uma.UmaPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Descriptor</b></em>'.
+ * An implementation of the model object '<em><b>Applicable Meta Class Info</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.impl.DescriptorImpl#getIsSynchronizedWithSource <em>Is Synchronized With Source</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.ApplicableMetaClassInfoImpl#getIsPrimaryExtension <em>Is Primary Extension</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public abstract class DescriptorImpl extends BreakdownElementImpl implements
-		Descriptor {
+public class ApplicableMetaClassInfoImpl extends ClassifierImpl implements
+		ApplicableMetaClassInfo {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -40,31 +42,31 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The default value of the '{@link #getIsSynchronizedWithSource() <em>Is Synchronized With Source</em>}' attribute.
+	 * The default value of the '{@link #getIsPrimaryExtension() <em>Is Primary Extension</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getIsSynchronizedWithSource()
+	 * @see #getIsPrimaryExtension()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Boolean IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT = Boolean.TRUE;
+	protected static final Boolean IS_PRIMARY_EXTENSION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getIsSynchronizedWithSource() <em>Is Synchronized With Source</em>}' attribute.
+	 * The cached value of the '{@link #getIsPrimaryExtension() <em>Is Primary Extension</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getIsSynchronizedWithSource()
+	 * @see #getIsPrimaryExtension()
 	 * @generated
 	 * @ordered
 	 */
-	protected Boolean isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
+	protected Boolean isPrimaryExtension = IS_PRIMARY_EXTENSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected DescriptorImpl() {
+	protected ApplicableMetaClassInfoImpl() {
 		super();
 	}
 
@@ -75,7 +77,7 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return UmaPackage.Literals.DESCRIPTOR;
+		return UmaPackage.Literals.APPLICABLE_META_CLASS_INFO;
 	}
 
 	/**
@@ -83,8 +85,8 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Boolean getIsSynchronizedWithSource() {
-		return isSynchronizedWithSource;
+	public Boolean getIsPrimaryExtension() {
+		return isPrimaryExtension;
 	}
 
 	/**
@@ -92,13 +94,15 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setIsSynchronizedWithSource(Boolean newIsSynchronizedWithSource) {
-		Boolean oldIsSynchronizedWithSource = isSynchronizedWithSource;
-		isSynchronizedWithSource = newIsSynchronizedWithSource;
+	public void setIsPrimaryExtension(Boolean newIsPrimaryExtension) {
+		Boolean oldIsPrimaryExtension = isPrimaryExtension;
+		isPrimaryExtension = newIsPrimaryExtension;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
-					oldIsSynchronizedWithSource, isSynchronizedWithSource));
+			eNotify(new ENotificationImpl(
+					this,
+					Notification.SET,
+					UmaPackage.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION,
+					oldIsPrimaryExtension, isPrimaryExtension));
 	}
 
 	/**
@@ -109,8 +113,8 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			return getIsSynchronizedWithSource();
+		case UmaPackage.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION:
+			return getIsPrimaryExtension();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -123,8 +127,8 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			setIsSynchronizedWithSource((Boolean) newValue);
+		case UmaPackage.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION:
+			setIsPrimaryExtension((Boolean) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -138,8 +142,8 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			setIsSynchronizedWithSource(IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT);
+		case UmaPackage.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION:
+			setIsPrimaryExtension(IS_PRIMARY_EXTENSION_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -153,10 +157,9 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			return IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT == null ? isSynchronizedWithSource != null
-					: !IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT
-							.equals(isSynchronizedWithSource);
+		case UmaPackage.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION:
+			return IS_PRIMARY_EXTENSION_EDEFAULT == null ? isPrimaryExtension != null
+					: !IS_PRIMARY_EXTENSION_EDEFAULT.equals(isPrimaryExtension);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -172,10 +175,10 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isSynchronizedWithSource: "); //$NON-NLS-1$
-		result.append(isSynchronizedWithSource);
+		result.append(" (isPrimaryExtension: "); //$NON-NLS-1$
+		result.append(isPrimaryExtension);
 		result.append(')');
 		return result.toString();
 	}
 
-} //DescriptorImpl
+} //ApplicableMetaClassInfoImpl

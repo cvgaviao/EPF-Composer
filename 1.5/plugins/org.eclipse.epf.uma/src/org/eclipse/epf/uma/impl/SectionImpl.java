@@ -71,15 +71,6 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	protected String sectionName = SECTION_NAME_EDEFAULT;
 
 	/**
-	 * This is true if the Section Name attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean sectionNameESet;
-
-	/**
 	 * The default value of the '{@link #getSectionDescription() <em>Section Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -98,15 +89,6 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	 * @ordered
 	 */
 	protected String sectionDescription = SECTION_DESCRIPTION_EDEFAULT;
-
-	/**
-	 * This is true if the Section Description attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean sectionDescriptionESet;
 
 	/**
 	 * The cached value of the '{@link #getSubSections() <em>Sub Sections</em>}' containment reference list.
@@ -164,37 +146,10 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	public void setSectionName(String newSectionName) {
 		String oldSectionName = sectionName;
 		sectionName = newSectionName;
-		boolean oldSectionNameESet = sectionNameESet;
-		sectionNameESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.SECTION__SECTION_NAME, oldSectionName,
-					sectionName, !oldSectionNameESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetSectionName() {
-		String oldSectionName = sectionName;
-		boolean oldSectionNameESet = sectionNameESet;
-		sectionName = SECTION_NAME_EDEFAULT;
-		sectionNameESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.SECTION__SECTION_NAME, oldSectionName,
-					SECTION_NAME_EDEFAULT, oldSectionNameESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetSectionName() {
-		return sectionNameESet;
+					sectionName));
 	}
 
 	/**
@@ -214,39 +169,10 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	public void setSectionDescription(String newSectionDescription) {
 		String oldSectionDescription = sectionDescription;
 		sectionDescription = newSectionDescription;
-		boolean oldSectionDescriptionESet = sectionDescriptionESet;
-		sectionDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.SECTION__SECTION_DESCRIPTION,
-					oldSectionDescription, sectionDescription,
-					!oldSectionDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetSectionDescription() {
-		String oldSectionDescription = sectionDescription;
-		boolean oldSectionDescriptionESet = sectionDescriptionESet;
-		sectionDescription = SECTION_DESCRIPTION_EDEFAULT;
-		sectionDescriptionESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.SECTION__SECTION_DESCRIPTION,
-					oldSectionDescription, SECTION_DESCRIPTION_EDEFAULT,
-					oldSectionDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetSectionDescription() {
-		return sectionDescriptionESet;
+					oldSectionDescription, sectionDescription));
 	}
 
 	/**
@@ -377,10 +303,10 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.SECTION__SECTION_NAME:
-			unsetSectionName();
+			setSectionName(SECTION_NAME_EDEFAULT);
 			return;
 		case UmaPackage.SECTION__SECTION_DESCRIPTION:
-			unsetSectionDescription();
+			setSectionDescription(SECTION_DESCRIPTION_EDEFAULT);
 			return;
 		case UmaPackage.SECTION__SUB_SECTIONS:
 			getSubSections().clear();
@@ -401,9 +327,11 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.SECTION__SECTION_NAME:
-			return isSetSectionName();
+			return SECTION_NAME_EDEFAULT == null ? sectionName != null
+					: !SECTION_NAME_EDEFAULT.equals(sectionName);
 		case UmaPackage.SECTION__SECTION_DESCRIPTION:
-			return isSetSectionDescription();
+			return SECTION_DESCRIPTION_EDEFAULT == null ? sectionDescription != null
+					: !SECTION_DESCRIPTION_EDEFAULT.equals(sectionDescription);
 		case UmaPackage.SECTION__SUB_SECTIONS:
 			return subSections != null && !subSections.isEmpty();
 		case UmaPackage.SECTION__PREDECESSOR:
@@ -424,15 +352,9 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (sectionName: "); //$NON-NLS-1$
-		if (sectionNameESet)
-			result.append(sectionName);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(sectionName);
 		result.append(", sectionDescription: "); //$NON-NLS-1$
-		if (sectionDescriptionESet)
-			result.append(sectionDescription);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(sectionDescription);
 		result.append(')');
 		return result.toString();
 	}

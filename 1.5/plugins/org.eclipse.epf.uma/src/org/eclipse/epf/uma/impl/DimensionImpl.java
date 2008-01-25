@@ -61,15 +61,6 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	protected Double width = WIDTH_EDEFAULT;
 
 	/**
-	 * This is true if the Width attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean widthESet;
-
-	/**
 	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -88,15 +79,6 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 * @ordered
 	 */
 	protected Double height = HEIGHT_EDEFAULT;
-
-	/**
-	 * This is true if the Height attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean heightESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,36 +116,9 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	public void setWidth(Double newWidth) {
 		Double oldWidth = width;
 		width = newWidth;
-		boolean oldWidthESet = widthESet;
-		widthESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.DIMENSION__WIDTH, oldWidth, width, !oldWidthESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetWidth() {
-		Double oldWidth = width;
-		boolean oldWidthESet = widthESet;
-		width = WIDTH_EDEFAULT;
-		widthESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DIMENSION__WIDTH, oldWidth, WIDTH_EDEFAULT,
-					oldWidthESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetWidth() {
-		return widthESet;
+					UmaPackage.DIMENSION__WIDTH, oldWidth, width));
 	}
 
 	/**
@@ -183,37 +138,9 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	public void setHeight(Double newHeight) {
 		Double oldHeight = height;
 		height = newHeight;
-		boolean oldHeightESet = heightESet;
-		heightESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.DIMENSION__HEIGHT, oldHeight, height,
-					!oldHeightESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetHeight() {
-		Double oldHeight = height;
-		boolean oldHeightESet = heightESet;
-		height = HEIGHT_EDEFAULT;
-		heightESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DIMENSION__HEIGHT, oldHeight, HEIGHT_EDEFAULT,
-					oldHeightESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetHeight() {
-		return heightESet;
+					UmaPackage.DIMENSION__HEIGHT, oldHeight, height));
 	}
 
 	/**
@@ -259,10 +186,10 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIMENSION__WIDTH:
-			unsetWidth();
+			setWidth(WIDTH_EDEFAULT);
 			return;
 		case UmaPackage.DIMENSION__HEIGHT:
-			unsetHeight();
+			setHeight(HEIGHT_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -277,9 +204,11 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DIMENSION__WIDTH:
-			return isSetWidth();
+			return WIDTH_EDEFAULT == null ? width != null : !WIDTH_EDEFAULT
+					.equals(width);
 		case UmaPackage.DIMENSION__HEIGHT:
-			return isSetHeight();
+			return HEIGHT_EDEFAULT == null ? height != null : !HEIGHT_EDEFAULT
+					.equals(height);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -296,15 +225,9 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (width: "); //$NON-NLS-1$
-		if (widthESet)
-			result.append(width);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(width);
 		result.append(", height: "); //$NON-NLS-1$
-		if (heightESet)
-			result.append(height);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(height);
 		result.append(')');
 		return result.toString();
 	}

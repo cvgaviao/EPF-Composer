@@ -36,11 +36,9 @@ public interface GuidanceDescription extends ContentDescription {
 	 * This field is primarily used for attachments augmenting the information provided for guidance.  In particular the attribute is used for Templates, Examples, and Reusable Assets to contain the actual attachment described in the mainDescription.  It can additionally contain representations of the guidance in just a third party format, e.g. PDF, MS Word, or Word Perfect.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Attachments</em>' attribute.
-	 * @see #isSetAttachments()
-	 * @see #unsetAttachments()
 	 * @see #setAttachments(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getGuidanceDescription_Attachments()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getAttachments();
@@ -50,34 +48,9 @@ public interface GuidanceDescription extends ContentDescription {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Attachments</em>' attribute.
-	 * @see #isSetAttachments()
-	 * @see #unsetAttachments()
 	 * @see #getAttachments()
 	 * @generated
 	 */
 	void setAttachments(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.GuidanceDescription#getAttachments <em>Attachments</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetAttachments()
-	 * @see #getAttachments()
-	 * @see #setAttachments(String)
-	 * @generated
-	 */
-	void unsetAttachments();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.GuidanceDescription#getAttachments <em>Attachments</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Attachments</em>' attribute is set.
-	 * @see #unsetAttachments()
-	 * @see #getAttachments()
-	 * @see #setAttachments(String)
-	 * @generated
-	 */
-	boolean isSetAttachments();
 
 } // GuidanceDescription

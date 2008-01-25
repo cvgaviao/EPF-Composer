@@ -60,15 +60,6 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * This is true if the Name attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean nameESet;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -104,36 +95,9 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
-		boolean oldNameESet = nameESet;
-		nameESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.NAMED_ELEMENT__NAME, oldName, name, !oldNameESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetName() {
-		String oldName = name;
-		boolean oldNameESet = nameESet;
-		name = NAME_EDEFAULT;
-		nameESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.NAMED_ELEMENT__NAME, oldName, NAME_EDEFAULT,
-					oldNameESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetName() {
-		return nameESet;
+					UmaPackage.NAMED_ELEMENT__NAME, oldName, name));
 	}
 
 	/**
@@ -174,7 +138,7 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.NAMED_ELEMENT__NAME:
-			unsetName();
+			setName(NAME_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -189,7 +153,8 @@ public abstract class NamedElementImpl extends ElementImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.NAMED_ELEMENT__NAME:
-			return isSetName();
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
+					.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -206,10 +171,7 @@ public abstract class NamedElementImpl extends ElementImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
-		if (nameESet)
-			result.append(name);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(name);
 		result.append(')');
 		return result.toString();
 	}

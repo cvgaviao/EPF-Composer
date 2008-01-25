@@ -96,15 +96,6 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	protected String prefix = PREFIX_EDEFAULT;
 
 	/**
-	 * This is true if the Prefix attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean prefixESet;
-
-	/**
 	 * The default value of the '{@link #getIsPlanned() <em>Is Planned</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -123,15 +114,6 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @ordered
 	 */
 	protected Boolean isPlanned = IS_PLANNED_EDEFAULT;
-
-	/**
-	 * This is true if the Is Planned attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isPlannedESet;
 
 	/**
 	 * The default value of the '{@link #getHasMultipleOccurrences() <em>Has Multiple Occurrences</em>}' attribute.
@@ -154,15 +136,6 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	protected Boolean hasMultipleOccurrences = HAS_MULTIPLE_OCCURRENCES_EDEFAULT;
 
 	/**
-	 * This is true if the Has Multiple Occurrences attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean hasMultipleOccurrencesESet;
-
-	/**
 	 * The default value of the '{@link #getIsOptional() <em>Is Optional</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -181,15 +154,6 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 * @ordered
 	 */
 	protected Boolean isOptional = IS_OPTIONAL_EDEFAULT;
-
-	/**
-	 * This is true if the Is Optional attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isOptionalESet;
 
 	/**
 	 * The cached value of the '{@link #getPresentedAfter() <em>Presented After</em>}' reference.
@@ -367,37 +331,9 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setPrefix(String newPrefix) {
 		String oldPrefix = prefix;
 		prefix = newPrefix;
-		boolean oldPrefixESet = prefixESet;
-		prefixESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.BREAKDOWN_ELEMENT__PREFIX, oldPrefix, prefix,
-					!oldPrefixESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetPrefix() {
-		String oldPrefix = prefix;
-		boolean oldPrefixESet = prefixESet;
-		prefix = PREFIX_EDEFAULT;
-		prefixESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.BREAKDOWN_ELEMENT__PREFIX, oldPrefix,
-					PREFIX_EDEFAULT, oldPrefixESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetPrefix() {
-		return prefixESet;
+					UmaPackage.BREAKDOWN_ELEMENT__PREFIX, oldPrefix, prefix));
 	}
 
 	/**
@@ -417,37 +353,10 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setIsPlanned(Boolean newIsPlanned) {
 		Boolean oldIsPlanned = isPlanned;
 		isPlanned = newIsPlanned;
-		boolean oldIsPlannedESet = isPlannedESet;
-		isPlannedESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED, oldIsPlanned,
-					isPlanned, !oldIsPlannedESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsPlanned() {
-		Boolean oldIsPlanned = isPlanned;
-		boolean oldIsPlannedESet = isPlannedESet;
-		isPlanned = IS_PLANNED_EDEFAULT;
-		isPlannedESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED, oldIsPlanned,
-					IS_PLANNED_EDEFAULT, oldIsPlannedESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsPlanned() {
-		return isPlannedESet;
+					isPlanned));
 	}
 
 	/**
@@ -467,40 +376,10 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setHasMultipleOccurrences(Boolean newHasMultipleOccurrences) {
 		Boolean oldHasMultipleOccurrences = hasMultipleOccurrences;
 		hasMultipleOccurrences = newHasMultipleOccurrences;
-		boolean oldHasMultipleOccurrencesESet = hasMultipleOccurrencesESet;
-		hasMultipleOccurrencesESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES,
-					oldHasMultipleOccurrences, hasMultipleOccurrences,
-					!oldHasMultipleOccurrencesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetHasMultipleOccurrences() {
-		Boolean oldHasMultipleOccurrences = hasMultipleOccurrences;
-		boolean oldHasMultipleOccurrencesESet = hasMultipleOccurrencesESet;
-		hasMultipleOccurrences = HAS_MULTIPLE_OCCURRENCES_EDEFAULT;
-		hasMultipleOccurrencesESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES,
-					oldHasMultipleOccurrences,
-					HAS_MULTIPLE_OCCURRENCES_EDEFAULT,
-					oldHasMultipleOccurrencesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetHasMultipleOccurrences() {
-		return hasMultipleOccurrencesESet;
+					oldHasMultipleOccurrences, hasMultipleOccurrences));
 	}
 
 	/**
@@ -520,37 +399,10 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void setIsOptional(Boolean newIsOptional) {
 		Boolean oldIsOptional = isOptional;
 		isOptional = newIsOptional;
-		boolean oldIsOptionalESet = isOptionalESet;
-		isOptionalESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL, oldIsOptional,
-					isOptional, !oldIsOptionalESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsOptional() {
-		Boolean oldIsOptional = isOptional;
-		boolean oldIsOptionalESet = isOptionalESet;
-		isOptional = IS_OPTIONAL_EDEFAULT;
-		isOptionalESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL, oldIsOptional,
-					IS_OPTIONAL_EDEFAULT, oldIsOptionalESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsOptional() {
-		return isOptionalESet;
+					isOptional));
 	}
 
 	/**
@@ -1119,16 +971,16 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT__PREFIX:
-			unsetPrefix();
+			setPrefix(PREFIX_EDEFAULT);
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED:
-			unsetIsPlanned();
+			setIsPlanned(IS_PLANNED_EDEFAULT);
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES:
-			unsetHasMultipleOccurrences();
+			setHasMultipleOccurrences(HAS_MULTIPLE_OCCURRENCES_EDEFAULT);
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL:
-			unsetIsOptional();
+			setIsOptional(IS_OPTIONAL_EDEFAULT);
 			return;
 		case UmaPackage.BREAKDOWN_ELEMENT__PRESENTED_AFTER:
 			setPresentedAfter((BreakdownElement) null);
@@ -1185,13 +1037,18 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT__PREFIX:
-			return isSetPrefix();
+			return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT
+					.equals(prefix);
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_PLANNED:
-			return isSetIsPlanned();
+			return IS_PLANNED_EDEFAULT == null ? isPlanned != null
+					: !IS_PLANNED_EDEFAULT.equals(isPlanned);
 		case UmaPackage.BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES:
-			return isSetHasMultipleOccurrences();
+			return HAS_MULTIPLE_OCCURRENCES_EDEFAULT == null ? hasMultipleOccurrences != null
+					: !HAS_MULTIPLE_OCCURRENCES_EDEFAULT
+							.equals(hasMultipleOccurrences);
 		case UmaPackage.BREAKDOWN_ELEMENT__IS_OPTIONAL:
-			return isSetIsOptional();
+			return IS_OPTIONAL_EDEFAULT == null ? isOptional != null
+					: !IS_OPTIONAL_EDEFAULT.equals(isOptional);
 		case UmaPackage.BREAKDOWN_ELEMENT__PRESENTED_AFTER:
 			return presentedAfter != null;
 		case UmaPackage.BREAKDOWN_ELEMENT__PRESENTED_BEFORE:
@@ -1238,25 +1095,13 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (prefix: "); //$NON-NLS-1$
-		if (prefixESet)
-			result.append(prefix);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(prefix);
 		result.append(", isPlanned: "); //$NON-NLS-1$
-		if (isPlannedESet)
-			result.append(isPlanned);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isPlanned);
 		result.append(", hasMultipleOccurrences: "); //$NON-NLS-1$
-		if (hasMultipleOccurrencesESet)
-			result.append(hasMultipleOccurrences);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(hasMultipleOccurrences);
 		result.append(", isOptional: "); //$NON-NLS-1$
-		if (isOptionalESet)
-			result.append(isOptional);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isOptional);
 		result.append(')');
 		return result.toString();
 	}

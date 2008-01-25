@@ -63,6 +63,7 @@ public class ContentDescriptionItemProvider extends MethodUnitItemProvider
 			addMainDescriptionPropertyDescriptor(object);
 			addExternalIdPropertyDescriptor(object);
 			addKeyConsiderationsPropertyDescriptor(object);
+			addLongPresentationNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -123,6 +124,26 @@ public class ContentDescriptionItemProvider extends MethodUnitItemProvider
 						getString(
 								"_UI_PropertyDescriptor_description", "_UI_ContentDescription_keyConsiderations_feature", "_UI_ContentDescription_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS,
+						true, false, false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Long Presentation Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addLongPresentationNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_ContentDescription_longPresentationName_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_ContentDescription_longPresentationName_feature", "_UI_ContentDescription_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME,
 						true, false, false,
 						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
@@ -199,6 +220,7 @@ public class ContentDescriptionItemProvider extends MethodUnitItemProvider
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
 		case UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID:
 		case UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS:
+		case UmaPackage.CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME:
 			fireNotifyChanged(new ViewerNotification(notification, notification
 					.getNotifier(), false, true));
 			return;

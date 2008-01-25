@@ -64,15 +64,6 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	protected Date startDate = START_DATE_EDEFAULT;
 
 	/**
-	 * This is true if the Start Date attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean startDateESet;
-
-	/**
 	 * The default value of the '{@link #getFinishDate() <em>Finish Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -93,15 +84,6 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	protected Date finishDate = FINISH_DATE_EDEFAULT;
 
 	/**
-	 * This is true if the Finish Date attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean finishDateESet;
-
-	/**
 	 * The default value of the '{@link #getRank() <em>Rank</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,15 +102,6 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	 * @ordered
 	 */
 	protected int rank = RANK_EDEFAULT;
-
-	/**
-	 * This is true if the Rank attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean rankESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -166,37 +139,10 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	public void setStartDate(Date newStartDate) {
 		Date oldStartDate = startDate;
 		startDate = newStartDate;
-		boolean oldStartDateESet = startDateESet;
-		startDateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.PLANNING_DATA__START_DATE, oldStartDate,
-					startDate, !oldStartDateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetStartDate() {
-		Date oldStartDate = startDate;
-		boolean oldStartDateESet = startDateESet;
-		startDate = START_DATE_EDEFAULT;
-		startDateESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PLANNING_DATA__START_DATE, oldStartDate,
-					START_DATE_EDEFAULT, oldStartDateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetStartDate() {
-		return startDateESet;
+					startDate));
 	}
 
 	/**
@@ -216,37 +162,10 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	public void setFinishDate(Date newFinishDate) {
 		Date oldFinishDate = finishDate;
 		finishDate = newFinishDate;
-		boolean oldFinishDateESet = finishDateESet;
-		finishDateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.PLANNING_DATA__FINISH_DATE, oldFinishDate,
-					finishDate, !oldFinishDateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetFinishDate() {
-		Date oldFinishDate = finishDate;
-		boolean oldFinishDateESet = finishDateESet;
-		finishDate = FINISH_DATE_EDEFAULT;
-		finishDateESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PLANNING_DATA__FINISH_DATE, oldFinishDate,
-					FINISH_DATE_EDEFAULT, oldFinishDateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetFinishDate() {
-		return finishDateESet;
+					finishDate));
 	}
 
 	/**
@@ -266,36 +185,9 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	public void setRank(int newRank) {
 		int oldRank = rank;
 		rank = newRank;
-		boolean oldRankESet = rankESet;
-		rankESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.PLANNING_DATA__RANK, oldRank, rank, !oldRankESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRank() {
-		int oldRank = rank;
-		boolean oldRankESet = rankESet;
-		rank = RANK_EDEFAULT;
-		rankESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PLANNING_DATA__RANK, oldRank, RANK_EDEFAULT,
-					oldRankESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRank() {
-		return rankESet;
+					UmaPackage.PLANNING_DATA__RANK, oldRank, rank));
 	}
 
 	/**
@@ -346,13 +238,13 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PLANNING_DATA__START_DATE:
-			unsetStartDate();
+			setStartDate(START_DATE_EDEFAULT);
 			return;
 		case UmaPackage.PLANNING_DATA__FINISH_DATE:
-			unsetFinishDate();
+			setFinishDate(FINISH_DATE_EDEFAULT);
 			return;
 		case UmaPackage.PLANNING_DATA__RANK:
-			unsetRank();
+			setRank(RANK_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -367,11 +259,13 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PLANNING_DATA__START_DATE:
-			return isSetStartDate();
+			return START_DATE_EDEFAULT == null ? startDate != null
+					: !START_DATE_EDEFAULT.equals(startDate);
 		case UmaPackage.PLANNING_DATA__FINISH_DATE:
-			return isSetFinishDate();
+			return FINISH_DATE_EDEFAULT == null ? finishDate != null
+					: !FINISH_DATE_EDEFAULT.equals(finishDate);
 		case UmaPackage.PLANNING_DATA__RANK:
-			return isSetRank();
+			return rank != RANK_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -388,20 +282,11 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (startDate: "); //$NON-NLS-1$
-		if (startDateESet)
-			result.append(startDate);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(startDate);
 		result.append(", finishDate: "); //$NON-NLS-1$
-		if (finishDateESet)
-			result.append(finishDate);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(finishDate);
 		result.append(", rank: "); //$NON-NLS-1$
-		if (rankESet)
-			result.append(rank);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(rank);
 		result.append(')');
 		return result.toString();
 	}

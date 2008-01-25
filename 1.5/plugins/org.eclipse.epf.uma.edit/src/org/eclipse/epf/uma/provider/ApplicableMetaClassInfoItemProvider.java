@@ -18,7 +18,6 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -29,18 +28,17 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.epf.uma.Kind;
-import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.ApplicableMetaClassInfo;
 import org.eclipse.epf.uma.UmaPackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.epf.uma.Kind} object.
+ * This is the item provider adapter for a {@link org.eclipse.epf.uma.ApplicableMetaClassInfo} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class KindItemProvider extends ContentElementItemProvider implements
-		IEditingDomainItemProvider, IStructuredItemContentProvider,
+public class ApplicableMetaClassInfoItemProvider extends ClassifierItemProvider
+		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
 		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -48,7 +46,7 @@ public class KindItemProvider extends ContentElementItemProvider implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public KindItemProvider(AdapterFactory adapterFactory) {
+	public ApplicableMetaClassInfoItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,44 +61,33 @@ public class KindItemProvider extends ContentElementItemProvider implements
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addIsPrimaryExtensionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * This adds a property descriptor for the Is Primary Extension feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(
-			Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures
-					.add(UmaPackage.Literals.KIND__APPLICABLE_META_CLASS_INFO);
-		}
-		return childrenFeatures;
+	protected void addIsPrimaryExtensionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_ApplicableMetaClassInfo_isPrimaryExtension_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_ApplicableMetaClassInfo_isPrimaryExtension_feature", "_UI_ApplicableMetaClassInfo_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION,
+						true, false, false,
+						ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns Kind.gif.
+	 * This returns ApplicableMetaClassInfo.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -108,7 +95,7 @@ public class KindItemProvider extends ContentElementItemProvider implements
 	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage(
-				"full/obj16/Kind")); //$NON-NLS-1$
+				"full/obj16/ApplicableMetaClassInfo")); //$NON-NLS-1$
 	}
 
 	/**
@@ -119,9 +106,9 @@ public class KindItemProvider extends ContentElementItemProvider implements
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Kind) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_Kind_type") : //$NON-NLS-1$
-				getString("_UI_Kind_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		String label = ((ApplicableMetaClassInfo) object).getName();
+		return label == null || label.length() == 0 ? getString("_UI_ApplicableMetaClassInfo_type") : //$NON-NLS-1$
+				getString("_UI_ApplicableMetaClassInfo_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -135,10 +122,10 @@ public class KindItemProvider extends ContentElementItemProvider implements
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Kind.class)) {
-		case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+		switch (notification.getFeatureID(ApplicableMetaClassInfo.class)) {
+		case UmaPackage.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION:
 			fireNotifyChanged(new ViewerNotification(notification, notification
-					.getNotifier(), true, false));
+					.getNotifier(), false, true));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -155,10 +142,6 @@ public class KindItemProvider extends ContentElementItemProvider implements
 	protected void collectNewChildDescriptors(
 			Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add(createChildParameter(
-				UmaPackage.Literals.KIND__APPLICABLE_META_CLASS_INFO,
-				UmaFactory.eINSTANCE.createApplicableMetaClassInfo()));
 	}
 
 	/**

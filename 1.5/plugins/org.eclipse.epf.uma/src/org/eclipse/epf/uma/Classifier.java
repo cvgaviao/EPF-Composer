@@ -42,11 +42,9 @@ public interface Classifier extends Type {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Abstract</em>' attribute.
-	 * @see #isSetIsAbstract()
-	 * @see #unsetIsAbstract()
 	 * @see #setIsAbstract(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getClassifier_IsAbstract()
-	 * @model default="false" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsAbstract();
@@ -56,33 +54,8 @@ public interface Classifier extends Type {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Abstract</em>' attribute.
-	 * @see #isSetIsAbstract()
-	 * @see #unsetIsAbstract()
 	 * @see #getIsAbstract()
 	 * @generated
 	 */
 	void setIsAbstract(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Classifier#getIsAbstract <em>Is Abstract</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsAbstract()
-	 * @see #getIsAbstract()
-	 * @see #setIsAbstract(Boolean)
-	 * @generated
-	 */
-	void unsetIsAbstract();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Classifier#getIsAbstract <em>Is Abstract</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Abstract</em>' attribute is set.
-	 * @see #unsetIsAbstract()
-	 * @see #getIsAbstract()
-	 * @see #setIsAbstract(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsAbstract();
 } // Classifier

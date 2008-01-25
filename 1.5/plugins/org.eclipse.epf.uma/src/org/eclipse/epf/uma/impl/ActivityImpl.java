@@ -98,15 +98,6 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	protected VariabilityType variabilityType = VARIABILITY_TYPE_EDEFAULT;
 
 	/**
-	 * This is true if the Variability Type attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean variabilityTypeESet;
-
-	/**
 	 * The cached value of the '{@link #getVariabilityBasedOnElement() <em>Variability Based On Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -207,37 +198,10 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 		VariabilityType oldVariabilityType = variabilityType;
 		variabilityType = newVariabilityType == null ? VARIABILITY_TYPE_EDEFAULT
 				: newVariabilityType;
-		boolean oldVariabilityTypeESet = variabilityTypeESet;
-		variabilityTypeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ACTIVITY__VARIABILITY_TYPE, oldVariabilityType,
-					variabilityType, !oldVariabilityTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetVariabilityType() {
-		VariabilityType oldVariabilityType = variabilityType;
-		boolean oldVariabilityTypeESet = variabilityTypeESet;
-		variabilityType = VARIABILITY_TYPE_EDEFAULT;
-		variabilityTypeESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ACTIVITY__VARIABILITY_TYPE, oldVariabilityType,
-					VARIABILITY_TYPE_EDEFAULT, oldVariabilityTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetVariabilityType() {
-		return variabilityTypeESet;
+					variabilityType));
 	}
 
 	/**
@@ -608,7 +572,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 			getFulfills().clear();
 			return;
 		case UmaPackage.ACTIVITY__VARIABILITY_TYPE:
-			unsetVariabilityType();
+			setVariabilityType(VARIABILITY_TYPE_EDEFAULT);
 			return;
 		case UmaPackage.ACTIVITY__VARIABILITY_BASED_ON_ELEMENT:
 			setVariabilityBasedOnElement((VariabilityElement) null);
@@ -640,7 +604,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 		case UmaPackage.ACTIVITY__FULFILLS:
 			return fulfills != null && !fulfills.isEmpty();
 		case UmaPackage.ACTIVITY__VARIABILITY_TYPE:
-			return isSetVariabilityType();
+			return variabilityType != VARIABILITY_TYPE_EDEFAULT;
 		case UmaPackage.ACTIVITY__VARIABILITY_BASED_ON_ELEMENT:
 			return variabilityBasedOnElement != null;
 		case UmaPackage.ACTIVITY__PRECONDITION:
@@ -743,10 +707,7 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (variabilityType: "); //$NON-NLS-1$
-		if (variabilityTypeESet)
-			result.append(variabilityType);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(variabilityType);
 		result.append(')');
 		return result.toString();
 	}

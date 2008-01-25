@@ -78,15 +78,6 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	protected Double radiusX = RADIUS_X_EDEFAULT;
 
 	/**
-	 * This is true if the Radius X attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean radiusXESet;
-
-	/**
 	 * The default value of the '{@link #getRadiusY() <em>Radius Y</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -105,15 +96,6 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * @ordered
 	 */
 	protected Double radiusY = RADIUS_Y_EDEFAULT;
-
-	/**
-	 * This is true if the Radius Y attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean radiusYESet;
 
 	/**
 	 * The default value of the '{@link #getRotation() <em>Rotation</em>}' attribute.
@@ -136,15 +118,6 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	protected Double rotation = ROTATION_EDEFAULT;
 
 	/**
-	 * This is true if the Rotation attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean rotationESet;
-
-	/**
 	 * The default value of the '{@link #getStartAngle() <em>Start Angle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -165,15 +138,6 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	protected Double startAngle = START_ANGLE_EDEFAULT;
 
 	/**
-	 * This is true if the Start Angle attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean startAngleESet;
-
-	/**
 	 * The default value of the '{@link #getEndAngle() <em>End Angle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -192,15 +156,6 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	 * @ordered
 	 */
 	protected Double endAngle = END_ANGLE_EDEFAULT;
-
-	/**
-	 * This is true if the End Angle attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean endAngleESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -238,37 +193,9 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	public void setRadiusX(Double newRadiusX) {
 		Double oldRadiusX = radiusX;
 		radiusX = newRadiusX;
-		boolean oldRadiusXESet = radiusXESet;
-		radiusXESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.ELLIPSE__RADIUS_X, oldRadiusX, radiusX,
-					!oldRadiusXESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRadiusX() {
-		Double oldRadiusX = radiusX;
-		boolean oldRadiusXESet = radiusXESet;
-		radiusX = RADIUS_X_EDEFAULT;
-		radiusXESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ELLIPSE__RADIUS_X, oldRadiusX,
-					RADIUS_X_EDEFAULT, oldRadiusXESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRadiusX() {
-		return radiusXESet;
+					UmaPackage.ELLIPSE__RADIUS_X, oldRadiusX, radiusX));
 	}
 
 	/**
@@ -288,37 +215,9 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	public void setRadiusY(Double newRadiusY) {
 		Double oldRadiusY = radiusY;
 		radiusY = newRadiusY;
-		boolean oldRadiusYESet = radiusYESet;
-		radiusYESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.ELLIPSE__RADIUS_Y, oldRadiusY, radiusY,
-					!oldRadiusYESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRadiusY() {
-		Double oldRadiusY = radiusY;
-		boolean oldRadiusYESet = radiusYESet;
-		radiusY = RADIUS_Y_EDEFAULT;
-		radiusYESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ELLIPSE__RADIUS_Y, oldRadiusY,
-					RADIUS_Y_EDEFAULT, oldRadiusYESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRadiusY() {
-		return radiusYESet;
+					UmaPackage.ELLIPSE__RADIUS_Y, oldRadiusY, radiusY));
 	}
 
 	/**
@@ -338,37 +237,9 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	public void setRotation(Double newRotation) {
 		Double oldRotation = rotation;
 		rotation = newRotation;
-		boolean oldRotationESet = rotationESet;
-		rotationESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.ELLIPSE__ROTATION, oldRotation, rotation,
-					!oldRotationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRotation() {
-		Double oldRotation = rotation;
-		boolean oldRotationESet = rotationESet;
-		rotation = ROTATION_EDEFAULT;
-		rotationESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ELLIPSE__ROTATION, oldRotation,
-					ROTATION_EDEFAULT, oldRotationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRotation() {
-		return rotationESet;
+					UmaPackage.ELLIPSE__ROTATION, oldRotation, rotation));
 	}
 
 	/**
@@ -388,37 +259,9 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	public void setStartAngle(Double newStartAngle) {
 		Double oldStartAngle = startAngle;
 		startAngle = newStartAngle;
-		boolean oldStartAngleESet = startAngleESet;
-		startAngleESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.ELLIPSE__START_ANGLE, oldStartAngle, startAngle,
-					!oldStartAngleESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetStartAngle() {
-		Double oldStartAngle = startAngle;
-		boolean oldStartAngleESet = startAngleESet;
-		startAngle = START_ANGLE_EDEFAULT;
-		startAngleESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ELLIPSE__START_ANGLE, oldStartAngle,
-					START_ANGLE_EDEFAULT, oldStartAngleESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetStartAngle() {
-		return startAngleESet;
+					UmaPackage.ELLIPSE__START_ANGLE, oldStartAngle, startAngle));
 	}
 
 	/**
@@ -438,37 +281,9 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 	public void setEndAngle(Double newEndAngle) {
 		Double oldEndAngle = endAngle;
 		endAngle = newEndAngle;
-		boolean oldEndAngleESet = endAngleESet;
-		endAngleESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.ELLIPSE__END_ANGLE, oldEndAngle, endAngle,
-					!oldEndAngleESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetEndAngle() {
-		Double oldEndAngle = endAngle;
-		boolean oldEndAngleESet = endAngleESet;
-		endAngle = END_ANGLE_EDEFAULT;
-		endAngleESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ELLIPSE__END_ANGLE, oldEndAngle,
-					END_ANGLE_EDEFAULT, oldEndAngleESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetEndAngle() {
-		return endAngleESet;
+					UmaPackage.ELLIPSE__END_ANGLE, oldEndAngle, endAngle));
 	}
 
 	/**
@@ -579,19 +394,19 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 			setCenter((Point) null);
 			return;
 		case UmaPackage.ELLIPSE__RADIUS_X:
-			unsetRadiusX();
+			setRadiusX(RADIUS_X_EDEFAULT);
 			return;
 		case UmaPackage.ELLIPSE__RADIUS_Y:
-			unsetRadiusY();
+			setRadiusY(RADIUS_Y_EDEFAULT);
 			return;
 		case UmaPackage.ELLIPSE__ROTATION:
-			unsetRotation();
+			setRotation(ROTATION_EDEFAULT);
 			return;
 		case UmaPackage.ELLIPSE__START_ANGLE:
-			unsetStartAngle();
+			setStartAngle(START_ANGLE_EDEFAULT);
 			return;
 		case UmaPackage.ELLIPSE__END_ANGLE:
-			unsetEndAngle();
+			setEndAngle(END_ANGLE_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -608,15 +423,20 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 		case UmaPackage.ELLIPSE__CENTER:
 			return center != null;
 		case UmaPackage.ELLIPSE__RADIUS_X:
-			return isSetRadiusX();
+			return RADIUS_X_EDEFAULT == null ? radiusX != null
+					: !RADIUS_X_EDEFAULT.equals(radiusX);
 		case UmaPackage.ELLIPSE__RADIUS_Y:
-			return isSetRadiusY();
+			return RADIUS_Y_EDEFAULT == null ? radiusY != null
+					: !RADIUS_Y_EDEFAULT.equals(radiusY);
 		case UmaPackage.ELLIPSE__ROTATION:
-			return isSetRotation();
+			return ROTATION_EDEFAULT == null ? rotation != null
+					: !ROTATION_EDEFAULT.equals(rotation);
 		case UmaPackage.ELLIPSE__START_ANGLE:
-			return isSetStartAngle();
+			return START_ANGLE_EDEFAULT == null ? startAngle != null
+					: !START_ANGLE_EDEFAULT.equals(startAngle);
 		case UmaPackage.ELLIPSE__END_ANGLE:
-			return isSetEndAngle();
+			return END_ANGLE_EDEFAULT == null ? endAngle != null
+					: !END_ANGLE_EDEFAULT.equals(endAngle);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -633,30 +453,15 @@ public class EllipseImpl extends GraphicPrimitiveImpl implements Ellipse {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (radiusX: "); //$NON-NLS-1$
-		if (radiusXESet)
-			result.append(radiusX);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(radiusX);
 		result.append(", radiusY: "); //$NON-NLS-1$
-		if (radiusYESet)
-			result.append(radiusY);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(radiusY);
 		result.append(", rotation: "); //$NON-NLS-1$
-		if (rotationESet)
-			result.append(rotation);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(rotation);
 		result.append(", startAngle: "); //$NON-NLS-1$
-		if (startAngleESet)
-			result.append(startAngle);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(startAngle);
 		result.append(", endAngle: "); //$NON-NLS-1$
-		if (endAngleESet)
-			result.append(endAngle);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(endAngle);
 		result.append(')');
 		return result.toString();
 	}

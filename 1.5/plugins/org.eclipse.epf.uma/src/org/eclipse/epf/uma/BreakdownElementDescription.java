@@ -36,11 +36,9 @@ public interface BreakdownElementDescription extends ContentDescription {
 	 * Provides information and guidance on the meaning of the Boolean flag values and under what circumstances they should be overridden. For example, it describes why the breakdown element is optional or considerations for repeating it and differences in the individual occurrences of this Breakdown Element across the lifecycle.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Usage Guidance</em>' attribute.
-	 * @see #isSetUsageGuidance()
-	 * @see #unsetUsageGuidance()
 	 * @see #setUsageGuidance(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElementDescription_UsageGuidance()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getUsageGuidance();
@@ -50,34 +48,9 @@ public interface BreakdownElementDescription extends ContentDescription {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Usage Guidance</em>' attribute.
-	 * @see #isSetUsageGuidance()
-	 * @see #unsetUsageGuidance()
 	 * @see #getUsageGuidance()
 	 * @generated
 	 */
 	void setUsageGuidance(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.BreakdownElementDescription#getUsageGuidance <em>Usage Guidance</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetUsageGuidance()
-	 * @see #getUsageGuidance()
-	 * @see #setUsageGuidance(String)
-	 * @generated
-	 */
-	void unsetUsageGuidance();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.BreakdownElementDescription#getUsageGuidance <em>Usage Guidance</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Usage Guidance</em>' attribute is set.
-	 * @see #unsetUsageGuidance()
-	 * @see #getUsageGuidance()
-	 * @see #setUsageGuidance(String)
-	 * @generated
-	 */
-	boolean isSetUsageGuidance();
 
 } // BreakdownElementDescription

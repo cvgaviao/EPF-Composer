@@ -105,9 +105,9 @@ public class TaskDescriptorItemProvider extends
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_TaskDescriptor_task_feature"), //$NON-NLS-1$
+						getString("_UI_TaskDescriptor_Task_feature"), //$NON-NLS-1$
 						getString(
-								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_task_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								"_UI_PropertyDescriptor_description", "_UI_TaskDescriptor_Task_feature", "_UI_TaskDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.TASK_DESCRIPTOR__TASK, true, false,
 						true, null, null, null));
 	}

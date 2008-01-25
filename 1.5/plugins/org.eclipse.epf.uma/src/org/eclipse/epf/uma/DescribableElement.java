@@ -73,11 +73,9 @@ public interface DescribableElement extends MethodElement, Classifier {
 	 * A reference to an icon that can be used for modeling with specific Content Element instances (as graphical stereotypes, e.g. a use case symbol for a use case artifact) as well as publication of content.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Shapeicon</em>' attribute.
-	 * @see #isSetShapeicon()
-	 * @see #unsetShapeicon()
 	 * @see #setShapeicon(URI)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDescribableElement_Shapeicon()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.Uri" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.Uri" ordered="false"
 	 * @generated
 	 */
 	URI getShapeicon();
@@ -87,35 +85,10 @@ public interface DescribableElement extends MethodElement, Classifier {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Shapeicon</em>' attribute.
-	 * @see #isSetShapeicon()
-	 * @see #unsetShapeicon()
 	 * @see #getShapeicon()
 	 * @generated
 	 */
 	void setShapeicon(URI value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.DescribableElement#getShapeicon <em>Shapeicon</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetShapeicon()
-	 * @see #getShapeicon()
-	 * @see #setShapeicon(URI)
-	 * @generated
-	 */
-	void unsetShapeicon();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.DescribableElement#getShapeicon <em>Shapeicon</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Shapeicon</em>' attribute is set.
-	 * @see #unsetShapeicon()
-	 * @see #getShapeicon()
-	 * @see #setShapeicon(URI)
-	 * @generated
-	 */
-	boolean isSetShapeicon();
 
 	/**
 	 * Returns the value of the '<em><b>Nodeicon</b></em>' attribute.
@@ -126,11 +99,9 @@ public interface DescribableElement extends MethodElement, Classifier {
 	 * A reference to an icon that can be used in tree browser presentations and breakdown structures.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Nodeicon</em>' attribute.
-	 * @see #isSetNodeicon()
-	 * @see #unsetNodeicon()
 	 * @see #setNodeicon(URI)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDescribableElement_Nodeicon()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.Uri" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.Uri" ordered="false"
 	 * @generated
 	 */
 	URI getNodeicon();
@@ -140,34 +111,9 @@ public interface DescribableElement extends MethodElement, Classifier {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Nodeicon</em>' attribute.
-	 * @see #isSetNodeicon()
-	 * @see #unsetNodeicon()
 	 * @see #getNodeicon()
 	 * @generated
 	 */
 	void setNodeicon(URI value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.DescribableElement#getNodeicon <em>Nodeicon</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetNodeicon()
-	 * @see #getNodeicon()
-	 * @see #setNodeicon(URI)
-	 * @generated
-	 */
-	void unsetNodeicon();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.DescribableElement#getNodeicon <em>Nodeicon</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Nodeicon</em>' attribute is set.
-	 * @see #unsetNodeicon()
-	 * @see #getNodeicon()
-	 * @see #setNodeicon(URI)
-	 * @generated
-	 */
-	boolean isSetNodeicon();
 
 } // DescribableElement

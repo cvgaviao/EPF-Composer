@@ -69,15 +69,6 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	protected Boolean isRepeatable = IS_REPEATABLE_EDEFAULT;
 
 	/**
-	 * This is true if the Is Repeatable attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isRepeatableESet;
-
-	/**
 	 * The default value of the '{@link #getIsOngoing() <em>Is Ongoing</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -98,15 +89,6 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	protected Boolean isOngoing = IS_ONGOING_EDEFAULT;
 
 	/**
-	 * This is true if the Is Ongoing attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isOngoingESet;
-
-	/**
 	 * The default value of the '{@link #getIsEventDriven() <em>Is Event Driven</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -125,15 +107,6 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 * @ordered
 	 */
 	protected Boolean isEventDriven = IS_EVENT_DRIVEN_EDEFAULT;
-
-	/**
-	 * This is true if the Is Event Driven attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isEventDrivenESet;
 
 	/**
 	 * The cached value of the '{@link #getLinkToPredecessor() <em>Link To Predecessor</em>}' reference list.
@@ -181,38 +154,10 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public void setIsRepeatable(Boolean newIsRepeatable) {
 		Boolean oldIsRepeatable = isRepeatable;
 		isRepeatable = newIsRepeatable;
-		boolean oldIsRepeatableESet = isRepeatableESet;
-		isRepeatableESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE,
-					oldIsRepeatable, isRepeatable, !oldIsRepeatableESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsRepeatable() {
-		Boolean oldIsRepeatable = isRepeatable;
-		boolean oldIsRepeatableESet = isRepeatableESet;
-		isRepeatable = IS_REPEATABLE_EDEFAULT;
-		isRepeatableESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE,
-					oldIsRepeatable, IS_REPEATABLE_EDEFAULT,
-					oldIsRepeatableESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsRepeatable() {
-		return isRepeatableESet;
+					oldIsRepeatable, isRepeatable));
 	}
 
 	/**
@@ -232,37 +177,10 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public void setIsOngoing(Boolean newIsOngoing) {
 		Boolean oldIsOngoing = isOngoing;
 		isOngoing = newIsOngoing;
-		boolean oldIsOngoingESet = isOngoingESet;
-		isOngoingESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING,
-					oldIsOngoing, isOngoing, !oldIsOngoingESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsOngoing() {
-		Boolean oldIsOngoing = isOngoing;
-		boolean oldIsOngoingESet = isOngoingESet;
-		isOngoing = IS_ONGOING_EDEFAULT;
-		isOngoingESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING,
-					oldIsOngoing, IS_ONGOING_EDEFAULT, oldIsOngoingESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsOngoing() {
-		return isOngoingESet;
+					oldIsOngoing, isOngoing));
 	}
 
 	/**
@@ -282,38 +200,10 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public void setIsEventDriven(Boolean newIsEventDriven) {
 		Boolean oldIsEventDriven = isEventDriven;
 		isEventDriven = newIsEventDriven;
-		boolean oldIsEventDrivenESet = isEventDrivenESet;
-		isEventDrivenESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN,
-					oldIsEventDriven, isEventDriven, !oldIsEventDrivenESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsEventDriven() {
-		Boolean oldIsEventDriven = isEventDriven;
-		boolean oldIsEventDrivenESet = isEventDrivenESet;
-		isEventDriven = IS_EVENT_DRIVEN_EDEFAULT;
-		isEventDrivenESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN,
-					oldIsEventDriven, IS_EVENT_DRIVEN_EDEFAULT,
-					oldIsEventDrivenESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsEventDriven() {
-		return isEventDrivenESet;
+					oldIsEventDriven, isEventDriven));
 	}
 
 	/**
@@ -386,13 +276,13 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE:
-			unsetIsRepeatable();
+			setIsRepeatable(IS_REPEATABLE_EDEFAULT);
 			return;
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING:
-			unsetIsOngoing();
+			setIsOngoing(IS_ONGOING_EDEFAULT);
 			return;
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN:
-			unsetIsEventDriven();
+			setIsEventDriven(IS_EVENT_DRIVEN_EDEFAULT);
 			return;
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR:
 			getLinkToPredecessor().clear();
@@ -410,11 +300,14 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE:
-			return isSetIsRepeatable();
+			return IS_REPEATABLE_EDEFAULT == null ? isRepeatable != null
+					: !IS_REPEATABLE_EDEFAULT.equals(isRepeatable);
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_ONGOING:
-			return isSetIsOngoing();
+			return IS_ONGOING_EDEFAULT == null ? isOngoing != null
+					: !IS_ONGOING_EDEFAULT.equals(isOngoing);
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_EVENT_DRIVEN:
-			return isSetIsEventDriven();
+			return IS_EVENT_DRIVEN_EDEFAULT == null ? isEventDriven != null
+					: !IS_EVENT_DRIVEN_EDEFAULT.equals(isEventDriven);
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR:
 			return linkToPredecessor != null && !linkToPredecessor.isEmpty();
 		}
@@ -433,20 +326,11 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isRepeatable: "); //$NON-NLS-1$
-		if (isRepeatableESet)
-			result.append(isRepeatable);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isRepeatable);
 		result.append(", isOngoing: "); //$NON-NLS-1$
-		if (isOngoingESet)
-			result.append(isOngoing);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isOngoing);
 		result.append(", isEventDriven: "); //$NON-NLS-1$
-		if (isEventDrivenESet)
-			result.append(isEventDriven);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isEventDriven);
 		result.append(')');
 		return result.toString();
 	}

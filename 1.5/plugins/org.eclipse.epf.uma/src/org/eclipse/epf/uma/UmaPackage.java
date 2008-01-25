@@ -29,10 +29,8 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  * <!-- end-user-doc -->
  * <!-- begin-model-doc -->
- * <HTML><HEAD>
- * <META content="MSHTML 6.00.2900.3243" name=GENERATOR></HEAD>
- * <BODY>
- * <P>&nbsp;</P></BODY></HTML>
+ * 06
+ * 05
  * 04
  * 03
  * 01
@@ -1089,13 +1087,13 @@ public interface UmaPackage extends EPackage {
 	int KIND__TERMDEFINITION = CONTENT_ELEMENT__TERMDEFINITION;
 
 	/**
-	 * The feature id for the '<em><b>Applicable Meta Class</b></em>' attribute.
+	 * The feature id for the '<em><b>Applicable Meta Class Info</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int KIND__APPLICABLE_META_CLASS = CONTENT_ELEMENT_FEATURE_COUNT + 0;
+	int KIND__APPLICABLE_META_CLASS_INFO = CONTENT_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Kind</em>' class.
@@ -1424,13 +1422,22 @@ public interface UmaPackage extends EPackage {
 	int CONTENT_DESCRIPTION__KEY_CONSIDERATIONS = METHOD_UNIT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME = METHOD_UNIT_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Content Description</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTENT_DESCRIPTION_FEATURE_COUNT = METHOD_UNIT_FEATURE_COUNT + 4;
+	int CONTENT_DESCRIPTION_FEATURE_COUNT = METHOD_UNIT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.SectionImpl <em>Section</em>}' class.
@@ -1450,7 +1457,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getRole()
 	 * @generated
 	 */
-	int ROLE = 38;
+	int ROLE = 39;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WorkProductImpl <em>Work Product</em>}' class.
@@ -1460,7 +1467,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkProduct()
 	 * @generated
 	 */
-	int WORK_PRODUCT = 26;
+	int WORK_PRODUCT = 27;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TaskImpl <em>Task</em>}' class.
@@ -1470,7 +1477,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTask()
 	 * @generated
 	 */
-	int TASK = 37;
+	int TASK = 38;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WorkDefinitionImpl <em>Work Definition</em>}' class.
@@ -1480,7 +1487,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkDefinition()
 	 * @generated
 	 */
-	int WORK_DEFINITION = 35;
+	int WORK_DEFINITION = 36;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.StepImpl <em>Step</em>}' class.
@@ -1490,7 +1497,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getStep()
 	 * @generated
 	 */
-	int STEP = 34;
+	int STEP = 35;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GuidanceImpl <em>Guidance</em>}' class.
@@ -1717,7 +1724,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getArtifact()
 	 * @generated
 	 */
-	int ARTIFACT = 25;
+	int ARTIFACT = 26;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.FulfillableElementImpl <em>Fulfillable Element</em>}' class.
@@ -1727,7 +1734,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getFulfillableElement()
 	 * @generated
 	 */
-	int FULFILLABLE_ELEMENT = 27;
+	int FULFILLABLE_ELEMENT = 28;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DeliverableImpl <em>Deliverable</em>}' class.
@@ -1737,7 +1744,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDeliverable()
 	 * @generated
 	 */
-	int DELIVERABLE = 32;
+	int DELIVERABLE = 33;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.OutcomeImpl <em>Outcome</em>}' class.
@@ -1747,7 +1754,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getOutcome()
 	 * @generated
 	 */
-	int OUTCOME = 33;
+	int OUTCOME = 34;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.MethodPackageImpl <em>Method Package</em>}' class.
@@ -1757,7 +1764,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getMethodPackage()
 	 * @generated
 	 */
-	int METHOD_PACKAGE = 62;
+	int METHOD_PACKAGE = 63;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ContentPackageImpl <em>Content Package</em>}' class.
@@ -1767,7 +1774,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getContentPackage()
 	 * @generated
 	 */
-	int CONTENT_PACKAGE = 63;
+	int CONTENT_PACKAGE = 64;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WorkProductDescriptionImpl <em>Work Product Description</em>}' class.
@@ -1777,7 +1784,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkProductDescription()
 	 * @generated
 	 */
-	int WORK_PRODUCT_DESCRIPTION = 40;
+	int WORK_PRODUCT_DESCRIPTION = 41;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ArtifactDescriptionImpl <em>Artifact Description</em>}' class.
@@ -1787,7 +1794,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getArtifactDescription()
 	 * @generated
 	 */
-	int ARTIFACT_DESCRIPTION = 39;
+	int ARTIFACT_DESCRIPTION = 40;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DeliverableDescriptionImpl <em>Deliverable Description</em>}' class.
@@ -1797,7 +1804,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDeliverableDescription()
 	 * @generated
 	 */
-	int DELIVERABLE_DESCRIPTION = 41;
+	int DELIVERABLE_DESCRIPTION = 42;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.RoleDescriptionImpl <em>Role Description</em>}' class.
@@ -1807,7 +1814,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getRoleDescription()
 	 * @generated
 	 */
-	int ROLE_DESCRIPTION = 42;
+	int ROLE_DESCRIPTION = 43;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TaskDescriptionImpl <em>Task Description</em>}' class.
@@ -1817,7 +1824,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTaskDescription()
 	 * @generated
 	 */
-	int TASK_DESCRIPTION = 43;
+	int TASK_DESCRIPTION = 44;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GuidanceDescriptionImpl <em>Guidance Description</em>}' class.
@@ -1827,7 +1834,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGuidanceDescription()
 	 * @generated
 	 */
-	int GUIDANCE_DESCRIPTION = 44;
+	int GUIDANCE_DESCRIPTION = 45;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PracticeDescriptionImpl <em>Practice Description</em>}' class.
@@ -1837,7 +1844,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPracticeDescription()
 	 * @generated
 	 */
-	int PRACTICE_DESCRIPTION = 45;
+	int PRACTICE_DESCRIPTION = 46;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessElementImpl <em>Process Element</em>}' class.
@@ -1847,7 +1854,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessElement()
 	 * @generated
 	 */
-	int PROCESS_ELEMENT = 55;
+	int PROCESS_ELEMENT = 56;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.BreakdownElementImpl <em>Breakdown Element</em>}' class.
@@ -1857,7 +1864,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getBreakdownElement()
 	 * @generated
 	 */
-	int BREAKDOWN_ELEMENT = 54;
+	int BREAKDOWN_ELEMENT = 55;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WorkBreakdownElementImpl <em>Work Breakdown Element</em>}' class.
@@ -1867,7 +1874,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkBreakdownElement()
 	 * @generated
 	 */
-	int WORK_BREAKDOWN_ELEMENT = 53;
+	int WORK_BREAKDOWN_ELEMENT = 54;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ActivityImpl <em>Activity</em>}' class.
@@ -1877,7 +1884,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getActivity()
 	 * @generated
 	 */
-	int ACTIVITY = 52;
+	int ACTIVITY = 53;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.MilestoneImpl <em>Milestone</em>}' class.
@@ -1887,7 +1894,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getMilestone()
 	 * @generated
 	 */
-	int MILESTONE = 64;
+	int MILESTONE = 65;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.IterationImpl <em>Iteration</em>}' class.
@@ -1897,7 +1904,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getIteration()
 	 * @generated
 	 */
-	int ITERATION = 67;
+	int ITERATION = 68;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PhaseImpl <em>Phase</em>}' class.
@@ -1907,7 +1914,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPhase()
 	 * @generated
 	 */
-	int PHASE = 68;
+	int PHASE = 69;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TeamProfileImpl <em>Team Profile</em>}' class.
@@ -1917,7 +1924,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTeamProfile()
 	 * @generated
 	 */
-	int TEAM_PROFILE = 69;
+	int TEAM_PROFILE = 70;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DescriptorImpl <em>Descriptor</em>}' class.
@@ -1927,7 +1934,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDescriptor()
 	 * @generated
 	 */
-	int DESCRIPTOR = 66;
+	int DESCRIPTOR = 67;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.RoleDescriptorImpl <em>Role Descriptor</em>}' class.
@@ -1937,7 +1944,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getRoleDescriptor()
 	 * @generated
 	 */
-	int ROLE_DESCRIPTOR = 70;
+	int ROLE_DESCRIPTOR = 71;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WorkOrderImpl <em>Work Order</em>}' class.
@@ -1947,7 +1954,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkOrder()
 	 * @generated
 	 */
-	int WORK_ORDER = 57;
+	int WORK_ORDER = 58;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PlanningDataImpl <em>Planning Data</em>}' class.
@@ -1957,7 +1964,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPlanningData()
 	 * @generated
 	 */
-	int PLANNING_DATA = 56;
+	int PLANNING_DATA = 57;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl <em>Task Descriptor</em>}' class.
@@ -1967,7 +1974,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTaskDescriptor()
 	 * @generated
 	 */
-	int TASK_DESCRIPTOR = 71;
+	int TASK_DESCRIPTOR = 72;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl <em>Work Product Descriptor</em>}' class.
@@ -1977,7 +1984,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkProductDescriptor()
 	 * @generated
 	 */
-	int WORK_PRODUCT_DESCRIPTOR = 65;
+	int WORK_PRODUCT_DESCRIPTOR = 66;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.CompositeRoleImpl <em>Composite Role</em>}' class.
@@ -1987,7 +1994,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getCompositeRole()
 	 * @generated
 	 */
-	int COMPOSITE_ROLE = 72;
+	int COMPOSITE_ROLE = 73;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.BreakdownElementDescriptionImpl <em>Breakdown Element Description</em>}' class.
@@ -1997,7 +2004,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getBreakdownElementDescription()
 	 * @generated
 	 */
-	int BREAKDOWN_ELEMENT_DESCRIPTION = 80;
+	int BREAKDOWN_ELEMENT_DESCRIPTION = 81;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ActivityDescriptionImpl <em>Activity Description</em>}' class.
@@ -2007,7 +2014,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getActivityDescription()
 	 * @generated
 	 */
-	int ACTIVITY_DESCRIPTION = 81;
+	int ACTIVITY_DESCRIPTION = 82;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessDescriptionImpl <em>Process Description</em>}' class.
@@ -2017,7 +2024,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessDescription()
 	 * @generated
 	 */
-	int PROCESS_DESCRIPTION = 83;
+	int PROCESS_DESCRIPTION = 84;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DeliveryProcessDescriptionImpl <em>Delivery Process Description</em>}' class.
@@ -2027,7 +2034,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDeliveryProcessDescription()
 	 * @generated
 	 */
-	int DELIVERY_PROCESS_DESCRIPTION = 82;
+	int DELIVERY_PROCESS_DESCRIPTION = 83;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DescriptorDescriptionImpl <em>Descriptor Description</em>}' class.
@@ -2037,7 +2044,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDescriptorDescription()
 	 * @generated
 	 */
-	int DESCRIPTOR_DESCRIPTION = 84;
+	int DESCRIPTOR_DESCRIPTION = 85;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ConceptImpl <em>Concept</em>}' class.
@@ -2087,7 +2094,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getEstimationConsiderations()
 	 * @generated
 	 */
-	int ESTIMATION_CONSIDERATIONS = 31;
+	int ESTIMATION_CONSIDERATIONS = 32;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ReportImpl <em>Report</em>}' class.
@@ -2097,7 +2104,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getReport()
 	 * @generated
 	 */
-	int REPORT = 28;
+	int REPORT = 29;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TemplateImpl <em>Template</em>}' class.
@@ -2107,7 +2114,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTemplate()
 	 * @generated
 	 */
-	int TEMPLATE = 29;
+	int TEMPLATE = 30;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.SupportingMaterialImpl <em>Supporting Material</em>}' class.
@@ -3414,7 +3421,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getToolMentor()
 	 * @generated
 	 */
-	int TOOL_MENTOR = 30;
+	int TOOL_MENTOR = 31;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WhitepaperImpl <em>Whitepaper</em>}' class.
@@ -3424,7 +3431,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWhitepaper()
 	 * @generated
 	 */
-	int WHITEPAPER = 36;
+	int WHITEPAPER = 37;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.TermDefinitionImpl <em>Term Definition</em>}' class.
@@ -3444,7 +3451,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPractice()
 	 * @generated
 	 */
-	int PRACTICE = 79;
+	int PRACTICE = 80;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ReusableAssetImpl <em>Reusable Asset</em>}' class.
@@ -3464,7 +3471,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getContentCategory()
 	 * @generated
 	 */
-	int CONTENT_CATEGORY = 47;
+	int CONTENT_CATEGORY = 48;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DisciplineImpl <em>Discipline</em>}' class.
@@ -3474,7 +3481,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiscipline()
 	 * @generated
 	 */
-	int DISCIPLINE = 51;
+	int DISCIPLINE = 52;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.RoleSetImpl <em>Role Set</em>}' class.
@@ -3484,7 +3491,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getRoleSet()
 	 * @generated
 	 */
-	int ROLE_SET = 46;
+	int ROLE_SET = 47;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DomainImpl <em>Domain</em>}' class.
@@ -3494,7 +3501,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDomain()
 	 * @generated
 	 */
-	int DOMAIN = 48;
+	int DOMAIN = 49;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.WorkProductTypeImpl <em>Work Product Type</em>}' class.
@@ -3504,7 +3511,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkProductType()
 	 * @generated
 	 */
-	int WORK_PRODUCT_TYPE = 49;
+	int WORK_PRODUCT_TYPE = 50;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DisciplineGroupingImpl <em>Discipline Grouping</em>}' class.
@@ -3514,7 +3521,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDisciplineGrouping()
 	 * @generated
 	 */
-	int DISCIPLINE_GROUPING = 50;
+	int DISCIPLINE_GROUPING = 51;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ToolImpl <em>Tool</em>}' class.
@@ -3524,7 +3531,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTool()
 	 * @generated
 	 */
-	int TOOL = 59;
+	int TOOL = 60;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.RoleSetGroupingImpl <em>Role Set Grouping</em>}' class.
@@ -3534,7 +3541,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getRoleSetGrouping()
 	 * @generated
 	 */
-	int ROLE_SET_GROUPING = 60;
+	int ROLE_SET_GROUPING = 61;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.CustomCategoryImpl <em>Custom Category</em>}' class.
@@ -3544,7 +3551,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getCustomCategory()
 	 * @generated
 	 */
-	int CUSTOM_CATEGORY = 61;
+	int CUSTOM_CATEGORY = 62;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessImpl <em>Process</em>}' class.
@@ -3554,7 +3561,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcess()
 	 * @generated
 	 */
-	int PROCESS = 74;
+	int PROCESS = 75;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DeliveryProcessImpl <em>Delivery Process</em>}' class.
@@ -3564,7 +3571,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDeliveryProcess()
 	 * @generated
 	 */
-	int DELIVERY_PROCESS = 73;
+	int DELIVERY_PROCESS = 74;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.CapabilityPatternImpl <em>Capability Pattern</em>}' class.
@@ -3574,7 +3581,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getCapabilityPattern()
 	 * @generated
 	 */
-	int CAPABILITY_PATTERN = 75;
+	int CAPABILITY_PATTERN = 76;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessPlanningTemplateImpl <em>Process Planning Template</em>}' class.
@@ -3584,7 +3591,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessPlanningTemplate()
 	 * @generated
 	 */
-	int PROCESS_PLANNING_TEMPLATE = 78;
+	int PROCESS_PLANNING_TEMPLATE = 79;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.RoadmapImpl <em>Roadmap</em>}' class.
@@ -3594,7 +3601,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getRoadmap()
 	 * @generated
 	 */
-	int ROADMAP = 58;
+	int ROADMAP = 59;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessPackageImpl <em>Process Package</em>}' class.
@@ -3604,7 +3611,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessPackage()
 	 * @generated
 	 */
-	int PROCESS_PACKAGE = 87;
+	int PROCESS_PACKAGE = 88;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessComponentImpl <em>Process Component</em>}' class.
@@ -3614,7 +3621,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessComponent()
 	 * @generated
 	 */
-	int PROCESS_COMPONENT = 86;
+	int PROCESS_COMPONENT = 87;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessComponentInterfaceImpl <em>Process Component Interface</em>}' class.
@@ -3624,7 +3631,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessComponentInterface()
 	 * @generated
 	 */
-	int PROCESS_COMPONENT_INTERFACE = 100;
+	int PROCESS_COMPONENT_INTERFACE = 101;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ProcessComponentDescriptorImpl <em>Process Component Descriptor</em>}' class.
@@ -3634,7 +3641,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessComponentDescriptor()
 	 * @generated
 	 */
-	int PROCESS_COMPONENT_DESCRIPTOR = 85;
+	int PROCESS_COMPONENT_DESCRIPTOR = 86;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.MethodPluginImpl <em>Method Plugin</em>}' class.
@@ -3644,7 +3651,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getMethodPlugin()
 	 * @generated
 	 */
-	int METHOD_PLUGIN = 77;
+	int METHOD_PLUGIN = 78;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4059,6 +4066,52 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TERM_DEFINITION_FEATURE_COUNT = GUIDANCE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ApplicableMetaClassInfoImpl <em>Applicable Meta Class Info</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.uma.impl.ApplicableMetaClassInfoImpl
+	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getApplicableMetaClassInfo()
+	 * @generated
+	 */
+	int APPLICABLE_META_CLASS_INFO = 25;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICABLE_META_CLASS_INFO__NAME = CLASSIFIER__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICABLE_META_CLASS_INFO__IS_ABSTRACT = CLASSIFIER__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Is Primary Extension</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION = CLASSIFIER_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Applicable Meta Class Info</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICABLE_META_CLASS_INFO_FEATURE_COUNT = CLASSIFIER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7229,6 +7282,15 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT_DESCRIPTION__KEY_CONSIDERATIONS = CONTENT_DESCRIPTION__KEY_CONSIDERATIONS;
 
 	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTION__LONG_PRESENTATION_NAME = CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Purpose</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7425,6 +7487,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ARTIFACT_DESCRIPTION__KEY_CONSIDERATIONS = WORK_PRODUCT_DESCRIPTION__KEY_CONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARTIFACT_DESCRIPTION__LONG_PRESENTATION_NAME = WORK_PRODUCT_DESCRIPTION__LONG_PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Purpose</b></em>' attribute.
@@ -7661,6 +7732,15 @@ public interface UmaPackage extends EPackage {
 	int DELIVERABLE_DESCRIPTION__KEY_CONSIDERATIONS = WORK_PRODUCT_DESCRIPTION__KEY_CONSIDERATIONS;
 
 	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERABLE_DESCRIPTION__LONG_PRESENTATION_NAME = WORK_PRODUCT_DESCRIPTION__LONG_PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Purpose</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7877,6 +7957,15 @@ public interface UmaPackage extends EPackage {
 	int ROLE_DESCRIPTION__KEY_CONSIDERATIONS = CONTENT_DESCRIPTION__KEY_CONSIDERATIONS;
 
 	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTION__LONG_PRESENTATION_NAME = CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Skills</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8075,6 +8164,15 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTION__KEY_CONSIDERATIONS = CONTENT_DESCRIPTION__KEY_CONSIDERATIONS;
 
 	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTION__LONG_PRESENTATION_NAME = CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Purpose</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8264,6 +8362,15 @@ public interface UmaPackage extends EPackage {
 	int GUIDANCE_DESCRIPTION__KEY_CONSIDERATIONS = CONTENT_DESCRIPTION__KEY_CONSIDERATIONS;
 
 	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDANCE_DESCRIPTION__LONG_PRESENTATION_NAME = CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8442,6 +8549,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRACTICE_DESCRIPTION__KEY_CONSIDERATIONS = CONTENT_DESCRIPTION__KEY_CONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRACTICE_DESCRIPTION__LONG_PRESENTATION_NAME = CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Additional Info</b></em>' attribute.
@@ -16758,7 +16874,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getMethodConfiguration()
 	 * @generated
 	 */
-	int METHOD_CONFIGURATION = 76;
+	int METHOD_CONFIGURATION = 77;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -17940,6 +18056,15 @@ public interface UmaPackage extends EPackage {
 	int BREAKDOWN_ELEMENT_DESCRIPTION__KEY_CONSIDERATIONS = CONTENT_DESCRIPTION__KEY_CONSIDERATIONS;
 
 	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT_DESCRIPTION__LONG_PRESENTATION_NAME = CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Usage Guidance</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18118,6 +18243,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ACTIVITY_DESCRIPTION__KEY_CONSIDERATIONS = BREAKDOWN_ELEMENT_DESCRIPTION__KEY_CONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY_DESCRIPTION__LONG_PRESENTATION_NAME = BREAKDOWN_ELEMENT_DESCRIPTION__LONG_PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Usage Guidance</b></em>' attribute.
@@ -18325,6 +18459,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_DESCRIPTION__KEY_CONSIDERATIONS = ACTIVITY_DESCRIPTION__KEY_CONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_DESCRIPTION__LONG_PRESENTATION_NAME = ACTIVITY_DESCRIPTION__LONG_PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Usage Guidance</b></em>' attribute.
@@ -18550,6 +18693,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELIVERY_PROCESS_DESCRIPTION__KEY_CONSIDERATIONS = PROCESS_DESCRIPTION__KEY_CONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS_DESCRIPTION__LONG_PRESENTATION_NAME = PROCESS_DESCRIPTION__LONG_PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Usage Guidance</b></em>' attribute.
@@ -18829,6 +18981,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DESCRIPTOR_DESCRIPTION__KEY_CONSIDERATIONS = BREAKDOWN_ELEMENT_DESCRIPTION__KEY_CONSIDERATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Long Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR_DESCRIPTION__LONG_PRESENTATION_NAME = BREAKDOWN_ELEMENT_DESCRIPTION__LONG_PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Usage Guidance</b></em>' attribute.
@@ -19504,7 +19665,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProcessFamily()
 	 * @generated
 	 */
-	int PROCESS_FAMILY = 110;
+	int PROCESS_FAMILY = 111;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.MethodLibraryImpl <em>Method Library</em>}' class.
@@ -19514,7 +19675,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getMethodLibrary()
 	 * @generated
 	 */
-	int METHOD_LIBRARY = 111;
+	int METHOD_LIBRARY = 112;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PointImpl <em>Point</em>}' class.
@@ -19524,7 +19685,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPoint()
 	 * @generated
 	 */
-	int POINT = 94;
+	int POINT = 95;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DiagramElementImpl <em>Diagram Element</em>}' class.
@@ -19534,7 +19695,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagramElement()
 	 * @generated
 	 */
-	int DIAGRAM_ELEMENT = 91;
+	int DIAGRAM_ELEMENT = 92;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -19670,7 +19831,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphElement()
 	 * @generated
 	 */
-	int GRAPH_ELEMENT = 90;
+	int GRAPH_ELEMENT = 91;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -19851,7 +20012,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagramLink()
 	 * @generated
 	 */
-	int DIAGRAM_LINK = 95;
+	int DIAGRAM_LINK = 96;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphConnectorImpl <em>Graph Connector</em>}' class.
@@ -19861,7 +20022,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphConnector()
 	 * @generated
 	 */
-	int GRAPH_CONNECTOR = 96;
+	int GRAPH_CONNECTOR = 97;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.SemanticModelBridgeImpl <em>Semantic Model Bridge</em>}' class.
@@ -19871,7 +20032,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSemanticModelBridge()
 	 * @generated
 	 */
-	int SEMANTIC_MODEL_BRIDGE = 98;
+	int SEMANTIC_MODEL_BRIDGE = 99;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.DimensionImpl <em>Dimension</em>}' class.
@@ -19881,7 +20042,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDimension()
 	 * @generated
 	 */
-	int DIMENSION = 99;
+	int DIMENSION = 100;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.ReferenceImpl <em>Reference</em>}' class.
@@ -19891,7 +20052,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getReference()
 	 * @generated
 	 */
-	int REFERENCE = 92;
+	int REFERENCE = 93;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.PropertyImpl <em>Property</em>}' class.
@@ -19901,7 +20062,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getProperty()
 	 * @generated
 	 */
-	int PROPERTY = 93;
+	int PROPERTY = 94;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphEdgeImpl <em>Graph Edge</em>}' class.
@@ -19911,7 +20072,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphEdge()
 	 * @generated
 	 */
-	int GRAPH_EDGE = 97;
+	int GRAPH_EDGE = 98;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.impl.GraphNodeImpl <em>Graph Node</em>}' class.
@@ -19921,7 +20082,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphNode()
 	 * @generated
 	 */
-	int GRAPH_NODE = 89;
+	int GRAPH_NODE = 90;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -20111,7 +20272,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDiagram()
 	 * @generated
 	 */
-	int DIAGRAM = 88;
+	int DIAGRAM = 89;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -21678,7 +21839,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSimpleSemanticModelElement()
 	 * @generated
 	 */
-	int SIMPLE_SEMANTIC_MODEL_ELEMENT = 101;
+	int SIMPLE_SEMANTIC_MODEL_ELEMENT = 102;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -21850,7 +22011,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getUMASemanticModelBridge()
 	 * @generated
 	 */
-	int UMA_SEMANTIC_MODEL_BRIDGE = 102;
+	int UMA_SEMANTIC_MODEL_BRIDGE = 103;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -22022,7 +22183,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getCoreSemanticModelBridge()
 	 * @generated
 	 */
-	int CORE_SEMANTIC_MODEL_BRIDGE = 103;
+	int CORE_SEMANTIC_MODEL_BRIDGE = 104;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -22194,7 +22355,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getLeafElement()
 	 * @generated
 	 */
-	int LEAF_ELEMENT = 104;
+	int LEAF_ELEMENT = 105;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -22330,7 +22491,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getTextElement()
 	 * @generated
 	 */
-	int TEXT_ELEMENT = 105;
+	int TEXT_ELEMENT = 106;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -22475,7 +22636,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getImage()
 	 * @generated
 	 */
-	int IMAGE = 106;
+	int IMAGE = 107;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -22629,7 +22790,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getGraphicPrimitive()
 	 * @generated
 	 */
-	int GRAPHIC_PRIMITIVE = 107;
+	int GRAPHIC_PRIMITIVE = 108;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -22765,7 +22926,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getPolyline()
 	 * @generated
 	 */
-	int POLYLINE = 108;
+	int POLYLINE = 109;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -22919,7 +23080,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getEllipse()
 	 * @generated
 	 */
-	int ELLIPSE = 109;
+	int ELLIPSE = 110;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -23469,7 +23630,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getWorkOrderType()
 	 * @generated
 	 */
-	int WORK_ORDER_TYPE = 113;
+	int WORK_ORDER_TYPE = 114;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.uma.VariabilityType <em>Variability Type</em>}' enum.
@@ -23479,7 +23640,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getVariabilityType()
 	 * @generated
 	 */
-	int VARIABILITY_TYPE = 112;
+	int VARIABILITY_TYPE = 113;
 
 	/**
 	 * The meta object id for the '<em>Date</em>' data type.
@@ -23489,7 +23650,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDate()
 	 * @generated
 	 */
-	int DATE = 116;
+	int DATE = 117;
 
 	/**
 	 * The meta object id for the '<em>Uri</em>' data type.
@@ -23499,7 +23660,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getUri()
 	 * @generated
 	 */
-	int URI = 117;
+	int URI = 118;
 
 	/**
 	 * The meta object id for the '<em>String</em>' data type.
@@ -23509,7 +23670,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getString()
 	 * @generated
 	 */
-	int STRING = 114;
+	int STRING = 115;
 
 	/**
 	 * The meta object id for the '<em>Boolean</em>' data type.
@@ -23519,7 +23680,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getBoolean()
 	 * @generated
 	 */
-	int BOOLEAN = 115;
+	int BOOLEAN = 116;
 
 	/**
 	 * The meta object id for the '<em>Set</em>' data type.
@@ -23529,7 +23690,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSet()
 	 * @generated
 	 */
-	int SET = 118;
+	int SET = 119;
 
 	/**
 	 * The meta object id for the '<em>Sequence</em>' data type.
@@ -23539,7 +23700,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getSequence()
 	 * @generated
 	 */
-	int SEQUENCE = 119;
+	int SEQUENCE = 120;
 
 	/**
 	 * The meta object id for the '<em>Integer</em>' data type.
@@ -23548,7 +23709,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getInteger()
 	 * @generated
 	 */
-	int INTEGER = 120;
+	int INTEGER = 121;
 
 	/**
 	 * The meta object id for the '<em>Double</em>' data type.
@@ -23558,7 +23719,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getDouble()
 	 * @generated
 	 */
-	int DOUBLE = 121;
+	int DOUBLE = 122;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.Classifier <em>Classifier</em>}'.
@@ -23803,15 +23964,15 @@ public interface UmaPackage extends EPackage {
 	EClass getKind();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epf.uma.Kind#getApplicableMetaClass <em>Applicable Meta Class</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.epf.uma.Kind#getApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Applicable Meta Class</em>'.
-	 * @see org.eclipse.epf.uma.Kind#getApplicableMetaClass()
+	 * @return the meta object for the containment reference list '<em>Applicable Meta Class Info</em>'.
+	 * @see org.eclipse.epf.uma.Kind#getApplicableMetaClassInfo()
 	 * @see #getKind()
 	 * @generated
 	 */
-	EAttribute getKind_ApplicableMetaClass();
+	EReference getKind_ApplicableMetaClassInfo();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.ContentElement <em>Content Element</em>}'.
@@ -23996,6 +24157,17 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getContentDescription_KeyConsiderations();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.uma.ContentDescription#getLongPresentationName <em>Long Presentation Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Long Presentation Name</em>'.
+	 * @see org.eclipse.epf.uma.ContentDescription#getLongPresentationName()
+	 * @see #getContentDescription()
+	 * @generated
+	 */
+	EAttribute getContentDescription_LongPresentationName();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.Section <em>Section</em>}'.
@@ -25771,6 +25943,27 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTermDefinition();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.epf.uma.ApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Applicable Meta Class Info</em>'.
+	 * @see org.eclipse.epf.uma.ApplicableMetaClassInfo
+	 * @generated
+	 */
+	EClass getApplicableMetaClassInfo();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.uma.ApplicableMetaClassInfo#getIsPrimaryExtension <em>Is Primary Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Primary Extension</em>'.
+	 * @see org.eclipse.epf.uma.ApplicableMetaClassInfo#getIsPrimaryExtension()
+	 * @see #getApplicableMetaClassInfo()
+	 * @generated
+	 */
+	EAttribute getApplicableMetaClassInfo_IsPrimaryExtension();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.Practice <em>Practice</em>}'.
@@ -27631,13 +27824,13 @@ public interface UmaPackage extends EPackage {
 		EClass KIND = eINSTANCE.getKind();
 
 		/**
-		 * The meta object literal for the '<em><b>Applicable Meta Class</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Applicable Meta Class Info</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute KIND__APPLICABLE_META_CLASS = eINSTANCE
-				.getKind_ApplicableMetaClass();
+		EReference KIND__APPLICABLE_META_CLASS_INFO = eINSTANCE
+				.getKind_ApplicableMetaClassInfo();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.ContentElementImpl <em>Content Element</em>}' class.
@@ -27794,6 +27987,15 @@ public interface UmaPackage extends EPackage {
 		 */
 		EAttribute CONTENT_DESCRIPTION__KEY_CONSIDERATIONS = eINSTANCE
 				.getContentDescription_KeyConsiderations();
+
+		/**
+		 * The meta object literal for the '<em><b>Long Presentation Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME = eINSTANCE
+				.getContentDescription_LongPresentationName();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.SectionImpl <em>Section</em>}' class.
@@ -29322,6 +29524,26 @@ public interface UmaPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TERM_DEFINITION = eINSTANCE.getTermDefinition();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.ApplicableMetaClassInfoImpl <em>Applicable Meta Class Info</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.epf.uma.impl.ApplicableMetaClassInfoImpl
+		 * @see org.eclipse.epf.uma.impl.UmaPackageImpl#getApplicableMetaClassInfo()
+		 * @generated
+		 */
+		EClass APPLICABLE_META_CLASS_INFO = eINSTANCE
+				.getApplicableMetaClassInfo();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Primary Extension</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION = eINSTANCE
+				.getApplicableMetaClassInfo_IsPrimaryExtension();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.PracticeImpl <em>Practice</em>}' class.

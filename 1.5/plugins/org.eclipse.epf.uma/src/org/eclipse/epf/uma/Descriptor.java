@@ -43,11 +43,9 @@ public interface Descriptor extends BreakdownElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Is Synchronized With Source</em>' attribute.
-	 * @see #isSetIsSynchronizedWithSource()
-	 * @see #unsetIsSynchronizedWithSource()
 	 * @see #setIsSynchronizedWithSource(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDescriptor_IsSynchronizedWithSource()
-	 * @model default="true" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsSynchronizedWithSource();
@@ -57,34 +55,9 @@ public interface Descriptor extends BreakdownElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Synchronized With Source</em>' attribute.
-	 * @see #isSetIsSynchronizedWithSource()
-	 * @see #unsetIsSynchronizedWithSource()
 	 * @see #getIsSynchronizedWithSource()
 	 * @generated
 	 */
 	void setIsSynchronizedWithSource(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Descriptor#getIsSynchronizedWithSource <em>Is Synchronized With Source</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsSynchronizedWithSource()
-	 * @see #getIsSynchronizedWithSource()
-	 * @see #setIsSynchronizedWithSource(Boolean)
-	 * @generated
-	 */
-	void unsetIsSynchronizedWithSource();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Descriptor#getIsSynchronizedWithSource <em>Is Synchronized With Source</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Synchronized With Source</em>' attribute is set.
-	 * @see #unsetIsSynchronizedWithSource()
-	 * @see #getIsSynchronizedWithSource()
-	 * @see #setIsSynchronizedWithSource(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsSynchronizedWithSource();
 
 } // Descriptor

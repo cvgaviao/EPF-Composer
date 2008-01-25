@@ -47,11 +47,9 @@ public interface VariabilityElement extends MethodElement {
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Variability Type</em>' attribute.
 	 * @see org.eclipse.epf.uma.VariabilityType
-	 * @see #isSetVariabilityType()
-	 * @see #unsetVariabilityType()
 	 * @see #setVariabilityType(VariabilityType)
 	 * @see org.eclipse.epf.uma.UmaPackage#getVariabilityElement_VariabilityType()
-	 * @model default="na" unsettable="true" required="true" ordered="false"
+	 * @model default="na" required="true" ordered="false"
 	 * @generated
 	 */
 	VariabilityType getVariabilityType();
@@ -62,35 +60,10 @@ public interface VariabilityElement extends MethodElement {
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Variability Type</em>' attribute.
 	 * @see org.eclipse.epf.uma.VariabilityType
-	 * @see #isSetVariabilityType()
-	 * @see #unsetVariabilityType()
 	 * @see #getVariabilityType()
 	 * @generated
 	 */
 	void setVariabilityType(VariabilityType value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.VariabilityElement#getVariabilityType <em>Variability Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetVariabilityType()
-	 * @see #getVariabilityType()
-	 * @see #setVariabilityType(VariabilityType)
-	 * @generated
-	 */
-	void unsetVariabilityType();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.VariabilityElement#getVariabilityType <em>Variability Type</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Variability Type</em>' attribute is set.
-	 * @see #unsetVariabilityType()
-	 * @see #getVariabilityType()
-	 * @see #setVariabilityType(VariabilityType)
-	 * @generated
-	 */
-	boolean isSetVariabilityType();
 
 	/**
 	 * Returns the value of the '<em><b>Variability Based On Element</b></em>' reference.

@@ -37,6 +37,7 @@ import org.eclipse.epf.uma.UmaPackage;
  *   <li>{@link org.eclipse.epf.uma.impl.ContentDescriptionImpl#getSections <em>Sections</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ContentDescriptionImpl#getExternalId <em>External Id</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.ContentDescriptionImpl#getKeyConsiderations <em>Key Considerations</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.ContentDescriptionImpl#getLongPresentationName <em>Long Presentation Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,15 +73,6 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	protected String mainDescription = MAIN_DESCRIPTION_EDEFAULT;
 
 	/**
-	 * This is true if the Main Description attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean mainDescriptionESet;
-
-	/**
 	 * The cached value of the '{@link #getSections() <em>Sections</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,15 +103,6 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	protected String externalId = EXTERNAL_ID_EDEFAULT;
 
 	/**
-	 * This is true if the External Id attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean externalIdESet;
-
-	/**
 	 * The default value of the '{@link #getKeyConsiderations() <em>Key Considerations</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -140,13 +123,24 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	protected String keyConsiderations = KEY_CONSIDERATIONS_EDEFAULT;
 
 	/**
-	 * This is true if the Key Considerations attribute has been set.
+	 * The default value of the '{@link #getLongPresentationName() <em>Long Presentation Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see #getLongPresentationName()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean keyConsiderationsESet;
+	protected static final String LONG_PRESENTATION_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLongPresentationName() <em>Long Presentation Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLongPresentationName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String longPresentationName = LONG_PRESENTATION_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -184,39 +178,10 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public void setMainDescription(String newMainDescription) {
 		String oldMainDescription = mainDescription;
 		mainDescription = newMainDescription;
-		boolean oldMainDescriptionESet = mainDescriptionESet;
-		mainDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION,
-					oldMainDescription, mainDescription,
-					!oldMainDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetMainDescription() {
-		String oldMainDescription = mainDescription;
-		boolean oldMainDescriptionESet = mainDescriptionESet;
-		mainDescription = MAIN_DESCRIPTION_EDEFAULT;
-		mainDescriptionESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION,
-					oldMainDescription, MAIN_DESCRIPTION_EDEFAULT,
-					oldMainDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetMainDescription() {
-		return mainDescriptionESet;
+					oldMainDescription, mainDescription));
 	}
 
 	/**
@@ -250,37 +215,10 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public void setExternalId(String newExternalId) {
 		String oldExternalId = externalId;
 		externalId = newExternalId;
-		boolean oldExternalIdESet = externalIdESet;
-		externalIdESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID, oldExternalId,
-					externalId, !oldExternalIdESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetExternalId() {
-		String oldExternalId = externalId;
-		boolean oldExternalIdESet = externalIdESet;
-		externalId = EXTERNAL_ID_EDEFAULT;
-		externalIdESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID, oldExternalId,
-					EXTERNAL_ID_EDEFAULT, oldExternalIdESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetExternalId() {
-		return externalIdESet;
+					externalId));
 	}
 
 	/**
@@ -300,13 +238,10 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public void setKeyConsiderations(String newKeyConsiderations) {
 		String oldKeyConsiderations = keyConsiderations;
 		keyConsiderations = newKeyConsiderations;
-		boolean oldKeyConsiderationsESet = keyConsiderationsESet;
-		keyConsiderationsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS,
-					oldKeyConsiderations, keyConsiderations,
-					!oldKeyConsiderationsESet));
+					oldKeyConsiderations, keyConsiderations));
 	}
 
 	/**
@@ -314,25 +249,22 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void unsetKeyConsiderations() {
-		String oldKeyConsiderations = keyConsiderations;
-		boolean oldKeyConsiderationsESet = keyConsiderationsESet;
-		keyConsiderations = KEY_CONSIDERATIONS_EDEFAULT;
-		keyConsiderationsESet = false;
+	public String getLongPresentationName() {
+		return longPresentationName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLongPresentationName(String newLongPresentationName) {
+		String oldLongPresentationName = longPresentationName;
+		longPresentationName = newLongPresentationName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS,
-					oldKeyConsiderations, KEY_CONSIDERATIONS_EDEFAULT,
-					oldKeyConsiderationsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetKeyConsiderations() {
-		return keyConsiderationsESet;
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					UmaPackage.CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME,
+					oldLongPresentationName, longPresentationName));
 	}
 
 	/**
@@ -367,6 +299,8 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 			return getExternalId();
 		case UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS:
 			return getKeyConsiderations();
+		case UmaPackage.CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME:
+			return getLongPresentationName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -393,6 +327,9 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 		case UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS:
 			setKeyConsiderations((String) newValue);
 			return;
+		case UmaPackage.CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME:
+			setLongPresentationName((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -406,16 +343,19 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
-			unsetMainDescription();
+			setMainDescription(MAIN_DESCRIPTION_EDEFAULT);
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__SECTIONS:
 			getSections().clear();
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID:
-			unsetExternalId();
+			setExternalId(EXTERNAL_ID_EDEFAULT);
 			return;
 		case UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS:
-			unsetKeyConsiderations();
+			setKeyConsiderations(KEY_CONSIDERATIONS_EDEFAULT);
+			return;
+		case UmaPackage.CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME:
+			setLongPresentationName(LONG_PRESENTATION_NAME_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -430,13 +370,20 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
-			return isSetMainDescription();
+			return MAIN_DESCRIPTION_EDEFAULT == null ? mainDescription != null
+					: !MAIN_DESCRIPTION_EDEFAULT.equals(mainDescription);
 		case UmaPackage.CONTENT_DESCRIPTION__SECTIONS:
 			return sections != null && !sections.isEmpty();
 		case UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID:
-			return isSetExternalId();
+			return EXTERNAL_ID_EDEFAULT == null ? externalId != null
+					: !EXTERNAL_ID_EDEFAULT.equals(externalId);
 		case UmaPackage.CONTENT_DESCRIPTION__KEY_CONSIDERATIONS:
-			return isSetKeyConsiderations();
+			return KEY_CONSIDERATIONS_EDEFAULT == null ? keyConsiderations != null
+					: !KEY_CONSIDERATIONS_EDEFAULT.equals(keyConsiderations);
+		case UmaPackage.CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME:
+			return LONG_PRESENTATION_NAME_EDEFAULT == null ? longPresentationName != null
+					: !LONG_PRESENTATION_NAME_EDEFAULT
+							.equals(longPresentationName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -453,20 +400,13 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (mainDescription: "); //$NON-NLS-1$
-		if (mainDescriptionESet)
-			result.append(mainDescription);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(mainDescription);
 		result.append(", externalId: "); //$NON-NLS-1$
-		if (externalIdESet)
-			result.append(externalId);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(externalId);
 		result.append(", keyConsiderations: "); //$NON-NLS-1$
-		if (keyConsiderationsESet)
-			result.append(keyConsiderations);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(keyConsiderations);
+		result.append(", longPresentationName: "); //$NON-NLS-1$
+		result.append(longPresentationName);
 		result.append(')');
 		return result.toString();
 	}

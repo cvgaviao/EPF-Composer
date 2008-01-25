@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ActivityDescription;
+import org.eclipse.epf.uma.ApplicableMetaClassInfo;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ArtifactDescription;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -597,6 +598,13 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	private EClass termDefinitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass applicableMetaClassInfoEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1283,8 +1291,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getKind_ApplicableMetaClass() {
-		return (EAttribute) kindEClass.getEStructuralFeatures().get(0);
+	public EReference getKind_ApplicableMetaClassInfo() {
+		return (EReference) kindEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1452,6 +1460,16 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	public EAttribute getContentDescription_KeyConsiderations() {
 		return (EAttribute) contentDescriptionEClass.getEStructuralFeatures()
 				.get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getContentDescription_LongPresentationName() {
+		return (EAttribute) contentDescriptionEClass.getEStructuralFeatures()
+				.get(4);
 	}
 
 	/**
@@ -3031,6 +3049,25 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getApplicableMetaClassInfo() {
+		return applicableMetaClassInfoEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getApplicableMetaClassInfo_IsPrimaryExtension() {
+		return (EAttribute) applicableMetaClassInfoEClass
+				.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getPractice() {
 		return practiceEClass;
 	}
@@ -4494,7 +4531,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				METHOD_ELEMENT_PROPERTY__VALUE);
 
 		kindEClass = createEClass(KIND);
-		createEAttribute(kindEClass, KIND__APPLICABLE_META_CLASS);
+		createEReference(kindEClass, KIND__APPLICABLE_META_CLASS_INFO);
 
 		contentElementEClass = createEClass(CONTENT_ELEMENT);
 		createEReference(contentElementEClass,
@@ -4524,6 +4561,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				CONTENT_DESCRIPTION__EXTERNAL_ID);
 		createEAttribute(contentDescriptionEClass,
 				CONTENT_DESCRIPTION__KEY_CONSIDERATIONS);
+		createEAttribute(contentDescriptionEClass,
+				CONTENT_DESCRIPTION__LONG_PRESENTATION_NAME);
 
 		methodUnitEClass = createEClass(METHOD_UNIT);
 		createEAttribute(methodUnitEClass, METHOD_UNIT__AUTHORS);
@@ -4559,6 +4598,10 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		reusableAssetEClass = createEClass(REUSABLE_ASSET);
 
 		termDefinitionEClass = createEClass(TERM_DEFINITION);
+
+		applicableMetaClassInfoEClass = createEClass(APPLICABLE_META_CLASS_INFO);
+		createEAttribute(applicableMetaClassInfoEClass,
+				APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION);
 
 		artifactEClass = createEClass(ARTIFACT);
 		createEReference(artifactEClass, ARTIFACT__CONTAINER_ARTIFACT);
@@ -5084,6 +5127,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		exampleEClass.getESuperTypes().add(this.getGuidance());
 		reusableAssetEClass.getESuperTypes().add(this.getGuidance());
 		termDefinitionEClass.getESuperTypes().add(this.getGuidance());
+		applicableMetaClassInfoEClass.getESuperTypes()
+				.add(this.getClassifier());
 		artifactEClass.getESuperTypes().add(this.getWorkProduct());
 		workProductEClass.getESuperTypes().add(this.getContentElement());
 		workProductEClass.getESuperTypes().add(this.getFulfillableElement());
@@ -5212,7 +5257,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getClassifier_IsAbstract(),
 				this.getBoolean(),
-				"isAbstract", "false", 1, 1, Classifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isAbstract", "false", 1, 1, Classifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(typeEClass, Type.class,
 				"Type", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -5229,7 +5274,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getNamedElement_Name(),
 				this.getString(),
-				"name", "", 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"name", "", 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				elementEClass,
@@ -5253,7 +5298,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getConstraint_Body(),
 				this.getString(),
-				"body", "", 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"body", "", 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				methodElementEClass,
@@ -5262,15 +5307,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getMethodElement_Guid(),
 				this.getString(),
-				"guid", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"guid", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getMethodElement_PresentationName(),
 				this.getString(),
-				"presentationName", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"presentationName", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getMethodElement_BriefDescription(),
 				this.getString(),
-				"briefDescription", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"briefDescription", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getMethodElement_OwnedRules(),
 				this.getConstraint(),
@@ -5289,11 +5334,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getMethodElement_Suppressed(),
 				this.getBoolean(),
-				"suppressed", "false", 1, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"suppressed", "false", 1, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getMethodElement_OrderingGuide(),
 				this.getString(),
-				"orderingGuide", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"orderingGuide", "", 0, 1, MethodElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				methodElementPropertyEClass,
@@ -5302,16 +5347,17 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getMethodElementProperty_Value(),
 				this.getString(),
-				"value", "", 0, 1, MethodElementProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"value", "", 0, 1, MethodElementProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				kindEClass,
 				Kind.class,
 				"Kind", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-				getKind_ApplicableMetaClass(),
-				this.getSet(),
-				"applicableMetaClass", null, 1, 1, Kind.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getKind_ApplicableMetaClassInfo(),
+				this.getApplicableMetaClassInfo(),
+				null,
+				"applicableMetaClassInfo", null, 0, -1, Kind.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				contentElementEClass,
@@ -5365,11 +5411,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDescribableElement_Shapeicon(),
 				this.getUri(),
-				"shapeicon", "", 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"shapeicon", "", 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDescribableElement_Nodeicon(),
 				this.getUri(),
-				"nodeicon", "", 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"nodeicon", "", 0, 1, DescribableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				contentDescriptionEClass,
@@ -5378,7 +5424,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getContentDescription_MainDescription(),
 				this.getString(),
-				"mainDescription", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"mainDescription", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getContentDescription_Sections(),
 				this.getSection(),
@@ -5387,11 +5433,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getContentDescription_ExternalId(),
 				this.getString(),
-				"externalId", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"externalId", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getContentDescription_KeyConsiderations(),
 				this.getString(),
-				"keyConsiderations", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"keyConsiderations", "", 0, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+				getContentDescription_LongPresentationName(),
+				this.getString(),
+				"longPresentationName", null, 1, 1, ContentDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				methodUnitEClass,
@@ -5400,19 +5450,19 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getMethodUnit_Authors(),
 				this.getString(),
-				"authors", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"authors", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getMethodUnit_ChangeDate(),
 				this.getDate(),
-				"changeDate", null, 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"changeDate", null, 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getMethodUnit_ChangeDescription(),
 				this.getString(),
-				"changeDescription", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"changeDescription", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getMethodUnit_Version(),
 				this.getString(),
-				"version", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"version", "", 0, 1, MethodUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getMethodUnit_CopyrightStatement(),
 				this.getSupportingMaterial(),
@@ -5436,11 +5486,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getSection_SectionName(),
 				this.getString(),
-				"sectionName", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"sectionName", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getSection_SectionDescription(),
 				this.getString(),
-				"sectionDescription", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"sectionDescription", "", 0, 1, Section.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getSection_SubSections(),
 				this.getSection(),
@@ -5459,7 +5509,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getVariabilityElement_VariabilityType(),
 				this.getVariabilityType(),
-				"variabilityType", "na", 1, 1, VariabilityElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"variabilityType", "na", 1, 1, VariabilityElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getVariabilityElement_VariabilityBasedOnElement(),
 				this.getVariabilityElement(),
@@ -5495,6 +5545,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				termDefinitionEClass,
 				TermDefinition.class,
 				"TermDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(
+				applicableMetaClassInfoEClass,
+				ApplicableMetaClassInfo.class,
+				"ApplicableMetaClassInfo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+				getApplicableMetaClassInfo_IsPrimaryExtension(),
+				this.getBoolean(),
+				"isPrimaryExtension", null, 1, 1, ApplicableMetaClassInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				artifactEClass,
@@ -5673,19 +5732,19 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getArtifactDescription_BriefOutline(),
 				this.getString(),
-				"briefOutline", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"briefOutline", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getArtifactDescription_RepresentationOptions(),
 				this.getString(),
-				"representationOptions", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"representationOptions", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getArtifactDescription_Representation(),
 				this.getString(),
-				"representation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"representation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getArtifactDescription_Notation(),
 				this.getString(),
-				"notation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"notation", "", 0, 1, ArtifactDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				workProductDescriptionEClass,
@@ -5694,15 +5753,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getWorkProductDescription_Purpose(),
 				this.getString(),
-				"purpose", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"purpose", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getWorkProductDescription_ImpactOfNotHaving(),
 				this.getString(),
-				"impactOfNotHaving", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"impactOfNotHaving", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getWorkProductDescription_ReasonsForNotNeeding(),
 				this.getString(),
-				"reasonsForNotNeeding", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"reasonsForNotNeeding", "", 0, 1, WorkProductDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				deliverableDescriptionEClass,
@@ -5711,11 +5770,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDeliverableDescription_ExternalDescription(),
 				this.getString(),
-				"externalDescription", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"externalDescription", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDeliverableDescription_PackagingGuidance(),
 				this.getString(),
-				"packagingGuidance", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"packagingGuidance", "", 0, 1, DeliverableDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				roleDescriptionEClass,
@@ -5724,15 +5783,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getRoleDescription_Skills(),
 				this.getString(),
-				"skills", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"skills", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getRoleDescription_AssignmentApproaches(),
 				this.getString(),
-				"assignmentApproaches", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"assignmentApproaches", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getRoleDescription_Synonyms(),
 				this.getString(),
-				"synonyms", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"synonyms", "", 0, 1, RoleDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				taskDescriptionEClass,
@@ -5741,11 +5800,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getTaskDescription_Purpose(),
 				this.getString(),
-				"purpose", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"purpose", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getTaskDescription_Alternatives(),
 				this.getString(),
-				"alternatives", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"alternatives", "", 0, 1, TaskDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				guidanceDescriptionEClass,
@@ -5754,7 +5813,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getGuidanceDescription_Attachments(),
 				this.getString(),
-				"attachments", "", 0, 1, GuidanceDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"attachments", "", 0, 1, GuidanceDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				practiceDescriptionEClass,
@@ -5763,27 +5822,27 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getPracticeDescription_AdditionalInfo(),
 				this.getString(),
-				"additionalInfo", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"additionalInfo", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getPracticeDescription_Problem(),
 				this.getString(),
-				"problem", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"problem", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getPracticeDescription_Background(),
 				this.getString(),
-				"background", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"background", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getPracticeDescription_Goals(),
 				this.getString(),
-				"goals", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"goals", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getPracticeDescription_Application(),
 				this.getString(),
-				"application", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"application", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getPracticeDescription_LevelsOfAdoption(),
 				this.getString(),
-				"levelsOfAdoption", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"levelsOfAdoption", "", 0, 1, PracticeDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				roleSetEClass,
@@ -5877,15 +5936,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getWorkBreakdownElement_IsRepeatable(),
 				this.getBoolean(),
-				"isRepeatable", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isRepeatable", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getWorkBreakdownElement_IsOngoing(),
 				this.getBoolean(),
-				"isOngoing", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isOngoing", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getWorkBreakdownElement_IsEventDriven(),
 				this.getBoolean(),
-				"isEventDriven", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isEventDriven", "false", 1, 1, WorkBreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getWorkBreakdownElement_LinkToPredecessor(),
 				this.getWorkOrder(),
@@ -5899,19 +5958,19 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getBreakdownElement_Prefix(),
 				this.getString(),
-				"prefix", "", 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"prefix", "", 0, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getBreakdownElement_IsPlanned(),
 				this.getBoolean(),
-				"isPlanned", "true", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isPlanned", "true", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getBreakdownElement_HasMultipleOccurrences(),
 				this.getBoolean(),
-				"hasMultipleOccurrences", "false", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"hasMultipleOccurrences", "false", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getBreakdownElement_IsOptional(),
 				this.getBoolean(),
-				"isOptional", "false", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isOptional", "false", 1, 1, BreakdownElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getBreakdownElement_PresentedAfter(),
 				this.getBreakdownElement(),
@@ -5995,15 +6054,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getPlanningData_StartDate(),
 				this.getDate(),
-				"startDate", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"startDate", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getPlanningData_FinishDate(),
 				this.getDate(),
-				"finishDate", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"finishDate", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getPlanningData_Rank(),
 				this.getInteger(),
-				"rank", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"rank", null, 1, 1, PlanningData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				workOrderEClass,
@@ -6012,7 +6071,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getWorkOrder_LinkType(),
 				this.getWorkOrderType(),
-				"linkType", "finishToStart", 1, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"linkType", "finishToStart", 1, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getWorkOrder_Pred(),
 				this.getWorkBreakdownElement(),
@@ -6105,16 +6164,16 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getWorkProductDescriptor_ActivityEntryState(),
 				this.getString(),
-				"activityEntryState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"activityEntryState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getWorkProductDescriptor_ActivityExitState(),
 				this.getString(),
-				"activityExitState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"activityExitState", "", 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getWorkProductDescriptor_WorkProduct(),
 				this.getWorkProduct(),
 				null,
-				"workProduct", null, 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"WorkProduct", null, 0, 1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getWorkProductDescriptor_ImpactedBy(),
 				this.getWorkProductDescriptor(),
@@ -6138,7 +6197,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDescriptor_IsSynchronizedWithSource(),
 				this.getBoolean(),
-				"isSynchronizedWithSource", "true", 1, 1, org.eclipse.epf.uma.Descriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isSynchronizedWithSource", "true", 1, 1, org.eclipse.epf.uma.Descriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				iterationEClass,
@@ -6178,7 +6237,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				getRoleDescriptor_Role(),
 				this.getRole(),
 				null,
-				"role", null, 0, 1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"Role", null, 0, 1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getRoleDescriptor_Modifies(),
 				this.getWorkProductDescriptor(),
@@ -6198,7 +6257,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				getTaskDescriptor_Task(),
 				this.getTask(),
 				null,
-				"task", null, 0, 1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"Task", null, 0, 1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getTaskDescriptor_AdditionallyPerformedBy(),
 				this.getRoleDescriptor(),
@@ -6337,7 +6396,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getMethodPlugin_UserChangeable(),
 				this.getBoolean(),
-				"userChangeable", "true", 1, 1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"userChangeable", "true", 1, 1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getMethodPlugin_MethodPackages(),
 				this.getMethodPackage(),
@@ -6386,7 +6445,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getBreakdownElementDescription_UsageGuidance(),
 				this.getString(),
-				"usageGuidance", "", 0, 1, BreakdownElementDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"usageGuidance", "", 0, 1, BreakdownElementDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				activityDescriptionEClass,
@@ -6395,15 +6454,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getActivityDescription_Purpose(),
 				this.getString(),
-				"purpose", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"purpose", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getActivityDescription_Alternatives(),
 				this.getString(),
-				"alternatives", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"alternatives", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getActivityDescription_HowtoStaff(),
 				this.getString(),
-				"howtoStaff", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"howtoStaff", "", 0, 1, ActivityDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				deliveryProcessDescriptionEClass,
@@ -6412,27 +6471,27 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDeliveryProcessDescription_Scale(),
 				this.getString(),
-				"scale", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"scale", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDeliveryProcessDescription_ProjectCharacteristics(),
 				this.getString(),
-				"projectCharacteristics", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"projectCharacteristics", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDeliveryProcessDescription_RiskLevel(),
 				this.getString(),
-				"riskLevel", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"riskLevel", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDeliveryProcessDescription_EstimatingTechnique(),
 				this.getString(),
-				"estimatingTechnique", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"estimatingTechnique", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDeliveryProcessDescription_ProjectMemberExpertise(),
 				this.getString(),
-				"projectMemberExpertise", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"projectMemberExpertise", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getDeliveryProcessDescription_TypeOfContract(),
 				this.getString(),
-				"typeOfContract", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"typeOfContract", "", 0, 1, DeliveryProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				processDescriptionEClass,
@@ -6441,11 +6500,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getProcessDescription_Scope(),
 				this.getString(),
-				"scope", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"scope", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getProcessDescription_UsageNotes(),
 				this.getString(),
-				"usageNotes", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"usageNotes", "", 0, 1, ProcessDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				descriptorDescriptionEClass,
@@ -6454,7 +6513,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDescriptorDescription_RefinedDescription(),
 				this.getString(),
-				"refinedDescription", "", 0, 1, DescriptorDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"refinedDescription", "", 0, 1, DescriptorDescription.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				processComponentDescriptorEClass,
@@ -6567,7 +6626,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDiagramElement_IsVisible(),
 				this.getBoolean(),
-				"isVisible", "true", 1, 1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"isVisible", "true", 1, 1, DiagramElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getDiagramElement_Container(),
 				this.getGraphElement(),
@@ -6605,11 +6664,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getProperty_Key(),
 				this.getString(),
-				"key", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"key", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getProperty_Value(),
 				this.getString(),
-				"value", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"value", "", 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				pointEClass,
@@ -6618,11 +6677,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getPoint_X(),
 				this.getDouble(),
-				"x", null, 1, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"x", null, 1, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getPoint_Y(),
 				this.getDouble(),
-				"y", null, 1, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"y", null, 1, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				diagramLinkEClass,
@@ -6631,7 +6690,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDiagramLink_Zoom(),
 				this.getDouble(),
-				"zoom", null, 1, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"zoom", null, 1, 1, DiagramLink.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getDiagramLink_Viewport(),
 				this.getPoint(),
@@ -6685,7 +6744,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getSemanticModelBridge_Presentation(),
 				this.getString(),
-				"presentation", "", 0, 1, SemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"presentation", "", 0, 1, SemanticModelBridge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 				getSemanticModelBridge_Diagram(),
 				this.getDiagram(),
@@ -6704,11 +6763,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getDimension_Width(),
 				this.getDouble(),
-				"width", null, 1, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"width", null, 1, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getDimension_Height(),
 				this.getDouble(),
-				"height", null, 1, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"height", null, 1, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				processComponentInterfaceEClass,
@@ -6732,7 +6791,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getSimpleSemanticModelElement_TypeInfo(),
 				this.getString(),
-				"typeInfo", "", 0, 1, SimpleSemanticModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"typeInfo", "", 0, 1, SimpleSemanticModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				umaSemanticModelBridgeEClass,
@@ -6766,7 +6825,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getTextElement_Text(),
 				this.getString(),
-				"text", "", 0, 1, TextElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"text", "", 0, 1, TextElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				imageEClass,
@@ -6775,11 +6834,11 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getImage_Uri(),
 				this.getUri(),
-				"uri", "", 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"uri", "", 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 				getImage_MimeType(),
 				this.getString(),
-				"mimeType", "", 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+				"mimeType", "", 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
 				graphicPrimitiveEClass,
@@ -6812,23 +6871,23 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(
 				getEllipse_RadiusX(),
 				this.getDouble(),
-				"radiusX", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"radiusX", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getEllipse_RadiusY(),
 				this.getDouble(),
-				"radiusY", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"radiusY", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getEllipse_Rotation(),
 				this.getDouble(),
-				"rotation", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"rotation", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getEllipse_StartAngle(),
 				this.getDouble(),
-				"startAngle", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"startAngle", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 				getEllipse_EndAngle(),
 				this.getDouble(),
-				"endAngle", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+				"endAngle", null, 1, 1, Ellipse.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				processFamilyEClass,

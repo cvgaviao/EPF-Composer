@@ -10,11 +10,19 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma.impl;
 
+import java.util.Collection;
+import java.util.List;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import java.util.Set;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.epf.uma.ApplicableMetaClassInfo;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.epf.uma.Kind;
@@ -27,7 +35,7 @@ import org.eclipse.epf.uma.UmaPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.impl.KindImpl#getApplicableMetaClass <em>Applicable Meta Class</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.KindImpl#getApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,33 +50,14 @@ public class KindImpl extends ContentElementImpl implements Kind {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The default value of the '{@link #getApplicableMetaClass() <em>Applicable Meta Class</em>}' attribute.
+	 * The cached value of the '{@link #getApplicableMetaClassInfo() <em>Applicable Meta Class Info</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getApplicableMetaClass()
+	 * @see #getApplicableMetaClassInfo()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Set APPLICABLE_META_CLASS_EDEFAULT = null; //$NON-NLS-1$
-
-	/**
-	 * The cached value of the '{@link #getApplicableMetaClass() <em>Applicable Meta Class</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getApplicableMetaClass()
-	 * @generated
-	 * @ordered
-	 */
-	protected Set applicableMetaClass = APPLICABLE_META_CLASS_EDEFAULT;
-
-	/**
-	 * This is true if the Applicable Meta Class attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean applicableMetaClassESet;
+	protected EList<ApplicableMetaClassInfo> applicableMetaClassInfo;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -94,8 +83,13 @@ public class KindImpl extends ContentElementImpl implements Kind {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Set getApplicableMetaClass() {
-		return applicableMetaClass;
+	public List<ApplicableMetaClassInfo> getApplicableMetaClassInfo() {
+		if (applicableMetaClassInfo == null) {
+			applicableMetaClassInfo = new EObjectContainmentEList.Resolving<ApplicableMetaClassInfo>(
+					ApplicableMetaClassInfo.class, this,
+					UmaPackage.KIND__APPLICABLE_META_CLASS_INFO);
+		}
+		return applicableMetaClassInfo;
 	}
 
 	/**
@@ -103,42 +97,15 @@ public class KindImpl extends ContentElementImpl implements Kind {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setApplicableMetaClass(Set newApplicableMetaClass) {
-		Set oldApplicableMetaClass = applicableMetaClass;
-		applicableMetaClass = newApplicableMetaClass;
-		boolean oldApplicableMetaClassESet = applicableMetaClassESet;
-		applicableMetaClassESet = true;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.KIND__APPLICABLE_META_CLASS,
-					oldApplicableMetaClass, applicableMetaClass,
-					!oldApplicableMetaClassESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetApplicableMetaClass() {
-		Set oldApplicableMetaClass = applicableMetaClass;
-		boolean oldApplicableMetaClassESet = applicableMetaClassESet;
-		applicableMetaClass = APPLICABLE_META_CLASS_EDEFAULT;
-		applicableMetaClassESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.KIND__APPLICABLE_META_CLASS,
-					oldApplicableMetaClass, APPLICABLE_META_CLASS_EDEFAULT,
-					oldApplicableMetaClassESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetApplicableMetaClass() {
-		return applicableMetaClassESet;
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+			return ((InternalEList<?>) getApplicableMetaClassInfo())
+					.basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -149,8 +116,8 @@ public class KindImpl extends ContentElementImpl implements Kind {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case UmaPackage.KIND__APPLICABLE_META_CLASS:
-			return getApplicableMetaClass();
+		case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+			return getApplicableMetaClassInfo();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -160,11 +127,14 @@ public class KindImpl extends ContentElementImpl implements Kind {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case UmaPackage.KIND__APPLICABLE_META_CLASS:
-			setApplicableMetaClass((Set) newValue);
+		case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+			getApplicableMetaClassInfo().clear();
+			getApplicableMetaClassInfo().addAll(
+					(Collection<? extends ApplicableMetaClassInfo>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -178,8 +148,8 @@ public class KindImpl extends ContentElementImpl implements Kind {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case UmaPackage.KIND__APPLICABLE_META_CLASS:
-			unsetApplicableMetaClass();
+		case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+			getApplicableMetaClassInfo().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -193,30 +163,11 @@ public class KindImpl extends ContentElementImpl implements Kind {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case UmaPackage.KIND__APPLICABLE_META_CLASS:
-			return isSetApplicableMetaClass();
+		case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+			return applicableMetaClassInfo != null
+					&& !applicableMetaClassInfo.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy())
-			return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (applicableMetaClass: "); //$NON-NLS-1$
-		if (applicableMetaClassESet)
-			result.append(applicableMetaClass);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
-		result.append(')');
-		return result.toString();
 	}
 
 } //KindImpl

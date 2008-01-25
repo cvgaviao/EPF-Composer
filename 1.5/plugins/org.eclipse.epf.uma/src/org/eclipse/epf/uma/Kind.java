@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Set;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.epf.uma.Kind#getApplicableMetaClass <em>Applicable Meta Class</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.Kind#getApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,56 +31,19 @@ import java.util.Set;
  */
 public interface Kind extends ContentElement {
 	/**
-	 * Returns the value of the '<em><b>Applicable Meta Class</b></em>' attribute.
+	 * Returns the value of the '<em><b>Applicable Meta Class Info</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.ApplicableMetaClassInfo}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Applicable Meta Class</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Applicable Meta Class Info</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Applicable Meta Class</em>' attribute.
-	 * @see #isSetApplicableMetaClass()
-	 * @see #unsetApplicableMetaClass()
-	 * @see #setApplicableMetaClass(Set)
-	 * @see org.eclipse.epf.uma.UmaPackage#getKind_ApplicableMetaClass()
-	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Set" required="true" ordered="false"
+	 * @return the value of the '<em>Applicable Meta Class Info</em>' containment reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getKind_ApplicableMetaClassInfo()
+	 * @model containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */
-	Set getApplicableMetaClass();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.epf.uma.Kind#getApplicableMetaClass <em>Applicable Meta Class</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Applicable Meta Class</em>' attribute.
-	 * @see #isSetApplicableMetaClass()
-	 * @see #unsetApplicableMetaClass()
-	 * @see #getApplicableMetaClass()
-	 * @generated
-	 */
-	void setApplicableMetaClass(Set value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Kind#getApplicableMetaClass <em>Applicable Meta Class</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetApplicableMetaClass()
-	 * @see #getApplicableMetaClass()
-	 * @see #setApplicableMetaClass(Set)
-	 * @generated
-	 */
-	void unsetApplicableMetaClass();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Kind#getApplicableMetaClass <em>Applicable Meta Class</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Applicable Meta Class</em>' attribute is set.
-	 * @see #unsetApplicableMetaClass()
-	 * @see #getApplicableMetaClass()
-	 * @see #setApplicableMetaClass(Set)
-	 * @generated
-	 */
-	boolean isSetApplicableMetaClass();
+	List<ApplicableMetaClassInfo> getApplicableMetaClassInfo();
 
 } // Kind

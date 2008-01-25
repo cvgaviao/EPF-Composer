@@ -37,11 +37,9 @@ public interface TextElement extends LeafElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Text</em>' attribute.
-	 * @see #isSetText()
-	 * @see #unsetText()
 	 * @see #setText(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getTextElement_Text()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getText();
@@ -51,34 +49,9 @@ public interface TextElement extends LeafElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Text</em>' attribute.
-	 * @see #isSetText()
-	 * @see #unsetText()
 	 * @see #getText()
 	 * @generated
 	 */
 	void setText(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.TextElement#getText <em>Text</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetText()
-	 * @see #getText()
-	 * @see #setText(String)
-	 * @generated
-	 */
-	void unsetText();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.TextElement#getText <em>Text</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Text</em>' attribute is set.
-	 * @see #unsetText()
-	 * @see #getText()
-	 * @see #setText(String)
-	 * @generated
-	 */
-	boolean isSetText();
 
 } // TextElement

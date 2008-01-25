@@ -64,15 +64,6 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	protected WorkOrderType linkType = LINK_TYPE_EDEFAULT;
 
 	/**
-	 * This is true if the Link Type attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean linkTypeESet;
-
-	/**
 	 * The cached value of the '{@link #getPred() <em>Pred</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,37 +109,9 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	public void setLinkType(WorkOrderType newLinkType) {
 		WorkOrderType oldLinkType = linkType;
 		linkType = newLinkType == null ? LINK_TYPE_EDEFAULT : newLinkType;
-		boolean oldLinkTypeESet = linkTypeESet;
-		linkTypeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.WORK_ORDER__LINK_TYPE, oldLinkType, linkType,
-					!oldLinkTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetLinkType() {
-		WorkOrderType oldLinkType = linkType;
-		boolean oldLinkTypeESet = linkTypeESet;
-		linkType = LINK_TYPE_EDEFAULT;
-		linkTypeESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.WORK_ORDER__LINK_TYPE, oldLinkType,
-					LINK_TYPE_EDEFAULT, oldLinkTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetLinkType() {
-		return linkTypeESet;
+					UmaPackage.WORK_ORDER__LINK_TYPE, oldLinkType, linkType));
 	}
 
 	/**
@@ -236,7 +199,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_ORDER__LINK_TYPE:
-			unsetLinkType();
+			setLinkType(LINK_TYPE_EDEFAULT);
 			return;
 		case UmaPackage.WORK_ORDER__PRED:
 			setPred((WorkBreakdownElement) null);
@@ -254,7 +217,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.WORK_ORDER__LINK_TYPE:
-			return isSetLinkType();
+			return linkType != LINK_TYPE_EDEFAULT;
 		case UmaPackage.WORK_ORDER__PRED:
 			return pred != null;
 		}
@@ -273,10 +236,7 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (linkType: "); //$NON-NLS-1$
-		if (linkTypeESet)
-			result.append(linkType);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(linkType);
 		result.append(')');
 		return result.toString();
 	}

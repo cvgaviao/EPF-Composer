@@ -61,15 +61,6 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	protected Double x = X_EDEFAULT;
 
 	/**
-	 * This is true if the X attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean xESet;
-
-	/**
 	 * The default value of the '{@link #getY() <em>Y</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -88,15 +79,6 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 * @ordered
 	 */
 	protected Double y = Y_EDEFAULT;
-
-	/**
-	 * This is true if the Y attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean yESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,35 +116,9 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	public void setX(Double newX) {
 		Double oldX = x;
 		x = newX;
-		boolean oldXESet = xESet;
-		xESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.POINT__X, oldX, x, !oldXESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetX() {
-		Double oldX = x;
-		boolean oldXESet = xESet;
-		x = X_EDEFAULT;
-		xESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.POINT__X, oldX, X_EDEFAULT, oldXESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetX() {
-		return xESet;
+					UmaPackage.POINT__X, oldX, x));
 	}
 
 	/**
@@ -182,35 +138,9 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	public void setY(Double newY) {
 		Double oldY = y;
 		y = newY;
-		boolean oldYESet = yESet;
-		yESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.POINT__Y, oldY, y, !oldYESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetY() {
-		Double oldY = y;
-		boolean oldYESet = yESet;
-		y = Y_EDEFAULT;
-		yESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.POINT__Y, oldY, Y_EDEFAULT, oldYESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetY() {
-		return yESet;
+					UmaPackage.POINT__Y, oldY, y));
 	}
 
 	/**
@@ -256,10 +186,10 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.POINT__X:
-			unsetX();
+			setX(X_EDEFAULT);
 			return;
 		case UmaPackage.POINT__Y:
-			unsetY();
+			setY(Y_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -274,9 +204,9 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.POINT__X:
-			return isSetX();
+			return X_EDEFAULT == null ? x != null : !X_EDEFAULT.equals(x);
 		case UmaPackage.POINT__Y:
-			return isSetY();
+			return Y_EDEFAULT == null ? y != null : !Y_EDEFAULT.equals(y);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -293,15 +223,9 @@ public class PointImpl extends MultiResourceEObject implements Point {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (x: "); //$NON-NLS-1$
-		if (xESet)
-			result.append(x);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(x);
 		result.append(", y: "); //$NON-NLS-1$
-		if (yESet)
-			result.append(y);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(y);
 		result.append(')');
 		return result.toString();
 	}

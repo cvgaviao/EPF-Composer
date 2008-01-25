@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ActivityDescription;
+import org.eclipse.epf.uma.ApplicableMetaClassInfo;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ArtifactDescription;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -661,6 +662,23 @@ public class UmaSwitch<T> {
 				result = caseNamedElement(termDefinition);
 			if (result == null)
 				result = caseElement(termDefinition);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case UmaPackage.APPLICABLE_META_CLASS_INFO: {
+			ApplicableMetaClassInfo applicableMetaClassInfo = (ApplicableMetaClassInfo) theEObject;
+			T result = caseApplicableMetaClassInfo(applicableMetaClassInfo);
+			if (result == null)
+				result = caseClassifier(applicableMetaClassInfo);
+			if (result == null)
+				result = caseType(applicableMetaClassInfo);
+			if (result == null)
+				result = casePackageableElement(applicableMetaClassInfo);
+			if (result == null)
+				result = caseNamedElement(applicableMetaClassInfo);
+			if (result == null)
+				result = caseElement(applicableMetaClassInfo);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -3679,6 +3697,21 @@ public class UmaSwitch<T> {
 	 * @generated
 	 */
 	public T caseTermDefinition(TermDefinition object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Applicable Meta Class Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Applicable Meta Class Info</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseApplicableMetaClassInfo(ApplicableMetaClassInfo object) {
 		return null;
 	}
 

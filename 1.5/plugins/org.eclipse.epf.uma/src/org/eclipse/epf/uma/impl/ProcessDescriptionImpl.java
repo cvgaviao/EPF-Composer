@@ -61,15 +61,6 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	protected String scope = SCOPE_EDEFAULT;
 
 	/**
-	 * This is true if the Scope attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean scopeESet;
-
-	/**
 	 * The default value of the '{@link #getUsageNotes() <em>Usage Notes</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -88,15 +79,6 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 * @ordered
 	 */
 	protected String usageNotes = USAGE_NOTES_EDEFAULT;
-
-	/**
-	 * This is true if the Usage Notes attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean usageNotesESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -134,37 +116,9 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	public void setScope(String newScope) {
 		String oldScope = scope;
 		scope = newScope;
-		boolean oldScopeESet = scopeESet;
-		scopeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.PROCESS_DESCRIPTION__SCOPE, oldScope, scope,
-					!oldScopeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetScope() {
-		String oldScope = scope;
-		boolean oldScopeESet = scopeESet;
-		scope = SCOPE_EDEFAULT;
-		scopeESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PROCESS_DESCRIPTION__SCOPE, oldScope,
-					SCOPE_EDEFAULT, oldScopeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetScope() {
-		return scopeESet;
+					UmaPackage.PROCESS_DESCRIPTION__SCOPE, oldScope, scope));
 	}
 
 	/**
@@ -184,37 +138,10 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	public void setUsageNotes(String newUsageNotes) {
 		String oldUsageNotes = usageNotes;
 		usageNotes = newUsageNotes;
-		boolean oldUsageNotesESet = usageNotesESet;
-		usageNotesESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES, oldUsageNotes,
-					usageNotes, !oldUsageNotesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetUsageNotes() {
-		String oldUsageNotes = usageNotes;
-		boolean oldUsageNotesESet = usageNotesESet;
-		usageNotes = USAGE_NOTES_EDEFAULT;
-		usageNotesESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES, oldUsageNotes,
-					USAGE_NOTES_EDEFAULT, oldUsageNotesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetUsageNotes() {
-		return usageNotesESet;
+					usageNotes));
 	}
 
 	/**
@@ -260,10 +187,10 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_DESCRIPTION__SCOPE:
-			unsetScope();
+			setScope(SCOPE_EDEFAULT);
 			return;
 		case UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES:
-			unsetUsageNotes();
+			setUsageNotes(USAGE_NOTES_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -278,9 +205,11 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_DESCRIPTION__SCOPE:
-			return isSetScope();
+			return SCOPE_EDEFAULT == null ? scope != null : !SCOPE_EDEFAULT
+					.equals(scope);
 		case UmaPackage.PROCESS_DESCRIPTION__USAGE_NOTES:
-			return isSetUsageNotes();
+			return USAGE_NOTES_EDEFAULT == null ? usageNotes != null
+					: !USAGE_NOTES_EDEFAULT.equals(usageNotes);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -297,15 +226,9 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (scope: "); //$NON-NLS-1$
-		if (scopeESet)
-			result.append(scope);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(scope);
 		result.append(", usageNotes: "); //$NON-NLS-1$
-		if (usageNotesESet)
-			result.append(usageNotes);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(usageNotes);
 		result.append(')');
 		return result.toString();
 	}

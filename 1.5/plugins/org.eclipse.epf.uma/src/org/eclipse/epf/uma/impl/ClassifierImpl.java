@@ -55,14 +55,6 @@ public abstract class ClassifierImpl extends TypeImpl implements Classifier {
 	 * @ordered
 	 */
 	protected Boolean isAbstract = IS_ABSTRACT_EDEFAULT;
-	/**
-	 * This is true if the Is Abstract attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isAbstractESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -100,37 +92,10 @@ public abstract class ClassifierImpl extends TypeImpl implements Classifier {
 	public void setIsAbstract(Boolean newIsAbstract) {
 		Boolean oldIsAbstract = isAbstract;
 		isAbstract = newIsAbstract;
-		boolean oldIsAbstractESet = isAbstractESet;
-		isAbstractESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.CLASSIFIER__IS_ABSTRACT, oldIsAbstract,
-					isAbstract, !oldIsAbstractESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsAbstract() {
-		Boolean oldIsAbstract = isAbstract;
-		boolean oldIsAbstractESet = isAbstractESet;
-		isAbstract = IS_ABSTRACT_EDEFAULT;
-		isAbstractESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.CLASSIFIER__IS_ABSTRACT, oldIsAbstract,
-					IS_ABSTRACT_EDEFAULT, oldIsAbstractESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsAbstract() {
-		return isAbstractESet;
+					isAbstract));
 	}
 
 	/**
@@ -171,7 +136,7 @@ public abstract class ClassifierImpl extends TypeImpl implements Classifier {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CLASSIFIER__IS_ABSTRACT:
-			unsetIsAbstract();
+			setIsAbstract(IS_ABSTRACT_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -186,7 +151,8 @@ public abstract class ClassifierImpl extends TypeImpl implements Classifier {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.CLASSIFIER__IS_ABSTRACT:
-			return isSetIsAbstract();
+			return IS_ABSTRACT_EDEFAULT == null ? isAbstract != null
+					: !IS_ABSTRACT_EDEFAULT.equals(isAbstract);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -203,10 +169,7 @@ public abstract class ClassifierImpl extends TypeImpl implements Classifier {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isAbstract: "); //$NON-NLS-1$
-		if (isAbstractESet)
-			result.append(isAbstract);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isAbstract);
 		result.append(')');
 		return result.toString();
 	}

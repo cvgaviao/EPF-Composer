@@ -81,15 +81,6 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	protected String guid = GUID_EDEFAULT;
 
 	/**
-	 * This is true if the Guid attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean guidESet;
-
-	/**
 	 * The default value of the '{@link #getPresentationName() <em>Presentation Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -110,15 +101,6 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	protected String presentationName = PRESENTATION_NAME_EDEFAULT;
 
 	/**
-	 * This is true if the Presentation Name attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean presentationNameESet;
-
-	/**
 	 * The default value of the '{@link #getBriefDescription() <em>Brief Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -137,15 +119,6 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	 * @ordered
 	 */
 	protected String briefDescription = BRIEF_DESCRIPTION_EDEFAULT;
-
-	/**
-	 * This is true if the Brief Description attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean briefDescriptionESet;
 
 	/**
 	 * The cached value of the '{@link #getOwnedRules() <em>Owned Rules</em>}' containment reference list.
@@ -198,15 +171,6 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	protected Boolean suppressed = SUPPRESSED_EDEFAULT;
 
 	/**
-	 * This is true if the Suppressed attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean suppressedESet;
-
-	/**
 	 * The default value of the '{@link #getOrderingGuide() <em>Ordering Guide</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -225,15 +189,6 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	 * @ordered
 	 */
 	protected String orderingGuide = ORDERING_GUIDE_EDEFAULT;
-
-	/**
-	 * This is true if the Ordering Guide attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean orderingGuideESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -289,31 +244,6 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void unsetGuid() {
-		String oldGuid = guid;
-		boolean oldGuidESet = guidESet;
-		guid = GUID_EDEFAULT;
-		guidESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.METHOD_ELEMENT__GUID, oldGuid, GUID_EDEFAULT,
-					oldGuidESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetGuid() {
-		return guidESet;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getPresentationName() {
 		return presentationName;
 	}
@@ -326,39 +256,10 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	public void setPresentationName(String newPresentationName) {
 		String oldPresentationName = presentationName;
 		presentationName = newPresentationName;
-		boolean oldPresentationNameESet = presentationNameESet;
-		presentationNameESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME,
-					oldPresentationName, presentationName,
-					!oldPresentationNameESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetPresentationName() {
-		String oldPresentationName = presentationName;
-		boolean oldPresentationNameESet = presentationNameESet;
-		presentationName = PRESENTATION_NAME_EDEFAULT;
-		presentationNameESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME,
-					oldPresentationName, PRESENTATION_NAME_EDEFAULT,
-					oldPresentationNameESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetPresentationName() {
-		return presentationNameESet;
+					oldPresentationName, presentationName));
 	}
 
 	/**
@@ -378,39 +279,10 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	public void setBriefDescription(String newBriefDescription) {
 		String oldBriefDescription = briefDescription;
 		briefDescription = newBriefDescription;
-		boolean oldBriefDescriptionESet = briefDescriptionESet;
-		briefDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_ELEMENT__BRIEF_DESCRIPTION,
-					oldBriefDescription, briefDescription,
-					!oldBriefDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetBriefDescription() {
-		String oldBriefDescription = briefDescription;
-		boolean oldBriefDescriptionESet = briefDescriptionESet;
-		briefDescription = BRIEF_DESCRIPTION_EDEFAULT;
-		briefDescriptionESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.METHOD_ELEMENT__BRIEF_DESCRIPTION,
-					oldBriefDescription, BRIEF_DESCRIPTION_EDEFAULT,
-					oldBriefDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetBriefDescription() {
-		return briefDescriptionESet;
+					oldBriefDescription, briefDescription));
 	}
 
 	/**
@@ -471,37 +343,10 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	public void setSuppressed(Boolean newSuppressed) {
 		Boolean oldSuppressed = suppressed;
 		suppressed = newSuppressed;
-		boolean oldSuppressedESet = suppressedESet;
-		suppressedESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_ELEMENT__SUPPRESSED, oldSuppressed,
-					suppressed, !oldSuppressedESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetSuppressed() {
-		Boolean oldSuppressed = suppressed;
-		boolean oldSuppressedESet = suppressedESet;
-		suppressed = SUPPRESSED_EDEFAULT;
-		suppressedESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.METHOD_ELEMENT__SUPPRESSED, oldSuppressed,
-					SUPPRESSED_EDEFAULT, oldSuppressedESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetSuppressed() {
-		return suppressedESet;
+					suppressed));
 	}
 
 	/**
@@ -521,38 +366,10 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	public void setOrderingGuide(String newOrderingGuide) {
 		String oldOrderingGuide = orderingGuide;
 		orderingGuide = newOrderingGuide;
-		boolean oldOrderingGuideESet = orderingGuideESet;
-		orderingGuideESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE,
-					oldOrderingGuide, orderingGuide, !oldOrderingGuideESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetOrderingGuide() {
-		String oldOrderingGuide = orderingGuide;
-		boolean oldOrderingGuideESet = orderingGuideESet;
-		orderingGuide = ORDERING_GUIDE_EDEFAULT;
-		orderingGuideESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE,
-					oldOrderingGuide, ORDERING_GUIDE_EDEFAULT,
-					oldOrderingGuideESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetOrderingGuide() {
-		return orderingGuideESet;
+					oldOrderingGuide, orderingGuide));
 	}
 
 	/**
@@ -652,13 +469,13 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT__GUID:
-			unsetGuid();
+			setGuid(GUID_EDEFAULT);
 			return;
 		case UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME:
-			unsetPresentationName();
+			setPresentationName(PRESENTATION_NAME_EDEFAULT);
 			return;
 		case UmaPackage.METHOD_ELEMENT__BRIEF_DESCRIPTION:
-			unsetBriefDescription();
+			setBriefDescription(BRIEF_DESCRIPTION_EDEFAULT);
 			return;
 		case UmaPackage.METHOD_ELEMENT__OWNED_RULES:
 			getOwnedRules().clear();
@@ -670,10 +487,10 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 			getKind().clear();
 			return;
 		case UmaPackage.METHOD_ELEMENT__SUPPRESSED:
-			unsetSuppressed();
+			setSuppressed(SUPPRESSED_EDEFAULT);
 			return;
 		case UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE:
-			unsetOrderingGuide();
+			setOrderingGuide(ORDERING_GUIDE_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -688,11 +505,14 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT__GUID:
-			return isSetGuid();
+			return GUID_EDEFAULT == null ? guid != null : !GUID_EDEFAULT
+					.equals(guid);
 		case UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME:
-			return isSetPresentationName();
+			return PRESENTATION_NAME_EDEFAULT == null ? presentationName != null
+					: !PRESENTATION_NAME_EDEFAULT.equals(presentationName);
 		case UmaPackage.METHOD_ELEMENT__BRIEF_DESCRIPTION:
-			return isSetBriefDescription();
+			return BRIEF_DESCRIPTION_EDEFAULT == null ? briefDescription != null
+					: !BRIEF_DESCRIPTION_EDEFAULT.equals(briefDescription);
 		case UmaPackage.METHOD_ELEMENT__OWNED_RULES:
 			return ownedRules != null && !ownedRules.isEmpty();
 		case UmaPackage.METHOD_ELEMENT__METHOD_ELEMENT_PROPERTY:
@@ -701,9 +521,11 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 		case UmaPackage.METHOD_ELEMENT__KIND:
 			return kind != null && !kind.isEmpty();
 		case UmaPackage.METHOD_ELEMENT__SUPPRESSED:
-			return isSetSuppressed();
+			return SUPPRESSED_EDEFAULT == null ? suppressed != null
+					: !SUPPRESSED_EDEFAULT.equals(suppressed);
 		case UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE:
-			return isSetOrderingGuide();
+			return ORDERING_GUIDE_EDEFAULT == null ? orderingGuide != null
+					: !ORDERING_GUIDE_EDEFAULT.equals(orderingGuide);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -720,30 +542,15 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (guid: "); //$NON-NLS-1$
-		if (guidESet)
-			result.append(guid);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(guid);
 		result.append(", presentationName: "); //$NON-NLS-1$
-		if (presentationNameESet)
-			result.append(presentationName);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(presentationName);
 		result.append(", briefDescription: "); //$NON-NLS-1$
-		if (briefDescriptionESet)
-			result.append(briefDescription);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(briefDescription);
 		result.append(", suppressed: "); //$NON-NLS-1$
-		if (suppressedESet)
-			result.append(suppressed);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(suppressed);
 		result.append(", orderingGuide: "); //$NON-NLS-1$
-		if (orderingGuideESet)
-			result.append(orderingGuide);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(orderingGuide);
 		result.append(')');
 		return result.toString();
 	}

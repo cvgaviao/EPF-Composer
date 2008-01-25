@@ -71,15 +71,6 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	protected Boolean userChangeable = USER_CHANGEABLE_EDEFAULT;
 
 	/**
-	 * This is true if the User Changeable attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean userChangeableESet;
-
-	/**
 	 * The cached value of the '{@link #getMethodPackages() <em>Method Packages</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -135,38 +126,10 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	public void setUserChangeable(Boolean newUserChangeable) {
 		Boolean oldUserChangeable = userChangeable;
 		userChangeable = newUserChangeable;
-		boolean oldUserChangeableESet = userChangeableESet;
-		userChangeableESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE,
-					oldUserChangeable, userChangeable, !oldUserChangeableESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetUserChangeable() {
-		Boolean oldUserChangeable = userChangeable;
-		boolean oldUserChangeableESet = userChangeableESet;
-		userChangeable = USER_CHANGEABLE_EDEFAULT;
-		userChangeableESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE,
-					oldUserChangeable, USER_CHANGEABLE_EDEFAULT,
-					oldUserChangeableESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetUserChangeable() {
-		return userChangeableESet;
+					oldUserChangeable, userChangeable));
 	}
 
 	/**
@@ -264,7 +227,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
-			unsetUserChangeable();
+			setUserChangeable(USER_CHANGEABLE_EDEFAULT);
 			return;
 		case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGES:
 			getMethodPackages().clear();
@@ -285,7 +248,8 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
-			return isSetUserChangeable();
+			return USER_CHANGEABLE_EDEFAULT == null ? userChangeable != null
+					: !USER_CHANGEABLE_EDEFAULT.equals(userChangeable);
 		case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGES:
 			return methodPackages != null && !methodPackages.isEmpty();
 		case UmaPackage.METHOD_PLUGIN__BASES:
@@ -306,10 +270,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (userChangeable: "); //$NON-NLS-1$
-		if (userChangeableESet)
-			result.append(userChangeable);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(userChangeable);
 		result.append(')');
 		return result.toString();
 	}

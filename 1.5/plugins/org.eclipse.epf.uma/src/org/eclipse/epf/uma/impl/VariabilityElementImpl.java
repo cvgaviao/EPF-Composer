@@ -64,15 +64,6 @@ public abstract class VariabilityElementImpl extends MethodElementImpl
 	protected VariabilityType variabilityType = VARIABILITY_TYPE_EDEFAULT;
 
 	/**
-	 * This is true if the Variability Type attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean variabilityTypeESet;
-
-	/**
 	 * The cached value of the '{@link #getVariabilityBasedOnElement() <em>Variability Based On Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -119,39 +110,10 @@ public abstract class VariabilityElementImpl extends MethodElementImpl
 		VariabilityType oldVariabilityType = variabilityType;
 		variabilityType = newVariabilityType == null ? VARIABILITY_TYPE_EDEFAULT
 				: newVariabilityType;
-		boolean oldVariabilityTypeESet = variabilityTypeESet;
-		variabilityTypeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_TYPE,
-					oldVariabilityType, variabilityType,
-					!oldVariabilityTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetVariabilityType() {
-		VariabilityType oldVariabilityType = variabilityType;
-		boolean oldVariabilityTypeESet = variabilityTypeESet;
-		variabilityType = VARIABILITY_TYPE_EDEFAULT;
-		variabilityTypeESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_TYPE,
-					oldVariabilityType, VARIABILITY_TYPE_EDEFAULT,
-					oldVariabilityTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetVariabilityType() {
-		return variabilityTypeESet;
+					oldVariabilityType, variabilityType));
 	}
 
 	/**
@@ -248,7 +210,7 @@ public abstract class VariabilityElementImpl extends MethodElementImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_TYPE:
-			unsetVariabilityType();
+			setVariabilityType(VARIABILITY_TYPE_EDEFAULT);
 			return;
 		case UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_BASED_ON_ELEMENT:
 			setVariabilityBasedOnElement((VariabilityElement) null);
@@ -266,7 +228,7 @@ public abstract class VariabilityElementImpl extends MethodElementImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_TYPE:
-			return isSetVariabilityType();
+			return variabilityType != VARIABILITY_TYPE_EDEFAULT;
 		case UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_BASED_ON_ELEMENT:
 			return variabilityBasedOnElement != null;
 		}
@@ -285,10 +247,7 @@ public abstract class VariabilityElementImpl extends MethodElementImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (variabilityType: "); //$NON-NLS-1$
-		if (variabilityTypeESet)
-			result.append(variabilityType);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(variabilityType);
 		result.append(')');
 		return result.toString();
 	}

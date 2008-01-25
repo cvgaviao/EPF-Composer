@@ -39,11 +39,9 @@ public interface DiagramLink extends DiagramElement {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Zoom</em>' attribute.
-	 * @see #isSetZoom()
-	 * @see #unsetZoom()
 	 * @see #setZoom(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDiagramLink_Zoom()
-	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getZoom();
@@ -53,35 +51,10 @@ public interface DiagramLink extends DiagramElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Zoom</em>' attribute.
-	 * @see #isSetZoom()
-	 * @see #unsetZoom()
 	 * @see #getZoom()
 	 * @generated
 	 */
 	void setZoom(Double value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.DiagramLink#getZoom <em>Zoom</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetZoom()
-	 * @see #getZoom()
-	 * @see #setZoom(Double)
-	 * @generated
-	 */
-	void unsetZoom();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.DiagramLink#getZoom <em>Zoom</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Zoom</em>' attribute is set.
-	 * @see #unsetZoom()
-	 * @see #getZoom()
-	 * @see #setZoom(Double)
-	 * @generated
-	 */
-	boolean isSetZoom();
 
 	/**
 	 * Returns the value of the '<em><b>Viewport</b></em>' reference.

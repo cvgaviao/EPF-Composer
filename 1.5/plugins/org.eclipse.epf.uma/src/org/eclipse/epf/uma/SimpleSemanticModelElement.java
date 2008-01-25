@@ -37,11 +37,9 @@ public interface SimpleSemanticModelElement extends SemanticModelBridge {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type Info</em>' attribute.
-	 * @see #isSetTypeInfo()
-	 * @see #unsetTypeInfo()
 	 * @see #setTypeInfo(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getSimpleSemanticModelElement_TypeInfo()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getTypeInfo();
@@ -51,34 +49,9 @@ public interface SimpleSemanticModelElement extends SemanticModelBridge {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type Info</em>' attribute.
-	 * @see #isSetTypeInfo()
-	 * @see #unsetTypeInfo()
 	 * @see #getTypeInfo()
 	 * @generated
 	 */
 	void setTypeInfo(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.SimpleSemanticModelElement#getTypeInfo <em>Type Info</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetTypeInfo()
-	 * @see #getTypeInfo()
-	 * @see #setTypeInfo(String)
-	 * @generated
-	 */
-	void unsetTypeInfo();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.SimpleSemanticModelElement#getTypeInfo <em>Type Info</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Type Info</em>' attribute is set.
-	 * @see #unsetTypeInfo()
-	 * @see #getTypeInfo()
-	 * @see #setTypeInfo(String)
-	 * @generated
-	 */
-	boolean isSetTypeInfo();
 
 } // SimpleSemanticModelElement

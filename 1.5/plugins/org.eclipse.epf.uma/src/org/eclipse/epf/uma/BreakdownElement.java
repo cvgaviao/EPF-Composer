@@ -60,11 +60,9 @@ public interface BreakdownElement extends ProcessElement {
 	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Prefix</em>' attribute.
-	 * @see #isSetPrefix()
-	 * @see #unsetPrefix()
 	 * @see #setPrefix(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_Prefix()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getPrefix();
@@ -74,35 +72,10 @@ public interface BreakdownElement extends ProcessElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Prefix</em>' attribute.
-	 * @see #isSetPrefix()
-	 * @see #unsetPrefix()
 	 * @see #getPrefix()
 	 * @generated
 	 */
 	void setPrefix(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getPrefix <em>Prefix</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetPrefix()
-	 * @see #getPrefix()
-	 * @see #setPrefix(String)
-	 * @generated
-	 */
-	void unsetPrefix();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getPrefix <em>Prefix</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Prefix</em>' attribute is set.
-	 * @see #unsetPrefix()
-	 * @see #getPrefix()
-	 * @see #setPrefix(String)
-	 * @generated
-	 */
-	boolean isSetPrefix();
 
 	/**
 	 * Returns the value of the '<em><b>Is Planned</b></em>' attribute.
@@ -116,11 +89,9 @@ public interface BreakdownElement extends ProcessElement {
 	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Planned</em>' attribute.
-	 * @see #isSetIsPlanned()
-	 * @see #unsetIsPlanned()
 	 * @see #setIsPlanned(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_IsPlanned()
-	 * @model default="true" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsPlanned();
@@ -130,35 +101,10 @@ public interface BreakdownElement extends ProcessElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Planned</em>' attribute.
-	 * @see #isSetIsPlanned()
-	 * @see #unsetIsPlanned()
 	 * @see #getIsPlanned()
 	 * @generated
 	 */
 	void setIsPlanned(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getIsPlanned <em>Is Planned</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsPlanned()
-	 * @see #getIsPlanned()
-	 * @see #setIsPlanned(Boolean)
-	 * @generated
-	 */
-	void unsetIsPlanned();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getIsPlanned <em>Is Planned</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Planned</em>' attribute is set.
-	 * @see #unsetIsPlanned()
-	 * @see #getIsPlanned()
-	 * @see #setIsPlanned(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsPlanned();
 
 	/**
 	 * Returns the value of the '<em><b>Has Multiple Occurrences</b></em>' attribute.
@@ -170,11 +116,9 @@ public interface BreakdownElement extends ProcessElement {
 	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Has Multiple Occurrences</em>' attribute.
-	 * @see #isSetHasMultipleOccurrences()
-	 * @see #unsetHasMultipleOccurrences()
 	 * @see #setHasMultipleOccurrences(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_HasMultipleOccurrences()
-	 * @model default="false" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getHasMultipleOccurrences();
@@ -184,35 +128,10 @@ public interface BreakdownElement extends ProcessElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Has Multiple Occurrences</em>' attribute.
-	 * @see #isSetHasMultipleOccurrences()
-	 * @see #unsetHasMultipleOccurrences()
 	 * @see #getHasMultipleOccurrences()
 	 * @generated
 	 */
 	void setHasMultipleOccurrences(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getHasMultipleOccurrences <em>Has Multiple Occurrences</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetHasMultipleOccurrences()
-	 * @see #getHasMultipleOccurrences()
-	 * @see #setHasMultipleOccurrences(Boolean)
-	 * @generated
-	 */
-	void unsetHasMultipleOccurrences();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getHasMultipleOccurrences <em>Has Multiple Occurrences</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Has Multiple Occurrences</em>' attribute is set.
-	 * @see #unsetHasMultipleOccurrences()
-	 * @see #getHasMultipleOccurrences()
-	 * @see #setHasMultipleOccurrences(Boolean)
-	 * @generated
-	 */
-	boolean isSetHasMultipleOccurrences();
 
 	/**
 	 * Returns the value of the '<em><b>Is Optional</b></em>' attribute.
@@ -223,11 +142,9 @@ public interface BreakdownElement extends ProcessElement {
 	 * The isOptional attribute indicates that the Breakdown Element describes work, a work result, or even work resources, which inclusion is not mandatory when performing a project that is planned based on a process containing this element.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Optional</em>' attribute.
-	 * @see #isSetIsOptional()
-	 * @see #unsetIsOptional()
 	 * @see #setIsOptional(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getBreakdownElement_IsOptional()
-	 * @model default="false" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsOptional();
@@ -237,35 +154,10 @@ public interface BreakdownElement extends ProcessElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Optional</em>' attribute.
-	 * @see #isSetIsOptional()
-	 * @see #unsetIsOptional()
 	 * @see #getIsOptional()
 	 * @generated
 	 */
 	void setIsOptional(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getIsOptional <em>Is Optional</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsOptional()
-	 * @see #getIsOptional()
-	 * @see #setIsOptional(Boolean)
-	 * @generated
-	 */
-	void unsetIsOptional();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.BreakdownElement#getIsOptional <em>Is Optional</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Optional</em>' attribute is set.
-	 * @see #unsetIsOptional()
-	 * @see #getIsOptional()
-	 * @see #setIsOptional(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsOptional();
 
 	/**
 	 * Returns the value of the '<em><b>Presented After</b></em>' reference.

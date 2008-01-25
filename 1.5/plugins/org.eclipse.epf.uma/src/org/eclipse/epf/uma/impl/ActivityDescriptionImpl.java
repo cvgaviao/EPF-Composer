@@ -62,15 +62,6 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	protected String purpose = PURPOSE_EDEFAULT;
 
 	/**
-	 * This is true if the Purpose attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean purposeESet;
-
-	/**
 	 * The default value of the '{@link #getAlternatives() <em>Alternatives</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,15 +82,6 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	protected String alternatives = ALTERNATIVES_EDEFAULT;
 
 	/**
-	 * This is true if the Alternatives attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean alternativesESet;
-
-	/**
 	 * The default value of the '{@link #getHowtoStaff() <em>Howto Staff</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -118,15 +100,6 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	 * @ordered
 	 */
 	protected String howtoStaff = HOWTO_STAFF_EDEFAULT;
-
-	/**
-	 * This is true if the Howto Staff attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean howtoStaffESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -164,37 +137,10 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	public void setPurpose(String newPurpose) {
 		String oldPurpose = purpose;
 		purpose = newPurpose;
-		boolean oldPurposeESet = purposeESet;
-		purposeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ACTIVITY_DESCRIPTION__PURPOSE, oldPurpose,
-					purpose, !oldPurposeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetPurpose() {
-		String oldPurpose = purpose;
-		boolean oldPurposeESet = purposeESet;
-		purpose = PURPOSE_EDEFAULT;
-		purposeESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ACTIVITY_DESCRIPTION__PURPOSE, oldPurpose,
-					PURPOSE_EDEFAULT, oldPurposeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetPurpose() {
-		return purposeESet;
+					purpose));
 	}
 
 	/**
@@ -214,37 +160,10 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	public void setAlternatives(String newAlternatives) {
 		String oldAlternatives = alternatives;
 		alternatives = newAlternatives;
-		boolean oldAlternativesESet = alternativesESet;
-		alternativesESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ACTIVITY_DESCRIPTION__ALTERNATIVES,
-					oldAlternatives, alternatives, !oldAlternativesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetAlternatives() {
-		String oldAlternatives = alternatives;
-		boolean oldAlternativesESet = alternativesESet;
-		alternatives = ALTERNATIVES_EDEFAULT;
-		alternativesESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ACTIVITY_DESCRIPTION__ALTERNATIVES,
-					oldAlternatives, ALTERNATIVES_EDEFAULT, oldAlternativesESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetAlternatives() {
-		return alternativesESet;
+					oldAlternatives, alternatives));
 	}
 
 	/**
@@ -264,37 +183,10 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	public void setHowtoStaff(String newHowtoStaff) {
 		String oldHowtoStaff = howtoStaff;
 		howtoStaff = newHowtoStaff;
-		boolean oldHowtoStaffESet = howtoStaffESet;
-		howtoStaffESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ACTIVITY_DESCRIPTION__HOWTO_STAFF,
-					oldHowtoStaff, howtoStaff, !oldHowtoStaffESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetHowtoStaff() {
-		String oldHowtoStaff = howtoStaff;
-		boolean oldHowtoStaffESet = howtoStaffESet;
-		howtoStaff = HOWTO_STAFF_EDEFAULT;
-		howtoStaffESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ACTIVITY_DESCRIPTION__HOWTO_STAFF,
-					oldHowtoStaff, HOWTO_STAFF_EDEFAULT, oldHowtoStaffESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetHowtoStaff() {
-		return howtoStaffESet;
+					oldHowtoStaff, howtoStaff));
 	}
 
 	/**
@@ -345,13 +237,13 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ACTIVITY_DESCRIPTION__PURPOSE:
-			unsetPurpose();
+			setPurpose(PURPOSE_EDEFAULT);
 			return;
 		case UmaPackage.ACTIVITY_DESCRIPTION__ALTERNATIVES:
-			unsetAlternatives();
+			setAlternatives(ALTERNATIVES_EDEFAULT);
 			return;
 		case UmaPackage.ACTIVITY_DESCRIPTION__HOWTO_STAFF:
-			unsetHowtoStaff();
+			setHowtoStaff(HOWTO_STAFF_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -366,11 +258,14 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ACTIVITY_DESCRIPTION__PURPOSE:
-			return isSetPurpose();
+			return PURPOSE_EDEFAULT == null ? purpose != null
+					: !PURPOSE_EDEFAULT.equals(purpose);
 		case UmaPackage.ACTIVITY_DESCRIPTION__ALTERNATIVES:
-			return isSetAlternatives();
+			return ALTERNATIVES_EDEFAULT == null ? alternatives != null
+					: !ALTERNATIVES_EDEFAULT.equals(alternatives);
 		case UmaPackage.ACTIVITY_DESCRIPTION__HOWTO_STAFF:
-			return isSetHowtoStaff();
+			return HOWTO_STAFF_EDEFAULT == null ? howtoStaff != null
+					: !HOWTO_STAFF_EDEFAULT.equals(howtoStaff);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -387,20 +282,11 @@ public class ActivityDescriptionImpl extends BreakdownElementDescriptionImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (purpose: "); //$NON-NLS-1$
-		if (purposeESet)
-			result.append(purpose);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(purpose);
 		result.append(", alternatives: "); //$NON-NLS-1$
-		if (alternativesESet)
-			result.append(alternatives);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(alternatives);
 		result.append(", howtoStaff: "); //$NON-NLS-1$
-		if (howtoStaffESet)
-			result.append(howtoStaff);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(howtoStaff);
 		result.append(')');
 		return result.toString();
 	}

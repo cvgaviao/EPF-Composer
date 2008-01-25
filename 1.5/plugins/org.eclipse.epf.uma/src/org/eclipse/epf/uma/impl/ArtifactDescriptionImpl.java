@@ -63,15 +63,6 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	protected String briefOutline = BRIEF_OUTLINE_EDEFAULT;
 
 	/**
-	 * This is true if the Brief Outline attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean briefOutlineESet;
-
-	/**
 	 * The default value of the '{@link #getRepresentationOptions() <em>Representation Options</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,15 +81,6 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	 * @ordered
 	 */
 	protected String representationOptions = REPRESENTATION_OPTIONS_EDEFAULT;
-
-	/**
-	 * This is true if the Representation Options attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean representationOptionsESet;
 
 	/**
 	 * The default value of the '{@link #getRepresentation() <em>Representation</em>}' attribute.
@@ -121,15 +103,6 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	protected String representation = REPRESENTATION_EDEFAULT;
 
 	/**
-	 * This is true if the Representation attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean representationESet;
-
-	/**
 	 * The default value of the '{@link #getNotation() <em>Notation</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -148,15 +121,6 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	 * @ordered
 	 */
 	protected String notation = NOTATION_EDEFAULT;
-
-	/**
-	 * This is true if the Notation attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean notationESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -194,38 +158,10 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	public void setBriefOutline(String newBriefOutline) {
 		String oldBriefOutline = briefOutline;
 		briefOutline = newBriefOutline;
-		boolean oldBriefOutlineESet = briefOutlineESet;
-		briefOutlineESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ARTIFACT_DESCRIPTION__BRIEF_OUTLINE,
-					oldBriefOutline, briefOutline, !oldBriefOutlineESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetBriefOutline() {
-		String oldBriefOutline = briefOutline;
-		boolean oldBriefOutlineESet = briefOutlineESet;
-		briefOutline = BRIEF_OUTLINE_EDEFAULT;
-		briefOutlineESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ARTIFACT_DESCRIPTION__BRIEF_OUTLINE,
-					oldBriefOutline, BRIEF_OUTLINE_EDEFAULT,
-					oldBriefOutlineESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetBriefOutline() {
-		return briefOutlineESet;
+					oldBriefOutline, briefOutline));
 	}
 
 	/**
@@ -245,39 +181,10 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	public void setRepresentationOptions(String newRepresentationOptions) {
 		String oldRepresentationOptions = representationOptions;
 		representationOptions = newRepresentationOptions;
-		boolean oldRepresentationOptionsESet = representationOptionsESet;
-		representationOptionsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION_OPTIONS,
-					oldRepresentationOptions, representationOptions,
-					!oldRepresentationOptionsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRepresentationOptions() {
-		String oldRepresentationOptions = representationOptions;
-		boolean oldRepresentationOptionsESet = representationOptionsESet;
-		representationOptions = REPRESENTATION_OPTIONS_EDEFAULT;
-		representationOptionsESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION_OPTIONS,
-					oldRepresentationOptions, REPRESENTATION_OPTIONS_EDEFAULT,
-					oldRepresentationOptionsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRepresentationOptions() {
-		return representationOptionsESet;
+					oldRepresentationOptions, representationOptions));
 	}
 
 	/**
@@ -297,38 +204,10 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	public void setRepresentation(String newRepresentation) {
 		String oldRepresentation = representation;
 		representation = newRepresentation;
-		boolean oldRepresentationESet = representationESet;
-		representationESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION,
-					oldRepresentation, representation, !oldRepresentationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRepresentation() {
-		String oldRepresentation = representation;
-		boolean oldRepresentationESet = representationESet;
-		representation = REPRESENTATION_EDEFAULT;
-		representationESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION,
-					oldRepresentation, REPRESENTATION_EDEFAULT,
-					oldRepresentationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRepresentation() {
-		return representationESet;
+					oldRepresentation, representation));
 	}
 
 	/**
@@ -348,37 +227,10 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	public void setNotation(String newNotation) {
 		String oldNotation = notation;
 		notation = newNotation;
-		boolean oldNotationESet = notationESet;
-		notationESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.ARTIFACT_DESCRIPTION__NOTATION, oldNotation,
-					notation, !oldNotationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetNotation() {
-		String oldNotation = notation;
-		boolean oldNotationESet = notationESet;
-		notation = NOTATION_EDEFAULT;
-		notationESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.ARTIFACT_DESCRIPTION__NOTATION, oldNotation,
-					NOTATION_EDEFAULT, oldNotationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetNotation() {
-		return notationESet;
+					notation));
 	}
 
 	/**
@@ -434,16 +286,16 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ARTIFACT_DESCRIPTION__BRIEF_OUTLINE:
-			unsetBriefOutline();
+			setBriefOutline(BRIEF_OUTLINE_EDEFAULT);
 			return;
 		case UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION_OPTIONS:
-			unsetRepresentationOptions();
+			setRepresentationOptions(REPRESENTATION_OPTIONS_EDEFAULT);
 			return;
 		case UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION:
-			unsetRepresentation();
+			setRepresentation(REPRESENTATION_EDEFAULT);
 			return;
 		case UmaPackage.ARTIFACT_DESCRIPTION__NOTATION:
-			unsetNotation();
+			setNotation(NOTATION_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -458,13 +310,18 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.ARTIFACT_DESCRIPTION__BRIEF_OUTLINE:
-			return isSetBriefOutline();
+			return BRIEF_OUTLINE_EDEFAULT == null ? briefOutline != null
+					: !BRIEF_OUTLINE_EDEFAULT.equals(briefOutline);
 		case UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION_OPTIONS:
-			return isSetRepresentationOptions();
+			return REPRESENTATION_OPTIONS_EDEFAULT == null ? representationOptions != null
+					: !REPRESENTATION_OPTIONS_EDEFAULT
+							.equals(representationOptions);
 		case UmaPackage.ARTIFACT_DESCRIPTION__REPRESENTATION:
-			return isSetRepresentation();
+			return REPRESENTATION_EDEFAULT == null ? representation != null
+					: !REPRESENTATION_EDEFAULT.equals(representation);
 		case UmaPackage.ARTIFACT_DESCRIPTION__NOTATION:
-			return isSetNotation();
+			return NOTATION_EDEFAULT == null ? notation != null
+					: !NOTATION_EDEFAULT.equals(notation);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -481,25 +338,13 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (briefOutline: "); //$NON-NLS-1$
-		if (briefOutlineESet)
-			result.append(briefOutline);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(briefOutline);
 		result.append(", representationOptions: "); //$NON-NLS-1$
-		if (representationOptionsESet)
-			result.append(representationOptions);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(representationOptions);
 		result.append(", representation: "); //$NON-NLS-1$
-		if (representationESet)
-			result.append(representation);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(representation);
 		result.append(", notation: "); //$NON-NLS-1$
-		if (notationESet)
-			result.append(notation);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(notation);
 		result.append(')');
 		return result.toString();
 	}

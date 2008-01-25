@@ -78,15 +78,6 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	protected String authors = AUTHORS_EDEFAULT;
 
 	/**
-	 * This is true if the Authors attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean authorsESet;
-
-	/**
 	 * The default value of the '{@link #getChangeDate() <em>Change Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -105,15 +96,6 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	 * @ordered
 	 */
 	protected Date changeDate = CHANGE_DATE_EDEFAULT;
-
-	/**
-	 * This is true if the Change Date attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean changeDateESet;
 
 	/**
 	 * The default value of the '{@link #getChangeDescription() <em>Change Description</em>}' attribute.
@@ -136,15 +118,6 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	protected String changeDescription = CHANGE_DESCRIPTION_EDEFAULT;
 
 	/**
-	 * This is true if the Change Description attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean changeDescriptionESet;
-
-	/**
 	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -163,15 +136,6 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	 * @ordered
 	 */
 	protected String version = VERSION_EDEFAULT;
-
-	/**
-	 * This is true if the Version attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean versionESet;
 
 	/**
 	 * The cached value of the '{@link #getCopyrightStatement() <em>Copyright Statement</em>}' reference.
@@ -239,37 +203,9 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	public void setAuthors(String newAuthors) {
 		String oldAuthors = authors;
 		authors = newAuthors;
-		boolean oldAuthorsESet = authorsESet;
-		authorsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.PROCESS_COMPONENT__AUTHORS, oldAuthors, authors,
-					!oldAuthorsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetAuthors() {
-		String oldAuthors = authors;
-		boolean oldAuthorsESet = authorsESet;
-		authors = AUTHORS_EDEFAULT;
-		authorsESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PROCESS_COMPONENT__AUTHORS, oldAuthors,
-					AUTHORS_EDEFAULT, oldAuthorsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetAuthors() {
-		return authorsESet;
+					UmaPackage.PROCESS_COMPONENT__AUTHORS, oldAuthors, authors));
 	}
 
 	/**
@@ -289,37 +225,10 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	public void setChangeDate(Date newChangeDate) {
 		Date oldChangeDate = changeDate;
 		changeDate = newChangeDate;
-		boolean oldChangeDateESet = changeDateESet;
-		changeDateESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.PROCESS_COMPONENT__CHANGE_DATE, oldChangeDate,
-					changeDate, !oldChangeDateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetChangeDate() {
-		Date oldChangeDate = changeDate;
-		boolean oldChangeDateESet = changeDateESet;
-		changeDate = CHANGE_DATE_EDEFAULT;
-		changeDateESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PROCESS_COMPONENT__CHANGE_DATE, oldChangeDate,
-					CHANGE_DATE_EDEFAULT, oldChangeDateESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetChangeDate() {
-		return changeDateESet;
+					changeDate));
 	}
 
 	/**
@@ -339,39 +248,10 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	public void setChangeDescription(String newChangeDescription) {
 		String oldChangeDescription = changeDescription;
 		changeDescription = newChangeDescription;
-		boolean oldChangeDescriptionESet = changeDescriptionESet;
-		changeDescriptionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.PROCESS_COMPONENT__CHANGE_DESCRIPTION,
-					oldChangeDescription, changeDescription,
-					!oldChangeDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetChangeDescription() {
-		String oldChangeDescription = changeDescription;
-		boolean oldChangeDescriptionESet = changeDescriptionESet;
-		changeDescription = CHANGE_DESCRIPTION_EDEFAULT;
-		changeDescriptionESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PROCESS_COMPONENT__CHANGE_DESCRIPTION,
-					oldChangeDescription, CHANGE_DESCRIPTION_EDEFAULT,
-					oldChangeDescriptionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetChangeDescription() {
-		return changeDescriptionESet;
+					oldChangeDescription, changeDescription));
 	}
 
 	/**
@@ -391,37 +271,9 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	public void setVersion(String newVersion) {
 		String oldVersion = version;
 		version = newVersion;
-		boolean oldVersionESet = versionESet;
-		versionESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.PROCESS_COMPONENT__VERSION, oldVersion, version,
-					!oldVersionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetVersion() {
-		String oldVersion = version;
-		boolean oldVersionESet = versionESet;
-		version = VERSION_EDEFAULT;
-		versionESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.PROCESS_COMPONENT__VERSION, oldVersion,
-					VERSION_EDEFAULT, oldVersionESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetVersion() {
-		return versionESet;
+					UmaPackage.PROCESS_COMPONENT__VERSION, oldVersion, version));
 	}
 
 	/**
@@ -660,16 +512,16 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT__AUTHORS:
-			unsetAuthors();
+			setAuthors(AUTHORS_EDEFAULT);
 			return;
 		case UmaPackage.PROCESS_COMPONENT__CHANGE_DATE:
-			unsetChangeDate();
+			setChangeDate(CHANGE_DATE_EDEFAULT);
 			return;
 		case UmaPackage.PROCESS_COMPONENT__CHANGE_DESCRIPTION:
-			unsetChangeDescription();
+			setChangeDescription(CHANGE_DESCRIPTION_EDEFAULT);
 			return;
 		case UmaPackage.PROCESS_COMPONENT__VERSION:
-			unsetVersion();
+			setVersion(VERSION_EDEFAULT);
 			return;
 		case UmaPackage.PROCESS_COMPONENT__COPYRIGHT_STATEMENT:
 			setCopyrightStatement((SupportingMaterial) null);
@@ -693,13 +545,17 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT__AUTHORS:
-			return isSetAuthors();
+			return AUTHORS_EDEFAULT == null ? authors != null
+					: !AUTHORS_EDEFAULT.equals(authors);
 		case UmaPackage.PROCESS_COMPONENT__CHANGE_DATE:
-			return isSetChangeDate();
+			return CHANGE_DATE_EDEFAULT == null ? changeDate != null
+					: !CHANGE_DATE_EDEFAULT.equals(changeDate);
 		case UmaPackage.PROCESS_COMPONENT__CHANGE_DESCRIPTION:
-			return isSetChangeDescription();
+			return CHANGE_DESCRIPTION_EDEFAULT == null ? changeDescription != null
+					: !CHANGE_DESCRIPTION_EDEFAULT.equals(changeDescription);
 		case UmaPackage.PROCESS_COMPONENT__VERSION:
-			return isSetVersion();
+			return VERSION_EDEFAULT == null ? version != null
+					: !VERSION_EDEFAULT.equals(version);
 		case UmaPackage.PROCESS_COMPONENT__COPYRIGHT_STATEMENT:
 			return copyrightStatement != null;
 		case UmaPackage.PROCESS_COMPONENT__INTERFACES:
@@ -774,25 +630,13 @@ public class ProcessComponentImpl extends ProcessPackageImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (authors: "); //$NON-NLS-1$
-		if (authorsESet)
-			result.append(authors);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(authors);
 		result.append(", changeDate: "); //$NON-NLS-1$
-		if (changeDateESet)
-			result.append(changeDate);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(changeDate);
 		result.append(", changeDescription: "); //$NON-NLS-1$
-		if (changeDescriptionESet)
-			result.append(changeDescription);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(changeDescription);
 		result.append(", version: "); //$NON-NLS-1$
-		if (versionESet)
-			result.append(version);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(version);
 		result.append(')');
 		return result.toString();
 	}

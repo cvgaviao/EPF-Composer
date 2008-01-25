@@ -45,11 +45,9 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * This attribute is used to define repetition of work, e.g. iterations.  A Process Work Definition with this attribute set to True shall be repeated more than once on the same set of artifacts.  For example, for an instance of Iteration (defined as a special Process Work Definition below) this attribute is set to True by default indicating that every sub-Activity will be repeated more than once.  However, any Process Work Definition can set this attribute to True to define iterations (e.g. to iterate one Activity consisting of many sub-activities or even Phases, but to iterate just one Task).
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Repeatable</em>' attribute.
-	 * @see #isSetIsRepeatable()
-	 * @see #unsetIsRepeatable()
 	 * @see #setIsRepeatable(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkBreakdownElement_IsRepeatable()
-	 * @model default="false" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsRepeatable();
@@ -59,35 +57,10 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Repeatable</em>' attribute.
-	 * @see #isSetIsRepeatable()
-	 * @see #unsetIsRepeatable()
 	 * @see #getIsRepeatable()
 	 * @generated
 	 */
 	void setIsRepeatable(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkBreakdownElement#getIsRepeatable <em>Is Repeatable</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsRepeatable()
-	 * @see #getIsRepeatable()
-	 * @see #setIsRepeatable(Boolean)
-	 * @generated
-	 */
-	void unsetIsRepeatable();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkBreakdownElement#getIsRepeatable <em>Is Repeatable</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Repeatable</em>' attribute is set.
-	 * @see #unsetIsRepeatable()
-	 * @see #getIsRepeatable()
-	 * @see #setIsRepeatable(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsRepeatable();
 
 	/**
 	 * Returns the value of the '<em><b>Is Ongoing</b></em>' attribute.
@@ -98,11 +71,9 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * If the isOngoing attribute is set to True for a Process Work Definition instance, then the element describes an ongoing piece of work without a fixed duration or end state.  For example, the Process Work Definition could represent work of an administrator continuously (e.g. 3h a day) working to ensure that systems are kept in a certain state.  Another example would be program management work overseeing many different projects being scheduled for one particular project at specific reoccurring intervals during the whole lifecycle of the project.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Ongoing</em>' attribute.
-	 * @see #isSetIsOngoing()
-	 * @see #unsetIsOngoing()
 	 * @see #setIsOngoing(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkBreakdownElement_IsOngoing()
-	 * @model default="false" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsOngoing();
@@ -112,35 +83,10 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Ongoing</em>' attribute.
-	 * @see #isSetIsOngoing()
-	 * @see #unsetIsOngoing()
 	 * @see #getIsOngoing()
 	 * @generated
 	 */
 	void setIsOngoing(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkBreakdownElement#getIsOngoing <em>Is Ongoing</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsOngoing()
-	 * @see #getIsOngoing()
-	 * @see #setIsOngoing(Boolean)
-	 * @generated
-	 */
-	void unsetIsOngoing();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkBreakdownElement#getIsOngoing <em>Is Ongoing</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Ongoing</em>' attribute is set.
-	 * @see #unsetIsOngoing()
-	 * @see #getIsOngoing()
-	 * @see #setIsOngoing(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsOngoing();
 
 	/**
 	 * Returns the value of the '<em><b>Is Event Driven</b></em>' attribute.
@@ -154,11 +100,9 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Is Event Driven</em>' attribute.
-	 * @see #isSetIsEventDriven()
-	 * @see #unsetIsEventDriven()
 	 * @see #setIsEventDriven(Boolean)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkBreakdownElement_IsEventDriven()
-	 * @model default="false" unsettable="true" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
+	 * @model default="false" dataType="org.eclipse.epf.uma.Boolean" required="true" ordered="false"
 	 * @generated
 	 */
 	Boolean getIsEventDriven();
@@ -168,35 +112,10 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Is Event Driven</em>' attribute.
-	 * @see #isSetIsEventDriven()
-	 * @see #unsetIsEventDriven()
 	 * @see #getIsEventDriven()
 	 * @generated
 	 */
 	void setIsEventDriven(Boolean value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkBreakdownElement#getIsEventDriven <em>Is Event Driven</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetIsEventDriven()
-	 * @see #getIsEventDriven()
-	 * @see #setIsEventDriven(Boolean)
-	 * @generated
-	 */
-	void unsetIsEventDriven();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkBreakdownElement#getIsEventDriven <em>Is Event Driven</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Is Event Driven</em>' attribute is set.
-	 * @see #unsetIsEventDriven()
-	 * @see #getIsEventDriven()
-	 * @see #setIsEventDriven(Boolean)
-	 * @generated
-	 */
-	boolean isSetIsEventDriven();
 
 	/**
 	 * Returns the value of the '<em><b>Link To Predecessor</b></em>' reference list.

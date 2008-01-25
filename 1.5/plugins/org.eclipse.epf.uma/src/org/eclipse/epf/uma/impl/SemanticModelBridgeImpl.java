@@ -68,15 +68,6 @@ public abstract class SemanticModelBridgeImpl extends DiagramElementImpl
 	protected String presentation = PRESENTATION_EDEFAULT;
 
 	/**
-	 * This is true if the Presentation attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean presentationESet;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -112,37 +103,10 @@ public abstract class SemanticModelBridgeImpl extends DiagramElementImpl
 	public void setPresentation(String newPresentation) {
 		String oldPresentation = presentation;
 		presentation = newPresentation;
-		boolean oldPresentationESet = presentationESet;
-		presentationESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.SEMANTIC_MODEL_BRIDGE__PRESENTATION,
-					oldPresentation, presentation, !oldPresentationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetPresentation() {
-		String oldPresentation = presentation;
-		boolean oldPresentationESet = presentationESet;
-		presentation = PRESENTATION_EDEFAULT;
-		presentationESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.SEMANTIC_MODEL_BRIDGE__PRESENTATION,
-					oldPresentation, PRESENTATION_EDEFAULT, oldPresentationESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetPresentation() {
-		return presentationESet;
+					oldPresentation, presentation));
 	}
 
 	/**
@@ -376,7 +340,7 @@ public abstract class SemanticModelBridgeImpl extends DiagramElementImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.SEMANTIC_MODEL_BRIDGE__PRESENTATION:
-			unsetPresentation();
+			setPresentation(PRESENTATION_EDEFAULT);
 			return;
 		case UmaPackage.SEMANTIC_MODEL_BRIDGE__DIAGRAM:
 			setDiagram((Diagram) null);
@@ -397,7 +361,8 @@ public abstract class SemanticModelBridgeImpl extends DiagramElementImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.SEMANTIC_MODEL_BRIDGE__PRESENTATION:
-			return isSetPresentation();
+			return PRESENTATION_EDEFAULT == null ? presentation != null
+					: !PRESENTATION_EDEFAULT.equals(presentation);
 		case UmaPackage.SEMANTIC_MODEL_BRIDGE__DIAGRAM:
 			return basicGetDiagram() != null;
 		case UmaPackage.SEMANTIC_MODEL_BRIDGE__GRAPH_ELEMENT:
@@ -418,10 +383,7 @@ public abstract class SemanticModelBridgeImpl extends DiagramElementImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (presentation: "); //$NON-NLS-1$
-		if (presentationESet)
-			result.append(presentation);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(presentation);
 		result.append(')');
 		return result.toString();
 	}

@@ -49,11 +49,9 @@ public interface Section extends VariabilityElement {
 	 * Every Section has a name used for external presentation of the section, e.g. when published or when section heading are listed in a table of contents.  This attribute is similar to Presentation Name for Content Elements.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Section Name</em>' attribute.
-	 * @see #isSetSectionName()
-	 * @see #unsetSectionName()
 	 * @see #setSectionName(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getSection_SectionName()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getSectionName();
@@ -63,35 +61,10 @@ public interface Section extends VariabilityElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Section Name</em>' attribute.
-	 * @see #isSetSectionName()
-	 * @see #unsetSectionName()
 	 * @see #getSectionName()
 	 * @generated
 	 */
 	void setSectionName(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Section#getSectionName <em>Section Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetSectionName()
-	 * @see #getSectionName()
-	 * @see #setSectionName(String)
-	 * @generated
-	 */
-	void unsetSectionName();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Section#getSectionName <em>Section Name</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Section Name</em>' attribute is set.
-	 * @see #unsetSectionName()
-	 * @see #getSectionName()
-	 * @see #setSectionName(String)
-	 * @generated
-	 */
-	boolean isSetSectionName();
 
 	/**
 	 * Returns the value of the '<em><b>Section Description</b></em>' attribute.
@@ -102,11 +75,9 @@ public interface Section extends VariabilityElement {
 	 * This attributes store the description text for a Content Description's Section.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Section Description</em>' attribute.
-	 * @see #isSetSectionDescription()
-	 * @see #unsetSectionDescription()
 	 * @see #setSectionDescription(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getSection_SectionDescription()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getSectionDescription();
@@ -116,35 +87,10 @@ public interface Section extends VariabilityElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Section Description</em>' attribute.
-	 * @see #isSetSectionDescription()
-	 * @see #unsetSectionDescription()
 	 * @see #getSectionDescription()
 	 * @generated
 	 */
 	void setSectionDescription(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Section#getSectionDescription <em>Section Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetSectionDescription()
-	 * @see #getSectionDescription()
-	 * @see #setSectionDescription(String)
-	 * @generated
-	 */
-	void unsetSectionDescription();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Section#getSectionDescription <em>Section Description</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Section Description</em>' attribute is set.
-	 * @see #unsetSectionDescription()
-	 * @see #getSectionDescription()
-	 * @see #setSectionDescription(String)
-	 * @generated
-	 */
-	boolean isSetSectionDescription();
 
 	/**
 	 * Returns the value of the '<em><b>Sub Sections</b></em>' containment reference list.

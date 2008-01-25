@@ -65,15 +65,6 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	protected String scale = SCALE_EDEFAULT;
 
 	/**
-	 * This is true if the Scale attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean scaleESet;
-
-	/**
 	 * The default value of the '{@link #getProjectCharacteristics() <em>Project Characteristics</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,15 +83,6 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	 * @ordered
 	 */
 	protected String projectCharacteristics = PROJECT_CHARACTERISTICS_EDEFAULT;
-
-	/**
-	 * This is true if the Project Characteristics attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean projectCharacteristicsESet;
 
 	/**
 	 * The default value of the '{@link #getRiskLevel() <em>Risk Level</em>}' attribute.
@@ -123,15 +105,6 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	protected String riskLevel = RISK_LEVEL_EDEFAULT;
 
 	/**
-	 * This is true if the Risk Level attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean riskLevelESet;
-
-	/**
 	 * The default value of the '{@link #getEstimatingTechnique() <em>Estimating Technique</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -150,15 +123,6 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	 * @ordered
 	 */
 	protected String estimatingTechnique = ESTIMATING_TECHNIQUE_EDEFAULT;
-
-	/**
-	 * This is true if the Estimating Technique attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean estimatingTechniqueESet;
 
 	/**
 	 * The default value of the '{@link #getProjectMemberExpertise() <em>Project Member Expertise</em>}' attribute.
@@ -181,15 +145,6 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	protected String projectMemberExpertise = PROJECT_MEMBER_EXPERTISE_EDEFAULT;
 
 	/**
-	 * This is true if the Project Member Expertise attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean projectMemberExpertiseESet;
-
-	/**
 	 * The default value of the '{@link #getTypeOfContract() <em>Type Of Contract</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -208,15 +163,6 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	 * @ordered
 	 */
 	protected String typeOfContract = TYPE_OF_CONTRACT_EDEFAULT;
-
-	/**
-	 * This is true if the Type Of Contract attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean typeOfContractESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -254,37 +200,10 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public void setScale(String newScale) {
 		String oldScale = scale;
 		scale = newScale;
-		boolean oldScaleESet = scaleESet;
-		scaleESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__SCALE, oldScale,
-					scale, !oldScaleESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetScale() {
-		String oldScale = scale;
-		boolean oldScaleESet = scaleESet;
-		scale = SCALE_EDEFAULT;
-		scaleESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__SCALE, oldScale,
-					SCALE_EDEFAULT, oldScaleESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetScale() {
-		return scaleESet;
+					scale));
 	}
 
 	/**
@@ -304,44 +223,12 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public void setProjectCharacteristics(String newProjectCharacteristics) {
 		String oldProjectCharacteristics = projectCharacteristics;
 		projectCharacteristics = newProjectCharacteristics;
-		boolean oldProjectCharacteristicsESet = projectCharacteristicsESet;
-		projectCharacteristicsESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(
 					this,
 					Notification.SET,
 					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_CHARACTERISTICS,
-					oldProjectCharacteristics, projectCharacteristics,
-					!oldProjectCharacteristicsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetProjectCharacteristics() {
-		String oldProjectCharacteristics = projectCharacteristics;
-		boolean oldProjectCharacteristicsESet = projectCharacteristicsESet;
-		projectCharacteristics = PROJECT_CHARACTERISTICS_EDEFAULT;
-		projectCharacteristicsESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(
-					this,
-					Notification.UNSET,
-					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_CHARACTERISTICS,
-					oldProjectCharacteristics,
-					PROJECT_CHARACTERISTICS_EDEFAULT,
-					oldProjectCharacteristicsESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetProjectCharacteristics() {
-		return projectCharacteristicsESet;
+					oldProjectCharacteristics, projectCharacteristics));
 	}
 
 	/**
@@ -361,37 +248,10 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public void setRiskLevel(String newRiskLevel) {
 		String oldRiskLevel = riskLevel;
 		riskLevel = newRiskLevel;
-		boolean oldRiskLevelESet = riskLevelESet;
-		riskLevelESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__RISK_LEVEL,
-					oldRiskLevel, riskLevel, !oldRiskLevelESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetRiskLevel() {
-		String oldRiskLevel = riskLevel;
-		boolean oldRiskLevelESet = riskLevelESet;
-		riskLevel = RISK_LEVEL_EDEFAULT;
-		riskLevelESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__RISK_LEVEL,
-					oldRiskLevel, RISK_LEVEL_EDEFAULT, oldRiskLevelESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetRiskLevel() {
-		return riskLevelESet;
+					oldRiskLevel, riskLevel));
 	}
 
 	/**
@@ -411,43 +271,12 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public void setEstimatingTechnique(String newEstimatingTechnique) {
 		String oldEstimatingTechnique = estimatingTechnique;
 		estimatingTechnique = newEstimatingTechnique;
-		boolean oldEstimatingTechniqueESet = estimatingTechniqueESet;
-		estimatingTechniqueESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(
 					this,
 					Notification.SET,
 					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__ESTIMATING_TECHNIQUE,
-					oldEstimatingTechnique, estimatingTechnique,
-					!oldEstimatingTechniqueESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetEstimatingTechnique() {
-		String oldEstimatingTechnique = estimatingTechnique;
-		boolean oldEstimatingTechniqueESet = estimatingTechniqueESet;
-		estimatingTechnique = ESTIMATING_TECHNIQUE_EDEFAULT;
-		estimatingTechniqueESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(
-					this,
-					Notification.UNSET,
-					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__ESTIMATING_TECHNIQUE,
-					oldEstimatingTechnique, ESTIMATING_TECHNIQUE_EDEFAULT,
-					oldEstimatingTechniqueESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetEstimatingTechnique() {
-		return estimatingTechniqueESet;
+					oldEstimatingTechnique, estimatingTechnique));
 	}
 
 	/**
@@ -467,44 +296,12 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public void setProjectMemberExpertise(String newProjectMemberExpertise) {
 		String oldProjectMemberExpertise = projectMemberExpertise;
 		projectMemberExpertise = newProjectMemberExpertise;
-		boolean oldProjectMemberExpertiseESet = projectMemberExpertiseESet;
-		projectMemberExpertiseESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(
 					this,
 					Notification.SET,
 					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_MEMBER_EXPERTISE,
-					oldProjectMemberExpertise, projectMemberExpertise,
-					!oldProjectMemberExpertiseESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetProjectMemberExpertise() {
-		String oldProjectMemberExpertise = projectMemberExpertise;
-		boolean oldProjectMemberExpertiseESet = projectMemberExpertiseESet;
-		projectMemberExpertise = PROJECT_MEMBER_EXPERTISE_EDEFAULT;
-		projectMemberExpertiseESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(
-					this,
-					Notification.UNSET,
-					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_MEMBER_EXPERTISE,
-					oldProjectMemberExpertise,
-					PROJECT_MEMBER_EXPERTISE_EDEFAULT,
-					oldProjectMemberExpertiseESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetProjectMemberExpertise() {
-		return projectMemberExpertiseESet;
+					oldProjectMemberExpertise, projectMemberExpertise));
 	}
 
 	/**
@@ -524,38 +321,10 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public void setTypeOfContract(String newTypeOfContract) {
 		String oldTypeOfContract = typeOfContract;
 		typeOfContract = newTypeOfContract;
-		boolean oldTypeOfContractESet = typeOfContractESet;
-		typeOfContractESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__TYPE_OF_CONTRACT,
-					oldTypeOfContract, typeOfContract, !oldTypeOfContractESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetTypeOfContract() {
-		String oldTypeOfContract = typeOfContract;
-		boolean oldTypeOfContractESet = typeOfContractESet;
-		typeOfContract = TYPE_OF_CONTRACT_EDEFAULT;
-		typeOfContractESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.DELIVERY_PROCESS_DESCRIPTION__TYPE_OF_CONTRACT,
-					oldTypeOfContract, TYPE_OF_CONTRACT_EDEFAULT,
-					oldTypeOfContractESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetTypeOfContract() {
-		return typeOfContractESet;
+					oldTypeOfContract, typeOfContract));
 	}
 
 	/**
@@ -621,22 +390,22 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__SCALE:
-			unsetScale();
+			setScale(SCALE_EDEFAULT);
 			return;
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_CHARACTERISTICS:
-			unsetProjectCharacteristics();
+			setProjectCharacteristics(PROJECT_CHARACTERISTICS_EDEFAULT);
 			return;
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__RISK_LEVEL:
-			unsetRiskLevel();
+			setRiskLevel(RISK_LEVEL_EDEFAULT);
 			return;
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__ESTIMATING_TECHNIQUE:
-			unsetEstimatingTechnique();
+			setEstimatingTechnique(ESTIMATING_TECHNIQUE_EDEFAULT);
 			return;
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_MEMBER_EXPERTISE:
-			unsetProjectMemberExpertise();
+			setProjectMemberExpertise(PROJECT_MEMBER_EXPERTISE_EDEFAULT);
 			return;
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__TYPE_OF_CONTRACT:
-			unsetTypeOfContract();
+			setTypeOfContract(TYPE_OF_CONTRACT_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -651,17 +420,26 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__SCALE:
-			return isSetScale();
+			return SCALE_EDEFAULT == null ? scale != null : !SCALE_EDEFAULT
+					.equals(scale);
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_CHARACTERISTICS:
-			return isSetProjectCharacteristics();
+			return PROJECT_CHARACTERISTICS_EDEFAULT == null ? projectCharacteristics != null
+					: !PROJECT_CHARACTERISTICS_EDEFAULT
+							.equals(projectCharacteristics);
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__RISK_LEVEL:
-			return isSetRiskLevel();
+			return RISK_LEVEL_EDEFAULT == null ? riskLevel != null
+					: !RISK_LEVEL_EDEFAULT.equals(riskLevel);
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__ESTIMATING_TECHNIQUE:
-			return isSetEstimatingTechnique();
+			return ESTIMATING_TECHNIQUE_EDEFAULT == null ? estimatingTechnique != null
+					: !ESTIMATING_TECHNIQUE_EDEFAULT
+							.equals(estimatingTechnique);
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__PROJECT_MEMBER_EXPERTISE:
-			return isSetProjectMemberExpertise();
+			return PROJECT_MEMBER_EXPERTISE_EDEFAULT == null ? projectMemberExpertise != null
+					: !PROJECT_MEMBER_EXPERTISE_EDEFAULT
+							.equals(projectMemberExpertise);
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__TYPE_OF_CONTRACT:
-			return isSetTypeOfContract();
+			return TYPE_OF_CONTRACT_EDEFAULT == null ? typeOfContract != null
+					: !TYPE_OF_CONTRACT_EDEFAULT.equals(typeOfContract);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -678,35 +456,17 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (scale: "); //$NON-NLS-1$
-		if (scaleESet)
-			result.append(scale);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(scale);
 		result.append(", projectCharacteristics: "); //$NON-NLS-1$
-		if (projectCharacteristicsESet)
-			result.append(projectCharacteristics);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(projectCharacteristics);
 		result.append(", riskLevel: "); //$NON-NLS-1$
-		if (riskLevelESet)
-			result.append(riskLevel);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(riskLevel);
 		result.append(", estimatingTechnique: "); //$NON-NLS-1$
-		if (estimatingTechniqueESet)
-			result.append(estimatingTechnique);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(estimatingTechnique);
 		result.append(", projectMemberExpertise: "); //$NON-NLS-1$
-		if (projectMemberExpertiseESet)
-			result.append(projectMemberExpertise);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(projectMemberExpertise);
 		result.append(", typeOfContract: "); //$NON-NLS-1$
-		if (typeOfContractESet)
-			result.append(typeOfContract);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(typeOfContract);
 		result.append(')');
 		return result.toString();
 	}

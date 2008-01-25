@@ -80,15 +80,6 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	protected Boolean isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
 
 	/**
-	 * This is true if the Is Synchronized With Source attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean isSynchronizedWithSourceESet;
-
-	/**
 	 * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -214,40 +205,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	public void setIsSynchronizedWithSource(Boolean newIsSynchronizedWithSource) {
 		Boolean oldIsSynchronizedWithSource = isSynchronizedWithSource;
 		isSynchronizedWithSource = newIsSynchronizedWithSource;
-		boolean oldIsSynchronizedWithSourceESet = isSynchronizedWithSourceESet;
-		isSynchronizedWithSourceESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
-					oldIsSynchronizedWithSource, isSynchronizedWithSource,
-					!oldIsSynchronizedWithSourceESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetIsSynchronizedWithSource() {
-		Boolean oldIsSynchronizedWithSource = isSynchronizedWithSource;
-		boolean oldIsSynchronizedWithSourceESet = isSynchronizedWithSourceESet;
-		isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
-		isSynchronizedWithSourceESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
-					oldIsSynchronizedWithSource,
-					IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT,
-					oldIsSynchronizedWithSourceESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetIsSynchronizedWithSource() {
-		return isSynchronizedWithSourceESet;
+					oldIsSynchronizedWithSource, isSynchronizedWithSource));
 	}
 
 	/**
@@ -502,7 +463,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			unsetIsSynchronizedWithSource();
+			setIsSynchronizedWithSource(IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			setTask((Task) null);
@@ -544,7 +505,9 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
-			return isSetIsSynchronizedWithSource();
+			return IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT == null ? isSynchronizedWithSource != null
+					: !IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT
+							.equals(isSynchronizedWithSource);
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			return task != null;
 		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
@@ -617,10 +580,7 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (isSynchronizedWithSource: "); //$NON-NLS-1$
-		if (isSynchronizedWithSourceESet)
-			result.append(isSynchronizedWithSource);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(isSynchronizedWithSource);
 		result.append(')');
 		return result.toString();
 	}

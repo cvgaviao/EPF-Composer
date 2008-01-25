@@ -1357,6 +1357,30 @@ public class UmaItemProviderAdapterFactory extends UmaAdapterFactory implements
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.epf.uma.ApplicableMetaClassInfo} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ApplicableMetaClassInfoItemProvider applicableMetaClassInfoItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.epf.uma.ApplicableMetaClassInfo}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createApplicableMetaClassInfoAdapter() {
+		if (applicableMetaClassInfoItemProvider == null) {
+			applicableMetaClassInfoItemProvider = new ApplicableMetaClassInfoItemProvider(
+					this);
+		}
+
+		return applicableMetaClassInfoItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.epf.uma.Practice} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2233,6 +2257,8 @@ public class UmaItemProviderAdapterFactory extends UmaAdapterFactory implements
 			reusableAssetItemProvider.dispose();
 		if (termDefinitionItemProvider != null)
 			termDefinitionItemProvider.dispose();
+		if (applicableMetaClassInfoItemProvider != null)
+			applicableMetaClassInfoItemProvider.dispose();
 		if (artifactItemProvider != null)
 			artifactItemProvider.dispose();
 		if (workProductItemProvider != null)

@@ -120,9 +120,9 @@ public class WorkProductDescriptorItemProvider extends DescriptorItemProvider
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_WorkProductDescriptor_workProduct_feature"), //$NON-NLS-1$
+						getString("_UI_WorkProductDescriptor_WorkProduct_feature"), //$NON-NLS-1$
 						getString(
-								"_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptor_workProduct_feature", "_UI_WorkProductDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								"_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptor_WorkProduct_feature", "_UI_WorkProductDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT,
 						true, false, true, null, null, null));
 	}

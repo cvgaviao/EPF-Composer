@@ -49,11 +49,9 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Activity Entry State</em>' attribute.
-	 * @see #isSetActivityEntryState()
-	 * @see #unsetActivityEntryState()
 	 * @see #setActivityEntryState(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_ActivityEntryState()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getActivityEntryState();
@@ -63,35 +61,10 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Activity Entry State</em>' attribute.
-	 * @see #isSetActivityEntryState()
-	 * @see #unsetActivityEntryState()
 	 * @see #getActivityEntryState()
 	 * @generated
 	 */
 	void setActivityEntryState(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityEntryState <em>Activity Entry State</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetActivityEntryState()
-	 * @see #getActivityEntryState()
-	 * @see #setActivityEntryState(String)
-	 * @generated
-	 */
-	void unsetActivityEntryState();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityEntryState <em>Activity Entry State</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Activity Entry State</em>' attribute is set.
-	 * @see #unsetActivityEntryState()
-	 * @see #getActivityEntryState()
-	 * @see #setActivityEntryState(String)
-	 * @generated
-	 */
-	boolean isSetActivityEntryState();
 
 	/**
 	 * Returns the value of the '<em><b>Activity Exit State</b></em>' attribute.
@@ -104,11 +77,9 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * 
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Activity Exit State</em>' attribute.
-	 * @see #isSetActivityExitState()
-	 * @see #unsetActivityExitState()
 	 * @see #setActivityExitState(String)
 	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_ActivityExitState()
-	 * @model default="" unsettable="true" dataType="org.eclipse.epf.uma.String" ordered="false"
+	 * @model default="" dataType="org.eclipse.epf.uma.String" ordered="false"
 	 * @generated
 	 */
 	String getActivityExitState();
@@ -118,35 +89,10 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Activity Exit State</em>' attribute.
-	 * @see #isSetActivityExitState()
-	 * @see #unsetActivityExitState()
 	 * @see #getActivityExitState()
 	 * @generated
 	 */
 	void setActivityExitState(String value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityExitState <em>Activity Exit State</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetActivityExitState()
-	 * @see #getActivityExitState()
-	 * @see #setActivityExitState(String)
-	 * @generated
-	 */
-	void unsetActivityExitState();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.WorkProductDescriptor#getActivityExitState <em>Activity Exit State</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Activity Exit State</em>' attribute is set.
-	 * @see #unsetActivityExitState()
-	 * @see #getActivityExitState()
-	 * @see #setActivityExitState(String)
-	 * @generated
-	 */
-	boolean isSetActivityExitState();
 
 	/**
 	 * Returns the value of the '<em><b>Work Product</b></em>' reference.

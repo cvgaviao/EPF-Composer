@@ -471,6 +471,15 @@ public interface UmaFactory extends EFactory {
 	TermDefinition createTermDefinition();
 
 	/**
+	 * Returns a new object of class '<em>Applicable Meta Class Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Applicable Meta Class Info</em>'.
+	 * @generated
+	 */
+	ApplicableMetaClassInfo createApplicableMetaClassInfo();
+
+	/**
 	 * Returns a new object of class '<em>Practice</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

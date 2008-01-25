@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ActivityDescription;
+import org.eclipse.epf.uma.ApplicableMetaClassInfo;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ArtifactDescription;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -306,6 +307,12 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseTermDefinition(TermDefinition object) {
 			return createTermDefinitionAdapter();
+		}
+
+		@Override
+		public Adapter caseApplicableMetaClassInfo(
+				ApplicableMetaClassInfo object) {
+			return createApplicableMetaClassInfoAdapter();
 		}
 
 		@Override
@@ -1677,6 +1684,20 @@ public class UmaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTermDefinitionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.epf.uma.ApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.epf.uma.ApplicableMetaClassInfo
+	 * @generated
+	 */
+	public Adapter createApplicableMetaClassInfoAdapter() {
 		return null;
 	}
 

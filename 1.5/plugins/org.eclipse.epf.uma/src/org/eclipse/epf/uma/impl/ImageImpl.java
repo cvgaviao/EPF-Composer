@@ -64,15 +64,6 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	protected URI uri = URI_EDEFAULT;
 
 	/**
-	 * This is true if the Uri attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean uriESet;
-
-	/**
 	 * The default value of the '{@link #getMimeType() <em>Mime Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -91,15 +82,6 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * @ordered
 	 */
 	protected String mimeType = MIME_TYPE_EDEFAULT;
-
-	/**
-	 * This is true if the Mime Type attribute has been set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean mimeTypeESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -137,35 +119,9 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	public void setUri(URI newUri) {
 		URI oldUri = uri;
 		uri = newUri;
-		boolean oldUriESet = uriESet;
-		uriESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.IMAGE__URI, oldUri, uri, !oldUriESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetUri() {
-		URI oldUri = uri;
-		boolean oldUriESet = uriESet;
-		uri = URI_EDEFAULT;
-		uriESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.IMAGE__URI, oldUri, URI_EDEFAULT, oldUriESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetUri() {
-		return uriESet;
+					UmaPackage.IMAGE__URI, oldUri, uri));
 	}
 
 	/**
@@ -185,37 +141,9 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	public void setMimeType(String newMimeType) {
 		String oldMimeType = mimeType;
 		mimeType = newMimeType;
-		boolean oldMimeTypeESet = mimeTypeESet;
-		mimeTypeESet = true;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-					UmaPackage.IMAGE__MIME_TYPE, oldMimeType, mimeType,
-					!oldMimeTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void unsetMimeType() {
-		String oldMimeType = mimeType;
-		boolean oldMimeTypeESet = mimeTypeESet;
-		mimeType = MIME_TYPE_EDEFAULT;
-		mimeTypeESet = false;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.UNSET,
-					UmaPackage.IMAGE__MIME_TYPE, oldMimeType,
-					MIME_TYPE_EDEFAULT, oldMimeTypeESet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isSetMimeType() {
-		return mimeTypeESet;
+					UmaPackage.IMAGE__MIME_TYPE, oldMimeType, mimeType));
 	}
 
 	/**
@@ -261,10 +189,10 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case UmaPackage.IMAGE__URI:
-			unsetUri();
+			setUri(URI_EDEFAULT);
 			return;
 		case UmaPackage.IMAGE__MIME_TYPE:
-			unsetMimeType();
+			setMimeType(MIME_TYPE_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -279,9 +207,11 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case UmaPackage.IMAGE__URI:
-			return isSetUri();
+			return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT
+					.equals(uri);
 		case UmaPackage.IMAGE__MIME_TYPE:
-			return isSetMimeType();
+			return MIME_TYPE_EDEFAULT == null ? mimeType != null
+					: !MIME_TYPE_EDEFAULT.equals(mimeType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -298,15 +228,9 @@ public class ImageImpl extends LeafElementImpl implements Image {
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (uri: "); //$NON-NLS-1$
-		if (uriESet)
-			result.append(uri);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(uri);
 		result.append(", mimeType: "); //$NON-NLS-1$
-		if (mimeTypeESet)
-			result.append(mimeType);
-		else
-			result.append("<unset>"); //$NON-NLS-1$
+		result.append(mimeType);
 		result.append(')');
 		return result.toString();
 	}

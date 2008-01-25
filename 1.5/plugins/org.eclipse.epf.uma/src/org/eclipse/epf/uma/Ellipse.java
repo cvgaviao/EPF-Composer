@@ -41,11 +41,9 @@ public interface Ellipse extends GraphicPrimitive {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Radius X</em>' attribute.
-	 * @see #isSetRadiusX()
-	 * @see #unsetRadiusX()
 	 * @see #setRadiusX(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getEllipse_RadiusX()
-	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getRadiusX();
@@ -55,35 +53,10 @@ public interface Ellipse extends GraphicPrimitive {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Radius X</em>' attribute.
-	 * @see #isSetRadiusX()
-	 * @see #unsetRadiusX()
 	 * @see #getRadiusX()
 	 * @generated
 	 */
 	void setRadiusX(Double value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Ellipse#getRadiusX <em>Radius X</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetRadiusX()
-	 * @see #getRadiusX()
-	 * @see #setRadiusX(Double)
-	 * @generated
-	 */
-	void unsetRadiusX();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Ellipse#getRadiusX <em>Radius X</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Radius X</em>' attribute is set.
-	 * @see #unsetRadiusX()
-	 * @see #getRadiusX()
-	 * @see #setRadiusX(Double)
-	 * @generated
-	 */
-	boolean isSetRadiusX();
 
 	/**
 	 * Returns the value of the '<em><b>Radius Y</b></em>' attribute.
@@ -94,11 +67,9 @@ public interface Ellipse extends GraphicPrimitive {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Radius Y</em>' attribute.
-	 * @see #isSetRadiusY()
-	 * @see #unsetRadiusY()
 	 * @see #setRadiusY(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getEllipse_RadiusY()
-	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getRadiusY();
@@ -108,35 +79,10 @@ public interface Ellipse extends GraphicPrimitive {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Radius Y</em>' attribute.
-	 * @see #isSetRadiusY()
-	 * @see #unsetRadiusY()
 	 * @see #getRadiusY()
 	 * @generated
 	 */
 	void setRadiusY(Double value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Ellipse#getRadiusY <em>Radius Y</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetRadiusY()
-	 * @see #getRadiusY()
-	 * @see #setRadiusY(Double)
-	 * @generated
-	 */
-	void unsetRadiusY();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Ellipse#getRadiusY <em>Radius Y</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Radius Y</em>' attribute is set.
-	 * @see #unsetRadiusY()
-	 * @see #getRadiusY()
-	 * @see #setRadiusY(Double)
-	 * @generated
-	 */
-	boolean isSetRadiusY();
 
 	/**
 	 * Returns the value of the '<em><b>Rotation</b></em>' attribute.
@@ -147,11 +93,9 @@ public interface Ellipse extends GraphicPrimitive {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rotation</em>' attribute.
-	 * @see #isSetRotation()
-	 * @see #unsetRotation()
 	 * @see #setRotation(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getEllipse_Rotation()
-	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getRotation();
@@ -161,35 +105,10 @@ public interface Ellipse extends GraphicPrimitive {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Rotation</em>' attribute.
-	 * @see #isSetRotation()
-	 * @see #unsetRotation()
 	 * @see #getRotation()
 	 * @generated
 	 */
 	void setRotation(Double value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Ellipse#getRotation <em>Rotation</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetRotation()
-	 * @see #getRotation()
-	 * @see #setRotation(Double)
-	 * @generated
-	 */
-	void unsetRotation();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Ellipse#getRotation <em>Rotation</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Rotation</em>' attribute is set.
-	 * @see #unsetRotation()
-	 * @see #getRotation()
-	 * @see #setRotation(Double)
-	 * @generated
-	 */
-	boolean isSetRotation();
 
 	/**
 	 * Returns the value of the '<em><b>Start Angle</b></em>' attribute.
@@ -200,11 +119,9 @@ public interface Ellipse extends GraphicPrimitive {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Start Angle</em>' attribute.
-	 * @see #isSetStartAngle()
-	 * @see #unsetStartAngle()
 	 * @see #setStartAngle(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getEllipse_StartAngle()
-	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getStartAngle();
@@ -214,35 +131,10 @@ public interface Ellipse extends GraphicPrimitive {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Start Angle</em>' attribute.
-	 * @see #isSetStartAngle()
-	 * @see #unsetStartAngle()
 	 * @see #getStartAngle()
 	 * @generated
 	 */
 	void setStartAngle(Double value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Ellipse#getStartAngle <em>Start Angle</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetStartAngle()
-	 * @see #getStartAngle()
-	 * @see #setStartAngle(Double)
-	 * @generated
-	 */
-	void unsetStartAngle();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Ellipse#getStartAngle <em>Start Angle</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>Start Angle</em>' attribute is set.
-	 * @see #unsetStartAngle()
-	 * @see #getStartAngle()
-	 * @see #setStartAngle(Double)
-	 * @generated
-	 */
-	boolean isSetStartAngle();
 
 	/**
 	 * Returns the value of the '<em><b>End Angle</b></em>' attribute.
@@ -253,11 +145,9 @@ public interface Ellipse extends GraphicPrimitive {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>End Angle</em>' attribute.
-	 * @see #isSetEndAngle()
-	 * @see #unsetEndAngle()
 	 * @see #setEndAngle(Double)
 	 * @see org.eclipse.epf.uma.UmaPackage#getEllipse_EndAngle()
-	 * @model unsettable="true" dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Double" required="true" ordered="false"
 	 * @generated
 	 */
 	Double getEndAngle();
@@ -267,35 +157,10 @@ public interface Ellipse extends GraphicPrimitive {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>End Angle</em>' attribute.
-	 * @see #isSetEndAngle()
-	 * @see #unsetEndAngle()
 	 * @see #getEndAngle()
 	 * @generated
 	 */
 	void setEndAngle(Double value);
-
-	/**
-	 * Unsets the value of the '{@link org.eclipse.epf.uma.Ellipse#getEndAngle <em>End Angle</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSetEndAngle()
-	 * @see #getEndAngle()
-	 * @see #setEndAngle(Double)
-	 * @generated
-	 */
-	void unsetEndAngle();
-
-	/**
-	 * Returns whether the value of the '{@link org.eclipse.epf.uma.Ellipse#getEndAngle <em>End Angle</em>}' attribute is set.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return whether the value of the '<em>End Angle</em>' attribute is set.
-	 * @see #unsetEndAngle()
-	 * @see #getEndAngle()
-	 * @see #setEndAngle(Double)
-	 * @generated
-	 */
-	boolean isSetEndAngle();
 
 	/**
 	 * Returns the value of the '<em><b>Center</b></em>' reference.

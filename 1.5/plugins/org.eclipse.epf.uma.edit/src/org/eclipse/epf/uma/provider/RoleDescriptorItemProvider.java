@@ -75,9 +75,9 @@ public class RoleDescriptorItemProvider extends DescriptorItemProvider
 						((ComposeableAdapterFactory) adapterFactory)
 								.getRootAdapterFactory(),
 						getResourceLocator(),
-						getString("_UI_RoleDescriptor_role_feature"), //$NON-NLS-1$
+						getString("_UI_RoleDescriptor_Role_feature"), //$NON-NLS-1$
 						getString(
-								"_UI_PropertyDescriptor_description", "_UI_RoleDescriptor_role_feature", "_UI_RoleDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								"_UI_PropertyDescriptor_description", "_UI_RoleDescriptor_Role_feature", "_UI_RoleDescriptor_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.ROLE_DESCRIPTOR__ROLE, true, false,
 						true, null, null, null));
 	}
