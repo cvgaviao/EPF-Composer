@@ -32,7 +32,6 @@ import java.net.URI;
 public interface Image extends LeafElement {
 	/**
 	 * Returns the value of the '<em><b>Uri</b></em>' attribute.
-	 * The default value is <code>""</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Uri</em>' attribute isn't clear,
@@ -42,7 +41,7 @@ public interface Image extends LeafElement {
 	 * @return the value of the '<em>Uri</em>' attribute.
 	 * @see #setUri(URI)
 	 * @see org.eclipse.epf.uma.UmaPackage#getImage_Uri()
-	 * @model default="" dataType="org.eclipse.epf.uma.Uri" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Uri" ordered="false"
 	 * @generated
 	 */
 	URI getUri();

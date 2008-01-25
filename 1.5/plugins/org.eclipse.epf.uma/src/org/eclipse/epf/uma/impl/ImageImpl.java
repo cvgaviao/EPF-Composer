@@ -50,8 +50,7 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final URI URI_EDEFAULT = (URI) UmaFactory.eINSTANCE
-			.createFromString(UmaPackage.eINSTANCE.getUri(), "");
+	protected static final URI URI_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getUri() <em>Uri</em>}' attribute.

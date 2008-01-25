@@ -66,7 +66,6 @@ public interface DescribableElement extends MethodElement, Classifier {
 
 	/**
 	 * Returns the value of the '<em><b>Shapeicon</b></em>' attribute.
-	 * The default value is <code>""</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -75,7 +74,7 @@ public interface DescribableElement extends MethodElement, Classifier {
 	 * @return the value of the '<em>Shapeicon</em>' attribute.
 	 * @see #setShapeicon(URI)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDescribableElement_Shapeicon()
-	 * @model default="" dataType="org.eclipse.epf.uma.Uri" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Uri" ordered="false"
 	 * @generated
 	 */
 	URI getShapeicon();
@@ -92,7 +91,6 @@ public interface DescribableElement extends MethodElement, Classifier {
 
 	/**
 	 * Returns the value of the '<em><b>Nodeicon</b></em>' attribute.
-	 * The default value is <code>""</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
@@ -101,7 +99,7 @@ public interface DescribableElement extends MethodElement, Classifier {
 	 * @return the value of the '<em>Nodeicon</em>' attribute.
 	 * @see #setNodeicon(URI)
 	 * @see org.eclipse.epf.uma.UmaPackage#getDescribableElement_Nodeicon()
-	 * @model default="" dataType="org.eclipse.epf.uma.Uri" ordered="false"
+	 * @model dataType="org.eclipse.epf.uma.Uri" ordered="false"
 	 * @generated
 	 */
 	URI getNodeicon();

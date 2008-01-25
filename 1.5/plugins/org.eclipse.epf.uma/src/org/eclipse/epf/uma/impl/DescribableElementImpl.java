@@ -92,8 +92,7 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final URI SHAPEICON_EDEFAULT = (URI) UmaFactory.eINSTANCE
-			.createFromString(UmaPackage.eINSTANCE.getUri(), "");
+	protected static final URI SHAPEICON_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getShapeicon() <em>Shapeicon</em>}' attribute.
@@ -113,8 +112,7 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final URI NODEICON_EDEFAULT = (URI) UmaFactory.eINSTANCE
-			.createFromString(UmaPackage.eINSTANCE.getUri(), "");
+	protected static final URI NODEICON_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getNodeicon() <em>Nodeicon</em>}' attribute.
