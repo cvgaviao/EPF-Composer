@@ -200,6 +200,9 @@ public class CategorySortHelper {
 				if (obj instanceof ContentCategory) {
 					ContentCategory contributor = (ContentCategory)obj;
 					OrderInfo orderInfo = TngUtil.getOrderInfo(contributor, ContentElementOrderList.ORDER_INFO_NAME);
+					if (orderInfo == null) {
+						continue;
+					}
 					// find latest OrderInfo that contains all these elements
 					if (latestInfo == null || orderInfo.getTimestamp() > latestInfo.getTimestamp()) {
 						latestInfo = orderInfo;
