@@ -1253,6 +1253,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						ctrl_presentation_name.setText(newContent);
 					}
 				}
+				// clear the selection when the focus of the component is lost 
+				if(ctrl_presentation_name.getSelectionCount() > 0){
+					ctrl_presentation_name.clearSelection();
+				}    
 			}
 			
 			/* (non-Javadoc)
@@ -1260,6 +1264,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			 */
 			public void focusGained(FocusEvent e) {
 				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget, UmaPackage.eINSTANCE.getMethodElement_PresentationName());
+				// when user tab to this field, select all text
+				ctrl_presentation_name.selectAll();
 			}
 		});
 

@@ -939,7 +939,15 @@ public class ProcessDescription extends ProcessFormPage {
 			public void focusGained(FocusEvent e) {
 				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
 						UmaPackage.eINSTANCE.getMethodElement_PresentationName());
+				// when user tab to this field, select all text
+				ctrl_presentation_name.selectAll();
+
 			}
+			public void focusLost(FocusEvent e) {
+				// clear the selection when the focus of the component is lost 
+				if(ctrl_presentation_name.getSelectionCount() > 0){
+					ctrl_presentation_name.clearSelection();
+				} }
 		});
 
 		ctrl_brief_desc.addModifyListener(modifyListener);
