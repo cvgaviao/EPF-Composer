@@ -567,46 +567,51 @@ public final class ProcessCommandUtil {
 		// }
 	
 		if (roleDescriptors != null) {
-			// get/create role descriptor for primary performer
+			// get/create role descriptor for primary performers
 			//
 			EReference ref = UmaPackage.eINSTANCE.getTask_PerformedBy();
-			Role role = synchFeatures.contains(ref) ? (Role) configApplicator.getReference(task,
+			List primaryPerformers = synchFeatures.contains(ref) ? (List) configApplicator.getReference(task,
 					ref, config) : null;
-			if (role != null) {
-				// if (TngUtil.isContributor(role)) {
-				// role = (Role) TngUtil.getBase(role);
-				// }
-	
-				// check for local descriptor
-				RoleDescriptor primaryRoleDesc = (RoleDescriptor) getDescriptor(
-						role, activity, config);
-				boolean isNewRoleDescriptor = false;
-				if (primaryRoleDesc == null) {
-					// check for inherited descriptor
-					primaryRoleDesc = (RoleDescriptor) ProcessCommandUtil.getInheritedDescriptor(
-							role, activity, config);
-					if (primaryRoleDesc == null) {
-						// check for descriptor in passed in descriptor list
-						primaryRoleDesc = (RoleDescriptor) getDescriptor(role,
-								roleDescriptors, config);
+			if (primaryPerformers != null) {
+				for (int j = 0; j < primaryPerformers.size(); j++) {
+					Role role = (Role) primaryPerformers.get(j);
+					if (role != null) {
+						// if (TngUtil.isContributor(role)) {
+						// role = (Role) TngUtil.getBase(role);
+						// }
+			
+						// check for local descriptor
+						RoleDescriptor primaryRoleDesc = (RoleDescriptor) getDescriptor(
+								role, activity, config);
+						boolean isNewRoleDescriptor = false;
 						if (primaryRoleDesc == null) {
-							primaryRoleDesc = ProcessUtil.createRoleDescriptor(role);
-							isNewRoleDescriptor = true;
-							roleDescriptors.add(primaryRoleDesc);
+							// check for inherited descriptor
+							primaryRoleDesc = (RoleDescriptor) ProcessCommandUtil.getInheritedDescriptor(
+									role, activity, config);
+							if (primaryRoleDesc == null) {
+								// check for descriptor in passed in descriptor list
+								primaryRoleDesc = (RoleDescriptor) getDescriptor(role,
+										roleDescriptors, config);
+								if (primaryRoleDesc == null) {
+									primaryRoleDesc = ProcessUtil.createRoleDescriptor(role);
+									isNewRoleDescriptor = true;
+									roleDescriptors.add(primaryRoleDesc);
+								}
+							}
+						}
+						if (descriptorsToRefresh != null && !isNewRoleDescriptor
+								&& primaryRoleDesc.getIsSynchronizedWithSource().booleanValue()) {
+							descriptorsToRefresh.add(primaryRoleDesc);
+						}
+						if (isNewTaskDescriptor && isNewRoleDescriptor) {
+							taskDesc.getPerformedPrimarilyBy().add(primaryRoleDesc);
+						} else {
+							BatchCommand.addFeatureValue(descriptorToNewFeatureValuesMap, taskDesc,
+									UmaPackage.eINSTANCE
+											.getTaskDescriptor_PerformedPrimarilyBy(),
+									primaryRoleDesc);
 						}
 					}
-				}
-				if (descriptorsToRefresh != null && !isNewRoleDescriptor
-						&& primaryRoleDesc.getIsSynchronizedWithSource().booleanValue()) {
-					descriptorsToRefresh.add(primaryRoleDesc);
-				}
-				if (isNewTaskDescriptor && isNewRoleDescriptor) {
-					taskDesc.getPerformedPrimarilyBy().add(primaryRoleDesc);
-				} else {
-					BatchCommand.addFeatureValue(descriptorToNewFeatureValuesMap, taskDesc,
-							UmaPackage.eINSTANCE
-									.getTaskDescriptor_PerformedPrimarilyBy(),
-							primaryRoleDesc);
 				}
 			}
 	
