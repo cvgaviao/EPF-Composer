@@ -40,6 +40,8 @@ import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -395,7 +397,20 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 			
 		});		
 		presentationNameText.addListener(SWT.Deactivate, presentationNameDeactivateListener);
-
+		presentationNameText.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent e) {
+				// when user tab to this field, select all text
+				presentationNameText.selectAll();
+				  
+			}
+			public void focusLost(FocusEvent e) {
+				// clear the selection when the focus of the component is lost 
+				if(presentationNameText.getSelectionCount() > 0){
+					presentationNameText.clearSelection();
+	            } 
+			}
+		});
+		
 		multipleButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				element = (BreakdownElement) getElement();
