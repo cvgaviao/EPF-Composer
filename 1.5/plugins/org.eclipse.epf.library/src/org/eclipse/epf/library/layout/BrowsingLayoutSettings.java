@@ -34,6 +34,7 @@ public class BrowsingLayoutSettings {
 	
 	private  File xslPath = null;
 	private  File cssPath = null;
+	private File scriptPath = null;
 	
 	// record all the sites updated since the last change
 	private  List updatedSites = new ArrayList();
@@ -78,12 +79,20 @@ public class BrowsingLayoutSettings {
 		cssPath = path;
 	}
 	
+	public  void setScriptPath(File path) {
+		scriptPath = path;
+	}
+	
 	public  File getXslPath() {
 		return xslPath;
 	}
 	
 	public  File getCssPath() {
 		return cssPath;
+	}
+	
+	public  File getScriptPath() {
+		return scriptPath;
 	}
 	
 	public  void setChanged() {
@@ -103,7 +112,7 @@ public class BrowsingLayoutSettings {
 			return;
 		}
 		
-		if ( xslPath == null || cssPath == null) {
+		if ( xslPath == null || cssPath == null || scriptPath == null) {
 			// use the default
 			LayoutResources.copyLayoutFiles(builder.getPublishDir());
 			builder.loadDefaultLayoutXsl();
@@ -119,6 +128,9 @@ public class BrowsingLayoutSettings {
 			
 			File folder = new File(builder.getPublishDir(), "css");			 //$NON-NLS-1$
 			LayoutResources.copyDir(cssPath, folder, include, exclude, override);
+			
+			folder = new File(builder.getPublishDir(), "scripts");			 //$NON-NLS-1$
+			LayoutResources.copyDir(scriptPath, folder, include, exclude, override);
 		}
 		
 		updatedSites.add(builder.getPublishDir());
