@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
@@ -63,7 +62,6 @@ public class TaskRolesPage extends AssociationFormPage {
 		super.init(site, input);
 		task = (Task) contentElement;
 		actionMgr = ((MethodElementEditor) getEditor()).getActionManager();
-		setCategoryIsSingleSelection1(true);
 		setUseCategory3(false);
 		setAllowChange1(true);
 		setAllowChange2(true);
@@ -77,12 +75,6 @@ public class TaskRolesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
-//				List list = new ArrayList();
-//				Role role = ((Task) object).getPerformedBy();
-//				if (role != null)
-//					list.add(role);
-//				return list.toArray();
-				
 				return ((Task) object).getPerformedBy().toArray();
 			}
 		};
@@ -94,23 +86,18 @@ public class TaskRolesPage extends AssociationFormPage {
 	 */
 	protected void addItemsToModel1(ArrayList addItems) {
 		// Update the model.
-		if (!addItems.isEmpty()) {
-			// Below line is needed to disallowed primary performer as a additional performer.
-			List elementList = retrieveTableViewerContents(viewer_selected2);
-			// Below line is needed to warn before changing primary performer.
-			List elementList1 = retrieveTableViewerContents(viewer_selected);
-			boolean ok = true;
-			if(!elementList1.isEmpty()){
-				String newPrimaryPerfomer = ((Role)addItems.get(0)).getName();
-				String message = AuthoringUIResources.bind(AuthoringUIResources.taskRolesPage_primaryPerformer_modify_message, (new String[]{newPrimaryPerfomer})); 
-				String warning = AuthoringUIResources.taskRolesPage_confirm_title;
-				ok = AuthoringUIPlugin.getDefault().getMsgDialog()
-				.displayConfirmation(warning, message);
+		if (!addItems.isEmpty()) {		
+			List elementList = retrieveTableViewerContents(viewer_selected);
+			List addItemsFiltered = new ArrayList();
+			for (int i = 0; i < addItems.size(); i++) {
+				if (!elementList.contains(((Role) addItems.get(i)))) {
+					addItemsFiltered.add(addItems.get(i));
+				}
 			}
-			if (!elementList.contains(((Role) addItems.get(0))) && ok) {
-				actionMgr.doAction(IActionManager.SET, task,
+			if (addItems.size() > 0) {
+				actionMgr.doAction(IActionManager.ADD_MANY, task,
 						UmaPackage.eINSTANCE.getTask_PerformedBy(),
-						(Role) addItems.get(0), -1);
+						addItemsFiltered, -1);
 			}
 		}
 	}
@@ -222,15 +209,10 @@ public class TaskRolesPage extends AssociationFormPage {
 						Object next = it.next();
 						if(next instanceof Role){
 							if(obj == next) return false;
-							if(!checkContribution((VariabilityElement)next, obj))
+							if(!checkContribution((Role)next, obj))
 								return false;
 						}
 					}
-					
-//					Role role = task.getPerformedBy();
-//					if(obj == role) return false;
-//					if(!checkContribution(role, obj))
-//						return false;
 				}
 				return (obj instanceof Role);
 			}
@@ -244,17 +226,12 @@ public class TaskRolesPage extends AssociationFormPage {
 	public class RoleFilter extends ContentFilter {
 		protected boolean childAccept(Object obj) {
 			if(task.getPerformedBy() != null){
-//				Role role = task.getPerformedBy();
-//				if(obj == role) return false;
-//				if(!checkContribution(role, obj))
-//					return false;
-				
 				List list = task.getPerformedBy();
 				for(Iterator it = list.iterator(); it.hasNext();){
 					Object next = it.next();
 					if(next instanceof Role){
 						if(obj == next) return false;
-						if(!checkContribution((VariabilityElement)next, obj))
+						if(!checkContribution((Role)next, obj))
 							return false;
 					}
 				}

@@ -24,7 +24,6 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
-import org.eclipse.epf.library.edit.process.command.AssignPrimaryPerformerToTaskDescriptor;
 import org.eclipse.epf.library.edit.process.command.AssignRoleToTaskDescriptor;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -75,12 +74,6 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	protected void initContentProvider1() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
-//				List list = new ArrayList();
-//				RoleDescriptor role = ((TaskDescriptor) element)
-//						.getPerformedPrimarilyBy();
-//				if (role != null)
-//					list.add(role);
-//				return getFilteredList(list).toArray();
 				return getFilteredList(
 						((TaskDescriptor) element).getPerformedPrimarilyBy())
 						.toArray();
@@ -145,7 +138,6 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#refresh()
 	 */
 	public void refresh() {
-		// System.out.println("Refreshing TaskDescriptor ROLES Section");
 		if (getElement() instanceof TaskDescriptor) {
 			element = (TaskDescriptor) getElement();
 		}
@@ -192,9 +184,11 @@ public class TaskDescriptorRoleSection extends RelationSection {
 						newList.add(role);
 				}
 			}
+
 			if (newList.size() > 0) {
-				AssignPrimaryPerformerToTaskDescriptor cmd = new AssignPrimaryPerformerToTaskDescriptor(
-						(TaskDescriptor) element, (Role) newList.get(0), getConfiguration());
+				AssignRoleToTaskDescriptor cmd = new AssignRoleToTaskDescriptor(
+						(TaskDescriptor) element, newList,
+						IActionTypeConstants.ADD_PRIMARY_PERFORMER, getConfiguration());
 				actionMgr.execute(cmd);
 			}
 		}
@@ -205,12 +199,6 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected void addItems2(List items) {
 		if (!items.isEmpty()) {
-//			RoleDescriptor roleDesc = ((TaskDescriptor) element)
-//					.getPerformedPrimarilyBy();
-//			List elementList = getRoles(((TaskDescriptor) element)
-//					.getAssistedBy());
-//			if (roleDesc != null)
-//				elementList.add(roleDesc.getRole());
 			List elementList = getRoles(((TaskDescriptor) element)
 					.getPerformedPrimarilyBy());
 			elementList.addAll(getRoles(((TaskDescriptor) element)
@@ -240,13 +228,6 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected void addItems3(List items) {
 		if (!items.isEmpty()) {
-//			RoleDescriptor roleDesc = ((TaskDescriptor) element)
-//					.getPerformedPrimarilyBy();
-//			List elementList = getRoles(((TaskDescriptor) element)
-//					.getAdditionallyPerformedBy());
-//			if (roleDesc != null)
-//				elementList.add(roleDesc.getRole());
-			
 			List elementList = getRoles(((TaskDescriptor) element)
 					.getPerformedPrimarilyBy());
 			elementList.addAll(getRoles(((TaskDescriptor) element)
@@ -280,10 +261,10 @@ public class TaskDescriptorRoleSection extends RelationSection {
 			items.removeAll(((TaskDescriptor) element).getAssistedBy());
 
 			if (items.size() > 0) {
-				actionMgr.doAction(IActionManager.SET, element,
+				actionMgr.doAction(IActionManager.ADD_MANY, element,
 						UmaPackage.eINSTANCE
 								.getTaskDescriptor_PerformedPrimarilyBy(),
-						items.get(0), -1);
+						items, -1);
 			}
 		}
 	}
@@ -294,7 +275,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	protected void addFromProcessItems2(List items) {
 		if (!items.isEmpty()) {
 			items.removeAll(((TaskDescriptor) element).getAssistedBy());
-			items.remove(((TaskDescriptor) element).getPerformedPrimarilyBy());
+			items.removeAll(((TaskDescriptor) element).getPerformedPrimarilyBy());
 
 			actionMgr.doAction(IActionManager.ADD_MANY, element,
 					UmaPackage.eINSTANCE
@@ -310,7 +291,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		if (!items.isEmpty()) {
 			items.removeAll(((TaskDescriptor) element)
 					.getAdditionallyPerformedBy());
-			items.remove(((TaskDescriptor) element).getPerformedPrimarilyBy());
+			items.removeAll(((TaskDescriptor) element).getPerformedPrimarilyBy());
 
 			actionMgr.doAction(IActionManager.ADD_MANY, element,
 					UmaPackage.eINSTANCE.getTaskDescriptor_AssistedBy(), items,
@@ -356,14 +337,6 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#getExistingElements1()
 	 */
 	protected List getExistingElements1() {
-//		List list = new ArrayList();
-//		RoleDescriptor roleDesc = ((TaskDescriptor) element)
-//				.getPerformedPrimarilyBy();
-//		if (roleDesc != null)
-//			list.add(roleDesc);
-//
-//		return list;
-		
 		return ((TaskDescriptor) element).getPerformedPrimarilyBy();
 	};
 

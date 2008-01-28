@@ -34,7 +34,7 @@ import org.eclipse.epf.uma.TeamProfile;
 
 
 /**
- * Command for assign roles to task descriptor. It will assign additional
+ * Command for assign roles to task descriptor. It will assign primary, additional
  * performers and assisted by to a task descriptor
  * 
  * @author Shilpa Toraskar
@@ -140,7 +140,10 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 	 */
 	public void redo() {
 
-		if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
+		if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
+			taskDesc.getPerformedPrimarilyBy().addAll(existingRoleDescList);
+			taskDesc.getPerformedPrimarilyBy().addAll(newRoleDescList);
+		} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
 			taskDesc.getAdditionallyPerformedBy().addAll(existingRoleDescList);
 			taskDesc.getAdditionallyPerformedBy().addAll(newRoleDescList);
 		} else if (action == IActionTypeConstants.ADD_ASSISTED_BY) {
@@ -170,6 +173,10 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 		super.undo();
 
 		if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
+			taskDesc.getPerformedPrimarilyBy().removeAll(
+					existingRoleDescList);
+			taskDesc.getPerformedPrimarilyBy().removeAll(newRoleDescList);
+		} else	if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
 			taskDesc.getAdditionallyPerformedBy().removeAll(
 					existingRoleDescList);
 			taskDesc.getAdditionallyPerformedBy().removeAll(newRoleDescList);
