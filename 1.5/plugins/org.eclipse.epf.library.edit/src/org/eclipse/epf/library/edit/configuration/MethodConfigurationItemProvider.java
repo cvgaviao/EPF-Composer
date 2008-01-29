@@ -187,7 +187,7 @@ public class MethodConfigurationItemProvider extends
 	private IFilter uncategorizedToolMentorFilter = new IFilter() {
 		public boolean accept(Object obj) {
 			return obj instanceof ToolMentor
-					&& AssociationHelper.getTool((ToolMentor) obj) == null;
+					&& AssociationHelper.getTools((ToolMentor) obj).isEmpty();
 		}
 
 	};

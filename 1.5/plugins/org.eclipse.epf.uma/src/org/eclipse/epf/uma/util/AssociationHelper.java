@@ -354,9 +354,9 @@ public final class AssociationHelper {
 	 * An opposite feature used for retrieving the tool which a tool mentor is
 	 * categorized under.
 	 */
-	public static final OppositeFeature ToolMentor_Tool = new OppositeFeature(
+	public static final OppositeFeature ToolMentor_Tools = new OppositeFeature(
 			ToolMentor.class,
-			"ToolMentor_Tool", UmaPackage.eINSTANCE.getTool_ToolMentors(), false); //$NON-NLS-1$
+			"ToolMentor_Tools", UmaPackage.eINSTANCE.getTool_ToolMentors(), true); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the tasks which a tool mentor is
@@ -826,9 +826,9 @@ public final class AssociationHelper {
 	 *            a tool mentor
 	 * @return a tool
 	 */
-	public static Tool getTool(ToolMentor toolMentor) {
-		return (Tool) ((MultiResourceEObject) toolMentor)
-				.getOppositeFeatureValue(ToolMentor_Tool);
+	public static List<? extends ToolMentor> getTools(ToolMentor toolMentor) {
+		return (List<? extends ToolMentor>) ((MultiResourceEObject) toolMentor)
+				.getOppositeFeatureValue(ToolMentor_Tools);
 	}
 
 	/**

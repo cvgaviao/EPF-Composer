@@ -360,7 +360,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 				return ( obj instanceof ToolMentor ) && 
 					ConfigurationHelper.calc0nFeatureValue(
 							(ToolMentor)obj, 
-							AssociationHelper.ToolMentor_Tool, 
+							AssociationHelper.ToolMentor_Tools, 
 							new DefaultElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
