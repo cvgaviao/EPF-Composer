@@ -150,8 +150,9 @@ public class MethodElementDiagram {
 
 		if (imageFileName != null && htmlMap != null) {
 			String mapName = htmlMap.getName();
+			String escapedName = StrUtil.toEscapedUnicode(mapName, true).replace("\\u", "");
 			xmlElement = new XmlElement("map") //$NON-NLS-1$
-				.setAttribute("name", mapName)  //$NON-NLS-1$ 
+				.setAttribute("name", escapedName)  //$NON-NLS-1$ 
 				.setAttribute("src", imageFileName) //$NON-NLS-1$ 
 				.setAttribute("alt", mapName);  //$NON-NLS-1$ 
 			
