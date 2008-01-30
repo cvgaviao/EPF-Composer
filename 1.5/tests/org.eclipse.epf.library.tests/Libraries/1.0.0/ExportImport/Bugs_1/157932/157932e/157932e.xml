@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uma:MethodLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uma="http://www.eclipse.org/epf/uma/1.0.3" name="157932m" briefDescription="" id="_eGh2oE2rEduWJdfZ9gn6JQ" orderingGuide="" suppressed="false" authors="" changeDescription="" version="" tool="epf=1.2.0">
+  <MethodPlugin name="new_plug-in" briefDescription="" id="_f48PcE2rEduWJdfZ9gn6JQ" orderingGuide="" suppressed="false" authors="" changeDescription="" version="" userChangeable="true">
+    <MethodPackage xsi:type="uma:ContentCategoryPackage" name="ContentCategories" id="_kEpa4E2rEduWJdfZ9gn6JQ"/>
+  </MethodPlugin>
+</uma:MethodLibrary>

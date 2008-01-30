@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="true">
+	
+	<CopyLibrary libFolderName="../../ExportImport/Paris">
+	</CopyLibrary>	
+	
+	<OpenLibrary libFolderName="Paris">
+	</OpenLibrary>
+	
+	<ExportPlugins exportFolderName="Exported001">
+	</ExportPlugins>
+	
+	<OpenLibrary libFolderName="Base_1">
+	</OpenLibrary>
+	
+	<ImportPlugins importFolderName="Exported001">
+	</ImportPlugins>
+	
+	<CompareToLibrary 
+		goldenLibFolderName="Paris" 
+		diffCount="0" 
+		elementCount="0"
+		useNameAsId="false">
+		
+	</CompareToLibrary>
+
+</MethodLibraryTest>

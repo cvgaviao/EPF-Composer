@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false" verbose="true">
+	
+	<OpenLibrary libFolderName="162148">
+	</OpenLibrary>	
+	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug_A"
+		briefDescription="Brief desciption of Plug_A"
+		authors="Somebody"	
+		>	
+	</NewMethodElement>	
+	
+	<NewMethodElement 
+		type="MethodConfiguration"
+		name="Config_A"
+		>			
+	</NewMethodElement>										
+		
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="B"
+		presentationName="B"
+		briefDescription="Brief desciption of B"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+				
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/B"
+		name="B1"
+		presentationName="B1"
+		>								
+	</NewMethodElement>
+
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/B/B1"
+		name="B2"
+		presentationName="B2"
+		>								
+	</NewMethodElement>				
+
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="A"
+		presentationName="A"
+		briefDescription="Brief desciption of A"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="C"
+		presentationName="C"
+		briefDescription="Brief desciption of C"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/B"
+		variabilityType="contributes"
+		>				
+		<presentation 
+			mainDescription="This is the main description of B">			
+		</presentation>
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/A</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/C"
+		variabilityType="extends"
+		>				
+		<presentation 
+			mainDescription="This is the main description of C">			
+		</presentation>
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/A</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/B/B1/B2"
+		variabilityType="extends"
+		>				
+		<presentation 
+			mainDescription="This is the main description of B2">			
+		</presentation>
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/C</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+		
+	<CircularDependencyCheck disable="false" 
+		errorCount="1"
+		circularElementCount="5"
+		>
+	</CircularDependencyCheck>	
+	
+	
+		
+</MethodLibraryTest>

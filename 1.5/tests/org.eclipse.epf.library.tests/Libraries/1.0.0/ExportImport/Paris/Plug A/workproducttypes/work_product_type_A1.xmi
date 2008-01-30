@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-TfRDoHismshj8cL2lORtcg" name="work_product_type_A1,_HghDYA-WEdqL2O1PJV9cZA" guid="-TfRDoHismshj8cL2lORtcg" changeDate="2005-08-18T18:02:44.125-0700">
+  <mainDescription>Work Product Type A1 main</mainDescription>
+  <keyConsiderations>Work Product Type A1 key</keyConsiderations>
+</org.eclipse.epf.uma:ContentDescription>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-NLwZpVe43A3pEv1L0nmwmA" name="role_set_B1,_uPAWcB85EdqNvelybDXZFQ" guid="-NLwZpVe43A3pEv1L0nmwmA" changeDate="2005-09-06T17:53:07.375-0700">
+  <mainDescription>Role Set B1 main</mainDescription>
+  <keyConsiderations>Role Set B1 key</keyConsiderations>
+</org.eclipse.epf.uma:ContentDescription>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:TaskDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-bR9TX1bZ6W9RY5IvIPGUjg" name=",_oUluEEDFEdqO9M3fukYA_A" guid="-bR9TX1bZ6W9RY5IvIPGUjg" changeDate="2005-10-19T10:27:43.000-0700">
+  <mainDescription>main: Task A3</mainDescription>
+  <sections xmi:id="_rCWwUEDPEdqrhsZh3QNAMQ" name="Step A3.1" guid="_rCWwUEDPEdqrhsZh3QNAMQ">
+    <sectionDescription>Step A3.1</sectionDescription>
+  </sections>
+  <sections xmi:id="_umygYEDPEdqrhsZh3QNAMQ" name="Step A3.2" guid="_umygYEDPEdqrhsZh3QNAMQ">
+    <sectionDescription>Step A3.2</sectionDescription>
+  </sections>
+  <sections xmi:id="_vx5BkEDPEdqrhsZh3QNAMQ" name="Step A3.3" guid="_vx5BkEDPEdqrhsZh3QNAMQ">
+    <sectionDescription>Step A3.3</sectionDescription>
+  </sections>
+  <keyConsiderations>keys: Task A3</keyConsiderations>
+  <purpose>purpose: Task A3</purpose>
+  <alternatives>alternatives: Task A3</alternatives>
+</org.eclipse.epf.uma:TaskDescription>

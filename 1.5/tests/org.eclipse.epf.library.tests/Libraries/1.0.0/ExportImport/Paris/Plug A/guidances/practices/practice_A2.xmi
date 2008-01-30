@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:PracticeDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-NcSMTfhMlttPUK2F6wXgEg" name="practice_A2,_EpfoYA-VEdqL2O1PJV9cZA" guid="-NcSMTfhMlttPUK2F6wXgEg" changeDate="2005-08-18T14:31:23.094-0700">
+  <mainDescription>Practice A2 content</mainDescription>
+  <additionalInfo>Practice A2 add</additionalInfo>
+  <problem>Practice A2 problem</problem>
+  <background>Practice A2 back</background>
+  <goals>Practice A2 goal</goals>
+  <application>Practice A2 app</application>
+  <levelsOfAdoption>Practice A2 level</levelsOfAdoption>
+</org.eclipse.epf.uma:PracticeDescription>

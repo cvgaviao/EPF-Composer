@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false">
+	
+<!-- 1. Create a new method library -->	
+	<OpenLibrary libFolderName="kelvinCase">
+	</OpenLibrary>	
+	
+<!-- 2. Create a new plugin_1 -->	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="plugin_1"
+		briefDescription="Brief desciption of plugin_1"
+		authors="Kelvin"	
+		>	
+	</NewMethodElement>	
+		
+<!-- 3. Create a new contentPackage_1 -->	
+	<NewMethodElement
+		type="ContentPackage"
+		name="contentPackage_1"
+		parentPath="plugin_1/Content/CoreContent"
+		>			
+	</NewMethodElement>	
+	
+<!-- 4. Create a new task_1 -->	
+	<NewMethodElement
+		type="Task"
+		name="task_1"
+		parentPath="plugin_1/Content/CoreContent/contentPackage_1"
+		>	
+		<presentation 
+			mainDescription="This is the main description of task_1">			
+		</presentation>		
+	</NewMethodElement>
+	
+<!-- 5. Create a new config_1 that includes plugin_1 & contentPackage_1 -->	
+	<NewMethodElement disable="false"
+		type="MethodConfiguration"
+		name="config_1"
+		briefDescription="Brief desciption of config_1"
+		>
+	  <methodPluginSelection>
+	  	<Value>plugin_1</Value>
+  	  </methodPluginSelection>
+					
+	  <methodPackageSelection>
+	  	<Value>plugin_1/Content/CoreContent/contentPackage_1</Value>
+  	  </methodPackageSelection>						
+	</NewMethodElement>	
+	
+<!-- 6. Create a new cp_1 using config_1 -->	
+	<NewMethodElement 
+		type="CapabilityPattern"
+		parentPath="plugin_1/Content/CapabilityPatterns"
+		name="cp_1"
+		briefDescription="Brief desciption of cp_1"
+		>		
+		<defaultContext>
+			<Value>config_1</Value>
+		</defaultContext>
+				
+		<presentation 
+			mainDescription="This is the main description of cp_1">			
+		</presentation>	
+	</NewMethodElement>
+		
+<!-- 6. Add a new td_1 to cp_1 that is linked to task_1 -->			
+	<NewMethodElement 
+		type="TaskDescriptor"
+		parentPath="plugin_1/Content/CapabilityPatterns/cp_1"
+		name="td_1"
+		>
+		<Task>
+			<Value>plugin_1/Content/CoreContent/contentPackage_1/task_1</Value>
+		</Task>				
+
+	</NewMethodElement>
+	
+<!-- 7. Suppress td_1 -->			
+	<EditMethodElement 
+		type="TaskDescriptor"
+		path="plugin_1/Content/CapabilityPatterns/cp_1/td_1"
+		suppressed="true"
+		>	
+	</EditMethodElement> 			
+	
+	<OutputLibrary outputFileName="t.xml"/>	
+	
+	<CompareToGoldenFile  
+		goldenFileName="kelvinCase.xml" 
+		diffCount="3" 
+		elementCount="35"
+		>
+	</CompareToGoldenFile>
+	
+		
+</MethodLibraryTest>

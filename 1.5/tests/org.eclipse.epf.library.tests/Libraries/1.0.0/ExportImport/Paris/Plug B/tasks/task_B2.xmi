@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:TaskDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-J3z0IGfjehit0uFbTJca7g" name="task_B2,_ZLOMsB8PEdqshMNSI07XOg" guid="-J3z0IGfjehit0uFbTJca7g" changeDate="2005-09-06T12:50:07.703-0700">
+  <mainDescription>Task B2 main</mainDescription>
+  <sections xmi:id="_oqYswB84EdqNvelybDXZFQ" name="Step B2.1" guid="_oqYswB84EdqNvelybDXZFQ">
+    <sectionDescription>Ein</sectionDescription>
+  </sections>
+  <sections xmi:id="_quQpAB84EdqNvelybDXZFQ" name="Step B2.2" guid="_quQpAB84EdqNvelybDXZFQ">
+    <sectionDescription>&lt;p&gt;
+    Zwei
+&lt;/p&gt;</sectionDescription>
+  </sections>
+  <sections xmi:id="_qyu5UB84EdqNvelybDXZFQ" name="Step B2.3" guid="_qyu5UB84EdqNvelybDXZFQ">
+    <sectionDescription>&lt;p&gt;
+    Drei
+&lt;/p&gt;</sectionDescription>
+  </sections>
+  <keyConsiderations>Task B2 key</keyConsiderations>
+  <purpose>Task B2 porpoise</purpose>
+  <alternatives>Task B2 alt</alternatives>
+</org.eclipse.epf.uma:TaskDescription>

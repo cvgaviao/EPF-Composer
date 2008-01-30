@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uma:MethodLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uma="http://www.eclipse.org/epf/uma/1.0.3" name="158913n158925m" briefDescription="" id="_8ygz0E5QEduGkqWGzwpn7Q" orderingGuide="" suppressed="false" authors="" changeDescription="" version="" tool="epf=1.2.0">
+  <MethodPlugin name="new_plug-in" briefDescription="" id="_-PDDQE5QEduGkqWGzwpn7Q" orderingGuide="" suppressed="false" authors="" changeDescription="" version="" userChangeable="true">
+    <MethodPackage xsi:type="uma:ContentCategoryPackage" name="ContentCategories" id="_GT64oE5REduGkqWGzwpn7Q"/>
+    <MethodPackage xsi:type="uma:ContentPackage" name="new_content_package" briefDescription="" id="_D1fHUE5REduGkqWGzwpn7Q" orderingGuide="" suppressed="false" global="false"/>
+    <MethodPackage xsi:type="uma:ProcessComponent" name="cp" briefDescription="" id="_CeL9ME5REduGkqWGzwpn7Q" orderingGuide="" suppressed="false" global="false" authors="" changeDescription="" version="">
+      <Process xsi:type="uma:CapabilityPattern" name="cp" briefDescription="" id="_CeL9MU5REduGkqWGzwpn7Q" orderingGuide="" suppressed="false" presentationName="cp" hasMultipleOccurrences="false" isOptional="false" isPlanned="true" prefix="" isEventDriven="false" isOngoing="false" isRepeatable="false" IsEnactable="false" variabilityType="na">
+        <Presentation xsi:type="uma:ProcessDescription" name="cp,_CeL9MU5REduGkqWGzwpn7Q" briefDescription="" id="-t72JwbqvK9u4stj31bqCog" orderingGuide="" suppressed="false" authors="" changeDescription="" version="" usageGuidance="" externalId="">
+          <MainDescription></MainDescription>
+          <KeyConsiderations></KeyConsiderations>
+          <Alternatives></Alternatives>
+          <HowToStaff></HowToStaff>
+          <Purpose></Purpose>
+          <Scope></Scope>
+          <UsageNotes></UsageNotes>
+        </Presentation>
+        <DefaultContext>_AgBnYE5REduGkqWGzwpn7Q</DefaultContext>
+        <ValidContext>_AgBnYE5REduGkqWGzwpn7Q</ValidContext>
+      </Process>
+    </MethodPackage>
+  </MethodPlugin>
+  <MethodConfiguration name="c" briefDescription="" id="_AgBnYE5REduGkqWGzwpn7Q" orderingGuide="" suppressed="false" authors="" changeDescription="" version="">
+    <MethodPluginSelection>_-PDDQE5QEduGkqWGzwpn7Q</MethodPluginSelection>
+    <MethodPackageSelection>_CeL9ME5REduGkqWGzwpn7Q</MethodPackageSelection>
+    <MethodPackageSelection>_-PDDTU5QEduGkqWGzwpn7Q</MethodPackageSelection>
+    <MethodPackageSelection>_-PDDQU5QEduGkqWGzwpn7Q</MethodPackageSelection>
+  </MethodConfiguration>
+</uma:MethodLibrary>

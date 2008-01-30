@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false">
+	
+	<OpenLibrary libFolderName="newLib">
+	</OpenLibrary>	
+	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug_A"
+		briefDescription="Brief desciption of Plug_A"
+		authors="Somebody"	
+		>	
+	</NewMethodElement>	
+	
+	<NewMethodElement 
+		type="MethodConfiguration"
+		name="Config_A"
+		>			
+	</NewMethodElement>										
+		
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="cp_1"
+		briefDescription="Brief desciption of cp_1"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+	
+	
+	<EditMethodElement disable="false"
+		type="CapabilityPattern"
+		path="Plug_A/Content/CapabilityPatterns/cp_1"	
+		>	
+		<presentation 
+			mainDescription="This is the main description of cp_1">			
+		</presentation>	
+	</EditMethodElement>
+	
+				
+	<NewMethodElement disable="false"
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/cp_1"
+		name="act_1"
+		briefDescription="Brief desciption of act_1"
+		>				
+				
+	</NewMethodElement>
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/cp_1/act_1"
+		>				
+		<presentation 
+			mainDescription="This is the main description of act_1">			
+		</presentation>	
+	</EditMethodElement>
+	
+	
+	<NewMethodElement disable="false"
+		type="Phase"
+		parentPath="Plug_A/Content/CapabilityPatterns/cp_1/act_1"
+		name="phase_1"
+		briefDescription="Brief desciption of phase_1"
+		>				
+				
+	</NewMethodElement>
+	
+	
+	
+	<OutputLibrary />	
+	
+	<CompareToGoldenFile  disable="false"
+		goldenFileName="newActivities.xml" 
+		diffCount="3" 
+		elementCount="34"
+		>
+	</CompareToGoldenFile>
+	
+		
+</MethodLibraryTest>

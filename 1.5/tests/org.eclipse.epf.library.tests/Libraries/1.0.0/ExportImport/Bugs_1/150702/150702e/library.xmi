@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_RV87kE21EduDA6DnzSycKQ" guid="_RV87kE21EduDA6DnzSycKQ">
+    <subManagers xmi:id="_RV87kk21EduDA6DnzSycKQ" href="uma://_5bS5QE20EduDA6DnzSycKQ#_RV87kk21EduDA6DnzSycKQ"/>
+    <resourceDescriptors xmi:id="_RV87kU21EduDA6DnzSycKQ" id="_3OnmUE20EduDA6DnzSycKQ" uri=""/>
+    <resourceDescriptors xmi:id="_RV87k021EduDA6DnzSycKQ" id="_RV87kk21EduDA6DnzSycKQ" uri="PlugA/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_RV87lE21EduDA6DnzSycKQ" id="_5bS5QE20EduDA6DnzSycKQ" uri="PlugA/plugin.xmi"/>
+  </org.eclipse.epf.uma.resourcemanager:ResourceManager>
+  <org.eclipse.epf.uma:MethodLibrary xmi:id="_3OnmUE20EduDA6DnzSycKQ" name="150702m" guid="_3OnmUE20EduDA6DnzSycKQ">
+    <methodPlugins xmi:id="_5bS5QE20EduDA6DnzSycKQ" href="uma://_5bS5QE20EduDA6DnzSycKQ#_5bS5QE20EduDA6DnzSycKQ"/>
+  </org.eclipse.epf.uma:MethodLibrary>
+</xmi:XMI>

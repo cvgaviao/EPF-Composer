@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:ArtifactDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-n9TJQa0FJvG_avDXaATjIQ" name="artifact_A1 x,_9Kt78A-PEdqL2O1PJV9cZA" guid="-n9TJQa0FJvG_avDXaATjIQ" changeDate="2005-09-07T14:52:44.984-0700">
+  <mainDescription>Artifact A1 main</mainDescription>
+  <keyConsiderations>Artifact A1 key</keyConsiderations>
+  <externalId>Artifact A1 unique</externalId>
+  <purpose>Artifact A1 purpose</purpose>
+  <impactOfNotHaving>Artifact A1 impact</impactOfNotHaving>
+  <reasonsForNotNeeding>Artifact A1 reason</reasonsForNotNeeding>
+  <briefOutline>Artifact A1 brief</briefOutline>
+  <representationOptions>Artifact A1 rep</representationOptions>
+</org.eclipse.epf.uma:ArtifactDescription>

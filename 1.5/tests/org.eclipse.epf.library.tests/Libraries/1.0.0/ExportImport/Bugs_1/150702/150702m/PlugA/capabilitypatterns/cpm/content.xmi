@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:ProcessDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-i5OYCKyIteWV2XH1Dt2qag" name="cp,_JRRTcU21EduDA6DnzSycKQ" guid="-i5OYCKyIteWV2XH1Dt2qag" version="1.0.0">
+  <mainDescription>&lt;p&gt;
+    m
+&lt;/p&gt;</mainDescription>
+  <keyConsiderations>&lt;p&gt;
+    m
+&lt;/p&gt;</keyConsiderations>
+  <purpose>&lt;p&gt;
+    m
+&lt;/p&gt;</purpose>
+  <alternatives>&lt;p&gt;
+    m
+&lt;/p&gt;</alternatives>
+  <howtoStaff>&lt;p&gt;
+    m
+&lt;/p&gt;</howtoStaff>
+  <externalId>m</externalId>
+  <scope>&lt;p&gt;
+    m
+&lt;/p&gt;</scope>
+  <usageNotes>&lt;p&gt;
+    m
+&lt;/p&gt;</usageNotes>
+</org.eclipse.epf.uma:ProcessDescription>

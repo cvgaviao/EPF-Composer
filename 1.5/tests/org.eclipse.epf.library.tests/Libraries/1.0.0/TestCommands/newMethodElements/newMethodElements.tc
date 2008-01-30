@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false">
+	
+	<OpenLibrary libFolderName="newLib">
+	</OpenLibrary>	
+	
+	<NewMethodElement 
+		type="MethodPlugin"
+		name="PlugTest"
+		>	
+	</NewMethodElement>	
+	
+	<NewMethodElement disable="false"
+		type="MethodConfiguration"
+		name="Config_Test"
+		>			
+	</NewMethodElement>
+		
+	<NewMethodElement
+		type="MethodPlugin"  
+		name="Plug_A"
+		briefDescription="Brief desciption of Plug_A"
+		authors="RMC team member A"	
+		>	
+	</NewMethodElement>
+	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug_B"
+		briefDescription="Brief desciption of Plug_B"
+		authors="RMC team member B"	
+		>
+		<bases>
+			<Value>Plug_A</Value>
+		</bases>			
+	</NewMethodElement>
+			
+	<EditMethodElement
+		type="MethodPlugin"
+		path="Plug_B"
+		>
+		<bases>
+			<Value>Plug_A0</Value>
+		</bases>		
+	</EditMethodElement>
+			
+			
+	<NewMethodConfiguration disable="false"
+		name="Config_A"
+		briefDescription="Brief desciption of Config_A"
+		>			
+	</NewMethodConfiguration>
+	
+	<NewMethodElement
+		type="ContentPackage"
+		name="ContentPackage_1"
+		parentPath="Plug_A/Content/CoreContent"
+		>			
+	</NewMethodElement>	
+	
+	<NewMethodElement
+		type="Role"
+		name="role_1"
+		parentPath="Plug_A/Content/CoreContent/ContentPackage_1"
+		>			
+	</NewMethodElement>
+	
+		
+	<EditMethodElement
+		type="Role"
+		path="Plug_A/Content/CoreContent/ContentPackage_1/role_1"
+		presentationName="Role 1"
+		briefDescription="This is a brief dsescription of Role 1"
+		>
+		<presentation mainDescription="This is the main description of Role 1">
+			
+		</presentation>			
+	</EditMethodElement>		
+	
+	<OutputLibrary disable="false" />
+	
+	<OutputPlugin path="Plug_A" recursive="false">
+	</OutputPlugin>
+	
+	<OutputConfiguration path="Config_A" recursive="false">
+	</OutputConfiguration>
+	
+	<CompareToGoldenFile 
+		goldenFileName="newMethodElements.xml" 
+		diffCount="4" 
+		elementCount="64"
+		>
+	</CompareToGoldenFile>
+	
+		
+</MethodLibraryTest>

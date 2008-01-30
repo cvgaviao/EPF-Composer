@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false" verbose="true">
+	
+	<OpenLibrary libFolderName="169501">
+	</OpenLibrary>	
+	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug_A"
+		briefDescription="Brief desciption of Plug_A"
+		authors="Somebody"	
+		>	
+	</NewMethodElement>	
+	
+	<NewMethodElement 
+		type="MethodConfiguration"
+		name="Config_A"
+		>			
+	</NewMethodElement>										
+		
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="cp1"
+		presentationName="cp1"
+		briefDescription="Brief desciption of cp1"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+				
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/cp1"
+		name="a1"
+		presentationName="a1"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="cp2"
+		presentationName="cp2"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+				
+	<NewMethodElement disable="false"
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/cp2"
+		name="a2"
+		presentationName="a2"
+		>								
+	</NewMethodElement>	
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/cp1/a1"
+		variabilityType="contributes"
+		>				
+		<presentation 
+			mainDescription="This is the main description of a1">			
+		</presentation>
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/cp2/a2</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+		
+	<CircularDependencyCheck disable="false" errorCount="0">
+	</CircularDependencyCheck>	
+	
+	
+		
+</MethodLibraryTest>

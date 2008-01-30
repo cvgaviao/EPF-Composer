@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EPF Tests Plug-in
+Bundle-SymbolicName: org.eclipse.epf.tests
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: Eclipse.org
+Bundle-Localization: plugin
+Require-Bundle: org.junit,
+ org.eclipse.epf.common.tests,
+ org.eclipse.epf.library.tests,
+ org.eclipse.epf.authoring.ui

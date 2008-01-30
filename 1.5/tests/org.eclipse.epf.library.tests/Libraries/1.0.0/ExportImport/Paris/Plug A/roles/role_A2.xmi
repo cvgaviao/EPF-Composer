@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:RoleDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-HxkcViHu57bDGul421rBvg" name="role_A2,_6k3UAA-PEdqL2O1PJV9cZA" guid="-HxkcViHu57bDGul421rBvg" changeDate="2005-10-19T10:32:35.422-0700">
+  <mainDescription>Role A2 main</mainDescription>
+  <keyConsiderations>Role A2 key</keyConsiderations>
+  <skills>Role A2 skills</skills>
+  <assignmentApproaches>Role A2 assign</assignmentApproaches>
+  <synonyms>Role A2 syn</synonyms>
+</org.eclipse.epf.uma:RoleDescription>

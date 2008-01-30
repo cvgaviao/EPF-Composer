@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false">
+	
+	<CopyLibrary libFolderName="../ExportImport/Paris">
+	</CopyLibrary>	
+	
+	<OpenLibrary libFolderName="Paris">
+	</OpenLibrary>
+	
+	<ExportPlugins exportFolderName="Exported001">
+	</ExportPlugins>
+	
+	<OpenLibrary libFolderName="Base_1">
+	</OpenLibrary>
+	
+	<ImportPlugins importFolderName="Exported001">
+	</ImportPlugins>
+	
+	<OutputLibrary disable="true" />
+	
+	<OutputPlugin path="Plug A" recursive="false">
+	</OutputPlugin>
+	
+	<OutputConfiguration path="Config A" recursive="false">
+	</OutputConfiguration>
+	
+	<OutputMethodElement path="Plug A/Content/CoreContent/content_package_A1" recursive="false">
+	</OutputMethodElement>
+
+	<OutputMethodElement path="Plug A/Content/CoreContent/content_package_A1/role_A2" recursive="true">
+	</OutputMethodElement>
+
+</MethodLibraryTest>

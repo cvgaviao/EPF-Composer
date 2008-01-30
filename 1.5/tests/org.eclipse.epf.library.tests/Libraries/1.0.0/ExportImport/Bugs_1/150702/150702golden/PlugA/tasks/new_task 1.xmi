@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:TaskDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-1CruqgPhD6fjmMlnNGqq-Q" name="new_task 1,_GerQAE21EduDA6DnzSycKQ" guid="-1CruqgPhD6fjmMlnNGqq-Q" changeDate="2006-09-26T16:17:01.979-0700">
+  <mainDescription>1</mainDescription>
+  <keyConsiderations>1</keyConsiderations>
+  <purpose>1</purpose>
+  <alternatives>1</alternatives>
+</org.eclipse.epf.uma:TaskDescription>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false" verbose="false">
+	
+	<OpenLibrary libFolderName="171028">
+	</OpenLibrary>	
+	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug_A"
+		briefDescription="Brief desciption of Plug_A"
+		authors="Somebody"	
+		>	
+	</NewMethodElement>	
+	
+	<NewMethodElement 
+		type="MethodConfiguration"
+		name="Config_A"
+		>		
+						
+	</NewMethodElement>										
+		
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="CPa"
+		presentationName="CPa"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+				
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPa"
+		name="A1"
+		presentationName="A1"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPa/A1"
+		name="A11"
+		presentationName="A11"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="CPb"
+		presentationName="CPb"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>		
+				
+	</NewMethodElement>
+				
+	<NewMethodElement disable="false"
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPb"
+		name="B1"
+		presentationName="B1"
+		>								
+	</NewMethodElement>	
+	
+	<NewMethodElement disable="false"
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPb/B1"
+		name="B11"
+		presentationName="B11"
+		>								
+	</NewMethodElement>	
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/CPa/A1/A11"
+		variabilityType="extends"
+		>				
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/CPb/B1/B11</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/CPb/B1/B11"
+		variabilityType="extends"
+		>				
+		<presentation 
+			mainDescription="This is the main description of B11">			
+		</presentation>
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/CPa/A1</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+		
+	<CircularDependencyCheck disable="false" 
+		errorCount="1"
+		circularElementCount="3"
+		>
+	</CircularDependencyCheck>	
+	
+	
+		
+</MethodLibraryTest>

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false" verbose="false">
+	
+<!-- This case includes creating and editng almost every type of mehtod element -->
+	
+	<OpenLibrary libFolderName="allElements">
+	</OpenLibrary>	
+	
+<!-- Plug A -->
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug A"
+		briefDescription="Brief desciption of Plug A"
+		authors="Plug A Author"	
+		>	
+	</NewMethodElement>	
+
+<!-- content_package_A1 -->
+	<NewMethodElement
+		type="ContentPackage"
+		name="content_package_A1"
+		parentPath="Plug A/Content/CoreContent"
+		briefDescription="Brief desciption of content_package_A1"
+		>			
+	</NewMethodElement>
+	
+<!-- Config_A -->	
+	<NewMethodElement disable="false"
+		type="MethodConfiguration"
+		name="Config_A"
+		briefDescription="Brief desciption of Config_A"
+		>
+	  <methodPluginSelection>
+	  	<Value>Plug A</Value>
+  	  </methodPluginSelection>
+					
+	  <methodPackageSelection>
+	  	<Value>Plug A/Content/CoreContent/content_package_A1</Value>
+  	  </methodPackageSelection>						
+	</NewMethodElement>				
+	
+<!-- role_A1 -->	
+	<NewMethodElement
+		type="Role"
+		name="role_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Role A1 main"
+			keyConsiderations="Role A1 key"
+			skills="Role A1 skills"
+			assignmentApproaches="Role A1 assig App"
+			synonyms="Role syn"
+			>			
+		</presentation>		
+	</NewMethodElement>
+	
+<!-- task_A1 -->	
+	<NewMethodElement
+		type="Task"
+		name="task_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Task A1 main"
+			keyConsiderations="Task A1 key"
+			skills="Task A1 skills"
+			assignmentApproaches="Task A1 assig App"
+			synonyms="Task syn"
+			>			
+		</presentation>
+			
+		<ownedRules body="Body 1" />
+		<ownedRules body="Body 2" />
+			
+	</NewMethodElement>
+	
+<!-- artifact_A1 -->	
+	<NewMethodElement
+		type="Artifact"
+		name="artifact_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Artififact A1 main"
+			keyConsiderations="Artififact A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+
+<!-- deliverable_A1 -->	
+	<NewMethodElement
+		type="Deliverable"
+		name="deliverable_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Deliverable A1 main"
+			keyConsiderations="Deliverable A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+
+<!-- outcome_A1 -->	
+	<NewMethodElement
+		type="Outcome"
+		name="outcome_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Outcome A1 main"
+			keyConsiderations="Outcome A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>	
+	
+<!-- concept_A1 -->	
+	<NewMethodElement
+		type="Concept"
+		name="concept_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Concept A1 main"
+			keyConsiderations="Concept A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- checklist_A1 -->	
+	<NewMethodElement
+		type="Checklist"
+		name="checklist_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Checklist A1 main"
+			keyConsiderations="Checklist A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>	
+	
+<!-- example_A1 -->	
+	<NewMethodElement
+		type="Example"
+		name="example_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Example A1 main"
+			keyConsiderations="Example A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>		
+	
+<!-- guideline_A1 -->	
+	<NewMethodElement
+		type="Guideline"
+		name="guideline_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Guideline A1 main"
+			keyConsiderations="Guideline A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>			
+		
+<!-- report_A1 -->	
+	<NewMethodElement
+		type="Report"
+		name="report_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Report A1 main"
+			keyConsiderations="Report A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- template_A1 -->	
+	<NewMethodElement
+		type="Template"
+		name="template_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Template A1 main"
+			keyConsiderations="Template A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- supporting_material_A1 -->	
+	<NewMethodElement
+		type="SupportingMaterial"
+		name="supporting_material_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Supporting_material A1 main"
+			keyConsiderations="Supporting_material A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- toolmentor_A1 -->	
+	<NewMethodElement
+		type="ToolMentor"
+		name="toolmentor_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Toolmentor A1 main"
+			keyConsiderations="Toolmentor A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>			
+
+<!-- whitepaper_A1 -->	
+	<NewMethodElement
+		type="Whitepaper"
+		name="whitepaper_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Whitepaper A1 main"
+			keyConsiderations="Whitepaper A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>	
+	
+<!-- practice_A1 -->	
+	<NewMethodElement
+		type="Practice"
+		name="practice_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Practice A1 main"
+			keyConsiderations="Practice A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- reusable_A1 -->	
+	<NewMethodElement
+		type="ReusableAsset"
+		name="reusable_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Reusable A1 main"
+			keyConsiderations="Reusable A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>	
+	
+<!-- roadmap_A1 -->	
+	<NewMethodElement
+		type="Roadmap"
+		name="roadmap_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Roadmap A1 main"
+			keyConsiderations="Roadmap A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- term_definition_A1 -->	
+	<NewMethodElement
+		type="TermDefinition"
+		name="term_definition_A1"
+		parentPath="Plug A/Content/CoreContent/content_package_A1"
+		>	
+		<presentation
+			mainDescription="Term_definition A1 main"
+			keyConsiderations="Term_definition A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- discipline_A1 -->	
+	<NewMethodElement
+		type="Discipline"
+		name="discipline_A1"
+		parentPath="Plug A/Content/Categories/Disciplines"
+		>	
+		<presentation
+			mainDescription="Discipline A1 main"
+			keyConsiderations="Discipline A1 key"
+			>			
+		</presentation>
+		<tasks>
+			<Value>Plug A/Content/CoreContent/content_package_A1/task_A1</Value>
+		</tasks>						
+	</NewMethodElement>	
+	
+<!-- discipline_grouping_A1 -->	
+	<NewMethodElement
+		type="DisciplineGrouping"
+		name="discipline_grouping_A1"
+		parentPath="Plug A/Content/Categories/Disciplines"
+		>			
+		<presentation
+			mainDescription="DisciplineGrouping A1 main"
+			keyConsiderations="DisciplineGrouping A1 key"
+			>			
+		</presentation>
+		<disciplines>
+			<Value>Plug A/Content/Categories/Disciplines/discipline_A1</Value>
+		</disciplines>					
+	</NewMethodElement>	
+	
+	
+<!-- discipline_A2 -->	
+	<NewMethodElement
+		type="Discipline"
+		name="discipline_A2"
+		parentPath="Plug A/Content/Categories/Disciplines"
+		>	
+		<presentation
+			mainDescription="Discipline A2 main"
+			keyConsiderations="Discipline A2 key"
+			>			
+		</presentation>						
+	</NewMethodElement>															
+		
+<!-- domain_A1 -->	
+	<NewMethodElement
+		type="Domain"
+		name="domain_A1"
+		parentPath="Plug A/Content/Categories/Domains"
+		>	
+		<presentation
+			mainDescription="Domain A1 main"
+			keyConsiderations="Domain A1 key"
+			>			
+		</presentation>
+		<subdomains 
+			name="sub_domain_A1"
+			>
+			<presentation
+				mainDescription="Sub Domain A1 main"
+				keyConsiderations="Sub Domain A1 key"
+				>			
+			</presentation>
+		</subdomains>						
+	</NewMethodElement>			
+		
+<!-- work_product_type_A1 -->	
+	<NewMethodElement
+		type="WorkProductType"
+		name="work_product_type_A1"
+		parentPath="Plug A/Content/Categories/WP Types"
+		>	
+		<presentation
+			mainDescription="WorkProductType A1 main"
+			keyConsiderations="WorkProductType A1 key"
+			>			
+		</presentation>						
+	</NewMethodElement>
+	
+<!-- role_set_A1 -->	
+	<NewMethodElement
+		type="RoleSet"
+		name="role_set_A1"
+		parentPath="Plug A/Content/Categories/RoleSets"
+		>	
+		<presentation
+			mainDescription="RoleSet A1 main"
+			keyConsiderations="RoleSet A1 key"
+			>			
+		</presentation>
+		<roles>
+			<Value>Plug A/Content/CoreContent/content_package_A1/role_A1</Value>
+		</roles>						
+	</NewMethodElement>	
+	
+<!-- role_set_grouping_A1 -->	
+	<NewMethodElement
+		type="RoleSetGrouping"
+		name="role_set_grouping_A1"
+		parentPath="Plug A/Content/Categories/RoleSets"
+		>			
+		<presentation
+			mainDescription="RoleSetGrouping A1 main"
+			keyConsiderations="RoleSetGrouping A1 key"
+			>			
+		</presentation>
+		<roleSets>
+			<Value>Plug A/Content/Categories/RoleSets/role_set_A1</Value>
+		</roleSets>					
+	</NewMethodElement>	
+	
+	
+<!-- role_set_A2 -->	
+	<NewMethodElement
+		type="RoleSet"
+		name="role_set_A2"
+		parentPath="Plug A/Content/Categories/RoleSets"
+		>	
+		<presentation
+			mainDescription="RoleSet A2 main"
+			keyConsiderations="RoleSet A2 key"
+			>			
+		</presentation>
+		<roles>
+			<Value>Plug A/Content/CoreContent/content_package_A1/role_A1</Value>
+		</roles>						
+	</NewMethodElement>
+	
+	
+<!-- tool_A1 -->	
+	<NewMethodElement
+		type="Tool"
+		name="tool_A1"
+		parentPath="Plug A/Content/Categories/Tools"
+		>	
+		<presentation
+			mainDescription="Tool A1 main"
+			keyConsiderations="Tool A1 key"
+			>			
+		</presentation>					
+	</NewMethodElement>
+	
+<!-- sub_custom_category_A1 -->	
+	<NewMethodElement
+		type="CustomCategory"
+		name="sub_custom_category_A1"
+		parentPath="Plug A/Content/Categories/CustomCategories"
+		>	
+		<presentation
+			mainDescription="sub_custom_category_A1 main"
+			keyConsiderations="sub_custom_category_A1 key"
+			>			
+		</presentation>
+							
+	</NewMethodElement>
+	
+<!-- custom_category_A1 -->	
+	<NewMethodElement
+		type="CustomCategory"
+		name="custom_category_A1"
+		parentPath="Plug A/Content/Categories/CustomCategories"
+		>	
+		<presentation
+			mainDescription="custom_category_A1 main"
+			keyConsiderations="custom_category_A1 key"
+			>			
+		</presentation>
+		<categorizedElements>
+			<Value>Plug A/Content/Categories/CustomCategories/sub_custom_category_A1</Value>
+		</categorizedElements>						
+	</NewMethodElement>
+	
+	<!-- custom_category_A2 -->	
+	<NewMethodElement
+		type="CustomCategory"
+		name="custom_category_A2"
+		parentPath="Plug A/Content/Categories/CustomCategories"
+		>	
+		<presentation
+			mainDescription="custom_category_A2 main"
+			keyConsiderations="custom_category_A2 key"
+			>			
+		</presentation>					
+	</NewMethodElement>	
+	
+	<EditMethodElement disable="false"
+		type="CustomCategory"
+		path="Plug A/Content/Categories/CustomCategories/Hidden/Custom Categories"
+		>	
+		<categorizedElements>
+			<Value>Plug A/Content/Categories/CustomCategories/custom_category_A1</Value>
+			<Value>Plug A/Content/Categories/CustomCategories/custom_category_A2</Value>			
+		</categorizedElements>				
+	</EditMethodElement>															
+		
+<!-- capPatPak_A1 -->	
+	<NewMethodElement
+		type="ProcessPackage"
+		name="capPatPak_A1"
+		parentPath="Plug A/Content/CapabilityPatterns"
+		>					
+	</NewMethodElement>
+	
+<!-- CP1 -->	
+	<NewMethodElement
+		type="CapabilityPattern"
+		name="CP1"
+		parentPath="Plug A/Content/CapabilityPatterns/capPatPak_A1"
+		>	
+		<presentation
+			mainDescription="CP1 main"
+			keyConsiderations="CP1 key"
+			>			
+		</presentation>
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>
+		<validContext>
+			<Value>Config_A</Value>
+		</validContext>						
+	</NewMethodElement>		
+	
+<!-- CP1_A1 -->	
+	<NewMethodElement
+		type="CapabilityPattern"
+		name="CP1_A1"
+		parentPath="Plug A/Content/CapabilityPatterns"
+		>	
+		<presentation
+			mainDescription="CP1_A1 main"
+			keyConsiderations="CP1_A1 key"
+			>			
+		</presentation>
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>
+		<validContext>
+			<Value>Config_A</Value>
+		</validContext>									
+	</NewMethodElement>		
+	
+<!-- delProcPak_A1 -->	
+	<NewMethodElement disable="false"
+		type="ProcessPackage"
+		name="delProcPak_A1"
+		parentPath="Plug A/DeliveryProcesses"
+		>						
+	</NewMethodElement>	
+	
+<!-- DP1 -->	
+	<NewMethodElement
+		type="DeliveryProcess"
+		name="DP1"
+		parentPath="Plug A/DeliveryProcesses/delProcPak_A1"
+		>	
+		<presentation
+			mainDescription="DP1 main"
+			keyConsiderations="DP1 key"
+			>			
+		</presentation>
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>
+		<validContext>
+			<Value>Config_A</Value>
+		</validContext>								
+	</NewMethodElement>				
+		
+	<OutputLibrary outputFileName="t.xml"/>	
+
+</MethodLibraryTest>

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EPF RichText Tests Plug-in
+Bundle-SymbolicName: org.eclipse.epf.richtext.tests; singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Activator: org.eclipse.epf.richtext.tests.RichTextTestsPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.epf.common,
+ org.eclipse.epf.richtext,
+ org.eclipse.ui,
+ org.junit,
+ org.eclipse.epf.common.ui
+Eclipse-LazyStart: true
+Bundle-Vendor: Eclipse.org

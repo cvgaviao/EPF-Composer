@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false" verbose="false">
+	
+	<OpenLibrary libFolderName="170294">
+	</OpenLibrary>	
+	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug_A"
+		briefDescription="Brief desciption of Plug_A"
+		authors="Somebody"	
+		>	
+	</NewMethodElement>	
+	
+	<NewMethodElement 
+		type="MethodConfiguration"
+		name="Config_A"
+		>								
+	</NewMethodElement>										
+		
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="CPa"
+		presentationName="CPa"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>						
+	</NewMethodElement>
+				
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPa"
+		name="a1"
+		presentationName="a1"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPa/a1"
+		name="a11"
+		presentationName="a11"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPa/a1/a11"
+		name="a111"
+		presentationName="a111"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="CPb"
+		presentationName="CPb"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>						
+	</NewMethodElement>
+				
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPb"
+		name="b1"
+		presentationName="b1"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPb/b1"
+		name="b11"
+		presentationName="b11"
+		>								
+	</NewMethodElement>
+	
+	<NewMethodElement disable="false" 
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CPb/b1/b11"
+		name="b111"
+		presentationName="b111"
+		>								
+	</NewMethodElement>
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/CPa/a1"
+		variabilityType="contributes"
+		>				
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/CPb/b1</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/CPa/a1/a11/a111"
+		variabilityType="extends"
+		>				
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/CPb/b1</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+		
+	<CircularDependencyCheck disable="false" 
+		errorCount="2"
+		circularElementCount="9"
+		>
+	</CircularDependencyCheck>	
+	
+	
+		
+</MethodLibraryTest>

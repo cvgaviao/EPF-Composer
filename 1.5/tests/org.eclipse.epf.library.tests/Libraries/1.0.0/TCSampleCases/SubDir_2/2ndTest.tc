@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest>
+	
+	<CopyLibrary libFolderName="../../ExportImport/Paris">
+	</CopyLibrary>	
+	
+	<OpenLibrary libFolderName="Paris">
+	</OpenLibrary>
+	
+	<ExportConfiguration exportFolderName="Export0001" selectedConfigName="Config A">
+	</ExportConfiguration>
+	
+	<OpenLibrary libFolderName="Base_1">
+	</OpenLibrary>
+	
+	<ImportConfiguration importFolderName="Export0001">
+	</ImportConfiguration>
+	
+	<CompareToLibrary 
+		goldenLibFolderName="Paris" 
+		diffCount="0" 
+		elementCount="0"
+		useNameAsId="false">
+		
+	</CompareToLibrary>
+
+</MethodLibraryTest>

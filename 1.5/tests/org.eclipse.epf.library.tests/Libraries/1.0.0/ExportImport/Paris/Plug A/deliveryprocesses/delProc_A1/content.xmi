@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:DeliveryProcessDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-U8_LGvMSof-db24aFAMb6w" name="DelProc A1,_W6a4cRBNEdqBs7KhdVLRLA" guid="-U8_LGvMSof-db24aFAMb6w">
+  <mainDescription>DelProc A1 main</mainDescription>
+  <keyConsiderations>DelProc A1 key con</keyConsiderations>
+  <purpose>DelProc A1 porpoise</purpose>
+  <alternatives>DelProc A1 altern</alternatives>
+  <howtoStaff>DelProc A1 staff</howtoStaff>
+  <externalId>DelProc A1 externID</externalId>
+  <scope>DelProc A1 scope</scope>
+  <usageNotes>DelProc A1 usage</usageNotes>
+  <scale>DelProc A1 scale</scale>
+  <projectCharacteristics>DelProc A1 proj char</projectCharacteristics>
+  <riskLevel>DelProc A1 risk</riskLevel>
+  <estimatingTechnique>DelProc A1 est tech</estimatingTechnique>
+  <projectMemberExpertise>DelProc A1 expertise</projectMemberExpertise>
+  <typeOfContract>DelProc A1 contype</typeOfContract>
+</org.eclipse.epf.uma:DeliveryProcessDescription>

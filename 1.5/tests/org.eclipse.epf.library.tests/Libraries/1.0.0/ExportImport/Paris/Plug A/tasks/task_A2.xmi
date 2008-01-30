@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:TaskDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-13q8JJAa0ix6rDMZAqwy1w" name="task_A2,_75NQwA-PEdqL2O1PJV9cZA" guid="-13q8JJAa0ix6rDMZAqwy1w" changeDate="2005-10-19T10:29:22.547-0700">
+  <mainDescription>Task A2 main</mainDescription>
+  <sections xmi:id="_ti2BYBBOEdqBs7KhdVLRLA" name="Step A2.1" guid="_ti2BYBBOEdqBs7KhdVLRLA">
+    <sectionDescription>&lt;p&gt;
+    put your right foot in
+&lt;/p&gt;</sectionDescription>
+  </sections>
+  <sections xmi:id="_tk7sEBBOEdqBs7KhdVLRLA" name="Step A2.2" guid="_tk7sEBBOEdqBs7KhdVLRLA">
+    <sectionDescription>put your right foot out</sectionDescription>
+  </sections>
+  <sections xmi:id="_tndboBBOEdqBs7KhdVLRLA" name="Step A2.3" guid="_tndboBBOEdqBs7KhdVLRLA">
+    <sectionDescription>Do the hokey-pokey</sectionDescription>
+  </sections>
+  <keyConsiderations>Task A2 key</keyConsiderations>
+  <purpose>Task A2 purpose</purpose>
+  <alternatives>Task A2 alt</alternatives>
+</org.eclipse.epf.uma:TaskDescription>

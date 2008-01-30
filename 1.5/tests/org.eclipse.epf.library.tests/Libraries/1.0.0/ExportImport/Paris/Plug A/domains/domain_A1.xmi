@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-O13UuJb8GqBLVtWaUqgqRw" name="domain_A1,_FEzO4A-WEdqL2O1PJV9cZA" guid="-O13UuJb8GqBLVtWaUqgqRw" changeDate="2005-09-06T19:15:35.031-0700">
+  <mainDescription>&lt;p&gt;
+    Domain A1 main
+&lt;/p&gt;</mainDescription>
+  <keyConsiderations>Domain A1 key</keyConsiderations>
+</org.eclipse.epf.uma:ContentDescription>

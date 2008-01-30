@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-6y7aBQt3cCSBLo8smMRemA" name="concept_A1,_NDL-kA-SEdqL2O1PJV9cZA" guid="-6y7aBQt3cCSBLo8smMRemA" changeDate="2005-08-18T14:30:30.938-0700">
+  <mainDescription>&lt;p&gt;
+    Concept A1 content
+&lt;/p&gt;
+&lt;p&gt;
+    File link:&amp;nbsp;&lt;a href=&quot;file:///resources/concept_A1.xmi&quot;&gt;concept_A1.xmi&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    URL:&amp;nbsp;&lt;a href=&quot;http://www.positrongroup.com&quot;&gt;http://www.positrongroup.com&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    Image:&amp;nbsp;&lt;img height=&quot;32&quot; alt=&quot;P&quot; src=&quot;resources/tyrannosaurus.gif&quot; width=&quot;32&quot; /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    Element plain:&amp;nbsp;&lt;a class=&quot;elementLink&quot;
+    href=&quot;./../../../Plug%20A/guidances/concepts/concept_A2,_OVLVcA-TEdqL2O1PJV9cZA.html&quot;
+    guid=&quot;_OVLVcA-TEdqL2O1PJV9cZA&quot;&gt;Concept A2 present&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    Element with type:&amp;nbsp;&lt;a class=&quot;elementLinkWithType&quot;
+    href=&quot;./../../../Plug%20A/guidances/concepts/concept_A2,_OVLVcA-TEdqL2O1PJV9cZA.html&quot;
+    guid=&quot;_OVLVcA-TEdqL2O1PJV9cZA&quot;&gt;Concept: Concept A2 present&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    Element with user text:&amp;nbsp; &lt;a class=&quot;elementLinkWithUserText&quot;
+    href=&quot;./../../../Plug%20A/guidances/concepts/concept_A2,_OVLVcA-TEdqL2O1PJV9cZA.html&quot;
+    guid=&quot;_OVLVcA-TEdqL2O1PJV9cZA&quot;&gt;concept_A2 user text&lt;/a&gt;
+&lt;/p&gt;</mainDescription>
+</org.eclipse.epf.uma:ContentDescription>

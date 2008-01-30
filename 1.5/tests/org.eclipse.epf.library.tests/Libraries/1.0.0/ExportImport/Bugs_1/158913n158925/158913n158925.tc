@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest>
+	
+	<CopyLibrary libFolderName="158913n158925golden">
+	</CopyLibrary>	
+	
+	<OpenLibrary libFolderName="158913n158925golden">
+	</OpenLibrary>
+
+	<CopyLibrary libFolderName="158913n158925m">
+	</CopyLibrary>	
+	
+	<OpenLibrary libFolderName="158913n158925m">
+	</OpenLibrary>
+	
+	<ImportXml importFolderName="158913n158925e">
+	</ImportXml>
+	
+	<CompareToLibrary 
+		goldenLibFolderName="158913n158925golden"
+		diffCount="0" 
+		elementCount="21"
+		useNameAsId="true">		
+	</CompareToLibrary>
+
+</MethodLibraryTest>

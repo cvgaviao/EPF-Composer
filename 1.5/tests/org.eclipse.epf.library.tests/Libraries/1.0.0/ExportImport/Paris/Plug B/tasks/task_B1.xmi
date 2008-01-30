@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:TaskDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-lYjr6VitL1VnnFNO78XuYw" name="task_B1,_XU6LUB8PEdqshMNSI07XOg" guid="-lYjr6VitL1VnnFNO78XuYw" changeDate="2005-09-06T12:50:47.203-0700">
+  <mainDescription>&lt;p&gt;
+    Task B1 main &amp;amp; \ \\ &quot; ' % &amp;gt; &amp;lt;
+&lt;/p&gt;</mainDescription>
+  <sections xmi:id="_T4AqAB84EdqNvelybDXZFQ" name="Step B1.1" guid="_T4AqAB84EdqNvelybDXZFQ">
+    <sectionDescription>up</sectionDescription>
+  </sections>
+  <sections xmi:id="_T58jsB84EdqNvelybDXZFQ" name="Step B1.2" guid="_T58jsB84EdqNvelybDXZFQ">
+    <sectionDescription>&lt;p&gt;
+    Down
+&lt;/p&gt;</sectionDescription>
+  </sections>
+  <sections xmi:id="_T8VJUB84EdqNvelybDXZFQ" name="Step B1.3" guid="_T8VJUB84EdqNvelybDXZFQ">
+    <sectionDescription>Over</sectionDescription>
+  </sections>
+  <keyConsiderations>Task B1 key</keyConsiderations>
+  <purpose>Task B1 porpoise</purpose>
+  <alternatives>Task B1 alt</alternatives>
+</org.eclipse.epf.uma:TaskDescription>

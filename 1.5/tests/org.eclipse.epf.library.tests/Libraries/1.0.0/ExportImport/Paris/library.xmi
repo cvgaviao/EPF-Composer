@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_qzwywQ-PEdqL2O1PJV9cZA" guid="_qzwywQ-PEdqL2O1PJV9cZA">
+    <subManagers xmi:id="_6lK2AA-PEdqL2O1PJV9cZA" href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_6lK2AA-PEdqL2O1PJV9cZA"/>
+    <subManagers xmi:id="_JR6xsB8PEdqshMNSI07XOg" href="uma://_ecy5wBM3Edqqndi-gDuxpw#_JR6xsB8PEdqshMNSI07XOg"/>
+    <resourceDescriptors xmi:id="_qzwywg-PEdqL2O1PJV9cZA" id="_qzwywA-PEdqL2O1PJV9cZA" uri=""/>
+    <resourceDescriptors xmi:id="_yUn8IA-PEdqL2O1PJV9cZA" id="_yUeLIA-PEdqL2O1PJV9cZA" uri="Plug%20A/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_edPlsBM3Edqqndi-gDuxpw" id="_ecy5wBM3Edqqndi-gDuxpw" uri="Plug%20B/plugin.xmi"/>
+  </org.eclipse.epf.uma.resourcemanager:ResourceManager>
+  <org.eclipse.epf.uma:MethodLibrary xmi:id="_qzwywA-PEdqL2O1PJV9cZA" name="Paris" guid="_qzwywA-PEdqL2O1PJV9cZA">
+    <methodPlugins xmi:id="_yUeLIA-PEdqL2O1PJV9cZA" href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_yUeLIA-PEdqL2O1PJV9cZA"/>
+    <methodPlugins xmi:id="_ecy5wBM3Edqqndi-gDuxpw" href="uma://_ecy5wBM3Edqqndi-gDuxpw#_ecy5wBM3Edqqndi-gDuxpw"/>
+  </org.eclipse.epf.uma:MethodLibrary>
+</xmi:XMI>

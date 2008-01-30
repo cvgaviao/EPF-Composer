@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TesterOutput>
+<MethodLibrary path="" name="newLib" guid="_RxVisLdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="">
+<MethodPlugin name="Plug_A" guid="_RzPnMLdCEduZKJS0UwJ_zA" briefDescription="Brief desciption of Plug_A" suppressed="false" orderingGuide="" authors="Somebody" changeDescription="" version="" userChangeable="true">
+<ContentPackage name="Content" guid="_RzPnMbdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Categories" guid="_RzPnMrdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Domains" guid="_RzPnM7dCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Disciplines" guid="_RzPnNLdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="RoleSets" guid="_RzPnNbdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="WP Types" guid="_RzPnNrdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Tools" guid="_RzPnN7dCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="StandardCategories" guid="_RzPnOLdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="CustomCategories" guid="_RzPnObdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Hidden" guid="_RzPnOrdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<CustomCategory name="Custom Categories" guid="_RzPnO7dCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" presentationName="" variabilityType="na">
+<ContentDescription name="Custom Categories,_RzPnO7dCEduZKJS0UwJ_zA" guid="-pu6eeOnedp0JxpWIuHJ_Bg" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="" mainDescription="" keyConsiderations="">
+</ContentDescription>
+</CustomCategory>
+</ContentPackage>
+</ContentPackage>
+</ContentPackage>
+<ContentPackage name="CoreContent" guid="_RzPnPLdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ProcessPackage name="CapabilityPatterns" guid="_RzPnPbdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ProcessComponent name="cp_1" guid="_R0e9ULdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false" authors="" changeDescription="" version="">
+<ProcessPackage name="act_1" guid="_R1KSwbdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ProcessPackage name="phase_1" guid="_R1itQbdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<Phase name="phase_1" guid="_R1itQLdCEduZKJS0UwJ_zA" briefDescription="Brief desciption of phase_1" suppressed="false" orderingGuide="" presentationName="" prefix="" isPlanned="true" hasMultipleOccurrences="false" isOptional="false" isRepeatable="false" isOngoing="false" isEventDriven="false" variabilityType="na" isEnactable="false">
+<ActivityDescription name="phase_1,_R1itQLdCEduZKJS0UwJ_zA" guid="-oVhpjk-HBjUgbT_Py-Dx3g" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="" mainDescription="" keyConsiderations="" usageGuidance="" purpose="" alternatives="" howtoStaff="">
+</ActivityDescription>
+<superActivities path="Plug_A/Content/CapabilityPatterns/cp_1/act_1/act_1">
+</superActivities>
+</Phase>
+</ProcessPackage>
+<Activity name="act_1" guid="_R1KSwLdCEduZKJS0UwJ_zA" briefDescription="Brief desciption of act_1" suppressed="false" orderingGuide="" presentationName="" prefix="" isPlanned="true" hasMultipleOccurrences="false" isOptional="false" isRepeatable="false" isOngoing="false" isEventDriven="false" variabilityType="na" isEnactable="false">
+<ActivityDescription name="act_1,_R1KSwLdCEduZKJS0UwJ_zA" guid="-emSwZBr9IGNZKUcObjpFOA" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 23:02:03 PST 2007" changeDescription="" version="" mainDescription="This is the main description of act_1" keyConsiderations="" usageGuidance="" purpose="" alternatives="" howtoStaff="">
+</ActivityDescription>
+<superActivities path="Plug_A/Content/CapabilityPatterns/cp_1/cp_1">
+</superActivities>
+<breakdownElements path="Plug_A/Content/CapabilityPatterns/cp_1/act_1/phase_1/phase_1">
+</breakdownElements>
+</Activity>
+</ProcessPackage>
+<CapabilityPattern name="cp_1" guid="_R0Y2sLdCEduZKJS0UwJ_zA" briefDescription="Brief desciption of cp_1" suppressed="false" orderingGuide="" presentationName="" prefix="" isPlanned="true" hasMultipleOccurrences="false" isOptional="false" isRepeatable="false" isOngoing="false" isEventDriven="false" variabilityType="na" isEnactable="false">
+<ProcessDescription name="cp_1,_R0Y2sLdCEduZKJS0UwJ_zA" guid="-o3OoDX3mrf-doWMks1POlw" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 23:02:02 PST 2007" changeDescription="" version="" mainDescription="This is the main description of cp_1" keyConsiderations="" usageGuidance="" purpose="" alternatives="" howtoStaff="" externalId="" scope="" usageNotes="">
+</ProcessDescription>
+<breakdownElements path="Plug_A/Content/CapabilityPatterns/cp_1/act_1/act_1">
+</breakdownElements>
+<defaultContext path="Config_A">
+</defaultContext>
+</CapabilityPattern>
+</ProcessComponent>
+</ProcessPackage>
+</ContentPackage>
+<ProcessPackage name="DeliveryProcesses" guid="_RzPnPrdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+<ProcessPackage name="ProcessContributions" guid="_RzPnP7dCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</MethodPlugin>
+<MethodConfiguration name="Config_A" guid="_RzuIULdCEduZKJS0UwJ_zA" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 23:02:02 PST 2007" changeDescription="" version="">
+</MethodConfiguration>
+</MethodLibrary>
+</TesterOutput>

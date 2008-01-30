@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false" verbose="false">
+	
+	<OpenLibrary libFolderName="170597">
+	</OpenLibrary>	
+	
+	<NewMethodElement
+		type="MethodPlugin" 
+		name="Plug_A"
+		briefDescription="Brief desciption of Plug_A"
+		authors="Somebody"	
+		>	
+	</NewMethodElement>	
+	
+	<NewMethodElement 
+		type="MethodConfiguration"
+		name="Config_A"
+		>								
+	</NewMethodElement>										
+		
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="CP1"
+		presentationName="CP1"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>						
+	</NewMethodElement>
+
+	
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="CP2"
+		presentationName="CP2"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>						
+	</NewMethodElement>
+				
+
+	<NewMethodElement disable="false"
+		type="CapabilityPattern"
+		parentPath="Plug_A/Content/CapabilityPatterns"
+		name="CP3"
+		presentationName="CP3"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>						
+	</NewMethodElement>
+																		
+												
+	<NewMethodElement disable="false"
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CP1"
+		name="CP2"
+		presentationName="CP2"
+		>								
+	</NewMethodElement>
+
+	
+	<NewMethodElement disable="false"
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CP2"
+		name="CP3"
+		presentationName="CP3"
+		>							
+	</NewMethodElement>
+				
+
+	<NewMethodElement disable="false"
+		type="Activity"
+		parentPath="Plug_A/Content/CapabilityPatterns/CP3"
+		name="CP1"
+		presentationName="CP1"
+		>		
+		<defaultContext>
+			<Value>Config_A</Value>
+		</defaultContext>						
+	</NewMethodElement>
+
+
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/CP1/CP2"
+		variabilityType="extends"
+		>				
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/CP2</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>	
+
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/CP2/CP3"
+		variabilityType="extends"
+		>				
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/CP3</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+	
+	
+	<EditMethodElement disable="false"
+		type="Activity"
+		path="Plug_A/Content/CapabilityPatterns/CP3/CP1"
+		variabilityType="extends"
+		>				
+		<variabilityBasedOnElement>
+			<Value>Plug_A/Content/CapabilityPatterns/CP1</Value>
+		</variabilityBasedOnElement>		
+	</EditMethodElement>
+	
+		
+	<CircularDependencyCheck disable="false" 
+		errorCount="1"
+		circularElementCount="6"
+		>
+	</CircularDependencyCheck>	
+	
+	
+		
+</MethodLibraryTest>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TesterOutput>
+<MethodLibrary path="" name="kelvinCase" guid="_5c_x4Lc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="">
+<MethodPlugin name="plugin_1" guid="_5fSQ4Lc9EduM49YNc-u-fw" briefDescription="Brief desciption of plugin_1" suppressed="false" orderingGuide="" authors="Kelvin" changeDescription="" version="" userChangeable="true">
+<ContentPackage name="Content" guid="_5fSQ4bc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Categories" guid="_5fSQ4rc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Domains" guid="_5fSQ47c9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Disciplines" guid="_5fSQ5Lc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="RoleSets" guid="_5fSQ5bc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="WP Types" guid="_5fSQ5rc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Tools" guid="_5fSQ57c9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="StandardCategories" guid="_5fSQ6Lc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="CustomCategories" guid="_5fSQ6bc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Hidden" guid="_5fSQ6rc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<CustomCategory name="Custom Categories" guid="_5fSQ67c9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" presentationName="" variabilityType="na">
+<ContentDescription name="Custom Categories,_5fSQ67c9EduM49YNc-u-fw" guid="-fXgKkRzRhgu4qdDnQELNeA" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="" mainDescription="" keyConsiderations="">
+</ContentDescription>
+</CustomCategory>
+</ContentPackage>
+</ContentPackage>
+</ContentPackage>
+<ContentPackage name="CoreContent" guid="_5fSQ7Lc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="contentPackage_1" guid="_5fwyALc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<Task name="task_1" guid="_5f9mULc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" presentationName="" variabilityType="na">
+<TaskDescription name="task_1,_5f9mULc9EduM49YNc-u-fw" guid="-1Ugkw_Ygsl8gVRRVhYi33w" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 22:30:41 PST 2007" changeDescription="" version="" mainDescription="This is the main description of task_1" keyConsiderations="" purpose="" alternatives="">
+</TaskDescription>
+</Task>
+</ContentPackage>
+</ContentPackage>
+<ProcessPackage name="CapabilityPatterns" guid="_5fSQ7bc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ProcessComponent name="cp_1" guid="_5g0h8bc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false" authors="" changeDescription="" version="">
+<ProcessPackage name="td_1" guid="_5hZJsLc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<TaskDescriptor name="td_1" guid="_5hTDELc9EduM49YNc-u-fw" briefDescription="" suppressed="true" orderingGuide="" presentationName="" prefix="" isPlanned="false" hasMultipleOccurrences="false" isOptional="false" isRepeatable="false" isOngoing="false" isEventDriven="false" isSynchronizedWithSource="true">
+<DescriptorDescription name="td_1,_5hTDELc9EduM49YNc-u-fw" guid="-SNgQuT7rBawS0ewo_-ka4w" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="" mainDescription="" keyConsiderations="" usageGuidance="" refinedDescription="">
+</DescriptorDescription>
+<superActivities path="plugin_1/Content/CapabilityPatterns/cp_1/cp_1">
+</superActivities>
+<Task path="plugin_1/Content/CoreContent/contentPackage_1/task_1">
+</Task>
+</TaskDescriptor>
+</ProcessPackage>
+<CapabilityPattern name="cp_1" guid="_5g0h8Lc9EduM49YNc-u-fw" briefDescription="Brief desciption of cp_1" suppressed="false" orderingGuide="" presentationName="" prefix="" isPlanned="true" hasMultipleOccurrences="false" isOptional="false" isRepeatable="false" isOngoing="false" isEventDriven="false" variabilityType="na" isEnactable="false">
+<ProcessDescription name="cp_1,_5g0h8Lc9EduM49YNc-u-fw" guid="-63A4kDr8iCW31YNTcs8mTQ" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 22:30:41 PST 2007" changeDescription="" version="" mainDescription="This is the main description of cp_1" keyConsiderations="" usageGuidance="" purpose="" alternatives="" howtoStaff="" externalId="" scope="" usageNotes="">
+</ProcessDescription>
+<breakdownElements path="plugin_1/Content/CapabilityPatterns/cp_1/td_1/td_1">
+</breakdownElements>
+<defaultContext path="config_1">
+</defaultContext>
+</CapabilityPattern>
+</ProcessComponent>
+</ProcessPackage>
+</ContentPackage>
+<ProcessPackage name="DeliveryProcesses" guid="_5fSQ7rc9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+<ProcessPackage name="ProcessContributions" guid="_5fSQ77c9EduM49YNc-u-fw" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</MethodPlugin>
+<MethodConfiguration name="config_1" guid="_5giOELc9EduM49YNc-u-fw" briefDescription="Brief desciption of config_1" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 22:30:41 PST 2007" changeDescription="" version="">
+<methodPluginSelection path="plugin_1">
+</methodPluginSelection>
+<methodPackageSelection path="plugin_1/Content/CoreContent/contentPackage_1">
+</methodPackageSelection>
+</MethodConfiguration>
+</MethodLibrary>
+</TesterOutput>

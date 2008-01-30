@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest>
+	
+	<CopyLibrary libFolderName="150702golden">
+	</CopyLibrary>	
+	
+	<OpenLibrary libFolderName="150702golden">
+	</OpenLibrary>
+
+	<CopyLibrary libFolderName="150702m">
+	</CopyLibrary>	
+	
+	<OpenLibrary libFolderName="150702m">
+	</OpenLibrary>
+	
+	<ImportConfiguration importFolderName="150702e">
+	</ImportConfiguration>
+	
+	<CompareToLibrary 
+		goldenLibFolderName="150702golden" >		
+	</CompareToLibrary>
+
+</MethodLibraryTest>

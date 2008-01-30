@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:WorkProductDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-3odyByIezRRXgQgeHuM6SA" name="outcome_A1,_KA_1YA-REdqL2O1PJV9cZA" guid="-3odyByIezRRXgQgeHuM6SA" changeDate="2005-08-18T14:30:18.188-0700" changeDescription=" Outcome A1 ">
+  <mainDescription>Outcome A1 main</mainDescription>
+  <keyConsiderations>Outcome A1 key</keyConsiderations>
+  <externalId>Outcome A1 unique</externalId>
+  <purpose>Outcome A1 porpoise</purpose>
+  <impactOfNotHaving>Outcome A1 impact</impactOfNotHaving>
+  <reasonsForNotNeeding>Outcome A1 reason</reasonsForNotNeeding>
+</org.eclipse.epf.uma:WorkProductDescription>

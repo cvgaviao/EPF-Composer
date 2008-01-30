@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TesterOutput>
+<MethodLibrary path="" name="newLib" guid="_jUqPgLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="">
+<MethodPlugin name="PlugTest" guid="_jWSnMLdCEduMEcSi4RdNgg" suppressed="false" orderingGuide="" changeDescription="" version="" userChangeable="true">
+<ContentPackage name="Content" guid="_jWSnMbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Categories" guid="_jWSnMrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Domains" guid="_jWSnM7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Disciplines" guid="_jWSnNLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="RoleSets" guid="_jWSnNbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="WP Types" guid="_jWSnNrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Tools" guid="_jWSnN7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="StandardCategories" guid="_jWSnOLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="CustomCategories" guid="_jWSnObdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Hidden" guid="_jWSnOrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<CustomCategory name="Custom Categories" guid="_jWSnO7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" presentationName="" variabilityType="na">
+<ContentDescription name="Custom Categories,_jWSnO7dCEduMEcSi4RdNgg" guid="-J4jY2TRLxcqqbqQdM1sEtw" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="" mainDescription="" keyConsiderations="">
+</ContentDescription>
+</CustomCategory>
+</ContentPackage>
+</ContentPackage>
+</ContentPackage>
+<ContentPackage name="CoreContent" guid="_jWSnPLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ProcessPackage name="CapabilityPatterns" guid="_jWSnPbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</ContentPackage>
+<ProcessPackage name="DeliveryProcesses" guid="_jWSnPrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+<ProcessPackage name="ProcessContributions" guid="_jWSnP7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</MethodPlugin>
+<MethodPlugin name="Plug_A" guid="_jXDcMLdCEduMEcSi4RdNgg" briefDescription="Brief desciption of Plug_A" suppressed="false" orderingGuide="" authors="RMC team member A" changeDescription="" version="" userChangeable="true">
+<ContentPackage name="Content" guid="_jXDcMbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Categories" guid="_jXDcMrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Domains" guid="_jXDcM7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Disciplines" guid="_jXDcNLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="RoleSets" guid="_jXDcNbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="WP Types" guid="_jXDcNrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Tools" guid="_jXDcN7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="StandardCategories" guid="_jXDcOLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="CustomCategories" guid="_jXDcObdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Hidden" guid="_jXDcOrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<CustomCategory name="Custom Categories" guid="_jXDcO7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" presentationName="" variabilityType="na">
+<ContentDescription name="Custom Categories,_jXDcO7dCEduMEcSi4RdNgg" guid="-13aCxuE42WyLGU_aoYrbrw" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="" mainDescription="" keyConsiderations="">
+</ContentDescription>
+</CustomCategory>
+</ContentPackage>
+</ContentPackage>
+</ContentPackage>
+<ContentPackage name="CoreContent" guid="_jXDcPLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="ContentPackage_1" guid="_jemOoLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<Role name="role_1" guid="_jesVQLdCEduMEcSi4RdNgg" briefDescription="This is a brief dsescription of Role 1" suppressed="false" orderingGuide="" presentationName="Role 1" variabilityType="na">
+<RoleDescription name="role_1,_jesVQLdCEduMEcSi4RdNgg" guid="-kJQ87GFKpw3EQKtvdKYH2w" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 23:04:01 PST 2007" changeDescription="" version="" mainDescription="This is the main description of Role 1" keyConsiderations="" skills="" assignmentApproaches="" synonyms="">
+</RoleDescription>
+</Role>
+</ContentPackage>
+</ContentPackage>
+<ProcessPackage name="CapabilityPatterns" guid="_jXDcPbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</ContentPackage>
+<ProcessPackage name="DeliveryProcesses" guid="_jXDcPrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+<ProcessPackage name="ProcessContributions" guid="_jXDcP7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</MethodPlugin>
+<MethodPlugin name="Plug_B" guid="_jXPpcLdCEduMEcSi4RdNgg" briefDescription="Brief desciption of Plug_B" suppressed="false" orderingGuide="" authors="RMC team member B" changeDate="Wed Feb 07 23:04:00 PST 2007" changeDescription="" version="" userChangeable="true">
+<ContentPackage name="Content" guid="_jXPpcbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Categories" guid="_jXPpcrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Domains" guid="_jXPpc7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Disciplines" guid="_jXPpdLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="RoleSets" guid="_jXPpdbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="WP Types" guid="_jXPpdrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="Tools" guid="_jXPpd7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="StandardCategories" guid="_jXPpeLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ContentPackage name="CustomCategories" guid="_jXPpebdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<ContentPackage name="Hidden" guid="_jXPperdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+<CustomCategory name="Custom Categories" guid="_jXPpe7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" presentationName="" variabilityType="na">
+<ContentDescription name="Custom Categories,_jXPpe7dCEduMEcSi4RdNgg" guid="-F7BfH1vyrHno1TC7YjNy4g" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDescription="" version="" mainDescription="" keyConsiderations="">
+</ContentDescription>
+</CustomCategory>
+</ContentPackage>
+</ContentPackage>
+</ContentPackage>
+<ContentPackage name="CoreContent" guid="_jXPpfLdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ProcessPackage name="CapabilityPatterns" guid="_jXPpfbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</ContentPackage>
+<ProcessPackage name="DeliveryProcesses" guid="_jXPpfrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+<ProcessPackage name="ProcessContributions" guid="_jXPpf7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+<bases path="Plug_A">
+</bases>
+</MethodPlugin>
+<MethodConfiguration name="Config_Test" guid="_jWk7ELdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" authors="" changeDate="Wed Feb 07 23:04:00 PST 2007" changeDescription="" version="">
+</MethodConfiguration>
+<MethodConfiguration name="Config_A" guid="_jXoD8LdCEduMEcSi4RdNgg" briefDescription="Brief desciption of Config_A" suppressed="false" orderingGuide="" authors="" changeDescription="" version="">
+</MethodConfiguration>
+</MethodLibrary>
+<MethodPlugin path="Plug_A" name="Plug_A" guid="_jXDcMLdCEduMEcSi4RdNgg" briefDescription="Brief desciption of Plug_A" suppressed="false" orderingGuide="" authors="RMC team member A" changeDescription="" version="" userChangeable="true">
+<ContentPackage name="Content" guid="_jXDcMbdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ContentPackage>
+<ProcessPackage name="DeliveryProcesses" guid="_jXDcPrdCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+<ProcessPackage name="ProcessContributions" guid="_jXDcP7dCEduMEcSi4RdNgg" briefDescription="" suppressed="false" orderingGuide="" global="false">
+</ProcessPackage>
+</MethodPlugin>
+<MethodConfiguration path="Config_A" name="Config_A" guid="_jXoD8LdCEduMEcSi4RdNgg" briefDescription="Brief desciption of Config_A" suppressed="false" orderingGuide="" authors="" changeDescription="" version="">
+</MethodConfiguration>
+</TesterOutput>

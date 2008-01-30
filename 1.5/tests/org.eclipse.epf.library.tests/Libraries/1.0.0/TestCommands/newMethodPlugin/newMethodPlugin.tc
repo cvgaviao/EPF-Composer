@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MethodLibraryTest disable="false">
+	
+	<OpenLibrary libFolderName="newLib">
+	</OpenLibrary>
+	
+	<NewMethodPlugin 
+		name="My 1st plugin"
+		briefDescription="Brief desciption aboyt the 1st plugin"
+		authors="name 1, name2, name3 etc"	
+		>	
+	</NewMethodPlugin>
+	
+	<NewMethodPlugin disable="false"
+		name="My 2nd plugin"
+		briefDescription="Brief desciption aboyt the 2nd plugin"
+		authors="name 11, name22, name33 etc"	
+		>
+		<bases>
+			<Value>My 1st plugin</Value>
+		</bases>			
+	</NewMethodPlugin>
+	
+	<CopyLibrary libFolderName="newMethodPlugin">
+	</CopyLibrary>
+	
+	<CompareToLibrary 
+		goldenLibFolderName="newMethodPlugin" 
+		diffCount="0" 
+		elementCount="33"
+		useNameAsId="true"
+		>		
+	</CompareToLibrary>	
+</MethodLibraryTest>

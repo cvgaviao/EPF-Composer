@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:MethodConfiguration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="_AgBnYE5REduGkqWGzwpn7Q" name="c" guid="_AgBnYE5REduGkqWGzwpn7Q">
+  <methodPluginSelection href="uma://_-PDDQE5QEduGkqWGzwpn7Q#_-PDDQE5QEduGkqWGzwpn7Q"/>
+  <methodPackageSelection xsi:type="org.eclipse.epf.uma:ProcessPackage" href="uma://_-PDDQE5QEduGkqWGzwpn7Q#_-PDDTU5QEduGkqWGzwpn7Q"/>
+  <methodPackageSelection xsi:type="org.eclipse.epf.uma:ContentPackage" href="uma://_-PDDQE5QEduGkqWGzwpn7Q#_-PDDQU5QEduGkqWGzwpn7Q"/>
+  <methodPackageSelection xsi:type="org.eclipse.epf.uma:ProcessComponent" href="uma://_LbsqwE5REduGkqWGzwpn7Q#_LbsqwE5REduGkqWGzwpn7Q"/>
+</org.eclipse.epf.uma:MethodConfiguration>

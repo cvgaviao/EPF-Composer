@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.epf.uma:DeliverableDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-KxNsFwg9cN4-1s5bs3xZIg" name="deliverable_B2,_nqFWEB8nEdq1Oo-DowdpBg" guid="-KxNsFwg9cN4-1s5bs3xZIg" changeDate="2005-09-06T15:43:30.562-0700">
+  <mainDescription>Deliverable B2 main</mainDescription>
+  <keyConsiderations>Deliverable B2 key</keyConsiderations>
+  <externalId>Deliverable B2 unique ID</externalId>
+  <purpose>Deliverable B2 porpoise</purpose>
+  <impactOfNotHaving>Deliverable B2 impact</impactOfNotHaving>
+  <reasonsForNotNeeding>Deliverable B2 reason</reasonsForNotNeeding>
+  <externalDescription>Deliverable B2 extern</externalDescription>
+  <packagingGuidance>Deliverable B2 pack</packagingGuidance>
+</org.eclipse.epf.uma:DeliverableDescription>

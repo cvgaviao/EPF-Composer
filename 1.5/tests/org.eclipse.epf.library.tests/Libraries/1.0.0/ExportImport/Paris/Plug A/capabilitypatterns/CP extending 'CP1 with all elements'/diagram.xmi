@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.0/notation" xmlns:org.eclipse.epf.diagram.model="http://www.eclipse.org/epf/diagram/1.0.0/diagram.ecore" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore">
+  <org.eclipse.epf.diagram.model:ActivityDetailDiagram xmi:id="_IcOcoOx4Edu2Oo6q-nHWgg">
+    <linkedElement xmi:type="org.eclipse.epf.uma:CapabilityPattern" href="uma://_aHUSQBBNEdqBs7KhdVLRLA#_aHUSQRBNEdqBs7KhdVLRLA"/>
+  </org.eclipse.epf.diagram.model:ActivityDetailDiagram>
+  <notation:Diagram xmi:id="_IcOcoex4Edu2Oo6q-nHWgg" type="ADD" element="_IcOcoOx4Edu2Oo6q-nHWgg" name="CP extending 'CP1 with all elements'" measurementUnit="Pixel">
+    <styles xmi:type="notation:PageStyle" xmi:id="_IcOcoux4Edu2Oo6q-nHWgg"/>
+    <styles xmi:type="notation:GuideStyle" xmi:id="_IcOco-x4Edu2Oo6q-nHWgg"/>
+    <styles xmi:type="notation:DescriptionStyle" xmi:id="_IcOcpOx4Edu2Oo6q-nHWgg"/>
+  </notation:Diagram>
+</xmi:XMI>
