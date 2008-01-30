@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DisciplineImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: DisciplineImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -59,6 +59,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DISCIPLINE;
 	}
@@ -80,7 +81,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getTask() {
+	public EList<String> getTask() {
 		return getGroup2().list(UmaPackage.Literals.DISCIPLINE__TASK);
 	}
 
@@ -89,7 +90,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getSubDiscipline() {
+	public EList<Discipline> getSubDiscipline() {
 		return getGroup2().list(UmaPackage.Literals.DISCIPLINE__SUB_DISCIPLINE);
 	}
 
@@ -98,7 +99,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getReferenceWorkflow() {
+	public EList<String> getReferenceWorkflow() {
 		return getGroup2().list(UmaPackage.Literals.DISCIPLINE__REFERENCE_WORKFLOW);
 	}
 
@@ -107,12 +108,13 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.DISCIPLINE__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 			case UmaPackage.DISCIPLINE__SUB_DISCIPLINE:
-				return ((InternalEList)getSubDiscipline()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getSubDiscipline()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -122,6 +124,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.DISCIPLINE__GROUP2:
@@ -142,6 +145,8 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.DISCIPLINE__GROUP2:
@@ -149,15 +154,15 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 				return;
 			case UmaPackage.DISCIPLINE__TASK:
 				getTask().clear();
-				getTask().addAll((Collection)newValue);
+				getTask().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.DISCIPLINE__SUB_DISCIPLINE:
 				getSubDiscipline().clear();
-				getSubDiscipline().addAll((Collection)newValue);
+				getSubDiscipline().addAll((Collection<? extends Discipline>)newValue);
 				return;
 			case UmaPackage.DISCIPLINE__REFERENCE_WORKFLOW:
 				getReferenceWorkflow().clear();
-				getReferenceWorkflow().addAll((Collection)newValue);
+				getReferenceWorkflow().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -168,6 +173,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.DISCIPLINE__GROUP2:
@@ -191,6 +197,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.DISCIPLINE__GROUP2:
@@ -210,6 +217,7 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

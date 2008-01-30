@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Estimate.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: Estimate.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -44,7 +44,7 @@ public interface Estimate extends Guidance {
 	 * @return the value of the '<em>Group2</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getEstimate_Group2()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:22'"
+	 *        extendedMetaData="kind='group' name='group:24'"
 	 * @generated
 	 */
 	FeatureMap getGroup2();
@@ -60,11 +60,11 @@ public interface Estimate extends Guidance {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Estimation Metric</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getEstimate_EstimationMetric()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='EstimationMetric' group='#group:22'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='EstimationMetric' group='#group:24'"
 	 * @generated
 	 */
-	EList getEstimationMetric();
+	EList<String> getEstimationMetric();
 
 	/**
 	 * Returns the value of the '<em><b>Estimation Considerations</b></em>' attribute list.
@@ -77,10 +77,10 @@ public interface Estimate extends Guidance {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Estimation Considerations</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getEstimate_EstimationConsiderations()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='EstimationConsiderations' group='#group:22'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='EstimationConsiderations' group='#group:24'"
 	 * @generated
 	 */
-	EList getEstimationConsiderations();
+	EList<String> getEstimationConsiderations();
 
 } // Estimate

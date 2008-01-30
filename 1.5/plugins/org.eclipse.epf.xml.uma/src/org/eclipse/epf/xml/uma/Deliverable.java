@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Deliverable.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: Deliverable.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -43,7 +43,7 @@ public interface Deliverable extends WorkProduct {
 	 * @return the value of the '<em>Group3</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliverable_Group3()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:28'"
+	 *        extendedMetaData="kind='group' name='group:30'"
 	 * @generated
 	 */
 	FeatureMap getGroup3();
@@ -59,10 +59,10 @@ public interface Deliverable extends WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Delivered Work Product</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliverable_DeliveredWorkProduct()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='DeliveredWorkProduct' group='#group:28'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='DeliveredWorkProduct' group='#group:30'"
 	 * @generated
 	 */
-	EList getDeliveredWorkProduct();
+	EList<String> getDeliveredWorkProduct();
 
 } // Deliverable

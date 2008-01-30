@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CustomCategoryImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: CustomCategoryImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -58,6 +58,7 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CUSTOM_CATEGORY;
 	}
@@ -79,7 +80,7 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getCategorizedElement() {
+	public EList<String> getCategorizedElement() {
 		return getGroup2().list(UmaPackage.Literals.CUSTOM_CATEGORY__CATEGORIZED_ELEMENT);
 	}
 
@@ -88,7 +89,7 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getSubCategory() {
+	public EList<String> getSubCategory() {
 		return getGroup2().list(UmaPackage.Literals.CUSTOM_CATEGORY__SUB_CATEGORY);
 	}
 
@@ -97,10 +98,11 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.CUSTOM_CATEGORY__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -110,6 +112,7 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.CUSTOM_CATEGORY__GROUP2:
@@ -128,6 +131,8 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.CUSTOM_CATEGORY__GROUP2:
@@ -135,11 +140,11 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 				return;
 			case UmaPackage.CUSTOM_CATEGORY__CATEGORIZED_ELEMENT:
 				getCategorizedElement().clear();
-				getCategorizedElement().addAll((Collection)newValue);
+				getCategorizedElement().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.CUSTOM_CATEGORY__SUB_CATEGORY:
 				getSubCategory().clear();
-				getSubCategory().addAll((Collection)newValue);
+				getSubCategory().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -150,6 +155,7 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.CUSTOM_CATEGORY__GROUP2:
@@ -170,6 +176,7 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.CUSTOM_CATEGORY__GROUP2:
@@ -187,6 +194,7 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements CustomCat
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

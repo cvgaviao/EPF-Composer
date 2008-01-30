@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: PackageableElementImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: PackageableElementImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -34,6 +34,7 @@ public class PackageableElementImpl extends NamedElementImpl implements Packagea
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PACKAGEABLE_ELEMENT;
 	}

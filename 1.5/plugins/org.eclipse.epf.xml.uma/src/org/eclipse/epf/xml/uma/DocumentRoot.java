@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DocumentRoot.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: DocumentRoot.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -62,11 +62,11 @@ public interface DocumentRoot extends EDataObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XMLNS Prefix Map</em>' map.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDocumentRoot_XMLNSPrefixMap()
-	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry" keyType="java.lang.String" valueType="java.lang.String" transient="true"
+	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xmlns:prefix'"
 	 * @generated
 	 */
-	EMap getXMLNSPrefixMap();
+	EMap<String, String> getXMLNSPrefixMap();
 
 	/**
 	 * Returns the value of the '<em><b>XSI Schema Location</b></em>' map.
@@ -80,11 +80,11 @@ public interface DocumentRoot extends EDataObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>XSI Schema Location</em>' map.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDocumentRoot_XSISchemaLocation()
-	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry" keyType="java.lang.String" valueType="java.lang.String" transient="true"
+	 * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>" transient="true"
 	 *        extendedMetaData="kind='attribute' name='xsi:schemaLocation'"
 	 * @generated
 	 */
-	EMap getXSISchemaLocation();
+	EMap<String, String> getXSISchemaLocation();
 
 	/**
 	 * Returns the value of the '<em><b>Method Configuration</b></em>' containment reference.

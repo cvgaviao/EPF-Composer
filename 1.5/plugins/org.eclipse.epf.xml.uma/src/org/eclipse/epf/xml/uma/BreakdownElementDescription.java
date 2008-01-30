@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BreakdownElementDescription.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: BreakdownElementDescription.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -38,7 +38,7 @@ public interface BreakdownElementDescription extends ContentDescription {
 	 * @return the value of the '<em>Usage Guidance</em>' attribute.
 	 * @see #setUsageGuidance(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElementDescription_UsageGuidance()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='usageGuidance'"
 	 * @generated
 	 */

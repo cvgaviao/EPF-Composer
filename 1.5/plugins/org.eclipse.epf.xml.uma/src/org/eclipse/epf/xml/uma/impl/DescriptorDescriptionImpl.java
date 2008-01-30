@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DescriptorDescriptionImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: DescriptorDescriptionImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -60,6 +60,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DESCRIPTOR_DESCRIPTION;
 	}
@@ -90,6 +91,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
@@ -103,6 +105,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
@@ -117,6 +120,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
@@ -131,6 +135,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
@@ -144,6 +149,7 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

@@ -2,10 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: PlanningDataImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: PlanningDataImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -36,7 +37,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Object FINISH_DATE_EDEFAULT = null;
+	protected static final XMLGregorianCalendar FINISH_DATE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getFinishDate() <em>Finish Date</em>}' attribute.
@@ -46,7 +47,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * @generated
 	 * @ordered
 	 */
-	protected Object finishDate = FINISH_DATE_EDEFAULT;
+	protected XMLGregorianCalendar finishDate = FINISH_DATE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getRank() <em>Rank</em>}' attribute.
@@ -76,7 +77,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Object START_DATE_EDEFAULT = null;
+	protected static final XMLGregorianCalendar START_DATE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
@@ -86,7 +87,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * @generated
 	 * @ordered
 	 */
-	protected Object startDate = START_DATE_EDEFAULT;
+	protected XMLGregorianCalendar startDate = START_DATE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -102,6 +103,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PLANNING_DATA;
 	}
@@ -111,7 +113,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object getFinishDate() {
+	public XMLGregorianCalendar getFinishDate() {
 		return finishDate;
 	}
 
@@ -120,8 +122,8 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setFinishDate(Object newFinishDate) {
-		Object oldFinishDate = finishDate;
+	public void setFinishDate(XMLGregorianCalendar newFinishDate) {
+		XMLGregorianCalendar oldFinishDate = finishDate;
 		finishDate = newFinishDate;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, UmaPackage.PLANNING_DATA__FINISH_DATE, oldFinishDate, finishDate));
@@ -153,7 +155,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object getStartDate() {
+	public XMLGregorianCalendar getStartDate() {
 		return startDate;
 	}
 
@@ -162,8 +164,8 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setStartDate(Object newStartDate) {
-		Object oldStartDate = startDate;
+	public void setStartDate(XMLGregorianCalendar newStartDate) {
+		XMLGregorianCalendar oldStartDate = startDate;
 		startDate = newStartDate;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, UmaPackage.PLANNING_DATA__START_DATE, oldStartDate, startDate));
@@ -174,6 +176,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.PLANNING_DATA__FINISH_DATE:
@@ -191,16 +194,17 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.PLANNING_DATA__FINISH_DATE:
-				setFinishDate(newValue);
+				setFinishDate((XMLGregorianCalendar)newValue);
 				return;
 			case UmaPackage.PLANNING_DATA__RANK:
 				setRank((String)newValue);
 				return;
 			case UmaPackage.PLANNING_DATA__START_DATE:
-				setStartDate(newValue);
+				setStartDate((XMLGregorianCalendar)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -211,6 +215,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.PLANNING_DATA__FINISH_DATE:
@@ -231,6 +236,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.PLANNING_DATA__FINISH_DATE:
@@ -248,6 +254,7 @@ public class PlanningDataImpl extends ProcessElementImpl implements PlanningData
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

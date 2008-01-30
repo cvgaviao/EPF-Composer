@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: EstimateImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: EstimateImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -58,6 +58,7 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ESTIMATE;
 	}
@@ -79,7 +80,7 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getEstimationMetric() {
+	public EList<String> getEstimationMetric() {
 		return getGroup2().list(UmaPackage.Literals.ESTIMATE__ESTIMATION_METRIC);
 	}
 
@@ -88,7 +89,7 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getEstimationConsiderations() {
+	public EList<String> getEstimationConsiderations() {
 		return getGroup2().list(UmaPackage.Literals.ESTIMATE__ESTIMATION_CONSIDERATIONS);
 	}
 
@@ -97,10 +98,11 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.ESTIMATE__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -110,6 +112,7 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.ESTIMATE__GROUP2:
@@ -128,6 +131,8 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.ESTIMATE__GROUP2:
@@ -135,11 +140,11 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 				return;
 			case UmaPackage.ESTIMATE__ESTIMATION_METRIC:
 				getEstimationMetric().clear();
-				getEstimationMetric().addAll((Collection)newValue);
+				getEstimationMetric().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.ESTIMATE__ESTIMATION_CONSIDERATIONS:
 				getEstimationConsiderations().clear();
-				getEstimationConsiderations().addAll((Collection)newValue);
+				getEstimationConsiderations().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -150,6 +155,7 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ESTIMATE__GROUP2:
@@ -170,6 +176,7 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ESTIMATE__GROUP2:
@@ -187,6 +194,7 @@ public class EstimateImpl extends GuidanceImpl implements Estimate {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

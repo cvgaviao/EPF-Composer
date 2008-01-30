@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RoleImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: RoleImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -57,6 +57,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ROLE;
 	}
@@ -78,7 +79,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getResponsibleFor() {
+	public EList<String> getResponsibleFor() {
 		return getGroup2().list(UmaPackage.Literals.ROLE__RESPONSIBLE_FOR);
 	}
 
@@ -87,10 +88,11 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.ROLE__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -100,6 +102,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.ROLE__GROUP2:
@@ -116,6 +119,8 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.ROLE__GROUP2:
@@ -123,7 +128,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 				return;
 			case UmaPackage.ROLE__RESPONSIBLE_FOR:
 				getResponsibleFor().clear();
-				getResponsibleFor().addAll((Collection)newValue);
+				getResponsibleFor().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -134,6 +139,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ROLE__GROUP2:
@@ -151,6 +157,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ROLE__GROUP2:
@@ -166,6 +173,7 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

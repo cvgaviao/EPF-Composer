@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DeliverableDescription.java,v 1.1 2008/01/15 08:52:08 jtham Exp $
+ * $Id: DeliverableDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -39,7 +39,7 @@ public interface DeliverableDescription extends WorkProductDescription {
 	 * @return the value of the '<em>External Description</em>' attribute.
 	 * @see #setExternalDescription(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliverableDescription_ExternalDescription()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ExternalDescription'"
 	 * @generated
 	 */
@@ -65,7 +65,7 @@ public interface DeliverableDescription extends WorkProductDescription {
 	 * @return the value of the '<em>Packaging Guidance</em>' attribute.
 	 * @see #setPackagingGuidance(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliverableDescription_PackagingGuidance()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='PackagingGuidance'"
 	 * @generated
 	 */

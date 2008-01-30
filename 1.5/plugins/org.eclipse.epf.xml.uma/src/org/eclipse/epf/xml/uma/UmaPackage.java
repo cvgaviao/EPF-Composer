@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaPackage.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: UmaPackage.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -43,7 +43,7 @@ public interface UmaPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/epf/uma/1.0.3";
+	String eNS_URI = "http://www.eclipse.org/epf/uma/1.0.5";
 
 	/**
 	 * The package namespace name.
@@ -69,7 +69,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getElement()
 	 * @generated
 	 */
-	int ELEMENT = 28;
+	int ELEMENT = 29;
 
 	/**
 	 * The number of structural features of the '<em>Element</em>' class.
@@ -88,7 +88,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getNamedElement()
 	 * @generated
 	 */
-	int NAMED_ELEMENT = 45;
+	int NAMED_ELEMENT = 47;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -116,7 +116,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getPackageableElement()
 	 * @generated
 	 */
-	int PACKAGEABLE_ELEMENT = 47;
+	int PACKAGEABLE_ELEMENT = 49;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -144,7 +144,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMethodElement()
 	 * @generated
 	 */
-	int METHOD_ELEMENT = 38;
+	int METHOD_ELEMENT = 40;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -210,13 +210,22 @@ public interface UmaPackage extends EPackage {
 	int METHOD_ELEMENT__ORDERING_GUIDE = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_ELEMENT__PRESENTATION_NAME = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_ELEMENT__SUPPRESSED = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 6;
+	int METHOD_ELEMENT__SUPPRESSED = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Method Element</em>' class.
@@ -225,7 +234,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_ELEMENT_FEATURE_COUNT = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 7;
+	int METHOD_ELEMENT_FEATURE_COUNT = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.DescribableElementImpl <em>Describable Element</em>}' class.
@@ -235,7 +244,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDescribableElement()
 	 * @generated
 	 */
-	int DESCRIBABLE_ELEMENT = 21;
+	int DESCRIBABLE_ELEMENT = 22;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -301,6 +310,15 @@ public interface UmaPackage extends EPackage {
 	int DESCRIBABLE_ELEMENT__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIBABLE_ELEMENT__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -319,22 +337,31 @@ public interface UmaPackage extends EPackage {
 	int DESCRIBABLE_ELEMENT__PRESENTATION = METHOD_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIBABLE_ELEMENT__FULFILL = METHOD_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIBABLE_ELEMENT__IS_ABSTRACT = METHOD_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIBABLE_ELEMENT__NODEICON = METHOD_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DESCRIBABLE_ELEMENT__PRESENTATION_NAME = METHOD_ELEMENT_FEATURE_COUNT + 2;
+	int DESCRIBABLE_ELEMENT__NODEICON = METHOD_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -343,7 +370,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIBABLE_ELEMENT__SHAPEICON = METHOD_ELEMENT_FEATURE_COUNT + 3;
+	int DESCRIBABLE_ELEMENT__SHAPEICON = METHOD_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Describable Element</em>' class.
@@ -352,7 +379,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIBABLE_ELEMENT_FEATURE_COUNT = METHOD_ELEMENT_FEATURE_COUNT + 4;
+	int DESCRIBABLE_ELEMENT_FEATURE_COUNT = METHOD_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.ProcessElementImpl <em>Process Element</em>}' class.
@@ -362,7 +389,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getProcessElement()
 	 * @generated
 	 */
-	int PROCESS_ELEMENT = 56;
+	int PROCESS_ELEMENT = 58;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -428,6 +455,15 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_ELEMENT__ORDERING_GUIDE = DESCRIBABLE_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_ELEMENT__PRESENTATION_NAME = DESCRIBABLE_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -446,6 +482,24 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_ELEMENT__PRESENTATION = DESCRIBABLE_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_ELEMENT__FULFILL = DESCRIBABLE_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_ELEMENT__IS_ABSTRACT = DESCRIBABLE_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -453,15 +507,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_ELEMENT__NODEICON = DESCRIBABLE_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_ELEMENT__PRESENTATION_NAME = DESCRIBABLE_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -489,7 +534,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getBreakdownElement()
 	 * @generated
 	 */
-	int BREAKDOWN_ELEMENT = 4;
+	int BREAKDOWN_ELEMENT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -555,6 +600,15 @@ public interface UmaPackage extends EPackage {
 	int BREAKDOWN_ELEMENT__ORDERING_GUIDE = PROCESS_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__PRESENTATION_NAME = PROCESS_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -573,6 +627,24 @@ public interface UmaPackage extends EPackage {
 	int BREAKDOWN_ELEMENT__PRESENTATION = PROCESS_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__FULFILL = PROCESS_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__IS_ABSTRACT = PROCESS_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -580,15 +652,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int BREAKDOWN_ELEMENT__NODEICON = PROCESS_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREAKDOWN_ELEMENT__PRESENTATION_NAME = PROCESS_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -636,13 +699,85 @@ public interface UmaPackage extends EPackage {
 	int BREAKDOWN_ELEMENT__SUPER_ACTIVITY = PROCESS_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__GROUP1 = PROCESS_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__CHECKLIST = PROCESS_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__CONCEPT = PROCESS_ELEMENT_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__EXAMPLE = PROCESS_ELEMENT_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__GUIDELINE = PROCESS_ELEMENT_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__REUSABLE_ASSET = PROCESS_ELEMENT_FEATURE_COUNT + 9;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL = PROCESS_ELEMENT_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT__WHITEPAPER = PROCESS_ELEMENT_FEATURE_COUNT + 11;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES = PROCESS_ELEMENT_FEATURE_COUNT + 4;
+	int BREAKDOWN_ELEMENT__HAS_MULTIPLE_OCCURRENCES = PROCESS_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Is Optional</b></em>' attribute.
@@ -651,7 +786,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREAKDOWN_ELEMENT__IS_OPTIONAL = PROCESS_ELEMENT_FEATURE_COUNT + 5;
+	int BREAKDOWN_ELEMENT__IS_OPTIONAL = PROCESS_ELEMENT_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Is Planned</b></em>' attribute.
@@ -660,7 +795,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREAKDOWN_ELEMENT__IS_PLANNED = PROCESS_ELEMENT_FEATURE_COUNT + 6;
+	int BREAKDOWN_ELEMENT__IS_PLANNED = PROCESS_ELEMENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Prefix</b></em>' attribute.
@@ -669,7 +804,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREAKDOWN_ELEMENT__PREFIX = PROCESS_ELEMENT_FEATURE_COUNT + 7;
+	int BREAKDOWN_ELEMENT__PREFIX = PROCESS_ELEMENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The number of structural features of the '<em>Breakdown Element</em>' class.
@@ -678,7 +813,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREAKDOWN_ELEMENT_FEATURE_COUNT = PROCESS_ELEMENT_FEATURE_COUNT + 8;
+	int BREAKDOWN_ELEMENT_FEATURE_COUNT = PROCESS_ELEMENT_FEATURE_COUNT + 16;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.WorkBreakdownElementImpl <em>Work Breakdown Element</em>}' class.
@@ -688,7 +823,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkBreakdownElement()
 	 * @generated
 	 */
-	int WORK_BREAKDOWN_ELEMENT = 78;
+	int WORK_BREAKDOWN_ELEMENT = 80;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -754,6 +889,15 @@ public interface UmaPackage extends EPackage {
 	int WORK_BREAKDOWN_ELEMENT__ORDERING_GUIDE = BREAKDOWN_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -772,6 +916,24 @@ public interface UmaPackage extends EPackage {
 	int WORK_BREAKDOWN_ELEMENT__PRESENTATION = BREAKDOWN_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__FULFILL = BREAKDOWN_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__IS_ABSTRACT = BREAKDOWN_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -779,15 +941,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_BREAKDOWN_ELEMENT__NODEICON = BREAKDOWN_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -835,6 +988,78 @@ public interface UmaPackage extends EPackage {
 	int WORK_BREAKDOWN_ELEMENT__SUPER_ACTIVITY = BREAKDOWN_ELEMENT__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__GROUP1 = BREAKDOWN_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__CHECKLIST = BREAKDOWN_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__CONCEPT = BREAKDOWN_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__EXAMPLE = BREAKDOWN_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__GUIDELINE = BREAKDOWN_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__REUSABLE_ASSET = BREAKDOWN_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL = BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_BREAKDOWN_ELEMENT__WHITEPAPER = BREAKDOWN_ELEMENT__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -871,13 +1096,13 @@ public interface UmaPackage extends EPackage {
 	int WORK_BREAKDOWN_ELEMENT__PREFIX = BREAKDOWN_ELEMENT__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORK_BREAKDOWN_ELEMENT__GROUP1 = BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
+	int WORK_BREAKDOWN_ELEMENT__GROUP2 = BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -998,6 +1223,15 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY__ORDERING_GUIDE = WORK_BREAKDOWN_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__PRESENTATION_NAME = WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1016,6 +1250,24 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY__PRESENTATION = WORK_BREAKDOWN_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__FULFILL = WORK_BREAKDOWN_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__IS_ABSTRACT = WORK_BREAKDOWN_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1023,15 +1275,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ACTIVITY__NODEICON = WORK_BREAKDOWN_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__PRESENTATION_NAME = WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -1079,6 +1322,78 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY__SUPER_ACTIVITY = WORK_BREAKDOWN_ELEMENT__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__GROUP1 = WORK_BREAKDOWN_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__CHECKLIST = WORK_BREAKDOWN_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__CONCEPT = WORK_BREAKDOWN_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__EXAMPLE = WORK_BREAKDOWN_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__GUIDELINE = WORK_BREAKDOWN_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__REUSABLE_ASSET = WORK_BREAKDOWN_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__SUPPORTING_MATERIAL = WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY__WHITEPAPER = WORK_BREAKDOWN_ELEMENT__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1115,13 +1430,13 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY__PREFIX = WORK_BREAKDOWN_ELEMENT__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__GROUP1 = WORK_BREAKDOWN_ELEMENT__GROUP1;
+	int ACTIVITY__GROUP2 = WORK_BREAKDOWN_ELEMENT__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -1178,13 +1493,13 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY__POSTCONDITION = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__GROUP2 = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
+	int ACTIVITY__GROUP3 = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Breakdown Element</b></em>' containment reference list.
@@ -1196,76 +1511,13 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY__BREAKDOWN_ELEMENT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__CHECKLIST = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 4;
-
-	/**
-	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__CONCEPT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 5;
-
-	/**
-	 * The feature id for the '<em><b>Example</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__EXAMPLE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 6;
-
-	/**
-	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__GUIDELINE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 7;
-
-	/**
 	 * The feature id for the '<em><b>Roadmap</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__ROADMAP = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 8;
-
-	/**
-	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__REUSABLE_ASSET = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 9;
-
-	/**
-	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__SUPPORTING_MATERIAL = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 10;
-
-	/**
-	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ACTIVITY__WHITEPAPER = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 11;
+	int ACTIVITY__ROADMAP = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Is Enactable</b></em>' attribute.
@@ -1274,7 +1526,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__IS_ENACTABLE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 12;
+	int ACTIVITY__IS_ENACTABLE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Variability Based On Element</b></em>' attribute.
@@ -1283,7 +1535,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__VARIABILITY_BASED_ON_ELEMENT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 13;
+	int ACTIVITY__VARIABILITY_BASED_ON_ELEMENT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Variability Type</b></em>' attribute.
@@ -1292,7 +1544,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__VARIABILITY_TYPE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 14;
+	int ACTIVITY__VARIABILITY_TYPE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Activity</em>' class.
@@ -1301,7 +1553,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 15;
+	int ACTIVITY_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.MethodUnitImpl <em>Method Unit</em>}' class.
@@ -1311,7 +1563,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMethodUnit()
 	 * @generated
 	 */
-	int METHOD_UNIT = 43;
+	int METHOD_UNIT = 45;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1375,6 +1627,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int METHOD_UNIT__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_UNIT__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -1447,7 +1708,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getContentDescription()
 	 * @generated
 	 */
-	int CONTENT_DESCRIPTION = 13;
+	int CONTENT_DESCRIPTION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1511,6 +1772,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTENT_DESCRIPTION__ORDERING_GUIDE = METHOD_UNIT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_DESCRIPTION__PRESENTATION_NAME = METHOD_UNIT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -1619,7 +1889,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getBreakdownElementDescription()
 	 * @generated
 	 */
-	int BREAKDOWN_ELEMENT_DESCRIPTION = 5;
+	int BREAKDOWN_ELEMENT_DESCRIPTION = 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1683,6 +1953,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int BREAKDOWN_ELEMENT_DESCRIPTION__ORDERING_GUIDE = CONTENT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREAKDOWN_ELEMENT_DESCRIPTION__PRESENTATION_NAME = CONTENT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -1866,6 +2145,15 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY_DESCRIPTION__ORDERING_GUIDE = BREAKDOWN_ELEMENT_DESCRIPTION__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ACTIVITY_DESCRIPTION__PRESENTATION_NAME = BREAKDOWN_ELEMENT_DESCRIPTION__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2001,6 +2289,43 @@ public interface UmaPackage extends EPackage {
 	int ACTIVITY_DESCRIPTION_FEATURE_COUNT = BREAKDOWN_ELEMENT_DESCRIPTION_FEATURE_COUNT + 3;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.ApplicableMetaClassInfoImpl <em>Applicable Meta Class Info</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.xml.uma.impl.ApplicableMetaClassInfoImpl
+	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getApplicableMetaClassInfo()
+	 * @generated
+	 */
+	int APPLICABLE_META_CLASS_INFO = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICABLE_META_CLASS_INFO__NAME = PACKAGEABLE_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Is Primary Extension</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Applicable Meta Class Info</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICABLE_META_CLASS_INFO_FEATURE_COUNT = PACKAGEABLE_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.ContentElementImpl <em>Content Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2008,7 +2333,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getContentElement()
 	 * @generated
 	 */
-	int CONTENT_ELEMENT = 14;
+	int CONTENT_ELEMENT = 15;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2074,6 +2399,15 @@ public interface UmaPackage extends EPackage {
 	int CONTENT_ELEMENT__ORDERING_GUIDE = DESCRIBABLE_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_ELEMENT__PRESENTATION_NAME = DESCRIBABLE_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2092,6 +2426,24 @@ public interface UmaPackage extends EPackage {
 	int CONTENT_ELEMENT__PRESENTATION = DESCRIBABLE_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_ELEMENT__FULFILL = DESCRIBABLE_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_ELEMENT__IS_ABSTRACT = DESCRIBABLE_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2099,15 +2451,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTENT_ELEMENT__NODEICON = DESCRIBABLE_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTENT_ELEMENT__PRESENTATION_NAME = DESCRIBABLE_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -2225,7 +2568,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkProduct()
 	 * @generated
 	 */
-	int WORK_PRODUCT = 81;
+	int WORK_PRODUCT = 83;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2291,6 +2634,15 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT__ORDERING_GUIDE = CONTENT_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2309,6 +2661,24 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT__PRESENTATION = CONTENT_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT__FULFILL = CONTENT_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT__IS_ABSTRACT = CONTENT_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2316,15 +2686,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_PRODUCT__NODEICON = CONTENT_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORK_PRODUCT__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -2496,7 +2857,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getArtifact()
 	 * @generated
 	 */
-	int ARTIFACT = 2;
+	int ARTIFACT = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2562,6 +2923,15 @@ public interface UmaPackage extends EPackage {
 	int ARTIFACT__ORDERING_GUIDE = WORK_PRODUCT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARTIFACT__PRESENTATION_NAME = WORK_PRODUCT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2580,6 +2950,24 @@ public interface UmaPackage extends EPackage {
 	int ARTIFACT__PRESENTATION = WORK_PRODUCT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARTIFACT__FULFILL = WORK_PRODUCT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARTIFACT__IS_ABSTRACT = WORK_PRODUCT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2587,15 +2975,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ARTIFACT__NODEICON = WORK_PRODUCT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARTIFACT__PRESENTATION_NAME = WORK_PRODUCT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -2785,7 +3164,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkProductDescription()
 	 * @generated
 	 */
-	int WORK_PRODUCT_DESCRIPTION = 82;
+	int WORK_PRODUCT_DESCRIPTION = 84;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2849,6 +3228,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_PRODUCT_DESCRIPTION__ORDERING_GUIDE = CONTENT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTION__PRESENTATION_NAME = CONTENT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -2984,7 +3372,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getArtifactDescription()
 	 * @generated
 	 */
-	int ARTIFACT_DESCRIPTION = 3;
+	int ARTIFACT_DESCRIPTION = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3048,6 +3436,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ARTIFACT_DESCRIPTION__ORDERING_GUIDE = WORK_PRODUCT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARTIFACT_DESCRIPTION__PRESENTATION_NAME = WORK_PRODUCT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -3219,7 +3616,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getProcess()
 	 * @generated
 	 */
-	int PROCESS = 52;
+	int PROCESS = 54;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3285,6 +3682,15 @@ public interface UmaPackage extends EPackage {
 	int PROCESS__ORDERING_GUIDE = ACTIVITY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__PRESENTATION_NAME = ACTIVITY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3303,6 +3709,24 @@ public interface UmaPackage extends EPackage {
 	int PROCESS__PRESENTATION = ACTIVITY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__FULFILL = ACTIVITY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__IS_ABSTRACT = ACTIVITY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3310,15 +3734,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS__NODEICON = ACTIVITY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__PRESENTATION_NAME = ACTIVITY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -3366,6 +3781,78 @@ public interface UmaPackage extends EPackage {
 	int PROCESS__SUPER_ACTIVITY = ACTIVITY__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__GROUP1 = ACTIVITY__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__CHECKLIST = ACTIVITY__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__CONCEPT = ACTIVITY__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__EXAMPLE = ACTIVITY__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__GUIDELINE = ACTIVITY__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__REUSABLE_ASSET = ACTIVITY__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__SUPPORTING_MATERIAL = ACTIVITY__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS__WHITEPAPER = ACTIVITY__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3402,13 +3889,13 @@ public interface UmaPackage extends EPackage {
 	int PROCESS__PREFIX = ACTIVITY__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__GROUP1 = ACTIVITY__GROUP1;
+	int PROCESS__GROUP2 = ACTIVITY__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -3465,13 +3952,13 @@ public interface UmaPackage extends EPackage {
 	int PROCESS__POSTCONDITION = ACTIVITY__POSTCONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__GROUP2 = ACTIVITY__GROUP2;
+	int PROCESS__GROUP3 = ACTIVITY__GROUP3;
 
 	/**
 	 * The feature id for the '<em><b>Breakdown Element</b></em>' containment reference list.
@@ -3483,42 +3970,6 @@ public interface UmaPackage extends EPackage {
 	int PROCESS__BREAKDOWN_ELEMENT = ACTIVITY__BREAKDOWN_ELEMENT;
 
 	/**
-	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__CHECKLIST = ACTIVITY__CHECKLIST;
-
-	/**
-	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__CONCEPT = ACTIVITY__CONCEPT;
-
-	/**
-	 * The feature id for the '<em><b>Example</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__EXAMPLE = ACTIVITY__EXAMPLE;
-
-	/**
-	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__GUIDELINE = ACTIVITY__GUIDELINE;
-
-	/**
 	 * The feature id for the '<em><b>Roadmap</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3526,33 +3977,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS__ROADMAP = ACTIVITY__ROADMAP;
-
-	/**
-	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__REUSABLE_ASSET = ACTIVITY__REUSABLE_ASSET;
-
-	/**
-	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__SUPPORTING_MATERIAL = ACTIVITY__SUPPORTING_MATERIAL;
-
-	/**
-	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__WHITEPAPER = ACTIVITY__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Is Enactable</b></em>' attribute.
@@ -3634,7 +4058,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getCapabilityPattern()
 	 * @generated
 	 */
-	int CAPABILITY_PATTERN = 6;
+	int CAPABILITY_PATTERN = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3700,6 +4124,15 @@ public interface UmaPackage extends EPackage {
 	int CAPABILITY_PATTERN__ORDERING_GUIDE = PROCESS__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__PRESENTATION_NAME = PROCESS__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3718,6 +4151,24 @@ public interface UmaPackage extends EPackage {
 	int CAPABILITY_PATTERN__PRESENTATION = PROCESS__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__FULFILL = PROCESS__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__IS_ABSTRACT = PROCESS__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3725,15 +4176,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CAPABILITY_PATTERN__NODEICON = PROCESS__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__PRESENTATION_NAME = PROCESS__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -3781,6 +4223,78 @@ public interface UmaPackage extends EPackage {
 	int CAPABILITY_PATTERN__SUPER_ACTIVITY = PROCESS__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__GROUP1 = PROCESS__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__CHECKLIST = PROCESS__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__CONCEPT = PROCESS__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__EXAMPLE = PROCESS__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__GUIDELINE = PROCESS__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__REUSABLE_ASSET = PROCESS__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__SUPPORTING_MATERIAL = PROCESS__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CAPABILITY_PATTERN__WHITEPAPER = PROCESS__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3817,13 +4331,13 @@ public interface UmaPackage extends EPackage {
 	int CAPABILITY_PATTERN__PREFIX = PROCESS__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CAPABILITY_PATTERN__GROUP1 = PROCESS__GROUP1;
+	int CAPABILITY_PATTERN__GROUP2 = PROCESS__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -3880,13 +4394,13 @@ public interface UmaPackage extends EPackage {
 	int CAPABILITY_PATTERN__POSTCONDITION = PROCESS__POSTCONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CAPABILITY_PATTERN__GROUP2 = PROCESS__GROUP2;
+	int CAPABILITY_PATTERN__GROUP3 = PROCESS__GROUP3;
 
 	/**
 	 * The feature id for the '<em><b>Breakdown Element</b></em>' containment reference list.
@@ -3898,42 +4412,6 @@ public interface UmaPackage extends EPackage {
 	int CAPABILITY_PATTERN__BREAKDOWN_ELEMENT = PROCESS__BREAKDOWN_ELEMENT;
 
 	/**
-	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__CHECKLIST = PROCESS__CHECKLIST;
-
-	/**
-	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__CONCEPT = PROCESS__CONCEPT;
-
-	/**
-	 * The feature id for the '<em><b>Example</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__EXAMPLE = PROCESS__EXAMPLE;
-
-	/**
-	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__GUIDELINE = PROCESS__GUIDELINE;
-
-	/**
 	 * The feature id for the '<em><b>Roadmap</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3941,33 +4419,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CAPABILITY_PATTERN__ROADMAP = PROCESS__ROADMAP;
-
-	/**
-	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__REUSABLE_ASSET = PROCESS__REUSABLE_ASSET;
-
-	/**
-	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__SUPPORTING_MATERIAL = PROCESS__SUPPORTING_MATERIAL;
-
-	/**
-	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CAPABILITY_PATTERN__WHITEPAPER = PROCESS__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Is Enactable</b></em>' attribute.
@@ -4049,7 +4500,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getGuidance()
 	 * @generated
 	 */
-	int GUIDANCE = 33;
+	int GUIDANCE = 34;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4115,6 +4566,15 @@ public interface UmaPackage extends EPackage {
 	int GUIDANCE__ORDERING_GUIDE = CONTENT_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDANCE__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4133,6 +4593,24 @@ public interface UmaPackage extends EPackage {
 	int GUIDANCE__PRESENTATION = CONTENT_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDANCE__FULFILL = CONTENT_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDANCE__IS_ABSTRACT = CONTENT_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4140,15 +4618,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int GUIDANCE__NODEICON = CONTENT_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GUIDANCE__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -4266,7 +4735,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getChecklist()
 	 * @generated
 	 */
-	int CHECKLIST = 7;
+	int CHECKLIST = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4332,6 +4801,15 @@ public interface UmaPackage extends EPackage {
 	int CHECKLIST__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHECKLIST__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4350,6 +4828,24 @@ public interface UmaPackage extends EPackage {
 	int CHECKLIST__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHECKLIST__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CHECKLIST__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4357,15 +4853,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CHECKLIST__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CHECKLIST__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -4483,7 +4970,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDescriptor()
 	 * @generated
 	 */
-	int DESCRIPTOR = 22;
+	int DESCRIPTOR = 23;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4549,6 +5036,15 @@ public interface UmaPackage extends EPackage {
 	int DESCRIPTOR__ORDERING_GUIDE = BREAKDOWN_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4567,6 +5063,24 @@ public interface UmaPackage extends EPackage {
 	int DESCRIPTOR__PRESENTATION = BREAKDOWN_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__FULFILL = BREAKDOWN_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__IS_ABSTRACT = BREAKDOWN_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4574,15 +5088,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DESCRIPTOR__NODEICON = BREAKDOWN_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DESCRIPTOR__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -4628,6 +5133,78 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DESCRIPTOR__SUPER_ACTIVITY = BREAKDOWN_ELEMENT__SUPER_ACTIVITY;
+
+	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__GROUP1 = BREAKDOWN_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__CHECKLIST = BREAKDOWN_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__CONCEPT = BREAKDOWN_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__EXAMPLE = BREAKDOWN_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__GUIDELINE = BREAKDOWN_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__REUSABLE_ASSET = BREAKDOWN_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__SUPPORTING_MATERIAL = BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__WHITEPAPER = BREAKDOWN_ELEMENT__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
@@ -4691,7 +5268,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getRoleDescriptor()
 	 * @generated
 	 */
-	int ROLE_DESCRIPTOR = 64;
+	int ROLE_DESCRIPTOR = 66;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4757,6 +5334,15 @@ public interface UmaPackage extends EPackage {
 	int ROLE_DESCRIPTOR__ORDERING_GUIDE = DESCRIPTOR__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__PRESENTATION_NAME = DESCRIPTOR__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4775,6 +5361,24 @@ public interface UmaPackage extends EPackage {
 	int ROLE_DESCRIPTOR__PRESENTATION = DESCRIPTOR__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__FULFILL = DESCRIPTOR__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__IS_ABSTRACT = DESCRIPTOR__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4782,15 +5386,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROLE_DESCRIPTOR__NODEICON = DESCRIPTOR__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DESCRIPTOR__PRESENTATION_NAME = DESCRIPTOR__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -4836,6 +5431,78 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROLE_DESCRIPTOR__SUPER_ACTIVITY = DESCRIPTOR__SUPER_ACTIVITY;
+
+	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__GROUP1 = DESCRIPTOR__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__CHECKLIST = DESCRIPTOR__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__CONCEPT = DESCRIPTOR__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__EXAMPLE = DESCRIPTOR__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__GUIDELINE = DESCRIPTOR__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__REUSABLE_ASSET = DESCRIPTOR__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__SUPPORTING_MATERIAL = DESCRIPTOR__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__WHITEPAPER = DESCRIPTOR__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
@@ -4917,7 +5584,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getCompositeRole()
 	 * @generated
 	 */
-	int COMPOSITE_ROLE = 8;
+	int COMPOSITE_ROLE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4983,6 +5650,15 @@ public interface UmaPackage extends EPackage {
 	int COMPOSITE_ROLE__ORDERING_GUIDE = ROLE_DESCRIPTOR__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__PRESENTATION_NAME = ROLE_DESCRIPTOR__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5001,6 +5677,24 @@ public interface UmaPackage extends EPackage {
 	int COMPOSITE_ROLE__PRESENTATION = ROLE_DESCRIPTOR__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__FULFILL = ROLE_DESCRIPTOR__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__IS_ABSTRACT = ROLE_DESCRIPTOR__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5008,15 +5702,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE_ROLE__NODEICON = ROLE_DESCRIPTOR__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSITE_ROLE__PRESENTATION_NAME = ROLE_DESCRIPTOR__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -5062,6 +5747,78 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE_ROLE__SUPER_ACTIVITY = ROLE_DESCRIPTOR__SUPER_ACTIVITY;
+
+	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__GROUP1 = ROLE_DESCRIPTOR__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__CHECKLIST = ROLE_DESCRIPTOR__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__CONCEPT = ROLE_DESCRIPTOR__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__EXAMPLE = ROLE_DESCRIPTOR__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__GUIDELINE = ROLE_DESCRIPTOR__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__REUSABLE_ASSET = ROLE_DESCRIPTOR__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__SUPPORTING_MATERIAL = ROLE_DESCRIPTOR__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__WHITEPAPER = ROLE_DESCRIPTOR__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
@@ -5127,13 +5884,13 @@ public interface UmaPackage extends EPackage {
 	int COMPOSITE_ROLE__RESPONSIBLE_FOR = ROLE_DESCRIPTOR__RESPONSIBLE_FOR;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSITE_ROLE__GROUP1 = ROLE_DESCRIPTOR_FEATURE_COUNT + 0;
+	int COMPOSITE_ROLE__GROUP2 = ROLE_DESCRIPTOR_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Aggregated Role</b></em>' containment reference list.
@@ -5161,7 +5918,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getConcept()
 	 * @generated
 	 */
-	int CONCEPT = 9;
+	int CONCEPT = 10;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5227,6 +5984,15 @@ public interface UmaPackage extends EPackage {
 	int CONCEPT__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONCEPT__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5245,6 +6011,24 @@ public interface UmaPackage extends EPackage {
 	int CONCEPT__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONCEPT__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONCEPT__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5252,15 +6036,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONCEPT__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONCEPT__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -5378,7 +6153,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getConstraint()
 	 * @generated
 	 */
-	int CONSTRAINT = 10;
+	int CONSTRAINT = 11;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5444,6 +6219,15 @@ public interface UmaPackage extends EPackage {
 	int CONSTRAINT__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5478,7 +6262,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getContentCategory()
 	 * @generated
 	 */
-	int CONTENT_CATEGORY = 11;
+	int CONTENT_CATEGORY = 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5544,6 +6328,15 @@ public interface UmaPackage extends EPackage {
 	int CONTENT_CATEGORY__ORDERING_GUIDE = CONTENT_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_CATEGORY__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5562,6 +6355,24 @@ public interface UmaPackage extends EPackage {
 	int CONTENT_CATEGORY__PRESENTATION = CONTENT_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_CATEGORY__FULFILL = CONTENT_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_CATEGORY__IS_ABSTRACT = CONTENT_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5569,15 +6380,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTENT_CATEGORY__NODEICON = CONTENT_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CONTENT_CATEGORY__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -5695,7 +6497,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMethodPackage()
 	 * @generated
 	 */
-	int METHOD_PACKAGE = 41;
+	int METHOD_PACKAGE = 43;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5761,6 +6563,15 @@ public interface UmaPackage extends EPackage {
 	int METHOD_PACKAGE__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_PACKAGE__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5822,7 +6633,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getContentCategoryPackage()
 	 * @generated
 	 */
-	int CONTENT_CATEGORY_PACKAGE = 12;
+	int CONTENT_CATEGORY_PACKAGE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5886,6 +6697,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTENT_CATEGORY_PACKAGE__ORDERING_GUIDE = METHOD_PACKAGE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_CATEGORY_PACKAGE__PRESENTATION_NAME = METHOD_PACKAGE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -5967,7 +6787,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getContentPackage()
 	 * @generated
 	 */
-	int CONTENT_PACKAGE = 15;
+	int CONTENT_PACKAGE = 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6031,6 +6851,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTENT_PACKAGE__ORDERING_GUIDE = METHOD_PACKAGE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTENT_PACKAGE__PRESENTATION_NAME = METHOD_PACKAGE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -6112,7 +6941,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getCustomCategory()
 	 * @generated
 	 */
-	int CUSTOM_CATEGORY = 16;
+	int CUSTOM_CATEGORY = 17;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6178,6 +7007,15 @@ public interface UmaPackage extends EPackage {
 	int CUSTOM_CATEGORY__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_CATEGORY__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6196,6 +7034,24 @@ public interface UmaPackage extends EPackage {
 	int CUSTOM_CATEGORY__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_CATEGORY__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_CATEGORY__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6203,15 +7059,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int CUSTOM_CATEGORY__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int CUSTOM_CATEGORY__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -6356,7 +7203,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDeliverable()
 	 * @generated
 	 */
-	int DELIVERABLE = 17;
+	int DELIVERABLE = 18;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6422,6 +7269,15 @@ public interface UmaPackage extends EPackage {
 	int DELIVERABLE__ORDERING_GUIDE = WORK_PRODUCT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERABLE__PRESENTATION_NAME = WORK_PRODUCT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6440,6 +7296,24 @@ public interface UmaPackage extends EPackage {
 	int DELIVERABLE__PRESENTATION = WORK_PRODUCT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERABLE__FULFILL = WORK_PRODUCT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERABLE__IS_ABSTRACT = WORK_PRODUCT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6447,15 +7321,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELIVERABLE__NODEICON = WORK_PRODUCT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERABLE__PRESENTATION_NAME = WORK_PRODUCT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -6645,7 +7510,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDeliverableDescription()
 	 * @generated
 	 */
-	int DELIVERABLE_DESCRIPTION = 18;
+	int DELIVERABLE_DESCRIPTION = 19;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6709,6 +7574,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELIVERABLE_DESCRIPTION__ORDERING_GUIDE = WORK_PRODUCT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERABLE_DESCRIPTION__PRESENTATION_NAME = WORK_PRODUCT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -6862,7 +7736,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDeliveryProcess()
 	 * @generated
 	 */
-	int DELIVERY_PROCESS = 19;
+	int DELIVERY_PROCESS = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -6928,6 +7802,15 @@ public interface UmaPackage extends EPackage {
 	int DELIVERY_PROCESS__ORDERING_GUIDE = PROCESS__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__PRESENTATION_NAME = PROCESS__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6946,6 +7829,24 @@ public interface UmaPackage extends EPackage {
 	int DELIVERY_PROCESS__PRESENTATION = PROCESS__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__FULFILL = PROCESS__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__IS_ABSTRACT = PROCESS__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6953,15 +7854,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELIVERY_PROCESS__NODEICON = PROCESS__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__PRESENTATION_NAME = PROCESS__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -7009,6 +7901,78 @@ public interface UmaPackage extends EPackage {
 	int DELIVERY_PROCESS__SUPER_ACTIVITY = PROCESS__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__GROUP1 = PROCESS__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__CHECKLIST = PROCESS__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__CONCEPT = PROCESS__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__EXAMPLE = PROCESS__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__GUIDELINE = PROCESS__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__REUSABLE_ASSET = PROCESS__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__SUPPORTING_MATERIAL = PROCESS__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS__WHITEPAPER = PROCESS__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7045,13 +8009,13 @@ public interface UmaPackage extends EPackage {
 	int DELIVERY_PROCESS__PREFIX = PROCESS__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELIVERY_PROCESS__GROUP1 = PROCESS__GROUP1;
+	int DELIVERY_PROCESS__GROUP2 = PROCESS__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -7108,13 +8072,13 @@ public interface UmaPackage extends EPackage {
 	int DELIVERY_PROCESS__POSTCONDITION = PROCESS__POSTCONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELIVERY_PROCESS__GROUP2 = PROCESS__GROUP2;
+	int DELIVERY_PROCESS__GROUP3 = PROCESS__GROUP3;
 
 	/**
 	 * The feature id for the '<em><b>Breakdown Element</b></em>' containment reference list.
@@ -7126,42 +8090,6 @@ public interface UmaPackage extends EPackage {
 	int DELIVERY_PROCESS__BREAKDOWN_ELEMENT = PROCESS__BREAKDOWN_ELEMENT;
 
 	/**
-	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__CHECKLIST = PROCESS__CHECKLIST;
-
-	/**
-	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__CONCEPT = PROCESS__CONCEPT;
-
-	/**
-	 * The feature id for the '<em><b>Example</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__EXAMPLE = PROCESS__EXAMPLE;
-
-	/**
-	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__GUIDELINE = PROCESS__GUIDELINE;
-
-	/**
 	 * The feature id for the '<em><b>Roadmap</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7169,33 +8097,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELIVERY_PROCESS__ROADMAP = PROCESS__ROADMAP;
-
-	/**
-	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__REUSABLE_ASSET = PROCESS__REUSABLE_ASSET;
-
-	/**
-	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__SUPPORTING_MATERIAL = PROCESS__SUPPORTING_MATERIAL;
-
-	/**
-	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELIVERY_PROCESS__WHITEPAPER = PROCESS__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Is Enactable</b></em>' attribute.
@@ -7261,13 +8162,13 @@ public interface UmaPackage extends EPackage {
 	int DELIVERY_PROCESS__DIAGRAM_URI = PROCESS__DIAGRAM_URI;
 
 	/**
-	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group4</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DELIVERY_PROCESS__GROUP3 = PROCESS_FEATURE_COUNT + 0;
+	int DELIVERY_PROCESS__GROUP4 = PROCESS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Communications Material</b></em>' attribute list.
@@ -7304,7 +8205,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getProcessDescription()
 	 * @generated
 	 */
-	int PROCESS_DESCRIPTION = 55;
+	int PROCESS_DESCRIPTION = 57;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7368,6 +8269,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_DESCRIPTION__ORDERING_GUIDE = ACTIVITY_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_DESCRIPTION__PRESENTATION_NAME = ACTIVITY_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -7530,7 +8440,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDeliveryProcessDescription()
 	 * @generated
 	 */
-	int DELIVERY_PROCESS_DESCRIPTION = 20;
+	int DELIVERY_PROCESS_DESCRIPTION = 21;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7594,6 +8504,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DELIVERY_PROCESS_DESCRIPTION__ORDERING_GUIDE = PROCESS_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELIVERY_PROCESS_DESCRIPTION__PRESENTATION_NAME = PROCESS_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -7810,7 +8729,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDescriptorDescription()
 	 * @generated
 	 */
-	int DESCRIPTOR_DESCRIPTION = 23;
+	int DESCRIPTOR_DESCRIPTION = 24;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7874,6 +8793,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DESCRIPTOR_DESCRIPTION__ORDERING_GUIDE = BREAKDOWN_ELEMENT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR_DESCRIPTION__PRESENTATION_NAME = BREAKDOWN_ELEMENT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -8000,7 +8928,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDiscipline()
 	 * @generated
 	 */
-	int DISCIPLINE = 24;
+	int DISCIPLINE = 25;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8066,6 +8994,15 @@ public interface UmaPackage extends EPackage {
 	int DISCIPLINE__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISCIPLINE__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8084,6 +9021,24 @@ public interface UmaPackage extends EPackage {
 	int DISCIPLINE__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISCIPLINE__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISCIPLINE__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8091,15 +9046,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DISCIPLINE__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DISCIPLINE__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -8253,7 +9199,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDisciplineGrouping()
 	 * @generated
 	 */
-	int DISCIPLINE_GROUPING = 25;
+	int DISCIPLINE_GROUPING = 26;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8319,6 +9265,15 @@ public interface UmaPackage extends EPackage {
 	int DISCIPLINE_GROUPING__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISCIPLINE_GROUPING__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8337,6 +9292,24 @@ public interface UmaPackage extends EPackage {
 	int DISCIPLINE_GROUPING__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISCIPLINE_GROUPING__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DISCIPLINE_GROUPING__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8344,15 +9317,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DISCIPLINE_GROUPING__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DISCIPLINE_GROUPING__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -8488,7 +9452,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDocumentRoot()
 	 * @generated
 	 */
-	int DOCUMENT_ROOT = 26;
+	int DOCUMENT_ROOT = 27;
 
 	/**
 	 * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -8561,7 +9525,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getDomain()
 	 * @generated
 	 */
-	int DOMAIN = 27;
+	int DOMAIN = 28;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8627,6 +9591,15 @@ public interface UmaPackage extends EPackage {
 	int DOMAIN__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8645,6 +9618,24 @@ public interface UmaPackage extends EPackage {
 	int DOMAIN__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8652,15 +9643,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int DOMAIN__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DOMAIN__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -8805,7 +9787,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getEstimate()
 	 * @generated
 	 */
-	int ESTIMATE = 29;
+	int ESTIMATE = 30;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -8871,6 +9853,15 @@ public interface UmaPackage extends EPackage {
 	int ESTIMATE__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8889,6 +9880,24 @@ public interface UmaPackage extends EPackage {
 	int ESTIMATE__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATE__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATE__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8896,15 +9905,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ESTIMATE__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ESTIMATE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -9049,7 +10049,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getEstimatingMetric()
 	 * @generated
 	 */
-	int ESTIMATING_METRIC = 30;
+	int ESTIMATING_METRIC = 31;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9115,6 +10115,15 @@ public interface UmaPackage extends EPackage {
 	int ESTIMATING_METRIC__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATING_METRIC__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9133,6 +10142,24 @@ public interface UmaPackage extends EPackage {
 	int ESTIMATING_METRIC__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATING_METRIC__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATING_METRIC__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9140,15 +10167,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ESTIMATING_METRIC__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ESTIMATING_METRIC__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -9266,7 +10284,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getEstimationConsiderations()
 	 * @generated
 	 */
-	int ESTIMATION_CONSIDERATIONS = 31;
+	int ESTIMATION_CONSIDERATIONS = 32;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9332,6 +10350,15 @@ public interface UmaPackage extends EPackage {
 	int ESTIMATION_CONSIDERATIONS__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATION_CONSIDERATIONS__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9350,6 +10377,24 @@ public interface UmaPackage extends EPackage {
 	int ESTIMATION_CONSIDERATIONS__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATION_CONSIDERATIONS__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESTIMATION_CONSIDERATIONS__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9357,15 +10402,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ESTIMATION_CONSIDERATIONS__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ESTIMATION_CONSIDERATIONS__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -9483,7 +10519,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getExample()
 	 * @generated
 	 */
-	int EXAMPLE = 32;
+	int EXAMPLE = 33;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9549,6 +10585,15 @@ public interface UmaPackage extends EPackage {
 	int EXAMPLE__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXAMPLE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9567,6 +10612,24 @@ public interface UmaPackage extends EPackage {
 	int EXAMPLE__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXAMPLE__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXAMPLE__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9574,15 +10637,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXAMPLE__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXAMPLE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -9700,7 +10754,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getGuidanceDescription()
 	 * @generated
 	 */
-	int GUIDANCE_DESCRIPTION = 34;
+	int GUIDANCE_DESCRIPTION = 35;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9764,6 +10818,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int GUIDANCE_DESCRIPTION__ORDERING_GUIDE = CONTENT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDANCE_DESCRIPTION__PRESENTATION_NAME = CONTENT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -9881,7 +10944,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getGuideline()
 	 * @generated
 	 */
-	int GUIDELINE = 35;
+	int GUIDELINE = 36;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -9947,6 +11010,15 @@ public interface UmaPackage extends EPackage {
 	int GUIDELINE__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDELINE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9965,6 +11037,24 @@ public interface UmaPackage extends EPackage {
 	int GUIDELINE__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDELINE__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUIDELINE__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9972,15 +11062,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int GUIDELINE__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GUIDELINE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -10098,7 +11179,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getIteration()
 	 * @generated
 	 */
-	int ITERATION = 36;
+	int ITERATION = 37;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10164,6 +11245,15 @@ public interface UmaPackage extends EPackage {
 	int ITERATION__ORDERING_GUIDE = ACTIVITY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__PRESENTATION_NAME = ACTIVITY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10182,6 +11272,24 @@ public interface UmaPackage extends EPackage {
 	int ITERATION__PRESENTATION = ACTIVITY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__FULFILL = ACTIVITY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__IS_ABSTRACT = ACTIVITY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10189,15 +11297,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ITERATION__NODEICON = ACTIVITY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__PRESENTATION_NAME = ACTIVITY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -10245,6 +11344,78 @@ public interface UmaPackage extends EPackage {
 	int ITERATION__SUPER_ACTIVITY = ACTIVITY__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__GROUP1 = ACTIVITY__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__CHECKLIST = ACTIVITY__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__CONCEPT = ACTIVITY__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__EXAMPLE = ACTIVITY__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__GUIDELINE = ACTIVITY__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__REUSABLE_ASSET = ACTIVITY__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__SUPPORTING_MATERIAL = ACTIVITY__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATION__WHITEPAPER = ACTIVITY__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10281,13 +11452,13 @@ public interface UmaPackage extends EPackage {
 	int ITERATION__PREFIX = ACTIVITY__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATION__GROUP1 = ACTIVITY__GROUP1;
+	int ITERATION__GROUP2 = ACTIVITY__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -10344,13 +11515,13 @@ public interface UmaPackage extends EPackage {
 	int ITERATION__POSTCONDITION = ACTIVITY__POSTCONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITERATION__GROUP2 = ACTIVITY__GROUP2;
+	int ITERATION__GROUP3 = ACTIVITY__GROUP3;
 
 	/**
 	 * The feature id for the '<em><b>Breakdown Element</b></em>' containment reference list.
@@ -10362,42 +11533,6 @@ public interface UmaPackage extends EPackage {
 	int ITERATION__BREAKDOWN_ELEMENT = ACTIVITY__BREAKDOWN_ELEMENT;
 
 	/**
-	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__CHECKLIST = ACTIVITY__CHECKLIST;
-
-	/**
-	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__CONCEPT = ACTIVITY__CONCEPT;
-
-	/**
-	 * The feature id for the '<em><b>Example</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__EXAMPLE = ACTIVITY__EXAMPLE;
-
-	/**
-	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__GUIDELINE = ACTIVITY__GUIDELINE;
-
-	/**
 	 * The feature id for the '<em><b>Roadmap</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10405,33 +11540,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ITERATION__ROADMAP = ACTIVITY__ROADMAP;
-
-	/**
-	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__REUSABLE_ASSET = ACTIVITY__REUSABLE_ASSET;
-
-	/**
-	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__SUPPORTING_MATERIAL = ACTIVITY__SUPPORTING_MATERIAL;
-
-	/**
-	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ITERATION__WHITEPAPER = ACTIVITY__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Is Enactable</b></em>' attribute.
@@ -10470,6 +11578,250 @@ public interface UmaPackage extends EPackage {
 	int ITERATION_FEATURE_COUNT = ACTIVITY_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.KindImpl <em>Kind</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.epf.xml.uma.impl.KindImpl
+	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getKind()
+	 * @generated
+	 */
+	int KIND = 38;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__NAME = CONTENT_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Group</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__GROUP = CONTENT_ELEMENT__GROUP;
+
+	/**
+	 * The feature id for the '<em><b>Owned Rule</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__OWNED_RULE = CONTENT_ELEMENT__OWNED_RULE;
+
+	/**
+	 * The feature id for the '<em><b>Method Element Property</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__METHOD_ELEMENT_PROPERTY = CONTENT_ELEMENT__METHOD_ELEMENT_PROPERTY;
+
+	/**
+	 * The feature id for the '<em><b>Brief Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__BRIEF_DESCRIPTION = CONTENT_ELEMENT__BRIEF_DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__ID = CONTENT_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Ordering Guide</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__ORDERING_GUIDE = CONTENT_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
+
+	/**
+	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__SUPPRESSED = CONTENT_ELEMENT__SUPPRESSED;
+
+	/**
+	 * The feature id for the '<em><b>Presentation</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__PRESENTATION = CONTENT_ELEMENT__PRESENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__FULFILL = CONTENT_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__IS_ABSTRACT = CONTENT_ELEMENT__IS_ABSTRACT;
+
+	/**
+	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__NODEICON = CONTENT_ELEMENT__NODEICON;
+
+	/**
+	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__SHAPEICON = CONTENT_ELEMENT__SHAPEICON;
+
+	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__GROUP1 = CONTENT_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__CHECKLIST = CONTENT_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__CONCEPT = CONTENT_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__EXAMPLE = CONTENT_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__GUIDELINE = CONTENT_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__REUSABLE_ASSET = CONTENT_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__SUPPORTING_MATERIAL = CONTENT_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__WHITEPAPER = CONTENT_ELEMENT__WHITEPAPER;
+
+	/**
+	 * The feature id for the '<em><b>Variability Based On Element</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__VARIABILITY_BASED_ON_ELEMENT = CONTENT_ELEMENT__VARIABILITY_BASED_ON_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Variability Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__VARIABILITY_TYPE = CONTENT_ELEMENT__VARIABILITY_TYPE;
+
+	/**
+	 * The feature id for the '<em><b>Applicable Meta Class Info</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND__APPLICABLE_META_CLASS_INFO = CONTENT_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Kind</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int KIND_FEATURE_COUNT = CONTENT_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.MethodConfigurationImpl <em>Method Configuration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -10477,7 +11829,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMethodConfiguration()
 	 * @generated
 	 */
-	int METHOD_CONFIGURATION = 37;
+	int METHOD_CONFIGURATION = 39;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10541,6 +11893,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int METHOD_CONFIGURATION__ORDERING_GUIDE = METHOD_UNIT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_CONFIGURATION__PRESENTATION_NAME = METHOD_UNIT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -10676,7 +12037,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMethodElementProperty()
 	 * @generated
 	 */
-	int METHOD_ELEMENT_PROPERTY = 39;
+	int METHOD_ELEMENT_PROPERTY = 41;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10713,7 +12074,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMethodLibrary()
 	 * @generated
 	 */
-	int METHOD_LIBRARY = 40;
+	int METHOD_LIBRARY = 42;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10777,6 +12138,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int METHOD_LIBRARY__ORDERING_GUIDE = METHOD_UNIT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_LIBRARY__PRESENTATION_NAME = METHOD_UNIT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -10876,7 +12246,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMethodPlugin()
 	 * @generated
 	 */
-	int METHOD_PLUGIN = 42;
+	int METHOD_PLUGIN = 44;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -10940,6 +12310,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int METHOD_PLUGIN__ORDERING_GUIDE = METHOD_UNIT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_PLUGIN__PRESENTATION_NAME = METHOD_UNIT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -11039,7 +12418,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getMilestone()
 	 * @generated
 	 */
-	int MILESTONE = 44;
+	int MILESTONE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -11105,6 +12484,15 @@ public interface UmaPackage extends EPackage {
 	int MILESTONE__ORDERING_GUIDE = WORK_BREAKDOWN_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__PRESENTATION_NAME = WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11123,6 +12511,24 @@ public interface UmaPackage extends EPackage {
 	int MILESTONE__PRESENTATION = WORK_BREAKDOWN_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__FULFILL = WORK_BREAKDOWN_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__IS_ABSTRACT = WORK_BREAKDOWN_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11130,15 +12536,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int MILESTONE__NODEICON = WORK_BREAKDOWN_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MILESTONE__PRESENTATION_NAME = WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -11186,6 +12583,78 @@ public interface UmaPackage extends EPackage {
 	int MILESTONE__SUPER_ACTIVITY = WORK_BREAKDOWN_ELEMENT__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__GROUP1 = WORK_BREAKDOWN_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__CHECKLIST = WORK_BREAKDOWN_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__CONCEPT = WORK_BREAKDOWN_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__EXAMPLE = WORK_BREAKDOWN_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__GUIDELINE = WORK_BREAKDOWN_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__REUSABLE_ASSET = WORK_BREAKDOWN_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__SUPPORTING_MATERIAL = WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__WHITEPAPER = WORK_BREAKDOWN_ELEMENT__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11222,13 +12691,13 @@ public interface UmaPackage extends EPackage {
 	int MILESTONE__PREFIX = WORK_BREAKDOWN_ELEMENT__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MILESTONE__GROUP1 = WORK_BREAKDOWN_ELEMENT__GROUP1;
+	int MILESTONE__GROUP2 = WORK_BREAKDOWN_ELEMENT__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -11267,13 +12736,22 @@ public interface UmaPackage extends EPackage {
 	int MILESTONE__IS_REPEATABLE = WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE;
 
 	/**
+	 * The feature id for the '<em><b>Required Result</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MILESTONE__REQUIRED_RESULT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Milestone</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MILESTONE_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
+	int MILESTONE_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.OutcomeImpl <em>Outcome</em>}' class.
@@ -11283,7 +12761,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getOutcome()
 	 * @generated
 	 */
-	int OUTCOME = 46;
+	int OUTCOME = 48;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -11349,6 +12827,15 @@ public interface UmaPackage extends EPackage {
 	int OUTCOME__ORDERING_GUIDE = WORK_PRODUCT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OUTCOME__PRESENTATION_NAME = WORK_PRODUCT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11367,6 +12854,24 @@ public interface UmaPackage extends EPackage {
 	int OUTCOME__PRESENTATION = WORK_PRODUCT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OUTCOME__FULFILL = WORK_PRODUCT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OUTCOME__IS_ABSTRACT = WORK_PRODUCT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11374,15 +12879,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int OUTCOME__NODEICON = WORK_PRODUCT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int OUTCOME__PRESENTATION_NAME = WORK_PRODUCT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -11554,7 +13050,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getPhase()
 	 * @generated
 	 */
-	int PHASE = 48;
+	int PHASE = 50;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -11620,6 +13116,15 @@ public interface UmaPackage extends EPackage {
 	int PHASE__ORDERING_GUIDE = ACTIVITY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__PRESENTATION_NAME = ACTIVITY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11638,6 +13143,24 @@ public interface UmaPackage extends EPackage {
 	int PHASE__PRESENTATION = ACTIVITY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__FULFILL = ACTIVITY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__IS_ABSTRACT = ACTIVITY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11645,15 +13168,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PHASE__NODEICON = ACTIVITY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__PRESENTATION_NAME = ACTIVITY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -11701,6 +13215,78 @@ public interface UmaPackage extends EPackage {
 	int PHASE__SUPER_ACTIVITY = ACTIVITY__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__GROUP1 = ACTIVITY__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__CHECKLIST = ACTIVITY__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__CONCEPT = ACTIVITY__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__EXAMPLE = ACTIVITY__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__GUIDELINE = ACTIVITY__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__REUSABLE_ASSET = ACTIVITY__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__SUPPORTING_MATERIAL = ACTIVITY__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PHASE__WHITEPAPER = ACTIVITY__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11737,13 +13323,13 @@ public interface UmaPackage extends EPackage {
 	int PHASE__PREFIX = ACTIVITY__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PHASE__GROUP1 = ACTIVITY__GROUP1;
+	int PHASE__GROUP2 = ACTIVITY__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -11800,13 +13386,13 @@ public interface UmaPackage extends EPackage {
 	int PHASE__POSTCONDITION = ACTIVITY__POSTCONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PHASE__GROUP2 = ACTIVITY__GROUP2;
+	int PHASE__GROUP3 = ACTIVITY__GROUP3;
 
 	/**
 	 * The feature id for the '<em><b>Breakdown Element</b></em>' containment reference list.
@@ -11818,42 +13404,6 @@ public interface UmaPackage extends EPackage {
 	int PHASE__BREAKDOWN_ELEMENT = ACTIVITY__BREAKDOWN_ELEMENT;
 
 	/**
-	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__CHECKLIST = ACTIVITY__CHECKLIST;
-
-	/**
-	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__CONCEPT = ACTIVITY__CONCEPT;
-
-	/**
-	 * The feature id for the '<em><b>Example</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__EXAMPLE = ACTIVITY__EXAMPLE;
-
-	/**
-	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__GUIDELINE = ACTIVITY__GUIDELINE;
-
-	/**
 	 * The feature id for the '<em><b>Roadmap</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -11861,33 +13411,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PHASE__ROADMAP = ACTIVITY__ROADMAP;
-
-	/**
-	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__REUSABLE_ASSET = ACTIVITY__REUSABLE_ASSET;
-
-	/**
-	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__SUPPORTING_MATERIAL = ACTIVITY__SUPPORTING_MATERIAL;
-
-	/**
-	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PHASE__WHITEPAPER = ACTIVITY__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Is Enactable</b></em>' attribute.
@@ -11933,7 +13456,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getPlanningData()
 	 * @generated
 	 */
-	int PLANNING_DATA = 49;
+	int PLANNING_DATA = 51;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -11999,6 +13522,15 @@ public interface UmaPackage extends EPackage {
 	int PLANNING_DATA__ORDERING_GUIDE = PROCESS_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLANNING_DATA__PRESENTATION_NAME = PROCESS_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12017,6 +13549,24 @@ public interface UmaPackage extends EPackage {
 	int PLANNING_DATA__PRESENTATION = PROCESS_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLANNING_DATA__FULFILL = PROCESS_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PLANNING_DATA__IS_ABSTRACT = PROCESS_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12024,15 +13574,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PLANNING_DATA__NODEICON = PROCESS_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PLANNING_DATA__PRESENTATION_NAME = PROCESS_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -12087,7 +13628,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getPractice()
 	 * @generated
 	 */
-	int PRACTICE = 50;
+	int PRACTICE = 52;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -12153,6 +13694,15 @@ public interface UmaPackage extends EPackage {
 	int PRACTICE__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRACTICE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12171,6 +13721,24 @@ public interface UmaPackage extends EPackage {
 	int PRACTICE__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRACTICE__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRACTICE__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12178,15 +13746,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRACTICE__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PRACTICE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -12340,7 +13899,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getPracticeDescription()
 	 * @generated
 	 */
-	int PRACTICE_DESCRIPTION = 51;
+	int PRACTICE_DESCRIPTION = 53;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -12404,6 +13963,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PRACTICE_DESCRIPTION__ORDERING_GUIDE = CONTENT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRACTICE_DESCRIPTION__PRESENTATION_NAME = CONTENT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -12566,7 +14134,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getProcessPackage()
 	 * @generated
 	 */
-	int PROCESS_PACKAGE = 57;
+	int PROCESS_PACKAGE = 59;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -12630,6 +14198,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_PACKAGE__ORDERING_GUIDE = METHOD_PACKAGE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PACKAGE__PRESENTATION_NAME = METHOD_PACKAGE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -12711,7 +14288,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getProcessComponent()
 	 * @generated
 	 */
-	int PROCESS_COMPONENT = 53;
+	int PROCESS_COMPONENT = 55;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -12775,6 +14352,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_COMPONENT__ORDERING_GUIDE = PROCESS_PACKAGE__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT__PRESENTATION_NAME = PROCESS_PACKAGE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -12919,7 +14505,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getProcessComponentInterface()
 	 * @generated
 	 */
-	int PROCESS_COMPONENT_INTERFACE = 54;
+	int PROCESS_COMPONENT_INTERFACE = 56;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -12985,6 +14571,15 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_INTERFACE__ORDERING_GUIDE = BREAKDOWN_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13003,6 +14598,24 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_INTERFACE__PRESENTATION = BREAKDOWN_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__FULFILL = BREAKDOWN_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__IS_ABSTRACT = BREAKDOWN_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13010,15 +14623,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_COMPONENT_INTERFACE__NODEICON = BREAKDOWN_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_COMPONENT_INTERFACE__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -13066,6 +14670,78 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_INTERFACE__SUPER_ACTIVITY = BREAKDOWN_ELEMENT__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__GROUP1 = BREAKDOWN_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__CHECKLIST = BREAKDOWN_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__CONCEPT = BREAKDOWN_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__EXAMPLE = BREAKDOWN_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__GUIDELINE = BREAKDOWN_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__REUSABLE_ASSET = BREAKDOWN_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__SUPPORTING_MATERIAL = BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_INTERFACE__WHITEPAPER = BREAKDOWN_ELEMENT__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13102,13 +14778,13 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_COMPONENT_INTERFACE__PREFIX = BREAKDOWN_ELEMENT__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_COMPONENT_INTERFACE__GROUP1 = BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
+	int PROCESS_COMPONENT_INTERFACE__GROUP2 = BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Interface Specification</b></em>' containment reference list.
@@ -13145,7 +14821,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getProcessPlanningTemplate()
 	 * @generated
 	 */
-	int PROCESS_PLANNING_TEMPLATE = 58;
+	int PROCESS_PLANNING_TEMPLATE = 60;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -13211,6 +14887,15 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_PLANNING_TEMPLATE__ORDERING_GUIDE = PROCESS__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__PRESENTATION_NAME = PROCESS__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13229,6 +14914,24 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_PLANNING_TEMPLATE__PRESENTATION = PROCESS__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__FULFILL = PROCESS__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__IS_ABSTRACT = PROCESS__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13236,15 +14939,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_PLANNING_TEMPLATE__NODEICON = PROCESS__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__PRESENTATION_NAME = PROCESS__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -13292,6 +14986,78 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_PLANNING_TEMPLATE__SUPER_ACTIVITY = PROCESS__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__GROUP1 = PROCESS__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__CHECKLIST = PROCESS__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__CONCEPT = PROCESS__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__EXAMPLE = PROCESS__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__GUIDELINE = PROCESS__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__REUSABLE_ASSET = PROCESS__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__SUPPORTING_MATERIAL = PROCESS__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_PLANNING_TEMPLATE__WHITEPAPER = PROCESS__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13328,13 +15094,13 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_PLANNING_TEMPLATE__PREFIX = PROCESS__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_PLANNING_TEMPLATE__GROUP1 = PROCESS__GROUP1;
+	int PROCESS_PLANNING_TEMPLATE__GROUP2 = PROCESS__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -13391,13 +15157,13 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_PLANNING_TEMPLATE__POSTCONDITION = PROCESS__POSTCONDITION;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_PLANNING_TEMPLATE__GROUP2 = PROCESS__GROUP2;
+	int PROCESS_PLANNING_TEMPLATE__GROUP3 = PROCESS__GROUP3;
 
 	/**
 	 * The feature id for the '<em><b>Breakdown Element</b></em>' containment reference list.
@@ -13409,42 +15175,6 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_PLANNING_TEMPLATE__BREAKDOWN_ELEMENT = PROCESS__BREAKDOWN_ELEMENT;
 
 	/**
-	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__CHECKLIST = PROCESS__CHECKLIST;
-
-	/**
-	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__CONCEPT = PROCESS__CONCEPT;
-
-	/**
-	 * The feature id for the '<em><b>Example</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__EXAMPLE = PROCESS__EXAMPLE;
-
-	/**
-	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__GUIDELINE = PROCESS__GUIDELINE;
-
-	/**
 	 * The feature id for the '<em><b>Roadmap</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13452,33 +15182,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_PLANNING_TEMPLATE__ROADMAP = PROCESS__ROADMAP;
-
-	/**
-	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__REUSABLE_ASSET = PROCESS__REUSABLE_ASSET;
-
-	/**
-	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__SUPPORTING_MATERIAL = PROCESS__SUPPORTING_MATERIAL;
-
-	/**
-	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS_PLANNING_TEMPLATE__WHITEPAPER = PROCESS__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Is Enactable</b></em>' attribute.
@@ -13544,13 +15247,13 @@ public interface UmaPackage extends EPackage {
 	int PROCESS_PLANNING_TEMPLATE__DIAGRAM_URI = PROCESS__DIAGRAM_URI;
 
 	/**
-	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group4</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_PLANNING_TEMPLATE__GROUP3 = PROCESS_FEATURE_COUNT + 0;
+	int PROCESS_PLANNING_TEMPLATE__GROUP4 = PROCESS_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Base Process</b></em>' attribute list.
@@ -13578,7 +15281,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getReport()
 	 * @generated
 	 */
-	int REPORT = 59;
+	int REPORT = 61;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -13644,6 +15347,15 @@ public interface UmaPackage extends EPackage {
 	int REPORT__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REPORT__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13662,6 +15374,24 @@ public interface UmaPackage extends EPackage {
 	int REPORT__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REPORT__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REPORT__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13669,15 +15399,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int REPORT__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REPORT__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -13795,7 +15516,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getReusableAsset()
 	 * @generated
 	 */
-	int REUSABLE_ASSET = 60;
+	int REUSABLE_ASSET = 62;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -13861,6 +15582,15 @@ public interface UmaPackage extends EPackage {
 	int REUSABLE_ASSET__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REUSABLE_ASSET__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13879,6 +15609,24 @@ public interface UmaPackage extends EPackage {
 	int REUSABLE_ASSET__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REUSABLE_ASSET__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REUSABLE_ASSET__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -13886,15 +15634,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int REUSABLE_ASSET__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int REUSABLE_ASSET__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -14012,7 +15751,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getRoadmap()
 	 * @generated
 	 */
-	int ROADMAP = 61;
+	int ROADMAP = 63;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -14078,6 +15817,15 @@ public interface UmaPackage extends EPackage {
 	int ROADMAP__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROADMAP__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14096,6 +15844,24 @@ public interface UmaPackage extends EPackage {
 	int ROADMAP__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROADMAP__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROADMAP__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14103,15 +15869,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROADMAP__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROADMAP__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -14229,7 +15986,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getRole()
 	 * @generated
 	 */
-	int ROLE = 62;
+	int ROLE = 64;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -14295,6 +16052,15 @@ public interface UmaPackage extends EPackage {
 	int ROLE__ORDERING_GUIDE = CONTENT_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14313,6 +16079,24 @@ public interface UmaPackage extends EPackage {
 	int ROLE__PRESENTATION = CONTENT_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__FULFILL = CONTENT_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE__IS_ABSTRACT = CONTENT_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14320,15 +16104,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROLE__NODEICON = CONTENT_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -14464,7 +16239,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getRoleDescription()
 	 * @generated
 	 */
-	int ROLE_DESCRIPTION = 63;
+	int ROLE_DESCRIPTION = 65;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -14528,6 +16303,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROLE_DESCRIPTION__ORDERING_GUIDE = CONTENT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTION__PRESENTATION_NAME = CONTENT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -14663,7 +16447,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getRoleSet()
 	 * @generated
 	 */
-	int ROLE_SET = 65;
+	int ROLE_SET = 67;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -14729,6 +16513,15 @@ public interface UmaPackage extends EPackage {
 	int ROLE_SET__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_SET__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14747,6 +16540,24 @@ public interface UmaPackage extends EPackage {
 	int ROLE_SET__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_SET__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_SET__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14754,15 +16565,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROLE_SET__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_SET__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -14898,7 +16700,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getRoleSetGrouping()
 	 * @generated
 	 */
-	int ROLE_SET_GROUPING = 66;
+	int ROLE_SET_GROUPING = 68;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -14964,6 +16766,15 @@ public interface UmaPackage extends EPackage {
 	int ROLE_SET_GROUPING__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_SET_GROUPING__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14982,6 +16793,24 @@ public interface UmaPackage extends EPackage {
 	int ROLE_SET_GROUPING__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_SET_GROUPING__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_SET_GROUPING__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -14989,15 +16818,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int ROLE_SET_GROUPING__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_SET_GROUPING__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -15133,7 +16953,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getSection()
 	 * @generated
 	 */
-	int SECTION = 67;
+	int SECTION = 69;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15197,6 +17017,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int SECTION__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SECTION__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -15278,7 +17107,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getSupportingMaterial()
 	 * @generated
 	 */
-	int SUPPORTING_MATERIAL = 68;
+	int SUPPORTING_MATERIAL = 70;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15344,6 +17173,15 @@ public interface UmaPackage extends EPackage {
 	int SUPPORTING_MATERIAL__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUPPORTING_MATERIAL__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15362,6 +17200,24 @@ public interface UmaPackage extends EPackage {
 	int SUPPORTING_MATERIAL__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUPPORTING_MATERIAL__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUPPORTING_MATERIAL__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15369,15 +17225,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int SUPPORTING_MATERIAL__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SUPPORTING_MATERIAL__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -15495,7 +17342,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getTask()
 	 * @generated
 	 */
-	int TASK = 69;
+	int TASK = 71;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15561,6 +17408,15 @@ public interface UmaPackage extends EPackage {
 	int TASK__ORDERING_GUIDE = CONTENT_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15579,6 +17435,24 @@ public interface UmaPackage extends EPackage {
 	int TASK__PRESENTATION = CONTENT_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__FULFILL = CONTENT_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK__IS_ABSTRACT = CONTENT_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15586,15 +17460,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TASK__NODEICON = CONTENT_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK__PRESENTATION_NAME = CONTENT_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -15714,7 +17579,7 @@ public interface UmaPackage extends EPackage {
 	int TASK__POSTCONDITION = CONTENT_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Performed By</b></em>' attribute.
+	 * The feature id for the '<em><b>Performed By</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -15811,7 +17676,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getTaskDescription()
 	 * @generated
 	 */
-	int TASK_DESCRIPTION = 70;
+	int TASK_DESCRIPTION = 72;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15875,6 +17740,15 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TASK_DESCRIPTION__ORDERING_GUIDE = CONTENT_DESCRIPTION__ORDERING_GUIDE;
+
+	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTION__PRESENTATION_NAME = CONTENT_DESCRIPTION__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
@@ -16001,7 +17875,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getTaskDescriptor()
 	 * @generated
 	 */
-	int TASK_DESCRIPTOR = 71;
+	int TASK_DESCRIPTOR = 73;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -16067,6 +17941,15 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__ORDERING_GUIDE = WORK_BREAKDOWN_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__PRESENTATION_NAME = WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16085,6 +17968,24 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__PRESENTATION = WORK_BREAKDOWN_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__FULFILL = WORK_BREAKDOWN_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__IS_ABSTRACT = WORK_BREAKDOWN_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16092,15 +17993,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TASK_DESCRIPTOR__NODEICON = WORK_BREAKDOWN_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__PRESENTATION_NAME = WORK_BREAKDOWN_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -16148,6 +18040,78 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__SUPER_ACTIVITY = WORK_BREAKDOWN_ELEMENT__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__GROUP1 = WORK_BREAKDOWN_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__CHECKLIST = WORK_BREAKDOWN_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__CONCEPT = WORK_BREAKDOWN_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__EXAMPLE = WORK_BREAKDOWN_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__GUIDELINE = WORK_BREAKDOWN_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__REUSABLE_ASSET = WORK_BREAKDOWN_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__SUPPORTING_MATERIAL = WORK_BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__WHITEPAPER = WORK_BREAKDOWN_ELEMENT__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16184,13 +18148,13 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__PREFIX = WORK_BREAKDOWN_ELEMENT__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__GROUP1 = WORK_BREAKDOWN_ELEMENT__GROUP1;
+	int TASK_DESCRIPTOR__GROUP2 = WORK_BREAKDOWN_ELEMENT__GROUP2;
 
 	/**
 	 * The feature id for the '<em><b>Predecessor</b></em>' containment reference list.
@@ -16247,13 +18211,13 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__GROUP2 = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
+	int TASK_DESCRIPTOR__GROUP3 = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Additionally Performed By</b></em>' attribute list.
@@ -16344,7 +18308,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getTeamProfile()
 	 * @generated
 	 */
-	int TEAM_PROFILE = 72;
+	int TEAM_PROFILE = 74;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -16410,6 +18374,15 @@ public interface UmaPackage extends EPackage {
 	int TEAM_PROFILE__ORDERING_GUIDE = BREAKDOWN_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16428,6 +18401,24 @@ public interface UmaPackage extends EPackage {
 	int TEAM_PROFILE__PRESENTATION = BREAKDOWN_ELEMENT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__FULFILL = BREAKDOWN_ELEMENT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__IS_ABSTRACT = BREAKDOWN_ELEMENT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16435,15 +18426,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEAM_PROFILE__NODEICON = BREAKDOWN_ELEMENT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEAM_PROFILE__PRESENTATION_NAME = BREAKDOWN_ELEMENT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -16491,6 +18473,78 @@ public interface UmaPackage extends EPackage {
 	int TEAM_PROFILE__SUPER_ACTIVITY = BREAKDOWN_ELEMENT__SUPER_ACTIVITY;
 
 	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__GROUP1 = BREAKDOWN_ELEMENT__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__CHECKLIST = BREAKDOWN_ELEMENT__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__CONCEPT = BREAKDOWN_ELEMENT__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__EXAMPLE = BREAKDOWN_ELEMENT__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__GUIDELINE = BREAKDOWN_ELEMENT__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__REUSABLE_ASSET = BREAKDOWN_ELEMENT__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__SUPPORTING_MATERIAL = BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEAM_PROFILE__WHITEPAPER = BREAKDOWN_ELEMENT__WHITEPAPER;
+
+	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16527,13 +18581,13 @@ public interface UmaPackage extends EPackage {
 	int TEAM_PROFILE__PREFIX = BREAKDOWN_ELEMENT__PREFIX;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TEAM_PROFILE__GROUP1 = BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
+	int TEAM_PROFILE__GROUP2 = BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Role</b></em>' attribute list.
@@ -16579,7 +18633,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getTemplate()
 	 * @generated
 	 */
-	int TEMPLATE = 73;
+	int TEMPLATE = 75;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -16645,6 +18699,15 @@ public interface UmaPackage extends EPackage {
 	int TEMPLATE__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16663,6 +18726,24 @@ public interface UmaPackage extends EPackage {
 	int TEMPLATE__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TEMPLATE__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16670,15 +18751,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TEMPLATE__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TEMPLATE__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -16796,7 +18868,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getTermDefinition()
 	 * @generated
 	 */
-	int TERM_DEFINITION = 74;
+	int TERM_DEFINITION = 76;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -16862,6 +18934,15 @@ public interface UmaPackage extends EPackage {
 	int TERM_DEFINITION__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TERM_DEFINITION__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16880,6 +18961,24 @@ public interface UmaPackage extends EPackage {
 	int TERM_DEFINITION__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TERM_DEFINITION__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TERM_DEFINITION__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -16887,15 +18986,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TERM_DEFINITION__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TERM_DEFINITION__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -17013,7 +19103,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getTool()
 	 * @generated
 	 */
-	int TOOL = 75;
+	int TOOL = 77;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -17079,6 +19169,15 @@ public interface UmaPackage extends EPackage {
 	int TOOL__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17097,6 +19196,24 @@ public interface UmaPackage extends EPackage {
 	int TOOL__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17104,15 +19221,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOOL__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -17248,7 +19356,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getToolMentor()
 	 * @generated
 	 */
-	int TOOL_MENTOR = 76;
+	int TOOL_MENTOR = 78;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -17314,6 +19422,15 @@ public interface UmaPackage extends EPackage {
 	int TOOL_MENTOR__ORDERING_GUIDE = GUIDANCE__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MENTOR__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17332,6 +19449,24 @@ public interface UmaPackage extends EPackage {
 	int TOOL_MENTOR__PRESENTATION = GUIDANCE__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MENTOR__FULFILL = GUIDANCE__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOOL_MENTOR__IS_ABSTRACT = GUIDANCE__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17339,15 +19474,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int TOOL_MENTOR__NODEICON = GUIDANCE__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TOOL_MENTOR__PRESENTATION_NAME = GUIDANCE__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -17465,7 +19591,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWhitepaper()
 	 * @generated
 	 */
-	int WHITEPAPER = 77;
+	int WHITEPAPER = 79;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -17531,6 +19657,15 @@ public interface UmaPackage extends EPackage {
 	int WHITEPAPER__ORDERING_GUIDE = CONCEPT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHITEPAPER__PRESENTATION_NAME = CONCEPT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17549,6 +19684,24 @@ public interface UmaPackage extends EPackage {
 	int WHITEPAPER__PRESENTATION = CONCEPT__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHITEPAPER__FULFILL = CONCEPT__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WHITEPAPER__IS_ABSTRACT = CONCEPT__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17556,15 +19709,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WHITEPAPER__NODEICON = CONCEPT__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WHITEPAPER__PRESENTATION_NAME = CONCEPT__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -17682,7 +19826,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkDefinition()
 	 * @generated
 	 */
-	int WORK_DEFINITION = 79;
+	int WORK_DEFINITION = 81;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -17748,6 +19892,15 @@ public interface UmaPackage extends EPackage {
 	int WORK_DEFINITION__ORDERING_GUIDE = METHOD_ELEMENT__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_DEFINITION__PRESENTATION_NAME = METHOD_ELEMENT__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17791,7 +19944,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkOrder()
 	 * @generated
 	 */
-	int WORK_ORDER = 80;
+	int WORK_ORDER = 82;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -17837,7 +19990,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkProductDescriptor()
 	 * @generated
 	 */
-	int WORK_PRODUCT_DESCRIPTOR = 83;
+	int WORK_PRODUCT_DESCRIPTOR = 85;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -17903,6 +20056,15 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT_DESCRIPTOR__ORDERING_GUIDE = DESCRIPTOR__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__PRESENTATION_NAME = DESCRIPTOR__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17921,6 +20083,24 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT_DESCRIPTOR__PRESENTATION = DESCRIPTOR__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__FULFILL = DESCRIPTOR__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__IS_ABSTRACT = DESCRIPTOR__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -17928,15 +20108,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_PRODUCT_DESCRIPTOR__NODEICON = DESCRIPTOR__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORK_PRODUCT_DESCRIPTOR__PRESENTATION_NAME = DESCRIPTOR__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -17982,6 +20153,78 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_PRODUCT_DESCRIPTOR__SUPER_ACTIVITY = DESCRIPTOR__SUPER_ACTIVITY;
+
+	/**
+	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__GROUP1 = DESCRIPTOR__GROUP1;
+
+	/**
+	 * The feature id for the '<em><b>Checklist</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__CHECKLIST = DESCRIPTOR__CHECKLIST;
+
+	/**
+	 * The feature id for the '<em><b>Concept</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__CONCEPT = DESCRIPTOR__CONCEPT;
+
+	/**
+	 * The feature id for the '<em><b>Example</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__EXAMPLE = DESCRIPTOR__EXAMPLE;
+
+	/**
+	 * The feature id for the '<em><b>Guideline</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__GUIDELINE = DESCRIPTOR__GUIDELINE;
+
+	/**
+	 * The feature id for the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__REUSABLE_ASSET = DESCRIPTOR__REUSABLE_ASSET;
+
+	/**
+	 * The feature id for the '<em><b>Supporting Material</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__SUPPORTING_MATERIAL = DESCRIPTOR__SUPPORTING_MATERIAL;
+
+	/**
+	 * The feature id for the '<em><b>Whitepaper</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__WHITEPAPER = DESCRIPTOR__WHITEPAPER;
 
 	/**
 	 * The feature id for the '<em><b>Has Multiple Occurrences</b></em>' attribute.
@@ -18047,13 +20290,13 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT_DESCRIPTOR__RESPONSIBLE_ROLE = DESCRIPTOR_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Group1</b></em>' attribute list.
+	 * The feature id for the '<em><b>Group2</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORK_PRODUCT_DESCRIPTOR__GROUP1 = DESCRIPTOR_FEATURE_COUNT + 2;
+	int WORK_PRODUCT_DESCRIPTOR__GROUP2 = DESCRIPTOR_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>External Input To</b></em>' attribute list.
@@ -18153,7 +20396,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkProductType()
 	 * @generated
 	 */
-	int WORK_PRODUCT_TYPE = 84;
+	int WORK_PRODUCT_TYPE = 86;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -18219,6 +20462,15 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT_TYPE__ORDERING_GUIDE = CONTENT_CATEGORY__ORDERING_GUIDE;
 
 	/**
+	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_TYPE__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
+
+	/**
 	 * The feature id for the '<em><b>Suppressed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18237,6 +20489,24 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT_TYPE__PRESENTATION = CONTENT_CATEGORY__PRESENTATION;
 
 	/**
+	 * The feature id for the '<em><b>Fulfill</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_TYPE__FULFILL = CONTENT_CATEGORY__FULFILL;
+
+	/**
+	 * The feature id for the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_TYPE__IS_ABSTRACT = CONTENT_CATEGORY__IS_ABSTRACT;
+
+	/**
 	 * The feature id for the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18244,15 +20514,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_PRODUCT_TYPE__NODEICON = CONTENT_CATEGORY__NODEICON;
-
-	/**
-	 * The feature id for the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORK_PRODUCT_TYPE__PRESENTATION_NAME = CONTENT_CATEGORY__PRESENTATION_NAME;
 
 	/**
 	 * The feature id for the '<em><b>Shapeicon</b></em>' attribute.
@@ -18388,7 +20649,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getVariabilityType()
 	 * @generated
 	 */
-	int VARIABILITY_TYPE = 85;
+	int VARIABILITY_TYPE = 87;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.WorkOrderType <em>Work Order Type</em>}' enum.
@@ -18398,7 +20659,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkOrderType()
 	 * @generated
 	 */
-	int WORK_ORDER_TYPE = 86;
+	int WORK_ORDER_TYPE = 88;
 
 	/**
 	 * The meta object id for the '<em>Variability Type Object</em>' data type.
@@ -18408,7 +20669,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getVariabilityTypeObject()
 	 * @generated
 	 */
-	int VARIABILITY_TYPE_OBJECT = 87;
+	int VARIABILITY_TYPE_OBJECT = 89;
 
 	/**
 	 * The meta object id for the '<em>Work Order Type Object</em>' data type.
@@ -18418,7 +20679,7 @@ public interface UmaPackage extends EPackage {
 	 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getWorkOrderTypeObject()
 	 * @generated
 	 */
-	int WORK_ORDER_TYPE_OBJECT = 88;
+	int WORK_ORDER_TYPE_OBJECT = 90;
 
 
 	/**
@@ -18454,15 +20715,15 @@ public interface UmaPackage extends EPackage {
 	EAttribute getActivity_Postcondition();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getGroup2 <em>Group2</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getGroup3 <em>Group3</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group2</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getGroup2()
+	 * @return the meta object for the attribute list '<em>Group3</em>'.
+	 * @see org.eclipse.epf.xml.uma.Activity#getGroup3()
 	 * @see #getActivity()
 	 * @generated
 	 */
-	EAttribute getActivity_Group2();
+	EAttribute getActivity_Group3();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.epf.xml.uma.Activity#getBreakdownElement <em>Breakdown Element</em>}'.
@@ -18476,50 +20737,6 @@ public interface UmaPackage extends EPackage {
 	EReference getActivity_BreakdownElement();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getChecklist <em>Checklist</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Checklist</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getChecklist()
-	 * @see #getActivity()
-	 * @generated
-	 */
-	EAttribute getActivity_Checklist();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getConcept <em>Concept</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Concept</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getConcept()
-	 * @see #getActivity()
-	 * @generated
-	 */
-	EAttribute getActivity_Concept();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getExample <em>Example</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Example</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getExample()
-	 * @see #getActivity()
-	 * @generated
-	 */
-	EAttribute getActivity_Example();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getGuideline <em>Guideline</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Guideline</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getGuideline()
-	 * @see #getActivity()
-	 * @generated
-	 */
-	EAttribute getActivity_Guideline();
-
-	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getRoadmap <em>Roadmap</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18529,39 +20746,6 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getActivity_Roadmap();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getReusableAsset <em>Reusable Asset</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Reusable Asset</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getReusableAsset()
-	 * @see #getActivity()
-	 * @generated
-	 */
-	EAttribute getActivity_ReusableAsset();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getSupportingMaterial <em>Supporting Material</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Supporting Material</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getSupportingMaterial()
-	 * @see #getActivity()
-	 * @generated
-	 */
-	EAttribute getActivity_SupportingMaterial();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Activity#getWhitepaper <em>Whitepaper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Whitepaper</em>'.
-	 * @see org.eclipse.epf.xml.uma.Activity#getWhitepaper()
-	 * @see #getActivity()
-	 * @generated
-	 */
-	EAttribute getActivity_Whitepaper();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.Activity#isIsEnactable <em>Is Enactable</em>}'.
@@ -18638,6 +20822,27 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getActivityDescription_Purpose();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.epf.xml.uma.ApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Applicable Meta Class Info</em>'.
+	 * @see org.eclipse.epf.xml.uma.ApplicableMetaClassInfo
+	 * @generated
+	 */
+	EClass getApplicableMetaClassInfo();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.ApplicableMetaClassInfo#isIsPrimaryExtension <em>Is Primary Extension</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Primary Extension</em>'.
+	 * @see org.eclipse.epf.xml.uma.ApplicableMetaClassInfo#isIsPrimaryExtension()
+	 * @see #getApplicableMetaClassInfo()
+	 * @generated
+	 */
+	EAttribute getApplicableMetaClassInfo_IsPrimaryExtension();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.xml.uma.Artifact <em>Artifact</em>}'.
@@ -18780,6 +20985,94 @@ public interface UmaPackage extends EPackage {
 	EAttribute getBreakdownElement_SuperActivity();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getGroup1 <em>Group1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Group1</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getGroup1()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_Group1();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getChecklist <em>Checklist</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Checklist</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getChecklist()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_Checklist();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getConcept <em>Concept</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Concept</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getConcept()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_Concept();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getExample <em>Example</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Example</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getExample()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_Example();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getGuideline <em>Guideline</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Guideline</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getGuideline()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_Guideline();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getReusableAsset <em>Reusable Asset</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Reusable Asset</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getReusableAsset()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_ReusableAsset();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getSupportingMaterial <em>Supporting Material</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Supporting Material</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getSupportingMaterial()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_SupportingMaterial();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.BreakdownElement#getWhitepaper <em>Whitepaper</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Whitepaper</em>'.
+	 * @see org.eclipse.epf.xml.uma.BreakdownElement#getWhitepaper()
+	 * @see #getBreakdownElement()
+	 * @generated
+	 */
+	EAttribute getBreakdownElement_Whitepaper();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.BreakdownElement#isHasMultipleOccurrences <em>Has Multiple Occurrences</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -18875,15 +21168,15 @@ public interface UmaPackage extends EPackage {
 	EClass getCompositeRole();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.CompositeRole#getGroup1 <em>Group1</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.CompositeRole#getGroup2 <em>Group2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group1</em>'.
-	 * @see org.eclipse.epf.xml.uma.CompositeRole#getGroup1()
+	 * @return the meta object for the attribute list '<em>Group2</em>'.
+	 * @see org.eclipse.epf.xml.uma.CompositeRole#getGroup2()
 	 * @see #getCompositeRole()
 	 * @generated
 	 */
-	EAttribute getCompositeRole_Group1();
+	EAttribute getCompositeRole_Group2();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.epf.xml.uma.CompositeRole#getAggregatedRole <em>Aggregated Role</em>}'.
@@ -19293,15 +21586,15 @@ public interface UmaPackage extends EPackage {
 	EClass getDeliveryProcess();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.DeliveryProcess#getGroup3 <em>Group3</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.DeliveryProcess#getGroup4 <em>Group4</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group3</em>'.
-	 * @see org.eclipse.epf.xml.uma.DeliveryProcess#getGroup3()
+	 * @return the meta object for the attribute list '<em>Group4</em>'.
+	 * @see org.eclipse.epf.xml.uma.DeliveryProcess#getGroup4()
 	 * @see #getDeliveryProcess()
 	 * @generated
 	 */
-	EAttribute getDeliveryProcess_Group3();
+	EAttribute getDeliveryProcess_Group4();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.DeliveryProcess#getCommunicationsMaterial <em>Communications Material</em>}'.
@@ -19423,6 +21716,28 @@ public interface UmaPackage extends EPackage {
 	EReference getDescribableElement_Presentation();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.DescribableElement#getFulfill <em>Fulfill</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Fulfill</em>'.
+	 * @see org.eclipse.epf.xml.uma.DescribableElement#getFulfill()
+	 * @see #getDescribableElement()
+	 * @generated
+	 */
+	EAttribute getDescribableElement_Fulfill();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.DescribableElement#isIsAbstract <em>Is Abstract</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Abstract</em>'.
+	 * @see org.eclipse.epf.xml.uma.DescribableElement#isIsAbstract()
+	 * @see #getDescribableElement()
+	 * @generated
+	 */
+	EAttribute getDescribableElement_IsAbstract();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.DescribableElement#getNodeicon <em>Nodeicon</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19432,17 +21747,6 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDescribableElement_Nodeicon();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.DescribableElement#getPresentationName <em>Presentation Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Presentation Name</em>'.
-	 * @see org.eclipse.epf.xml.uma.DescribableElement#getPresentationName()
-	 * @see #getDescribableElement()
-	 * @generated
-	 */
-	EAttribute getDescribableElement_PresentationName();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.DescribableElement#getShapeicon <em>Shapeicon</em>}'.
@@ -19837,6 +22141,27 @@ public interface UmaPackage extends EPackage {
 	EClass getIteration();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.epf.xml.uma.Kind <em>Kind</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Kind</em>'.
+	 * @see org.eclipse.epf.xml.uma.Kind
+	 * @generated
+	 */
+	EClass getKind();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Kind#getApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Applicable Meta Class Info</em>'.
+	 * @see org.eclipse.epf.xml.uma.Kind#getApplicableMetaClassInfo()
+	 * @see #getKind()
+	 * @generated
+	 */
+	EAttribute getKind_ApplicableMetaClassInfo();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.xml.uma.MethodConfiguration <em>Method Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -19998,6 +22323,17 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getMethodElement_OrderingGuide();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.MethodElement#getPresentationName <em>Presentation Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Presentation Name</em>'.
+	 * @see org.eclipse.epf.xml.uma.MethodElement#getPresentationName()
+	 * @see #getMethodElement()
+	 * @generated
+	 */
+	EAttribute getMethodElement_PresentationName();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.MethodElement#isSuppressed <em>Suppressed</em>}'.
@@ -20245,6 +22581,17 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getMilestone();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Milestone#getRequiredResult <em>Required Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Required Result</em>'.
+	 * @see org.eclipse.epf.xml.uma.Milestone#getRequiredResult()
+	 * @see #getMilestone()
+	 * @generated
+	 */
+	EAttribute getMilestone_RequiredResult();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.xml.uma.NamedElement <em>Named Element</em>}'.
@@ -20622,15 +22969,15 @@ public interface UmaPackage extends EPackage {
 	EClass getProcessComponentInterface();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.ProcessComponentInterface#getGroup1 <em>Group1</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.ProcessComponentInterface#getGroup2 <em>Group2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group1</em>'.
-	 * @see org.eclipse.epf.xml.uma.ProcessComponentInterface#getGroup1()
+	 * @return the meta object for the attribute list '<em>Group2</em>'.
+	 * @see org.eclipse.epf.xml.uma.ProcessComponentInterface#getGroup2()
 	 * @see #getProcessComponentInterface()
 	 * @generated
 	 */
-	EAttribute getProcessComponentInterface_Group1();
+	EAttribute getProcessComponentInterface_Group2();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.epf.xml.uma.ProcessComponentInterface#getInterfaceSpecification <em>Interface Specification</em>}'.
@@ -20739,15 +23086,15 @@ public interface UmaPackage extends EPackage {
 	EClass getProcessPlanningTemplate();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.ProcessPlanningTemplate#getGroup3 <em>Group3</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.ProcessPlanningTemplate#getGroup4 <em>Group4</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group3</em>'.
-	 * @see org.eclipse.epf.xml.uma.ProcessPlanningTemplate#getGroup3()
+	 * @return the meta object for the attribute list '<em>Group4</em>'.
+	 * @see org.eclipse.epf.xml.uma.ProcessPlanningTemplate#getGroup4()
 	 * @see #getProcessPlanningTemplate()
 	 * @generated
 	 */
-	EAttribute getProcessPlanningTemplate_Group3();
+	EAttribute getProcessPlanningTemplate_Group4();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.ProcessPlanningTemplate#getBaseProcess <em>Base Process</em>}'.
@@ -21080,10 +23427,10 @@ public interface UmaPackage extends EPackage {
 	EAttribute getTask_Postcondition();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.Task#getPerformedBy <em>Performed By</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.Task#getPerformedBy <em>Performed By</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Performed By</em>'.
+	 * @return the meta object for the attribute list '<em>Performed By</em>'.
 	 * @see org.eclipse.epf.xml.uma.Task#getPerformedBy()
 	 * @see #getTask()
 	 * @generated
@@ -21243,15 +23590,15 @@ public interface UmaPackage extends EPackage {
 	EAttribute getTaskDescriptor_PerformedPrimarilyBy();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.TaskDescriptor#getGroup2 <em>Group2</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.TaskDescriptor#getGroup3 <em>Group3</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group2</em>'.
-	 * @see org.eclipse.epf.xml.uma.TaskDescriptor#getGroup2()
+	 * @return the meta object for the attribute list '<em>Group3</em>'.
+	 * @see org.eclipse.epf.xml.uma.TaskDescriptor#getGroup3()
 	 * @see #getTaskDescriptor()
 	 * @generated
 	 */
-	EAttribute getTaskDescriptor_Group2();
+	EAttribute getTaskDescriptor_Group3();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.TaskDescriptor#getAdditionallyPerformedBy <em>Additionally Performed By</em>}'.
@@ -21352,15 +23699,15 @@ public interface UmaPackage extends EPackage {
 	EClass getTeamProfile();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.TeamProfile#getGroup1 <em>Group1</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.TeamProfile#getGroup2 <em>Group2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group1</em>'.
-	 * @see org.eclipse.epf.xml.uma.TeamProfile#getGroup1()
+	 * @return the meta object for the attribute list '<em>Group2</em>'.
+	 * @see org.eclipse.epf.xml.uma.TeamProfile#getGroup2()
 	 * @see #getTeamProfile()
 	 * @generated
 	 */
-	EAttribute getTeamProfile_Group1();
+	EAttribute getTeamProfile_Group2();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.TeamProfile#getRole <em>Role</em>}'.
@@ -21478,15 +23825,15 @@ public interface UmaPackage extends EPackage {
 	EClass getWorkBreakdownElement();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#getGroup1 <em>Group1</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#getGroup2 <em>Group2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group1</em>'.
-	 * @see org.eclipse.epf.xml.uma.WorkBreakdownElement#getGroup1()
+	 * @return the meta object for the attribute list '<em>Group2</em>'.
+	 * @see org.eclipse.epf.xml.uma.WorkBreakdownElement#getGroup2()
 	 * @see #getWorkBreakdownElement()
 	 * @generated
 	 */
-	EAttribute getWorkBreakdownElement_Group1();
+	EAttribute getWorkBreakdownElement_Group2();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#getPredecessor <em>Predecessor</em>}'.
@@ -21759,15 +24106,15 @@ public interface UmaPackage extends EPackage {
 	EAttribute getWorkProductDescriptor_ResponsibleRole();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getGroup1 <em>Group1</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getGroup2 <em>Group2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Group1</em>'.
-	 * @see org.eclipse.epf.xml.uma.WorkProductDescriptor#getGroup1()
+	 * @return the meta object for the attribute list '<em>Group2</em>'.
+	 * @see org.eclipse.epf.xml.uma.WorkProductDescriptor#getGroup2()
 	 * @see #getWorkProductDescriptor()
 	 * @generated
 	 */
-	EAttribute getWorkProductDescriptor_Group1();
+	EAttribute getWorkProductDescriptor_Group2();
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getExternalInputTo <em>External Input To</em>}'.
@@ -21927,7 +24274,7 @@ public interface UmaPackage extends EPackage {
 	 * @return the meta object for data type '<em>Variability Type Object</em>'.
 	 * @see org.eclipse.epf.xml.uma.VariabilityType
 	 * @model instanceClass="org.eclipse.epf.xml.uma.VariabilityType"
-	 *        extendedMetaData="name='VariabilityType:Object' baseType='VariabilityType'" 
+	 *        extendedMetaData="name='VariabilityType:Object' baseType='VariabilityType'"
 	 * @generated
 	 */
 	EDataType getVariabilityTypeObject();
@@ -21939,7 +24286,7 @@ public interface UmaPackage extends EPackage {
 	 * @return the meta object for data type '<em>Work Order Type Object</em>'.
 	 * @see org.eclipse.epf.xml.uma.WorkOrderType
 	 * @model instanceClass="org.eclipse.epf.xml.uma.WorkOrderType"
-	 *        extendedMetaData="name='WorkOrderType:Object' baseType='WorkOrderType'" 
+	 *        extendedMetaData="name='WorkOrderType:Object' baseType='WorkOrderType'"
 	 * @generated
 	 */
 	EDataType getWorkOrderTypeObject();
@@ -21993,12 +24340,12 @@ public interface UmaPackage extends EPackage {
 		EAttribute ACTIVITY__POSTCONDITION = eINSTANCE.getActivity_Postcondition();
 
 		/**
-		 * The meta object literal for the '<em><b>Group2</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group3</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ACTIVITY__GROUP2 = eINSTANCE.getActivity_Group2();
+		EAttribute ACTIVITY__GROUP3 = eINSTANCE.getActivity_Group3();
 
 		/**
 		 * The meta object literal for the '<em><b>Breakdown Element</b></em>' containment reference list feature.
@@ -22009,68 +24356,12 @@ public interface UmaPackage extends EPackage {
 		EReference ACTIVITY__BREAKDOWN_ELEMENT = eINSTANCE.getActivity_BreakdownElement();
 
 		/**
-		 * The meta object literal for the '<em><b>Checklist</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTIVITY__CHECKLIST = eINSTANCE.getActivity_Checklist();
-
-		/**
-		 * The meta object literal for the '<em><b>Concept</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTIVITY__CONCEPT = eINSTANCE.getActivity_Concept();
-
-		/**
-		 * The meta object literal for the '<em><b>Example</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTIVITY__EXAMPLE = eINSTANCE.getActivity_Example();
-
-		/**
-		 * The meta object literal for the '<em><b>Guideline</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTIVITY__GUIDELINE = eINSTANCE.getActivity_Guideline();
-
-		/**
 		 * The meta object literal for the '<em><b>Roadmap</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute ACTIVITY__ROADMAP = eINSTANCE.getActivity_Roadmap();
-
-		/**
-		 * The meta object literal for the '<em><b>Reusable Asset</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTIVITY__REUSABLE_ASSET = eINSTANCE.getActivity_ReusableAsset();
-
-		/**
-		 * The meta object literal for the '<em><b>Supporting Material</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTIVITY__SUPPORTING_MATERIAL = eINSTANCE.getActivity_SupportingMaterial();
-
-		/**
-		 * The meta object literal for the '<em><b>Whitepaper</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ACTIVITY__WHITEPAPER = eINSTANCE.getActivity_Whitepaper();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Enactable</b></em>' attribute feature.
@@ -22129,6 +24420,24 @@ public interface UmaPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ACTIVITY_DESCRIPTION__PURPOSE = eINSTANCE.getActivityDescription_Purpose();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.epf.xml.uma.impl.ApplicableMetaClassInfoImpl <em>Applicable Meta Class Info</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.epf.xml.uma.impl.ApplicableMetaClassInfoImpl
+		 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getApplicableMetaClassInfo()
+		 * @generated
+		 */
+		EClass APPLICABLE_META_CLASS_INFO = eINSTANCE.getApplicableMetaClassInfo();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Primary Extension</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION = eINSTANCE.getApplicableMetaClassInfo_IsPrimaryExtension();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.xml.uma.impl.ArtifactImpl <em>Artifact</em>}' class.
@@ -22241,6 +24550,70 @@ public interface UmaPackage extends EPackage {
 		EAttribute BREAKDOWN_ELEMENT__SUPER_ACTIVITY = eINSTANCE.getBreakdownElement_SuperActivity();
 
 		/**
+		 * The meta object literal for the '<em><b>Group1</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__GROUP1 = eINSTANCE.getBreakdownElement_Group1();
+
+		/**
+		 * The meta object literal for the '<em><b>Checklist</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__CHECKLIST = eINSTANCE.getBreakdownElement_Checklist();
+
+		/**
+		 * The meta object literal for the '<em><b>Concept</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__CONCEPT = eINSTANCE.getBreakdownElement_Concept();
+
+		/**
+		 * The meta object literal for the '<em><b>Example</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__EXAMPLE = eINSTANCE.getBreakdownElement_Example();
+
+		/**
+		 * The meta object literal for the '<em><b>Guideline</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__GUIDELINE = eINSTANCE.getBreakdownElement_Guideline();
+
+		/**
+		 * The meta object literal for the '<em><b>Reusable Asset</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__REUSABLE_ASSET = eINSTANCE.getBreakdownElement_ReusableAsset();
+
+		/**
+		 * The meta object literal for the '<em><b>Supporting Material</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__SUPPORTING_MATERIAL = eINSTANCE.getBreakdownElement_SupportingMaterial();
+
+		/**
+		 * The meta object literal for the '<em><b>Whitepaper</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREAKDOWN_ELEMENT__WHITEPAPER = eINSTANCE.getBreakdownElement_Whitepaper();
+
+		/**
 		 * The meta object literal for the '<em><b>Has Multiple Occurrences</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -22321,12 +24694,12 @@ public interface UmaPackage extends EPackage {
 		EClass COMPOSITE_ROLE = eINSTANCE.getCompositeRole();
 
 		/**
-		 * The meta object literal for the '<em><b>Group1</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group2</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute COMPOSITE_ROLE__GROUP1 = eINSTANCE.getCompositeRole_Group1();
+		EAttribute COMPOSITE_ROLE__GROUP2 = eINSTANCE.getCompositeRole_Group2();
 
 		/**
 		 * The meta object literal for the '<em><b>Aggregated Role</b></em>' containment reference list feature.
@@ -22655,12 +25028,12 @@ public interface UmaPackage extends EPackage {
 		EClass DELIVERY_PROCESS = eINSTANCE.getDeliveryProcess();
 
 		/**
-		 * The meta object literal for the '<em><b>Group3</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group4</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DELIVERY_PROCESS__GROUP3 = eINSTANCE.getDeliveryProcess_Group3();
+		EAttribute DELIVERY_PROCESS__GROUP4 = eINSTANCE.getDeliveryProcess_Group4();
 
 		/**
 		 * The meta object literal for the '<em><b>Communications Material</b></em>' attribute list feature.
@@ -22755,20 +25128,28 @@ public interface UmaPackage extends EPackage {
 		EReference DESCRIBABLE_ELEMENT__PRESENTATION = eINSTANCE.getDescribableElement_Presentation();
 
 		/**
+		 * The meta object literal for the '<em><b>Fulfill</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DESCRIBABLE_ELEMENT__FULFILL = eINSTANCE.getDescribableElement_Fulfill();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Abstract</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DESCRIBABLE_ELEMENT__IS_ABSTRACT = eINSTANCE.getDescribableElement_IsAbstract();
+
+		/**
 		 * The meta object literal for the '<em><b>Nodeicon</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute DESCRIBABLE_ELEMENT__NODEICON = eINSTANCE.getDescribableElement_Nodeicon();
-
-		/**
-		 * The meta object literal for the '<em><b>Presentation Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DESCRIBABLE_ELEMENT__PRESENTATION_NAME = eINSTANCE.getDescribableElement_PresentationName();
 
 		/**
 		 * The meta object literal for the '<em><b>Shapeicon</b></em>' attribute feature.
@@ -23097,6 +25478,24 @@ public interface UmaPackage extends EPackage {
 		EClass ITERATION = eINSTANCE.getIteration();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.epf.xml.uma.impl.KindImpl <em>Kind</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.epf.xml.uma.impl.KindImpl
+		 * @see org.eclipse.epf.xml.uma.impl.UmaPackageImpl#getKind()
+		 * @generated
+		 */
+		EClass KIND = eINSTANCE.getKind();
+
+		/**
+		 * The meta object literal for the '<em><b>Applicable Meta Class Info</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute KIND__APPLICABLE_META_CLASS_INFO = eINSTANCE.getKind_ApplicableMetaClassInfo();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.xml.uma.impl.MethodConfigurationImpl <em>Method Configuration</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -23219,6 +25618,14 @@ public interface UmaPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute METHOD_ELEMENT__ORDERING_GUIDE = eINSTANCE.getMethodElement_OrderingGuide();
+
+		/**
+		 * The meta object literal for the '<em><b>Presentation Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute METHOD_ELEMENT__PRESENTATION_NAME = eINSTANCE.getMethodElement_PresentationName();
 
 		/**
 		 * The meta object literal for the '<em><b>Suppressed</b></em>' attribute feature.
@@ -23415,6 +25822,14 @@ public interface UmaPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MILESTONE = eINSTANCE.getMilestone();
+
+		/**
+		 * The meta object literal for the '<em><b>Required Result</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MILESTONE__REQUIRED_RESULT = eINSTANCE.getMilestone_RequiredResult();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.xml.uma.impl.NamedElementImpl <em>Named Element</em>}' class.
@@ -23717,12 +26132,12 @@ public interface UmaPackage extends EPackage {
 		EClass PROCESS_COMPONENT_INTERFACE = eINSTANCE.getProcessComponentInterface();
 
 		/**
-		 * The meta object literal for the '<em><b>Group1</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group2</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PROCESS_COMPONENT_INTERFACE__GROUP1 = eINSTANCE.getProcessComponentInterface_Group1();
+		EAttribute PROCESS_COMPONENT_INTERFACE__GROUP2 = eINSTANCE.getProcessComponentInterface_Group2();
 
 		/**
 		 * The meta object literal for the '<em><b>Interface Specification</b></em>' containment reference list feature.
@@ -23813,12 +26228,12 @@ public interface UmaPackage extends EPackage {
 		EClass PROCESS_PLANNING_TEMPLATE = eINSTANCE.getProcessPlanningTemplate();
 
 		/**
-		 * The meta object literal for the '<em><b>Group3</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group4</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PROCESS_PLANNING_TEMPLATE__GROUP3 = eINSTANCE.getProcessPlanningTemplate_Group3();
+		EAttribute PROCESS_PLANNING_TEMPLATE__GROUP4 = eINSTANCE.getProcessPlanningTemplate_Group4();
 
 		/**
 		 * The meta object literal for the '<em><b>Base Process</b></em>' attribute list feature.
@@ -24091,7 +26506,7 @@ public interface UmaPackage extends EPackage {
 		EAttribute TASK__POSTCONDITION = eINSTANCE.getTask_Postcondition();
 
 		/**
-		 * The meta object literal for the '<em><b>Performed By</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Performed By</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -24215,12 +26630,12 @@ public interface UmaPackage extends EPackage {
 		EAttribute TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY = eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
 
 		/**
-		 * The meta object literal for the '<em><b>Group2</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group3</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TASK_DESCRIPTOR__GROUP2 = eINSTANCE.getTaskDescriptor_Group2();
+		EAttribute TASK_DESCRIPTOR__GROUP3 = eINSTANCE.getTaskDescriptor_Group3();
 
 		/**
 		 * The meta object literal for the '<em><b>Additionally Performed By</b></em>' attribute list feature.
@@ -24297,12 +26712,12 @@ public interface UmaPackage extends EPackage {
 		EClass TEAM_PROFILE = eINSTANCE.getTeamProfile();
 
 		/**
-		 * The meta object literal for the '<em><b>Group1</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group2</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TEAM_PROFILE__GROUP1 = eINSTANCE.getTeamProfile_Group1();
+		EAttribute TEAM_PROFILE__GROUP2 = eINSTANCE.getTeamProfile_Group2();
 
 		/**
 		 * The meta object literal for the '<em><b>Role</b></em>' attribute list feature.
@@ -24405,12 +26820,12 @@ public interface UmaPackage extends EPackage {
 		EClass WORK_BREAKDOWN_ELEMENT = eINSTANCE.getWorkBreakdownElement();
 
 		/**
-		 * The meta object literal for the '<em><b>Group1</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group2</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute WORK_BREAKDOWN_ELEMENT__GROUP1 = eINSTANCE.getWorkBreakdownElement_Group1();
+		EAttribute WORK_BREAKDOWN_ELEMENT__GROUP2 = eINSTANCE.getWorkBreakdownElement_Group2();
 
 		/**
 		 * The meta object literal for the '<em><b>Predecessor</b></em>' containment reference list feature.
@@ -24623,12 +27038,12 @@ public interface UmaPackage extends EPackage {
 		EAttribute WORK_PRODUCT_DESCRIPTOR__RESPONSIBLE_ROLE = eINSTANCE.getWorkProductDescriptor_ResponsibleRole();
 
 		/**
-		 * The meta object literal for the '<em><b>Group1</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Group2</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute WORK_PRODUCT_DESCRIPTOR__GROUP1 = eINSTANCE.getWorkProductDescriptor_Group1();
+		EAttribute WORK_PRODUCT_DESCRIPTOR__GROUP2 = eINSTANCE.getWorkProductDescriptor_Group2();
 
 		/**
 		 * The meta object literal for the '<em><b>External Input To</b></em>' attribute list feature.

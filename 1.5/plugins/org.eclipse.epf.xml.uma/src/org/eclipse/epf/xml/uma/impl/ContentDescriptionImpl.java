@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ContentDescriptionImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: ContentDescriptionImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -85,7 +85,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * @generated
 	 * @ordered
 	 */
-	protected EList section;
+	protected EList<Section> section;
 
 	/**
 	 * The default value of the '{@link #getExternalId() <em>External Id</em>}' attribute.
@@ -121,6 +121,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CONTENT_DESCRIPTION;
 	}
@@ -172,9 +173,9 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getSection() {
+	public EList<Section> getSection() {
 		if (section == null) {
-			section = new EObjectContainmentEList(Section.class, this, UmaPackage.CONTENT_DESCRIPTION__SECTION);
+			section = new EObjectContainmentEList<Section>(Section.class, this, UmaPackage.CONTENT_DESCRIPTION__SECTION);
 		}
 		return section;
 	}
@@ -205,10 +206,11 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_DESCRIPTION__SECTION:
-				return ((InternalEList)getSection()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getSection()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -218,6 +220,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
@@ -237,6 +240,8 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
@@ -247,7 +252,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 				return;
 			case UmaPackage.CONTENT_DESCRIPTION__SECTION:
 				getSection().clear();
-				getSection().addAll((Collection)newValue);
+				getSection().addAll((Collection<? extends Section>)newValue);
 				return;
 			case UmaPackage.CONTENT_DESCRIPTION__EXTERNAL_ID:
 				setExternalId((String)newValue);
@@ -261,6 +266,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
@@ -284,6 +290,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
@@ -303,6 +310,7 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements ContentDes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

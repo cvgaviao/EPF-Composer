@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodPluginImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: MethodPluginImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -45,7 +45,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList referencedMethodPlugin;
+	protected EList<String> referencedMethodPlugin;
 
 	/**
 	 * The cached value of the '{@link #getMethodPackage() <em>Method Package</em>}' containment reference list.
@@ -55,7 +55,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methodPackage;
+	protected EList<MethodPackage> methodPackage;
 
 	/**
 	 * The default value of the '{@link #isUserChangeable() <em>User Changeable</em>}' attribute.
@@ -100,6 +100,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_PLUGIN;
 	}
@@ -109,9 +110,9 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getReferencedMethodPlugin() {
+	public EList<String> getReferencedMethodPlugin() {
 		if (referencedMethodPlugin == null) {
-			referencedMethodPlugin = new EDataTypeEList(String.class, this, UmaPackage.METHOD_PLUGIN__REFERENCED_METHOD_PLUGIN);
+			referencedMethodPlugin = new EDataTypeEList<String>(String.class, this, UmaPackage.METHOD_PLUGIN__REFERENCED_METHOD_PLUGIN);
 		}
 		return referencedMethodPlugin;
 	}
@@ -121,9 +122,9 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMethodPackage() {
+	public EList<MethodPackage> getMethodPackage() {
 		if (methodPackage == null) {
-			methodPackage = new EObjectContainmentEList(MethodPackage.class, this, UmaPackage.METHOD_PLUGIN__METHOD_PACKAGE);
+			methodPackage = new EObjectContainmentEList<MethodPackage>(MethodPackage.class, this, UmaPackage.METHOD_PLUGIN__METHOD_PACKAGE);
 		}
 		return methodPackage;
 	}
@@ -179,10 +180,11 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGE:
-				return ((InternalEList)getMethodPackage()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getMethodPackage()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -192,6 +194,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PLUGIN__REFERENCED_METHOD_PLUGIN:
@@ -209,15 +212,17 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PLUGIN__REFERENCED_METHOD_PLUGIN:
 				getReferencedMethodPlugin().clear();
-				getReferencedMethodPlugin().addAll((Collection)newValue);
+				getReferencedMethodPlugin().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.METHOD_PLUGIN__METHOD_PACKAGE:
 				getMethodPackage().clear();
-				getMethodPackage().addAll((Collection)newValue);
+				getMethodPackage().addAll((Collection<? extends MethodPackage>)newValue);
 				return;
 			case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
 				setUserChangeable(((Boolean)newValue).booleanValue());
@@ -231,6 +236,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PLUGIN__REFERENCED_METHOD_PLUGIN:
@@ -251,6 +257,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PLUGIN__REFERENCED_METHOD_PLUGIN:
@@ -268,6 +275,7 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

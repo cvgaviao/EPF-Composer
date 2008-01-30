@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodPackageImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: MethodPackageImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -90,6 +90,7 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_PACKAGE;
 	}
@@ -111,7 +112,7 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getReusedPackage() {
+	public EList<String> getReusedPackage() {
 		return getGroup1().list(UmaPackage.Literals.METHOD_PACKAGE__REUSED_PACKAGE);
 	}
 
@@ -120,7 +121,7 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMethodPackage() {
+	public EList<MethodPackage> getMethodPackage() {
 		return getGroup1().list(UmaPackage.Literals.METHOD_PACKAGE__METHOD_PACKAGE);
 	}
 
@@ -175,12 +176,13 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PACKAGE__GROUP1:
-				return ((InternalEList)getGroup1()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup1()).basicRemove(otherEnd, msgs);
 			case UmaPackage.METHOD_PACKAGE__METHOD_PACKAGE:
-				return ((InternalEList)getMethodPackage()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getMethodPackage()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -190,6 +192,7 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PACKAGE__GROUP1:
@@ -210,6 +213,8 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PACKAGE__GROUP1:
@@ -217,11 +222,11 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 				return;
 			case UmaPackage.METHOD_PACKAGE__REUSED_PACKAGE:
 				getReusedPackage().clear();
-				getReusedPackage().addAll((Collection)newValue);
+				getReusedPackage().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.METHOD_PACKAGE__METHOD_PACKAGE:
 				getMethodPackage().clear();
-				getMethodPackage().addAll((Collection)newValue);
+				getMethodPackage().addAll((Collection<? extends MethodPackage>)newValue);
 				return;
 			case UmaPackage.METHOD_PACKAGE__GLOBAL:
 				setGlobal(((Boolean)newValue).booleanValue());
@@ -235,6 +240,7 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PACKAGE__GROUP1:
@@ -258,6 +264,7 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_PACKAGE__GROUP1:
@@ -277,6 +284,7 @@ public class MethodPackageImpl extends MethodElementImpl implements MethodPackag
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

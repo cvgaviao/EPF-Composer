@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DescriptorDescription.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: DescriptorDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -38,7 +38,7 @@ public interface DescriptorDescription extends BreakdownElementDescription {
 	 * @return the value of the '<em>Refined Description</em>' attribute.
 	 * @see #setRefinedDescription(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDescriptorDescription_RefinedDescription()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='RefinedDescription'"
 	 * @generated
 	 */

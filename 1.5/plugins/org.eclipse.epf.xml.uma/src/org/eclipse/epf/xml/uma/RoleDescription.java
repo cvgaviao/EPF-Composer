@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RoleDescription.java,v 1.1 2008/01/15 08:52:06 jtham Exp $
+ * $Id: RoleDescription.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -40,7 +40,7 @@ public interface RoleDescription extends ContentDescription {
 	 * @return the value of the '<em>Assignment Approaches</em>' attribute.
 	 * @see #setAssignmentApproaches(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getRoleDescription_AssignmentApproaches()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='AssignmentApproaches'"
 	 * @generated
 	 */
@@ -66,7 +66,7 @@ public interface RoleDescription extends ContentDescription {
 	 * @return the value of the '<em>Skills</em>' attribute.
 	 * @see #setSkills(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getRoleDescription_Skills()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Skills'"
 	 * @generated
 	 */
@@ -92,7 +92,7 @@ public interface RoleDescription extends ContentDescription {
 	 * @return the value of the '<em>Synonyms</em>' attribute.
 	 * @see #setSynonyms(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getRoleDescription_Synonyms()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Synonyms'"
 	 * @generated
 	 */

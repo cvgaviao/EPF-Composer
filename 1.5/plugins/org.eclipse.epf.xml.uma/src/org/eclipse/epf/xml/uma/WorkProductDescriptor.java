@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkProductDescriptor.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: WorkProductDescriptor.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * <ul>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getWorkProduct <em>Work Product</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getResponsibleRole <em>Responsible Role</em>}</li>
- *   <li>{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getGroup1 <em>Group1</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getGroup2 <em>Group2</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getExternalInputTo <em>External Input To</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getImpactedBy <em>Impacted By</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkProductDescriptor#getImpacts <em>Impacts</em>}</li>
@@ -53,7 +53,7 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @return the value of the '<em>Work Product</em>' attribute.
 	 * @see #setWorkProduct(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_WorkProduct()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='WorkProduct'"
 	 * @generated
 	 */
@@ -80,7 +80,7 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @return the value of the '<em>Responsible Role</em>' attribute.
 	 * @see #setResponsibleRole(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_ResponsibleRole()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ResponsibleRole'"
 	 * @generated
 	 */
@@ -97,21 +97,21 @@ public interface WorkProductDescriptor extends Descriptor {
 	void setResponsibleRole(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Group1</b></em>' attribute list.
+	 * Returns the value of the '<em><b>Group2</b></em>' attribute list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Group1</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Group2</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Group1</em>' attribute list.
-	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_Group1()
+	 * @return the value of the '<em>Group2</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_Group2()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:23'"
+	 *        extendedMetaData="kind='group' name='group:33'"
 	 * @generated
 	 */
-	FeatureMap getGroup1();
+	FeatureMap getGroup2();
 
 	/**
 	 * Returns the value of the '<em><b>External Input To</b></em>' attribute list.
@@ -124,11 +124,11 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>External Input To</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_ExternalInputTo()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='ExternalInputTo' group='#group:23'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='ExternalInputTo' group='#group:33'"
 	 * @generated
 	 */
-	EList getExternalInputTo();
+	EList<String> getExternalInputTo();
 
 	/**
 	 * Returns the value of the '<em><b>Impacted By</b></em>' attribute list.
@@ -141,11 +141,11 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Impacted By</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_ImpactedBy()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='ImpactedBy' group='#group:23'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='ImpactedBy' group='#group:33'"
 	 * @generated
 	 */
-	EList getImpactedBy();
+	EList<String> getImpactedBy();
 
 	/**
 	 * Returns the value of the '<em><b>Impacts</b></em>' attribute list.
@@ -158,11 +158,11 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Impacts</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_Impacts()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Impacts' group='#group:23'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Impacts' group='#group:33'"
 	 * @generated
 	 */
-	EList getImpacts();
+	EList<String> getImpacts();
 
 	/**
 	 * Returns the value of the '<em><b>Mandatory Input To</b></em>' attribute list.
@@ -175,11 +175,11 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Mandatory Input To</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_MandatoryInputTo()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='MandatoryInputTo' group='#group:23'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='MandatoryInputTo' group='#group:33'"
 	 * @generated
 	 */
-	EList getMandatoryInputTo();
+	EList<String> getMandatoryInputTo();
 
 	/**
 	 * Returns the value of the '<em><b>Optional Input To</b></em>' attribute list.
@@ -192,11 +192,11 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Optional Input To</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_OptionalInputTo()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='OptionalInputTo' group='#group:23'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='OptionalInputTo' group='#group:33'"
 	 * @generated
 	 */
-	EList getOptionalInputTo();
+	EList<String> getOptionalInputTo();
 
 	/**
 	 * Returns the value of the '<em><b>Output From</b></em>' attribute list.
@@ -209,11 +209,11 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Output From</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_OutputFrom()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='OutputFrom' group='#group:23'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='OutputFrom' group='#group:33'"
 	 * @generated
 	 */
-	EList getOutputFrom();
+	EList<String> getOutputFrom();
 
 	/**
 	 * Returns the value of the '<em><b>Deliverable Parts</b></em>' attribute list.
@@ -226,11 +226,11 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Deliverable Parts</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_DeliverableParts()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='DeliverableParts' group='#group:23'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='DeliverableParts' group='#group:33'"
 	 * @generated
 	 */
-	EList getDeliverableParts();
+	EList<String> getDeliverableParts();
 
 	/**
 	 * Returns the value of the '<em><b>Activity Entry State</b></em>' attribute.
@@ -243,7 +243,7 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @return the value of the '<em>Activity Entry State</em>' attribute.
 	 * @see #setActivityEntryState(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_ActivityEntryState()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='activityEntryState'"
 	 * @generated
 	 */
@@ -270,7 +270,7 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @return the value of the '<em>Activity Exit State</em>' attribute.
 	 * @see #setActivityExitState(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescriptor_ActivityExitState()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='activityExitState'"
 	 * @generated
 	 */

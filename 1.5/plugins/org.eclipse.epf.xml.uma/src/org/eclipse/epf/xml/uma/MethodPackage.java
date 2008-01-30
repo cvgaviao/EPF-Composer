@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodPackage.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: MethodPackage.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -45,7 +45,7 @@ public interface MethodPackage extends MethodElement {
 	 * @return the value of the '<em>Group1</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPackage_Group1()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:8'"
+	 *        extendedMetaData="kind='group' name='group:9'"
 	 * @generated
 	 */
 	FeatureMap getGroup1();
@@ -61,11 +61,11 @@ public interface MethodPackage extends MethodElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reused Package</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPackage_ReusedPackage()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='ReusedPackage' group='#group:8'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='ReusedPackage' group='#group:9'"
 	 * @generated
 	 */
-	EList getReusedPackage();
+	EList<String> getReusedPackage();
 
 	/**
 	 * Returns the value of the '<em><b>Method Package</b></em>' containment reference list.
@@ -78,11 +78,11 @@ public interface MethodPackage extends MethodElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Package</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPackage_MethodPackage()
-	 * @model type="org.eclipse.epf.xml.uma.MethodPackage" containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='MethodPackage' group='#group:8'"
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='MethodPackage' group='#group:9'"
 	 * @generated
 	 */
-	EList getMethodPackage();
+	EList<MethodPackage> getMethodPackage();
 
 	/**
 	 * Returns the value of the '<em><b>Global</b></em>' attribute.
@@ -96,7 +96,7 @@ public interface MethodPackage extends MethodElement {
 	 * @see #unsetGlobal()
 	 * @see #setGlobal(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPackage_Global()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='global'"
 	 * @generated
 	 */

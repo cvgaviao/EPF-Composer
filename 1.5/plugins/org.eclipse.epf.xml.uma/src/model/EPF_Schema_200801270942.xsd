@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EPF UMA XML Data Interchange Schema -->
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uma="http://www.eclipse.org/epf/uma/1.0.3" targetNamespace="http://www.eclipse.org/epf/uma/1.0.3">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uma="http://www.eclipse.org/epf/uma/1.0.5" targetNamespace="http://www.eclipse.org/epf/uma/1.0.5">
 	<xsd:simpleType name="WorkOrderType">
 		<xsd:annotation>
 			<xsd:documentation>Represents a relationship between two Breakdown Element in which one Breakdown Element depends on the start or finish of another Breakdown Element in order to begin or end. This enumeration defines the different types of Work Order relationships available in UMA and is used to provide values for Work Order's linkType attribute.</xsd:documentation>
@@ -49,6 +49,13 @@
 			<xsd:extension base="uma:NamedElement"/>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:complexType name="ApplicableMetaClassInfo">
+		<xsd:complexContent>
+			<xsd:extension base="uma:PackageableElement">
+				<xsd:attribute name="isPrimaryExtension" type="xsd:boolean"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:complexType name="MethodElement">
 		<xsd:annotation>
 			<xsd:documentation>The root generalization for all UMA Method Elements.  Defines a common set of attributes inherited by all UMA Method Elements.  Method Element itself is derived from Packageable Element from the UML 2.0 Infrastructure.</xsd:documentation>
@@ -61,8 +68,7 @@
 							<xsd:documentation>Defines the packaging rules for this Method Element.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="MethodElementProperty" type="uma:MethodElementProperty">
-					</xsd:element>
+					<xsd:element name="MethodElementProperty" type="uma:MethodElementProperty"/>
 				</xsd:choice>
 				<xsd:attribute name="id" type="xsd:string">
 					<xsd:annotation>
@@ -84,6 +90,11 @@
 						<xsd:documentation>Used for CASE tool realizations of this model to contain information about layout and ordering of the method element and its parts.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
+				<xsd:attribute name="presentationName" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Every Describable Element has a presentation name, which is used for external presentation of the element.  For example, name (the internal representation) might be set to "rup_architecture_document" to differentiate from a "j2ee_architcture_document" whereas the external presentation would always be "Architecture Document".</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -101,13 +112,13 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	  <xsd:complexType name="MethodElementProperty">
-	    <xsd:complexContent>
-	      <xsd:extension base="uma:PackageableElement">
-	        <xsd:attribute name="value" type="xsd:string"/>
-	      </xsd:extension>
-	    </xsd:complexContent>
-  	</xsd:complexType>
+	<xsd:complexType name="MethodElementProperty">
+		<xsd:complexContent>
+			<xsd:extension base="uma:PackageableElement">
+				<xsd:attribute name="value" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:complexType name="Section">
 		<xsd:annotation>
 			<xsd:documentation>A special Method Element that represents structural subsections of a Content Description's sectionDescription attribute.  It is used for either large scale documentation of Content Elements organized into sections as well as to flexibly add new Sections to Content Elements using contribution variability added to the Section concept for Method Plug-ins.</xsd:documentation>
@@ -188,7 +199,7 @@
 					<xsd:annotation>
 						<xsd:documentation>An external visible number that is used to reference this artifact. Used like a synonym.</xsd:documentation>
 					</xsd:annotation>
-				</xsd:attribute>				
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -292,10 +303,8 @@
 							<xsd:documentation>Discusses different possible alternative representations for the artifact. For example a design model can be represented as a UML model or an informal block diagram or by textual description only.</xsd:documentation>
 						</xsd:annotation>
 					</xsd:element>
-					<xsd:element name="Representation" type="xsd:string" minOccurs="0">
-					</xsd:element>
-					<xsd:element name="Notation" type="xsd:string" minOccurs="0">
-					</xsd:element>					
+					<xsd:element name="Representation" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Notation" type="xsd:string" minOccurs="0"/>
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -375,14 +384,12 @@ This abstraction represents all elements in the Method Content as well as Proces
 		</xsd:annotation>
 		<xsd:complexContent>
 			<xsd:extension base="uma:MethodElement">
-				<xsd:choice minOccurs="0">
-					<xsd:element name="Presentation" type="uma:ContentDescription"/>
-				</xsd:choice>
-				<xsd:attribute name="presentationName" type="xsd:string">
-					<xsd:annotation>
-						<xsd:documentation>Every Describable Element has a presentation name, which is used for external presentation of the element.  For example, name (the internal representation) might be set to "rup_architecture_document" to differentiate from a "j2ee_architcture_document" whereas the external presentation would always be "Architecture Document".</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attribute>
+				<xsd:sequence>
+					<xsd:choice minOccurs="0">
+						<xsd:element name="Presentation" type="uma:ContentDescription"/>
+					</xsd:choice>
+					<xsd:element name="Fulfill" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
 				<xsd:attribute name="shapeicon" type="xsd:string">
 					<xsd:annotation>
 						<xsd:documentation>A reference to an icon that can be used for modeling with specific Content Element instances (as graphical stereotypes, e.g. a use case symbol for a use case artifact) as well as publication of content.</xsd:documentation>
@@ -393,6 +400,7 @@ This abstraction represents all elements in the Method Content as well as Proces
 						<xsd:documentation>A reference to an icon that can be used in tree browser presentations and breakdown structures.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
+				<xsd:attribute name="isAbstract" type="xsd:boolean"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -416,6 +424,15 @@ Content Elements represents reusable Method Content that is supposed to be manag
 				</xsd:sequence>
 				<xsd:attribute name="variabilityType" type="uma:VariabilityType"/>
 				<xsd:attribute name="variabilityBasedOnElement" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Kind">
+		<xsd:complexContent>
+			<xsd:extension base="uma:ContentElement">
+				<xsd:sequence>
+					<xsd:element name="ApplicableMetaClassInfo" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -643,7 +660,7 @@ For example, a Task such as "Develop Use Case Model" describes all the work that
 				<xsd:sequence>
 					<xsd:element name="Precondition" type="xsd:string" minOccurs="0"/>
 					<xsd:element name="Postcondition" type="xsd:string" minOccurs="0"/>
-					<xsd:element name="PerformedBy" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="PerformedBy" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
 					<xsd:choice minOccurs="0" maxOccurs="unbounded">
 						<xsd:element name="MandatoryInput" type="xsd:string"/>
 						<xsd:element name="Output" type="xsd:string"/>
@@ -869,6 +886,15 @@ Planning Data factors out specific optional data needed for representing plannin
 					<xsd:element name="PresentedBefore" type="xsd:string" minOccurs="0"/>
 					<xsd:element name="PlanningData" type="xsd:string" minOccurs="0"/>
 					<xsd:element name="SuperActivity" type="xsd:string" minOccurs="0"/>
+					<xsd:choice minOccurs="0" maxOccurs="unbounded">
+						<xsd:element name="Checklist" type="xsd:string"/>
+						<xsd:element name="Concept" type="xsd:string"/>
+						<xsd:element name="Example" type="xsd:string"/>
+						<xsd:element name="Guideline" type="xsd:string"/>
+						<xsd:element name="ReusableAsset" type="xsd:string"/>
+						<xsd:element name="SupportingMaterial" type="xsd:string"/>
+						<xsd:element name="Whitepaper" type="xsd:string"/>
+					</xsd:choice>
 				</xsd:sequence>
 				<xsd:attribute name="prefix" type="xsd:string">
 					<xsd:annotation>
@@ -947,7 +973,11 @@ The Work Order class defines predecessor and successor relations amongst Breakdo
 			<xsd:documentation>A special Breakdown Element that describes a significant event in a development project, such as a major decision, completion of a deliverable, or meeting of a major dependency (like completion of a project phase).  Because, Milestone is commonly used to refer to both the event itself and the point in time at which the event is scheduled to happen, it is modeled as a Breakdown Element (i.e. it appears as part of a breakdown structure).</xsd:documentation>
 		</xsd:annotation>
 		<xsd:complexContent>
-			<xsd:extension base="uma:WorkBreakdownElement"/>
+			<xsd:extension base="uma:WorkBreakdownElement">
+				<xsd:sequence>
+					<xsd:element name="RequiredResult" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 	<xsd:complexType name="Activity">
@@ -962,14 +992,7 @@ Activity represents a grouping element for other Breakdown Elements such as Acti
 					<xsd:element name="Postcondition" type="xsd:string" minOccurs="0"/>
 					<xsd:choice minOccurs="0" maxOccurs="unbounded">
 						<xsd:element name="BreakdownElement" type="uma:BreakdownElement"/>
-						<xsd:element name="Checklist" type="xsd:string"/>
-						<xsd:element name="Concept" type="xsd:string"/>
-						<xsd:element name="Example" type="xsd:string"/>
-						<xsd:element name="Guideline" type="xsd:string"/>
 						<xsd:element name="Roadmap" type="xsd:string"/>
-						<xsd:element name="ReusableAsset" type="xsd:string"/>
-						<xsd:element name="SupportingMaterial" type="xsd:string"/>
-						<xsd:element name="Whitepaper" type="xsd:string"/>
 					</xsd:choice>
 				</xsd:sequence>
 				<xsd:attribute name="variabilityType" type="uma:VariabilityType"/>

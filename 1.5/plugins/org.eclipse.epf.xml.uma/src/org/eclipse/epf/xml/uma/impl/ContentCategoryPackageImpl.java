@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ContentCategoryPackageImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: ContentCategoryPackageImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.epf.xml.uma.ContentCategory;
 import org.eclipse.epf.xml.uma.ContentCategoryPackage;
 import org.eclipse.epf.xml.uma.UmaPackage;
 
@@ -57,6 +58,7 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.CONTENT_CATEGORY_PACKAGE;
 	}
@@ -78,7 +80,7 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getContentCategory() {
+	public EList<ContentCategory> getContentCategory() {
 		return getGroup2().list(UmaPackage.Literals.CONTENT_CATEGORY_PACKAGE__CONTENT_CATEGORY);
 	}
 
@@ -87,12 +89,13 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_CATEGORY_PACKAGE__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 			case UmaPackage.CONTENT_CATEGORY_PACKAGE__CONTENT_CATEGORY:
-				return ((InternalEList)getContentCategory()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getContentCategory()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -102,6 +105,7 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_CATEGORY_PACKAGE__GROUP2:
@@ -118,6 +122,8 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_CATEGORY_PACKAGE__GROUP2:
@@ -125,7 +131,7 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 				return;
 			case UmaPackage.CONTENT_CATEGORY_PACKAGE__CONTENT_CATEGORY:
 				getContentCategory().clear();
-				getContentCategory().addAll((Collection)newValue);
+				getContentCategory().addAll((Collection<? extends ContentCategory>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -136,6 +142,7 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_CATEGORY_PACKAGE__GROUP2:
@@ -153,6 +160,7 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.CONTENT_CATEGORY_PACKAGE__GROUP2:
@@ -168,6 +176,7 @@ public class ContentCategoryPackageImpl extends MethodPackageImpl implements Con
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

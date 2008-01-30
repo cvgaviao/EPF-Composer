@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkProductDescription.java,v 1.1 2008/01/15 08:52:06 jtham Exp $
+ * $Id: WorkProductDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -40,7 +40,7 @@ public interface WorkProductDescription extends ContentDescription {
 	 * @return the value of the '<em>Impact Of Not Having</em>' attribute.
 	 * @see #setImpactOfNotHaving(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescription_ImpactOfNotHaving()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ImpactOfNotHaving'"
 	 * @generated
 	 */
@@ -66,7 +66,7 @@ public interface WorkProductDescription extends ContentDescription {
 	 * @return the value of the '<em>Purpose</em>' attribute.
 	 * @see #setPurpose(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescription_Purpose()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Purpose'"
 	 * @generated
 	 */
@@ -92,7 +92,7 @@ public interface WorkProductDescription extends ContentDescription {
 	 * @return the value of the '<em>Reasons For Not Needing</em>' attribute.
 	 * @see #setReasonsForNotNeeding(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkProductDescription_ReasonsForNotNeeding()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ReasonsForNotNeeding'"
 	 * @generated
 	 */

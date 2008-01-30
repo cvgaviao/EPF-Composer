@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodLibraryImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: MethodLibraryImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -46,7 +46,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methodPlugin;
+	protected EList<MethodPlugin> methodPlugin;
 
 	/**
 	 * The cached value of the '{@link #getMethodConfiguration() <em>Method Configuration</em>}' containment reference list.
@@ -56,7 +56,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList methodConfiguration;
+	protected EList<MethodConfiguration> methodConfiguration;
 
 	/**
 	 * The default value of the '{@link #getTool() <em>Tool</em>}' attribute.
@@ -92,6 +92,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_LIBRARY;
 	}
@@ -101,9 +102,9 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMethodPlugin() {
+	public EList<MethodPlugin> getMethodPlugin() {
 		if (methodPlugin == null) {
-			methodPlugin = new EObjectContainmentEList(MethodPlugin.class, this, UmaPackage.METHOD_LIBRARY__METHOD_PLUGIN);
+			methodPlugin = new EObjectContainmentEList<MethodPlugin>(MethodPlugin.class, this, UmaPackage.METHOD_LIBRARY__METHOD_PLUGIN);
 		}
 		return methodPlugin;
 	}
@@ -113,9 +114,9 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMethodConfiguration() {
+	public EList<MethodConfiguration> getMethodConfiguration() {
 		if (methodConfiguration == null) {
-			methodConfiguration = new EObjectContainmentEList(MethodConfiguration.class, this, UmaPackage.METHOD_LIBRARY__METHOD_CONFIGURATION);
+			methodConfiguration = new EObjectContainmentEList<MethodConfiguration>(MethodConfiguration.class, this, UmaPackage.METHOD_LIBRARY__METHOD_CONFIGURATION);
 		}
 		return methodConfiguration;
 	}
@@ -146,12 +147,13 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.METHOD_LIBRARY__METHOD_PLUGIN:
-				return ((InternalEList)getMethodPlugin()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getMethodPlugin()).basicRemove(otherEnd, msgs);
 			case UmaPackage.METHOD_LIBRARY__METHOD_CONFIGURATION:
-				return ((InternalEList)getMethodConfiguration()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getMethodConfiguration()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -161,6 +163,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.METHOD_LIBRARY__METHOD_PLUGIN:
@@ -178,15 +181,17 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.METHOD_LIBRARY__METHOD_PLUGIN:
 				getMethodPlugin().clear();
-				getMethodPlugin().addAll((Collection)newValue);
+				getMethodPlugin().addAll((Collection<? extends MethodPlugin>)newValue);
 				return;
 			case UmaPackage.METHOD_LIBRARY__METHOD_CONFIGURATION:
 				getMethodConfiguration().clear();
-				getMethodConfiguration().addAll((Collection)newValue);
+				getMethodConfiguration().addAll((Collection<? extends MethodConfiguration>)newValue);
 				return;
 			case UmaPackage.METHOD_LIBRARY__TOOL:
 				setTool((String)newValue);
@@ -200,6 +205,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_LIBRARY__METHOD_PLUGIN:
@@ -220,6 +226,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_LIBRARY__METHOD_PLUGIN:
@@ -237,6 +244,7 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

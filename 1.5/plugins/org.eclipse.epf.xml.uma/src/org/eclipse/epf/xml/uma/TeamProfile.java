@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TeamProfile.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: TeamProfile.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.epf.xml.uma.TeamProfile#getGroup1 <em>Group1</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.TeamProfile#getGroup2 <em>Group2</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.TeamProfile#getRole <em>Role</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.TeamProfile#getSuperTeam <em>Super Team</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.TeamProfile#getSubTeam <em>Sub Team</em>}</li>
@@ -36,21 +36,21 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  */
 public interface TeamProfile extends BreakdownElement {
 	/**
-	 * Returns the value of the '<em><b>Group1</b></em>' attribute list.
+	 * Returns the value of the '<em><b>Group2</b></em>' attribute list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Group1</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Group2</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Group1</em>' attribute list.
-	 * @see org.eclipse.epf.xml.uma.UmaPackage#getTeamProfile_Group1()
+	 * @return the value of the '<em>Group2</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getTeamProfile_Group2()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:20'"
+	 *        extendedMetaData="kind='group' name='group:30'"
 	 * @generated
 	 */
-	FeatureMap getGroup1();
+	FeatureMap getGroup2();
 
 	/**
 	 * Returns the value of the '<em><b>Role</b></em>' attribute list.
@@ -63,11 +63,11 @@ public interface TeamProfile extends BreakdownElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Role</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getTeamProfile_Role()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Role' group='#group:20'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Role' group='#group:30'"
 	 * @generated
 	 */
-	EList getRole();
+	EList<String> getRole();
 
 	/**
 	 * Returns the value of the '<em><b>Super Team</b></em>' attribute list.
@@ -80,11 +80,11 @@ public interface TeamProfile extends BreakdownElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Super Team</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getTeamProfile_SuperTeam()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='SuperTeam' group='#group:20'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='SuperTeam' group='#group:30'"
 	 * @generated
 	 */
-	EList getSuperTeam();
+	EList<String> getSuperTeam();
 
 	/**
 	 * Returns the value of the '<em><b>Sub Team</b></em>' attribute list.
@@ -97,10 +97,10 @@ public interface TeamProfile extends BreakdownElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Sub Team</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getTeamProfile_SubTeam()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='SubTeam' group='#group:20'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='SubTeam' group='#group:30'"
 	 * @generated
 	 */
-	EList getSubTeam();
+	EList<String> getSubTeam();
 
 } // TeamProfile

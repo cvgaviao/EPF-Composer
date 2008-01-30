@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ArtifactImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: ArtifactImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -57,6 +57,7 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ARTIFACT;
 	}
@@ -78,7 +79,7 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getContainedArtifact() {
+	public EList<Artifact> getContainedArtifact() {
 		return getGroup3().list(UmaPackage.Literals.ARTIFACT__CONTAINED_ARTIFACT);
 	}
 
@@ -87,12 +88,13 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.ARTIFACT__GROUP3:
-				return ((InternalEList)getGroup3()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup3()).basicRemove(otherEnd, msgs);
 			case UmaPackage.ARTIFACT__CONTAINED_ARTIFACT:
-				return ((InternalEList)getContainedArtifact()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getContainedArtifact()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -102,6 +104,7 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.ARTIFACT__GROUP3:
@@ -118,6 +121,8 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.ARTIFACT__GROUP3:
@@ -125,7 +130,7 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 				return;
 			case UmaPackage.ARTIFACT__CONTAINED_ARTIFACT:
 				getContainedArtifact().clear();
-				getContainedArtifact().addAll((Collection)newValue);
+				getContainedArtifact().addAll((Collection<? extends Artifact>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -136,6 +141,7 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ARTIFACT__GROUP3:
@@ -153,6 +159,7 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ARTIFACT__GROUP3:
@@ -168,6 +175,7 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

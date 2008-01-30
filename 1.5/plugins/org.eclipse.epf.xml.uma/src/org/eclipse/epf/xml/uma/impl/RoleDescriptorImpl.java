@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RoleDescriptorImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: RoleDescriptorImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -59,7 +59,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * @generated
 	 * @ordered
 	 */
-	protected EList responsibleFor;
+	protected EList<String> responsibleFor;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,6 +75,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.ROLE_DESCRIPTOR;
 	}
@@ -105,9 +106,9 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getResponsibleFor() {
+	public EList<String> getResponsibleFor() {
 		if (responsibleFor == null) {
-			responsibleFor = new EDataTypeEList(String.class, this, UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR);
+			responsibleFor = new EDataTypeEList<String>(String.class, this, UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR);
 		}
 		return responsibleFor;
 	}
@@ -117,6 +118,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.ROLE_DESCRIPTOR__ROLE:
@@ -132,6 +134,8 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.ROLE_DESCRIPTOR__ROLE:
@@ -139,7 +143,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 				return;
 			case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR:
 				getResponsibleFor().clear();
-				getResponsibleFor().addAll((Collection)newValue);
+				getResponsibleFor().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -150,6 +154,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ROLE_DESCRIPTOR__ROLE:
@@ -167,6 +172,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.ROLE_DESCRIPTOR__ROLE:
@@ -182,6 +188,7 @@ public class RoleDescriptorImpl extends DescriptorImpl implements RoleDescriptor
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

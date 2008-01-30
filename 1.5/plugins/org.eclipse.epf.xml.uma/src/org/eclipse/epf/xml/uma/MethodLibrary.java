@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodLibrary.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: MethodLibrary.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -42,11 +42,11 @@ public interface MethodLibrary extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Plugin</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodLibrary_MethodPlugin()
-	 * @model type="org.eclipse.epf.xml.uma.MethodPlugin" containment="true"
+	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='MethodPlugin'"
 	 * @generated
 	 */
-	EList getMethodPlugin();
+	EList<MethodPlugin> getMethodPlugin();
 
 	/**
 	 * Returns the value of the '<em><b>Method Configuration</b></em>' containment reference list.
@@ -59,11 +59,11 @@ public interface MethodLibrary extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Configuration</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodLibrary_MethodConfiguration()
-	 * @model type="org.eclipse.epf.xml.uma.MethodConfiguration" containment="true"
+	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='MethodConfiguration'"
 	 * @generated
 	 */
-	EList getMethodConfiguration();
+	EList<MethodConfiguration> getMethodConfiguration();
 
 	/**
 	 * Returns the value of the '<em><b>Tool</b></em>' attribute.
@@ -79,7 +79,7 @@ public interface MethodLibrary extends MethodUnit {
 	 * @return the value of the '<em>Tool</em>' attribute.
 	 * @see #setTool(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodLibrary_Tool()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='tool'"
 	 * @generated
 	 */

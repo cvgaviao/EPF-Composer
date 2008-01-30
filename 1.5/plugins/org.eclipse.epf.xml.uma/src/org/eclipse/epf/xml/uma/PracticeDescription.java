@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: PracticeDescription.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: PracticeDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -43,7 +43,7 @@ public interface PracticeDescription extends ContentDescription {
 	 * @return the value of the '<em>Additional Info</em>' attribute.
 	 * @see #setAdditionalInfo(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPracticeDescription_AdditionalInfo()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='AdditionalInfo'"
 	 * @generated
 	 */
@@ -69,7 +69,7 @@ public interface PracticeDescription extends ContentDescription {
 	 * @return the value of the '<em>Application</em>' attribute.
 	 * @see #setApplication(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPracticeDescription_Application()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Application'"
 	 * @generated
 	 */
@@ -95,7 +95,7 @@ public interface PracticeDescription extends ContentDescription {
 	 * @return the value of the '<em>Background</em>' attribute.
 	 * @see #setBackground(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPracticeDescription_Background()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Background'"
 	 * @generated
 	 */
@@ -121,7 +121,7 @@ public interface PracticeDescription extends ContentDescription {
 	 * @return the value of the '<em>Goals</em>' attribute.
 	 * @see #setGoals(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPracticeDescription_Goals()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Goals'"
 	 * @generated
 	 */
@@ -147,7 +147,7 @@ public interface PracticeDescription extends ContentDescription {
 	 * @return the value of the '<em>Levels Of Adoption</em>' attribute.
 	 * @see #setLevelsOfAdoption(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPracticeDescription_LevelsOfAdoption()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='LevelsOfAdoption'"
 	 * @generated
 	 */
@@ -173,7 +173,7 @@ public interface PracticeDescription extends ContentDescription {
 	 * @return the value of the '<em>Problem</em>' attribute.
 	 * @see #setProblem(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPracticeDescription_Problem()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Problem'"
 	 * @generated
 	 */

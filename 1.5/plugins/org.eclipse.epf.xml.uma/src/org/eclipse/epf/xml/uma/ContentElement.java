@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ContentElement.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: ContentElement.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -52,7 +52,7 @@ public interface ContentElement extends DescribableElement {
 	 * @return the value of the '<em>Group1</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_Group1()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:12'"
+	 *        extendedMetaData="kind='group' name='group:14'"
 	 * @generated
 	 */
 	FeatureMap getGroup1();
@@ -68,11 +68,11 @@ public interface ContentElement extends DescribableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Checklist</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_Checklist()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Checklist' group='#group:12'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Checklist' group='#group:14'"
 	 * @generated
 	 */
-	EList getChecklist();
+	EList<String> getChecklist();
 
 	/**
 	 * Returns the value of the '<em><b>Concept</b></em>' attribute list.
@@ -85,11 +85,11 @@ public interface ContentElement extends DescribableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Concept</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_Concept()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Concept' group='#group:12'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Concept' group='#group:14'"
 	 * @generated
 	 */
-	EList getConcept();
+	EList<String> getConcept();
 
 	/**
 	 * Returns the value of the '<em><b>Example</b></em>' attribute list.
@@ -102,11 +102,11 @@ public interface ContentElement extends DescribableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Example</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_Example()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Example' group='#group:12'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Example' group='#group:14'"
 	 * @generated
 	 */
-	EList getExample();
+	EList<String> getExample();
 
 	/**
 	 * Returns the value of the '<em><b>Guideline</b></em>' attribute list.
@@ -119,11 +119,11 @@ public interface ContentElement extends DescribableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Guideline</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_Guideline()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Guideline' group='#group:12'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Guideline' group='#group:14'"
 	 * @generated
 	 */
-	EList getGuideline();
+	EList<String> getGuideline();
 
 	/**
 	 * Returns the value of the '<em><b>Reusable Asset</b></em>' attribute list.
@@ -136,11 +136,11 @@ public interface ContentElement extends DescribableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Reusable Asset</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_ReusableAsset()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='ReusableAsset' group='#group:12'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='ReusableAsset' group='#group:14'"
 	 * @generated
 	 */
-	EList getReusableAsset();
+	EList<String> getReusableAsset();
 
 	/**
 	 * Returns the value of the '<em><b>Supporting Material</b></em>' attribute list.
@@ -153,11 +153,11 @@ public interface ContentElement extends DescribableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Supporting Material</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_SupportingMaterial()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='SupportingMaterial' group='#group:12'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='SupportingMaterial' group='#group:14'"
 	 * @generated
 	 */
-	EList getSupportingMaterial();
+	EList<String> getSupportingMaterial();
 
 	/**
 	 * Returns the value of the '<em><b>Whitepaper</b></em>' attribute list.
@@ -170,11 +170,11 @@ public interface ContentElement extends DescribableElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Whitepaper</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_Whitepaper()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Whitepaper' group='#group:12'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Whitepaper' group='#group:14'"
 	 * @generated
 	 */
-	EList getWhitepaper();
+	EList<String> getWhitepaper();
 
 	/**
 	 * Returns the value of the '<em><b>Variability Based On Element</b></em>' attribute.
@@ -187,7 +187,7 @@ public interface ContentElement extends DescribableElement {
 	 * @return the value of the '<em>Variability Based On Element</em>' attribute.
 	 * @see #setVariabilityBasedOnElement(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_VariabilityBasedOnElement()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='variabilityBasedOnElement'"
 	 * @generated
 	 */
@@ -219,7 +219,7 @@ public interface ContentElement extends DescribableElement {
 	 * @see #unsetVariabilityType()
 	 * @see #setVariabilityType(VariabilityType)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentElement_VariabilityType()
-	 * @model default="na" unique="false" unsettable="true"
+	 * @model default="na" unsettable="true"
 	 *        extendedMetaData="kind='attribute' name='variabilityType'"
 	 * @generated
 	 */

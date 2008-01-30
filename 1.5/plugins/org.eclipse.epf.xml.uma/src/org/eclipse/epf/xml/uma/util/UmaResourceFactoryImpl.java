@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaResourceFactoryImpl.java,v 1.1 2008/01/15 08:52:51 jtham Exp $
+ * $Id: UmaResourceFactoryImpl.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma.util;
 
@@ -35,6 +35,7 @@ public class UmaResourceFactoryImpl extends ResourceFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Resource createResource(URI uri) {
 		XMLResource result = new UmaResourceImpl(uri);
 		result.getDefaultSaveOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);

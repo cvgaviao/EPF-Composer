@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Descriptor.java,v 1.1 2008/01/15 08:52:06 jtham Exp $
+ * $Id: Descriptor.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -42,7 +42,7 @@ public interface Descriptor extends BreakdownElement {
 	 * @see #unsetIsSynchronizedWithSource()
 	 * @see #setIsSynchronizedWithSource(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDescriptor_IsSynchronizedWithSource()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='isSynchronizedWithSource'"
 	 * @generated
 	 */

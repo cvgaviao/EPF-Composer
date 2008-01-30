@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TaskImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: TaskImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.epf.xml.uma.Task;
@@ -85,24 +86,14 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	protected String postcondition = POSTCONDITION_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPerformedBy() <em>Performed By</em>}' attribute.
+	 * The cached value of the '{@link #getPerformedBy() <em>Performed By</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getPerformedBy()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PERFORMED_BY_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPerformedBy() <em>Performed By</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPerformedBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected String performedBy = PERFORMED_BY_EDEFAULT;
+	protected EList<String> performedBy;
 
 	/**
 	 * The cached value of the '{@link #getGroup2() <em>Group2</em>}' attribute list.
@@ -128,6 +119,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.TASK;
 	}
@@ -179,20 +171,11 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPerformedBy() {
+	public EList<String> getPerformedBy() {
+		if (performedBy == null) {
+			performedBy = new EDataTypeEList<String>(String.class, this, UmaPackage.TASK__PERFORMED_BY);
+		}
 		return performedBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPerformedBy(String newPerformedBy) {
-		String oldPerformedBy = performedBy;
-		performedBy = newPerformedBy;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UmaPackage.TASK__PERFORMED_BY, oldPerformedBy, performedBy));
 	}
 
 	/**
@@ -212,7 +195,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMandatoryInput() {
+	public EList<String> getMandatoryInput() {
 		return getGroup2().list(UmaPackage.Literals.TASK__MANDATORY_INPUT);
 	}
 
@@ -221,7 +204,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getOutput() {
+	public EList<String> getOutput() {
 		return getGroup2().list(UmaPackage.Literals.TASK__OUTPUT);
 	}
 
@@ -230,7 +213,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getAdditionallyPerformedBy() {
+	public EList<String> getAdditionallyPerformedBy() {
 		return getGroup2().list(UmaPackage.Literals.TASK__ADDITIONALLY_PERFORMED_BY);
 	}
 
@@ -239,7 +222,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getOptionalInput() {
+	public EList<String> getOptionalInput() {
 		return getGroup2().list(UmaPackage.Literals.TASK__OPTIONAL_INPUT);
 	}
 
@@ -248,7 +231,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getEstimate() {
+	public EList<String> getEstimate() {
 		return getGroup2().list(UmaPackage.Literals.TASK__ESTIMATE);
 	}
 
@@ -257,7 +240,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getEstimationConsiderations() {
+	public EList<String> getEstimationConsiderations() {
 		return getGroup2().list(UmaPackage.Literals.TASK__ESTIMATION_CONSIDERATIONS);
 	}
 
@@ -266,7 +249,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getToolMentor() {
+	public EList<String> getToolMentor() {
 		return getGroup2().list(UmaPackage.Literals.TASK__TOOL_MENTOR);
 	}
 
@@ -275,10 +258,11 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.TASK__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -288,6 +272,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.TASK__PRECONDITION:
@@ -322,6 +307,8 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.TASK__PRECONDITION:
@@ -331,38 +318,39 @@ public class TaskImpl extends ContentElementImpl implements Task {
 				setPostcondition((String)newValue);
 				return;
 			case UmaPackage.TASK__PERFORMED_BY:
-				setPerformedBy((String)newValue);
+				getPerformedBy().clear();
+				getPerformedBy().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK__GROUP2:
 				((FeatureMap.Internal)getGroup2()).set(newValue);
 				return;
 			case UmaPackage.TASK__MANDATORY_INPUT:
 				getMandatoryInput().clear();
-				getMandatoryInput().addAll((Collection)newValue);
+				getMandatoryInput().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK__OUTPUT:
 				getOutput().clear();
-				getOutput().addAll((Collection)newValue);
+				getOutput().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK__ADDITIONALLY_PERFORMED_BY:
 				getAdditionallyPerformedBy().clear();
-				getAdditionallyPerformedBy().addAll((Collection)newValue);
+				getAdditionallyPerformedBy().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK__OPTIONAL_INPUT:
 				getOptionalInput().clear();
-				getOptionalInput().addAll((Collection)newValue);
+				getOptionalInput().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK__ESTIMATE:
 				getEstimate().clear();
-				getEstimate().addAll((Collection)newValue);
+				getEstimate().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK__ESTIMATION_CONSIDERATIONS:
 				getEstimationConsiderations().clear();
-				getEstimationConsiderations().addAll((Collection)newValue);
+				getEstimationConsiderations().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK__TOOL_MENTOR:
 				getToolMentor().clear();
-				getToolMentor().addAll((Collection)newValue);
+				getToolMentor().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -373,6 +361,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.TASK__PRECONDITION:
@@ -382,7 +371,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 				setPostcondition(POSTCONDITION_EDEFAULT);
 				return;
 			case UmaPackage.TASK__PERFORMED_BY:
-				setPerformedBy(PERFORMED_BY_EDEFAULT);
+				getPerformedBy().clear();
 				return;
 			case UmaPackage.TASK__GROUP2:
 				getGroup2().clear();
@@ -417,6 +406,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.TASK__PRECONDITION:
@@ -424,7 +414,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 			case UmaPackage.TASK__POSTCONDITION:
 				return POSTCONDITION_EDEFAULT == null ? postcondition != null : !POSTCONDITION_EDEFAULT.equals(postcondition);
 			case UmaPackage.TASK__PERFORMED_BY:
-				return PERFORMED_BY_EDEFAULT == null ? performedBy != null : !PERFORMED_BY_EDEFAULT.equals(performedBy);
+				return performedBy != null && !performedBy.isEmpty();
 			case UmaPackage.TASK__GROUP2:
 				return group2 != null && !group2.isEmpty();
 			case UmaPackage.TASK__MANDATORY_INPUT:
@@ -450,6 +440,7 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: RoleDescriptor.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: RoleDescriptor.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -41,7 +41,7 @@ public interface RoleDescriptor extends Descriptor {
 	 * @return the value of the '<em>Role</em>' attribute.
 	 * @see #setRole(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getRoleDescriptor_Role()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Role'"
 	 * @generated
 	 */
@@ -68,10 +68,10 @@ public interface RoleDescriptor extends Descriptor {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Responsible For</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getRoleDescriptor_ResponsibleFor()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ResponsibleFor'"
 	 * @generated
 	 */
-	EList getResponsibleFor();
+	EList<String> getResponsibleFor();
 
 } // RoleDescriptor

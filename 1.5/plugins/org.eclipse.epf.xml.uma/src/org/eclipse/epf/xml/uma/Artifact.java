@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Artifact.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: Artifact.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -44,7 +44,7 @@ public interface Artifact extends WorkProduct {
 	 * @return the value of the '<em>Group3</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getArtifact_Group3()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:28'"
+	 *        extendedMetaData="kind='group' name='group:30'"
 	 * @generated
 	 */
 	FeatureMap getGroup3();
@@ -60,10 +60,10 @@ public interface Artifact extends WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Contained Artifact</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getArtifact_ContainedArtifact()
-	 * @model type="org.eclipse.epf.xml.uma.Artifact" containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='ContainedArtifact' group='#group:28'"
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='ContainedArtifact' group='#group:30'"
 	 * @generated
 	 */
-	EList getContainedArtifact();
+	EList<Artifact> getContainedArtifact();
 
 } // Artifact

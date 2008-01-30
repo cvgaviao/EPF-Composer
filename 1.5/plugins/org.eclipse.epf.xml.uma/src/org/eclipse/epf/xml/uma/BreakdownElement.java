@@ -2,9 +2,12 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BreakdownElement.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: BreakdownElement.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.FeatureMap;
 
 
 /**
@@ -23,6 +26,14 @@ package org.eclipse.epf.xml.uma;
  *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getPresentedBefore <em>Presented Before</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getPlanningData <em>Planning Data</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getSuperActivity <em>Super Activity</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getGroup1 <em>Group1</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getChecklist <em>Checklist</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getConcept <em>Concept</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getExample <em>Example</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getGuideline <em>Guideline</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getReusableAsset <em>Reusable Asset</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getSupportingMaterial <em>Supporting Material</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#getWhitepaper <em>Whitepaper</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#isHasMultipleOccurrences <em>Has Multiple Occurrences</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#isIsOptional <em>Is Optional</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.BreakdownElement#isIsPlanned <em>Is Planned</em>}</li>
@@ -46,7 +57,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @return the value of the '<em>Presented After</em>' attribute.
 	 * @see #setPresentedAfter(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_PresentedAfter()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='PresentedAfter'"
 	 * @generated
 	 */
@@ -73,7 +84,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @return the value of the '<em>Presented Before</em>' attribute.
 	 * @see #setPresentedBefore(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_PresentedBefore()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='PresentedBefore'"
 	 * @generated
 	 */
@@ -100,7 +111,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @return the value of the '<em>Planning Data</em>' attribute.
 	 * @see #setPlanningData(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_PlanningData()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='PlanningData'"
 	 * @generated
 	 */
@@ -127,7 +138,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @return the value of the '<em>Super Activity</em>' attribute.
 	 * @see #setSuperActivity(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_SuperActivity()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='SuperActivity'"
 	 * @generated
 	 */
@@ -144,6 +155,142 @@ public interface BreakdownElement extends ProcessElement {
 	void setSuperActivity(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Group1</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Group1</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Group1</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_Group1()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
+	 *        extendedMetaData="kind='group' name='group:18'"
+	 * @generated
+	 */
+	FeatureMap getGroup1();
+
+	/**
+	 * Returns the value of the '<em><b>Checklist</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Checklist</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Checklist</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_Checklist()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Checklist' group='#group:18'"
+	 * @generated
+	 */
+	EList<String> getChecklist();
+
+	/**
+	 * Returns the value of the '<em><b>Concept</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Concept</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Concept</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_Concept()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Concept' group='#group:18'"
+	 * @generated
+	 */
+	EList<String> getConcept();
+
+	/**
+	 * Returns the value of the '<em><b>Example</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Example</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Example</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_Example()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Example' group='#group:18'"
+	 * @generated
+	 */
+	EList<String> getExample();
+
+	/**
+	 * Returns the value of the '<em><b>Guideline</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Guideline</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guideline</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_Guideline()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Guideline' group='#group:18'"
+	 * @generated
+	 */
+	EList<String> getGuideline();
+
+	/**
+	 * Returns the value of the '<em><b>Reusable Asset</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Reusable Asset</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Reusable Asset</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_ReusableAsset()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='ReusableAsset' group='#group:18'"
+	 * @generated
+	 */
+	EList<String> getReusableAsset();
+
+	/**
+	 * Returns the value of the '<em><b>Supporting Material</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Supporting Material</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Supporting Material</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_SupportingMaterial()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='SupportingMaterial' group='#group:18'"
+	 * @generated
+	 */
+	EList<String> getSupportingMaterial();
+
+	/**
+	 * Returns the value of the '<em><b>Whitepaper</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Whitepaper</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Whitepaper</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_Whitepaper()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Whitepaper' group='#group:18'"
+	 * @generated
+	 */
+	EList<String> getWhitepaper();
+
+	/**
 	 * Returns the value of the '<em><b>Has Multiple Occurrences</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -155,7 +302,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @see #unsetHasMultipleOccurrences()
 	 * @see #setHasMultipleOccurrences(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_HasMultipleOccurrences()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='hasMultipleOccurrences'"
 	 * @generated
 	 */
@@ -208,7 +355,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @see #unsetIsOptional()
 	 * @see #setIsOptional(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_IsOptional()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='isOptional'"
 	 * @generated
 	 */
@@ -262,7 +409,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @see #unsetIsPlanned()
 	 * @see #setIsPlanned(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_IsPlanned()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='isPlanned'"
 	 * @generated
 	 */
@@ -313,7 +460,7 @@ public interface BreakdownElement extends ProcessElement {
 	 * @return the value of the '<em>Prefix</em>' attribute.
 	 * @see #setPrefix(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getBreakdownElement_Prefix()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='prefix'"
 	 * @generated
 	 */

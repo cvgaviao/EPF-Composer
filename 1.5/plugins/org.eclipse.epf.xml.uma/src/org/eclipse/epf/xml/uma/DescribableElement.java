@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DescribableElement.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: DescribableElement.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
+
+import org.eclipse.emf.common.util.EList;
 
 
 /**
@@ -21,8 +23,9 @@ package org.eclipse.epf.xml.uma;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.epf.xml.uma.DescribableElement#getPresentation <em>Presentation</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.DescribableElement#getFulfill <em>Fulfill</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.DescribableElement#isIsAbstract <em>Is Abstract</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.DescribableElement#getNodeicon <em>Nodeicon</em>}</li>
- *   <li>{@link org.eclipse.epf.xml.uma.DescribableElement#getPresentationName <em>Presentation Name</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.DescribableElement#getShapeicon <em>Shapeicon</em>}</li>
  * </ul>
  * </p>
@@ -60,6 +63,77 @@ public interface DescribableElement extends MethodElement {
 	void setPresentation(ContentDescription value);
 
 	/**
+	 * Returns the value of the '<em><b>Fulfill</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Fulfill</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Fulfill</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDescribableElement_Fulfill()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='element' name='Fulfill'"
+	 * @generated
+	 */
+	EList<String> getFulfill();
+
+	/**
+	 * Returns the value of the '<em><b>Is Abstract</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Abstract</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Abstract</em>' attribute.
+	 * @see #isSetIsAbstract()
+	 * @see #unsetIsAbstract()
+	 * @see #setIsAbstract(boolean)
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDescribableElement_IsAbstract()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute' name='isAbstract'"
+	 * @generated
+	 */
+	boolean isIsAbstract();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.epf.xml.uma.DescribableElement#isIsAbstract <em>Is Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Abstract</em>' attribute.
+	 * @see #isSetIsAbstract()
+	 * @see #unsetIsAbstract()
+	 * @see #isIsAbstract()
+	 * @generated
+	 */
+	void setIsAbstract(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.xml.uma.DescribableElement#isIsAbstract <em>Is Abstract</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetIsAbstract()
+	 * @see #isIsAbstract()
+	 * @see #setIsAbstract(boolean)
+	 * @generated
+	 */
+	void unsetIsAbstract();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.xml.uma.DescribableElement#isIsAbstract <em>Is Abstract</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Is Abstract</em>' attribute is set.
+	 * @see #unsetIsAbstract()
+	 * @see #isIsAbstract()
+	 * @see #setIsAbstract(boolean)
+	 * @generated
+	 */
+	boolean isSetIsAbstract();
+
+	/**
 	 * Returns the value of the '<em><b>Nodeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -69,7 +143,7 @@ public interface DescribableElement extends MethodElement {
 	 * @return the value of the '<em>Nodeicon</em>' attribute.
 	 * @see #setNodeicon(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDescribableElement_Nodeicon()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='nodeicon'"
 	 * @generated
 	 */
@@ -86,32 +160,6 @@ public interface DescribableElement extends MethodElement {
 	void setNodeicon(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Presentation Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Every Describable Element has a presentation name, which is used for external presentation of the element.  For example, name (the internal representation) might be set to "rup_architecture_document" to differentiate from a "j2ee_architcture_document" whereas the external presentation would always be "Architecture Document".
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Presentation Name</em>' attribute.
-	 * @see #setPresentationName(String)
-	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDescribableElement_PresentationName()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='presentationName'"
-	 * @generated
-	 */
-	String getPresentationName();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.epf.xml.uma.DescribableElement#getPresentationName <em>Presentation Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Presentation Name</em>' attribute.
-	 * @see #getPresentationName()
-	 * @generated
-	 */
-	void setPresentationName(String value);
-
-	/**
 	 * Returns the value of the '<em><b>Shapeicon</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -121,7 +169,7 @@ public interface DescribableElement extends MethodElement {
 	 * @return the value of the '<em>Shapeicon</em>' attribute.
 	 * @see #setShapeicon(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDescribableElement_Shapeicon()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='shapeicon'"
 	 * @generated
 	 */

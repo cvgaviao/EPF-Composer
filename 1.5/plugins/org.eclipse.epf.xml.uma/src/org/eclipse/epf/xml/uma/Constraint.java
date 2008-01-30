@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Constraint.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: Constraint.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -38,7 +38,7 @@ public interface Constraint extends MethodElement {
 	 * @return the value of the '<em>Main Description</em>' attribute.
 	 * @see #setMainDescription(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getConstraint_MainDescription()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='mainDescription'"
 	 * @generated
 	 */

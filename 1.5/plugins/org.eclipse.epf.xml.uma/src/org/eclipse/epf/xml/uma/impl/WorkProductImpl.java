@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkProductImpl.java,v 1.1 2008/01/15 08:51:35 jtham Exp $
+ * $Id: WorkProductImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -61,6 +61,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_PRODUCT;
 	}
@@ -82,7 +83,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getEstimate() {
+	public EList<String> getEstimate() {
 		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT__ESTIMATE);
 	}
 
@@ -91,7 +92,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getEstimationConsiderations() {
+	public EList<String> getEstimationConsiderations() {
 		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT__ESTIMATION_CONSIDERATIONS);
 	}
 
@@ -100,7 +101,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getReport() {
+	public EList<String> getReport() {
 		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT__REPORT);
 	}
 
@@ -109,7 +110,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getTemplate() {
+	public EList<String> getTemplate() {
 		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT__TEMPLATE);
 	}
 
@@ -118,7 +119,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getToolMentor() {
+	public EList<String> getToolMentor() {
 		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT__TOOL_MENTOR);
 	}
 
@@ -127,10 +128,11 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -140,6 +142,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT__GROUP2:
@@ -164,6 +167,8 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT__GROUP2:
@@ -171,23 +176,23 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 				return;
 			case UmaPackage.WORK_PRODUCT__ESTIMATE:
 				getEstimate().clear();
-				getEstimate().addAll((Collection)newValue);
+				getEstimate().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT__ESTIMATION_CONSIDERATIONS:
 				getEstimationConsiderations().clear();
-				getEstimationConsiderations().addAll((Collection)newValue);
+				getEstimationConsiderations().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT__REPORT:
 				getReport().clear();
-				getReport().addAll((Collection)newValue);
+				getReport().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT__TEMPLATE:
 				getTemplate().clear();
-				getTemplate().addAll((Collection)newValue);
+				getTemplate().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT__TOOL_MENTOR:
 				getToolMentor().clear();
-				getToolMentor().addAll((Collection)newValue);
+				getToolMentor().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -198,6 +203,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT__GROUP2:
@@ -227,6 +233,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT__GROUP2:
@@ -250,6 +257,7 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

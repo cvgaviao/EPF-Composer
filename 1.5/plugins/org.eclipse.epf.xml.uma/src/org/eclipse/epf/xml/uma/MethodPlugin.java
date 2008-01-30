@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodPlugin.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: MethodPlugin.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -44,11 +44,11 @@ public interface MethodPlugin extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Referenced Method Plugin</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPlugin_ReferencedMethodPlugin()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ReferencedMethodPlugin'"
 	 * @generated
 	 */
-	EList getReferencedMethodPlugin();
+	EList<String> getReferencedMethodPlugin();
 
 	/**
 	 * Returns the value of the '<em><b>Method Package</b></em>' containment reference list.
@@ -61,11 +61,11 @@ public interface MethodPlugin extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Package</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPlugin_MethodPackage()
-	 * @model type="org.eclipse.epf.xml.uma.MethodPackage" containment="true"
+	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='MethodPackage'"
 	 * @generated
 	 */
-	EList getMethodPackage();
+	EList<MethodPackage> getMethodPackage();
 
 	/**
 	 * Returns the value of the '<em><b>User Changeable</b></em>' attribute.
@@ -80,7 +80,7 @@ public interface MethodPlugin extends MethodUnit {
 	 * @see #unsetUserChangeable()
 	 * @see #setUserChangeable(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPlugin_UserChangeable()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='userChangeable'"
 	 * @generated
 	 */

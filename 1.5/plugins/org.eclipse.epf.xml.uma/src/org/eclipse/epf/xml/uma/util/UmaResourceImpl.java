@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaResourceImpl.java,v 1.1 2008/01/15 08:52:51 jtham Exp $
+ * $Id: UmaResourceImpl.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma.util;
 
@@ -10,8 +10,11 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLSave;
+import org.eclipse.emf.ecore.xmi.impl.XMLHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
+import org.eclipse.epf.xml.uma.UmaPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -47,5 +50,17 @@ public class UmaResourceImpl extends XMLResourceImpl {
 		// return super.createXMLSave();
 		return new UmaXMLSaveImpl(createXMLHelper());
 	}
+		
+	protected XMLHelper createXMLHelper() {
+		XMLHelperImpl helper = new XMLHelperImpl(this) {
+			public void addPrefix(String prefix, String uri) {
+				if (prefix.equals("uma")) {		//$NON-NLS-1$
+					uri = UmaPackage.eNS_URI;
+				}
+				super.addPrefix(prefix, uri);
+			}
+		};
+		return helper;
+	}
 	
-} //UmaResourceImpl
+} // UmaResourceImpl

@@ -2,10 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodUnitImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: MethodUnitImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
+import javax.xml.datatype.XMLGregorianCalendar;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -78,7 +79,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Object CHANGE_DATE_EDEFAULT = null;
+	protected static final XMLGregorianCalendar CHANGE_DATE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getChangeDate() <em>Change Date</em>}' attribute.
@@ -88,7 +89,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * @generated
 	 * @ordered
 	 */
-	protected Object changeDate = CHANGE_DATE_EDEFAULT;
+	protected XMLGregorianCalendar changeDate = CHANGE_DATE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getChangeDescription() <em>Change Description</em>}' attribute.
@@ -144,6 +145,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_UNIT;
 	}
@@ -195,7 +197,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Object getChangeDate() {
+	public XMLGregorianCalendar getChangeDate() {
 		return changeDate;
 	}
 
@@ -204,8 +206,8 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setChangeDate(Object newChangeDate) {
-		Object oldChangeDate = changeDate;
+	public void setChangeDate(XMLGregorianCalendar newChangeDate) {
+		XMLGregorianCalendar oldChangeDate = changeDate;
 		changeDate = newChangeDate;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, UmaPackage.METHOD_UNIT__CHANGE_DATE, oldChangeDate, changeDate));
@@ -258,6 +260,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.METHOD_UNIT__COPYRIGHT:
@@ -279,6 +282,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.METHOD_UNIT__COPYRIGHT:
@@ -288,7 +292,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 				setAuthors((String)newValue);
 				return;
 			case UmaPackage.METHOD_UNIT__CHANGE_DATE:
-				setChangeDate(newValue);
+				setChangeDate((XMLGregorianCalendar)newValue);
 				return;
 			case UmaPackage.METHOD_UNIT__CHANGE_DESCRIPTION:
 				setChangeDescription((String)newValue);
@@ -305,6 +309,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_UNIT__COPYRIGHT:
@@ -331,6 +336,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_UNIT__COPYRIGHT:
@@ -352,6 +358,7 @@ public class MethodUnitImpl extends MethodElementImpl implements MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

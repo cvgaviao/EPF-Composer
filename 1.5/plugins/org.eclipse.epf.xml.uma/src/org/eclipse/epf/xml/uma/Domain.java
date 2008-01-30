@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Domain.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: Domain.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -45,7 +45,7 @@ public interface Domain extends ContentCategory {
 	 * @return the value of the '<em>Group2</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDomain_Group2()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:22'"
+	 *        extendedMetaData="kind='group' name='group:24'"
 	 * @generated
 	 */
 	FeatureMap getGroup2();
@@ -61,11 +61,11 @@ public interface Domain extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Work Product</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDomain_WorkProduct()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='WorkProduct' group='#group:22'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='WorkProduct' group='#group:24'"
 	 * @generated
 	 */
-	EList getWorkProduct();
+	EList<String> getWorkProduct();
 
 	/**
 	 * Returns the value of the '<em><b>Subdomain</b></em>' containment reference list.
@@ -78,10 +78,10 @@ public interface Domain extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Subdomain</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDomain_Subdomain()
-	 * @model type="org.eclipse.epf.xml.uma.Domain" containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Subdomain' group='#group:22'"
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Subdomain' group='#group:24'"
 	 * @generated
 	 */
-	EList getSubdomain();
+	EList<Domain> getSubdomain();
 
 } // Domain

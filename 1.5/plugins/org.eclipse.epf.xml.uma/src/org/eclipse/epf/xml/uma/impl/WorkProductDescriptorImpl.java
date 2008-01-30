@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkProductDescriptorImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: WorkProductDescriptorImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -34,7 +34,7 @@ import org.eclipse.epf.xml.uma.WorkProductDescriptor;
  * <ul>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl#getWorkProduct <em>Work Product</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl#getResponsibleRole <em>Responsible Role</em>}</li>
- *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl#getGroup1 <em>Group1</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl#getGroup2 <em>Group2</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl#getExternalInputTo <em>External Input To</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl#getImpactedBy <em>Impacted By</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl#getImpacts <em>Impacts</em>}</li>
@@ -91,14 +91,14 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	protected String responsibleRole = RESPONSIBLE_ROLE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getGroup1() <em>Group1</em>}' attribute list.
+	 * The cached value of the '{@link #getGroup2() <em>Group2</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGroup1()
+	 * @see #getGroup2()
 	 * @generated
 	 * @ordered
 	 */
-	protected FeatureMap group1;
+	protected FeatureMap group2;
 
 	/**
 	 * The default value of the '{@link #getActivityEntryState() <em>Activity Entry State</em>}' attribute.
@@ -154,6 +154,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR;
 	}
@@ -205,11 +206,11 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FeatureMap getGroup1() {
-		if (group1 == null) {
-			group1 = new BasicFeatureMap(this, UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP1);
+	public FeatureMap getGroup2() {
+		if (group2 == null) {
+			group2 = new BasicFeatureMap(this, UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP2);
 		}
-		return group1;
+		return group2;
 	}
 
 	/**
@@ -217,8 +218,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getExternalInputTo() {
-		return getGroup1().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__EXTERNAL_INPUT_TO);
+	public EList<String> getExternalInputTo() {
+		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__EXTERNAL_INPUT_TO);
 	}
 
 	/**
@@ -226,8 +227,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getImpactedBy() {
-		return getGroup1().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY);
+	public EList<String> getImpactedBy() {
+		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY);
 	}
 
 	/**
@@ -235,8 +236,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getImpacts() {
-		return getGroup1().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__IMPACTS);
+	public EList<String> getImpacts() {
+		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__IMPACTS);
 	}
 
 	/**
@@ -244,8 +245,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMandatoryInputTo() {
-		return getGroup1().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__MANDATORY_INPUT_TO);
+	public EList<String> getMandatoryInputTo() {
+		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__MANDATORY_INPUT_TO);
 	}
 
 	/**
@@ -253,8 +254,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getOptionalInputTo() {
-		return getGroup1().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__OPTIONAL_INPUT_TO);
+	public EList<String> getOptionalInputTo() {
+		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__OPTIONAL_INPUT_TO);
 	}
 
 	/**
@@ -262,8 +263,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getOutputFrom() {
-		return getGroup1().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__OUTPUT_FROM);
+	public EList<String> getOutputFrom() {
+		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__OUTPUT_FROM);
 	}
 
 	/**
@@ -271,8 +272,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getDeliverableParts() {
-		return getGroup1().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS);
+	public EList<String> getDeliverableParts() {
+		return getGroup2().list(UmaPackage.Literals.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS);
 	}
 
 	/**
@@ -322,10 +323,11 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP1:
-				return ((InternalEList)getGroup1()).basicRemove(otherEnd, msgs);
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP2:
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -335,15 +337,16 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
 				return getWorkProduct();
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__RESPONSIBLE_ROLE:
 				return getResponsibleRole();
-			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP1:
-				if (coreType) return getGroup1();
-				return ((FeatureMap.Internal)getGroup1()).getWrapper();
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP2:
+				if (coreType) return getGroup2();
+				return ((FeatureMap.Internal)getGroup2()).getWrapper();
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__EXTERNAL_INPUT_TO:
 				return getExternalInputTo();
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
@@ -371,6 +374,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
@@ -379,36 +384,36 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__RESPONSIBLE_ROLE:
 				setResponsibleRole((String)newValue);
 				return;
-			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP1:
-				((FeatureMap.Internal)getGroup1()).set(newValue);
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP2:
+				((FeatureMap.Internal)getGroup2()).set(newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__EXTERNAL_INPUT_TO:
 				getExternalInputTo().clear();
-				getExternalInputTo().addAll((Collection)newValue);
+				getExternalInputTo().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
 				getImpactedBy().clear();
-				getImpactedBy().addAll((Collection)newValue);
+				getImpactedBy().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTS:
 				getImpacts().clear();
-				getImpacts().addAll((Collection)newValue);
+				getImpacts().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__MANDATORY_INPUT_TO:
 				getMandatoryInputTo().clear();
-				getMandatoryInputTo().addAll((Collection)newValue);
+				getMandatoryInputTo().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__OPTIONAL_INPUT_TO:
 				getOptionalInputTo().clear();
-				getOptionalInputTo().addAll((Collection)newValue);
+				getOptionalInputTo().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__OUTPUT_FROM:
 				getOutputFrom().clear();
-				getOutputFrom().addAll((Collection)newValue);
+				getOutputFrom().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS:
 				getDeliverableParts().clear();
-				getDeliverableParts().addAll((Collection)newValue);
+				getDeliverableParts().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
 				setActivityEntryState((String)newValue);
@@ -425,6 +430,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
@@ -433,8 +439,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__RESPONSIBLE_ROLE:
 				setResponsibleRole(RESPONSIBLE_ROLE_EDEFAULT);
 				return;
-			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP1:
-				getGroup1().clear();
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP2:
+				getGroup2().clear();
 				return;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__EXTERNAL_INPUT_TO:
 				getExternalInputTo().clear();
@@ -472,14 +478,15 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__WORK_PRODUCT:
 				return WORK_PRODUCT_EDEFAULT == null ? workProduct != null : !WORK_PRODUCT_EDEFAULT.equals(workProduct);
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__RESPONSIBLE_ROLE:
 				return RESPONSIBLE_ROLE_EDEFAULT == null ? responsibleRole != null : !RESPONSIBLE_ROLE_EDEFAULT.equals(responsibleRole);
-			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP1:
-				return group1 != null && !group1.isEmpty();
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__GROUP2:
+				return group2 != null && !group2.isEmpty();
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__EXTERNAL_INPUT_TO:
 				return !getExternalInputTo().isEmpty();
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__IMPACTED_BY:
@@ -507,6 +514,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -515,8 +523,8 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements WorkPro
 		result.append(workProduct);
 		result.append(", responsibleRole: ");
 		result.append(responsibleRole);
-		result.append(", group1: ");
-		result.append(group1);
+		result.append(", group2: ");
+		result.append(group2);
 		result.append(", activityEntryState: ");
 		result.append(activityEntryState);
 		result.append(", activityExitState: ");

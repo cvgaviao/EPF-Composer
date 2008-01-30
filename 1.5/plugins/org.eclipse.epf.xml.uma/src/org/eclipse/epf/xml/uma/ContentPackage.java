@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ContentPackage.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: ContentPackage.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -43,7 +43,7 @@ public interface ContentPackage extends MethodPackage {
 	 * @return the value of the '<em>Group2</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentPackage_Group2()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:12'"
+	 *        extendedMetaData="kind='group' name='group:13'"
 	 * @generated
 	 */
 	FeatureMap getGroup2();
@@ -59,10 +59,10 @@ public interface ContentPackage extends MethodPackage {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Content Element</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentPackage_ContentElement()
-	 * @model type="org.eclipse.epf.xml.uma.ContentElement" containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='ContentElement' group='#group:12'"
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='ContentElement' group='#group:13'"
 	 * @generated
 	 */
-	EList getContentElement();
+	EList<ContentElement> getContentElement();
 
 } // ContentPackage

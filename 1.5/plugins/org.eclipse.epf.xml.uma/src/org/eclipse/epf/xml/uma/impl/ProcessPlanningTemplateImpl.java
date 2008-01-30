@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ProcessPlanningTemplateImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: ProcessPlanningTemplateImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -25,7 +25,7 @@ import org.eclipse.epf.xml.uma.UmaPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.epf.xml.uma.impl.ProcessPlanningTemplateImpl#getGroup3 <em>Group3</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.impl.ProcessPlanningTemplateImpl#getGroup4 <em>Group4</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.ProcessPlanningTemplateImpl#getBaseProcess <em>Base Process</em>}</li>
  * </ul>
  * </p>
@@ -34,15 +34,14 @@ import org.eclipse.epf.xml.uma.UmaPackage;
  */
 public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessPlanningTemplate {
 	/**
-	 * The cached value of the '{@link #getGroup3() <em>Group3</em>}' attribute list.
+	 * The cached value of the '{@link #getGroup4() <em>Group4</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGroup3()
+	 * @see #getGroup4()
 	 * @generated
 	 * @ordered
 	 */
-	protected FeatureMap group3;
-
+	protected FeatureMap group4;
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -57,6 +56,7 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_PLANNING_TEMPLATE;
 	}
@@ -66,11 +66,11 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FeatureMap getGroup3() {
-		if (group3 == null) {
-			group3 = new BasicFeatureMap(this, UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP3);
+	public FeatureMap getGroup4() {
+		if (group4 == null) {
+			group4 = new BasicFeatureMap(this, UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP4);
 		}
-		return group3;
+		return group4;
 	}
 
 	/**
@@ -78,8 +78,8 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getBaseProcess() {
-		return getGroup3().list(UmaPackage.Literals.PROCESS_PLANNING_TEMPLATE__BASE_PROCESS);
+	public EList<String> getBaseProcess() {
+		return getGroup4().list(UmaPackage.Literals.PROCESS_PLANNING_TEMPLATE__BASE_PROCESS);
 	}
 
 	/**
@@ -87,10 +87,11 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP3:
-				return ((InternalEList)getGroup3()).basicRemove(otherEnd, msgs);
+			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP4:
+				return ((InternalEList<?>)getGroup4()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -100,11 +101,12 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP3:
-				if (coreType) return getGroup3();
-				return ((FeatureMap.Internal)getGroup3()).getWrapper();
+			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP4:
+				if (coreType) return getGroup4();
+				return ((FeatureMap.Internal)getGroup4()).getWrapper();
 			case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASE_PROCESS:
 				return getBaseProcess();
 		}
@@ -116,14 +118,16 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP3:
-				((FeatureMap.Internal)getGroup3()).set(newValue);
+			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP4:
+				((FeatureMap.Internal)getGroup4()).set(newValue);
 				return;
 			case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASE_PROCESS:
 				getBaseProcess().clear();
-				getBaseProcess().addAll((Collection)newValue);
+				getBaseProcess().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -134,10 +138,11 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP3:
-				getGroup3().clear();
+			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP4:
+				getGroup4().clear();
 				return;
 			case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASE_PROCESS:
 				getBaseProcess().clear();
@@ -151,10 +156,11 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP3:
-				return group3 != null && !group3.isEmpty();
+			case UmaPackage.PROCESS_PLANNING_TEMPLATE__GROUP4:
+				return group4 != null && !group4.isEmpty();
 			case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASE_PROCESS:
 				return !getBaseProcess().isEmpty();
 		}
@@ -166,12 +172,13 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements ProcessP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (group3: ");
-		result.append(group3);
+		result.append(" (group4: ");
+		result.append(group4);
 		result.append(')');
 		return result.toString();
 	}

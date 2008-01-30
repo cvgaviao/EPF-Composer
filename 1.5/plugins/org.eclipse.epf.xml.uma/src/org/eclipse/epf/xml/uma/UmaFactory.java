@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaFactory.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: UmaFactory.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -42,6 +42,15 @@ public interface UmaFactory extends EFactory {
 	 * @generated
 	 */
 	ActivityDescription createActivityDescription();
+
+	/**
+	 * Returns a new object of class '<em>Applicable Meta Class Info</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Applicable Meta Class Info</em>'.
+	 * @generated
+	 */
+	ApplicableMetaClassInfo createApplicableMetaClassInfo();
 
 	/**
 	 * Returns a new object of class '<em>Artifact</em>'.
@@ -357,6 +366,15 @@ public interface UmaFactory extends EFactory {
 	 * @generated
 	 */
 	Iteration createIteration();
+
+	/**
+	 * Returns a new object of class '<em>Kind</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Kind</em>'.
+	 * @generated
+	 */
+	Kind createKind();
 
 	/**
 	 * Returns a new object of class '<em>Method Configuration</em>'.

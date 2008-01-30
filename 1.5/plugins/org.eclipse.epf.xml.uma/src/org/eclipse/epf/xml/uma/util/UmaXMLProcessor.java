@@ -2,13 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaXMLProcessor.java,v 1.1 2008/01/15 08:52:51 jtham Exp $
+ * $Id: UmaXMLProcessor.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma.util;
 
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.util.XMLProcessor;
 import org.eclipse.epf.xml.uma.UmaPackage;
 
@@ -36,7 +37,8 @@ public class UmaXMLProcessor extends XMLProcessor {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Map getRegistrations() {
+	@Override
+	protected Map<String, Resource.Factory> getRegistrations() {
 		if (registrations == null) {
 			super.getRegistrations();
 			registrations.put(XML_EXTENSION, new UmaResourceFactoryImpl());

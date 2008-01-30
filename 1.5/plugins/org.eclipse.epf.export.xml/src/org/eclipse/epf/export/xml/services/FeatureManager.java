@@ -123,6 +123,8 @@ public class FeatureManager {
 		featureNameMap.put("workProducts", "workProduct"); //$NON-NLS-1$ //$NON-NLS-2$
 		featureNameMap.put("pred", "value"); //$NON-NLS-1$ //$NON-NLS-2$
 		featureNameMap.put("methodElementProperty", "methodElementProperty"); //$NON-NLS-1$ //$NON-NLS-2$
+		featureNameMap.put("requiredResults", "requiredResult"); //$NON-NLS-1$ //$NON-NLS-2$
+		featureNameMap.put("fulfills", "fulfill"); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		unneededRmcFeatures.add("containerArtifact"); //$NON-NLS-1$
 		unneededRmcFeatures.add("modifies"); //$NON-NLS-1$

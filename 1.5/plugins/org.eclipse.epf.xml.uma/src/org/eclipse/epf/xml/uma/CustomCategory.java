@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CustomCategory.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: CustomCategory.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -44,7 +44,7 @@ public interface CustomCategory extends ContentCategory {
 	 * @return the value of the '<em>Group2</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getCustomCategory_Group2()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:22'"
+	 *        extendedMetaData="kind='group' name='group:24'"
 	 * @generated
 	 */
 	FeatureMap getGroup2();
@@ -60,11 +60,11 @@ public interface CustomCategory extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Categorized Element</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getCustomCategory_CategorizedElement()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='CategorizedElement' group='#group:22'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='CategorizedElement' group='#group:24'"
 	 * @generated
 	 */
-	EList getCategorizedElement();
+	EList<String> getCategorizedElement();
 
 	/**
 	 * Returns the value of the '<em><b>Sub Category</b></em>' attribute list.
@@ -77,10 +77,10 @@ public interface CustomCategory extends ContentCategory {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Sub Category</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getCustomCategory_SubCategory()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='SubCategory' group='#group:22'"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='SubCategory' group='#group:24'"
 	 * @generated
 	 */
-	EList getSubCategory();
+	EList<String> getSubCategory();
 
 } // CustomCategory

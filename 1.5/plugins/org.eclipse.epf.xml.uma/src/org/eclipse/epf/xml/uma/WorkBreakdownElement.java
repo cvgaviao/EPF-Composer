@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkBreakdownElement.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: WorkBreakdownElement.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#getGroup1 <em>Group1</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#getGroup2 <em>Group2</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#getPredecessor <em>Predecessor</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#isIsEventDriven <em>Is Event Driven</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkBreakdownElement#isIsOngoing <em>Is Ongoing</em>}</li>
@@ -35,21 +35,21 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  */
 public interface WorkBreakdownElement extends BreakdownElement {
 	/**
-	 * Returns the value of the '<em><b>Group1</b></em>' attribute list.
+	 * Returns the value of the '<em><b>Group2</b></em>' attribute list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Group1</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Group2</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Group1</em>' attribute list.
-	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkBreakdownElement_Group1()
+	 * @return the value of the '<em>Group2</em>' attribute list.
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkBreakdownElement_Group2()
 	 * @model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
-	 *        extendedMetaData="kind='group' name='group:20'"
+	 *        extendedMetaData="kind='group' name='group:30'"
 	 * @generated
 	 */
-	FeatureMap getGroup1();
+	FeatureMap getGroup2();
 
 	/**
 	 * Returns the value of the '<em><b>Predecessor</b></em>' containment reference list.
@@ -62,11 +62,11 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Predecessor</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkBreakdownElement_Predecessor()
-	 * @model type="org.eclipse.epf.xml.uma.WorkOrder" containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="kind='element' name='Predecessor' group='#group:20'"
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="kind='element' name='Predecessor' group='#group:30'"
 	 * @generated
 	 */
-	EList getPredecessor();
+	EList<WorkOrder> getPredecessor();
 
 	/**
 	 * Returns the value of the '<em><b>Is Event Driven</b></em>' attribute.
@@ -81,7 +81,7 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * @see #unsetIsEventDriven()
 	 * @see #setIsEventDriven(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkBreakdownElement_IsEventDriven()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='isEventDriven'"
 	 * @generated
 	 */
@@ -134,7 +134,7 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * @see #unsetIsOngoing()
 	 * @see #setIsOngoing(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkBreakdownElement_IsOngoing()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='isOngoing'"
 	 * @generated
 	 */
@@ -187,7 +187,7 @@ public interface WorkBreakdownElement extends BreakdownElement {
 	 * @see #unsetIsRepeatable()
 	 * @see #setIsRepeatable(boolean)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkBreakdownElement_IsRepeatable()
-	 * @model unique="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
 	 *        extendedMetaData="kind='attribute' name='isRepeatable'"
 	 * @generated
 	 */

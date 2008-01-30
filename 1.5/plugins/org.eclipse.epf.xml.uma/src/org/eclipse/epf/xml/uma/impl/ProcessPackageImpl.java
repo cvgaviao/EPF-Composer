@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ProcessPackageImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: ProcessPackageImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.epf.xml.uma.ProcessElement;
 import org.eclipse.epf.xml.uma.ProcessPackage;
 import org.eclipse.epf.xml.uma.UmaPackage;
 
@@ -57,6 +58,7 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PROCESS_PACKAGE;
 	}
@@ -78,7 +80,7 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getProcessElement() {
+	public EList<ProcessElement> getProcessElement() {
 		return getGroup2().list(UmaPackage.Literals.PROCESS_PACKAGE__PROCESS_ELEMENT);
 	}
 
@@ -87,12 +89,13 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.PROCESS_PACKAGE__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 			case UmaPackage.PROCESS_PACKAGE__PROCESS_ELEMENT:
-				return ((InternalEList)getProcessElement()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getProcessElement()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -102,6 +105,7 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.PROCESS_PACKAGE__GROUP2:
@@ -118,6 +122,8 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.PROCESS_PACKAGE__GROUP2:
@@ -125,7 +131,7 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 				return;
 			case UmaPackage.PROCESS_PACKAGE__PROCESS_ELEMENT:
 				getProcessElement().clear();
-				getProcessElement().addAll((Collection)newValue);
+				getProcessElement().addAll((Collection<? extends ProcessElement>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -136,6 +142,7 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.PROCESS_PACKAGE__GROUP2:
@@ -153,6 +160,7 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.PROCESS_PACKAGE__GROUP2:
@@ -168,6 +176,7 @@ public class ProcessPackageImpl extends MethodPackageImpl implements ProcessPack
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

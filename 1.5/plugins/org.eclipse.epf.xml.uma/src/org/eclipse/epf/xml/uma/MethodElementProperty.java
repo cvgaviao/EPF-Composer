@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodElementProperty.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: MethodElementProperty.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -35,7 +35,7 @@ public interface MethodElementProperty extends PackageableElement {
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodElementProperty_Value()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='value'"
 	 * @generated
 	 */

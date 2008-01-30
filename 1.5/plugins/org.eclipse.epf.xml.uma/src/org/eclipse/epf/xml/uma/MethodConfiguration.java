@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodConfiguration.java,v 1.1 2008/01/15 08:52:08 jtham Exp $
+ * $Id: MethodConfiguration.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -46,11 +46,11 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Base Configuration</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodConfiguration_BaseConfiguration()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='BaseConfiguration'"
 	 * @generated
 	 */
-	EList getBaseConfiguration();
+	EList<String> getBaseConfiguration();
 
 	/**
 	 * Returns the value of the '<em><b>Method Plugin Selection</b></em>' attribute list.
@@ -63,11 +63,11 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Plugin Selection</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodConfiguration_MethodPluginSelection()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='MethodPluginSelection'"
 	 * @generated
 	 */
-	EList getMethodPluginSelection();
+	EList<String> getMethodPluginSelection();
 
 	/**
 	 * Returns the value of the '<em><b>Method Package Selection</b></em>' attribute list.
@@ -80,11 +80,11 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Method Package Selection</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodConfiguration_MethodPackageSelection()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='MethodPackageSelection'"
 	 * @generated
 	 */
-	EList getMethodPackageSelection();
+	EList<String> getMethodPackageSelection();
 
 	/**
 	 * Returns the value of the '<em><b>Default View</b></em>' attribute.
@@ -97,7 +97,7 @@ public interface MethodConfiguration extends MethodUnit {
 	 * @return the value of the '<em>Default View</em>' attribute.
 	 * @see #setDefaultView(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodConfiguration_DefaultView()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='DefaultView'"
 	 * @generated
 	 */
@@ -124,11 +124,11 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Process View</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodConfiguration_ProcessView()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ProcessView'"
 	 * @generated
 	 */
-	EList getProcessView();
+	EList<String> getProcessView();
 
 	/**
 	 * Returns the value of the '<em><b>Subtracted Category</b></em>' attribute list.
@@ -141,11 +141,11 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Subtracted Category</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodConfiguration_SubtractedCategory()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='SubtractedCategory'"
 	 * @generated
 	 */
-	EList getSubtractedCategory();
+	EList<String> getSubtractedCategory();
 
 	/**
 	 * Returns the value of the '<em><b>Added Category</b></em>' attribute list.
@@ -158,10 +158,10 @@ public interface MethodConfiguration extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Added Category</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodConfiguration_AddedCategory()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='AddedCategory'"
 	 * @generated
 	 */
-	EList getAddedCategory();
+	EList<String> getAddedCategory();
 
 } // MethodConfiguration

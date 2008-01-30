@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: PlanningData.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: PlanningData.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -40,13 +42,13 @@ public interface PlanningData extends ProcessElement {
 	 * The default finish date for a planed Task.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Finish Date</em>' attribute.
-	 * @see #setFinishDate(Object)
+	 * @see #setFinishDate(XMLGregorianCalendar)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPlanningData_FinishDate()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.DateTime"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.DateTime"
 	 *        extendedMetaData="kind='attribute' name='finishDate'"
 	 * @generated
 	 */
-	Object getFinishDate();
+	XMLGregorianCalendar getFinishDate();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.epf.xml.uma.PlanningData#getFinishDate <em>Finish Date</em>}' attribute.
@@ -56,7 +58,7 @@ public interface PlanningData extends ProcessElement {
 	 * @see #getFinishDate()
 	 * @generated
 	 */
-	void setFinishDate(Object value);
+	void setFinishDate(XMLGregorianCalendar value);
 
 	/**
 	 * Returns the value of the '<em><b>Rank</b></em>' attribute.
@@ -68,7 +70,7 @@ public interface PlanningData extends ProcessElement {
 	 * @return the value of the '<em>Rank</em>' attribute.
 	 * @see #setRank(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPlanningData_Rank()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='rank'"
 	 * @generated
 	 */
@@ -92,13 +94,13 @@ public interface PlanningData extends ProcessElement {
 	 * The default start date for a planed Task.
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Start Date</em>' attribute.
-	 * @see #setStartDate(Object)
+	 * @see #setStartDate(XMLGregorianCalendar)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getPlanningData_StartDate()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.DateTime"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.DateTime"
 	 *        extendedMetaData="kind='attribute' name='startDate'"
 	 * @generated
 	 */
-	Object getStartDate();
+	XMLGregorianCalendar getStartDate();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.epf.xml.uma.PlanningData#getStartDate <em>Start Date</em>}' attribute.
@@ -108,6 +110,6 @@ public interface PlanningData extends ProcessElement {
 	 * @see #getStartDate()
 	 * @generated
 	 */
-	void setStartDate(Object value);
+	void setStartDate(XMLGregorianCalendar value);
 
 } // PlanningData

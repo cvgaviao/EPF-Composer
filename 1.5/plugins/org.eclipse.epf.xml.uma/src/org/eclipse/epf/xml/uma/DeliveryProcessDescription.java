@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DeliveryProcessDescription.java,v 1.1 2008/01/15 08:52:08 jtham Exp $
+ * $Id: DeliveryProcessDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -43,7 +43,7 @@ public interface DeliveryProcessDescription extends ProcessDescription {
 	 * @return the value of the '<em>Scale</em>' attribute.
 	 * @see #setScale(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliveryProcessDescription_Scale()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Scale'"
 	 * @generated
 	 */
@@ -69,7 +69,7 @@ public interface DeliveryProcessDescription extends ProcessDescription {
 	 * @return the value of the '<em>Project Characteristics</em>' attribute.
 	 * @see #setProjectCharacteristics(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliveryProcessDescription_ProjectCharacteristics()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ProjectCharacteristics'"
 	 * @generated
 	 */
@@ -95,7 +95,7 @@ public interface DeliveryProcessDescription extends ProcessDescription {
 	 * @return the value of the '<em>Risk Level</em>' attribute.
 	 * @see #setRiskLevel(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliveryProcessDescription_RiskLevel()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='RiskLevel'"
 	 * @generated
 	 */
@@ -121,7 +121,7 @@ public interface DeliveryProcessDescription extends ProcessDescription {
 	 * @return the value of the '<em>Estimating Technique</em>' attribute.
 	 * @see #setEstimatingTechnique(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliveryProcessDescription_EstimatingTechnique()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='EstimatingTechnique'"
 	 * @generated
 	 */
@@ -147,7 +147,7 @@ public interface DeliveryProcessDescription extends ProcessDescription {
 	 * @return the value of the '<em>Project Member Expertise</em>' attribute.
 	 * @see #setProjectMemberExpertise(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliveryProcessDescription_ProjectMemberExpertise()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ProjectMemberExpertise'"
 	 * @generated
 	 */
@@ -173,7 +173,7 @@ public interface DeliveryProcessDescription extends ProcessDescription {
 	 * @return the value of the '<em>Type Of Contract</em>' attribute.
 	 * @see #setTypeOfContract(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getDeliveryProcessDescription_TypeOfContract()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='TypeOfContract'"
 	 * @generated
 	 */

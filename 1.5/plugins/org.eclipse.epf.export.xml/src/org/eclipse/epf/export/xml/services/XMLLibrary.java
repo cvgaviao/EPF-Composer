@@ -38,12 +38,11 @@ import org.eclipse.epf.dataexchange.util.ContentProcessor;
 import org.eclipse.epf.dataexchange.util.ILogger;
 import org.eclipse.epf.export.xml.ExportXMLResources;
 import org.eclipse.epf.library.ILibraryManager;
-import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.xml.uma.BreakdownElement;
 import org.eclipse.epf.xml.uma.ContentCategoryPackage;
+import org.eclipse.epf.xml.uma.ContentElement;
 import org.eclipse.epf.xml.uma.ContentPackage;
 import org.eclipse.epf.xml.uma.DocumentRoot;
 import org.eclipse.epf.xml.uma.MethodElement;
@@ -52,6 +51,7 @@ import org.eclipse.epf.xml.uma.MethodLibrary;
 import org.eclipse.epf.xml.uma.MethodPackage;
 import org.eclipse.epf.xml.uma.MethodPlugin;
 import org.eclipse.epf.xml.uma.ProcessComponent;
+import org.eclipse.epf.xml.uma.ProcessElement;
 import org.eclipse.epf.xml.uma.ProcessPackage;
 import org.eclipse.epf.xml.uma.Section;
 import org.eclipse.epf.xml.uma.UmaFactory;
@@ -509,9 +509,9 @@ public class XMLLibrary {
 			return;
 		}
 		if (container instanceof ContentPackage) {
-			((ContentPackage) container).getContentElement().add(obj);
+			((ContentPackage) container).getContentElement().add((ContentElement)obj);
 		} else if (container instanceof ProcessPackage) {
-			((ProcessPackage) container).getProcessElement().add(obj);
+			((ProcessPackage) container).getProcessElement().add((ProcessElement)obj);
 			// } else if ( (obj instanceof Constraint) && (container instanceof
 			// MethodElement) ) {
 			// // the owner rule should be a containment 0..n feature, waiting
@@ -708,7 +708,7 @@ public class XMLLibrary {
 			// Jinhua Xi, 08/24/2006
 			Object v = getElement(idValue);
 			if (v instanceof WorkOrder) {
-				((WorkBreakdownElement)obj).getPredecessor().add(v);
+				((WorkBreakdownElement)obj).getPredecessor().add((WorkOrder)v);
 			}
 		} else {
 			// not handled, add warning log

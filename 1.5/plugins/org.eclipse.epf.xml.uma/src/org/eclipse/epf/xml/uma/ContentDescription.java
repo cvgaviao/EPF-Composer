@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ContentDescription.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: ContentDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -42,7 +42,7 @@ public interface ContentDescription extends MethodUnit {
 	 * @return the value of the '<em>Main Description</em>' attribute.
 	 * @see #setMainDescription(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentDescription_MainDescription()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='MainDescription'"
 	 * @generated
 	 */
@@ -68,7 +68,7 @@ public interface ContentDescription extends MethodUnit {
 	 * @return the value of the '<em>Key Considerations</em>' attribute.
 	 * @see #setKeyConsiderations(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentDescription_KeyConsiderations()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='KeyConsiderations'"
 	 * @generated
 	 */
@@ -95,11 +95,11 @@ public interface ContentDescription extends MethodUnit {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Section</em>' containment reference list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentDescription_Section()
-	 * @model type="org.eclipse.epf.xml.uma.Section" containment="true"
+	 * @model containment="true"
 	 *        extendedMetaData="kind='element' name='Section'"
 	 * @generated
 	 */
-	EList getSection();
+	EList<Section> getSection();
 
 	/**
 	 * Returns the value of the '<em><b>External Id</b></em>' attribute.
@@ -111,7 +111,7 @@ public interface ContentDescription extends MethodUnit {
 	 * @return the value of the '<em>External Id</em>' attribute.
 	 * @see #setExternalId(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getContentDescription_ExternalId()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='externalId'"
 	 * @generated
 	 */

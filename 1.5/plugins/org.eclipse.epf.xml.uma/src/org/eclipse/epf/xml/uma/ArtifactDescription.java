@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ArtifactDescription.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: ArtifactDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -41,7 +41,7 @@ public interface ArtifactDescription extends WorkProductDescription {
 	 * @return the value of the '<em>Brief Outline</em>' attribute.
 	 * @see #setBriefOutline(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getArtifactDescription_BriefOutline()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='BriefOutline'"
 	 * @generated
 	 */
@@ -67,7 +67,7 @@ public interface ArtifactDescription extends WorkProductDescription {
 	 * @return the value of the '<em>Representation Options</em>' attribute.
 	 * @see #setRepresentationOptions(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getArtifactDescription_RepresentationOptions()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='RepresentationOptions'"
 	 * @generated
 	 */
@@ -94,7 +94,7 @@ public interface ArtifactDescription extends WorkProductDescription {
 	 * @return the value of the '<em>Representation</em>' attribute.
 	 * @see #setRepresentation(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getArtifactDescription_Representation()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Representation'"
 	 * @generated
 	 */
@@ -121,7 +121,7 @@ public interface ArtifactDescription extends WorkProductDescription {
 	 * @return the value of the '<em>Notation</em>' attribute.
 	 * @see #setNotation(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getArtifactDescription_Notation()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Notation'"
 	 * @generated
 	 */

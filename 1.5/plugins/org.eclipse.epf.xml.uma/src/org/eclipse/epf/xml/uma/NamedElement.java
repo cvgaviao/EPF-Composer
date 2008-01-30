@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: NamedElement.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: NamedElement.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -39,7 +39,7 @@ public interface NamedElement extends Element {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getNamedElement_Name()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='name'"
 	 * @generated
 	 */

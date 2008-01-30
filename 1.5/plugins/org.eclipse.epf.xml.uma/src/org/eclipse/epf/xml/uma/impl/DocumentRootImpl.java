@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DocumentRootImpl.java,v 1.1 2008/01/15 08:51:35 jtham Exp $
+ * $Id: DocumentRootImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -61,7 +61,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap xMLNSPrefixMap;
+	protected EMap<String, String> xMLNSPrefixMap;
 
 	/**
 	 * The cached value of the '{@link #getXSISchemaLocation() <em>XSI Schema Location</em>}' map.
@@ -71,7 +71,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * @generated
 	 * @ordered
 	 */
-	protected EMap xSISchemaLocation;
+	protected EMap<String, String> xSISchemaLocation;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -87,6 +87,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.DOCUMENT_ROOT;
 	}
@@ -108,9 +109,9 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap getXMLNSPrefixMap() {
+	public EMap<String, String> getXMLNSPrefixMap() {
 		if (xMLNSPrefixMap == null) {
-			xMLNSPrefixMap = new EcoreEMap(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, UmaPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
+			xMLNSPrefixMap = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, UmaPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
 		}
 		return xMLNSPrefixMap;
 	}
@@ -120,9 +121,9 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EMap getXSISchemaLocation() {
+	public EMap<String, String> getXSISchemaLocation() {
 		if (xSISchemaLocation == null) {
-			xSISchemaLocation = new EcoreEMap(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, UmaPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
+			xSISchemaLocation = new EcoreEMap<String,String>(EcorePackage.Literals.ESTRING_TO_STRING_MAP_ENTRY, EStringToStringMapEntryImpl.class, this, UmaPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
 		}
 		return xSISchemaLocation;
 	}
@@ -213,14 +214,15 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.DOCUMENT_ROOT__MIXED:
-				return ((InternalEList)getMixed()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getMixed()).basicRemove(otherEnd, msgs);
 			case UmaPackage.DOCUMENT_ROOT__XMLNS_PREFIX_MAP:
-				return ((InternalEList)getXMLNSPrefixMap()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getXMLNSPrefixMap()).basicRemove(otherEnd, msgs);
 			case UmaPackage.DOCUMENT_ROOT__XSI_SCHEMA_LOCATION:
-				return ((InternalEList)getXSISchemaLocation()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getXSISchemaLocation()).basicRemove(otherEnd, msgs);
 			case UmaPackage.DOCUMENT_ROOT__METHOD_CONFIGURATION:
 				return basicSetMethodConfiguration(null, msgs);
 			case UmaPackage.DOCUMENT_ROOT__METHOD_LIBRARY:
@@ -236,6 +238,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.DOCUMENT_ROOT__MIXED:
@@ -262,6 +265,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.DOCUMENT_ROOT__MIXED:
@@ -291,6 +295,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.DOCUMENT_ROOT__MIXED:
@@ -320,6 +325,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.DOCUMENT_ROOT__MIXED:
@@ -343,6 +349,7 @@ public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

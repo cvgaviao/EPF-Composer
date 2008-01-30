@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ActivityDescription.java,v 1.1 2008/01/15 08:52:08 jtham Exp $
+ * $Id: ActivityDescription.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -40,7 +40,7 @@ public interface ActivityDescription extends BreakdownElementDescription {
 	 * @return the value of the '<em>Alternatives</em>' attribute.
 	 * @see #setAlternatives(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getActivityDescription_Alternatives()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Alternatives'"
 	 * @generated
 	 */
@@ -66,7 +66,7 @@ public interface ActivityDescription extends BreakdownElementDescription {
 	 * @return the value of the '<em>How To Staff</em>' attribute.
 	 * @see #setHowToStaff(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getActivityDescription_HowToStaff()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='HowToStaff'"
 	 * @generated
 	 */
@@ -92,7 +92,7 @@ public interface ActivityDescription extends BreakdownElementDescription {
 	 * @return the value of the '<em>Purpose</em>' attribute.
 	 * @see #setPurpose(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getActivityDescription_Purpose()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Purpose'"
 	 * @generated
 	 */

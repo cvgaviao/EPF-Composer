@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkOrderImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: WorkOrderImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -82,7 +82,7 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final WorkOrderType LINK_TYPE_EDEFAULT = WorkOrderType.FINISH_TO_START_LITERAL;
+	protected static final WorkOrderType LINK_TYPE_EDEFAULT = WorkOrderType.FINISH_TO_START;
 
 	/**
 	 * The cached value of the '{@link #getLinkType() <em>Link Type</em>}' attribute.
@@ -117,6 +117,7 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.WORK_ORDER;
 	}
@@ -214,6 +215,7 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.WORK_ORDER__VALUE:
@@ -231,6 +233,7 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.WORK_ORDER__VALUE:
@@ -251,6 +254,7 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.WORK_ORDER__VALUE:
@@ -271,6 +275,7 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.WORK_ORDER__VALUE:
@@ -288,6 +293,7 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

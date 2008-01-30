@@ -2,47 +2,51 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MilestoneImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
+ * $Id: KindImpl.java,v 1.1 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.util.EDataTypeEList;
-import org.eclipse.epf.xml.uma.Milestone;
+
+import org.eclipse.epf.xml.uma.Kind;
 import org.eclipse.epf.xml.uma.UmaPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Milestone</b></em>'.
+ * An implementation of the model object '<em><b>Kind</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.epf.xml.uma.impl.MilestoneImpl#getRequiredResult <em>Required Result</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.impl.KindImpl#getApplicableMetaClassInfo <em>Applicable Meta Class Info</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone {
+public class KindImpl extends ContentElementImpl implements Kind {
 	/**
-	 * The cached value of the '{@link #getRequiredResult() <em>Required Result</em>}' attribute list.
+	 * The cached value of the '{@link #getApplicableMetaClassInfo() <em>Applicable Meta Class Info</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRequiredResult()
+	 * @see #getApplicableMetaClassInfo()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> requiredResult;
+	protected EList<String> applicableMetaClassInfo;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected MilestoneImpl() {
+	protected KindImpl() {
 		super();
 	}
 
@@ -53,7 +57,7 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return UmaPackage.Literals.MILESTONE;
+		return UmaPackage.Literals.KIND;
 	}
 
 	/**
@@ -61,11 +65,11 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getRequiredResult() {
-		if (requiredResult == null) {
-			requiredResult = new EDataTypeEList<String>(String.class, this, UmaPackage.MILESTONE__REQUIRED_RESULT);
+	public EList<String> getApplicableMetaClassInfo() {
+		if (applicableMetaClassInfo == null) {
+			applicableMetaClassInfo = new EDataTypeEList<String>(String.class, this, UmaPackage.KIND__APPLICABLE_META_CLASS_INFO);
 		}
-		return requiredResult;
+		return applicableMetaClassInfo;
 	}
 
 	/**
@@ -76,8 +80,8 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case UmaPackage.MILESTONE__REQUIRED_RESULT:
-				return getRequiredResult();
+			case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+				return getApplicableMetaClassInfo();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -91,9 +95,9 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone
 		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case UmaPackage.MILESTONE__REQUIRED_RESULT:
-				getRequiredResult().clear();
-				getRequiredResult().addAll((Collection<? extends String>)newValue);
+			case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+				getApplicableMetaClassInfo().clear();
+				getApplicableMetaClassInfo().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -107,8 +111,8 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case UmaPackage.MILESTONE__REQUIRED_RESULT:
-				getRequiredResult().clear();
+			case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+				getApplicableMetaClassInfo().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -122,8 +126,8 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case UmaPackage.MILESTONE__REQUIRED_RESULT:
-				return requiredResult != null && !requiredResult.isEmpty();
+			case UmaPackage.KIND__APPLICABLE_META_CLASS_INFO:
+				return applicableMetaClassInfo != null && !applicableMetaClassInfo.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -138,10 +142,10 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements Milestone
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (requiredResult: ");
-		result.append(requiredResult);
+		result.append(" (applicableMetaClassInfo: ");
+		result.append(applicableMetaClassInfo);
 		result.append(')');
 		return result.toString();
 	}
 
-} //MilestoneImpl
+} //KindImpl

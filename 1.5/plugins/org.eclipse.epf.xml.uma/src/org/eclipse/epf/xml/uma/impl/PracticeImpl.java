@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: PracticeImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: PracticeImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -59,6 +59,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.PRACTICE;
 	}
@@ -80,7 +81,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getActivityReference() {
+	public EList<String> getActivityReference() {
 		return getGroup2().list(UmaPackage.Literals.PRACTICE__ACTIVITY_REFERENCE);
 	}
 
@@ -89,7 +90,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getContentReference() {
+	public EList<String> getContentReference() {
 		return getGroup2().list(UmaPackage.Literals.PRACTICE__CONTENT_REFERENCE);
 	}
 
@@ -98,7 +99,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getSubPractice() {
+	public EList<Practice> getSubPractice() {
 		return getGroup2().list(UmaPackage.Literals.PRACTICE__SUB_PRACTICE);
 	}
 
@@ -107,12 +108,13 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.PRACTICE__GROUP2:
-				return ((InternalEList)getGroup2()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup2()).basicRemove(otherEnd, msgs);
 			case UmaPackage.PRACTICE__SUB_PRACTICE:
-				return ((InternalEList)getSubPractice()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getSubPractice()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -122,6 +124,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.PRACTICE__GROUP2:
@@ -142,6 +145,8 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.PRACTICE__GROUP2:
@@ -149,15 +154,15 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 				return;
 			case UmaPackage.PRACTICE__ACTIVITY_REFERENCE:
 				getActivityReference().clear();
-				getActivityReference().addAll((Collection)newValue);
+				getActivityReference().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.PRACTICE__CONTENT_REFERENCE:
 				getContentReference().clear();
-				getContentReference().addAll((Collection)newValue);
+				getContentReference().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.PRACTICE__SUB_PRACTICE:
 				getSubPractice().clear();
-				getSubPractice().addAll((Collection)newValue);
+				getSubPractice().addAll((Collection<? extends Practice>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -168,6 +173,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.PRACTICE__GROUP2:
@@ -191,6 +197,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.PRACTICE__GROUP2:
@@ -210,6 +217,7 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 

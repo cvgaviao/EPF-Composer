@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="uma"
-    nsURI="http://www.eclipse.org/epf/uma/1.0.3" nsPrefix="uma">
+    nsURI="http://www.eclipse.org/epf/uma/1.0.5" nsPrefix="uma">
   <eClassifiers xsi:type="ecore:EClass" name="Activity" eSuperTypes="#//WorkBreakdownElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Work Breakdown Element and Work Definition which supports the nesting and logical grouping of related Breakdown Elements forming breakdown structures.  Although Activity is a concrete meta-class, other classes which represent breakdown structures derive from it; such as Phase, Iteration, Delivery Process, or Capability Pattern.&#xD;&#xA;Activity represents a grouping element for other Breakdown Elements such as Activities, Descriptors, Milestones, etc.  It is not per-se a 'high-level' grouping of only work as in other meta-models, but groups any kind of Breakdown Elements.  For example, one can define valid Activities that group only Work Products Descriptors without any matching Task Descriptors.  Activities also inherit all properties from Work Breakdown Element and indirectly from Process Element; i.e. Activity is ready to have a full content description attached to it."/>
@@ -11,25 +11,23 @@
       <details key="name" value="Activity"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precondition" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precondition" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Precondition"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="postcondition" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="postcondition" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Postcondition"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group2" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group3" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:27"/>
+        <details key="name" value="group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="breakdownElement" upperBound="-1"
@@ -38,43 +36,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="BreakdownElement"/>
-        <details key="group" value="#group:27"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="checklist" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
-        volatile="true" transient="true" derived="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="Checklist"/>
-        <details key="group" value="#group:27"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="concept" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
-        volatile="true" transient="true" derived="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="Concept"/>
-        <details key="group" value="#group:27"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="example" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
-        volatile="true" transient="true" derived="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="Example"/>
-        <details key="group" value="#group:27"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="guideline" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
-        volatile="true" transient="true" derived="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="Guideline"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="roadmap" unique="false"
@@ -83,38 +45,10 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Roadmap"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reusableAsset" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
-        volatile="true" transient="true" derived="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="ReusableAsset"/>
-        <details key="group" value="#group:27"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportingMaterial" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
-        volatile="true" transient="true" derived="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="SupportingMaterial"/>
-        <details key="group" value="#group:27"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="whitepaper" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
-        volatile="true" transient="true" derived="true">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="Whitepaper"/>
-        <details key="group" value="#group:27"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEnactable" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEnactable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -122,14 +56,14 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityBasedOnElement"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="variabilityBasedOnElement"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityType" unique="false"
-        eType="#//VariabilityType" defaultValueLiteral="na" unsettable="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityType" eType="#//VariabilityType"
+        defaultValueLiteral="na" unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="variabilityType"/>
@@ -144,8 +78,7 @@
       <details key="name" value="ActivityDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternatives" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternatives" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Comprises of summaries describing important exceptional and non-standard ways of doing the work of this Activity not covered by the Activity's Tasks."/>
       </eAnnotations>
@@ -154,8 +87,7 @@
         <details key="name" value="Alternatives"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="howToStaff" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="howToStaff" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides background on who should be involved in this activity what are the required skills, experience,  and perhaps attitudes."/>
       </eAnnotations>
@@ -164,14 +96,26 @@
         <details key="name" value="HowToStaff"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purpose" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purpose" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Summarizes the main reason for performing this Activity, describes what the activity as a whole is intended to achieve."/>
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Purpose"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ApplicableMetaClassInfo" eSuperTypes="#//PackageableElement">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="ApplicableMetaClassInfo"/>
+      <details key="kind" value="empty"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isPrimaryExtension" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="isPrimaryExtension"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -187,7 +131,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:28"/>
+        <details key="name" value="group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containedArtifact" upperBound="-1"
@@ -196,7 +140,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ContainedArtifact"/>
-        <details key="group" value="#group:28"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -208,8 +152,7 @@
       <details key="name" value="ArtifactDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="briefOutline" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="briefOutline" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides a brief description of the information that can be found in this artifact. For example, discusses the contents for key chapters of a document artifact or the key packages and modules of a model artifact."/>
       </eAnnotations>
@@ -219,7 +162,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="representationOptions"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Discusses different possible alternative representations for the artifact. For example a design model can be represented as a UML model or an informal block diagram or by textual description only."/>
       </eAnnotations>
@@ -228,15 +171,13 @@
         <details key="name" value="RepresentationOptions"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="representation" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="representation" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Representation"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notation" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="notation" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Notation"/>
@@ -251,36 +192,102 @@
       <details key="name" value="BreakdownElement"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentedAfter" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentedAfter" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="PresentedAfter"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentedBefore" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentedBefore" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="PresentedBefore"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="planningData" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="planningData" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="PlanningData"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="superActivity" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="superActivity" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SuperActivity"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group1" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="group"/>
+        <details key="name" value="group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="checklist" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Checklist"/>
+        <details key="group" value="#group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="concept" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Concept"/>
+        <details key="group" value="#group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="example" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Example"/>
+        <details key="group" value="#group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="guideline" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Guideline"/>
+        <details key="group" value="#group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reusableAsset" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ReusableAsset"/>
+        <details key="group" value="#group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportingMaterial" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="SupportingMaterial"/>
+        <details key="group" value="#group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="whitepaper" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Whitepaper"/>
+        <details key="group" value="#group:18"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasMultipleOccurrences"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Just as the isPlanned attribute the hasMultipleOccurrences attribute has an impact on generating plans from a Process.  When this attribute is set to True for a Breakdown Element then it will typically occur multiple times within the same Activity.  For example, a Task such as &quot;Detail Use Case&quot; would be performed for every use case identified for a particular Iteration or Activity.  Generating a plan would list one Task instance per use case."/>
@@ -290,8 +297,7 @@
         <details key="name" value="hasMultipleOccurrences"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOptional" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOptional" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Indicates that the Breakdown Element describes work, a work result, or even work resources, which inclusion is not mandatory when performing a project that is planned based on a process containing this element."/>
@@ -301,8 +307,7 @@
         <details key="name" value="isOptional"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isPlanned" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isPlanned" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A key application for Development Processes expressed with Breakdown structures is to generate a project plan from it.  A process as defined in UMA (cf. with Sections XX and 5.2) is a multi-dimensional structure defining what work is being performed at what time by which roles using which input and producing what outputs.  A project plan as it is represented in project planning tools such as IBM Rational Portfolio Manager or Microsoft Project normally does not need all this information and is normally limited to just representing a subset.  For example, a typical MS Project plan only represents the work breakdown consisting of Tasks and Activities (sometimes referred to as summary tasks).  It does not show the input and output Work Products for a Task, but it can show which roles shall be staffed for performing the Task.  However, such role allocation need to be replaced with concrete resources when instantiating the plan for a concrete project.  Sometimes project plans can then again be organized differently by organizing work by deliverables in which Work Products are mapped to the plan's summary tasks and Task that have these work products as output mapped below such as summary task.  Therefore, a process can make recommendations about which elements to include and which to exclude when generating a plan.  When the isPlanned attribute is set to False for an instance of a Breakdown Element, then this element shall not be not included when a concrete project plan is being generated from the breakdown structure that contains this element.&#xD;&#xA;"/>
@@ -312,8 +317,7 @@
         <details key="name" value="isPlanned"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="prefix" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="prefix" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Prefix represents an additional label that will be presented as a prefix to any Breakdown Element to indicate a user-defined sub-type for the element.  For example, if the process engineer would like to distinguish his Activities by 'Module' (as done in the IBM Rational Summit Ascendant Method), he can define a different prefix for every model to be used in addition to naming Activities, e.g. &quot;SRA.Establish Requirements&quot; with SRA indicating that this Activity belongs to the &quot;Software Requirements Analysis&quot; module.  Another common application for prefix is to qualify roles in Role Descriptors.  For example, &quot;Customer.Architect&quot; would define a &quot;Customer&quot; prefix for the Role Descriptor &quot;Architect&quot; expressing that this is an architect on the customer side and not the development team side."/>
       </eAnnotations>
@@ -331,8 +335,7 @@
       <details key="name" value="BreakdownElementDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usageGuidance" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usageGuidance" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides information and guidance on the meaning of the Boolean flag values and under what circumstances they should be overridden. For example, it describes why the breakdown element is optional or considerations for repeating it and differences in the individual occurrences of this Breakdown Element across the lifecycle."/>
       </eAnnotations>
@@ -368,11 +371,11 @@
       <details key="name" value="CompositeRole"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group1" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group2" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:23"/>
+        <details key="name" value="group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aggregatedRole" upperBound="-1"
@@ -381,7 +384,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="AggregatedRole"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -402,8 +405,7 @@
       <details key="name" value="Constraint"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mainDescription" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mainDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Stores the main definition of the constraint."/>
       </eAnnotations>
@@ -434,7 +436,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:12"/>
+        <details key="name" value="group:13"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contentCategory" upperBound="-1"
@@ -443,7 +445,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ContentCategory"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:13"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -455,8 +457,7 @@
       <details key="name" value="ContentDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mainDescription" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mainDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Stores the main descriptive text for the Content Element.  All text that is not part of any of the more specific attributes shall be stored here.  If the Content Description is divided into sections using the Section class, then only the text from the 'start' of the content description to the first section will be stored here (similar to a normal document where you can place text between its beginning to its first diction heading)."/>
       </eAnnotations>
@@ -465,8 +466,7 @@
         <details key="name" value="MainDescription"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyConsiderations" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyConsiderations" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides advise and guidance of a critical nature for the content element as well as warnings, cautions, pitfalls, dangers."/>
       </eAnnotations>
@@ -482,8 +482,7 @@
         <details key="name" value="Section"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalId" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalId" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An external visible number that is used to reference this artifact. Used like a synonym."/>
       </eAnnotations>
@@ -505,7 +504,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:12"/>
+        <details key="name" value="group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="checklist" unique="false"
@@ -514,7 +513,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Checklist"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="concept" unique="false"
@@ -523,7 +522,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Concept"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="example" unique="false"
@@ -532,7 +531,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Example"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="guideline" unique="false"
@@ -541,7 +540,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Guideline"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reusableAsset" unique="false"
@@ -550,7 +549,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ReusableAsset"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportingMaterial" unique="false"
@@ -559,7 +558,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SupportingMaterial"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="whitepaper" unique="false"
@@ -568,18 +567,18 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Whitepaper"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:14"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityBasedOnElement"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="variabilityBasedOnElement"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityType" unique="false"
-        eType="#//VariabilityType" defaultValueLiteral="na" unsettable="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityType" eType="#//VariabilityType"
+        defaultValueLiteral="na" unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="variabilityType"/>
@@ -598,7 +597,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:12"/>
+        <details key="name" value="group:13"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contentElement" upperBound="-1"
@@ -607,7 +606,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ContentElement"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:13"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -623,7 +622,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="categorizedElement" unique="false"
@@ -632,7 +631,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="CategorizedElement"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="subCategory" unique="false"
@@ -641,7 +640,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SubCategory"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -657,7 +656,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:28"/>
+        <details key="name" value="group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deliveredWorkProduct" unique="false"
@@ -666,7 +665,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="DeliveredWorkProduct"/>
-        <details key="group" value="#group:28"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -678,8 +677,7 @@
       <details key="name" value="DeliverableDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalDescription" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The description of the Deliverable used for client documents (proposal, statements of work or contractual agreements).  It might use a different language and follow legal constraints."/>
       </eAnnotations>
@@ -688,8 +686,7 @@
         <details key="name" value="ExternalDescription"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="packagingGuidance" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="packagingGuidance" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides guidance on how to assemble the deliverable from all its required inputs.  This section describes the most common content medium and format.  Distribution of the deliverable is addressed in this section, if necessary."/>
       </eAnnotations>
@@ -707,11 +704,11 @@
       <details key="name" value="DeliveryProcess"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group3" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group4" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:44"/>
+        <details key="name" value="group:47"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="communicationsMaterial"
@@ -720,7 +717,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="CommunicationsMaterial"/>
-        <details key="group" value="#group:44"/>
+        <details key="group" value="#group:47"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="educationMaterial" unique="false"
@@ -729,7 +726,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="EducationMaterial"/>
-        <details key="group" value="#group:44"/>
+        <details key="group" value="#group:47"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -741,7 +738,7 @@
       <details key="name" value="DeliveryProcessDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scale" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scale" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Outlines characteristics about the size of a typical project that performs this project expressed in team size, man years, etc."/>
       </eAnnotations>
@@ -751,7 +748,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="projectCharacteristics"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Characterizes the project that would typically perform this Process"/>
       </eAnnotations>
@@ -760,8 +757,7 @@
         <details key="name" value="ProjectCharacteristics"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="riskLevel" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="riskLevel" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Outlines typical project risks that are addressed with this process."/>
       </eAnnotations>
@@ -770,8 +766,7 @@
         <details key="name" value="RiskLevel"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimatingTechnique" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimatingTechnique" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Describes the Estimation Techniques provided for this Process."/>
       </eAnnotations>
@@ -781,7 +776,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="projectMemberExpertise"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides a profile of a typical project team, the distribution of roles, skills required for a team performs a project based on this process."/>
       </eAnnotations>
@@ -790,8 +785,7 @@
         <details key="name" value="ProjectMemberExpertise"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeOfContract" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeOfContract" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides background information about the coI'm chaI'm ntracts that need to be established between a project team that performs this process and a client (e.g. for an IGS engagement)."/>
       </eAnnotations>
@@ -816,8 +810,21 @@
         <details key="name" value="Presentation"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nodeicon" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fulfill" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="Fulfill"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAbstract" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="isAbstract"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nodeicon" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A reference to an icon that can be used in tree browser presentations and breakdown structures."/>
       </eAnnotations>
@@ -826,18 +833,7 @@
         <details key="name" value="nodeicon"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentationName" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Every Describable Element has a presentation name, which is used for external presentation of the element.  For example, name (the internal representation) might be set to &quot;rup_architecture_document&quot; to differentiate from a &quot;j2ee_architcture_document&quot; whereas the external presentation would always be &quot;Architecture Document&quot;."/>
-      </eAnnotations>
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="attribute"/>
-        <details key="name" value="presentationName"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shapeicon" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shapeicon" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A reference to an icon that can be used for modeling with specific Content Element instances (as graphical stereotypes, e.g. a use case symbol for a use case artifact) as well as publication of content."/>
       </eAnnotations>
@@ -856,7 +852,7 @@
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSynchronizedWithSource"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -872,8 +868,7 @@
       <details key="name" value="DescriptorDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="refinedDescription" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="refinedDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A Descriptor might add refinements to the main description of the Content Element it refers to.  For example, it could provide additional information about a Work Product relevant for the specific point in time in the process this Work Product type is being used.  It could describe additional skills needed for a Role at that particular point in time in a process, etc. "/>
       </eAnnotations>
@@ -895,7 +890,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="task" unique="false" upperBound="-1"
@@ -904,7 +899,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Task"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subDiscipline" upperBound="-1"
@@ -913,7 +908,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SubDiscipline"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referenceWorkflow" unique="false"
@@ -922,7 +917,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ReferenceWorkflow"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -938,7 +933,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="discipline" unique="false"
@@ -947,7 +942,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Discipline"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1028,7 +1023,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="workProduct" unique="false"
@@ -1037,7 +1032,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="WorkProduct"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subdomain" upperBound="-1"
@@ -1046,7 +1041,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Subdomain"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1071,7 +1066,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimationMetric" unique="false"
@@ -1080,7 +1075,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="EstimationMetric"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimationConsiderations"
@@ -1089,7 +1084,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="EstimationConsiderations"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1137,8 +1132,7 @@
       <details key="name" value="GuidanceDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachment" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachment" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="This field is primarily used for attachments augmenting the information provided for guidance.  In particular the attribute is used for Templates, Examples, and Reusable Assets to contain the actual attachment described in the mainDescription.  It can additionally contain representations of the guidance in just a third party format, e.g. PDF, MS Word, or Word Perfect."/>
       </eAnnotations>
@@ -1165,6 +1159,19 @@
       <details key="name" value="Iteration"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Kind" eSuperTypes="#//ContentElement">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Kind"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="applicableMetaClassInfo"
+        unique="false" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="ApplicableMetaClassInfo"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MethodConfiguration" eSuperTypes="#//MethodUnit">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1195,8 +1202,7 @@
         <details key="name" value="MethodPackageSelection"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultView" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultView" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="DefaultView"/>
@@ -1260,8 +1266,7 @@
         <details key="group" value="#group:1"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="briefDescription" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="briefDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Every instance of Method Element shall be briefly described with one or two sentences summarizing the element."/>
       </eAnnotations>
@@ -1270,7 +1275,7 @@
         <details key="name" value="briefDescription"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Every instance of Method Element has a global unique id."/>
       </eAnnotations>
@@ -1279,8 +1284,7 @@
         <details key="name" value="id"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderingGuide" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderingGuide" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Used for CASE tool realizations of this model to contain information about layout and ordering of the method element and its parts."/>
       </eAnnotations>
@@ -1289,8 +1293,16 @@
         <details key="name" value="orderingGuide"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="suppressed" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="presentationName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Every Describable Element has a presentation name, which is used for external presentation of the element.  For example, name (the internal representation) might be set to &quot;rup_architecture_document&quot; to differentiate from a &quot;j2ee_architcture_document&quot; whereas the external presentation would always be &quot;Architecture Document&quot;."/>
+      </eAnnotations>
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="presentationName"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="suppressed" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="If a Variability Element is derived from another Variability Element using the &quot;extends&quot; Variability Specialization, then this attribute can be used to suppress inherited Method Elements that were part of the based-on Variability Element, which can be any type of Method Element.  In other words, if this attribute is set to true on a Method Element that has the same name than an inherited method element then it will not be regarded as inherited at all."/>
@@ -1306,7 +1318,7 @@
       <details key="name" value="MethodElementProperty"/>
       <details key="kind" value="empty"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="value"/>
@@ -1335,7 +1347,7 @@
         <details key="name" value="MethodConfiguration"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tool" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tool" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The tool that generated the XML file."/>
       </eAnnotations>
@@ -1357,7 +1369,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:8"/>
+        <details key="name" value="group:9"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reusedPackage" unique="false"
@@ -1366,7 +1378,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ReusedPackage"/>
-        <details key="group" value="#group:8"/>
+        <details key="group" value="#group:9"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="methodPackage" upperBound="-1"
@@ -1375,11 +1387,10 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="MethodPackage"/>
-        <details key="group" value="#group:8"/>
+        <details key="group" value="#group:9"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Method Packages can have a global scope.  This means that every element of every other Method Package can see the global package's contents.  Global Method Packages are primarily used to store commonly used category definitions such as for Disciplines or Domains, which are used by many Task and Work Products respectively."/>
@@ -1412,8 +1423,7 @@
         <details key="name" value="MethodPackage"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userChangeable" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userChangeable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -1429,15 +1439,13 @@
       <details key="name" value="MethodUnit"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="copyright" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="copyright" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Copyright"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authors" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authors" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Every Method Unit is being created and owned by an author or authoring team."/>
       </eAnnotations>
@@ -1446,8 +1454,7 @@
         <details key="name" value="authors"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDate" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDate" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The date the last change that resulted into this version has been made."/>
       </eAnnotations>
@@ -1456,8 +1463,7 @@
         <details key="name" value="changeDate"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDescription" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The description of the last change that resulted into this version."/>
       </eAnnotations>
@@ -1466,8 +1472,7 @@
         <details key="name" value="changeDescription"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Every Package has a version number used to track changes."/>
       </eAnnotations>
@@ -1485,6 +1490,13 @@
       <details key="name" value="Milestone"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredResult" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="RequiredResult"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement" eSuperTypes="#//Element">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1494,7 +1506,7 @@
       <details key="name" value="NamedElement"/>
       <details key="kind" value="empty"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="name"/>
@@ -1536,8 +1548,7 @@
       <details key="name" value="PlanningData"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="finishDate" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="finishDate" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The default finish date for a planed Task."/>
       </eAnnotations>
@@ -1546,7 +1557,7 @@
         <details key="name" value="finishDate"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rank" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rank" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The default rank for a planed Task."/>
       </eAnnotations>
@@ -1555,8 +1566,7 @@
         <details key="name" value="rank"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The default start date for a planed Task."/>
       </eAnnotations>
@@ -1578,7 +1588,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="activityReference" unique="false"
@@ -1587,7 +1597,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ActivityReference"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contentReference" unique="false"
@@ -1596,7 +1606,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ContentReference"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subPractice" upperBound="-1"
@@ -1605,7 +1615,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SubPractice"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1617,8 +1627,7 @@
       <details key="name" value="PracticeDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalInfo" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalInfo" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Any additional Information not covered by the other attributes."/>
       </eAnnotations>
@@ -1627,8 +1636,7 @@
         <details key="name" value="AdditionalInfo"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="application" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="application" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Describes how the Practice is being applied or introduced into the context described in background."/>
       </eAnnotations>
@@ -1637,8 +1645,7 @@
         <details key="name" value="Application"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="background" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="background" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Elaboration on the background and the context in which the problem occurs and where the solution described by this Practice will fit in."/>
       </eAnnotations>
@@ -1647,7 +1654,7 @@
         <details key="name" value="Background"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="goals" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="goals" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A summary of the overall goals to be addressed by the Practice."/>
       </eAnnotations>
@@ -1656,8 +1663,7 @@
         <details key="name" value="Goals"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="levelsOfAdoption" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="levelsOfAdoption" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Outlines the different forms or variants in which the practice could be realized. (e.g. full adoption verus a partial adoption of the Practice)"/>
       </eAnnotations>
@@ -1666,8 +1672,7 @@
         <details key="name" value="LevelsOfAdoption"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="problem" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="problem" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A description of the problem the Practice addresses."/>
       </eAnnotations>
@@ -1692,8 +1697,7 @@
         <details key="name" value="IncludesPattern"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultContext" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultContext" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="DefaultContext"/>
@@ -1706,8 +1710,7 @@
         <details key="name" value="ValidContext"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="diagramURI" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="diagramURI" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The URI of the diagram file associated with the process."/>
       </eAnnotations>
@@ -1725,8 +1728,7 @@
       <details key="name" value="ProcessComponent"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="copyright" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="copyright" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Copyright"/>
@@ -1746,8 +1748,7 @@
         <details key="name" value="Process"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authors" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authors" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Every Method Unit is being created and owned by an author or authoring team."/>
       </eAnnotations>
@@ -1756,8 +1757,7 @@
         <details key="name" value="authors"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDate" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDate" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//DateTime">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The date the last change that resulted into this version has been made."/>
       </eAnnotations>
@@ -1766,8 +1766,7 @@
         <details key="name" value="changeDate"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDescription" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The description of the last change that resulted into this version."/>
       </eAnnotations>
@@ -1776,8 +1775,7 @@
         <details key="name" value="changeDescription"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Every Package has a version number used to track changes."/>
       </eAnnotations>
@@ -1795,11 +1793,11 @@
       <details key="name" value="ProcessComponentInterface"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group1" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group2" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:20"/>
+        <details key="name" value="group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceSpecification"
@@ -1808,7 +1806,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="InterfaceSpecification"/>
-        <details key="group" value="#group:20"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interfaceIO" upperBound="-1"
@@ -1817,7 +1815,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="InterfaceIO"/>
-        <details key="group" value="#group:20"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1829,7 +1827,7 @@
       <details key="name" value="ProcessDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Defines the scope of the Process, i.e. which types of projects does it address and which not."/>
       </eAnnotations>
@@ -1838,8 +1836,7 @@
         <details key="name" value="Scope"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usageNotes" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usageNotes" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Any additional notes on how to apply and instantiate this process for a project."/>
       </eAnnotations>
@@ -1870,7 +1867,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:12"/>
+        <details key="name" value="group:13"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="processElement" upperBound="-1"
@@ -1879,7 +1876,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ProcessElement"/>
-        <details key="group" value="#group:12"/>
+        <details key="group" value="#group:13"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1891,11 +1888,11 @@
       <details key="name" value="ProcessPlanningTemplate"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group3" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group4" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:44"/>
+        <details key="name" value="group:47"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseProcess" unique="false"
@@ -1904,7 +1901,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="BaseProcess"/>
-        <details key="group" value="#group:44"/>
+        <details key="group" value="#group:47"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1947,7 +1944,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="responsibleFor" unique="false"
@@ -1956,7 +1953,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ResponsibleFor"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1968,8 +1965,7 @@
       <details key="name" value="RoleDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignmentApproaches" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignmentApproaches" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides guidance on for assigning individuals to the Role in terms of what other roles these individuals could perform and what responsibility different individuals assigned to this role might have.  The guidance can also describe different assignment approaches for different types of projects, e.g. for large versus small teams where individuals could be allocated to roles full time versus sharing roles within the team."/>
       </eAnnotations>
@@ -1978,8 +1974,7 @@
         <details key="name" value="AssignmentApproaches"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="skills" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="skills" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Lists of set of required skills a person needs to possess to fulfill that Role."/>
       </eAnnotations>
@@ -1988,8 +1983,7 @@
         <details key="name" value="Skills"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="synonyms" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="synonyms" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Lists synonyms, i.e. other names the Role might be referred by.  Tool support for the meta-model might support that a Role name can be consistently be replaced with one of its synonyms throught a Process."/>
       </eAnnotations>
@@ -2007,7 +2001,7 @@
       <details key="name" value="RoleDescriptor"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Role"/>
@@ -2033,7 +2027,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" unique="false" upperBound="-1"
@@ -2042,7 +2036,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Role"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -2058,7 +2052,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="roleSet" unique="false"
@@ -2067,7 +2061,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="RoleSet"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -2086,15 +2080,13 @@
         <details key="name" value="SubSection"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="predecessor" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="predecessor" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Predecessor"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="This attributes store the description text for a Content Description's Section."/>
       </eAnnotations>
@@ -2103,8 +2095,7 @@
         <details key="name" value="Description"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sectionName" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sectionName" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Every Section has a name used for external presentation of the section, e.g. when published or when section heading are listed in a table of contents.  This attribute is similar to Presentation Name for Content Elements."/>
       </eAnnotations>
@@ -2114,14 +2105,14 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityBasedOnElement"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="variabilityBasedOnElement"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityType" unique="false"
-        eType="#//VariabilityType" defaultValueLiteral="na" unsettable="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variabilityType" eType="#//VariabilityType"
+        defaultValueLiteral="na" unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
         <details key="name" value="variabilityType"/>
@@ -2145,22 +2136,20 @@
       <details key="name" value="Task"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precondition" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precondition" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Precondition"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="postcondition" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="postcondition" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Postcondition"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="performedBy" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="PerformedBy"/>
@@ -2170,7 +2159,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:25"/>
+        <details key="name" value="group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatoryInput" unique="false"
@@ -2179,7 +2168,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="MandatoryInput"/>
-        <details key="group" value="#group:25"/>
+        <details key="group" value="#group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" unique="false"
@@ -2188,7 +2177,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Output"/>
-        <details key="group" value="#group:25"/>
+        <details key="group" value="#group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionallyPerformedBy"
@@ -2197,7 +2186,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="AdditionallyPerformedBy"/>
-        <details key="group" value="#group:25"/>
+        <details key="group" value="#group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optionalInput" unique="false"
@@ -2206,7 +2195,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="OptionalInput"/>
-        <details key="group" value="#group:25"/>
+        <details key="group" value="#group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimate" unique="false"
@@ -2215,7 +2204,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Estimate"/>
-        <details key="group" value="#group:25"/>
+        <details key="group" value="#group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimationConsiderations"
@@ -2224,7 +2213,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="EstimationConsiderations"/>
-        <details key="group" value="#group:25"/>
+        <details key="group" value="#group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolMentor" unique="false"
@@ -2233,7 +2222,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ToolMentor"/>
-        <details key="group" value="#group:25"/>
+        <details key="group" value="#group:27"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -2245,8 +2234,7 @@
       <details key="name" value="TaskDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternatives" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternatives" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Comprises of summaries describing important exceptional and non-standard ways of achieving this Task's development goals that were not covered by the Task's Steps."/>
       </eAnnotations>
@@ -2255,8 +2243,7 @@
         <details key="name" value="Alternatives"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purpose" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purpose" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Summarizes the main reason for performing this Task and what is intended to be achieved."/>
       </eAnnotations>
@@ -2274,24 +2261,23 @@
       <details key="name" value="TaskDescriptor"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="task" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="task" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Task"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="performedPrimarilyBy" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="performedPrimarilyBy" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="PerformedPrimarilyBy"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group2" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group3" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:27"/>
+        <details key="name" value="group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionallyPerformedBy"
@@ -2300,7 +2286,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="AdditionallyPerformedBy"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="assistedBy" unique="false"
@@ -2309,7 +2295,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="AssistedBy"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalInput" unique="false"
@@ -2318,7 +2304,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ExternalInput"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatoryInput" unique="false"
@@ -2327,7 +2313,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="MandatoryInput"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optionalInput" unique="false"
@@ -2336,7 +2322,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="OptionalInput"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" unique="false"
@@ -2345,7 +2331,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Output"/>
-        <details key="group" value="#group:27"/>
+        <details key="group" value="#group:37"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="step" upperBound="-1" eType="#//Section"
@@ -2356,7 +2342,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSynchronizedWithSource"
-        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
@@ -2372,11 +2358,11 @@
       <details key="name" value="TeamProfile"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group1" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group2" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:20"/>
+        <details key="name" value="group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" unique="false" upperBound="-1"
@@ -2385,7 +2371,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Role"/>
-        <details key="group" value="#group:20"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="superTeam" unique="false"
@@ -2394,7 +2380,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SuperTeam"/>
-        <details key="group" value="#group:20"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="subTeam" unique="false"
@@ -2403,7 +2389,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="SubTeam"/>
-        <details key="group" value="#group:20"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -2437,7 +2423,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolMentor" unique="false"
@@ -2446,7 +2432,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ToolMentor"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -2497,11 +2483,11 @@
       <details key="name" value="WorkBreakdownElement"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group1" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group2" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:20"/>
+        <details key="name" value="group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="predecessor" upperBound="-1"
@@ -2510,11 +2496,10 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Predecessor"/>
-        <details key="group" value="#group:20"/>
+        <details key="group" value="#group:30"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEventDriven" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEventDriven" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The isEventDriven attribute indicates that the Process Work Definition describes an instance of work which is not started because it has been scheduled to start at a certain point of time, because preceding work is being completed, or input work products are available, but because another specific event has occurred.  Examples for such events are exceptions or problem situations which require specific work to be performed as a result.  Also change management work can be modeled as event driven work analyzing a change request or defect and allocating work dynamically to resources to deal with it following the work described with such Process Work Definition.  The events themselves are not modeled in this version of the specification.  They shall be described as part of the normal descriptions fields available.&#xD;&#xA;"/>
@@ -2524,8 +2509,7 @@
         <details key="name" value="isEventDriven"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOngoing" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOngoing" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="If the isOngoing attribute is set to True for a Process Work Definition instance, then the element describes an ongoing piece of work without a fixed duration or end state.  For example, the Process Work Definition could represent work of an administrator continuously (e.g. 3h a day) working to ensure that systems are kept in a certain state.  Another example would be program management work overseeing many different projects being scheduled for one particular project at specific reoccurring intervals during the whole lifecycle of the project."/>
@@ -2535,8 +2519,7 @@
         <details key="name" value="isOngoing"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRepeatable" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRepeatable" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"
         unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="This attribute is used to define repetition of work, e.g. iterations.  A Process Work Definition with this attribute set to True shall be repeated more than once on the same set of artifacts.  For example, for an instance of Iteration (defined as a special Process Work Definition below) this attribute is set to True by default indicating that every sub-Activity will be repeated more than once.  However, any Process Work Definition can set this attribute to True to define iterations (e.g. to iterate one Activity consisting of many sub-activities or even Phases, but to iterate just one Task)."/>
@@ -2555,15 +2538,13 @@
       <details key="name" value="WorkDefinition"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precondition" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precondition" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Precondition"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="postcondition" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="postcondition" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Postcondition"/>
@@ -2578,13 +2559,13 @@
       <details key="name" value="WorkOrder"/>
       <details key="kind" value="simple"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="name" value=":0"/>
         <details key="kind" value="simple"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Defines a global unique id for a work order."/>
       </eAnnotations>
@@ -2593,8 +2574,8 @@
         <details key="name" value="id"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="linkType" unique="false"
-        eType="#//WorkOrderType" defaultValueLiteral="finishToStart" unsettable="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="linkType" eType="#//WorkOrderType"
+        defaultValueLiteral="finishToStart" unsettable="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="This attribute expresses the type of the Work Order relationship by assigning a value from the Work Order Type enumeration."/>
       </eAnnotations>
@@ -2634,7 +2615,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimate" unique="false"
@@ -2643,7 +2624,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Estimate"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="estimationConsiderations"
@@ -2652,7 +2633,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="EstimationConsiderations"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="report" unique="false"
@@ -2661,7 +2642,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Report"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="template" unique="false"
@@ -2670,7 +2651,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Template"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="toolMentor" unique="false"
@@ -2679,7 +2660,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ToolMentor"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -2691,8 +2672,7 @@
       <details key="name" value="WorkProductDescription"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="impactOfNotHaving" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="impactOfNotHaving" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Describes the consequences of not producing the work product.  This is intended to aid in the tailoring the method/process to the needs of a specific project."/>
       </eAnnotations>
@@ -2701,8 +2681,7 @@
         <details key="name" value="ImpactOfNotHaving"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purpose" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purpose" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Describes why the work product is produced and to what use it will be put."/>
       </eAnnotations>
@@ -2711,8 +2690,7 @@
         <details key="name" value="Purpose"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reasonsForNotNeeding" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reasonsForNotNeeding" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Describes the circumstances in which it is reasonable not to produce the work product.  This is intended to aid in the tailoring of the method/process to the needs of a specific project."/>
       </eAnnotations>
@@ -2730,25 +2708,23 @@
       <details key="name" value="WorkProductDescriptor"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workProduct" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workProduct" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="WorkProduct"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="responsibleRole" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="responsibleRole" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ResponsibleRole"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group1" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="group2" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:23"/>
+        <details key="name" value="group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalInputTo" unique="false"
@@ -2757,7 +2733,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ExternalInputTo"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="impactedBy" unique="false"
@@ -2766,7 +2742,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="ImpactedBy"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="impacts" unique="false"
@@ -2775,7 +2751,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="Impacts"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mandatoryInputTo" unique="false"
@@ -2784,7 +2760,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="MandatoryInputTo"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optionalInputTo" unique="false"
@@ -2793,7 +2769,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="OptionalInputTo"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputFrom" unique="false"
@@ -2802,7 +2778,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="OutputFrom"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deliverableParts" unique="false"
@@ -2811,11 +2787,10 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="DeliverableParts"/>
-        <details key="group" value="#group:23"/>
+        <details key="group" value="#group:33"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activityEntryState" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activityEntryState" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Given that an instance of Work Product Descriptor has been created for a specific Activity, then the Activity Entry State attribute specifies the desired state of instances of the referenced Work Product when work on the Activity is initiated (i.e. work on the Activity's Task Descriptors is being initiated that use this Work Product Descriptor as input).  &#xD;&#xA;For some Work Products state is expressed in percentage of completion, compliance to work product checklist, informal state descriptions, etc.  Others have very specific states expressed as enumerations such as [identified, briefly described, outlined, detailed] for use cases.  Other Work Product states relate to some quality measures or lifecycle states such as [reviewed, implemented, tested]."/>
       </eAnnotations>
@@ -2824,8 +2799,7 @@
         <details key="name" value="activityEntryState"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activityExitState" unique="false"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="activityExitState" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Given that an instance of Work Product Descriptor has been created for a specific Activity, then the Activity Exist State attribute specifies the desired state of instances of the referenced Work Product when work on the Activity is finished (i.e. work on the Activity's Task Descriptors has finished that have this Work Product Descriptor as output).&#xD;&#xA;For some Work Products state is expressed in percentage of completion, compliance to work product checklist, informal state descriptions, etc.  Others have very specific states expressed as enumerations such as [identified, briefly described, outlined, detailed] for use cases.  Other Work Product states relate to some quality measures or lifecycle states such as [reviewed, implemented, tested]."/>
       </eAnnotations>
@@ -2847,7 +2821,7 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
-        <details key="name" value="group:22"/>
+        <details key="name" value="group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="workProduct" unique="false"
@@ -2856,7 +2830,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="WorkProduct"/>
-        <details key="group" value="#group:22"/>
+        <details key="group" value="#group:24"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

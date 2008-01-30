@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Process.java,v 1.1 2008/01/15 08:52:08 jtham Exp $
+ * $Id: Process.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -44,11 +44,11 @@ public interface Process extends Activity {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Includes Pattern</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getProcess_IncludesPattern()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='IncludesPattern'"
 	 * @generated
 	 */
-	EList getIncludesPattern();
+	EList<String> getIncludesPattern();
 
 	/**
 	 * Returns the value of the '<em><b>Default Context</b></em>' attribute.
@@ -61,7 +61,7 @@ public interface Process extends Activity {
 	 * @return the value of the '<em>Default Context</em>' attribute.
 	 * @see #setDefaultContext(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getProcess_DefaultContext()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='DefaultContext'"
 	 * @generated
 	 */
@@ -88,11 +88,11 @@ public interface Process extends Activity {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Valid Context</em>' attribute list.
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getProcess_ValidContext()
-	 * @model type="java.lang.String" unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='ValidContext'"
 	 * @generated
 	 */
-	EList getValidContext();
+	EList<String> getValidContext();
 
 	/**
 	 * Returns the value of the '<em><b>Diagram URI</b></em>' attribute.
@@ -104,7 +104,7 @@ public interface Process extends Activity {
 	 * @return the value of the '<em>Diagram URI</em>' attribute.
 	 * @see #setDiagramURI(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getProcess_DiagramURI()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='diagramURI'"
 	 * @generated
 	 */

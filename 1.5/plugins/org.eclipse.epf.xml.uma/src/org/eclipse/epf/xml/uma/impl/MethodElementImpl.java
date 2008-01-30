@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodElementImpl.java,v 1.1 2008/01/15 08:51:36 jtham Exp $
+ * $Id: MethodElementImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -17,7 +17,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.epf.xml.uma.Constraint;
 import org.eclipse.epf.xml.uma.MethodElement;
+import org.eclipse.epf.xml.uma.MethodElementProperty;
 import org.eclipse.epf.xml.uma.UmaPackage;
 
 /**
@@ -33,6 +35,7 @@ import org.eclipse.epf.xml.uma.UmaPackage;
  *   <li>{@link org.eclipse.epf.xml.uma.impl.MethodElementImpl#getBriefDescription <em>Brief Description</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.MethodElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.MethodElementImpl#getOrderingGuide <em>Ordering Guide</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.impl.MethodElementImpl#getPresentationName <em>Presentation Name</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.MethodElementImpl#isSuppressed <em>Suppressed</em>}</li>
  * </ul>
  * </p>
@@ -111,6 +114,26 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	protected String orderingGuide = ORDERING_GUIDE_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getPresentationName() <em>Presentation Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPresentationName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PRESENTATION_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPresentationName() <em>Presentation Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPresentationName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String presentationName = PRESENTATION_NAME_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #isSuppressed() <em>Suppressed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -153,6 +176,7 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected EClass eStaticClass() {
 		return UmaPackage.Literals.METHOD_ELEMENT;
 	}
@@ -174,7 +198,7 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getOwnedRule() {
+	public EList<Constraint> getOwnedRule() {
 		return getGroup().list(UmaPackage.Literals.METHOD_ELEMENT__OWNED_RULE);
 	}
 
@@ -183,7 +207,7 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList getMethodElementProperty() {
+	public EList<MethodElementProperty> getMethodElementProperty() {
 		return getGroup().list(UmaPackage.Literals.METHOD_ELEMENT__METHOD_ELEMENT_PROPERTY);
 	}
 
@@ -255,6 +279,27 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getPresentationName() {
+		return presentationName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPresentationName(String newPresentationName) {
+		String oldPresentationName = presentationName;
+		presentationName = newPresentationName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME, oldPresentationName, presentationName));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isSuppressed() {
 		return suppressed;
 	}
@@ -301,14 +346,15 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case UmaPackage.METHOD_ELEMENT__GROUP:
-				return ((InternalEList)getGroup()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getGroup()).basicRemove(otherEnd, msgs);
 			case UmaPackage.METHOD_ELEMENT__OWNED_RULE:
-				return ((InternalEList)getOwnedRule()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedRule()).basicRemove(otherEnd, msgs);
 			case UmaPackage.METHOD_ELEMENT__METHOD_ELEMENT_PROPERTY:
-				return ((InternalEList)getMethodElementProperty()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getMethodElementProperty()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -318,6 +364,7 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case UmaPackage.METHOD_ELEMENT__GROUP:
@@ -333,6 +380,8 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 				return getId();
 			case UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE:
 				return getOrderingGuide();
+			case UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME:
+				return getPresentationName();
 			case UmaPackage.METHOD_ELEMENT__SUPPRESSED:
 				return isSuppressed() ? Boolean.TRUE : Boolean.FALSE;
 		}
@@ -344,6 +393,8 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case UmaPackage.METHOD_ELEMENT__GROUP:
@@ -351,11 +402,11 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 				return;
 			case UmaPackage.METHOD_ELEMENT__OWNED_RULE:
 				getOwnedRule().clear();
-				getOwnedRule().addAll((Collection)newValue);
+				getOwnedRule().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case UmaPackage.METHOD_ELEMENT__METHOD_ELEMENT_PROPERTY:
 				getMethodElementProperty().clear();
-				getMethodElementProperty().addAll((Collection)newValue);
+				getMethodElementProperty().addAll((Collection<? extends MethodElementProperty>)newValue);
 				return;
 			case UmaPackage.METHOD_ELEMENT__BRIEF_DESCRIPTION:
 				setBriefDescription((String)newValue);
@@ -365,6 +416,9 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 				return;
 			case UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE:
 				setOrderingGuide((String)newValue);
+				return;
+			case UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME:
+				setPresentationName((String)newValue);
 				return;
 			case UmaPackage.METHOD_ELEMENT__SUPPRESSED:
 				setSuppressed(((Boolean)newValue).booleanValue());
@@ -378,6 +432,7 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_ELEMENT__GROUP:
@@ -398,6 +453,9 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 			case UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE:
 				setOrderingGuide(ORDERING_GUIDE_EDEFAULT);
 				return;
+			case UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME:
+				setPresentationName(PRESENTATION_NAME_EDEFAULT);
+				return;
 			case UmaPackage.METHOD_ELEMENT__SUPPRESSED:
 				unsetSuppressed();
 				return;
@@ -410,6 +468,7 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case UmaPackage.METHOD_ELEMENT__GROUP:
@@ -424,6 +483,8 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case UmaPackage.METHOD_ELEMENT__ORDERING_GUIDE:
 				return ORDERING_GUIDE_EDEFAULT == null ? orderingGuide != null : !ORDERING_GUIDE_EDEFAULT.equals(orderingGuide);
+			case UmaPackage.METHOD_ELEMENT__PRESENTATION_NAME:
+				return PRESENTATION_NAME_EDEFAULT == null ? presentationName != null : !PRESENTATION_NAME_EDEFAULT.equals(presentationName);
 			case UmaPackage.METHOD_ELEMENT__SUPPRESSED:
 				return isSetSuppressed();
 		}
@@ -435,6 +496,7 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -447,6 +509,8 @@ public class MethodElementImpl extends PackageableElementImpl implements MethodE
 		result.append(id);
 		result.append(", orderingGuide: ");
 		result.append(orderingGuide);
+		result.append(", presentationName: ");
+		result.append(presentationName);
 		result.append(", suppressed: ");
 		if (suppressedESet) result.append(suppressed); else result.append("<unset>");
 		result.append(')');

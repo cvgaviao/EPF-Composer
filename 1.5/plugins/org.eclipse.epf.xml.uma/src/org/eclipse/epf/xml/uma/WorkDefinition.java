@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkDefinition.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: WorkDefinition.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -41,7 +41,7 @@ public interface WorkDefinition extends MethodElement {
 	 * @return the value of the '<em>Precondition</em>' attribute.
 	 * @see #setPrecondition(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkDefinition_Precondition()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Precondition'"
 	 * @generated
 	 */
@@ -68,7 +68,7 @@ public interface WorkDefinition extends MethodElement {
 	 * @return the value of the '<em>Postcondition</em>' attribute.
 	 * @see #setPostcondition(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkDefinition_Postcondition()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='element' name='Postcondition'"
 	 * @generated
 	 */

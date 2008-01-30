@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkOrder.java,v 1.1 2008/01/15 08:52:07 jtham Exp $
+ * $Id: WorkOrder.java,v 1.2 2008/01/30 00:41:48 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -44,7 +44,7 @@ public interface WorkOrder extends EDataObject {
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkOrder_Value()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name=':0' kind='simple'"
 	 * @generated
 	 */
@@ -70,7 +70,7 @@ public interface WorkOrder extends EDataObject {
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkOrder_Id()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='id'"
 	 * @generated
 	 */
@@ -101,7 +101,7 @@ public interface WorkOrder extends EDataObject {
 	 * @see #unsetLinkType()
 	 * @see #setLinkType(WorkOrderType)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkOrder_LinkType()
-	 * @model default="finishToStart" unique="false" unsettable="true"
+	 * @model default="finishToStart" unsettable="true"
 	 *        extendedMetaData="kind='attribute' name='linkType'"
 	 * @generated
 	 */
