@@ -12,11 +12,9 @@ package org.eclipse.epf.common.ui.util;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.epf.common.AbstractActivator;
+import org.eclipse.epf.common.IActivator;
 import org.eclipse.epf.common.serviceability.Logger;
-import org.eclipse.epf.common.ui.AbstractPlugin;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
@@ -30,12 +28,10 @@ import org.eclipse.ui.PlatformUI;
  * 
  * @author Kelvin Low
  * @author Jinhua Xi
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class MsgDialog {
-
-	// The plug-in instance.
-	private Plugin plugin;
 
 	// The plug-in ID.
 	private String pluginId;
@@ -43,28 +39,21 @@ public class MsgDialog {
 	// The plug-in logger.
 	private Logger logger;
 	
-	private Shell shell;
-
 	/**
 	 * Create a new instance given the plug-in instance.
 	 * 
 	 * @param plugin
 	 *            The plugin instance.
 	 */
-	public MsgDialog(AbstractPlugin plugin) {
-		this.plugin = plugin;
-		this.shell = plugin.getWorkbench().getDisplay().getActiveShell();
+	public MsgDialog(IActivator plugin) {
 		this.pluginId = plugin.getId();
 		this.logger = plugin.getLogger();
+	}
+		
+	protected Shell getShell() {
+		return PlatformUI.getWorkbench().getDisplay().getActiveShell();
 	}
 
-	public MsgDialog(AbstractActivator plugin, Shell shell) {
-		this.plugin = plugin;
-		this.shell = shell;
-		this.pluginId = plugin.getId();
-		this.logger = plugin.getLogger();
-	}
-	
 	/**
 	 * Displays the given error message in an error dialog without the error
 	 * reason and Details button.
@@ -403,7 +392,7 @@ public class MsgDialog {
 			ErrorDialog.setDefaultImage(shellImage);
 		}
 
-		//Shell shell = plugin.getWorkbench().getDisplay().getActiveShell();
+		Shell shell = getShell();
 
 		if (details != null && details.length() > 0) {
 			MultiStatus mStatus = new MultiStatus(pluginId, IStatus.OK, reason,
@@ -481,7 +470,7 @@ public class MsgDialog {
 			ErrorDialog.setDefaultImage(shellImage);
 		}
 
-		//Shell shell = plugin.getWorkbench().getDisplay().getActiveShell();
+		Shell shell = getShell();
 
 		int rc = org.eclipse.jface.dialogs.ErrorDialog.openError(shell, title,
 				msg, status);
@@ -512,7 +501,7 @@ public class MsgDialog {
 			WrappedMessageDialog.setDefaultImage(shellImage);
 		}
 
-		//Shell shell = plugin.getWorkbench().getDisplay().getActiveShell();
+		Shell shell = getShell();
 		WrappedMessageDialog.openInformation(shell, title, msg);
 
 		if (shellImage != null) {
@@ -540,7 +529,7 @@ public class MsgDialog {
 			WrappedMessageDialog.setDefaultImage(shellImage);
 		}
 
-		//Shell shell = plugin.getWorkbench().getDisplay().getActiveShell();
+		Shell shell = getShell();
 		boolean result = WrappedMessageDialog.openQuestion(shell, title, msg);
 
 		if (shellImage != null) {
@@ -570,7 +559,7 @@ public class MsgDialog {
 			WrappedMessageDialog.setDefaultImage(shellImage);
 		}
 
-		//Shell shell = plugin.getWorkbench().getDisplay().getActiveShell();
+		Shell shell = getShell();
 		boolean result = WrappedMessageDialog.openConfirm(shell, title, msg);
 
 		if (shellImage != null) {
@@ -597,7 +586,7 @@ public class MsgDialog {
 			ErrorDialogNoReason.setDefaultImage(shellImage);
 		}
 
-		//Shell shell = plugin.getWorkbench().getDisplay().getActiveShell();
+		Shell shell = getShell();
 
 		int rc = ErrorDialogNoReason.openError(shell, title, msg, status);
 

@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 import org.eclipse.core.internal.runtime.InternalPlatform;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.epf.common.AbstractActivator;
+import org.eclipse.epf.common.IActivator;
 import org.eclipse.epf.common.serviceability.Logger;
 import org.eclipse.epf.common.ui.util.MsgDialog;
 import org.eclipse.epf.common.utils.FileUtil;
@@ -47,9 +47,10 @@ import org.osgi.framework.BundleContext;
  * 
  * @author Kelvin Low
  * @author Jinhua Xi
+ * @author Phong Nguyen Le
  * @since 1.0
  */
-public abstract class AbstractPlugin extends AbstractUIPlugin {
+public abstract class AbstractPlugin extends AbstractUIPlugin implements IActivator {
 
 
 	// The relative path to the icons.
@@ -498,10 +499,10 @@ public abstract class AbstractPlugin extends AbstractUIPlugin {
 	 * 
 	 * @return The new or cached message dialog.
 	 */
-	public MsgDialog getMsgDialog(AbstractActivator plugin) {
+	public static MsgDialog getMsgDialog(IActivator plugin) {
 		MsgDialog msgDialog = (MsgDialog) msgDialogs.get(plugin.getId());
 		if (msgDialog == null) {
-			msgDialog = new MsgDialog(plugin, getWorkbench().getDisplay().getActiveShell());
+			msgDialog = new MsgDialog(plugin);
 			msgDialogs.put(plugin.getId(), msgDialog);
 		}
 		return msgDialog;
@@ -509,12 +510,7 @@ public abstract class AbstractPlugin extends AbstractUIPlugin {
 
 	
 	public MsgDialog getMsgDialog() {		
-		MsgDialog msgDialog = (MsgDialog) msgDialogs.get(getId());
-		if (msgDialog == null) {
-			msgDialog = new MsgDialog(this);
-			msgDialogs.put(getId(), msgDialog);
-		}
-		return msgDialog;
+		return getMsgDialog(this);
 	}
 	
 	/**

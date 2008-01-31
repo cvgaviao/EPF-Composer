@@ -42,9 +42,10 @@ import org.osgi.framework.BundleContext;
  * 
  * @author Kelvin Low
  * @author Jinhua Xi
+ * @author Phong Nguyen Le
  * @since 1.0
  */
-public abstract class AbstractActivator extends Plugin {
+public abstract class AbstractActivator extends Plugin implements IActivator {
 
 	// The relative path to the icons.
 	private static final String ICON_PATH = "icons/"; //$NON-NLS-1$;
