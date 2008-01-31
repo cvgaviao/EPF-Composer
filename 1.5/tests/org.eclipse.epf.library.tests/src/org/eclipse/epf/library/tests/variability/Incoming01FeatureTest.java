@@ -93,8 +93,9 @@ public class Incoming01FeatureTest extends VariablityBaseTestCase {
 		// case 4: 
 		LibraryTestHelper.setExtends(d2, d1);
 		items = ConfigurationHelper.calc0nFeatureValue(a1, ofeature, realizer);
-		assertEquals(1, items.size());
+		assertEquals(2, items.size());
 		assertEquals(d1, items.get(0));
+		assertEquals(d2, items.get(1));
 		
 		items = ConfigurationHelper.calc0nFeatureValue(a2, ofeature, realizer);
 		assertEquals(1, items.size());
