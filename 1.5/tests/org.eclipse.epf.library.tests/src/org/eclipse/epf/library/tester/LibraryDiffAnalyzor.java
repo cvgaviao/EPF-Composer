@@ -25,6 +25,7 @@ import org.eclipse.epf.importing.services.ResourceScanner;
 import org.eclipse.epf.library.tester.iface.TestTracer;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Diagram;
+import org.eclipse.epf.uma.GraphNode;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
@@ -452,6 +453,10 @@ public class LibraryDiffAnalyzor {
 		}
 		
 		if (useNameAs2ndId && obj instanceof Diagram) {
+			return false;
+		}
+		
+		if (obj instanceof GraphNode) {
 			return false;
 		}
 		
