@@ -10,6 +10,8 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.tests.variability;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
@@ -23,7 +25,6 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.VariabilityElement;
 
 /**
  * Test case for 0..1 feature varaibility.
@@ -56,8 +57,9 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
-		MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
-		assertEquals(r1, r);
+		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
+		List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertEquals(r1, list.get(0));
 	}
 	
 	public void test_task_performedBy_with_contributor() {
@@ -82,8 +84,10 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
-		MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
-		assertEquals(r1, r);
+		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
+		//assertEquals(r1, r);
+		List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertEquals(r1, list.get(0));
 	}
 	
 	public void test_task_performedBy_from_contributor() {
@@ -109,8 +113,10 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
-		MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
-		assertEquals(r2, r);
+		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
+		//assertEquals(r2, r);
+		List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertEquals(r2, list.get(0));
 	}
 	
 	public void test_task_performedBy_with_contributors() {
@@ -167,8 +173,10 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		assertEquals(t2, t);  // if this fail, the remaining code will not be executed
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
-		MethodElement r = ConfigurationHelper.calc01FeatureValue(t, feature, realizer);
-		assertEquals(r2, r);
+		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t, feature, realizer);
+		//assertEquals(r2, r);
+		List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertEquals(r1, list.get(0));
 	}
 	
 	public void test_task_performedBy_with_replacer_no_performer() {
@@ -233,8 +241,10 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		assertEquals(t1, t); 
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
-		MethodElement r = ConfigurationHelper.calc01FeatureValue(t, feature, realizer);
-		assertEquals(r1, r);
+		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t, feature, realizer);
+		//assertEquals(r1, r);
+		List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertEquals(r1, list.get(0));
 	}
 	
 	
@@ -260,33 +270,49 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		MethodElement r;
 		
 		// case 1:
-		t1.getPerformedBy().add(null);
+		//t1.getPerformedBy().add(null);
 		t2.getPerformedBy().add(r2);		
-		r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
-		assertEquals(null, r);
+		//r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
+		//assertEquals(null, r);
+		List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertTrue(list.isEmpty());
 		
-		r = ConfigurationHelper.calc01FeatureValue(t2, feature, realizer);
-		assertEquals(r2, r);
+		//r = ConfigurationHelper.calc01FeatureValue(t2, feature, realizer);
+		//assertEquals(r2, r);
+		list = ConfigurationHelper.calc0nFeatureValue(t2, feature, realizer);
+		assertEquals(r2, list.get(0));
 		
 		// case 2:
 		t1.getPerformedBy().add(r1);
-		t2.getPerformedBy().add(r2);
+		t2.getPerformedBy().add(r1);
 
-		r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
-		assertEquals(r1, r);
+		//r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
+		//assertEquals(r1, r);
+		list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertEquals(r1, list.get(0));
 		
-		r = ConfigurationHelper.calc01FeatureValue(t2, feature, realizer);
-		assertEquals(r2, r);
+		//r = ConfigurationHelper.calc01FeatureValue(t2, feature, realizer);
+		//assertEquals(r2, r);
+		list = ConfigurationHelper.calc0nFeatureValue(t2, feature, realizer);
+		assertTrue(list.size() == 2);
+		assertEquals(r2, list.get(0));
+		assertEquals(r1, list.get(1));
 		
 		// case 3:
+		t1.getPerformedBy().clear();
+		t2.getPerformedBy().clear();
 		t1.getPerformedBy().add(r1);
-		t2.getPerformedBy().add(null);
+		//t2.getPerformedBy().add(null);
 
-		r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
-		assertEquals(r1, r);
+		//r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
+		//assertEquals(r1, r);
+		list = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
+		assertEquals(r1, list.get(0));
 		
-		r = ConfigurationHelper.calc01FeatureValue(t2, feature, realizer);
-		assertEquals(r1, r);
+		//r = ConfigurationHelper.calc01FeatureValue(t2, feature, realizer);
+		//assertEquals(r1, r);
+		list = ConfigurationHelper.calc0nFeatureValue(t2, feature, realizer);
+		assertEquals(r1, list.get(0));
 		
 	}
 }
