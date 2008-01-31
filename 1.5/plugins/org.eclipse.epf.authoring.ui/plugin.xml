@@ -223,12 +223,20 @@
                afterTab="properties.tab.TaskDescriptor.General"/>
 		 <!-- END DOCUMENTATION -->
 		
-		 <!-- ACTIVITY -->
-         <propertyTab
+		 <!-- START GUIDANCE -->
+		  <propertyTab
+               label="%_UI_Properties_Guidance"
+               category="element"
+               afterTab="properties.tab.BreakdownElement.Documentation"
+               id="properties.tab.BreakdownElement.Guidance"/>  
+          <propertyTab
                label="%_UI_Properties_Guidance"
                category="element"
                afterTab="properties.tab.Activity.Documentation"
-               id="properties.tab.Activity.Guidance"/>  
+               id="properties.tab.Activity.Guidance"/> 
+         <!-- END GUIDANCE-->
+         
+		 <!-- ACTIVITY -->       
          <propertyTab
                label="%_UI_Properties_Work_Rollup"
                category="element"
@@ -366,7 +374,20 @@
          </propertySection>       
          <!-- END DOCUMENTATION SECTION -->
       
-         <!-- ACTIVITY -->
+         <!-- START GUIDANCE SECTION -->
+         <propertySection
+               tab="properties.tab.BreakdownElement.Guidance"
+               class="org.eclipse.epf.authoring.ui.properties.BreakdownElementGuidanceSection"
+               id="properties.section.BreakdownElement.Guidance">
+            <input type="org.eclipse.epf.uma.Milestone"/>
+            <input type="org.eclipse.epf.uma.TeamProfile"/>
+            <input type="org.eclipse.epf.uma.Descriptor"/>
+            <input type="org.eclipse.epf.library.edit.process.TaskDescriptorWrapperItemProvider"/>
+            <input type="org.eclipse.epf.library.edit.process.RoleDescriptorWrapperItemProvider"/>
+            <input type="org.eclipse.epf.library.edit.process.WorkProductDescriptorWrapperItemProvider"/>
+            <input type="org.eclipse.epf.library.edit.process.MilestoneWrapperItemProvider"/>
+            <input type="org.eclipse.epf.library.edit.process.TeamProfileWrapperItemProvider"/>
+         </propertySection>
          <propertySection
                tab="properties.tab.Activity.Guidance"
                class="org.eclipse.epf.authoring.ui.properties.ActivityGuidanceSection"
@@ -374,6 +395,9 @@
             <input type="org.eclipse.epf.uma.Activity"/>
             <input type="org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider"/>
          </propertySection>
+         <!-- END GUIDANCE SECTION -->
+         
+         <!-- ACTIVITY -->    
          <propertySection
                tab="properties.tab.Activity.WorkRollup"
                class="org.eclipse.epf.authoring.ui.properties.ActivityWorkRollupSection"

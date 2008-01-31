@@ -31,7 +31,7 @@ import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.FilterInitializer;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
-import org.eclipse.epf.library.edit.process.command.AddGuidanceToActivityCommand;
+import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
@@ -844,8 +844,7 @@ public class ActivityGuidanceSection extends AbstractSection {
 	 */
 	private void addGuidances(ArrayList addItems) {
 		// update the model
-
-		AddGuidanceToActivityCommand command = new AddGuidanceToActivityCommand(
+		AddGuidanceToBreakdownElementCommand command = new AddGuidanceToBreakdownElementCommand(
 				element, addItems);
 		actionMgr.execute(command);
 	}
