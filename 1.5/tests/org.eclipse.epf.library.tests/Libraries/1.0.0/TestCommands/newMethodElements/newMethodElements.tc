@@ -87,7 +87,7 @@
 	
 	<CompareToGoldenFile 
 		goldenFileName="newMethodElements.xml" 
-		diffCount="4" 
+		diffCount="0" 
 		elementCount="64"
 		>
 	</CompareToGoldenFile>
