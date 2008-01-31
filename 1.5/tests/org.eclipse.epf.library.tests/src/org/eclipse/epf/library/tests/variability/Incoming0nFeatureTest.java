@@ -61,6 +61,10 @@ public class Incoming0nFeatureTest extends VariablityBaseTestCase {
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_ResponsibleRoles;
 		List items;
 		
+		List list = r1.getResponsibleFor();
+		list.add(a1);
+		list.add(a1);
+		
 		// case 1
 		r1.getResponsibleFor().add(a1);
 		r2.getResponsibleFor().add(a2);
@@ -102,8 +106,9 @@ public class Incoming0nFeatureTest extends VariablityBaseTestCase {
 		r2.getResponsibleFor().add(a2);
 		LibraryTestHelper.setExtends(r2, r1);
 		items = ConfigurationHelper.calc0nFeatureValue(a1, ofeature, realizer);
-		assertEquals(1, items.size());
+		assertEquals(2, items.size());
 		assertTrue(items.contains(r1));
+		assertTrue(items.contains(r2));
 		
 		items = ConfigurationHelper.calc0nFeatureValue(a2, ofeature, realizer);
 		assertEquals(1, items.size());
