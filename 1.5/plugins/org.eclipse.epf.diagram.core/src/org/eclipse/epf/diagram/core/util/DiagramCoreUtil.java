@@ -290,7 +290,19 @@ public final class DiagramCoreUtil {
 	}
 	
 	/**
+	 * Hide default connection handles in AD, ADD, WPDD.
+	 * 
+	 * @param store
+	 *            IPreferenceStore
+	 */
+	public static void hideConnectionHandles(IPreferenceStore store) {
+		store.setDefault(IPreferenceConstants.PREF_SHOW_CONNECTION_HANDLES,
+				false);
+	}
+	
+	/**
 	 * Return text height based on text, font and width of boundries text is in
+	 * 
 	 * @param text
 	 * @param fontStyle
 	 * @param width
