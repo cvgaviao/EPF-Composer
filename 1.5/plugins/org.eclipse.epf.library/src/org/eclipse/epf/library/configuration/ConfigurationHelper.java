@@ -1167,11 +1167,11 @@ public class ConfigurationHelper {
 	 * @param oFeature
 	 * @return EStructuralFeature
 	 */
-	public static EStructuralFeature get01Feature(OppositeFeature oFeature) {
-		if ( oFeature == AssociationHelper.Role_Primary_Tasks 
+	public static EStructuralFeature get01Feature(OppositeFeature oFeature) {		
+/*		if ( oFeature == AssociationHelper.Role_Primary_Tasks 
 				|| oFeature == AssociationHelper.RoleDescriptor_PrimaryTaskDescriptors ) {
 			return oFeature.getTargetFeature();
-		}
+		}*/
 		
 		return null;
 	}
