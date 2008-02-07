@@ -1,4 +1,4 @@
-feature@org.eclipse.epf.tests.feature=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/tests/org.eclipse.epf.tests.feature
+feature@org.eclipse.epf.tests.feature=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.tests.feature
 plugin@org.eclipse.epf.common.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.common.tests
 plugin@org.eclipse.epf.diagram.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.diagram.tests
 plugin@org.eclipse.epf.library.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.library.tests
