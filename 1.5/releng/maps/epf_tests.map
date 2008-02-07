@@ -1,6 +1,6 @@
-feature@org.eclipse.epf.tests.feature=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.tests.feature
-plugin@org.eclipse.epf.common.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.common.tests
-plugin@org.eclipse.epf.diagram.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.diagram.tests
-plugin@org.eclipse.epf.library.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.library.tests
-plugin@org.eclipse.epf.richtext.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.richtext.tests
-plugin@org.eclipse.epf.tests=HEAD,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.tests
+feature@org.eclipse.epf.tests.feature=v20080207-1439,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.tests.feature
+plugin@org.eclipse.epf.common.tests=v20080207-1439,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.common.tests
+plugin@org.eclipse.epf.diagram.tests=v20080207-1439,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.diagram.tests
+plugin@org.eclipse.epf.library.tests=v20080207-1439,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.library.tests
+plugin@org.eclipse.epf.richtext.tests=v20080207-1439,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.richtext.tests
+plugin@org.eclipse.epf.tests=v20080207-1439,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/tests/org.eclipse.epf.tests
