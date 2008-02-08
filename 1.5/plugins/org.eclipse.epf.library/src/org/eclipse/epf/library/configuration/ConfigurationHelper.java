@@ -592,7 +592,7 @@ public class ConfigurationHelper {
 			if ( StrUtil.isBlank(name) && (element instanceof VariabilityElement) ) {
 				
 				EStructuralFeature f = UmaPackage.eINSTANCE.getVariabilityElement_VariabilityBasedOnElement();
-				ElementRealizer r = new DefaultElementRealizer(config);	
+				ElementRealizer r = DefaultElementRealizer.newElementRealizer(config);	
 				MethodElement me = element;
 
 				do {
@@ -975,7 +975,7 @@ public class ConfigurationHelper {
 				// (i.e. i am an entender)
 				// this handles the senario: G2 replaces G1 and G3 extends G1
 				ElementRealizer realizer2 = 
-					new DefaultElementRealizer(config, (!isReplacer), (!isReplacer));
+					DefaultElementRealizer.newElementRealizer(config, (!isReplacer), (!isReplacer));
 
 				MethodElement e = getCalculatedElement(ce
 						.getVariabilityBasedOnElement(), realizer2);
@@ -1006,7 +1006,7 @@ public class ConfigurationHelper {
 	 */
 	public static List getCalculatedElements(List elements,
 			MethodConfiguration config) {
-		return getCalculatedElements(elements, new DefaultElementRealizer(config) );
+		return getCalculatedElements(elements, DefaultElementRealizer.newElementRealizer(config) );
 	}
 	
 	/**
@@ -1041,7 +1041,7 @@ public class ConfigurationHelper {
 	 */
 	public static MethodElement getCalculatedElement(MethodElement element,
 			MethodConfiguration config) {
-		ElementRealizer realizer = new DefaultElementRealizer(config, true, true);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config, true, true);
 
 		return getCalculatedElement(element, realizer);
 	}
@@ -1269,7 +1269,7 @@ public class ConfigurationHelper {
 
 				
 				// workaround to allow show/hide subtracted elements
-				DefaultElementRealizer r = new DefaultElementRealizer(config);
+				ElementRealizer r = DefaultElementRealizer.newElementRealizer(config);
 				r.setShowSubtracted(realizer.showSubtracted());
 				
 				MethodElement oo = calc01FeatureValue(o, of, r);
@@ -1408,7 +1408,7 @@ public class ConfigurationHelper {
 			MethodConfiguration config) {
 		if (isMergableAttribute(feature)) {
 			// merge the attribute values
-			ElementRealizer realizer = new DefaultElementRealizer(config);
+			ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 			AttributeFeatureValue values = new AttributeFeatureValue(element, ownerElement, feature, realizer);
 			calculateFeature(element, ownerElement, feature, config, values,
 						realizer);

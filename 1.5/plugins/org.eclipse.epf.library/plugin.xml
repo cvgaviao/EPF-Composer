@@ -17,6 +17,7 @@
          name="Method Library Managers"
          schema="schema/LibraryManagers.exsd"/>
    <extension-point id="elementLayoutExtensions" name="Element layout Extensions" schema="schema/elementLayoutExtensions.exsd"/>
+   <extension-point id="elementRealizerFactory" name="ElementRealizer Factory" schema="schema/elementRealizerFactory.exsd"/>
    <extension
          point="org.eclipse.epf.library.edit.textReferenceReplacer">
       <textReferenceReplacer class="org.eclipse.epf.library.util.TextReferenceReplacerImpl"/>

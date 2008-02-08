@@ -45,6 +45,7 @@ import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.IWrapper;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.process.OBSItemProviderAdapterFactory;
@@ -53,6 +54,7 @@ import org.eclipse.epf.library.edit.process.WBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.LibraryEditConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -71,7 +73,7 @@ import org.eclipse.epf.uma.TeamProfile;
  * @since 1.0
  */
 public class TngAdapterFactoryImpl implements TngAdapterFactory {
-	
+
 	private ExposedAdapterFactory wbsAdapterFactory = null;
 
 	private ExposedAdapterFactory obsAdapterFactory = null;
@@ -202,11 +204,18 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 		if (navigatorAdapterFactory == null) {
 			synchronized (this) {
 				if (navigatorAdapterFactory == null) {
-					navigatorAdapterFactory = new ExposedAdapterFactory(
-							new AdapterFactory[] {
-									// new ResourceItemProviderAdapterFactory(),
-									new org.eclipse.epf.library.edit.navigator.ItemProviderAdapterFactory(),
-									new ReflectiveItemProviderAdapterFactory() });
+					Object ext = ExtensionManager.createExtension(LibraryEditPlugin.PLUGIN_ID, "libraryViewAdapterFactory"); //$NON-NLS-1$
+					if(ext instanceof ComposedAdapterFactory) {
+						navigatorAdapterFactory = (ExposedAdapterFactory) ext;
+					}
+					else {
+						navigatorAdapterFactory = new ExposedAdapterFactory(
+								new AdapterFactory[] {
+										// new
+										// ResourceItemProviderAdapterFactory(),
+										new org.eclipse.epf.library.edit.navigator.ItemProviderAdapterFactory(),
+										new ReflectiveItemProviderAdapterFactory() });
+					}
 				}
 			}
 		}

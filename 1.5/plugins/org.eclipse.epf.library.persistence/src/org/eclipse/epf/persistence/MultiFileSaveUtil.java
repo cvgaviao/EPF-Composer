@@ -1636,7 +1636,11 @@ public final class MultiFileSaveUtil {
 	 * @return
 	 */
 	public static Iterator listConfigFiles(File configDir) {
-		return new AbstractTreeIterator(configDir, false) {
+		return listLibraryFiles(configDir);
+	}
+	
+	public static Iterator<File> listLibraryFiles(File dir) {
+		return new AbstractTreeIterator<File>(dir, false) {
 			/**
 			 * Comment for <code>serialVersionUID</code>
 			 */
@@ -1653,7 +1657,7 @@ public final class MultiFileSaveUtil {
 
 			};
 
-			protected Iterator getChildren(Object object) {
+			protected Iterator<File> getChildren(Object object) {
 				File[] files = ((File) object).listFiles(filter);
 				if (files != null && files.length > 0) {
 					return Arrays.asList(files).iterator();
@@ -1663,5 +1667,4 @@ public final class MultiFileSaveUtil {
 
 		};
 	}
-	
 }

@@ -52,10 +52,10 @@ public class ConfigurationApplicator implements IConfigurationApplicator {
 			MethodConfiguration config) {
 		if (ConfigurationHelper.is0nFeature(ref)) {
 			return ConfigurationHelper.calc0nFeatureValue(e, ref,
-					new DefaultElementRealizer(config));
+					DefaultElementRealizer.newElementRealizer(config));
 		} else if (ConfigurationHelper.is01Feature(ref)) {
 			return ConfigurationHelper.calc01FeatureValue(e, ref,
-					new DefaultElementRealizer(config));
+					DefaultElementRealizer.newElementRealizer(config));
 		}
 		return null;
 	}
@@ -64,7 +64,7 @@ public class ConfigurationApplicator implements IConfigurationApplicator {
 			DescribableElement owner, EReference ref, MethodConfiguration config) {
 
 		List values = ConfigurationHelper.calc0nFeatureValue(desc, owner, ref,
-				new DefaultElementRealizer(config));
+				DefaultElementRealizer.newElementRealizer(config));
 		if (ref.isMany()) {
 			return values;
 		}
@@ -76,7 +76,7 @@ public class ConfigurationApplicator implements IConfigurationApplicator {
 	public Object getReference(MethodElement element, OppositeFeature feature,
 			MethodConfiguration config) {
 		List values = ConfigurationHelper.calc0nFeatureValue(element, feature,
-				new DefaultElementRealizer(config));
+				DefaultElementRealizer.newElementRealizer(config));
 
 		return values;
 	}

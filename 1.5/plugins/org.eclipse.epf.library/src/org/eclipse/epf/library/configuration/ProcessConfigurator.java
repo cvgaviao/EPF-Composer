@@ -60,7 +60,7 @@ public class ProcessConfigurator extends ConfigurationFilter {
 			return true;
 
 		if (obj instanceof BreakdownElement) {
-			DefaultElementRealizer realizer = new DefaultElementRealizer(super.methodConfig);
+			ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(super.methodConfig);
 			return accept((BreakdownElement)obj, realizer);
 		}
 		

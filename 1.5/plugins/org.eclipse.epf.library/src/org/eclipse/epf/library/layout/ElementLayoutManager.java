@@ -164,7 +164,7 @@ public class ElementLayoutManager {
 	
 	public ElementRealizer getElementRealizer() {
 		if ( realizer == null ) {
-			realizer = new DefaultElementRealizer(config);
+			realizer = DefaultElementRealizer.newElementRealizer(config);
 			realizer.setFilter(contentLayoutAdapterFactory.getFilter());
 		}
 		

@@ -217,7 +217,7 @@ public class ContentPackageItemProvider extends
 	 * @see org.eclipse.emf.edit.provider.ItemProviderAdapter#collectNewChildDescriptors(java.util.Collection,
 	 *      java.lang.Object)
 	 */
-	protected void collectNewChildDescriptors(Collection newChildDescriptors,
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors,
 			Object object) {
 		newChildDescriptors.add(createChildParameter(UmaPackage.eINSTANCE
 				.getMethodPackage_ChildPackages(), UmaFactory.eINSTANCE

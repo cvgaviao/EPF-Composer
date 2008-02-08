@@ -114,7 +114,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 		if (methodConfig == null)
 			return null;
 
-		ElementRealizer realizer = new DefaultElementRealizer(methodConfig);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(methodConfig);
 		// discard the contributors
 		realizer.setDiscardContributor(this.discardContributors);
 
@@ -229,7 +229,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	public VariabilityInfo getVariabilityInfo(VariabilityElement ve) {
 
 		// calculate the element first
-		ElementRealizer realizer = new DefaultElementRealizer(methodConfig, true, true);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(methodConfig, true, true);
 		return getVariabilityInfo(ve, realizer);
 	}
 
@@ -253,7 +253,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	
 	public Object resolve(Object element) {
 		if (element instanceof VariabilityElement) {
-			ElementRealizer realizer = new DefaultElementRealizer(methodConfig, true, true);
+			ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(methodConfig, true, true);
 			return ConfigurationHelper.getCalculatedElement(
 					(MethodElement) element, realizer);
 		}
@@ -277,7 +277,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 					ConfigurationHelper.calc0nFeatureValue(
 							(Task)obj, 
 							AssociationHelper.Task_Disciplines, 
-							new DefaultElementRealizer(methodConfig)).isEmpty();					
+							DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
 	}
@@ -298,7 +298,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 					ConfigurationHelper.calc0nFeatureValue(
 							(WorkProduct)obj, 
 							AssociationHelper.WorkProduct_Domains, 
-							new DefaultElementRealizer(methodConfig)).isEmpty();					
+							DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
 	}
@@ -319,7 +319,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 					ConfigurationHelper.calc0nFeatureValue(
 							(WorkProduct)obj, 
 							AssociationHelper.WorkProduct_WorkProductTypes, 
-							new DefaultElementRealizer(methodConfig)).isEmpty();					
+							DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
 	}
@@ -340,7 +340,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 					ConfigurationHelper.calc0nFeatureValue(
 							(Role)obj, 
 							AssociationHelper.Role_RoleSets, 
-							new DefaultElementRealizer(methodConfig)).isEmpty();					
+							DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
 	}
@@ -361,7 +361,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 					ConfigurationHelper.calc0nFeatureValue(
 							(ToolMentor)obj, 
 							AssociationHelper.ToolMentor_Tools, 
-							new DefaultElementRealizer(methodConfig)).isEmpty();					
+							DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
 	}
@@ -384,7 +384,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 				ConfigurationHelper.calc0nFeatureValue(
 						(MethodElement)obj, 
 						AssociationHelper.Discipline_DisciplineGroupings, 
-						new DefaultElementRealizer(methodConfig)).isEmpty();					
+						DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
 	}
@@ -408,7 +408,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 					ConfigurationHelper.calc0nFeatureValue(
 							(MethodElement)obj, 
 							AssociationHelper.RoleSet_RoleSetGrouppings, 
-							new DefaultElementRealizer(methodConfig)).isEmpty();					
+							DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
 	}
