@@ -28,6 +28,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
  * Realizes the element based on the configuration and realize options.
  * 
  * @author Jinhua Xi
+ * @author Weiping Lu
  * @since 1.0
  */
 public abstract class ElementRealizer {
@@ -284,4 +285,9 @@ public abstract class ElementRealizer {
 	public void dispose() {
 		this.filter = null;
 	}
+	
+	protected Object eGet(MethodElement element, EStructuralFeature feature) {
+		return element.eGet(feature);
+	}
+
 }

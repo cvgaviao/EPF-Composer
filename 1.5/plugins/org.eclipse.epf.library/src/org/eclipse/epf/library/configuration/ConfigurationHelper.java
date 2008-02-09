@@ -64,6 +64,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
 /**
  * @author Jinhua Xi
  * @author Phong Nguyen Le
+ * @author Weiping Lu
  * @since 1.0
  */
 public class ConfigurationHelper {
@@ -738,7 +739,8 @@ public class ConfigurationHelper {
 		VariabilityElement ve = getVariableOwner((OwnerElement == null) ? element
 				: OwnerElement);
 
-		Object value = element.eGet(feature);
+		Object value = realizer == null ? element.eGet(feature) :
+							realizer.eGet(element, feature);
 
 		values.add(ve, value);
 
