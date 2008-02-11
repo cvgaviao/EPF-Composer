@@ -47,11 +47,11 @@ public final class ModelStorage {
 	 * return the MethodPlugins in the current MethodLibrary
 	 * @return List
 	 */
-	public static List getBaseModels() {
+	public static List<MethodPlugin> getBaseModels() {
 		MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
 		if (lib != null)
-			return new ArrayList(lib.getMethodPlugins());
-		return Collections.EMPTY_LIST;
+			return new ArrayList<MethodPlugin>(lib.getMethodPlugins());
+		return Collections.emptyList();
 	}
 
 	/**

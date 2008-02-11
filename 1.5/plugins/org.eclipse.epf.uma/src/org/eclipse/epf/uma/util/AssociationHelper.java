@@ -1163,8 +1163,8 @@ public final class AssociationHelper {
 	 *            a method plug-in
 	 * @return a list of method plug-ins
 	 */
-	public static List getPluginDirectExtensions(MethodPlugin plugin) {
-		return (List) ((MultiResourceEObject) plugin)
+	public static List<MethodPlugin> getPluginDirectExtensions(MethodPlugin plugin) {
+		return (List<MethodPlugin>) ((MultiResourceEObject) plugin)
 				.getOppositeFeatureValue(MethodPlugin_DirectExtensions);
 	}
 
