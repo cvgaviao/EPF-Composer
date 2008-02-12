@@ -21,6 +21,11 @@
          id="ProcessEditorPageProvider"
          name="Process Editor Page Provider"
          schema="schema/ProcessEditorPageProvider.exsd"/>
+         
+   <extension-point
+         id="descriptionPageColumnProvider"
+         name="Editor Description Page Column Provider"
+         schema="schema/descriptionPageColumnProvider.exsd"/>
 
    <extension-point
          id="wizardRegistryProvider"
