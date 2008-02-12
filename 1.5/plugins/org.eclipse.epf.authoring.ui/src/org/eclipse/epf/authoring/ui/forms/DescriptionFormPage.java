@@ -70,6 +70,7 @@ import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.MethodUnit;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -234,7 +235,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 	private Text ctrl_authors;
 
-	private Text ctrl_change_date;
+	protected Text ctrl_change_date;
 
 	private Text ctrl_change_desc;
 
@@ -335,6 +336,91 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected ModifyListener modelModifyListener;
 
 	protected ModifyListener contentModifyListener;
+	
+	protected FocusAdapter nameFocusListener = new FocusAdapter() {
+		public void focusGained(FocusEvent e) {
+			((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
+					UmaPackage.eINSTANCE.getNamedElement_Name());
+		}
+
+		public void focusLost(FocusEvent e) {
+			String oldContent = methodElement.getName() ;
+			String name = ctrl_name.getText().trim();
+			if (((MethodElementEditor) getEditor()).mustRestoreValue(
+					e.widget, methodElement.getName())) {
+				return;
+			}
+			if (name.equals(methodElement.getName()))
+				return;
+			
+			// 178462
+			String msg = null;
+			if (oldContent.indexOf("&") < 0 && name.indexOf("&") > -1) { //$NON-NLS-1$ //$NON-NLS-2$
+				msg = NLS.bind(
+						LibraryEditResources.invalidElementNameError4_msg,
+						name);
+			} else {
+				IValidator validator = getNameValidator();
+				if(validator == null){
+					validator = IValidatorFactory.INSTANCE
+						.createNameValidator(
+								methodElement,
+								TngAdapterFactory.INSTANCE
+										.getNavigatorView_ComposedAdapterFactory());
+				}
+				msg = validator.isValid(name);
+			}
+			if (msg == null && !name.equals(methodElement.getName())) {
+				if(name.indexOf("&") > -1) { //$NON-NLS-1$
+					msg = NLS.bind(
+							LibraryEditResources.invalidElementNameError4_msg,
+							name);
+				}
+			}
+			if (msg == null) {
+				name = StrUtil.makeValidFileName(ctrl_name.getText());
+				ctrl_name.setText(name); //183084
+				if (!name.equals(methodElement.getName())) {						
+					boolean success = actionMgr.doAction(
+							IActionManager.SET, methodElement,
+							UmaPackage.eINSTANCE.getNamedElement_Name(),
+							name, -1);
+					if (!success) {
+						return;
+					}
+					if (ContentDescriptionFactory
+							.hasPresentation(methodElement)) {
+						Resource contentResource = contentElement
+								.getPresentation().eResource();
+						if (contentResource != null) {
+							((MethodElementEditor) getEditor())
+									.addResourceToAdjustLocation(contentResource);
+						}
+					}
+					setFormTextWithVariableInfo();
+					ctrl_name.setText(name);
+				}
+			} else {
+				//Fix missing "&" in error dialog
+				if (msg.indexOf("&") >= 0) {//$NON-NLS-1$
+					msg = msg.replace("&", "&&");//$NON-NLS-1$//$NON-NLS-2$
+				}
+				AuthoringUIPlugin
+						.getDefault()
+						.getMsgDialog()
+						.displayError(
+								AuthoringUIResources.renameError_title, 
+								msg);
+				ctrl_name.setText(methodElement.getName());
+				ctrl_name.getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						ctrl_name.setFocus();
+						ctrl_name.selectAll();
+					}
+				});
+			}
+		}
+	};
 
 	// Editing and display flags.
 	protected boolean descExpandFlag = false;
@@ -444,7 +530,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	/**
 	 * Returns the Content element associated with this page.
 	 */
-	protected Object getContentElement() {
+	protected Object getmethodElement() {
 		return null;
 	}
 
@@ -500,7 +586,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		
 		@Override
 		public void notifyChanged(Notification notification) {
-			if (notification.getNotifier() == contentElement
+			if (notification.getNotifier() == methodElement
 					&& notification.getEventType() == Notification.SET
 					&& notification.getFeature() == UmaPackage.Literals.VARIABILITY_ELEMENT__VARIABILITY_TYPE) {
 				viewer.setSelection(new StructuredSelection(notification.getNewValue()));
@@ -515,7 +601,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		super.init(site, input);
 		
 		VariabilityType[] types;
-		if (contentElement instanceof ContentCategory) {
+		if (methodElement instanceof ContentCategory) {
 			types = new VariabilityType[] {
 					VariabilityType.NA,
 					VariabilityType.CONTRIBUTES,
@@ -549,7 +635,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}
 
 	private void setFormTextWithVariableInfo() {
-		UIHelper.setFormText(form, contentElement);
+		UIHelper.setFormText(form, methodElement);
 	}
 
 	/**
@@ -616,6 +702,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		// Create the General section.
 		if (generalSectionOn) {
 			createGeneralSection(toolkit);
+			toolkit.paintBordersFor(generalComposite);
 			SECTIONS++;
 		}
 
@@ -641,11 +728,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (versionSectionOn) {
 			createVersionSection(toolkit);
 			createVersionSectionContent();
+			toolkit.paintBordersFor(versionComposite);
 			SECTIONS++;
 		}
 
 		if (variabilitySectionOn) {
 			createVariabilitySection(toolkit);
+			toolkit.paintBordersFor(variabilityComposite);
 			SECTIONS++;
 		}
 
@@ -656,10 +745,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			SECTIONS++;
 		}
 
-		toolkit.paintBordersFor(variabilityComposite);
-		toolkit.paintBordersFor(expandedComposite);
-		toolkit.paintBordersFor(generalComposite);
-		toolkit.paintBordersFor(versionComposite);
+		if (expandedComposite != null)
+			toolkit.paintBordersFor(expandedComposite);
 	}
 
 	private void createFormComposites(FormToolkit toolkit) {
@@ -737,7 +824,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						.getSystemColor(19));
 				ctrl_type_label.setLayoutData(gridData);
 			}
-			if (contentElement instanceof Guidance) {
+			if (methodElement instanceof Guidance) {
 				ctrl_type_button = toolkit.createButton(generalComposite,
 						AuthoringUIText.CHANGE_TYPE_BUTTON_TEXT, SWT.PUSH);
 				{
@@ -746,7 +833,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					ctrl_type_button.setLayoutData(gridData);
 				}
 				if (ConvertGuidanceType
-						.getValidNewGuidanceTypes((Guidance) contentElement) == null) {
+						.getValidNewGuidanceTypes((Guidance) methodElement) == null) {
 					ctrl_type_button.setVisible(false);
 				}
 			}
@@ -807,7 +894,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 		viewer_variability.setContentProvider(contentProviderVariability);
 		viewer_variability.setLabelProvider(labelProviderVariability);
-		viewer_variability.setInput(contentElement);
+		viewer_variability.setInput(methodElement);
 
 		toolkit.createLabel(variabilityComposite, "", SWT.NONE); //$NON-NLS-1$
 
@@ -827,7 +914,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		base_viewer = new TableViewer(ctrl_base);
 		initContentProviderBase();
 		base_viewer.setLabelProvider(labelProviderBase);
-		base_viewer.setInput(contentElement);
+		base_viewer.setInput(methodElement);
 
 		Composite baseButtonPane = createComposite(toolkit, variabilityComposite, 
 				GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_BEGINNING, 1, 1, 1);
@@ -851,9 +938,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					if(ctrl_name.isDisposed()) return;
 					
 					ctrl_name.setFocus();
-					ContentDescription contentDescription = contentElement
-							.getPresentation();
-					if (contentDescription.getChangeDate() == null)
+					if (methodUnit != null && methodUnit.getChangeDate() == null)
 						ctrl_name.setSelection(0, ctrl_name.getText().length());
 				}
 			});
@@ -992,9 +1077,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected void addListeners() {
 		final MethodElementEditor editor = (MethodElementEditor) getEditor();
 
-		modelModifyListener = editor.createModifyListener(contentElement);
-		contentModifyListener = editor.createModifyListener(contentElement
-				.getPresentation());
+		modelModifyListener = editor.createModifyListener(methodElement);
+		contentModifyListener = editor.createModifyListener(methodUnit);
 		actionMgr = editor.getActionManager();
 
 		form.addControlListener(new ControlListener() {
@@ -1016,7 +1100,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					return;
 				}
 				
-				refresh(!TngUtil.isLocked(contentElement));
+				refresh(!TngUtil.isLocked(methodElement));
 				setFormTextWithVariableInfo();
 				
 				// do refresh variability and copyright viewer
@@ -1043,200 +1127,119 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			addIconSectionListeners();
 		}
 
-		viewer_variability
-				.addSelectionChangedListener(new ISelectionChangedListener() {
-					public void selectionChanged(SelectionChangedEvent event) {
-						IStructuredSelection selection = (IStructuredSelection) viewer_variability
-								.getSelection();
-
-						if (contentElement.getVariabilityBasedOnElement() != null) {
-							boolean status = editor
-									.getActionManager()
-									.doAction(
-											IActionManager.SET,
-											contentElement,
-											UmaPackage.eINSTANCE
-													.getVariabilityElement_VariabilityType(),
-											(VariabilityType) selection
-													.getFirstElement(), -1);
-							if (!status) {
-								return;
-							}
-						}
-						if (selection.getFirstElement() == VariabilityType.NA) {
+		if (variabilitySectionOn) {
+			viewer_variability
+					.addSelectionChangedListener(new ISelectionChangedListener() {
+						public void selectionChanged(SelectionChangedEvent event) {
+							IStructuredSelection selection = (IStructuredSelection) viewer_variability
+									.getSelection();
+	
 							if (contentElement.getVariabilityBasedOnElement() != null) {
 								boolean status = editor
 										.getActionManager()
 										.doAction(
 												IActionManager.SET,
-												contentElement,
+												methodElement,
 												UmaPackage.eINSTANCE
-														.getVariabilityElement_VariabilityBasedOnElement(),
-												null, -1);
+														.getVariabilityElement_VariabilityType(),
+												(VariabilityType) selection
+														.getFirstElement(), -1);
 								if (!status) {
 									return;
 								}
 							}
-							ctrl_base_button.setEnabled(false);
-							base_viewer.refresh();
-						} else {
-							List selectionBaseList = new ArrayList();
-							VariabilityElement base = contentElement
-									.getVariabilityBasedOnElement();
-							selectionBaseList.add(base);
-							ctrl_base_button.setEnabled(true);
-							base_viewer.refresh();
+							if (selection.getFirstElement() == VariabilityType.NA) {
+								if (contentElement.getVariabilityBasedOnElement() != null) {
+									boolean status = editor
+											.getActionManager()
+											.doAction(
+													IActionManager.SET,
+													methodElement,
+													UmaPackage.eINSTANCE
+															.getVariabilityElement_VariabilityBasedOnElement(),
+													null, -1);
+									if (!status) {
+										return;
+									}
+								}
+								ctrl_base_button.setEnabled(false);
+								base_viewer.refresh();
+							} else {
+								List selectionBaseList = new ArrayList();
+								VariabilityElement base = contentElement
+										.getVariabilityBasedOnElement();
+								selectionBaseList.add(base);
+								ctrl_base_button.setEnabled(true);
+								base_viewer.refresh();
+							}
+							setFormTextWithVariableInfo();
 						}
-						setFormTextWithVariableInfo();
+					});
+	
+			ctrl_base_button.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					filter = getFilter();
+					if (filter != null) {
+						ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
+								.getWorkbench().getActiveWorkbenchWindow()
+								.getShell(), filter, getmethodElement(),
+								LibraryUIText.getUIText(methodElement, true));
+						fd.setViewerSelectionSingle(true);
+						fd.setBlockOnOpen(true);
+						fd.setTitle(LibraryUIText.getUIText(methodElement, true));
+						fd.open();
+						fd.getSelectedItems();
+						if (fd.getSelectedItems().size() > 0) {
+							IStatus istatus = DependencyChecker.checkCircularDependencyAfterFilterSelection(
+									contentElement, (VariabilityElement) fd.getSelectedItems().get(0));
+							if(!istatus.isOK()) {
+								String title = AuthoringUIResources.variability_error_title;
+								AuthoringUIPlugin.getDefault().getMsgDialog().displayError(title, istatus.getMessage());						
+								return;
+							}
+							boolean status = editor
+									.getActionManager()
+									.doAction(
+											IActionManager.SET,
+											methodElement,
+											UmaPackage.eINSTANCE
+													.getVariabilityElement_VariabilityBasedOnElement(),
+											(VariabilityElement) fd
+													.getSelectedItems().get(0), -1);
+							if (!status) {
+								return;
+							}
+							status = editor
+									.getActionManager()
+									.doAction(
+											IActionManager.SET,
+											methodElement,
+											UmaPackage.eINSTANCE
+													.getVariabilityElement_VariabilityType(),
+											(VariabilityType) ((IStructuredSelection) viewer_variability
+													.getSelection())
+													.getFirstElement(), -1);
+						}
 					}
-				});
-
-		ctrl_base_button.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				filter = getFilter();
-				if (filter != null) {
-					ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
-							.getWorkbench().getActiveWorkbenchWindow()
-							.getShell(), filter, getContentElement(),
-							LibraryUIText.getUIText(contentElement, true));
-					fd.setViewerSelectionSingle(true);
-					fd.setBlockOnOpen(true);
-					fd.setTitle(LibraryUIText.getUIText(contentElement, true));
-					fd.open();
-					fd.getSelectedItems();
-					if (fd.getSelectedItems().size() > 0) {
-						IStatus istatus = DependencyChecker.checkCircularDependencyAfterFilterSelection(
-								contentElement, (VariabilityElement) fd.getSelectedItems().get(0));
-						if(!istatus.isOK()) {
-							String title = AuthoringUIResources.variability_error_title;
-							AuthoringUIPlugin.getDefault().getMsgDialog().displayError(title, istatus.getMessage());						
-							return;
-						}
-						boolean status = editor
-								.getActionManager()
-								.doAction(
-										IActionManager.SET,
-										contentElement,
-										UmaPackage.eINSTANCE
-												.getVariabilityElement_VariabilityBasedOnElement(),
-										(VariabilityElement) fd
-												.getSelectedItems().get(0), -1);
-						if (!status) {
-							return;
-						}
-						status = editor
-								.getActionManager()
-								.doAction(
-										IActionManager.SET,
-										contentElement,
-										UmaPackage.eINSTANCE
-												.getVariabilityElement_VariabilityType(),
-										(VariabilityType) ((IStructuredSelection) viewer_variability
-												.getSelection())
-												.getFirstElement(), -1);
-					}
+					setFormTextWithVariableInfo();
+					if ((ctrl_base != null) && (!(ctrl_base.isDisposed())))
+						ctrl_base.redraw();
+					if ((base_viewer != null)
+							&& (!(base_viewer.getControl().isDisposed())))
+						base_viewer.refresh();
 				}
-				setFormTextWithVariableInfo();
-				if ((ctrl_base != null) && (!(ctrl_base.isDisposed())))
-					ctrl_base.redraw();
-				if ((base_viewer != null)
-						&& (!(base_viewer.getControl().isDisposed())))
-					base_viewer.refresh();
-			}
-		});
+			});
+		}
 	}
 
 	private void addGeneralSectionListeners() {
 		ctrl_name.addModifyListener(modelModifyListener);
-		ctrl_name.addFocusListener(new FocusAdapter() {
-			public void focusGained(FocusEvent e) {
-				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-						UmaPackage.eINSTANCE.getNamedElement_Name());
-			}
-
-			public void focusLost(FocusEvent e) {
-				String oldContent = contentElement.getName() ;
-				String name = ctrl_name.getText().trim();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						e.widget, contentElement.getName())) {
-					return;
-				}
-				if (name.equals(contentElement.getName()))
-					return;
-				
-				// 178462
-				String msg = null;
-				if (oldContent.indexOf("&") < 0 && name.indexOf("&") > -1) { //$NON-NLS-1$ //$NON-NLS-2$
-					msg = NLS.bind(
-							LibraryEditResources.invalidElementNameError4_msg,
-							name);
-				} else {
-					IValidator validator = getNameValidator();
-					if(validator == null){
-						validator = IValidatorFactory.INSTANCE
-							.createNameValidator(
-									contentElement,
-									TngAdapterFactory.INSTANCE
-											.getNavigatorView_ComposedAdapterFactory());
-					}
-					msg = validator.isValid(name);
-				}
-				if (msg == null && !name.equals(contentElement.getName())) {
-					if(name.indexOf("&") > -1) { //$NON-NLS-1$
-						msg = NLS.bind(
-								LibraryEditResources.invalidElementNameError4_msg,
-								name);
-					}
-				}
-				if (msg == null) {
-					name = StrUtil.makeValidFileName(ctrl_name.getText());
-					ctrl_name.setText(name); //183084
-					if (!name.equals(contentElement.getName())) {						
-						boolean success = actionMgr.doAction(
-								IActionManager.SET, contentElement,
-								UmaPackage.eINSTANCE.getNamedElement_Name(),
-								name, -1);
-						if (!success) {
-							return;
-						}
-						if (ContentDescriptionFactory
-								.hasPresentation(contentElement)) {
-							Resource contentResource = contentElement
-									.getPresentation().eResource();
-							if (contentResource != null) {
-								((MethodElementEditor) getEditor())
-										.addResourceToAdjustLocation(contentResource);
-							}
-						}
-						setFormTextWithVariableInfo();
-						ctrl_name.setText(name);
-					}
-				} else {
-					//Fix missing "&" in error dialog
-					if (msg.indexOf("&") >= 0) {//$NON-NLS-1$
-						msg = msg.replace("&", "&&");//$NON-NLS-1$//$NON-NLS-2$
-					}
-					AuthoringUIPlugin
-							.getDefault()
-							.getMsgDialog()
-							.displayError(
-									AuthoringUIResources.renameError_title, 
-									msg);
-					ctrl_name.setText(contentElement.getName());
-					ctrl_name.getDisplay().asyncExec(new Runnable() {
-						public void run() {
-							ctrl_name.setFocus();
-							ctrl_name.selectAll();
-						}
-					});
-				}
-			}
-		});
+		ctrl_name.addFocusListener(nameFocusListener);
 
 		ctrl_presentation_name.addModifyListener(modelModifyListener);
 		ctrl_presentation_name.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent e) {
-				String oldContent = contentElement.getPresentationName();
+				String oldContent = methodElement.getPresentationName();
 				if (((MethodElementEditor) getEditor()).mustRestoreValue(
 						e.widget, oldContent)) {
 					return;
@@ -1246,7 +1249,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						.getText());				
 				if (!newContent.equals(oldContent)) {
 					boolean success = actionMgr.doAction(IActionManager.SET,
-							contentElement, UmaPackage.eINSTANCE
+							methodElement, UmaPackage.eINSTANCE
 									.getMethodElement_PresentationName(),
 							newContent, -1);
 					if (success) {
@@ -1281,7 +1284,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				 * @see org.eclipse.swt.events.FocusAdapter#focusLost(org.eclipse.swt.events.FocusEvent)
 				 */
 				public void focusLost(FocusEvent e) {
-					String oldContent = contentElement.getBriefDescription();
+					String oldContent = methodElement.getBriefDescription();
 					if (((MethodElementEditor) getEditor()).mustRestoreValue(
 							e.widget, oldContent)) {
 						return;
@@ -1289,7 +1292,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					String newContent = ctrl_brief_desc.getText();
 					if (!newContent.equals(oldContent)) {
 						boolean success = actionMgr.doAction(
-								IActionManager.SET, contentElement,
+								IActionManager.SET, methodElement,
 								UmaPackage.eINSTANCE
 										.getMethodElement_BriefDescription(),
 								newContent, -1);
@@ -1302,7 +1305,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 
 		if (elementTypeOn) {
-			if (contentElement instanceof Guidance) {
+			if (methodElement instanceof Guidance) {
 				ctrl_type_button.addListener(SWT.Selection, new Listener() {
 					public void handleEvent(Event event) {
 						final MethodElementEditor editor = (MethodElementEditor) getEditor();
@@ -1311,22 +1314,22 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							String message = AuthoringUIResources.descriptionTabGuidanceWarningDialog_message1; 
 							AuthoringUIPlugin.getDefault().getMsgDialog()
 									.displayWarning(title, message);
-						} else if (contentElement instanceof Guidance) {
+						} else if (methodElement instanceof Guidance) {
 							MethodElementDeleteAction deleteAction = new MethodElementDeleteAction();
 							deleteAction.setEditingDomain(LibraryView.getView()
 									.getEditingDomain());
 							deleteAction
 									.selectionChanged(new StructuredSelection(
-											contentElement));
+											methodElement));
 							Command cmd = deleteAction
 									.createCommand(Collections
-											.singleton(contentElement));
+											.singleton(methodElement));
 							if (cmd instanceof DeleteMethodElementCommand) {
 								Guidance newGuidance;
 								try {
 									newGuidance = ConvertGuidanceType
 										.convertGuidance(
-												(Guidance) contentElement,
+												(Guidance) methodElement,
 												null,
 												(DeleteMethodElementCommand) cmd);
 								}
@@ -1335,7 +1338,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 								}
 								if (newGuidance != null) {
 									EditorChooser.getInstance().closeEditor(
-											contentElement);
+											methodElement);
 									EditorChooser.getInstance().openEditor(
 											newGuidance);
 								}
@@ -1355,7 +1358,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			ctrl_publish_categories_button.addSelectionListener(new SelectionAdapter() {			
 				public void widgetSelected(SelectionEvent e) {				
 					String val = new Boolean(ctrl_publish_categories_button.getSelection()).toString();				
-					MethodElementProperty prop = TngUtil.getPublishCategoryProperty(contentElement);
+					MethodElementProperty prop = TngUtil.getPublishCategoryProperty(methodElement);
 										
 					if (prop == null) {			
 						prop = UmaFactory.eINSTANCE
@@ -1366,7 +1369,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						actionMgr
 						.doAction(
 								IActionManager.ADD,
-								contentElement,
+								methodElement,
 								UmaPackage.eINSTANCE
 										.getMethodElement_MethodElementProperty(),
 								prop, -1);
@@ -1532,24 +1535,24 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}
 
 	private void loadGeneralSectionData() {
-		String name = contentElement.getName();
-		String presentationName = (contentElement).getPresentationName();
+		String name = methodElement.getName();
+		String presentationName = (methodElement).getPresentationName();
 		ctrl_name.setText(name == null ? "" : name); //$NON-NLS-1$
 		ctrl_presentation_name
 				.setText(presentationName == null ? "" : presentationName); //$NON-NLS-1$
 
 		if (elementTypeOn) {
-			// String type = contentElement.getType().getName();
-			String type = LibraryUIText.getUIText(contentElement);
+			// String type = methodElement.getType().getName();
+			String type = LibraryUIText.getUIText(methodElement);
 			ctrl_type_label.setText(type == null ? "" : type); //$NON-NLS-1$
 		}
 		if (briefDescOn) {
-			String brief_desc = contentElement.getBriefDescription();
+			String brief_desc = methodElement.getBriefDescription();
 			ctrl_brief_desc.setText(brief_desc == null ? "" : brief_desc); //$NON-NLS-1$
 		}
 		
 		if (publishCategoryOn) {
-			MethodElementProperty prop = TngUtil.getPublishCategoryProperty(contentElement);
+			MethodElementProperty prop = TngUtil.getPublishCategoryProperty(methodElement);
 			if (prop != null) {
 				String val = prop.getValue();
 				ctrl_publish_categories_button.setSelection((new Boolean(val)).booleanValue());
@@ -1642,7 +1645,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				ctrl_expanded.addListener(listener.getEventType(), listener
 						.getListener());
 			}
-			boolean editable = !TngUtil.isLocked(contentElement);
+			boolean editable = !TngUtil.isLocked(methodElement);
 			ctrl_expanded.setEditable(editable);
 			if (editable) {
 				ctrl_expanded.setFocus();
@@ -1749,15 +1752,14 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	/**
 	 * Create the Version section content.
 	 */
-	private void createVersionSectionContent() {
-		ContentDescription contentDescription = contentElement.getPresentation();
-		String fillText = (contentDescription.getVersion() == null ? "" : contentDescription.getVersion()); //$NON-NLS-1$
+	protected void createVersionSectionContent() {
+		String fillText = (methodUnit.getVersion() == null ? "" : methodUnit.getVersion()); //$NON-NLS-1$
 		ctrl_version = createTextEditWithLabel4(toolkit, versionComposite,
 				AuthoringUIText.VERSION_TEXT, SWT.DEFAULT, SWT.SINGLE, fillText);
 
-		fillText = contentDescription.getChangeDate() == null ? "" //$NON-NLS-1$
+		fillText = methodUnit.getChangeDate() == null ? "" //$NON-NLS-1$
 				: DateFormat.getDateInstance(DateFormat.FULL).format(
-						contentDescription.getChangeDate());
+						methodUnit.getChangeDate());
 		ctrl_change_date = createTextEditWithLabel4(toolkit, versionComposite,
 				AuthoringUIText.CHANGE_DATE_TEXT, SWT.DEFAULT, SWT.SINGLE, fillText);
 		ctrl_change_date.setEditable(false);
@@ -1777,7 +1779,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		copyright_viewer = new TableViewer(ctrl_copyright);
 		initContentProviderCopyright();
 		copyright_viewer.setLabelProvider(copyrightLabelProviderBase);
-		copyright_viewer.setInput(contentElement);
+		copyright_viewer.setInput(methodElement);
 		Composite buttonpane = createComposite(toolkit, versionComposite,
 				GridData.HORIZONTAL_ALIGN_END, 1, 1, 1);
 		{
@@ -1812,8 +1814,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
 				List list = new ArrayList();
-				if (contentElement.getPresentation().getCopyrightStatement() != null) {
-					list.add(contentElement.getPresentation()
+				if (methodUnit.getCopyrightStatement() != null) {
+					list.add(methodUnit
 							.getCopyrightStatement());
 				}
 				return list.toArray();
@@ -1834,7 +1836,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			}
 
 			public void focusLost(FocusEvent e) {
-				String oldContent = contentElement.getPresentation()
+				String oldContent = methodUnit
 						.getVersion();
 				if (((MethodElementEditor) getEditor()).mustRestoreValue(
 						e.widget, oldContent)) {
@@ -1844,7 +1846,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						.getPlainText(ctrl_version.getText());
 				if (!newContent.equals(oldContent)) {
 					boolean status = actionMgr.doAction(IActionManager.SET,
-							contentElement.getPresentation(),
+							methodUnit,
 							UmaPackage.eINSTANCE.getMethodUnit_Version(),
 							newContent, -1);
 					if (status) {
@@ -1862,7 +1864,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			}
 
 			public void focusLost(FocusEvent e) {
-				String oldContent = contentElement.getPresentation()
+				String oldContent = methodUnit
 						.getAuthors();
 				if (((MethodElementEditor) getEditor()).mustRestoreValue(
 						e.widget, oldContent)) {
@@ -1872,7 +1874,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						.getPlainText(ctrl_authors.getText());
 				if (!newContent.equals(oldContent)) {
 					boolean status = actionMgr.doAction(IActionManager.SET,
-							contentElement.getPresentation(),
+							methodUnit,
 							UmaPackage.eINSTANCE.getMethodUnit_Authors(),
 							newContent, -1);
 					if (status) {
@@ -1900,7 +1902,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				}
 				ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 						.getWorkbench().getActiveWorkbenchWindow().getShell(),
-						filter, contentElement,
+						filter, methodElement,
 						FilterConstants.SUPPORTING_MATERIALS, alreadyExsting);
 				fd.setViewerSelectionSingle(true);
 				fd.setBlockOnOpen(true);
@@ -1909,7 +1911,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				fd.getSelectedItems();
 				if (fd.getSelectedItems().size() > 0) {
 					boolean status = actionMgr.doAction(IActionManager.SET,
-							contentElement.getPresentation(),
+							methodUnit,
 							UmaPackage.eINSTANCE
 									.getMethodUnit_CopyrightStatement(),
 							(SupportingMaterial) fd.getSelectedItems().get(0),
@@ -1931,7 +1933,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			}
 
 			public void focusLost(FocusEvent e) {
-				String oldContent = contentElement.getPresentation()
+				String oldContent = methodUnit
 						.getChangeDescription();
 				if (((MethodElementEditor) getEditor()).mustRestoreValue(
 						e.widget, oldContent)) {
@@ -1941,8 +1943,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				newContent = newContent.replace(StrUtil.LINE_FEED, AuthoringUIResources.ChangeHistoryDialog_delimiter);
 				if (!newContent.equals(oldContent)) {
 					boolean success = actionMgr.doAction(
-							IActionManager.SET, contentElement
-							.getPresentation(), UmaPackage.eINSTANCE
+							IActionManager.SET, methodUnit, UmaPackage.eINSTANCE
 							.getMethodUnit_ChangeDescription(), newContent, -1);
 					if (success) {
 						updateChangeDate();
@@ -1954,7 +1955,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		copyright_button_deselect.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = actionMgr.doAction(IActionManager.SET,
-						contentElement.getPresentation(), UmaPackage.eINSTANCE
+						methodUnit, UmaPackage.eINSTANCE
 								.getMethodUnit_CopyrightStatement(), null, -1);
 				if (status) {
 					copyright_viewer.refresh();
@@ -1969,7 +1970,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 */
 	protected void updateChangeDate() {
 
-		Date changeDate = contentElement.getPresentation().getChangeDate();
+		Date changeDate = methodUnit.getChangeDate();
 		DateFormat df = DateFormat.getDateInstance(DateFormat.FULL);
 
 		String oldContent = ""; //$NON-NLS-1$
@@ -1981,7 +1982,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		String newContent = df.format(currentDate);
 		if (!newContent.equals(oldContent)) {
 			boolean status = actionMgr.doAction(IActionManager.SET,
-					contentElement.getPresentation(), UmaPackage.eINSTANCE
+					methodUnit, UmaPackage.eINSTANCE
 							.getMethodUnit_ChangeDate(), currentDate, -1);
 			if (!status) {
 				return;
@@ -1993,19 +1994,17 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 	protected void loadVersionSectionData() {
 
-		ContentDescription contentDescription = contentElement
-				.getPresentation();
 		ctrl_version
-				.setText(contentDescription.getVersion() == null ? "" : contentDescription.getVersion()); //$NON-NLS-1$
+				.setText(methodUnit.getVersion() == null ? "" : methodUnit.getVersion()); //$NON-NLS-1$
 		ctrl_authors
-				.setText(contentDescription.getAuthors() == null ? "" : contentDescription.getAuthors()); //$NON-NLS-1$
-		String changeDesc = contentDescription.getChangeDescription() == null ? "" : contentDescription.getChangeDescription(); //$NON-NLS-1$
+				.setText(methodUnit.getAuthors() == null ? "" : methodUnit.getAuthors()); //$NON-NLS-1$
+		String changeDesc = methodUnit.getChangeDescription() == null ? "" : methodUnit.getChangeDescription(); //$NON-NLS-1$
 		changeDesc = changeDesc.replace(AuthoringUIResources.ChangeHistoryDialog_delimiter, StrUtil.LINE_FEED);
 		ctrl_change_desc.setText(changeDesc);
 		ctrl_change_date
-				.setText(contentDescription.getChangeDate() == null ? "" //$NON-NLS-1$
+				.setText(methodUnit.getChangeDate() == null ? "" //$NON-NLS-1$
 						: DateFormat.getDateInstance(DateFormat.FULL).format(
-								contentDescription.getChangeDate()));
+								methodUnit.getChangeDate()));
 	}
 
 	/**
@@ -2214,18 +2213,18 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							try {
 								String url = copyResourceToLib(ctrl_select_shapeIcon_button.getShell(), filename,
 										fileChooser.getFilterPath(),
-										contentElement);
+										methodElement);
 								if (url != null) {
 									File file = new File(url);
 									shapeIconUri = new URI(NetUtil
 											.encodeFileURL(FileUtil
 													.getRelativePath(file,
-															new File(getPluginPath(contentElement)))));
+															new File(getPluginPath(methodElement)))));
 									if (shapeIconUri != null) {
 										boolean status = actionMgr
 												.doAction(
 														IActionManager.SET,
-														contentElement,
+														methodElement,
 														UmaPackage.eINSTANCE
 																.getDescribableElement_Shapeicon(),
 														shapeIconUri, -1);
@@ -2275,7 +2274,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
 						boolean status = actionMgr.doAction(IActionManager.SET,
-								contentElement, UmaPackage.eINSTANCE
+								methodElement, UmaPackage.eINSTANCE
 										.getDescribableElement_Shapeicon(),
 								null, -1);
 						if (!status)
@@ -2347,18 +2346,18 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							try {
 								String url = copyResourceToLib(ctrl_select_nodeIcon_button.getShell(), filename,
 										fileChooser.getFilterPath(),
-										contentElement);
+										methodElement);
 								if (url != null) {
 									File file = new File(url);
 									nodeIconUri = new URI(NetUtil
 											.encodeFileURL(FileUtil
 													.getRelativePath(file,
-															new File(getPluginPath(contentElement)))));
+															new File(getPluginPath(methodElement)))));
 									if (nodeIconUri != null) {
 										boolean status = actionMgr
 												.doAction(
 														IActionManager.SET,
-														contentElement,
+														methodElement,
 														UmaPackage.eINSTANCE
 																.getDescribableElement_Nodeicon(),
 														nodeIconUri, -1);
@@ -2406,7 +2405,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		ctrl_clear_nodeIcon_button.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				boolean status = actionMgr.doAction(IActionManager.SET,
-						contentElement, UmaPackage.eINSTANCE
+						methodElement, UmaPackage.eINSTANCE
 								.getDescribableElement_Nodeicon(), null, -1);
 				if (!status)
 					return;
@@ -2454,13 +2453,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							} else {
 								if (!file.isAbsolute()) {
 									// Check for the uri contains the relative to library.
-									MethodPlugin plugin = UmaUtil.getMethodPlugin(contentElement);
+									MethodPlugin plugin = UmaUtil.getMethodPlugin(methodElement);
 									if(path.indexOf(plugin.getName()) > -1){
 										path = LibraryService.getInstance()
 										.getCurrentMethodLibraryLocation()
 										+ File.separator + path;	
 									}else{
-										path = getPluginPath(contentElement)
+										path = getPluginPath(methodElement)
 										+ File.separator + path;
 									}
 									
@@ -2492,7 +2491,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							} else {
 								if (warningCount == 1) {
 									warningCount++;
-									String msg = AuthoringUIResources.bind(AuthoringUIResources.DescriptionFormPage_LoadShapeIconWarning, (new Object[] { contentElement.getName(), path })); 
+									String msg = AuthoringUIResources.bind(AuthoringUIResources.DescriptionFormPage_LoadShapeIconWarning, (new Object[] { methodElement.getName(), path })); 
 									MsgBox.showWarning(msg);
 								}
 
@@ -2531,13 +2530,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							if (file.exists()) {
 							} else {
 								if (!file.isAbsolute()) {
-									MethodPlugin plugin = UmaUtil.getMethodPlugin(contentElement);
+									MethodPlugin plugin = UmaUtil.getMethodPlugin(methodElement);
 									if(path.indexOf(plugin.getName()) > -1){
 										path = LibraryService.getInstance()
 										.getCurrentMethodLibraryLocation()
 										+ File.separator + path;	
 									}else{
-										path = getPluginPath(contentElement)
+										path = getPluginPath(methodElement)
 										+ File.separator + path;
 									}
 								}
@@ -2568,7 +2567,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							} else {
 								if (warningCount == 1) {
 									warningCount++;
-									String msg = AuthoringUIResources.bind(AuthoringUIResources.DescriptionFormPage_LoadNodeIconWarning, (new Object[] { contentElement.getName(), path })); 
+									String msg = AuthoringUIResources.bind(AuthoringUIResources.DescriptionFormPage_LoadNodeIconWarning, (new Object[] { methodElement.getName(), path })); 
 									MsgBox.showWarning(msg);
 								}
 
@@ -2687,21 +2686,21 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}		
 
 	private void setCopyrightButtonDeselect() {
-		if (contentElement.getPresentation().getCopyrightStatement() != null) {
+		if (methodUnit.getCopyrightStatement() != null) {
 			copyright_button_deselect
-					.setEnabled((contentElement.getPresentation()
+					.setEnabled((methodUnit
 							.getCopyrightStatement().getName() == null) ? false
 							: true);
 		} else
 			copyright_button_deselect.setEnabled(false);
-		if (TngUtil.isLocked(contentElement))
+		if (TngUtil.isLocked(methodElement))
 			copyright_button_deselect.setEnabled(false);
 	}
 
-	private void setContextHelp() {
+	protected void setContextHelp() {
 		if (sectionComposite != null) {
 			EditorsContextHelper.setHelp(sectionComposite.getParent(),
-					getContentElement());
+					getmethodElement());
 		}
 		if (expandedComposite != null) {
 			PlatformUI.getWorkbench().getHelpSystem().setHelp(

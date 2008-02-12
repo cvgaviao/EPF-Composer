@@ -1957,6 +1957,11 @@ public final class AuthoringUIResources extends NLS {
 	public static String taskCategoriesPage_multipleSelectDescription;
 	
 	public static String workProductCategoriesPage_multipleSelectDescription;
+	
+	public static String plugin_generalInfoSection_desc;
+
+	public static String plugin_versionInfoSection_desc;
+
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);

@@ -21,8 +21,10 @@ import org.eclipse.epf.authoring.ui.editors.MethodElementEditorInput;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
 import org.eclipse.epf.library.util.ResourceHelper;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodUnit;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -108,6 +110,8 @@ public class BaseFormPage extends FormPage {
 
 	protected String editorName;
 
+	protected MethodUnit methodUnit;
+	
 	protected MethodElement methodElement;
 
 	protected ContentElement contentElement = null;
@@ -146,8 +150,14 @@ public class BaseFormPage extends FormPage {
 		MethodElement elementOfPath =  methodElement instanceof ProcessComponent ?
 				((ProcessComponent) methodElement).getProcess() : methodElement;
 		contentElementPath = ResourceHelper.getFolderAbsolutePath(elementOfPath);
-		if(methodElement instanceof ContentElement) {
+		if (methodElement instanceof MethodUnit) {
+			methodUnit = (MethodUnit)methodElement;
+		}
+		if (methodElement instanceof ContentElement) {
 			contentElement = (ContentElement) methodElement;
+			ContentDescription contentDescription = contentElement
+					.getPresentation();
+			methodUnit = contentDescription;
 		}
 	}
 
