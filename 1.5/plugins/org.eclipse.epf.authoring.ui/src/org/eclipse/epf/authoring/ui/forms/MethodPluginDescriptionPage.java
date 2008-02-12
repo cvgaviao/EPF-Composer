@@ -146,7 +146,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 
 	private void createReferenceContent(FormToolkit toolkit) {
 		// Ref Model Section
-		refModelSection = toolkit.createSection(form.getBody(),
+		refModelSection = toolkit.createSection(sectionComposite,
 				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
 						| Section.TITLE_BAR);
 		TableWrapData td1 = new TableWrapData(TableWrapData.FILL_GRAB);
