@@ -149,7 +149,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		refModelSection = toolkit.createSection(sectionComposite,
 				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
 						| Section.TITLE_BAR);
-		TableWrapData td1 = new TableWrapData(TableWrapData.FILL_GRAB);
+		GridData td1 = new GridData(GridData.FILL_BOTH);
 		refModelSection.setLayoutData(td1);
 		refModelSection
 				.setText(AuthoringUIText.REFERENCED_PLUGINS_SECTION_NAME);
