@@ -210,7 +210,7 @@ public final class Comparators {
 		}
 	};
 
-	public static final Comparator PLUGINPACKAGE_COMPARATOR = new Comparator() {
+	public static final Comparator<Object> PLUGINPACKAGE_COMPARATOR = new Comparator<Object>() {
 	
 		public int compare(Object o1, Object o2) {
 			if (o1 == o2)
