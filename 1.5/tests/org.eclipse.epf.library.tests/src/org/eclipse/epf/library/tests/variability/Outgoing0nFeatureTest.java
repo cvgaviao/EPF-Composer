@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.tests.LibraryTestHelper;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Artifact;
@@ -55,7 +56,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_MandatoryInput();
 		List items = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
@@ -104,7 +105,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_MandatoryInput();
 		List items = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
@@ -163,7 +164,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_MandatoryInput();
 		List items = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
@@ -212,7 +213,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		MethodElement t = ConfigurationHelper.getCalculatedElement(t1, realizer);
 		assertEquals(t2, t);
@@ -272,7 +273,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_MandatoryInput();
 		List items = ConfigurationHelper.calc0nFeatureValue(t1, feature, realizer);
@@ -329,7 +330,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 	
 		// these two should generate the same result
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getContentDescription_Sections();
@@ -386,7 +387,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 	
 		// these two should generate the same result
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getContentDescription_Sections();
@@ -432,7 +433,7 @@ public class Outgoing0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 	
 		// these two should generate the same result
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getContentDescription_Sections();

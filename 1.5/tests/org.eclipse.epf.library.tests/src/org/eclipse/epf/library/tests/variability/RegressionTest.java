@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.tests.LibraryTestHelper;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Artifact;
@@ -86,7 +87,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin2);
 		config.getMethodPackageSelection().add(pkg2);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		List items;
 		
@@ -132,7 +133,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 	
 		// these two should generate the same result
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getContentDescription_Sections();
@@ -185,7 +186,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 	
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getContentDescription_Sections();
 		List items;
@@ -238,7 +239,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getRoleSet_Roles();
 		OppositeFeature ofeature = AssociationHelper.Role_RoleSets;
@@ -276,7 +277,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getRoleSet_Roles();
 		OppositeFeature ofeature = AssociationHelper.Role_RoleSets;
@@ -314,7 +315,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getRoleSet_Roles();
 		OppositeFeature ofeature = AssociationHelper.Role_RoleSets;
@@ -383,7 +384,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_MandatoryInput();
@@ -423,7 +424,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_MandatoryInputTo_Tasks;
@@ -456,7 +457,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts();
@@ -501,7 +502,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 			
 		// outgoing feature
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
@@ -542,7 +543,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		OppositeFeature ofeature = AssociationHelper.Role_RoleSets;
 		List items;
@@ -589,7 +590,7 @@ public class RegressionTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getRole_ResponsibleFor();
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_ResponsibleRoles;

@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.tests.LibraryTestHelper;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Artifact;
@@ -56,7 +57,7 @@ public class Incoming0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_ResponsibleRoles;
 		List items;
@@ -144,7 +145,7 @@ public class Incoming0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_ResponsibleRoles;
 		List items;
@@ -181,7 +182,7 @@ public class Incoming0nFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_ResponsibleRoles;
 		List items;

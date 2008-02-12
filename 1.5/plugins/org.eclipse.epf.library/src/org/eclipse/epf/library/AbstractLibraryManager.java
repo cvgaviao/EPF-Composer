@@ -45,6 +45,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeEventWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeListenerWrapper;
 import org.eclipse.epf.common.serviceability.DebugTrace;
@@ -1017,10 +1018,13 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 	 */
 	public void dispose() {
 		if (preferenceStoreChangeListener != null) {
-			LibraryPlugin
+			IPreferenceStoreWrapper prefStoreWrapper = LibraryPlugin
 					.getDefault()
-					.getPreferenceStore()
-					.removePropertyChangeListener(preferenceStoreChangeListener);
+					.getPreferenceStore();
+			
+			if(prefStoreWrapper != null) {
+				prefStoreWrapper.removePropertyChangeListener(preferenceStoreChangeListener);
+			}
 		}
 
 		if (libraryChangedListeners.size() > 0) {

@@ -54,7 +54,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
 		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
@@ -81,7 +81,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
 		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
@@ -110,7 +110,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
 		//MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
@@ -143,7 +143,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
 		MethodElement r = ConfigurationHelper.calc01FeatureValue(t1, feature, realizer);
@@ -167,7 +167,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		MethodElement t = ConfigurationHelper.getCalculatedElement(t1, realizer);
 		assertEquals(t2, t);  // if this fail, the remaining code will not be executed
@@ -198,7 +198,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		MethodElement t = ConfigurationHelper.getCalculatedElement(t1, realizer);
 		assertEquals(t2, t);  // if this fail, the remaining code will not be executed
@@ -234,7 +234,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		// if more than one replacer, all replacers are ignored
 		MethodElement t = ConfigurationHelper.getCalculatedElement(t1, realizer);
@@ -264,7 +264,7 @@ public class Outgoing01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_PerformedBy();
 		MethodElement r;

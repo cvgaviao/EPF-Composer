@@ -13,6 +13,7 @@ package org.eclipse.epf.library.tests.variability;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.tests.LibraryTestHelper;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.ContentPackage;
@@ -88,7 +89,7 @@ public class AttributeFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getContentDescription_MainDescription();
 		String text;
@@ -176,7 +177,7 @@ public class AttributeFeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getContentDescription_MainDescription();
 		String text;

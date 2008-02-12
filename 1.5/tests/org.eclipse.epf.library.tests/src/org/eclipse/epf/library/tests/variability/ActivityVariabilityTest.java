@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.tests.LibraryTestHelper;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
@@ -106,7 +107,7 @@ public class ActivityVariabilityTest extends VariablityBaseTestCase {
 		config.getMethodPackageSelection().add((ProcessComponent)cp2.eContainer());
 		
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getBreakdownElement_Checklists();
 		List items = ConfigurationHelper.calc0nFeatureValue(cp1, feature, realizer);
@@ -138,7 +139,7 @@ public class ActivityVariabilityTest extends VariablityBaseTestCase {
 		config.getMethodPackageSelection().add((ProcessComponent)cp2.eContainer());
 		
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getActivity_BreakdownElements();
 		List items = ConfigurationHelper.calc0nFeatureValue(cp1, feature, realizer);
@@ -192,7 +193,7 @@ public class ActivityVariabilityTest extends VariablityBaseTestCase {
 		config.getMethodPackageSelection().add((ProcessComponent)cp1.eContainer());
 		config.getMethodPackageSelection().add((ProcessComponent)cp2.eContainer());
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getActivity_BreakdownElements();
 		List items = ConfigurationHelper.calc0nFeatureValue(cp1, feature, realizer);

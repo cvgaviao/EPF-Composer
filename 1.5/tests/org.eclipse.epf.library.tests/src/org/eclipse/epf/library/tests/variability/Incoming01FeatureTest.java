@@ -21,7 +21,6 @@ import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.Domain;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
@@ -53,7 +52,7 @@ public class Incoming01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_Domains;
 		
@@ -116,7 +115,7 @@ public class Incoming01FeatureTest extends VariablityBaseTestCase {
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
 		LibraryUtil.validateMethodConfiguration(config);	
-		DefaultElementRealizer realizer = new DefaultElementRealizer(config);
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		OppositeFeature ofeature = AssociationHelper.WorkProduct_Domains;
 		
