@@ -158,157 +158,30 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 		super.addListeners();
 
-		ctrl_purpose.setModalObject(contentElement.getPresentation());
-		ctrl_purpose.setModalObjectFeature(UmaPackage.eINSTANCE
-				.getWorkProductDescription_Purpose());
-		ctrl_purpose.addModifyListener(contentModifyListener);
-		ctrl_purpose.addListener(SWT.Deactivate, new Listener() {
-			public void handleEvent(Event e) {
-				IMethodRichText control = descExpandFlag ? ctrl_expanded
-						: ctrl_purpose;
-				if (!control.getModified()) {
-					return;
-				}
-				String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
-						.getPresentation()).getPurpose();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						control, oldContent)) {
-					return;
-				}
-				String newContent = control.getText();
-				if (!newContent.equals(oldContent)) {
-					boolean success = actionMgr.doAction(IActionManager.SET,
-							contentElement.getPresentation(),
-							UmaPackage.eINSTANCE
-									.getWorkProductDescription_Purpose(),
-							newContent, -1);
-					if (success && isVersionSectionOn()) {
-						updateChangeDate();
-					}
-				}
-			}
-		});
-
-		ctrl_external_id.addModifyListener(contentModifyListener);
-		ctrl_external_id.addFocusListener(new FocusAdapter() {
-			public void focusGained(FocusEvent e) {
-				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-						UmaPackage.eINSTANCE.getContentDescription_ExternalId());
-			}
-
-			public void focusLost(FocusEvent e) {
-				String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
-						.getPresentation()).getExternalId();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						ctrl_external_id, oldContent)) {
-					return;
-				}
-				String newContent = ctrl_external_id.getText();
-				if (!newContent.equals(oldContent)) {
-					boolean success = actionMgr.doAction(IActionManager.SET,
-							contentElement.getPresentation(),
-							UmaPackage.eINSTANCE
-									.getContentDescription_ExternalId(),
-							newContent, -1);
-					if (success && isVersionSectionOn()) {
-						updateChangeDate();
-					}
-				}
-			}
-		});
-
-		ctrl_impact.setModalObject(contentElement.getPresentation());
-		ctrl_impact.setModalObjectFeature(UmaPackage.eINSTANCE
-				.getWorkProductDescription_ImpactOfNotHaving());
-		ctrl_impact.addModifyListener(contentModifyListener);
-		ctrl_impact.addListener(SWT.Deactivate, new Listener() {
-			public void handleEvent(Event e) {
-				IMethodRichText control = descExpandFlag ? ctrl_expanded
-						: ctrl_impact;
-				if (!control.getModified()) {
-					return;
-				}
-				String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
-						.getPresentation()).getImpactOfNotHaving();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						control, oldContent)) {
-					return;
-				}
-				String newContent = control.getText();
-				if (!newContent.equals(oldContent)) {
-					boolean success = actionMgr
-							.doAction(
-									IActionManager.SET,
-									contentElement.getPresentation(),
-									UmaPackage.eINSTANCE
-											.getWorkProductDescription_ImpactOfNotHaving(),
-									newContent, -1);
-					if (success && isVersionSectionOn()) {
-						updateChangeDate();
-					}
-				}
-			}
-		});
-
-		ctrl_reason.setModalObject(contentElement.getPresentation());
-		ctrl_reason.setModalObjectFeature(UmaPackage.eINSTANCE
-				.getWorkProductDescription_ReasonsForNotNeeding());
-		ctrl_reason.addModifyListener(contentModifyListener);
-		ctrl_reason.addListener(SWT.Deactivate, new Listener() {
-			public void handleEvent(Event e) {
-				IMethodRichText control = descExpandFlag ? ctrl_expanded
-						: ctrl_reason;
-				if (!control.getModified()) {
-					return;
-				}
-				String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
-						.getPresentation()).getReasonsForNotNeeding();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						control, oldContent)) {
-					return;
-				}
-				String newContent = control.getText();
-				if (!newContent.equals(oldContent)) {
-					boolean success = actionMgr
-							.doAction(
-									IActionManager.SET,
-									contentElement.getPresentation(),
-									UmaPackage.eINSTANCE
-											.getWorkProductDescription_ReasonsForNotNeeding(),
-									newContent, -1);
-					if (success && isVersionSectionOn()) {
-						updateChangeDate();
-					}
-				}
-			}
-		});
-
-		if (workProduct instanceof Artifact) {
-			ctrl_brief_outline.setModalObject(contentElement.getPresentation());
-			ctrl_brief_outline.setModalObjectFeature(UmaPackage.eINSTANCE
-					.getArtifactDescription_BriefOutline());
-			ctrl_brief_outline.addModifyListener(contentModifyListener);
-			ctrl_brief_outline.addListener(SWT.Deactivate, new Listener() {
+		if (purposeOn) {
+			ctrl_purpose.setModalObject(contentElement.getPresentation());
+			ctrl_purpose.setModalObjectFeature(UmaPackage.eINSTANCE
+					.getWorkProductDescription_Purpose());
+			ctrl_purpose.addModifyListener(contentModifyListener);
+			ctrl_purpose.addListener(SWT.Deactivate, new Listener() {
 				public void handleEvent(Event e) {
 					IMethodRichText control = descExpandFlag ? ctrl_expanded
-							: ctrl_brief_outline;
+							: ctrl_purpose;
 					if (!control.getModified()) {
 						return;
 					}
-					String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
-							.getPresentation()).getBriefOutline();
+					String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
+							.getPresentation()).getPurpose();
 					if (((MethodElementEditor) getEditor()).mustRestoreValue(
 							control, oldContent)) {
 						return;
 					}
-					String newContent = descExpandFlag ? ctrl_expanded
-							.getText() : ctrl_brief_outline.getText();
+					String newContent = control.getText();
 					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr.doAction(
-								IActionManager.SET, contentElement
-										.getPresentation(),
+						boolean success = actionMgr.doAction(IActionManager.SET,
+								contentElement.getPresentation(),
 								UmaPackage.eINSTANCE
-										.getArtifactDescription_BriefOutline(),
+										.getWorkProductDescription_Purpose(),
 								newContent, -1);
 						if (success && isVersionSectionOn()) {
 							updateChangeDate();
@@ -316,15 +189,114 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 					}
 				}
 			});
+		}
 
-			ctrl_representation_options.setModalObject(contentElement
-					.getPresentation());
-			ctrl_representation_options
-					.setModalObjectFeature(UmaPackage.eINSTANCE
-							.getArtifactDescription_RepresentationOptions());
-			ctrl_representation_options
-					.addModifyListener(contentModifyListener);
-			ctrl_representation_options.addListener(SWT.Deactivate,
+		if (externalIdOn) {
+			ctrl_external_id.addModifyListener(contentModifyListener);
+			ctrl_external_id.addFocusListener(new FocusAdapter() {
+				public void focusGained(FocusEvent e) {
+					((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
+							UmaPackage.eINSTANCE.getContentDescription_ExternalId());
+				}
+	
+				public void focusLost(FocusEvent e) {
+					String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
+							.getPresentation()).getExternalId();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							ctrl_external_id, oldContent)) {
+						return;
+					}
+					String newContent = ctrl_external_id.getText();
+					if (!newContent.equals(oldContent)) {
+						boolean success = actionMgr.doAction(IActionManager.SET,
+								contentElement.getPresentation(),
+								UmaPackage.eINSTANCE
+										.getContentDescription_ExternalId(),
+								newContent, -1);
+						if (success && isVersionSectionOn()) {
+							updateChangeDate();
+						}
+					}
+				}
+			});
+		}
+
+		if (tailoringSectionOn) {
+			ctrl_impact.setModalObject(contentElement.getPresentation());
+			ctrl_impact.setModalObjectFeature(UmaPackage.eINSTANCE
+					.getWorkProductDescription_ImpactOfNotHaving());
+			ctrl_impact.addModifyListener(contentModifyListener);
+			ctrl_impact.addListener(SWT.Deactivate, new Listener() {
+				public void handleEvent(Event e) {
+					IMethodRichText control = descExpandFlag ? ctrl_expanded
+							: ctrl_impact;
+					if (!control.getModified()) {
+						return;
+					}
+					String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
+							.getPresentation()).getImpactOfNotHaving();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							control, oldContent)) {
+						return;
+					}
+					String newContent = control.getText();
+					if (!newContent.equals(oldContent)) {
+						boolean success = actionMgr
+								.doAction(
+										IActionManager.SET,
+										contentElement.getPresentation(),
+										UmaPackage.eINSTANCE
+												.getWorkProductDescription_ImpactOfNotHaving(),
+										newContent, -1);
+						if (success && isVersionSectionOn()) {
+							updateChangeDate();
+						}
+					}
+				}
+			});
+
+			ctrl_reason.setModalObject(contentElement.getPresentation());
+			ctrl_reason.setModalObjectFeature(UmaPackage.eINSTANCE
+					.getWorkProductDescription_ReasonsForNotNeeding());
+			ctrl_reason.addModifyListener(contentModifyListener);
+			ctrl_reason.addListener(SWT.Deactivate, new Listener() {
+				public void handleEvent(Event e) {
+					IMethodRichText control = descExpandFlag ? ctrl_expanded
+							: ctrl_reason;
+					if (!control.getModified()) {
+						return;
+					}
+					String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
+							.getPresentation()).getReasonsForNotNeeding();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							control, oldContent)) {
+						return;
+					}
+					String newContent = control.getText();
+					if (!newContent.equals(oldContent)) {
+						boolean success = actionMgr
+								.doAction(
+										IActionManager.SET,
+										contentElement.getPresentation(),
+										UmaPackage.eINSTANCE
+												.getWorkProductDescription_ReasonsForNotNeeding(),
+										newContent, -1);
+						if (success && isVersionSectionOn()) {
+							updateChangeDate();
+						}
+					}
+				}
+			});
+			
+			if (workProduct instanceof Artifact) {
+				ctrl_representation_options.setModalObject(contentElement
+						.getPresentation());
+				ctrl_representation_options
+						.setModalObjectFeature(UmaPackage.eINSTANCE
+								.getArtifactDescription_RepresentationOptions());
+				ctrl_representation_options
+						.addModifyListener(contentModifyListener);
+				ctrl_representation_options.addListener(SWT.Deactivate,
 					new Listener() {
 						public void handleEvent(Event e) {
 							IMethodRichText control = descExpandFlag ? ctrl_expanded
@@ -355,142 +327,181 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 							}
 						}
 					});
-			
-			ctrl_representation.setModalObject(contentElement.getPresentation());
-			ctrl_representation.setModalObjectFeature(UmaPackage.eINSTANCE
-					.getArtifactDescription_Representation());
-			ctrl_representation.addModifyListener(contentModifyListener);
-			ctrl_representation.addListener(SWT.Deactivate, new Listener() {
-				public void handleEvent(Event e) {
-					IMethodRichText control = descExpandFlag ? ctrl_expanded
-							: ctrl_representation;
-					if (!control.getModified()) {
-						return;
-					}
-					String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
-							.getPresentation()).getRepresentation();
-					if (((MethodElementEditor) getEditor()).mustRestoreValue(
-							control, oldContent)) {
-						return;
-					}
-					String newContent = descExpandFlag ? ctrl_expanded
-							.getText() : ctrl_representation.getText();
-					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr.doAction(
-								IActionManager.SET, contentElement
-										.getPresentation(),
-								UmaPackage.eINSTANCE
-										.getArtifactDescription_Representation(),
-								newContent, -1);
-						if (success && isVersionSectionOn()) {
-							updateChangeDate();
-						}
-					}
-				}
-			});
-
-			ctrl_notation.setModalObject(contentElement.getPresentation());
-			ctrl_notation.setModalObjectFeature(UmaPackage.eINSTANCE
-					.getArtifactDescription_Notation());
-			ctrl_notation.addModifyListener(contentModifyListener);
-			ctrl_notation.addListener(SWT.Deactivate, new Listener() {
-				public void handleEvent(Event e) {
-					IMethodRichText control = descExpandFlag ? ctrl_expanded
-							: ctrl_notation;
-					if (!control.getModified()) {
-						return;
-					}
-					String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
-							.getPresentation()).getNotation();
-					if (((MethodElementEditor) getEditor()).mustRestoreValue(
-							control, oldContent)) {
-						return;
-					}
-					String newContent = descExpandFlag ? ctrl_expanded
-							.getText() : ctrl_notation.getText();
-					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr.doAction(
-								IActionManager.SET, contentElement
-										.getPresentation(),
-								UmaPackage.eINSTANCE
-										.getArtifactDescription_Notation(),
-								newContent, -1);
-						if (success && isVersionSectionOn()) {
-							updateChangeDate();
-						}
-					}
-				}
-			});
-
+			}
 		}
 
-		if (workProduct instanceof Deliverable) {
-			ctrl_external_desc.setModalObject(contentElement.getPresentation());
-			ctrl_external_desc.setModalObjectFeature(UmaPackage.eINSTANCE
-					.getDeliverableDescription_ExternalDescription());
-			ctrl_external_desc.addModifyListener(contentModifyListener);
-			ctrl_external_desc.addListener(SWT.Deactivate, new Listener() {
-				public void handleEvent(Event e) {
-					IMethodRichText control = descExpandFlag ? ctrl_expanded
-							: ctrl_external_desc;
-					if (!control.getModified()) {
-						return;
-					}
-					String oldContent = ((org.eclipse.epf.uma.DeliverableDescription) workProduct
-							.getPresentation()).getExternalDescription();
-					if (((MethodElementEditor) getEditor()).mustRestoreValue(
-							control, oldContent)) {
-						return;
-					}
-					String newContent = control.getText();
-					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr
-								.doAction(
-										IActionManager.SET,
-										contentElement.getPresentation(),
-										UmaPackage.eINSTANCE
-												.getDeliverableDescription_ExternalDescription(),
-										newContent, -1);
-						if (success && isVersionSectionOn()) {
-							updateChangeDate();
+		if (notationSectionOn) {
+			if (workProduct instanceof Artifact) {
+				ctrl_brief_outline.setModalObject(contentElement.getPresentation());
+				ctrl_brief_outline.setModalObjectFeature(UmaPackage.eINSTANCE
+						.getArtifactDescription_BriefOutline());
+				ctrl_brief_outline.addModifyListener(contentModifyListener);
+				ctrl_brief_outline.addListener(SWT.Deactivate, new Listener() {
+					public void handleEvent(Event e) {
+						IMethodRichText control = descExpandFlag ? ctrl_expanded
+								: ctrl_brief_outline;
+						if (!control.getModified()) {
+							return;
+						}
+						String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
+								.getPresentation()).getBriefOutline();
+						if (((MethodElementEditor) getEditor()).mustRestoreValue(
+								control, oldContent)) {
+							return;
+						}
+						String newContent = descExpandFlag ? ctrl_expanded
+								.getText() : ctrl_brief_outline.getText();
+						if (!newContent.equals(oldContent)) {
+							boolean success = actionMgr.doAction(
+									IActionManager.SET, contentElement
+											.getPresentation(),
+									UmaPackage.eINSTANCE
+											.getArtifactDescription_BriefOutline(),
+									newContent, -1);
+							if (success && isVersionSectionOn()) {
+								updateChangeDate();
+							}
 						}
 					}
-				}
-			});
+				});
+	
+				
+				
+				ctrl_representation.setModalObject(contentElement.getPresentation());
+				ctrl_representation.setModalObjectFeature(UmaPackage.eINSTANCE
+						.getArtifactDescription_Representation());
+				ctrl_representation.addModifyListener(contentModifyListener);
+				ctrl_representation.addListener(SWT.Deactivate, new Listener() {
+					public void handleEvent(Event e) {
+						IMethodRichText control = descExpandFlag ? ctrl_expanded
+								: ctrl_representation;
+						if (!control.getModified()) {
+							return;
+						}
+						String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
+								.getPresentation()).getRepresentation();
+						if (((MethodElementEditor) getEditor()).mustRestoreValue(
+								control, oldContent)) {
+							return;
+						}
+						String newContent = descExpandFlag ? ctrl_expanded
+								.getText() : ctrl_representation.getText();
+						if (!newContent.equals(oldContent)) {
+							boolean success = actionMgr.doAction(
+									IActionManager.SET, contentElement
+											.getPresentation(),
+									UmaPackage.eINSTANCE
+											.getArtifactDescription_Representation(),
+									newContent, -1);
+							if (success && isVersionSectionOn()) {
+								updateChangeDate();
+							}
+						}
+					}
+				});
+	
+				ctrl_notation.setModalObject(contentElement.getPresentation());
+				ctrl_notation.setModalObjectFeature(UmaPackage.eINSTANCE
+						.getArtifactDescription_Notation());
+				ctrl_notation.addModifyListener(contentModifyListener);
+				ctrl_notation.addListener(SWT.Deactivate, new Listener() {
+					public void handleEvent(Event e) {
+						IMethodRichText control = descExpandFlag ? ctrl_expanded
+								: ctrl_notation;
+						if (!control.getModified()) {
+							return;
+						}
+						String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
+								.getPresentation()).getNotation();
+						if (((MethodElementEditor) getEditor()).mustRestoreValue(
+								control, oldContent)) {
+							return;
+						}
+						String newContent = descExpandFlag ? ctrl_expanded
+								.getText() : ctrl_notation.getText();
+						if (!newContent.equals(oldContent)) {
+							boolean success = actionMgr.doAction(
+									IActionManager.SET, contentElement
+											.getPresentation(),
+									UmaPackage.eINSTANCE
+											.getArtifactDescription_Notation(),
+									newContent, -1);
+							if (success && isVersionSectionOn()) {
+								updateChangeDate();
+							}
+						}
+					}
+				});
+			}
 
-			ctrl_packaging_guidance.setModalObject(contentElement
-					.getPresentation());
-			ctrl_packaging_guidance.setModalObjectFeature(UmaPackage.eINSTANCE
-					.getDeliverableDescription_PackagingGuidance());
-			ctrl_packaging_guidance.addModifyListener(contentModifyListener);
-			ctrl_packaging_guidance.addListener(SWT.Deactivate, new Listener() {
-				public void handleEvent(Event e) {
-					IMethodRichText control = descExpandFlag ? ctrl_expanded
-							: ctrl_packaging_guidance;
-					if (!control.getModified()) {
-						return;
-					}
-					String oldContent = ((org.eclipse.epf.uma.DeliverableDescription) workProduct
-							.getPresentation()).getPackagingGuidance();
-					if (((MethodElementEditor) getEditor()).mustRestoreValue(
-							control, oldContent)) {
-						return;
-					}
-					String newContent = control.getText();
-					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr
-								.doAction(
-										IActionManager.SET,
-										contentElement.getPresentation(),
-										UmaPackage.eINSTANCE
-												.getDeliverableDescription_PackagingGuidance(),
-										newContent, -1);
-						if (success && isVersionSectionOn()) {
-							updateChangeDate();
+			if (workProduct instanceof Deliverable) {
+				ctrl_external_desc.setModalObject(contentElement.getPresentation());
+				ctrl_external_desc.setModalObjectFeature(UmaPackage.eINSTANCE
+						.getDeliverableDescription_ExternalDescription());
+				ctrl_external_desc.addModifyListener(contentModifyListener);
+				ctrl_external_desc.addListener(SWT.Deactivate, new Listener() {
+					public void handleEvent(Event e) {
+						IMethodRichText control = descExpandFlag ? ctrl_expanded
+								: ctrl_external_desc;
+						if (!control.getModified()) {
+							return;
+						}
+						String oldContent = ((org.eclipse.epf.uma.DeliverableDescription) workProduct
+								.getPresentation()).getExternalDescription();
+						if (((MethodElementEditor) getEditor()).mustRestoreValue(
+								control, oldContent)) {
+							return;
+						}
+						String newContent = control.getText();
+						if (!newContent.equals(oldContent)) {
+							boolean success = actionMgr
+									.doAction(
+											IActionManager.SET,
+											contentElement.getPresentation(),
+											UmaPackage.eINSTANCE
+													.getDeliverableDescription_ExternalDescription(),
+											newContent, -1);
+							if (success && isVersionSectionOn()) {
+								updateChangeDate();
+							}
 						}
 					}
-				}
-			});
+				});
+	
+				ctrl_packaging_guidance.setModalObject(contentElement
+						.getPresentation());
+				ctrl_packaging_guidance.setModalObjectFeature(UmaPackage.eINSTANCE
+						.getDeliverableDescription_PackagingGuidance());
+				ctrl_packaging_guidance.addModifyListener(contentModifyListener);
+				ctrl_packaging_guidance.addListener(SWT.Deactivate, new Listener() {
+					public void handleEvent(Event e) {
+						IMethodRichText control = descExpandFlag ? ctrl_expanded
+								: ctrl_packaging_guidance;
+						if (!control.getModified()) {
+							return;
+						}
+						String oldContent = ((org.eclipse.epf.uma.DeliverableDescription) workProduct
+								.getPresentation()).getPackagingGuidance();
+						if (((MethodElementEditor) getEditor()).mustRestoreValue(
+								control, oldContent)) {
+							return;
+						}
+						String newContent = control.getText();
+						if (!newContent.equals(oldContent)) {
+							boolean success = actionMgr
+									.doAction(
+											IActionManager.SET,
+											contentElement.getPresentation(),
+											UmaPackage.eINSTANCE
+													.getDeliverableDescription_PackagingGuidance(),
+											newContent, -1);
+							if (success && isVersionSectionOn()) {
+								updateChangeDate();
+							}
+						}
+					}
+				});
+			}
 		}
 	}
 
@@ -499,18 +510,22 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	 */
 	protected void refresh(boolean editable) {
 		super.refresh(editable);
-		ctrl_impact.setEditable(editable);
-		ctrl_reason.setEditable(editable);
-		if (workProduct instanceof Artifact) {
-			ctrl_brief_outline.setEditable(editable);
-			ctrl_representation_options.setEditable(editable);
-			ctrl_representation.setEditable(editable);
-			ctrl_notation.setEditable(editable);
-
+		if (tailoringSectionOn) {
+			ctrl_impact.setEditable(editable);
+			ctrl_reason.setEditable(editable);
+			if (workProduct instanceof Artifact)
+				ctrl_representation_options.setEditable(editable);
 		}
-		if (workProduct instanceof Deliverable) {
-			ctrl_external_desc.setEditable(editable);
-			ctrl_packaging_guidance.setEditable(editable);
+		if (notationSectionOn) {
+			if (workProduct instanceof Artifact) {
+				ctrl_brief_outline.setEditable(editable);
+				ctrl_representation.setEditable(editable);
+				ctrl_notation.setEditable(editable);
+			}
+			if (workProduct instanceof Deliverable) {
+				ctrl_external_desc.setEditable(editable);
+				ctrl_packaging_guidance.setEditable(editable);
+			}
 		}
 	}
 
@@ -522,34 +537,42 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 		org.eclipse.epf.uma.WorkProductDescription content = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
 				.getPresentation());
-		String purpose = content.getPurpose();
-		String impact = content.getImpactOfNotHaving();
-		String reason = content.getReasonsForNotNeeding();
-
-		ctrl_purpose.setText(purpose == null ? "" : purpose); //$NON-NLS-1$	
-		ctrl_impact.setText(impact == null ? "" : impact); //$NON-NLS-1$	
-		ctrl_reason.setText(reason == null ? "" : reason); //$NON-NLS-1$
+	
+		if (purposeOn) {
+			String purpose = content.getPurpose();
+			ctrl_purpose.setText(purpose == null ? "" : purpose); //$NON-NLS-1$
+		}
+		if (tailoringSectionOn) {
+			String impact = content.getImpactOfNotHaving();
+			String reason = content.getReasonsForNotNeeding();
+			ctrl_impact.setText(impact == null ? "" : impact); //$NON-NLS-1$	
+			ctrl_reason.setText(reason == null ? "" : reason); //$NON-NLS-1$
+			if (workProduct instanceof Artifact) {
+				ctrl_representation_options
+				.setText(((ArtifactDescription) content)
+						.getRepresentationOptions() == null ? "" : ((ArtifactDescription) content).getRepresentationOptions()); //$NON-NLS-1$
+			}
+		}
 
 		if (externalIdOn) {
 			String external_id = content.getExternalId();
 			ctrl_external_id.setText(external_id == null ? "" : external_id); //$NON-NLS-1$
 		}
 
-		if (workProduct instanceof Artifact) {
-			ctrl_brief_outline
-					.setText(((ArtifactDescription) content).getBriefOutline() == null ? "" : ((ArtifactDescription) content).getBriefOutline()); //$NON-NLS-1$
-			ctrl_representation_options
-					.setText(((ArtifactDescription) content)
-							.getRepresentationOptions() == null ? "" : ((ArtifactDescription) content).getRepresentationOptions()); //$NON-NLS-1$
-			ctrl_representation.setText(((ArtifactDescription) content).getRepresentation() == null ? "" : ((ArtifactDescription) content).getRepresentation()); //$NON-NLS-1$
-			ctrl_notation.setText(((ArtifactDescription) content).getNotation() == null ? "" : ((ArtifactDescription) content).getNotation()); //$NON-NLS-1$
-		} else if (workProduct instanceof Deliverable) {
-			ctrl_external_desc
-					.setText(((DeliverableDescription) content)
-							.getExternalDescription() == null ? "" : ((DeliverableDescription) content).getExternalDescription()); //$NON-NLS-1$
-			ctrl_packaging_guidance
-					.setText(((DeliverableDescription) content)
-							.getPackagingGuidance() == null ? "" : ((DeliverableDescription) content).getPackagingGuidance()); //$NON-NLS-1$
+		if (notationSectionOn) {
+			if (workProduct instanceof Artifact) {
+				ctrl_brief_outline
+						.setText(((ArtifactDescription) content).getBriefOutline() == null ? "" : ((ArtifactDescription) content).getBriefOutline()); //$NON-NLS-1$			
+				ctrl_representation.setText(((ArtifactDescription) content).getRepresentation() == null ? "" : ((ArtifactDescription) content).getRepresentation()); //$NON-NLS-1$
+				ctrl_notation.setText(((ArtifactDescription) content).getNotation() == null ? "" : ((ArtifactDescription) content).getNotation()); //$NON-NLS-1$
+			} else if (workProduct instanceof Deliverable) {
+				ctrl_external_desc
+						.setText(((DeliverableDescription) content)
+								.getExternalDescription() == null ? "" : ((DeliverableDescription) content).getExternalDescription()); //$NON-NLS-1$
+				ctrl_packaging_guidance
+						.setText(((DeliverableDescription) content)
+								.getPackagingGuidance() == null ? "" : ((DeliverableDescription) content).getPackagingGuidance()); //$NON-NLS-1$
+			}
 		}
 	}
 

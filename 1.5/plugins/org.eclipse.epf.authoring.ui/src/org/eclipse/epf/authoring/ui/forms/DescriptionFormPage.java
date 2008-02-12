@@ -38,6 +38,8 @@ import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditorInput;
 import org.eclipse.epf.authoring.ui.filters.ContentFilter;
+import org.eclipse.epf.authoring.ui.providers.ColumnElement;
+import org.eclipse.epf.authoring.ui.providers.DescriptionPageColumnProvider;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
 import org.eclipse.epf.authoring.ui.util.EditorsContextHelper;
@@ -100,6 +102,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -760,10 +765,79 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 
 		// Create the composite for the sections.
-		sectionComposite = toolkit.createComposite(formSection, SWT.NONE);
-		sectionComposite.setLayoutData(new TableWrapData(TableWrapData.FILL_GRAB));
-		sectionComposite.setLayout(new TableWrapLayout());
-		formSection.setClient(sectionComposite);
+		Composite mainComposite = toolkit.createComposite(formSection, SWT.NONE);
+		{
+			TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
+			mainComposite.setLayoutData(td);
+			FormLayout layout = new FormLayout();
+			layout.marginHeight = 0;
+			layout.marginWidth = 0;
+			mainComposite.setLayout( layout);
+			formSection.setClient(mainComposite);
+		}
+		
+	
+		// check for extenstion point and add the page if there
+		List<?> columnProviders = DescriptionPageColumnProvider.getInstance()
+				.getColumnProviders();
+
+		if (columnProviders == null || columnProviders.size() == 0) {
+			createSectionComposite(mainComposite, 0, 100);
+		} else {
+			try {
+				for (int i = 0; i < columnProviders.size(); i++) {
+					ColumnElement column = (ColumnElement) columnProviders.get(i);
+					IColumnProvider providerClass = (IColumnProvider) column.getContributorClass();
+					int width = column.getWidth();
+					String alignment = column.getAlignment();
+					
+					if (providerClass instanceof IColumnProvider) {
+						IColumnProvider columnProvider = (IColumnProvider) providerClass;
+						
+						if (alignment.equals("left")) {
+							createSectionComposite(mainComposite, width,
+									100);
+
+							Composite columnComposite = columnProvider
+									.setColumn(toolkit, mainComposite);
+							{							
+								FormData data = new FormData();
+								data.top = new FormAttachment(0, 0);
+								data.left = new FormAttachment(0, 5);
+								data.bottom = new FormAttachment(100, -5);
+								data.right = new FormAttachment(
+										sectionComposite, 0);
+								columnComposite.setLayoutData(data);
+								GridLayout layout = new GridLayout();
+								layout.marginHeight = 0;
+								columnComposite.setLayout(layout);
+							}						
+						}
+						if (alignment.equals("right")) {
+							createSectionComposite(mainComposite, 0,
+									100 - width);
+
+							Composite columnComposite = columnProvider
+									.setColumn(toolkit, mainComposite);
+							{
+								FormData data = new FormData();
+								data.top = new FormAttachment(0, 0);
+								data.left = new FormAttachment(
+										sectionComposite, 5);
+								data.bottom = new FormAttachment(100, -5);
+								data.right = new FormAttachment(100, 0);
+								columnComposite.setLayoutData(data);
+								GridLayout layout = new GridLayout();
+								layout.marginHeight = 0;
+								columnComposite.setLayout(layout);
+							}
+						}
+					}
+				}
+			} catch (Exception e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
+		}
 
 		// Create the composite for the RichTextEditor.
 		expandedComposite = toolkit.createComposite(formSection, SWT.NONE);
@@ -789,6 +863,26 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		expandLabel = createDecoratedLabel(toolkit, expandedComposite, ""); //$NON-NLS-1$
 	}
 
+	/**
+	 * Creates EPF Main section composite where all general, detail section resides
+	 */
+	private void createSectionComposite(Composite parent, int leftMargin,
+			int rightMargin) {
+		// Create the composite for the sections.
+		sectionComposite = toolkit.createComposite(parent, SWT.NONE);
+		{
+			FormData data = new FormData();
+			data.top = new FormAttachment(0, 0);
+			data.left = new FormAttachment(leftMargin, 0);
+			data.bottom = new FormAttachment(100, -5);
+			data.right = new FormAttachment(rightMargin, -5);
+			sectionComposite.setLayoutData(data);
+			GridLayout layout = new GridLayout();
+			layout.marginHeight = 0;
+			sectionComposite.setLayout(layout);
+		}
+	}
+	
 	/**
 	 * Creates the General section.
 	 */
@@ -1735,7 +1829,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		versionSection = toolkit.createSection(sectionComposite,
 				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
 						| Section.TITLE_BAR);
-		TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
+		GridData td = new GridData(GridData.FILL_BOTH);
 		versionSection.setLayoutData(td);
 		versionSection.setText(AuthoringUIText.VERSION_INFO_SECTION_NAME);
 		versionSection.setDescription(getVersionSectionDescription());
@@ -2040,7 +2134,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		iconSection = toolkit.createSection(sectionComposite,
 				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
 						| Section.TITLE_BAR);
-		TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
+		GridData td = new GridData(GridData.FILL_BOTH);
 		iconSection.setLayoutData(td);
 		iconSection.setText(AuthoringUIText.ICON_SECTION_NAME);
 		iconSection.setDescription(getIconSectionDescription());

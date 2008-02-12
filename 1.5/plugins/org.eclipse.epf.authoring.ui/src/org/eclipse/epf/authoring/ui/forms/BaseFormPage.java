@@ -233,7 +233,7 @@ public class BaseFormPage extends FormPage {
 			String title, String description) {
 		Section section = toolkit.createSection(parent, Section.DESCRIPTION
 				| Section.TWISTIE | Section.EXPANDED | Section.TITLE_BAR);
-		TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
+		GridData td = new GridData(GridData.FILL_BOTH);
 		section.setLayoutData(td);
 		section.setText(title);
 //		String text = MessageFormat.format(description,
