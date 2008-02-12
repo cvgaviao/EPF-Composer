@@ -57,7 +57,7 @@ public class DefaultElementRealizer extends ElementRealizer {
 	 * construct an instance with the give configuration
 	 * @param config MethodConfiguration
 	 */
-	protected DefaultElementRealizer(MethodConfiguration config) {
+	public DefaultElementRealizer(MethodConfiguration config) {
 		super(config);
 	}
 
