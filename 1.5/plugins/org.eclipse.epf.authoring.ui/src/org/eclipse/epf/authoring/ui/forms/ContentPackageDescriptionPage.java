@@ -424,7 +424,7 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 			}
 			if (contentElement instanceof Task) {
 				if (((Task) contentElement).getPerformedBy() != null) {
-					elements.add(((Task) contentElement).getPerformedBy());
+					elements.addAll(((Task) contentElement).getPerformedBy());
 				}
 				if (((Task) contentElement).getAdditionallyPerformedBy() != null) {
 					elements.addAll(((Task) contentElement)
