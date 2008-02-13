@@ -33,7 +33,7 @@ public class ProcessPublishingElementRealizer extends PublishingElementRealizer 
 	 * @param config MethodConfiguration
 	 * @param validator ProcessPublishingContentValidator
 	 */
-	public ProcessPublishingElementRealizer(MethodConfiguration config, ProcessPublishingContentValidator validator) {
+	protected ProcessPublishingElementRealizer(MethodConfiguration config, ProcessPublishingContentValidator validator) {
 		super(config, validator);
 	}
 

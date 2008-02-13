@@ -36,7 +36,7 @@ public class PublishingElementRealizer extends DefaultElementRealizer {
 	 * @param config MethodConfiguration
 	 * @param validator PublishingContentValidator
 	 */
-	public PublishingElementRealizer(MethodConfiguration config, PublishingContentValidator validator) {
+	protected PublishingElementRealizer(MethodConfiguration config, PublishingContentValidator validator) {
 		super(config);
 		this.validator = validator;
 	}

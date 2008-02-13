@@ -61,11 +61,11 @@ public class PublishManager extends AbstractPublishManager {
 		ElementRealizer realizer = null;
 		if ((options != null) && options.publishProcess) {
 			validator = new ProcessPublishingContentValidator(pubDir, options);
-			realizer = new ProcessPublishingElementRealizer(config,
+			realizer = ProcessPublishingElementRealizer.newProcessPublishingElementRealizer(config,
 					(ProcessPublishingContentValidator) validator);
 		} else {
 			validator = new PublishingContentValidator(pubDir, options);
-			realizer = new PublishingElementRealizer(config, validator);
+			realizer = PublishingElementRealizer.newPublishingElementRealizer(config, validator);
 		}
 
 		// validator.setShowBrokenLinks(options.convertBrokenLinks == false);
