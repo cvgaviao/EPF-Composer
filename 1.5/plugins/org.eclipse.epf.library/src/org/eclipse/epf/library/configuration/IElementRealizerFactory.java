@@ -14,9 +14,10 @@ import org.eclipse.epf.uma.MethodConfiguration;
 
 /**
  * @author Phong Nguyen Le
+ * @author Weiping Lu
  * @since 1.5
  *
  */
 public interface IElementRealizerFactory {
-	ElementRealizer createRealizer(MethodConfiguration config);
+	ElementRealizer createRealizer(MethodConfiguration config, String type);
 }

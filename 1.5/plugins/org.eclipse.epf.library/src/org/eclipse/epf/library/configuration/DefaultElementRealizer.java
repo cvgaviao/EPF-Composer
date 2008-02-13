@@ -27,14 +27,17 @@ import org.eclipse.epf.uma.Whitepaper;
  * 
  * @author Jinhua Xi
  * @author Phong Nguyen Le
+ * @author Weiping Lu
  * @since 1.0
  */
 public class DefaultElementRealizer extends ElementRealizer {
 	
+	public static final String DefaultElementRealizer_Type = "DefaultElementRealizer"; //$NON-NLS-1$
+	
 	private static final ElementRealizer createElementRealizerExtension(MethodConfiguration config) {
 		Object ext = ExtensionManager.createExtension(LibraryPlugin.getDefault().getId(), "elementRealizerFactory"); //$NON-NLS-1$
 		return ext instanceof IElementRealizerFactory ?
-			((IElementRealizerFactory) ext).createRealizer(config) : null;
+			((IElementRealizerFactory) ext).createRealizer(config, DefaultElementRealizer_Type) : null;
 	}
 	
 	public static final ElementRealizer newElementRealizer(
