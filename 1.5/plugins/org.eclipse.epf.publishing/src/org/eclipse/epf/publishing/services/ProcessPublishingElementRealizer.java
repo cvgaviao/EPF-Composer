@@ -40,7 +40,7 @@ public class ProcessPublishingElementRealizer extends PublishingElementRealizer 
 
 	public static final ElementRealizer newProcessPublishingElementRealizer(MethodConfiguration config,
 			ProcessPublishingContentValidator validator) {
-		ProcessPublishingElementRealizer realizer = (ProcessPublishingElementRealizer) createElementRealizerExtension(config, PublishingElementRealizer_Type);
+		ProcessPublishingElementRealizer realizer = (ProcessPublishingElementRealizer) createElementRealizerExtension(config, ProcessPublishingElementRealizer_Type);
 		if (realizer == null) {
 			realizer = new ProcessPublishingElementRealizer(config, null);
 		}
