@@ -104,8 +104,10 @@ public class RoleDescriptorLayout extends DescriptorLayout {
 				
 				String path = super.makePath(getSuperActivityPath(), e);
 				TaskDescriptorLayout tl = (TaskDescriptorLayout)layoutManager.createLayout(e, owningProcess, path);
-				RoleDescriptor r = (RoleDescriptor)tl.getFeatureValue(UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy(), null, false);
-				if ( r == this.element ) {
+				//RoleDescriptor r = (RoleDescriptor)tl.getFeatureValue(UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy(), null, false);
+				List rList = (List)tl.getFeatureValue(UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy(), null, false);
+				//if ( r == this.element ) {
+				if ( rList.contains(this.element) ) {
 					List value = (List)tl.getFeatureValue(feature, null, false);
 					if ( value != null && value.size() > 0 ) {
 						for ( Iterator itr = value.iterator(); itr.hasNext(); ) {
