@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 
@@ -40,6 +41,17 @@ public class PublishingElementRealizer extends DefaultElementRealizer {
 		this.validator = validator;
 	}
 
+	public static final ElementRealizer newPublishingElementRealizer(MethodConfiguration config,
+												PublishingContentValidator validator) {
+		PublishingElementRealizer realizer = (PublishingElementRealizer) createElementRealizerExtension(config, PublishingElementRealizer_Type);
+		if (realizer == null) {
+			realizer = new PublishingElementRealizer(config, null);
+		}
+		realizer.validator = validator;
+		
+		return realizer;
+	}
+	
 	/**
 	 * realize the element
 	 * 

@@ -13,6 +13,7 @@ package org.eclipse.epf.publishing.services;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 
@@ -36,6 +37,18 @@ public class ProcessPublishingElementRealizer extends PublishingElementRealizer 
 		super(config, validator);
 	}
 
+
+	public static final ElementRealizer newProcessPublishingElementRealizer(MethodConfiguration config,
+			ProcessPublishingContentValidator validator) {
+		ProcessPublishingElementRealizer realizer = (ProcessPublishingElementRealizer) createElementRealizerExtension(config, PublishingElementRealizer_Type);
+		if (realizer == null) {
+			realizer = new ProcessPublishingElementRealizer(config, null);
+		}
+		realizer.validator = validator;
+		
+		return realizer;
+	}
+	
 	/**
 	 * realize the element. 
 	 * 
