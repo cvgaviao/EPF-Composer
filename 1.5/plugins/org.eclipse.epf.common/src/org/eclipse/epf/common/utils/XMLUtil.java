@@ -37,6 +37,7 @@ import org.xml.sax.SAXParseException;
  * 
  * @author Kelvin Low
  * @author Jinhua Xi
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class XMLUtil {
@@ -609,4 +610,52 @@ public class XMLUtil {
 		return new NodeIterator(nodes);
 	}
 
+	/**
+	 * Gets the list of immediate child elements with the given tag name.
+	 * 
+	 * @param element
+	 * @param tagName
+	 * @return list of {@link Element} objects
+	 */
+	public static List<Element> getChildElementsByTagName(Element element, String tagName) {	
+		List<Element> elements = new ArrayList<Element>();
+		NodeList list = element.getChildNodes();
+		int size = list.getLength(); 
+		if(size > 0) {
+			for (int i = 0; i < size; i++) {
+				Node node = list.item(i);
+				if(node instanceof Element) {
+					Element e = (Element) node;
+					if(e.getTagName().equals(tagName)) {
+						elements.add(e);
+					}
+				}
+			}
+		}
+		return elements;
+	}
+	
+	/**
+	 * Gets the first element with the given tag name in the immediate child elements.
+	 * 
+	 * @param element
+	 * @param tagName
+	 * @return
+	 */
+	public static Element getFirstChildElementByTagName(Element element, String tagName) {
+		NodeList list = element.getChildNodes();
+		int size = list.getLength(); 
+		if(size > 0) {
+			for (int i = 0; i < size; i++) {
+				Node node = list.item(i);
+				if(node instanceof Element) {
+					Element e = (Element) node;
+					if(e.getTagName().equals(tagName)) {
+						return e;
+					}
+				}
+			}
+		}
+		return null;
+	}
 }

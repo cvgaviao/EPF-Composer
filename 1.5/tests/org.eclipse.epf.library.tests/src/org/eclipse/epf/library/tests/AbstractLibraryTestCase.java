@@ -10,11 +10,14 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.tests;
 
+import java.io.File;
+
 import junit.framework.TestCase;
 
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.xmi.XMILibraryUtil;
+import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.uma.MethodLibrary;
 
 /**
@@ -58,6 +61,12 @@ public abstract class AbstractLibraryTestCase extends TestCase {
 
 	protected MethodLibrary openLibrary() throws LibraryServiceException {
 		String libPath = System.getProperty("epf.library");
+		if(libPath == null) {
+			String path = TestsPlugin.getDefault().getInstallPath() + File.separator + "Libraries" + File.separator + "OpenUP";
+			if(new File(path, MultiFileSaveUtil.DEFAULT_LIBRARY_MODEL_FILENAME).exists()) {
+				libPath = path;
+			}
+		}
 		if (libPath != null) {
 			library = XMILibraryUtil.openMethodLibrary(libPath);
 			LibraryService.getInstance().setCurrentMethodLibrary(library);
