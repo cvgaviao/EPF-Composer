@@ -34,6 +34,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -58,6 +59,8 @@ public class NewPluginMainPage extends BaseWizardPage {
 
 	protected Text authorsText;
 
+	protected Label referencedPluginsLabel;
+	
 	protected CheckboxTableViewer referencedPluginsViewer;
 
 	protected List<MethodPlugin> plugins;
@@ -99,7 +102,7 @@ public class NewPluginMainPage extends BaseWizardPage {
 
 		authorsText = createEditableText(composite, 400, 40, 1);
 
-		createVerticallyAlignedLabel(composite,
+		referencedPluginsLabel = createVerticallyAlignedLabel(composite,
 				AuthoringUIText.REFERENCED_PLUGINS_SECTION_NAME);
 
 		referencedPluginsViewer = CheckboxTableViewer.newCheckList(composite,
