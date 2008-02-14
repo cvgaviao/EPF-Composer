@@ -59,6 +59,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.UIActionDispatcher;
+import org.eclipse.epf.authoring.ui.actions.AssignAction;
 import org.eclipse.epf.authoring.ui.actions.CreateMethodElementCommand;
 import org.eclipse.epf.authoring.ui.actions.ILibraryActionBarContributor;
 import org.eclipse.epf.authoring.ui.actions.LayoutActionGroup;
@@ -69,6 +70,7 @@ import org.eclipse.epf.authoring.ui.actions.LibraryViewDeleteAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewPasteAction;
 import org.eclipse.epf.authoring.ui.actions.NewPluginAction;
 import org.eclipse.epf.authoring.ui.actions.RenameAction;
+import org.eclipse.epf.authoring.ui.dialogs.AssignDialog;
 import org.eclipse.epf.authoring.ui.dialogs.MoveDialog;
 import org.eclipse.epf.authoring.ui.dialogs.SwitchConfigDialog;
 import org.eclipse.epf.authoring.ui.dialogs.VariabilitySelection;
@@ -756,6 +758,37 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 			}
 		};
 
+		private AssignAction assignAction = new AssignAction() {
+			protected void doAssign() {
+				Collection elementsToAssign = new ArrayList();
+				IStructuredSelection selection = (IStructuredSelection) LibraryView.this.selection;
+				for (Iterator iter = selection.iterator(); iter.hasNext();) {
+					Object element = iter.next();
+					if (element instanceof MethodElement
+							|| (element = TngUtil.unwrap(element)) instanceof CustomCategory) {
+						// Handle CustomCategory specially.
+						EObject container = ((EObject) element).eContainer();
+						IStatus status = UserInteractionHelper.checkModify(
+								container, getSite().getShell());
+						if (container != null && !status.isOK()) {
+							AuthoringUIPlugin
+									.getDefault()
+									.getMsgDialog()
+									.displayError(
+											AuthoringUIResources.errorDialog_title,
+											AuthoringUIResources.errorDialog_moveError,
+											status);
+							return;
+						}
+						elementsToAssign.add(element);
+					}
+				}
+				
+				AssignDialog dlg = new AssignDialog(getSite().getShell(), elementsToAssign);
+				dlg.open();
+			}
+		};
+		
 		private RenameAction renameAction = new RenameAction();
 
 		private IAction replaceAction = new Action(
@@ -839,6 +872,8 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		private boolean locked;
 
 		private boolean canMove;
+		
+		private boolean canAssign;
 
 		private IAction showInResourceNavigatorAction = new Action(
 				AuthoringUIResources.showInResourceNavigatorAction_label) {
@@ -865,7 +900,7 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 				}
 			}
 		};
-
+		
 		private boolean canRename;
 
 		/**
@@ -1042,6 +1077,8 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 			moveAction.setEnabled(enabled);
 
 			canMove = canMove(sel);
+			
+			canAssign = assignAction.updateSelection(sel);
 
 			if (!locked && sel.size() == 1
 					&& sel.getFirstElement() instanceof ProcessComponent) {
@@ -1128,6 +1165,10 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 			}
 			if (canMove) {
 				menuManager.add(new ActionContributionItem(moveAction));
+			}
+			
+			if (canAssign) {
+				menuManager.add(new ActionContributionItem(assignAction));
 			}
 
 			menuManager.add(new Separator("view")); //$NON-NLS-1$

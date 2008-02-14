@@ -25,6 +25,8 @@ public final class AuthoringUIResources extends NLS {
 			.getName()
 			+ ".Resources"; //$NON-NLS-1$
 
+	public static String assignAction_text;
+
 	private AuthoringUIResources() {
 		// Do not instantiate.
 	}
@@ -1077,6 +1079,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String ProcessEditor_Prefix;
 
 	public static String MoveDialog_move_text;
+	
+	public static String AssignDialog_assign_text;
 
 	public static String ChecklistOrder_title;
 
