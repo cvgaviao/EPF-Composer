@@ -26,7 +26,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
-import org.eclipse.epf.library.edit.command.MoveInCategoryCommand;
+import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
@@ -36,7 +36,6 @@ import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.ui.LibraryUIManager;
 import org.eclipse.epf.library.util.LibraryManager;
 import org.eclipse.epf.uma.Activity;
-import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
@@ -117,6 +116,19 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#addItemsToModel1(ArrayList)
 	 */
 	protected void addItemsToModel1(ArrayList addItems) {
+		addItemsToModel1(addItems, category, usedCategories,
+				getActionManager(), getAncestors(category));
+		if (!addItems.isEmpty()) {
+			setDirty(true);
+		}
+	}
+		
+	public static void addItemsToModel1(ArrayList addItems, 
+			CustomCategory category,
+			ArrayList usedCategories,
+			IActionManager actionManager,
+			List<Object> ancestors
+			) {
 		boolean ok = DependencyChecker.checkCircularForMovingVariabilityElement(category, addItems);
 		if(! ok) {
 			String title = AuthoringUIResources.circular_dependency_error_title;
@@ -124,7 +136,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 			return;
 		}
 		
-		List<Object> ancestors = getAncestors(category);
+		//List<Object> ancestors = getAncestors(category);
 		if (!addItems.isEmpty()) {
 			for (Iterator it = addItems.iterator(); it.hasNext();) {
 				MethodElement customCategory = (MethodElement) it.next();
@@ -137,14 +149,14 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 						MethodElement object = ((ProcessComponent) customCategory)
 								.getProcess();
 						LibraryManager.getInstance().addToCustomCategory(
-								getActionManager(), category, object, usedCategories);
+								actionManager, category, object, usedCategories);
 					} else {
 						LibraryManager.getInstance().addToCustomCategory(
-								getActionManager(), category, customCategory, usedCategories);
+								actionManager, category, customCategory, usedCategories);
 					}
 				}
 			}
-			setDirty(true);
+			//setDirty(true);
 		}
 	}
 
@@ -152,6 +164,19 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#removeItemsFromModel1(ArrayList)
 	 */
 	protected void removeItemsFromModel1(ArrayList rmItems) {
+		removeItemsFromModel1(rmItems, category, usedCategories,
+				getActionManager(), getAncestors(category));
+		if (!rmItems.isEmpty()) {
+			setDirty(true);
+		}
+	}
+	
+	public static void removeItemsFromModel1(ArrayList rmItems,
+		CustomCategory category,
+		ArrayList usedCategories,
+		IActionManager actionManager,
+		List<Object> ancestors
+		) {
 		if (!rmItems.isEmpty()) {
 			ArrayList<MethodElement> customCategoriesToDelete = new ArrayList<MethodElement>();
 			MethodPlugin currentPlugin = UmaUtil.getMethodPlugin(category);
@@ -182,7 +207,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 					}
 				}				
 				LibraryManager.getInstance().removeFromCustomCategory(
-						getActionManager(), category, e, usedCategories);
+						actionManager, category, e, usedCategories);
 			}
 
 			if (customCategoriesToDelete.size() > 0) {
@@ -237,14 +262,14 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 						customCategoriesToDelete));
 				deleteAction.run();
 			}
-			setDirty(true);
+			//setDirty(true);
 		}
 	}
 
 	/**
 	 * Returns the ancestors for the given Custom Category.
 	 */
-	private List<Object> getAncestors(CustomCategory methodObject) {
+	public static List<Object> getAncestors(CustomCategory methodObject) {
 		List<Object> ancestorList = new ArrayList<Object>();
 		List<Object> objList = new ArrayList<Object>();
 		objList.add(methodObject);
@@ -252,7 +277,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 		return ancestorList;
 	}
 
-	private List<Object> getAncestors(List<Object> ancestorList, List<Object> methodObjectList) {
+	private static List<Object> getAncestors(List<Object> ancestorList, List<Object> methodObjectList) {
 		if (methodObjectList.isEmpty())
 			return ancestorList;
 
