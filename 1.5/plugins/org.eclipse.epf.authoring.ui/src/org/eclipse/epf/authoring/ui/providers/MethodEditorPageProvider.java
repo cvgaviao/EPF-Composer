@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.forms.IExtensionFormPage;
 import org.osgi.framework.Bundle;
 
 /**
@@ -36,10 +37,16 @@ public class MethodEditorPageProvider {
 	public static final String PAGE_PROVIDERS_EXTENSION_NAMESPACE = "org.eclipse.epf.authoring.ui"; //$NON-NLS-1$
 
 	/**
-	 * The extension name.
+	 * The extension name for task pages
 	 */
-	public static final String PAGE_PROVIDERS_EXTENSION_NAME = "TaskEditorPageProvider"; //$NON-NLS-1$
+	public static final String TASK_PAGE_PROVIDERS_EXTENSION_NAME = "TaskEditorPageProvider"; //$NON-NLS-1$
 
+	/**
+	 * The extension name for custom category pages
+	 */
+	public static final String CUSTOMCATEGORY_PAGE_PROVIDERS_EXTENSION_NAME = "CustomCategoryEditorPageProvider"; //$NON-NLS-1$
+	
+	
 	/**
 	 * The extension Attributes
 	 */
@@ -51,7 +58,8 @@ public class MethodEditorPageProvider {
 
 	// Contains the editor page providers loaded via the
 	// "org.eclipse.epf.authoring.ui.MethodEditorPageProvider" extension point.
-	private ArrayList pageProviders = new ArrayList();
+	private List<EditorPageElement> taskPageProviders = new ArrayList<EditorPageElement>();
+	private List<EditorPageElement> customCategoryPageProviders = new ArrayList<EditorPageElement>();
 
 	//	 The shared instance.
 	private static MethodEditorPageProvider instance = null;
@@ -75,16 +83,16 @@ public class MethodEditorPageProvider {
 	}
 
 	/**
-	 * Returns all the page providers
+	 * Returns all the task page providers
 	 * 
-	 * @return all the page providers.
+	 * @return all the task page providers.
 	 */
-	public List getPageProviders() {
-		List pages = new ArrayList();
-		for (int i = 0; i < pageProviders.size(); i++) {
-			EditorPageElement pageElement = (EditorPageElement) pageProviders
+	public List<IExtensionFormPage> getTaskPageProviders() {
+		List<IExtensionFormPage> pages = new ArrayList<IExtensionFormPage>();
+		for (int i = 0; i < taskPageProviders.size(); i++) {
+			EditorPageElement pageElement = (EditorPageElement) taskPageProviders
 					.get(i);
-			Object contributorClass = null;
+			IExtensionFormPage contributorClass = null;
 			try {
 				contributorClass = pageElement.getContributorClass();
 			} catch (Exception e) {
@@ -95,14 +103,40 @@ public class MethodEditorPageProvider {
 	}
 
 	/**
+	 * Returns all the custom category page providers
+	 * 
+	 * @return all the customcategory page providers.
+	 */
+	public List<IExtensionFormPage> getCustomCategoryPageProviders() {
+		List<IExtensionFormPage> pages = new ArrayList<IExtensionFormPage>();
+		for (int i = 0; i < customCategoryPageProviders.size(); i++) {
+			EditorPageElement pageElement = (EditorPageElement) customCategoryPageProviders
+					.get(i);
+			IExtensionFormPage contributorClass = null;
+			try {
+				contributorClass = pageElement.getContributorClass();
+			} catch (Exception e) {
+			}
+			pages.add(contributorClass);
+		}
+		return pages;
+	}
+
+	
+	/**
 	 * Loads the configuration providers specified via the
 	 * "com.ibm.process.pageProviders" extension point.
 	 */
 	public void loadProviders() {
+		loadProvider(TASK_PAGE_PROVIDERS_EXTENSION_NAME, taskPageProviders);
+		loadProvider(CUSTOMCATEGORY_PAGE_PROVIDERS_EXTENSION_NAME, customCategoryPageProviders);
+	}
+	
+	private void loadProvider(String extName, List<EditorPageElement> list) {
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(
 				PAGE_PROVIDERS_EXTENSION_NAMESPACE,
-				PAGE_PROVIDERS_EXTENSION_NAME);
+				extName);
 		if (extensionPoint != null) {
 			IExtension[] extensions = extensionPoint.getExtensions();
 			for (int i = 0; i < extensions.length; i++) {
@@ -123,7 +157,7 @@ public class MethodEditorPageProvider {
 
 						EditorPageElement pageElement = new EditorPageElement(
 								bundle, id, name, contributorClass);
-						pageProviders.add(pageElement);
+						list.add(pageElement);
 						
 					} catch (Exception e) {
 						AuthoringUIPlugin.getDefault().getLogger().logError(
@@ -132,5 +166,6 @@ public class MethodEditorPageProvider {
 				}
 			}
 		}
+
 	}
 }

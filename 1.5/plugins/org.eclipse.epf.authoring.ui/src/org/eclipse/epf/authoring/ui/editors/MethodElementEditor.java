@@ -1093,20 +1093,30 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 			if (elementObj instanceof Task) {
 				// check for extenstion point and add the page if there
-				List<?> pageProviders = MethodEditorPageProvider.getInstance()
-						.getPageProviders();
+				List<IExtensionFormPage> pageProviders = MethodEditorPageProvider.getInstance()
+						.getTaskPageProviders();
 
 				if (pageProviders != null && pageProviders.size() > 0) {
-					try {
-						for (int i = 0; i < pageProviders.size(); i++) {
-							Object page = pageProviders.get(i);
-							if (page instanceof IExtensionFormPage) {
-								IExtensionFormPage formPage = (IExtensionFormPage) page;
-								formPage.setEditor(this);
-							}
+					for (IExtensionFormPage formPage : pageProviders) {
+						try {
+							formPage.setEditor(this);
+						} catch (Exception e) {
+							AuthoringUIPlugin.getDefault().getLogger().logError(e);
 						}
-					} catch (Exception e) {
-						AuthoringUIPlugin.getDefault().getLogger().logError(e);
+					}
+				}
+			} else if (elementObj instanceof CustomCategory) {
+				// check for extenstion point and add the page if there
+				List<IExtensionFormPage> pageProviders = MethodEditorPageProvider.getInstance()
+						.getCustomCategoryPageProviders();
+
+				if (pageProviders != null && pageProviders.size() > 0) {
+					for (IExtensionFormPage formPage : pageProviders) {
+						try {
+							formPage.setEditor(this);
+						} catch (Exception e) {
+							AuthoringUIPlugin.getDefault().getLogger().logError(e);
+						}
 					}
 				}
 			}
