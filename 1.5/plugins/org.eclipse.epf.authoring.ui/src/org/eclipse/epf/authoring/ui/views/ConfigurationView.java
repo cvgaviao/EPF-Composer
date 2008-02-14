@@ -254,6 +254,7 @@ public class ConfigurationView extends AbstractBaseView implements
 		content.setLayout(layout);
 
 		treeViewer = new TreeViewer(content);
+		treeViewer.setUseHashlookup(true);
 		treeViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		// Add drag-and-drop support.
@@ -309,7 +310,7 @@ public class ConfigurationView extends AbstractBaseView implements
 		actionDispatcher.setSelection(emptySelection);
 		UIActionDispatcher.getInstance().setSelection(emptySelection);
 	}
-
+	
 	/**
 	 * Sets the given Method Configuration as this viewer's input
 	 * 
@@ -331,8 +332,14 @@ public class ConfigurationView extends AbstractBaseView implements
 			adapterFactory = TngAdapterFactory.INSTANCE
 					.getConfigurationView_AdapterFactory(configFilter);
 			editingDomain.setAdapterFactory(adapterFactory);
-			treeViewer.setContentProvider(new AdapterFactoryContentProvider(
-					adapterFactory));
+			AdapterFactoryContentProvider contentProvider = (AdapterFactoryContentProvider) treeViewer.getContentProvider();			
+			if(contentProvider == null) {
+				contentProvider = createContentProvider();
+			}
+			else {
+				contentProvider.setAdapterFactory(adapterFactory);
+			}
+			treeViewer.setContentProvider(contentProvider);
 			treeViewer.setLabelProvider(new ConfigurationLabelProvider(config,
 					adapterFactory));
 			title = config.getName();

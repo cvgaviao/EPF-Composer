@@ -57,9 +57,14 @@ public class CommonPlugin extends AbstractActivator {
 //	 * set the store wrapper before it's being used.
 //	 * @param storeWrapper
 //	 */
-	IPreferenceStoreWrapper storeWrapper = null;
-	public void setPreferenceStore(IPreferenceStoreWrapper storeWrapper) {
+	private IPreferenceStoreWrapper storeWrapper = null;
+	
+	public void setCommonPreferenceStore(IPreferenceStoreWrapper storeWrapper) {
 		this.storeWrapper = storeWrapper;
+	}
+	
+	public IPreferenceStoreWrapper getCommonPreferenceStore() {
+		return storeWrapper;
 	}
 	
 	// this is the context for message callback

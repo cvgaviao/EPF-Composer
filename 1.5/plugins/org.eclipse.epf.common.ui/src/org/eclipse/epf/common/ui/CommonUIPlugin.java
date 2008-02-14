@@ -26,7 +26,7 @@ public class CommonUIPlugin extends AbstractPlugin {
 		
 //		// set the preference store for the common plugin
 		PreferenceStoreWrapper storeWrapper = new PreferenceStoreWrapper(getPreferenceStore());
-		CommonPlugin.getDefault().setPreferenceStore(storeWrapper);
+		CommonPlugin.getDefault().setCommonPreferenceStore(storeWrapper);
 		
 		// create the message callback context for the non-ui plugins
 		// this is the context for message callback

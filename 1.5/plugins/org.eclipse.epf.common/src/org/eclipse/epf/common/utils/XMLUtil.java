@@ -642,7 +642,7 @@ public class XMLUtil {
 	 * @param tagName
 	 * @return
 	 */
-	public static Element getFirstChildElementByTagName(Element element, String tagName) {
+	public static Element getFirstChildElementByTagName(Node element, String tagName) {
 		NodeList list = element.getChildNodes();
 		int size = list.getLength(); 
 		if(size > 0) {

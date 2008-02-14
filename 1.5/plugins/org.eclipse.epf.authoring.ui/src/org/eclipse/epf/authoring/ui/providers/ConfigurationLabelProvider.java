@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.providers;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IWrapperItemProvider;
@@ -30,6 +31,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.model.IWorkbenchAdapter;
 
 /**
  * The label provider for the Configuration view tree,
@@ -89,7 +91,13 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 			// name = ConfigurationHelper.getName((MethodElement)object,
 			// config);
 		}
-
+		
+		IWorkbenchAdapter adapter = (IWorkbenchAdapter) (object instanceof IWorkbenchAdapter ?
+				object : (object instanceof IAdaptable ? ((IAdaptable) object).getAdapter(IWorkbenchAdapter.class) : null));
+		if(adapter != null) {
+			return adapter.getLabel(object);
+		}
+		
 		if (name == null) {
 			name = super.getText(object);
 		}

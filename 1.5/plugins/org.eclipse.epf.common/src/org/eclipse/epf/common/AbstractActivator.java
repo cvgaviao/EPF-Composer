@@ -500,7 +500,7 @@ public abstract class AbstractActivator extends Plugin implements IActivator {
 	}
 	
 	public IPreferenceStoreWrapper getPreferenceStore() {
-		return CommonPlugin.getDefault().storeWrapper;
+		return CommonPlugin.getDefault().getCommonPreferenceStore();
 	}
 	
 	

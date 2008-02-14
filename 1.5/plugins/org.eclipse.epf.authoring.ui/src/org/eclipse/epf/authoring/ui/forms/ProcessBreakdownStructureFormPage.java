@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.ecore.EClass;
@@ -576,6 +575,7 @@ public class ProcessBreakdownStructureFormPage extends ProcessFormPage
 		
 		viewer = new ProcessViewer(comp, SWT.MULTI | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
+		viewer.setUseHashlookup(true);
 		viewer.getControl().setLayoutData(gd);
 		viewer.setupColumns(columnDescriptors);
 		viewer.setContentProvider(new ExposedAdapterFactoryContentProvider(
