@@ -25,11 +25,17 @@ public final class AuthoringUIResources extends NLS {
 			.getName()
 			+ ".Resources"; //$NON-NLS-1$
 
-	public static String assignAction_text;
-
 	private AuthoringUIResources() {
 		// Do not instantiate.
 	}
+	
+	public static String assignAction_text;
+	
+	public static String unassignAction_text;
+	
+	public static String reassignAction_text;
+		
+	public static String deepCopyAction_text;
 
 	public static String ConfigurationOrderDialog_description;
 

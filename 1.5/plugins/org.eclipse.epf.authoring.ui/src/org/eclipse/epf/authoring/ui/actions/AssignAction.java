@@ -10,19 +10,21 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.actions;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.dialogs.AssignDialog;
+import org.eclipse.epf.authoring.ui.views.LibraryView;
+import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
-import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
 import org.eclipse.epf.uma.CustomCategory;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * Assign method element.
@@ -30,33 +32,43 @@ import org.eclipse.swt.widgets.Display;
  * @author Weiping Lu
  * @since  1.5
  */
-public class AssignAction extends Action {
+public class AssignAction extends LibraryViewSimpleAction {
 
 	/**
 	 * Creates an instance
 	 * @param text
 	 */
-	public AssignAction() {
-		super(AuthoringUIResources.assignAction_text);
+	public AssignAction(LibraryView libView) {
+		super(libView, AuthoringUIResources.assignAction_text);
 	}
 	
-	protected void doAssign() {
-	}
-
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.action.Action#run()
-	 */
-	public void run() {
-		LibraryLockingOperationRunner runner = new LibraryLockingOperationRunner();
-		runner.run(new IRunnableWithProgress() {
-
-			public void run(IProgressMonitor monitor)
-					throws InvocationTargetException,
-					InterruptedException {
-				doAssign();
+	protected void doRun() {
+		Collection elementsToAssign = new ArrayList();
+		IStructuredSelection selection = (IStructuredSelection) getLibraryView().getSelection();
+		for (Iterator iter = selection.iterator(); iter.hasNext();) {
+			Object element = iter.next();
+			if (element instanceof MethodElement
+					|| (element = TngUtil.unwrap(element)) instanceof CustomCategory) {
+				// Handle CustomCategory specially.
+				EObject container = ((EObject) element).eContainer();
+				IStatus status = UserInteractionHelper.checkModify(
+						container, getLibraryView().getSite().getShell());
+				if (container != null && !status.isOK()) {
+					AuthoringUIPlugin
+							.getDefault()
+							.getMsgDialog()
+							.displayError(
+									AuthoringUIResources.errorDialog_title,
+									AuthoringUIResources.errorDialog_moveError,
+									status);
+					return;
+				}
+				elementsToAssign.add(element);
 			}
-
-		});
+		}
+		
+		AssignDialog dlg = new AssignDialog(getLibraryView().getSite().getShell(), elementsToAssign);
+		dlg.open();
 	}
 	
 	/**
@@ -77,7 +89,7 @@ public class AssignAction extends Action {
 		}
 		Object element = TngUtil.unwrap(selection.getFirstElement());
 		if (element instanceof CustomCategory) {
-			return true;
+			return getSelectionParentObject() instanceof CustomCategory;
 		}
 		
 		return false;
