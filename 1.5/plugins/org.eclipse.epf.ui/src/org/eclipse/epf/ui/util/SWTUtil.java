@@ -12,6 +12,7 @@ package org.eclipse.epf.ui.util;
 
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -572,6 +573,30 @@ public class SWTUtil {
 		gd.heightHint = heightHint;
 		table.setLayoutData(gd);
 		return checkboxTableViewer;
+	}
+	
+	/**
+	 * Creates a list viewer.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 * @param widthHint
+	 *            the preferred width (in pixels) for the control
+	 * @param heightHint
+	 *            the preferred height (in pixels) for the control
+	 * @param column
+	 *            the number of column cells that the control will take up
+	 * @return a <code>ListViewer</code> object
+	 */
+	public static ListViewer createListViewer(Composite parent,
+			int widthHint, int heightHint, int column) {
+		ListViewer listViewer = new ListViewer(parent, SWT.V_SCROLL | SWT.BORDER);
+		GridData gd = new GridData(GridData.BEGINNING | GridData.FILL_BOTH);
+		gd.horizontalSpan = column;
+		gd.widthHint = widthHint;
+		gd.heightHint = heightHint;
+		listViewer.getControl().setLayoutData(gd);
+		return listViewer;
 	}
 
 	/**

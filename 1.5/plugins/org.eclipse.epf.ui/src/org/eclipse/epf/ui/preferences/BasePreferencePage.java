@@ -14,6 +14,7 @@ import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -459,6 +460,20 @@ abstract public class BasePreferencePage extends PreferencePage implements
 	protected static CheckboxTableViewer createCheckboxTableViewer(
 			Composite parent, int column) {
 		return SWTUtil.createCheckboxTableViewer(parent, 360, 175, column);
+	}
+	
+	/**
+	 * Creates a list viewer.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 * @param column
+	 *            the number of column cells that the control will take up
+	 * @return a <code>ListViewer</code> object
+	 */
+	protected static ListViewer createListViewer(
+			Composite parent, int widthHint, int heightHint) {
+		return SWTUtil.createListViewer(parent, widthHint, heightHint, 1);
 	}
 
 	/**
