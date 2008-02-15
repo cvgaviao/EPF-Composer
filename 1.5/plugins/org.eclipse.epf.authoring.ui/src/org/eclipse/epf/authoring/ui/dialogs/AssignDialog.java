@@ -10,32 +10,42 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.dialogs;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.actions.LibraryViewSimpleAction;
+import org.eclipse.epf.authoring.ui.actions.UnassignAction;
 import org.eclipse.epf.authoring.ui.forms.CustomCategoryAssignPage;
 import org.eclipse.epf.common.ui.util.MsgDialog;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.ProgressMonitorPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -56,13 +66,28 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	
 	private TreeViewer treeViewer;
 
-	private ArrayList elements;
+	protected ArrayList elements;
 
 	private Object destination;
 	
 	private boolean assigning = false;
 
-	public AssignDialog(Shell parentShell, Collection elementsToAssign) {
+	private ProgressMonitorPart progressMonitorPart;
+
+	private Cursor waitCursor;
+	
+	private boolean lockedUI = false;
+
+	public static AssignDialog newAssignDialog(Shell parentShell, Collection elements) {
+		return new AssignDialog(parentShell, elements);
+	}
+	
+	public static AssignDialog newReassignDialog(Shell parentShell,
+			Collection elements, MethodElement parentElement) {
+		return new ReassignDialog(parentShell, elements, parentElement);
+	}
+	
+	protected AssignDialog(Shell parentShell, Collection elementsToAssign) {
 		super(parentShell);
 
 		// filter out the predefined elements to prevent them from getting moved
@@ -116,6 +141,16 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 
 		treeViewer.setInput(LibraryService.getInstance().getCurrentMethodLibrary());
 
+		GridLayout pmlayout = new GridLayout();
+		pmlayout.numColumns = 1;
+		progressMonitorPart = createProgressMonitorPart(composite, pmlayout);
+		progressMonitorPart
+				.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		progressMonitorPart.setVisible(false);
+
+		waitCursor = parent.getShell().getDisplay().getSystemCursor(
+				SWT.CURSOR_WAIT);
+		
 		return composite;
 	}
 
@@ -192,21 +227,59 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			}
 		}
 
-		assigning = true;
+		assigning = true;		
 		
+		IRunnableWithProgress runnable = new IRunnableWithProgress() {
+
+			public void run(IProgressMonitor monitor)
+					throws InvocationTargetException, InterruptedException {
+				monitor.subTask(AuthoringUIResources.assignAction_text);
+				try {
+					Collection<Resource> resouresToSave = doWorkBeforeSave();
+					LibraryViewSimpleAction.save(resouresToSave);
+				} finally {
+					assigning = false;
+				}
+			}
+
+		};
+		
+		final Shell shell = getShell();
+		shell.setCursor(waitCursor);
+
+		getButton(IDialogConstants.OK_ID).setEnabled(false);
+		getButton(IDialogConstants.CANCEL_ID).setEnabled(false);
+		treeViewer.getControl().setEnabled(false);
+
+		progressMonitorPart.setVisible(true);
+		IStatus stat = null;
 		try {
-			LibraryModificationHelper helper = new LibraryModificationHelper();
-			CustomCategory category = (CustomCategory) destination;
-			
-			CustomCategoryAssignPage.addItemsToModel1(elements, category, usedCategories,
-					helper.getActionManager(), CustomCategoryAssignPage.getAncestors(category));
+			stat = UserInteractionHelper.getUIHelper().runInModalContext(runnable, true, progressMonitorPart, shell);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		} finally {
-			assigning = false;
+			progressMonitorPart.done();
+		}
+		if(stat != null && !stat.isOK()) {
+			return false;
 		}
 
 		return true;
 	}
 
+	protected Collection<Resource> doWorkBeforeSave() {
+		LibraryModificationHelper helper = new LibraryModificationHelper();
+		CustomCategory category = (CustomCategory) destination;
+		
+		CustomCategoryAssignPage.addItemsToModel1(elements, category, usedCategories,
+				helper.getActionManager(), CustomCategoryAssignPage.getAncestors(category));
+
+		Collection<Resource> resouresToSave = new HashSet<Resource>();
+		resouresToSave.add(category.eResource());
+		return resouresToSave;
+	}
+		
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -217,5 +290,95 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			return false;
 		return super.close();
 	}
+	
+
+	protected ProgressMonitorPart createProgressMonitorPart(
+			Composite composite, GridLayout pmlayout) {
+		return new ProgressMonitorPart(composite, pmlayout, SWT.DEFAULT) {
+			String currentTask = null;
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.eclipse.jface.wizard.ProgressMonitorPart#setBlocked(org.eclipse.core.runtime.IStatus)
+			 */
+			public void setBlocked(IStatus reason) {
+				super.setBlocked(reason);
+				if (!lockedUI)// Do not show blocked if we are locking the UI
+					getBlockedHandler().showBlocked(getShell(), this, reason,
+							currentTask);
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.eclipse.jface.wizard.ProgressMonitorPart#clearBlocked()
+			 */
+			public void clearBlocked() {
+				super.clearBlocked();
+				if (!lockedUI)// Do not vlear if we never set it
+					getBlockedHandler().clearBlocked();
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.eclipse.jface.wizard.ProgressMonitorPart#beginTask(java.lang.String,
+			 *      int)
+			 */
+			public void beginTask(String name, int totalWork) {
+				super.beginTask(name, totalWork);
+				currentTask = name;
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.eclipse.jface.wizard.ProgressMonitorPart#setTaskName(java.lang.String)
+			 */
+			public void setTaskName(String name) {
+				super.setTaskName(name);
+				currentTask = name;
+			}
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see org.eclipse.jface.wizard.ProgressMonitorPart#subTask(java.lang.String)
+			 */
+			public void subTask(String name) {
+				super.subTask(name);
+				// If we haven't got anything yet use this value for more
+				// context
+				if (currentTask == null)
+					currentTask = name;
+			}
+		};
+	}
+
+	private static class ReassignDialog extends AssignDialog {
+		
+		private CustomCategory parentElement;
+		
+		protected ReassignDialog(Shell parentShell, 
+				Collection elements, MethodElement parentElement) {
+			super(parentShell, elements);
+			this.parentElement = (CustomCategory) parentElement;
+		}
+		
+		protected Collection<Resource> doWorkBeforeSave() {
+			Collection<Resource> resouresToSave = super.doWorkBeforeSave();
+			resouresToSave.add(parentElement.eResource());			
+			UnassignAction.unassign(elements.get(0), parentElement, new ArrayList());
+			return resouresToSave;
+		}
+		
+		protected void configureShell(Shell newShell) {
+			super.configureShell(newShell);
+			newShell.setText(AuthoringUIResources.AssignDialog_reassign_text); 
+		}
+		
+	}
+
 
 }

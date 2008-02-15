@@ -11,9 +11,12 @@
 package org.eclipse.epf.authoring.ui.actions;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.forms.CustomCategoryAssignPage;
@@ -41,12 +44,20 @@ public class UnassignAction extends LibraryViewSimpleAction {
 	}
 	
 	protected void doRun() {
+		Collection<Resource> resouceToSave = doRunBeforeSave();
+		save(resouceToSave);
+	}
+	
+	/**
+	 * @return resources to save
+	 */
+	private Collection<Resource> doRunBeforeSave() {
 		IStructuredSelection selection = (IStructuredSelection) getLibraryView().getSelection();
 		Object element = selection.getFirstElement();
 		element = TngUtil.unwrap(element);
 
 		if (!(element instanceof CustomCategory)) {
-			return;
+			return null;
 		}
 
 		CustomCategory category = (CustomCategory) element;
@@ -58,18 +69,25 @@ public class UnassignAction extends LibraryViewSimpleAction {
 			AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
 					AuthoringUIResources.errorDialog_title,
 					AuthoringUIResources.errorDialog_moveError, status);
-			return;
+			return null;
 		}
 		
 		Object parent = getSelectionParentObject();
 		if (! (parent instanceof CustomCategory)) {
-			return;
+			return null;
 		}
 		CustomCategory parentCc = (CustomCategory) parent;						
+		unassign(element, parentCc, new ArrayList());
+		
+		return Collections.singleton(parentCc.eResource());
+		
+	}
+
+	public static void unassign(Object element, CustomCategory parentCc, ArrayList usedCategories) {
 		LibraryModificationHelper helper = new LibraryModificationHelper();
 		ArrayList elements  = new ArrayList();
 		elements.add(element);
-		CustomCategoryAssignPage.removeItemsFromModel1(elements, parentCc, new ArrayList(),
+		CustomCategoryAssignPage.removeItemsFromModel1(elements, parentCc, usedCategories,
 				helper.getActionManager(), CustomCategoryAssignPage.getAncestors(parentCc));
 	}
 	

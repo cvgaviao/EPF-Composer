@@ -11,11 +11,17 @@
 package org.eclipse.epf.authoring.ui.actions;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
+import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
+import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
+import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -77,5 +83,23 @@ public abstract class LibraryViewSimpleAction extends Action {
 		TreeItem item = selectedItems[0].getParentItem();
 		return TngUtil.unwrap(item.getData());
 	}
-
+	
+	public static boolean save(Collection<Resource> resouresToSave) {
+		ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
+				.getCurrentPersister().getFailSafePersister();
+		try {
+			for (Iterator<Resource> it = resouresToSave.iterator(); it.hasNext();) {
+				MultiFileXMIResourceImpl res = (MultiFileXMIResourceImpl) it.next();
+				persister.save(res);	
+			}
+			persister.commit();
+		} catch (Exception e) {
+			persister.rollback();
+			return false;
+		} finally {
+		}
+		
+		return true;
+	}
+	
 }

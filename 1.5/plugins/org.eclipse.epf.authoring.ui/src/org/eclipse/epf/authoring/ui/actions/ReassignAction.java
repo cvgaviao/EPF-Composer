@@ -10,8 +10,12 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.actions;
 
+import java.util.Collection;
+
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.dialogs.AssignDialog;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
+import org.eclipse.epf.uma.MethodElement;
 
 /**
  * Reassign method element.
@@ -19,23 +23,20 @@ import org.eclipse.epf.authoring.ui.views.LibraryView;
  * @author Weiping Lu
  * @since  1.5
  */
-public class ReassignAction extends LibraryViewSimpleAction {
+public class ReassignAction extends AssignAction {
 
 	/**
 	 * Creates an instance
 	 * @param text
 	 */
 	public ReassignAction(LibraryView libView) {
-		super(libView, AuthoringUIResources.reassignAction_text);
+		super(libView);
+		setText(AuthoringUIResources.reassignAction_text);
 	}
 	
-	protected void doRun() {
-		AssignAction assignAction = new AssignAction(getLibraryView());		
-		UnassignAction unassignAction = new UnassignAction(getLibraryView());
-
-		assignAction.doRun();
-		unassignAction.doRun();
+	protected AssignDialog getDialog(Collection elements) {
+		return AssignDialog.newReassignDialog(getLibraryView().getSite().getShell(), elements,
+				(MethodElement) getSelectionParentObject());
 	}
-	
 
 }

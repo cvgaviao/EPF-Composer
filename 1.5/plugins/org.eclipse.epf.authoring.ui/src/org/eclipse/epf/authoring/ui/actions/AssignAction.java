@@ -67,8 +67,12 @@ public class AssignAction extends LibraryViewSimpleAction {
 			}
 		}
 		
-		AssignDialog dlg = new AssignDialog(getLibraryView().getSite().getShell(), elementsToAssign);
+		AssignDialog dlg = getDialog(elementsToAssign);
 		dlg.open();
+	}
+	
+	protected AssignDialog getDialog(Collection elements) {
+		return AssignDialog.newAssignDialog(getLibraryView().getSite().getShell(), elements);
 	}
 	
 	/**
