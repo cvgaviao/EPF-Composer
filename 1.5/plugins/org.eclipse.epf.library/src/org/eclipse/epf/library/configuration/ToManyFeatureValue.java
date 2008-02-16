@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.configuration;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class ToManyFeatureValue extends FeatureValue {
 			return;
 		}
 			
+		HashSet seenValues = new HashSet(values);
 		for (Iterator it = ((List) value).iterator(); it.hasNext();) {
 			Object obj = it.next();
 			if ( obj instanceof MethodElement ) {
@@ -59,8 +61,9 @@ public class ToManyFeatureValue extends FeatureValue {
 				MethodElement ce = ConfigurationHelper.getCalculatedElement(e, realizer);
 				
 				// calculated element can be null if it can't show
-				if (ce != null && !values.contains(ce)) {
+				if (ce != null && !seenValues.contains(ce)) {
 					values.add(ce);
+					seenValues.add(ce);
 				}
 			}
 		}
