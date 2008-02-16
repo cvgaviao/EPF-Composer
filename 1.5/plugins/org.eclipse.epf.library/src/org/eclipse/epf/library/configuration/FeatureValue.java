@@ -26,7 +26,7 @@ import org.eclipse.epf.uma.ecore.util.OppositeFeature;
  * @since 1.0
  *
  */
-abstract class FeatureValue {
+public abstract class FeatureValue {
 	
 	private static final String _NULL_ = "_NULL_"; //$NON-NLS-1$
 
