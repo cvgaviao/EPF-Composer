@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -39,6 +40,7 @@ import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaFactory;
@@ -395,7 +397,9 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 		
 	}
 	
-	private static class CustomCategoryDeepCopyDialog extends AssignDialog {		
+	private static class CustomCategoryDeepCopyDialog extends AssignDialog {
+		private ContentPackage hiddenPkg;
+		
 		protected CustomCategoryDeepCopyDialog(Shell parentShell, 
 				Collection elements) {
 			super(parentShell, elements);
@@ -410,10 +414,14 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 					
 			CustomCategory source = (CustomCategory) getElements().get(0);
 			CustomCategory targetParent = (CustomCategory) getDestination();
-
+			hiddenPkg = (ContentPackage) targetParent.eContainer();
+			
 			CustomCategory copy = (CustomCategory) deepCopy(source);
-			TngUtil.setDefaultName(source, copy, copy.getName());
-
+			TngUtil.setDefaultName(targetParent, copy, copy.getName());
+			
+			//ITextReferenceReplacer txtRefReplacer = ExtensionManager.getTextReferenceReplacer();
+			
+			hiddenPkg.getContentElements().add(copy);
 			targetParent.getCategorizedElements().add(copy);
 			
 			Collection<Resource> resouresToSave = new ArrayList();				
@@ -427,49 +435,79 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 		
 			List features = source.eClass().getEAllStructuralFeatures();
 			for (int i = 0; i < features.size(); i++) {
-				EStructuralFeature feature = (EStructuralFeature) features.get(i);
+				EStructuralFeature feature = (EStructuralFeature) features.get(i);				
+				//System.out.println("LD> feature: " + feature.getName());
 				copyFeatureValue(source, copy, feature);
 			}
 			return copy;
 		}
 		
 		private void copyFeatureValue(EObject sourceObj, EObject copiedObj, EStructuralFeature feature) {
-			Object sourceValue = sourceObj.eGet(feature);
-			Object copiedValue = sourceValue;
+				
+			if (feature instanceof EAttribute) {
+				copyAttributeFeatureValue(sourceObj, copiedObj, (EAttribute) feature);				
+			} else if (feature instanceof EReference) {
+				copyReferenceFeatureValue(sourceObj, copiedObj, (EReference) feature);
+			}
 			
-			if (feature instanceof EReference) {
-				EReference rFeature = (EReference) feature;
-				if (rFeature.isContainment()) {
-					if (rFeature.isMany()) {
-						List<EObject> sourceList = (List<EObject>) sourceValue;
-						List<EObject> copiedList = (List<EObject>) copiedObj.eGet(feature);
-						for (EObject sobj : sourceList) {
-							EObject cobj = deepCopy(sobj);
-							copiedList.add(cobj);
-						}
-						return;
-					}
-					copiedValue = deepCopy((EObject) sourceValue);
-					
-				} else if (rFeature.isMany()) {
-					List sourceList = (List) sourceValue;
-					List copiedList = (List) copiedObj.eGet(feature);
-					for (Object sobj : sourceList) {
-						Object cobj = sobj;
-						if (sobj instanceof CustomCategory) {
-							cobj = deepCopy((CustomCategory) sobj);
-						}
+		}
+		
+		private void copyAttributeFeatureValue(EObject sourceObj,
+				EObject copiedObj, EAttribute feature) {
+			Object sourceValue = sourceObj.eGet(feature);
+			if (sourceValue == null) {
+				return;
+			}
+			Object copiedValue = sourceValue;
+
+			if (sourceObj instanceof CustomCategory) {
+				if (feature == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
+					copiedValue = EcoreUtil.generateUUID();
+				}
+				
+				//MigrationUtil a;
+			}
+
+			copiedObj.eSet(feature, copiedValue);
+		}
+
+		private void copyReferenceFeatureValue(EObject sourceObj, EObject copiedObj, EReference feature) {
+			Object sourceValue = sourceObj.eGet(feature);
+			if (sourceValue == null) {
+				return;
+			}
+			Object copiedValue = sourceValue;
+
+			if (feature.isContainment()) {
+				if (feature.isMany()) {
+					List<EObject> sourceList = (List<EObject>) sourceValue;
+					List<EObject> copiedList = (List<EObject>) copiedObj
+							.eGet(feature);
+					for (EObject sobj : sourceList) {
+						EObject cobj = deepCopy(sobj);
 						copiedList.add(cobj);
 					}
 					return;
 				}
-			} else if (feature == UmaPackage.eINSTANCE.getMethodElement_Guid() &&
-					sourceObj instanceof CustomCategory) {
-				copiedValue = EcoreUtil.generateUUID();
+				copiedValue = deepCopy((EObject) sourceValue);
+
+			} else if (feature.isMany()) {
+				List sourceList = (List) sourceValue;
+				List copiedList = (List) copiedObj.eGet(feature);
+				for (Object sobj : sourceList) {
+					Object cobj = sobj;
+					if (sobj instanceof CustomCategory) {
+						cobj = (CustomCategory) deepCopy((CustomCategory) sobj);
+						CustomCategory ccobj = (CustomCategory) cobj;
+						TngUtil.setDefaultName((CustomCategory) copiedObj, ccobj, ccobj.getName());
+						hiddenPkg.getContentElements().add(ccobj);
+					}
+					copiedList.add(cobj);
+				}
+				return;
 			}
-			
+
 			copiedObj.eSet(feature, copiedValue);
-			
 		}
 
 		protected void configureShell(Shell newShell) {
