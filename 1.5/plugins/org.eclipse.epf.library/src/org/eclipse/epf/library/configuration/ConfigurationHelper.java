@@ -739,8 +739,7 @@ public class ConfigurationHelper {
 		VariabilityElement ve = getVariableOwner((OwnerElement == null) ? element
 				: OwnerElement);
 
-		Object value = realizer == null ? element.eGet(feature) :
-							realizer.eGet(element, feature);
+		Object value = element.eGet(feature);
 
 		values.add(ve, value);
 
@@ -756,6 +755,10 @@ public class ConfigurationHelper {
 		// according to Peter, the realization should be always top down.
 		// i.e realize the base first, then include the contributions
 		__mergeBase(element, ve, feature, config, values, realizer);	
+		
+		if (realizer != null) {
+			realizer.addExtraFeatureValues(element, feature, values);
+		}
 		
 		if (!is01Feature(feature) || (values.size() == 0) ) {
 			__mergeContributors(element, ve, feature, config, values, realizer);

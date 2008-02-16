@@ -286,8 +286,9 @@ public abstract class ElementRealizer {
 		this.filter = null;
 	}
 	
-	protected Object eGet(MethodElement element, EStructuralFeature feature) {
-		return element.eGet(feature);
+	protected void addExtraFeatureValues(MethodElement element, EStructuralFeature feature,
+								FeatureValue values) {
 	}
+	
 
 }
