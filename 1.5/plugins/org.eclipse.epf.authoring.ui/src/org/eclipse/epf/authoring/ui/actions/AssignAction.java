@@ -80,8 +80,8 @@ public class AssignAction extends LibraryViewSimpleAction {
 	 * @return
 	 */
 	public boolean updateSelection(IStructuredSelection selection) {
-		return false;
-		//return canAssign(selection);
+		//return false;
+		return canAssign(selection);
 	}
 	
 	/**

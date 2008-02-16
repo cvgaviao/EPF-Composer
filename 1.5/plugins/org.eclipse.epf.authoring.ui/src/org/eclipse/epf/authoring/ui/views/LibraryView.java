@@ -61,6 +61,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.UIActionDispatcher;
 import org.eclipse.epf.authoring.ui.actions.AssignAction;
 import org.eclipse.epf.authoring.ui.actions.CreateMethodElementCommand;
+import org.eclipse.epf.authoring.ui.actions.CustomCategoryDeepCopyAction;
 import org.eclipse.epf.authoring.ui.actions.ILibraryActionBarContributor;
 import org.eclipse.epf.authoring.ui.actions.LayoutActionGroup;
 import org.eclipse.epf.authoring.ui.actions.LibraryActionBarContributor;
@@ -767,6 +768,7 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		
 		private LibraryViewSimpleAction reassignAction = new ReassignAction(LibraryView.this);
 
+		private LibraryViewSimpleAction customCategoryDeepCopyAction = new CustomCategoryDeepCopyAction(LibraryView.this);
 		
 		private RenameAction renameAction = new RenameAction();
 
@@ -1150,6 +1152,7 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 				menuManager.add(new ActionContributionItem(assignAction));
 				menuManager.add(new ActionContributionItem(unassignAction));
 				menuManager.add(new ActionContributionItem(reassignAction));
+				menuManager.add(new ActionContributionItem(customCategoryDeepCopyAction));				
 			}
 
 			menuManager.add(new Separator("view")); //$NON-NLS-1$

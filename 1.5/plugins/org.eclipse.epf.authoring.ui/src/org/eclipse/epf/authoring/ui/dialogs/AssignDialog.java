@@ -15,12 +15,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -37,6 +41,8 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -66,7 +72,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	
 	private TreeViewer treeViewer;
 
-	protected ArrayList elements;
+	private ArrayList elements;
 
 	private Object destination;
 	
@@ -85,6 +91,10 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	public static AssignDialog newReassignDialog(Shell parentShell,
 			Collection elements, MethodElement parentElement) {
 		return new ReassignDialog(parentShell, elements, parentElement);
+	}
+	
+	public static AssignDialog newDeepCopyDialog(Shell parentShell, Collection elements) {
+		return new CustomCategoryDeepCopyDialog(parentShell, elements);
 	}
 	
 	protected AssignDialog(Shell parentShell, Collection elementsToAssign) {
@@ -186,12 +196,9 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	}
 
 	private boolean isValidDestination() {
-		// preventing moving elements to category
-		//
 		if (destination instanceof CustomCategory) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -355,6 +362,14 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			}
 		};
 	}
+	
+	protected ArrayList getElements() {
+		return elements;
+	}
+	
+	protected Object getDestination() {
+		return destination;
+	}
 
 	private static class ReassignDialog extends AssignDialog {
 		
@@ -369,7 +384,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 		protected Collection<Resource> doWorkBeforeSave() {
 			Collection<Resource> resouresToSave = super.doWorkBeforeSave();
 			resouresToSave.add(parentElement.eResource());			
-			UnassignAction.unassign(elements.get(0), parentElement, new ArrayList());
+			UnassignAction.unassign(getElements().get(0), parentElement, new ArrayList());
 			return resouresToSave;
 		}
 		
@@ -379,6 +394,93 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 		}
 		
 	}
+	
+	private static class CustomCategoryDeepCopyDialog extends AssignDialog {		
+		protected CustomCategoryDeepCopyDialog(Shell parentShell, 
+				Collection elements) {
+			super(parentShell, elements);
+		}
+		
+		protected Collection<Resource> doWorkBeforeSave() {
+			if (getElements() == null
+					|| !(getElements().get(0) instanceof CustomCategory)
+					|| !(getDestination() instanceof CustomCategory)) {
+				return null;
+			}
+					
+			CustomCategory source = (CustomCategory) getElements().get(0);
+			CustomCategory targetParent = (CustomCategory) getDestination();
+
+			CustomCategory copy = (CustomCategory) deepCopy(source);
+			TngUtil.setDefaultName(source, copy, copy.getName());
+
+			targetParent.getCategorizedElements().add(copy);
+			
+			Collection<Resource> resouresToSave = new ArrayList();				
+			resouresToSave.add(targetParent.eResource());
+			
+			return resouresToSave;
+		}
+		
+		private EObject deepCopy(EObject source) {			
+			EObject copy = UmaFactory.eINSTANCE.create(source.eClass());
+		
+			List features = source.eClass().getEAllStructuralFeatures();
+			for (int i = 0; i < features.size(); i++) {
+				EStructuralFeature feature = (EStructuralFeature) features.get(i);
+				copyFeatureValue(source, copy, feature);
+			}
+			return copy;
+		}
+		
+		private void copyFeatureValue(EObject sourceObj, EObject copiedObj, EStructuralFeature feature) {
+			Object sourceValue = sourceObj.eGet(feature);
+			Object copiedValue = sourceValue;
+			
+			if (feature instanceof EReference) {
+				EReference rFeature = (EReference) feature;
+				if (rFeature.isContainment()) {
+					if (rFeature.isMany()) {
+						List<EObject> sourceList = (List<EObject>) sourceValue;
+						List<EObject> copiedList = (List<EObject>) copiedObj.eGet(feature);
+						for (EObject sobj : sourceList) {
+							EObject cobj = deepCopy(sobj);
+							copiedList.add(cobj);
+						}
+						return;
+					}
+					copiedValue = deepCopy((EObject) sourceValue);
+					
+				} else if (rFeature.isMany()) {
+					List sourceList = (List) sourceValue;
+					List copiedList = (List) copiedObj.eGet(feature);
+					for (Object sobj : sourceList) {
+						Object cobj = sobj;
+						if (sobj instanceof CustomCategory) {
+							cobj = deepCopy((CustomCategory) sobj);
+						}
+						copiedList.add(cobj);
+					}
+					return;
+				}
+			} else if (feature == UmaPackage.eINSTANCE.getMethodElement_Guid() &&
+					sourceObj instanceof CustomCategory) {
+				copiedValue = EcoreUtil.generateUUID();
+			}
+			
+			copiedObj.eSet(feature, copiedValue);
+			
+		}
+
+		protected void configureShell(Shell newShell) {
+			super.configureShell(newShell);
+			newShell.setText(AuthoringUIResources.deepCopy_text); 
+		}
+		
+	}
+
+
+
 
 
 }
