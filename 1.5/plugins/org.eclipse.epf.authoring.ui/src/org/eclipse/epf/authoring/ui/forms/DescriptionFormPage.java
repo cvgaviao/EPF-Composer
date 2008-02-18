@@ -172,6 +172,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected Section formSection;
 
 	protected Composite sectionComposite;
+	
+	private Composite mainComposite;
 
 	protected Composite expandedComposite;
 
@@ -765,7 +767,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 
 		// Create the composite for the sections.
-		Composite mainComposite = toolkit.createComposite(formSection, SWT.NONE);
+		mainComposite = toolkit.createComposite(formSection, SWT.NONE);
 		{
 			TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
 			mainComposite.setLayoutData(td);
@@ -819,9 +821,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 							Composite columnComposite = columnProvider
 									.setColumn((MethodElementEditor) getEditor(), toolkit, mainComposite);
-							{
-								
-								
+							{	
 								FormData data = new FormData();
 								data.top = new FormAttachment(0, 0);
 								data.left = new FormAttachment(
@@ -1703,8 +1703,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 		if (descExpandFlag) {
 			expandedComposite.setVisible(false);
-			sectionComposite.setVisible(true);
-			formSection.setClient(sectionComposite);
+			mainComposite.setVisible(true);
+			formSection.setClient(mainComposite);
 			enableSections(true);
 			IMethodRichText richText = getActiveRichTextControl();
 			richText.setText(ctrl_expanded.getText());
@@ -1726,7 +1726,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			}
 
 		} else {
-			sectionComposite.setVisible(false);
+			mainComposite.setVisible(false);
 			expandedComposite.setVisible(true);
 			formSection.setClient(expandedComposite);
 			enableSections(false);
@@ -2796,8 +2796,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}
 
 	protected void setContextHelp() {
-		if (sectionComposite != null) {
-			EditorsContextHelper.setHelp(sectionComposite.getParent(),
+		if (mainComposite != null) {
+			EditorsContextHelper.setHelp(mainComposite.getParent(),
 					getmethodElement());
 		}
 		if (expandedComposite != null) {
