@@ -725,6 +725,11 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 	}
 
+	public MethodElement getMethodElement()
+	{
+		return elementObj;
+	}
+	
 	public void updateResourceInfos(Collection<Resource> resources) {
 		if(resourceInfoMap == null) {
 			resourceInfoMap = new HashMap<Resource, ResourceInfo>();
