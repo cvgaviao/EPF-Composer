@@ -799,7 +799,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 									100);
 
 							Composite columnComposite = columnProvider
-									.setColumn(toolkit, mainComposite);
+									.setColumn((MethodElementEditor) getEditor(), toolkit, mainComposite);
 							{							
 								FormData data = new FormData();
 								data.top = new FormAttachment(0, 0);
@@ -818,8 +818,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 									100 - width);
 
 							Composite columnComposite = columnProvider
-									.setColumn(toolkit, mainComposite);
+									.setColumn((MethodElementEditor) getEditor(), toolkit, mainComposite);
 							{
+								
+								
 								FormData data = new FormData();
 								data.top = new FormAttachment(0, 0);
 								data.left = new FormAttachment(
@@ -1174,6 +1176,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		modelModifyListener = editor.createModifyListener(methodElement);
 		contentModifyListener = editor.createModifyListener(methodUnit);
 		actionMgr = editor.getActionManager();
+		
+		
 
 		form.addControlListener(new ControlListener() {
 			public void controlResized(ControlEvent e) {

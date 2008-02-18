@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.forms;
 
+import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
@@ -21,10 +22,14 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
  */
 public interface IColumnProvider   {
 
+
 	/**
-	 * Set composite for column
-	 * @param parent composite
+	 * Set column composite for the given method element editor
+	 * @param toolkit
+	 * @param parent
+	 * @param element
+	 * @return
 	 */
-	public Composite setColumn(FormToolkit toolkit, Composite parent);
+	public Composite setColumn(MethodElementEditor editor, FormToolkit toolkit, Composite parent);
 	
 }
