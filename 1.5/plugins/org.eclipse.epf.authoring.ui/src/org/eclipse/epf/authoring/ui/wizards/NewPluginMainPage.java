@@ -53,6 +53,8 @@ public class NewPluginMainPage extends BaseWizardPage {
 	 */
 	public static final String PAGE_NAME = NewPluginMainPage.class.getName();
 
+	protected Label nameTextLabel;
+
 	protected Text nameText;
 
 	protected Text briefDescText;
@@ -89,7 +91,7 @@ public class NewPluginMainPage extends BaseWizardPage {
 	public void createControl(Composite parent) {
 		Composite composite = createGridLayoutComposite(parent, 2);
 
-		createVerticallyAlignedLabel(composite, AuthoringUIText.NAME_TEXT);
+		nameTextLabel = createVerticallyAlignedLabel(composite, AuthoringUIText.NAME_TEXT);
 
 		nameText = createEditableText(composite);
 
@@ -207,7 +209,7 @@ public class NewPluginMainPage extends BaseWizardPage {
 	 * @return <code>true</code> if the plug-in name is valid
 	 */
 	protected boolean validatePluginName(String name) {
-		String errmsg = LibraryUtil.checkPluginName(null, getPluginName());
+		String errmsg = LibraryUtil.checkPluginName(null, name);
 		if (errmsg != null) {
 			// Remove newline characters from the message to fit it in the error
 			// message area of the wizard page.
