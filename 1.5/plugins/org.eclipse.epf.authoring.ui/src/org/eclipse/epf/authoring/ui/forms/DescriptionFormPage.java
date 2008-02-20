@@ -537,7 +537,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	/**
 	 * Returns the Content element associated with this page.
 	 */
-	protected Object getmethodElement() {
+	protected Object getContentElement() {
 		return null;
 	}
 
@@ -1280,7 +1280,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					if (filter != null) {
 						ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 								.getWorkbench().getActiveWorkbenchWindow()
-								.getShell(), filter, getmethodElement(),
+								.getShell(), filter, getContentElement(),
 								LibraryUIText.getUIText(methodElement, true));
 						fd.setViewerSelectionSingle(true);
 						fd.setBlockOnOpen(true);
@@ -2798,7 +2798,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected void setContextHelp() {
 		if (mainComposite != null) {
 			EditorsContextHelper.setHelp(mainComposite.getParent(),
-					getmethodElement());
+					getContentElement());
 		}
 		if (expandedComposite != null) {
 			PlatformUI.getWorkbench().getHelpSystem().setHelp(
