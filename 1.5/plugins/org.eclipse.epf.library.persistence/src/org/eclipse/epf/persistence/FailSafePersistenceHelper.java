@@ -220,7 +220,7 @@ public class FailSafePersistenceHelper {
 			resource.setURI(finalURI);
 			resource.setModified(false);
 //			updateTimeStamps();
-//			FileManager.getInstance().refresh(this);
+			FileManager.getInstance().refresh(resource);
 //			if(!wasMove) {
 //				MultiFileResourceSetImpl resourceSet = (MultiFileResourceSetImpl) getResourceSet();
 //				if(resourceSet != null) {
