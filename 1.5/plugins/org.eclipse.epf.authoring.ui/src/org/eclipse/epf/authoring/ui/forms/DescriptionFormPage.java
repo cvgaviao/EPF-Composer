@@ -900,7 +900,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	/**
 	 * Creates the General section content.
 	 */
-	private void createGeneralSectionContent() {
+	protected void createGeneralSectionContent() {
 		// Add the Name label and text control.
 		ctrl_name = createTextEditWithLabel3(toolkit, generalComposite,
 				AuthoringUIText.NAME_TEXT, SWT.DEFAULT, SWT.SINGLE);

@@ -1975,7 +1975,20 @@ public final class AuthoringUIResources extends NLS {
 	public static String plugin_generalInfoSection_desc;
 
 	public static String plugin_versionInfoSection_desc;
+	
+	public static String workproductDescriptionPage_slot_text;
+	
+	public static String slotSection_name;
+	
+	public static String slotSection_desc;
+	
+	public static String slotsLabel_text;
+	
+	public static String artifact_slotSection_desc;
 
+	public static String deliverable_slotSection_desc;
+	
+	public static String outcome_slotSection_desc;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);

@@ -102,8 +102,11 @@ public class AuthoringUIText {
 
 	public static final String VERSION_INFO_SECTION_NAME = AuthoringUIResources.versionInfoSection_name; 
 
-	public static final String VERSION_INFO_SECTION_DESC = AuthoringUIResources.versionInfoSection_desc; 
+	public static final String VERSION_INFO_SECTION_DESC = AuthoringUIResources.versionInfoSection_desc;
+	
+	public static final String SLOT_SECTION_NAME = AuthoringUIResources.slotSection_name;
 
+	public static final String SLOT_SECTION_DESC = AuthoringUIResources.slotSection_desc;
 	/**
 	 * UI and element attribute labels.
 	 */

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
@@ -22,6 +24,7 @@ import org.eclipse.epf.authoring.ui.filters.WorkProductFilter;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.util.UIHelper;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.VariabilityBaseElementFilter;
@@ -31,19 +34,31 @@ import org.eclipse.epf.uma.ArtifactDescription;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.DeliverableDescription;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Outcome;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.forms.editor.FormEditor;
-
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Section;
 
 /**
  * The Description page in a Work Product (Artifact, Deliverable and Outcome)
@@ -57,6 +72,9 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 	private static final String FORM_PAGE_ID = "workProductDescriptionPage"; //$NON-NLS-1$	
 
+	// slot
+	private Button ctrl_slot_button;
+
 	private IMethodRichText ctrl_impact;
 
 	private IMethodRichText ctrl_reason;
@@ -68,13 +86,31 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 	// For Deliverable
 	private IMethodRichText ctrl_external_desc, ctrl_packaging_guidance;
-	
+
 	private IMethodRichText ctrl_representation;
-	
+
 	private IMethodRichText ctrl_notation;
 
 	private WorkProduct workProduct;
 
+	// For slots
+	private Section slotSection;
+	private Composite slotComposite;
+	private String slotSectionDescription;
+
+	private IStructuredContentProvider slotContentProvider = new AdapterFactoryContentProvider(
+			TngAdapterFactory.INSTANCE
+					.getNavigatorView_ComposedAdapterFactory()) {
+		public Object[] getElements(Object object) {
+			List<FulfillableElement> list = new ArrayList<FulfillableElement>();
+			list.addAll(workProduct.getFulfills());
+			return list.toArray();
+		}
+	};
+
+	private ILabelProvider slotLabelProvider = new AdapterFactoryLabelProvider(
+			TngAdapterFactory.INSTANCE
+					.getNavigatorView_ComposedAdapterFactory());
 	/**
 	 * Creates a new instance.
 	 */
@@ -83,7 +119,8 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	}
 
 	/**
-	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
+	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#init(org.eclipse.ui.IEditorSite,
+	 *      org.eclipse.ui.IEditorInput)
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
@@ -97,25 +134,32 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		iconSectionOn = true;
 	}
 
+	protected void createGeneralSectionContent() {
+		super.createGeneralSectionContent();
+
+		ctrl_slot_button = toolkit.createButton(generalComposite,
+				AuthoringUIResources.workproductDescriptionPage_slot_text,
+				SWT.CHECK);
+		GridData data = new GridData();
+		data.horizontalSpan = 3;
+		ctrl_slot_button.setLayoutData(data);
+	}
+
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#createNotationSectionContent()
 	 */
 	protected void createNotationSectionContent() {
 		super.createNotationSectionContent();
-		
-		
-		
+
 		if (workProduct instanceof Artifact) {
 			ctrl_brief_outline = createRichTextEditWithLinkForSection(toolkit,
 					notationComposite, AuthoringUIText.BRIEF_OUTLINE_TEXT, 40,
 					400, NOTATION_SECTION_ID);
 			ctrl_representation = createRichTextEditWithLinkForSection(toolkit,
-					notationComposite,
-					AuthoringUIText.REPRESENTATION_TEXT, 40, 400,
-					NOTATION_SECTION_ID);
+					notationComposite, AuthoringUIText.REPRESENTATION_TEXT, 40,
+					400, NOTATION_SECTION_ID);
 			ctrl_notation = createRichTextEditWithLinkForSection(toolkit,
-					notationComposite,
-					AuthoringUIText.NOTATION_TEXT, 40, 400,
+					notationComposite, AuthoringUIText.NOTATION_TEXT, 40, 400,
 					NOTATION_SECTION_ID);
 		} else if (workProduct instanceof Deliverable) {
 			ctrl_external_desc = createRichTextEditWithLinkForSection(toolkit,
@@ -149,6 +193,68 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		}
 	}
 
+	protected void createEditorContent(FormToolkit toolkit) {
+		super.createEditorContent(toolkit);
+
+		createSlotSection(toolkit);
+	}
+
+	/**
+	 * Create slot section
+	 * 
+	 * @param toolkit
+	 */
+	private void createSlotSection(FormToolkit toolkit) {
+
+		slotSection = createSection(toolkit, sectionComposite,
+				AuthoringUIText.SLOT_SECTION_NAME, this.slotSectionDescription);
+		slotComposite = createComposite(toolkit, slotSection);
+		slotComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		slotComposite.setLayout(new GridLayout(5, false));
+		createSlotSectionContent();
+		toolkit.paintBordersFor(slotComposite);
+
+	}
+
+	/**
+	 * 
+	 */
+	private void createSlotSectionContent() {
+		createLabel(toolkit, slotComposite,
+				AuthoringUIResources.slotsLabel_text, 2);
+		Table ctrl_slot = createTable(toolkit, slotComposite, SWT.SINGLE
+				| SWT.READ_ONLY, GridData.FILL_HORIZONTAL | GridData.BEGINNING,
+				5, 300, 1, 2);
+		{
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL
+					| GridData.BEGINNING);
+			gridData.horizontalSpan = 2;
+			gridData.heightHint = 24;
+			gridData.widthHint = 300;
+			ctrl_slot.setLayoutData(gridData);
+		}
+
+		TableViewer slotViewer = new TableViewer(ctrl_slot);
+		slotViewer.setContentProvider(slotContentProvider);
+		slotViewer.setLabelProvider(slotLabelProvider);
+		slotViewer.setInput(methodElement);
+
+		Composite buttonPane = createComposite(toolkit, slotComposite,
+				GridData.HORIZONTAL_ALIGN_END, 1, 1, 1);
+		{
+			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_END);
+			buttonPane.setLayoutData(gridData);
+		}
+
+		Button selectButton = toolkit.createButton(buttonPane,
+				AuthoringUIText.SELECT_BUTTON_TEXT, SWT.SIMPLE);
+		{
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+			gridData.widthHint = BUTTON_WIDTH;
+			selectButton.setLayoutData(gridData);
+		}
+	}
+
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#addListeners()
 	 */
@@ -157,6 +263,16 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 				.getActionManager();
 
 		super.addListeners();
+
+		ctrl_slot_button.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Boolean val = new Boolean(ctrl_slot_button.getSelection());
+				actionMgr.doAction(IActionManager.SET, methodElement,
+						UmaPackage.eINSTANCE.getClassifier_IsAbstract(), val,
+						-1);
+
+			}
+		});
 
 		if (purposeOn) {
 			ctrl_purpose.setModalObject(contentElement.getPresentation());
@@ -178,8 +294,9 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 					}
 					String newContent = control.getText();
 					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr.doAction(IActionManager.SET,
-								contentElement.getPresentation(),
+						boolean success = actionMgr.doAction(
+								IActionManager.SET, contentElement
+										.getPresentation(),
 								UmaPackage.eINSTANCE
 										.getWorkProductDescription_Purpose(),
 								newContent, -1);
@@ -195,10 +312,12 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			ctrl_external_id.addModifyListener(contentModifyListener);
 			ctrl_external_id.addFocusListener(new FocusAdapter() {
 				public void focusGained(FocusEvent e) {
-					((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-							UmaPackage.eINSTANCE.getContentDescription_ExternalId());
+					((MethodElementEditor) getEditor())
+							.setCurrentFeatureEditor(e.widget,
+									UmaPackage.eINSTANCE
+											.getContentDescription_ExternalId());
 				}
-	
+
 				public void focusLost(FocusEvent e) {
 					String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
 							.getPresentation()).getExternalId();
@@ -208,8 +327,9 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 					}
 					String newContent = ctrl_external_id.getText();
 					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr.doAction(IActionManager.SET,
-								contentElement.getPresentation(),
+						boolean success = actionMgr.doAction(
+								IActionManager.SET, contentElement
+										.getPresentation(),
 								UmaPackage.eINSTANCE
 										.getContentDescription_ExternalId(),
 								newContent, -1);
@@ -287,7 +407,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 					}
 				}
 			});
-			
+
 			if (workProduct instanceof Artifact) {
 				ctrl_representation_options.setModalObject(contentElement
 						.getPresentation());
@@ -297,42 +417,43 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 				ctrl_representation_options
 						.addModifyListener(contentModifyListener);
 				ctrl_representation_options.addListener(SWT.Deactivate,
-					new Listener() {
-						public void handleEvent(Event e) {
-							IMethodRichText control = descExpandFlag ? ctrl_expanded
-									: ctrl_representation_options;
-							if (!control.getModified()) {
-								return;
-							}
-							String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
-									.getPresentation())
-									.getRepresentationOptions();
-							if (((MethodElementEditor) getEditor())
-									.mustRestoreValue(control, oldContent)) {
-								return;
-							}
-							String newContent = control.getText();
-							if (!newContent.equals(oldContent)) {
-								boolean success = actionMgr
-										.doAction(
-												IActionManager.SET,
-												contentElement
-														.getPresentation(),
-												UmaPackage.eINSTANCE
-														.getArtifactDescription_RepresentationOptions(),
-												newContent, -1);
-								if (success && isVersionSectionOn()) {
-									updateChangeDate();
+						new Listener() {
+							public void handleEvent(Event e) {
+								IMethodRichText control = descExpandFlag ? ctrl_expanded
+										: ctrl_representation_options;
+								if (!control.getModified()) {
+									return;
+								}
+								String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
+										.getPresentation())
+										.getRepresentationOptions();
+								if (((MethodElementEditor) getEditor())
+										.mustRestoreValue(control, oldContent)) {
+									return;
+								}
+								String newContent = control.getText();
+								if (!newContent.equals(oldContent)) {
+									boolean success = actionMgr
+											.doAction(
+													IActionManager.SET,
+													contentElement
+															.getPresentation(),
+													UmaPackage.eINSTANCE
+															.getArtifactDescription_RepresentationOptions(),
+													newContent, -1);
+									if (success && isVersionSectionOn()) {
+										updateChangeDate();
+									}
 								}
 							}
-						}
-					});
+						});
 			}
 		}
 
 		if (notationSectionOn) {
 			if (workProduct instanceof Artifact) {
-				ctrl_brief_outline.setModalObject(contentElement.getPresentation());
+				ctrl_brief_outline.setModalObject(contentElement
+						.getPresentation());
 				ctrl_brief_outline.setModalObjectFeature(UmaPackage.eINSTANCE
 						.getArtifactDescription_BriefOutline());
 				ctrl_brief_outline.addModifyListener(contentModifyListener);
@@ -345,29 +466,29 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 						}
 						String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
 								.getPresentation()).getBriefOutline();
-						if (((MethodElementEditor) getEditor()).mustRestoreValue(
-								control, oldContent)) {
+						if (((MethodElementEditor) getEditor())
+								.mustRestoreValue(control, oldContent)) {
 							return;
 						}
 						String newContent = descExpandFlag ? ctrl_expanded
 								.getText() : ctrl_brief_outline.getText();
 						if (!newContent.equals(oldContent)) {
-							boolean success = actionMgr.doAction(
-									IActionManager.SET, contentElement
-											.getPresentation(),
-									UmaPackage.eINSTANCE
-											.getArtifactDescription_BriefOutline(),
-									newContent, -1);
+							boolean success = actionMgr
+									.doAction(
+											IActionManager.SET,
+											contentElement.getPresentation(),
+											UmaPackage.eINSTANCE
+													.getArtifactDescription_BriefOutline(),
+											newContent, -1);
 							if (success && isVersionSectionOn()) {
 								updateChangeDate();
 							}
 						}
 					}
 				});
-	
-				
-				
-				ctrl_representation.setModalObject(contentElement.getPresentation());
+
+				ctrl_representation.setModalObject(contentElement
+						.getPresentation());
 				ctrl_representation.setModalObjectFeature(UmaPackage.eINSTANCE
 						.getArtifactDescription_Representation());
 				ctrl_representation.addModifyListener(contentModifyListener);
@@ -380,26 +501,27 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 						}
 						String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
 								.getPresentation()).getRepresentation();
-						if (((MethodElementEditor) getEditor()).mustRestoreValue(
-								control, oldContent)) {
+						if (((MethodElementEditor) getEditor())
+								.mustRestoreValue(control, oldContent)) {
 							return;
 						}
 						String newContent = descExpandFlag ? ctrl_expanded
 								.getText() : ctrl_representation.getText();
 						if (!newContent.equals(oldContent)) {
-							boolean success = actionMgr.doAction(
-									IActionManager.SET, contentElement
-											.getPresentation(),
-									UmaPackage.eINSTANCE
-											.getArtifactDescription_Representation(),
-									newContent, -1);
+							boolean success = actionMgr
+									.doAction(
+											IActionManager.SET,
+											contentElement.getPresentation(),
+											UmaPackage.eINSTANCE
+													.getArtifactDescription_Representation(),
+											newContent, -1);
 							if (success && isVersionSectionOn()) {
 								updateChangeDate();
 							}
 						}
 					}
 				});
-	
+
 				ctrl_notation.setModalObject(contentElement.getPresentation());
 				ctrl_notation.setModalObjectFeature(UmaPackage.eINSTANCE
 						.getArtifactDescription_Notation());
@@ -413,8 +535,8 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 						}
 						String oldContent = ((org.eclipse.epf.uma.ArtifactDescription) workProduct
 								.getPresentation()).getNotation();
-						if (((MethodElementEditor) getEditor()).mustRestoreValue(
-								control, oldContent)) {
+						if (((MethodElementEditor) getEditor())
+								.mustRestoreValue(control, oldContent)) {
 							return;
 						}
 						String newContent = descExpandFlag ? ctrl_expanded
@@ -435,7 +557,8 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			}
 
 			if (workProduct instanceof Deliverable) {
-				ctrl_external_desc.setModalObject(contentElement.getPresentation());
+				ctrl_external_desc.setModalObject(contentElement
+						.getPresentation());
 				ctrl_external_desc.setModalObjectFeature(UmaPackage.eINSTANCE
 						.getDeliverableDescription_ExternalDescription());
 				ctrl_external_desc.addModifyListener(contentModifyListener);
@@ -448,8 +571,8 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 						}
 						String oldContent = ((org.eclipse.epf.uma.DeliverableDescription) workProduct
 								.getPresentation()).getExternalDescription();
-						if (((MethodElementEditor) getEditor()).mustRestoreValue(
-								control, oldContent)) {
+						if (((MethodElementEditor) getEditor())
+								.mustRestoreValue(control, oldContent)) {
 							return;
 						}
 						String newContent = control.getText();
@@ -467,40 +590,45 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 						}
 					}
 				});
-	
+
 				ctrl_packaging_guidance.setModalObject(contentElement
 						.getPresentation());
-				ctrl_packaging_guidance.setModalObjectFeature(UmaPackage.eINSTANCE
-						.getDeliverableDescription_PackagingGuidance());
-				ctrl_packaging_guidance.addModifyListener(contentModifyListener);
-				ctrl_packaging_guidance.addListener(SWT.Deactivate, new Listener() {
-					public void handleEvent(Event e) {
-						IMethodRichText control = descExpandFlag ? ctrl_expanded
-								: ctrl_packaging_guidance;
-						if (!control.getModified()) {
-							return;
-						}
-						String oldContent = ((org.eclipse.epf.uma.DeliverableDescription) workProduct
-								.getPresentation()).getPackagingGuidance();
-						if (((MethodElementEditor) getEditor()).mustRestoreValue(
-								control, oldContent)) {
-							return;
-						}
-						String newContent = control.getText();
-						if (!newContent.equals(oldContent)) {
-							boolean success = actionMgr
-									.doAction(
-											IActionManager.SET,
-											contentElement.getPresentation(),
-											UmaPackage.eINSTANCE
-													.getDeliverableDescription_PackagingGuidance(),
-											newContent, -1);
-							if (success && isVersionSectionOn()) {
-								updateChangeDate();
+				ctrl_packaging_guidance
+						.setModalObjectFeature(UmaPackage.eINSTANCE
+								.getDeliverableDescription_PackagingGuidance());
+				ctrl_packaging_guidance
+						.addModifyListener(contentModifyListener);
+				ctrl_packaging_guidance.addListener(SWT.Deactivate,
+						new Listener() {
+							public void handleEvent(Event e) {
+								IMethodRichText control = descExpandFlag ? ctrl_expanded
+										: ctrl_packaging_guidance;
+								if (!control.getModified()) {
+									return;
+								}
+								String oldContent = ((org.eclipse.epf.uma.DeliverableDescription) workProduct
+										.getPresentation())
+										.getPackagingGuidance();
+								if (((MethodElementEditor) getEditor())
+										.mustRestoreValue(control, oldContent)) {
+									return;
+								}
+								String newContent = control.getText();
+								if (!newContent.equals(oldContent)) {
+									boolean success = actionMgr
+											.doAction(
+													IActionManager.SET,
+													contentElement
+															.getPresentation(),
+													UmaPackage.eINSTANCE
+															.getDeliverableDescription_PackagingGuidance(),
+													newContent, -1);
+									if (success && isVersionSectionOn()) {
+										updateChangeDate();
+									}
+								}
 							}
-						}
-					}
-				});
+						});
 			}
 		}
 	}
@@ -510,6 +638,8 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	 */
 	protected void refresh(boolean editable) {
 		super.refresh(editable);
+		
+		ctrl_slot_button.setEnabled(editable);
 		if (tailoringSectionOn) {
 			ctrl_impact.setEditable(editable);
 			ctrl_reason.setEditable(editable);
@@ -535,9 +665,16 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	protected void loadData() {
 		super.loadData();
 
+		// IsAbstract attribute
+		Boolean isAbstract = workProduct.getIsAbstract();
+		if (isAbstract != null)
+			ctrl_slot_button.setSelection(isAbstract.booleanValue());
+		else
+			ctrl_slot_button.setSelection(false);
+
 		org.eclipse.epf.uma.WorkProductDescription content = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
 				.getPresentation());
-	
+
 		if (purposeOn) {
 			String purpose = content.getPurpose();
 			ctrl_purpose.setText(purpose == null ? "" : purpose); //$NON-NLS-1$
@@ -549,8 +686,8 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			ctrl_reason.setText(reason == null ? "" : reason); //$NON-NLS-1$
 			if (workProduct instanceof Artifact) {
 				ctrl_representation_options
-				.setText(((ArtifactDescription) content)
-						.getRepresentationOptions() == null ? "" : ((ArtifactDescription) content).getRepresentationOptions()); //$NON-NLS-1$
+						.setText(((ArtifactDescription) content)
+								.getRepresentationOptions() == null ? "" : ((ArtifactDescription) content).getRepresentationOptions()); //$NON-NLS-1$
 			}
 		}
 
@@ -562,9 +699,13 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		if (notationSectionOn) {
 			if (workProduct instanceof Artifact) {
 				ctrl_brief_outline
-						.setText(((ArtifactDescription) content).getBriefOutline() == null ? "" : ((ArtifactDescription) content).getBriefOutline()); //$NON-NLS-1$			
-				ctrl_representation.setText(((ArtifactDescription) content).getRepresentation() == null ? "" : ((ArtifactDescription) content).getRepresentation()); //$NON-NLS-1$
-				ctrl_notation.setText(((ArtifactDescription) content).getNotation() == null ? "" : ((ArtifactDescription) content).getNotation()); //$NON-NLS-1$
+						.setText(((ArtifactDescription) content)
+								.getBriefOutline() == null ? "" : ((ArtifactDescription) content).getBriefOutline()); //$NON-NLS-1$			
+				ctrl_representation
+						.setText(((ArtifactDescription) content)
+								.getRepresentation() == null ? "" : ((ArtifactDescription) content).getRepresentation()); //$NON-NLS-1$
+				ctrl_notation
+						.setText(((ArtifactDescription) content).getNotation() == null ? "" : ((ArtifactDescription) content).getNotation()); //$NON-NLS-1$
 			} else if (workProduct instanceof Deliverable) {
 				ctrl_external_desc
 						.setText(((DeliverableDescription) content)
@@ -574,6 +715,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 								.getPackagingGuidance() == null ? "" : ((DeliverableDescription) content).getPackagingGuidance()); //$NON-NLS-1$
 			}
 		}
+
 	}
 
 	/**
@@ -670,13 +812,12 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 						workProduct) });
 		return filter;
 	}
-	
-	
+
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#loadSectionDescription()
 	 */
 	public void loadSectionDescription() {
-		if(contentElement instanceof Artifact){
+		if (contentElement instanceof Artifact) {
 			this.generalSectionDescription = AuthoringUIResources.artifact_generalInfoSection_desc;
 			this.detailSectionDescription = AuthoringUIResources.artifact_detailSection_desc;
 			this.variabilitySectionDescription = AuthoringUIResources.artifact_variabilitySection_desc;
@@ -684,8 +825,9 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			this.notationSectionDescription = AuthoringUIResources.artifact_notationSection_desc;
 			this.tailoringSectionDescription = AuthoringUIResources.artifact_tailoringSection_desc;
 			this.iconSectionDescription = AuthoringUIResources.artifact_iconSection_desc;
+			this.slotSectionDescription = AuthoringUIResources.artifact_slotSection_desc;
 		}
-		if(contentElement instanceof Outcome){
+		if (contentElement instanceof Outcome) {
 			this.generalSectionDescription = AuthoringUIResources.outcome_generalInfoSection_desc;
 			this.detailSectionDescription = AuthoringUIResources.outcome_detailSection_desc;
 			this.variabilitySectionDescription = AuthoringUIResources.outcome_variabilitySection_desc;
@@ -693,8 +835,9 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			this.notationSectionDescription = AuthoringUIResources.outcome_notationSection_desc;
 			this.tailoringSectionDescription = AuthoringUIResources.outcome_tailoringSection_desc;
 			this.iconSectionDescription = AuthoringUIResources.outcome_iconSection_desc;
+			this.slotSectionDescription = AuthoringUIResources.outcome_slotSection_desc;
 		}
-		if(contentElement instanceof Deliverable){
+		if (contentElement instanceof Deliverable) {
 			this.generalSectionDescription = AuthoringUIResources.deliverable_generalInfoSection_desc;
 			this.detailSectionDescription = AuthoringUIResources.deliverable_detailSection_desc;
 			this.variabilitySectionDescription = AuthoringUIResources.deliverable_variabilitySection_desc;
@@ -702,6 +845,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			this.notationSectionDescription = AuthoringUIResources.deliverable_notationSection_desc;
 			this.tailoringSectionDescription = AuthoringUIResources.deliverable_tailoringSection_desc;
 			this.iconSectionDescription = AuthoringUIResources.deliverable_iconSection_desc;
+			this.slotSectionDescription = AuthoringUIResources.deliverable_slotSection_desc;
 		}
 	}
 
