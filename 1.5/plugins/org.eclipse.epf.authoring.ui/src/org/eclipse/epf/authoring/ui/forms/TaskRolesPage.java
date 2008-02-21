@@ -108,8 +108,9 @@ public class TaskRolesPage extends AssociationFormPage {
 	protected void removeItemsFromModel1(ArrayList rmItems) {
 		// Update the model.
 		if (!rmItems.isEmpty()) {
-			actionMgr.doAction(IActionManager.SET, task, UmaPackage.eINSTANCE
-					.getTask_PerformedBy(), null, -1);
+			actionMgr.doAction(IActionManager.REMOVE_MANY, task,
+					UmaPackage.eINSTANCE.getTask_PerformedBy(),
+					rmItems, -1);
 		}
 	}
 
