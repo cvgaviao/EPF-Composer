@@ -101,11 +101,8 @@ public class RoleTasksPage extends AssociationFormPage {
 	protected void removeItemsFromModel1(ArrayList rmItems) {
 		// Update the model.
 		if (!rmItems.isEmpty()) {
-//			for (java.util.Iterator it = rmItems.iterator(); it.hasNext();) {
-//				Task task = (Task) it.next();
-//				task.setPerformedBy(null);
-//			}
-			getActionManager().doAction(IActionManager.REMOVE_MANY, role, UmaPackage.eINSTANCE.getTask_PerformedBy(), rmItems, -1);
+			getActionManager().doAction(IActionManager.REMOVE_MANY, role,
+					UmaPackage.eINSTANCE.getTask_PerformedBy(), rmItems, -1);
 			setDirty(true);
 		}
 	}
