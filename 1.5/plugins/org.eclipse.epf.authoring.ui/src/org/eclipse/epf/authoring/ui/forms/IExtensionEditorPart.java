@@ -10,8 +10,8 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.forms;
 
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.editor.IFormPage;
 
 /**
  * Interface to be used for all pages added through extension points
@@ -19,17 +19,23 @@ import org.eclipse.ui.forms.editor.IFormPage;
  * @author Shilpa Toraskar
  * @since 1.0
  */
-public interface IExtensionFormPage   {
+public interface IExtensionEditorPart   {
 
 	/**
 	 * Set editor for form page
 	 * @param editor
 	 */
-	public IFormPage setEditor(FormEditor editor) ;
+	public IEditorPart setEditor(FormEditor editor) ;
 	
 	/**
 	 * Set input for form page
 	 * @param input
 	 */
 	public void setInput(Object input);
+	
+	/**
+	 * 
+	 * @return name of part, if the part is a FormPage this can be null
+	 */
+	public String getPartName();
 }

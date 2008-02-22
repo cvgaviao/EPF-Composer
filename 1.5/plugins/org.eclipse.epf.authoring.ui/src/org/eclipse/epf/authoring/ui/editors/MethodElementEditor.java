@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -48,6 +49,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -67,7 +71,7 @@ import org.eclipse.epf.authoring.ui.forms.DomainDescriptionPage;
 import org.eclipse.epf.authoring.ui.forms.DomainWorkProductsPage;
 import org.eclipse.epf.authoring.ui.forms.GuidanceDescriptionPage;
 import org.eclipse.epf.authoring.ui.forms.GuidanceWithAttachmentsDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.IExtensionFormPage;
+import org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart;
 import org.eclipse.epf.authoring.ui.forms.IRefreshable;
 import org.eclipse.epf.authoring.ui.forms.MethodLibraryDescriptionFormPage;
 import org.eclipse.epf.authoring.ui.forms.MethodPluginDescriptionPage;
@@ -154,8 +158,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ISelectionProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
@@ -178,6 +180,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.MultiPageSelectionProvider;
 
 /**
  * The Method Element editor.
@@ -188,7 +191,7 @@ import org.eclipse.ui.part.FileEditorInput;
  * @since 1.0
  */
 public class MethodElementEditor extends AbstractBaseFormEditor implements
-		ISelectionProvider, IGotoMarker {
+		IGotoMarker, IEditingDomainProvider {
 
 	protected static class ResourceInfo {
 		long modificationStamp;
@@ -224,6 +227,8 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 	protected ElementHTMLViewer previewer = null;
 
 	protected MethodElement elementObj = null;
+	
+	protected AdapterFactoryEditingDomain editingDomain;
 
 	// The rich text control or editor whose content was last modified before
 	// the Save or Save All button key is selected.
@@ -693,7 +698,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 			}
 		}
 		setInput(input);
-		site.setSelectionProvider(this);
+		site.setSelectionProvider(new MultiPageSelectionProvider(this));
 		activationListener = new ActivationListener(site.getWorkbenchWindow()
 				.getPartService());
 
@@ -703,6 +708,11 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		Image titleImage = labelProvider.getImage(elementObj);
 		labelProvider.dispose();
 		setTitleImage(titleImage);
+
+		CommandStack commandStack = actionMgr.getCommandStack();
+		editingDomain = new AdapterFactoryEditingDomain(TngAdapterFactory.INSTANCE
+				.getNavigatorView_ComposedAdapterFactory(), commandStack);
+
 	}
 
 	/**
@@ -979,43 +989,6 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 	}
 
 	/**
-	 * @see org.eclipse.jface.viewers.ISelectionProvider#addSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)
-	 */
-	public void addSelectionChangedListener(ISelectionChangedListener listener) {
-		selectionChangedListeners.add(listener);
-	}
-
-	/**
-	 * @see org.eclipse.jface.viewers.ISelectionProvider#removeSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)
-	 */
-	public void removeSelectionChangedListener(
-			ISelectionChangedListener listener) {
-		selectionChangedListeners.remove(listener);
-	}
-
-	/**
-	 * @see org.eclipse.jface.viewers.ISelectionProvider#getSelection()
-	 */
-	public ISelection getSelection() {
-		return currentSelection;
-	}
-
-	/**
-	 * @see org.eclipse.jface.viewers.ISelectionProvider#setSelection(org.eclipse.jface.viewers.ISelection)
-	 */
-	public void setSelection(ISelection selection) {
-		currentSelection = selection;
-
-		for (Iterator listeners = new ArrayList<ISelectionChangedListener>(selectionChangedListeners)
-				.iterator(); listeners.hasNext();) {
-			ISelectionChangedListener listener = (ISelectionChangedListener) listeners
-					.next();
-			listener
-					.selectionChanged(new SelectionChangedEvent(this, selection));
-		}
-	}
-
-	/**
 	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
 	 */
 	protected void addPages() {
@@ -1098,11 +1071,11 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 			if (elementObj instanceof Task) {
 				// check for extenstion point and add the page if there
-				List<IExtensionFormPage> pageProviders = MethodEditorPageProvider.getInstance()
+				List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
 						.getTaskPageProviders();
 
 				if (pageProviders != null && pageProviders.size() > 0) {
-					for (IExtensionFormPage formPage : pageProviders) {
+					for (IExtensionEditorPart formPage : pageProviders) {
 						try {
 							formPage.setEditor(this);
 						} catch (Exception e) {
@@ -1112,13 +1085,15 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 				}
 			} else if (elementObj instanceof CustomCategory) {
 				// check for extenstion point and add the page if there
-				List<IExtensionFormPage> pageProviders = MethodEditorPageProvider.getInstance()
+				List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
 						.getCustomCategoryPageProviders();
 
 				if (pageProviders != null && pageProviders.size() > 0) {
-					for (IExtensionFormPage formPage : pageProviders) {
+					for (IExtensionEditorPart extension : pageProviders) {
 						try {
-							formPage.setEditor(this);
+							IEditorPart editorPart = extension.setEditor(this);
+							int index = addPage(editorPart, getEditorInput());
+							setPageText(index, extension.getPartName());
 						} catch (Exception e) {
 							AuthoringUIPlugin.getDefault().getLogger().logError(e);
 						}
@@ -2182,4 +2157,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		return disposed;
 	}
 
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
+	}
 }

@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
-import org.eclipse.epf.authoring.ui.forms.IExtensionFormPage;
+import org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart;
 import org.osgi.framework.Bundle;
 
 /**
@@ -87,12 +87,12 @@ public class MethodEditorPageProvider {
 	 * 
 	 * @return all the task page providers.
 	 */
-	public List<IExtensionFormPage> getTaskPageProviders() {
-		List<IExtensionFormPage> pages = new ArrayList<IExtensionFormPage>();
+	public List<IExtensionEditorPart> getTaskPageProviders() {
+		List<IExtensionEditorPart> pages = new ArrayList<IExtensionEditorPart>();
 		for (int i = 0; i < taskPageProviders.size(); i++) {
 			EditorPageElement pageElement = (EditorPageElement) taskPageProviders
 					.get(i);
-			IExtensionFormPage contributorClass = null;
+			IExtensionEditorPart contributorClass = null;
 			try {
 				contributorClass = pageElement.getContributorClass();
 			} catch (Exception e) {
@@ -107,12 +107,12 @@ public class MethodEditorPageProvider {
 	 * 
 	 * @return all the customcategory page providers.
 	 */
-	public List<IExtensionFormPage> getCustomCategoryPageProviders() {
-		List<IExtensionFormPage> pages = new ArrayList<IExtensionFormPage>();
+	public List<IExtensionEditorPart> getCustomCategoryPageProviders() {
+		List<IExtensionEditorPart> pages = new ArrayList<IExtensionEditorPart>();
 		for (int i = 0; i < customCategoryPageProviders.size(); i++) {
 			EditorPageElement pageElement = (EditorPageElement) customCategoryPageProviders
 					.get(i);
-			IExtensionFormPage contributorClass = null;
+			IExtensionEditorPart contributorClass = null;
 			try {
 				contributorClass = pageElement.getContributorClass();
 			} catch (Exception e) {

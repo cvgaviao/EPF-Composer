@@ -53,7 +53,7 @@ import org.eclipse.epf.authoring.ui.actions.IWorkbenchPartAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryValidateAction;
 import org.eclipse.epf.authoring.ui.dnd.EditingDomainTableTreeViewerDropAdapter;
 import org.eclipse.epf.authoring.ui.forms.DeliveryProcessDescription;
-import org.eclipse.epf.authoring.ui.forms.IExtensionFormPage;
+import org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart;
 import org.eclipse.epf.authoring.ui.forms.ProcessBreakdownStructureFormPage;
 import org.eclipse.epf.authoring.ui.forms.ProcessDescription;
 import org.eclipse.epf.authoring.ui.preferences.ApplicationPreferenceConstants;
@@ -1230,10 +1230,10 @@ public class ProcessEditor extends MethodElementEditor implements
 							.size()];
 					for (int i = 0; i < pageProviders.size(); i++) {
 						Object page = pageProviders.get(i);
-						if (page instanceof IExtensionFormPage) {
+						if (page instanceof IExtensionEditorPart) {
 
-							IExtensionFormPage formPage = (IExtensionFormPage) page;
-							IFormPage control = formPage.setEditor(this);
+							IExtensionEditorPart formPage = (IExtensionEditorPart) page;
+							IEditorPart control = formPage.setEditor(this);
 							formPage.setInput(selectedProcess);
 							ProcessBreakdownStructureFormPage extendedPage = null;
 							if (control instanceof ProcessBreakdownStructureFormPage) {

@@ -2072,7 +2072,7 @@ public class ProcessEditorActionBarContributor extends
 					// bsItemProvider = null;
 					selectedActivity = null;
 				}
-				AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditorPart)
+				AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditor)
 						.getEditingDomain();
 				Object providerObj = domain.getAdapterFactory().adapt(
 						selectedObject, ITreeItemContentProvider.class);
@@ -2258,8 +2258,8 @@ public class ProcessEditorActionBarContributor extends
 	}
 
 	protected void doRefresh() {
-		if (activeEditorPart instanceof IViewerProvider) {
-			Display display = activeEditorPart.getEditorSite().getShell().getDisplay();
+		if (activeEditor instanceof IViewerProvider) {
+			Display display = activeEditor.getEditorSite().getShell().getDisplay();
 			BusyIndicator.showWhile(display, new Runnable() {
 
 				public void run() {
@@ -2390,7 +2390,7 @@ public class ProcessEditorActionBarContributor extends
 						if (!getSuppression().isSuppressed(obj)) {
 							Object e = ((TaskDescriptor) obj)
 									.getPerformedPrimarilyBy();
-							AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditorPart)
+							AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditor)
 									.getEditingDomain();
 							AdapterFactory factory = domain.getAdapterFactory();
 							if (factory instanceof ExposedAdapterFactory) {
@@ -2501,7 +2501,7 @@ public class ProcessEditorActionBarContributor extends
 						if (!getSuppression().isSuppressed(obj)) {
 							Object e = ((TaskDescriptor) obj)
 									.getPerformedPrimarilyBy();
-							AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditorPart)
+							AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditor)
 									.getEditingDomain();
 							AdapterFactory factory = domain.getAdapterFactory();
 							if (factory instanceof ExposedAdapterFactory) {

@@ -46,6 +46,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IActionBars2;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PartInitException;
@@ -62,9 +63,6 @@ import org.eclipse.ui.actions.ActionFactory;
  */
 public class MethodLibraryActionBarContributor extends
 		EditingDomainActionBarContributor implements ISelectionChangedListener {
-	
-	// Keep track of the active editor.
-	protected IEditorPart activeEditorPart;
 
 	// Keep track of the current selection provider.
 	protected ISelectionProvider selectionProvider;
@@ -88,7 +86,7 @@ public class MethodLibraryActionBarContributor extends
 	protected IAction refreshViewerAction = new Action(
 			getString("_UI_RefreshViewer_menu_item")) { //$NON-NLS-1$
 		public boolean isEnabled() {
-			return activeEditorPart instanceof IViewerProvider;
+			return activeEditor instanceof IViewerProvider;
 		}
 
 		public void run() {
@@ -125,8 +123,14 @@ public class MethodLibraryActionBarContributor extends
 
 	protected String name;
 
-	protected boolean enabled;
+	protected boolean enabled = true;
 
+	public MethodLibraryActionBarContributor() {
+		loadResourceAction = new LoadResourceAction();
+		validateAction = new LibraryValidateAction();
+		this.name = "MethodElementEditor";
+	}
+	
 	/**
 	 * This creates an instance of the contributor.
 	 */
@@ -149,43 +153,45 @@ public class MethodLibraryActionBarContributor extends
 	 * @see org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor#init(org.eclipse.ui.IActionBars)
 	 */
 	public void init(IActionBars actionBars) {
-		ISharedImages sharedImages = PlatformUI.getWorkbench()
-				.getSharedImages();
-
-		deleteAction = createDeleteAction();
-		deleteAction.setImageDescriptor(sharedImages
-				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
-				deleteAction);
-
-		cutAction = createCutAction();
-		cutAction.setImageDescriptor(sharedImages
-				.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
-		actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), cutAction);
-
-		copyAction = createCopyAction();
-		copyAction.setImageDescriptor(sharedImages
-				.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
-		actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(),
-				copyAction);
-
-		pasteAction = createPasteAction();
-		pasteAction.setImageDescriptor(sharedImages
-				.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
-		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(),
-				pasteAction);
-
-		undoAction = new UndoAction();
-		undoAction.setImageDescriptor(sharedImages
-				.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(),
-				undoAction);
-
-		redoAction = new RedoAction();
-		redoAction.setImageDescriptor(sharedImages
-				.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
-		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(),
-				redoAction);
+		super.init(actionBars);
+		
+//		ISharedImages sharedImages = PlatformUI.getWorkbench()
+//				.getSharedImages();
+//
+//		deleteAction = createDeleteAction();
+//		deleteAction.setImageDescriptor(sharedImages
+//				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+//		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
+//				deleteAction);
+//
+//		cutAction = createCutAction();
+//		cutAction.setImageDescriptor(sharedImages
+//				.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
+//		actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), cutAction);
+//
+//		copyAction = createCopyAction();
+//		copyAction.setImageDescriptor(sharedImages
+//				.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+//		actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(),
+//				copyAction);
+//
+//		pasteAction = createPasteAction();
+//		pasteAction.setImageDescriptor(sharedImages
+//				.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
+//		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(),
+//				pasteAction);
+//
+//		undoAction = new UndoAction();
+//		undoAction.setImageDescriptor(sharedImages
+//				.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+//		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(),
+//				undoAction);
+//
+//		redoAction = new RedoAction();
+//		redoAction.setImageDescriptor(sharedImages
+//				.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+//		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(),
+//				redoAction);
 	}
 
 	/**
@@ -233,33 +239,33 @@ public class MethodLibraryActionBarContributor extends
 	 * additions, as well as the sub-menus for object creation items.
 	 */
 	public void contributeToMenu(IMenuManager menuManager) {
-		super.contributeToMenu(menuManager);
-		IMenuManager submenuManager = new MenuManager(
-				getString("_UI_" + name + "_menu"), "org.eclipse.epf.authoring." + name + "MenuID"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-		menuManager.insertAfter("additions", submenuManager); //$NON-NLS-1$
-		submenuManager.add(new Separator("settings")); //$NON-NLS-1$
-		submenuManager.add(new Separator("actions")); //$NON-NLS-1$
-		submenuManager.add(new Separator("additions")); //$NON-NLS-1$
-		submenuManager.add(new Separator("additions-end")); //$NON-NLS-1$
-
-		// Prepare for CreateChild item addition or removal.
-		createChildMenuManager = new MenuManager(
-				getString("_UI_CreateChild_menu_item")); //$NON-NLS-1$
-		submenuManager.insertBefore("additions", createChildMenuManager); //$NON-NLS-1$
-
-		// Prepare for CreateSibling item addition or removal.
-		createSiblingMenuManager = new MenuManager(
-				getString("_UI_CreateSibling_menu_item")); //$NON-NLS-1$
-		submenuManager.insertBefore("additions", createSiblingMenuManager); //$NON-NLS-1$
-
-		// Force an update because Eclipse hides empty menus now.
-		submenuManager.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager menuManager) {
-				menuManager.updateAll(true);
-			}
-		});
-
-		addGlobalActions(submenuManager);
+//		super.contributeToMenu(menuManager);
+//		IMenuManager submenuManager = new MenuManager(
+//				getString("_UI_" + name + "_menu"), "org.eclipse.epf.authoring." + name + "MenuID"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+//		menuManager.insertAfter("additions", submenuManager); //$NON-NLS-1$
+//		submenuManager.add(new Separator("settings")); //$NON-NLS-1$
+//		submenuManager.add(new Separator("actions")); //$NON-NLS-1$
+//		submenuManager.add(new Separator("additions")); //$NON-NLS-1$
+//		submenuManager.add(new Separator("additions-end")); //$NON-NLS-1$
+//
+//		// Prepare for CreateChild item addition or removal.
+//		createChildMenuManager = new MenuManager(
+//				getString("_UI_CreateChild_menu_item")); //$NON-NLS-1$
+//		submenuManager.insertBefore("additions", createChildMenuManager); //$NON-NLS-1$
+//
+//		// Prepare for CreateSibling item addition or removal.
+//		createSiblingMenuManager = new MenuManager(
+//				getString("_UI_CreateSibling_menu_item")); //$NON-NLS-1$
+//		submenuManager.insertBefore("additions", createSiblingMenuManager); //$NON-NLS-1$
+//
+//		// Force an update because Eclipse hides empty menus now.
+//		submenuManager.addMenuListener(new IMenuListener() {
+//			public void menuAboutToShow(IMenuManager menuManager) {
+//				menuManager.updateAll(true);
+//			}
+//		});
+//
+//		addGlobalActions(submenuManager);
 	}
 
 	/**
@@ -268,7 +274,7 @@ public class MethodLibraryActionBarContributor extends
 	 */
 	public void setActiveEditor(IEditorPart part) {
 		super.setActiveEditor(part);
-		activeEditorPart = part;
+		activeEditor = part;
 
 		// Switch to the new selection provider.
 		if (selectionProvider != null) {
@@ -287,7 +293,29 @@ public class MethodLibraryActionBarContributor extends
 			}
 		}
 	}
+	
+	@Override
+	public void setActivePage(IEditorPart part) {
+		activeEditor = part;
 
+		// Switch to the new selection provider.
+		if (selectionProvider != null) {
+			selectionProvider.removeSelectionChangedListener(this);
+		}
+		if (part == null) {
+			selectionProvider = null;
+		} else {
+			selectionProvider = part.getSite().getSelectionProvider();
+			selectionProvider.addSelectionChangedListener(this);
+
+			// Fake a selection changed event to update the menus.
+			if (selectionProvider.getSelection() != null) {
+				selectionChanged(new SelectionChangedEvent(selectionProvider,
+						selectionProvider.getSelection()));
+			}
+		}
+	}
+	
 	/**
 	 * This implements
 	 * {@link org.eclipse.jface.viewers.ISelectionChangedListener}, handling
@@ -315,7 +343,7 @@ public class MethodLibraryActionBarContributor extends
 			Object object = ((IStructuredSelection) selection)
 					.getFirstElement();
 
-			EditingDomain domain = ((IEditingDomainProvider) activeEditorPart)
+			EditingDomain domain = ((IEditingDomainProvider) activeEditor)
 					.getEditingDomain();
 
 			newChildDescriptors = domain.getNewChildDescriptors(object, null);
@@ -337,6 +365,7 @@ public class MethodLibraryActionBarContributor extends
 					null);
 			createSiblingMenuManager.update(true);
 		}
+		update();
 	}
 
 	/**
@@ -349,7 +378,7 @@ public class MethodLibraryActionBarContributor extends
 		Collection actions = new ArrayList();
 		if (descriptors != null) {
 			for (Iterator i = descriptors.iterator(); i.hasNext();) {
-				actions.add(new CreateChildAction(activeEditorPart, selection,
+				actions.add(new CreateChildAction(activeEditor, selection,
 						i.next()));
 			}
 		}
@@ -367,7 +396,7 @@ public class MethodLibraryActionBarContributor extends
 		Collection actions = new ArrayList();
 		if (descriptors != null) {
 			for (Iterator i = descriptors.iterator(); i.hasNext();) {
-				actions.add(new CreateSiblingAction(activeEditorPart,
+				actions.add(new CreateSiblingAction(activeEditor,
 						selection, i.next()));
 			}
 		}
@@ -490,12 +519,16 @@ public class MethodLibraryActionBarContributor extends
 	 *
 	 */
 	protected void doRefresh() {
-		if (activeEditorPart instanceof IViewerProvider) {
-			Viewer viewer = ((IViewerProvider) activeEditorPart).getViewer();
+		if (activeEditor instanceof IViewerProvider) {
+			Viewer viewer = ((IViewerProvider) activeEditor).getViewer();
 			if (viewer != null) {
 				viewer.refresh();
 			}
 		}
 	}
 
+	protected boolean removeAllReferencesOnDelete()
+	{
+		return false;
+	}
 }

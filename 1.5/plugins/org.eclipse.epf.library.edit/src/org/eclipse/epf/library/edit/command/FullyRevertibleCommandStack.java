@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.process.command.BSDragAndDropCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.util.model.util.StringResource;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -60,7 +61,8 @@ public class FullyRevertibleCommandStack extends BasicCommandStack {
 		if(!modifiedResources.isEmpty()) {
 			for (Iterator iter = modifiedResources.iterator(); iter.hasNext();) {
 				Resource resource = (Resource) iter.next();
-				actionMgr.registerAsModifierOf(resource);
+				if (!(resource instanceof StringResource))
+					actionMgr.registerAsModifierOf(resource);
 			}
 		}
 	}

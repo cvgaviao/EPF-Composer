@@ -64,7 +64,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.epf.authoring.ui.forms.IExtensionFormPage"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart"/>
                </appInfo>
             </annotation>
          </attribute>
