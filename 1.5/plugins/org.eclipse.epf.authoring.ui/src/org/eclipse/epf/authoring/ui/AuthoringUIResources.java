@@ -1989,6 +1989,12 @@ public final class AuthoringUIResources extends NLS {
 	public static String deliverable_slotSection_desc;
 	
 	public static String outcome_slotSection_desc;
+	
+	public static String slotConfirmDialog_title;
+	
+	public static String wpFulFillsConfirmDialog_message;
+	
+	public static String wpSlotFulFillsConfirmDialog_message;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);

@@ -16,8 +16,10 @@ import java.util.List;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
+import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.filters.ContentFilter;
 import org.eclipse.epf.authoring.ui.filters.WorkProductFilter;
@@ -28,6 +30,7 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.VariabilityBaseElementFilter;
+import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ArtifactDescription;
@@ -39,8 +42,12 @@ import org.eclipse.epf.uma.Outcome;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
@@ -56,6 +63,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
@@ -71,9 +79,6 @@ import org.eclipse.ui.forms.widgets.Section;
 public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 	private static final String FORM_PAGE_ID = "workProductDescriptionPage"; //$NON-NLS-1$	
-
-	// slot
-	private Button ctrl_slot_button;
 
 	private IMethodRichText ctrl_impact;
 
@@ -94,11 +99,21 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	private WorkProduct workProduct;
 
 	// For slots
+	private Button ctrl_slot_button;
+	
 	private Section slotSection;
+	
 	private Composite slotComposite;
+	
 	private String slotSectionDescription;
-	private Button slotSelectButton;
+	
+	private Button addSlotButton, removeSlotButton;
+	
+	private Table ctrl_slot;
+	
+	private TableViewer slotViewer;
 
+	// slots content provider
 	private IStructuredContentProvider slotContentProvider = new AdapterFactoryContentProvider(
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
@@ -214,7 +229,6 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		slotComposite.setLayout(new GridLayout(5, false));
 		createSlotSectionContent();
 		toolkit.paintBordersFor(slotComposite);
-
 	}
 
 	/**
@@ -223,19 +237,19 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	private void createSlotSectionContent() {
 		createLabel(toolkit, slotComposite,
 				AuthoringUIResources.slotsLabel_text, 2);
-		Table ctrl_slot = createTable(toolkit, slotComposite, SWT.SINGLE
+		ctrl_slot = createTable(toolkit, slotComposite, SWT.MULTI
 				| SWT.READ_ONLY, GridData.FILL_HORIZONTAL | GridData.BEGINNING,
 				5, 300, 1, 2);
 		{
 			GridData gridData = new GridData(GridData.FILL_HORIZONTAL
 					| GridData.BEGINNING);
 			gridData.horizontalSpan = 2;
-			gridData.heightHint = 24;
+			gridData.heightHint = 30;
 			gridData.widthHint = 300;
 			ctrl_slot.setLayoutData(gridData);
 		}
 
-		TableViewer slotViewer = new TableViewer(ctrl_slot);
+		slotViewer = new TableViewer(ctrl_slot);
 		slotViewer.setContentProvider(slotContentProvider);
 		slotViewer.setLabelProvider(slotLabelProvider);
 		slotViewer.setInput(methodElement);
@@ -247,13 +261,22 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			buttonPane.setLayoutData(gridData);
 		}
 
-		slotSelectButton = toolkit.createButton(buttonPane,
-				AuthoringUIText.SELECT_BUTTON_TEXT, SWT.SIMPLE);
+		addSlotButton = toolkit.createButton(buttonPane,
+				AuthoringUIText.ADD_BUTTON_TEXT, SWT.SIMPLE);
 		{
 			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 			gridData.widthHint = BUTTON_WIDTH;
-			slotSelectButton.setLayoutData(gridData);
+			addSlotButton.setLayoutData(gridData);
 		}
+		
+		removeSlotButton = toolkit.createButton(buttonPane,
+				AuthoringUIText.REMOVE_BUTTON_TEXT, SWT.SIMPLE);
+		{
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+			gridData.widthHint = BUTTON_WIDTH;
+			removeSlotButton.setLayoutData(gridData);
+		}
+		removeSlotButton.setEnabled(false);
 	}
 
 	/**
@@ -265,24 +288,11 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 		super.addListeners();
 
-		ctrl_slot_button.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				Boolean val = new Boolean(ctrl_slot_button.getSelection());
-				actionMgr.doAction(IActionManager.SET, methodElement,
-						UmaPackage.eINSTANCE.getClassifier_IsAbstract(), val,
-						-1);
-				
-				if (val) {
-					slotSection.setExpanded(false);
-					slotSection.setVisible(false);			
-				}
-				else {
-					slotSection.setVisible(true);
-					slotSection.setExpanded(true);
-				}
-			}
-		});
-
+		// add all slot related listeners
+		
+		addSlotListeners();
+		
+		
 		if (purposeOn) {
 			ctrl_purpose.setModalObject(contentElement.getPresentation());
 			ctrl_purpose.setModalObjectFeature(UmaPackage.eINSTANCE
@@ -641,6 +651,150 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			}
 		}
 	}
+	
+	
+	/**
+	 * Slot Listeners
+	 */
+	private void addSlotListeners()	{
+		// work product slot check button
+		ctrl_slot_button.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Boolean isSlot = new Boolean(ctrl_slot_button.getSelection());
+				if (isSlot.booleanValue()) {
+					// if this becoming a slot itself
+					List<FulfillableElement> fulFills = workProduct
+							.getFulfills();
+					if (fulFills != null && fulFills.size() != 0) {
+						boolean val = AuthoringUIPlugin
+								.getDefault()
+								.getMsgDialog()
+								.displayConfirmation(
+										AuthoringUIResources.slotConfirmDialog_title,
+										AuthoringUIResources.wpFulFillsConfirmDialog_message);
+						if (!val) {
+							ctrl_slot_button.setSelection(workProduct
+									.getIsAbstract().booleanValue());
+							return;
+						} else {
+							actionMgr.doAction(IActionManager.REMOVE_MANY,
+									workProduct, UmaPackage.eINSTANCE
+											.getFulfillableElement_Fulfills(),
+									fulFills, -1);
+						}
+					}
+				} else {					
+					List fulFills = new ArrayList();
+					fulFills.addAll(AssociationHelper.getFullFills(workProduct));
+					if (fulFills != null && fulFills.size() != 0) {
+						boolean val = AuthoringUIPlugin
+								.getDefault()
+								.getMsgDialog()
+								.displayConfirmation(
+										AuthoringUIResources.slotConfirmDialog_title,
+										AuthoringUIResources.wpSlotFulFillsConfirmDialog_message);
+						if (!val) {
+							ctrl_slot_button.setSelection(workProduct
+									.getIsAbstract().booleanValue());
+							return;
+						} else {
+							for (Iterator itor = fulFills.iterator(); itor
+									.hasNext();) {
+								WorkProduct wp = (WorkProduct) itor.next();
+								actionMgr
+										.doAction(
+												IActionManager.REMOVE,
+												wp,
+												UmaPackage.eINSTANCE
+														.getFulfillableElement_Fulfills(),
+												workProduct, -1);
+							}
+						}
+					}				
+				}
+				actionMgr.doAction(IActionManager.SET, methodElement,
+						UmaPackage.eINSTANCE.getClassifier_IsAbstract(), isSlot,
+						-1);
+				
+				if (isSlot) {
+					slotSection.setExpanded(false);
+					slotSection.setVisible(false);			
+				}
+				else {
+					slotSection.setVisible(true);
+					slotSection.setExpanded(true);
+				}
+			}
+		});
+
+		addSlotButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				IFilter filter = new WorkProductFilter() {
+					protected boolean childAccept(Object obj) {
+						if (obj instanceof WorkProduct) {
+							System.out.println(obj + " " + ((WorkProduct) obj).getIsAbstract());
+							return ((WorkProduct) obj).getIsAbstract().booleanValue();
+						}
+						return false;
+					}
+				};
+				List<FulfillableElement> alreadyExisting = new ArrayList<FulfillableElement>();
+				alreadyExisting.addAll(workProduct.getFulfills());
+				ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
+						.getWorkbench().getActiveWorkbenchWindow().getShell(),
+						filter, methodElement,
+						FilterConstants.WORKPRODUCTS, alreadyExisting);
+				fd.setViewerSelectionSingle(false);
+				fd.setBlockOnOpen(true);
+				fd.setTitle(FilterConstants.WORKPRODUCTS);
+				fd.open();
+				
+				if (fd.getSelectedItems().size() > 0) {
+					boolean status = actionMgr.doAction(
+							IActionManager.ADD_MANY, workProduct,
+							UmaPackage.eINSTANCE
+									.getFulfillableElement_Fulfills(), fd
+									.getSelectedItems(), -1);
+					if (!status) {
+						return;
+					}
+					// refresh slot viewer
+					slotViewer.refresh();	
+				}		
+			}
+		});
+		
+		removeSlotButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e){
+				IStructuredSelection selection = (IStructuredSelection) slotViewer
+						.getSelection();
+				if (selection.size() > 0) {
+					boolean status = actionMgr.doAction(IActionManager.REMOVE_MANY, workProduct,
+							UmaPackage.eINSTANCE
+									.getFulfillableElement_Fulfills(),
+							selection.toList(), -1);
+					
+					if (!status) {
+						return;
+					}
+					// refresh slot viewer
+					slotViewer.refresh();
+					removeSlotButton.setEnabled(false);
+				}
+			}	
+		});
+		
+		slotViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent e) {
+				IStructuredSelection selection = (IStructuredSelection) slotViewer
+						.getSelection();
+				if (selection.size() > 0 && !TngUtil.isLocked(workProduct)) {
+					removeSlotButton.setEnabled(true);
+				}
+			}
+		});
+
+	}
 
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#refresh(boolean)
@@ -649,6 +803,14 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		super.refresh(editable);
 		
 		ctrl_slot_button.setEnabled(editable);
+		addSlotButton.setEnabled(editable);
+		IStructuredSelection selection = (IStructuredSelection) slotViewer.getSelection();
+		if (selection.size() > 0 && editable) {
+			removeSlotButton.setEnabled(true);
+		} else {
+			removeSlotButton.setEnabled(false);
+		}
+		
 		if (tailoringSectionOn) {
 			ctrl_impact.setEditable(editable);
 			ctrl_reason.setEditable(editable);
