@@ -35,6 +35,7 @@ import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.Example;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -285,6 +286,15 @@ public final class AssociationHelper {
 	public static final OppositeFeature Roadmap_Activites = new OppositeFeature(
 			Roadmap.class,
 			"Roadmap_Activites", UmaPackage.eINSTANCE.getActivity_Roadmaps(), true); //$NON-NLS-1$
+
+	
+	/**
+	 * An opposite feature used for retrieving the fulfills elements which a workproduct is
+	 * associated with.
+	 */
+	public static final OppositeFeature FulFills_FullFillableElements = new OppositeFeature(
+			FulfillableElement.class,
+			"FulFills_FullFillableElements", UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(), true); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the activities which a supporting
@@ -936,6 +946,17 @@ public final class AssociationHelper {
 	 */
 	public static List getResponsibleRoles(WorkProduct wp) {
 		return (List) wp.getOppositeFeatureValue(WorkProduct_ResponsibleRoles);
+	}
+	
+	/**
+	 * Gets list of work products for which given work product fulfills.
+	 * 
+	 * @param wp
+	 *            a work product
+	 * @return a list of work products
+	 */
+	public static List getFullFills(WorkProduct wp) {
+		return (List) wp.getOppositeFeatureValue(FulFills_FullFillableElements);
 	}
 
 	/**
