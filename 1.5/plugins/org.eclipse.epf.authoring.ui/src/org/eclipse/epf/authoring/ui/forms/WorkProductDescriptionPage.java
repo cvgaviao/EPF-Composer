@@ -97,6 +97,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	private Section slotSection;
 	private Composite slotComposite;
 	private String slotSectionDescription;
+	private Button slotSelectButton;
 
 	private IStructuredContentProvider slotContentProvider = new AdapterFactoryContentProvider(
 			TngAdapterFactory.INSTANCE
@@ -246,12 +247,12 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			buttonPane.setLayoutData(gridData);
 		}
 
-		Button selectButton = toolkit.createButton(buttonPane,
+		slotSelectButton = toolkit.createButton(buttonPane,
 				AuthoringUIText.SELECT_BUTTON_TEXT, SWT.SIMPLE);
 		{
 			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 			gridData.widthHint = BUTTON_WIDTH;
-			selectButton.setLayoutData(gridData);
+			slotSelectButton.setLayoutData(gridData);
 		}
 	}
 
@@ -270,7 +271,15 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 				actionMgr.doAction(IActionManager.SET, methodElement,
 						UmaPackage.eINSTANCE.getClassifier_IsAbstract(), val,
 						-1);
-
+				
+				if (val) {
+					slotSection.setExpanded(false);
+					slotSection.setVisible(false);			
+				}
+				else {
+					slotSection.setVisible(true);
+					slotSection.setExpanded(true);
+				}
 			}
 		});
 
@@ -667,11 +676,19 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 		// IsAbstract attribute
 		Boolean isAbstract = workProduct.getIsAbstract();
-		if (isAbstract != null)
+		if (isAbstract != null) {
 			ctrl_slot_button.setSelection(isAbstract.booleanValue());
-		else
+			if (isAbstract.booleanValue())  {
+				slotSection.setExpanded(false);
+				slotSection.setVisible(false);
+			} else {
+				slotSection.setVisible(true);
+				slotSection.setExpanded(true);
+			}
+		} else
 			ctrl_slot_button.setSelection(false);
 
+		
 		org.eclipse.epf.uma.WorkProductDescription content = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
 				.getPresentation());
 
