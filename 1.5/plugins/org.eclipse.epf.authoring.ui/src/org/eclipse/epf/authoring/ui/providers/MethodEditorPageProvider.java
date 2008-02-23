@@ -37,16 +37,10 @@ public class MethodEditorPageProvider {
 	public static final String PAGE_PROVIDERS_EXTENSION_NAMESPACE = "org.eclipse.epf.authoring.ui"; //$NON-NLS-1$
 
 	/**
-	 * The extension name for task pages
+	 * The extension name
 	 */
-	public static final String TASK_PAGE_PROVIDERS_EXTENSION_NAME = "TaskEditorPageProvider"; //$NON-NLS-1$
+	public static final String METHOD_PAGE_PROVIDERS_EXTENSION_NAME = "MethodEditorPageProvider"; //$NON-NLS-1$
 
-	/**
-	 * The extension name for custom category pages
-	 */
-	public static final String CUSTOMCATEGORY_PAGE_PROVIDERS_EXTENSION_NAME = "CustomCategoryEditorPageProvider"; //$NON-NLS-1$
-	
-	
 	/**
 	 * The extension Attributes
 	 */
@@ -58,8 +52,7 @@ public class MethodEditorPageProvider {
 
 	// Contains the editor page providers loaded via the
 	// "org.eclipse.epf.authoring.ui.MethodEditorPageProvider" extension point.
-	private List<EditorPageElement> taskPageProviders = new ArrayList<EditorPageElement>();
-	private List<EditorPageElement> customCategoryPageProviders = new ArrayList<EditorPageElement>();
+	private List<EditorPageElement> pageProviders = new ArrayList<EditorPageElement>();
 
 	//	 The shared instance.
 	private static MethodEditorPageProvider instance = null;
@@ -83,14 +76,14 @@ public class MethodEditorPageProvider {
 	}
 
 	/**
-	 * Returns all the task page providers
+	 * Returns all the page providers
 	 * 
-	 * @return all the task page providers.
+	 * @return all the page providers.
 	 */
-	public List<IExtensionEditorPart> getTaskPageProviders() {
+	public List<IExtensionEditorPart> getMethodPageProviders() {
 		List<IExtensionEditorPart> pages = new ArrayList<IExtensionEditorPart>();
-		for (int i = 0; i < taskPageProviders.size(); i++) {
-			EditorPageElement pageElement = (EditorPageElement) taskPageProviders
+		for (int i = 0; i < pageProviders.size(); i++) {
+			EditorPageElement pageElement = (EditorPageElement) pageProviders
 					.get(i);
 			IExtensionEditorPart contributorClass = null;
 			try {
@@ -101,42 +94,16 @@ public class MethodEditorPageProvider {
 		}
 		return pages;
 	}
-
-	/**
-	 * Returns all the custom category page providers
-	 * 
-	 * @return all the customcategory page providers.
-	 */
-	public List<IExtensionEditorPart> getCustomCategoryPageProviders() {
-		List<IExtensionEditorPart> pages = new ArrayList<IExtensionEditorPart>();
-		for (int i = 0; i < customCategoryPageProviders.size(); i++) {
-			EditorPageElement pageElement = (EditorPageElement) customCategoryPageProviders
-					.get(i);
-			IExtensionEditorPart contributorClass = null;
-			try {
-				contributorClass = pageElement.getContributorClass();
-			} catch (Exception e) {
-			}
-			pages.add(contributorClass);
-		}
-		return pages;
-	}
-
 	
 	/**
 	 * Loads the configuration providers specified via the
 	 * "com.ibm.process.pageProviders" extension point.
 	 */
 	public void loadProviders() {
-		loadProvider(TASK_PAGE_PROVIDERS_EXTENSION_NAME, taskPageProviders);
-		loadProvider(CUSTOMCATEGORY_PAGE_PROVIDERS_EXTENSION_NAME, customCategoryPageProviders);
-	}
-	
-	private void loadProvider(String extName, List<EditorPageElement> list) {
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(
 				PAGE_PROVIDERS_EXTENSION_NAMESPACE,
-				extName);
+				METHOD_PAGE_PROVIDERS_EXTENSION_NAME);
 		if (extensionPoint != null) {
 			IExtension[] extensions = extensionPoint.getExtensions();
 			for (int i = 0; i < extensions.length; i++) {
@@ -157,7 +124,7 @@ public class MethodEditorPageProvider {
 
 						EditorPageElement pageElement = new EditorPageElement(
 								bundle, id, name, contributorClass);
-						list.add(pageElement);
+						pageProviders.add(pageElement);
 						
 					} catch (Exception e) {
 						AuthoringUIPlugin.getDefault().getLogger().logError(

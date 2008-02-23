@@ -166,6 +166,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
@@ -178,6 +179,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.forms.editor.IFormPage;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageSelectionProvider;
@@ -1069,37 +1071,29 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 			if (!(elementObj instanceof ContentPackage || elementObj instanceof MethodPlugin))
 				createPreviewPage();
 
-			if (elementObj instanceof Task) {
-				// check for extenstion point and add the page if there
-				List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
-						.getTaskPageProviders();
+			// check for extenstion point and add the page if there
+			List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
+					.getMethodPageProviders();
 
-				if (pageProviders != null && pageProviders.size() > 0) {
-					for (IExtensionEditorPart formPage : pageProviders) {
-						try {
-							formPage.setEditor(this);
-						} catch (Exception e) {
-							AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			if (pageProviders != null && pageProviders.size() > 0) {
+				for (IExtensionEditorPart extension : pageProviders) {
+					if (extension.isValid(elementObj)) {
+						Object contribution = extension.getContribution(this, elementObj);
+						int index = -1;
+						if (contribution instanceof Control) {
+							index = addPage((Control)contribution);
+						} else if (contribution instanceof IFormPage) {
+							index = addPage((IFormPage)contribution);
+						} else if (contribution instanceof IEditorPart) {
+							index = addPage((IEditorPart)contribution, getEditorInput());
 						}
-					}
-				}
-			} else if (elementObj instanceof CustomCategory) {
-				// check for extenstion point and add the page if there
-				List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
-						.getCustomCategoryPageProviders();
-
-				if (pageProviders != null && pageProviders.size() > 0) {
-					for (IExtensionEditorPart extension : pageProviders) {
-						try {
-							IEditorPart editorPart = extension.setEditor(this);
-							int index = addPage(editorPart, getEditorInput());
+						if (extension.getPartName() != null) {
 							setPageText(index, extension.getPartName());
-						} catch (Exception e) {
-							AuthoringUIPlugin.getDefault().getLogger().logError(e);
 						}
 					}
 				}
 			}
+		
 		} catch (Throwable t) {
 			AuthoringUIPlugin.getDefault().getLogger().logError(t);
 			dispose();

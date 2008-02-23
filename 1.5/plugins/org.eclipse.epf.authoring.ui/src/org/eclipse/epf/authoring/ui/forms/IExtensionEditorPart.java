@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.forms;
 
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.forms.editor.FormEditor;
 
 /**
@@ -19,23 +18,24 @@ import org.eclipse.ui.forms.editor.FormEditor;
  * @author Shilpa Toraskar
  * @since 1.0
  */
-public interface IExtensionEditorPart   {
+public interface IExtensionEditorPart {
 
 	/**
-	 * Set editor for form page
+	 * Return a Control, IFormPage, or IEditorPart to be added
 	 * @param editor
+	 * @param input TODO
 	 */
-	public IEditorPart setEditor(FormEditor editor) ;
-	
+	public Object getContribution(FormEditor editor, Object input);
+		
 	/**
-	 * Set input for form page
-	 * @param input
+	 * 
+	 * @return name of part, if the part is a IFormPage this can be null
 	 */
-	public void setInput(Object input);
+	public String getPartName();
 	
 	/**
 	 * 
-	 * @return name of part, if the part is a FormPage this can be null
+	 * @return true if extension should contribute to this object's editor
 	 */
-	public String getPartName();
+	public boolean isValid(Object object);
 }

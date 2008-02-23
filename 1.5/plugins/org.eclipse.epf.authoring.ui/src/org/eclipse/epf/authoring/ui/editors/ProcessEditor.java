@@ -58,7 +58,7 @@ import org.eclipse.epf.authoring.ui.forms.ProcessBreakdownStructureFormPage;
 import org.eclipse.epf.authoring.ui.forms.ProcessDescription;
 import org.eclipse.epf.authoring.ui.preferences.ApplicationPreferenceConstants;
 import org.eclipse.epf.authoring.ui.properties.EPFPropertySheetPage;
-import org.eclipse.epf.authoring.ui.providers.ProcessEditorPageProvider;
+import org.eclipse.epf.authoring.ui.providers.MethodEditorPageProvider;
 import org.eclipse.epf.authoring.ui.views.ProcessViewer;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeEventWrapper;
@@ -127,6 +127,7 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
@@ -1221,39 +1222,41 @@ public class ProcessEditor extends MethodElementEditor implements
 			pages.add(procTab);
 
 			// check for extenstion point and add the page if there
-			List pageProviders = ProcessEditorPageProvider.getInstance()
-					.getPageProviders();
+			List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
+					.getMethodPageProviders();
 
 			if (pageProviders != null && pageProviders.size() > 0) {
-				try {
-					extensionTabs = new ProcessBreakdownStructureFormPage[pageProviders
-							.size()];
-					for (int i = 0; i < pageProviders.size(); i++) {
-						Object page = pageProviders.get(i);
-						if (page instanceof IExtensionEditorPart) {
+				extensionTabs = new ProcessBreakdownStructureFormPage[pageProviders.size()];
+				int i = 0;
+				for (IExtensionEditorPart extension : pageProviders) {
+					if (extension.isValid(selectedProcess)) {
+						Object contribution = extension.getContribution(this, selectedProcess);
+						int index = -1;
+						if (contribution instanceof Control) {
+							index = addPage((Control)contribution);
+						} else if (contribution instanceof IFormPage) {
+							if (contribution instanceof ProcessBreakdownStructureFormPage) {
+								ProcessBreakdownStructureFormPage extendedPage = (ProcessBreakdownStructureFormPage) contribution;
+								extensionTabs[i++] = extendedPage;
+								index = addPage(extendedPage
+										.createControl(getContainer()));
+								setPageText(index, extendedPage.getTitle());
+								extendedPage.setTabIndex(index);
+								viewer = (StructuredViewer) extendedPage
+										.getViewer();
+								createContextMenuFor(viewer);
 
-							IExtensionEditorPart formPage = (IExtensionEditorPart) page;
-							IEditorPart control = formPage.setEditor(this);
-							formPage.setInput(selectedProcess);
-							ProcessBreakdownStructureFormPage extendedPage = null;
-							if (control instanceof ProcessBreakdownStructureFormPage) {
-								extendedPage = (ProcessBreakdownStructureFormPage) control;
-								extensionTabs[i] = extendedPage;
+								pages.add(extendedPage);
 							}
-
-							id = addPage(extendedPage
-									.createControl(getContainer()));
-							setPageText(id, extendedPage.getTitle());
-							extendedPage.setTabIndex(id);
-							viewer = (StructuredViewer) extendedPage
-									.getViewer();
-							createContextMenuFor(viewer);
-
-							pages.add(extendedPage);
+						} else if (contribution instanceof IEditorPart) {
+							index = addPage((IEditorPart)contribution, getEditorInput());
 						}
+						if (extension.getPartName() != null) {
+							setPageText(index, extension.getPartName());
+						}
+						
+						
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			}
 

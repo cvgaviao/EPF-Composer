@@ -12,15 +12,7 @@
          name="New Method Configuration Wizard Extension"
          schema="schema/NewConfigurationWizard.exsd" />         
 
-   <extension-point
-         id="TaskEditorPageProvider"
-         name="Task Editor Page Provider"
-         schema="schema/TaskEditorPageProvider.exsd"/>
 
-   <extension-point
-         id="ProcessEditorPageProvider"
-         name="Process Editor Page Provider"
-         schema="schema/ProcessEditorPageProvider.exsd"/>
          
    <extension-point
          id="descriptionPageColumnProvider"
@@ -36,7 +28,7 @@
    <extension-point id="methodRichText" name="Method Rich Text Extension" schema="schema/methodRichText.exsd"/>
    <extension-point id="methodRichTextEditor" name="Method Rich Text Editor Extension" schema="schema/methodRichTextEditor.exsd"/>
    <extension-point id="contentProviderFactories" name="Content Provider Factories" schema="schema/contentProviderFactories.exsd"/>
-   <extension-point id="CustomCategoryEditorPageProvider" name="Custom Category Editor Page Provider" schema="schema/CustomCategoryEditorPageProvider.exsd"/>
+   <extension-point id="MethodEditorPageProvider" name="Method Editor Page Provider" schema="schema/MethodEditorPageProvider.exsd"/>
 
    <extension point="org.eclipse.ui.perspectives">
       <perspective
