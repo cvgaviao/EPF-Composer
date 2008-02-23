@@ -48,6 +48,7 @@ import org.eclipse.epf.library.edit.IWrapper;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.configuration.PracticeItemProvider;
 import org.eclipse.epf.library.edit.process.OBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.PBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.WBSItemProviderAdapterFactory;
@@ -398,6 +399,10 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 				}
 			} while (false);
 
+			if (adapter instanceof PracticeItemProvider) {
+				return ((PracticeItemProvider) adapter).getModifiedChildren(children);
+			}
+			
 			// alphabetically sort the children
 			//
 			if (!TngUtil.isInstanceOf(CLASSES_EXCLUDED_FROM_SORTING, TngUtil

@@ -147,4 +147,9 @@ public class ItemProviderAdapterFactory extends
 	public Adapter createMilestoneAdapter() {
 		return new MilestoneItemProvider(this);
 	}
+	
+	@Override
+	public Adapter createPracticeAdapter() {
+		return new PracticeItemProvider(this);
+	}
 }
