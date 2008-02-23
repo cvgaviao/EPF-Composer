@@ -101,12 +101,14 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 			
 			if ( outputs != null && outputs.contains(element) ) {	
 				List roleDescriptors = (List) tl.getFeatureValue(UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy(), null, false);
+				if (roleDescriptors != null) {
 				for (Iterator i = roleDescriptors.iterator(); i.hasNext();)
 				{
 					RoleDescriptor r = (RoleDescriptor) i.next();
 					if ( (r != null) && !modifyRoles.contains(r) ) {
 						modifyRoles.add(r);
 					}
+				}
 				}
 			}
 		}
