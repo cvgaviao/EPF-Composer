@@ -527,7 +527,7 @@ public class ProcessEditor extends MethodElementEditor implements
 
 	protected ProcessBreakdownStructureFormPage procTab;
 
-	protected ProcessBreakdownStructureFormPage[] extensionTabs = null;
+	protected Collection<ProcessBreakdownStructureFormPage> extensionTabs = null;
 
 	protected ProcessBreakdownStructureFormPage[] bsPages;
 
@@ -659,13 +659,10 @@ public class ProcessEditor extends MethodElementEditor implements
 			}
 			
 			if (extensionTabs != null) {
-				for (int i = 0; i < extensionTabs.length; i++) {
-					if (extensionTabs[i] != null) {
-						extensionTabs[i].setProcess(selectedProcess);
-					}
+				for (ProcessBreakdownStructureFormPage extPage : extensionTabs) {
+					extPage.setProcess(selectedProcess);
 				}
 			}
-
 		}
 	}
 
@@ -750,6 +747,7 @@ public class ProcessEditor extends MethodElementEditor implements
 	public void init(IEditorSite site, IEditorInput input)
 			throws PartInitException {
 		super.init(site, input);
+		site.setSelectionProvider(this);
 
 		// TODO: need revisit
 		// site.setSelectionProvider(new FormEditorSelectionProvider(this));
@@ -1226,7 +1224,7 @@ public class ProcessEditor extends MethodElementEditor implements
 					.getMethodPageProviders();
 
 			if (pageProviders != null && pageProviders.size() > 0) {
-				extensionTabs = new ProcessBreakdownStructureFormPage[pageProviders.size()];
+				extensionTabs = new ArrayList<ProcessBreakdownStructureFormPage>();
 				int i = 0;
 				for (IExtensionEditorPart extension : pageProviders) {
 					if (extension.isValid(selectedProcess)) {
@@ -1237,7 +1235,7 @@ public class ProcessEditor extends MethodElementEditor implements
 						} else if (contribution instanceof IFormPage) {
 							if (contribution instanceof ProcessBreakdownStructureFormPage) {
 								ProcessBreakdownStructureFormPage extendedPage = (ProcessBreakdownStructureFormPage) contribution;
-								extensionTabs[i++] = extendedPage;
+								extensionTabs.add(extendedPage);
 								index = addPage(extendedPage
 										.createControl(getContainer()));
 								setPageText(index, extendedPage.getTitle());
@@ -1339,11 +1337,11 @@ public class ProcessEditor extends MethodElementEditor implements
 			}
 		}
 		if(id == -1 && extensionTabs != null) {
-			for (int i = 0; i < extensionTabs.length; i++) {
-				ProcessBreakdownStructureFormPage page = extensionTabs[i];
-				if (page.getId().equals(pageId)) {
-					id = page.getTabIndex();
-					activePage = page;
+			for (ProcessBreakdownStructureFormPage extPage : extensionTabs) {
+				extPage.setProcess(selectedProcess);
+				if (extPage.getId().equals(pageId)) {
+					id = extPage.getTabIndex();
+					activePage = extPage;
 					break;
 				}
 			}
@@ -1372,9 +1370,9 @@ public class ProcessEditor extends MethodElementEditor implements
 			} else if (procTab != null && id == procTab.getTabIndex()) {
 				setCurrentViewer(procTab.getViewer());
 			} else if (extensionTabs != null) {
-				for (int i = 0; i < extensionTabs.length; i++) {
-					if (extensionTabs[i] != null && id == extensionTabs[i].getTabIndex())
-						setCurrentViewer(extensionTabs[i].getViewer());
+				for (ProcessBreakdownStructureFormPage extPage : extensionTabs) {
+					if (id == extPage.getTabIndex())
+						setCurrentViewer(extPage.getViewer());
 				}
 			} else {
 				setCurrentViewer(null);
@@ -1681,12 +1679,11 @@ public class ProcessEditor extends MethodElementEditor implements
 							selected = TngUtil.unwrap(selected);
 							selection = new StructuredSelection(selected);
 						} else if (extensionTabs != null) {
-							for (int i = 0; i < extensionTabs.length; i++) {
-								if (extensionTabs[i].getViewer() == currentViewer) {
+							for (ProcessBreakdownStructureFormPage extPage : extensionTabs) {
+								if (extPage.getViewer() == currentViewer) {
 									selected = TngUtil.unwrap(selected);
 									selection = new StructuredSelection(
-											selected);
-
+											selected);							
 								}
 							}
 						}
@@ -1696,10 +1693,9 @@ public class ProcessEditor extends MethodElementEditor implements
 							procTab.getViewer().setSelection(selection, false);
 						}
 						if (extensionTabs != null) {
-							for (int i = 0; i < extensionTabs.length; i++) {
-								if (extensionTabs[i].getViewer() != currentViewer)
-									extensionTabs[i].getViewer().setSelection(
-											selection, false);
+							for (ProcessBreakdownStructureFormPage extPage : extensionTabs) {
+								if (extPage.getViewer() != currentViewer)
+									extPage.getViewer().setSelection(selection, false);
 							}
 						}
 
@@ -1799,16 +1795,17 @@ public class ProcessEditor extends MethodElementEditor implements
 						}
 						
 						if (extensionTabs != null) {
-							for (int i = 0; i < extensionTabs.length; i++) {
-								viewer = extensionTabs[i].getViewer();
+							for (ProcessBreakdownStructureFormPage extPage : extensionTabs) {
+								viewer = extPage.getViewer();
 								if (viewer != currentViewer) {
 									selection = new StructuredSelection(
 											findSelection(
 													selectedPath,
-													extensionTabs[i]
+													extPage
 															.getAdapterFactory()));
 									viewer.setSelection(selection, false);
 								}
+								
 							}
 						}
 					}
@@ -2150,8 +2147,8 @@ public class ProcessEditor extends MethodElementEditor implements
 
 		
 		if (extensionTabs != null) {
-			for (int i = 0; i < extensionTabs.length; i++) {
-				extensionTabs[i].getViewer().refresh();
+			for (ProcessBreakdownStructureFormPage extPage : extensionTabs) {
+				extPage.getViewer().refresh();
 			}
 		}
 
