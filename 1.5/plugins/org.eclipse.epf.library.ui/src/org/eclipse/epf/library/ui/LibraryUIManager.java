@@ -840,6 +840,8 @@ public class LibraryUIManager {
 	 */
 	private String handleLibraryOnReadOnlyInstallPath(URI libURI) {
 		try {
+			boolean readOnly = false;
+			
 			// determine if path is in Installation directory
 			File libPathFile = new File(libURI);
 			if (!libPathFile.exists()) {
@@ -858,8 +860,19 @@ public class LibraryUIManager {
 			// determine if OS is not vista or linux
 			String osName = System.getProperty("os.name"); //$NON-NLS-1$
 			String platformOS = Platform.getOS();
-			if ((osName.indexOf("Vista") == -1) //$NON-NLS-1$
-					&& !platformOS.equals(Platform.OS_LINUX)) {
+			if ((osName.indexOf("Vista") > -1) //$NON-NLS-1$
+					|| platformOS.equals(Platform.OS_LINUX)) {
+				readOnly = true;
+			}
+			
+			File libraryXMIFile = new File(libPathFile, XMILibraryManager.LIBRARY_XMI);
+
+			// do not allow a read-only default library
+			if (!libPathFile.canWrite() || !libraryXMIFile.canWrite()) {
+				readOnly = true;
+			}
+			
+			if (!readOnly) {
 				return null;
 			}
 			
