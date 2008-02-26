@@ -10,24 +10,18 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library;
 
-import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.epf.common.utils.CommandLineRunUtil;
-import org.eclipse.epf.common.utils.FileUtil;
-import org.eclipse.epf.common.utils.I18nUtil;
-import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.UmaFactory;
 
@@ -542,6 +536,51 @@ public class LibraryService implements ILibraryService {
 		config = UmaFactory.eINSTANCE.createMethodConfiguration();
 		config.setName(name);
 		configs.add(config);
+		return config;
+	}
+	
+	
+	/**
+	 * Creates a new method configuration with the HIDE property
+	 * 
+	 * @param name
+	 *            a name for the new method configuration
+	 * @param library
+	 *            the containing method library
+	 * @param hide
+	 * 			  Hide this configuration editors
+	 * @return a method configuration
+	 * @throw <code>LibraryServiceException</code> if an error occurs while
+	 *        performing the operation
+	 */
+	public MethodConfiguration createMethodConfiguration(String name,
+			MethodLibrary library, boolean hide) throws LibraryServiceException {
+		if (name == null || library == null) {
+			throw new IllegalArgumentException();
+		}
+
+		MethodConfiguration config;
+		List configs = library.getPredefinedConfigurations();
+		for (Iterator it = configs.iterator(); it.hasNext();) {
+			config = (MethodConfiguration) it.next();
+			if (name.equals(config.getName())) {
+				throw new ConfigurationAlreadyExistsException();
+			}
+		}
+
+		config = UmaFactory.eINSTANCE.createMethodConfiguration();
+		config.setName(name);
+		configs.add(config);
+		
+		// create method property
+		String CONFIG_HIDE_PROPERTY = "HIDE_CONFIG";  //$NON-NLS-1$
+		MethodElementProperty prop = UmaFactory.eINSTANCE.createMethodElementProperty();
+		prop.setName(CONFIG_HIDE_PROPERTY);
+		prop.setValue(new Boolean(hide).toString());
+			
+		config.getMethodElementProperty().add(prop);
+	
+	
 		return config;
 	}
 

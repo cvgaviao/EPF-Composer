@@ -224,6 +224,22 @@ public interface ILibraryService {
 	public MethodConfiguration createMethodConfiguration(String name,
 			MethodLibrary library) throws LibraryServiceException;
 
+	
+	/**
+	 * Creates a new method configuration.
+	 * 
+	 * @param name
+	 *            a name for the new method configuration
+	 * @param library
+	 *            the containing method library
+	 * @param hide
+	 * 		      hide this configuration in editors
+	 * @return a method configuration
+	 * @throw <code>LibraryServiceException</code> if an error occurs while
+	 *        performing the operation
+	 */
+	public MethodConfiguration createMethodConfiguration(String name,
+			MethodLibrary library, boolean hide) throws LibraryServiceException;
 	/**
 	 * Gets the current method configuration.
 	 * 
