@@ -25,7 +25,6 @@ import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.search.ui.SearchUIPlugin;
 import org.eclipse.epf.search.ui.SearchUIResources;
-import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
@@ -302,9 +301,9 @@ public class MethodSearchOperation {
 			for (Iterator j = processElements.iterator(); j.hasNext()
 					&& !progressMonitor.isCanceled();) {
 				ProcessElement processElement = (ProcessElement) j.next();
-				if (!(processElement instanceof Activity)) {
+//				if (!(processElement instanceof Activity)) {
 					matchPattern(processElement);
-				}
+//				}
 			}
 		}
 	}
