@@ -120,7 +120,7 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 	protected void addCreateCopyCommands(CompoundCommand compoundCommand,
 			EObject object) {
 
-		// Operation to handle copy replacers
+		// Operation to handle copy replacers of the child activities
 		// 
 		if (object instanceof ProcessPackage &&	object != this.activity.eContainer() ) {			
 			ProcessPackage pkg = (ProcessPackage)object;
@@ -129,15 +129,24 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 			Activity orignalActivity = null;
 			for(Object procesElement : pkg.getProcessElements()){
 				if (procesElement instanceof Activity) {
-					replacer = getReplacer( (Activity)procesElement );
-					if (replacer != null ) {
-						isReplaced = true;
-						orignalActivity = (Activity)procesElement;
+					Activity childAct = (Activity) procesElement;
+					if(childAct.getSuperActivities() == this.activity) {
+						replacer = getReplacer( (Activity)procesElement );
+						if (replacer != null ) {
+							isReplaced = true;
+							orignalActivity = (Activity)procesElement;
+						}
 						break;
 					}
 				}
 			}
 			if (isReplaced) {				
+				// reset the deferredInitializationCount so
+				// InitializeCopyCommand can be created for the following
+				// ActivityDeepCopyCommand. See
+				// org.eclipse.emf.edit.command.CopyCommand.prepare() for more
+				// details.
+				//
 				copyHelper.decrementDeferredInitializationCount();
 				ActivityDeepCopyCommand cmd = new ActivityDeepCopyCommand(replacer, (CopyHelper)copyHelper, config, 
 						targetProcess, monitor, false,activityDeepCopyConfigurator);
@@ -153,6 +162,9 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 				}finally{
 					cmd.dispose();
 				}	
+				// restore the deferredInitializationCount so
+				// InitializeCopyCommand can be created for this
+				// ActivityDeepCopyCommand
 				copyHelper.incrementDeferredInitializationCount();				
 				return;
 			}
@@ -451,15 +463,10 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 					// copy presentation name
 					//
 					activityCopy.setPresentationName(ProcessUtil.getPresentationName(activity));					
-
-					// clear the variability data
-					//
-					activityCopy.setVariabilityBasedOnElement(null);
-					activityCopy.setVariabilityType(null);
 				}
 				
 				//copy contributors				
-				if (owner instanceof Activity && copyContributors ) {
+				if (owner instanceof Activity && (copyContributors || owner != ActivityDeepCopyCommand.this.activity)) {
 					Activity activity = (Activity)owner;					
 					List contributors = getContributors(activity);
 					if (!contributors.isEmpty()) {
@@ -467,11 +474,12 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 					}
 				}
 				
-				// clear the variability data of replacer
+				// clear the variability data
 				//
-				if (copy instanceof Activity && TngUtil.isReplacer((VariabilityElement)copy)) {
-					((Activity)copy).setVariabilityBasedOnElement(null);
-					((Activity)copy).setVariabilityType(null);
+				if (copy instanceof Activity) {
+					Activity activityCopy = ((Activity) copy);
+					activityCopy.setVariabilityBasedOnElement(null);
+					activityCopy.setVariabilityType(null);
 				}
 			}
 			finally {
@@ -512,7 +520,7 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 					Activity contributorCopy = (Activity) helper.get(contributedActivity);
 					ActivityDeepCopyCommand cmd = new ActivityDeepCopyCommand(contributedActivity, helper, 
 							config, targetProcess, monitor, false,activityDeepCopyConfigurator);
-					cmd.copyContributors = false;
+					cmd.copyContributors = false; // don't copy contributor's contributors since they already are included in the given contributors list
 					cmd.guidList = new LinkedList<String>(ActivityDeepCopyCommand.this.guidList);
 					cmd.guidList.addAll(ProcessUtil.getGuidList(ActivityDeepCopyCommand.this.activity, owner));
 					try {

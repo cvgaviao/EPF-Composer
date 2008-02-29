@@ -450,28 +450,24 @@ public class ActivityDropCommand extends BSDropCommand {
 		
 		UserInteractionHelper.runWithProgress(runnable, getLabel());
 		
-		MethodConfiguration deepCopyConfig = activityHandler.getDeepCopyConfig();			
+		// synchronize the deep copies with default configuration of the target process				
+		//
+		final SynchronizeCommand synchCmd = new SynchronizeCommand(activityHandler.getDeepCopies(), targetProcess.getDefaultContext(), null, false);
+		try {
+			runnable = new Runnable() {
 
-		if(deepCopyConfig != null) {
-			// synchronize the deep copies with deep copy configuration				
-			//
-			final SynchronizeCommand synchCmd = new SynchronizeCommand(activityHandler.getDeepCopies(), deepCopyConfig, null, false);
-			try {
-				runnable = new Runnable() {
-
-					public void run() {
-						synchCmd.initilize();
-					}
-					
-				};
-				UserInteractionHelper.runWithProgress(runnable, LibraryEditResources.ProcessAutoSynchronizeAction_prepare);
-				if(synchCmd.isIntialized()) {
-					synchCmd.execute();
+				public void run() {
+					synchCmd.initilize();
 				}
+				
+			};
+			UserInteractionHelper.runWithProgress(runnable, LibraryEditResources.ProcessAutoSynchronizeAction_prepare);
+			if(synchCmd.isIntialized()) {
+				synchCmd.execute();
 			}
-			finally {
-				synchCmd.dispose();
-			}
+		}
+		finally {
+			synchCmd.dispose();
 		}
 	}
 	
