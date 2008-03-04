@@ -32,4 +32,9 @@ public interface IColumnProvider   {
 	 */
 	public Composite setColumn(MethodElementEditor editor, FormToolkit toolkit, Composite parent);
 	
+	/**
+	 * Refresh state of all controls
+	 * @param value
+	 */
+	public void refresh(boolean value);
 }

@@ -300,6 +300,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 	protected IStructuredContentProvider contentProviderBase;
 	
+	private IColumnProvider columnProvider;
+	
 	protected ILabelProvider labelProviderVariability = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
@@ -789,12 +791,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			try {
 				for (int i = 0; i < columnProviders.size(); i++) {
 					ColumnElement column = (ColumnElement) columnProviders.get(i);
-					IColumnProvider providerClass = (IColumnProvider) column.getContributorClass();
+					Object providerClass = column.getContributorClass();
 					int width = column.getWidth();
 					String alignment = column.getAlignment();
 					
 					if (providerClass instanceof IColumnProvider) {
-						IColumnProvider columnProvider = (IColumnProvider) providerClass;
+						columnProvider = (IColumnProvider) providerClass;
 						
 						if (alignment.equals("left")) {
 							createSectionComposite(mainComposite, width,
@@ -1094,6 +1096,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (publishCategoryOn) {
 			ctrl_publish_categories_button.setEnabled(editable);
 		}
+		
+		if (columnProvider != null)
+			columnProvider.refresh(editable);
 	}
 
 	/**
