@@ -25,15 +25,12 @@ import org.eclipse.emf.edit.ui.action.DeleteAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.PasteAction;
-import org.eclipse.emf.edit.ui.action.RedoAction;
-import org.eclipse.emf.edit.ui.action.UndoAction;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
-import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
@@ -46,12 +43,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IActionBars2;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.forms.editor.FormEditor;
+import org.eclipse.ui.forms.editor.IFormPage;
 
 /**
  * The contributor for a Method editor.
@@ -274,7 +270,6 @@ public class MethodLibraryActionBarContributor extends
 	 */
 	public void setActiveEditor(IEditorPart part) {
 		super.setActiveEditor(part);
-		activeEditor = part;
 
 		// Switch to the new selection provider.
 		if (selectionProvider != null) {
@@ -296,8 +291,10 @@ public class MethodLibraryActionBarContributor extends
 	
 	@Override
 	public void setActivePage(IEditorPart part) {
-		activeEditor = part;
-
+		if (part != null) {
+			setActiveEditor(part);
+		}
+		
 		// Switch to the new selection provider.
 		if (selectionProvider != null) {
 			selectionProvider.removeSelectionChangedListener(this);
@@ -365,7 +362,9 @@ public class MethodLibraryActionBarContributor extends
 					null);
 			createSiblingMenuManager.update(true);
 		}
-		update();
+		if (!(activeEditor instanceof FormEditor)) {
+			update();
+		}
 	}
 
 	/**
@@ -530,5 +529,46 @@ public class MethodLibraryActionBarContributor extends
 	protected boolean removeAllReferencesOnDelete()
 	{
 		return false;
+	}
+	
+	@Override
+	public void activate() {
+		// fix actions -- if new page is an IFormPage, we don't want EMF actions
+		if (activeEditor != null) {
+			IActionBars actionBars = activeEditor.getEditorSite()
+				.getActionBars();
+			if (activeEditor instanceof FormEditor) {
+				IFormPage page = ((FormEditor)activeEditor).getActivePageInstance(); 
+				if (page instanceof IFormPage) {			
+					actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
+							null);
+					actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(),
+							null);
+					actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(),
+							null);
+					actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(),
+							null);
+					actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(),
+							null);
+					actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(),
+							null);
+				}
+			} else {
+				actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
+						deleteAction);
+				actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(),
+						cutAction);
+				actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(),
+						copyAction);
+				actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(),
+						pasteAction);
+				actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(),
+						undoAction);
+				actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(),
+						redoAction);
+			}
+			actionBars.updateActionBars();
+		}
+		super.activate();
 	}
 }
