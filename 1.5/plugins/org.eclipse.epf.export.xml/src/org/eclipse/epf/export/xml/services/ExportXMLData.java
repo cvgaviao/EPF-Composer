@@ -10,12 +10,14 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.export.xml.services;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodPlugin;
 
 /**
  * Stores the selections and settings made by the user in the Export XML wizard.
@@ -34,7 +36,7 @@ public class ExportXMLData {
 
 	protected int exportType = EXPORT_METHOD_LIBRARY;
 
-	protected List selectedPlugins;
+	protected Collection<MethodPlugin> selectedPlugins;
 	
 	protected HashSet associatedConfigs;
 
@@ -66,7 +68,7 @@ public class ExportXMLData {
 	 * 
 	 * @return a list of method plug-ins
 	 */
-	public List getSelectedPlugins() {
+	public Collection<MethodPlugin> getSelectedPlugins() {
 		return selectedPlugins;
 	}
 
@@ -99,7 +101,7 @@ public class ExportXMLData {
 	 * @param plugins
 	 *            a list of method plug-ins
 	 */
-	public void setSelectedPlugins(List plugins) {
+	public void setSelectedPlugins(Collection<MethodPlugin> plugins) {
 		selectedPlugins = plugins;
 	}
 	

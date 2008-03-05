@@ -11,6 +11,7 @@
 package org.eclipse.epf.export.services;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class PluginExportService extends BaseExportService {
 	public void run(IProgressMonitor monitor) {
 		monitor.setTaskName(ExportResources.PluginExportService_MSG0); 
 
-		List plugins = data.selectedPlugins;
+		Collection<MethodPlugin> plugins = data.selectedPlugins;
 		if (plugins == null || plugins.size() == 0) {
 			return;
 		}
@@ -165,7 +166,7 @@ public class PluginExportService extends BaseExportService {
 		cp.execute();
 	}
 
-	private void getSelectedIds(List plugins, Map configsMap) {
+	private void getSelectedIds(Collection<MethodPlugin> plugins, Map configsMap) {
 		selectedIds.clear();
 		selectedPluginNames.clear();
 

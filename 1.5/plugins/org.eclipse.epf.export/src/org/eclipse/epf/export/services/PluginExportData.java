@@ -11,6 +11,7 @@
 package org.eclipse.epf.export.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +30,7 @@ import org.eclipse.epf.uma.MethodPlugin;
  */
 public class PluginExportData {
 
-	public List selectedPlugins = null;
+	public Collection<MethodPlugin> selectedPlugins = null;
 
 	public LibraryLocationData llData = null;
 
@@ -49,14 +50,14 @@ public class PluginExportData {
 	/**
 	 * Returns the list of selected plugins.
 	 */
-	public List getSelectedPlugins() {
+	public Collection<MethodPlugin> getSelectedPlugins() {
 		return selectedPlugins;
 	}
 
 	/**
 	 * Sets the list of selected plugins.
 	 */
-	public void setSelectedPlugins(List selectedPlugins) {
+	public void setSelectedPlugins(Collection<MethodPlugin> selectedPlugins) {
 		this.selectedPlugins = selectedPlugins;
 	};
 

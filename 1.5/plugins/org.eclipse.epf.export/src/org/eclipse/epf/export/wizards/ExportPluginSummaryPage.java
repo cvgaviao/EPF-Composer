@@ -100,8 +100,7 @@ public class ExportPluginSummaryPage extends BaseWizardPage {
 
 		int start = 0;
 		int offset = 0;
-		for (int i = 0; i < data.selectedPlugins.size(); i++) {
-			MethodPlugin plugin = (MethodPlugin) data.selectedPlugins.get(i);
+		for (MethodPlugin plugin : data.selectedPlugins) {
 			start = textBuf.length();
 			offset = plugin.getName().length();
 			style.addStyleRange(new StyleRange(start, offset, null, null,

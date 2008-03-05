@@ -130,7 +130,7 @@ public class PluginInfoPage extends BaseWizardPage implements
 		if (data.getSelectedPlugins() != null
 				&& !data.getSelectedPlugins().isEmpty()) {
 			table.select(0);
-			displayRelatedInfo((MethodPlugin) data.getSelectedPlugins().get(0));
+			displayRelatedInfo(data.getSelectedPlugins().iterator().next());
 		}
 
 		addListeners();
@@ -172,7 +172,7 @@ public class PluginInfoPage extends BaseWizardPage implements
 				&& !data.getSelectedPlugins().isEmpty()) {
 			ctrl_tableViewer.setInput(data.getSelectedPlugins().toArray());
 			table.select(0);
-			displayRelatedInfo((MethodPlugin) data.getSelectedPlugins().get(0));
+			displayRelatedInfo(data.getSelectedPlugins().iterator().next());
 		}
 	}
 

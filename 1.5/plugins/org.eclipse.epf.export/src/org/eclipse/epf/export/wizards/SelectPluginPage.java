@@ -11,6 +11,7 @@
 package org.eclipse.epf.export.wizards;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
@@ -67,7 +68,7 @@ public class SelectPluginPage extends BaseWizardPage implements
 
 	private int checkedCount = 0;
 
-	private List<Object> checkedPluginList = new ArrayList<Object>();
+	private Collection<MethodPlugin> checkedPluginList = new ArrayList<MethodPlugin>();
 
 	private PluginExportData data;
 
@@ -151,16 +152,17 @@ public class SelectPluginPage extends BaseWizardPage implements
 	public void checkStateChanged(CheckStateChangedEvent event) {
 		Object obj = event.getElement();
 
-		if (event.getChecked()) {
-			checkedCount++;
-			checkedPluginList.add(obj);
-		} else {
-			checkedCount--;
-			checkedPluginList.remove(obj);
+		if (obj instanceof MethodPlugin) {
+			if (event.getChecked()) {
+				checkedCount++;
+				checkedPluginList.add((MethodPlugin)obj);
+			} else {
+				checkedCount--;
+				checkedPluginList.remove(obj);
+			}
+			setPageComplete(isPageComplete());
+			getWizard().getContainer().updateButtons();
 		}
-
-		setPageComplete(isPageComplete());
-		getWizard().getContainer().updateButtons();
 	}
 
 	/**
