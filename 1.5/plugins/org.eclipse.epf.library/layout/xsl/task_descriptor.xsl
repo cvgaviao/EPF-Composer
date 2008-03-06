@@ -189,7 +189,7 @@
 	</xsl:template>	
 
 	<xsl:template name="relationshipsSection">
-		<xsl:variable name="performingRole" select="reference[@name='performedPrimarilyBy']/Element[@Type='RoleDescriptor']"/>
+		<xsl:variable name="performedPrimarilyBy" select="referenceList[@name='performedPrimarilyBy']/Element"/>
 		<xsl:variable name="additionallyPerformedBy" select="referenceList[@name='additionallyPerformedBy']/Element"/>
 		<xsl:variable name="assistedBy" select="referenceList[@name='assistedBy']/Element"/>
 		<xsl:variable name="mandatoryInputs" select="referenceList[@name='mandatoryInput']/Element"/>
@@ -198,56 +198,61 @@
 		<xsl:variable name="outputs" select="referenceList[@name='output']/Element"/>
 		<xsl:variable name="imagePath" select="concat(/Element/@BackPath, 'images/')"/>
 
-		<xsl:if test="count($performingRole) + count($additionallyPerformedBy) + count($mandatoryInputs) + count($optionalInputs) + count($outputs) > 0">
+		<xsl:if test="count($performedPrimarilyBy) + count($additionallyPerformedBy) + count($assistedBy) + count($mandatoryInputs) + count($optionalInputs) + count($externalInput)+ count($outputs) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
-				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">					
-					<tr valign="top">
-						<th class="sectionTableHeading" scope="row"><xsl:value-of select="$rolesText"/></th>
-						<td class="sectionTableCell" width="30%">
-							<span class="sectionTableCellHeading">
-								<xsl:value-of select="$mainText"/>:
-							</span>
-							<xsl:if test="count($performingRole) > 0">
+				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">		
+					<xsl:if test="count($performedPrimarilyBy) + count($additionallyPerformedBy) + count($assistedBy) > 0">			
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$rolesText"/></th>
+							<td class="sectionTableCell" width="30%">
+								<span class="sectionTableCellHeading">
+									<xsl:value-of select="$mainText"/>:
+								</span>
+								<xsl:if test="count($performedPrimarilyBy) > 0">
 								<ul>
-									<li>
-										<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="$performingRole/@Url"/></xsl:attribute><xsl:value-of select="$performingRole/@DisplayName"/></a>
-									</li>
+									<xsl:for-each select="$performedPrimarilyBy">
+									<xsl:sort select="@DisplayName"/>
+										<li>
+											<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of 	select="@DisplayName"/></a>
+										</li>
+									</xsl:for-each>
 								</ul>
-							</xsl:if>
-						</td>
-						<td class="sectionTableCell" width="30%">	
-							<span class="sectionTableCellHeading">							
-								<xsl:value-of select="$additionalText"/>:
-							</span>
-							<xsl:if test="count($additionallyPerformedBy) > 0">
-							<ul>
-								<xsl:for-each select="$additionallyPerformedBy">
-								<xsl:sort select="@DisplayName"/>
-									<li>
-										<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/></a>
-									</li>
-								</xsl:for-each>
-							</ul>
-							</xsl:if>
-						</td>
-						<td class="sectionTableCell">
-							<span class="sectionTableCellHeading">
-								<xsl:value-of select="$assistingText"/>:
-							</span>
-							<xsl:if test="count($assistedBy) > 0">									
-							<ul>
-								<xsl:for-each select="$assistedBy">
-								<xsl:sort select="@DisplayName"/>
-									<li>
-										<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/></a>
-									</li>
-								</xsl:for-each>
-							</ul>
-							</xsl:if>
-						</td>
-					</tr>					
-					<xsl:if test="count($mandatoryInputs) + count($optionalInputs) > 0">
+								</xsl:if>
+							</td>
+							<td class="sectionTableCell" width="30%">	
+								<span class="sectionTableCellHeading">							
+									<xsl:value-of select="$additionalText"/>:
+								</span>
+								<xsl:if test="count($additionallyPerformedBy) > 0">
+								<ul>
+									<xsl:for-each select="$additionallyPerformedBy">
+									<xsl:sort select="@DisplayName"/>
+										<li>
+											<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of 	select="@DisplayName"/></a>
+										</li>
+									</xsl:for-each>
+								</ul>
+								</xsl:if>
+							</td>
+							<td class="sectionTableCell">
+								<span class="sectionTableCellHeading">
+									<xsl:value-of select="$assistingText"/>:
+								</span>
+								<xsl:if test="count($assistedBy) > 0">									
+								<ul>
+									<xsl:for-each select="$assistedBy">
+									<xsl:sort select="@DisplayName"/>
+										<li>
+											<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of 	select="@DisplayName"/></a>
+										</li>
+									</xsl:for-each>
+								</ul>
+								</xsl:if>
+							</td>
+						</tr>			
+					</xsl:if>		
+					<xsl:if test="count($mandatoryInputs) + count($externalInput) + count($optionalInputs) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$inputsText"/></th>
 							<td class="sectionTableCell" width="30%">
