@@ -329,6 +329,30 @@ public class ConfigurationHelper {
 
 		return element.getVariabilityType() == VariabilityType.REPLACES;
 	}
+	
+	/**
+	 * is "b" an ancestor of "a" through a "contribute chain" relationship
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static boolean contrubuteChain(VariabilityElement a, VariabilityElement b) {	
+		VariabilityElement element = a;
+		while (element != null) {
+			if (element.getVariabilityType() != VariabilityType.CONTRIBUTES) {
+				return false;
+			}
+			element = element.getVariabilityBasedOnElement();
+			if (element == null) {
+				return false;
+			}
+			if (element == b) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	/**
 	 * is the element a extend-replacer?

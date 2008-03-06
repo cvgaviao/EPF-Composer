@@ -88,7 +88,8 @@ public class ToManyOppositeFeatureValue extends ToManyFeatureValue {
 			if ( e instanceof VariabilityElement ) {
 				//replacer = ConfigurationHelper.getReplacer((VariabilityElement) e, realizer.getConfiguration());
 				replacer = (VariabilityElement)ConfigurationHelper.getCalculatedElement(e, realizer);
-				if ( (replacer == e) || !ConfigurationHelper.isReplacer(replacer) ) {
+				if ( (replacer == e) || !ConfigurationHelper.isReplacer(replacer) || 
+						ConfigurationHelper.contrubuteChain((VariabilityElement) e, (VariabilityElement)replacer)) {					
 					replacer = null;
 				}
 				
