@@ -122,7 +122,7 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 
 		// Operation to handle copy replacers of the child activities
 		// 
-		if (object instanceof ProcessPackage &&	object != this.activity.eContainer() ) {			
+		if (copyExternalVariations && object instanceof ProcessPackage && object != this.activity.eContainer()) {			
 			ProcessPackage pkg = (ProcessPackage)object;
 			boolean isReplaced = false;
 			Activity replacer = null;
@@ -345,6 +345,7 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 							}
 
 							ActivityDeepCopyCommand cmd = new ActivityDeepCopyCommand(base, helper, config, targetProcess, monitor, false,activityDeepCopyConfigurator);
+							cmd.copyExternalVariations = copyExternalVariations;
 							cmd.guidList = new LinkedList<String>(ActivityDeepCopyCommand.this.guidList);
 							cmd.guidList.addAll(ProcessUtil.getGuidList(ActivityDeepCopyCommand.this.activity, activity));
 							try {
@@ -465,8 +466,8 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 					activityCopy.setPresentationName(ProcessUtil.getPresentationName(activity));					
 				}
 				
-				//copy contributors				
-				if (owner instanceof Activity && (copyContributors || owner != ActivityDeepCopyCommand.this.activity)) {
+				// copy contributors				
+				if (copyExternalVariations && owner instanceof Activity && (copyContributors || owner != ActivityDeepCopyCommand.this.activity)) {
 					Activity activity = (Activity)owner;					
 					List contributors = getContributors(activity);
 					if (!contributors.isEmpty()) {
@@ -587,7 +588,8 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 	//used to retrieve replacers and contributors
 	private IConfigurator activityDeepCopyConfigurator;
 	
-	//
+	private boolean copyExternalVariations = true;
+	
 	private boolean copyContributors = true;
 	
 	private ActivityDeepCopyCommand(Activity activity, CopyHelper copyHelper,
@@ -623,6 +625,10 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 			guidList = ProcessUtil.getGuidList(wrapper);
 		}
 	}	
+	
+	public void setCopyExternalVariations(boolean copyExternalVariations) {
+		this.copyExternalVariations = copyExternalVariations;
+	}
 	
 	public AdapterFactory getAdapterFactory() {
 		return ((AdapterFactoryEditingDomain)domain).getAdapterFactory();

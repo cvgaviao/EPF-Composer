@@ -29,9 +29,11 @@ import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.command.IUserInteractionHandler;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ActivityHandler;
+import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -249,12 +251,23 @@ public class ActivityDropCommand extends BSDropCommand {
 			deepCopyConfig = UserInteractionHelper.chooseDeepCopyConfiguration(targetProcess, adapterFactory);
 		}
 		catch(OperationCanceledException e) {
+			getModifiedResources().clear();
 			return;
 		}
+		
+		boolean copyExternalVariations;
+		try {
+			copyExternalVariations = UserInteractionHelper.copyExternalVariationsAllowed(targetProcess, adapterFactory);
+		}
+		catch(OperationCanceledException e) {
+			getModifiedResources().clear();
+			return;			
+		}
+		activityHandler.setCopyExternalVariations(copyExternalVariations);
 		activityHandler.setDeepCopyConfig(deepCopyConfig);
 		activityHandler.setTargetProcess(targetProcess);
 		
-		// Set a configurator to resovle and deep copy contributors and replacers
+		// Set a configurator to resolve and deep copy contributors and replacers
 		activityHandler.setActivityDeepCopyConfigurator(activityDeepCopyConfigurator);
 		
 		IRunnableWithProgress runnable = new IRunnableWithProgress() {

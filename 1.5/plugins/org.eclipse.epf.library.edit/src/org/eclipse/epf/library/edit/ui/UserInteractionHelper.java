@@ -183,7 +183,7 @@ public final class UserInteractionHelper {
 					IUserInteractionHandler.ACTION_YES,
 					IUserInteractionHandler.ACTION_NO,
 					IUserInteractionHandler.ACTION_CANCEL
-				}, "Add to default configuration", msg, null);
+				}, LibraryEditResources.add_to_default_config_dlg_title, msg, null);
 			if (TngUtil.DEBUG) {
 				System.out
 				.println("UserInteractionHelper.checkAgainstDefaultConfiguration(): element=" //$NON-NLS-1$
@@ -259,7 +259,7 @@ public final class UserInteractionHelper {
 		if(uiHandler == null) {
 			return null;
 		}
-		UserInput input = new UserInput("", UserInput.TEXT, false, null, null, inputValidator, null);
+		UserInput input = new UserInput("", UserInput.TEXT, false, null, null, inputValidator, null); //$NON-NLS-1$
 		input.setInput(name);
 		boolean ret = uiHandler.requestInput(title, LibraryEditResources.UserInteractionHelper_ProcessPackage_Name, 
 			Collections.singletonList(input));
@@ -743,6 +743,38 @@ public final class UserInteractionHelper {
 			}
 		}
 		return deepCopyConfig;
+	}
+	
+	public static boolean copyExternalVariationsAllowed(Process targetProcess, AdapterFactory adapterFactory) {
+		// ask users to copy external contribution(s)/replacement(s) if
+		// current config is not the default config of the target process
+		//
+		IFilter filter = ProcessUtil.getFilter(adapterFactory);
+		if (filter instanceof IConfigurator) {
+			MethodConfiguration currentConfig = ((IConfigurator) filter)
+					.getMethodConfiguration();
+			if (currentConfig != null
+					&& currentConfig != targetProcess.getDefaultContext()) {				
+				String msg = LibraryEditResources.activity_deep_copy_variability_prompt;
+				IUserInteractionHandler uiHandler = ExtensionManager.getDefaultUserInteractionHandler();
+				if(uiHandler != null) {
+					int ret = uiHandler.selectOne(new int[] {
+							IUserInteractionHandler.ACTION_YES,
+							IUserInteractionHandler.ACTION_NO,
+							IUserInteractionHandler.ACTION_CANCEL
+						}, LibraryEditResources.deepCopy_title, msg, null);						
+					switch (ret) {
+					case IUserInteractionHandler.ACTION_YES:
+						return true;
+					case IUserInteractionHandler.ACTION_NO:
+						return false;
+					case IUserInteractionHandler.ACTION_CANCEL:
+						throw new OperationCanceledException();
+					}
+				}				
+			}
+		}
+		return true;
 	}
 
 	public static IUIHelper getUIHelper() {

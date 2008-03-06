@@ -757,11 +757,11 @@ public final class ProcessUtil {
 		//
 
 		// add roles
-		ArrayList dependencies = new ArrayList();
+		ArrayList<EObject> dependencies = new ArrayList<EObject>();
 		dependencies.addAll(task.getAdditionallyPerformedBy());
-		dependencies.add(task.getPerformedBy());
-		for (Iterator iter = dependencies.iterator(); iter.hasNext();) {
-			TngUtil.addToConfiguration(config, (EObject) iter.next(),
+		dependencies.addAll(task.getPerformedBy());
+		for (EObject eObject : dependencies) {
+			TngUtil.addToConfiguration(config, eObject,
 					addedObjects);
 		}
 
@@ -771,14 +771,13 @@ public final class ProcessUtil {
 			dependencies.addAll(task.getOptionalInput());
 			dependencies.addAll(task.getOutput());
 			dependencies.addAll(task.getMandatoryInput());
-			for (Iterator iter = dependencies.iterator(); iter.hasNext();) {
-				addWPToDefaultConfiguration(proc, (WorkProduct) iter.next(),
+			for (EObject eObject : dependencies) {
+				addWPToDefaultConfiguration(proc, (WorkProduct) eObject,
 						addedObjects);
 			}
 		}
 
-		for (Iterator iter = task.getSteps().iterator(); iter.hasNext();) {
-			VariabilityElement step = (VariabilityElement) iter.next();
+		for (Step step : task.getSteps()) {
 			EObject base = step.getVariabilityBasedOnElement();
 			if (base != null) {
 				TngUtil.addToConfiguration(config, base, addedObjects);

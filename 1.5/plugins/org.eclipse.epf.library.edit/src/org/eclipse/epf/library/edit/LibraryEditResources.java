@@ -24,11 +24,15 @@ public final class LibraryEditResources extends NLS {
 			.getName()
 			+ ".Resources"; //$NON-NLS-1$
 
+	public static String activity_deep_copy_variability_prompt;
+
 	public static String activity_variability_error_msg;
 
 	public static String activity_variability_error_msg1;
 
 	public static String activity_variability_error_msg2;
+
+	public static String add_to_default_config_dlg_title;
 
 	public static String cannot_copy_or_extend_delivery_process;
 

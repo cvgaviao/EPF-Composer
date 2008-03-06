@@ -58,7 +58,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public class ActivityHandler {
 
-	private ArrayList procPackages;
+	private ArrayList<ProcessPackage> procPackages;
 	
 	/**
 	 * List of activities or activity wrappers to deep copy.
@@ -68,7 +68,7 @@ public class ActivityHandler {
 	private MethodConfiguration deepCopyConfig;	
 	private List deepCopies;
 	private Map deepCopyToOriginalMap;
-	private ArrayList activities;
+	private ArrayList<Activity> activities;
 
 	private Map copyToOriginal;
 	
@@ -83,6 +83,8 @@ public class ActivityHandler {
 	private IProgressMonitor monitor;
 	
 	private IConfigurator activityDeepCopyConfigurator;
+	
+	private boolean copyExternalVariations = true;
 
 	/**
 	 * Constructs a new ActivityHandler
@@ -110,8 +112,12 @@ public class ActivityHandler {
 		deepCopyToOriginalMap.clear();
 	}
 	
+	public void setCopyExternalVariations(boolean copyExternalVariations) {
+		this.copyExternalVariations = copyExternalVariations;
+	}
+	
 	public void copy(Activity activity) {
-		procPackages.add(activity.eContainer());
+		procPackages.add((ProcessPackage) activity.eContainer());
 	}
 	
 	public MethodConfiguration getDeepCopyConfig() {
@@ -151,7 +157,7 @@ public class ActivityHandler {
 		activities.add(extendedAct);
 	}
 	
-	public List getActivities() {
+	public List<Activity> getActivities() {
 		if (!procPackages.isEmpty() || !activitiesToDeepCopy.isEmpty()) {
 			editingDomain = new TraceableAdapterFactoryEditingDomain(
 					TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory(),
@@ -166,6 +172,7 @@ public class ActivityHandler {
 				for (Object act : activitiesToDeepCopy) {
 					ActivityDeepCopyCommand cmd = new ActivityDeepCopyCommand(
 							act, getDeepCopyHelper(), deepCopyConfig, targetProcess, monitor,activityDeepCopyConfigurator);
+					cmd.setCopyExternalVariations(copyExternalVariations);
 					try {
 						long time = 0;
 						if (TngUtil.DEBUG) {
@@ -271,7 +278,7 @@ public class ActivityHandler {
 		}
 	}
 	
-	private Collection copyProcessPackages(Collection procPackages) {
+	private Collection<?> copyProcessPackages(Collection<ProcessPackage> procPackages) {
 		Command command = createCopyCommand(editingDomain, procPackages);
 		if(command != null) {
 			try {
@@ -312,10 +319,10 @@ public class ActivityHandler {
 	 * @param procPackages
 	 * @return activities of the copies
 	 */
-	private List copy(List procPackages) {
-		Collection copyPackages = copyProcessPackages(procPackages);
-		ArrayList activities = new ArrayList();
-		for (Iterator iter = copyPackages.iterator(); iter.hasNext();) {
+	private List<Activity> copy(List<ProcessPackage> procPackages) {
+		Collection<?> copyPackages = copyProcessPackages(procPackages);
+		ArrayList<Activity> activities = new ArrayList<Activity>();
+		for (Iterator<?> iter = copyPackages.iterator(); iter.hasNext();) {
 			ProcessPackage copy = (ProcessPackage) iter.next();
 			if (copy instanceof ProcessComponent) {
 				Activity actCopy = ((ProcessComponent) copy)
