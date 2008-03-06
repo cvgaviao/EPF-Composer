@@ -1123,7 +1123,8 @@ public class ResourceHelper {
 		
 		if ( isAbsolutepath(filePath) ) {
 			// assume this is an absolute path
-			return url;
+			return XMLUtil.unescape(NetUtil.decodedFileUrl(filePath));
+//			return url;
 		}
 
 		File f = new File(contentPath);
@@ -1236,6 +1237,8 @@ public class ResourceHelper {
 	public static String resolveUrl(String url, String contentPath,
 			String backPath) {
 		String new_url = getFilePathFromUrl(url, contentPath);
+		if (isAbsolutepath(new_url))
+			return new_url;
 		if (new_url != null && !new_url.equals(url) ) {
 			if (backPath != null) {
 				new_url = backPath + new_url;
