@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.NetUtil;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.common.xml.XSLTProcessor;
 import org.eclipse.epf.library.ILibraryManager;
@@ -800,22 +801,9 @@ public class ResourceHelper {
 	public static String regExpEscape(String text) {
 		// escape the regExp reserved words,
 		// the $ sign is reserved for group matching 
-		int i=text.indexOf('$'); 
-		if ( i < 0 ) {
-			return text;
-		}
-		
-		int start = 0;
-		StringBuffer buffer = new StringBuffer();
-		while ( i > start ) {
-			buffer.append(text.substring(start, i)).append("\\"); //$NON-NLS-1$
-			start = i;
-			i=text.indexOf('$', start+1); 
-		}
-		
-		buffer.append(text.substring(start));
-		
-		return buffer.toString();
+		String newtext = StrUtil.escapeChar(text, '$');
+		newtext = StrUtil.escapeChar(text, '\\');
+		return newtext;
 	}
 	
 	/**

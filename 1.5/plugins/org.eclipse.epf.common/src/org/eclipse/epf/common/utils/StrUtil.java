@@ -556,4 +556,22 @@ public class StrUtil {
 		return null;
 	}
 
+	public static String escapeChar(String text, char c) {
+		int i=text.indexOf(c); 
+		if ( i < 0 ) {
+			return text;
+		}
+		
+		int start = 0;
+		StringBuffer buffer = new StringBuffer();
+		while ( i > start ) {
+			buffer.append(text.substring(start, i)).append("\\"); //$NON-NLS-1$
+			start = i;
+			i=text.indexOf(c, start+1); 
+		}
+		
+		buffer.append(text.substring(start));
+		
+		return buffer.toString();
+	}
 }

@@ -78,6 +78,7 @@ RTE.prototype.selectionRange;
 RTE.prototype.readOnly = false;
 RTE.prototype.initialized = false;
 RTE.prototype.modified = false;
+RTE.prototype.selectionInfo = null;
 
 
 //Initializes the editor.
@@ -361,12 +362,95 @@ RTE.prototype.setInnerHTML = function(html) {
 RTE.prototype.setText = function(html) {
 	if (this.supportRichTextEditing) {
 		html = this.decodeString(html);
+		this.selectionInfo = getSelectionInfo();
 		this.setInnerHTML(html);
+		if (selectionInfo != null) {
+			setTimeout("this.setSelection(this.selectionInfo);", 10);
+		}
 		this.modified = false;
 		this.setStatus(this.STATUS_EXEC_CMD, 1);
 	}
 }
 
+RTE.prototype.setSelection = function (selectionInfo) {
+	if (!supportRichTextEditing) {
+		return;
+	}
+	
+	contentWindow = document.getElementById(editorId).contentWindow;
+	editorDoc = contentWindow.document;
+	
+	try {
+		if (document.all) {
+			var startOffset = selectionInfo.start;
+			var len = selectionInfo.len;
+			if (startOffset == 0 && len == 0) {
+				return;
+			}
+			var tempRange = editorDoc.body.createTextRange();
+			tempRange.moveStart('character', startOffset);
+			tempRange.collapse();
+			tempRange.moveEnd('character', len);
+			tempRange.select();
+			tempRange.scrollIntoView();
+		} else {
+			selection = this.window.getSelection();
+			var startContainer = selectionInfo.startContainer;
+			var start = selectionInfo.start;
+			var endContainer = selectionInfo.endContainer;
+			var end = selectionInfo.end;
+			var tempRange = document.createRange();
+			tempRange.setStart(startContainer, start);
+			tempRange.setEnd(endContainer, end);
+			selection.removeAllRanges();
+			selection.addRange(tempRange);
+			contentWindow.focus();
+		}
+	} catch (e) {
+	}
+}
+
+RTE.prototype.getSelectionInfo = function () {
+	if (!supportRichTextEditing) {
+		return null;
+	}	
+	
+	contentWindow = document.getElementById(editorId).contentWindow;
+	editorDoc = contentWindow.document;
+	
+	var tempSelRange;
+	try {
+	    if (document.all) {
+			selection = editorDoc.selection;
+			if (selection != null) {
+				tempSelRange = selection.createRange();
+			}
+			// length of selection
+			var tempSelLen = tempSelRange.text.length;
+			// create new range
+			var tempRange = editorDoc.body.createTextRange();
+			// set end of new range to start of selection
+			// this will throw an exception if tempSelRange is not in editor.doc.body (ie, at the start of the RTE).
+			tempRange.setEndPoint("EndToStart", tempSelRange);
+			// length of new range is the start offset
+			var tempText = tempRange.text;
+			// IE counts newlines as 2 characters for length property, but they count as 1 when using moveStart so remove the \r to make the count the same
+			tempText = tempText.replace(/\r/g, "");
+			var startOffset = tempText.length;
+			
+			return {start:startOffset, len:tempSelLen};
+	    } else {
+			selection = contentWindow.getSelection();
+			if (selection != null) {
+				tempSelRange = selection.getRangeAt(selection.rangeCount - 1).cloneRange();
+			}
+			return {startContainer: tempSelRange.startContainer, start:tempSelRange.startOffset, 
+				endContainer: tempSelRange.endContainer, end:tempSelRange.endOffset};
+	    }
+	} catch (e) {
+		return null;
+	}
+}
 // Decodes the HTML passed from the Java layer.
 RTE.prototype.decodeString = function(str) {
 	if (str != null && str != '') {
