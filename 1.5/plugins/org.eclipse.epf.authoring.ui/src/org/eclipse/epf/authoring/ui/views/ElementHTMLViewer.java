@@ -420,7 +420,14 @@ public class ElementHTMLViewer {
 
 	private String fixPath(String path) {
 		try {
-			path = URLDecoder.decode(path, "utf-8"); //$NON-NLS-1$
+			String platform = SWT.getPlatform();
+			if ("win32".equals(platform) || "wpf".equals(platform)) { //$NON-NLS-1$ $NON-NLS-2$
+			// org.eclipse.swt.browser.IE
+				path = URLDecoder.decode(path, "ISO-8859-1"); //$NON-NLS-1$
+			} else {
+				// org.eclipse.swt.browser.Mozilla
+				path = URLDecoder.decode(path, "UTF-8"); //$NON-NLS-1$
+			}
 			if (File.separatorChar != '/') {
 				return path.replace(File.separatorChar, '/');
 			}
