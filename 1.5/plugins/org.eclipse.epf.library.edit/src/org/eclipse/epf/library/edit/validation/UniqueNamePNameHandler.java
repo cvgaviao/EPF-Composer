@@ -29,7 +29,7 @@ public class UniqueNamePNameHandler {
 	/**
 	 * Empty constructor
 	 */
-	public UniqueNamePNameHandler(Collection<MethodElement> nameElements, Collection<DescribableElement> pnameElements) {
+	public UniqueNamePNameHandler(Collection<MethodElement> nameElements, Collection<MethodElement> pnameElements) {
 		nameHandler.registerNames(nameElements);
 		pnameHandler.registerPresentationNames(pnameElements);		
 	}
