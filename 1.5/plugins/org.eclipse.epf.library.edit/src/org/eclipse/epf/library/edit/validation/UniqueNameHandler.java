@@ -50,12 +50,12 @@ public class UniqueNameHandler {
 	/**
 	 * @param elements
 	 */
-	public void registerPresentationNames(Collection<DescribableElement> elements) {
+	public void registerPresentationNames(Collection<? extends MethodElement> elements) {
 		if (elements == null) {
 			return;
 		}
-		for (Iterator<DescribableElement> it = elements.iterator(); it.hasNext();) {
-			DescribableElement element = it.next();
+		for (Iterator<? extends MethodElement> it = elements.iterator(); it.hasNext();) {
+			MethodElement element = it.next();
 			register(element.getPresentationName());
 		}
 	}
