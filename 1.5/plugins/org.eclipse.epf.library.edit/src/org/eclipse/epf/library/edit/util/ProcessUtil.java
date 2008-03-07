@@ -55,7 +55,6 @@ import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.ComposedBreakdownElementWrapperItemProvider;
-import org.eclipse.epf.library.edit.process.ComposedWPDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.DescribableElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.RoleDescriptorWrapperItemProvider;
@@ -1131,13 +1130,7 @@ public final class ProcessUtil {
 //					getModelInfoForWorkProductDescriptor(modelInfo,
 //							(WorkProductDescriptor) TngUtil.unwrap(wrapper));
 					
-					if (wrapper instanceof ComposedWPDescriptorWrapperItemProvider) {
-						ComposedWPDescriptorWrapperItemProvider provider = (ComposedWPDescriptorWrapperItemProvider) wrapper;
-						String str = provider.getAttribute(e, IBSItemProvider.COL_MODEL_INFO);
-						modelInfo.append(str);
-					} else {
-						getWPDModelInfo(modelInfo, wrapper, wrapper);
-					}
+					getWPDModelInfo(modelInfo, wrapper, wrapper);
 					
 				}
 			}

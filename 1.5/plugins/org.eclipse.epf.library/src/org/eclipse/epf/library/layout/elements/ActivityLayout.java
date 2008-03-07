@@ -31,6 +31,7 @@ import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.process.ComposedWPDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.PredecessorList;
@@ -847,8 +848,16 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 		// get the index and predecessor indeces
 		if (elementItem.element instanceof BreakdownElement) {
 			String index = getIndex(adapter);
-			String modelInfo = ProcessUtil.getAttribute(item,
-					IBSItemProvider.COL_MODEL_INFO, adapter);
+			
+			String modelInfo = null;			
+			if (adapter instanceof ComposedWPDescriptorWrapperItemProvider) {
+				ComposedWPDescriptorWrapperItemProvider provider = (ComposedWPDescriptorWrapperItemProvider) adapter;
+				modelInfo = provider.getAttribute(item, IBSItemProvider.COL_MODEL_INFO);
+			} else {
+				modelInfo = ProcessUtil.getAttribute(item,
+						IBSItemProvider.COL_MODEL_INFO, adapter);
+			}			
+			
 			String team = ProcessUtil.getAttribute(item,
 					IBSItemProvider.COL_TEAMS, adapter);
 			String prefix = ProcessUtil.getAttribute(item,
