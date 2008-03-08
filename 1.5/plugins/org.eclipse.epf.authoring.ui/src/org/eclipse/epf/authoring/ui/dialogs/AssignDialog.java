@@ -38,13 +38,18 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
+import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.validation.UniqueNamePNameHandler;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -278,14 +283,19 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	}
 
 	protected Collection<Resource> doWorkBeforeSave() {
-		LibraryModificationHelper helper = new LibraryModificationHelper();
-		CustomCategory category = (CustomCategory) destination;
-		
-		CustomCategoryAssignPage.addItemsToModel1(elements, category, usedCategories,
-				helper.getActionManager(), CustomCategoryAssignPage.getAncestors(category));
+		final LibraryModificationHelper helper = new LibraryModificationHelper();
+		final CustomCategory category = (CustomCategory) destination;
+		final Collection<Resource> resouresToSave = new HashSet<Resource>();
 
-		Collection<Resource> resouresToSave = new HashSet<Resource>();
-		resouresToSave.add(category.eResource());
+		getShell().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				CustomCategoryAssignPage.addItemsToModel1(elements, category,
+						usedCategories, helper.getActionManager(),
+						CustomCategoryAssignPage.getAncestors(category));
+				resouresToSave.add(category.eResource());
+			}
+		});
+		
 		return resouresToSave;
 	}
 		
@@ -386,7 +396,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 		protected Collection<Resource> doWorkBeforeSave() {
 			Collection<Resource> resouresToSave = super.doWorkBeforeSave();
 			resouresToSave.add(parentElement.eResource());			
-			UnassignAction.unassign(getElements().get(0), parentElement, new ArrayList());
+			UnassignAction.unassign(getShell(), getElements().get(0), parentElement, new ArrayList());
 			return resouresToSave;
 		}
 		
@@ -398,7 +408,8 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	}
 	
 	private static class CustomCategoryDeepCopyDialog extends AssignDialog {
-		private ContentPackage hiddenPkg;
+		ContentPackage customCategoryPkg;
+		private UniqueNamePNameHandler nameHandler;
 		
 		protected CustomCategoryDeepCopyDialog(Shell parentShell, 
 				Collection elements) {
@@ -414,24 +425,23 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 					
 			CustomCategory source = (CustomCategory) getElements().get(0);
 			CustomCategory targetParent = (CustomCategory) getDestination();
-			hiddenPkg = (ContentPackage) targetParent.eContainer();
 			
-			CustomCategory copy = (CustomCategory) deepCopy(source);
-			TngUtil.setDefaultName(targetParent, copy, copy.getName());
+			initDeepCopy(targetParent); 
+			CustomCategory copy = (CustomCategory) deepCopy(source);			
 			
 			//ITextReferenceReplacer txtRefReplacer = ExtensionManager.getTextReferenceReplacer();
-			
-			hiddenPkg.getContentElements().add(copy);
+			customCategoryPkg.getContentElements().add(copy);
 			targetParent.getCategorizedElements().add(copy);
 			
 			Collection<Resource> resouresToSave = new ArrayList();				
 			resouresToSave.add(targetParent.eResource());
 			
 			return resouresToSave;
-		}
+		}		
 		
 		private EObject deepCopy(EObject source) {			
 			EObject copy = UmaFactory.eINSTANCE.create(source.eClass());
+			handleNames(source, copy);
 		
 			List features = source.eClass().getEAllStructuralFeatures();
 			for (int i = 0; i < features.size(); i++) {
@@ -440,6 +450,18 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 				copyFeatureValue(source, copy, feature);
 			}
 			return copy;
+		}
+
+		private void handleNames(EObject source, EObject copy) {
+			if (copy instanceof CustomCategory) {
+				Object name = source.eGet(UmaPackage.eINSTANCE.getNamedElement_Name());
+				Object pname = source.eGet(UmaPackage.eINSTANCE.getMethodElement_PresentationName());
+				
+				copy.eSet(UmaPackage.eINSTANCE.getNamedElement_Name(), name);
+				copy.eSet(UmaPackage.eINSTANCE.getMethodElement_PresentationName(), pname);
+
+				nameHandler.ensureUnique((CustomCategory) copy);
+			}
 		}
 		
 		private void copyFeatureValue(EObject sourceObj, EObject copiedObj, EStructuralFeature feature) {
@@ -463,6 +485,10 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			if (sourceObj instanceof CustomCategory) {
 				if (feature == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
 					copiedValue = EcoreUtil.generateUUID();
+				} else if (feature == UmaPackage.eINSTANCE.getNamedElement_Name()) {
+					return;
+				} else if (feature == UmaPackage.eINSTANCE.getMethodElement_PresentationName()) {
+					return;
 				}
 				
 				//MigrationUtil a;
@@ -499,8 +525,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 					if (sobj instanceof CustomCategory) {
 						cobj = (CustomCategory) deepCopy((CustomCategory) sobj);
 						CustomCategory ccobj = (CustomCategory) cobj;
-						TngUtil.setDefaultName((CustomCategory) copiedObj, ccobj, ccobj.getName());
-						hiddenPkg.getContentElements().add(ccobj);
+						customCategoryPkg.getContentElements().add(ccobj);
 					}
 					copiedList.add(cobj);
 				}
@@ -515,6 +540,12 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			newShell.setText(AuthoringUIResources.deepCopy_text); 
 		}
 		
+		private void initDeepCopy(CustomCategory targetParent) {
+			MethodPlugin plugin = UmaUtil.getMethodPlugin(targetParent);
+			customCategoryPkg = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
+			nameHandler = new UniqueNamePNameHandler(customCategoryPkg.getContentElements());
+		}
+			
 	}
 
 

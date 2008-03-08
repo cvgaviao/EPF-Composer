@@ -26,6 +26,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * Unassign method element.
@@ -77,18 +78,26 @@ public class UnassignAction extends LibraryViewSimpleAction {
 			return null;
 		}
 		CustomCategory parentCc = (CustomCategory) parent;						
-		unassign(element, parentCc, new ArrayList());
+		unassign(getLibraryView().getSite().getShell(), element, parentCc, new ArrayList());
 		
 		return Collections.singleton(parentCc.eResource());
 		
 	}
 
-	public static void unassign(Object element, CustomCategory parentCc, ArrayList usedCategories) {
-		LibraryModificationHelper helper = new LibraryModificationHelper();
-		ArrayList elements  = new ArrayList();
+	public static void unassign(Shell shell, final Object element, final CustomCategory parentCc, final ArrayList usedCategories) {
+		final LibraryModificationHelper helper = new LibraryModificationHelper();
+		final ArrayList elements  = new ArrayList();
 		elements.add(element);
-		CustomCategoryAssignPage.removeItemsFromModel1(elements, parentCc, usedCategories,
-				helper.getActionManager(), CustomCategoryAssignPage.getAncestors(parentCc));
+		
+		shell.getDisplay().syncExec(new Runnable() {
+			public void run() {
+				CustomCategoryAssignPage.removeItemsFromModel1(elements, parentCc, usedCategories,
+						helper.getActionManager(), CustomCategoryAssignPage.getAncestors(parentCc));
+			}
+		});
+
+		
+		
 	}
 	
 

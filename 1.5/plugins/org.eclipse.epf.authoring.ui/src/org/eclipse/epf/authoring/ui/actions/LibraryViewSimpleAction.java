@@ -12,6 +12,7 @@ package org.eclipse.epf.authoring.ui.actions;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -88,9 +89,13 @@ public abstract class LibraryViewSimpleAction extends Action {
 		ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 				.getCurrentPersister().getFailSafePersister();
 		try {
+			HashSet<Resource> seens = new HashSet<Resource>();
 			for (Iterator<Resource> it = resouresToSave.iterator(); it.hasNext();) {
 				MultiFileXMIResourceImpl res = (MultiFileXMIResourceImpl) it.next();
-				persister.save(res);	
+				if (! seens.contains(res)) {
+					persister.save(res);
+					seens.add(res);
+				}
 			}
 			persister.commit();
 		} catch (Exception e) {
