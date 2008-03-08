@@ -63,7 +63,7 @@ public class WBSDropCommand extends BSDropCommand {
 			Set descriptorsToRefresh = synchronize ? batchCommand.getDescriptorsToRefresh() : null;
 
 			List bes = activity.getBreakdownElements();
-			UniqueNamePNameHandler uniqueNamesHandler = new UniqueNamePNameHandler(bes, bes);
+			UniqueNamePNameHandler uniqueNamesHandler = new UniqueNamePNameHandler(bes);
 			
 			for (int i = 0; i < dropElements.size(); i++) {
 				Task task = (Task) dropElements.get(i);

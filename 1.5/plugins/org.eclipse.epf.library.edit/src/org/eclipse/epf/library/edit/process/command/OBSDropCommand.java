@@ -105,7 +105,7 @@ public class OBSDropCommand extends BSDropCommand {
 				.getDescriptorsToRefresh() : null;
 
 		List bes = activity.getBreakdownElements();
-		UniqueNamePNameHandler uniqueNamesHandler = new UniqueNamePNameHandler(bes, bes);
+		UniqueNamePNameHandler uniqueNamesHandler = new UniqueNamePNameHandler(bes);
 				
 		int size = dropElements.size();
 		for (int i = 0; i < size; i++) {
