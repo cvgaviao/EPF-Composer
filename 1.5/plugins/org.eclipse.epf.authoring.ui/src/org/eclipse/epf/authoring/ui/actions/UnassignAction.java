@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.actions.LibraryViewSimpleAction.CustomeCategoryAction;
 import org.eclipse.epf.authoring.ui.forms.CustomCategoryAssignPage;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
@@ -34,7 +35,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author Weiping Lu
  * @since  1.5
  */
-public class UnassignAction extends LibraryViewSimpleAction {
+public class UnassignAction extends CustomeCategoryAction {
 
 	/**
 	 * Creates an instance
@@ -45,6 +46,9 @@ public class UnassignAction extends LibraryViewSimpleAction {
 	}
 	
 	protected void doRun() {
+		if (! checkModify()) {
+			return;
+		}
 		Collection<Resource> resouceToSave = doRunBeforeSave();
 		save(resouceToSave);
 	}

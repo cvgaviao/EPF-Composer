@@ -34,6 +34,13 @@ public class ReassignAction extends AssignAction {
 		setText(AuthoringUIResources.reassignAction_text);
 	}
 	
+	protected void doRun() {		
+		if (!checkModify()) {
+			return;
+		}
+		super.doRun();
+	}
+	
 	protected AssignDialog getDialog(Collection elements) {
 		return AssignDialog.newReassignDialog(getLibraryView().getSite().getShell(), elements,
 				(MethodElement) getSelectionParentObject());

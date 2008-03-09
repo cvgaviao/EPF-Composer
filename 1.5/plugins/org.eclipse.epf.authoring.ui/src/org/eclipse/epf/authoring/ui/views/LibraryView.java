@@ -1034,6 +1034,11 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 					boolean enabled = !locked;
 					renameAction.setEnabled(enabled);
 					moveAction.setEnabled(enabled);
+					
+					//assignAction.setEnabled(enabled);
+					unassignAction.setEnabled(enabled);
+					reassignAction.setEnabled(enabled);
+					//customCategoryDeepCopyAction.setEnabled(enabled);
 				}
 			}
 		}
@@ -1056,6 +1061,9 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 				renameAction.setEnabled(enabled);
 			}
 			moveAction.setEnabled(enabled);
+			
+			unassignAction.setEnabled(enabled);
+			reassignAction.setEnabled(enabled);
 
 			canMove = canMove(sel);
 			

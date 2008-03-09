@@ -14,13 +14,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.actions.LibraryViewSimpleAction.CustomeCategoryAction;
 import org.eclipse.epf.authoring.ui.dialogs.AssignDialog;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
-import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
@@ -32,7 +29,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  * @author Weiping Lu
  * @since  1.5
  */
-public class AssignAction extends LibraryViewSimpleAction {
+public class AssignAction extends CustomeCategoryAction {
 
 	/**
 	 * Creates an instance
@@ -42,27 +39,13 @@ public class AssignAction extends LibraryViewSimpleAction {
 		super(libView, AuthoringUIResources.assignAction_text);
 	}
 	
-	protected void doRun() {
+	protected void doRun() {		
 		Collection elementsToAssign = new ArrayList();
 		IStructuredSelection selection = (IStructuredSelection) getLibraryView().getSelection();
 		for (Iterator iter = selection.iterator(); iter.hasNext();) {
 			Object element = iter.next();
 			if (element instanceof MethodElement
 					|| (element = TngUtil.unwrap(element)) instanceof CustomCategory) {
-				// Handle CustomCategory specially.
-				EObject container = ((EObject) element).eContainer();
-				IStatus status = UserInteractionHelper.checkModify(
-						container, getLibraryView().getSite().getShell());
-				if (container != null && !status.isOK()) {
-					AuthoringUIPlugin
-							.getDefault()
-							.getMsgDialog()
-							.displayError(
-									AuthoringUIResources.errorDialog_title,
-									AuthoringUIResources.errorDialog_moveError,
-									status);
-					return;
-				}
 				elementsToAssign.add(element);
 			}
 		}

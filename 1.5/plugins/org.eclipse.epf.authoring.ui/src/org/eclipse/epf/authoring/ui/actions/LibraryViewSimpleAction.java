@@ -16,13 +16,20 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
 import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
 import org.eclipse.epf.services.ILibraryPersister;
+import org.eclipse.epf.uma.CustomCategory;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -105,6 +112,50 @@ public abstract class LibraryViewSimpleAction extends Action {
 		}
 		
 		return true;
+	}
+	
+	public static abstract class CustomeCategoryAction extends LibraryViewSimpleAction {
+		public CustomeCategoryAction(LibraryView libView, String text) {
+			super(libView, text);
+		}
+		
+		protected boolean checkModify() {
+			IStructuredSelection selection = (IStructuredSelection) getLibraryView().getSelection();
+			for (Iterator iter = selection.iterator(); iter.hasNext();) {
+				Object element = iter.next();
+				if (element instanceof MethodElement
+						|| (element = TngUtil.unwrap(element)) instanceof CustomCategory) {
+					if (! checkModify(element)) {
+						return false;
+					}
+				}
+			}
+			
+			return true;
+		}
+				
+		protected boolean checkModify(Object element) {
+			if (element instanceof MethodElement
+					|| (element = TngUtil.unwrap(element)) instanceof CustomCategory) {
+				// Handle CustomCategory specially.
+				EObject container = ((EObject) element).eContainer();
+				IStatus status = UserInteractionHelper.checkModify(
+						container, getLibraryView().getSite().getShell());
+				if (container != null && !status.isOK()) {
+					AuthoringUIPlugin
+							.getDefault()
+							.getMsgDialog()
+							.displayError(
+									AuthoringUIResources.errorDialog_title,
+									AuthoringUIResources.errorDialog_moveError,
+									status);
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		
 	}
 	
 }
