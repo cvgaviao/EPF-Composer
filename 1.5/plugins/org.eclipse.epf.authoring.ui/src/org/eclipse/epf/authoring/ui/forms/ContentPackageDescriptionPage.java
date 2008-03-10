@@ -82,6 +82,8 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 			+ ": "; //$NON-NLS-1$
 
 	private Text ctrl_name;
+	
+	private Text ctrl_presentation_name;
 
 	private Text ctrl_brief_desc;
 
@@ -160,6 +162,21 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 			ctrl_name.setLayoutData(gridData);
 		}
 
+		// presentation name 
+		Label l_presentation_name = toolkit.createLabel(generalComposite,
+				AuthoringUIText.PRESENTATION_NAME_TEXT);
+		{
+			GridData gridData = new GridData(GridData.BEGINNING);
+			l_presentation_name.setLayoutData(gridData);
+		}
+
+		ctrl_presentation_name = toolkit.createText(generalComposite, ""); //$NON-NLS-1$
+		{
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL
+					| GridData.GRAB_HORIZONTAL);
+			ctrl_presentation_name.setLayoutData(gridData);
+		}
+		
 		// brief desc
 		Label l_brief_desc = toolkit.createLabel(generalComposite,
 				AuthoringUIText.BRIEF_DESCRIPTION_TEXT);
@@ -333,7 +350,42 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 				}
 			}
 		});
+		
+		// add presentation_name listener
+		ctrl_presentation_name.addModifyListener(modelModifyListener);
+		ctrl_presentation_name.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent e) {
+				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
+						UmaPackage.eINSTANCE.getMethodElement_PresentationName());
+				// when user tab to this field, select all text
+				ctrl_presentation_name.selectAll();
+			}
 
+			public void focusLost(FocusEvent e) {
+				String oldContent = contentPackage.getPresentationName();
+				if (((MethodElementEditor) getEditor()).mustRestoreValue(
+						e.widget, oldContent)) {
+					return;
+				}
+				String newName = ctrl_presentation_name.getText();
+				if (!newName.equals(contentPackage.getPresentationName())) {
+					boolean success = editor.getActionManager().doAction(
+							IActionManager.SET,
+							contentPackage,
+							UmaPackage.eINSTANCE
+									.getMethodElement_PresentationName(),
+							newName, -1);
+					if (success) {
+						ctrl_presentation_name.setText(newName);
+					}
+				}
+				// clear the selection when the focus of the component is lost 
+				if(ctrl_presentation_name.getSelectionCount() > 0){
+					ctrl_presentation_name.clearSelection();
+				} 
+			}
+		});
+		
 		ctrl_brief_desc.addModifyListener(modelModifyListener);
 		ctrl_brief_desc.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
@@ -373,6 +425,7 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 
 	protected void enableControls(boolean editable) {
 		ctrl_name.setEditable(editable);
+		ctrl_presentation_name.setEditable(editable);
 		ctrl_brief_desc.setEditable(editable);
 	}
 
@@ -381,11 +434,13 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 	 */
 	private void loadData() {
 		String name = contentPackage.getName();
+		String presentation_name = contentPackage.getPresentationName();
 		String desc = contentPackage.getBriefDescription();
 
 
 		ctrl_name.setText(name == null ? "" : name); //$NON-NLS-1$
 		ctrl_name.selectAll();
+		ctrl_presentation_name.setText(desc == null ? "" : presentation_name); //$NON-NLS-1$
 		ctrl_brief_desc.setText(desc == null ? "" : desc); //$NON-NLS-1$
 	}
 

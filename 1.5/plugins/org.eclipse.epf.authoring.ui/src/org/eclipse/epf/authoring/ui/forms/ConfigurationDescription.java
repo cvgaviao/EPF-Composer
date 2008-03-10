@@ -14,10 +14,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.ConfigurationEditor;
 import org.eclipse.epf.authoring.ui.editors.ConfigurationEditorInput;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
-import org.eclipse.epf.authoring.ui.views.ConfigurationView;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -37,8 +37,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -67,6 +65,8 @@ public class ConfigurationDescription extends FormPage implements IRefreshable {
 	private ScrolledForm form = null;
 
 	private Text nameText;
+	
+	private Text ctrl_presentation_name;
 
 	private Text despText;
 
@@ -136,6 +136,17 @@ public class ConfigurationDescription extends FormPage implements IRefreshable {
 		TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
 		nameText.setLayoutData(td);
 		nameText.setText(config.getName());
+		
+		// presentation name 
+		Label l_presentation_name = toolkit.createLabel(sectionClient,
+				AuthoringUIText.PRESENTATION_NAME_TEXT, SWT.NONE);
+
+		ctrl_presentation_name = toolkit.createText(sectionClient, "", SWT.NONE); //$NON-NLS-1$
+		{
+			TableWrapData twd = new TableWrapData(TableWrapData.FILL_GRAB);
+			ctrl_presentation_name.setLayoutData(twd);
+		}
+		ctrl_presentation_name.setText(config.getPresentationName());
 
 		Label despLabel = toolkit
 				.createLabel(
@@ -257,6 +268,41 @@ public class ConfigurationDescription extends FormPage implements IRefreshable {
 				}
 			}
 
+		});
+		
+		// add presentation_name listener
+		ctrl_presentation_name.addModifyListener(modelModifyListener);
+		ctrl_presentation_name.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent e) {
+				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
+						UmaPackage.eINSTANCE.getMethodElement_PresentationName());
+				// when user tab to this field, select all text
+				ctrl_presentation_name.selectAll();
+			}
+
+			public void focusLost(FocusEvent e) {
+				String oldContent = config.getPresentationName();
+				if (((MethodElementEditor) getEditor()).mustRestoreValue(
+						e.widget, oldContent)) {
+					return;
+				}
+				String newName = ctrl_presentation_name.getText();
+				if (!newName.equals(config.getPresentationName())) {
+					boolean success = actionMgr.doAction(
+							IActionManager.SET,
+							config,
+							UmaPackage.eINSTANCE
+									.getMethodElement_PresentationName(),
+							newName, -1);
+					if (success) {
+						ctrl_presentation_name.setText(newName);
+					}
+				}
+				// clear the selection when the focus of the component is lost 
+				if(ctrl_presentation_name.getSelectionCount() > 0){
+					ctrl_presentation_name.clearSelection();
+				} 
+			}
 		});
 
 		despText.addModifyListener(modelModifyListener);
