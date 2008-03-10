@@ -149,6 +149,7 @@ public class HTMLFormatter {
 		tidy.setSpaces(indentSize);
 		tidy.setInputEncoding("UTF-16"); //$NON-NLS-1$
 		tidy.setOutputEncoding("UTF-16"); //$NON-NLS-1$
+		tidy.setFixBackslash(false);
 		// this will add <p> around each text block (?that isn't in a block already?)
 //		tidy.setEncloseBlockText(true);
 		// setting this seemed to prevent JTidy from indenting the source
