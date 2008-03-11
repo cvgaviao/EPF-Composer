@@ -549,6 +549,7 @@
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
+						<xsl:text> </xsl:text>
 					</xsl:for-each>
 				</xsl:if>
 				<xsl:if test="count($baseElement) > 0">
