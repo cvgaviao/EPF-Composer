@@ -1074,4 +1074,29 @@ public abstract class AbstractElementLayout implements IElementLayout {
 
 		return items;
 	}
+	
+	protected boolean isBreakdownElement_Guidances(EStructuralFeature feature) {
+		UmaPackage umaPkg = UmaPackage.eINSTANCE;
+		if (feature == umaPkg.getBreakdownElement_Checklists()) {
+			return true;
+		}
+		if (feature == umaPkg.getBreakdownElement_Concepts()) {
+			return true;
+		}
+		if (feature == umaPkg.getBreakdownElement_Examples()) {
+			return true;
+		}
+		if (feature == umaPkg.getBreakdownElement_Guidelines()) {
+			return true;
+		}	
+		if (feature == umaPkg.getBreakdownElement_ReusableAssets()) {
+			return true;
+		}	
+		if (feature == umaPkg.getBreakdownElement_SupportingMaterials()) {
+			return true;
+		}		
+		
+		return false;
+	}
+	
 }

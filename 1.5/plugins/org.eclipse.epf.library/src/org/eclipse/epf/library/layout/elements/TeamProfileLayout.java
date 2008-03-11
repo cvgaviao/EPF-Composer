@@ -84,6 +84,10 @@ public class TeamProfileLayout extends AbstractProcessElementLayout {
 				}
 			}
 		} else if (feature.isMany()) {
+			if (isBreakdownElement_Guidances(feature)) {
+				super.loadFeature(feature, elementXml, includeReferences);
+				return;
+			}
 			List pv = ConfigurationHelper.calc0nFeatureValue(element, feature,
 					getLayoutMgr().getElementRealizer());
 			List roleDescList = new ArrayList();
