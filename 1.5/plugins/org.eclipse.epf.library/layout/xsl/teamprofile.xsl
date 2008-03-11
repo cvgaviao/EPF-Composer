@@ -24,6 +24,8 @@
 	<xsl:include href="main_description.xsl"/>
 	<xsl:include href="key_consideration.xsl"/>
 	<xsl:include href="property.xsl"/>
+	<xsl:include href="guidance_helper.xsl"/>
+	<xsl:include href="illustration.xsl"/>
 
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
@@ -94,10 +96,12 @@
 							</xsl:call-template>
 							<xsl:call-template name="usageSection">
 								<xsl:with-param name="contentDescription" select="$breakdownElementDescription"/>
-							</xsl:call-template>							
+							</xsl:call-template>						
+							<xsl:call-template name="illustrationsSection"/>	
 							<xsl:call-template name="keyConsiderationsSection">
 								<xsl:with-param name="description" select="$breakdownElementDescription"/>
 							</xsl:call-template>							
+							<xsl:call-template name="moreInfoSection"/>		
 							<xsl:call-template name="copyright">
 								<xsl:with-param name="copyright" select="$copyright"/>
 							</xsl:call-template>
@@ -198,5 +202,38 @@
 			</div>
 		</xsl:if>
 	</xsl:template>
+	
+	<xsl:template name="moreInfoSection">
+		<xsl:variable name="checklists" select="referenceList/Element[@Type='Checklist']"/>
+		<xsl:variable name="concepts" select="referenceList/Element[@Type='Concept']"/>
+		<xsl:variable name="guidelines" select="referenceList/Element[@Type='Guideline']"/>
+		<xsl:variable name="supportingMaterials" select="referenceList/Element[@Type='SupportingMaterial']"/>
+		<xsl:variable name="whitePapers" select="referenceList/Element[@Type='Whitepaper']"/>
+		<xsl:if test="count($checklists) + count($concepts) + count($guidelines) + count($supportingMaterials) + count($whitePapers) > 0">
+			<div class="sectionHeading">
+				<xsl:value-of select="$moreInfoText"/>
+			</div>
+			<div class="sectionContent">
+				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="addChecklists">
+						<xsl:with-param name="checklists" select="$checklists"/>
+					</xsl:call-template>
+					<xsl:call-template name="addConcepts">
+						<xsl:with-param name="concepts" select="$concepts"/>
+					</xsl:call-template>
+					<xsl:call-template name="addGuidelines">
+						<xsl:with-param name="guidelines" select="$guidelines"/>
+					</xsl:call-template>
+					<xsl:call-template name="addSupportingMaterials">
+						<xsl:with-param name="supportingMaterials" select="$supportingMaterials"/>
+					</xsl:call-template>
+					<xsl:call-template name="addWhitePapers">
+						<xsl:with-param name="whitePapers" select="$whitePapers"/>
+					</xsl:call-template>
+				</table>
+			</div>
+		</xsl:if>
+	</xsl:template>
+
 
 </xsl:stylesheet>
