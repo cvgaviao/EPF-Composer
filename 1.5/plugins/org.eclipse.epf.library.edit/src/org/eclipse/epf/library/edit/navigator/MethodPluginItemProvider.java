@@ -27,11 +27,11 @@ import org.eclipse.epf.library.edit.IStatefulItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.StructuredMethodPluginItemProvider;
+import org.eclipse.epf.library.edit.command.MethodPluginInitializeCopyCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 
 /**
@@ -127,7 +127,7 @@ public class MethodPluginItemProvider extends StructuredMethodPluginItemProvider
 
 	protected Command createInitializeCopyCommand(EditingDomain domain,
 			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
+		return new MethodPluginInitializeCopyCommand(domain, owner, helper);
 	}
 
 	protected Command createCreateCopyCommand(EditingDomain domain,

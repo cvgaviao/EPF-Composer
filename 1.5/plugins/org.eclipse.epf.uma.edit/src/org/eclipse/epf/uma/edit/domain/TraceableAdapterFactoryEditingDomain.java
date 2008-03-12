@@ -40,6 +40,8 @@ public class TraceableAdapterFactoryEditingDomain extends
 	private Map originalToClipboardMap = null;
 	
 	private Map<EObject, EObject> clipboardToOriginalMap;
+	
+	private Object selectedObjectToCopy = null;
 
 	/**
 	 * Creates a new instance.
@@ -215,5 +217,13 @@ public class TraceableAdapterFactoryEditingDomain extends
 
 	public Map<EObject, EObject> getClipboardToOriginalMap() {
 		return clipboardToOriginalMap;
+	}
+
+	public Object getSelectedObjectToCopy() {
+		return selectedObjectToCopy;
+	}
+
+	public void setSelectedObjectToCopy(Object selectedObjectToCopy) {
+		this.selectedObjectToCopy = selectedObjectToCopy;
 	}
 }
