@@ -1191,7 +1191,12 @@ public class ResourceHelper {
 							.matcher(urltext);
 					if (m2.find()) {
 						String url = m2.group(1).trim().replaceAll("\"", ""); //$NON-NLS-1$ //$NON-NLS-2$
-						url = resolveUrl(url, contentPath, backPath);
+						if ( isExternalLink(url) ) {
+							// decode for external link 
+							url = XMLUtil.unescape(NetUtil.decodedFileUrl(url));
+						} else {
+							url = resolveUrl(url, contentPath, backPath);
+						}
 						if (url != null) {
 							String replacement = urltext.substring(m2.start(), m2.start(1))
 									+ url
