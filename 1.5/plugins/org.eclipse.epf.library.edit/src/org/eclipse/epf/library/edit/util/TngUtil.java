@@ -514,11 +514,11 @@ public final class TngUtil {
 		}
 		String label = null;
 		boolean showPresentationNames = PresentationContext.INSTANCE.isShowPresentationNames();
-		if (showPresentationNames && object instanceof DescribableElement)
-			label = ((DescribableElement) object).getPresentationName();
-		else if (showPresentationNames && object instanceof ProcessComponent)
+		if (showPresentationNames && object instanceof ProcessComponent)
 			label = ((ProcessComponent) object).getProcess()
 					.getPresentationName();
+		else if (showPresentationNames && object instanceof MethodElement)
+			label = ((MethodElement) object).getPresentationName();
 		if (label == null || label.trim().length() == 0)
 			label = ((NamedElement) object).getName();
 		return label == null || label.trim().length() == 0 ? alternativeLabel : label;
