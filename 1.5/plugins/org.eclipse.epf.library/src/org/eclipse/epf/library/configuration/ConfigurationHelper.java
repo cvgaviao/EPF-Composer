@@ -38,6 +38,7 @@ import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.DescribableElement;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -778,7 +779,11 @@ public class ConfigurationHelper {
 		
 		// according to Peter, the realization should be always top down.
 		// i.e realize the base first, then include the contributions
-		__mergeBase(element, ve, feature, config, values, realizer);	
+		__mergeBase(element, ve, feature, config, values, realizer);
+		
+		if (element instanceof FulfillableElement) {
+			mergeSlotFeatureValues((FulfillableElement) element, feature, config, values, realizer);
+		}
 		
 		if (realizer != null) {
 			realizer.addExtraFeatureValues(element, feature, values);
@@ -787,6 +792,63 @@ public class ConfigurationHelper {
 		if (!is01Feature(feature) || (values.size() == 0) ) {
 			__mergeContributors(element, ve, feature, config, values, realizer);
 		}
+	}
+	
+	private static void mergeSlotFeatureValues(FulfillableElement element,
+			EStructuralFeature feature, MethodConfiguration config,
+			FeatureValue values, ElementRealizer realizer) {
+		if (!(element instanceof WorkProduct)) {
+			return;
+		}
+		if (values.size() > 0) {
+			return;
+		}
+
+		List<FulfillableElement> slots = element.getFulfills();
+
+		for (FulfillableElement slot : slots) {
+			if (slot instanceof WorkProduct) {
+				slot = (FulfillableElement) getCalculatedElement(slot, config);
+				if (slotMatching(slot, element)) {
+					calculateFeature(slot, null, feature, config, values,
+							realizer);
+				}
+			}
+		}
+	}
+	
+	private static void mergeSlotOppositeFeatureValues(FulfillableElement element,
+			OppositeFeature feature, MethodConfiguration config,
+			FeatureValue values, ElementRealizer realizer) {
+		if (!(element instanceof WorkProduct)) {
+			return;
+		}
+		if (values.size() > 0) {
+			return;
+		}
+		
+		List<FulfillableElement> slots = element.getFulfills();
+
+		for (FulfillableElement slot : slots) {
+			if (slot instanceof WorkProduct) {
+				slot = (FulfillableElement) getCalculatedElement(slot, config);
+				if (slotMatching(slot, element)) {
+					calculateOppositeFeature(slot, feature, realizer, values);
+				}
+			}
+		}
+	}	
+	
+	private static boolean slotMatching(FulfillableElement slot, FulfillableElement element) {		
+		if (slot == null || !slot.getIsAbstract()) {
+			return false;
+		}
+
+		
+		//if not tag matching
+		//return false
+		
+		return true;
 	}
 	
 	private static void __mergeBase(MethodElement element,
@@ -1022,6 +1084,11 @@ public class ConfigurationHelper {
 					calculateOppositeFeature(e, feature, mergeReplacerBase, mergeExtenderBase, realizer, values);
 				}
 			}
+			
+			if (element instanceof FulfillableElement) {
+				mergeSlotOppositeFeatureValues((FulfillableElement) element, feature, config, values, realizer);
+			}
+			
 		}
 	}
 
