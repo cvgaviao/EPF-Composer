@@ -670,35 +670,35 @@ public class LibraryService implements ILibraryService {
 			final ILibraryServiceListener listener = it.next();
 			switch (eventId) {
 			case EVENT_CREATE_LIBRARY:
-				SafeUpdateController.syncExec(new Runnable() {
+				SafeUpdateController.asyncExec(new Runnable() {
 					public void run() {
 						listener.libraryCreated(library);
 					}
 				});
 				break;
 			case EVENT_OPEN_LIBRARY:
-				SafeUpdateController.syncExec(new Runnable() {
+				SafeUpdateController.asyncExec(new Runnable() {
 					public void run() {
 						listener.libraryOpened(library);
 					}
 				});
 				break;
 			case EVENT_REOPEN_LIBRARY:
-				SafeUpdateController.syncExec(new Runnable() {
+				SafeUpdateController.asyncExec(new Runnable() {
 					public void run() {
 						listener.libraryReopened(library);
 					}
 				});
 				break;
 			case EVENT_CLOSE_LIBRARY:
-				SafeUpdateController.syncExec(new Runnable() {
+				SafeUpdateController.asyncExec(new Runnable() {
 					public void run() {
 						listener.libraryClosed(library);
 					}
 				});
 				break;
 			case EVENT_SET_CURRENT_LIBRARY:
-				SafeUpdateController.syncExec(new Runnable() {
+				SafeUpdateController.asyncExec(new Runnable() {
 					public void run() {
 						listener.librarySet(library);
 					}
