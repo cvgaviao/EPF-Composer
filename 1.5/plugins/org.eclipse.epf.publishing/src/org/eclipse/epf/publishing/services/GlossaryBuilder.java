@@ -251,7 +251,7 @@ public class GlossaryBuilder {
 			// update the url text
 			String text = "<a " + urltext + ">" + linkedText + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-			m.appendReplacement(sb, text);
+			m.appendReplacement(sb, ResourceHelper.regExpEscape(text));
 		}
 
 		m.appendTail(sb);
