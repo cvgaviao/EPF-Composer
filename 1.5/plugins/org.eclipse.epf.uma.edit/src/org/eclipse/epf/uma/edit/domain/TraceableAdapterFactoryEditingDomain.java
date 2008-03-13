@@ -41,7 +41,10 @@ public class TraceableAdapterFactoryEditingDomain extends
 	
 	private Map<EObject, EObject> clipboardToOriginalMap;
 	
+	// when copy/pasting a plugin, these fields are used by the various copy/add commands for renaming the plugins
 	private Object selectedObjectToCopy = null;
+	private String newPackageName = null;
+	private String newPluginName = null;
 
 	/**
 	 * Creates a new instance.
@@ -225,5 +228,21 @@ public class TraceableAdapterFactoryEditingDomain extends
 
 	public void setSelectedObjectToCopy(Object selectedObjectToCopy) {
 		this.selectedObjectToCopy = selectedObjectToCopy;
+	}
+
+	public String getNewPackageName() {
+		return newPackageName;
+	}
+
+	public void setNewPackageName(String newPackageName) {
+		this.newPackageName = newPackageName;
+	}
+
+	public String getNewPluginName() {
+		return newPluginName;
+	}
+
+	public void setNewPluginName(String newPluginName) {
+		this.newPluginName = newPluginName;
 	}
 }
