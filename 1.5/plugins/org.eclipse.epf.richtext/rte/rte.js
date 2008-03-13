@@ -360,24 +360,33 @@ RTE.prototype.setInnerHTML = function(html) {
 
 // Sets the HTML source.
 RTE.prototype.setText = function(html) {
+//	alert('setText ' + html);
+	try {
 	if (this.supportRichTextEditing) {
 		html = this.decodeString(html);
-		this.selectionInfo = getSelectionInfo();
+//		alert('setText doessupport ' + html);
+		this.selectionInfo = this.getSelectionInfo();
+//		alert('setText-pre-setInnerHTML ' + html);
 		this.setInnerHTML(html);
-		if (selectionInfo != null) {
+//		alert('setText-post-setInnerHTML ' + html);
+		if (this.selectionInfo != null) {
 			setTimeout("this.setSelection(this.selectionInfo);", 10);
 		}
 		this.modified = false;
 		this.setStatus(this.STATUS_EXEC_CMD, 1);
 	}
+	} catch (e) {
+		alert('setText e: ' + e.message);
+	}
+
 }
 
 RTE.prototype.setSelection = function (selectionInfo) {
-	if (!supportRichTextEditing) {
+	if (!this.supportRichTextEditing) {
 		return;
 	}
 	
-	contentWindow = document.getElementById(editorId).contentWindow;
+	contentWindow = document.getElementById(this.editorId).contentWindow;
 	editorDoc = contentWindow.document;
 	
 	try {
@@ -394,7 +403,7 @@ RTE.prototype.setSelection = function (selectionInfo) {
 			tempRange.select();
 			tempRange.scrollIntoView();
 		} else {
-			selection = this.window.getSelection();
+			selection = window.getSelection();
 			var startContainer = selectionInfo.startContainer;
 			var start = selectionInfo.start;
 			var endContainer = selectionInfo.endContainer;
@@ -411,19 +420,19 @@ RTE.prototype.setSelection = function (selectionInfo) {
 }
 
 RTE.prototype.getSelectionInfo = function () {
-	if (!supportRichTextEditing) {
+	if (!this.supportRichTextEditing) {
 		return null;
 	}	
 	
-	contentWindow = document.getElementById(editorId).contentWindow;
+	contentWindow = document.getElementById(this.editorId).contentWindow;
 	editorDoc = contentWindow.document;
 	
 	var tempSelRange;
 	try {
 	    if (document.all) {
-			selection = editorDoc.selection;
-			if (selection != null) {
-				tempSelRange = selection.createRange();
+			this.selection = editorDoc.selection;
+			if (this.selection != null) {
+				tempSelRange = this.selection.createRange();
 			}
 			// length of selection
 			var tempSelLen = tempSelRange.text.length;
@@ -440,9 +449,9 @@ RTE.prototype.getSelectionInfo = function () {
 			
 			return {start:startOffset, len:tempSelLen};
 	    } else {
-			selection = contentWindow.getSelection();
-			if (selection != null) {
-				tempSelRange = selection.getRangeAt(selection.rangeCount - 1).cloneRange();
+			this.selection = contentWindow.getSelection();
+			if (this.selection != null) {
+				tempSelRange = this.selection.getRangeAt(selection.rangeCount - 1).cloneRange();
 			}
 			return {startContainer: tempSelRange.startContainer, start:tempSelRange.startOffset, 
 				endContainer: tempSelRange.endContainer, end:tempSelRange.endOffset};
