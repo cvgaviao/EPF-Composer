@@ -10,25 +10,27 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.providers;
 
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
-import org.eclipse.epf.authoring.ui.views.CategoryTreeViewerWrapper;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 
 /**
- * Filter for Custom Category view of configuration page
+ * Filter for viewers of configuration page.
+ * If hideUnchecked is set, it will filter unchecked elements
  * 
  * @author Jeff Hardy
  */
-public class CategoryTreeFilter extends ViewerFilter {
+public class HideUncheckedViewerFilter extends ViewerFilter {
 	
-	CategoryTreeViewerWrapper CCViewer;
+	private ContainerCheckedTreeViewer viewer;
 	
 	private boolean hideUnchecked = false;
 	
-	public CategoryTreeFilter(CategoryTreeViewerWrapper CCViewer) {
-		this.CCViewer = CCViewer;
+	public HideUncheckedViewerFilter(ContainerCheckedTreeViewer viewer) {
+		this.viewer = viewer;
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class CategoryTreeFilter extends ViewerFilter {
 	}
 	
 	private boolean isChecked(Object element) {
-		Set<Object> checkedItems = CCViewer.getAllCheckedTreeItems();
+		List<Object> checkedItems = Arrays.asList(viewer.getCheckedElements());
 		return checkedItems.contains(element);
 	}
 }

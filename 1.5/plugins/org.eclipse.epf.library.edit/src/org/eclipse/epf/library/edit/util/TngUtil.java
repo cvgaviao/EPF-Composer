@@ -2997,4 +2997,17 @@ public final class TngUtil {
 		}
 		return null;
 	}
+
+	public static Object getFeatureValueWrapperItemProviderForCC(AdapterFactory adapterFactory, CustomCategory cc) {
+		// get ITreeContentProvider adapater
+		CustomCategoryItemProvider adapter = (CustomCategoryItemProvider) adapterFactory.adapt(cc, ITreeItemContentProvider.class);
+		for (Iterator iter = adapter.getNotifyChangedListeners().iterator(); iter.hasNext();) {
+			Object listener = iter.next();
+			if (listener instanceof FeatureValueWrapperItemProvider
+					&& unwrap(listener) == cc) {
+				return (FeatureValueWrapperItemProvider)listener;
+			}
+		}
+		return cc;
+	}
 }

@@ -101,14 +101,6 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
 	}
 
 	/**
-	 * Returns closure for this configuration
-	 * @return closure
-	 */
-	public ConfigurationClosure getClosure() {
-		return configPage.getClosure();
-	}
-
-	/**
 	 * @see org.eclipse.epf.authoring.ui.editors.MethodElementEditor#createInput(org.eclipse.epf.uma.MethodElement)
 	 */
 	protected IEditorInput createInput(MethodElement e) {

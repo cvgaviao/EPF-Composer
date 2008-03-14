@@ -25,7 +25,6 @@ import org.eclipse.emf.edit.provider.IViewerNotification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.library.edit.FeatureValueWrapperItemProvider;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
-import org.eclipse.epf.library.edit.category.CustomCategoryItemProvider;
 import org.eclipse.epf.library.edit.category.DisciplineCategoriesItemProvider;
 import org.eclipse.epf.library.edit.category.DomainsItemProvider;
 import org.eclipse.epf.library.edit.category.RoleSetsItemProvider;
@@ -220,19 +219,6 @@ public class CategoryContentProvider extends AdapterFactoryContentProvider {
 		}
 	}
 	
-	public Object getFirstTreeItemForCC(CustomCategory cc) {
-		// get ITreeContentProvider adapater
-		CustomCategoryItemProvider adapter = (CustomCategoryItemProvider) getAdapterFactory().adapt(cc, ITreeItemContentProvider.class);
-		for (Iterator iter = adapter.getNotifyChangedListeners().iterator(); iter.hasNext();) {
-			Object listener = iter.next();
-			if (listener instanceof FeatureValueWrapperItemProvider
-					&& TngUtil.unwrap(listener) == cc) {
-				return (FeatureValueWrapperItemProvider)listener;
-			}
-		}
-		return cc;
-	}
-
 	public Collection<Object> getTreeItems(Object item) {
 		List<Object> result = new ArrayList<Object>();
 		// get ITreeContentProvider adapater
