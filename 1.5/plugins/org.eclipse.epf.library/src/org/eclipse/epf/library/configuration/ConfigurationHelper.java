@@ -11,6 +11,8 @@
 package org.eclipse.epf.library.configuration;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
@@ -24,6 +26,7 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.SectionList;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -814,6 +817,11 @@ public class ConfigurationHelper {
 			if (slotMatching(slot, element, realizer)) {
 				resultList.add(slot);
 			}
+		}
+		
+		if (resultList.size() > 1) {
+			Comparator comparator = PresentationContext.INSTANCE.getPresNameComparator();
+			Collections.<FulfillableElement>sort(resultList, comparator);
 		}
 		
 		return resultList;
