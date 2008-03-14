@@ -52,15 +52,24 @@ public class FulfillmentTest extends VariablityBaseTestCase {
 		Task t1 = LibraryTestHelper.createTask(pkg, "t1");
 		Task t2 = LibraryTestHelper.createTask(pkg, "t2");
 		
-		Artifact slot1 = LibraryTestHelper.createArtifact(pkg, "b_slot1");
-		Artifact slot2 = LibraryTestHelper.createArtifact(pkg, "a_slot2");
+		Artifact slot1 = LibraryTestHelper.createArtifact(pkg, "slot1");
+		Artifact slot2 = LibraryTestHelper.createArtifact(pkg, "slot2");
 		slot1.setIsAbstract(true);
 		slot2.setIsAbstract(true);
+		slot1.setPresentationName("b_slot");
+		slot2.setPresentationName("a_slot");
 		
 		Artifact a1 = LibraryTestHelper.createArtifact(pkg, "a1");
 		a1.getFulfills().add(slot1);
 		a1.getFulfills().add(slot2);
-				
+		
+		Artifact a2 = LibraryTestHelper.createArtifact(pkg, "a2");
+		a2.getFulfills().add(slot1);
+		a2.getFulfills().add(slot2);
+		
+		a1.setPresentationName("b_a1");
+		a2.setPresentationName("a_a2");
+		
 		MethodConfiguration config = LibraryTestHelper.createConfiguration("config");
 		config.getMethodPluginSelection().add(plugin);
 		config.getMethodPackageSelection().add(pkg);
@@ -85,5 +94,11 @@ public class FulfillmentTest extends VariablityBaseTestCase {
 		items = ConfigurationHelper.calcFulfillableElement_Fulfills(a1, config);
 		assertEquals(slot2, items.get(0));
 		assertEquals(slot1, items.get(1));
+		
+		ofeature = AssociationHelper.FulFills_FullFillableElements;
+		items = ConfigurationHelper.calcFulfills_FulfillableElement(slot1, config);
+		assertEquals(2, items.size());
+		assertEquals(a2, items.get(0));
+		assertEquals(a1, items.get(1));
 	}
 }
