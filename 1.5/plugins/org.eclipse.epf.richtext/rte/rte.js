@@ -360,25 +360,16 @@ RTE.prototype.setInnerHTML = function(html) {
 
 // Sets the HTML source.
 RTE.prototype.setText = function(html) {
-//	alert('setText ' + html);
-	try {
 	if (this.supportRichTextEditing) {
 		html = this.decodeString(html);
-//		alert('setText doessupport ' + html);
 		this.selectionInfo = this.getSelectionInfo();
-//		alert('setText-pre-setInnerHTML ' + html);
 		this.setInnerHTML(html);
-//		alert('setText-post-setInnerHTML ' + html);
 		if (this.selectionInfo != null) {
 			setTimeout("this.setSelection(this.selectionInfo);", 10);
 		}
 		this.modified = false;
 		this.setStatus(this.STATUS_EXEC_CMD, 1);
 	}
-	} catch (e) {
-		alert('setText e: ' + e.message);
-	}
-
 }
 
 RTE.prototype.setSelection = function (selectionInfo) {
