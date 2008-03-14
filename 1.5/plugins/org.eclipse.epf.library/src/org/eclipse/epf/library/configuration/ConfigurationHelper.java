@@ -796,11 +796,32 @@ public class ConfigurationHelper {
 		}
 	}
 	
+	public static List<FulfillableElement> calcFulfillableElement_Fulfills(FulfillableElement element,
+					MethodConfiguration config) {
+		List<FulfillableElement> resultList = new ArrayList<FulfillableElement>();
+
+		Object fullfillsObj = calcAttributeFeatureValue(element, null,
+				UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(), config);
+		
+		if (! (fullfillsObj instanceof List)) {
+			return resultList;
+		}
+
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
+		EStructuralFeature feature = UmaPackage.eINSTANCE.getFulfillableElement_Fulfills();
+		for (FulfillableElement slot : (List<FulfillableElement>) fullfillsObj) {
+			slot = (FulfillableElement) getCalculatedElement(slot, config);
+			if (slotMatching(slot, element, realizer)) {
+				resultList.add(slot);
+			}
+		}
+		
+		return resultList;
+	}
+	
 	private static void mergeSlotFeatureValues(FulfillableElement element,
 			EStructuralFeature feature, MethodConfiguration config,
-			FeatureValue values, ElementRealizer realizer) {
-		//Note: the realized values for fullfils feature are not filtered by
-		//slot matching here. All the other features do.		
+			FeatureValue values, ElementRealizer realizer) {		
 		if (feature == UmaPackage.eINSTANCE.getFulfillableElement_Fulfills()) {			
 			return;
 		}
@@ -810,23 +831,14 @@ public class ConfigurationHelper {
 		if (values.size() > 0) {
 			return;
 		}
-
-		Object fullfillsObj = calcAttributeFeatureValue(element, null,
-				UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(), config);
 		
-		if (! (fullfillsObj instanceof List)) {
-			return;
-		}
-		
-		List<FulfillableElement> slots = (List<FulfillableElement>) fullfillsObj;
+		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(element, config);
 
 		for (FulfillableElement slot : slots) {
 			if (slot instanceof WorkProduct) {
 				slot = (FulfillableElement) getCalculatedElement(slot, config);
-				if (slotMatching(slot, element, realizer)) {
-					calculateFeature(slot, null, feature, config, values,
-							realizer);
-				}
+				calculateFeature(slot, null, feature, config, values,
+						realizer);
 			}
 		}
 	}
@@ -834,6 +846,10 @@ public class ConfigurationHelper {
 	private static void mergeSlotOppositeFeatureValues(FulfillableElement element,
 			OppositeFeature feature, MethodConfiguration config,
 			FeatureValue values, ElementRealizer realizer) {
+		if (feature == AssociationHelper.FulFills_FullFillableElements) {
+			return;
+		}
+		
 		if (!(element instanceof WorkProduct)) {
 			return;
 		}
@@ -841,29 +857,46 @@ public class ConfigurationHelper {
 			return;
 		}
 		
-		List<FulfillableElement> slots = element.getFulfills();
+		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(element, config);
 
 		for (FulfillableElement slot : slots) {
-			if (slot instanceof WorkProduct) {
-				slot = (FulfillableElement) getCalculatedElement(slot, config);
-				if (slotMatching(slot, element, realizer)) {
-					calculateOppositeFeature(slot, feature, realizer, values);
-				}
+			slot = (FulfillableElement) getCalculatedElement(slot, config);
+			calculateOppositeFeature(slot, feature, realizer, values);
+		}
+	}
+	
+	public static List<FulfillableElement> calcFulfills_FulfillableElement(
+			FulfillableElement element, MethodConfiguration config) {
+		List<FulfillableElement> resultList = new ArrayList<FulfillableElement>();
+
+		Object fullfillsObj = calcAttributeFeatureValue(element, null,
+				UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(), config);
+
+		if (!(fullfillsObj instanceof List)) {
+			return resultList;
+		}
+
+		ElementRealizer realizer = DefaultElementRealizer
+				.newElementRealizer(config);
+		EStructuralFeature feature = UmaPackage.eINSTANCE
+				.getFulfillableElement_Fulfills();
+		for (FulfillableElement slot : (List<FulfillableElement>) fullfillsObj) {
+			slot = (FulfillableElement) getCalculatedElement(slot, config);
+			if (slotMatching(slot, element, realizer)) {
+				resultList.add(slot);
 			}
 		}
-	}	
+
+		return resultList;
+	}		
 	
 	private static boolean slotMatching(FulfillableElement slot,
 			FulfillableElement element, ElementRealizer realizer) {
 		if (slot == null || !slot.getIsAbstract()) {
 			return false;
-		}
-		
-		if (true) {	//slotMatching not ready yet
-			return true;
-		}
+		}		
 
-		if (realizer != null) {
+		if (realizer != null && false) {	//slot matching not ready yet
 			return realizer.slotMatching(slot, element);
 		}
 
