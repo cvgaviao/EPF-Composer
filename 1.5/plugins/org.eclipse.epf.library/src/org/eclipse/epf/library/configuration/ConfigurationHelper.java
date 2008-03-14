@@ -874,27 +874,26 @@ public class ConfigurationHelper {
 	}
 	
 	public static List<FulfillableElement> calcFulfills_FulfillableElement(
-			FulfillableElement element, MethodConfiguration config) {
+			FulfillableElement slot, MethodConfiguration config) {
 		List<FulfillableElement> resultList = new ArrayList<FulfillableElement>();
-
-		Object fullfillsObj = calcAttributeFeatureValue(element, null,
-				UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(), config);
-
-		if (!(fullfillsObj instanceof List)) {
-			return resultList;
-		}
 
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(config);
-		EStructuralFeature feature = UmaPackage.eINSTANCE
-				.getFulfillableElement_Fulfills();
-		for (FulfillableElement slot : (List<FulfillableElement>) fullfillsObj) {
-			slot = (FulfillableElement) getCalculatedElement(slot, config);
+
+		List fulfillingList = calc0nFeatureValue(slot, AssociationHelper.FulFills_FullFillableElements, realizer);
+
+		for (FulfillableElement element : (List<FulfillableElement>) fulfillingList) {
+			element = (FulfillableElement) getCalculatedElement(element, config);
 			if (slotMatching(slot, element, realizer)) {
-				resultList.add(slot);
+				resultList.add(element);
 			}
 		}
-
+		
+		if (resultList.size() > 1) {
+			Comparator comparator = PresentationContext.INSTANCE.getPresNameComparator();
+			Collections.<FulfillableElement>sort(resultList, comparator);
+		}
+		
 		return resultList;
 	}		
 	
