@@ -17,6 +17,7 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -288,6 +289,10 @@ public abstract class ElementRealizer {
 	
 	protected void addExtraFeatureValues(MethodElement element, EStructuralFeature feature,
 			FeatureValue values) {
+	}
+	
+	protected boolean slotMatching(FulfillableElement slot, FulfillableElement element) {		
+		return true;
 	}
 
 }
