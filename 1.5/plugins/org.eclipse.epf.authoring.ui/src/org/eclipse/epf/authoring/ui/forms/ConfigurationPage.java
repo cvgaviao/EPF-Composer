@@ -325,7 +325,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		initializeConfigFactory();
 
     	List<MethodPackage> packages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
-    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
+//    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
 //    	initializeViewerSelection(configViewer, plugins);
     	initializeViewerSelection(configViewer, packages);
 		
@@ -335,8 +335,6 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     	List<ContentCategory> subCats = new ArrayList<ContentCategory>(config.getSubtractedCategory());
     	initializeViewerSelection(subCategoryViewer, subCats);
     	
-//		addCategoryViewer.aboutToOpen();
-//		subCategoryViewer.aboutToOpen();
 	}
 	
 	private void initializeViewerSelection(ContainerCheckedTreeViewer viewer, List<? extends Object> elements) {
@@ -568,6 +566,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			public void widgetSelected(SelectionEvent e) {
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
+						saveConfiguration();
 						showErrors();
 					}
 				});				
