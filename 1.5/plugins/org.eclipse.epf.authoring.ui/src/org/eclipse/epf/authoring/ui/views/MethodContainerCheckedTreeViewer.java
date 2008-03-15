@@ -24,7 +24,7 @@ import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
  * Specifically, has changes to support FeatureValueWrapperItemProviders.
  * 
  * Also, expands the tree for checked items when they are set via
- * setCheckedElements(..).
+ * setCheckedElements(..) iff expandWhenChecking is true.
  * @author Jeff Hardy
  *
  */
