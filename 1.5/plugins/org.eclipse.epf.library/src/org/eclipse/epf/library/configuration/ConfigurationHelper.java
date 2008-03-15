@@ -785,9 +785,14 @@ public class ConfigurationHelper {
 		__mergeBase(element, ve, feature, config, values, realizer);
 		
 		if (element instanceof FulfillableElement) {
-			if (feature != UmaPackage.eINSTANCE.getFulfillableElement_Fulfills()) {			
-				mergeSlotFeatureValues((FulfillableElement) element, feature, config, values, realizer);
+			if (feature != UmaPackage.eINSTANCE
+					.getFulfillableElement_Fulfills()) {
+				mergeSlotFeatureValues((FulfillableElement) element, feature,
+						config, values, realizer);
 			}
+		} else if (OwnerElement instanceof FulfillableElement) {
+			mergeSlotFeatureValues(element, (FulfillableElement) OwnerElement,
+					feature, config, values, realizer);	
 		}
 		
 		if (realizer != null) {
@@ -846,6 +851,32 @@ public class ConfigurationHelper {
 			if (slot instanceof WorkProduct) {
 				slot = (FulfillableElement) getCalculatedElement(slot, config);
 				calculateFeature(slot, null, feature, config, values,
+						realizer);
+			}
+		}
+	}
+	
+	private static void mergeSlotFeatureValues(MethodElement element, FulfillableElement OwnerElement,
+			EStructuralFeature feature, MethodConfiguration config,
+			FeatureValue values, ElementRealizer realizer) {		
+		if (! (element instanceof ContentDescription)) {
+			return;
+		}
+		
+		if (!(OwnerElement instanceof WorkProduct)) {
+			return;
+		}
+		if (values.size() > 0) {
+			return;
+		}
+		
+		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(OwnerElement, config);
+
+		for (FulfillableElement slot : slots) {
+			if (slot instanceof WorkProduct) {
+				slot = (FulfillableElement) getCalculatedElement(slot, config);
+				ContentDescription slotOwnedElement = slot.getPresentation();				
+				calculateFeature(slotOwnedElement, slot, feature, config, values,
 						realizer);
 			}
 		}
