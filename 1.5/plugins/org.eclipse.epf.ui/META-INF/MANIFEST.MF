@@ -17,5 +17,6 @@ Export-Package: org.eclipse.epf.ui,
  org.eclipse.epf.ui.dialogs,
  org.eclipse.epf.ui.editors,
  org.eclipse.epf.ui.preferences,
+ org.eclipse.epf.ui.util,
  org.eclipse.epf.ui.wizards
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
