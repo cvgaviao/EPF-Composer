@@ -2783,6 +2783,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (copyrightLabelProviderBase != null) {
 			copyrightLabelProviderBase.dispose();
 		}
+		
+		if (columnProvider != null) {
+			columnProvider.dispose();
+		}
 		super.dispose();
 		
 		disposed = true;

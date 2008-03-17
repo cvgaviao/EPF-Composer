@@ -37,4 +37,10 @@ public interface IColumnProvider   {
 	 * @param value
 	 */
 	public void refresh(boolean value);
+	
+	
+	/**
+	 * Dispose the control
+	 */
+	public void dispose();
 }
