@@ -716,13 +716,11 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 						UmaPackage.eINSTANCE.getClassifier_IsAbstract(), isSlot,
 						-1);
 				
-				if (isSlot) {
-					slotSection.setExpanded(false);
-					slotSection.setVisible(false);			
+				if (isSlot) {		
+					addSlotButton.setEnabled(false);
 				}
 				else {
-					slotSection.setVisible(true);
-					slotSection.setExpanded(true);
+					addSlotButton.setEnabled(true);
 				}
 			}
 		});
@@ -803,7 +801,18 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		super.refresh(editable);
 		
 		ctrl_slot_button.setEnabled(editable);
-		addSlotButton.setEnabled(editable);
+		
+		Boolean isAbstract = workProduct.getIsAbstract();
+		if (isAbstract != null && editable) {
+			if (isAbstract.booleanValue())  {
+				addSlotButton.setEnabled(false);
+			} else {
+				addSlotButton.setEnabled(true);
+			}
+		}
+		else
+			addSlotButton.setEnabled(editable);
+		
 		IStructuredSelection selection = (IStructuredSelection) slotViewer.getSelection();
 		if (selection.size() > 0 && editable) {
 			removeSlotButton.setEnabled(true);
@@ -840,13 +849,6 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		Boolean isAbstract = workProduct.getIsAbstract();
 		if (isAbstract != null) {
 			ctrl_slot_button.setSelection(isAbstract.booleanValue());
-			if (isAbstract.booleanValue())  {
-				slotSection.setExpanded(false);
-				slotSection.setVisible(false);
-			} else {
-				slotSection.setVisible(true);
-				slotSection.setExpanded(true);
-			}
 		} else
 			ctrl_slot_button.setSelection(false);
 
