@@ -577,6 +577,16 @@
                toolbarPath="additions"
                tooltip="%showPresentationNamesTooltip"/>
       </viewContribution>
+      <viewContribution
+            id="org.eclipse.epf.authoring.ui.libraryFilterOptions"
+            targetID="org.eclipse.ui.views.ProblemView">
+         <action
+               class="org.eclipse.epf.authoring.ui.actions.ShowMethodElementFiltersAction"
+               id="org.eclipse.epf.authoring.ui.showMethodElementFilters"
+               label="Method Element Filters"
+               menubarPath="additions">
+         </action>
+      </viewContribution>
    </extension>
    
    <extension point="org.eclipse.ui.commands">
