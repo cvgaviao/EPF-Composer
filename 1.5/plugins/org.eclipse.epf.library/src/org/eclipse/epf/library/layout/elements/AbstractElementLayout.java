@@ -33,6 +33,7 @@ import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
@@ -771,14 +772,20 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 			}
 		} else if (feature.isMany()) {
-			List pv = ConfigurationHelper.calc0nFeatureValue(element, feature,
+			List pv = calc0nFeatureValue(element, feature,
 					layoutManager.getElementRealizer());
 			if ( acceptFeatureValue(feature, pv) && pv.size() > 0) {
 				addReferences(feature, elementXml, name, pv);
 			}
 		}
 	}
-
+	
+	protected List calc0nFeatureValue(MethodElement element,
+			OppositeFeature feature, ElementRealizer realizer) {
+		return ConfigurationHelper.calc0nFeatureValue(element, feature,
+				layoutManager.getElementRealizer());
+	}
+	
 	/**
 	 * load references for the element
 	 * @param elementXml XmlElement
