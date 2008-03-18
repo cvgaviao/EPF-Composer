@@ -934,7 +934,7 @@ public class ConfigurationHelper {
 			return false;
 		}		
 
-		if (realizer != null && false) {	//slot matching not ready yet
+		if (realizer != null) {	
 			return realizer.slotMatching(slot, element);
 		}
 

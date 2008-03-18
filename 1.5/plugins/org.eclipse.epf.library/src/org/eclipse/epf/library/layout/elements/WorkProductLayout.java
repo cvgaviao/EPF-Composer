@@ -12,11 +12,17 @@ package org.eclipse.epf.library.layout.elements;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
 
@@ -42,6 +48,17 @@ public class WorkProductLayout extends AbstractElementLayout {
 	 */
 	public XmlElement getXmlElement(boolean includeReferences) {
 		XmlElement elementXml = super.getXmlElement(includeReferences);
+		
+		boolean isSlot = false;
+		if (getElement() instanceof WorkProduct) {
+			WorkProduct wp = (WorkProduct) getElement();
+			isSlot = wp.getIsAbstract();
+		}
+		if (isSlot) {			
+			elementXml.setAttribute("Type", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
+			elementXml.setAttribute("TypeName", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
+		}
+		
 		if (includeReferences) {
 
 			// no this will lose the contributor
@@ -141,6 +158,26 @@ public class WorkProductLayout extends AbstractElementLayout {
 		
 		return elementXml;
 	}
+	
+	protected List calc0nFeatureValue(MethodElement element,
+			MethodElement ownerElement, EStructuralFeature feature,
+			ElementRealizer realizer) {
+		if (feature == UmaPackage.eINSTANCE.getFulfillableElement_Fulfills()) {
+			return ConfigurationHelper.calcFulfillableElement_Fulfills(
+					(FulfillableElement) element, realizer.getConfiguration());
+		}
+		return super.calc0nFeatureValue(element, ownerElement, feature,
+				layoutManager.getElementRealizer());
+	}	
 
+	protected List calc0nFeatureValue(MethodElement element,
+			OppositeFeature feature, ElementRealizer realizer) {
+		if (feature == AssociationHelper.FulFills_FullFillableElements) {
+			return ConfigurationHelper.calcFulfills_FulfillableElement(
+					(FulfillableElement) element, realizer.getConfiguration());
+		}
+		return super.calc0nFeatureValue(element, feature, layoutManager
+				.getElementRealizer());
+	}
 
 }

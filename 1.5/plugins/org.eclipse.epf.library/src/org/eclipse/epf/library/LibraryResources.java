@@ -112,6 +112,8 @@ public final class LibraryResources extends NLS {
 	public static String ElementError_missing_mandatory_input;
 	public static String ElementError_missing_output;
 	
+	public static String WorkProductSlot_text;
+	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, LibraryResources.class);
 	}
