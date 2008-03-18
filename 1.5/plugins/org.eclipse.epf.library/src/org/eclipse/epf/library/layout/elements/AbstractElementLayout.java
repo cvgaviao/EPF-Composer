@@ -695,7 +695,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 
 		String name = feature.getName();
-
+		
 		if (!feature.isMany()) {
 			MethodElement e = ConfigurationHelper.calc01FeatureValue(element, ownerElement,
 					feature, layoutManager.getElementRealizer());
@@ -723,7 +723,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 			}
 		} else if (feature.isMany()) {
-			List pv = ConfigurationHelper.calc0nFeatureValue(element, ownerElement, feature,
+			List pv = calc0nFeatureValue(element, ownerElement, feature,
 					layoutManager.getElementRealizer());
 			if ( acceptFeatureValue(feature, pv) ) {
 				if ( elementXml != null ) {
@@ -738,6 +738,12 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		return null;
 	}
 
+	protected List calc0nFeatureValue(MethodElement element, MethodElement ownerElement, 
+			EStructuralFeature feature, ElementRealizer realizer) {
+		return ConfigurationHelper.calc0nFeatureValue(element, ownerElement, feature,
+				layoutManager.getElementRealizer());
+	}	
+	
 	/**
 	 * load the non-attribute feature
 	 * 
