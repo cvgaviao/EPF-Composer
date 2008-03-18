@@ -1283,6 +1283,11 @@ public final class AuthoringUIResources extends NLS {
 
 	public static String ConfigurationPage_LoadingMessage;
 
+	public static String ConfigurationPage_updateOnClick;
+	public static String ConfigurationPage_updateOnClickToolTip;
+	public static String ConfigurationPage_noUpdateOnClick;
+	public static String ConfigurationPage_noUpdateOnClickToolTip;
+	
 	public static String MoveDialog_validdestination_text;
 
 	public static String MoveDialog_cannotModifyDestination;

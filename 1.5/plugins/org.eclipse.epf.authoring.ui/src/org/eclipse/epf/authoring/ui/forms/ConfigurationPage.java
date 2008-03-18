@@ -111,6 +111,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 	private IActionManager actionMgr;
 	ScrolledForm form = null;
+	private Button updateOnClick;
+	private Button noUpdateOnClick;
 	private Button closureButton;
 	private Button fixWarningButton;
 	private Button refreshButton;
@@ -234,16 +236,33 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				AuthoringUIHelpContexts.CONFIGURATION_EDITOR_ALL_CONTEXT);
 
 		Composite buttonComposite = toolkit.createComposite(sectionClient);
-		{
-			GridLayout gridLayout = new GridLayout();
-			gridLayout.numColumns = 6;
-			buttonComposite.setLayout(gridLayout);
-			GridData gridData = new GridData(GridData.FILL_BOTH);
-			gridData.horizontalSpan = 6;
-			gridData.horizontalAlignment = 3;
-			buttonComposite.setLayoutData(gridData);
-
-		}
+		GridLayout gridLayout = new GridLayout();
+		gridLayout.numColumns = 7;
+		buttonComposite.setLayout(gridLayout);
+		GridData gridData = new GridData(GridData.FILL_BOTH);
+		gridData.horizontalSpan = 2;
+		buttonComposite.setLayoutData(gridData);
+		
+		Composite radioComposite = toolkit.createComposite(buttonComposite);
+		gridLayout = new GridLayout();
+		radioComposite.setLayout(gridLayout);
+		gridData = new GridData(GridData.FILL_BOTH);
+		gridData.horizontalSpan = 1;
+		radioComposite.setLayoutData(gridData);
+		
+		
+		updateOnClick = toolkit.createButton(radioComposite, AuthoringUIResources.ConfigurationPage_updateOnClick, SWT.RADIO);
+		updateOnClick.setToolTipText(AuthoringUIResources.ConfigurationPage_updateOnClickToolTip); 
+		updateOnClick.setLayoutData(new GridData(SWT.BEGINNING, SWT.DEFAULT, false, false));
+		updateOnClick.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
+				AuthoringUIResources.ConfigurationPage_updateOnClickToolTip));
+		updateOnClick.setSelection(true);
+		
+		noUpdateOnClick = toolkit.createButton(radioComposite, AuthoringUIResources.ConfigurationPage_noUpdateOnClick, SWT.RADIO);
+		noUpdateOnClick.setToolTipText(AuthoringUIResources.ConfigurationPage_noUpdateOnClickToolTip); 
+		noUpdateOnClick.setLayoutData(new GridData(SWT.BEGINNING, SWT.DEFAULT, false, false));
+		noUpdateOnClick.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
+				AuthoringUIResources.ConfigurationPage_noUpdateOnClickToolTip));
 
 		hideButton = toolkit.createButton(buttonComposite, "", SWT.PUSH //$NON-NLS-1$
 				| GridData.HORIZONTAL_ALIGN_END);
@@ -591,9 +610,11 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				final CheckStateChangedEvent event = evt;
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
-						saveConfiguration();
-						// update the closure error
-						showErrors();
+						if (updateOnClick.getSelection()) {
+							saveConfiguration();
+							// update the closure error
+							showErrors();
+						}
 					}
 				});
 				
