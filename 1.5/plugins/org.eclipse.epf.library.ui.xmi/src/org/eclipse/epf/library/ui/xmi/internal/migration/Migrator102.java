@@ -221,7 +221,7 @@ public class Migrator102 extends MigratorImpl {
 			if (toVerify) {
 				resourceSet = new MultiFileResourceSetImpl(false);
 			} else {
-				resourceSet = getImportPluginResourceSet();
+				resourceSet = PersistenceUtil.getImportPluginResourceSet();
 			}
 						
 			resourceSet.getLoadOptions().put(
@@ -316,25 +316,6 @@ public class Migrator102 extends MigratorImpl {
 				resourceSet = null;
 			}
 		}
-	}
-
-	protected static MultiFileResourceSetImpl getImportPluginResourceSet() {
-		MultiFileResourceSetImpl resourceSet;
-		resourceSet = new MultiFileResourceSetImpl(false) {
-			protected void demandLoad(Resource resource) throws IOException {
-				if (! skipDemandLoad(resource)) {
-					super.demandLoad(resource);
-				}
-			}
-			private boolean skipDemandLoad(Resource res) {
-				File file = new File(res.getURI().toFileString());
-				if (! file.exists() && file.getName().equals(MultiFileSaveUtil.DEFAULT_PLUGIN_MODEL_FILENAME)) {
-					return true;
-				}
-				return false;
-			}
-		};
-		return resourceSet;
 	}
 
 	/**

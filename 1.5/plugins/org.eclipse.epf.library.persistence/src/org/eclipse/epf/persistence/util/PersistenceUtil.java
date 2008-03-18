@@ -11,6 +11,7 @@
 package org.eclipse.epf.persistence.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -387,6 +388,26 @@ public class PersistenceUtil {
 		}
 		return uri;
 	}
+	
+	public static MultiFileResourceSetImpl getImportPluginResourceSet() {
+		MultiFileResourceSetImpl resourceSet;
+		resourceSet = new MultiFileResourceSetImpl(false) {
+			protected void demandLoad(Resource resource) throws IOException {
+				if (! skipDemandLoad(resource)) {
+					super.demandLoad(resource);
+				}
+			}
+			private boolean skipDemandLoad(Resource res) {
+				File file = new File(res.getURI().toFileString());
+				if (! file.exists() && file.getName().equals(MultiFileSaveUtil.DEFAULT_PLUGIN_MODEL_FILENAME)) {
+					return true;
+				}
+				return false;
+			}
+		};
+		return resourceSet;
+	}
+
 	
 	public static void main(String[] args) {
 		String attrib = getTopAttribute(new File(args[0]), args[1]);

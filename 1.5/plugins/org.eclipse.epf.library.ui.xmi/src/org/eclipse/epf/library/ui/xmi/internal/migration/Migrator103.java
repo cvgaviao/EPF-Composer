@@ -35,6 +35,7 @@ import org.eclipse.epf.library.xmi.XMILibraryResources;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.migration.UpgradeCallerInfo;
 import org.eclipse.epf.persistence.util.PersistenceResources;
+import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.DeliveryProcess;
@@ -86,7 +87,7 @@ public class Migrator103 extends MigratorBase {
 			if (toVerify) {
 				resourceSet = new MultiFileResourceSetImpl(false);
 			} else {
-				resourceSet = Migrator102.getImportPluginResourceSet();
+				resourceSet = PersistenceUtil.getImportPluginResourceSet();
 			}
 						
 			resourceSet.getLoadOptions().put(

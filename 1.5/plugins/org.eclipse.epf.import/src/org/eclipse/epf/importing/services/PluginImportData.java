@@ -37,7 +37,7 @@ public class PluginImportData {
 	// these are filled in by the importing service
 	public String libraryVersion;
 
-	private List plugins = new ArrayList();
+	private List<PluginInfo> plugins = new ArrayList<PluginInfo>();
 
 	private List configs = new ArrayList();
 
@@ -82,7 +82,7 @@ public class PluginImportData {
 	 */
 	public PluginInfo getPluginInfo(String guid) {
 		PluginInfo info;
-		for (Iterator it = plugins.iterator(); it.hasNext();) {
+		for (Iterator<PluginInfo> it = plugins.iterator(); it.hasNext();) {
 			info = (PluginInfo) it.next();
 			if (info.guid.equals(guid)) {
 				return info;
@@ -97,7 +97,7 @@ public class PluginImportData {
 	 */
 	public void removePluginInfo(String guid) {
 		PluginInfo info;
-		for (Iterator it = plugins.iterator(); it.hasNext();) {
+		for (Iterator<PluginInfo> it = plugins.iterator(); it.hasNext();) {
 			info = (PluginInfo) it.next();
 			if (info.guid.equals(guid)) {
 				plugins.remove(info);
@@ -132,7 +132,7 @@ public class PluginImportData {
 	 * 
 	 * @return List a list of PluginInfo objects
 	 */
-	public List getPlugins() {
+	public List<PluginInfo> getPlugins() {
 		return plugins;
 	}
 

@@ -85,6 +85,8 @@ public class PluginImportingService {
 	private static boolean localDebug = false;
 	
 	private PluginImportData data;
+	
+	private Object validateHookData;
 
 	LibraryDocument importingLibDoc;
 	LibraryDocument targetLibDoc;
@@ -153,6 +155,8 @@ public class PluginImportingService {
 					return;
 				}
 			}
+			
+			validateHook(monitor, importingLibPath, validateHookData);
 
 			importingLibDoc = new LibraryDocument(importingLibPath);
 			
@@ -168,6 +172,9 @@ public class PluginImportingService {
 
 	}
 
+	protected void validateHook(IProgressMonitor monitor, File importingLibPath, Object object) {
+	}
+	
 	/**
 	 * Performs import.
 	 */
@@ -1276,6 +1283,14 @@ public class PluginImportingService {
 		Resource res = element.eResource();
 		URI uri = res.getURI();
 		return new File(uri.toFileString());
+	}
+
+	public Object getValidateHookData() {
+		return validateHookData;
+	}
+
+	public void setValidateHookData(Object validateHookData) {
+		this.validateHookData = validateHookData;
 	}
 	
 }
