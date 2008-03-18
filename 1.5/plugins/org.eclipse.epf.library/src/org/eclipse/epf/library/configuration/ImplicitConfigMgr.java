@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +35,7 @@ import org.eclipse.epf.uma.ProcessComponent;
 public class ImplicitConfigMgr {
 	
 	private static ImplicitConfigMgr instance = new ImplicitConfigMgr();
+	private List<MethodPlugin> newAddedPlugins;
 	
 	private ImplicitConfigMgr() {		
 	}
@@ -42,6 +44,11 @@ public class ImplicitConfigMgr {
 		return instance;
 	}
 	
+	/**
+	 * Update config with the selected plug-ins. 
+	 * @param config
+	 * @param selectedPlugins
+	 */
 	public void update(MethodConfiguration config, List<MethodPlugin> selectedPlugins) {
 		
 		List<MethodPlugin> plugins = config.getMethodPluginSelection();
@@ -51,17 +58,70 @@ public class ImplicitConfigMgr {
 		pkgs.clear();
 
 		Set<MethodPlugin> addedPlugins = new HashSet<MethodPlugin>();
+		Set<MethodPackage> addedPkgs = new HashSet<MethodPackage>();
+		
+		addPluginsAndPackages(selectedPlugins, plugins, pkgs, addedPlugins, addedPkgs);		
+	}
+
+	private void addPluginsAndPackages(List<MethodPlugin> selectedPlugins,
+			List<MethodPlugin> plugins, List<MethodPackage> pkgs,
+			Set<MethodPlugin> addedPlugins, Set<MethodPackage> addedPkgs) {
+		
+		newAddedPlugins = new ArrayList<MethodPlugin>();
+		
 		for (MethodPlugin plugin: selectedPlugins) {
 			addPlugin(addedPlugins, plugin, plugins);
-		}
-		
-		Set<MethodPackage> addedPkgs = new HashSet<MethodPackage>();
-		for (MethodPlugin plugin: plugins) {
+		}		
+
+		for (MethodPlugin plugin: newAddedPlugins) {
 			List<MethodPackage> pkgList = plugin.getMethodPackages();
 			for (MethodPackage pkg: pkgList) {
 				addPackages(addedPkgs, pkg, pkgs);
 			}
-		}		
+		}
+		
+		newAddedPlugins = null;
+	}
+	
+	/**
+	 * Remove selected plug-ins from config 
+	 * @param config
+	 * @param selectedPlugins
+	 */
+	public void remove(MethodConfiguration config, List<MethodPlugin> selectedPlugins) {
+		if (selectedPlugins == null || selectedPlugins.isEmpty()) {
+			return;
+		}
+		List<MethodPlugin> plugins = config.getMethodPluginSelection();
+		
+		boolean needToUpdate = false;
+		List<MethodPlugin> finalSelectedPlugins = new ArrayList<MethodPlugin>();
+		for (MethodPlugin plugin: plugins) {
+			if (selectedPlugins.contains(plugin)) {
+				needToUpdate = true;
+			} else {
+				finalSelectedPlugins.add(plugin);
+			}
+		}
+		
+		if (needToUpdate) {
+			update(config, finalSelectedPlugins);
+		}
+	}
+	
+	/**
+	 * Add to config with the selected plug-ins. 
+	 * @param config
+	 * @param selectedPlugins
+	 */
+	public void add(MethodConfiguration config, List<MethodPlugin> selectedPlugins) {		
+		List<MethodPlugin> plugins = config.getMethodPluginSelection();
+		List<MethodPackage> pkgs = config.getMethodPackageSelection();
+		
+		Set<MethodPlugin> addedPlugins = new HashSet<MethodPlugin>(plugins);
+		Set<MethodPackage> addedPkgs = new HashSet<MethodPackage>(pkgs);
+		
+		addPluginsAndPackages(selectedPlugins, plugins, pkgs, addedPlugins, addedPkgs);		
 	}
 	
 	private void addPlugin(Set<MethodPlugin> added, MethodPlugin plugin, List<MethodPlugin> plugins) {
@@ -69,6 +129,7 @@ public class ImplicitConfigMgr {
 			return;
 		}
 		added.add(plugin);
+		newAddedPlugins.add(plugin);
 		
 		plugins.add(plugin);
 		List<MethodPlugin> basePlugins = plugin.getBases();
