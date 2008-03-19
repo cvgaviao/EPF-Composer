@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.library.configuration.ConfigurationData;
+import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.DependencyManager;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -37,6 +38,8 @@ public class ConfigurationManager implements IConfigurationManager {
 	
 	// The managed configuraiton data.
 	private ConfigurationData configData;
+	
+	private ConfigurationProperties configProps;
 
 	// The containing method library for the managed method configuration.
 	protected MethodLibrary library;
@@ -182,6 +185,11 @@ public class ConfigurationManager implements IConfigurationManager {
 		dependencyManager = null;
 		layoutManager = null;
 		closure = null;
+		configProps = null;
+	}
+
+	protected ConfigurationProperties getConfigProps() {
+		return configProps;
 	}
 
 }
