@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
@@ -28,6 +27,7 @@ import org.eclipse.epf.authoring.ui.util.AuthoringAccessibleListener;
 import org.eclipse.epf.authoring.ui.util.ConfigurationMarkerHelper;
 import org.eclipse.epf.authoring.ui.views.MethodContainerCheckedTreeViewer;
 import org.eclipse.epf.authoring.ui.views.MethodContainerCheckedTreeViewer2;
+import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationData;
@@ -147,6 +147,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private static final ClosureListener closureListener = new ClosureListener() {
 		@Override
 		public void errorAdded(MethodConfiguration config, IConfigurationError error) {
+			IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
+			if (configMgr.getConfigurationProperties().toHide(error)) {
+				return;
+			}
 			markerHelper.createMarker(config, error);
 		}
 

@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import org.eclipse.epf.library.configuration.closure.IConfigurationError;
 import org.eclipse.epf.uma.MethodConfiguration;
 
 /**
@@ -21,43 +22,52 @@ import org.eclipse.epf.uma.MethodConfiguration;
 public class ConfigurationProperties {
 
 	private MethodConfiguration config;
+	private boolean hideWarnings = false;
+	private boolean hideErrors = false;
+	private boolean hideInfos = false;
 	
 	public ConfigurationProperties(MethodConfiguration config) {
 		this.config = config;
 		loadFromConfiguration();
 	}
 	
-	public boolean getBooleanValue(String propertyName) {
-		return true;
-	}
-	
-	public int getIntValue(String propertyName) {
-		return 0;
-	}
-	
-	public String getStringValue(String propertyName) {
-		return null;
-	}
-	
-	public void setBooleanValue(String propertyName, boolean value) {
-		
-	}
-	
-	public void setInt(String propertyName, int value) {
-
-	}
-	
-	public void setString(String propertyName, String value) {
-
-	}
-	
 	private void loadFromConfiguration() {
-		
+		//tbi
 	}
 	
 	public void saveToConfiguration() {
-		
+		//tbi
 	}
 	
+	public boolean toHide(IConfigurationError error) {
+		if (error.isError()) {
+			return isHideErrors();
+		} else if (error.isWarning()) {
+			return isHideWarnings();
+		} else {
+			return isHideInfos();
+		}
+	}
+
+	public boolean isHideWarnings() {
+		return hideWarnings;
+	}
+	public void setHideWarnings(boolean hideWarnings) {
+		this.hideWarnings = hideWarnings;
+	}
+	
+	public boolean isHideErrors() {
+		return hideErrors;
+	}
+	public void setHideErrors(boolean hideErrors) {
+		this.hideErrors = hideErrors;
+	}
+
+	public boolean isHideInfos() {
+		return hideInfos;
+	}
+	public void setHideInfos(boolean hideInfos) {
+		this.hideInfos = hideInfos;
+	}
 
 }

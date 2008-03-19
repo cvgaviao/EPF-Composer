@@ -178,6 +178,14 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		}	
 	}
 	
+	public void refreshErrormarks() {
+		clearErrorMarks();
+		for (Iterator<ElementError> it = errors.iterator(); it.hasNext(); ) {
+			ElementError error = it.next();
+			notifyError(error, ClosureListener.ERROR_ADDED);
+		}	
+	}
+	
 //	private void selectProcessPackages(Activity a) {
 //		if (a == null) {
 //			return;

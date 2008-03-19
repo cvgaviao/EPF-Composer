@@ -67,6 +67,8 @@ public class ConfigurationManager implements IConfigurationManager {
 	public ConfigurationManager(MethodConfiguration config) {
 		this.config = config;
 		configData = new ConfigurationData(config);
+		
+		configProps = new ConfigurationProperties(config); 
 
 		library = LibraryServiceUtil.getMethodLibrary(config);
 
@@ -188,7 +190,7 @@ public class ConfigurationManager implements IConfigurationManager {
 		configProps = null;
 	}
 
-	protected ConfigurationProperties getConfigProps() {
+	public ConfigurationProperties getConfigurationProperties() {
 		return configProps;
 	}
 
