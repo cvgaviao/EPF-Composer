@@ -46,7 +46,7 @@ import org.eclipse.epf.uma.provider.MethodPluginItemProvider;
 public class PluginUIPackagesItemProvider extends ItemProviderAdapter implements IStructuredItemContentProvider,
 	ITreeItemContentProvider, IItemLabelProvider, ILibraryItemProvider, IStatefulItemProvider {
 
-	public static final String PACKAGE_SEPARATOR = "."; //$NON-NLS-1$
+	public static final String PLUGIN_PACKAGE_SEPARATOR = "."; //$NON-NLS-1$
 
 	private Object parent;
 	
@@ -133,7 +133,7 @@ public class PluginUIPackagesItemProvider extends ItemProviderAdapter implements
 		for (Iterator<MethodPlugin> iter = plugins.iterator();iter.hasNext();) {
 			MethodPlugin plugin = iter.next();
 			String deltaName = getNameDelta(this, plugin);
-			int dotIdx = deltaName.indexOf(PACKAGE_SEPARATOR);
+			int dotIdx = deltaName.indexOf(PLUGIN_PACKAGE_SEPARATOR);
 			if (dotIdx != -1) {
 				map.add(deltaName.substring(0, dotIdx), plugin);
 			} else {
@@ -150,14 +150,14 @@ public class PluginUIPackagesItemProvider extends ItemProviderAdapter implements
 			Map.Entry<String, Set<MethodPlugin>> entry = iter.next();
 			String name = entry.getKey();
 			Set<MethodPlugin> plugSet = entry.getValue();
-			PluginUIPackagesItemProvider provider = pluginPackagesItemProvidersMap.get(getFullName() + PACKAGE_SEPARATOR + name);
+			PluginUIPackagesItemProvider provider = pluginPackagesItemProvidersMap.get(getFullName() + PLUGIN_PACKAGE_SEPARATOR + name);
 			if (provider == null) {
 				provider = new PluginUIPackagesItemProvider(adapterFactory, name, plugSet);
-				pluginPackagesItemProvidersMap.put(getFullName() + PACKAGE_SEPARATOR + name, provider);
+				pluginPackagesItemProvidersMap.put(getFullName() + PLUGIN_PACKAGE_SEPARATOR + name, provider);
 			} else {
 				provider.setPlugins(plugSet);
 			}
-			existingNames.add(getFullName() + PACKAGE_SEPARATOR + name);
+			existingNames.add(getFullName() + PLUGIN_PACKAGE_SEPARATOR + name);
 			provider.setParent(this);
 			children.add(provider);
 		}
@@ -174,7 +174,7 @@ public class PluginUIPackagesItemProvider extends ItemProviderAdapter implements
 		String fullName = getName();
 		Object parent = getParent();
 		while (parent instanceof PluginUIPackagesItemProvider) {
-			fullName = ((PluginUIPackagesItemProvider)parent).getName() + PACKAGE_SEPARATOR + fullName;
+			fullName = ((PluginUIPackagesItemProvider)parent).getName() + PLUGIN_PACKAGE_SEPARATOR + fullName;
 			parent = ((PluginUIPackagesItemProvider)parent).getParent();
 		}
 		return fullName;
@@ -243,11 +243,11 @@ public class PluginUIPackagesItemProvider extends ItemProviderAdapter implements
 	 */
 	public ItemProviderAdapter getPluginItemProvider(MethodPlugin plugin) {
 		String deltaName = getNameDelta(this, plugin);
-		int dotIdx = deltaName.indexOf(PluginUIPackagesItemProvider.PACKAGE_SEPARATOR);
+		int dotIdx = deltaName.indexOf(PluginUIPackagesItemProvider.PLUGIN_PACKAGE_SEPARATOR);
 		if (dotIdx != -1) {
 			String packageProviderName = deltaName.substring(0, dotIdx);
 			if (pluginPackagesItemProvidersMap != null) {
-				PluginUIPackagesItemProvider provider = pluginPackagesItemProvidersMap.get(getFullName() + PACKAGE_SEPARATOR + packageProviderName);
+				PluginUIPackagesItemProvider provider = pluginPackagesItemProvidersMap.get(getFullName() + PLUGIN_PACKAGE_SEPARATOR + packageProviderName);
 				if (provider != null) {
 					return provider;
 				}

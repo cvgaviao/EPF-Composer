@@ -43,6 +43,7 @@ public class TraceableAdapterFactoryEditingDomain extends
 	
 	// when copy/pasting a plugin, these fields are used by the various copy/add commands for renaming the plugins
 	private Object selectedObjectToCopy = null;
+	private boolean createContibuter = false;
 	private String newPackageName = null;
 	private String newPluginName = null;
 
@@ -244,5 +245,13 @@ public class TraceableAdapterFactoryEditingDomain extends
 
 	public void setNewPluginName(String newPluginName) {
 		this.newPluginName = newPluginName;
+	}
+
+	public boolean isCreateContibuter() {
+		return createContibuter;
+	}
+
+	public void setCreateContibuter(boolean createContibuter) {
+		this.createContibuter = createContibuter;
 	}
 }

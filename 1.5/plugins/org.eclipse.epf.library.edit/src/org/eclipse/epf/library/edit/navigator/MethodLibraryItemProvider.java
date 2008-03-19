@@ -145,7 +145,7 @@ public class MethodLibraryItemProvider extends
 		for (Iterator<MethodPlugin> iter = plugins.iterator();iter.hasNext();) {
 			MethodPlugin plugin = iter.next();
 			String pluginName = plugin.getName();
-			int dotIdx = pluginName.indexOf(PluginUIPackagesItemProvider.PACKAGE_SEPARATOR);
+			int dotIdx = pluginName.indexOf(PluginUIPackagesItemProvider.PLUGIN_PACKAGE_SEPARATOR);
 			if (dotIdx != -1) {
 				map.add(pluginName.substring(0, dotIdx), plugin);
 			} else {
@@ -262,7 +262,7 @@ public class MethodLibraryItemProvider extends
 	 */
 	public ItemProviderAdapter getPluginItemProvider(MethodPlugin plugin) {
 		String pluginName = plugin.getName();
-		int dotIdx = pluginName.indexOf(PluginUIPackagesItemProvider.PACKAGE_SEPARATOR);
+		int dotIdx = pluginName.indexOf(PluginUIPackagesItemProvider.PLUGIN_PACKAGE_SEPARATOR);
 		if (dotIdx != -1) {
 			String packageProviderName = pluginName.substring(0, dotIdx);
 			if (pluginPackagesItemProvidersMap != null) {

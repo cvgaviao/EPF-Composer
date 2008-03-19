@@ -1105,7 +1105,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					for (Object obj : addCommand.getCollection()) {
 						if (obj instanceof MethodPlugin) {
 							String oldName = ((MethodPlugin)obj).getName();
-							((MethodPlugin)obj).setName(newPackageName + PluginUIPackagesItemProvider.PACKAGE_SEPARATOR + oldName);
+							((MethodPlugin)obj).setName(newPackageName + PluginUIPackagesItemProvider.PLUGIN_PACKAGE_SEPARATOR + oldName);
 						}
 					}
 				}
