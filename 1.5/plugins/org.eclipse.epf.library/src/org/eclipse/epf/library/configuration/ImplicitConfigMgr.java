@@ -181,6 +181,7 @@ public class ImplicitConfigMgr {
 	public MethodConfiguration getTemporaryConfiguration() {
 		if (tempConfig == null) {
 			tempConfig = UmaFactory.eINSTANCE.createMethodConfiguration();
+			tempConfig.setName("TEMP_PRACTICE"); //$NON-NLS-1$ to do: add the string to resource
 		}
 		return tempConfig;
 	}
