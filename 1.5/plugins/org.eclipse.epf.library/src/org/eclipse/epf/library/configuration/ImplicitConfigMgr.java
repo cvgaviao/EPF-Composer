@@ -24,6 +24,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.UmaFactory;
 
 
 /**
@@ -36,6 +37,7 @@ public class ImplicitConfigMgr {
 	
 	private static ImplicitConfigMgr instance = new ImplicitConfigMgr();
 	private List<MethodPlugin> newAddedPlugins;
+	private MethodConfiguration tempConfig;
 	
 	private ImplicitConfigMgr() {		
 	}
@@ -174,6 +176,29 @@ public class ImplicitConfigMgr {
 				LibraryPlugin.getDefault().getLogger().logError(ex);
 			}
 		}
+	}
+	
+	public MethodConfiguration getTemporaryConfiguration() {
+		if (tempConfig == null) {
+			tempConfig = UmaFactory.eINSTANCE.createMethodConfiguration();
+		}
+		return tempConfig;
+	}
+	
+	public void clearTemporaryConfiguration() {
+		tempConfig = null;
+	}
+	
+	public void updateTemporaryConfiguration(List<MethodPlugin> selectedPlugins) {
+		update(getTemporaryConfiguration(), selectedPlugins);
+	}
+	
+	public void addToTemporaryConfiguration(List<MethodPlugin> selectedPlugins) {		
+		add(getTemporaryConfiguration(), selectedPlugins);
+	}
+	
+	public void removeFromTemporaryConfiguration(List<MethodPlugin> selectedPlugins) {		
+		remove(getTemporaryConfiguration(), selectedPlugins);
 	}
 		
 }
