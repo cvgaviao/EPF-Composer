@@ -343,4 +343,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 		}
 	}
 
+	public void setEnabled(boolean enabled) {
+		configCombo.setEnabled(enabled);
+	}
 }

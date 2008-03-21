@@ -111,6 +111,8 @@ public class LibraryUIManager {
 	protected static URI defaultLibraryURI;
 	protected static URI defaultLibraryURI_NL;
 	private boolean libraryInitialized = false;
+	
+	protected ConfigurationContributionItem configCombo = null;
 
 	/**
 	 * Returns the singleton instance.
@@ -665,7 +667,7 @@ public class LibraryUIManager {
 				// The method configuration combobox toolbar has been restored
 				// via a saved perspective, add the method configuration
 				// combobox contribution.
-				ConfigurationContributionItem configCombo = new ConfigurationContributionItem(
+				configCombo = new ConfigurationContributionItem(
 						null);
 				toolBarMgr.add(configCombo);
 				configToolBar.setVisible(true);
@@ -675,7 +677,7 @@ public class LibraryUIManager {
 		}
 
 		IToolBarManager toolBarMgr = new ToolBarManager(SWT.FLAT | SWT.LEFT);
-		ConfigurationContributionItem configCombo = new ConfigurationContributionItem(
+		configCombo = new ConfigurationContributionItem(
 				null);
 		toolBarMgr.add(configCombo);
 		ToolBarContributionItem configComboToolBar = new ToolBarContributionItem(
@@ -932,5 +934,13 @@ public class LibraryUIManager {
 
 		UserInteractionHelper.runWithProgress(runnable,
 				LibraryUIResources.copyLibraryTask_name);
+	}
+
+	/**
+	 * 
+	 * @return the current MethodConfiguration dropdown box
+	 */
+	public ConfigurationContributionItem getConfigCombo() {
+		return configCombo;
 	}
 }
