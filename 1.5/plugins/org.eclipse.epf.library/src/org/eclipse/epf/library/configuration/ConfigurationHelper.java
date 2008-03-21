@@ -73,6 +73,8 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  */
 public class ConfigurationHelper {
 	
+	private static boolean inheritingSlotFeatures = false; 
+	
 	public static final String ATTRIBUTE_VALUE_SEPERATOR = "<p/>"; //$NON-NLS-1$
 
 	private static boolean debug = LibraryPlugin.getDefault().isDebugging();
@@ -834,7 +836,11 @@ public class ConfigurationHelper {
 	
 	private static void mergeSlotFeatureValues(FulfillableElement element,
 			EStructuralFeature feature, MethodConfiguration config,
-			FeatureValue values, ElementRealizer realizer) {		
+			FeatureValue values, ElementRealizer realizer) {
+		if (!inheritingSlotFeatures) {
+			return;
+		}
+		
 		if (feature == UmaPackage.eINSTANCE.getFulfillableElement_Fulfills()) {			
 			return;
 		}
@@ -858,7 +864,11 @@ public class ConfigurationHelper {
 	
 	private static void mergeSlotFeatureValues(MethodElement element, FulfillableElement OwnerElement,
 			EStructuralFeature feature, MethodConfiguration config,
-			FeatureValue values, ElementRealizer realizer) {		
+			FeatureValue values, ElementRealizer realizer) {
+		if (!inheritingSlotFeatures) {
+			return;
+		}
+		
 		if (! (element instanceof ContentDescription)) {
 			return;
 		}
@@ -885,6 +895,10 @@ public class ConfigurationHelper {
 	private static void mergeSlotOppositeFeatureValues(FulfillableElement element,
 			OppositeFeature feature, MethodConfiguration config,
 			FeatureValue values, ElementRealizer realizer) {
+		if (!inheritingSlotFeatures) {
+			return;
+		}
+		
 		if (feature == AssociationHelper.FulFills_FullFillableElements) {
 			return;
 		}
