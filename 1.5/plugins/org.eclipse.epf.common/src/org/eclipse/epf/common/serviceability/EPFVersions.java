@@ -48,7 +48,7 @@ public class EPFVersions {
 	// EPF 1.5 release
 	private static EPFVersion EPF_15 = new EPFVersion("1.5", //$NON-NLS-1$  tool version
 			"1.0.5.0", //$NON-NLS-1$  library version
-			"1.0.1"); //$NON-NLS-1$  xml schema version
+			"1.0.2"); //$NON-NLS-1$  xml schema version
 
 	private static EPFVersion currentVersion = EPF_15;
 
