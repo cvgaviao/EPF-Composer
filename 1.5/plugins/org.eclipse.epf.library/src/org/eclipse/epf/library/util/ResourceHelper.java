@@ -130,15 +130,15 @@ public class ResourceHelper {
 
 	public static final Pattern p_link_type_picker = Pattern
 			.compile(
-					" class\\s*?=\\s*?(.*?)\\s+", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
+					"\\s*class\\s*?=\\s*?(.*?)\\s+", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
 
 	public static final Pattern p_link_guid_picker = Pattern
 			.compile(
-					" guid\\s*?=\\s*?(.*?)\\s+", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
+					"\\s*guid\\s*?=\\s*?(.*?)\\s+", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
 
 	public static final Pattern p_link_href_picker = Pattern
 			.compile(
-					" href\\s*?=\\s*?\"(.*?)\"\\s+", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
+					"\\s*href\\s*?=\\s*?\"(.*?)\"\\s+", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
 
 	public static final Pattern p_tag_ref = Pattern
 			.compile(
@@ -1180,17 +1180,23 @@ public class ResourceHelper {
 			content = sb.toString();
 			sb = new StringBuffer();
 
+			System.out.println("wpl> content: " + content);
+
+			
 			// process attachments
 			m = ResourceHelper.p_link_ref_gen.matcher(content);
 			while (m.find()) {
 				StringBuffer sbLink = new StringBuffer();
 				// String tag = m.group(1);
 				String urltext = " " + m.group(2) + " "; //$NON-NLS-1$ //$NON-NLS-2$
+				System.out.println("wpl> urltext: " + urltext);
+				
 				if (ResourceHelper.getGuidFromUrl(urltext) == null) {
 					Matcher m2 = ResourceHelper.p_link_href_picker
 							.matcher(urltext);
 					if (m2.find()) {
 						String url = m2.group(1).trim().replaceAll("\"", ""); //$NON-NLS-1$ //$NON-NLS-2$
+						System.out.println("wpl> url: " + url);
 						if ( isExternalLink(url) ) {
 							// decode for external link 
 							url = XMLUtil.unescape(NetUtil.decodedFileUrl(url));
