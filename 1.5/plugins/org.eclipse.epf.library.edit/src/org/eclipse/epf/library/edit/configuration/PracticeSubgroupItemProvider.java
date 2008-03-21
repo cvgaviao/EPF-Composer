@@ -12,6 +12,7 @@ package org.eclipse.epf.library.edit.configuration;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
@@ -36,6 +37,8 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	private String label;
 
 	private Object parent;
+	
+	private List children;
 
 	protected IFilter filter;
 
@@ -45,10 +48,11 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	 * Creates a new instance.
 	 */
 	public PracticeSubgroupItemProvider(AdapterFactory adapterFactory,
-			String name, Object image) {
+			String name, Object image, List children) {
 		super(adapterFactory);
 		label = name;
 		this.image = image;
+		this.children = children;
 	}
 
 	/*
@@ -57,7 +61,7 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	 * @see org.eclipse.emf.edit.provider.ItemProviderAdapter#getChildren(java.lang.Object)
 	 */
 	public Collection getChildren(Object object) {
-		return Collections.EMPTY_LIST;
+		return children == null ? Collections.EMPTY_LIST : children;
 	}
 
 	/*

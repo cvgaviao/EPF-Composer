@@ -82,7 +82,7 @@ public class PracticeItemProvider extends
 				ret.addAll(subgroupChildren);
 			} else {
 				PracticeSubgroupItemProvider sub = new PracticeSubgroupItemProvider(
-						getAdapterFactory(), key, getImageObject(key));
+						getAdapterFactory(), key, getImageObject(key), subgroupChildren);
 				ret.add(sub);
 			}
 		}
