@@ -104,20 +104,24 @@ public class PracticeItemProvider extends
 	private Object getImageObject(String subGroupName) {
 		
 		String imageStr = null;
-		if (subGroupName.equals("Key Concepts")) {
-			imageStr = "full/obj16/Concepts";
-		} else if (subGroupName.equals("Work Products")) {
-			imageStr = "full/obj16/WorkProducts";
-		} else if (subGroupName.equals("Tasks")) {
-			imageStr = "full/obj16/Tasks";
-		} else if (subGroupName.equals("Roles")) {
-			imageStr = "full/obj16/Roles";
-		} else if (subGroupName.equals("Activities")) {
-			imageStr = "full/obj16/Processes";
-		} else if (subGroupName.equals("Guidances")) {
-			imageStr = "full/obj16/GuidanceFolder";
+		if (subGroupName.equals(getUIString("_UI_Guidances_Concepts"))) { //$NON-NLS-1$
+			imageStr = "full/obj16/Concepts"; //$NON-NLS-1$
+		} else if (subGroupName.equals(getUIString("_UI_WorkProducts_group"))) { //$NON-NLS-1$
+			imageStr = "full/obj16/WorkProducts"; //$NON-NLS-1$
+		} else if (subGroupName.equals(getUIString("_UI_Tasks_group"))) { //$NON-NLS-1$
+			imageStr = "full/obj16/Tasks"; //$NON-NLS-1$
+		} else if (subGroupName.equals(getUIString("_UI_Roles_group"))) { //$NON-NLS-1$
+			imageStr = "full/obj16/Roles"; //$NON-NLS-1$
+		} else if (subGroupName.equals(getUIString("_UI_Activities_group"))) { //$NON-NLS-1$
+			imageStr = "full/obj16/Processes"; //$NON-NLS-1$
+		} else if (subGroupName.equals(getUIString("_UI_Guidances_group"))) { //$NON-NLS-1$
+			imageStr = "full/obj16/GuidanceFolder"; //$NON-NLS-1$
 		}
 		return imageStr == null ? null : LibraryEditPlugin.INSTANCE.getImage(imageStr);
+	}
+	
+	private String getUIString(String key) {
+		return LibraryEditPlugin.INSTANCE.getString(key);
 	}
 	
 	private String getSubGroupName(Object obj) {
@@ -125,22 +129,22 @@ public class PracticeItemProvider extends
 			return flat;
 		}
 		if (obj instanceof Concept) {
-			return "Key Concepts";
+			return getUIString("_UI_Guidances_Concepts"); //$NON-NLS-1$
 		}
 		if (obj instanceof WorkProduct) {
-			return "Work Products";
+			return getUIString("_UI_WorkProducts_group"); //$NON-NLS-1$
 		}
 		if (obj instanceof Task) {
-			return "Tasks";
+			return getUIString("_UI_Tasks_group"); //$NON-NLS-1$
 		}
 		if (obj instanceof Role) {
-			return "Roles";
+			return getUIString("_UI_Roles_group"); //$NON-NLS-1$
 		}
 		if (obj instanceof Activity) {
-			return "Activities";
+			return getUIString("_UI_Activities_group"); //$NON-NLS-1$
 		}
-		if (obj instanceof Guidance) {
-			return "Guidances";
+		if (obj instanceof Guidance) {			
+			return getUIString("_UI_Guidances_group"); //$NON-NLS-1$
 		}
 		
 		return categories;
