@@ -155,7 +155,11 @@ public class DependencyManager {
 			EList elements = element.eContents();
 			if (elements != null) {
 				for (Iterator it = elements.iterator(); it.hasNext();) {
-					MethodElement methodElement = (MethodElement) it.next();
+					Object obj = it.next();
+					if (! (obj instanceof MethodElement)) {
+						continue;
+					}
+					MethodElement methodElement = (MethodElement) obj;
 					if (methodElement != null
 							&& !LibraryUtil.selectable(methodElement)) {
 						buildDependencyFor(methodElement);
