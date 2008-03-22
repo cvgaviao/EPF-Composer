@@ -97,7 +97,6 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 		if (owner instanceof MethodElement) {
 			EList<EAttribute> attributes = new BasicEList<EAttribute>();
 			attributes.add(UmaPackage.Literals.NAMED_ELEMENT__NAME);
-			attributes.add(UmaPackage.Literals.METHOD_ELEMENT__PRESENTATION_NAME);
 			return attributes;
 		} else {
 			return super.getAttributesToCopy();

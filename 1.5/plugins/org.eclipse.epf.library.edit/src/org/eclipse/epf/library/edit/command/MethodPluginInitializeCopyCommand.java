@@ -54,27 +54,5 @@ public class MethodPluginInitializeCopyCommand extends
 				}
 			}
 		}
-		if (domain instanceof TraceableAdapterFactoryEditingDomain) {
-			if (((TraceableAdapterFactoryEditingDomain)domain).isCreateContibuter()) {
-				MethodPlugin plugin = UmaUtil.getMethodPlugin(owner);
-				org.eclipse.epf.uma.ProcessPackage pkg = (org.eclipse.epf.uma.ProcessPackage) UmaUtil
-					.findMethodPackage(plugin, ModelStructure.DEFAULT.capabilityPatternPath);
-				pkg.getChildPackages().clear();
-				
-				pkg = (org.eclipse.epf.uma.ProcessPackage) UmaUtil
-						.findMethodPackage(plugin, ModelStructure.DEFAULT.deliveryProcessPath);
-				pkg.getChildPackages().clear();
-				
-				// create contribution association
-				if (copy instanceof MethodPlugin) {
-					Object originalObj = ((TraceableAdapterFactoryEditingDomain)domain).getCopyToOriginalMap().get(copy);
-					if (originalObj instanceof MethodPlugin) {
-						((MethodPlugin)copy).getBases().add((MethodPlugin)originalObj);
-					}
-				}
-
-			}
-		}
-
 	}
 }

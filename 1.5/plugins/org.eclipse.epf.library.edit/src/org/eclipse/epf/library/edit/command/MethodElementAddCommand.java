@@ -873,23 +873,24 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		//		
 		ownerPlugin = UmaUtil.getMethodPlugin(addCommand.getOwner());
 		removeXRefRequired = false;
-		find_xPluginRef: for (Iterator iter = addCommand.getCollection()
-				.iterator(); iter.hasNext();) {
-			Object element = iter.next();
-
-			if (isExcludedFromOutgoingReferenceCheck(element)) {
-				continue find_xPluginRef;
-			}
-
-			if (element instanceof MethodElement) {
-				if (hasIllegalReferenceIncludingAllChildren(ownerPlugin,
-						(MethodElement) element, addList)) {
-					removeXRefRequired = true;
-					break find_xPluginRef;
+		if (ownerPlugin != null) {
+			find_xPluginRef: for (Iterator iter = addCommand.getCollection()
+					.iterator(); iter.hasNext();) {
+				Object element = iter.next();
+	
+				if (isExcludedFromOutgoingReferenceCheck(element)) {
+					continue find_xPluginRef;
+				}
+	
+				if (element instanceof MethodElement) {
+					if (hasIllegalReferenceIncludingAllChildren(ownerPlugin,
+							(MethodElement) element, addList)) {
+						removeXRefRequired = true;
+						break find_xPluginRef;
+					}
 				}
 			}
-		}
-
+		}	
 		if (removeXRefRequired) {
 			return LibraryEditResources.invalidReferencesError_reason; 
 		}
