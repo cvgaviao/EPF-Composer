@@ -158,6 +158,10 @@ public class ImplicitConfigMgr {
 	}
 		
 	public void remove(MethodConfiguration config) {
+		MethodLibrary library = LibraryService.getInstance()
+		.getCurrentMethodLibrary();
+		library.getPredefinedConfigurations().remove(config);
+		LibraryService.getInstance().removeConfigurationManager(config);
 	}
 	
 	public void save(MethodConfiguration config) {
@@ -178,15 +182,29 @@ public class ImplicitConfigMgr {
 		}
 	}
 	
-	public MethodConfiguration getTemporaryConfiguration() {
+	public MethodConfiguration createTemporaryConfiguration(String name, List<MethodPlugin> selectedPlugins) {
 		if (tempConfig == null) {
 			tempConfig = UmaFactory.eINSTANCE.createMethodConfiguration();
-			tempConfig.setName("TEMP_PRACTICE"); //$NON-NLS-1$ to do: add the string to resource
+			tempConfig.setName(name); 
 		}
+		MethodLibrary library = LibraryService.getInstance()
+		.getCurrentMethodLibrary();
+		library.getPredefinedConfigurations().add(tempConfig);
+		update(tempConfig, selectedPlugins);
+		return tempConfig;
+	}
+	
+	public MethodConfiguration getTemporaryConfiguration() {
+		if (tempConfig == null) {
+			return createTemporaryConfiguration("TEMP_PRACTICE", new ArrayList<MethodPlugin>());
+		} 
 		return tempConfig;
 	}
 	
 	public void clearTemporaryConfiguration() {
+		MethodLibrary library = LibraryService.getInstance()
+		.getCurrentMethodLibrary();
+		library.getPredefinedConfigurations().remove(tempConfig);
 		tempConfig = null;
 	}
 	
