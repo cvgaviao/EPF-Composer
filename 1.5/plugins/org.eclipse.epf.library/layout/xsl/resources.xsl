@@ -223,5 +223,8 @@
 
 	<xsl:param name="workProductText"/>
 	<xsl:param name="processUsageText"/>
+	
+	<xsl:param name="fulfilledSlotsText"/>
+	<xsl:param name="fulfillingWorkProductsText"/>
 
 </xsl:stylesheet>
