@@ -160,8 +160,10 @@ public class ImplicitConfigMgr {
 	public void remove(MethodConfiguration config) {
 		MethodLibrary library = LibraryService.getInstance()
 		.getCurrentMethodLibrary();
-		library.getPredefinedConfigurations().remove(config);
-		LibraryService.getInstance().removeConfigurationManager(config);
+		if (config != null) {
+			library.getPredefinedConfigurations().remove(config);
+			LibraryService.getInstance().removeConfigurationManager(config);
+		}
 	}
 	
 	public void save(MethodConfiguration config) {
