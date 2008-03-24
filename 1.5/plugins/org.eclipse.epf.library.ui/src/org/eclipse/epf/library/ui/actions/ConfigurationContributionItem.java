@@ -318,7 +318,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 	/**
 	 * Refreshes the configuration combo.
 	 */
-	private static void refresh() {
+	public static void refresh() {
 		configComboViewer.refresh();
 	}
 
