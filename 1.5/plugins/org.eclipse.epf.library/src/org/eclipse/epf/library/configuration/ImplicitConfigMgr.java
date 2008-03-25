@@ -25,6 +25,7 @@ import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 
 /**
@@ -38,6 +39,7 @@ public class ImplicitConfigMgr {
 	private static ImplicitConfigMgr instance = new ImplicitConfigMgr();
 	private List<MethodPlugin> newAddedPlugins;
 	private MethodConfiguration tempConfig;
+	private boolean namespaceMatch = true;
 	
 	private ImplicitConfigMgr() {		
 	}
@@ -62,7 +64,51 @@ public class ImplicitConfigMgr {
 		Set<MethodPlugin> addedPlugins = new HashSet<MethodPlugin>();
 		Set<MethodPackage> addedPkgs = new HashSet<MethodPackage>();
 		
-		addPluginsAndPackages(selectedPlugins, plugins, pkgs, addedPlugins, addedPkgs);		
+		List<MethodPlugin> matchedSelected = getNamespaceMatched(selectedPlugins);
+		
+		addPluginsAndPackages(matchedSelected, plugins, pkgs, addedPlugins, addedPkgs);		
+	}
+	
+	private List<MethodPlugin> getNamespaceMatched(List<MethodPlugin> selectedPlugins) {
+		if (!namespaceMatch || selectedPlugins.isEmpty()) {
+			return selectedPlugins;
+		}
+		
+		MethodLibrary lib = UmaUtil.getMethodLibrary(selectedPlugins.get(0));
+		if (lib == null) {
+			return selectedPlugins;
+		}
+		
+		List<MethodPlugin> ret = new ArrayList<MethodPlugin>();
+		ret.addAll(selectedPlugins);
+		Set selectedSet = new HashSet(selectedPlugins);
+		for (MethodPlugin selectedPlugin : selectedPlugins) {
+			namespaceMatch(ret, lib.getMethodPlugins(), selectedSet);
+		}
+		
+		return ret;
+	}
+
+	private void namespaceMatch(List<MethodPlugin> ret,
+			List<MethodPlugin> allPlugins, Set selectedSet) {
+		for (MethodPlugin plugin : allPlugins) {
+			if (selectedSet.contains(plugin)) {
+				continue;
+			}
+			
+			String baseName = plugin.getName();			
+			int ix = baseName.lastIndexOf("."); //$NON-NLS-1$
+			if (ix <= 0) {
+				continue;
+			}
+			
+			String matchString = baseName.substring(0, ix + 1);
+			String name = plugin.getName();
+			if (name.indexOf(matchString) == 0) {
+				ret.add(plugin);
+				selectedSet.add(plugin);
+			}
+		}
 	}
 
 	private void addPluginsAndPackages(List<MethodPlugin> selectedPlugins,
@@ -123,7 +169,9 @@ public class ImplicitConfigMgr {
 		Set<MethodPlugin> addedPlugins = new HashSet<MethodPlugin>(plugins);
 		Set<MethodPackage> addedPkgs = new HashSet<MethodPackage>(pkgs);
 		
-		addPluginsAndPackages(selectedPlugins, plugins, pkgs, addedPlugins, addedPkgs);		
+		List<MethodPlugin> matchedSelected = getNamespaceMatched(selectedPlugins);
+		
+		addPluginsAndPackages(matchedSelected, plugins, pkgs, addedPlugins, addedPkgs);		
 	}
 	
 	private void addPlugin(Set<MethodPlugin> added, MethodPlugin plugin, List<MethodPlugin> plugins) {
@@ -198,7 +246,7 @@ public class ImplicitConfigMgr {
 	
 	public MethodConfiguration getTemporaryConfiguration() {
 		if (tempConfig == null) {
-			return createTemporaryConfiguration("TEMP_PRACTICE", new ArrayList<MethodPlugin>());
+			return createTemporaryConfiguration("TEMP_PRACTICE", new ArrayList<MethodPlugin>()); //$NON-NLS-1$
 		} 
 		return tempConfig;
 	}
