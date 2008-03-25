@@ -25,7 +25,6 @@ import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.UmaFactory;
-import org.eclipse.epf.uma.util.UmaUtil;
 
 
 /**
@@ -39,13 +38,16 @@ public class ImplicitConfigMgr {
 	private static ImplicitConfigMgr instance = new ImplicitConfigMgr();
 	private List<MethodPlugin> newAddedPlugins;
 	private MethodConfiguration tempConfig;
-	private boolean namespaceMatch = true;
 	
-	private ImplicitConfigMgr() {		
+	protected ImplicitConfigMgr() {		
 	}
 	
 	public static ImplicitConfigMgr getInstance() {
 		return instance;
+	}
+	
+	public static void setInstance(ImplicitConfigMgr instance) {
+		ImplicitConfigMgr.instance = instance;
 	}
 	
 	/**
@@ -69,46 +71,9 @@ public class ImplicitConfigMgr {
 		addPluginsAndPackages(matchedSelected, plugins, pkgs, addedPlugins, addedPkgs);		
 	}
 	
-	private List<MethodPlugin> getNamespaceMatched(List<MethodPlugin> selectedPlugins) {
-		if (!namespaceMatch || selectedPlugins.isEmpty()) {
-			return selectedPlugins;
-		}
-		
-		MethodLibrary lib = UmaUtil.getMethodLibrary(selectedPlugins.get(0));
-		if (lib == null) {
-			return selectedPlugins;
-		}
-		
-		List<MethodPlugin> ret = new ArrayList<MethodPlugin>();
-		ret.addAll(selectedPlugins);
-		Set selectedSet = new HashSet(selectedPlugins);
-		for (MethodPlugin selectedPlugin : selectedPlugins) {
-			namespaceMatch(ret, lib.getMethodPlugins(), selectedSet);
-		}
-		
-		return ret;
-	}
-
-	private void namespaceMatch(List<MethodPlugin> ret,
-			List<MethodPlugin> allPlugins, Set selectedSet) {
-		for (MethodPlugin plugin : allPlugins) {
-			if (selectedSet.contains(plugin)) {
-				continue;
-			}
-			
-			String baseName = plugin.getName();			
-			int ix = baseName.lastIndexOf("."); //$NON-NLS-1$
-			if (ix <= 0) {
-				continue;
-			}
-			
-			String matchString = baseName.substring(0, ix + 1);
-			String name = plugin.getName();
-			if (name.indexOf(matchString) == 0) {
-				ret.add(plugin);
-				selectedSet.add(plugin);
-			}
-		}
+	//May be overridden by sub-class
+	protected List<MethodPlugin> getNamespaceMatched(List<MethodPlugin> selectedPlugins) {
+		return selectedPlugins;
 	}
 
 	private void addPluginsAndPackages(List<MethodPlugin> selectedPlugins,
