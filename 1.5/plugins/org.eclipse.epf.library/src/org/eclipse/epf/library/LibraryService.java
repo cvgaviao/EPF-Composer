@@ -547,14 +547,14 @@ public class LibraryService implements ILibraryService {
 	 *            a name for the new method configuration
 	 * @param library
 	 *            the containing method library
-	 * @param hide
-	 * 			  Hide this configuration editors
+	 * @param configWizard
+	 * 			 Flag to indicate that this config is created thru config wizard
 	 * @return a method configuration
 	 * @throw <code>LibraryServiceException</code> if an error occurs while
 	 *        performing the operation
 	 */
 	public MethodConfiguration createMethodConfiguration(String name,
-			MethodLibrary library, boolean hide) throws LibraryServiceException {
+			MethodLibrary library, boolean configWizard) throws LibraryServiceException {
 		if (name == null || library == null) {
 			throw new IllegalArgumentException();
 		}
@@ -573,10 +573,10 @@ public class LibraryService implements ILibraryService {
 		configs.add(config);
 		
 		// create method property
-		String CONFIG_HIDE_PROPERTY = "HIDE_CONFIG";  //$NON-NLS-1$
+		String CONFIG_WIZARD_PROPERTY = "CONIG_WIZARD";  //$NON-NLS-1$
 		MethodElementProperty prop = UmaFactory.eINSTANCE.createMethodElementProperty();
-		prop.setName(CONFIG_HIDE_PROPERTY);
-		prop.setValue(new Boolean(hide).toString());
+		prop.setName(CONFIG_WIZARD_PROPERTY);
+		prop.setValue(new Boolean(configWizard).toString());
 			
 		config.getMethodElementProperty().add(prop);
 	
