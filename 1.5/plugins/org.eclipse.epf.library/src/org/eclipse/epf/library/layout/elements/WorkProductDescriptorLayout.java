@@ -16,15 +16,20 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -153,6 +158,50 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 
 		
 		return true;
+	}
+	
+	/**
+	 * @see org.eclipse.epf.library.layout.IElementLayout#getXmlElement(boolean)
+	 */
+	public XmlElement getXmlElement(boolean includeReferences) {
+		XmlElement elementXml = super.getXmlElement(includeReferences);
+		
+		WorkProductDescriptor wpd = null;
+		WorkProduct wp = null;
+		
+		boolean isSlot = false;
+		if (getElement() instanceof WorkProductDescriptor) {
+			wpd = (WorkProductDescriptor) getElement();
+			wp = wpd.getWorkProduct();
+			if (wp != null) {
+				isSlot = wp.getIsAbstract();
+			}
+		}
+		if (isSlot) {			
+			elementXml.setAttribute("Type", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
+			elementXml.setAttribute("TypeName", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
+		}
+		
+		if (includeReferences) {
+			EReference feature;
+			OppositeFeature ofeature;
+			List list;
+
+			if (isSlot) {
+				ofeature = AssociationHelper.FulFills_FullFillableElements;
+				list = ConfigurationHelper.calcFulfills_FulfillableElement(wp,
+						layoutManager.getElementRealizer().getConfiguration());
+				addReferences(ofeature, elementXml, ofeature.getName(), list);
+			} else {
+				feature = UmaPackage.eINSTANCE.getFulfillableElement_Fulfills();
+				list = ConfigurationHelper.calcFulfillableElement_Fulfills(wp,
+						layoutManager.getElementRealizer().getConfiguration());
+				addReferences(feature, elementXml, feature.getName(), list);
+			}
+
+		}
+		
+		return elementXml;
 	}
 	
 }
