@@ -26,6 +26,7 @@ import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -169,10 +170,10 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 	 */
 	public XmlElement getXmlElement(boolean includeReferences) {
 		XmlElement elementXml = super.getXmlElement(includeReferences);
-		
+
 		WorkProductDescriptor wpd = null;
 		WorkProduct wp = null;
-		
+
 		boolean isSlot = false;
 		if (getElement() instanceof WorkProductDescriptor) {
 			wpd = (WorkProductDescriptor) getElement();
@@ -181,11 +182,13 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 				isSlot = wp.getIsAbstract();
 			}
 		}
-		if (isSlot) {			
-			elementXml.setAttribute("Type", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
-			elementXml.setAttribute("TypeName", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
+		if (isSlot) {
+			elementXml.setAttribute(
+					"Type", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
+			elementXml.setAttribute(
+					"TypeName", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
 		}
-		
+
 		EObject containingObj = wpd.eContainer();
 		ProcessPackage contaningPkg = containingObj instanceof ProcessPackage ? (ProcessPackage) containingObj
 				: null;
@@ -194,12 +197,18 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 			List<ProcessElement> processElements = contaningPkg
 					.getProcessElements();
 			Map<WorkProduct, WorkProductDescriptor> wpWpdMap = new HashMap<WorkProduct, WorkProductDescriptor>();
+			MethodConfiguration config = layoutManager.getElementRealizer()
+					.getConfiguration();
 			for (ProcessElement processElement : processElements) {
 				if (processElement instanceof WorkProductDescriptor) {
 					WorkProductDescriptor wpdElem = (WorkProductDescriptor) processElement;
 					WorkProduct wpElement = wpdElem.getWorkProduct();
 					if (wpElement != null) {
-						wpWpdMap.put(wpElement, wpdElem);
+						wpElement = (WorkProduct) ConfigurationHelper
+						.getCalculatedElement(wpElement, config);
+						if (wpElement != null) {
+							wpWpdMap.put(wpElement, wpdElem);
+						}
 					}
 				}
 			}
@@ -207,16 +216,14 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 			if (isSlot) {
 				OppositeFeature ofeature = AssociationHelper.FulFills_FullFillableElements;
 				List list = ConfigurationHelper
-						.calcFulfills_FulfillableElement(wp, layoutManager
-								.getElementRealizer().getConfiguration());
+						.calcFulfills_FulfillableElement(wp, config);
 				List<WorkProductDescriptor> wpdList = getWpdList(wpWpdMap, list);
 				addReferences(ofeature, elementXml, ofeature.getName(), wpdList);
 			} else if (wp != null) {
 				EReference feature = UmaPackage.eINSTANCE
 						.getFulfillableElement_Fulfills();
 				List list = ConfigurationHelper
-						.calcFulfillableElement_Fulfills(wp, layoutManager
-								.getElementRealizer().getConfiguration());
+						.calcFulfillableElement_Fulfills(wp, config);
 				List<WorkProductDescriptor> wpdList = getWpdList(wpWpdMap, list);
 				addReferences(feature, elementXml, feature.getName(), wpdList);
 			}
