@@ -554,7 +554,7 @@ public class LibraryService implements ILibraryService {
 	 *        performing the operation
 	 */
 	public MethodConfiguration createMethodConfiguration(String name,
-			MethodLibrary library, boolean configWizard) throws LibraryServiceException {
+			MethodLibrary library, MethodElementProperty property) throws LibraryServiceException {
 		if (name == null || library == null) {
 			throw new IllegalArgumentException();
 		}
@@ -571,14 +571,8 @@ public class LibraryService implements ILibraryService {
 		config = UmaFactory.eINSTANCE.createMethodConfiguration();
 		config.setName(name);
 		configs.add(config);
-		
-		// create method property
-		String CONFIG_WIZARD_PROPERTY = "CONIG_WIZARD";  //$NON-NLS-1$
-		MethodElementProperty prop = UmaFactory.eINSTANCE.createMethodElementProperty();
-		prop.setName(CONFIG_WIZARD_PROPERTY);
-		prop.setValue(new Boolean(configWizard).toString());
-			
-		config.getMethodElementProperty().add(prop);
+	
+		config.getMethodElementProperty().add(property);
 	
 	
 		return config;

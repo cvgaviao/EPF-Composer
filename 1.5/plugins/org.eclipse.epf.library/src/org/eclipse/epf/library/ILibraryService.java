@@ -14,6 +14,7 @@ import java.net.URI;
 import java.util.Map;
 
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 
 /**
@@ -232,14 +233,14 @@ public interface ILibraryService {
 	 *            a name for the new method configuration
 	 * @param library
 	 *            the containing method library
-	 * @param hide
-	 * 		      hide this configuration in editors
+	 * @param property
+	 * 		      method element property
 	 * @return a method configuration
 	 * @throw <code>LibraryServiceException</code> if an error occurs while
 	 *        performing the operation
 	 */
 	public MethodConfiguration createMethodConfiguration(String name,
-			MethodLibrary library, boolean hide) throws LibraryServiceException;
+			MethodLibrary library, MethodElementProperty property) throws LibraryServiceException;
 	/**
 	 * Gets the current method configuration.
 	 * 
