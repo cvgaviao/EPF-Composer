@@ -52,6 +52,8 @@ public class NewPluginMainPage extends BaseWizardPage {
 	 * The wizard page name.
 	 */
 	public static final String PAGE_NAME = NewPluginMainPage.class.getName();
+	
+	protected Composite composite;
 
 	protected Label nameTextLabel;
 
@@ -89,21 +91,24 @@ public class NewPluginMainPage extends BaseWizardPage {
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(Composite)
 	 */
 	public void createControl(Composite parent) {
-		Composite composite = createGridLayoutComposite(parent, 2);
+		composite = createGridLayoutComposite(parent, 2);
 
-		nameTextLabel = createVerticallyAlignedLabel(composite, AuthoringUIText.NAME_TEXT);
+		createNameField(composite);
 
-		nameText = createEditableText(composite);
+		createBriefDescField(composite);
 
-		createVerticallyAlignedLabel(composite,
-				AuthoringUIText.BRIEF_DESCRIPTION_TEXT);
+		createAuthorsField(composite);
 
-		briefDescText = createEditableText(composite, 400, 80, 1);
+		createReferencedModelsViewer(composite);
 
-		createVerticallyAlignedLabel(composite, AuthoringUIText.AUTHORS_TEXT);
+		initControls();
 
-		authorsText = createEditableText(composite, 400, 40, 1);
+		addListeners();
 
+		setControl(composite);
+	}
+
+	protected void createReferencedModelsViewer(Composite composite) {
 		referencedPluginsLabel = createVerticallyAlignedLabel(composite,
 				AuthoringUIText.REFERENCED_PLUGINS_SECTION_NAME);
 
@@ -114,25 +119,46 @@ public class NewPluginMainPage extends BaseWizardPage {
 		referencedPluginsGridData.heightHint = 150;
 		referencedPluginsViewer.getTable().setLayoutData(
 				referencedPluginsGridData);
+	}
 
-		initControls();
+	protected void createAuthorsField(Composite composite) {
+		createVerticallyAlignedLabel(composite, AuthoringUIText.AUTHORS_TEXT);
 
-		addListeners();
+		authorsText = createEditableText(composite, 400, 40, 1);
+	}
 
-		setControl(composite);
+	protected void createBriefDescField(Composite composite) {
+		createVerticallyAlignedLabel(composite,
+				AuthoringUIText.BRIEF_DESCRIPTION_TEXT);
+
+		briefDescText = createEditableText(composite, 400, 80, 1);
+	}
+
+	protected void createNameField(Composite composite) {
+		nameTextLabel = createVerticallyAlignedLabel(composite, AuthoringUIText.NAME_TEXT);
+
+		nameText = createEditableText(composite);
 	}
 
 	/**
 	 * Initializes the wizard page controls with data.
 	 */
 	protected void initControls() {
+		initNameField();
+		
+		initReferencedModelsViewer();
+	}
+
+	protected void initNameField() {
 		String name = "new_plug-in"; //$NON-NLS-1$
 		if (LibraryService.getInstance().getCurrentMethodLibrary() != null) {
 			name = TngUtil.getNextAvailableName(LibraryService.getInstance()
 					.getCurrentMethodLibrary().getMethodPlugins(), name);
 		}
 		nameText.setText(name);
+	}
 
+	protected void initReferencedModelsViewer() {
 		ILabelProvider labelProvider = new LabelProvider() {
 			public Image getImage(Object element) {
 				return LibraryUIImages.IMG_METHOD_PLUGIN;
@@ -169,6 +195,10 @@ public class NewPluginMainPage extends BaseWizardPage {
 	 * Adds event listeners to the wizard page controls.
 	 */
 	protected void addListeners() {
+		addNameFieldListeners();
+	}
+
+	protected void addNameFieldListeners() {
 		nameText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				setPageComplete(isPageComplete());
