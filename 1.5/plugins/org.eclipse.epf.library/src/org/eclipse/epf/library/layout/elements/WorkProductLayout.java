@@ -55,7 +55,7 @@ public class WorkProductLayout extends AbstractElementLayout {
 			isSlot = wp.getIsAbstract();
 		}
 		if (isSlot) {			
-			elementXml.setAttribute("Type", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
+			elementXml.setAttribute("Type", "WorkProductSlot"); //$NON-NLS-1$
 			elementXml.setAttribute("TypeName", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
 		}
 		

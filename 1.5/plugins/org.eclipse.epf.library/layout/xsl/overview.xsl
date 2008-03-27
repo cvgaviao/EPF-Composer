@@ -312,6 +312,9 @@
 			<xsl:when test="$elementType = 'WorkProductType'">
 					<xsl:value-of select="$workProductTypeText"/>
 			</xsl:when>
+			<xsl:when test="$elementType = 'WorkProductSlot'">
+					<xsl:value-of select="$workProductSlotText"/>
+			</xsl:when>
 			<xsl:otherwise>
 					<xsl:value-of select="$elementTypeName"/>
 			</xsl:otherwise>

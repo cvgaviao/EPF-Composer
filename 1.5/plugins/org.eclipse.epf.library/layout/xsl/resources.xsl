@@ -53,6 +53,7 @@
 <xsl:param name="whitepaperText"/>
 <xsl:param name="workProductDescriptorText"/>
 <xsl:param name="workProductTypeText"/>
+<xsl:param name="workProductSlotText"/>
 
 <!-- other text variables -->
 	<xsl:param name="activityEntryStateText"/>

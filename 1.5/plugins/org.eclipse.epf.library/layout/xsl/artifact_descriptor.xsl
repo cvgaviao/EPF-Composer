@@ -221,6 +221,8 @@
 	</xsl:template>
 
 	<xsl:template name="descriptorRelationshipsSection">
+		<xsl:variable name="fulfillingWorkProducts" select="referenceList[@name='FulFills_FullFillableElements']/Element"></xsl:variable>
+		<xsl:variable name="fulfilledSlots" select="referenceList[@name='fulfills']/Element"></xsl:variable>
 		<xsl:variable name="workProduct" select="reference[@name='WorkProduct']/Element[@Type='Artifact']"/>
 		<xsl:variable name="deliverableParts" select="referenceList[@name='deliverableParts']/Element"/>
 		<xsl:variable name="impacts" select="referenceList[@name='impacts']/Element[@Type='WorkProductDescriptor']"/>
@@ -233,10 +235,49 @@
 		<xsl:variable name="responsibleRole" select="referenceList[@name='WorkProductDescriptor_ResponsibleRoleDescriptors']/Element[@Type='RoleDescriptor']"/>
 		<xsl:variable name="workedOnBy" select="referenceList[@name='workedOnBy']/Element"/>
 
-		<xsl:if test="count($responsibleRole) + count($workedOnBy) + count($mandatoryInputTo) + count($optionalInputTo) + count($externalInputTo) + count($outputFrom) + count($impacts) + count($impactedBy)> 0">
+		<xsl:if test="count($fulfillingWorkProducts) + count($fulfilledSlots) + count($responsibleRole) + count($workedOnBy) + count($mandatoryInputTo) + count($optionalInputTo) + count($externalInputTo) + count($outputFrom) + count($impacts) + count($impactedBy)> 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					
+					<xsl:if test="count($fulfillingWorkProducts) > 0">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$fulfillingWorkProductsText"/></th>
+							<td class="sectionTableCell" colspan="2">
+							<ul>
+								<xsl:for-each select="$fulfillingWorkProducts">
+								<xsl:sort select="@DisplayName"/>
+									<li>
+										<a>
+											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+											<xsl:value-of select="@DisplayName"/>
+										</a>
+									</li>
+								</xsl:for-each>
+							</ul>
+							</td>
+						</tr>
+					</xsl:if>		
+					
+					<xsl:if test="count($fulfilledSlots) > 0">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$fulfilledSlotsText"/></th>
+							<td class="sectionTableCell" colspan="2">
+							<ul>
+								<xsl:for-each select="$fulfilledSlots">
+								<xsl:sort select="@DisplayName"/>
+									<li>
+										<a>
+											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+											<xsl:value-of select="@DisplayName"/>
+										</a>
+									</li>
+								</xsl:for-each>
+							</ul>
+							</td>
+						</tr>
+					</xsl:if>		
+					
 					<xsl:if test="count($impacts) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$dependentText"/></th>
