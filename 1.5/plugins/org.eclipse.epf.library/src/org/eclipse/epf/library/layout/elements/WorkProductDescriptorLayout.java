@@ -226,11 +226,41 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 						.calcFulfillableElement_Fulfills(wp, config);
 				List<WorkProductDescriptor> wpdList = getWpdList(wpWpdMap, list);
 				addReferences(feature, elementXml, feature.getName(), wpdList);
+				
+				includeSlotReferences(elementXml, wpdList);
 			}
 
 		}
 
 		return elementXml;
+	}
+	
+	private void includeSlotReferences(XmlElement elementXml, List<WorkProductDescriptor> wpdsWithslots) {
+		ElementRealizer realizer = layoutManager.getElementRealizer();		
+				
+		addSlotReferences(elementXml,
+				AssociationHelper.WorkProductDescriptor_MandatoryInputTo_TaskDescriptors,
+				"mandatoryInputToTaskDescriptors_fromSlots", wpdsWithslots, realizer);	//$NON-NLS-1$
+
+		addSlotReferences(elementXml,
+				AssociationHelper.WorkProductDescriptor_OptionalInputTo_TaskDescriptors,
+				"optionalInputToTaskDescriptors_fromSlots", wpdsWithslots, realizer);	//$NON-NLS-1$
+
+		addSlotReferences(elementXml,
+				AssociationHelper.WorkProductDescriptor_OutputFrom_TaskDescriptors,
+				"outputFromTaskDescriptors_fromSlots", wpdsWithslots, realizer);	//$NON-NLS-1$
+		
+	}
+	
+	private void addSlotReferences(XmlElement elementXml, OppositeFeature ofeature, String referenceName, List<WorkProductDescriptor> wpdsWithslots, ElementRealizer realizer) {
+		List references = new ArrayList();
+		
+		for (WorkProductDescriptor wpd: wpdsWithslots) {
+			List list = ConfigurationHelper.calc0nFeatureValue(wpd, ofeature, realizer);
+			references.addAll(list);
+		}
+
+		addReferences(ofeature, elementXml, referenceName, references); 
 	}
 	
 	private List<WorkProductDescriptor> getWpdList(Map<WorkProduct, WorkProductDescriptor> wpWpdMap, List<WorkProduct> wpList) {
