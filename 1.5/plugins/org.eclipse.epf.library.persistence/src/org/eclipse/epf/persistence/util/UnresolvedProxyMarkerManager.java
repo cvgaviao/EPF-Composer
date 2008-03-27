@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.persistence.util;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,6 +43,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -50,6 +52,7 @@ import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.PersistencePlugin;
+import org.eclipse.epf.persistence.UnnormalizedURIException;
 import org.eclipse.epf.uma.ecore.IProxyResolutionListener;
 import org.eclipse.epf.uma.ecore.ResolveException;
 import org.eclipse.jface.text.BadLocationException;
@@ -70,6 +73,11 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	public static final String MARKER_ID = PersistencePlugin.getDefault().getId() + ".unresolvedProxyMarker"; //$NON-NLS-1$
 	public static final String PROXY_URI = "proxyURI"; //$NON-NLS-1$
 	public static final String OWNER_GUID = "ownerGUID"; //$NON-NLS-1$
+	public static final String MARKER_DETAIL_TYPE = "markerDetailType"; //$NON-NLS-1$
+	public static final String MARKER_DETAIL_TYPE_NORMALIZED_URI = "NormzlizedUri"; //$NON-NLS-1$
+	public static final String MARKER_DETAIL_TYPE_RESOLVING_PROXY = "ResolvingProxy"; //$NON-NLS-1$
+	public static final String MARKER_DETAIL_TYPE_FIND_FILE = "FindFile"; //$NON-NLS-1$
+	public static final String MARKER_DETAIL_TYPE_UNKNOWN = "Unknown"; //$NON-NLS-1$
 	
 	private static class ValidObject {
 		boolean valid;
@@ -315,7 +323,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		}
 	}
 	
-	private void addMarker(Resource resource, URI proxyURI, String errMsg, String ownerGUID, IProgressMonitor monitor) {
+	private void addMarker(ResolveException re, Resource resource, URI proxyURI, String errMsg, String ownerGUID, IProgressMonitor monitor) {
 		URI containerURI = resource.getURI();
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IPath path = new Path(containerURI.toFileString());
@@ -361,6 +369,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 										marker.setAttribute(IMarker.CHAR_END, end);
 										marker.setAttribute(PROXY_URI, proxyURIStr);
 										marker.setAttribute(OWNER_GUID, ownerGUID);
+										marker.setAttribute(MARKER_DETAIL_TYPE, getMarkerDetailType(re));
 
 										// cache marker to it can be found easily and deleted
 										//
@@ -387,6 +396,22 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 				}
 			}
 		}
+	}
+	
+	private String getMarkerDetailType(ResolveException re) {
+		if (re.getCause() instanceof UnnormalizedURIException) {
+			return MARKER_DETAIL_TYPE_NORMALIZED_URI;
+		}
+		if (re.getCause() instanceof WrappedException) {
+			Exception ex = ((WrappedException) re.getCause()).exception();
+			if (ex instanceof FileNotFoundException) {
+				return MARKER_DETAIL_TYPE_FIND_FILE;
+			}
+		}
+		if (re.getCause() == null) {
+			return MARKER_DETAIL_TYPE_RESOLVING_PROXY;
+		}		
+		return MARKER_DETAIL_TYPE_UNKNOWN;
 	}
 	
 	private void addMarker(ResolveException re, IProgressMonitor monitor) {
@@ -418,7 +443,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 					errMsg = re.getMessage() == null ? NLS.bind(PersistenceResources.UnresolvedProxyMarkerManager_couldNotResolveProxy, proxy.eProxyURI()) : re
 								.getMessage();
 				}
-				addMarker(resource, proxy.eProxyURI(), errMsg, MultiFileSaveUtil.getGuid(re.getResolver()), monitor);
+				addMarker(re, resource, proxy.eProxyURI(), errMsg, MultiFileSaveUtil.getGuid(re.getResolver()), monitor);
 			}
 		}
 	}
