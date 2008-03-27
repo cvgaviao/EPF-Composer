@@ -17,15 +17,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
-import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
-import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
-import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
-import org.eclipse.epf.authoring.ui.editors.MethodElementEditorInput;
-import org.eclipse.epf.authoring.ui.util.UIHelper;
-import org.eclipse.epf.library.edit.LibraryEditResources;
-import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
@@ -33,7 +25,6 @@ import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -43,30 +34,18 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.forms.widgets.TableWrapData;
-import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 
 /**
@@ -76,24 +55,14 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
  * @author Kelvin Low
  * @since 1.0
  */
-public class ContentPackageDescriptionPage extends FormPage implements IRefreshable {
+public class ContentPackageDescriptionPage extends DescriptionFormPage implements IRefreshable {
 
 	private static final String FORM_PREFIX = LibraryUIText.TEXT_CONTENT_PACKAGE
 			+ ": "; //$NON-NLS-1$
 
-	private Text ctrl_name;
-	
-	private Text ctrl_presentation_name;
-
-	private Text ctrl_brief_desc;
-
 	private CheckboxTableViewer ctrl_dependency;
 
-	private ScrolledForm form;
-
 	private ContentPackage contentPackage;
-
-	private org.eclipse.epf.authoring.ui.editors.MethodElementEditor.ModifyListener modelModifyListener;
 
 	/**
 	 * Creates a new instance.
@@ -108,96 +77,25 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
-
-		// Retrieve the ContentPackage object from the Editor input.
-		MethodElementEditorInput methodElementInput = (MethodElementEditorInput) input;
-		Object obj = methodElementInput.getMethodElement();
-		contentPackage = (ContentPackage) obj;
+		contentPackage = (ContentPackage) methodElement;
+		detailSectionOn = false;
+		fullDescOn = false;
+		keyConsiderationOn = false;
+		variabilitySectionOn = false;
+		versionSectionOn = false;
 	}
 
-	/**
-	 * @see org.eclipse.ui.forms.editor.createFormContent(IManagedForm)
-	 */
-	protected void createFormContent(IManagedForm managedForm) {
-		// Create the form toolkit.
-		form = managedForm.getForm();
-		FormToolkit toolkit = managedForm.getToolkit();
-		form.setText(FORM_PREFIX + contentPackage.getName());
-		TableWrapLayout layout = new TableWrapLayout();
-		form.getBody().setLayout(layout);
+	@Override
+	protected void createEditorContent(FormToolkit toolkit) {
+		super.createEditorContent(toolkit);
+		createDependencySection(toolkit);
+	}
 
-		// Create the General Informaiton section.
-		Section generalSection = toolkit.createSection(form.getBody(),
+	private void createDependencySection(FormToolkit toolkit) {
+		Section dependencySection = toolkit.createSection(sectionComposite,
 				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
 						| Section.TITLE_BAR);
-		TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
-		generalSection.setLayoutData(td);
-		generalSection.setText(AuthoringUIText.GENERAL_INFO_SECTION_NAME);
-		generalSection.setDescription(MessageFormat.format(
-				AuthoringUIText.GENERAL_INFO_SECTION_DESC,
-				new String[] { LibraryUIText.getUITextLower(contentPackage) }));
-		generalSection.setLayout(new GridLayout());
-
-		Composite generalComposite = toolkit.createComposite(generalSection);
-		generalComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		generalComposite.setLayout(new GridLayout(2, false));
-		generalSection.setClient(generalComposite);
-
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(
-				generalComposite.getParent().getParent(),
-				AuthoringUIHelpContexts.CONTENT_PACKAGE_EDITOR_ALL_CONTEXT); 
-
-		// name
-		Label l_name = toolkit.createLabel(generalComposite,
-				AuthoringUIText.NAME_TEXT);
-		{
-			GridData gridData = new GridData(GridData.BEGINNING);
-			l_name.setLayoutData(gridData);
-		}
-
-		ctrl_name = toolkit.createText(generalComposite, ""); //$NON-NLS-1$
-		{
-			GridData gridData = new GridData(GridData.FILL_HORIZONTAL
-					| GridData.GRAB_HORIZONTAL);
-			ctrl_name.setLayoutData(gridData);
-		}
-
-		// presentation name 
-		Label l_presentation_name = toolkit.createLabel(generalComposite,
-				AuthoringUIText.PRESENTATION_NAME_TEXT);
-		{
-			GridData gridData = new GridData(GridData.BEGINNING);
-			l_presentation_name.setLayoutData(gridData);
-		}
-
-		ctrl_presentation_name = toolkit.createText(generalComposite, ""); //$NON-NLS-1$
-		{
-			GridData gridData = new GridData(GridData.FILL_HORIZONTAL
-					| GridData.GRAB_HORIZONTAL);
-			ctrl_presentation_name.setLayoutData(gridData);
-		}
-		
-		// brief desc
-		Label l_brief_desc = toolkit.createLabel(generalComposite,
-				AuthoringUIText.BRIEF_DESCRIPTION_TEXT);
-		{
-			GridData gridData = new GridData(GridData.BEGINNING);
-			l_brief_desc.setLayoutData(gridData);
-		}
-
-		ctrl_brief_desc = toolkit.createText(generalComposite,
-				"", SWT.MULTI | SWT.WRAP | SWT.V_SCROLL); //$NON-NLS-1$
-		{
-			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-			gridData.heightHint = 40;
-			gridData.widthHint = 300;
-			ctrl_brief_desc.setLayoutData(gridData);
-		}
-
-		Section dependencySection = toolkit.createSection(form.getBody(),
-				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
-						| Section.TITLE_BAR);
-		TableWrapData td1 = new TableWrapData(TableWrapData.FILL_GRAB);
+		GridData td1 = new GridData(GridData.BEGINNING | GridData.FILL_HORIZONTAL);
 		dependencySection.setLayoutData(td1);
 		dependencySection.setText(AuthoringUIText.DEPENDENCIES_SECTION_NAME);
 		dependencySection
@@ -254,163 +152,23 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 
 		ctrl_dependency.setAllChecked(true);
 		ctrl_dependency.setAllGrayed(true);
-
-		toolkit.paintBordersFor(generalComposite);
+		
 		toolkit.paintBordersFor(dependencyComposite);
-
-		// load data
-		loadData();
-		addListeners();
-
-		// set focus on the name attribute
-		Display display = form.getBody().getDisplay();
-		if (!(display == null || display.isDisposed())) {
-			display.asyncExec(new Runnable() {
-				public void run() {
-					ctrl_name.setFocus();
-					ctrl_name.setSelection(0, ctrl_name.getText().length());
-				}
-			});
-		}
 	}
 
 	/**
 	 * Add listeners
 	 * 
 	 */
-	private void addListeners() {
-		final MethodElementEditor editor = (MethodElementEditor) getEditor();
-		modelModifyListener = editor.createModifyListener(contentPackage);
-
+	protected void addListeners() {
+		super.addListeners();
+		
 		form.addListener(SWT.Activate, new Listener() {
 			public void handleEvent(Event e) {
 				// refreshViewers();
 				ctrl_dependency.refresh();
 				ctrl_dependency.setAllChecked(true);
 				ctrl_dependency.setAllGrayed(true);
-				if (TngUtil.isLocked(contentPackage)) {
-					enableControls(false);
-				} else {
-					enableControls(true);
-				}
-			}
-		});
-
-		ctrl_name.addModifyListener(modelModifyListener);
-		ctrl_name.addFocusListener(new FocusAdapter() {
-			public void focusGained(FocusEvent e) {
-				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-						UmaPackage.eINSTANCE.getNamedElement_Name());
-			}
-
-			public void focusLost(FocusEvent e) {
-				final Collection eClasses = Collections
-						.singleton(UmaPackage.eINSTANCE.getMethodPackage());
-				String oldContent = contentPackage.getName();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						e.widget, oldContent)) {
-					return;
-				}
-				String msg = null ;
-				String newName = ctrl_name.getText();
-				if(newName != null) {
-					newName = newName.trim();					
-					// 178462
-					if (oldContent.indexOf("&") < 0 && newName.indexOf("&") > -1) { //$NON-NLS-1$ //$NON-NLS-2$
-						msg = NLS
-								.bind(
-										LibraryEditResources.invalidElementNameError4_msg,
-										newName);
-					} else {
-						msg = TngUtil.checkName(contentPackage, newName,
-								eClasses);
-					}
-				}
-				if (msg == null) {
-					if (!newName.equals(contentPackage.getName())) {
-						ctrl_name.setText(newName);
-						editor.getActionManager().doAction(IActionManager.SET,
-								contentPackage,
-								UmaPackage.eINSTANCE.getNamedElement_Name(),
-								newName, -1);
-					}
-				} else {
-					AuthoringUIPlugin
-							.getDefault()
-							.getMsgDialog()
-							.displayError(
-									AuthoringUIResources.renameDialog_title, msg); 
-					ctrl_name.setText(contentPackage.getName());
-					ctrl_name.getDisplay().asyncExec(new Runnable() {
-						public void run() {
-							ctrl_name.setFocus();
-							ctrl_name.selectAll();
-						}
-					});
-				}
-			}
-		});
-		
-		// add presentation_name listener
-		ctrl_presentation_name.addModifyListener(modelModifyListener);
-		ctrl_presentation_name.addFocusListener(new FocusAdapter() {
-			public void focusGained(FocusEvent e) {
-				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-						UmaPackage.eINSTANCE.getMethodElement_PresentationName());
-				// when user tab to this field, select all text
-				ctrl_presentation_name.selectAll();
-			}
-
-			public void focusLost(FocusEvent e) {
-				String oldContent = contentPackage.getPresentationName();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						e.widget, oldContent)) {
-					return;
-				}
-				String newName = ctrl_presentation_name.getText();
-				if (!newName.equals(contentPackage.getPresentationName())) {
-					boolean success = editor.getActionManager().doAction(
-							IActionManager.SET,
-							contentPackage,
-							UmaPackage.eINSTANCE
-									.getMethodElement_PresentationName(),
-							newName, -1);
-					if (success) {
-						ctrl_presentation_name.setText(newName);
-					}
-				}
-				// clear the selection when the focus of the component is lost 
-				if(ctrl_presentation_name.getSelectionCount() > 0){
-					ctrl_presentation_name.clearSelection();
-				} 
-			}
-		});
-		
-		ctrl_brief_desc.addModifyListener(modelModifyListener);
-		ctrl_brief_desc.addFocusListener(new FocusAdapter() {
-			public void focusGained(FocusEvent e) {
-				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-						UmaPackage.eINSTANCE.getMethodElement_BriefDescription());
-			}
-
-			public void focusLost(FocusEvent e) {
-				String oldContent = contentPackage.getBriefDescription();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						e.widget, oldContent)) {
-					return;
-				}
-				String newName = ctrl_brief_desc.getText();
-				if (!newName.equals(contentPackage.getBriefDescription())) {
-					boolean success = editor.getActionManager().doAction(
-							IActionManager.SET,
-							contentPackage,
-							UmaPackage.eINSTANCE
-									.getMethodElement_BriefDescription(),
-							newName, -1);
-					if (success) {
-						ctrl_brief_desc.setText(newName);
-					}
-				}
 			}
 		});
 
@@ -421,27 +179,6 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 			}
 		});
 
-	}
-
-	protected void enableControls(boolean editable) {
-		ctrl_name.setEditable(editable);
-		ctrl_presentation_name.setEditable(editable);
-		ctrl_brief_desc.setEditable(editable);
-	}
-
-	/**
-	 * Loads initial data from model
-	 */
-	private void loadData() {
-		String name = contentPackage.getName();
-		String presentation_name = contentPackage.getPresentationName();
-		String desc = contentPackage.getBriefDescription();
-
-
-		ctrl_name.setText(name == null ? "" : name); //$NON-NLS-1$
-		ctrl_name.selectAll();
-		ctrl_presentation_name.setText(desc == null ? "" : presentation_name); //$NON-NLS-1$
-		ctrl_brief_desc.setText(desc == null ? "" : desc); //$NON-NLS-1$
 	}
 
 	/**
@@ -533,20 +270,13 @@ public class ContentPackageDescriptionPage extends FormPage implements IRefresha
 			}
 		}
 		return cpList;
-	}	
-
-	/**
-	 * @see org.eclipse.epf.authoring.ui.forms.IRefreshable#refreshName(java.lang.String)
-	 */
-	public void refreshName(String newName) {
-		if (newName != null) {
-			if ((ctrl_name != null) && !(ctrl_name.isDisposed())) {
-				ctrl_name.removeModifyListener(modelModifyListener);
-				ctrl_name.setText(newName);
-				ctrl_name.addModifyListener(modelModifyListener);
-				UIHelper.setFormText(form, contentPackage);
-			}
-		}
 	}
+
+	@Override
+	public void loadSectionDescription() {
+		this.generalSectionDescription = MessageFormat.format(
+				AuthoringUIText.GENERAL_INFO_SECTION_DESC,
+				new String[] { LibraryUIText.getUITextLower(contentPackage) });
+	}	
 
 }
