@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.layout.elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -150,6 +151,8 @@ public class WorkProductLayout extends AbstractElementLayout {
 			addReferences(AssociationHelper.WorkProduct_OutputFrom_Tasks, 
 					elementXml, "outputFromTasks", outputFromTasks); //$NON-NLS-1$
 			
+			includeSlotReferences(elementXml);
+			
 			// add the descriptors referencing this element
 			super.processDescriptors(elementXml);
 
@@ -159,6 +162,39 @@ public class WorkProductLayout extends AbstractElementLayout {
 		return elementXml;
 	}
 	
+	private void includeSlotReferences(XmlElement elementXml) {
+		ElementRealizer realizer = layoutManager.getElementRealizer();		
+		FulfillableElement fElement = (FulfillableElement) getElement();
+		if (fElement.getIsAbstract()) {
+			return;
+		}
+		List slots = ConfigurationHelper.calcFulfillableElement_Fulfills(
+				fElement, realizer.getConfiguration());
+				
+		addSlotReferences(elementXml,
+				AssociationHelper.WorkProduct_MandatoryInputTo_Tasks,
+				"mandatoryInputToTasks_fromSlots", slots, realizer);	//$NON-NLS-1$
+
+		addSlotReferences(elementXml,
+				AssociationHelper.WorkProduct_OptionalInputTo_Tasks,
+				"optionalInputToTasks_fromSlots", slots, realizer);	//$NON-NLS-1$
+
+		addSlotReferences(elementXml,
+				AssociationHelper.WorkProduct_OutputFrom_Tasks,
+				"outputFromTasks_fromSlots", slots, realizer);	//$NON-NLS-1$	
+	}
+	
+	private void addSlotReferences(XmlElement elementXml, OppositeFeature ofeature, String referenceName, List<FulfillableElement> slots, ElementRealizer realizer) {
+		List references = new ArrayList();
+		
+		for (FulfillableElement fElement: slots) {
+			List list = ConfigurationHelper.calc0nFeatureValue(fElement, ofeature, realizer);
+			references.addAll(list);
+		}
+
+		addReferences(ofeature, elementXml, referenceName, references); 
+	}
+		
 	protected List calc0nFeatureValue(MethodElement element,
 			MethodElement ownerElement, EStructuralFeature feature,
 			ElementRealizer realizer) {
