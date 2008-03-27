@@ -92,29 +92,16 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 	}
 
 	private void createDependencySection(FormToolkit toolkit) {
-		Section dependencySection = toolkit.createSection(sectionComposite,
-				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
-						| Section.TITLE_BAR);
-		GridData td1 = new GridData(GridData.BEGINNING | GridData.FILL_HORIZONTAL);
-		dependencySection.setLayoutData(td1);
-		dependencySection.setText(AuthoringUIText.DEPENDENCIES_SECTION_NAME);
-		dependencySection
-				.setDescription(AuthoringUIText.DEPENDENCIES_SECTION_DESC);
-		dependencySection.setLayout(new GridLayout());
+		Section dependencySection = createSection(toolkit, sectionComposite, 
+				AuthoringUIText.DEPENDENCIES_SECTION_NAME, 
+				AuthoringUIText.DEPENDENCIES_SECTION_DESC);
+		Composite dependencyComposite = createComposite(toolkit, dependencySection);
 
-		Composite dependencyComposite = toolkit
-				.createComposite(dependencySection);
-		dependencyComposite
-				.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		dependencyComposite.setLayout(new GridLayout(2, false));
-		dependencySection.setClient(dependencyComposite);
-
-		
 		Table ctrl_table = toolkit.createTable(dependencyComposite, SWT.V_SCROLL
 				| SWT.CHECK | SWT.READ_ONLY | SWT.COLOR_BLUE);
 		{
 			GridData gridData = new GridData(GridData.BEGINNING
-					| GridData.FILL_BOTH);
+					| GridData.FILL_HORIZONTAL);
 			gridData.heightHint = 100;
 			ctrl_table.setLayoutData(gridData);
 		}
@@ -152,7 +139,7 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 
 		ctrl_dependency.setAllChecked(true);
 		ctrl_dependency.setAllGrayed(true);
-		
+
 		toolkit.paintBordersFor(dependencyComposite);
 	}
 
