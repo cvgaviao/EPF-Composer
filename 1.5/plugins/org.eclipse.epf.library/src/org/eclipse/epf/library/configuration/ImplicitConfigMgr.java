@@ -11,8 +11,11 @@
 package org.eclipse.epf.library.configuration;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.epf.library.LibraryPlugin;
@@ -20,6 +23,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -38,6 +42,7 @@ public class ImplicitConfigMgr {
 	private static ImplicitConfigMgr instance = new ImplicitConfigMgr();
 	private List<MethodPlugin> newAddedPlugins;
 	private MethodConfiguration tempConfig;
+	private Map<MethodConfiguration, MapEntry> configMap = new HashMap<MethodConfiguration, MapEntry>();
 	
 	protected ImplicitConfigMgr() {		
 	}
@@ -68,7 +73,28 @@ public class ImplicitConfigMgr {
 		
 		List<MethodPlugin> matchedSelected = getNamespaceMatched(selectedPlugins);
 		
-		addPluginsAndPackages(matchedSelected, plugins, pkgs, addedPlugins, addedPkgs);		
+		addPluginsAndPackages(config, matchedSelected, plugins, pkgs, addedPlugins, addedPkgs);
+				
+		handleIncludeExcludeSet(config, plugins, pkgs, addedPlugins, addedPkgs);
+	}
+
+	private void handleIncludeExcludeSet(MethodConfiguration config,
+			List<MethodPlugin> plugins, List<MethodPackage> pkgs,
+			Set<MethodPlugin> addedPlugins, Set<MethodPackage> addedPkgs) {
+		List<MethodPlugin> includePlugins = new ArrayList<MethodPlugin>();
+		MapEntry entry = getMapEntry(config);	
+		for (MethodElement elem: entry.includeSet) {
+			if (elem instanceof MethodPlugin) {
+				includePlugins.add((MethodPlugin) elem);
+			}
+		}
+		addPluginsAndPackages(config, includePlugins, plugins, pkgs, addedPlugins, addedPkgs);
+		for (MethodElement elem: entry.excludeSet) {
+			if (elem instanceof MethodPackage && !addedPkgs.contains(elem)) {
+				pkgs.add((MethodPackage) elem);
+				addedPkgs.add((MethodPackage) elem);
+			}
+		}
 	}
 	
 	//May be overridden by sub-class
@@ -76,20 +102,20 @@ public class ImplicitConfigMgr {
 		return selectedPlugins;
 	}
 
-	private void addPluginsAndPackages(List<MethodPlugin> selectedPlugins,
+	private void addPluginsAndPackages(MethodConfiguration config, List<MethodPlugin> selectedPlugins,
 			List<MethodPlugin> plugins, List<MethodPackage> pkgs,
 			Set<MethodPlugin> addedPlugins, Set<MethodPackage> addedPkgs) {
 		
 		newAddedPlugins = new ArrayList<MethodPlugin>();
 		
 		for (MethodPlugin plugin: selectedPlugins) {
-			addPlugin(addedPlugins, plugin, plugins);
+			addPlugin(config, addedPlugins, plugin, plugins);
 		}		
 
 		for (MethodPlugin plugin: newAddedPlugins) {
 			List<MethodPackage> pkgList = plugin.getMethodPackages();
 			for (MethodPackage pkg: pkgList) {
-				addPackages(addedPkgs, pkg, pkgs);
+				addPackages(config, addedPkgs, pkg, pkgs);
 			}
 		}
 		
@@ -136,27 +162,41 @@ public class ImplicitConfigMgr {
 		
 		List<MethodPlugin> matchedSelected = getNamespaceMatched(selectedPlugins);
 		
-		addPluginsAndPackages(matchedSelected, plugins, pkgs, addedPlugins, addedPkgs);		
+		addPluginsAndPackages(config, matchedSelected, plugins, pkgs, addedPlugins, addedPkgs);
+		
+		handleIncludeExcludeSet(config, plugins, pkgs, addedPlugins, addedPkgs);
 	}
 	
-	private void addPlugin(Set<MethodPlugin> added, MethodPlugin plugin, List<MethodPlugin> plugins) {
+	private void addPlugin(MethodConfiguration config, Set<MethodPlugin> added, MethodPlugin plugin, List<MethodPlugin> plugins) {
 		if (added.contains(plugin)) {
 			return;
 		}
+
+		MapEntry entry = getMapEntry(config);
+		if (entry.excludeSet.contains(plugin)) {
+			return;
+		}
+		
 		added.add(plugin);
 		newAddedPlugins.add(plugin);
 		
 		plugins.add(plugin);
 		List<MethodPlugin> basePlugins = plugin.getBases();
 		for (MethodPlugin basePlugin: basePlugins) {
-			addPlugin(added, basePlugin, plugins);
+			addPlugin(config, added, basePlugin, plugins);
 		}
 	}
 			
-	private void addPackages(Set<MethodPackage> added, MethodPackage pkg, List<MethodPackage> pkgs) {
+	private void addPackages(MethodConfiguration config, Set<MethodPackage> added, MethodPackage pkg, List<MethodPackage> pkgs) {
 		if (added.contains(pkg)) {
 			return;
 		}
+		
+		MapEntry entry = getMapEntry(config);
+		if (entry.includeSet.contains(pkg)) {
+			return;
+		}
+		
 		added.add(pkg);
 		
 		pkgs.add(pkg);		
@@ -166,7 +206,7 @@ public class ImplicitConfigMgr {
 		
 		List<MethodPackage> childPkgs = pkg.getChildPackages();
 		for (MethodPackage childPkg: childPkgs) {
-			addPackages(added, childPkg, pkgs);
+			addPackages(config, added, childPkg, pkgs);
 		}
 	}
 		
@@ -217,10 +257,18 @@ public class ImplicitConfigMgr {
 	}
 	
 	public void clearTemporaryConfiguration() {
+		if (tempConfig == null) {
+			return;
+		}
+		clearCacheData(tempConfig);
 		MethodLibrary library = LibraryService.getInstance()
 		.getCurrentMethodLibrary();
 		library.getPredefinedConfigurations().remove(tempConfig);
 		tempConfig = null;
+	}
+	
+	public void clearCacheData(MethodConfiguration config) {
+		configMap.remove(config);
 	}
 	
 	public void updateTemporaryConfiguration(List<MethodPlugin> selectedPlugins) {
@@ -234,5 +282,42 @@ public class ImplicitConfigMgr {
 	public void removeFromTemporaryConfiguration(List<MethodPlugin> selectedPlugins) {		
 		remove(getTemporaryConfiguration(), selectedPlugins);
 	}
+	
+	public void setIncluded(MethodConfiguration config, Collection<MethodElement> includedElements) {
+		MapEntry entry = getMapEntry(config);		
+		for (MethodElement elem: includedElements) {
+			entry.includeSet.add(elem);
+		}
+	}
+	
+	public void setExcluded(MethodConfiguration config, Collection<MethodElement> excludedElements) {
+		MapEntry entry = getMapEntry(config);		
+		for (MethodElement elem: excludedElements) {
+			entry.excludeSet.add(elem);
+		}
+	}
+
+	public void setViews(MethodConfiguration config, Collection<MethodElement> views) {
+		MapEntry entry = getMapEntry(config);		
+		for (MethodElement elem: views) {
+			entry.viewSet.add(elem);
+		}
+	}
+	
+	private MapEntry getMapEntry(MethodConfiguration config) {
+		MapEntry entry = configMap.get(config);
+		if (entry == null) {
+			entry = new MapEntry();
+			configMap.put(config, entry);
+		}
+		return entry;
+	}
+	
+	static class MapEntry {
+		public Set<MethodElement> includeSet = new HashSet();
+		public Set<MethodElement> excludeSet = new HashSet();
+		public Set<MethodElement> viewSet = new HashSet();
+	}
+
 		
 }
