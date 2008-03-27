@@ -38,6 +38,7 @@ import org.eclipse.epf.library.edit.IPluginUIPackageContextChangedListener;
 import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
@@ -86,6 +87,9 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.ui.ide.IGotoMarker;
 
 public class ConfigurationPage extends FormPage implements IGotoMarker {
+	
+	public static final String TOUCHED_BY_CONFIG_EDITOR = "TouchedByConfigEditor";
+	
 	private String formPrefix = AuthoringUIResources.ConfigurationPage_FormPrefix; 
 
 	private MethodConfiguration config = null;
@@ -611,7 +615,6 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		ICheckStateListener configCheckStateListener = new ICheckStateListener() {
 			public void checkStateChanged(CheckStateChangedEvent evt) {
 				
-				final CheckStateChangedEvent event = evt;
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
 						if (updateOnClick.getSelection()) {
@@ -645,7 +648,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		// listen to the library changes and automatically update the
 		// configuration view
 		libListener = new ILibraryChangeListener() {
-			public void libraryChanged(int option, Collection changedItems) {
+			public void libraryChanged(int option, Collection<Object> changedItems) {
 				// for performance reason, we should not response to every
 				// library change
 				// only cover package and plugin changes
@@ -679,7 +682,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 	protected void showErrors() {
 		// save the previous invalid elements
-		List invalid = closure.getInvalidElements();
+		List<Object> invalid = closure.getInvalidElements();
 
 		closure.checkError();
 		
@@ -772,6 +775,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	
 	    	// validate before save
 			LibraryUtil.validateMethodConfiguration(actionMgr, config);
+			
+			actionMgr.execute(new MethodElementSetPropertyCommand(config, TOUCHED_BY_CONFIG_EDITOR, Boolean.TRUE.toString()));
 
 			return true;
 		

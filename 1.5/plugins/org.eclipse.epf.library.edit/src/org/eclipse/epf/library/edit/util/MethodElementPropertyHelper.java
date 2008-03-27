@@ -49,4 +49,10 @@ public class MethodElementPropertyHelper {
 		setProperty(e, propName, String.valueOf(b));
 	}
 
+	public static final void removeProperty(MethodElement e, String propName) {
+		MethodElementProperty property = getProperty(e, propName);
+		if (property != null) {
+			e.getMethodElementProperty().remove(property);
+		}
+	}
 }

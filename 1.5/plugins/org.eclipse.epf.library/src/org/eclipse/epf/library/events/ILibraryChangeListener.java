@@ -43,6 +43,6 @@ public interface ILibraryChangeListener {
 	 *            the changed elements in the library, if the option is
 	 *            OPTION_CHANGED, null otherwise
 	 */
-	public void libraryChanged(int option, Collection collection);
+	public void libraryChanged(int option, Collection<Object> collection);
 
 }

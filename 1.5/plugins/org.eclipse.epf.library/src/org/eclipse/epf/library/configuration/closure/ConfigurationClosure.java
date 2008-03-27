@@ -346,8 +346,8 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 * 
 	 * @return A list of invalid elements.
 	 */
-	public List getInvalidElements() {
-		return new ArrayList(invalidNodesMap.keySet());
+	public List<Object> getInvalidElements() {
+		return new ArrayList<Object>(invalidNodesMap.keySet());
 	}
 
 	private void removeError(Object element) {
