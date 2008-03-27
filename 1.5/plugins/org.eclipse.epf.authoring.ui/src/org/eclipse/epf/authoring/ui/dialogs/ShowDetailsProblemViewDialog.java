@@ -14,10 +14,12 @@ import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -31,12 +33,13 @@ import org.eclipse.swt.widgets.Text;
  */
 public class ShowDetailsProblemViewDialog extends Dialog {
 
-	private Text details;
-	private String detailsStr;
+	private String textString;
+	private String labelString;
 	
-	public ShowDetailsProblemViewDialog(Shell parentShell, String details) {
+	public ShowDetailsProblemViewDialog(Shell parentShell, String labelString, String textString) {
 		super(parentShell);
-		detailsStr = details;
+		this.textString = textString;
+		this.labelString = labelString;
 	}
 
 	/*
@@ -52,15 +55,16 @@ public class ShowDetailsProblemViewDialog extends Dialog {
 		layout.marginHeight = 10;
 
 		Label label = new Label(composite, SWT.NONE);
-		label.setText("Detail Description"); 
+		label.setText(labelString); 
 		GridData layoutData = new GridData(SWT.BEGINNING);
 		label.setLayoutData(layoutData);
-
+		
 		GridData spec = new GridData(GridData.FILL_BOTH);
 		
-		details = SWTUtil.createEditableText(composite, 400, 80, 2);
-		details.setText(detailsStr);
-		
+		Text text = SWTUtil.createEditableText(composite, 400, 240, 2);
+		text.setText(textString);
+		text.setEditable(false);
+		text.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
 		return composite;
 	}
 
@@ -71,12 +75,15 @@ public class ShowDetailsProblemViewDialog extends Dialog {
 	 */
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Show Details"); 
+		newShell.setText(AuthoringUIResources.ProblemExplanationText); 
 	}	
-
-	public Text getDetails() {
-		return details;
-	}
 	
+	protected Point getInitialSize() {
+		Point calculatedSize = super.getInitialSize();
+		if (calculatedSize.x < 675) {
+			calculatedSize.x = 675;
+		}
+		return calculatedSize;
+	}
 
 }

@@ -668,7 +668,7 @@
          <action
                class="org.eclipse.epf.authoring.ui.actions.ShowDetailsProblemViewAction"
                id="org.eclipse.epf.authoring.ui.showDetailsProblemView"
-               label="Show Details"
+               label="%ExplanationText"
                menubarPath="additions">
          </action>
       </viewerContribution>
