@@ -541,44 +541,6 @@ public class LibraryService implements ILibraryService {
 	
 	
 	/**
-	 * Creates a new method configuration with the HIDE property
-	 * 
-	 * @param name
-	 *            a name for the new method configuration
-	 * @param library
-	 *            the containing method library
-	 * @param configWizard
-	 * 			 Flag to indicate that this config is created thru config wizard
-	 * @return a method configuration
-	 * @throw <code>LibraryServiceException</code> if an error occurs while
-	 *        performing the operation
-	 */
-	public MethodConfiguration createMethodConfiguration(String name,
-			MethodLibrary library, MethodElementProperty property) throws LibraryServiceException {
-		if (name == null || library == null) {
-			throw new IllegalArgumentException();
-		}
-
-		MethodConfiguration config;
-		List configs = library.getPredefinedConfigurations();
-		for (Iterator it = configs.iterator(); it.hasNext();) {
-			config = (MethodConfiguration) it.next();
-			if (name.equals(config.getName())) {
-				throw new ConfigurationAlreadyExistsException();
-			}
-		}
-
-		config = UmaFactory.eINSTANCE.createMethodConfiguration();
-		config.setName(name);
-		configs.add(config);
-	
-		config.getMethodElementProperty().add(property);
-	
-	
-		return config;
-	}
-
-	/**
 	 * Gets the current method configuration.
 	 * 
 	 * @return a method configuration
