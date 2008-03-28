@@ -36,8 +36,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
@@ -89,6 +89,17 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 	protected void createEditorContent(FormToolkit toolkit) {
 		super.createEditorContent(toolkit);
 		createDependencySection(toolkit);
+		// Set focus on the Name text control.
+		Display display = form.getBody().getDisplay();
+		if (!(display == null || display.isDisposed())) {
+			display.asyncExec(new Runnable() {
+				public void run() {
+					if(ctrl_name.isDisposed()) return;
+					ctrl_name.setFocus();
+					ctrl_name.setSelection(0, ctrl_name.getText().length());
+				}
+			});
+		}
 	}
 
 	private void createDependencySection(FormToolkit toolkit) {
@@ -257,6 +268,11 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 			}
 		}
 		return cpList;
+	}
+
+	@Override
+	protected Object getContentElement() {
+		return contentPackage;
 	}
 
 	@Override

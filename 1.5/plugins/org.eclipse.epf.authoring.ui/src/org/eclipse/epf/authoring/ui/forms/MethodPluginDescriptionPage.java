@@ -142,6 +142,17 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	protected void createEditorContent(FormToolkit toolkit) {
 		super.createEditorContent(toolkit);
 		createReferenceContent(toolkit);
+		// Set focus on the Name text control.
+		Display display = form.getBody().getDisplay();
+		if (!(display == null || display.isDisposed())) {
+			display.asyncExec(new Runnable() {
+				public void run() {
+					if(ctrl_name.isDisposed()) return;
+					ctrl_name.setFocus();
+					ctrl_name.setSelection(0, ctrl_name.getText().length());
+				}
+			});
+		}
 	}
 
 	private void createReferenceContent(FormToolkit toolkit) {
@@ -638,6 +649,11 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	public void loadSectionDescription() {
 		this.generalSectionDescription = AuthoringUIResources.plugin_generalInfoSection_desc;
 		this.versionSectionDescription = AuthoringUIResources.plugin_versionInfoSection_desc;
+	}
+
+	@Override
+	protected Object getContentElement() {
+		return plugin;
 	}
 
 }
