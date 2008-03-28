@@ -9,8 +9,9 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.epf.authoring.ui,
  org.eclipse.core.runtime,
  org.eclipse.jface.text,
- org.eclipse.search,
+ org.eclipse.search;visibility:=reexport,
  org.eclipse.epf.common.ui
 Eclipse-LazyStart: true
-Export-Package: org.eclipse.epf.search.ui
+Export-Package: org.eclipse.epf.search.ui,
+ org.eclipse.epf.search.ui.internal
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

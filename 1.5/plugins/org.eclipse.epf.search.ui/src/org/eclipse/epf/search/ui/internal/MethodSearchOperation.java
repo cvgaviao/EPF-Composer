@@ -48,9 +48,10 @@ import org.xml.sax.Attributes;
  * the content element XMI files where necessary.
  * 
  * @author Kelvin Low
+ * @author Phong Nguyen Le
  * @since 1.0
  */
-public class MethodSearchOperation {
+public class MethodSearchOperation implements IMethodSearchOperation {
 
 	private static final String SCAN_LIBRARY_TEXT = SearchUIResources.scanLibraryTask_name; 
 
@@ -154,6 +155,14 @@ public class MethodSearchOperation {
 	 */
 	public MethodSearchOperation(MethodSearchInput searchInput,
 			ISearchResultCollector result) {
+		initialize(searchInput, result);
+	}
+
+	public MethodSearchOperation() {
+	}
+
+	private void initialize(MethodSearchInput searchInput,
+			ISearchResultCollector result) {
 		this.searchInput = searchInput;
 		this.result = result;
 
@@ -182,7 +191,7 @@ public class MethodSearchOperation {
 							+ ", caseSensitive=" + caseSensitive); //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * Executes the search operation.
 	 * 
@@ -465,6 +474,12 @@ public class MethodSearchOperation {
 			}
 		}
 		return null;
+	}
+
+	public void execute(MethodSearchInput searchInput,
+			ISearchResultCollector result, IProgressMonitor monitor) {
+		initialize(searchInput, result);
+		execute(progressMonitor);
 	}
 
 }

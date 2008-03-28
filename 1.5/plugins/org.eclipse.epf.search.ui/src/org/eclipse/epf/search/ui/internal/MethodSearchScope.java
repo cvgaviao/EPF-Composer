@@ -11,59 +11,23 @@
 package org.eclipse.epf.search.ui.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.impl.ActivityImpl;
-import org.eclipse.epf.uma.impl.ArtifactImpl;
-import org.eclipse.epf.uma.impl.CapabilityPatternImpl;
-import org.eclipse.epf.uma.impl.ChecklistImpl;
-import org.eclipse.epf.uma.impl.ConceptImpl;
-import org.eclipse.epf.uma.impl.ContentCategoryImpl;
-import org.eclipse.epf.uma.impl.ContentPackageImpl;
-import org.eclipse.epf.uma.impl.CustomCategoryImpl;
-import org.eclipse.epf.uma.impl.DeliverableImpl;
-import org.eclipse.epf.uma.impl.DeliveryProcessImpl;
-import org.eclipse.epf.uma.impl.DisciplineGroupingImpl;
-import org.eclipse.epf.uma.impl.DisciplineImpl;
-import org.eclipse.epf.uma.impl.DomainImpl;
-import org.eclipse.epf.uma.impl.EstimationConsiderationsImpl;
-import org.eclipse.epf.uma.impl.ExampleImpl;
-import org.eclipse.epf.uma.impl.GuidanceImpl;
-import org.eclipse.epf.uma.impl.GuidelineImpl;
-import org.eclipse.epf.uma.impl.IterationImpl;
-import org.eclipse.epf.uma.impl.MethodPluginImpl;
-import org.eclipse.epf.uma.impl.MilestoneImpl;
-import org.eclipse.epf.uma.impl.OutcomeImpl;
-import org.eclipse.epf.uma.impl.PhaseImpl;
-import org.eclipse.epf.uma.impl.PracticeImpl;
-import org.eclipse.epf.uma.impl.ProcessComponentImpl;
-import org.eclipse.epf.uma.impl.ProcessPackageImpl;
-import org.eclipse.epf.uma.impl.ReportImpl;
-import org.eclipse.epf.uma.impl.ReusableAssetImpl;
-import org.eclipse.epf.uma.impl.RoadmapImpl;
-import org.eclipse.epf.uma.impl.RoleDescriptorImpl;
-import org.eclipse.epf.uma.impl.RoleImpl;
-import org.eclipse.epf.uma.impl.RoleSetGroupingImpl;
-import org.eclipse.epf.uma.impl.RoleSetImpl;
-import org.eclipse.epf.uma.impl.SupportingMaterialImpl;
-import org.eclipse.epf.uma.impl.TaskDescriptorImpl;
-import org.eclipse.epf.uma.impl.TaskImpl;
-import org.eclipse.epf.uma.impl.TemplateImpl;
-import org.eclipse.epf.uma.impl.TermDefinitionImpl;
-import org.eclipse.epf.uma.impl.ToolImpl;
-import org.eclipse.epf.uma.impl.ToolMentorImpl;
-import org.eclipse.epf.uma.impl.WhitepaperImpl;
-import org.eclipse.epf.uma.impl.WorkProductDescriptorImpl;
-import org.eclipse.epf.uma.impl.WorkProductTypeImpl;
+import org.eclipse.epf.uma.UmaPackage;
 
 /**
  * The method search scope.
  * 
  * @author Kelvin Low
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class MethodSearchScope {
@@ -118,56 +82,93 @@ public class MethodSearchScope {
 
 	public static final String DELIVERY_PROCESS = LibraryUIText.TEXT_DELIVERY_PROCESS;
 
-	private static Map<Class, String> elementSearchScope = new HashMap<Class, String>();
+	private static Map<EClass, String> elementSearchScope = new HashMap<EClass, String>();
+	
+	private static final Map<String, Collection<EClass>> scopeToEClassesMap = new HashMap<String, Collection<EClass>>();
 
 	static {
-		elementSearchScope.put(MethodPluginImpl.class, ROOT);
-		elementSearchScope.put(ContentPackageImpl.class, METHOD_CONTENT);
-		elementSearchScope.put(RoleImpl.class, ROLE);
-		elementSearchScope.put(TaskImpl.class, TASK);
-		elementSearchScope.put(ArtifactImpl.class, WORK_PRODUCT);
-		elementSearchScope.put(DeliverableImpl.class, WORK_PRODUCT);
-		elementSearchScope.put(OutcomeImpl.class, WORK_PRODUCT);
-		elementSearchScope.put(GuidanceImpl.class, GUIDANCE);
-		elementSearchScope.put(ChecklistImpl.class, CHECKLIST);
-		elementSearchScope.put(ConceptImpl.class, CONCEPT);
-		elementSearchScope.put(EstimationConsiderationsImpl.class,
+		elementSearchScope.put(UmaPackage.eINSTANCE.getMethodPlugin(), ROOT);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getContentPackage(), METHOD_CONTENT);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getRole(), ROLE);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getTask(), TASK);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getArtifact(), WORK_PRODUCT);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getDeliverable(), WORK_PRODUCT);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getOutcome(), WORK_PRODUCT);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getGuidance(), GUIDANCE);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getChecklist(), CHECKLIST);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getConcept(), CONCEPT);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getEstimationConsiderations(),
 				ESTIMATION_CONSIDERATIONS);
-		elementSearchScope.put(ExampleImpl.class, EXAMPLE);
-		elementSearchScope.put(GuidelineImpl.class, GUIDELINE);
-		elementSearchScope.put(PracticeImpl.class, PRACTICE);
-		elementSearchScope.put(ReportImpl.class, REPORT);
-		elementSearchScope.put(ReusableAssetImpl.class, REUSABLE_ASSET);
-		elementSearchScope.put(RoadmapImpl.class, ROADMAP);
-		elementSearchScope.put(SupportingMaterialImpl.class,
+		elementSearchScope.put(UmaPackage.eINSTANCE.getExample(), EXAMPLE);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getPractice(), PRACTICE);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getReport(), REPORT);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getReusableAsset(), REUSABLE_ASSET);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getRoadmap(), ROADMAP);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getSupportingMaterial(),
 				SUPPORTING_MATERIAL);
-		elementSearchScope.put(TemplateImpl.class, TEMPLATE);
-		elementSearchScope.put(TermDefinitionImpl.class, TERM_DEFINITION);
-		elementSearchScope.put(ToolMentorImpl.class, TOOL_MENTOR);
-		elementSearchScope.put(WhitepaperImpl.class, WHITEPAPER);
-		elementSearchScope.put(ContentCategoryImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(DisciplineImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(DisciplineGroupingImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(DomainImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(WorkProductTypeImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(RoleSetImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(RoleSetGroupingImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(ToolImpl.class, STANDARD_CATEGORY);
-		elementSearchScope.put(CustomCategoryImpl.class, CUSTOM_CATEGORY);
-		elementSearchScope.put(ProcessPackageImpl.class, PROCESS);
-		elementSearchScope.put(ProcessComponentImpl.class, PROCESS);
-		elementSearchScope.put(PhaseImpl.class, PROCESS);
-		elementSearchScope.put(IterationImpl.class, PROCESS);
-		elementSearchScope.put(MilestoneImpl.class, PROCESS);
-		elementSearchScope.put(ActivityImpl.class, PROCESS);
-		elementSearchScope.put(RoleDescriptorImpl.class, PROCESS);
-		elementSearchScope.put(TaskDescriptorImpl.class, PROCESS);
-		elementSearchScope.put(WorkProductDescriptorImpl.class, PROCESS);
-		elementSearchScope.put(CapabilityPatternImpl.class, CAPABILITY_PATTERN);
-		elementSearchScope.put(DeliveryProcessImpl.class, DELIVERY_PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getTemplate(), TEMPLATE);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getTermDefinition(), TERM_DEFINITION);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getToolMentor(), TOOL_MENTOR);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getWhitepaper(), WHITEPAPER);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getContentCategory(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getDiscipline(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getDisciplineGrouping(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getDomain(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getWorkProductType(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getRoleSet(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getRoleSetGrouping(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getTool(), STANDARD_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getCustomCategory(), CUSTOM_CATEGORY);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getProcessPackage(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getProcessComponent(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getPhase(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getIteration(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getMilestone(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getActivity(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getRoleDescriptor(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getTaskDescriptor(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getWorkProductDescriptor(), PROCESS);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getCapabilityPattern(), CAPABILITY_PATTERN);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getDeliveryProcess(), DELIVERY_PROCESS);
+		
+		scopeToEClassesMap.put(ROLE, Collections.singleton(UmaPackage.eINSTANCE.getRole()));
+		scopeToEClassesMap.put(TASK, Collections.singleton(UmaPackage.eINSTANCE.getTask()));
+		scopeToEClassesMap.put(WORK_PRODUCT, Arrays.asList(new EClass[] {
+				UmaPackage.eINSTANCE.getArtifact(),
+				UmaPackage.eINSTANCE.getDeliverable(),
+				UmaPackage.eINSTANCE.getOutcome()
+		}));
+		scopeToEClassesMap.put(CHECKLIST, Collections.singleton(UmaPackage.eINSTANCE.getChecklist()));
+		scopeToEClassesMap.put(CONCEPT, Collections.singleton(UmaPackage.eINSTANCE.getConcept()));
+		scopeToEClassesMap.put(ESTIMATION_CONSIDERATIONS, Collections.singleton(UmaPackage.eINSTANCE.getEstimationConsiderations()));
+		scopeToEClassesMap.put(EXAMPLE, Collections.singleton(UmaPackage.eINSTANCE.getEstimationConsiderations()));
+		scopeToEClassesMap.put(PRACTICE, Collections.singleton(UmaPackage.eINSTANCE.getPractice()));
+		scopeToEClassesMap.put(REPORT, Collections.singleton(UmaPackage.eINSTANCE.getReport()));
+		scopeToEClassesMap.put(REUSABLE_ASSET, Collections.singleton(UmaPackage.eINSTANCE.getReusableAsset()));
+		scopeToEClassesMap.put(ROADMAP, Collections.singleton(UmaPackage.eINSTANCE.getRoadmap()));
+		scopeToEClassesMap.put(SUPPORTING_MATERIAL, Collections.singleton(UmaPackage.eINSTANCE.getSupportingMaterial()));
+		scopeToEClassesMap.put(TEMPLATE, Collections.singleton(UmaPackage.eINSTANCE.getTemplate()));
+		scopeToEClassesMap.put(TERM_DEFINITION, Collections.singleton(UmaPackage.eINSTANCE.getTermDefinition()));
+		scopeToEClassesMap.put(TOOL_MENTOR, Collections.singleton(UmaPackage.eINSTANCE.getToolMentor()));
+		scopeToEClassesMap.put(WHITEPAPER, Collections.singleton(UmaPackage.eINSTANCE.getWhitepaper()));
+		scopeToEClassesMap.put(STANDARD_CATEGORY, Arrays.asList(new EClass[] {
+				UmaPackage.eINSTANCE.getDiscipline(),
+				UmaPackage.eINSTANCE.getDisciplineGrouping(),
+				UmaPackage.eINSTANCE.getDomain(),
+				UmaPackage.eINSTANCE.getWorkProductType(),
+				UmaPackage.eINSTANCE.getRoleSet(),
+				UmaPackage.eINSTANCE.getRoleSetGrouping(),
+				UmaPackage.eINSTANCE.getTool()
+		}));
+		scopeToEClassesMap.put(CUSTOM_CATEGORY, Collections.singleton(UmaPackage.eINSTANCE.getCustomCategory()));
+		scopeToEClassesMap.put(CAPABILITY_PATTERN, Collections.singleton(UmaPackage.eINSTANCE.getCapabilityPattern()));
+		scopeToEClassesMap.put(DELIVERY_PROCESS, Collections.singleton(UmaPackage.eINSTANCE.getDeliveryProcess()));
+
 	}
 
 	private List<Object> searchScope = new ArrayList<Object>();
+
+	private ArrayList<EClass> selectedTypes;
 
 	/**
 	 * Creates a new instance.
@@ -218,7 +219,7 @@ public class MethodSearchScope {
 		if (element == null)
 			return false;
 		String searchScopeName = (String) elementSearchScope.get(element
-				.getClass());
+				.eClass());
 		return searchScope.contains(searchScopeName);
 	}
 
@@ -233,4 +234,16 @@ public class MethodSearchScope {
 		return searchScope.contains(searchScopeName);
 	}
 
+	public Collection<EClass> getSelectedTypes() {
+		if (selectedTypes == null) {
+			selectedTypes = new ArrayList<EClass>();
+			for (Map.Entry<String, Collection<EClass>> entry : scopeToEClassesMap
+					.entrySet()) {
+				if (searchScope.contains(entry.getKey())) {
+					selectedTypes.addAll(entry.getValue());
+				}
+			}
+		}
+		return selectedTypes;
+	}
 }

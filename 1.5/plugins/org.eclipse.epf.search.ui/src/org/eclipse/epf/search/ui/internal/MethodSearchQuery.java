@@ -59,9 +59,11 @@ public class MethodSearchQuery implements ISearchQuery {
 				}
 			}
 		};
-		MethodSearchOperation operation = new MethodSearchOperation(
-				searchInput, result);
-		operation.execute(processMonitor);
+//		MethodSearchOperation operation = new MethodSearchOperation(
+//				searchInput, result);
+//		operation.execute(processMonitor);
+		IMethodSearchOperation op = MethodSearchHelper.newSearchOperation();
+		op.execute(searchInput, result, processMonitor);
 		processMonitor.done();
 		return Status.OK_STATUS;
 	}

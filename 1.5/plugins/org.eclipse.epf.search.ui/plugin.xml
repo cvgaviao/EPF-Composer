@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
+   <extension-point id="operation" name="Method Search Operation" schema="schema/operation.exsd"/>
+   <extension-point id="searchInputFactories" name="Method Search Input Factories" schema="schema/searchInputFactories.exsd"/>
    
    <extension point="org.eclipse.search.searchPages">
       <page id="org.eclipse.epf.search.ui.MethodSearchPage"

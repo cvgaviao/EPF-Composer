@@ -17,6 +17,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -55,7 +60,6 @@ import org.eclipse.epf.library.edit.process.WBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
-import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.LibraryEditConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -66,6 +70,7 @@ import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
+import org.osgi.framework.Bundle;
 
 /**
  * The default method library adapter factory implementation.
@@ -74,6 +79,9 @@ import org.eclipse.epf.uma.TeamProfile;
  * @since 1.0
  */
 public class TngAdapterFactoryImpl implements TngAdapterFactory {
+	private static final String WBS_ADAPTER_FACTORY_ID = "wbs"; //$NON-NLS-1$
+	private static final String LIBRARY_ADAPTER_FACTORY_ID = "library"; //$NON-NLS-1$
+	private static final String CONFIGURATION_ADAPTER_FACTORY_ID = "configuration"; //$NON-NLS-1$
 
 	private ExposedAdapterFactory wbsAdapterFactory = null;
 
@@ -162,7 +170,10 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 
 	private AdapterFactory[] getWBS_AdapterFactories() {
 		if (wbsAdapterFactories == null) {
-			WBSItemProviderAdapterFactory factory = new WBSItemProviderAdapterFactory();
+			AdapterFactory factory = createAdapterFactoryFromExtension(WBS_ADAPTER_FACTORY_ID);
+			if(factory == null) {
+				factory = new WBSItemProviderAdapterFactory();
+			}
 			wbsAdapterFactories = new AdapterFactory[] {
 			// new ResourceItemProviderAdapterFactory(),
 					factory,
@@ -205,18 +216,16 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 		if (navigatorAdapterFactory == null) {
 			synchronized (this) {
 				if (navigatorAdapterFactory == null) {
-					Object ext = ExtensionManager.createExtension(LibraryEditPlugin.PLUGIN_ID, "libraryViewAdapterFactory"); //$NON-NLS-1$
-					if(ext instanceof ComposedAdapterFactory) {
-						navigatorAdapterFactory = (ExposedAdapterFactory) ext;
+					AdapterFactory factory = createAdapterFactoryFromExtension(LIBRARY_ADAPTER_FACTORY_ID);
+					if (factory == null) {
+						factory = new org.eclipse.epf.library.edit.navigator.ItemProviderAdapterFactory();
 					}
-					else {
-						navigatorAdapterFactory = new ExposedAdapterFactory(
-								new AdapterFactory[] {
-										// new
-										// ResourceItemProviderAdapterFactory(),
-										new org.eclipse.epf.library.edit.navigator.ItemProviderAdapterFactory(),
-										new ReflectiveItemProviderAdapterFactory() });
-					}
+					navigatorAdapterFactory = new ExposedAdapterFactory(
+							new AdapterFactory[] {
+									// new
+									// ResourceItemProviderAdapterFactory(),
+									factory,
+									new ReflectiveItemProviderAdapterFactory() });
 				}
 			}
 		}
@@ -248,10 +257,14 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 		if (configurationAdapterFactory == null) {
 			synchronized (this) {
 				if (configurationAdapterFactory == null) {
+					AdapterFactory factory = createAdapterFactoryFromExtension(CONFIGURATION_ADAPTER_FACTORY_ID);
+					if(factory == null) {
+						factory = new org.eclipse.epf.library.edit.configuration.ItemProviderAdapterFactory();
+					}
 					configurationAdapterFactory = new ExposedAdapterFactory(
 							new AdapterFactory[] {
 									// new ResourceItemProviderAdapterFactory(),
-									new org.eclipse.epf.library.edit.configuration.ItemProviderAdapterFactory(),
+									factory,
 									new ReflectiveItemProviderAdapterFactory() });
 				}
 			}
@@ -982,6 +995,41 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 		if (procAdapterFactory != null) {
 			procAdapterFactory.cleanUp();
 		}
+	}
+
+	private static AdapterFactory createAdapterFactoryFromExtension(String id) {
+		// Process the contributors.
+		//
+		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(LibraryEditPlugin.PLUGIN_ID, "adapterFactories"); //$NON-NLS-1$
+		if (extensionPoint != null) {
+			IExtension[] extensions = extensionPoint.getExtensions();
+			for (int i = 0; i < extensions.length; i++) {
+				IExtension extension = extensions[i];
+				String pluginId = extension.getNamespaceIdentifier();
+				Bundle bundle = Platform.getBundle(pluginId);
+				IConfigurationElement[] configElements = extension
+						.getConfigurationElements();
+				for (int j = 0; j < configElements.length; j++) {
+					IConfigurationElement configElement = configElements[j];
+					try {
+						String factoryId = configElement.getAttribute("id"); //$NON-NLS-1$
+						if(id.equals(factoryId)) {
+							String className = configElement.getAttribute("class"); //$NON-NLS-1$
+							if(className != null) {
+								Object factory = bundle.loadClass(className).newInstance();
+								if(factory instanceof AdapterFactory) {
+									return (AdapterFactory) factory;
+								}
+							}
+						}
+					} catch (Exception e) {
+						LibraryEditPlugin.INSTANCE.log(e);
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 }
