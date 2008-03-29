@@ -1179,9 +1179,6 @@ public class ResourceHelper {
 
 			content = sb.toString();
 			sb = new StringBuffer();
-
-			System.out.println("wpl> content: " + content);
-
 			
 			// process attachments
 			m = ResourceHelper.p_link_ref_gen.matcher(content);
@@ -1189,14 +1186,13 @@ public class ResourceHelper {
 				StringBuffer sbLink = new StringBuffer();
 				// String tag = m.group(1);
 				String urltext = " " + m.group(2) + " "; //$NON-NLS-1$ //$NON-NLS-2$
-				System.out.println("wpl> urltext: " + urltext);
 				
 				if (ResourceHelper.getGuidFromUrl(urltext) == null) {
 					Matcher m2 = ResourceHelper.p_link_href_picker
 							.matcher(urltext);
 					if (m2.find()) {
 						String url = m2.group(1).trim().replaceAll("\"", ""); //$NON-NLS-1$ //$NON-NLS-2$
-						System.out.println("wpl> url: " + url);
+
 						if ( isExternalLink(url) ) {
 							// decode for external link 
 							url = XMLUtil.unescape(NetUtil.decodedFileUrl(url));
