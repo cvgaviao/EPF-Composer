@@ -1,5 +1,7 @@
 package org.eclipse.epf.library.edit.command;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.CopyCommand.Helper;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -39,20 +41,5 @@ public class MethodPluginInitializeCopyCommand extends
 	 */
 	public void doExecute() {
 		super.doExecute();
-
-		// change name for the copy
-		if (copy instanceof MethodElement) {
-			MethodElement e = ((MethodElement) copy);
-			if (e instanceof MethodPlugin) {
-				Object parent = ((TraceableAdapterFactoryEditingDomain)domain).getSelectedObjectToCopy();
-				if (parent instanceof PluginUIPackagesItemProvider) {
-					Object parentParent = ((PluginUIPackagesItemProvider)parent).getParent();
-					if (parentParent instanceof PluginUIPackagesItemProvider) {
-						String deltaName = PluginUIPackagesItemProvider.getNameDelta((PluginUIPackagesItemProvider)parentParent, e);
-						e.setName(deltaName);
-					}
-				}
-			}
-		}
 	}
 }

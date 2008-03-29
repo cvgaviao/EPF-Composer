@@ -122,7 +122,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 	public static boolean REPORT_ERROR = true;
 
-	static final Map DEFAULT_SAVE_OPTIONS = new HashMap();
+	static final Map<Object, Object> DEFAULT_SAVE_OPTIONS = new HashMap<Object, Object>();
 
 	static final Set DEFAULT_SAVE_SEPARATELY_CLASS_SET = new HashSet();
 
@@ -162,7 +162,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 	public static final String RESMGR_XMI = "resmgr.xmi"; //$NON-NLS-1$
 
-	private HashMap defaultSaveOptions;
+	private HashMap<Object, Object> defaultSaveOptions;
 
 	private HashMap guidToMethodElementMap;
 
@@ -306,16 +306,16 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 	}
 
-	public Map getLoadOptions() {
-		Map options = super.getLoadOptions();
+	public Map<Object, Object> getLoadOptions() {
+		Map<Object, Object> options = super.getLoadOptions();
 		options.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
 		options.put(XMLResource.OPTION_XML_MAP, createLoadXMLMap());
 		return options;
 	}
 
-	public Map getDefaultSaveOptions() {
+	public Map<Object, Object> getDefaultSaveOptions() {
 		if (defaultSaveOptions == null) {
-			defaultSaveOptions = new HashMap();
+			defaultSaveOptions = new HashMap<Object, Object>();
 			defaultSaveOptions.putAll(DEFAULT_SAVE_OPTIONS);
 		}
 

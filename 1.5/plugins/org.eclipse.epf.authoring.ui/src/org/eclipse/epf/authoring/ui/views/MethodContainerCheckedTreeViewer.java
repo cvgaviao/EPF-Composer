@@ -3,10 +3,13 @@ package org.eclipse.epf.authoring.ui.views;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.CustomCategory;
+import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -33,8 +36,10 @@ public class MethodContainerCheckedTreeViewer extends
 	
 	protected boolean expandWhenChecking = false;
 
+	protected ListenerList childrenCheckStateListeners = new ListenerList();
+
     /**
-     * Constructor for ContainerCheckedTreeViewer2.
+     * Constructor for MethodContainerCheckedTreeViewer.
      * @see CheckboxTreeViewer#CheckboxTreeViewer(Composite)
      */
     public MethodContainerCheckedTreeViewer(Composite parent) {
@@ -43,7 +48,7 @@ public class MethodContainerCheckedTreeViewer extends
     }
 
     /**
-     * Constructor for ContainerCheckedTreeViewer2.
+     * Constructor for MethodContainerCheckedTreeViewer.
      * @see CheckboxTreeViewer#CheckboxTreeViewer(Composite,int)
      */
     public MethodContainerCheckedTreeViewer(Composite parent, int style) {
@@ -52,7 +57,7 @@ public class MethodContainerCheckedTreeViewer extends
     }
 
     /**
-     * Constructor for ContainerCheckedTreeViewer2.
+     * Constructor for MethodContainerCheckedTreeViewer.
      * @see CheckboxTreeViewer#CheckboxTreeViewer(Tree)
      */
     public MethodContainerCheckedTreeViewer(Tree tree) {
@@ -101,6 +106,8 @@ public class MethodContainerCheckedTreeViewer extends
                     && ((curr.getChecked() != state) || curr.getGrayed())) {
                 curr.setChecked(state);
                 curr.setGrayed(false);
+                notifyChildrenCheckStateListeners(new CheckStateChangedEvent(this, curr.getData(),
+                		state));                
                 updateChildrenItems(curr);
             }
         }
@@ -174,4 +181,23 @@ public class MethodContainerCheckedTreeViewer extends
 	public void setExpandWhenChecking(boolean expandWhenChecking) {
 		this.expandWhenChecking = expandWhenChecking;
 	}
+	
+	public void addChildrenCheckStateListener(ICheckStateListener listener) {
+		childrenCheckStateListeners.add(listener);
+	}
+	
+	public void removeChildrenCheckStateListener(ICheckStateListener listener) {
+		childrenCheckStateListeners.remove(listener);
+	}
+	
+	protected void notifyChildrenCheckStateListeners(final CheckStateChangedEvent event) {
+		for (final Object listener : childrenCheckStateListeners.getListeners()) {
+            SafeRunner.run(new SafeRunnable() {
+                public void run() {
+                	((ICheckStateListener)listener).checkStateChanged(event);
+                }
+            });
+		}
+	}
+
 }

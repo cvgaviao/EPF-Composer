@@ -13,6 +13,7 @@ package org.eclipse.epf.uma.edit.domain;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.CommandStack;
@@ -42,7 +43,7 @@ public class TraceableAdapterFactoryEditingDomain extends
 	private Map<EObject, EObject> clipboardToOriginalMap;
 	
 	// when copy/pasting a plugin, these fields are used by the various copy/add commands for renaming the plugins
-	private Object selectedObjectToCopy = null;
+	private List<? extends Object> selectedObjectsToCopy = null;
 	private boolean createContibuter = false;
 	private String newPackageName = null;
 	private String newPluginName = null;
@@ -223,12 +224,12 @@ public class TraceableAdapterFactoryEditingDomain extends
 		return clipboardToOriginalMap;
 	}
 
-	public Object getSelectedObjectToCopy() {
-		return selectedObjectToCopy;
+	public List<? extends Object> getSelectedObjectsToCopy() {
+		return selectedObjectsToCopy;
 	}
 
-	public void setSelectedObjectToCopy(Object selectedObjectToCopy) {
-		this.selectedObjectToCopy = selectedObjectToCopy;
+	public void setSelectedObjectsToCopy(List<? extends Object> selectedObjectsToCopy) {
+		this.selectedObjectsToCopy = selectedObjectsToCopy;
 	}
 
 	public String getNewPackageName() {

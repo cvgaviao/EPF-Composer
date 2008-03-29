@@ -37,6 +37,7 @@ public final class ImportResources extends NLS {
 	public static String ConfigurationImportService_MSG0;
 	public static String ConfigurationImportService_MSG1;
 	public static String ConfigurationImportService_MSG3;
+	public static String ConfigurationImportService_handleToolVersion_error;
 	public static String ImportConfigurationWizard_MSG1;
 	public static String FileModifyChecker_Checkout_failed_msg;
 	public static String FileModifyChecker_Checkout_failed_title;

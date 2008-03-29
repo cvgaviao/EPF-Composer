@@ -622,6 +622,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 							// update the closure error
 							showErrors();
 						}
+						actionMgr.execute(new MethodElementSetPropertyCommand(config, TOUCHED_BY_CONFIG_EDITOR, Boolean.TRUE.toString()));
 					}
 				});
 				
@@ -775,7 +776,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	
 	    	// validate before save
 			LibraryUtil.validateMethodConfiguration(actionMgr, config);
-			
+
 			actionMgr.execute(new MethodElementSetPropertyCommand(config, TOUCHED_BY_CONFIG_EDITOR, Boolean.TRUE.toString()));
 
 			return true;
@@ -834,6 +835,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		
 		if (ConfigurationUtil.addCollToSubtractedCategoryList(actionMgr, config, newSubCats) == false)
 			return false;
+
+		actionMgr.execute(new MethodElementSetPropertyCommand(config, TOUCHED_BY_CONFIG_EDITOR, Boolean.TRUE.toString()));
 
 		return true;
 	}

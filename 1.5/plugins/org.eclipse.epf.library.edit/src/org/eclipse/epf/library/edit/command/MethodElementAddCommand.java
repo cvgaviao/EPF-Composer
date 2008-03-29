@@ -1105,6 +1105,21 @@ public class MethodElementAddCommand extends CommandWrapper implements
 						newPackageName != null) {
 					for (Object obj : addCommand.getCollection()) {
 						if (obj instanceof MethodPlugin) {
+							Map copyToOriginalMap = ((TraceableAdapterFactoryEditingDomain) ed).getCopyToOriginalMap();
+							Object original = copyToOriginalMap.get(obj);
+							if (((TraceableAdapterFactoryEditingDomain)ed).getSelectedObjectsToCopy() != null) {
+								for (Object parent : ((TraceableAdapterFactoryEditingDomain)ed).getSelectedObjectsToCopy()) {
+									if (parent instanceof PluginUIPackagesItemProvider) {
+										if (((PluginUIPackagesItemProvider)parent).getPlugins().contains(original)) {
+											Object parentParent = ((PluginUIPackagesItemProvider)parent).getParent();
+											if (parentParent instanceof PluginUIPackagesItemProvider) {
+												String deltaName = PluginUIPackagesItemProvider.getNameDelta((PluginUIPackagesItemProvider)parentParent, ((MethodPlugin)obj));
+												((MethodPlugin)obj).setName(deltaName);
+											}
+										}
+									}					
+								}
+							}
 							String oldName = ((MethodPlugin)obj).getName();
 							((MethodPlugin)obj).setName(newPackageName + PluginUIPackagesItemProvider.PLUGIN_PACKAGE_SEPARATOR + oldName);
 						}
