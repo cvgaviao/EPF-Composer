@@ -21,14 +21,11 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
-import org.eclipse.epf.authoring.ui.AuthoringUIImages;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
-import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
 import org.eclipse.epf.authoring.ui.util.EditorsContextHelper;
 import org.eclipse.epf.authoring.ui.util.UIHelper;
 import org.eclipse.epf.diagram.core.services.DiagramManager;
@@ -40,7 +37,6 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.ui.LibraryUIText;
-import org.eclipse.epf.richtext.RichTextListener;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -77,17 +73,12 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
-import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.events.HyperlinkAdapter;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.forms.widgets.TableWrapData;
-import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 
 /**
@@ -106,10 +97,6 @@ public class ProcessDescription extends ProcessFormPage {
 
 	private static final int DEFAULT_VERTICAL_INDENT = 2;
 
-	protected static final int GENERAL_SECTION_ID = 1;
-
-	protected static final int DETAIL_SECTION_ID = 2;
-
 	private IStructuredContentProvider contentProvider = new AdapterFactoryContentProvider(
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
@@ -119,50 +106,16 @@ public class ProcessDescription extends ProcessFormPage {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory());
 
-	protected Section formSection;
-
-	protected Composite sectionComposite;
-
-	private Composite expandedComposite;
-
-	private Text ctrl_name;
-
-	private Text ctrl_presentation_name;
-
-	private Text ctrl_brief_desc, ctrl_external_id;
-
-	private IMethodRichText ctrl_purpose;
-
-	private IMethodRichText ctrl_full_desc;
-
 	private IMethodRichText ctrl_scope, ctrl_usage_notes;
 
 	private IMethodRichText ctrl_alternatives, ctrl_how_to_staff,
 			ctrl_key_consideration;
 
-	private IMethodRichText activeControl;
+	private Section configSection;
 
-	private Section generalSection, detailSection, configSection;
-
-	protected Composite generalComposite, detailComposite, configComposite;
-
-	protected boolean descExpandFlag = false;
-
-	protected boolean generalSectionExpandFlag = false;
-
-	protected boolean detailSectionExpandFlag = false;
+	protected Composite configComposite;
 
 	protected boolean configSectionExpandFlag = false;
-
-	protected IMethodRichTextEditor ctrl_expanded;
-
-	private ImageHyperlink expandLink;
-
-	private Label expandLabel;
-
-	// private String[] variabilityTypes = new String[] {"N/A", "Contributes",
-	// "Extends", "Replaces"};
-	// private HashMap variabilityElementMap = new HashMap();
 
 	private org.eclipse.swt.widgets.List list_configurations;
 
@@ -199,38 +152,15 @@ public class ProcessDescription extends ProcessFormPage {
 	public ProcessDescription(FormEditor editor) {
 		super(editor, FORM_PAGE_ID, AuthoringUIResources.descriptionPage_title); 
 	}
-
-	/**
-	 * @see org.eclipse.ui.forms.editor.createFormContent(IManagedForm)
-	 */
-	protected void createFormContent(IManagedForm managedForm) {
-		// create form toolkit
-		super.createFormContent(managedForm);
-
+	
+	@Override
+	public void init(IEditorSite site, IEditorInput input) {
+		super.init(site, input);
 		processType = LibraryUIText.getUITextLower(process);
-		setFormText();
-
-		// create editor content
-		createEditorContent(toolkit);
-
-//		// add listener to listen to change in process's data
-//		if (processListener == null) {
-//			processListener = new AdapterImpl() {
-//				public void notifyChanged(Notification msg) {
-//					switch (msg.getFeatureID(Process.class)) {
-//					case UmaPackage.PROCESS__NAME:
-//						refreshElementName(msg.getNewStringValue());
-//						break;
-//					}
-//				}
-//			};
-//		}
-//		process.eAdapters().add(processListener);
-
-		loadData();
-		addListeners();
-
-		EditorsContextHelper.setHelp(getPartControl(), processType);
+		versionSectionOn = false;
+		variabilitySectionOn = false;
+		externalIdOn = true;
+		purposeOn = true;
 	}
 
 	/**
@@ -240,78 +170,32 @@ public class ProcessDescription extends ProcessFormPage {
 	 *            The form toolkit.
 	 */
 	protected void createEditorContent(FormToolkit toolkit) {
-		createFormComposites();
-		createGeneralSection();
-		createDetailSection();
-		createConfigurationSection();
-
-		toolkit.paintBordersFor(generalComposite);
-		toolkit.paintBordersFor(detailComposite);
-		toolkit.paintBordersFor(configComposite);
-		toolkit.paintBordersFor(expandedComposite);
-	}
-
-	private void createFormComposites() {
-		formSection = toolkit.createSection(form.getBody(), Section.NO_TITLE);
-		{
-			TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
-			formSection.setLayoutData(td);
-			formSection.setLayout(new TableWrapLayout());
+		super.createEditorContent(toolkit);
+		createConfigurationSection(toolkit);
+		// Set focus on the Name text control.
+		Display display = form.getBody().getDisplay();
+		if (!(display == null || display.isDisposed())) {
+			display.asyncExec(new Runnable() {
+				public void run() {
+					if(ctrl_name.isDisposed()) return;
+					ctrl_name.setFocus();
+					ctrl_name.setSelection(0, ctrl_name.getText().length());
+				}
+			});
 		}
-
-		// create the composite for the sections
-		sectionComposite = toolkit.createComposite(formSection, SWT.NONE);
-		sectionComposite.setLayoutData(new TableWrapData());
-		sectionComposite.setLayout(new TableWrapLayout());
-		formSection.setClient(sectionComposite);
-
-		expandedComposite = toolkit.createComposite(formSection, SWT.NONE);
-		{
-			TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
-			expandedComposite.setLayoutData(td);
-			expandedComposite.setLayout(new GridLayout(2, false));
-			expandedComposite.setVisible(false);
-		}
-
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(expandedComposite,
-				AuthoringUIHelpContexts.RICH_TEXT_EDITOR_CONTEXT_ID);
-
-		// Add the expand/collapse hyperlink image.
-		expandLink = toolkit.createImageHyperlink(expandedComposite, SWT.NONE);
-		expandLink.setImage(AuthoringUIImages.IMG_EXPANDED);
-		expandLink.setToolTipText(AuthoringUIResources.closeRTE);
-		expandLink.setUnderlined(false);
-		expandLink.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				toggle(e);
-			}
-		});
-
-		// Add the expand/collapse hyperlink text.
-		expandLabel = createDecoratedLabel(toolkit, expandedComposite, ""); //$NON-NLS-1$
-
 	}
 
 	/**
 	 * Create general section
 	 */
-	protected void createGeneralSection() {
+	protected void createGeneralSection(FormToolkit toolkit) {
 		// create General Information section
-		generalSection = toolkit.createSection(form.getBody(),
-				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
-						| Section.TITLE_BAR);
-		TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
-		generalSection.setLayoutData(td);
-		generalSection.setText(AuthoringUIText.GENERAL_INFO_SECTION_NAME);
-		generalSection.setDescription(MessageFormat.format(
-				AuthoringUIText.GENERAL_INFO_SECTION_DESC,
-				new String[] { processType }));
-		generalSection.setLayout(new GridLayout());
-
-		generalComposite = toolkit.createComposite(generalSection);
-		generalComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		generalComposite.setLayout(new GridLayout(3, false));
-		generalSection.setClient(generalComposite);
+		generalSection = createSection(toolkit, sectionComposite, 
+				AuthoringUIText.GENERAL_INFO_SECTION_NAME, 
+				MessageFormat.format(
+						AuthoringUIText.GENERAL_INFO_SECTION_DESC,
+						new String[] { processType }));
+		generalComposite = createComposite(toolkit, generalSection);
 
 		// name
 		ctrl_name = createTextEditWithLabel(toolkit, generalComposite,
@@ -334,63 +218,22 @@ public class ProcessDescription extends ProcessFormPage {
 				toolkit,
 				generalComposite,
 				AuthoringUIResources.Process_Purpose, 40, 400, GENERAL_SECTION_ID); 
-
-		// // create expanded composite
-		// expandGeneralComposite = toolkit.createComposite(generalSection);
-		// expandGeneralComposite.setLayoutData(new
-		// GridData(GridData.FILL_HORIZONTAL));
-		// expandGeneralComposite.setLayout(new GridLayout(2, false));
-		// expandGeneralComposite.setVisible(false);
-		//		
-		// // Hyperlink desc
-		// expandGeneralLink =
-		// toolkit.createImageHyperlink(expandGeneralComposite, SWT.NONE);
-		// expandGeneralLink.setImage(AuthoringUIImages.IMG_EXPANDED);
-		// expandGeneralLink.setUnderlined(false);
-		// expandGeneralLink.addHyperlinkListener(new HyperlinkAdapter()
-		// {
-		// public void linkActivated(HyperlinkEvent e)
-		// {
-		// toggle(e, GENERAL_SECTION_ID);
-		// }
-		// });
-		//		
-		// expandGeneralLabel = createLabel(toolkit, expandGeneralComposite,
-		// "");
-
-		// set focus on the name attribute
-		Display display = form.getBody().getDisplay();
-		if (!(display == null || display.isDisposed())) {
-			display.asyncExec(new Runnable() {
-				public void run() {
-					ctrl_name.setFocus();
-				}
-			});
-		}
-
+		
+		toolkit.paintBordersFor(generalComposite);
 	}
 
 	/**
 	 * Create detail section
 	 *
 	 */
-	protected void createDetailSection() {
+	protected void createDetailSection(FormToolkit toolkit) {
 		// create detail section
-		detailSection = toolkit.createSection(form.getBody(),
-				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
-						| Section.TITLE_BAR);
-		TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
-		detailSection.setLayoutData(td);
-		detailSection.setText(AuthoringUIText.DETAIL_SECTION_NAME);
-		detailSection.setDescription(MessageFormat.format(
-				AuthoringUIText.DETAIL_SECTION_DESC,
-				new String[] { processType }));
-		detailSection.setLayout(new GridLayout());
-
-		detailComposite = toolkit.createComposite(detailSection);
-		detailComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		detailComposite.setLayout(new GridLayout(3, false));
-		detailSection.setClient(detailComposite);
+		detailSection = createSection(toolkit, sectionComposite, 
+				AuthoringUIText.DETAIL_SECTION_NAME, 
+				MessageFormat.format(
+						AuthoringUIText.DETAIL_SECTION_DESC,
+						new String[] { processType }));
+		detailComposite = createComposite(toolkit, detailSection);
 
 		// full description
 		ctrl_full_desc = createRichTextEditWithLinkForSection(toolkit,
@@ -425,50 +268,19 @@ public class ProcessDescription extends ProcessFormPage {
 				detailComposite,
 				AuthoringUIResources.Process_KeyConsideration, 40, 400, DETAIL_SECTION_ID); 
 
-		// // create expanded composite
-		// expandDetailComposite = toolkit.createComposite(detailSection);
-		// expandDetailComposite.setLayoutData(new
-		// GridData(GridData.FILL_HORIZONTAL));
-		// expandDetailComposite.setLayout(new GridLayout(2, false));
-		// expandDetailComposite.setVisible(false);
-		//		
-		// // Hyperlink desc
-		// expandDetailLink =
-		// toolkit.createImageHyperlink(expandDetailComposite, SWT.NONE);
-		// expandDetailLink.setImage(AuthoringUIImages.IMG_EXPANDED);
-		// expandDetailLink.setUnderlined(false);
-		// expandDetailLink.addHyperlinkListener(new HyperlinkAdapter()
-		// {
-		// public void linkActivated(HyperlinkEvent e)
-		// {
-		// toggle(e, DETAIL_SECTION_ID);
-		// }
-		// });
-		//		
-		// expandDetailLabel = createLabel(toolkit, expandDetailComposite, "");
-
+		toolkit.paintBordersFor(detailComposite);
 	}
 
 	/**
 	 * Create configuration section
 	 */
-	protected void createConfigurationSection() {
+	protected void createConfigurationSection(FormToolkit toolkit) {
 		// create Configuration section
-		configSection = toolkit.createSection(form.getBody(),
-				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
-						| Section.TITLE_BAR);
-		TableWrapData td1 = new TableWrapData(TableWrapData.FILL_GRAB);
-		configSection.setLayoutData(td1);
-		configSection
-				.setText(AuthoringUIResources.processDescription_configurationSectionTitle); 
-		configSection
-				.setDescription(AuthoringUIResources.processDescription_configurationSectionMessage); 
-		configSection.setLayout(new GridLayout());
-
-		configComposite = toolkit.createComposite(configSection);
-		configComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		configComposite.setLayout(new GridLayout(2, false));
-		configSection.setClient(configComposite);
+		configSection = createSection(toolkit, sectionComposite, 
+				AuthoringUIResources.processDescription_configurationSectionTitle, 
+				AuthoringUIResources.processDescription_configurationSectionMessage);
+		configComposite = createComposite(toolkit, configSection);
+		((GridLayout) configComposite.getLayout()).numColumns = 2;
 
 		Label l_element = toolkit
 				.createLabel(
@@ -574,6 +386,7 @@ public class ProcessDescription extends ProcessFormPage {
 			textConfigDescription.setLayoutData(gridData);
 		}
 		textConfigDescription.setEditable(false);
+		toolkit.paintBordersFor(configComposite);
 	}
 
 	/**
@@ -734,6 +547,7 @@ public class ProcessDescription extends ProcessFormPage {
 	 * 
 	 */
 	protected void addListeners() {
+//		super.addListeners();
 		this.editor = ((MethodElementEditor) getEditor());
 		final IActionManager actionMgr = editor.getActionManager();
 		final org.eclipse.epf.uma.ProcessDescription content = (org.eclipse.epf.uma.ProcessDescription) process
@@ -1379,82 +1193,6 @@ public class ProcessDescription extends ProcessFormPage {
 	}
 
 	/**
-	 * Toggle Description control to expand and control state
-	 * 
-	 */
-	protected void toggle(HyperlinkEvent e, int id) {
-		// TODO- we should combine these methods into one. One way to do it,
-		// dispoing
-		// ctrl_expanded every time it collapses and creating it when we expand.
-		// At present, there is no method to dispose
-		toggle(e);
-		// if (id == GENERAL_SECTION_ID)
-		// {
-		// toggleGeneralSection(e);
-		// }
-		// if (id == DETAIL_SECTION_ID)
-		// {
-		// toggleDetailSection(e);
-		// }
-	}
-
-	protected void toggle(HyperlinkEvent e) {
-		if (ctrl_expanded == null) {
-			ctrl_expanded = createRichTextEditor(toolkit, expandedComposite,
-					SWT.MULTI | SWT.WRAP | SWT.V_SCROLL,
-					GridData.FILL_VERTICAL, getRichTextEditorHeight(),
-					getRichTextEditorWidth(), 2,
-					expandLabel);
-			ctrl_expanded.addModifyListener(contentModifyListener);
-		}
-
-		if (descExpandFlag) {
-			expandedComposite.setVisible(false);
-			sectionComposite.setVisible(true);
-			formSection.setClient(sectionComposite);
-			enableSections(true);
-			IMethodRichText richText = getActiveRichTextControl();
-			richText.setText(ctrl_expanded.getText());
-			for (Iterator i = richText.getListeners(); i.hasNext();) {
-				RichTextListener listener = (RichTextListener) i.next();
-				ctrl_expanded.removeListener(listener.getEventType(), listener
-						.getListener());
-			}
-			if (ctrl_expanded.getModified()) {
-				((MethodElementEditor) getEditor())
-						.saveModifiedRichText(ctrl_expanded);
-			}
-			editor.setFocus();
-		} else {
-			sectionComposite.setVisible(false);
-			expandedComposite.setVisible(true);
-			formSection.setClient(expandedComposite);
-			enableSections(false);
-			expandLabel.setText((String) ((ImageHyperlink) e.getSource())
-					.getData("Title")); //$NON-NLS-1$
-			IMethodRichText richText = (IMethodRichText) e.getHref();
-			ctrl_expanded.setInitialText(richText.getText());
-			ctrl_expanded.setModalObject(richText.getModalObject());
-			ctrl_expanded.setModalObjectFeature(richText
-					.getModalObjectFeature());
-			ctrl_expanded.setFindReplaceAction(richText.getFindReplaceAction());
-			for (Iterator i = richText.getListeners(); i.hasNext();) {
-				RichTextListener listener = (RichTextListener) i.next();
-				ctrl_expanded.addListener(listener.getEventType(), listener
-						.getListener());
-			}
-			boolean editable = !TngUtil.isLocked(process);
-			ctrl_expanded.setEditable(editable);
-			if (editable) {
-				ctrl_expanded.setFocus();
-			}
-			setActiveRichTextControl(richText);
-		}
-		form.getBody().layout(true, true);
-		descExpandFlag = !descExpandFlag;
-	}
-
-	/**
 	 * Checks whether default configuration is superset of selected
 	 * configuration or not
 	 * 
@@ -1480,25 +1218,6 @@ public class ProcessDescription extends ProcessFormPage {
 		}
 
 		return (pluginContains) && (packageContains);
-	}
-
-	/**
-	 * Set active rich text control
-	 * 
-	 * @param ctrl
-	 */
-	private void setActiveRichTextControl(IMethodRichText ctrl) {
-		activeControl = ctrl;
-	}
-
-	/**
-	 * Get Active Rich text control
-	 * 
-	 * @return
-	 * 		Rich text control
-	 */
-	private IMethodRichText getActiveRichTextControl() {
-		return activeControl;
 	}
 
 	protected void enableSections(boolean enable) {
@@ -1560,5 +1279,11 @@ public class ProcessDescription extends ProcessFormPage {
 
 			}
 		}
+	}
+
+	@Override
+	protected void setContextHelp() {
+		super.setContextHelp();
+		EditorsContextHelper.setHelp(getPartControl(), processType);
 	}
 }

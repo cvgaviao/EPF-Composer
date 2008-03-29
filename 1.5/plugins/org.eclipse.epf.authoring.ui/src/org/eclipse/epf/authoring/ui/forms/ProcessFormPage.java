@@ -25,7 +25,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
  * @author Kelvin Low
  * @since 1.0
  */
-public class ProcessFormPage extends BaseFormPage {
+public class ProcessFormPage extends DescriptionFormPage {
 
 	protected Process process;
 
@@ -56,6 +56,11 @@ public class ProcessFormPage extends BaseFormPage {
 		if (obj instanceof ProcessComponent) {
 			process = ((ProcessComponent) obj).getProcess();
 		}
+	}
+
+	@Override
+	protected Object getContentElement() {
+		return process;
 	}
 
 }

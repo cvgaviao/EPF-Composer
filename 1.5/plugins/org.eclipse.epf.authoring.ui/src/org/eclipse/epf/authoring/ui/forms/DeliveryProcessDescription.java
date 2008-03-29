@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.forms.editor.FormEditor;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 
 
 /**
@@ -62,8 +63,8 @@ public class DeliveryProcessDescription extends ProcessDescription {
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.ProcessDescription#createDetailSection()
 	 */
-	protected void createDetailSection() {
-		super.createDetailSection();
+	protected void createDetailSection(FormToolkit toolkit) {
+		super.createDetailSection(toolkit);
 
 		// scale
 		ctrl_scale = createRichTextEditWithLinkForSection(toolkit,
@@ -98,6 +99,7 @@ public class DeliveryProcessDescription extends ProcessDescription {
 				toolkit,
 				detailComposite,
 				AuthoringUIResources.Process_TypeOfContract, 40, 400, DETAIL_SECTION_ID); 
+		toolkit.paintBordersFor(detailComposite);
 
 	}
 
