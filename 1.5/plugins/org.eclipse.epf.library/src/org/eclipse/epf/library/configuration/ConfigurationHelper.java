@@ -618,28 +618,24 @@ public class ConfigurationHelper {
 		// [Bug 196399] P-name is not inherited from its base element in an extending element
 		String name = null;
 
-		if ( element instanceof DescribableElement ) {
-			name = ((DescribableElement)element).getPresentationName();
-			if ( StrUtil.isBlank(name) && (element instanceof VariabilityElement) ) {
-				
-				EStructuralFeature f = UmaPackage.eINSTANCE.getVariabilityElement_VariabilityBasedOnElement();
-				ElementRealizer r = DefaultElementRealizer.newElementRealizer(config);	
-				MethodElement me = element;
+		name = element.getPresentationName();
+		if ( StrUtil.isBlank(name) && (element instanceof VariabilityElement) ) {
+			EStructuralFeature f = UmaPackage.eINSTANCE.getVariabilityElement_VariabilityBasedOnElement();
+			ElementRealizer r = DefaultElementRealizer.newElementRealizer(config);	
+			MethodElement me = element;
 
-				do {
-					VariabilityElement oldMe = (VariabilityElement) me;
-					me = (DescribableElement)ConfigurationHelper.calc01FeatureValue(me, f, r);
-					if ( me == null ) {
-						break;
-					} else if (oldMe == me) {
-						me = oldMe.getVariabilityBasedOnElement();						
-					}					
-					
-					name = ((DescribableElement)me).getPresentationName();
-					
-				} while ( StrUtil.isBlank(name) );
-			}
-		} 
+			do {
+				VariabilityElement oldMe = (VariabilityElement) me;
+				me = (DescribableElement)ConfigurationHelper.calc01FeatureValue(me, f, r);
+				if ( me == null ) {
+					break;
+				} else if (oldMe == me) {
+					me = oldMe.getVariabilityBasedOnElement();						
+				}					
+				name = ((DescribableElement)me).getPresentationName();
+				
+			} while ( StrUtil.isBlank(name) );
+		}
 		
 		if ( StrUtil.isBlank(name) ) {
 			name = TngUtil.getPresentationName(element);

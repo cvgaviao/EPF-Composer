@@ -1331,12 +1331,12 @@ public final class TngUtil {
 		}
 
 		String name = null;
-		if (e instanceof DescribableElement) {
-			name = ((DescribableElement) e).getPresentationName();
-		}
-
-		if (e instanceof MethodElement && StrUtil.isBlank(name)) {
-			name = ((MethodElement) e).getName();
+		
+		if (e instanceof MethodElement) {
+			name = ((MethodElement) e).getPresentationName();
+			if (StrUtil.isBlank(name)) 	{
+				name = ((MethodElement) e).getName();
+			}
 		}
 
 		return name;
