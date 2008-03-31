@@ -389,6 +389,23 @@ public class SWTUtil {
 		combo.setLayoutData(gd);
 		return combo;
 	}
+	
+	/**
+	 * Creates an combobox.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 * @param column
+	 *            the number of column cells that the control will take up
+	 * @return a <code>Combo</code> object
+	 */
+	public static Combo createReadOnlyCombobox(Composite parent, int column) {
+		Combo combo = new Combo(parent, SWT.BORDER|SWT.READ_ONLY);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = column;
+		combo.setLayoutData(gd);
+		return combo;
+	}
 
 	/**
 	 * Creates an combobox that only takes up one column cell.

@@ -388,6 +388,19 @@ public abstract class BaseWizardPage extends WizardPage {
 	protected static Combo createCombobox(Composite parent, int column) {
 		return SWTUtil.createCombobox(parent, column);
 	}
+	
+	/**
+	 * Creates an combobox with readonly style.
+	 * 
+	 * @param parent
+	 *            the parent composite
+	 * @param column
+	 *            the number of column cells that the control will take up
+	 * @return a <code>Combo</code> object
+	 */
+	protected static Combo createReadOnlyCombobox(Composite parent, int column) {
+		return SWTUtil.createReadOnlyCombobox(parent, column);
+	}
 
 	/**
 	 * Creates an combobox that only takes up one column cell.

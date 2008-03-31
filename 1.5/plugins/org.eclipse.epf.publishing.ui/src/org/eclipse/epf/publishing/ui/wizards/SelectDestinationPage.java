@@ -351,6 +351,13 @@ public class SelectDestinationPage extends BaseWizardPage {
 	public boolean getStaticWebSiteSelection() {
 		return staticWebSiteRadioButton.getSelection();
 	}
+	
+	/**
+	 * Gets the user specified java web application selection.
+	 */
+	public boolean getJavaWebAppSelection() {
+		return javaWebAppRadioButton.getSelection();
+	}
 
 	/**
 	 * Gets the user specified include search selection.
