@@ -26,10 +26,12 @@ public class MethodElementPropertyHelper {
 	public static final String WORK_ORDER__PREDECESSOR_PROCESS_PATH = "pred_process_path"; //$NON-NLS-1$
 
 	public static final MethodElementProperty getProperty(MethodElement e, String propertyName) {
-		for (Iterator iter = e.getMethodElementProperty().iterator(); iter.hasNext();) {
-			MethodElementProperty prop = (MethodElementProperty) iter.next();
-			if(prop.getName().equals(propertyName)) {
-				return prop;
+		if (e != null) {
+			for (Iterator iter = e.getMethodElementProperty().iterator(); iter.hasNext();) {
+				MethodElementProperty prop = (MethodElementProperty) iter.next();
+				if(prop.getName().equals(propertyName)) {
+					return prop;
+				}
 			}
 		}
 		return null;
