@@ -117,12 +117,20 @@ public class MethodContainerCheckedTreeViewer extends
 	 * Update element after a checkstate change.
 	 * @param element
 	 */
-    protected void doCheckStateChanged(Object element) {
+    public void doCheckStateChanged(Object element) {
         Widget item = findItem(element);
         if (item instanceof TreeItem) {
             TreeItem treeItem = (TreeItem) item;
             treeItem.setGrayed(false);
             updateChildrenItems(treeItem);
+            updateParentItems(treeItem.getParentItem());
+        }
+    }
+    
+    public void updateParents(Object element) {
+        Widget item = findItem(element);
+        if (item instanceof TreeItem) {
+            TreeItem treeItem = (TreeItem) item;
             updateParentItems(treeItem.getParentItem());
         }
     }
