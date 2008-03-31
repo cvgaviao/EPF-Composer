@@ -213,6 +213,10 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	 * @return
 	 */
 	private boolean doAssign() {
+		//To do: 
+		//(1) Implement circular dependency check for isValidDestination (nice to have the check
+		//    at this point, although the circulat check would be done during "run" action too 
+		//(2) Change "move" to "assign" strings
 		if (destination == null) {
 			String title = AuthoringUIResources.errorDialog_title; 
 			String problem = AuthoringUIResources.MoveDialog_nomove_destination_problem_msg; 
