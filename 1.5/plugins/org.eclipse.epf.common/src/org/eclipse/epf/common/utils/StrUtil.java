@@ -30,6 +30,7 @@ import com.ibm.icu.util.StringTokenizer;
  * @since 1.0
  */
 public class StrUtil {
+	public static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
 	public static final String TAB = "\t"; //$NON-NLS-1$
 

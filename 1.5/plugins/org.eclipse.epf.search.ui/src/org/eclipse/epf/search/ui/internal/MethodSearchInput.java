@@ -34,7 +34,7 @@ public class MethodSearchInput {
 
 	private MethodSearchScope searchScope;
 
-	private Map<?, ?> additionalInput;
+	private Map<Object, Object> additionalInput;
 
 	/**
 	 * Creates a new instance.
@@ -117,7 +117,7 @@ public class MethodSearchInput {
 		return searchScope;
 	}
 
-	public Map<?, ?> getAdditionalInput() {
+	public Map<Object, Object> getAdditionalInput() {
 		if(additionalInput == null) {
 			additionalInput = new HashMap<Object, Object>();
 		}

@@ -479,7 +479,7 @@ public class MethodSearchOperation implements IMethodSearchOperation {
 	public void execute(MethodSearchInput searchInput,
 			ISearchResultCollector result, IProgressMonitor monitor) {
 		initialize(searchInput, result);
-		execute(progressMonitor);
+		execute(monitor);
 	}
 
 }

@@ -10,7 +10,18 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.search.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.search.ui.internal.IMethodSearchInputExtension;
+import org.eclipse.epf.search.ui.internal.IMethodSearchInputFactory;
 import org.eclipse.epf.search.ui.internal.MethodSearchInput;
 import org.eclipse.epf.search.ui.internal.MethodSearchQuery;
 import org.eclipse.epf.search.ui.internal.MethodSearchScope;
@@ -34,17 +45,21 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.osgi.framework.Bundle;
 
 /**
  * Displays the Method Search page in the Search dialog.
  * 
  * @author Kelvin Low
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class MethodSearchPage extends DialogPage implements ISearchPage {
 
 	public static final String SEARCH_PAGE_ID = MethodSearchPage.class
 			.getName();
+
+	private static List<IMethodSearchInputFactory> searchInputFactories;
 
 	private Combo searchStringCombo;
 
@@ -55,6 +70,8 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 	private MethodSearchScopeViewer searchScopeViewer;
 
 	private ISearchPageContainer container;
+
+	private List<IMethodSearchInputExtension> additionalSearchInputs = new ArrayList<IMethodSearchInputExtension>();
 
 	/**
 	 * Creates a new instance.
@@ -119,6 +136,8 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 
 		new Label(composite, SWT.NONE);
 
+		collectContributedSearchInputs(composite);
+		
 		Group searchScopeGroup = new Group(composite, SWT.NONE);
 		searchScopeGroup.setLayout(new GridLayout(1, false));
 		GridData searchScopeGroupGridData = new GridData(GridData.FILL_BOTH);
@@ -133,6 +152,62 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 
 		setControl(composite);
 		Dialog.applyDialogFont(composite);
+	}
+
+	private static List<IMethodSearchInputFactory> getSearchInputFactories() {
+		if (searchInputFactories == null) {
+			searchInputFactories = new ArrayList<IMethodSearchInputFactory>();
+			// Process the contributors.
+			//
+			IExtensionRegistry extensionRegistry = Platform
+					.getExtensionRegistry();
+			IExtensionPoint extensionPoint = extensionRegistry
+					.getExtensionPoint(SearchUIPlugin.getDefault().getId(),
+							"searchInputFactories"); //$NON-NLS-1$
+			if (extensionPoint != null) {
+				IExtension[] extensions = extensionPoint.getExtensions();
+				Object ext = null;
+				for (int i = 0; i < extensions.length; i++) {
+					IExtension extension = extensions[i];
+					String pluginId = extension.getNamespaceIdentifier();
+					Bundle bundle = Platform.getBundle(pluginId);
+					IConfigurationElement[] configElements = extension
+							.getConfigurationElements();
+					for (int j = 0; j < configElements.length; j++) {
+						IConfigurationElement configElement = configElements[j];
+						try {
+							String className = configElement
+									.getAttribute("class"); //$NON-NLS-1$
+							if (className != null) {
+								ext = bundle.loadClass(className).newInstance();
+								if (ext instanceof IMethodSearchInputFactory) {
+									searchInputFactories
+											.add((IMethodSearchInputFactory) ext);
+								}
+							}
+						} catch (Exception e) {
+							SearchUIPlugin.getDefault().getLogger().logError(e);
+						}
+					}
+				}
+			}
+		}
+		return searchInputFactories;
+
+	}
+	
+	private void collectContributedSearchInputs(Composite parent) {
+		for (IMethodSearchInputFactory factory : getSearchInputFactories()) {
+			try {
+				IMethodSearchInputExtension searchInput = factory.createSearchInput(parent);
+				if(searchInput != null) {
+					additionalSearchInputs .add(searchInput);
+				}
+			}
+			catch(Exception e) {
+				SearchUIPlugin.getDefault().getLogger().logError(e);
+			}
+		}
 	}
 
 	/**
@@ -153,6 +228,11 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 		MethodSearchInput searchInput = new MethodSearchInput(searchString,
 				namePattern, caseSensitiveCheckbox.getSelection(), false,
 				false, searchScope);
+		if(!additionalSearchInputs.isEmpty()) {
+			for (IMethodSearchInputExtension input : additionalSearchInputs) {
+				searchInput.getAdditionalInput().putAll(input.getInput());
+			}
+		}
 		MethodSearchQuery searchQuery = new MethodSearchQuery(searchInput);
 		NewSearchUI.activateSearchResultView();
 		NewSearchUI.runQueryInBackground(searchQuery);
