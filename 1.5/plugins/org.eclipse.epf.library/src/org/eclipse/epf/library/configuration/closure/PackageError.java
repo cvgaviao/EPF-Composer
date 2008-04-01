@@ -15,7 +15,7 @@ public class PackageError extends ErrorInfo {
 	
 	public PackageError(int errorLevel, String message, Object ownerElement, 
 			Object causeElement, int relation) {
-		super(errorLevel, message, ownerElement, causeElement, relation);
+		super(errorLevel, message, ownerElement, causeElement, relation, null);
 		
 		//checkElementErrors();
 	}

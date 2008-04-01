@@ -57,6 +57,8 @@ public class ErrorInfo {
 	protected String errorMessage;
 
 	protected int relation = 0;
+	
+	private String messageId;
 
 	//protected ConfigurationClosure closure = null;
 	
@@ -70,13 +72,14 @@ public class ErrorInfo {
 	 * @param relation int the relathioship between the owner element and the cause element.
 	 */
 	public ErrorInfo(int errorLevel, String message, Object ownerElement,
-			Object causeElement, int relation) {
+			Object causeElement, int relation, String messageId) {
 		//this.closure = closure;
 		this.ownerElement = ownerElement;
 		this.causeElement = causeElement;
 		this.errorLevel = errorLevel;
 		this.errorMessage = message;
 		this.relation = relation;
+		this.messageId = messageId;
 	}
 
 	/**
@@ -143,4 +146,9 @@ public class ErrorInfo {
 	public String getCategory() {
 		return category;
 	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+	
 }

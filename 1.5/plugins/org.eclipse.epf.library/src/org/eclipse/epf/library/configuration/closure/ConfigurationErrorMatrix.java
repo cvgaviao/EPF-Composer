@@ -84,7 +84,7 @@ public class ConfigurationErrorMatrix {
 				(new String[] {LibraryUtil.getTypePath(e), 
 						LibraryUtil.getTypePath(e_ref) }));
 
-		return new ElementError(config, errorLevel, message, e, e_ref, ErrorInfo.REFERENCE_TO);
+		return new ElementError(config, errorLevel, message, e, e_ref, ErrorInfo.REFERENCE_TO, messageId);
 	}
 	
 	private static boolean isBreakdownReference(MethodElement e, MethodElement e_ref) {
@@ -129,6 +129,6 @@ public class ConfigurationErrorMatrix {
 				(new String[] {LibraryUtil.getTypePath(e), 
 						LibraryUtil.getTypePath(e_ref) }));
 
-		return new ElementError(config, errorLevel, message, e, e_ref, ErrorInfo.REFERENCE_TO);
+		return new ElementError(config, errorLevel, message, e, e_ref, ErrorInfo.REFERENCE_TO, messageId);
 	}
 }

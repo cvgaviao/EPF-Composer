@@ -47,6 +47,7 @@ public class ConfigurationMarkerHelper {
 	public static final ConfigurationMarkerHelper INSTANCE = new ConfigurationMarkerHelper();
 	public static final String ATTR_ERROR_ID = "errorID"; //$NON-NLS-1$
 	public static final String ATTR_CONFIG_GUID = "configGuid"; //$NON-NLS-1$
+	public static final String ATTR_MESSAGE_ID = "messageId"; //$NON-NLS-1$
 	public static final String ATTR_ERROR_ELEMENT_GUID = "elementGuid"; //$NON-NLS-1$
 	public static final String ATTR_CAUSE_ELEMENT_GUID = "causeGuid"; //$NON-NLS-1$
 
@@ -254,6 +255,8 @@ public class ConfigurationMarkerHelper {
 			marker.setAttribute(IMarker.LINE_NUMBER, 0);
 			marker.setAttribute(ATTR_CONFIG_GUID, config.getGuid());
 			marker.setAttribute(ATTR_ERROR_ID, error.getId());
+			marker.setAttribute(ATTR_MESSAGE_ID, error.getMessageId());
+			
 	    	if (error.getErrorMethodElement() != null) {
 				marker.setAttribute(IMarker.LOCATION, TngUtil.getLabelWithPath(error.getErrorMethodElement()));
 				marker.setAttribute(ATTR_ERROR_ELEMENT_GUID, error.getErrorMethodElement().getGuid());

@@ -18,8 +18,8 @@ public class ElementError  extends ErrorInfo implements IConfigurationError {
 	public ElementError(MethodConfiguration config,  
 			int errorLevel, String message, 
 			Object ownerElement, Object causeElement, 
-			int relation) {
-		super(errorLevel, message, ownerElement, causeElement, relation);
+			int relation, String messageId) {
+		super(errorLevel, message, ownerElement, causeElement, relation, messageId);
 		this.configId = config.getGuid();
 	}
 

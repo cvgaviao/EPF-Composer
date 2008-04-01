@@ -13,7 +13,11 @@ package org.eclipse.epf.authoring.ui.actions;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.dialogs.ShowDetailsProblemViewDialog;
+import org.eclipse.epf.authoring.ui.util.ConfigurationMarkerHelper;
+import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.configuration.closure.ErrorInfo;
 import org.eclipse.epf.persistence.util.UnresolvedProxyMarkerManager;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -50,13 +54,25 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 		}
 		if (markderDetailType == null
 				|| markderDetailType == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_UNKNOWN) {
-			return;
+			try {
+				if (! selectedMarker.getType().equals(
+						ConfigurationMarkerHelper.MARKER_ID)) {
+					return;
+				}
+			} catch (Exception e) {
+				return;
+			}
 		}
+		
+		ConfigurationMarkerHelper a;
 		
 		try {
 			
 			String labelString = (String) selectedMarker.getAttribute(IMarker.MESSAGE);
-			String textString = getDialogTextString(selectedMarker, markderDetailType); 
+			String textString = getDialogTextString(selectedMarker, markderDetailType);
+			if (textString.length() == 0) {
+				return;
+			}
 
 			ShowDetailsProblemViewDialog showDialog = new ShowDetailsProblemViewDialog(
 					targetView.getSite().getShell(), labelString, textString);
@@ -88,8 +104,26 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 			sb.append(location + "\n\n");
 			
 			sb.append("Quick fix will remove this unresolved reference from the shown location.");
-		} 
-
+		} else if (marker.getType().equals(ConfigurationMarkerHelper.MARKER_ID)) {
+			String messageId = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_MESSAGE_ID);
+			
+/*			public static String ElementError_missing_element;
+			public static String ElementError_contributor_missing_base;
+			public static String ElementError_extender_missing_base;
+			public static String ElementError_replacer_missing_base;	
+			public static String ElementError_missing_primary_performer;
+			public static String ElementError_missing_mandatory_input;
+			public static String ElementError_missing_output;*/
+			
+			if (messageId == LibraryResources.ElementError_missing_mandatory_input) {
+				
+			} else if (messageId == LibraryResources.ElementError_missing_output) {
+				
+			} else if (messageId == LibraryResources.ElementError_missing_primary_performer) {
+				
+			}
+			
+		}
 		
 		return sb.toString();
 	}
