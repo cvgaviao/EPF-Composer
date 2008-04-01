@@ -52,9 +52,12 @@
 		<xsl:variable name="mandatoryInputToTasks" select="referenceList[@name='mandatoryInputToTasks']/Element[@Type='Task']"/>
 		<xsl:variable name="optionalInputToTasks" select="referenceList[@name='optionalInputToTasks']/Element[@Type='Task']"/>
 		<xsl:variable name="outputFromTasks" select="referenceList[@name='outputFromTasks']/Element[@Type='Task']"/>
+		<xsl:variable name="mandatoryInputToTasks_fromSlots" select="referenceList[@name='mandatoryInputToTasks_fromSlots']/Element[@Type='Task']"/>
+		<xsl:variable name="optionalInputToTasks_fromSlots" select="referenceList[@name='optionalInputToTasks_fromSlots']/Element[@Type='Task']"/>
+		<xsl:variable name="outputFromTasks_fromSlots" select="referenceList[@name='outputFromTasks_fromSlots']/Element[@Type='Task']"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
 		
-		<xsl:if test="count($fulfillingWorkProducts) + count($fulfilledSlots) + count($categories) + count($responsibleRoles) + count($containerArtifact) + count($containedArtifacts) + count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($outputFromTasks) > 0">
+		<xsl:if test="count($fulfillingWorkProducts) + count($fulfilledSlots) + count($categories) + count($responsibleRoles) + count($containerArtifact) + count($containedArtifacts) + count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($outputFromTasks) + count($mandatoryInputToTasks_fromSlots) + count($optionalInputToTasks_fromSlots) + count($outputFromTasks_fromSlots) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
@@ -189,14 +192,14 @@
 							</td>							
 						</tr>
 					</xsl:if>
-					<xsl:if test="count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($outputFromTasks) > 0">
+					<xsl:if test="count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($outputFromTasks) + count($mandatoryInputToTasks_fromSlots) + count($optionalInputToTasks_fromSlots) + count($outputFromTasks_fromSlots) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$tasksText"/></th>
 							<td class="sectionTableCell" width="42%">
 								<span class="sectionTableCellHeading">
 									<xsl:value-of select="$inputToText"/>:
 								</span>
-								<xsl:if test="count($mandatoryInputToTasks) + count($optionalInputToTasks) > 0">
+								<xsl:if test="count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($mandatoryInputToTasks_fromSlots) + count($optionalInputToTasks_fromSlots) > 0">
 								    <xsl:if test="count($mandatoryInputToTasks) > 0">
 									<ul>
 										<xsl:for-each select="$mandatoryInputToTasks">
@@ -218,6 +221,28 @@
 										</xsl:for-each>										
 									</ul>
 									</xsl:if>
+									<xsl:if test="count($mandatoryInputToTasks_fromSlots) > 0">
+										<xsl:if test="count($mandatoryInputToTasks) + count($optionalInputToTasks) > 0"><br/></xsl:if>
+									<ul>
+										<xsl:for-each select="$mandatoryInputToTasks_fromSlots">
+										<xsl:sort select="@DisplayName"/>
+											<li>
+												<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/></a>
+											</li>
+										</xsl:for-each>
+									</ul>
+									</xsl:if>
+									<xsl:if test="count($optionalInputToTasks_fromSlots) > 0">
+									  <xsl:if test="count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($mandatoryInputToTasks_fromSlots)> 0"><br/></xsl:if>
+									<ul>		
+										<xsl:for-each select="$optionalInputToTasks_fromSlots">
+										<xsl:sort select="@DisplayName"/>
+											<li>
+												<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/></a>
+											</li>
+										</xsl:for-each>										
+									</ul>
+									</xsl:if>
 								</xsl:if>
 							</td>
 							<td class="sectionTableCell">
@@ -227,6 +252,17 @@
 								<xsl:if test="count($outputFromTasks) > 0">									
 									<ul>
 										<xsl:for-each select="$outputFromTasks">
+										<xsl:sort select="@DisplayName"/>
+											<li>
+												<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/></a>
+											</li>
+										</xsl:for-each>
+									</ul>
+								</xsl:if>
+								<xsl:if test="count($outputFromTasks_fromSlots) > 0">	
+									<xsl:if test="count($outputFromTasks) > 0"><br/></xsl:if>								
+									<ul>
+										<xsl:for-each select="$outputFromTasks_fromSlots">
 										<xsl:sort select="@DisplayName"/>
 											<li>
 												<a><xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/></a>
