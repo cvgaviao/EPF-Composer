@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.net.proxy.IProxyData;
+import org.eclipse.core.net.proxy.IProxyService;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.common.utils.Timer;
 import org.eclipse.epf.library.layout.DefaultContentValidator;
 import org.eclipse.epf.library.layout.LinkInfo;
@@ -31,13 +34,17 @@ import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.osgi.util.NLS;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 import com.ibm.icu.util.Calendar;
 
 /**
- * content validator used for publishing. This class will be responsible for validating the content to be published, 
- * fixing problems such as links in the content, 
- * and logging information about missing elements, missing resources, etc.
+ * content validator used for publishing. This class will be responsible for
+ * validating the content to be published, fixing problems such as links in the
+ * content, and logging information about missing elements, missing resources,
+ * etc.
  * 
  * @author Jinhua Xi
  * @since 1.0
@@ -47,11 +54,11 @@ public class PublishingContentValidator extends DefaultContentValidator {
 
 	private boolean debug = PublishingPlugin.getDefault().isDebugging();
 
-	//private boolean showExtraInfoForDescriptors = false;
-	//private boolean showRelatedDescriptors = false;
-	
+	// private boolean showExtraInfoForDescriptors = false;
+	// private boolean showRelatedDescriptors = false;
+
 	protected PublishHTMLOptions options = null;
-	
+
 	class InvalidExternalLinkInfo {
 		public MethodElement owner;
 
@@ -112,6 +119,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 
 	static final String INFO_LOG_FILENAME = "info.log"; //$NON-NLS-1$
 
+	static final String CORE_NET_BUNDLE = "org.eclipse.core.net";
+
 	protected File logPath;
 
 	protected boolean validateExternalLinks = false;
@@ -149,13 +158,15 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * consructor
 	 * 
-	 * @param pubDir String
-	 * @param validateExternalLinks boolean
+	 * @param pubDir
+	 *            String
+	 * @param validateExternalLinks
+	 *            boolean
 	 */
 	public PublishingContentValidator(String pubDir, PublishHTMLOptions options) {
 		super(pubDir);
 		this.options = options;
-		
+
 		this.validateExternalLinks = options.isCheckExternalLinks();
 
 		this.logPath = new File(pubDir, LOGS_FOLDER);
@@ -205,62 +216,147 @@ public class PublishingContentValidator extends DefaultContentValidator {
 		return null;
 	}
 
+	private IProxyService getProxyService() {
+		Bundle bundle = Platform.getBundle(CORE_NET_BUNDLE);
+		if (bundle != null) {
+			BundleContext ctx = bundle.getBundleContext();
+			String name = IProxyService.class.getName();
+			ServiceReference ref = ctx.getServiceReference(name);
+			if (ref != null)
+				return (IProxyService) bundle.getBundleContext()
+						.getService(ref);
+		}
+		return null;
+	}
+
 	/**
 	 * validate the link attributes fro the element.
 	 * 
-	 * @param owner MethodElement the owner element
-	 * @param attributes String the attributes in the link
-	 * @param text String the text allow with the link
-	 * @param config MethodConfiguration 
+	 * @param owner
+	 *            MethodElement the owner element
+	 * @param attributes
+	 *            String the attributes in the link
+	 * @param text
+	 *            String the text allow with the link
+	 * @param config
+	 *            MethodConfiguration
 	 * 
 	 * @return LinkInfo
 	 */
 	public LinkInfo validateLink(MethodElement owner, String attributes,
 			String text, MethodConfiguration config, String tag) {
-		LinkInfo info = super.validateLink(owner, attributes, text, config, tag);
+		LinkInfo info = super
+				.validateLink(owner, attributes, text, config, tag);
 
 		if (validateExternalLinks) {
-			
+
 			String url = info.getUrl();
 			if ((url != null) && ResourceHelper.isExternalLink(url)
 					&& !url.startsWith("ftp://")) //$NON-NLS-1$
 			{
 				if (!validatedExternalLinks.contains(url)) {
 					Timer t = new Timer();
-					try {
-						HttpResponse resp = HttpUtil.doGet(url, null, 6000); // timeout
-						// System.out
-						// .println(time
-						// + " mini-seconds querying Url '" + url + "', return
-						// status=" + resp.getStatus()); //$NON-NLS-1$
-						// //$NON-NLS-2$
-					} catch (java.net.UnknownHostException e) {
-						logInvalidExternalLink(owner, url, null);
-					} catch (Exception e) {
-						logInvalidExternalLink(owner, url, e.getMessage());
+					IProxyService proxyService = getProxyService();
+
+					if (proxyService.isProxiesEnabled()) {
+						IProxyData proxy = null;
+						boolean accessible = false;
+						boolean useProxy = false;
+						String exceptionMessage = null;
+						String[] proxyTypes = { IProxyData.HTTP_PROXY_TYPE,
+								IProxyData.HTTPS_PROXY_TYPE,
+								IProxyData.SOCKS_PROXY_TYPE };
+						for (String proxyType : proxyTypes) {
+							// access external link by using different proxys
+							proxy = proxyService.getProxyData(proxyType);
+							if ((proxy.getHost()==null)||proxy.getPort()==-1)
+							{
+								continue;
+							}
+							try {
+								HttpResponse resp = HttpUtil.doGet(url, null,
+										6000, proxy); // timeout
+								useProxy = true;
+								accessible = true;
+								break;
+							} catch (java.net.UnknownHostException e) {
+							} catch (Exception e) {
+								if (exceptionMessage == null)
+								{
+									exceptionMessage = proxy.getHost() + ":"
+											+ proxy.getPort() + "[" + proxyType
+											+ "]:" + e.getMessage();
+								} else {
+									exceptionMessage += ";" + proxy.getHost()
+											+ ":" + proxy.getPort() + "["
+											+ proxyType + "]:" + e.getMessage();
+								}
+							}
+						}
+						if (useProxy)
+						{
+							if (!accessible) {
+								if (exceptionMessage != null) {
+									logInvalidExternalLink(owner, url,
+											exceptionMessage);
+								} else {
+									logInvalidExternalLink(owner, url, null);
+								}
+							}
+						}
+						else	// connect directly
+						{
+							try {
+								HttpResponse resp = HttpUtil.doGet(url, null, 6000); // timeout
+							} catch (java.net.UnknownHostException e) {
+								logInvalidExternalLink(owner, url, null);
+							} catch (Exception e) {
+								logInvalidExternalLink(owner, url, e.getMessage());
+							}
+						}
+						
+					} else {
+						try {
+							HttpResponse resp = HttpUtil.doGet(url, null, 6000); // timeout
+							// System.out
+							// .println(time
+							// + " mini-seconds querying Url '" + url + "',
+							// return
+							// status=" + resp.getStatus()); //$NON-NLS-1$
+							// //$NON-NLS-2$
+						} catch (java.net.UnknownHostException e) {
+							logInvalidExternalLink(owner, url, null);
+						} catch (Exception e) {
+							logInvalidExternalLink(owner, url, e.getMessage());
+						}
 					}
 
 					t.stop();
 					time_for_external_link_checking += t.getTime();
-					
+
 					// cache it
 					validatedExternalLinks.add(url);
-					
-					// do we need to log the info so that user know what external
+
+					// do we need to log the info so that user know what
+					// external
 					// urls are referenced in the content?
-					logInfo(owner, NLS.bind(PublishingResources.externalUrl_msg,
-							new Object[]{new Integer(t.getTime()), url}));
+					logInfo(owner, NLS.bind(
+							PublishingResources.externalUrl_msg, new Object[] {
+									new Integer(t.getTime()), url }));
 				}
 
-			}			
+			}
 		}
 		return info;
 	}
 
 	/**
 	 * log missing reference.
-	 * @param owner MethodElement
-	 * @param refElement MethodElement the missing element
+	 * 
+	 * @param owner
+	 *            MethodElement
+	 * @param refElement
+	 *            MethodElement the missing element
 	 */
 	public void logMissingReference(MethodElement owner,
 			MethodElement refElement) {
@@ -270,9 +366,13 @@ public class PublishingContentValidator extends DefaultContentValidator {
 
 	/**
 	 * log missing reference
-	 * @param owner M<ethodElement
-	 * @param guid String the guid of the missing element
-	 * @param linkedText String the linked text. 
+	 * 
+	 * @param owner
+	 *            M<ethodElement
+	 * @param guid
+	 *            String the guid of the missing element
+	 * @param linkedText
+	 *            String the linked text.
 	 */
 	public void logMissingReference(MethodElement owner, String guid,
 			String linkedText) {
@@ -283,9 +383,12 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * log missing resource.
 	 * 
-	 * @param owner MethodElement
-	 * @param resourceFile File
-	 * @param url String
+	 * @param owner
+	 *            MethodElement
+	 * @param resourceFile
+	 *            File
+	 * @param url
+	 *            String
 	 */
 	public void logMissingResource(MethodElement owner, File resourceFile,
 			String url) {
@@ -295,9 +398,12 @@ public class PublishingContentValidator extends DefaultContentValidator {
 
 	/**
 	 * log invalid external link
+	 * 
 	 * @param owner
-	 * @param url String
-	 * @param message String
+	 * @param url
+	 *            String
+	 * @param message
+	 *            String
 	 */
 	public void logInvalidExternalLink(MethodElement owner, String url,
 			String message) {
@@ -316,7 +422,7 @@ public class PublishingContentValidator extends DefaultContentValidator {
 
 		if (invalidExternalLinks.size() > 0) {
 			String msg = time_for_external_link_checking / 1000
-			+ " seconds validating external links"; //$NON-NLS-1$
+					+ " seconds validating external links"; //$NON-NLS-1$
 			System.out.println(msg);
 			logInfo(msg);
 
@@ -325,7 +431,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 			for (Iterator it = invalidExternalLinks.iterator(); it.hasNext();) {
 				InvalidExternalLinkInfo info = (InvalidExternalLinkInfo) it
 						.next();
-				invalidExternalLinksXml.newChild("entry") //$NON-NLS-1$
+				invalidExternalLinksXml
+						.newChild("entry") //$NON-NLS-1$
 						.setAttribute("url", info.url) //$NON-NLS-1$
 						.setAttribute(
 								"owner", (info.owner == null) ? "" : LibraryUtil.getLocalizeTypeName(info.owner)) //$NON-NLS-1$ //$NON-NLS-2$
@@ -351,7 +458,7 @@ public class PublishingContentValidator extends DefaultContentValidator {
 					missingReferencesXml
 							.newChild("entry") //$NON-NLS-1$
 							.setAttribute(
-									"element", (info.refElement == null ) ? "" : LibraryUtil.getLocalizeTypeName(info.refElement)) //$NON-NLS-1$ //$NON-NLS-2$
+									"element", (info.refElement == null) ? "" : LibraryUtil.getLocalizeTypeName(info.refElement)) //$NON-NLS-1$ //$NON-NLS-2$
 							.setAttribute("guid", info.refElement.getGuid()) //$NON-NLS-1$
 							.setAttribute(
 									"owner", (info.owner == null) ? "" : LibraryUtil.getLocalizeTypeName(info.owner)); //$NON-NLS-1$ //$NON-NLS-2$
@@ -387,7 +494,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * add a category that should be published.
 	 * 
-	 * @param e ContentCategory
+	 * @param e
+	 *            ContentCategory
 	 */
 	public void addValidCategory(ContentCategory e) {
 		if (!validCategories.contains(e)) {
@@ -401,11 +509,11 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	 * 
 	 * @param owner
 	 *            MethodElement the owner of the element
-	 * @param feature 
-	 * 			  Object EStructuralFeature or OppositeFeature
+	 * @param feature
+	 *            Object EStructuralFeature or OppositeFeature
 	 * @param e
 	 *            MethodElement the element to be checked
-	 *            
+	 * 
 	 * @return boolean
 	 */
 	public boolean isDiscarded(MethodElement owner, Object feature,
@@ -438,8 +546,10 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * add a referenced element
 	 * 
-	 * @param owner MethodElement
-	 * @param e MethodElement
+	 * @param owner
+	 *            MethodElement
+	 * @param e
+	 *            MethodElement
 	 */
 	public void addReferencedElement(MethodElement owner, MethodElement e) {
 		if (e == null) {
@@ -465,8 +575,10 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * log a refernece
 	 * 
-	 * @param owner MethodElement
-	 * @param e MethodElement
+	 * @param owner
+	 *            MethodElement
+	 * @param e
+	 *            MethodElement
 	 */
 	public void logReference(MethodElement owner, MethodElement e) {
 		if (debug) {
@@ -478,7 +590,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * remove element from referenced list
 	 * 
-	 * @param e MethodElement
+	 * @param e
+	 *            MethodElement
 	 */
 	public void removeReferencedElement(MethodElement e) {
 		if (referencedElements.contains(e)) {
@@ -524,7 +637,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * check if an elenment is referenced or not.
 	 * 
-	 * @param e MethodElement
+	 * @param e
+	 *            MethodElement
 	 * @return boolean
 	 */
 	public boolean isReferencedElement(MethodElement e) {
@@ -543,7 +657,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * set the default target for the referenced elements
 	 * 
-	 * @param target MethodElement
+	 * @param target
+	 *            MethodElement
 	 */
 	public void setTargetElement(MethodElement target) {
 		this.defaultTarget = target;
@@ -561,7 +676,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * check if an element is in closure or not.
 	 * 
-	 * @param e MethodElement
+	 * @param e
+	 *            MethodElement
 	 * @return boolean
 	 */
 	public boolean inClosure(MethodElement e) {
@@ -571,7 +687,8 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	/**
 	 * add elements to closure
 	 * 
-	 * @param items List
+	 * @param items
+	 *            List
 	 */
 	public void addClosureElements(List items) {
 		// do nothing
@@ -579,7 +696,7 @@ public class PublishingContentValidator extends DefaultContentValidator {
 
 	/**
 	 * make a closure
-	 *
+	 * 
 	 */
 	public void makeElementClosure() {
 		// do nothing
@@ -588,10 +705,10 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	public boolean showBrokenLinks() {
 		return !options.isConvertBrokenLinks();
 	}
-	
+
 	/**
-	 * get the flag on whether to show extra descriptor info. 
-	 * If true, information from linked element will be included in the descriptor page.
+	 * get the flag on whether to show extra descriptor info. If true,
+	 * information from linked element will be included in the descriptor page.
 	 * 
 	 * @return boolean
 	 */
@@ -599,14 +716,13 @@ public class PublishingContentValidator extends DefaultContentValidator {
 		return options.isShowMethodContentInDescriptors();
 	}
 
-
 	/**
 	 * show descriptors on method element page
 	 */
 	public boolean showRelatedDescriptors() {
 		return options.showRelatedDescriptors;
 	}
-	
+
 	/**
 	 * get the tab id for the activity layout
 	 * 

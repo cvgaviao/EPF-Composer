@@ -14,7 +14,11 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -25,6 +29,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
+import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.epf.publishing.PublishingResources;
 import org.eclipse.osgi.util.NLS;
 
@@ -227,11 +232,11 @@ public class HttpUtil {
 	 *            <li> java.io.InterruptedIOException timeout exceeded
 	 *            <li> java.io.IOException I/O error
 	 */
-	public static HttpResponse doGet(String url, Properties headers, int timeout) throws Exception
-	{
-		return doGet(new URL((URL)null, url, getHandler(timeout)), headers);
+	public static HttpResponse doGet(String url, Properties headers, int timeout)
+			throws Exception {
+		return doGet(new URL((URL) null, url, getHandler(timeout)), headers);
 	}
-
+	
 	/**
 	 * Do a GET
 	 *
@@ -240,12 +245,78 @@ public class HttpUtil {
 	 *            <li> java.io.InterruptedIOException timeout exceeded
 	 *            <li> java.io.IOException I/O error
 	 */
-	static HttpResponse doGet(URL url, Properties headers) throws Exception
-	{
+	public static HttpResponse doGet(String url, Properties headers,
+			int timeout, IProxyData proxy) throws Exception {
+		return doGet(new URL((URL) null, url, getHandler(timeout)), headers,
+				proxy);
+	}
+
+	public static class ProxyAuthenticator extends Authenticator {
+		private String username, password;
+
+		public ProxyAuthenticator(String username, String password) {
+			this.username = username;
+			this.password = password;
+		}
+
+		protected PasswordAuthentication getPasswordAuthentication() {
+			return new PasswordAuthentication(username, password.toCharArray());
+		}
+	}
+	
+	/**
+	 * Do a GET
+	 * 
+	 * @return response
+	 * @exception
+	 *         <li> java.net.ConnectException could not connect to host:port
+	 *         <li> java.io.InterruptedIOException timeout exceeded
+	 *         <li> java.io.IOException I/O error
+	 */
+	static HttpResponse doGet(URL url, Properties headers) throws Exception {
+		return doGet(url, headers, null);
+	}
+	
+	/**
+	 * Do a GET
+	 *
+	 * @return response
+	 * @exception <li> java.net.ConnectException could not connect to host:port(or a proxy)
+	 *            <li> java.io.InterruptedIOException timeout exceeded
+	 *            <li> java.io.IOException I/O error
+	 */
+	static HttpResponse doGet(URL url, Properties headers, IProxyData proxy)
+			throws Exception {
+		HttpURLConnection conn = null;
+		/***********************************************************************
+		 * For Using Proxy
+		 **********************************************************************/
+		if (proxy != null) {
+			Proxy.Type proxyType = null;
+			if (proxy.getType().equals(IProxyData.HTTP_PROXY_TYPE)) {
+				proxyType = Proxy.Type.HTTP;
+			} else if (proxy.getType().equals(IProxyData.HTTPS_PROXY_TYPE)) {
+				proxyType = Proxy.Type.HTTP;
+			} else if (proxy.getType().equals(IProxyData.SOCKS_PROXY_TYPE)) {
+				proxyType = Proxy.Type.SOCKS;
+			}
+
+			Proxy proxyServer = new Proxy(proxyType, new InetSocketAddress(
+					proxy.getHost(), proxy.getPort()));
+			if (proxy.isRequiresAuthentication()) {
+				Authenticator.setDefault(new ProxyAuthenticator(proxy
+						.getUserId(), proxy.getPassword()));
+			} else {
+				Authenticator.setDefault(null);
+			}
+			conn = (HttpURLConnection) url.openConnection(proxyServer);
+		} else {
+			conn = (HttpURLConnection) url.openConnection();
+		}
+		
 		Properties respHeaders = new Properties();
 		Vector respCookies = new Vector();
 		HttpURLConnection.setFollowRedirects(false);
-		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		//conn.setInstanceFollowRedirects(false); //JDK1.3
 		conn.setRequestMethod("GET"); //$NON-NLS-1$
 		conn.setUseCaches(false);
@@ -305,6 +376,7 @@ public class HttpUtil {
 			}
 			resp = bos.toString();
 		}
+//		System.out.println("Content  :" +resp);
 		return new HttpResponse(respStatus, respHeaders, respCookies, resp);
 	}
 
