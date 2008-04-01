@@ -109,9 +109,11 @@ public class BrowsingLayoutSettings {
 	
 	public  void update(HtmlBuilder builder) {
 		if ( (builder == null) || !needUpdate(builder.getPublishDir()) ) {
+			if ((builder != null)&&(xslPath != null)) {
+				builder.setLayoutXslRootPath(xslPath.getAbsolutePath());
+			}
 			return;
 		}
-		
 		if ( xslPath == null || cssPath == null || scriptPath == null) {
 			// use the default
 			LayoutResources.copyLayoutFiles(builder.getPublishDir());

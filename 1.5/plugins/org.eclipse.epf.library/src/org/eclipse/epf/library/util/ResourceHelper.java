@@ -11,7 +11,10 @@
 package org.eclipse.epf.library.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -19,12 +22,14 @@ import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.epf.common.utils.FileUtil;
+import org.eclipse.epf.common.utils.I18nUtil;
 import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.common.utils.XMLUtil;
@@ -36,6 +41,7 @@ import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.DefaultContentValidator;
 import org.eclipse.epf.library.layout.IContentValidator;
 import org.eclipse.epf.library.layout.LayoutResources;
@@ -172,6 +178,10 @@ public class ResourceHelper {
 
 	private static ILibraryResourceManager defaultResourceMgr;
 		
+	private static boolean showSkinResource = false;
+	
+	public static String LAYOUT_XSL_ROOT_PATH = null;
+	
 	public ResourceHelper() {
 	}
 
@@ -536,11 +546,57 @@ public class ResourceHelper {
 	public static String getElementLinkText(MethodElement element,
 			boolean withType) {
 		String text = TngUtil.getPresentationName(element);
-
+//		if (withType) {
+//			return getElementTypeText(element) + LibraryResources.colon_with_space + text; 
+//		}
+//
+//		return text;
 		if (withType) {
-			return getElementTypeText(element) + LibraryResources.colon_with_space + text; 
-		}
+			if (showSkinResource) {
+				String xslPath = null;
 
+				if ((LAYOUT_XSL_ROOT_PATH == null)
+						|| (LAYOUT_XSL_ROOT_PATH.equals(""))) {
+					LAYOUT_XSL_ROOT_PATH = BrowsingLayoutSettings.INSTANCE.getXslPath()
+							.getAbsolutePath();
+				}
+				Properties browsingResource = new Properties();
+				File file = new File(LAYOUT_XSL_ROOT_PATH, "resources.properties"); //$NON-NLS-1$
+				Locale locale = Locale.getDefault();
+				String localFileName = I18nUtil.getLocalizedFile(file
+						.getAbsolutePath(), locale);
+				if (localFileName != null) {
+					file = new File(localFileName);
+				}
+				if (file.exists()) {
+					try {
+						browsingResource.load(new FileInputStream(file));
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				String type = getElementTypeText(element);
+				String key = type.substring(0, 1).toLowerCase()
+						+ type.substring(1) + "Text";
+				String value = browsingResource.getProperty(key);
+				if (value != null) {
+					return value + LibraryResources.colon_with_space + text;
+				} else {
+					return type + LibraryResources.colon_with_space + text;
+				}
+			}
+			else
+			{
+				return getElementTypeText(element) + LibraryResources.colon_with_space + text;
+			}
+			
+		}
+		
 		return text;
 	}
 
@@ -638,7 +694,7 @@ public class ResourceHelper {
 	 */
 	public static String validateContent(MethodElement element, String source) {
 		return validateContent(element, source, new DefaultContentValidator(),
-				null);
+				null, null);
 	}
 
 	/**
@@ -673,8 +729,11 @@ public class ResourceHelper {
 	 * @return String the validated content
 	 */
 	public static String validateContent(MethodElement element, String source,
-			IContentValidator validator, MethodConfiguration config) {
+			IContentValidator validator, MethodConfiguration config, String layoutXslRootPath) {
+		
 		try {
+			ResourceHelper.LAYOUT_XSL_ROOT_PATH = layoutXslRootPath;
+			showSkinResource = true;
 			// first validate the tags, remove any CF/LF from the tag text
 			source = validateTag(source);
 
@@ -756,6 +815,11 @@ public class ResourceHelper {
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+		finally
+		{
+			ResourceHelper.LAYOUT_XSL_ROOT_PATH = null;
+			showSkinResource = false;
 		}
 
 		return source;

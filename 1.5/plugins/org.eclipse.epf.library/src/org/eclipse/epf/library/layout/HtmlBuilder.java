@@ -407,7 +407,7 @@ public class HtmlBuilder {
 			// Always validate and fix the content before publishing.
 			content = ResourceHelper.validateContent(layout.getElement(),
 					content, getValidator(), layout.getLayoutMgr()
-							.getConfiguration());
+							.getConfiguration(), this.layoutXslRootPath);
 			if (contentScanEnabled()) {
 //				scanContentForResources(layout.getElement(), content, layout
 //						.getFilePath());
