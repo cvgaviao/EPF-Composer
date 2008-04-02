@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.configuration;
 
 import org.eclipse.epf.library.configuration.closure.IConfigurationError;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.uma.MethodConfiguration;
 
 /**
@@ -25,18 +26,59 @@ public class ConfigurationProperties {
 	private boolean hideWarnings = false;
 	private boolean hideErrors = false;
 	private boolean hideInfos = false;
+	private static final String trueValue = "true";	//$NON-NLS-1$
+	private static final String falseValue = "false";	//$NON-NLS-1$
 	
 	public ConfigurationProperties(MethodConfiguration config) {
 		this.config = config;
 		loadFromConfiguration();
 	}
 	
+	private String[] getHidePropStrings() {
+		String[] hideProps = { MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
+				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS,
+				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS};
+		return hideProps;
+	}
+	
 	private void loadFromConfiguration() {
-		//tbi
+		String[] hideProps = getHidePropStrings();
+		for (int i = 0; i < hideProps.length; i++) {
+			String value = MethodElementPropertyHelper.getProperty(config, hideProps[i]).getValue();
+			boolean b = trueValue.equals(value);
+			if (i == 0) {
+				setHideErrors(b);
+			} else if (i == 1) {
+				setHideWarnings(b);
+			} else if (i == 2) {
+				setHideWarnings(b);
+			}
+		}
 	}
 	
 	public void saveToConfiguration() {
-		//tbi
+		String[] hideProps = getHidePropStrings();
+		for (int i = 0; i < hideProps.length; i++) {
+			String value = null;
+			String oldValue = MethodElementPropertyHelper.getProperty(config, hideProps[i]).getValue();
+			boolean oldB = trueValue.equals(oldValue);
+			if (i == 0) {
+				if (oldB != isHideErrors()) {
+					value = isHideErrors() ? trueValue : falseValue;
+				}
+			} else if (i == 1) {
+				if (oldB != isHideWarnings()) {
+					value = isHideWarnings() ? trueValue : falseValue;
+				}
+			} else if (i == 2) {
+				if (oldB != isHideInfos()) {
+					value = isHideInfos() ? trueValue : falseValue;
+				}
+			}
+			if (value != null) {
+				MethodElementPropertyHelper.setProperty(config, hideProps[i], value);
+			}
+		}
 	}
 	
 	public boolean toHide(IConfigurationError error) {
