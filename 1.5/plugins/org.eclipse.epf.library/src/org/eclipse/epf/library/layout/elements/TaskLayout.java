@@ -31,6 +31,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  * 
  * @author Kelvin Low
  * @author Jinhua Xi
+ * @author Weiping Lu
  * @since 1.0
  */
 public class TaskLayout extends AbstractElementLayout {
@@ -109,7 +110,9 @@ public class TaskLayout extends AbstractElementLayout {
 		ElementRealizer realizer = wpChildLayout.layoutManager
 				.getElementRealizer();
 
-		if (feature == UmaPackage.eINSTANCE.getTask_MandatoryInput()) {
+		if (feature == UmaPackage.eINSTANCE.getTask_MandatoryInput() ||
+			feature == UmaPackage.eINSTANCE.getTask_OptionalInput() ||
+			feature == UmaPackage.eINSTANCE.getTask_Output()) {
 			OppositeFeature oFulfillingFeature = AssociationHelper.FulFills_FullFillableElements;
 			List items = wpChildLayout.calc0nFeatureValue(childElememt, oFulfillingFeature, realizer);
 			wpChildLayout.addReferences(oFulfillingFeature, childXmlElement, oFulfillingFeature

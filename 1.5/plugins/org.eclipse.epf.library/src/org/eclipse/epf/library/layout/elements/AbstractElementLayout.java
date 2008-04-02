@@ -78,6 +78,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  * 
  * @author Jinhua Xi
  * @author Kelvin Low
+ * @author Weiping Lu
  * @sicne 1.0
  */
 public abstract class AbstractElementLayout implements IElementLayout {

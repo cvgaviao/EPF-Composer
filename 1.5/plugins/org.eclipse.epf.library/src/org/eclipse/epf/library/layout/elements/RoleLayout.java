@@ -11,7 +11,6 @@
 package org.eclipse.epf.library.layout.elements;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,18 +18,16 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.diagram.MethodElementDiagram;
 import org.eclipse.epf.library.layout.diagram.RoleDiagramPublisher;
 import org.eclipse.epf.library.layout.util.XmlElement;
-import org.eclipse.epf.library.util.LibraryUtil;
-import org.eclipse.epf.uma.Activity;
-import org.eclipse.epf.uma.BreakdownElement;
-import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -39,6 +36,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  * 
  * @author Jinhua Xi
  * @author Kelvin Low
+ * @author Weiping Lu
  * @since 1.0
  */
 public class RoleLayout extends AbstractElementLayout {
@@ -160,6 +158,32 @@ public class RoleLayout extends AbstractElementLayout {
 
 	protected boolean acceptFeatureValue(OppositeFeature feature, Object value) {
 		return super.acceptFeatureValue(feature, value);
+	}
+	
+	
+	protected void processGrandChild(Object feature,
+			MethodElement childElememt, IElementLayout childLayout,
+			XmlElement childXmlElement) {
+		if (!(childLayout instanceof WorkProductLayout)
+				|| childXmlElement == null
+				|| !(childElememt instanceof WorkProduct)) {
+			return;
+		}
+		if (! ((WorkProduct)childElememt).getIsAbstract()) {
+			return;
+		}
+		
+		WorkProductLayout wpChildLayout = (WorkProductLayout) childLayout;
+		ElementRealizer realizer = wpChildLayout.layoutManager
+				.getElementRealizer();
+
+		if (feature == UmaPackage.eINSTANCE.getRole_ResponsibleFor() ||
+			feature == UmaPackage.eINSTANCE.getRole_Modifies()) {
+			OppositeFeature oFulfillingFeature = AssociationHelper.FulFills_FullFillableElements;
+			List items = wpChildLayout.calc0nFeatureValue(childElememt, oFulfillingFeature, realizer);
+			wpChildLayout.addReferences(oFulfillingFeature, childXmlElement, oFulfillingFeature
+					.getName(), items);
+		}
 	}
 
 }
