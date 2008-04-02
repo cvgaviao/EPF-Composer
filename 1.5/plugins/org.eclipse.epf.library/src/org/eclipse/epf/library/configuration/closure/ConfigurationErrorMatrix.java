@@ -28,6 +28,7 @@ import org.eclipse.epf.uma.WorkProduct;
  * define the configuration error level metrix
  * 
  * @author Jinhua Xi
+ * @author Weiping Lu
  * @since 1.2
  *
  */
@@ -66,9 +67,11 @@ public class ConfigurationErrorMatrix {
 		} else if ( ref.hasFeature(UmaPackage.eINSTANCE.getTask_PerformedBy()) ) {
 			errorLevel = ErrorInfo.WARNING;
 			messageId = LibraryResources.ElementError_missing_primary_performer;
+		} else if ( ref.hasFeature(UmaPackage.eINSTANCE.getRole_ResponsibleFor()) ) {
+			errorLevel = ErrorInfo.WARNING;
+			messageId = LibraryResources.ElementError_missing_responsible_for_workProduct;
 		} else if ( ref.hasFeature(UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy()) 
-				|| ref.hasFeature(UmaPackage.eINSTANCE.getTask_OptionalInput())
-				|| ref.hasFeature(UmaPackage.eINSTANCE.getRole_ResponsibleFor()) 
+				|| ref.hasFeature(UmaPackage.eINSTANCE.getTask_OptionalInput()) 
 				|| ref.hasFeature(UmaPackage.eINSTANCE.getRole_Modifies())
 				 ) {
 			// default

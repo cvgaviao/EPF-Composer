@@ -111,6 +111,7 @@ public final class LibraryResources extends NLS {
 	public static String ElementError_missing_primary_performer;
 	public static String ElementError_missing_mandatory_input;
 	public static String ElementError_missing_output;
+	public static String ElementError_missing_responsible_for_workProduct;
 	
 	public static String WorkProductSlot_text;
 	

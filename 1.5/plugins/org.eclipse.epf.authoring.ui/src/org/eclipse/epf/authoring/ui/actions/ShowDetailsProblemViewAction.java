@@ -107,22 +107,25 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 		} else if (marker.getType().equals(ConfigurationMarkerHelper.MARKER_ID)) {
 			String messageId = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_MESSAGE_ID);
 			
-/*			public static String ElementError_missing_element;
-			public static String ElementError_contributor_missing_base;
-			public static String ElementError_extender_missing_base;
-			public static String ElementError_replacer_missing_base;	
-			public static String ElementError_missing_primary_performer;
-			public static String ElementError_missing_mandatory_input;
-			public static String ElementError_missing_output;*/
-			
-			if (messageId == LibraryResources.ElementError_missing_mandatory_input) {
+			if (messageId == LibraryResources.ElementError_contributor_missing_base) {
 				
-			} else if (messageId == LibraryResources.ElementError_missing_output) {
+			} else if (messageId == LibraryResources.ElementError_extender_missing_base) {
+				
+			} else if (messageId == LibraryResources.ElementError_replacer_missing_base) {
 				
 			} else if (messageId == LibraryResources.ElementError_missing_primary_performer) {
 				
+			} else if (messageId == LibraryResources.ElementError_missing_mandatory_input) {
+				
+			} else if (messageId == LibraryResources.ElementError_missing_output) {
+				
+			} else if (messageId == LibraryResources.ElementError_missing_responsible_for_workProduct) {
+				
+			} else if (messageId == LibraryResources.ElementError_missing_element) {
+				
 			}
 			
+						
 		}
 		
 		return sb.toString();
