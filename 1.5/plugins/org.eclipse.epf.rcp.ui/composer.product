@@ -13,7 +13,7 @@
    <configIni use="default"/>
 
    <launcherArgs>
-      <programArgs>-data @user.home/EPF/workspace.120M3 -defaultlibrary OpenUP</programArgs>
+      <programArgs>-data @user.home/EPF/workspace.150M2 -defaultlibrary OpenUP</programArgs>
       <vmArgs>-Xms64m -Xmx512m</vmArgs>
    </launcherArgs>
 
@@ -29,6 +29,9 @@
          <bmp/>
       </win>
    </launcher>
+
+   <vm>
+   </vm>
 
    <plugins>
    </plugins>
