@@ -1276,6 +1276,11 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 								base_viewer.refresh();
 							}
 							setFormTextWithVariableInfo();
+							
+							// IColumnProvider
+							if (columnProvider != null) {
+								columnProvider.refresh(false);
+							}
 						}
 					});
 	
@@ -1325,6 +1330,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						}
 					}
 					setFormTextWithVariableInfo();
+					// IColumnProvider
+					if (columnProvider != null) {
+						columnProvider.refresh(false);
+					}
 					if ((ctrl_base != null) && (!(ctrl_base.isDisposed())))
 						ctrl_base.redraw();
 					if ((base_viewer != null)
