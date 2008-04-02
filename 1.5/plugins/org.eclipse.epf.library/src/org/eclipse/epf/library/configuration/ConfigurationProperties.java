@@ -13,6 +13,7 @@ package org.eclipse.epf.library.configuration;
 import org.eclipse.epf.library.configuration.closure.IConfigurationError;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElementProperty;
 
 /**
  *  Class managing configuration properties
@@ -44,7 +45,8 @@ public class ConfigurationProperties {
 	private void loadFromConfiguration() {
 		String[] hideProps = getHidePropStrings();
 		for (int i = 0; i < hideProps.length; i++) {
-			String value = MethodElementPropertyHelper.getProperty(config, hideProps[i]).getValue();
+			MethodElementProperty prop = MethodElementPropertyHelper.getProperty(config, hideProps[i]);
+			String value = prop == null ? falseValue : prop.getValue();
 			boolean b = trueValue.equals(value);
 			if (i == 0) {
 				setHideErrors(b);
@@ -60,7 +62,8 @@ public class ConfigurationProperties {
 		String[] hideProps = getHidePropStrings();
 		for (int i = 0; i < hideProps.length; i++) {
 			String value = null;
-			String oldValue = MethodElementPropertyHelper.getProperty(config, hideProps[i]).getValue();
+			MethodElementProperty prop = MethodElementPropertyHelper.getProperty(config, hideProps[i]);
+			String oldValue = prop == null ? falseValue : prop.getValue();
 			boolean oldB = trueValue.equals(oldValue);
 			if (i == 0) {
 				if (oldB != isHideErrors()) {
