@@ -451,7 +451,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 					}
 					l.setElementOwner(element);
 				}
-				parent.addChild(l.getXmlElement(includeReferences));
+				XmlElement childXmlElement = l.getXmlElement(includeReferences);
+				parent.addChild(childXmlElement);
+				processGrandChild(feature, e, l, childXmlElement);
 			}
 		}
 	}
@@ -470,14 +472,21 @@ public abstract class AbstractElementLayout implements IElementLayout {
 						if (l != null) {							
 							// don't include the references of the refereced
 							// elements, otherwise, may cause deadlock
-							parent.addChild(l.getXmlElement(ConfigurationHelper
+							XmlElement childXmlElement = l.getXmlElement(ConfigurationHelper
 									.isDescriptionElement(me) ? true
-									: includeReferences));
+									: includeReferences);
+							parent.addChild(childXmlElement);
+							processGrandChild(feature, me, l, childXmlElement);
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	protected void processGrandChild(Object feature,
+			MethodElement childElememt, IElementLayout childLayout,
+			XmlElement childXmlElement) {
 	}
 
 	/**

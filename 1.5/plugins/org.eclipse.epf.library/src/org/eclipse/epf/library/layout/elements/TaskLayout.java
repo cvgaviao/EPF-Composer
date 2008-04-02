@@ -13,12 +13,16 @@ package org.eclipse.epf.library.layout.elements;
 import java.util.List;
 
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
+import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
 
@@ -88,5 +92,30 @@ public class TaskLayout extends AbstractElementLayout {
 		
 		return elementXml;
 	}
+	
+	protected void processGrandChild(Object feature,
+			MethodElement childElememt, IElementLayout childLayout,
+			XmlElement childXmlElement) {
+		if (!(childLayout instanceof WorkProductLayout)
+				|| childXmlElement == null
+				|| !(childElememt instanceof WorkProduct)) {
+			return;
+		}
+		if (! ((WorkProduct)childElememt).getIsAbstract()) {
+			return;
+		}
+		
+		WorkProductLayout wpChildLayout = (WorkProductLayout) childLayout;
+		ElementRealizer realizer = wpChildLayout.layoutManager
+				.getElementRealizer();
+
+		if (feature == UmaPackage.eINSTANCE.getTask_MandatoryInput()) {
+			OppositeFeature oFulfillingFeature = AssociationHelper.FulFills_FullFillableElements;
+			List items = wpChildLayout.calc0nFeatureValue(childElememt, oFulfillingFeature, realizer);
+			wpChildLayout.addReferences(oFulfillingFeature, childXmlElement, oFulfillingFeature
+					.getName(), items);
+		}
+	}
+	
 
 }
