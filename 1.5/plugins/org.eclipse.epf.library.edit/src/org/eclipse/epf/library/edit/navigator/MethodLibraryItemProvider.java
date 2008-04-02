@@ -140,7 +140,7 @@ public class MethodLibraryItemProvider extends
 		return children;
 	}
 	
-	private void addChildren(Collection children, List<MethodPlugin> plugins, Object parent) {
+	protected void addChildren(Collection<Object> children, List<MethodPlugin> plugins, Object parent) {
 		PluginUIPackagesMap map = new PluginUIPackagesMap();
 		for (Iterator<MethodPlugin> iter = plugins.iterator();iter.hasNext();) {
 			MethodPlugin plugin = iter.next();

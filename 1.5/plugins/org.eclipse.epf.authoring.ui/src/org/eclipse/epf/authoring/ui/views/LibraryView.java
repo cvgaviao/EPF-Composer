@@ -2261,4 +2261,9 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 	public TreeViewer getTreeViewer() {
 		return treeViewer;
 	}
+	
+	@Override
+	public void setContentDescription(String description) {
+		super.setContentDescription(description);
+	}
 }
