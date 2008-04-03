@@ -48,7 +48,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.LibraryEditResources;
-import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
@@ -890,7 +889,8 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					}
 				}
 			}
-		}	
+		}
+
 		if (removeXRefRequired) {
 			return LibraryEditResources.invalidReferencesError_reason; 
 		}
@@ -1096,46 +1096,6 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 	protected void doAdd() {
 		try {
-			EditingDomain ed = addCommand.getDomain();
-			if (ed instanceof TraceableAdapterFactoryEditingDomain) {
-				// change plugin names, prepend with package name
-				String newPackageName = ((TraceableAdapterFactoryEditingDomain)ed).getNewPackageName();
-				if (addCommand.getCollection() != null
-						&& addCommand.getCollection().size() > 0 &&
-						newPackageName != null) {
-					for (Object obj : addCommand.getCollection()) {
-						if (obj instanceof MethodPlugin) {
-							Map copyToOriginalMap = ((TraceableAdapterFactoryEditingDomain) ed).getCopyToOriginalMap();
-							Object original = copyToOriginalMap.get(obj);
-							if (((TraceableAdapterFactoryEditingDomain)ed).getSelectedObjectsToCopy() != null) {
-								for (Object parent : ((TraceableAdapterFactoryEditingDomain)ed).getSelectedObjectsToCopy()) {
-									if (parent instanceof PluginUIPackagesItemProvider) {
-										if (((PluginUIPackagesItemProvider)parent).getPlugins().contains(original)) {
-											Object parentParent = ((PluginUIPackagesItemProvider)parent).getParent();
-											if (parentParent instanceof PluginUIPackagesItemProvider) {
-												String deltaName = PluginUIPackagesItemProvider.getNameDelta((PluginUIPackagesItemProvider)parentParent, ((MethodPlugin)obj));
-												((MethodPlugin)obj).setName(deltaName);
-											}
-										}
-									}					
-								}
-							}
-							String oldName = ((MethodPlugin)obj).getName();
-							((MethodPlugin)obj).setName(newPackageName + PluginUIPackagesItemProvider.PLUGIN_PACKAGE_SEPARATOR + oldName);
-						}
-					}
-				}
-				String newPluginName = ((TraceableAdapterFactoryEditingDomain)ed).getNewPluginName();
-				if (addCommand.getCollection() != null
-						&& addCommand.getCollection().size() > 0 &&
-						newPluginName != null) {
-					Object firstObj = addCommand.getCollection().iterator().next();
-					if (firstObj instanceof MethodPlugin) {
-						((MethodPlugin)firstObj).setName(newPluginName);
-					}
-				}
-			}
-			
 			// check feature values
 			//
 			for (Iterator iter = getFeaturesToCheck().iterator(); iter
@@ -1147,8 +1107,9 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					return;
 				}
 			}
-			
+
 			boolean showWarning = false;
+			EditingDomain ed = addCommand.getDomain();
 			if (ed instanceof TraceableAdapterFactoryEditingDomain) {
 				Map copyToOriginalMap = ((TraceableAdapterFactoryEditingDomain) ed)
 						.getCopyToOriginalMap();
