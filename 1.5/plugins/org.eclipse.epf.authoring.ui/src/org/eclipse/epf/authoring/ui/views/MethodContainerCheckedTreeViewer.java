@@ -16,6 +16,7 @@ import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -181,6 +182,49 @@ public class MethodContainerCheckedTreeViewer extends
         	doCheckStateChanged(element);
         }
     }
+    
+    /**
+     * Returns a list of top-most checked elements in this viewer's tree, 
+     * including currently hidden ones that are marked as
+     * checked but are under a collapsed ancestor.
+     *
+     * Only returns white-checked items, not grayed items
+     *
+     * @return the array of checked elements
+     *
+     * @see #setCheckedElements
+     */
+    public Object[] getTopCheckedElements() {
+        ArrayList v = new ArrayList();
+        Control tree = getControl();
+        internalCollectTopChecked(v, tree);
+        return v.toArray();
+    }
+    
+    
+    /**
+     * Gathers the top-most checked states of the given widget and its
+     * descendents, following a pre-order traversal of the tree.
+     *
+     * @param result a writable list of elements (element type: <code>Object</code>)
+     * @param widget the widget
+     */
+    private void internalCollectTopChecked(List result, Widget widget) {
+        Item[] items = getChildren(widget);
+        for (int i = 0; i < items.length; i++) {
+            Item item = items[i];
+            if (item instanceof TreeItem && ((TreeItem) item).getChecked() && !((TreeItem) item).getGrayed()) {
+                Object data = item.getData();
+                if (data != null) {
+					result.add(data);
+				}
+            }
+            if (item instanceof TreeItem && (!((TreeItem) item).getChecked() || ((TreeItem) item).getGrayed())) {
+            	internalCollectTopChecked(result, item);
+            }
+        }
+    }
+
 
 	public boolean isExpandWhenChecking() {
 		return expandWhenChecking;
