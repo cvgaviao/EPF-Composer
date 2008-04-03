@@ -931,6 +931,18 @@ public final class TngUtil {
 		}
 		return list;
 	}
+	
+	public static <T> List<T> extractType(Collection<? extends Object> collection, Class<T> cls) {
+		ArrayList<T> list = new ArrayList<T>();
+		for (Iterator<? extends Object> iter = collection.iterator(); iter.hasNext();) {
+			Object element = iter.next();
+			if (cls.isInstance(element)) {
+				list.add((T)element);
+			}
+		}
+		return list;
+	}
+
 
 	public static void setDefaultName(IDefaultNameSetter defaultNameSetter,
 			Notification msg) {
