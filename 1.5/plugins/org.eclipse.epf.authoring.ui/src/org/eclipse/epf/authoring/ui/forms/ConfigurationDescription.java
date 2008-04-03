@@ -111,52 +111,35 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		
 		hideErrorButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				Object obj = e.getSource();
-				if (obj instanceof Button) {
-					Button button = (Button) obj;
-					String value = button.getSelection() ? Boolean.TRUE
-							.toString() : Boolean.FALSE.toString();
-					actionMgr
-							.execute(new ConfigSetPropertyCommand(
-									config,
-									MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
-									value));
-				}
+				handleHidesButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS);
 			}
 		});
 		
 		hideWarnButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				Object obj = e.getSource();
-				if (obj instanceof Button) {
-					Button button = (Button) obj;
-					String value = button.getSelection() ? Boolean.TRUE
-							.toString() : Boolean.FALSE.toString();
-					actionMgr
-							.execute(new ConfigSetPropertyCommand(
-									config,
-									MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS,
-									value));
-				}
+				handleHidesButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS);
 			}
 		});
 		
 		hideInfoButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				Object obj = e.getSource();
-				if (obj instanceof Button) {
-					Button button = (Button) obj;
-					String value = button.getSelection() ? Boolean.TRUE
-							.toString() : Boolean.FALSE.toString();
-					actionMgr
-							.execute(new ConfigSetPropertyCommand(
-									config,
-									MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS,
-									value));
-				}
+				handleHidesButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS);
 			}
 		});
 		
+	}
+	
+	private void handleHidesButtonWidgetSelected(SelectionEvent e, String key) {
+		Object obj = e.getSource();
+		if (obj instanceof Button) {
+			Button button = (Button) obj;
+			String value = button.getSelection() ? Boolean.TRUE.toString()
+					: Boolean.FALSE.toString();
+			actionMgr.execute(new ConfigSetPropertyCommand(config, key, value));
+		}
 	}
 	
 	@Override
