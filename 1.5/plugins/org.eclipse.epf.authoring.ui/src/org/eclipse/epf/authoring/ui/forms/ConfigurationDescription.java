@@ -184,10 +184,6 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 			super(element, key, value);
 		}
 		
-		String[] hideProps = { MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
-				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS,
-				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS};
-		
 		@Override
 		public void redo() {
 			super.redo();
