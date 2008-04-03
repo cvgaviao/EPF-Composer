@@ -12,11 +12,14 @@ package org.eclipse.epf.authoring.ui.forms;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.ConfigurationEditorInput;
-import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
+import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -111,8 +114,13 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 				Object obj = e.getSource();
 				if (obj instanceof Button) {
 					Button button = (Button) obj;
-					configProperties.setHideErrors(button.getSelection());
-					markConfigDirty();
+					String value = button.getSelection() ? Boolean.TRUE
+							.toString() : Boolean.FALSE.toString();
+					actionMgr
+							.execute(new ConfigSetPropertyCommand(
+									config,
+									MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
+									value));
 				}
 			}
 		});
@@ -122,8 +130,13 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 				Object obj = e.getSource();
 				if (obj instanceof Button) {
 					Button button = (Button) obj;
-					configProperties.setHideWarnings(button.getSelection());
-					markConfigDirty();
+					String value = button.getSelection() ? Boolean.TRUE
+							.toString() : Boolean.FALSE.toString();
+					actionMgr
+							.execute(new ConfigSetPropertyCommand(
+									config,
+									MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS,
+									value));
 				}
 			}
 		});
@@ -133,18 +146,17 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 				Object obj = e.getSource();
 				if (obj instanceof Button) {
 					Button button = (Button) obj;
-					configProperties.setHideInfos(button.getSelection());
-					markConfigDirty();
+					String value = button.getSelection() ? Boolean.TRUE
+							.toString() : Boolean.FALSE.toString();
+					actionMgr
+							.execute(new ConfigSetPropertyCommand(
+									config,
+									MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS,
+									value));
 				}
 			}
 		});
 		
-	}
-	
-	private void markConfigDirty() {
-		MethodElementEditor editor = (MethodElementEditor) getEditor();
-		editor.setDirty();
-		config.eResource().setModified(true);
 	}
 	
 	@Override
@@ -164,8 +176,41 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		
 		hideErrorButton.setSelection(configProperties.isHideErrors());
 		hideWarnButton.setSelection(configProperties.isHideWarnings());
-		hideInfoButton.setSelection(configProperties.isHideInfos());
+		hideInfoButton.setSelection(configProperties.isHideInfos());		
+	}
+	
+	class ConfigSetPropertyCommand extends MethodElementSetPropertyCommand {		
+		public ConfigSetPropertyCommand(MethodElement element, String key, String value) {
+			super(element, key, value);
+		}
 		
+		String[] hideProps = { MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
+				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS,
+				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS};
+		
+		@Override
+		public void redo() {
+			super.redo();
+			if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS)) {
+				configProperties.setHideErrors(value);
+			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS)) {
+				configProperties.setHideWarnings(value);
+			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS)) {
+				configProperties.setHideInfos(value);
+			}
+		}
+		
+		@Override
+		public void undo() {
+			super.undo();
+			if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS)) {
+				configProperties.setHideErrors(oldValue);
+			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS)) {
+				configProperties.setHideWarnings(oldValue);
+			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS)) {
+				configProperties.setHideInfos(oldValue);
+			}
+		}
 	}
 
 }
