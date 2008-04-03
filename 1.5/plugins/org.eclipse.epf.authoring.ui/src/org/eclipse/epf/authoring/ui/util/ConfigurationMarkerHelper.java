@@ -36,6 +36,7 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.views.markers.MarkerViewUtil;
 
 /**
  *  Helper class to handle Configuration error markers
@@ -260,6 +261,7 @@ public class ConfigurationMarkerHelper {
 	    	if (error.getErrorMethodElement() != null) {
 				marker.setAttribute(IMarker.LOCATION, TngUtil.getLabelWithPath(error.getErrorMethodElement()));
 				marker.setAttribute(ATTR_ERROR_ELEMENT_GUID, error.getErrorMethodElement().getGuid());
+				marker.setAttribute(MarkerViewUtil.NAME_ATTRIBUTE, error.getErrorMethodElement().getName());
 	    	}
 	    	if (error.getCauseMethodElement() != null) {
 	    		marker.setAttribute(ATTR_CAUSE_ELEMENT_GUID, error.getCauseMethodElement().getGuid());
