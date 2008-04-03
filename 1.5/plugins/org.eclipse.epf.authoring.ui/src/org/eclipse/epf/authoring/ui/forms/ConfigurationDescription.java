@@ -12,8 +12,14 @@ package org.eclipse.epf.authoring.ui.forms;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.ConfigurationEditorInput;
+import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -33,6 +39,10 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 	private static final String FORM_PREFIX = AuthoringUIResources.ConfigurationDescriptionFormPrefix; 
 
 	private MethodConfiguration config = null;
+	
+	private Button hideErrorButton;
+	private Button hideWarnButton;
+	private Button hideInfoButton;
 
 	/**
 	 * Creates a new instance.
@@ -81,6 +91,28 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 	@Override
 	protected Object getContentElement() {
 		return config;
+	}
+	
+	@Override
+	protected void addListeners() {
+		super.addListeners();
+	}
+	
+	@Override
+	protected void createGeneralSection(FormToolkit toolkit) {
+		super.createGeneralSection(toolkit);
+
+		Group group = new Group(generalComposite, SWT.NONE);
+		group.setLayout(new GridLayout(1, false));
+		GridData data = new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false);
+		data.horizontalSpan = 4;
+		group.setLayoutData(data);
+		group.setText("Configuration problem view options");
+
+		hideErrorButton = SWTUtil.createCheckbox(group, "Hide errors");
+		hideWarnButton = SWTUtil.createCheckbox(group, "Hide warnings");
+		hideInfoButton = SWTUtil.createCheckbox(group, "Hide infos");
+		
 	}
 
 }
