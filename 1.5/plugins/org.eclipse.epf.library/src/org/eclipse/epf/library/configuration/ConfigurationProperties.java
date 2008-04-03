@@ -146,4 +146,14 @@ public class ConfigurationProperties {
 		return oldValue;
 	}
 	
+	public void setValue(String key, String value) {
+		if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS)) {
+			setHideErrors(value);
+		} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS)) {
+			setHideWarnings(value);
+		} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS)) {
+			setHideInfos(value);
+		}
+	}
+	
 }

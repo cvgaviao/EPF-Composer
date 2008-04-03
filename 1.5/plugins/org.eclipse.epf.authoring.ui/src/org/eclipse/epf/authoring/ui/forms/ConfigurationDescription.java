@@ -170,26 +170,14 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		@Override
 		public void redo() {
 			super.redo();
-			if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS)) {
-				configProperties.setHideErrors(value);
-			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS)) {
-				configProperties.setHideWarnings(value);
-			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS)) {
-				configProperties.setHideInfos(value);
-			}
+			configProperties.setValue(key, value);
 		}
 		
 		@Override
 		public void undo() {
 			super.undo();
 			boolean b = configProperties.setNotifyListeners(false);
-			if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS)) {
-				configProperties.setHideErrors(oldValue);
-			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS)) {
-				configProperties.setHideWarnings(oldValue);
-			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS)) {
-				configProperties.setHideInfos(oldValue);
-			}
+			configProperties.setValue(key, oldValue);
 			configProperties.setNotifyListeners(b);
 		}
 	}
