@@ -2002,6 +2002,14 @@ public final class AuthoringUIResources extends NLS {
 	public static String wpFulFillsConfirmDialog_message;
 	
 	public static String wpSlotFulFillsConfirmDialog_message;
+	
+	public static String configProblemViewOptionsText;
+	
+	public static String hideErrosText;
+	
+	public static String hideWarningsText;
+	
+	public static String hideInfosText;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);

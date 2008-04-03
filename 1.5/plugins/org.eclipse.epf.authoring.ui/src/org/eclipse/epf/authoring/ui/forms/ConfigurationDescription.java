@@ -12,9 +12,14 @@ package org.eclipse.epf.authoring.ui.forms;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.ConfigurationEditorInput;
+import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
+import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -40,6 +45,7 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 
 	private MethodConfiguration config = null;
 	
+	private ConfigurationProperties configProperties;
 	private Button hideErrorButton;
 	private Button hideWarnButton;
 	private Button hideInfoButton;
@@ -65,6 +71,9 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		variabilitySectionOn = false;
 		fullDescOn = false;
 		keyConsiderationOn = false;
+		
+		configProperties = LibraryService.getInstance()
+				.getConfigurationManager(config).getConfigurationProperties();
 	}
 
 	@Override
@@ -96,6 +105,46 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 	@Override
 	protected void addListeners() {
 		super.addListeners();
+		
+		hideErrorButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Object obj = e.getSource();
+				if (obj instanceof Button) {
+					Button button = (Button) obj;
+					configProperties.setHideErrors(button.getSelection());
+					markConfigDirty();
+				}
+			}
+		});
+		
+		hideWarnButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Object obj = e.getSource();
+				if (obj instanceof Button) {
+					Button button = (Button) obj;
+					configProperties.setHideWarnings(button.getSelection());
+					markConfigDirty();
+				}
+			}
+		});
+		
+		hideInfoButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Object obj = e.getSource();
+				if (obj instanceof Button) {
+					Button button = (Button) obj;
+					configProperties.setHideInfos(button.getSelection());
+					markConfigDirty();
+				}
+			}
+		});
+		
+	}
+	
+	private void markConfigDirty() {
+		MethodElementEditor editor = (MethodElementEditor) getEditor();
+		editor.setDirty();
+		config.eResource().setModified(true);
 	}
 	
 	@Override
@@ -107,11 +156,15 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		GridData data = new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false);
 		data.horizontalSpan = 4;
 		group.setLayoutData(data);
-		group.setText("Configuration problem view options");
+		group.setText(AuthoringUIResources.configProblemViewOptionsText);
 
-		hideErrorButton = SWTUtil.createCheckbox(group, "Hide errors");
-		hideWarnButton = SWTUtil.createCheckbox(group, "Hide warnings");
-		hideInfoButton = SWTUtil.createCheckbox(group, "Hide infos");
+		hideErrorButton = SWTUtil.createCheckbox(group, AuthoringUIResources.hideErrosText);
+		hideWarnButton = SWTUtil.createCheckbox(group, AuthoringUIResources.hideWarningsText);
+		hideInfoButton = SWTUtil.createCheckbox(group,AuthoringUIResources.hideInfosText);
+		
+		hideErrorButton.setSelection(configProperties.isHideErrors());
+		hideWarnButton.setSelection(configProperties.isHideWarnings());
+		hideInfoButton.setSelection(configProperties.isHideInfos());
 		
 	}
 

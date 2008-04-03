@@ -10,6 +10,9 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.epf.library.configuration.closure.IConfigurationError;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -29,12 +32,15 @@ public class ConfigurationProperties {
 	private boolean hideInfos = false;
 	private static final String trueValue = "true";	//$NON-NLS-1$
 	private static final String falseValue = "false";	//$NON-NLS-1$
+	private boolean dirty = true;
+	private boolean notifyingListeners = true;
+	private List<Listener> listeners = new ArrayList<Listener>();
 	
 	public ConfigurationProperties(MethodConfiguration config) {
 		this.config = config;
 		loadFromConfiguration();
 	}
-	
+			
 	private String[] getHidePropStrings() {
 		String[] hideProps = { MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
 				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS,
@@ -42,8 +48,11 @@ public class ConfigurationProperties {
 		return hideProps;
 	}
 	
-	private void loadFromConfiguration() {
+	public void loadFromConfiguration() {
 		String[] hideProps = getHidePropStrings();
+		
+		boolean oldNotifyingListeners = notifyingListeners;
+		notifyingListeners = false;
 		for (int i = 0; i < hideProps.length; i++) {
 			MethodElementProperty prop = MethodElementPropertyHelper.getProperty(config, hideProps[i]);
 			String value = prop == null ? falseValue : prop.getValue();
@@ -53,9 +62,11 @@ public class ConfigurationProperties {
 			} else if (i == 1) {
 				setHideWarnings(b);
 			} else if (i == 2) {
-				setHideWarnings(b);
+				setHideInfos(b);
 			}
 		}
+		setDirty(false);
+		notifyingListeners = oldNotifyingListeners;
 	}
 	
 	public void saveToConfiguration() {
@@ -82,6 +93,7 @@ public class ConfigurationProperties {
 				MethodElementPropertyHelper.setProperty(config, hideProps[i], value);
 			}
 		}
+		setDirty(false);
 	}
 	
 	public boolean toHide(IConfigurationError error) {
@@ -98,21 +110,64 @@ public class ConfigurationProperties {
 		return hideWarnings;
 	}
 	public void setHideWarnings(boolean hideWarnings) {
-		this.hideWarnings = hideWarnings;
+		if (this.hideWarnings != hideWarnings) {
+			this.hideWarnings = hideWarnings;
+			setDirty(true);
+		}
 	}
 	
 	public boolean isHideErrors() {
 		return hideErrors;
 	}
 	public void setHideErrors(boolean hideErrors) {
-		this.hideErrors = hideErrors;
+		if (this.hideErrors != hideErrors) {
+			this.hideErrors = hideErrors;
+			setDirty(true);
+		}
 	}
 
 	public boolean isHideInfos() {
 		return hideInfos;
 	}
 	public void setHideInfos(boolean hideInfos) {
-		this.hideInfos = hideInfos;
+		if (this.hideInfos != hideInfos) {
+			this.hideInfos = hideInfos;
+			setDirty(true);
+		}
 	}
 
+	public boolean isDirty() {
+		return dirty;
+	}
+
+	private void setDirty(boolean dirty) {
+		this.dirty = dirty;
+		if (dirty) {
+			notifyListeners();
+		}
+	}
+
+	public void addListeners(Listener listener) {
+		this.listeners.add(listener);
+	}
+	
+	public void removeListeners(Listener listener) {
+		this.listeners.remove(listener);
+	}
+	
+	private void notifyListeners() {
+		if (! notifyingListeners) {
+			return;
+		}
+		for (Listener listener: listeners) {
+			listener.fireEvent();
+		}
+	}
+	
+	public static class Listener {
+		public void fireEvent() {			
+		}
+	}
+	
+	
 }

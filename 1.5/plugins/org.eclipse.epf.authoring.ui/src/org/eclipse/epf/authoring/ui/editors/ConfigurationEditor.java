@@ -11,6 +11,7 @@
 package org.eclipse.epf.authoring.ui.editors;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IMarker;
@@ -19,7 +20,8 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.forms.ConfigViewPage;
 import org.eclipse.epf.authoring.ui.forms.ConfigurationDescription;
 import org.eclipse.epf.authoring.ui.forms.ConfigurationPage;
-import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
+import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -97,6 +99,13 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
 	 * @see org.eclipse.epf.authoring.ui.editors.MethodElementEditor#dispose()
 	 */
 	public void dispose() {
+		if (isDirty()) {
+			ConfigurationProperties props = LibraryService.getInstance().getConfigurationManager(getConfiguration()).getConfigurationProperties();
+			if (props.isDirty()) {
+				props.loadFromConfiguration();
+			}
+		}
+
 		super.dispose();
 	}
 
@@ -144,4 +153,18 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
     public void doQuickFix(IMarker marker) {
     	configPage.doQuickFix(marker);
     }
+    
+	public Collection getModifiedResources() {
+		Collection col = super.getModifiedResources();
+		Resource resource = getConfiguration().eResource();
+		if (isDirty() && !col.contains(resource)) {
+			ConfigurationProperties props = LibraryService.getInstance().getConfigurationManager(getConfiguration()).getConfigurationProperties();
+			if (props.isDirty()) {
+				props.saveToConfiguration();
+				col.add(resource);
+			}
+		}
+		return col;
+	}
+    
 }

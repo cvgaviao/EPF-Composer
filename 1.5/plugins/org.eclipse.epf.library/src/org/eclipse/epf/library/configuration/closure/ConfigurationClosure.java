@@ -26,6 +26,7 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -73,6 +74,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	
 	private List<ClosureListener> listeners;
 
+	private ConfigurationProperties.Listener configPropListener;
 	/**
 	 * Creates a new instance.
 	 * 
@@ -90,6 +92,14 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		if (configManager != null) {
 			library = configManager.getMethodLibrary();
 			dependencyManager = configManager.getDependencyManager();
+			
+			ConfigurationProperties props = configManager.getConfigurationProperties();
+			configPropListener = new ConfigurationProperties.Listener() {
+				public void fireEvent() {
+					refreshErrormarks();
+				}
+			};			
+			props.addListeners(configPropListener);
 		}
 
 		// configuration changed, re-build the analyze the configuration for errors
@@ -988,6 +998,11 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		
 		clearErrorMarks();
 		
+		if (configManager != null) {
+			ConfigurationProperties props = configManager.getConfigurationProperties();			
+			props.removeListeners(configPropListener);
+		}
+				
 		configManager = null;
 		config = null;
 		library = null;
