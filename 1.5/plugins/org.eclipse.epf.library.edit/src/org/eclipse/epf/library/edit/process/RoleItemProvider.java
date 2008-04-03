@@ -13,13 +13,7 @@ package org.eclipse.epf.library.edit.process;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 
 
 /**
@@ -33,23 +27,6 @@ public class RoleItemProvider extends org.eclipse.epf.uma.provider.RoleItemProvi
 	 */
 	public RoleItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.emf.edit.provider.ItemProviderAdapter#createInitializeCopyCommand(org.eclipse.emf.edit.domain.EditingDomain,
-	 *      org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.edit.command.CopyCommand.Helper)
-	 */
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
 	}
 
 	/*

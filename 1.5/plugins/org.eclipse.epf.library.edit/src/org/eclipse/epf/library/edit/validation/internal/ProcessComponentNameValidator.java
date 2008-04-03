@@ -16,7 +16,6 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.AbstractStringValidator;
-import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.NameChecker;
 import org.eclipse.epf.services.IFileBasedLibraryPersister;
 import org.eclipse.epf.services.Services;

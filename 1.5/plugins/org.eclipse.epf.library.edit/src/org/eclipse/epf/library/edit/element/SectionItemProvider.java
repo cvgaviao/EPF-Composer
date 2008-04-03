@@ -10,14 +10,8 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.element;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.util.TngUtil;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 
 /**
  * The item provider adapter for a section.
@@ -35,15 +29,5 @@ public class SectionItemProvider extends
 
 	public String getText(Object object) {
 		return TngUtil.getLabel(object, getString("_UI_Section_type")); //$NON-NLS-1$
-	}
-
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
 	}
 }

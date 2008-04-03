@@ -23,7 +23,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.Disposable;
 import org.eclipse.emf.edit.provider.ViewerNotification;
@@ -41,8 +40,6 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -238,16 +235,6 @@ public class DomainItemProvider extends
 	 */
 	public Class getInterestedFeatureOwnerClass() {
 		return Domain.class;
-	}
-
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
 	}
 
 	protected Command createAddCommand(EditingDomain domain, EObject owner,

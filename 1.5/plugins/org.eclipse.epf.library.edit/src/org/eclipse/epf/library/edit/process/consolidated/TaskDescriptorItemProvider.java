@@ -26,7 +26,6 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.provider.WrapperItemProvider;
 import org.eclipse.epf.library.edit.IFilter;
-import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider.CompareByName;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.IBreakdownElementWrapperItemProviderFactory;

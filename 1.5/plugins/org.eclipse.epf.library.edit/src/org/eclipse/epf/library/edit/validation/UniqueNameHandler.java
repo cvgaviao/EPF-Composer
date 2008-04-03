@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
 
 

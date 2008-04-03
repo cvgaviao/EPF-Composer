@@ -18,14 +18,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.eclipse.epf.library.edit.util.TngUtil;
-import org.eclipse.epf.uma.Activity;
-import org.eclipse.epf.uma.CustomCategory;
-import org.eclipse.epf.uma.Deliverable;
-import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.VariabilityElement;
-import org.eclipse.epf.uma.VariabilityType;
-import org.eclipse.epf.uma.util.AssociationHelper;
 
 /**
  * This class handles plugin dependency info for circular dependency check

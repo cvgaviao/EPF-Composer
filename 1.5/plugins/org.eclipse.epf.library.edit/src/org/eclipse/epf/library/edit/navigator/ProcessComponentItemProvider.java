@@ -13,20 +13,14 @@ package org.eclipse.epf.library.edit.navigator;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 
 /**
@@ -127,16 +121,6 @@ public class ProcessComponentItemProvider extends
 		TngUtil.refreshParentIfNameChanged(notification, this);
 
 		super.notifyChanged(notification);
-	}
-
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
 	}
 
 }

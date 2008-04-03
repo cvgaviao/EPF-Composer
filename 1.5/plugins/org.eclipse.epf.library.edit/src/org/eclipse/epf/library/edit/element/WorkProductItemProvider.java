@@ -15,12 +15,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -28,8 +25,6 @@ import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Outcome;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 
 /**
@@ -149,16 +144,6 @@ public class WorkProductItemProvider extends
 		} else {
 			return super.getImage(object);
 		}
-	}
-
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
 	}
 
 	/* (non-Javadoc)

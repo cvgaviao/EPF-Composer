@@ -31,9 +31,11 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.IStatefulItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.PluginUIPackagesMap;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.provider.MethodPluginItemProvider;
@@ -255,6 +257,36 @@ public class PluginUIPackagesItemProvider extends ItemProviderAdapter implements
 		} else {
 			return (MethodPluginItemProvider) TngUtil
 				.getAdapter(plugin, MethodPluginItemProvider.class);
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param itemName name of item to find
+	 * @param lib MethodLibrary
+	 * @return the MethodPlugin or PluginUIPackagesItemProvider with the specified name, or null if not found
+	 */
+	public static Object findPluginItemProvider(String itemName, MethodLibrary lib) {
+		ITreeItemContentProvider adapter = (ITreeItemContentProvider)TngAdapterFactory.INSTANCE
+				.getNavigatorView_ComposedAdapterFactory().adapt(lib, ITreeItemContentProvider.class);
+		if (adapter instanceof MethodLibraryItemProvider) {
+			MethodLibraryItemProvider libraryAdapter = (MethodLibraryItemProvider)adapter;
+			List<MethodPlugin> pluginList = lib.getMethodPlugins();
+			for (MethodPlugin plugin : pluginList) {
+				if (itemName.equals(plugin.getName())) {
+					return plugin;
+				}
+				Collection<?> children = libraryAdapter.getChildren(lib);
+				ItemProviderAdapter pluginTreeAdapter = libraryAdapter.getPluginItemProvider(plugin);
+				while (pluginTreeAdapter instanceof PluginUIPackagesItemProvider) {
+					if (itemName.equals(((PluginUIPackagesItemProvider)pluginTreeAdapter).getFullName())) {
+						return pluginTreeAdapter;
+					}
+					children = pluginTreeAdapter.getChildren(pluginTreeAdapter);
+					pluginTreeAdapter = ((PluginUIPackagesItemProvider)pluginTreeAdapter).getPluginItemProvider(plugin);
+				}
+			}
 		}
 		return null;
 	}

@@ -10,13 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.validation;
 
-import org.eclipse.epf.library.edit.IFilter;
-import org.eclipse.epf.uma.Activity;
-import org.eclipse.epf.uma.Artifact;
-import org.eclipse.epf.uma.CustomCategory;
-import org.eclipse.epf.uma.Deliverable;
-import org.eclipse.epf.uma.Domain;
-import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.VariabilityElement;
 
 /**

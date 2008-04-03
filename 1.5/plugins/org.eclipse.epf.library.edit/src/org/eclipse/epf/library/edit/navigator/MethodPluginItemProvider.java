@@ -15,23 +15,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.IStatefulItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.StructuredMethodPluginItemProvider;
-import org.eclipse.epf.library.edit.command.MethodPluginInitializeCopyCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 
 /**
@@ -123,16 +117,6 @@ public class MethodPluginItemProvider extends StructuredMethodPluginItemProvider
 		}
 
 		super.dispose();
-	}
-
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodPluginInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
 	}
 
 	public Object getImage(Object object) {

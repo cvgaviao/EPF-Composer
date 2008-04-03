@@ -13,17 +13,11 @@ package org.eclipse.epf.library.edit.process;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 
 
 /**
@@ -175,14 +169,5 @@ public class ProcessComponentItemProvider extends
 	//
 	// super.dispose();
 	// }
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
-	}
 
 }

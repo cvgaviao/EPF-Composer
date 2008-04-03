@@ -14,7 +14,6 @@ import java.util.Iterator;
 
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
-import org.eclipse.epf.uma.Property;
 import org.eclipse.epf.uma.UmaFactory;
 
 /**

@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
-import org.eclipse.emf.edit.command.CopyCommand.Helper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.Disposable;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
@@ -68,8 +67,6 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
-import org.eclipse.epf.uma.edit.command.MethodElementCreateCopyCommand;
-import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 import org.eclipse.epf.uma.provider.ActivityItemProvider;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -1414,16 +1411,6 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		if ((parent != null) && (parent instanceof Activity)) {
 			TngUtil.moveDown((Activity) parent, obj, getEClasses(), actionMgr);
 		}
-	}
-
-	protected Command createInitializeCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementInitializeCopyCommand(domain, owner, helper);
-	}
-
-	protected Command createCreateCopyCommand(EditingDomain domain,
-			EObject owner, Helper helper) {
-		return new MethodElementCreateCopyCommand(domain, owner, helper);
 	}
 
 	protected Command createAddCommand(EditingDomain domain, EObject owner,

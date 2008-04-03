@@ -19,7 +19,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
-import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
