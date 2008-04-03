@@ -10,13 +10,10 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma.edit.command;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.command.InitializeCopyCommand;
@@ -24,9 +21,7 @@ import org.eclipse.emf.edit.command.CopyCommand.Helper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
-import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -83,26 +78,6 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 		}
 	}
 
-	@Override
-	protected Collection<? extends EAttribute> getAttributesToCopy() {
-		if (domain instanceof TraceableAdapterFactoryEditingDomain) {
-			if (((TraceableAdapterFactoryEditingDomain)domain).isCreateContibuter()) {
-				return getAttributesToCopyForContributors();
-			}
-		}
-		return super.getAttributesToCopy();
-	}
-	
-	private Collection<? extends EAttribute> getAttributesToCopyForContributors() {
-		if (owner instanceof MethodElement) {
-			EList<EAttribute> attributes = new BasicEList<EAttribute>();
-			attributes.add(UmaPackage.Literals.NAMED_ELEMENT__NAME);
-			return attributes;
-		} else {
-			return super.getAttributesToCopy();
-		}
-	}
-	
 	/**
 	 * Iterates over the references of the owner object and sets them
 	 * accordingly in the copy. Includes coping of opposite features.

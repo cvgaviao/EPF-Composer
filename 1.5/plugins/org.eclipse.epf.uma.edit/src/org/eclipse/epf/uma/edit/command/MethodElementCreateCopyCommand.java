@@ -11,16 +11,12 @@
 package org.eclipse.epf.uma.edit.command;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.CreateCopyCommand;
 import org.eclipse.emf.edit.command.CopyCommand.Helper;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
-import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
  * A command that creates an uninitialized copy of a method element. The
@@ -62,24 +58,6 @@ public class MethodElementCreateCopyCommand extends CreateCopyCommand {
 		}
 
 		return collection;
-	}
-	
-	@Override
-	public Collection<?> doGetChildrenToCopy() {
-		Collection<?> children = super.doGetChildrenToCopy();
-		if (domain instanceof TraceableAdapterFactoryEditingDomain &&
-				((TraceableAdapterFactoryEditingDomain)domain).isCreateContibuter()) {
-			for (Iterator<?> iter = children.iterator();iter.hasNext();) {
-				Object child = iter.next();
-				if (child instanceof MethodElement) {
-					if (UmaUtil.getProcessComponent((MethodElement)child) != null ||
-							(child instanceof ProcessPackage && ((ProcessPackage)child).eContainer() instanceof ProcessPackage)) {
-						iter.remove();
-					}
-				}
-			}
-		}
-		return children;
 	}
 
 }

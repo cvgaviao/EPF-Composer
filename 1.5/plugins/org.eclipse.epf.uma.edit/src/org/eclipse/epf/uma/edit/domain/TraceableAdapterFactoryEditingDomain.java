@@ -13,7 +13,6 @@ package org.eclipse.epf.uma.edit.domain;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.CommandStack;
@@ -41,12 +40,6 @@ public class TraceableAdapterFactoryEditingDomain extends
 	private Map originalToClipboardMap = null;
 	
 	private Map<EObject, EObject> clipboardToOriginalMap;
-	
-	// when copy/pasting a plugin, these fields are used by the various copy/add commands for renaming the plugins
-	private List<? extends Object> selectedObjectsToCopy = null;
-	private boolean createContibuter = false;
-	private String newPackageName = null;
-	private String newPluginName = null;
 
 	/**
 	 * Creates a new instance.
@@ -222,37 +215,5 @@ public class TraceableAdapterFactoryEditingDomain extends
 
 	public Map<EObject, EObject> getClipboardToOriginalMap() {
 		return clipboardToOriginalMap;
-	}
-
-	public List<? extends Object> getSelectedObjectsToCopy() {
-		return selectedObjectsToCopy;
-	}
-
-	public void setSelectedObjectsToCopy(List<? extends Object> selectedObjectsToCopy) {
-		this.selectedObjectsToCopy = selectedObjectsToCopy;
-	}
-
-	public String getNewPackageName() {
-		return newPackageName;
-	}
-
-	public void setNewPackageName(String newPackageName) {
-		this.newPackageName = newPackageName;
-	}
-
-	public String getNewPluginName() {
-		return newPluginName;
-	}
-
-	public void setNewPluginName(String newPluginName) {
-		this.newPluginName = newPluginName;
-	}
-
-	public boolean isCreateContibuter() {
-		return createContibuter;
-	}
-
-	public void setCreateContibuter(boolean createContibuter) {
-		this.createContibuter = createContibuter;
 	}
 }
