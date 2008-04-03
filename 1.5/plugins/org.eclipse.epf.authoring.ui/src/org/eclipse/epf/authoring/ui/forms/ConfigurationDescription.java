@@ -199,6 +199,7 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		@Override
 		public void undo() {
 			super.undo();
+			boolean b = configProperties.setNotifyListeners(false);
 			if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS)) {
 				configProperties.setHideErrors(oldValue);
 			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS)) {
@@ -206,6 +207,7 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 			} else if (key.equals(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS)) {
 				configProperties.setHideInfos(oldValue);
 			}
+			configProperties.setNotifyListeners(b);
 		}
 	}
 

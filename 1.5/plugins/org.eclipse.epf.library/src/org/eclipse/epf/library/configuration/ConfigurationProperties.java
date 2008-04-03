@@ -30,7 +30,6 @@ public class ConfigurationProperties {
 	private boolean hideWarnings = false;
 	private boolean hideErrors = false;
 	private boolean hideInfos = false;
-	private boolean dirty = true;
 	private boolean notifyingListeners = true;
 	private List<Listener> listeners = new ArrayList<Listener>();
 	
@@ -49,8 +48,7 @@ public class ConfigurationProperties {
 	public void loadFromConfiguration() {
 		String[] hideProps = getHidePropStrings();
 		
-		boolean oldNotifyingListeners = notifyingListeners;
-		notifyingListeners = false;
+		boolean oldNotifyingListeners = setNotifyListeners(false);
 		for (int i = 0; i < hideProps.length; i++) {
 			MethodElementProperty prop = MethodElementPropertyHelper.getProperty(config, hideProps[i]);
 			String value = prop == null ? Boolean.FALSE.toString() : prop.getValue();
@@ -63,8 +61,7 @@ public class ConfigurationProperties {
 				setHideInfos(b);
 			}
 		}
-		setDirty(false);
-		notifyingListeners = oldNotifyingListeners;
+		setNotifyListeners(oldNotifyingListeners);
 	}
 	
 	public boolean toHide(IConfigurationError error) {
@@ -86,7 +83,7 @@ public class ConfigurationProperties {
 	public void setHideWarnings(boolean hideWarnings) {
 		if (this.hideWarnings != hideWarnings) {
 			this.hideWarnings = hideWarnings;
-			setDirty(true);
+			notifyListeners();
 		}
 	}
 	
@@ -99,7 +96,7 @@ public class ConfigurationProperties {
 	public void setHideErrors(boolean hideErrors) {
 		if (this.hideErrors != hideErrors) {
 			this.hideErrors = hideErrors;
-			setDirty(true);
+			notifyListeners();
 		}
 	}
 
@@ -112,17 +109,6 @@ public class ConfigurationProperties {
 	public void setHideInfos(boolean hideInfos) {
 		if (this.hideInfos != hideInfos) {
 			this.hideInfos = hideInfos;
-			setDirty(true);
-		}
-	}
-
-	public boolean isDirty() {
-		return dirty;
-	}
-
-	private void setDirty(boolean dirty) {
-		this.dirty = dirty;
-		if (dirty) {
 			notifyListeners();
 		}
 	}
@@ -136,7 +122,7 @@ public class ConfigurationProperties {
 	}
 	
 	private void notifyListeners() {
-		if (! notifyingListeners) {
+		if (! getNotifyingListeners()) {
 			return;
 		}
 		for (Listener listener: listeners) {
@@ -149,5 +135,15 @@ public class ConfigurationProperties {
 		}
 	}
 	
+	private boolean getNotifyingListeners() {
+		return notifyingListeners;
+	}
+	
+	//return old value
+	public boolean setNotifyListeners(boolean b) {
+		boolean oldValue = notifyingListeners;
+		notifyingListeners = b;
+		return oldValue;
+	}
 	
 }
