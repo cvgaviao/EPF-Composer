@@ -222,6 +222,7 @@ public class NewPluginMainPage extends BaseWizardPage {
 	 * @see org.eclipse.jface.wizard.WizardPage#isPageComplete()
 	 */
 	public boolean isPageComplete() {
+		setErrorMessage(null);
 		if (LibraryService.getInstance().getCurrentMethodLibrary() == null) {
 			setErrorMessage(LibraryUIResources.noOpenLibraryWarning_msg);
 			return false;
