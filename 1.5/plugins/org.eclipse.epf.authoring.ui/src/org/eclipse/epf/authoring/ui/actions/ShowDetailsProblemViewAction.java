@@ -15,14 +15,13 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.dialogs.ShowDetailsProblemViewDialog;
 import org.eclipse.epf.authoring.ui.util.ConfigurationMarkerHelper;
 import org.eclipse.epf.library.LibraryResources;
-import org.eclipse.epf.library.configuration.closure.ErrorInfo;
 import org.eclipse.epf.persistence.util.UnresolvedProxyMarkerManager;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.views.markers.MarkerViewUtil;
 import org.eclipse.ui.views.markers.internal.ProblemView;
 
 /**
@@ -88,12 +87,18 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 		StringBuffer sb = new StringBuffer();
 		
 		String location = (String) marker.getAttribute(IMarker.LOCATION);
+		String indent = "     ";
+		sb.append("Problem cause\n");
 		
 		//To do: externalize the strings
 		if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_FIND_FILE) {
-			sb.append("The missing file is referred at the location:\n");
-			sb.append(location + "\n\n");
-			sb.append("Quick fix will remove this missing file reference from the shown location.");
+			sb.append(indent + "An xmi file is referring to another file in the library,\n");
+			sb.append(indent + "but the referred to file is missing.\n");		
+			sb.append("\nMissing file\n");
+			sb.append(indent + "The location is shown in the error message descritption.\n");
+			sb.append("\nReferring xmi file\n");
+			sb.append(indent + "Location: " + location + "\n");
+			sb.append("\nQuick fix will remove this missing file reference from the shown location.");
 
 		} else if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_NORMALIZED_URI ||
 				type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_RESOLVING_PROXY) {
@@ -105,33 +110,70 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 			
 			sb.append("Quick fix will remove this unresolved reference from the shown location.");
 		} else if (marker.getType().equals(ConfigurationMarkerHelper.MARKER_ID)) {
-			String messageId = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_MESSAGE_ID);
+			String messageId = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_MESSAGE_ID);			
+			String elementName = (String) marker.getAttribute(MarkerViewUtil.NAME_ATTRIBUTE);
+			String causeName = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_NAME);
+			String elementGuid = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_ERROR_ELEMENT_GUID);
+			String causeGuid = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_GUID);
+			String elementType = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_ERROR_ELEMENT_TYPE);
+			String causeType = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_TYPE);									
+			String causeLocation = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_LOCATION);
+			
+			sb.append(indent + "A method element is referring to another method element.\n");
+			sb.append(indent + "The referring method element is in the configuration, \n");
+			sb.append(indent + "but the referred to method element is not.\n");
+
+			sb.append("\nReferring method element\n");
+			sb.append(indent + "type: " + elementType + "\n"); 
+			sb.append(indent + "name, location: " + location + "\n");
+			sb.append(indent + "guid: " + elementGuid + "\n");
+			
+			sb.append("\nRefered to method element\n");
+			sb.append(indent + "type: " + causeType + "\n"); 
+			sb.append(indent + "name, location: " + causeLocation + "\n");
+			sb.append(indent + "guid: " + causeGuid + "\n");	
+
+			String elementRole = null;
+			String causeRole = null;
 			
 			if (messageId == LibraryResources.ElementError_contributor_missing_base) {
-				
+				elementRole = "Varibility contributor";
+				causeRole = "Varibility base";
 			} else if (messageId == LibraryResources.ElementError_extender_missing_base) {
-				
+				elementRole = "Varibility extender";
+				causeRole = "Varibility base";
 			} else if (messageId == LibraryResources.ElementError_replacer_missing_base) {
-				
+				elementRole = "Varibility replacer";
+				causeRole = "Varibility base";
 			} else if (messageId == LibraryResources.ElementError_missing_primary_performer) {
-				
+				elementRole = "Task";
+				causeRole = "Primary performer";
 			} else if (messageId == LibraryResources.ElementError_missing_mandatory_input) {
-				
+				elementRole = "Task";
+				causeRole = "Mandatory input work product";
 			} else if (messageId == LibraryResources.ElementError_missing_output) {
-				
+				elementRole = "Task";
+				causeRole = "Output work product";
 			} else if (messageId == LibraryResources.ElementError_missing_responsible_for_workProduct) {
-				
+				elementRole = "Role";
+				causeRole = "Respossible for work product";
 			} else if (messageId == LibraryResources.ElementError_missing_element) {
 				
 			}
 			
-						
+			if (elementRole != null && causeRole != null) {
+				sb.append("\nRelationship\n");
+				sb.append(indent + "Referring method element: " + elementRole + "\n"); 
+				sb.append(indent + "Referred to method element: " + causeRole + "\n"); 
+			}
 		}
-		
+
 		return sb.toString();
 	}
 	
-	
+	private String s(String str) {
+		return str == null ? "" : str;//$NON-NLS-1$
+	}
 	
 	/**
 	 * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction, org.eclipse.jface.viewers.ISelection)
