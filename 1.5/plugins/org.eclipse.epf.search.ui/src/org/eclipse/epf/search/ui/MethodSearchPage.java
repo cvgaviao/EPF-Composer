@@ -19,9 +19,11 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.search.ui.internal.IMethodSearchInputExtension;
 import org.eclipse.epf.search.ui.internal.IMethodSearchInputFactory;
+import org.eclipse.epf.search.ui.internal.IMethodSearchScopeGroup;
+import org.eclipse.epf.search.ui.internal.IMethodSearchScopeGroupFactory;
 import org.eclipse.epf.search.ui.internal.MethodSearchInput;
 import org.eclipse.epf.search.ui.internal.MethodSearchQuery;
 import org.eclipse.epf.search.ui.internal.MethodSearchScope;
@@ -88,7 +90,7 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(2, false);
-		layout.horizontalSpacing = 10;
+		layout.horizontalSpacing = 5;
 		composite.setLayout(layout);
 		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -138,20 +140,36 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 
 		collectContributedSearchInputs(composite);
 		
-		Group searchScopeGroup = new Group(composite, SWT.NONE);
-		searchScopeGroup.setLayout(new GridLayout(1, false));
-		GridData searchScopeGroupGridData = new GridData(GridData.FILL_BOTH);
-		searchScopeGroupGridData.heightHint = 200;
-		searchScopeGroup.setLayoutData(searchScopeGroupGridData);
-		searchScopeGroup.setText(SearchUIResources.scopeGroup_text); 
-
-		searchScopeViewer = new MethodSearchScopeViewer(searchScopeGroup,
-				SWT.NONE);
+		searchScopeViewer = createSearchScopeGroup(composite).getSearchScopeViewer();
 
 		container.setPerformActionEnabled(getSearchButtonEnabled());
 
 		setControl(composite);
 		Dialog.applyDialogFont(composite);
+	}
+	
+	private IMethodSearchScopeGroup createSearchScopeGroup(Composite parent) {
+		Object ext = ExtensionManager.getExtension(SearchUIPlugin.getDefault().getId(), "searchScopeGroupFactory"); //$NON-NLS-1$
+		if(ext instanceof IMethodSearchScopeGroupFactory) {
+			IMethodSearchScopeGroup group = ((IMethodSearchScopeGroupFactory) ext).createSearchScopeGroup(parent);
+			if(group != null) {
+				return group;
+			}
+		}
+		Group searchScopeGroup = new Group(parent, SWT.NONE);
+		searchScopeGroup.setLayout(new GridLayout(1, false));
+		GridData searchScopeGroupGridData = new GridData(GridData.FILL_BOTH);
+		searchScopeGroupGridData.heightHint = 200;
+		searchScopeGroup.setLayoutData(searchScopeGroupGridData);
+		searchScopeGroup.setText(SearchUIResources.scopeGroup_text); 
+		final MethodSearchScopeViewer viewer = new MethodSearchScopeViewer(searchScopeGroup, SWT.BORDER);
+		return new IMethodSearchScopeGroup() {
+
+			public MethodSearchScopeViewer getSearchScopeViewer() {
+				return viewer;
+			}
+			
+		};
 	}
 
 	private static List<IMethodSearchInputFactory> getSearchInputFactories() {

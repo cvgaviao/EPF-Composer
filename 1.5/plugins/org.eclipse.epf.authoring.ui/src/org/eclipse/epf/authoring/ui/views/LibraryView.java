@@ -95,11 +95,14 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.edit.FeatureValueWrapperItemProvider;
+import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.INamedFilter;
 import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.navigator.MethodLibraryItemProvider;
 import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -573,6 +576,16 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 			UIActionDispatcher.getInstance().setSelection(emptySelection);
 
 			getViewer().setInput(model);
+			
+			if(adapterFactory instanceof ConfigurableComposedAdapterFactory) {
+				IFilter filter = ((ConfigurableComposedAdapterFactory) adapterFactory).getFilter();
+				if(filter instanceof INamedFilter) {
+					String name = ((INamedFilter) filter).getName();
+					if(name != null) {
+						setContentDescription(name);
+					}
+				}
+			}
 			updateLastRefreshTimestamp();
 		} else {
 			AuthoringUIPlugin

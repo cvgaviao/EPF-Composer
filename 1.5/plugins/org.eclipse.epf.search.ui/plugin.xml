@@ -3,6 +3,7 @@
 <plugin>
    <extension-point id="operation" name="Method Search Operation" schema="schema/operation.exsd"/>
    <extension-point id="searchInputFactories" name="Method Search Input Factories" schema="schema/searchInputFactories.exsd"/>
+   <extension-point id="searchScopeGroupFactory" name="Search Scope Group Factory" schema="schema/searchScopeGroupFactory.exsd"/>
    
    <extension point="org.eclipse.search.searchPages">
       <page id="org.eclipse.epf.search.ui.MethodSearchPage"

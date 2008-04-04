@@ -82,7 +82,7 @@ public class MethodSearchScope {
 
 	public static final String DELIVERY_PROCESS = LibraryUIText.TEXT_DELIVERY_PROCESS;
 
-	private static Map<EClass, String> elementSearchScope = new HashMap<EClass, String>();
+	public static final Map<EClass, String> elementSearchScope = new HashMap<EClass, String>();
 	
 	private static final Map<String, Collection<EClass>> scopeToEClassesMap = new HashMap<String, Collection<EClass>>();
 
@@ -165,11 +165,13 @@ public class MethodSearchScope {
 		scopeToEClassesMap.put(DELIVERY_PROCESS, Collections.singleton(UmaPackage.eINSTANCE.getDeliveryProcess()));
 
 	}
+	
+	public static final MethodSearchScope INCLUDE_ALL_SEARCH_SCOPE = new MethodSearchScope(scopeToEClassesMap.keySet().toArray());
 
 	private List<Object> searchScope = new ArrayList<Object>();
 
 	private ArrayList<EClass> selectedTypes;
-
+	
 	/**
 	 * Creates a new instance.
 	 */
