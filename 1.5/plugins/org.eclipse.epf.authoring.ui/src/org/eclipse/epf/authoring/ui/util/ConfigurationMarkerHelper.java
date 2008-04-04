@@ -52,9 +52,9 @@ public class ConfigurationMarkerHelper {
 	public static final String ATTR_ERROR_ELEMENT_GUID = "elementGuid"; //$NON-NLS-1$
 	public static final String ATTR_CAUSE_ELEMENT_GUID = "causeGuid"; //$NON-NLS-1$
 	public static final String ATTR_ERROR_ELEMENT_TYPE = "elementType"; //$NON-NLS-1$
-	public static final String ATTR_CAUSE_ELEMENT_TYPE = "cuaseType"; //$NON-NLS-1$
-	public static final String ATTR_CAUSE_ELEMENT_NAME = "cuaseName"; //$NON-NLS-1$
-	public static final String ATTR_CAUSE_ELEMENT_LOCATION = "cuaseLocation"; //$NON-NLS-1$
+	public static final String ATTR_CAUSE_ELEMENT_TYPE = "causeType"; //$NON-NLS-1$
+	public static final String ATTR_CAUSE_ELEMENT_NAME = "causeName"; //$NON-NLS-1$
+	public static final String ATTR_CAUSE_ELEMENT_LOCATION = "causeLocation"; //$NON-NLS-1$
 
 	// marker ID
 	public static final String MARKER_ID = "org.eclipse.epf.authoring.ui.configuration"; //$NON-NLS-1$

@@ -95,20 +95,26 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 			sb.append(indent + "An xmi file is referring to another file in the library,\n");
 			sb.append(indent + "but the referred to file is missing.\n");		
 			sb.append("\nMissing file\n");
-			sb.append(indent + "The location is shown in the error message descritption.\n");
+			sb.append(indent + "The location is shown in the error message description.\n");
 			sb.append("\nReferring xmi file\n");
 			sb.append(indent + "Location: " + location + "\n");
-			sb.append("\nQuick fix will remove this missing file reference from the shown location.");
+			sb.append("\nQuick fix\n");
+			sb.append(indent + "Will remove the missing file reference from referring xmi file.");
 
 		} else if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_NORMALIZED_URI ||
 				type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_RESOLVING_PROXY) {
-			sb.append("The method element represented by the reference: \n");
-			sb.append(marker.getAttribute(UnresolvedProxyMarkerManager.PROXY_URI) + " \n");
-			sb.append("can not be resovled.\n\n");
-			sb.append("It is referred at the location:\n");
-			sb.append(location + "\n\n");
+			sb.append(indent + "An xmi file is referring to a method element represented by a proxy URI,\n");
+			sb.append(indent + "but the referred to method element cannot be found by resolving the proxy URI.\n");
+
+			sb.append("\nReferring xmi file\n"); 
+			sb.append(indent + "Location: " + location + "\n");
 			
-			sb.append("Quick fix will remove this unresolved reference from the shown location.");
+			sb.append("\nReferred to method element\n"); 
+			sb.append(indent + "Proxy URI: " + marker.getAttribute(UnresolvedProxyMarkerManager.PROXY_URI) + " \n");			
+			
+			sb.append("\nQuick fix\n");
+			sb.append(indent + "Will remove the referred to method element reference from referring xmi file.");
+			
 		} else if (marker.getType().equals(ConfigurationMarkerHelper.MARKER_ID)) {
 			String messageId = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_MESSAGE_ID);			
 			String elementName = (String) marker.getAttribute(MarkerViewUtil.NAME_ATTRIBUTE);
@@ -137,14 +143,14 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 			String causeRole = null;
 			
 			if (messageId == LibraryResources.ElementError_contributor_missing_base) {
-				elementRole = "Varibility contributor";
-				causeRole = "Varibility base";
+				elementRole = "Variability contributor";
+				causeRole = "Variability base";
 			} else if (messageId == LibraryResources.ElementError_extender_missing_base) {
-				elementRole = "Varibility extender";
-				causeRole = "Varibility base";
+				elementRole = "Variability extender";
+				causeRole = "Variability base";
 			} else if (messageId == LibraryResources.ElementError_replacer_missing_base) {
-				elementRole = "Varibility replacer";
-				causeRole = "Varibility base";
+				elementRole = "Variability replacer";
+				causeRole = "Variability base";
 			} else if (messageId == LibraryResources.ElementError_missing_primary_performer) {
 				elementRole = "Task";
 				causeRole = "Primary performer";
@@ -166,6 +172,10 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 				sb.append(indent + "Referring method element: " + elementRole + "\n"); 
 				sb.append(indent + "Referred to method element: " + causeRole + "\n"); 
 			}
+			
+			sb.append("\nQuick fix\n");
+			sb.append(indent + "Will add the referred to method element inclduing its containing package to the configuration.");
+
 		}
 
 		return sb.toString();
