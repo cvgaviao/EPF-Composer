@@ -69,6 +69,7 @@ import org.eclipse.osgi.util.NLS;
 public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxyResolutionListener {
 
 	private static final long DELAY = 0;
+	private static final boolean ignoreMarkerStartEndAtts = true;
 	
 	public static final String MARKER_ID = PersistencePlugin.getDefault().getId() + ".unresolvedProxyMarker"; //$NON-NLS-1$
 	public static final String PROXY_URI = "proxyURI"; //$NON-NLS-1$
@@ -330,10 +331,18 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		IFile file = workspace.getRoot().getFileForLocation(path);
 		if (file != null) {
 			String location = containerURI != null ? containerURI
-					.toFileString() : ""; //$NON-NLS-1$
+					.toFileString() : ""; //$NON-NLS-1$					
 			
 			try {
 				file.refreshLocal(IResource.DEPTH_ZERO, null);
+				
+				if (ignoreMarkerStartEndAtts) {
+					createMarker(re, proxyURI,
+							errMsg, ownerGUID, file,
+							location, proxyURI.toString(), 0,
+							0);
+					return;
+				}
 				
 				// locate the text of unresolved URI in file
 				//
@@ -359,21 +368,10 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 									// create problem marker for file
 									IMarker marker = findMarker(file, proxyURIStr, start, end);
 									if(marker == null) {
-										marker = file.createMarker(MARKER_ID);
-										marker.setAttribute(IMarker.SEVERITY,
-												IMarker.SEVERITY_ERROR);
-										marker.setAttribute(IMarker.MESSAGE, errMsg);
-										marker.setAttribute(IMarker.LOCATION, location);
-										marker.setAttribute(IMarker.TRANSIENT, true);
-										marker.setAttribute(IMarker.CHAR_START, start);	
-										marker.setAttribute(IMarker.CHAR_END, end);
-										marker.setAttribute(PROXY_URI, proxyURIStr);
-										marker.setAttribute(OWNER_GUID, ownerGUID);
-										marker.setAttribute(MARKER_DETAIL_TYPE, getMarkerDetailType(re));
-
-										// cache marker to it can be found easily and deleted
-										//
-										cacheMarker(marker, proxyURI);
+										marker = createMarker(re, proxyURI,
+												errMsg, ownerGUID, file,
+												location, proxyURIStr, start,
+												end);
 									}
 									else {
 										// update owner GUID
@@ -396,6 +394,28 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 				}
 			}
 		}
+	}
+
+	private IMarker createMarker(ResolveException re, URI proxyURI,
+			String errMsg, String ownerGUID, IFile file, String location,
+			String proxyURIStr, int start, int end) throws CoreException {
+		IMarker marker;
+		marker = file.createMarker(MARKER_ID);
+		marker.setAttribute(IMarker.SEVERITY,
+				IMarker.SEVERITY_ERROR);
+		marker.setAttribute(IMarker.MESSAGE, errMsg);
+		marker.setAttribute(IMarker.LOCATION, location);
+		marker.setAttribute(IMarker.TRANSIENT, true);
+		marker.setAttribute(IMarker.CHAR_START, start);	
+		marker.setAttribute(IMarker.CHAR_END, end);
+		marker.setAttribute(PROXY_URI, proxyURIStr);
+		marker.setAttribute(OWNER_GUID, ownerGUID);
+		marker.setAttribute(MARKER_DETAIL_TYPE, getMarkerDetailType(re));
+
+		// cache marker to it can be found easily and deleted
+		//
+		cacheMarker(marker, proxyURI);
+		return marker;
 	}
 	
 	private String getMarkerDetailType(ResolveException re) {
