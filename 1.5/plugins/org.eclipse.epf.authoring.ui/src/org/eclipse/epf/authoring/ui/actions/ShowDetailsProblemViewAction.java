@@ -15,7 +15,11 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.dialogs.ShowDetailsProblemViewDialog;
 import org.eclipse.epf.authoring.ui.util.ConfigurationMarkerHelper;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.persistence.util.PersistenceResources;
 import org.eclipse.epf.persistence.util.UnresolvedProxyMarkerManager;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -86,12 +90,15 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 	private String getDialogTextString(IMarker marker, String type) throws Exception {
 		StringBuffer sb = new StringBuffer();
 		
+		String typeStr = null;
 		String location = (String) marker.getAttribute(IMarker.LOCATION);
 		String indent = "     ";
-		sb.append("Problem cause\n");
+		sb.append("Problem cause\n");		
 		
 		//To do: externalize the strings
-		if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_FIND_FILE) {
+		if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_FIND_FILE) {			
+			typeStr = "java.io.FileNotFoundException        ";
+			
 			sb.append(indent + "An xmi file is referring to another file in the library,\n");
 			sb.append(indent + "but the referred to file is missing.\n");		
 			sb.append("\nMissing file\n");
@@ -99,22 +106,37 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 			sb.append("\nReferring xmi file\n");
 			sb.append(indent + "Location: " + location + "\n");
 			sb.append("\nQuick fix\n");
-			sb.append(indent + "Will remove the missing file reference from referring xmi file.");
+			sb.append(indent + "Will remove the missing file reference from referring xmi file.\n");
 
 		} else if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_NORMALIZED_URI ||
 				type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_RESOLVING_PROXY) {
-			sb.append(indent + "An xmi file is referring to a method element represented by a proxy URI,\n");
-			sb.append(indent + "but the referred to method element cannot be found by resolving the proxy URI.\n");
 
-			sb.append("\nReferring xmi file\n"); 
+			typeStr = 
+				type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_NORMALIZED_URI ? 
+						PersistenceResources.normalizeURIError_msg
+					: PersistenceResources.UnresolvedProxyMarkerManager_couldNotResolveProxy;
+			
+			String ownerGUID = (String) marker.getAttribute(UnresolvedProxyMarkerManager.OWNER_GUID);
+			MethodElement  element = LibraryService.getInstance().getCurrentLibraryManager().getMethodElement(ownerGUID);
+
+			sb.append(indent + "A method element is referring to another method element represented by a object URI,\n");
+			sb.append(indent + "but the referred to method element cannot be found by resolving the object URI.\n");
+
+			if (element != null) {
+				sb.append("\nReferring methor element\n"); 
+				sb.append(indent + "type: " + element.getType().getName() + "\n"); 
+				sb.append(indent + "name, location: " + TngUtil.getLabelWithPath(element) + "\n");
+			}
+						
+			sb.append("\nReferred to method element\n"); 
+			sb.append(indent + "Object URI: " + marker.getAttribute(UnresolvedProxyMarkerManager.PROXY_URI) + " \n");			
+			
+			sb.append("\nThe file where the referred to element is referred\n"); 
 			sb.append(indent + "Location: " + location + "\n");
 			
-			sb.append("\nReferred to method element\n"); 
-			sb.append(indent + "Proxy URI: " + marker.getAttribute(UnresolvedProxyMarkerManager.PROXY_URI) + " \n");			
-			
 			sb.append("\nQuick fix\n");
-			sb.append(indent + "Will remove the referred to method element reference from referring xmi file.");
-			
+			sb.append(indent + "Will remove the unresolved object URI from the referring method element.\n");
+					
 		} else if (marker.getType().equals(ConfigurationMarkerHelper.MARKER_ID)) {
 			String messageId = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_MESSAGE_ID);			
 			String elementName = (String) marker.getAttribute(MarkerViewUtil.NAME_ATTRIBUTE);
@@ -175,9 +197,17 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 			
 			sb.append("\nQuick fix\n");
 			sb.append(indent + "Will add the referred to method element inclduing its containing package to the configuration.");
-
+			
 		}
-
+		
+		if (typeStr != null) {
+			int ix = typeStr.length() - 8;
+			typeStr = typeStr.substring(0, ix);
+			sb.append("\nFind Similar Problems\n");
+			sb.append(indent + "Will find all problems of the type '" + typeStr + "'\n");
+			sb.append(indent + "and allow quick fix to fix them all at one time.");
+		}
+		
 		return sb.toString();
 	}
 	
