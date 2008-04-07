@@ -3,10 +3,10 @@
 <schema targetNamespace="org.eclipse.epf.authoring.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.epf.authoring.ui" id="EditorPageProvider" name="Editor Page Provider"/>
+         <meta.schema plugin="org.eclipse.epf.authoring.ui" id="MethodElementEditorPageProvider" name="Method Element Editor Page Provider"/>
       </appInfo>
       <documentation>
-         This extension point enables a plug-in to register one or more pages in authoring editor. Though this page will only be added for method element type &quot;custom category&quot;.
+         This extension point enables a plug-in to add, remove, or replace one or more pages in the authoring editor.
       </documentation>
    </annotation>
 
@@ -51,20 +51,13 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="name" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.epf.authoring.ui.providers.IMethodElementEditorPageProviderExtension"/>
                </appInfo>
             </annotation>
          </attribute>

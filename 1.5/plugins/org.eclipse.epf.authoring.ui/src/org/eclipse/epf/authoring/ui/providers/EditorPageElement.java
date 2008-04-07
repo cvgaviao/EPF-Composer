@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.providers;
 
-import org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart;
 import org.osgi.framework.Bundle;
 
 
@@ -70,10 +69,10 @@ public class EditorPageElement {
 	 * 
 	 * @return The page contributor class.
 	 */
-	public IExtensionEditorPart getContributorClass() throws Exception {
+	public IMethodElementEditorPageProviderExtension getContributorClass() throws Exception {
 		
 		Class clazz = bundle.loadClass(contributorClass);
-		return (IExtensionEditorPart)clazz.newInstance();	
+		return (IMethodElementEditorPageProviderExtension)clazz.newInstance();	
 	}
 
 }

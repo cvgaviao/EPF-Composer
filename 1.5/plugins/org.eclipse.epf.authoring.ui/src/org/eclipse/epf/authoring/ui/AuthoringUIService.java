@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.epf.authoring.gef.util.DiagramEditorUtil;
 import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.providers.DescriptionPageColumnProvider;
-import org.eclipse.epf.authoring.ui.providers.MethodEditorPageProvider;
 import org.eclipse.epf.common.ui.PreferenceStoreWrapper;
 import org.eclipse.epf.diagram.model.util.GraphicalDataManager;
 import org.eclipse.epf.library.ILibraryServiceListener;
@@ -116,7 +115,6 @@ public class AuthoringUIService {
 			EditorChooser.getInstance();
 
 			// Load EditorPage Providers
-			MethodEditorPageProvider.getInstance().loadProviders();
 			DescriptionPageColumnProvider.getInstance().loadProviders();
 
 			// Set providers for library edit.

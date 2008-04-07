@@ -17,6 +17,7 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,12 +54,11 @@ import org.eclipse.epf.authoring.ui.actions.IWorkbenchPartAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryValidateAction;
 import org.eclipse.epf.authoring.ui.dnd.EditingDomainTableTreeViewerDropAdapter;
 import org.eclipse.epf.authoring.ui.forms.DeliveryProcessDescription;
-import org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart;
 import org.eclipse.epf.authoring.ui.forms.ProcessBreakdownStructureFormPage;
 import org.eclipse.epf.authoring.ui.forms.ProcessDescription;
 import org.eclipse.epf.authoring.ui.preferences.ApplicationPreferenceConstants;
 import org.eclipse.epf.authoring.ui.properties.EPFPropertySheetPage;
-import org.eclipse.epf.authoring.ui.providers.MethodEditorPageProvider;
+import org.eclipse.epf.authoring.ui.providers.IMethodElementEditorPageProviderExtension;
 import org.eclipse.epf.authoring.ui.views.ProcessViewer;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeEventWrapper;
@@ -1219,45 +1219,53 @@ public class ProcessEditor extends MethodElementEditor implements
 			createContextMenuFor(viewer);
 			pages.add(procTab);
 
+			
+			// TODO: properly implement extension point
+			// this extension point is supposed to let extensions modify the 
+			// list of pages.  But this editor is so messy that we can't
+			// just put the pages in a map to be passed to extensions
+			// (like in the MethodElementEditor).
+			
 			// check for extenstion point and add the page if there
-			List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
-					.getMethodPageProviders();
-
+			Map<Object,String> pageMap = new LinkedHashMap<Object,String>();
+			List<IMethodElementEditorPageProviderExtension> pageProviders = getAllPageProviders();
 			if (pageProviders != null && pageProviders.size() > 0) {
-				extensionTabs = new ArrayList<ProcessBreakdownStructureFormPage>();
-				int i = 0;
-				for (IExtensionEditorPart extension : pageProviders) {
-					if (extension.isValid(selectedProcess)) {
-						Object contribution = extension.getContribution(this, selectedProcess);
-						int index = -1;
-						if (contribution instanceof Control) {
-							index = addPage((Control)contribution);
-						} else if (contribution instanceof IFormPage) {
-							if (contribution instanceof ProcessBreakdownStructureFormPage) {
-								ProcessBreakdownStructureFormPage extendedPage = (ProcessBreakdownStructureFormPage) contribution;
-								extensionTabs.add(extendedPage);
-								index = addPage(extendedPage
-										.createControl(getContainer()));
-								setPageText(index, extendedPage.getTitle());
-								extendedPage.setTabIndex(index);
-								viewer = (StructuredViewer) extendedPage
-										.getViewer();
-								createContextMenuFor(viewer);
-
-								pages.add(extendedPage);
-							}
-						} else if (contribution instanceof IEditorPart) {
-							index = addPage((IEditorPart)contribution, getEditorInput());
-						}
-						if (extension.getPartName() != null) {
-							setPageText(index, extension.getPartName());
-						}
-						
-						
-					}
+				for (IMethodElementEditorPageProviderExtension extension : pageProviders) {
+					pageMap = extension.getPages(pageMap, this, selectedProcess);
 				}
 			}
 
+			if (!pageMap.isEmpty()) {
+				extensionTabs = new ArrayList<ProcessBreakdownStructureFormPage>();
+				for (Map.Entry<Object, String> pageEntry : pageMap.entrySet()) {
+					Object page = pageEntry.getKey();
+					String name = pageEntry.getValue();
+					int index = -1;
+					if (page instanceof Control) {
+						index = addPage((Control)page);
+					} else if (page instanceof IFormPage) {
+						if (page instanceof ProcessBreakdownStructureFormPage) {
+							ProcessBreakdownStructureFormPage extendedPage = (ProcessBreakdownStructureFormPage) page;
+							extensionTabs.add(extendedPage);
+							index = addPage(extendedPage
+									.createControl(getContainer()));
+							setPageText(index, extendedPage.getTitle());
+							extendedPage.setTabIndex(index);
+							viewer = (StructuredViewer) extendedPage
+									.getViewer();
+							createContextMenuFor(viewer);
+	
+							pages.add(extendedPage);
+						}
+					} else if (page instanceof IEditorPart) {
+						index = addPage((IEditorPart)page, getEditorInput());
+					}
+					if (name != null) {
+						setPageText(index, name);
+					}
+				}
+			}
+			
 			bsPages = new ProcessBreakdownStructureFormPage[pages.size()];
 			for (int i = 0; i < pages.size(); i++) {
 				bsPages[i] = (ProcessBreakdownStructureFormPage) pages.get(i);

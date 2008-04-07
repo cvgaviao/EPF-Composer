@@ -22,6 +22,7 @@ import java.util.EventObject;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,47 +58,10 @@ import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.actions.LibraryValidateAction;
-import org.eclipse.epf.authoring.ui.forms.ChecklistItemsPage;
-import org.eclipse.epf.authoring.ui.forms.ContentElementGuidancePage;
-import org.eclipse.epf.authoring.ui.forms.ContentPackageDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.CustomCategoryAssignPage;
-import org.eclipse.epf.authoring.ui.forms.CustomCategoryDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.DisciplineDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.DisciplineGroupingDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.DisciplineGroupingDisciplinesPage;
-import org.eclipse.epf.authoring.ui.forms.DisciplineReferenceWorkflowPage;
-import org.eclipse.epf.authoring.ui.forms.DisciplineTasksPage;
-import org.eclipse.epf.authoring.ui.forms.DomainDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.DomainWorkProductsPage;
-import org.eclipse.epf.authoring.ui.forms.GuidanceDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.GuidanceWithAttachmentsDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.IExtensionEditorPart;
 import org.eclipse.epf.authoring.ui.forms.IRefreshable;
-import org.eclipse.epf.authoring.ui.forms.MethodLibraryDescriptionFormPage;
-import org.eclipse.epf.authoring.ui.forms.MethodPluginDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.PracticeDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.PracticeReferencesPage;
-import org.eclipse.epf.authoring.ui.forms.RoleCategoriesPage;
-import org.eclipse.epf.authoring.ui.forms.RoleDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.RoleSetDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.RoleSetGroupingDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.RoleSetGroupingRoleSets;
-import org.eclipse.epf.authoring.ui.forms.RoleSetRolesPage;
-import org.eclipse.epf.authoring.ui.forms.RoleWorkProductsPage;
-import org.eclipse.epf.authoring.ui.forms.TaskCategoriesPage;
-import org.eclipse.epf.authoring.ui.forms.TaskDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.TaskRolesPage;
-import org.eclipse.epf.authoring.ui.forms.TaskStepsPage;
-import org.eclipse.epf.authoring.ui.forms.TaskWorkProductsPage;
-import org.eclipse.epf.authoring.ui.forms.ToolDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.ToolToolMentorsPage;
-import org.eclipse.epf.authoring.ui.forms.WorkProductCategoriesPage;
-import org.eclipse.epf.authoring.ui.forms.WorkProductDeliverablePartsPage;
-import org.eclipse.epf.authoring.ui.forms.WorkProductDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.WorkProductTypeDescriptionPage;
-import org.eclipse.epf.authoring.ui.forms.WorkProductTypeWorkProductsPage;
 import org.eclipse.epf.authoring.ui.internal.MethodElementEditorErrorTickUpdater;
-import org.eclipse.epf.authoring.ui.providers.MethodEditorPageProvider;
+import org.eclipse.epf.authoring.ui.providers.IMethodElementEditorPageProviderExtension;
+import org.eclipse.epf.authoring.ui.providers.MethodElementEditorDefaultPageProvider;
 import org.eclipse.epf.authoring.ui.providers.MethodElementLabelDecorator;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.util.LibraryValidationMarkerHelper;
@@ -116,6 +80,7 @@ import org.eclipse.epf.library.edit.command.FullyRevertibleCommandStack;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -132,26 +97,11 @@ import org.eclipse.epf.richtext.IRichText;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.services.ILibraryPersister.FailSafeMethodLibraryPersister;
-import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.ContentPackage;
-import org.eclipse.epf.uma.CustomCategory;
-import org.eclipse.epf.uma.Deliverable;
-import org.eclipse.epf.uma.Discipline;
-import org.eclipse.epf.uma.DisciplineGrouping;
-import org.eclipse.epf.uma.Domain;
-import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.Practice;
-import org.eclipse.epf.uma.Role;
-import org.eclipse.epf.uma.RoleSet;
-import org.eclipse.epf.uma.RoleSetGrouping;
-import org.eclipse.epf.uma.Task;
-import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.WorkProduct;
-import org.eclipse.epf.uma.WorkProductType;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -272,6 +222,13 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 	
 	protected MethodElementEditorErrorTickUpdater fMethodElementEditorErrorTickUpdater = null;
 	
+	/**
+	 * Extension name
+	 */
+	public static final String METHOD_PAGE_PROVIDERS_EXTENSION_NAME = "MethodElementEditorPageProvider"; //$NON-NLS-1$
+	protected static List<IMethodElementEditorPageProviderExtension> allPageProviders;
+	protected static IMethodElementEditorPageProviderExtension defaultPageProvider;
+
 	/**
 	 * Listens for workspace changes.
 	 */
@@ -990,80 +947,51 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		setPartName(partName);
 	}
 
+	protected static List<IMethodElementEditorPageProviderExtension> getAllPageProviders() {
+		if (allPageProviders == null) {
+			allPageProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), METHOD_PAGE_PROVIDERS_EXTENSION_NAME, IMethodElementEditorPageProviderExtension.class);
+		}
+		return allPageProviders;
+	}
+
+
+	protected IMethodElementEditorPageProviderExtension getDefaultPageProvider() {
+		if (defaultPageProvider == null) {
+			defaultPageProvider = new MethodElementEditorDefaultPageProvider();
+		}
+		return defaultPageProvider;
+	}
+
 	/**
 	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
 	 */
 	protected void addPages() {
+		// first get original list
+		Map<Object,String> pageMap = getDefaultPageProvider().getPages(new LinkedHashMap<Object,String>(), this, elementObj);
+		
+		// let extensions modify
+		List<IMethodElementEditorPageProviderExtension> pageProviders = getAllPageProviders();
+		if (pageProviders != null && pageProviders.size() > 0) {
+			for (IMethodElementEditorPageProviderExtension extension : pageProviders) {
+				pageMap = extension.getPages(pageMap, this, elementObj);
+			}
+		}
+		// now add pages
 		try {
-			if (elementObj instanceof MethodLibrary) {
-				addPage(new MethodLibraryDescriptionFormPage(this));
-			} else if (elementObj instanceof MethodPlugin) {
-				addPage(new MethodPluginDescriptionPage(this));
-			} else if (elementObj instanceof ContentPackage) {
-				addPage(new ContentPackageDescriptionPage(this));
-			} else if (elementObj instanceof Role) {
-				addPage(new RoleDescriptionPage(this));
-				addPage(new RoleWorkProductsPage(this));
-				addPage(new ContentElementGuidancePage(this));
-				addPage(new RoleCategoriesPage(this));
-			} else if (elementObj instanceof Task) {
-				addPage(new TaskDescriptionPage(this));
-				addPage(new TaskStepsPage(this));
-				addPage(new TaskRolesPage(this));
-				addPage(new TaskWorkProductsPage(this));
-				addPage(new ContentElementGuidancePage(this));
-				addPage(new TaskCategoriesPage(this));
-			} else if (elementObj instanceof WorkProduct) {
-				addPage(new WorkProductDescriptionPage(this));
-				if (elementObj instanceof Deliverable) {
-					addPage(new WorkProductDeliverablePartsPage(this));
+			for (Map.Entry<Object, String> pageEntry : pageMap.entrySet()) {
+				Object page = pageEntry.getKey();
+				String name = pageEntry.getValue();
+				int index = -1;
+				if (page instanceof Control) {
+					index = addPage((Control)page);
+				} else if (page instanceof IFormPage) {
+					index = addPage((IFormPage)page);
+				} else if (page instanceof IEditorPart) {
+					index = addPage((IEditorPart)page, getEditorInput());
 				}
-				addPage(new ContentElementGuidancePage(this));
-				addPage(new WorkProductCategoriesPage(this));
-			} else if (elementObj instanceof Guidance) {
-				if (TngUtil.isAllowedAttachments(elementObj)) {
-					addPage(new GuidanceWithAttachmentsDescriptionPage(this));
-				} else if (elementObj instanceof Practice) {
-					addPage(new PracticeDescriptionPage(this));
-					addPage(new PracticeReferencesPage(this));
-				} else if (elementObj instanceof Checklist) {
-					addPage(new GuidanceDescriptionPage(this));
-					addPage(new ChecklistItemsPage(this));
-				} else {
-					addPage(new GuidanceDescriptionPage(this));
+				if (name != null) {
+					setPageText(index, name);
 				}
-				if (!(elementObj instanceof Practice))
-					addPage(new ContentElementGuidancePage(this));
-			} else if (elementObj instanceof Discipline) {
-				addPage(new DisciplineDescriptionPage(this));
-				addPage(new DisciplineTasksPage(this));
-				addPage(new DisciplineReferenceWorkflowPage(this));
-				addPage(new ContentElementGuidancePage(this));
-			} else if (elementObj instanceof DisciplineGrouping) {
-				addPage(new DisciplineGroupingDescriptionPage(this));
-				addPage(new DisciplineGroupingDisciplinesPage(this));
-			} else if (elementObj instanceof Domain) {
-				addPage(new DomainDescriptionPage(this));
-				addPage(new DomainWorkProductsPage(this));
-				addPage(new ContentElementGuidancePage(this));
-			} else if (elementObj instanceof WorkProductType) {
-				addPage(new WorkProductTypeDescriptionPage(this));
-				addPage(new WorkProductTypeWorkProductsPage(this));
-				addPage(new ContentElementGuidancePage(this));
-			} else if (elementObj instanceof RoleSet) {
-				addPage(new RoleSetDescriptionPage(this));
-				addPage(new RoleSetRolesPage(this));
-				addPage(new ContentElementGuidancePage(this));
-			} else if (elementObj instanceof RoleSetGrouping) {
-				addPage(new RoleSetGroupingDescriptionPage(this));
-				addPage(new RoleSetGroupingRoleSets(this));
-			} else if (elementObj instanceof Tool) {
-				addPage(new ToolDescriptionPage(this));
-				addPage(new ToolToolMentorsPage(this));
-				addPage(new ContentElementGuidancePage(this));
-			} else if (elementObj instanceof CustomCategory) {
-				addPage(new CustomCategoryDescriptionPage(this));
-				addPage(new CustomCategoryAssignPage(this));
 			}
 
 			setPartName(elementObj.getName());
@@ -1071,28 +999,6 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 			if (!(elementObj instanceof ContentPackage || elementObj instanceof MethodPlugin))
 				createPreviewPage();
 
-			// check for extenstion point and add the page if there
-			List<IExtensionEditorPart> pageProviders = MethodEditorPageProvider.getInstance()
-					.getMethodPageProviders();
-
-			if (pageProviders != null && pageProviders.size() > 0) {
-				for (IExtensionEditorPart extension : pageProviders) {
-					if (extension.isValid(elementObj)) {
-						Object contribution = extension.getContribution(this, elementObj);
-						int index = -1;
-						if (contribution instanceof Control) {
-							index = addPage((Control)contribution);
-						} else if (contribution instanceof IFormPage) {
-							index = addPage((IFormPage)contribution);
-						} else if (contribution instanceof IEditorPart) {
-							index = addPage((IEditorPart)contribution, getEditorInput());
-						}
-						if (extension.getPartName() != null) {
-							setPageText(index, extension.getPartName());
-						}
-					}
-				}
-			}
 		
 		} catch (Throwable t) {
 			AuthoringUIPlugin.getDefault().getLogger().logError(t);

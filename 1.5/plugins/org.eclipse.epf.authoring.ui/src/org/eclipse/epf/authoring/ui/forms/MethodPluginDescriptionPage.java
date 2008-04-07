@@ -89,26 +89,86 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
  */
 public class MethodPluginDescriptionPage extends DescriptionFormPage implements IRefreshable {
 
-	private static final String FORM_PREFIX = LibraryUIText.TEXT_METHOD_PLUGIN
+	protected static final String FORM_PREFIX = LibraryUIText.TEXT_METHOD_PLUGIN
 			+ ": "; //$NON-NLS-1$
 
-	private Text ctrl_r_brief_desc;
+	protected Text ctrl_r_brief_desc;
 
-	private CheckboxTableViewer ctrl_refModel;
+	protected CheckboxTableViewer ctrl_refModel;
 
-	private Section refModelSection;
+	protected Section refModelSection;
 
-	private Composite refModelComposite;
+	protected Composite refModelComposite;
 
-	private MethodPlugin plugin;
+	protected MethodPlugin plugin;
 
-	private Button ctrl_changeable;
+	protected Button ctrl_changeable;
 
 	public boolean notificationEnabled = true;
 
 	protected Adapter userChangeableAdapter;
 
-	private ModifyListener nameModifyListener;
+	protected ModifyListener nameModifyListener;
+	
+	protected ISelectionChangedListener refModelSelChangedListener = new ISelectionChangedListener() {
+		public void selectionChanged(SelectionChangedEvent event) {
+			StructuredSelection selectedList = (StructuredSelection) event
+					.getSelection();
+			MethodPlugin selectedObj = (MethodPlugin) selectedList
+					.getFirstElement();
+			if (selectedObj == null)
+				return;
+			ctrl_r_brief_desc.setText(selectedObj
+					.getBriefDescription());
+		}
+	};
+	
+	protected ICheckStateListener refModelCheckStateListener = new ICheckStateListener() {
+		public void checkStateChanged(CheckStateChangedEvent event) {
+			Object obj = event.getElement();
+
+			ctrl_r_brief_desc.setText(((MethodPlugin) obj)
+					.getBriefDescription());
+
+			if (TngUtil.isLocked(plugin)) {
+				ctrl_refModel.setChecked(obj, !event.getChecked());
+				return;
+			}
+
+			if (event.getChecked()) {
+				// TODO: Change this to be not un-doable due to the circular
+				// dependency check.
+				actionMgr.doAction(IActionManager.ADD, plugin,
+						UmaPackage.eINSTANCE.getMethodPlugin_Bases(),
+						(MethodPlugin) obj, -1);
+			} else {
+				final MethodPlugin base = (MethodPlugin) obj;
+				
+				if(removeAllReferences(base)){
+					ctrl_refModel.setChecked(base, false);
+				}else{
+					Display.getCurrent().asyncExec(new Runnable() {
+						public void run() {
+							ctrl_refModel.setChecked(base, true);
+						}
+					});
+					return;
+				}
+				// change this to be not un-doable due to the circular
+				// dependency check
+				// plugin.getBases().remove(obj);
+				actionMgr.doAction(IActionManager.REMOVE, plugin,
+						UmaPackage.eINSTANCE.getMethodPlugin_Bases(),
+						(MethodPlugin) obj, -1);
+			}
+
+			// double check circular dependency, not necessary here
+			PluginReferenceChecker.hasCircularConflictWithPlugin(plugin);
+
+			updateChangeDate();
+		}
+
+	};
 
 	/**
 	 * Creates a new instance.
@@ -141,7 +201,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	 */
 	protected void createEditorContent(FormToolkit toolkit) {
 		super.createEditorContent(toolkit);
-		createReferenceContent(toolkit);
+		createReferenceSection(toolkit);
 		// Set focus on the Name text control.
 		Display display = form.getBody().getDisplay();
 		if (!(display == null || display.isDisposed())) {
@@ -155,23 +215,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		}
 	}
 
-	private void createReferenceContent(FormToolkit toolkit) {
-		// Ref Model Section
-		refModelSection = toolkit.createSection(sectionComposite,
-				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
-						| Section.TITLE_BAR);
-		GridData td1 = new GridData(GridData.FILL_BOTH);
-		refModelSection.setLayoutData(td1);
-		refModelSection
-				.setText(AuthoringUIText.REFERENCED_PLUGINS_SECTION_NAME);
-		refModelSection
-				.setDescription(AuthoringUIText.REFERENCED_PLUGINS_SECTION_DESC);
-		refModelSection.setLayout(new GridLayout());
-
-		refModelComposite = toolkit.createComposite(refModelSection);
-		refModelComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		refModelComposite.setLayout(new GridLayout(2, false));
-		refModelSection.setClient(refModelComposite);
+	protected void createReferenceContent(FormToolkit toolkit) {
 
 		Table ctrl_table = toolkit.createTable(refModelComposite, SWT.CHECK);
 		{
@@ -190,11 +234,17 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		};
 		ctrl_refModel.setLabelProvider(labelProvider);
 
+		createRefModelBriefDescField(toolkit);
+
+		toolkit.paintBordersFor(refModelComposite);
+	}
+
+	protected void createRefModelBriefDescField(FormToolkit toolkit) {
 		Label l_r_brief_desc = toolkit.createLabel(refModelComposite,
 				AuthoringUIText.BRIEF_DESCRIPTION_TEXT);
 		{
 			GridData gridData = new GridData(GridData.BEGINNING);
-			gridData.horizontalSpan = 3;
+			gridData.horizontalSpan = 2;
 			l_r_brief_desc.setLayoutData(gridData);
 		}
 
@@ -204,13 +254,32 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 			GridData gridData = new GridData(GridData.FILL_HORIZONTAL
 					| GridData.GRAB_HORIZONTAL);
 			gridData.heightHint = 80;
+			gridData.horizontalSpan = 2;
 			ctrl_r_brief_desc.setLayoutData(gridData);
 		}
-
-		toolkit.paintBordersFor(refModelComposite);
 	}
 
-	private void setCheckboxForCurrentBase(List<MethodPlugin> currentBaseList) {
+	protected void createReferenceSection(FormToolkit toolkit) {
+		// Ref Model Section
+		refModelSection = toolkit.createSection(sectionComposite,
+				Section.DESCRIPTION | Section.TWISTIE | Section.EXPANDED
+						| Section.TITLE_BAR);
+		GridData td1 = new GridData(GridData.FILL_BOTH);
+		refModelSection.setLayoutData(td1);
+		refModelSection
+				.setText(AuthoringUIText.REFERENCED_PLUGINS_SECTION_NAME);
+		refModelSection
+				.setDescription(AuthoringUIText.REFERENCED_PLUGINS_SECTION_DESC);
+		refModelSection.setLayout(new GridLayout());
+
+		refModelComposite = toolkit.createComposite(refModelSection);
+		refModelComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		refModelComposite.setLayout(new GridLayout(2, false));
+		refModelSection.setClient(refModelComposite);
+		createReferenceContent(toolkit);
+	}
+
+	protected void setCheckboxForCurrentBase(List<MethodPlugin> currentBaseList) {
 		ctrl_refModel.setAllChecked(false);
 		for (int i = 0; i < currentBaseList.size(); i++) {
 			MethodPlugin model = (MethodPlugin) currentBaseList.get(i);
@@ -229,17 +298,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 
 		form.addListener(SWT.Activate, new Listener() {
 			public void handleEvent(Event e) {
-				// Clear the old items and add the newly allowable items.
-				ctrl_refModel.getTable().clearAll();
-				ctrl_refModel.refresh();
-
-				List allowableList = PluginReferenceChecker
-						.getApplicableBasePlugins(plugin);
-				Collections.<Object>sort(allowableList, Comparators.PLUGINPACKAGE_COMPARATOR);
-				ctrl_refModel.add(allowableList.toArray());
-
-				List<MethodPlugin> currentBaseList = plugin.getBases();
-				setCheckboxForCurrentBase(currentBaseList);
+				refreshReferencedModels();
 
 				if (!plugin.getUserChangeable().booleanValue()) {
 					refresh(false);
@@ -369,67 +428,14 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		});
 
 
-		ctrl_refModel
-				.addSelectionChangedListener(new ISelectionChangedListener() {
-					public void selectionChanged(SelectionChangedEvent event) {
-						StructuredSelection selectedList = (StructuredSelection) event
-								.getSelection();
-						MethodPlugin selectedObj = (MethodPlugin) selectedList
-								.getFirstElement();
-						if (selectedObj == null)
-							return;
-						ctrl_r_brief_desc.setText(selectedObj
-								.getBriefDescription());
-					}
 
-				});
+		addReferencedModelListener();
+	}
 
-		ctrl_refModel.addCheckStateListener(new ICheckStateListener() {
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				Object obj = event.getElement();
+	protected void addReferencedModelListener() {
+		ctrl_refModel.addSelectionChangedListener(refModelSelChangedListener);
 
-				ctrl_r_brief_desc.setText(((MethodPlugin) obj)
-						.getBriefDescription());
-
-				if (TngUtil.isLocked(plugin)) {
-					ctrl_refModel.setChecked(obj, !event.getChecked());
-					return;
-				}
-
-				if (event.getChecked()) {
-					// TODO: Change this to be not un-doable due to the circular
-					// dependency check.
-					actionMgr.doAction(IActionManager.ADD, plugin,
-							UmaPackage.eINSTANCE.getMethodPlugin_Bases(),
-							(MethodPlugin) obj, -1);
-				} else {
-					final MethodPlugin base = (MethodPlugin) obj;
-					
-					if(removeAllReferences(base)){
-						ctrl_refModel.setChecked(base, false);
-					}else{
-						Display.getCurrent().asyncExec(new Runnable() {
-							public void run() {
-								ctrl_refModel.setChecked(base, true);
-							}
-						});
-						return;
-					}
-					// change this to be not un-doable due to the circular
-					// dependency check
-					// plugin.getBases().remove(obj);
-					actionMgr.doAction(IActionManager.REMOVE, plugin,
-							UmaPackage.eINSTANCE.getMethodPlugin_Bases(),
-							(MethodPlugin) obj, -1);
-				}
-
-				// double check circular dependency, not necessary here
-				PluginReferenceChecker.hasCircularConflictWithPlugin(plugin);
-
-				updateChangeDate();
-			}
-
-		});
+		ctrl_refModel.addCheckStateListener(refModelCheckStateListener);
 	}
 
 	@Override
@@ -552,7 +558,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	 * @param plugins
 	 * @return
 	 */
-	private static boolean isOneOrBaseOf(MethodPlugin base, Collection<MethodPlugin> plugins) {
+	protected static boolean isOneOrBaseOf(MethodPlugin base, Collection<MethodPlugin> plugins) {
 		for (MethodPlugin plugin : plugins) {
 			if(base == plugin || Misc.isBaseOf(base, plugin)) {
 				return true;
@@ -561,7 +567,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		return false;
 	}
 
-	private boolean removeAllReferences(MethodPlugin unCheckedPlugin) {
+	protected boolean removeAllReferences(MethodPlugin unCheckedPlugin) {
 		ArrayList<MethodPlugin> removedBases = new ArrayList<MethodPlugin>();
 		removedBases.add(unCheckedPlugin);
 		for (Iterator<MethodPlugin> iter = new AbstractTreeIterator<MethodPlugin>(unCheckedPlugin, false) {
@@ -654,6 +660,20 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	@Override
 	protected Object getContentElement() {
 		return plugin;
+	}
+
+	protected void refreshReferencedModels() {
+		// Clear the old items and add the newly allowable items.
+		ctrl_refModel.getTable().clearAll();
+		ctrl_refModel.refresh();
+
+		List allowableList = PluginReferenceChecker
+				.getApplicableBasePlugins(plugin);
+		Collections.<Object>sort(allowableList, Comparators.PLUGINPACKAGE_COMPARATOR);
+		ctrl_refModel.add(allowableList.toArray());
+
+		List<MethodPlugin> currentBaseList = plugin.getBases();
+		setCheckboxForCurrentBase(currentBaseList);
 	}
 
 }

@@ -28,7 +28,7 @@
    <extension-point id="methodRichText" name="Method Rich Text Extension" schema="schema/methodRichText.exsd"/>
    <extension-point id="methodRichTextEditor" name="Method Rich Text Editor Extension" schema="schema/methodRichTextEditor.exsd"/>
    <extension-point id="contentProviderFactories" name="Content Provider Factories" schema="schema/contentProviderFactories.exsd"/>
-   <extension-point id="MethodEditorPageProvider" name="Method Editor Page Provider" schema="schema/MethodEditorPageProvider.exsd"/>
+   <extension-point id="MethodElementEditorPageProvider" name="Method Element Editor Page Provider" schema="schema/MethodElementEditorPageProvider.exsd"/>
 
    <extension point="org.eclipse.ui.perspectives">
       <perspective

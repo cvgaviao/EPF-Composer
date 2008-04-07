@@ -37,8 +37,8 @@ public final class ExtensionManager {
 	private static List<INestedCommandProvider> nestedCommandProviders;
 	private static List oppositeFeatureLoaders;
 	
-	public static List getExtensions(String namespace, String extensionPointName, Class type) {
-		List list = new ArrayList();
+	public static <T>List<T> getExtensions(String namespace, String extensionPointName, Class<T> type) {
+		List<T> list = new ArrayList<T>();
 		try {
 			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 			IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(namespace, extensionPointName);
@@ -57,7 +57,7 @@ public final class ExtensionManager {
 							if(className != null) {
 								Object ext = bundle.loadClass(className).newInstance();
 								if(type.isInstance(ext)) {
-									list.add(ext);
+									list.add((T)ext);
 								}
 							}
 						} catch (Exception e) {
