@@ -27,11 +27,14 @@ public class ConfigurationViewFilter extends ConfigurationFilter {
 				case Notification.ADD_MANY:
 				case Notification.REMOVE:
 				case Notification.REMOVE_MANY:
-					viewer.refresh();
+					refreshViewer();
 				}
 			}
 		});
-
+	}
+	
+	public void refreshViewer() {
+		viewer.refresh();
 	}
 	
 }

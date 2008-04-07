@@ -34,6 +34,7 @@ import org.eclipse.epf.authoring.ui.actions.LibraryViewCopyAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewFindElementAction;
 import org.eclipse.epf.authoring.ui.dnd.LibraryViewerDragAdapter;
 import org.eclipse.epf.authoring.ui.providers.ConfigurationLabelProvider;
+import org.eclipse.epf.authoring.ui.providers.IContentProviderFactory;
 import org.eclipse.epf.common.ui.util.ClipboardUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ILibraryManager;
@@ -103,6 +104,8 @@ public class ConfigurationView extends AbstractBaseView implements
 	private TreeViewer treeViewer;
 
 	private IDoubleClickListener doubleClickListener;
+
+	private IFilter configFilter;
 
 	/**
 	 * Creates a new instance.
@@ -311,6 +314,15 @@ public class ConfigurationView extends AbstractBaseView implements
 		UIActionDispatcher.getInstance().setSelection(emptySelection);
 	}
 	
+	private IFilter createFilter(MethodConfiguration config) {
+		IContentProviderFactory cpFactory = getContentProviderFactory();
+		IFilter filter = null;
+		if(cpFactory != null) {
+			filter = cpFactory.createFilter(config, treeViewer);
+		}
+		return filter != null ? filter : new ConfigurationViewFilter(config, treeViewer);
+	}
+	
 	/**
 	 * Sets the given Method Configuration as this viewer's input
 	 * 
@@ -328,7 +340,7 @@ public class ConfigurationView extends AbstractBaseView implements
 
 		if (config != null) {
 			this.configName = config.getName();
-			IFilter configFilter = new ConfigurationViewFilter(config, treeViewer);
+			configFilter = createFilter(config);
 			adapterFactory = TngAdapterFactory.INSTANCE
 					.getConfigurationView_AdapterFactory(configFilter);
 			editingDomain.setAdapterFactory(adapterFactory);
@@ -617,6 +629,15 @@ public class ConfigurationView extends AbstractBaseView implements
 			setMethodConfiguration((MethodConfiguration) model);
 		} else {
 			reset();
+		}
+	}
+	
+	public void refresh() {
+		if(configFilter instanceof ConfigurationViewFilter) {
+			((ConfigurationViewFilter)configFilter).refreshViewer();
+		}
+		else {
+			getViewer().refresh();
 		}
 	}
 

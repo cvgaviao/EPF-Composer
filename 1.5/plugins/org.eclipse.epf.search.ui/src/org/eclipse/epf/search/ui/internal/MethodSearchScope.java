@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
@@ -247,5 +248,10 @@ public class MethodSearchScope {
 			}
 		}
 		return selectedTypes;
+	}
+	
+	public static String getTypeText(String typeName) {
+		EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(typeName);
+		return elementSearchScope.get(cls);
 	}
 }

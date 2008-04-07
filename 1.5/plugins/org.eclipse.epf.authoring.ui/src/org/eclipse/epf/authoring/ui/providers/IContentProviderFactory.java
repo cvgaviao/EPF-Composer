@@ -11,7 +11,10 @@
 package org.eclipse.epf.authoring.ui.providers;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IViewPart;
 
 /**
@@ -21,4 +24,5 @@ import org.eclipse.ui.IViewPart;
  */
 public interface IContentProviderFactory {
 	IContentProvider createProvider(AdapterFactory adapterFactory, IViewPart view);
+	IFilter createFilter(MethodConfiguration config, Viewer viewer);
 }

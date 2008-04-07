@@ -283,7 +283,7 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 				getConfigurationView_ComposedAdapterFactory(), filter);
 	}
 
-	private static class FilterItemProvider implements Adapter,
+	protected static class FilterItemProvider implements Adapter,
 			IStructuredItemContentProvider, ITreeItemContentProvider,
 			IItemLabelProvider, IItemPropertySource {
 		private static final HashSet<Class<?>> CLASSES_EXCLUDED_FROM_SORTING = new HashSet<Class<?>>();
@@ -543,7 +543,7 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 
 	}
 
-	private static class FilterAdapterFactory implements AdapterFactory,
+	protected static class FilterAdapterFactory implements AdapterFactory,
 			IChangeNotifier, IDisposable {
 
 		private ComposedAdapterFactory adapterFactory;

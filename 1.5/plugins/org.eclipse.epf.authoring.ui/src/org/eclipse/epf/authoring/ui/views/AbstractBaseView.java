@@ -154,6 +154,8 @@ public abstract class AbstractBaseView extends SaveableLibraryViewPart
 		}
 	};
 
+	private IContentProviderFactory contentProviderFactory;
+
 	/**
 	 * Displays a dialog that asks if conflicting changes should be discarded.
 	 */
@@ -471,51 +473,65 @@ public abstract class AbstractBaseView extends SaveableLibraryViewPart
 		}
 	}
 
-	protected final AdapterFactoryContentProvider createContentProviderFromExtension() {
-		// Process the contributors.
-		//
-		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(AuthoringUIPlugin.getDefault().getId(), "contentProviderFactories"); //$NON-NLS-1$
-		if (extensionPoint != null) {
-			IExtension[] extensions = extensionPoint.getExtensions();
-			Object ext = null;
-			for (int i = 0; i < extensions.length; i++) {
-				IExtension extension = extensions[i];
-				String pluginId = extension.getNamespaceIdentifier();
-				Bundle bundle = Platform.getBundle(pluginId);
-				IConfigurationElement[] configElements = extension
-						.getConfigurationElements();
-				for (int j = 0; j < configElements.length; j++) {
-					IConfigurationElement configElement = configElements[j];
-					try {
-						String viewId = configElement.getAttribute("view"); //$NON-NLS-1$
-						if(getViewId().equals(viewId)) {
-							String className = configElement.getAttribute("class"); //$NON-NLS-1$
-							if(className != null) {
-								ext = bundle.loadClass(className).newInstance();
-								if(ext instanceof IContentProviderFactory) {
-									IContentProvider cp = ((IContentProviderFactory)ext).createProvider(adapterFactory, this);
-									if(cp instanceof AdapterFactoryContentProvider) {
-										return (AdapterFactoryContentProvider) cp;
+	protected IContentProviderFactory getContentProviderFactory() {
+		if(contentProviderFactory == null) {
+			// Process the contributors.
+			//
+			IExtensionRegistry extensionRegistry = Platform
+					.getExtensionRegistry();
+			IExtensionPoint extensionPoint = extensionRegistry
+					.getExtensionPoint(AuthoringUIPlugin.getDefault().getId(),
+							"contentProviderFactories"); //$NON-NLS-1$
+			if (extensionPoint != null) {
+				IExtension[] extensions = extensionPoint.getExtensions();
+				Object ext = null;
+				ext_walk:
+				for (int i = 0; i < extensions.length; i++) {
+					IExtension extension = extensions[i];
+					String pluginId = extension.getNamespaceIdentifier();
+					Bundle bundle = Platform.getBundle(pluginId);
+					IConfigurationElement[] configElements = extension
+							.getConfigurationElements();
+					for (int j = 0; j < configElements.length; j++) {
+						IConfigurationElement configElement = configElements[j];
+						try {
+							String viewId = configElement.getAttribute("view"); //$NON-NLS-1$
+							if (getViewId().equals(viewId)) {
+								String className = configElement
+										.getAttribute("class"); //$NON-NLS-1$
+								if (className != null) {
+									ext = bundle.loadClass(className)
+											.newInstance();
+									if (ext instanceof IContentProviderFactory) {
+										contentProviderFactory = (IContentProviderFactory) ext;
+										break ext_walk;
 									}
 								}
 							}
+						} catch (Exception e) {
+							AuthoringUIPlugin.getDefault().getLogger()
+									.logError(e);
 						}
-					} catch (Exception e) {
-						AuthoringUIPlugin.getDefault().getLogger().logError(e);
 					}
 				}
 			}
 		}
 		
-		return null;
+		return contentProviderFactory;		
 	}
 
 	/**
 	 * @return a new AdapterFactoryContentProvider
 	 */
 	protected AdapterFactoryContentProvider createContentProvider() {
-		AdapterFactoryContentProvider cp = createContentProviderFromExtension();		
+		IContentProviderFactory factory = getContentProviderFactory();		
+		AdapterFactoryContentProvider cp = null;
+		if(factory != null) {
+			IContentProvider contentProvider = factory.createProvider(adapterFactory, this);
+			if(contentProvider instanceof AdapterFactoryContentProvider) {
+				cp = (AdapterFactoryContentProvider) contentProvider;
+			}
+		}
 		return cp != null ? cp : new AdapterFactoryContentProvider(adapterFactory);
 	}
 
