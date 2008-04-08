@@ -61,7 +61,7 @@ public class ShowDetailsProblemViewDialog extends Dialog {
 		
 		GridData spec = new GridData(GridData.FILL_BOTH);
 		
-		Text text = SWTUtil.createEditableText(composite, 400, 240, 2);
+		Text text = SWTUtil.createEditableText(composite, 400, 400, 2);
 		text.setText(textString);
 		text.setEditable(false);
 		text.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
