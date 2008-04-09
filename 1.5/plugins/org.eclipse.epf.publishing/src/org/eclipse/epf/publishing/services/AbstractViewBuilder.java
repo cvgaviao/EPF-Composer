@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.common.utils.FileUtil;
-import org.eclipse.epf.common.utils.Timer;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.Bookmark;
@@ -29,14 +28,14 @@ import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.util.IconUtil;
-import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.publishing.PublishingPlugin;
 import org.eclipse.epf.publishing.PublishingResources;
-import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.osgi.util.NLS;
 
@@ -306,6 +305,13 @@ public abstract class AbstractViewBuilder {
 
 		if (obj instanceof DescribableElement) {
 			URI uri = ((DescribableElement) obj).getNodeicon();
+			
+			VariabilityElement uriInheritingBase = null;
+			if (uri == null && config != null && obj instanceof VariabilityElement) {
+				VariabilityElement[] uriInheritingBases = new VariabilityElement[1];
+				uri = getInheritingUri((DescribableElement) obj, uri, uriInheritingBases);
+				uriInheritingBase = uriInheritingBases[0];
+			}
 
 			String elementName = ((DescribableElement) obj).getType().getName()
 					.toLowerCase();
@@ -334,7 +340,7 @@ public abstract class AbstractViewBuilder {
 					// is relative to plugin path.
 					iconFile = new File(
 							TngUtil.getFullPathofNodeorShapeIconURI(
-									(EObject) obj, uri));
+									uriInheritingBase == null ? (EObject) obj : uriInheritingBase, uri));
 				}
 			}
 		}
@@ -393,6 +399,24 @@ public abstract class AbstractViewBuilder {
 		}
 
 		return iconName;
+	}
+
+	private URI getInheritingUri(DescribableElement obj, URI uri,
+			VariabilityElement[] uriInheritingBases) {
+		VariabilityElement ve = (VariabilityElement) obj;
+		VariabilityElement base = ve.getVariabilityBasedOnElement();
+		if (base != null
+				&& (ve.getVariabilityType() == VariabilityType.EXTENDS || ve
+						.getVariabilityType() == VariabilityType.EXTENDS_REPLACES)) {
+			base = (VariabilityElement) ConfigurationHelper.getCalculatedElement(base, config);
+			if (base != null) {
+				uri = ((DescribableElement) base).getNodeicon();
+				if (uri != null) {
+					uriInheritingBases[0] = base;
+				}
+			}
+		}
+		return uri;
 	}
 
 	/**
