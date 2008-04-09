@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.export.ExportPlugin;
 import org.eclipse.epf.export.ExportResources;
@@ -35,8 +36,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -71,6 +75,10 @@ public class SelectPluginPage extends BaseWizardPage implements
 	private Collection<MethodPlugin> checkedPluginList = new ArrayList<MethodPlugin>();
 
 	private PluginExportData data;
+	
+	private Button selectAllButton;
+	
+	private Button deselectAllButton;
 
 	/**
 	 * Creates a new instance.
@@ -91,8 +99,17 @@ public class SelectPluginPage extends BaseWizardPage implements
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new GridLayout());
 
-		createLabel(container,
+		Composite container1 = new Composite(container, SWT.NONE);
+		container1.setLayout(new GridLayout(3, false));
+		createLabel(container1,
 				ExportResources.selectPluginsPage_pluginsLabel_text);
+
+		selectAllButton = createButton(
+				container1,
+				AuthoringUIResources.AuthoringUIPlugin_SaveAllEditorsPage_SelectAllButtonLabel);
+		deselectAllButton = createButton(
+				container1,
+				AuthoringUIResources.AuthoringUIPlugin_SaveAllEditorsPage_DeselectAllButtonLabel);
 
 		ctrl_chkboxTableViewer = createCheckboxTableViewer(container, 1);
 		table = ctrl_chkboxTableViewer.getTable();
@@ -144,6 +161,44 @@ public class SelectPluginPage extends BaseWizardPage implements
 	private void addListeners() {
 		ctrl_chkboxTableViewer.addSelectionChangedListener(this);
 		ctrl_chkboxTableViewer.addCheckStateListener(this);
+		
+		final MethodLibrary lib = LibraryService.getInstance()
+						.getCurrentMethodLibrary();
+		selectAllButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				ctrl_chkboxTableViewer.setAllChecked(true);
+				if (lib != null) {
+					checkedPluginList.addAll(lib.getMethodPlugins());
+					checkedCount = checkedPluginList.size();
+				}
+				
+				setPageComplete(isPageComplete());
+				getWizard().getContainer().updateButtons();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+		});
+
+		deselectAllButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				ctrl_chkboxTableViewer.setAllChecked(false);
+				if (lib != null) {
+					checkedPluginList.clear();
+					checkedCount = 0;
+				}
+				
+				setPageComplete(isPageComplete());
+				getWizard().getContainer().updateButtons();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+		});
 	}
 
 	/**
