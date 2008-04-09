@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -2295,5 +2296,27 @@ public class ConfigurationHelper {
 				getBaseProcesses((Activity)o, config, value);
 			}
 		}
+	}
+	
+	public static URI getInheritingUri(DescribableElement obj, URI uri,
+			VariabilityElement[] uriInheritingBases, MethodConfiguration config, int uriType) {
+		VariabilityElement ve = (VariabilityElement) obj;
+		VariabilityElement base = ve.getVariabilityBasedOnElement();
+		if (base != null
+				&& (ve.getVariabilityType() == VariabilityType.EXTENDS || ve
+						.getVariabilityType() == VariabilityType.EXTENDS_REPLACES)) {
+			base = (VariabilityElement) ConfigurationHelper.getCalculatedElement(base, config);
+			if (base != null) {
+				if (uriType == 0) {
+					uri = ((DescribableElement) base).getNodeicon();
+				} else if (uriType == 1) {
+					uri = ((DescribableElement) base).getShapeicon();
+				}
+				if (uri != null) {
+					uriInheritingBases[0] = base;
+				}
+			}
+		}
+		return uri;
 	}
 }

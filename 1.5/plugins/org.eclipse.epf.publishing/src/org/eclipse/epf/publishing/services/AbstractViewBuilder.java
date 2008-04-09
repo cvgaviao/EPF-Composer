@@ -35,7 +35,6 @@ import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.VariabilityElement;
-import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.osgi.util.NLS;
 
@@ -44,6 +43,7 @@ import org.eclipse.osgi.util.NLS;
  * 
  * @author Jinhua Xi
  * @author Kelvin Low
+ * @author Weiping Lu
  * @since 1.0
  */
 public abstract class AbstractViewBuilder {
@@ -309,7 +309,7 @@ public abstract class AbstractViewBuilder {
 			VariabilityElement uriInheritingBase = null;
 			if (uri == null && config != null && obj instanceof VariabilityElement) {
 				VariabilityElement[] uriInheritingBases = new VariabilityElement[1];
-				uri = getInheritingUri((DescribableElement) obj, uri, uriInheritingBases);
+				uri = ConfigurationHelper.getInheritingUri((DescribableElement) obj, uri, uriInheritingBases, config, 0);
 				uriInheritingBase = uriInheritingBases[0];
 			}
 
@@ -399,24 +399,6 @@ public abstract class AbstractViewBuilder {
 		}
 
 		return iconName;
-	}
-
-	private URI getInheritingUri(DescribableElement obj, URI uri,
-			VariabilityElement[] uriInheritingBases) {
-		VariabilityElement ve = (VariabilityElement) obj;
-		VariabilityElement base = ve.getVariabilityBasedOnElement();
-		if (base != null
-				&& (ve.getVariabilityType() == VariabilityType.EXTENDS || ve
-						.getVariabilityType() == VariabilityType.EXTENDS_REPLACES)) {
-			base = (VariabilityElement) ConfigurationHelper.getCalculatedElement(base, config);
-			if (base != null) {
-				uri = ((DescribableElement) base).getNodeicon();
-				if (uri != null) {
-					uriInheritingBases[0] = base;
-				}
-			}
-		}
-		return uri;
 	}
 
 	/**

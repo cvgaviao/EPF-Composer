@@ -66,6 +66,7 @@ import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.Whitepaper;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkProduct;
@@ -935,11 +936,21 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		String imageUrl;
 		
 		// String imageFile;
+		VariabilityElement uriInheritingBase = null;
 		if (element instanceof DescribableElement) {
 			uri = ((DescribableElement) element).getShapeicon();
-		}
 
-		ILibraryResourceManager resMgr = ResourceHelper.getResourceMgr(element);
+			if (uri == null && element instanceof VariabilityElement) {
+				VariabilityElement[] uriInheritingBases = new VariabilityElement[1];
+				uri = ConfigurationHelper.getInheritingUri(
+						(DescribableElement) element, uri, uriInheritingBases,
+						getLayoutMgr().getConfiguration(), 1);
+				uriInheritingBase = uriInheritingBases[0];
+			}
+		}
+		MethodElement element1 = uriInheritingBase == null ? element : uriInheritingBase;
+
+		ILibraryResourceManager resMgr = ResourceHelper.getResourceMgr(element1);
 
 		if (uri == null || resMgr == null ) {
 			imageUrl = getDefaultShapeiconUrl();
@@ -953,7 +964,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		
 			// From EPF 1.2, shapeIcon/nodeIcon stores uri relative to plugin path. 
 			// Below section of code is necessary to append plugin name to shapeIcon/nodeIcon uri.
-			MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+			MethodPlugin plugin = UmaUtil.getMethodPlugin(element1);
 			if(plugin != null){
 				if(!imageUrl.startsWith(plugin.getName()) ){
 //					String pluginPath = ResourceHelper.getPluginPath(element);
@@ -967,7 +978,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			if ( resMgr != null ) {
 				// need decoded URL for file ops
 				String decodedImageUrl = NetUtil.decodedFileUrl(imageUrl);
-				File source = new File(resMgr.resolve(element, decodedImageUrl));
+				File source = new File(resMgr.resolve(element1, decodedImageUrl));
 				File dest = new File(getLayoutMgr().getPublishDir(), decodedImageUrl);
 				FileUtil.copyFile(source, dest);
 			}
