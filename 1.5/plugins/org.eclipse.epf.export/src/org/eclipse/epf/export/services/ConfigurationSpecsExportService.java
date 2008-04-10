@@ -95,13 +95,15 @@ public class ConfigurationSpecsExportService extends BaseExportService {
 			MethodConfiguration config = (MethodConfiguration) it.next();
 			String guid = config.getGuid();
 			String uri = document.getResourceUri(guid);
+			String srcUri = null;
 			if (uri == null) {
 				URI resUri = config.eResource().getURI();
+				srcUri = resUri.toFileString();
 				uri = MultiFileSaveUtil.METHOD_CONFIGURATION_FOLDER_NAME + File.separator + resUri.lastSegment();
 				uri = document.decodeUri(uri);
 			}
 			if ( uri != null ) {
-				File src = new File(libFolder, uri);
+				File src = srcUri == null ? new File(libFolder, uri) : new File(srcUri);
 				File target =  new File(exportLibFolder, uri);
 				FileUtil.copyFile(src, target);
 			}
