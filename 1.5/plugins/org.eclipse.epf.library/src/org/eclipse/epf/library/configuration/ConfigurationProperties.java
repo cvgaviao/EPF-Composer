@@ -10,9 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.epf.library.configuration.closure.IConfigurationError;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -31,7 +29,7 @@ public class ConfigurationProperties {
 	private boolean hideErrors = false;
 	private boolean hideInfos = false;
 	private boolean notifyingListeners = true;
-	private List<Listener> listeners = new ArrayList<Listener>();
+	private ListenerList listeners = new ListenerList();
 	
 	public ConfigurationProperties(MethodConfiguration config) {
 		this.config = config;
@@ -125,8 +123,9 @@ public class ConfigurationProperties {
 		if (! getNotifyingListeners()) {
 			return;
 		}
-		for (Listener listener: listeners) {
-			listener.fireEvent();
+		for (Object o : listeners.getListeners()) {
+			if (o instanceof Listener)
+				((Listener)o).fireEvent();
 		}
 	}
 	
