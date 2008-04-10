@@ -41,11 +41,13 @@ public class MethodElementPropertyHelper {
 	
 	public static final void setProperty(MethodElement e, String propName, String propValue) {
 		MethodElementProperty prop = getProperty(e, propName);
-		if(prop == null) {
+		if (prop == null) {
 			prop = UmaFactory.eINSTANCE.createMethodElementProperty();
 			prop.setName(propName);
 			e.getMethodElementProperty().add(prop);
 		}
+		if (propValue != null && propValue.equals(prop.getValue())) return;
+		if (propValue == null && prop.getValue() == null) return;
 		prop.setValue(propValue);
 	}
 
