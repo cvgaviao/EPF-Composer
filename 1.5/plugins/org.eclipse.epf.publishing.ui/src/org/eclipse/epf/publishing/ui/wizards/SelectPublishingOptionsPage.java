@@ -106,7 +106,7 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 
 	protected List<MethodConfiguration> selectedConfigs = new ArrayList<MethodConfiguration>();
 
-	protected static Map<String, String> activityTabMap = new TreeMap<String, String>();
+	public static Map<String, String> activityTabMap = new TreeMap<String, String>();
 
 	static {
 		activityTabMap.put(ActivityLayout.TAB_NAME_ACTIVITY_DESC,

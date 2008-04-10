@@ -225,7 +225,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 	/**
 	 * Extension name
 	 */
-	public static final String METHOD_PAGE_PROVIDERS_EXTENSION_NAME = "MethodElementEditorPageProvider"; //$NON-NLS-1$
+	public static final String METHOD_PAGE_PROVIDERS_EXTENSION_NAME = "MethodElementEditorPageProviders"; //$NON-NLS-1$
 	protected static List<IMethodElementEditorPageProviderExtension> allPageProviders;
 	protected static IMethodElementEditorPageProviderExtension defaultPageProvider;
 

@@ -169,6 +169,9 @@ public final class TngUtil {
 	public static final String GUIDANCE_FILESTRING_SEPARATOR = "|"; //$NON-NLS-1$
 
 	private static final String GUIDANCE_FILESTRING_SEPARATOR_SPLITTER = "\\|"; //$NON-NLS-1$
+
+	public static final String GUID_SEPARATOR = ","; //$NON-NLS-1$
+	private static final String GUID_SEPARATOR_SPLITTER = "\\,"; //$NON-NLS-1$
 	
 	public static final String PUBLISH_CATEGORY_PROPERTY = "PUBLISH_CATEGORY"; //$NON-NLS-1$
 	
@@ -2603,6 +2606,34 @@ public final class TngUtil {
 		}
 		return attachmentString;
 	}
+	
+	public static List<String> convertGUIDsToList(String guidString) {
+		ArrayList<String> guidList = new ArrayList<String>();
+		if (guidString == null)
+			guidString = ""; //$NON-NLS-1$
+		String guids[] = guidString
+				.split(GUID_SEPARATOR_SPLITTER);
+		for (int i = 0; i < guids.length; i++) {
+			if (guids[i].trim().length() > 0)
+				guidList.add(guids[i].trim());
+		}
+		return guidList;
+	}
+
+	public static String convertGUIDsToString(List<String> guidList) {
+		String guidString = ""; //$NON-NLS-1$
+		int i = 0;
+		if (guidList != null) {
+			for (String guid: guidList) {
+				if (i++ > 0)
+					guidString = guidString
+							.concat(GUID_SEPARATOR);
+				guidString = guidString.concat(guid);
+			}
+		}
+		return guidString;
+	}
+
 	
 	/**
 	 * 

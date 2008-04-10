@@ -11,23 +11,28 @@
 package org.eclipse.epf.authoring.ui.editors;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
-import org.eclipse.epf.authoring.ui.forms.ConfigViewPage;
-import org.eclipse.epf.authoring.ui.forms.ConfigurationDescription;
 import org.eclipse.epf.authoring.ui.forms.ConfigurationPage;
+import org.eclipse.epf.authoring.ui.providers.ConfigurationEditorDefaultPageProvider;
+import org.eclipse.epf.authoring.ui.providers.IMethodElementEditorPageProviderExtension;
 import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.editor.IFormPage;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -78,15 +83,50 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
 
 		super.init(site, input);
 	}
+	
+	
+	protected IMethodElementEditorPageProviderExtension getDefaultPageProvider() {
+		if (defaultPageProvider == null) {
+			defaultPageProvider = new ConfigurationEditorDefaultPageProvider();
+		}
+		return defaultPageProvider;
+	}
+
 	/**
 	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
 	 */
 	protected void addPages() {
+		// first get original list
+		Map<Object,String> pageMap = getDefaultPageProvider().getPages(new LinkedHashMap<Object,String>(), this, elementObj);
+		
+		// let extensions modify
+		List<IMethodElementEditorPageProviderExtension> pageProviders = getAllPageProviders();
+		if (pageProviders != null && pageProviders.size() > 0) {
+			for (IMethodElementEditorPageProviderExtension extension : pageProviders) {
+				pageMap = extension.getPages(pageMap, this, elementObj);
+			}
+		}
+		// now add pages
 		try {
-			addPage(new ConfigurationDescription(this));
-			configPage = new ConfigurationPage(this);
-			addPage(configPage);
-			addPage(new ConfigViewPage(this));
+			for (Map.Entry<Object, String> pageEntry : pageMap.entrySet()) {
+				Object page = pageEntry.getKey();
+				String name = pageEntry.getValue();
+				int index = -1;
+				if (page instanceof Control) {
+					index = addPage((Control)page);
+				} else if (page instanceof IFormPage) {
+					index = addPage((IFormPage)page);
+				} else if (page instanceof IEditorPart) {
+					index = addPage((IEditorPart)page, getEditorInput());
+				}
+				if (name != null) {
+					setPageText(index, name);
+				}
+				
+				if (page instanceof ConfigurationPage) {
+					configPage = (ConfigurationPage)page;
+				}
+			}
 		} catch (PartInitException e) {
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
 		}
