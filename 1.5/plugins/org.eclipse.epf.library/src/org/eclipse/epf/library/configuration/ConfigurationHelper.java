@@ -14,8 +14,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -625,6 +627,7 @@ public class ConfigurationHelper {
 			ElementRealizer r = DefaultElementRealizer.newElementRealizer(config);	
 			MethodElement me = element;
 
+			Set<MethodElement> seens = new HashSet<MethodElement>();
 			do {
 				VariabilityElement oldMe = (VariabilityElement) me;
 				me = (DescribableElement)ConfigurationHelper.calc01FeatureValue(me, f, r);
@@ -634,7 +637,10 @@ public class ConfigurationHelper {
 					me = oldMe.getVariabilityBasedOnElement();						
 				}					
 				name = ((DescribableElement)me).getPresentationName();
-				
+				if (seens.contains(me)) {	//to prevent loop in case such as											
+					break;					//both extend-replacer and base have empty pres name
+				}
+				seens.add(me);
 			} while ( StrUtil.isBlank(name) );
 		}
 		
