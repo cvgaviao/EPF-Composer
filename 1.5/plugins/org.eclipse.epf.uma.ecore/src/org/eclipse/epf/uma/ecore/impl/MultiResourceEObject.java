@@ -67,6 +67,8 @@ public class MultiResourceEObject extends EDataObjectImpl implements
 
 	private static final long serialVersionUID = 3258126947153097273L;
 	
+	private static final boolean DEBUG = false;
+	
 	private static final DefaultValueManager defaultValueManager = DefaultValueManager.INSTANCE;
 	
 	/**
@@ -171,13 +173,15 @@ public class MultiResourceEObject extends EDataObjectImpl implements
 				eSetDeliver(false);
 				EcoreUtil.replace(this, feature, oldValue, newValue);
 			} catch (Exception e) {
-				CommonPlugin.INSTANCE.log(e);
-				e.printStackTrace();
-				System.out.println("MultiResourceEObject.replace():");
-				System.out.println("  object: " + this);
-				System.out.println("  feature: " + feature);
-				System.out.println("  proxy: " + oldValue);
-				System.out.println("  resolved: " + newValue);
+				if (DEBUG) {
+					CommonPlugin.INSTANCE.log(e);
+					e.printStackTrace();
+					System.out.println("MultiResourceEObject.replace():");
+					System.out.println("  object: " + this);
+					System.out.println("  feature: " + feature);
+					System.out.println("  proxy: " + oldValue);
+					System.out.println("  resolved: " + newValue);
+				}
 			} finally {
 				eSetDeliver(notify);
 			}
