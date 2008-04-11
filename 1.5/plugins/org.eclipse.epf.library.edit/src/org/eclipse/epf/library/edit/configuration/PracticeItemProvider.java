@@ -51,8 +51,8 @@ public class PracticeItemProvider extends
 
 	private String label;
 	
-	private static String flat = "flat"; //$NON-NLS-1$
-	private static String categories = "categories"; //$NON-NLS-1$
+	private static String ROADMAP = "roadmap"; //$NON-NLS-1$
+	private static String CATEGORIES = "categories"; //$NON-NLS-1$
 
 	public PracticeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
@@ -74,10 +74,27 @@ public class PracticeItemProvider extends
 
 		Map<String, List> map = getSubGroupMap(children);
 
-		for (Map.Entry<String, List> entry : map.entrySet()) {
+/*		for (Map.Entry<String, List> entry : map.entrySet()) {
 			String key = entry.getKey();
 			List subgroupChildren = entry.getValue();
-			if (key.equals(flat) || key.equals(categories)
+			if (key.equals(ROADMAP) || key.equals(CATEGORIES)
+					|| subgroupChildren.size() < 3) {
+				ret.addAll(subgroupChildren);
+			} else {
+				PracticeSubgroupItemProvider sub = new PracticeSubgroupItemProvider(
+						getAdapterFactory(), key, getImageObject(key), subgroupChildren);
+				ret.add(sub);
+			}
+		}*/
+		
+		String[] keys = getKeysInOrder();
+		for (int i = 0; i < keys.length; i++) {
+			String key = keys[i];
+			List subgroupChildren = map.get(key);
+			if (subgroupChildren == null || subgroupChildren.isEmpty()) {
+				continue;
+			}
+			if (key.equals(ROADMAP) || key.equals(CATEGORIES)
 					|| subgroupChildren.size() < 3) {
 				ret.addAll(subgroupChildren);
 			} else {
@@ -88,6 +105,21 @@ public class PracticeItemProvider extends
 		}
 		
 		return ret;
+	}
+	
+	private String[] getKeysInOrder() {
+		String[] keys = {
+				ROADMAP,
+				getUIString("_UI_Guidances_Concepts"),
+				getUIString("_UI_WorkProducts_group"),
+				getUIString("_UI_Tasks_group"),
+				getUIString("_UI_Activities_group"),
+				getUIString("_UI_Roles_group"),
+				getUIString("_UI_Guidances_group"),
+				CATEGORIES				
+		};
+		
+		return keys;
 	}
 	
 	private Map<String, List> getSubGroupMap(Collection children) {
@@ -126,7 +158,7 @@ public class PracticeItemProvider extends
 	
 	private String getSubGroupName(Object obj) {
 		if (obj instanceof Roadmap) {
-			return flat;
+			return ROADMAP;
 		}
 		if (obj instanceof Concept) {
 			return getUIString("_UI_Guidances_Concepts"); //$NON-NLS-1$
@@ -147,7 +179,7 @@ public class PracticeItemProvider extends
 			return getUIString("_UI_Guidances_group"); //$NON-NLS-1$
 		}
 		
-		return categories;
+		return CATEGORIES;
 	}
 	
 	private static void add(Map<String, List> map, String key, Object value) {
