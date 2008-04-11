@@ -110,12 +110,12 @@ public class PracticeItemProvider extends
 	private String[] getKeysInOrder() {
 		String[] keys = {
 				ROADMAP,
-				getUIString("_UI_Guidances_Concepts"),
-				getUIString("_UI_WorkProducts_group"),
-				getUIString("_UI_Tasks_group"),
-				getUIString("_UI_Activities_group"),
-				getUIString("_UI_Roles_group"),
-				getUIString("_UI_Guidances_group"),
+				getUIString("_UI_Guidances_Concepts"),	//$NON-NLS-1$
+				getUIString("_UI_WorkProducts_group"),	//$NON-NLS-1$
+				getUIString("_UI_Tasks_group"),			//$NON-NLS-1$
+				getUIString("_UI_Activities_group"),	//$NON-NLS-1$
+				getUIString("_UI_Roles_group"),			//$NON-NLS-1$
+				getUIString("_UI_Guidances_group"),		//$NON-NLS-1$
 				CATEGORIES				
 		};
 		
