@@ -3,7 +3,7 @@
 <schema targetNamespace="org.eclipse.epf.search.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.epf.search.ui" id="searchScopeViewerFactory" name="SearchScopeViewer Factory"/>
+         <meta.schema plugin="org.eclipse.epf.search.ui" id="searchResultContentProviderFactory" name="Search Result Content Provider Factory"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -12,9 +12,9 @@
 
    <element name="extension">
       <complexType>
-         <choice>
+         <sequence>
             <element ref="factory"/>
-         </choice>
+         </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
@@ -50,7 +50,7 @@
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.epf.search.ui.internal.IMethodSearchScopeGroup"/>
+                  <meta.attribute kind="java"/>
                </appInfo>
             </annotation>
          </attribute>

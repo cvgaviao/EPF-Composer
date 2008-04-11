@@ -11,8 +11,8 @@
 package org.eclipse.epf.search.ui.internal;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.provider.UmaItemProviderAdapterFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -25,8 +25,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class SearchResultLabelProvider extends LabelProvider {
 
-	private static ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-			new UmaItemProviderAdapterFactory());
+	private static ILabelProvider labelProvider = new AdapterFactoryLabelProvider(TngUtil.umaItemProviderAdapterFactory);
 
 	/**
 	 * Creates a new instance.
