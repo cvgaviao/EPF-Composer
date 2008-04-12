@@ -13,27 +13,16 @@ package org.eclipse.epf.authoring.ui.actions;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.dialogs.ShowDetailsProblemViewDialog;
-import org.eclipse.epf.authoring.ui.util.ConfigurationMarkerHelper;
-import org.eclipse.epf.library.LibraryResources;
-import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.edit.util.TngUtil;
-import org.eclipse.epf.persistence.util.PersistenceResources;
-import org.eclipse.epf.persistence.util.UnresolvedProxyMarkerManager;
-import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.views.markers.MarkerViewUtil;
 import org.eclipse.ui.views.markers.internal.ProblemView;
 
 /**
- * Show details action on ProblemView
- * 
  * @author Weiping Lu
  * @since 1.5
- *
+ * @deprecated
  */
 public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 
@@ -55,19 +44,6 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 		if (selectedMarker == null) {
 			return;
 		}
-		if (markderDetailType == null
-				|| markderDetailType == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_UNKNOWN) {
-			try {
-				if (! selectedMarker.getType().equals(
-						ConfigurationMarkerHelper.MARKER_ID)) {
-					return;
-				}
-			} catch (Exception e) {
-				return;
-			}
-		}
-		
-		ConfigurationMarkerHelper a;
 		
 		try {
 			
@@ -88,125 +64,7 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 	}
 
 	private String getDialogTextString(IMarker marker, String type) throws Exception {
-		StringBuffer sb = new StringBuffer();
-		
-		String typeStr = null;
-		String location = (String) marker.getAttribute(IMarker.LOCATION);
-		String indent = "     ";
-		sb.append("Problem cause\n");		
-		
-		//To do: externalize the strings
-		if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_FIND_FILE) {			
-			typeStr = "java.io.FileNotFoundException        ";
-			
-			sb.append(indent + "An xmi file is referring to another file in the library,\n");
-			sb.append(indent + "but the referred to file is missing.\n");		
-			sb.append("\nMissing file\n");
-			sb.append(indent + "The location is shown in the error message description.\n");
-			sb.append("\nReferring xmi file\n");
-			sb.append(indent + "Location: " + location + "\n");
-			sb.append("\nQuick fix\n");
-			sb.append(indent + "Will remove the missing file reference from referring xmi file.\n");
-
-		} else if (type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_NORMALIZED_URI ||
-				type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_RESOLVING_PROXY) {
-
-			typeStr = 
-				type == UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE_NORMALIZED_URI ? 
-						PersistenceResources.normalizeURIError_msg
-					: PersistenceResources.UnresolvedProxyMarkerManager_couldNotResolveProxy;
-			
-			String ownerGUID = (String) marker.getAttribute(UnresolvedProxyMarkerManager.OWNER_GUID);
-			MethodElement  element = LibraryService.getInstance().getCurrentLibraryManager().getMethodElement(ownerGUID);
-
-			sb.append(indent + "A method element is referring to another method element represented by a object URI,\n");
-			sb.append(indent + "but the referred to method element cannot be found by resolving the object URI.\n");
-
-			if (element != null) {
-				sb.append("\nReferring methor element\n"); 
-				sb.append(indent + "type: " + element.getType().getName() + "\n"); 
-				sb.append(indent + "name, location: " + TngUtil.getLabelWithPath(element) + "\n");
-			}
-						
-			sb.append("\nReferred to method element\n"); 
-			sb.append(indent + "Object URI: " + marker.getAttribute(UnresolvedProxyMarkerManager.PROXY_URI) + " \n");			
-			
-			sb.append("\nThe file where the referred to element is referred\n"); 
-			sb.append(indent + "Location: " + location + "\n");
-			
-			sb.append("\nQuick fix\n");
-			sb.append(indent + "Will remove the unresolved object URI from the referring method element.\n");
-					
-		} else if (marker.getType().equals(ConfigurationMarkerHelper.MARKER_ID)) {
-			String messageId = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_MESSAGE_ID);			
-			String elementName = (String) marker.getAttribute(MarkerViewUtil.NAME_ATTRIBUTE);
-			String causeName = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_NAME);
-			String elementGuid = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_ERROR_ELEMENT_GUID);
-			String causeGuid = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_GUID);
-			String elementType = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_ERROR_ELEMENT_TYPE);
-			String causeType = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_TYPE);									
-			String causeLocation = (String) marker.getAttribute(ConfigurationMarkerHelper.ATTR_CAUSE_ELEMENT_LOCATION);
-			
-			sb.append(indent + "A method element is referring to another method element.\n");
-			sb.append(indent + "The referring method element is in the configuration, \n");
-			sb.append(indent + "but the referred to method element is not.\n");
-
-			sb.append("\nReferring method element\n");
-			sb.append(indent + "type: " + elementType + "\n"); 
-			sb.append(indent + "name, location: " + location + "\n");
-			sb.append(indent + "guid: " + elementGuid + "\n");
-			
-			sb.append("\nRefered to method element\n");
-			sb.append(indent + "type: " + causeType + "\n"); 
-			sb.append(indent + "name, location: " + causeLocation + "\n");
-			sb.append(indent + "guid: " + causeGuid + "\n");	
-
-			String elementRole = null;
-			String causeRole = null;
-			
-			if (messageId == LibraryResources.ElementError_contributor_missing_base) {
-				elementRole = "Variability contributor";
-				causeRole = "Variability base";
-			} else if (messageId == LibraryResources.ElementError_extender_missing_base) {
-				elementRole = "Variability extender";
-				causeRole = "Variability base";
-			} else if (messageId == LibraryResources.ElementError_replacer_missing_base) {
-				elementRole = "Variability replacer";
-				causeRole = "Variability base";
-			} else if (messageId == LibraryResources.ElementError_missing_primary_performer) {
-				elementRole = "Task";
-				causeRole = "Primary performer";
-			} else if (messageId == LibraryResources.ElementError_missing_mandatory_input) {
-				elementRole = "Task";
-				causeRole = "Mandatory input work product";
-			} else if (messageId == LibraryResources.ElementError_missing_output) {
-				elementRole = "Task";
-				causeRole = "Output work product";
-			} else if (messageId == LibraryResources.ElementError_missing_responsible_for_workProduct) {
-				elementRole = "Role";
-				causeRole = "Respossible for work product";
-			} else if (messageId == LibraryResources.ElementError_missing_element) {
-				
-			}
-			
-			if (elementRole != null && causeRole != null) {
-				sb.append("\nRelationship\n");
-				sb.append(indent + "Referring method element: " + elementRole + "\n"); 
-				sb.append(indent + "Referred to method element: " + causeRole + "\n"); 
-			}
-			
-			sb.append("\nQuick fix\n");
-			sb.append(indent + "Will add the referred to method element inclduing its containing package to the configuration.");
-			
-		}
-		
-		if (typeStr != null) {
-			int ix = typeStr.length() - 8;
-			typeStr = typeStr.substring(0, ix);
-			sb.append("\nFind Similar Problems\n");
-			sb.append(indent + "Will find all problems of the type '" + typeStr + "'\n");
-			sb.append(indent + "and allow quick fix to fix them all at one time.");
-		}
+		StringBuffer sb = new StringBuffer();		
 		
 		return sb.toString();
 	}
@@ -221,21 +79,6 @@ public class ShowDetailsProblemViewAction implements IViewActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 		markderDetailType = null;
 		selectedMarker = null;		
-		if (selection instanceof IStructuredSelection) {
-			IStructuredSelection sel = (IStructuredSelection) selection;			
-			boolean b = sel != null && sel.size() == 1;			
-			action.setEnabled(b);
-
-			Object selObj = sel.getFirstElement();
-			if (selObj instanceof IMarker) {
-				selectedMarker = (IMarker) selObj;
-				try {		
-					markderDetailType = (String) selectedMarker.getAttribute(UnresolvedProxyMarkerManager.MARKER_DETAIL_TYPE);
-				} catch (Exception ex) {
-					AuthoringUIPlugin.getDefault().getLogger().logError(ex);
-				}
-			}			
-		}
 	}
 
 }

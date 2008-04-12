@@ -26,10 +26,9 @@ import org.eclipse.swt.widgets.Text;
 
 
 /**
- * Dialog for showing details in Problem View
- * 
  * @author Weiping Lu
  * @since 1.5
+ * @deprecated
  */
 public class ShowDetailsProblemViewDialog extends Dialog {
 
