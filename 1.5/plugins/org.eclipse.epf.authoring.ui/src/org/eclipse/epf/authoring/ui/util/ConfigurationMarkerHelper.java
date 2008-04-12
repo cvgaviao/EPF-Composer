@@ -25,6 +25,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.common.utils.ExtensionHelper;
+import org.eclipse.epf.common.utils.IMarkerAttributeContributer;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceListener;
 import org.eclipse.epf.library.configuration.closure.IConfigurationError;
@@ -274,6 +276,12 @@ public class ConfigurationMarkerHelper {
 				marker.setAttribute(ATTR_CAUSE_ELEMENT_NAME, error.getCauseMethodElement().getName());
 				marker.setAttribute(ATTR_CAUSE_ELEMENT_LOCATION, TngUtil.getLabelWithPath(error.getCauseMethodElement()));
 	    	}
+	    	
+			IMarkerAttributeContributer attAdder = ExtensionHelper.getMarkerAttributeContributer();
+			if (attAdder != null) {
+				attAdder.addAddtionalAttributes(marker, error);
+			}
+			
 		} catch (CoreException e) {
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
 		}

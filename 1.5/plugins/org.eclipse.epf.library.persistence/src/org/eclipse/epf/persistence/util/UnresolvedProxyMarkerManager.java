@@ -48,6 +48,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.epf.common.utils.ExtensionHelper;
+import org.eclipse.epf.common.utils.IMarkerAttributeContributer;
 import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
@@ -411,6 +413,11 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		marker.setAttribute(PROXY_URI, proxyURIStr);
 		marker.setAttribute(OWNER_GUID, ownerGUID);
 		marker.setAttribute(MARKER_DETAIL_TYPE, getMarkerDetailType(re));
+		
+		IMarkerAttributeContributer attAdder = ExtensionHelper.getMarkerAttributeContributer();
+		if (attAdder != null) {
+			attAdder.addAddtionalAttributes(marker, re);
+		}
 
 		// cache marker to it can be found easily and deleted
 		//
