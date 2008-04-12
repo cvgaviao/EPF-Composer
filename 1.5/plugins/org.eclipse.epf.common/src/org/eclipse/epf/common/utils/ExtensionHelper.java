@@ -23,9 +23,10 @@ import org.osgi.framework.Bundle;
 
 /**
 * Helper class with methods to retrieve extensions
-* Based on part of org.eclipse.epf.library.edit.util.ExtensionManager, to allow
+* Moved part of org.eclipse.epf.library.edit.util.ExtensionManager, to allow
 * access by classes that have no dependency on org.eclipse.epf.library.edit
 * 
+* @author Phong Nguyen Le 
 * @author Weiping Lu
 * @since  1.5
 */
