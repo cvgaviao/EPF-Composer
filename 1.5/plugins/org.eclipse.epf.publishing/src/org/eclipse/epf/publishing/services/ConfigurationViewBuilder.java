@@ -95,8 +95,6 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 
 	private static final String PREFIX_Performing_Roles = "Performing_Roles"; //$NON-NLS-1$
 	
-	private static final String PREFIX_Group_Folder = "Group_Folder";
-
 	private static final String PREFIX_Input_Work_Products = "Input_Work_Products"; //$NON-NLS-1$
 
 	private static final String PREFIX_Output_Work_Products = "Output_Work_Products"; //$NON-NLS-1$
@@ -813,7 +811,7 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 			provider.setPractice(practice);
 
 			IElementLayout l = new SummaryPageLayout(getHtmlBuilder()
-					.getLayoutManager(), practice, PREFIX_Group_Folder,
+					.getLayoutManager(), practice, provider.getText(null),
 					provider.getText(null), items);
 			String url = l.getUrl();
 
