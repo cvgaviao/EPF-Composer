@@ -22,6 +22,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.uma.Practice;
 
 /**
  * The base item provider adapter class for the standard categories in
@@ -43,6 +44,8 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	protected IFilter filter;
 
 	private Object image;
+	
+	private Practice practice;
 
 	/**
 	 * Creates a new instance.
@@ -124,5 +127,15 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	public void setParent(Object parent) {
 		this.parent = parent;
 	}
+
+	public Practice getPractice() {
+		return practice;
+	}
+
+	public void setPractice(Practice practice) {
+		this.practice = practice;
+	}
+	
+
 
 }

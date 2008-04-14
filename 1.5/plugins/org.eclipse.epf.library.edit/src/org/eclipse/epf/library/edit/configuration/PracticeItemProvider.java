@@ -135,37 +135,40 @@ public class PracticeItemProvider extends
 	
 	private Object getImageObject(String subGroupName) {
 		
-		String imageStr = null;
-		if (subGroupName.equals(getUIString("_UI_Key_Concepts"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Concepts"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_WorkProducts_group"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/WorkProducts"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Tasks_group"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Tasks"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Roles_group"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Roles"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Activities_group"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Processes"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_group"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/GuidanceFolder"; //$NON-NLS-1$
-			
-			//Guidance sub groups
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_Checklists"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Checklists"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_Examples"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Examples"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_Practices"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Practices"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_Reports"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Reports"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_ReusableAssets"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/ReusableAssets"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_SupportingMaterials"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/SupportingMaterials"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_Templates"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/Templates"; //$NON-NLS-1$
-		} else if (subGroupName.equals(getUIString("_UI_Guidances_ToolMentors"))) { //$NON-NLS-1$
-			imageStr = "full/obj16/ToolMentors"; //$NON-NLS-1$
+		String imageStr = "full/obj16/Folder"; //$NON-NLS-1$
+		
+		if (false) {		//Not used for now
+			if (subGroupName.equals(getUIString("_UI_Key_Concepts"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Concepts"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_WorkProducts_group"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/WorkProducts"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Tasks_group"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Tasks"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Roles_group"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Roles"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Activities_group"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Processes"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_group"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/GuidanceFolder"; //$NON-NLS-1$
+				
+				//Guidance sub groups
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_Checklists"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Checklists"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_Examples"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Examples"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_Practices"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Practices"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_Reports"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Reports"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_ReusableAssets"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/ReusableAssets"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_SupportingMaterials"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/SupportingMaterials"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_Templates"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/Templates"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_ToolMentors"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/ToolMentors"; //$NON-NLS-1$
+			}
 		}
 	
 		return imageStr == null ? null : LibraryEditPlugin.INSTANCE.getImage(imageStr);

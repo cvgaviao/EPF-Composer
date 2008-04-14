@@ -38,6 +38,7 @@ import org.eclipse.epf.library.configuration.ConfigurationFilter;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -63,6 +64,7 @@ import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.Role;
@@ -92,6 +94,8 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 	private static final String PREFIX_ParticipatesIn_Tasks = "Additionally_Performs"; //$NON-NLS-1$
 
 	private static final String PREFIX_Performing_Roles = "Performing_Roles"; //$NON-NLS-1$
+	
+	private static final String PREFIX_Group_Folder = "Group_Folder";
 
 	private static final String PREFIX_Input_Work_Products = "Input_Work_Products"; //$NON-NLS-1$
 
@@ -544,7 +548,7 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 				treeItemContentProvider = (ITreeItemContentProvider) adapterFactory
 						.adapt(obj, ITreeItemContentProvider.class);
 			}
-
+		
 			// Either delegate the call or return nothing.
 			if (treeItemContentProvider != null) {
 				Collection items = treeItemContentProvider.getChildren(obj);
@@ -595,9 +599,14 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 											discardEmptyCategory(cc, true);
 										}
 									} else {
-										Bookmark b = createBookmark(me, parent);
-										if (!buildSubTree(itorObj, me, b)) {
-											iterate(itorObj, b);
+										if (itorObj instanceof PracticeSubgroupItemProvider) {
+											buildPracticeSubgroupTree(obj, parent,
+													(PracticeSubgroupItemProvider) itorObj);
+										} else {										
+											Bookmark b = createBookmark(me, parent);
+											if (!buildSubTree(itorObj, me, b)) {
+												iterate(itorObj, b);
+											}
 										}
 									}
 								}
@@ -609,7 +618,11 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 							e.printStackTrace();
 						}
 					} else {
-						iterate(itorObj, parent);
+						if (itorObj instanceof PracticeSubgroupItemProvider) {
+							buildPracticeSubgroupTree(obj, parent, (PracticeSubgroupItemProvider) itorObj);
+						} else {
+							iterate(itorObj, parent);
+						}
 					}
 
 				}
@@ -777,6 +790,44 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 		}
 
 		return b;
+	}
+	
+	private void buildPracticeSubgroupTree(Object providerParent,
+			Bookmark parent, PracticeSubgroupItemProvider provider) {
+		Collection children = provider.getChildren(null);
+		List items = children instanceof List ? (List) children
+				: new ArrayList(children);
+
+		if (items != null && items.size() > 0) {
+			Practice practice = null;
+			if (providerParent instanceof Practice) {
+				practice = (Practice) providerParent;
+			} else if (providerParent instanceof PracticeSubgroupItemProvider) {
+				practice = ((PracticeSubgroupItemProvider) providerParent)
+						.getPractice();
+			}
+			if (practice == null) {
+				return;
+			}
+
+			provider.setPractice(practice);
+
+			IElementLayout l = new SummaryPageLayout(getHtmlBuilder()
+					.getLayoutManager(), practice, PREFIX_Group_Folder,
+					provider.getText(null), items);
+			String url = l.getUrl();
+
+			if (!summaryPagesGenerated.contains(url)) {
+				getHtmlBuilder().generateHtml(l);
+				summaryPagesGenerated.add(url);
+			}
+
+			Bookmark b = createBookmark(provider.getText(null), EcoreUtil
+					.generateUUID(), url, ICON_FOLDER, ICON_FOLDER, null);
+			parent.addChild(b);
+			this.iterate(provider, b);
+		}
+
 	}
 
 	private Bookmark buildDisciplineSubTree(Discipline element, Bookmark parent) {
