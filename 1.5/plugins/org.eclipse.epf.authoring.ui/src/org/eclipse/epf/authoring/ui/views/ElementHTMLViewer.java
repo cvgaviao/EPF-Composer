@@ -13,14 +13,17 @@ package org.eclipse.epf.authoring.ui.views;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.elements.AbstractProcessElementLayout;
+import org.eclipse.epf.library.layout.elements.SummaryPageLayout;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.MethodElement;
@@ -331,6 +334,12 @@ public class ElementHTMLViewer {
 								(org.eclipse.epf.uma.Process)proc, path);
 					file_url = getHtmlBuilder().generateHtml(layout);
 				}
+			} else if (raw_element instanceof PracticeSubgroupItemProvider) {
+				PracticeSubgroupItemProvider provider = (PracticeSubgroupItemProvider) raw_element;
+				layout = new SummaryPageLayout(getHtmlBuilder().getLayoutManager(),
+						provider.getPractice(), provider.getText(null),
+						provider.getText(null), (List) provider.getChildren(null));
+				file_url = getHtmlBuilder().generateHtml(layout);
 			} else if (element instanceof MethodElement) {
 					file_url = getHtmlBuilder().generateHtml((MethodElement)element);
 			}

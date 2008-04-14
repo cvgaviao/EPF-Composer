@@ -14,8 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.epf.common.utils.StrUtil;
-import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.LayoutInfo;
@@ -179,6 +179,12 @@ public class SummaryPageLayout implements IElementLayout {
 							refXml.addChild(l.getXmlElement(false));
 						}
 					}
+				} else if (e instanceof PracticeSubgroupItemProvider) {
+					PracticeSubgroupItemProvider provider = (PracticeSubgroupItemProvider) e;
+					IElementLayout l = new SummaryPageLayout(getLayoutMgr(),
+							provider.getPractice(), provider.getText(null),
+							provider.getText(null), (List) provider.getChildren(null));
+					refXml.addChild(l.getXmlElement(false));
 				}
 			}
 		}

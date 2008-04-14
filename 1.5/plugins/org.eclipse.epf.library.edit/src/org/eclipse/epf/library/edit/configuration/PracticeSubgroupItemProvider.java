@@ -51,11 +51,14 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	 * Creates a new instance.
 	 */
 	public PracticeSubgroupItemProvider(AdapterFactory adapterFactory,
-			String name, Object image, List children) {
+			String name, Object image, List children, Object parentObject) {
 		super(adapterFactory);
 		label = name;
 		this.image = image;
 		this.children = children;
+		if (parentObject instanceof Practice) {
+			practice = (Practice) parentObject;
+		}
 	}
 
 	/*
@@ -131,11 +134,5 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	public Practice getPractice() {
 		return practice;
 	}
-
-	public void setPractice(Practice practice) {
-		this.practice = practice;
-	}
-	
-
 
 }

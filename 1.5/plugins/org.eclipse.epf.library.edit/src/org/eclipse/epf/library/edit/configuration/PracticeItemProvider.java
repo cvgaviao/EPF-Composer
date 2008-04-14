@@ -83,16 +83,16 @@ public class PracticeItemProvider extends
 	 * @param children
 	 * @return
 	 */
-	public Collection<?> getModifiedChildren(Collection children) {
+	public Collection<?> getModifiedChildren(Object parentObject, Collection children) {
 		List ret = new ArrayList();
 
 		GroupingHelper groupingHelper = new GroupingHelper();
-		grouping(ret, children, groupingHelper);
+		grouping(parentObject, ret, children, groupingHelper);
 		
 		return ret;
 	}
 	
-	private void grouping(List ret, Collection children, 
+	private void grouping(Object parentObject, List ret, Collection children, 
 			GroupingHelper groupingHelper) {
 		Map<String, List> map = getSubGroupMap(children, groupingHelper);
 		
@@ -104,9 +104,9 @@ public class PracticeItemProvider extends
 				continue;
 			}
 			if (groupingHelper.toGroup(key, subgroupChildren)) {
-				subgroupChildren = groupingHelper.nestedGrouping(key, subgroupChildren);
+				subgroupChildren = groupingHelper.nestedGrouping(parentObject, key, subgroupChildren);
 				PracticeSubgroupItemProvider sub = new PracticeSubgroupItemProvider(
-						getAdapterFactory(), key, getImageObject(key), subgroupChildren);
+						getAdapterFactory(), key, getImageObject(key), subgroupChildren, parentObject);
 				ret.add(sub);
 			} else {
 				sort(subgroupChildren);
@@ -334,7 +334,7 @@ public class PracticeItemProvider extends
 			return true;
 		}
 		
-		protected List<?> nestedGrouping(String key, List<?> subgroupChildren) {
+		protected List<?> nestedGrouping(Object parentObject, String key, List<?> subgroupChildren) {
 			if (! key.equals(PracticeItemProvider.getUIString("_UI_Guidances_group"))) {
 				return subgroupChildren;
 			}
@@ -342,7 +342,7 @@ public class PracticeItemProvider extends
 			List ret = new ArrayList<Object>();
 			
 			GroupingHelper groupingHelper = new GuidanceGroupingHelper();
-			grouping(ret, subgroupChildren, groupingHelper);
+			grouping(parentObject, ret, subgroupChildren, groupingHelper);
 			
 			return ret;
 		}
@@ -409,7 +409,7 @@ public class PracticeItemProvider extends
 			return true;
 		}
 		
-		protected List<?> nestedGrouping(String key, List<?> subgroupChildren) {
+		protected List<?> nestedGrouping(Object parentObject, String key, List<?> subgroupChildren) {
 			return subgroupChildren;
 		}
 

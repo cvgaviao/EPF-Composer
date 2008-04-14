@@ -413,7 +413,7 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 			} while (false);
 
 			if (adapter instanceof PracticeItemProvider) {
-				return ((PracticeItemProvider) adapter).getModifiedChildren(children);
+				return ((PracticeItemProvider) adapter).getModifiedChildren(object, children);
 			}
 			
 			// alphabetically sort the children

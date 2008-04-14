@@ -797,18 +797,10 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 				: new ArrayList(children);
 
 		if (items != null && items.size() > 0) {
-			Practice practice = null;
-			if (providerParent instanceof Practice) {
-				practice = (Practice) providerParent;
-			} else if (providerParent instanceof PracticeSubgroupItemProvider) {
-				practice = ((PracticeSubgroupItemProvider) providerParent)
-						.getPractice();
-			}
+			Practice practice = provider.getPractice();
 			if (practice == null) {
 				return;
 			}
-
-			provider.setPractice(practice);
 
 			IElementLayout l = new SummaryPageLayout(getHtmlBuilder()
 					.getLayoutManager(), practice, provider.getText(null),
