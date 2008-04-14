@@ -47,6 +47,8 @@ public class SummaryPageLayout implements IElementLayout {
 	String title;
 	
 	String prefix;
+	
+	private String typeName;
 
 	// String fileName;
 	IElementLayout elementLayout;
@@ -60,11 +62,16 @@ public class SummaryPageLayout implements IElementLayout {
 //
 //		this.elementLayout = layoutManager.getLayout(element, true);
 //	}
+	public SummaryPageLayout(ElementLayoutManager layoutManager,
+			MethodElement element, String prefix, String title, List refList) {
+		this(layoutManager, element, prefix, title, refList, null);
+	}
 	
 	public SummaryPageLayout(ElementLayoutManager layoutManager,
 			MethodElement element, String prefix, String title, 
-			List refList) 
+			List refList, String typeName) 
 	{
+		this.typeName = typeName;
 		this.layoutManager = layoutManager;
 		this.element = element;
 		this.refList = refList;
@@ -153,6 +160,10 @@ public class SummaryPageLayout implements IElementLayout {
 				.setAttribute("BackPath", getBackPath()) //$NON-NLS-1$
 				.setAttribute("ImageUrl", getShapeiconUrl()) //$NON-NLS-1$
 				.setAttribute("DisplayName", getDisplayName()); //$NON-NLS-1$
+		
+		if (typeName != null) {
+			elementXml.setAttribute("TypeName", typeName);
+		}
 
 		if (includeReferences) {
 			
@@ -183,7 +194,8 @@ public class SummaryPageLayout implements IElementLayout {
 					PracticeSubgroupItemProvider provider = (PracticeSubgroupItemProvider) e;
 					IElementLayout l = new SummaryPageLayout(getLayoutMgr(),
 							provider.getPractice(), provider.getText(null),
-							provider.getText(null), (List) provider.getChildren(null));
+							provider.getText(null), (List) provider
+									.getChildren(null), provider.getText(null));
 					refXml.addChild(l.getXmlElement(false));
 				}
 			}
