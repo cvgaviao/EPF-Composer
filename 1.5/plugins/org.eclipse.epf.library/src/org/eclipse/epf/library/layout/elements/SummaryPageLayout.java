@@ -17,6 +17,7 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
+import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.LayoutInfo;
 import org.eclipse.epf.library.layout.util.XmlElement;
@@ -30,6 +31,7 @@ import org.eclipse.epf.uma.MethodElement;
  * The summarypage layout a list of elements referenced by the owner element
  * 
  * @author Jinhua Xi
+ * @author Weiping Lu
  * @since 1.0
  */
 public class SummaryPageLayout implements IElementLayout {
@@ -50,6 +52,8 @@ public class SummaryPageLayout implements IElementLayout {
 	
 	private String typeName;
 
+	private HtmlBuilder htmlBuilder;
+	
 	// String fileName;
 	IElementLayout elementLayout;
 
@@ -197,6 +201,12 @@ public class SummaryPageLayout implements IElementLayout {
 							provider.getText(null), (List) provider
 									.getChildren(null), provider.getText(null));
 					refXml.addChild(l.getXmlElement(false));
+					
+					//This is a short cut approach.
+					//To do: generalize layoutManager to handle non method element layouts
+					if (!this.layoutManager.isPublishingMode() && htmlBuilder != null) {
+						htmlBuilder.generateHtml(l);						
+					}
 				}
 			}
 		}
@@ -235,6 +245,10 @@ public class SummaryPageLayout implements IElementLayout {
 	}
 	
 	public void setShowElementLink(boolean show) {
+	}
+
+	public void setHtmlBuilder(HtmlBuilder htmlBuilder) {
+		this.htmlBuilder = htmlBuilder;
 	}
 
 }

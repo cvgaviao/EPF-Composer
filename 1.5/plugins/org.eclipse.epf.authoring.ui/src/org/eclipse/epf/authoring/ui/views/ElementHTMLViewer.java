@@ -340,6 +340,7 @@ public class ElementHTMLViewer {
 						provider.getPractice(), provider.getText(null),
 						provider.getText(null), (List) provider.getChildren(null),
 						provider.getText(null));
+				((SummaryPageLayout) layout).setHtmlBuilder(getHtmlBuilder());
 				file_url = getHtmlBuilder().generateHtml(layout);
 			} else if (element instanceof MethodElement) {
 					file_url = getHtmlBuilder().generateHtml((MethodElement)element);
