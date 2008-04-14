@@ -148,6 +148,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		}
 		tailoringSectionOn = true;
 		iconSectionOn = true;
+		slotSectionOn = true;
 	}
 
 	protected void createGeneralSectionContent() {
@@ -211,8 +212,6 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 	protected void createEditorContent(FormToolkit toolkit) {
 		super.createEditorContent(toolkit);
-
-		createSlotSection(toolkit);
 	}
 
 	/**
@@ -220,7 +219,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	 * 
 	 * @param toolkit
 	 */
-	private void createSlotSection(FormToolkit toolkit) {
+	protected void createSlotSection(FormToolkit toolkit) {
 
 		slotSection = createSection(toolkit, sectionComposite,
 				AuthoringUIText.SLOT_SECTION_NAME, this.slotSectionDescription);
@@ -290,7 +289,9 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 
 		// add all slot related listeners
 		
-		addSlotListeners();
+		if (slotSectionOn) {
+			addSlotListeners();
+		}
 		
 		
 		if (purposeOn) {
@@ -800,24 +801,26 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	protected void refresh(boolean editable) {
 		super.refresh(editable);
 		
-		ctrl_slot_button.setEnabled(editable);
-		
-		Boolean isAbstract = workProduct.getIsAbstract();
-		if (isAbstract != null && editable) {
-			if (isAbstract.booleanValue())  {
-				addSlotButton.setEnabled(false);
-			} else {
-				addSlotButton.setEnabled(true);
+		if (slotSectionOn)  {
+			ctrl_slot_button.setEnabled(editable);
+			
+			Boolean isAbstract = workProduct.getIsAbstract();
+			if (isAbstract != null && editable) {
+				if (isAbstract.booleanValue())  {
+					addSlotButton.setEnabled(false);
+				} else {
+					addSlotButton.setEnabled(true);
+				}
 			}
-		}
-		else
-			addSlotButton.setEnabled(editable);
-		
-		IStructuredSelection selection = (IStructuredSelection) slotViewer.getSelection();
-		if (selection.size() > 0 && editable) {
-			removeSlotButton.setEnabled(true);
-		} else {
-			removeSlotButton.setEnabled(false);
+			else
+				addSlotButton.setEnabled(editable);
+			
+			IStructuredSelection selection = (IStructuredSelection) slotViewer.getSelection();
+			if (selection.size() > 0 && editable) {
+				removeSlotButton.setEnabled(true);
+			} else {
+				removeSlotButton.setEnabled(false);
+			}
 		}
 		
 		if (tailoringSectionOn) {
@@ -846,11 +849,13 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		super.loadData();
 
 		// IsAbstract attribute
-		Boolean isAbstract = workProduct.getIsAbstract();
-		if (isAbstract != null) {
-			ctrl_slot_button.setSelection(isAbstract.booleanValue());
-		} else
-			ctrl_slot_button.setSelection(false);
+		if (slotSectionOn) {
+			Boolean isAbstract = workProduct.getIsAbstract();
+			if (isAbstract != null) {
+				ctrl_slot_button.setSelection(isAbstract.booleanValue());
+			} else
+				ctrl_slot_button.setSelection(false);
+		}
 
 		
 		org.eclipse.epf.uma.WorkProductDescription content = ((org.eclipse.epf.uma.WorkProductDescription) workProduct

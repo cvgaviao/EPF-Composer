@@ -471,6 +471,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected boolean tailoringSectionOn = false;
 
 	protected boolean variabilitySectionOn = true;
+	
+	protected boolean slotSectionOn= false;
 
 	protected boolean purposeOn = false;
 
@@ -739,13 +741,20 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			createVersionSectionContent();
 			toolkit.paintBordersFor(versionComposite);
 			SECTIONS++;
-		}
-
+		}		
+		
 		if (variabilitySectionOn) {
 			createVariabilitySection(toolkit);
 			toolkit.paintBordersFor(variabilityComposite);
 			SECTIONS++;
 		}
+		
+		// Create the Slot Section
+		if (slotSectionOn) {
+			createSlotSection(toolkit);
+			SECTIONS++;
+		}
+
 
 		// Icon Section
 		if (iconSectionOn) {
@@ -1169,6 +1178,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}
 
 	protected void createTailoringSectionContent() {
+	}
+	
+	/**
+	 * Creates the slot section.
+	 */
+	protected void createSlotSection(FormToolkit toolkit) {
+
 	}
 
 	/**
