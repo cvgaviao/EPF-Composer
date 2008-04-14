@@ -50,6 +50,7 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
 	 * The editor ID.
 	 */
 	public static final String EDITOR_ID = ConfigurationEditor.class.getName();
+	protected static IMethodElementEditorPageProviderExtension defaultConfigPageProvider;
 
 	ConfigurationPage configPage = null;
 
@@ -86,10 +87,10 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
 	
 	
 	protected IMethodElementEditorPageProviderExtension getDefaultPageProvider() {
-		if (defaultPageProvider == null) {
-			defaultPageProvider = new ConfigurationEditorDefaultPageProvider();
+		if (defaultConfigPageProvider == null) {
+			defaultConfigPageProvider = new ConfigurationEditorDefaultPageProvider();
 		}
-		return defaultPageProvider;
+		return defaultConfigPageProvider;
 	}
 
 	/**
