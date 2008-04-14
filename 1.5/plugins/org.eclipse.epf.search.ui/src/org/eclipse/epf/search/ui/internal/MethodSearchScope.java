@@ -177,13 +177,19 @@ public class MethodSearchScope {
 	 * Creates a new instance.
 	 */
 	public MethodSearchScope(Object[] elementTypes) {
-		searchScope.add(ROOT);
+		this(elementTypes, true);
+	}
+	
+	public MethodSearchScope(Object[] elementTypes, boolean includeRoot) {
+		if(includeRoot) {
+			searchScope.add(ROOT);
+		}
 		for (int i = 0; i < elementTypes.length; i++) {
 			Object elementType = elementTypes[i];
 			searchScope.add(elementType);
 		}
 	}
-
+	
 	/**
 	 * Checks whether a core method element is included in the search scope.
 	 * 
