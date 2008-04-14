@@ -1122,5 +1122,9 @@ public class BaseFormPage extends FormPage {
 		return form.getBounds().width - 2 * 32;
 	}
 
+	public MethodElement getMethodElement() {
+		return methodElement;
+	}
+
 
 }
