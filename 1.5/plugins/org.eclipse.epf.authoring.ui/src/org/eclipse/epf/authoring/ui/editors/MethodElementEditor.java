@@ -124,6 +124,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -132,7 +133,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.editor.IFormPage;
 import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.part.MultiPageSelectionProvider;
+import org.eclipse.ui.views.properties.PropertySheet;
 
 /**
  * The Method Element editor.
@@ -1451,6 +1454,14 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 			// Use the default layout manager.
 			//previewer.setLayoutManager(null);
 			previewer.showElementContent(elementObj);
+		}
+		Object page = pages.get(newPageIndex);
+		if (page instanceof MultiPageEditorPart) {
+			IViewPart propertiesView = getEditorSite().getPage().findView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
+			if (propertiesView instanceof PropertySheet) {
+				((PropertySheet)propertiesView).partActivated(this);
+			}
+
 		}
 	}
 
