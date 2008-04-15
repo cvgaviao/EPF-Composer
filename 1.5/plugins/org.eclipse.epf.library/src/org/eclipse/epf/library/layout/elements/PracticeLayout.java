@@ -22,6 +22,8 @@ import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.AssociationHelper;
 
 
 /**
@@ -124,6 +126,13 @@ public class PracticeLayout extends AbstractElementLayout {
 			addReferences(feature,
 				parent, key, listValue); 
 		}
+	}
+	
+	protected boolean acceptFeatureValue(OppositeFeature feature, Object value) {
+		if ( feature == AssociationHelper.DescribableElement_CustomCategories) {
+			return true;
+		}			
+		return super.acceptFeatureValue(feature, value);
 	}
 
 	static class SubGroupValue {
