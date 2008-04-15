@@ -481,9 +481,16 @@ public abstract class AbstractElementLayout implements IElementLayout {
 							processGrandChild(feature, me, l, childXmlElement);
 						}
 					}
+				} else {
+					processNonMethodElementInProcessChild(e, feature, parent, includeReferences);
 				}
 			}
 		}
+	}
+	
+	protected void processNonMethodElementInProcessChild(
+			Object nonMethodElementChild, Object feature, XmlElement parent,
+			boolean includeReferences) {
 	}
 	
 	protected void processGrandChild(Object feature,
