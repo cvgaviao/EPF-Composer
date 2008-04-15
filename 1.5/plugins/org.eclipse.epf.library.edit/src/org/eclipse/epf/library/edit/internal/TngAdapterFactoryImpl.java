@@ -741,6 +741,25 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 		return new ExposedAdapterFactory(adapterFactories);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ibm.library.edit.TngAdapterFactory#createLibraryComposedAdapterFactory()
+	 */
+	public ComposedAdapterFactory createLibraryComposedAdapterFactory() {
+		AdapterFactory factory = createAdapterFactoryFromExtension(LIBRARY_ADAPTER_FACTORY_ID);
+		if (factory == null) {
+			factory = new org.eclipse.epf.library.edit.navigator.ItemProviderAdapterFactory();
+		}
+		return new ExposedAdapterFactory(
+				new AdapterFactory[] {
+						// new
+						// ResourceItemProviderAdapterFactory(),
+						factory,
+						new ReflectiveItemProviderAdapterFactory() });
+
+	}
+	
 	// Section for TNG Filter modification process.
 	// filter modification code. Similar to getFilterView_AdapterFactory(IFilter
 	// filter)
