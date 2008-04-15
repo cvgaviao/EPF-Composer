@@ -86,7 +86,7 @@ public class PracticeItemProvider extends
 	public Collection<?> getModifiedChildren(Object parentObject, Collection children) {
 		List ret = new ArrayList();
 
-		GroupingHelper groupingHelper = new GroupingHelper();
+		GroupingHelper groupingHelper = new GroupingHelper(this);
 		grouping(parentObject, ret, children, groupingHelper);
 		
 		return ret;
@@ -115,14 +115,14 @@ public class PracticeItemProvider extends
 		}
 	}
 
-	private static void sort(List subgroupChildren) {
+	public static void sort(List subgroupChildren) {
 		if (subgroupChildren.size() > 1) {
 			Comparator comparator = PresentationContext.INSTANCE.getPresNameComparator();
 			Collections.<FulfillableElement>sort(subgroupChildren, comparator);
 		}
 	}	
 	
-	private Map<String, List> getSubGroupMap(Collection children, GroupingHelper groupingHelper) {
+	public static Map<String, List> getSubGroupMap(Collection children, GroupingHelper groupingHelper) {
 		 Map<String, List> map = new LinkedHashMap<String, List>(); 
 		
 		for (Object child: children) {
@@ -278,7 +278,18 @@ public class PracticeItemProvider extends
 		return super.getImage(object);
 	}
 	
-	class GroupingHelper {
+	public static class GroupingHelper {
+		
+		private Object grouper;
+		
+		public GroupingHelper(Object grouper) {
+			this.grouper = grouper;
+		}
+		
+		protected Object getGrouper() {
+			return grouper;
+		}		
+		
 		protected String getSubGroupName(Object obj) {
 			if (obj instanceof Roadmap) {
 				return ROADMAP;
@@ -308,7 +319,7 @@ public class PracticeItemProvider extends
 			return UNKNOWN;
 		}
 		
-		protected String[] getKeysInOrder() {
+		public String[] getKeysInOrder() {
 			String[] keys = {
 					ROADMAP,
 					getUIString("_UI_Key_Concepts"),	//$NON-NLS-1$
@@ -324,7 +335,7 @@ public class PracticeItemProvider extends
 			return keys;
 		}
 		
-		protected boolean toGroup(String key, List subgroupChildren) {
+		public boolean toGroup(String key, List subgroupChildren) {
 			if (key.equals(ROADMAP) || 
 				key.equals(CATEGORIES) ||
 				key.equals(UNKNOWN) ||
@@ -334,21 +345,33 @@ public class PracticeItemProvider extends
 			return true;
 		}
 		
-		protected List<?> nestedGrouping(Object parentObject, String key, List<?> subgroupChildren) {
+		public List<?> nestedGrouping(Object parentObject, String key, List<?> subgroupChildren) {
 			if (! key.equals(PracticeItemProvider.getUIString("_UI_Guidances_group"))) {
 				return subgroupChildren;
 			}
 			
 			List ret = new ArrayList<Object>();
 			
-			GroupingHelper groupingHelper = new GuidanceGroupingHelper();
+			GroupingHelper groupingHelper = new GuidanceGroupingHelper(grouper);
 			grouping(parentObject, ret, subgroupChildren, groupingHelper);
 			
 			return ret;
 		}
+		
+		protected void grouping(Object parentObject, List ret,
+				Collection children, GroupingHelper groupingHelper) {
+			if (grouper instanceof PracticeItemProvider) {
+				((PracticeItemProvider) grouper).grouping(parentObject, ret,
+						children, groupingHelper);
+			}
+		}		
 	}
 	
-	class GuidanceGroupingHelper extends GroupingHelper {
+	public static class GuidanceGroupingHelper extends GroupingHelper {
+		public GuidanceGroupingHelper(Object grouper) {
+			super(grouper);
+		}
+		
 		protected String getSubGroupName(Object obj) {
 			
 			if (obj instanceof Checklist) {
@@ -385,7 +408,7 @@ public class PracticeItemProvider extends
 			
 		}
 		
-		protected String[] getKeysInOrder() {
+		public String[] getKeysInOrder() {
 			String[] keys = {
 					getUIString("_UI_Guidances_Checklists"),	//$NON-NLS-1$
 					getUIString("_UI_Guidances_Examples"),	//$NON-NLS-1$
@@ -401,7 +424,7 @@ public class PracticeItemProvider extends
 			return keys;
 		}
 		
-		protected boolean toGroup(String key, List subgroupChildren) {
+		public boolean toGroup(String key, List subgroupChildren) {
 			if (key.equals(UNKNOWN) || 
 				subgroupChildren.size() < 3) {
 				return false;
@@ -409,7 +432,7 @@ public class PracticeItemProvider extends
 			return true;
 		}
 		
-		protected List<?> nestedGrouping(Object parentObject, String key, List<?> subgroupChildren) {
+		public List<?> nestedGrouping(Object parentObject, String key, List<?> subgroupChildren) {
 			return subgroupChildren;
 		}
 
