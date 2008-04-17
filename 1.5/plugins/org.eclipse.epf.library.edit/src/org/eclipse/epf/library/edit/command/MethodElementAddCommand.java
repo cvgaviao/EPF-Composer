@@ -1547,7 +1547,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		}
 	}
 
-	public static class MoveOperation {
+	public static class MoveOperation extends CommandWrapper {
 		/** Constants for state of the move operation */
 		private static final int STATE_START = 0;
 
@@ -1596,10 +1596,14 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 		public MoveOperation(Command command, IProgressMonitor monitor,
 				Object shell) {
-			// this.command = command;
+			super(command);
 			addCommand = (AddCommand) TngUtil.unwrap(command);
 			this.monitor = monitor;
 			this.shell = shell;
+		}
+		
+		public Map getElementToOldPluginMap() {
+			return elementToOldPluginMap;
 		}
 
 		/**
@@ -1620,7 +1624,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					&& CommandStatusChecker.hasRollbackError(status);
 		}
 
-		private void undo() {
+		public void undo() {
 			// undo name change
 			//
 			if (elementToNewNameMap != null) {
@@ -1653,7 +1657,12 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				illegalReferenceRemover.restoreRemovedReferences();
 			}
 		}
-
+		
+		@Override
+		public void execute() {
+			run();
+		}
+		
 		public void run() {
 			state = STATE_START;
 
@@ -1848,6 +1857,15 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					return;
 				}
 
+				// run nested commands
+				//
+				NestedCommandExcecutor nestedCommandExcecutor = new NestedCommandExcecutor(this);
+				try {
+					nestedCommandExcecutor.executeNestedCommands();
+				}
+				finally {
+					nestedCommandExcecutor.dispose();
+				}
 			}
 
 			state = STATE_END;

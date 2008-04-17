@@ -17,11 +17,11 @@ import org.eclipse.emf.common.command.Command;
 /**
  * Provides nested commands to execute right after the execution of the main command
  *  
- * @author Phong Nguyen Le - Aug 17, 2006
+ * @author Phong Nguyen Le
  * @since  1.0
  */
 public interface INestedCommandProvider {
-	Command createRelatedObjects(Collection createdElements, Command createCommand);
-	Command removeRelatedObjects(Collection deletedElements, Command deleteCommand);
+	Command createRelatedObjects(Collection<?> createdElements, Command createCommand);
+	Command removeRelatedObjects(Collection<?> deletedElements, Command deleteCommand);
 	Command createNestedCommand(Command command);
 }

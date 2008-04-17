@@ -34,10 +34,10 @@ public class TraceableAdapterFactoryEditingDomain extends
 
 	// Maps copied method elements to their original counterparts.
 	// Note: Copied elements are copies of the clipboard copies.
-	private HashMap copyToOriginalMap = null;
+	private HashMap<Object, Object> copyToOriginalMap = null;
 
 	// Maps original elements to their clipboard copies.
-	private Map originalToClipboardMap = null;
+	private Map<Object, Object> originalToClipboardMap = null;
 	
 	private Map<EObject, EObject> clipboardToOriginalMap;
 
@@ -94,9 +94,9 @@ public class TraceableAdapterFactoryEditingDomain extends
 	 * @return a map containing the copied elements mapped to their original
 	 *         counterparts
 	 */
-	public Map getCopyToOriginalMap() {
+	public Map<?, ?> getCopyToOriginalMap() {
 		if (copyToOriginalMap == null) {
-			copyToOriginalMap = new HashMap();
+			copyToOriginalMap = new HashMap<Object, Object>();
 		}
 		return copyToOriginalMap;
 	}
