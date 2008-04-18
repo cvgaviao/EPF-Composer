@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.epf.common.CommonPlugin;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ConfigHelperDelegate;
@@ -92,6 +91,10 @@ public class ConfigurationHelper {
 		}
 	}
 	
+	private static ConfigHelperDelegate getDelegate() {
+		return delegate;
+	}
+	
 	private static boolean inheritingSlotFeatures = false; 
 	
 	public static final String ATTRIBUTE_VALUE_SEPERATOR = "<p/>"; //$NON-NLS-1$
@@ -137,7 +140,7 @@ public class ConfigurationHelper {
 			return false;
 		}
 
-		return TngUtil.getAllSystemPackages(p).contains(pkg);
+		return getDelegate().isSystemPackage(p, pkg);
 	}
 
 	/**
