@@ -36,6 +36,7 @@ import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
+import org.eclipse.epf.library.layout.ElementPropertyProviderManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.LayoutInfo;
 import org.eclipse.epf.library.layout.LayoutResources;
@@ -583,6 +584,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				elementXml
 						.newChild("attribute").setAttribute("name", name).setValue((value == null) ? "" : value.toString()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
+			// Get the singleton of the ElementPropertyProviderManager and have it add any additional attributes as needed
+			ElementPropertyProviderManager.getInstance().loadAdditionalElementProperties(element, elementXml);
 		}
 	}
 
