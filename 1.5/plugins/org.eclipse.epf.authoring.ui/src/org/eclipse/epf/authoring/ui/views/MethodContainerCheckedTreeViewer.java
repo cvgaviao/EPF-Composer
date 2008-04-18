@@ -234,6 +234,10 @@ public class MethodContainerCheckedTreeViewer extends
 		this.expandWhenChecking = expandWhenChecking;
 	}
 	
+	/**
+	 * notified when children checkstate is changed (by checking a parent)
+	 * @param listener
+	 */
 	public void addChildrenCheckStateListener(ICheckStateListener listener) {
 		childrenCheckStateListeners.add(listener);
 	}
