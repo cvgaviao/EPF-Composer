@@ -126,7 +126,7 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 						EObject target = copyHelper.getCopyTarget(object,
 								copiedTargetRequired);
 						if (target == null)
-							break; // if one is null, they'll all be null
+							continue;
 						if (reverseReference != null) {
 							int position = copyList.indexOf(target);
 							if (position == -1) {
