@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
  * Displays the searchable method elements, organized by types, in a tree view.
  * 
  * @author Kelvin Low
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class MethodSearchScopeViewer {
@@ -130,7 +131,7 @@ public class MethodSearchScopeViewer {
 		hasChildrenList.add(PROCESS);
 	}
 
-	private CheckboxTreeViewer viewer;
+	protected CheckboxTreeViewer viewer;
 
 	/**
 	 * The content provider for the viewer.
@@ -219,8 +220,25 @@ public class MethodSearchScopeViewer {
 				if (!event.getChecked()) {
 					viewer.setParentsGrayed(selectedElement, true);
 					viewer.setGrayChecked(selectedElement, false);
-				} else {
-					viewer.setParentsGrayed(selectedElement, false);
+				} else {					
+					ITreeContentProvider cp = (ITreeContentProvider) viewer.getContentProvider();
+					Object parent = cp.getParent(selectedElement);
+					Object[] children = cp.getChildren(parent);
+					boolean grayed = false;
+					for (Object child : children) {
+						if(!viewer.getChecked(child)) {
+							grayed = true;
+							break;
+						}
+					}
+					if(grayed) {
+						viewer.setGrayChecked(parent, true);
+					}
+					else {
+						viewer.setChecked(parent, true);
+						viewer.setParentsGrayed(selectedElement, false);
+					}
+					
 				}
 			}
 		});
@@ -234,5 +252,4 @@ public class MethodSearchScopeViewer {
 	public MethodSearchScope getSearchScope() {
 		return new MethodSearchScope(viewer.getCheckedElements());
 	}
-
 }

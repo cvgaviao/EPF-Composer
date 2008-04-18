@@ -16,6 +16,7 @@ import org.eclipse.epf.search.ui.SearchUIPlugin;
  * Manages the Search UI preferences.
  * 
  * @author Kelvin Low
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class SearchUIPreferences {
@@ -28,6 +29,8 @@ public class SearchUIPreferences {
 	public static final String NAME_PATTERN = "namePattern"; //$NON-NLS-1$
 
 	public static final String CASE_SENSITIVE = "caseSensitive"; //$NON-NLS-1$	
+
+	private static final String TYPES = "types"; //$NON-NLS-1$
 
 	/**
 	 * Returns the saved search string.
@@ -77,4 +80,11 @@ public class SearchUIPreferences {
 				CASE_SENSITIVE, caseSensitive);
 	}
 
+	public static String getTypes() {
+		return SearchUIPlugin.getDefault().getPreferenceStore().getString(TYPES);
+	}
+	
+	public static void setTypes(String types) {
+		SearchUIPlugin.getDefault().getPreferenceStore().setValue(TYPES, types);
+	}
 }

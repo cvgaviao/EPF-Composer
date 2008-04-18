@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
@@ -259,5 +260,18 @@ public class MethodSearchScope {
 	public static String getTypeText(String typeName) {
 		EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(typeName);
 		return elementSearchScope.get(cls);
+	}
+	
+	@Override
+	public String toString() {
+		if(searchScope == null && searchScope.isEmpty()) {
+			return StrUtil.EMPTY_STRING;
+		}
+		StringBuffer strBuffer = new StringBuffer();
+		int max = searchScope.size() - 1;
+		for(int i = 0; i < max; i++) {
+			strBuffer.append(searchScope.get(i)).append(',');
+		}
+		return strBuffer.append(searchScope.get(max)).toString();
 	}
 }

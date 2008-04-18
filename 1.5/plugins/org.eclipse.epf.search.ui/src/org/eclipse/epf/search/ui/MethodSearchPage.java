@@ -258,6 +258,7 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 		SearchUIPreferences.setNamePattern(namePatternCombo.getText());
 		SearchUIPreferences.setCaseSensitive(caseSensitiveCheckbox
 				.getSelection());
+		SearchUIPreferences.setTypes(searchScope.toString());
 		return true;
 	}
 
