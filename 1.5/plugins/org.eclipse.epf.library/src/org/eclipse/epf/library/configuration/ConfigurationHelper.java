@@ -24,7 +24,10 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.common.CommonPlugin;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.ConfigHelperDelegate;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
@@ -75,6 +78,19 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  * @since 1.0
  */
 public class ConfigurationHelper {
+	
+	private static ConfigHelperDelegate delegate;
+
+	static {
+		ConfigHelperDelegate extendedDelegate = (ConfigHelperDelegate) ExtensionHelper
+				.getExtension(LibraryPlugin.getDefault().getId(),
+						"configHelperDelegateExt");
+		if (extendedDelegate == null) {
+			delegate = new ConfigHelperDelegate();
+		} else {
+			delegate = extendedDelegate;
+		}
+	}
 	
 	private static boolean inheritingSlotFeatures = false; 
 	
