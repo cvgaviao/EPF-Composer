@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ConfigHelperDelegate;
+import org.eclipse.epf.library.ConfigHelperDelegateForTestOnly;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
@@ -83,7 +84,7 @@ public class ConfigurationHelper {
 	static {
 		ConfigHelperDelegate extendedDelegate = (ConfigHelperDelegate) ExtensionHelper
 				.getExtension(LibraryPlugin.getDefault().getId(),
-						"configHelperDelegateExt");
+						"configHelperDelegateExt");//$NON-NLS-1$
 		if (extendedDelegate == null) {
 			delegate = new ConfigHelperDelegate();
 		} else {
@@ -229,109 +230,7 @@ public class ConfigurationHelper {
 
 	private static boolean isOwnerSelected(MethodElement element,
 			MethodConfiguration config, boolean checkSubtracted) {
-		MethodLibrary library = LibraryServiceUtil.getMethodLibrary(config);
-		ILibraryManager libraryManager = library == null? null : LibraryService.getInstance().getLibraryManager(library);
-		if (libraryManager != null) {
-			return LibraryService.getInstance()
-						.getConfigurationManager(config)
-							.getConfigurationData()
-								.isOwnerSelected(element, checkSubtracted);
-		}
-				
-		if (element == null) {
-			return false;
-		}
-
-		if (config == null || isDescriptionElement(element)) {
-			return true;
-		}
-
-		// since UMA 1.0.4, configuration can have added categories 
-		// and subtracted categories. The order of filtering is:
-		// 1. any element in the subtracted categories should be excluded
-		// 2. any element in the added categories should be included
-		// 3. any element not in the selected package or plugin should be excluded.
-		
-		if ( checkSubtracted ) {
-			// first check subtracted elements
-			List subtractedCategories = config.getSubtractedCategory();
-			if ( subtractedCategories.size() > 0 ) {
-				for ( Iterator it = subtractedCategories.iterator(); it.hasNext(); ) {
-					ContentCategory cc = (ContentCategory)it.next();
-					if ( cc == element ) {
-						return false;
-					}
-					
-					// need to check all content category types and sub-categories
-					// we need to have an efficient algorithm for this checking.
-					// for now, only check the custom category's categorised elements
-					// TODO. Jinhua Xi, 11/27/2006
-					if ( cc instanceof CustomCategory ) {
-						if ( ((CustomCategory)cc).getCategorizedElements().contains(element) ) {
-							return false;
-						}
-					} else {
-						// TODO, not implemented yet
-						System.out.println("TODO, isOwnerSelected: not implemented yet"); //$NON-NLS-1$
-					}
-				}
-			}
-		}
-		
-		// then check added categories
-		// TODO
-		
-		// elements beyond configuration scope should be always visible
-		if ((element instanceof MethodLibrary)
-				|| (element instanceof MethodConfiguration)) {
-			return true;
-		} else if (element instanceof MethodPlugin) {
-			List plugins = config.getMethodPluginSelection();
-			return (plugins != null) && plugins.contains(element);
-		} else {
-			// if the ownerprocess can't show, can't accept
-			if (element instanceof Activity) {
-				Activity base = (Activity) ((Activity) element)
-						.getVariabilityBasedOnElement();
-				if (base != null && base != element) {
-					MethodElement owningProc = TngUtil.getOwningProcess(base);
-					if ( owningProc != null && owningProc != element 
-							&& !inConfig(owningProc, config, checkSubtracted)) {
-						return false;
-					}
-				}
-			}
-
-			EObject pkg = LibraryUtil.getSelectable(element);
-
-			// accept global package if the plugin is in the configuration
-			if (pkg instanceof MethodPackage
-					&& isGlobalPackage((MethodPackage) pkg)) {
-				MethodPlugin plugin = LibraryUtil.getMethodPlugin(pkg);
-				return inConfig(plugin, config, checkSubtracted);
-			}
-
-			List pkgs = config.getMethodPackageSelection();
-			if (pkgs == null) {
-				return false;
-			}
-
-			// per Phong's request, for ProcessPackage, check the
-			// ProcessComponent parent instead
-			if (pkg instanceof ProcessPackage) {
-				while ((pkg != null) && !(pkg instanceof ProcessComponent)
-						&& !pkgs.contains(pkg)) {
-					pkg = pkg.eContainer();
-				}
-			}
-
-			// if package not selected, return false
-			if ((pkg == null) || !pkgs.contains(pkg)) {
-				return false;
-			}
-
-			return true;
-		}
+		return getDelegate().isOwnerSelected(element, config, checkSubtracted);
 	}
 
 	/**
