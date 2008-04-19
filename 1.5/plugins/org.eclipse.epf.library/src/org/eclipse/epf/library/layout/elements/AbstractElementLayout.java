@@ -255,10 +255,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		} 
 	
 		if ( oppositeFeatures.size() > 0 ) {
-			Set<String> GUIDs = new HashSet<String>();
-			GUIDs.add(element.getGuid());
 			ConfigurationHelper.getDelegate().loadOppositeFeatures(
-					(ILibraryResourceSet) resSet, oppositeFeatures, GUIDs);
+					(ILibraryResourceSet) resSet, oppositeFeatures, element);
 		}
 	}
 

@@ -1,10 +1,12 @@
 package org.eclipse.epf.library;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
@@ -23,7 +25,9 @@ public class ConfigHelperDelegate {
 	}
 	
 	public void loadOppositeFeatures(ILibraryResourceSet resouceSet,
-			List<OppositeFeature> oppositeFeatures, Set<String> GUIDs) {		
+			List<OppositeFeature> oppositeFeatures,  MethodElement element) {
+		Set<String> GUIDs = new HashSet<String>();
+		GUIDs.add(element.getGuid());
 		resouceSet.loadOppositeFeatures(oppositeFeatures, GUIDs);
 	}
 	
