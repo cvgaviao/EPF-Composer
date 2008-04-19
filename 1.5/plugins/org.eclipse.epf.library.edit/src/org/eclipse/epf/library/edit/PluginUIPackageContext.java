@@ -57,6 +57,10 @@ public class PluginUIPackageContext {
 		notifyListeners();
 	}
 	
+	public void setLayoutFlatWithoutNotify(boolean flag) {
+		isFlatLayout = flag;
+	}
+	
 	public void addListener(IPluginUIPackageContextChangedListener listener) {
 		if (listeners == null) {
 			listeners = new ArrayList<IPluginUIPackageContextChangedListener>();

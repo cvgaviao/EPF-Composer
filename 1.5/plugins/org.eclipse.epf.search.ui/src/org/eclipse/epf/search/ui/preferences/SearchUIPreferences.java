@@ -30,8 +30,6 @@ public class SearchUIPreferences {
 
 	public static final String CASE_SENSITIVE = "caseSensitive"; //$NON-NLS-1$	
 
-	private static final String TYPES = "types"; //$NON-NLS-1$
-
 	/**
 	 * Returns the saved search string.
 	 */
@@ -78,13 +76,5 @@ public class SearchUIPreferences {
 	public static void setCaseSensitive(boolean caseSensitive) {
 		SearchUIPlugin.getDefault().getPreferenceStore().setValue(
 				CASE_SENSITIVE, caseSensitive);
-	}
-
-	public static String getTypes() {
-		return SearchUIPlugin.getDefault().getPreferenceStore().getString(TYPES);
-	}
-	
-	public static void setTypes(String types) {
-		SearchUIPlugin.getDefault().getPreferenceStore().setValue(TYPES, types);
 	}
 }

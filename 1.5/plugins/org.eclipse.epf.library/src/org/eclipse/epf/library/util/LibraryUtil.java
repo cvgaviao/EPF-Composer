@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -223,19 +222,8 @@ public class LibraryUtil {
 	 * @param library MethodLibrary
 	 * @return List a list of MethodPlugin objects
 	 */
-	public static List getMethodPlugins(MethodLibrary library) {
-		List items = new ArrayList();
-		EList elements = library.eContents();
-		if (elements != null) {
-			for (Iterator it = elements.iterator(); it.hasNext();) {
-				EObject element = (EObject) it.next();
-				if (element instanceof MethodPlugin) {
-					items.add(element);
-				}
-			}
-		}
-
-		return items;
+	public static List<MethodPlugin> getMethodPlugins(MethodLibrary library) {
+		return new ArrayList<MethodPlugin>(library.getMethodPlugins());
 	}
 
 	/**

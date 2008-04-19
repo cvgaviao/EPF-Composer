@@ -12,6 +12,7 @@ package org.eclipse.epf.search.ui.internal;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -33,7 +34,6 @@ import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.Domain;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Practice;
@@ -59,7 +59,7 @@ public class MethodSearchOperation implements IMethodSearchOperation {
 
 	private boolean debug;
 
-	private MethodSearchInput searchInput;
+	protected MethodSearchInput searchInput;
 
 	private ISearchResultCollector result;
 
@@ -192,6 +192,10 @@ public class MethodSearchOperation implements IMethodSearchOperation {
 		}
 	}
 	
+	protected Collection<MethodPlugin> getSearchableMethodPlugins() {
+		return LibraryUtil.getMethodPlugins(LibraryService.getInstance().getCurrentMethodLibrary());
+	}
+	
 	/**
 	 * Executes the search operation.
 	 * 
@@ -202,12 +206,10 @@ public class MethodSearchOperation implements IMethodSearchOperation {
 		this.progressMonitor = progressMonitor;
 		this.progressMonitor.beginTask(SCAN_LIBRARY_TEXT, 7500);
 
-		// Iterate the Method Library to look for elements that match the name
+		// Iterate the Method Plugin to look for elements that match the name
 		// pattern.
-		MethodLibrary library = LibraryService.getInstance()
-				.getCurrentMethodLibrary();
-		List methodPlugins = LibraryUtil.getMethodPlugins(library);
-		for (Iterator i = methodPlugins.iterator(); i.hasNext()
+		Collection<MethodPlugin> methodPlugins = getSearchableMethodPlugins();
+		for (Iterator<MethodPlugin> i = methodPlugins.iterator(); i.hasNext()
 				&& !progressMonitor.isCanceled();) {
 			MethodPlugin methodPlugin = (MethodPlugin) i.next();
 			matchPattern(methodPlugin);
