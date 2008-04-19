@@ -91,7 +91,7 @@ public class ConfigurationHelper {
 		}
 	}
 	
-	private static ConfigHelperDelegate getDelegate() {
+	public static ConfigHelperDelegate getDelegate() {
 		return delegate;
 	}
 	
