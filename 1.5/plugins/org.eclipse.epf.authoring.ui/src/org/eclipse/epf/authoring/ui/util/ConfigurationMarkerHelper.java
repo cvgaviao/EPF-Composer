@@ -53,10 +53,6 @@ public class ConfigurationMarkerHelper {
 	public static final String ATTR_MESSAGE_ID = "messageId"; //$NON-NLS-1$
 	public static final String ATTR_ERROR_ELEMENT_GUID = "elementGuid"; //$NON-NLS-1$
 	public static final String ATTR_CAUSE_ELEMENT_GUID = "causeGuid"; //$NON-NLS-1$
-	public static final String ATTR_ERROR_ELEMENT_TYPE = "elementType"; //$NON-NLS-1$
-	public static final String ATTR_CAUSE_ELEMENT_TYPE = "causeType"; //$NON-NLS-1$
-	public static final String ATTR_CAUSE_ELEMENT_NAME = "causeName"; //$NON-NLS-1$
-	public static final String ATTR_CAUSE_ELEMENT_LOCATION = "causeLocation"; //$NON-NLS-1$
 
 	// marker ID
 	public static final String MARKER_ID = "org.eclipse.epf.authoring.ui.configuration"; //$NON-NLS-1$
@@ -268,13 +264,9 @@ public class ConfigurationMarkerHelper {
 				marker.setAttribute(IMarker.LOCATION, TngUtil.getLabelWithPath(error.getErrorMethodElement()));
 				marker.setAttribute(ATTR_ERROR_ELEMENT_GUID, error.getErrorMethodElement().getGuid());
 				marker.setAttribute(MarkerViewUtil.NAME_ATTRIBUTE, error.getErrorMethodElement().getName());
-				marker.setAttribute(ATTR_ERROR_ELEMENT_TYPE, error.getErrorMethodElement().getType().getName());				
 	    	}
 	    	if (error.getCauseMethodElement() != null) {
 	    		marker.setAttribute(ATTR_CAUSE_ELEMENT_GUID, error.getCauseMethodElement().getGuid());
-				marker.setAttribute(ATTR_CAUSE_ELEMENT_TYPE, error.getCauseMethodElement().getType().getName());
-				marker.setAttribute(ATTR_CAUSE_ELEMENT_NAME, error.getCauseMethodElement().getName());
-				marker.setAttribute(ATTR_CAUSE_ELEMENT_LOCATION, TngUtil.getLabelWithPath(error.getCauseMethodElement()));
 	    	}
 	    	
 			IMarkerAttributeContributer attAdder = ExtensionHelper.getMarkerAttributeContributer();
