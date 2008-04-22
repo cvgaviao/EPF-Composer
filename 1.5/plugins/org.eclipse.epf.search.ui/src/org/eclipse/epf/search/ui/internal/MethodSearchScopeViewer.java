@@ -199,6 +199,34 @@ public class MethodSearchScopeViewer {
 			return null;
 		}
 	}
+	
+	private void checkParent(Object selectedElement) {
+		ITreeContentProvider cp = (ITreeContentProvider) viewer.getContentProvider();
+		Object parent = cp.getParent(selectedElement);
+		if (parent != null && parent != ROOT) {
+			Object[] children = cp.getChildren(parent);
+			boolean grayed = false;
+			for (Object child : children) {
+				if (!viewer.getChecked(child) || viewer.getGrayed(child)) {
+					grayed = true;
+					break;
+				}
+			}
+			if (grayed) {
+				viewer.setGrayChecked(parent, true);
+				
+				// check all other parents grayed as well
+				//
+				for(parent = cp.getParent(parent); parent != null && parent != ROOT; parent = cp.getParent(parent)) {
+					viewer.setGrayChecked(parent, true);
+				}
+			} else {
+				viewer.setChecked(parent, true);
+				viewer.setParentsGrayed(selectedElement, false);
+				checkParent(parent);
+			}
+		}
+	}
 
 	/**
 	 * Creates a new instance.
@@ -220,25 +248,15 @@ public class MethodSearchScopeViewer {
 				if (!event.getChecked()) {
 					viewer.setParentsGrayed(selectedElement, true);
 					viewer.setGrayChecked(selectedElement, false);
-				} else {					
-					ITreeContentProvider cp = (ITreeContentProvider) viewer.getContentProvider();
-					Object parent = cp.getParent(selectedElement);
-					Object[] children = cp.getChildren(parent);
-					boolean grayed = false;
-					for (Object child : children) {
-						if(!viewer.getChecked(child)) {
-							grayed = true;
-							break;
+					// set gray to false for items that are unchecked
+					//
+					for (Object element : viewer.getGrayedElements()) {
+						if(!viewer.getChecked(element)) {
+							viewer.setGrayed(element, false);
 						}
 					}
-					if(grayed) {
-						viewer.setGrayChecked(parent, true);
-					}
-					else {
-						viewer.setChecked(parent, true);
-						viewer.setParentsGrayed(selectedElement, false);
-					}
-					
+				} else {		
+					checkParent(selectedElement);
 				}
 			}
 		});
