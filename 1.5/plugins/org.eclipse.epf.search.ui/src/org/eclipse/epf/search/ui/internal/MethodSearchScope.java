@@ -102,6 +102,7 @@ public class MethodSearchScope {
 		elementSearchScope.put(UmaPackage.eINSTANCE.getEstimationConsiderations(),
 				ESTIMATION_CONSIDERATIONS);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getExample(), EXAMPLE);
+		elementSearchScope.put(UmaPackage.eINSTANCE.getGuideline(), GUIDELINE);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getPractice(), PRACTICE);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getReport(), REPORT);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getReusableAsset(), REUSABLE_ASSET);
@@ -144,6 +145,7 @@ public class MethodSearchScope {
 		scopeToEClassesMap.put(CONCEPT, Collections.singleton(UmaPackage.eINSTANCE.getConcept()));
 		scopeToEClassesMap.put(ESTIMATION_CONSIDERATIONS, Collections.singleton(UmaPackage.eINSTANCE.getEstimationConsiderations()));
 		scopeToEClassesMap.put(EXAMPLE, Collections.singleton(UmaPackage.eINSTANCE.getEstimationConsiderations()));
+		scopeToEClassesMap.put(GUIDELINE,  Collections.singleton(UmaPackage.eINSTANCE.getGuideline()));
 		scopeToEClassesMap.put(PRACTICE, Collections.singleton(UmaPackage.eINSTANCE.getPractice()));
 		scopeToEClassesMap.put(REPORT, Collections.singleton(UmaPackage.eINSTANCE.getReport()));
 		scopeToEClassesMap.put(REUSABLE_ASSET, Collections.singleton(UmaPackage.eINSTANCE.getReusableAsset()));
