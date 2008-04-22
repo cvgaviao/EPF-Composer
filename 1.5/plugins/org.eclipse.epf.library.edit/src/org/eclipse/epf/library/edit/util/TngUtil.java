@@ -170,8 +170,8 @@ public final class TngUtil {
 
 	private static final String GUIDANCE_FILESTRING_SEPARATOR_SPLITTER = "\\|"; //$NON-NLS-1$
 
-	public static final String GUID_SEPARATOR = ","; //$NON-NLS-1$
-	private static final String GUID_SEPARATOR_SPLITTER = "\\,"; //$NON-NLS-1$
+	public static final String COMMA_SEPARATOR = ","; //$NON-NLS-1$
+	private static final String COMMA_SEPARATOR_SPLITTER = "\\,"; //$NON-NLS-1$
 	
 	public static final String PUBLISH_CATEGORY_PROPERTY = "PUBLISH_CATEGORY"; //$NON-NLS-1$
 	
@@ -2607,31 +2607,31 @@ public final class TngUtil {
 		return attachmentString;
 	}
 	
-	public static List<String> convertGUIDsToList(String guidString) {
-		ArrayList<String> guidList = new ArrayList<String>();
-		if (guidString == null)
-			guidString = ""; //$NON-NLS-1$
-		String guids[] = guidString
-				.split(GUID_SEPARATOR_SPLITTER);
-		for (int i = 0; i < guids.length; i++) {
-			if (guids[i].trim().length() > 0)
-				guidList.add(guids[i].trim());
+	public static List<String> convertStringsToList(String string) {
+		ArrayList<String> strList = new ArrayList<String>();
+		if (string == null)
+			string = ""; //$NON-NLS-1$
+		String strings[] = string
+				.split(COMMA_SEPARATOR_SPLITTER);
+		for (int i = 0; i < strings.length; i++) {
+			if (strings[i].trim().length() > 0)
+				strList.add(strings[i].trim());
 		}
-		return guidList;
+		return strList;
 	}
 
-	public static String convertGUIDsToString(List<String> guidList) {
-		String guidString = ""; //$NON-NLS-1$
+	public static String convertListToString(List<String> strList) {
+		String string = ""; //$NON-NLS-1$
 		int i = 0;
-		if (guidList != null) {
-			for (String guid: guidList) {
+		if (strList != null) {
+			for (String aString: strList) {
 				if (i++ > 0)
-					guidString = guidString
-							.concat(GUID_SEPARATOR);
-				guidString = guidString.concat(guid);
+					string = string
+							.concat(COMMA_SEPARATOR);
+				string = string.concat(aString);
 			}
 		}
-		return guidString;
+		return string;
 	}
 
 	

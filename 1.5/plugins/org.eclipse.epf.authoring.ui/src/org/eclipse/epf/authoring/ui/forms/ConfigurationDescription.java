@@ -12,22 +12,8 @@ package org.eclipse.epf.authoring.ui.forms;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.ConfigurationEditorInput;
-import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.configuration.ConfigurationProperties;
-import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
-import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
-import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.MethodElementProperty;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -47,11 +33,6 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 	private static final String FORM_PREFIX = AuthoringUIResources.ConfigurationDescriptionFormPrefix; 
 
 	private MethodConfiguration config = null;
-	
-	private ConfigurationProperties configProperties;
-	private Button hideErrorButton;
-	private Button hideWarnButton;
-	private Button hideInfoButton;
 
 	/**
 	 * Creates a new instance.
@@ -74,9 +55,6 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		variabilitySectionOn = false;
 		fullDescOn = false;
 		keyConsiderationOn = false;
-		
-		configProperties = LibraryService.getInstance()
-				.getConfigurationManager(config).getConfigurationProperties();
 	}
 
 	@Override
@@ -105,81 +83,4 @@ public class ConfigurationDescription extends DescriptionFormPage implements IRe
 		return config;
 	}
 	
-	@Override
-	protected void addListeners() {
-		super.addListeners();
-		
-		hideErrorButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				handleHidesButtonWidgetSelected(e,
-						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS);
-			}
-		});
-		
-		hideWarnButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				handleHidesButtonWidgetSelected(e,
-						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS);
-			}
-		});
-		
-		hideInfoButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				handleHidesButtonWidgetSelected(e,
-						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS);
-			}
-		});
-		
-	}
-	
-	private void handleHidesButtonWidgetSelected(SelectionEvent e, String key) {
-		Object obj = e.getSource();
-		if (obj instanceof Button) {
-			Button button = (Button) obj;
-			String value = button.getSelection() ? Boolean.TRUE.toString()
-					: Boolean.FALSE.toString();
-			actionMgr.execute(new ConfigSetPropertyCommand(config, key, value));
-		}
-	}
-	
-	@Override
-	protected void createGeneralSection(FormToolkit toolkit) {
-		super.createGeneralSection(toolkit);
-
-		Group group = new Group(generalComposite, SWT.NONE);
-		group.setLayout(new GridLayout(1, false));
-		GridData data = new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false);
-		data.horizontalSpan = 4;
-		group.setLayoutData(data);
-		group.setText(AuthoringUIResources.configProblemViewOptionsText);
-
-		hideErrorButton = SWTUtil.createCheckbox(group, AuthoringUIResources.hideErrosText);
-		hideWarnButton = SWTUtil.createCheckbox(group, AuthoringUIResources.hideWarningsText);
-		hideInfoButton = SWTUtil.createCheckbox(group,AuthoringUIResources.hideInfosText);
-		
-		hideErrorButton.setSelection(configProperties.isHideErrors());
-		hideWarnButton.setSelection(configProperties.isHideWarnings());
-		hideInfoButton.setSelection(configProperties.isHideInfos());		
-	}
-	
-	class ConfigSetPropertyCommand extends MethodElementSetPropertyCommand {		
-		public ConfigSetPropertyCommand(MethodElement element, String key, String value) {
-			super(element, key, value);
-		}
-		
-		@Override
-		public void redo() {
-			super.redo();
-			configProperties.setValue(key, value);
-		}
-		
-		@Override
-		public void undo() {
-			super.undo();
-			boolean b = configProperties.setNotifyListeners(false);
-			configProperties.setValue(key, oldValue);
-			configProperties.setNotifyListeners(b);
-		}
-	}
-
 }

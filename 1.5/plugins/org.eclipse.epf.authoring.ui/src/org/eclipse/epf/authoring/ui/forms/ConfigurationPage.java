@@ -31,6 +31,7 @@ import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationData;
+import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.closure.ClosureListener;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.IConfigurationError;
@@ -41,10 +42,12 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -70,6 +73,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
@@ -122,6 +126,11 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private Button refreshButton;
 	private Button hideButton;
 	private Text elemDespContentText;
+
+	private ConfigurationProperties configProperties;
+	private Button hideErrorButton;
+	private Button hideWarnButton;
+	private Button hideInfoButton;
 
 
 	protected ISelectionChangedListener treeSelectionListener = new ISelectionChangedListener() {
@@ -225,6 +234,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		ConfigurationEditorInput configInput = (ConfigurationEditorInput) input;
 		config = configInput.getConfiguration();
 		actionMgr = ((ConfigurationEditor) getEditor()).getActionManager();
+		configProperties = LibraryService.getInstance()
+		.getConfigurationManager(config).getConfigurationProperties();
 	}
 
 	/**
@@ -244,8 +255,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				AuthoringUIHelpContexts.CONFIGURATION_EDITOR_ALL_CONTEXT);
 
 		Composite buttonComposite = toolkit.createComposite(sectionClient);
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 7;
+		GridLayout gridLayout = new GridLayout(6, false);
 		buttonComposite.setLayout(gridLayout);
 		GridData gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 2;
@@ -272,6 +282,22 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		noUpdateOnClick.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
 				AuthoringUIResources.ConfigurationPage_noUpdateOnClickToolTip));
 
+		Group group = new Group(buttonComposite, SWT.NONE);
+		group.setLayout(new GridLayout(1, false));
+		GridData data = new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false);
+		group.setLayoutData(data);
+		group.setText(AuthoringUIResources.configProblemViewOptionsText);
+
+		hideErrorButton = SWTUtil.createCheckbox(group, AuthoringUIResources.hideErrosText);
+		hideWarnButton = SWTUtil.createCheckbox(group, AuthoringUIResources.hideWarningsText);
+		hideInfoButton = SWTUtil.createCheckbox(group,AuthoringUIResources.hideInfosText);
+		
+		hideErrorButton.setSelection(configProperties.isHideErrors());
+		hideWarnButton.setSelection(configProperties.isHideWarnings());
+		hideInfoButton.setSelection(configProperties.isHideInfos());		
+
+		
+		
 		hideButton = toolkit.createButton(buttonComposite, "", SWT.PUSH //$NON-NLS-1$
 				| GridData.HORIZONTAL_ALIGN_END);
 		hideButton.setImage(AuthoringUIPlugin.getDefault().getSharedImage(
@@ -570,6 +596,27 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 	
 	private void addListeners() {
+		hideErrorButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				handleHidesButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS);
+			}
+		});
+		
+		hideWarnButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				handleHidesButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS);
+			}
+		});
+		
+		hideInfoButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				handleHidesButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS);
+			}
+		});
+		
 		closureButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				
@@ -931,5 +978,35 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		saveConfiguration();
 		showErrors();					
    }
+
+	class ConfigSetPropertyCommand extends MethodElementSetPropertyCommand {		
+		public ConfigSetPropertyCommand(MethodElement element, String key, String value) {
+			super(element, key, value);
+		}
+		
+		@Override
+		public void redo() {
+			super.redo();
+			configProperties.setValue(key, value);
+		}
+		
+		@Override
+		public void undo() {
+			super.undo();
+			boolean b = configProperties.setNotifyListeners(false);
+			configProperties.setValue(key, oldValue);
+			configProperties.setNotifyListeners(b);
+		}
+	}
+
+	private void handleHidesButtonWidgetSelected(SelectionEvent e, String key) {
+		Object obj = e.getSource();
+		if (obj instanceof Button) {
+			Button button = (Button) obj;
+			String value = button.getSelection() ? Boolean.TRUE.toString()
+					: Boolean.FALSE.toString();
+			actionMgr.execute(new ConfigSetPropertyCommand(config, key, value));
+		}
+	}
 
 }
