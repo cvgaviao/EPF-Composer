@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,6 +24,8 @@ import java.util.Map;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -33,9 +36,11 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -45,9 +50,12 @@ import org.eclipse.epf.persistence.MultiFileXMISaveImpl;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -67,6 +75,16 @@ import org.eclipse.epf.uma.util.UmaUtil;
 public class LibraryUtil {
 
 	public static boolean PUBLISH_MODE = false;
+	
+	private static Comparator<EClass> typeComparator = new Comparator<EClass>() {
+
+		public int compare(EClass o1, EClass o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
+		
+	};
+
+	private static List<EClass> contentElementTypes;
 	
 	/**
 	 * Check is given plugin name is valid name in the library
@@ -855,5 +873,47 @@ public class LibraryUtil {
 			return features;
 		} else
 			return null;
+	}
+	
+	public static List<EClass> getContentElementTypes() {
+		if (contentElementTypes == null) {
+			synchronized (LibraryUtil.class) {
+				if (contentElementTypes == null) {
+					contentElementTypes = new ArrayList<EClass>();
+					for (EClassifier cls : UmaPackage.eINSTANCE
+							.getEClassifiers()) {
+						if (cls instanceof EClass
+								&& UmaPackage.eINSTANCE.getContentElement()
+										.isSuperTypeOf((EClass) cls)) {
+							contentElementTypes.add((EClass) cls);
+						}
+					}
+					Collections.sort(contentElementTypes, typeComparator);
+					contentElementTypes = Collections.unmodifiableList(contentElementTypes);
+				}
+			}
+		}
+		return contentElementTypes;
+	}
+	
+	public static List<ContentElement> getIncludedContentElement(CustomCategory category, ElementRealizer realizer) {
+		List<ContentElement> includedElements = new ArrayList<ContentElement>();
+		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
+		EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
+		if(cls instanceof EClass) {
+			EClass eClass = (EClass) cls;
+			if (UmaPackage.eINSTANCE.getContentElement().isSuperTypeOf(eClass)) {
+				MethodLibrary lib = (MethodLibrary) realizer.getConfiguration()
+						.eContainer();
+				Iterator<EObject> iter = lib.eAllContents();
+				while (iter.hasNext()) {
+					EObject eObject = iter.next();
+					if (eClass.isInstance(eObject)) {
+						includedElements.add((ContentElement) eObject);
+					}
+				}
+			}
+		}
+		return includedElements;
 	}
 }

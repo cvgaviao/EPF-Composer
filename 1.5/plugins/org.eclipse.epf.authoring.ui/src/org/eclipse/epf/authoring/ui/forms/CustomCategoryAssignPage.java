@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -22,23 +24,28 @@ import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewDeleteAction;
 import org.eclipse.epf.authoring.ui.filters.AllFilter;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.ui.LibraryUIManager;
 import org.eclipse.epf.library.util.LibraryManager;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
@@ -49,10 +56,24 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.MessageException;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 
 
@@ -61,6 +82,7 @@ import org.eclipse.ui.forms.editor.FormEditor;
  * 
  * @author Shashidhar Kannoori
  * @author Kelvin Low
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class CustomCategoryAssignPage extends AssociationFormPage {
@@ -72,13 +94,102 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 	//private ContentElementOrderList allSteps;
 	private ContentElementOrderList allSteps;
 
+	private Button includeCheckBox;
+
+	private ComboViewer typeComboViewer;
+
 	/**
 	 * Creates a new instance.
 	 */
 	public CustomCategoryAssignPage(FormEditor editor) {
 		super(editor, FORM_PAGE_ID, AuthoringUIText.ASSIGN_PAGE_TITLE);
 	}
+	
+	@Override
+	protected void createFormContent(IManagedForm managedForm) {
+		super.createFormContent(managedForm);
+		
+		createIncludeComposite();
+	}
 
+	private void createIncludeComposite() {
+		createCompositeForButtons(toolkit, aComposite);
+		Composite composite = createComposite(toolkit, aComposite, GridData.FILL_BOTH, 1, 1, 2);
+		includeCheckBox = toolkit.createButton(composite, "Include content elements of type", SWT.CHECK);
+		includeCheckBox.setLayoutData(new GridData(GridData.BEGINNING));
+		Combo typeCombo = new Combo(composite, SWT.SINGLE | SWT.FLAT | SWT.READ_ONLY);
+		typeCombo.setLayoutData(new GridData(GridData.BEGINNING));
+		typeComboViewer = new ComboViewer(typeCombo);
+		typeComboViewer.setContentProvider(new ArrayContentProvider());
+		typeComboViewer.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if(element instanceof EClass) {
+					return TngUtil.getTypeText((EClass) element);
+				}
+				return super.getText(element);
+			}
+		});
+		typeComboViewer.setInput(LibraryUtil.getContentElementTypes());
+		
+		// populate data
+		//
+		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
+		if(prop != null) {
+			includeCheckBox.setSelection(true);
+			EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
+			if(cls instanceof EClass) {
+				typeComboViewer.setSelection(new StructuredSelection(cls));
+			}
+		}
+		else {
+			typeCombo.setEnabled(false);
+		}
+		
+		// add listeners
+		//
+		includeCheckBox.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				typeComboViewer.getCombo().setEnabled(includeCheckBox.getSelection());
+				updateInclude();
+			}
+		});
+		typeComboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			public void selectionChanged(SelectionChangedEvent event) {
+				if(includeCheckBox.getSelection()) {
+					updateInclude();
+				}
+			}
+			
+		});
+	}
+
+	private void updateInclude() {
+		if(includeCheckBox.getSelection()) {
+			String type;
+			IStructuredSelection selection = (IStructuredSelection) typeComboViewer.getSelection();
+			if(selection.isEmpty()) {
+				type = StrUtil.EMPTY_STRING;
+			}
+			else {
+				type = ((EClass) selection.getFirstElement()).getName();
+			}
+			MethodElementSetPropertyCommand cmd = new MethodElementSetPropertyCommand(category,
+					MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS, type);
+			getActionManager().execute(cmd);
+		}
+		else {
+			// remove property "include"
+			//
+			MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
+			if(prop != null) {
+				getActionManager().doAction(IActionManager.REMOVE, category, UmaPackage.eINSTANCE.getMethodElement_MethodElementProperty(), prop, -1);
+			}
+		}
+	}
+	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
 	 */

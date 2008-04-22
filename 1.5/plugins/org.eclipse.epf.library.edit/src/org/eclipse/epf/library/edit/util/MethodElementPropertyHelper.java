@@ -26,6 +26,7 @@ public class MethodElementPropertyHelper {
 	public static final String CONFIG_PROPBLEM_HIDE_ERRORS = "hide_errors"; //$NON-NLS-1$
 	public static final String CONFIG_PROPBLEM_HIDE_WARNINGS = "hide_warnings"; //$NON-NLS-1$
 	public static final String CONFIG_PROPBLEM_HIDE_INFOS = "hide_infos"; //$NON-NLS-1$
+	public static final String CUSTOM_CATEGORY__INCLUDED_ELEMENTS = "include"; //$NON-NLS-1$
 	
 	public static final MethodElementProperty getProperty(MethodElement e, String propertyName) {
 		if (e != null) {
