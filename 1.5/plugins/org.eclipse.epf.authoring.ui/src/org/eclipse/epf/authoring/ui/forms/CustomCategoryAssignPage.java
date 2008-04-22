@@ -130,7 +130,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 				return super.getText(element);
 			}
 		});
-		typeComboViewer.setInput(LibraryUtil.getContentElementTypes());
+		typeComboViewer.setInput(LibraryUtil.getIncludedElementTypes());
 		
 		// populate data
 		//

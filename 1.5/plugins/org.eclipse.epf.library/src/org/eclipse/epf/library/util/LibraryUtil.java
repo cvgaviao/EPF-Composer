@@ -12,6 +12,7 @@ package org.eclipse.epf.library.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -84,7 +85,26 @@ public class LibraryUtil {
 		
 	};
 
-	private static List<EClass> contentElementTypes;
+	private static List<EClass> includedElementTypes;
+	
+	private static final Collection<EClass> excludedTypes = Arrays.asList(new EClass[] {
+			UmaPackage.eINSTANCE.getBreakdownElement(),
+			UmaPackage.eINSTANCE.getCompositeRole(),
+			UmaPackage.eINSTANCE.getDescribableElement(),
+			UmaPackage.eINSTANCE.getDescriptor(),
+			UmaPackage.eINSTANCE.getFulfillableElement(),
+			UmaPackage.eINSTANCE.getKind(),
+			UmaPackage.eINSTANCE.getProcessComponentDescriptor(),
+			UmaPackage.eINSTANCE.getProcessComponentInterface(),
+			UmaPackage.eINSTANCE.getProcessElement(),
+			UmaPackage.eINSTANCE.getProcessPlanningTemplate(),
+			UmaPackage.eINSTANCE.getRoleDescriptor(),
+			UmaPackage.eINSTANCE.getTaskDescriptor(),
+			UmaPackage.eINSTANCE.getTeamProfile(),
+			UmaPackage.eINSTANCE.getWorkBreakdownElement(),
+			UmaPackage.eINSTANCE.getWorkOrder(),
+			UmaPackage.eINSTANCE.getWorkProductDescriptor()
+	});
 	
 	/**
 	 * Check is given plugin name is valid name in the library
@@ -875,34 +895,35 @@ public class LibraryUtil {
 			return null;
 	}
 	
-	public static List<EClass> getContentElementTypes() {
-		if (contentElementTypes == null) {
+	public static List<EClass> getIncludedElementTypes() {
+		if (includedElementTypes == null) {
 			synchronized (LibraryUtil.class) {
-				if (contentElementTypes == null) {
-					contentElementTypes = new ArrayList<EClass>();
+				if (includedElementTypes == null) {
+					includedElementTypes = new ArrayList<EClass>();
 					for (EClassifier cls : UmaPackage.eINSTANCE
 							.getEClassifiers()) {
 						if (cls instanceof EClass
-								&& UmaPackage.eINSTANCE.getContentElement()
+								&& UmaPackage.eINSTANCE.getDescribableElement()
 										.isSuperTypeOf((EClass) cls)) {
-							contentElementTypes.add((EClass) cls);
+							includedElementTypes.add((EClass) cls);
 						}
 					}
-					Collections.sort(contentElementTypes, typeComparator);
-					contentElementTypes = Collections.unmodifiableList(contentElementTypes);
+					includedElementTypes.removeAll(excludedTypes);
+					Collections.sort(includedElementTypes, typeComparator);
+					includedElementTypes = Collections.unmodifiableList(includedElementTypes);
 				}
 			}
 		}
-		return contentElementTypes;
+		return includedElementTypes;
 	}
 	
-	public static List<ContentElement> getIncludedContentElement(CustomCategory category, ElementRealizer realizer) {
-		List<ContentElement> includedElements = new ArrayList<ContentElement>();
+	public static List<DescribableElement> getIncludedElements(CustomCategory category, ElementRealizer realizer) {
+		List<DescribableElement> includedElements = new ArrayList<DescribableElement>();
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
 		EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
 		if(cls instanceof EClass) {
 			EClass eClass = (EClass) cls;
-			if (UmaPackage.eINSTANCE.getContentElement().isSuperTypeOf(eClass)) {
+			if (UmaPackage.eINSTANCE.getDescribableElement().isSuperTypeOf(eClass)) {
 				MethodLibrary lib = (MethodLibrary) realizer.getConfiguration()
 						.eContainer();
 				Iterator<EObject> iter = lib.eAllContents();
