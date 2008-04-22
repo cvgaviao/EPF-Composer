@@ -115,7 +115,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 	private void createIncludeComposite() {
 		createCompositeForButtons(toolkit, aComposite);
 		Composite composite = createComposite(toolkit, aComposite, GridData.FILL_BOTH, 1, 1, 2);
-		includeCheckBox = toolkit.createButton(composite, "Include content elements of type", SWT.CHECK);
+		includeCheckBox = toolkit.createButton(composite, AuthoringUIResources.CustomCategoryAssignPage_includeElementsOfType, SWT.CHECK);
 		includeCheckBox.setLayoutData(new GridData(GridData.BEGINNING));
 		Combo typeCombo = new Combo(composite, SWT.SINGLE | SWT.FLAT | SWT.READ_ONLY);
 		typeCombo.setLayoutData(new GridData(GridData.BEGINNING));

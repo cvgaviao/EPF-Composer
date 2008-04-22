@@ -30,6 +30,8 @@ public final class AuthoringUIResources extends NLS {
 	}
 	
 	public static String assignAction_text;
+
+	public static String CustomCategoryAssignPage_includeElementsOfType;
 	
 	public static String unassignAction_text;
 	
