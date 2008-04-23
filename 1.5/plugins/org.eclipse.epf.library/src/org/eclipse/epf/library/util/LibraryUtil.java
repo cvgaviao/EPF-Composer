@@ -469,6 +469,13 @@ public class LibraryUtil {
 		}
 	}
 	
+	public static void loadAllPlugins(MethodConfiguration config) {
+		List<MethodPlugin> pluigns = config.getMethodPluginSelection();
+		for (MethodPlugin plugin: pluigns) {
+			loadAllContained(plugin);
+		}
+	}
+	
 	/**
 	 * load all processes in the library
 	 * @param lib MethodLibrary
