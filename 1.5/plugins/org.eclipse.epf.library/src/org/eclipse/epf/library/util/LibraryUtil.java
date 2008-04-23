@@ -51,7 +51,6 @@ import org.eclipse.epf.persistence.MultiFileXMISaveImpl;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
-import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -451,7 +450,13 @@ public class LibraryUtil {
 
 		Collection<Resource> loadedres = getLoadedResources(lib, null);
 		
-		for (Iterator<EObject> iter = lib.eAllContents(); iter.hasNext();) {
+		loadAllContained(lib);
+		
+		return getLoadedResources(lib, loadedres);
+	}
+
+	public static void loadAllContained(MethodElement me) {
+		for (Iterator<EObject> iter = me.eAllContents(); iter.hasNext();) {
 			try {
 				EObject element = (EObject) iter.next();
 				for (Iterator<EObject> iterator = element.eCrossReferences().iterator(); iterator
@@ -462,10 +467,7 @@ public class LibraryUtil {
 				LibraryPlugin.getDefault().getLogger().logError(e);
 			}
 		}
-		
-		return getLoadedResources(lib, loadedres);
 	}
-
 	
 	/**
 	 * load all processes in the library
