@@ -12,6 +12,8 @@ package org.eclipse.epf.export.wizards;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
@@ -20,9 +22,11 @@ import org.eclipse.epf.export.ExportPlugin;
 import org.eclipse.epf.export.ExportResources;
 import org.eclipse.epf.export.services.PluginExportData;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.ui.LibraryUIImages;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
+import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -116,8 +120,14 @@ public class SelectPluginPage extends BaseWizardPage implements
 
 		MethodLibrary library = LibraryService.getInstance()
 				.getCurrentMethodLibrary();
-		List plugins = (library == null) ? new ArrayList() : library
-				.getMethodPlugins();
+		List plugins = (library == null) ? new ArrayList() : new ArrayList(library
+				.getMethodPlugins());
+		
+		if (plugins.size() > 1) {
+			Comparator comparator = PresentationContext.INSTANCE.getComparator();
+			Collections.<FulfillableElement>sort(plugins, comparator);
+		}
+		
 		ILabelProvider labelProvider = new LabelProvider() {
 			public Image getImage(Object element) {
 				return LibraryUIImages.IMG_METHOD_PLUGIN;
@@ -152,13 +162,13 @@ public class SelectPluginPage extends BaseWizardPage implements
 			setDisplayAttributes((MethodPlugin) plugins.get(0));
 		}
 
-		addListeners();
+		addListeners(plugins);
 
 		setControl(container);
 		setPageComplete(false);
 	}
 
-	private void addListeners() {
+	private void addListeners(final List<MethodPlugin> plugins) {
 		ctrl_chkboxTableViewer.addSelectionChangedListener(this);
 		ctrl_chkboxTableViewer.addCheckStateListener(this);
 		
@@ -168,7 +178,7 @@ public class SelectPluginPage extends BaseWizardPage implements
 			public void widgetSelected(SelectionEvent e) {
 				ctrl_chkboxTableViewer.setAllChecked(true);
 				if (lib != null) {
-					checkedPluginList.addAll(lib.getMethodPlugins());
+					checkedPluginList.addAll(plugins);
 					checkedCount = checkedPluginList.size();
 				}
 				
