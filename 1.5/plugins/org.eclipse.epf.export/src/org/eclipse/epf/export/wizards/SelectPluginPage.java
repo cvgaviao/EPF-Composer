@@ -26,7 +26,6 @@ import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.ui.LibraryUIImages;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
-import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -125,7 +124,7 @@ public class SelectPluginPage extends BaseWizardPage implements
 		
 		if (plugins.size() > 1) {
 			Comparator comparator = PresentationContext.INSTANCE.getComparator();
-			Collections.<FulfillableElement>sort(plugins, comparator);
+			Collections.<MethodPlugin>sort(plugins, comparator);
 		}
 		
 		ILabelProvider labelProvider = new LabelProvider() {
