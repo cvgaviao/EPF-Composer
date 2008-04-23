@@ -930,7 +930,7 @@ public class LibraryUtil {
 				while (iter.hasNext()) {
 					EObject eObject = iter.next();
 					if (eClass.isInstance(eObject)) {
-						includedElements.add((ContentElement) eObject);
+						includedElements.add((DescribableElement) eObject);
 					}
 				}
 			}
