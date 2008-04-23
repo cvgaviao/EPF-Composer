@@ -13,20 +13,13 @@ package org.eclipse.epf.authoring.ui.views;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.List;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
-import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
-import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.HtmlBuilder;
-import org.eclipse.epf.library.layout.IElementLayout;
-import org.eclipse.epf.library.layout.elements.AbstractProcessElementLayout;
-import org.eclipse.epf.library.layout.elements.SummaryPageLayout;
-import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
-import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationAdapter;
@@ -320,51 +313,7 @@ public class ElementHTMLViewer {
 		startWait();
 
 		try {
-			IElementLayout layout = null;
-			String file_url = "about:blank"; //$NON-NLS-1$
-			Object element = LibraryUtil.unwrap(raw_element);
-			if ( raw_element instanceof ActivityWrapperItemProvider ) {
-				ActivityWrapperItemProvider wrapper = (ActivityWrapperItemProvider)raw_element;
-				Object proc = wrapper.getTopItem();
-				if ( element instanceof MethodElement && proc instanceof org.eclipse.epf.uma.Process ) {
-					String path = AbstractProcessElementLayout.getPath(wrapper);
-					//System.out.println(topItem);
-					layout = getHtmlBuilder().getLayoutManager()
-						.createLayout((MethodElement)element, 
-								(org.eclipse.epf.uma.Process)proc, path);
-					file_url = getHtmlBuilder().generateHtml(layout);
-				}
-			} else if (raw_element instanceof PracticeSubgroupItemProvider) {
-				PracticeSubgroupItemProvider provider = (PracticeSubgroupItemProvider) raw_element;
-				layout = new SummaryPageLayout(getHtmlBuilder().getLayoutManager(),
-						provider.getPractice(), provider.getText(null),
-						provider.getText(null), (List) provider.getChildren(null),
-						provider.getText(null));
-				((SummaryPageLayout) layout).setHtmlBuilder(getHtmlBuilder());
-				file_url = getHtmlBuilder().generateHtml(layout);
-			} else if (element instanceof MethodElement) {
-					file_url = getHtmlBuilder().generateHtml((MethodElement)element);
-			}
-			
-			if ( file_url == null ) {
-				file_url = "about:blank"; //$NON-NLS-1$
-			}
-			// on linux, the file path need to be specified as file, otherwise it will be treated as url
-			// and casuign encoding/decoding issue
-			// Linux: Configuration names containing accented characters cannot be browsed.
-			else {			
-				if (!SWT.getPlatform().equals("win32") && !file_url.startsWith("file://") && //$NON-NLS-1$ //$NON-NLS-2$
-					!file_url.equals("about:blank")) //$NON-NLS-1$
-				{
-					file_url = "file://" + file_url; //$NON-NLS-1$
-				}
-				
-				// Bug 201335 - Refresh does not work correctly for process pages in browsing mode
-				// need to append the query string
-				if ( layout instanceof AbstractProcessElementLayout ) {
-					file_url += ((AbstractProcessElementLayout)layout).getQueryString();
-				}
-			}
+			String file_url = generateHtml(raw_element, getHtmlBuilder());
 		
 			// Set the current location to avoid re-generating the HTML file in
 			// respond to a location change.
@@ -375,6 +324,10 @@ public class ElementHTMLViewer {
 		}
 
 		endWait();
+	}
+
+	private String generateHtml(Object raw_element, HtmlBuilder htmlBuilder) {
+		return ConfigurationHelper.getDelegate().generateHtml(raw_element, htmlBuilder);
 	}
 
 	private void generateHtml(String url) {

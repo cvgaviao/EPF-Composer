@@ -12,7 +12,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
+import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.layout.HtmlBuilder;
+import org.eclipse.epf.library.layout.IElementLayout;
+import org.eclipse.epf.library.layout.elements.AbstractProcessElementLayout;
+import org.eclipse.epf.library.layout.elements.SummaryPageLayout;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
@@ -27,6 +33,7 @@ import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.swt.SWT;
 
 public class ConfigHelperDelegate {
 
@@ -239,6 +246,55 @@ public class ConfigHelperDelegate {
 			elements = new HashSet(map.values());
 			elements.removeAll(loadedElements);
 		}
+	}
+	
+	public String generateHtml(Object raw_element, HtmlBuilder htmlBuilder) {
+		IElementLayout layout = null;
+		String file_url = "about:blank"; //$NON-NLS-1$
+		Object element = LibraryUtil.unwrap(raw_element);
+		if ( raw_element instanceof ActivityWrapperItemProvider ) {
+			ActivityWrapperItemProvider wrapper = (ActivityWrapperItemProvider)raw_element;
+			Object proc = wrapper.getTopItem();
+			if ( element instanceof MethodElement && proc instanceof org.eclipse.epf.uma.Process ) {
+				String path = AbstractProcessElementLayout.getPath(wrapper);
+				//System.out.println(topItem);
+				layout = htmlBuilder.getLayoutManager()
+					.createLayout((MethodElement)element, 
+							(org.eclipse.epf.uma.Process)proc, path);
+				file_url = htmlBuilder.generateHtml(layout);
+			}
+		} else if (raw_element instanceof PracticeSubgroupItemProvider) {
+			PracticeSubgroupItemProvider provider = (PracticeSubgroupItemProvider) raw_element;
+			layout = new SummaryPageLayout(htmlBuilder.getLayoutManager(),
+					provider.getPractice(), provider.getText(null),
+					provider.getText(null), (List) provider.getChildren(null),
+					provider.getText(null));
+			((SummaryPageLayout) layout).setHtmlBuilder(htmlBuilder);
+			file_url = htmlBuilder.generateHtml(layout);
+		} else if (element instanceof MethodElement) {
+				file_url = htmlBuilder.generateHtml((MethodElement)element);
+		}
+		
+		if ( file_url == null ) {
+			file_url = "about:blank"; //$NON-NLS-1$
+		}
+		// on linux, the file path need to be specified as file, otherwise it will be treated as url
+		// and casuign encoding/decoding issue
+		// Linux: Configuration names containing accented characters cannot be browsed.
+		else {			
+			if (!SWT.getPlatform().equals("win32") && !file_url.startsWith("file://") && //$NON-NLS-1$ //$NON-NLS-2$
+				!file_url.equals("about:blank")) //$NON-NLS-1$
+			{
+				file_url = "file://" + file_url; //$NON-NLS-1$
+			}
+			
+			// Bug 201335 - Refresh does not work correctly for process pages in browsing mode
+			// need to append the query string
+			if ( layout instanceof AbstractProcessElementLayout ) {
+				file_url += ((AbstractProcessElementLayout)layout).getQueryString();
+			}
+		}
+		return file_url;
 	}
 	
 	public void debugDump(String msg) {
