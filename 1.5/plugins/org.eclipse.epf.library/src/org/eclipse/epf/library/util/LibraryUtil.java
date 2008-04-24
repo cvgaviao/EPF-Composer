@@ -929,7 +929,7 @@ public class LibraryUtil {
 	public static List<DescribableElement> getIncludedElements(CustomCategory category, ElementRealizer realizer) {
 		List<DescribableElement> includedElements = new ArrayList<DescribableElement>();
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
-		EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
+		EClassifier cls = prop == null ? null : UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
 		if(cls instanceof EClass) {
 			EClass eClass = (EClass) cls;
 			if (UmaPackage.eINSTANCE.getDescribableElement().isSuperTypeOf(eClass)) {
