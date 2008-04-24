@@ -926,14 +926,17 @@ public class LibraryUtil {
 		return includedElementTypes;
 	}
 	
-	public static List<DescribableElement> getIncludedElements(CustomCategory category, ElementRealizer realizer) {
+	public static List<DescribableElement> getIncludedElements(CustomCategory category, MethodConfiguration config) {
 		List<DescribableElement> includedElements = new ArrayList<DescribableElement>();
+		if (config == null) {
+			return includedElements;
+		}
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
 		EClassifier cls = prop == null ? null : UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
 		if(cls instanceof EClass) {
 			EClass eClass = (EClass) cls;
 			if (UmaPackage.eINSTANCE.getDescribableElement().isSuperTypeOf(eClass)) {
-				MethodLibrary lib = (MethodLibrary) realizer.getConfiguration()
+				MethodLibrary lib = (MethodLibrary) config
 						.eContainer();
 				Iterator<EObject> iter = lib.eAllContents();
 				while (iter.hasNext()) {

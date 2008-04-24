@@ -418,7 +418,7 @@ public class ConfigurationData {
 		return ret;
 	}
 	
-	private boolean isOwnerSelected_(MethodElement element, boolean checkSubtracted) {
+	protected boolean isOwnerSelected_(MethodElement element, boolean checkSubtracted) {
 		if (element == null) {
 			return false;
 		}

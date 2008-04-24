@@ -306,9 +306,9 @@ public abstract class ElementRealizer {
 		
 		CustomCategory cc = (CustomCategory) element;
 
-		Collection<?> result = LibraryUtil.getIncludedElements(cc, this);
+		Collection<?> result = LibraryUtil.getIncludedElements(cc, getConfiguration());
 
-		if (result.isEmpty()) {
+		if (result == null || result.isEmpty()) {
 			return;
 		}
 
