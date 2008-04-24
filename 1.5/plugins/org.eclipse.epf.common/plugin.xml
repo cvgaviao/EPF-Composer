@@ -4,6 +4,7 @@
    <extension-point id="version" name="Version" schema="schema/org.eclipse.epf.common.version.exsd"/>
    <extension-point id="commandLineRunners" name="CommandLineRunners" schema="schema/commandLineRunners.exsd"/>
    <extension-point id="markerAttributeContributer" name="MarkerAttributeContributer" schema="schema/markerAttributeContributer.exsd"/>
+   <extension-point id="objectFactory" name="ObjectFactory" schema="schema/objectFactory.exsd"/>
    <extension
          id="epf"
          point="org.eclipse.epf.common.version">

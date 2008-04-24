@@ -86,8 +86,23 @@ public class ExtensionHelper {
 
 	public static IMarkerAttributeContributer getMarkerAttributeContributer() {
 		IMarkerAttributeContributer ret = (IMarkerAttributeContributer) getExtension(
-				CommonPlugin.getDefault().getId(), "markerAttributeContributer");
+				CommonPlugin.getDefault().getId(), "markerAttributeContributer");//$NON-NLS-1$
 		return ret;
+	}
+	
+	/**
+	 * Create object based on type and context through extension
+	 * @param type
+	 * @param context
+	 * @return created object or null if no extension is found
+	 */
+	public static Object create(Class type, Object context) {
+		IObjectFactory ret = (IObjectFactory) getExtension(
+				CommonPlugin.getDefault().getId(), "objectFactory");//$NON-NLS-1$
+		if (ret == null) {
+			return null;
+		}
+		return ret.create(type, context);
 	}
 
 }
