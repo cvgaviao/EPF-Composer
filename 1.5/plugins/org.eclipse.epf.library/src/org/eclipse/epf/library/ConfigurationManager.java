@@ -66,7 +66,7 @@ public class ConfigurationManager implements IConfigurationManager {
 	 */
 	public ConfigurationManager(MethodConfiguration config) {
 		this.config = config;
-		configData = new ConfigurationData(config);
+		configData = ConfigurationData.newConfigurationData(config);
 		
 		configProps = new ConfigurationProperties(config); 
 

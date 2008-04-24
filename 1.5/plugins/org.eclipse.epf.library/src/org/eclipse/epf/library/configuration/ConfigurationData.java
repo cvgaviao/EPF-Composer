@@ -25,6 +25,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
@@ -48,7 +49,6 @@ import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.RoleSet;
 import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.Tool;
-import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProductType;
@@ -79,7 +79,15 @@ public class ConfigurationData {
 	private ILibraryChangeListener libListener;
 	private boolean enableUpdate = true;
 	
-	public ConfigurationData(MethodConfiguration config) {
+	public static ConfigurationData newConfigurationData(MethodConfiguration config) {
+		Object obj = ExtensionHelper.create(ConfigurationData.class, config);
+		if (obj instanceof ConfigurationData) {
+			return (ConfigurationData) obj;
+		}		
+		return new ConfigurationData(config);
+	}
+	
+	private ConfigurationData(MethodConfiguration config) {
 		this.config = config;
 		
 		configListener = new AdapterImpl() {
