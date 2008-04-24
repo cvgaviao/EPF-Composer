@@ -87,7 +87,7 @@ public class ConfigurationData {
 		return new ConfigurationData(config);
 	}
 	
-	private ConfigurationData(MethodConfiguration config) {
+	public ConfigurationData(MethodConfiguration config) {
 		this.config = config;
 		
 		configListener = new AdapterImpl() {
