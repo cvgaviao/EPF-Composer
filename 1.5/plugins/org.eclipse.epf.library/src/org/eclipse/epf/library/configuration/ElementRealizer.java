@@ -10,18 +10,28 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.CustomCategory;
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -289,10 +299,82 @@ public abstract class ElementRealizer {
 	
 	protected void addExtraFeatureValues(MethodElement element, EStructuralFeature feature,
 			FeatureValue values) {
+		if (!ElementRealizer.toAddExtraFeatureValues(element, feature, values,
+				getConfiguration())) {
+			return;
+		}
+		
+		CustomCategory cc = (CustomCategory) element;
+
+		Collection<?> result = LibraryUtil.getIncludedElements(cc, this);
+
+		if (result.isEmpty()) {
+			return;
+		}
+
+		ToManyFeatureValue manyValues = values instanceof ToManyFeatureValue ?
+				(ToManyFeatureValue) values : null;
+				
+		List oldValues = manyValues == null ? null : (List) manyValues.getValue();
+
+		HashSet<DescribableElement> seenSet = manyValues == null ?
+				new HashSet<DescribableElement>() : new HashSet<DescribableElement>(oldValues);
+				
+		List<DescribableElement> list = calculateList(result, seenSet);
+		values.add(cc, list);
+		
+	}
+
+	public List<DescribableElement> calculateList(Collection<?> result,
+			HashSet<DescribableElement> seenSet) {
+		List<DescribableElement> list = new ArrayList<DescribableElement>();
+		for (Iterator<?> iter = result.iterator(); iter.hasNext();) {
+			Object o = iter.next();
+			if (o instanceof DescribableElement) {
+				DescribableElement contElem = (DescribableElement) o;
+				contElem = (DescribableElement) ConfigurationHelper
+						.getCalculatedElement(contElem, this);
+				if (contElem != null) {
+					if (seenSet.add(contElem)) {
+						list.add(contElem);
+					}
+				}
+			}
+		}
+		
+		if (list.size() > 1) {
+			Comparator comparator = PresentationContext.INSTANCE.getPresNameComparator();
+			Collections.<DescribableElement>sort(list, comparator);
+		}
+		
+		return list;
 	}
 	
 	protected boolean slotMatching(FulfillableElement slot, FulfillableElement element) {		
 		return true;
 	}
 
+	protected static boolean toAddExtraFeatureValues(MethodElement element,
+			EStructuralFeature feature, FeatureValue values,
+			MethodConfiguration config) {
+		if (config == null) {
+			return false;
+		}
+
+		if (!(values instanceof ToManyFeatureValue)) {
+			return false;
+		}
+
+		if (!(element instanceof CustomCategory)) {
+			return false;
+		}
+
+		if (feature != UmaPackage.eINSTANCE
+				.getCustomCategory_CategorizedElements()) {
+			return false;
+		}
+
+		return true;
+	}
+	
 }
