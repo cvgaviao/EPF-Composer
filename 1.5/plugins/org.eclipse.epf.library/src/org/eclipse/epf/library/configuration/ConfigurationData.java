@@ -110,18 +110,8 @@ public class ConfigurationData {
 			public void libraryChanged(int option, Collection changedItems) {
 				if (localDebug) {
 					//System.out.println("LD> libraryChanged, option: " + option + ", " + changedItems);//$NON-NLS-1$//$NON-NLS-2$
-				}
-				
-				if (isNeedUpdateChanges()) {
-					return;
-				}
-				for (Iterator it = changedItems.iterator(); it.hasNext();) {
-					Object item = it.next();
-					if (item instanceof ContentCategory) {
-						setNeedUpdateChanges(true);
-						return;
-					}
-				}
+				}				
+				handleLibraryChange(option, changedItems);
 			}
 		};
 		
@@ -130,9 +120,22 @@ public class ConfigurationData {
 		if(libraryManager != null) {
 			libraryManager.addListener(libListener);
 		}
-	} 
+	}
 	
-	private boolean getUpdatingChanges() {
+	protected void handleLibraryChange(int option, Collection changedItems) {
+		if (isNeedUpdateChanges()) {
+			return;
+		}
+		for (Iterator it = changedItems.iterator(); it.hasNext();) {
+			Object item = it.next();
+			if (item instanceof ContentCategory) {
+				setNeedUpdateChanges(true);
+				return;
+			}
+		}
+	}
+	
+	protected boolean getUpdatingChanges() {
 		return originalSubstracted != null && orignalAdded != null;
 	}
 	
