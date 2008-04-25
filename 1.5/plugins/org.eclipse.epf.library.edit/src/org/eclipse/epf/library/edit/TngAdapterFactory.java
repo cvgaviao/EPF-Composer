@@ -22,7 +22,7 @@ import org.eclipse.epf.library.edit.internal.TngAdapterFactoryImpl;
  */
 public interface TngAdapterFactory {
 
-	public static final TngAdapterFactory INSTANCE = new TngAdapterFactoryImpl();
+	public static final TngAdapterFactory INSTANCE = TngAdapterFactoryImpl.createAdapterFactoryProvider();
 	
 	public static final AdapterFactory[] processAdapterFactories = {
 		INSTANCE.getWBS_ComposedAdapterFactory(),

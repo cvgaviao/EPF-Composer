@@ -612,6 +612,10 @@ public class ConfigurationView extends AbstractBaseView implements
 			};
 		}
 
+		@Override
+		protected void refreshViewer(Viewer viewer) {
+			refresh();
+		}
 	}
 
 	/**

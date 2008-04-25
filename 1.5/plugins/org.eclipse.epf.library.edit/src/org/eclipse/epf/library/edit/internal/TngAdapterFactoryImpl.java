@@ -45,6 +45,7 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeEventWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeListenerWrapper;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
@@ -79,6 +80,12 @@ import org.osgi.framework.Bundle;
  * @since 1.0
  */
 public class TngAdapterFactoryImpl implements TngAdapterFactory {
+	public static final TngAdapterFactory createAdapterFactoryProvider() {
+		Object provider = ExtensionHelper.create(TngAdapterFactory.class, null);
+		return provider instanceof TngAdapterFactory ? (TngAdapterFactory) provider : new TngAdapterFactoryImpl();
+//		return new TngAdapterFactoryImpl();
+	}
+	
 	private static final String WBS_ADAPTER_FACTORY_ID = "wbs"; //$NON-NLS-1$
 	private static final String LIBRARY_ADAPTER_FACTORY_ID = "library"; //$NON-NLS-1$
 	private static final String CONFIGURATION_ADAPTER_FACTORY_ID = "configuration"; //$NON-NLS-1$
@@ -301,7 +308,7 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 
 		private boolean isAdapterConfigurable;
 
-		FilterItemProvider(ItemProviderAdapter adapter, IFilter filter) {
+		protected FilterItemProvider(ItemProviderAdapter adapter, IFilter filter) {
 			this.adapter = adapter;
 			this.filter = filter;
 			if (adapter instanceof IConfigurable) {
@@ -309,6 +316,10 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 				((IConfigurable) adapter).setFilter(filter);
 			}
 
+		}
+		
+		public ItemProviderAdapter getAdapter() {
+			return adapter;
 		}
 
 		/*
@@ -365,18 +376,18 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 					IConfigurator configurator = (IConfigurator) filter;
 					children = new ArrayList<Object>();
 					boolean replaceChildren = false;
-					for (Iterator iter = ((ILibraryItemProvider) adapter)
+					for (Iterator<?> iter = ((ILibraryItemProvider) adapter)
 							.getChildrenFeatures(object).iterator(); iter
 							.hasNext();) {
 						EStructuralFeature feature = (EStructuralFeature) iter
 								.next();
-						Collection otherChildren = configurator.getChildren(
+						Collection<?> otherChildren = configurator.getChildren(
 								object, feature);
 						if (otherChildren != null) {
 							replaceChildren = true;
 							if (adapter instanceof IWrapper) {
 								IWrapper wrapper = (IWrapper) adapter;
-								for (Iterator iterator = otherChildren
+								for (Iterator<?> iterator = otherChildren
 										.iterator(); iterator.hasNext();) {
 									Object child = iterator.next();
 									children.add(wrapper.wrap((EObject) object,
@@ -393,18 +404,14 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 					}
 				} 
 				if (isAdapterConfigurable) {
-					Collection collection = adapter.getChildren(object);
-					if (collection instanceof List) {
-						children = (List) collection;
-					} else {
-						children = new ArrayList(collection);
-					}
+					Collection<?> collection = adapter.getChildren(object);
+					children = new ArrayList<Object>(collection);
 					break fake_loop;
 				}
 				
 				// regular adapter
-				children = new ArrayList(adapter.getChildren(object));
-				for (Iterator iter = children.iterator(); iter.hasNext();) {
+				children = new ArrayList<Object>(adapter.getChildren(object));
+				for (Iterator<?> iter = children.iterator(); iter.hasNext();) {
 					Object element = (Object) iter.next();
 					if (!filter.accept(element)) {
 						iter.remove();

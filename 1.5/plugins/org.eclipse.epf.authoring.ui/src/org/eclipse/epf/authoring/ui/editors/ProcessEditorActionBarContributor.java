@@ -110,6 +110,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
@@ -2203,7 +2204,7 @@ public class ProcessEditorActionBarContributor extends
 		// Set Activity Detail Diagram Action enable state.
 		if (selectedObject instanceof Activity
 				|| selectedObject instanceof ActivityWrapperItemProvider) {
-			setActionStateForADD();
+//			setActionStateForADD();
 			setDiagramsContextMenuState();
 		}
 
@@ -2384,11 +2385,12 @@ public class ProcessEditorActionBarContributor extends
 				// Iterate through the List, to find taskdescriptor and has
 				// primary role within current configuration.
 				// then enable the action.
-				for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				findRoleDesc:
+				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 					Object obj = iterator.next();
 					if (obj instanceof TaskDescriptor) {
 						if (!getSuppression().isSuppressed(obj)) {
-							Object e = ((TaskDescriptor) obj)
+							List<RoleDescriptor> primaryPerformers = ((TaskDescriptor) obj)
 									.getPerformedPrimarilyBy();
 							AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditor)
 									.getEditingDomain();
@@ -2396,11 +2398,13 @@ public class ProcessEditorActionBarContributor extends
 							if (factory instanceof ExposedAdapterFactory) {
 								IFilter filter = ((ExposedAdapterFactory) factory)
 										.getFilter();
-								if (filter != null && filter.accept(e)
-										&& !getSuppression().isSuppressed(e)) {
-									openWorkflowDetailEditorAction
-											.setEnabled(true);
-									break;
+								for (RoleDescriptor e : primaryPerformers) {
+									if (filter != null && filter.accept(e)
+											&& !getSuppression().isSuppressed(e)) {
+										openWorkflowDetailEditorAction
+												.setEnabled(true);
+										break findRoleDesc;
+									}									
 								}
 							}
 						}
@@ -2440,7 +2444,7 @@ public class ProcessEditorActionBarContributor extends
 				return;
 			}
 			Activity activity = (Activity) unwrapped;
-			List list = new ArrayList();
+			List<Object> list = new ArrayList<Object>();
 			
 			//TODO: check for existing diagrams in immediate base instead of root base
 			
@@ -2495,11 +2499,12 @@ public class ProcessEditorActionBarContributor extends
 				// Iterate through the List, to find taskdescriptor and has
 				// primary role within current configuration.
 				// then enable the action.
-				for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				findRoleDesc:
+				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 					Object obj = iterator.next();
 					if (obj instanceof TaskDescriptor) {
 						if (!getSuppression().isSuppressed(obj)) {
-							Object e = ((TaskDescriptor) obj)
+							List<RoleDescriptor> primaryPerformers = ((TaskDescriptor) obj)
 									.getPerformedPrimarilyBy();
 							AdapterFactoryEditingDomain domain = (AdapterFactoryEditingDomain) ((IEditingDomainProvider) activeEditor)
 									.getEditingDomain();
@@ -2507,11 +2512,13 @@ public class ProcessEditorActionBarContributor extends
 							if (factory instanceof ExposedAdapterFactory) {
 								IFilter filter = ((ExposedAdapterFactory) factory)
 										.getFilter();
-								if (filter != null && filter.accept(e)
-										&& !getSuppression().isSuppressed(e)) {
-									newActivityDetailDiagramEditor
-											.setEnabled(true);
-									break;
+								for (RoleDescriptor e : primaryPerformers) {
+									if (filter != null && filter.accept(e)
+											&& !getSuppression().isSuppressed(e)) {
+										newActivityDetailDiagramEditor
+												.setEnabled(true);
+										break findRoleDesc;
+									}
 								}
 							}
 						}
