@@ -160,29 +160,6 @@ public class PracticeReferencesPage extends AssociationFormPage {
 			}
 		};
 	}
-	/**
-	 * 
-	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#getFilterTypes()
-	 */
-	protected String[] getFilterTypes() {
-		String[] str = new String[14];
-		int i = 0;
-		str[i++] = FilterConstants.ALL_ELEMENTS;
-		str[i++] = FilterConstants.space + FilterConstants.ROLES;
-		str[i++] = FilterConstants.space + FilterConstants.TASKS;
-		str[i++] = FilterConstants.space + FilterConstants.WORKPRODUCTS;
-		str[i++] = FilterConstants.space + FilterConstants.GUIDANCE;
-		str[i++] = FilterConstants.DISCIPLINES;
-		str[i++] = FilterConstants.ROLESETS;
-		str[i++] = FilterConstants.WORKPRODUCTTYPES;
-		str[i++] = FilterConstants.DOMAINS;
-		str[i++] = FilterConstants.TOOLS;
-		str[i++] = FilterConstants.CUSTOM_CATEGORIES;
-		str[i++] = FilterConstants.PROCESSES;
-		str[i++] = FilterConstants.CONTENT_PACKAGES;
-		str[i++] = FilterConstants.METHO_PLUGINS;
-		return str;
-	}
 	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#getMultipleSelectDescription(int)

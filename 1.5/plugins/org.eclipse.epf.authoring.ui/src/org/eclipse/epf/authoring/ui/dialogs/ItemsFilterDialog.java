@@ -744,6 +744,52 @@ public class ItemsFilterDialog extends Dialog implements
 			str[0] = (String) tabStr;
 			filterType.setItems(str);
 			filterTypeStr = str[0];
+		} else if (FilterConstants.ONLY_CONTENT_ELEMENTS.equals(tabStr)) {
+			String space = "-"; //$NON-NLS-1$
+			String[] str = new String[26];
+			int i = 0;
+			str[i++] = FilterConstants.ALL_ELEMENTS;
+			str[i++] = FilterConstants.CONTENT_PACKAGES;
+			str[i++] = space + FilterConstants.ROLES;
+			str[i++] = space + FilterConstants.TASKS;
+			str[i++] = space + FilterConstants.WORKPRODUCTS;
+			str[i++] = space + FilterConstants.GUIDANCE;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.CHECKLISTS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.CONCEPTS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.ESTIMATE_CONSIDERATIONS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.EXAMPLES;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.GUIDELINES;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.PRACTICES;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.REPORTS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.REUSABLE_ASSETS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.ROADMAP;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.SUPPORTING_MATERIALS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.TEMPLATES;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.TERM_DEFINITIONS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.TOOL_MENTORS;
+			str[i++] = FilterConstants.space + FilterConstants.space
+					+ FilterConstants.WHITE_PAPERS;
+			str[i++] = FilterConstants.DISCIPLINES;
+			str[i++] = FilterConstants.ROLESETS;
+			str[i++] = FilterConstants.WORKPRODUCTTYPES;
+			str[i++] = FilterConstants.DOMAINS;
+			str[i++] = FilterConstants.TOOLS;
+			str[i++] = FilterConstants.CUSTOM_CATEGORIES;
+			filterType.setItems(str);
+			filterTypeStr = str[0];
 		} else if (FilterConstants.categoryStrs.contains(tabStr)) {
 			String[] str = new String[2];
 			str[0] = (String) tabStr;
