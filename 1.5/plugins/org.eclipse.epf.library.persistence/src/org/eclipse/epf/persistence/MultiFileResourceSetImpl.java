@@ -825,6 +825,8 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		boolean notify = eDeliver();
 		boolean reportError = REPORT_ERROR;
 		boolean refresh = RefreshJob.getInstance().isEnabled();
+		boolean oldMarkerManagerEnabled = markerMananger.isEnabled();
+
 		try {
 			if(RefreshJob.getInstance().getResourceSet() == this) {
 				RefreshJob.getInstance().setEnabled(false);
@@ -851,7 +853,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		} finally {
 			eSetDeliver(notify);
 			REPORT_ERROR = reportError;
-			markerMananger.setEnabled(true);
+			markerMananger.setEnabled(oldMarkerManagerEnabled);
 			if(RefreshJob.getInstance().getResourceSet() == this) {
 				RefreshJob.getInstance().setEnabled(refresh);
 			}
@@ -1009,6 +1011,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		// disable logging unresolved proxies during loading resource manager
 		// tree
 		//
+		boolean oldMarkerManagerEnabled = markerMananger.isEnabled();
 		markerMananger.setEnabled(false);
 
 		MultiFileURIConverter uriConverter = (MultiFileURIConverter) getURIConverter();
@@ -1036,7 +1039,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			for (; iterator.hasNext(); iterator.next())
 				;
 		} finally {
-			markerMananger.setEnabled(true);
+			markerMananger.setEnabled(oldMarkerManagerEnabled);
 			uriConverter.setResolveProxy(true);
 			loadingResourceManagerTree = false;
 

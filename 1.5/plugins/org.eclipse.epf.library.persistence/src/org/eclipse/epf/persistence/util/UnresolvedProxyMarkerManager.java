@@ -728,6 +728,10 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.epf.uma.ecore.IProxyResolutionListener#notifyException(java.lang.Exception)
