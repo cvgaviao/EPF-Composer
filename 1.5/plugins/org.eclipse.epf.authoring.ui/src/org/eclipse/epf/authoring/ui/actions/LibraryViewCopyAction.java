@@ -60,11 +60,19 @@ public class LibraryViewCopyAction extends CopyAction {
 					}
 				}
 				if (links.length() > 0) {
-					ClipboardUtil.copyTextHTMLToClipboard(links);
+					handleCopyTextHTMLToClipboard(links);
 				}
 			}
 			super.run();
 		}
+	}
+
+	/**
+	 * Handles copying the links to the clipboard as Text and HTML
+	 * @param links
+	 */
+	protected void handleCopyTextHTMLToClipboard(String links) {
+		ClipboardUtil.copyTextHTMLToClipboard(links);
 	}
 
 	

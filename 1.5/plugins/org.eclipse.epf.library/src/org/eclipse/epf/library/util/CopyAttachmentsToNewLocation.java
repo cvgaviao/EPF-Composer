@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.util;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -110,61 +111,23 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 					java.net.URI shapeIconUri = de.getShapeicon();
 					if (shapeIconUri != null) {
 						// To handle the shapeIcon/nodeIcon uri got changed, its relative to pluginPath.
-						java.net.URI srcShapeUri = TngUtil.getFullPathURI(de,
+						java.net.URI newShapeIconUri = handleIconURI(de,
 								shapeIconUri);
-						String shapeIconPath = shapeIconUri.getPath();
-						if(shapeIconPath.indexOf(lastOldPlugin.getName()) < 0){
-							srcShapeUri = new File(ResourceHelper.getPluginPath(lastOldPlugin) + File.separator+ shapeIconPath).toURI();
+						if (newShapeIconUri != null) {
+							de.setShapeicon(newShapeIconUri);
+							modifiedResourceSet.add(de.eResource());
 						}
-						File srcFile = new File(srcShapeUri);
-						File tgtFile = new File(srcFile.getAbsolutePath()
-								.replaceFirst(
-										"\\" + File.separator //$NON-NLS-1$
-												+ lastOldPlugin.getName()
-												+ "\\" + File.separator, //$NON-NLS-1$
-										"\\" //$NON-NLS-1$
-												+ File.separator
-												+ UmaUtil.getMethodPlugin(de)
-														.getName() + "\\" //$NON-NLS-1$
-												+ File.separator));
-						if (!tgtFile.exists()) {
-							FileUtil.copyFile(srcFile, tgtFile);
-						}
-						java.net.URI newShapeIconUri = new java.net.URI(NetUtil
-								.encodeFileURL(FileUtil.getRelativePath(
-										tgtFile, new File(ResourceHelper.getPluginPath(de)))));
-						de.setShapeicon(newShapeIconUri);
-						modifiedResourceSet.add(de.eResource());
 					}
 
 					// node icon
 					java.net.URI nodeIconUri = de.getNodeicon();
 					if (nodeIconUri != null) {
-						java.net.URI srcNodeUri = TngUtil.getFullPathURI(de,
-								nodeIconUri);
-						String nodeIconPath = nodeIconUri.getPath();
-						if(nodeIconPath.indexOf(lastOldPlugin.getName()) < 0){
-							srcNodeUri = new File(ResourceHelper.getPluginPath(lastOldPlugin) + File.separator+ nodeIconPath).toURI();
+						java.net.URI newNodeIconUri = handleIconURI(de,
+								shapeIconUri);
+						if (newNodeIconUri != null) {
+							de.setNodeicon(newNodeIconUri);
+							modifiedResourceSet.add(de.eResource());
 						}
-						File srcFile = new File(srcNodeUri);
-						File tgtFile = new File(srcFile.getAbsolutePath()
-								.replaceFirst(
-										"\\" + File.separator //$NON-NLS-1$
-												+ lastOldPlugin.getName()
-												+ "\\" + File.separator, //$NON-NLS-1$
-										"\\" //$NON-NLS-1$
-												+ File.separator
-												+ UmaUtil.getMethodPlugin(de)
-														.getName() + "\\" //$NON-NLS-1$
-												+ File.separator));
-						if (!tgtFile.exists()) {
-							FileUtil.copyFile(srcFile, tgtFile);
-						}
-						java.net.URI newNodeIconUri = new java.net.URI(NetUtil
-								.encodeFileURL(FileUtil.getRelativePath(
-										tgtFile, new File(ResourceHelper.getPluginPath(de)))));
-						de.setNodeicon(newNodeIconUri);
-						modifiedResourceSet.add(de.eResource());
 					}
 				} catch (Exception ex) {
 					LibraryPlugin.getDefault().getLogger().logError(ex);
@@ -214,9 +177,12 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 
 				// FIXME: this is not always correct this relative of the element's folder might have been changed
 				// during move/copy
-				String oldContentPath = contentPath.replaceFirst(UmaUtil
+				String oldContentPath2 = contentPath.replaceFirst(UmaUtil
 						.getMethodPlugin(elementToProcess).getName(),
 						lastOldPlugin.getName());
+				String oldContentPath = ResourceHelper
+					.getElementPath(lastOldPlugin);
+
 				Iterator iter = elementToProcess.eClass().getEAllAttributes()
 						.iterator();
 				while (iter.hasNext()) {
@@ -273,6 +239,33 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 			EObject child = (EObject) iter.next();
 			HandleAttachmentsPlugin(child);
 		}
+	}
+
+	/**
+	 * 
+	 * @param de
+	 * @param iconUri
+	 * @return the new Icon URI (relative path, so its ready to be persisted to the model)
+	 * @throws URISyntaxException
+	 */
+	private java.net.URI handleIconURI(DescribableElement de,
+			java.net.URI iconUri) throws URISyntaxException {
+		java.net.URI srcUri = TngUtil.getFullPathURI(de,
+				iconUri);
+		String iconPath = iconUri.getPath();
+		if(iconPath.indexOf(lastOldPlugin.getName()) < 0){
+			srcUri = new File(ResourceHelper.getPluginPath(lastOldPlugin) + File.separator + iconPath).toURI();
+		}
+		File srcFile = new File(srcUri);
+		java.net.URI tgtUri = new File(ResourceHelper.getPluginPath(de) + File.separator + iconPath).toURI();
+		File tgtFile = new File(tgtUri);
+		if (!tgtFile.exists()) {
+			FileUtil.copyFile(srcFile, tgtFile);
+		}
+		java.net.URI newIconUri = new java.net.URI(NetUtil
+				.encodeFileURL(FileUtil.getRelativePath(
+						tgtFile, new File(ResourceHelper.getPluginPath(de)))));
+		return newIconUri;
 	}
 
 	/**
