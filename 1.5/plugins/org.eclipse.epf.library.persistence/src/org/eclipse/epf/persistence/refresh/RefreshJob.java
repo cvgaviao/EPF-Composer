@@ -368,7 +368,7 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 							
 							// handle file move
 							//
-							if ((IResourceDelta.MOVED_TO & delta.getFlags()) != 0) {
+							if ((IResourceDelta.MOVED_FROM & delta.getFlags()) != 0) {
 //								resource = getResource(delta.getResource());          
 //								if (resource != null) {                           
 //									movedResources.add(resource);                 

@@ -58,7 +58,6 @@ import org.eclipse.epf.common.CommonPlugin;
 import org.eclipse.epf.diagram.core.DiagramCorePlugin;
 import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
 import org.eclipse.epf.diagram.core.providers.AccessibleDiagramModificationListener;
-import org.eclipse.epf.diagram.core.services.FileSynchronizer.FileInfo;
 import org.eclipse.epf.diagram.model.ActivityDetailDiagram;
 import org.eclipse.epf.diagram.model.ModelFactory;
 import org.eclipse.epf.diagram.model.WorkProductDependencyDiagram;
@@ -74,6 +73,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.internal.IFailSafeSavable;
 import org.eclipse.epf.library.persistence.util.ExtendedResourceSet;
+import org.eclipse.epf.library.persistence.util.FileSynchronizer.FileInfo;
 import org.eclipse.epf.persistence.FailSafePersistenceHelper;
 import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
@@ -149,7 +149,7 @@ public class DiagramManager {
 		}
 		
 		@Override
-		protected Map<IFile, IPath> handleMovedFiles(Map<IFile, IPath> movedFileToNewPathMap) {
+		protected Collection<IFile> handleMovedFiles(Map<IFile, IPath> movedFileToNewPathMap) {
 			for (Map.Entry<IFile, IPath> entry : movedFileToNewPathMap.entrySet()) {
 				IFile iFile = entry.getKey();
 				if(DIAGRAM_FILENAME.equals(iFile.getName())) {
@@ -161,12 +161,11 @@ public class DiagramManager {
 					}
 				}
 			}
-			return super.handleMovedFiles(movedFileToNewPathMap);
+			return movedFileToNewPathMap.keySet();
 		}
 		
 		@Override
-		protected Collection handleDeletedFiles(Collection<IFile> deletedFiles) {
-			// TODO Auto-generated method stub
+		protected Collection<IFile> handleDeletedFiles(Collection<IFile> deletedFiles) {
 			return super.handleDeletedFiles(deletedFiles);
 		}
 	};
@@ -245,7 +244,7 @@ public class DiagramManager {
 				if(mgr == null) {
 					mgr = new DiagramManager(process);
 					processToDiagramManagerMap.put(process, mgr);
-					if(!fileSynchronizer.fIsInstalled) {
+					if(!fileSynchronizer.isInstalled()) {
 						fileSynchronizer.install();
 					}
 				}
