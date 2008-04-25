@@ -174,7 +174,7 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 			return wizardExtender.doFinish();
 		} else {
 			PublishManager publisher = new PublishManager();
-			boolean success = publishConfig(selectConfigPage.getConfigName(),
+			boolean success = publishConfig(selectConfigPage.getSelectedConfig(),
 					getPublishingOptions(), publisher);
 			if (publisher != null) {
 				publisher.dispose();
@@ -191,14 +191,10 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 	 * @param options
 	 *            the publishing options
 	 */
-	public boolean publishConfig(String configName, PublishOptions options,
+	public boolean publishConfig(MethodConfiguration config, PublishOptions options,
 			PublishManager publisher) {
 		try {
 			if (checkAndCreateDir(options)) {
-				MethodConfiguration config = LibraryServiceUtil
-						.getMethodConfiguration(LibraryService.getInstance()
-								.getCurrentMethodLibrary(), configName);
-
 				publisher.init(options.getPublishDir(), config, options);
 				PublishingOperation operation = new PublishingOperation(
 						publisher);
@@ -226,9 +222,6 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 			if (selectDestinationPage != null) {
 				selectDestinationPage.savePreferences();
 			}
-			MethodConfiguration config = LibraryServiceUtil
-					.getMethodConfiguration(LibraryService.getInstance()
-							.getCurrentMethodLibrary(), configName);
 			String configId = config.getGuid();
 			PublishingUIPreferences.setConfigPrefInitialized(configId, true);
 			PublishingUIPreferences.saveAllPreferences();

@@ -73,6 +73,8 @@ public class SelectConfigPage extends BaseWizardPage {
 	protected List processViews;
 
 	protected String selectedConfigName;
+	
+	private MethodConfiguration selectedConfig;
 
 	/**
 	 * 
@@ -206,14 +208,16 @@ public class SelectConfigPage extends BaseWizardPage {
 
 		if (table.getSelectionCount() > 0) {
 			TableItem[] items = table.getSelection();
-/*			selectedConfigName = items[0].getText();
-			MethodConfiguration config = LibraryServiceUtil
+			selectedConfigName = items[0].getText();
+			/*MethodConfiguration config = LibraryServiceUtil
 					.getMethodConfiguration(LibraryService.getInstance()
 							.getCurrentMethodLibrary(), selectedConfigName);*/
 			
+			
 			MethodConfiguration config =  items[0].getData() instanceof MethodConfiguration ?
 					(MethodConfiguration) items[0].getData() : null;
-			
+			setSelectedConfig(config);
+					
 			processViews = null;
 			if (config != null) {
 				processViews = getValidConfigViews(config);
@@ -305,6 +309,14 @@ public class SelectConfigPage extends BaseWizardPage {
 	 */
 	private void setBriefDescription(MethodConfiguration config) {
 		briefDescText.setText(config.getBriefDescription());
+	}
+
+	public MethodConfiguration getSelectedConfig() {
+		return selectedConfig;
+	}
+
+	private void setSelectedConfig(MethodConfiguration selectedConfig) {
+		this.selectedConfig = selectedConfig;
 	}
 
 }
