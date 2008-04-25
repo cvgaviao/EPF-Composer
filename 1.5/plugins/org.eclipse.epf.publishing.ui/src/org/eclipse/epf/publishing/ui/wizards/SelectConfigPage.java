@@ -206,10 +206,14 @@ public class SelectConfigPage extends BaseWizardPage {
 
 		if (table.getSelectionCount() > 0) {
 			TableItem[] items = table.getSelection();
-			selectedConfigName = items[0].getText();
+/*			selectedConfigName = items[0].getText();
 			MethodConfiguration config = LibraryServiceUtil
 					.getMethodConfiguration(LibraryService.getInstance()
-							.getCurrentMethodLibrary(), selectedConfigName);
+							.getCurrentMethodLibrary(), selectedConfigName);*/
+			
+			MethodConfiguration config =  items[0].getData() instanceof MethodConfiguration ?
+					(MethodConfiguration) items[0].getData() : null;
+			
 			processViews = null;
 			if (config != null) {
 				processViews = getValidConfigViews(config);
