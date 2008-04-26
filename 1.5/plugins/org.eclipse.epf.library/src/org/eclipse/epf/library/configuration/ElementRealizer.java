@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryPlugin;
@@ -34,6 +35,7 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.util.AssociationHelper;
 
 /**
  * Realizes the element based on the configuration and realize options.
@@ -318,7 +320,10 @@ public abstract class ElementRealizer {
 		List oldValues = manyValues == null ? null : (List) manyValues.getValue();
 
 		HashSet<DescribableElement> seenSet = manyValues == null ?
-				new HashSet<DescribableElement>() : new HashSet<DescribableElement>(oldValues);
+				new HashSet<DescribableElement>() : new HashSet<DescribableElement>(oldValues);	
+		seenSet.add(cc);
+		List ccList = AssociationHelper.getCustomCategories(cc);
+		seenSet.addAll(ccList);					
 				
 		List<DescribableElement> list = calculateList(result, seenSet);
 		values.add(cc, list);
@@ -326,7 +331,7 @@ public abstract class ElementRealizer {
 	}
 
 	public List<DescribableElement> calculateList(Collection<?> result,
-			HashSet<DescribableElement> seenSet) {
+			Set<DescribableElement> seenSet) {
 		List<DescribableElement> list = new ArrayList<DescribableElement>();
 		for (Iterator<?> iter = result.iterator(); iter.hasNext();) {
 			Object o = iter.next();
