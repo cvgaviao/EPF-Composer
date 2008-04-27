@@ -560,7 +560,7 @@ public class ConfigurationData {
 		libraryManager.removeListener(libListener);		
 	}
 
-	private boolean isNeedUpdateChanges() {
+	protected boolean isNeedUpdateChanges() {
 		return needUpdateChanges;
 	}
 
