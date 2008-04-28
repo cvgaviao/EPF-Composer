@@ -162,7 +162,7 @@ public class FileManager implements IFileManager {
 
 	public boolean refresh(Resource resource) {
 		try {
-			return refresh(resource.getURI().toFileString());
+			return refresh(toFileString(resource.getURI()));
 		} catch (CoreException e) {
 //			CommonPlugin.INSTANCE.log(e);
 			return false;
