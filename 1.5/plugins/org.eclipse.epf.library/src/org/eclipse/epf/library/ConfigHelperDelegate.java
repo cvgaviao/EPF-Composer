@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2005, 2008 IBM Corporation and others.
+// All rights reserved. This program and the accompanying materials
+// are made available under the terms of the Eclipse Public License v1.0
+// which accompanies this distribution, and is available at
+// http://www.eclipse.org/legal/epl-v10.html
+//
+// Contributors:
+// IBM Corporation - initial implementation
+//------------------------------------------------------------------------------
 package org.eclipse.epf.library;
 
 import java.util.Collection;
@@ -35,6 +45,12 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.swt.SWT;
 
+/**
+ * Delegate class used in ConfigurationHelper
+ * 
+ * @author Weiping Lu 
+ * @since 1.5
+ */
 public class ConfigHelperDelegate {
 
 	
