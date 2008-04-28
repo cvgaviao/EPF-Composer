@@ -106,7 +106,8 @@
 
 	<xsl:template name="relationshipsSection">
 		<xsl:variable name="additionallyPerforms" select="referenceList[@name='additionallyPerforms']/Element"/>
-		<xsl:variable name="modifies" select="referenceList[@name='modifies']/Element"/>
+		<xsl:variable name="workProductModifies" select="referenceList[@name='modifies']/Element[@Type!='WorkProductSlot']"/>
+		<xsl:variable name="workProductSlotModifies" select="referenceList[@name='modifies']/Element[@Type='WorkProductSlot']"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
 		<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 		<div class="sectionContent">
@@ -124,10 +125,46 @@
 					<xsl:with-param name="refName" select="$additionallyPerformsText"/>
 					<xsl:with-param name="refElement" select="$additionallyPerforms"/>
 				</xsl:call-template>
-				<xsl:call-template name="addReferences">
-					<xsl:with-param name="refName" select="$modifiesText"/>
-					<xsl:with-param name="refElement" select="$modifies"/>
-				</xsl:call-template>	
+				<xsl:if test="count($workProductModifies) + count($workProductSlotModifies) > 0">
+					<tr valign="top">
+						<th class="sectionTableHeading" scope="row"><xsl:value-of select="$modifiesText"/></th>
+						<td class="sectionTableCell" colspan="2">
+							<ul>
+							<xsl:for-each select="$workProductModifies">
+							<xsl:sort select="@DisplayName"/>
+								<li>
+									<a>
+										<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/>
+											<xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/>
+									</a>
+								</li>
+							</xsl:for-each>
+							</ul>
+							<ul>
+							<xsl:for-each select="$workProductSlotModifies">
+							<xsl:sort select="@DisplayName"/>
+								<li>
+									<a>
+										<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/>
+											<xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/>
+									</a>
+									<ul>
+									<xsl:for-each select="referenceList[@name='FulFills_FullFillableElements']/Element">
+									<xsl:sort select="@DisplayName"/>
+									<li>
+										<a>
+											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/>
+												<xsl:value-of select="@Url"/></xsl:attribute><xsl:value-of select="@DisplayName"/>
+										</a>
+									</li>
+									</xsl:for-each>
+									</ul>
+								</li>
+							</xsl:for-each>
+							</ul>
+						</td>
+					</tr>
+				</xsl:if>
 				<xsl:call-template name="addDescriptors">
 					<xsl:with-param name="descriptors" select="referenceList[@name='descriptors']/Element"/>
 					<xsl:with-param name="colspan" select="'1'"/>
