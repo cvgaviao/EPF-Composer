@@ -164,7 +164,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 	private HashMap<Object, Object> defaultSaveOptions;
 
-	private HashMap guidToMethodElementMap;
+	private HashMap<String, EObject> guidToMethodElementMap;
 
 	private boolean loading;
 
@@ -916,7 +916,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		if (!res.getErrors().isEmpty()) {
 			StringBuffer strBuf = new StringBuffer();
 			strBuf.append(PersistenceResources.loadLibraryError_msg);
-			for (Iterator iter = res.getErrors().iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = res.getErrors().iterator(); iter.hasNext();) {
 				Resource.Diagnostic error = (Resource.Diagnostic) iter
 						.next();
 				strBuf.append(NLS.bind(
@@ -1022,14 +1022,14 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			uriConverter.setResolveProxy(false);
 
 			ResourceManager resMgr = getRootResourceManager();
-			Iterator iterator = new AbstractTreeIterator(resMgr, false) {
+			Iterator<?> iterator = new AbstractTreeIterator<Object>(resMgr, false) {
 
 				/**
 				 * Comment for <code>serialVersionUID</code>
 				 */
 				private static final long serialVersionUID = 2172691017987702506L;
 
-				protected Iterator getChildren(Object object) {
+				protected Iterator<?> getChildren(Object object) {
 					ResourceManager resMgr = (ResourceManager) object;
 					return resMgr.getSubManagers().iterator();
 				}
@@ -1049,7 +1049,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			// unnormalized URIs and report them
 			//
 			try {
-				for (Iterator iter = new ArrayList(getGuidToMethodElementMap().values())
+				for (Iterator<?> iter = new ArrayList<Object>(getGuidToMethodElementMap().values())
 						.iterator(); iter.hasNext();) {
 					InternalEObject o = (InternalEObject) iter.next();
 					if (o.eIsProxy() && o.eContainer() != null) {
@@ -2168,9 +2168,9 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		}
 	}
 
-	public Map getGuidToMethodElementMap() {
+	public Map<String, EObject> getGuidToMethodElementMap() {
 		if (guidToMethodElementMap == null) {
-			guidToMethodElementMap = new HashMap();
+			guidToMethodElementMap = new HashMap<String, EObject>();
 		}
 		return guidToMethodElementMap;
 	}
@@ -2238,13 +2238,13 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		if(resolved instanceof MethodElement) {
 			String guid = MultiFileSaveUtil.getGuid(resolved);
 			if (guid != null) {
-				getGuidToMethodElementMap().put(guid, resolved);
+				getGuidToMethodElementMap().put(guid, (EObject) resolved);
 			}
 		}
 		markerMananger.proxyResolved(proxy, resolved);
 	}
 
-	private EObject getEObjectByGUID(String guid) {
+	protected EObject getEObjectByGUID(String guid) {
 		return (EObject) getGuidToMethodElementMap().get(guid);
 	}
 
@@ -2274,7 +2274,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 			String msg = NLS.bind(PersistenceResources.normalizeURIError_msg,
 					uri);
-			throw new UnnormalizedURIException(msg);
+			throw new UnnormalizedURIException(uri, msg);
 		}
 		Resource resource = getResource(normalized.trimFragment(), loadOnDemand);
 		if (resource != null) {
