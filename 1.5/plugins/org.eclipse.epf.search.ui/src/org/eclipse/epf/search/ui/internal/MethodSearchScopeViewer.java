@@ -200,6 +200,31 @@ public class MethodSearchScopeViewer {
 		}
 	}
 	
+	private boolean shouldParentGrayed(Object selectedElement) {
+		ITreeContentProvider cp = (ITreeContentProvider) viewer.getContentProvider();
+		Object parent = cp.getParent(selectedElement);
+		if (parent != null && parent != ROOT) {
+			Object[] children = cp.getChildren(parent);
+			boolean grayed = false;
+			boolean checked = false;
+			for (Object child : children) {
+				if(!checked) {
+					checked = viewer.getChecked(child);
+					if(checked && grayed) {
+						return true;
+					}
+				}
+				if (!viewer.getChecked(child) || viewer.getGrayed(child)) {
+					if(checked) {
+						return true;
+					}
+					grayed = true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	private void checkParent(Object selectedElement) {
 		ITreeContentProvider cp = (ITreeContentProvider) viewer.getContentProvider();
 		Object parent = cp.getParent(selectedElement);
@@ -246,7 +271,15 @@ public class MethodSearchScopeViewer {
 				Object selectedElement = event.getElement();
 				viewer.setSubtreeChecked(selectedElement, event.getChecked());
 				if (!event.getChecked()) {
-					viewer.setParentsGrayed(selectedElement, true);
+					if(shouldParentGrayed(selectedElement)) {
+						viewer.setParentsGrayed(selectedElement, true);
+					} else {
+						ITreeContentProvider cp = (ITreeContentProvider) viewer.getContentProvider();
+						Object parent = cp.getParent(selectedElement);
+						if(parent != null) {
+							viewer.setGrayChecked(parent, false);
+						}
+					}
 					viewer.setGrayChecked(selectedElement, false);
 					// set gray to false for items that are unchecked
 					//

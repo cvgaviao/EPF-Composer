@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.search.ui.internal.IMethodSearchInputExtension;
@@ -121,9 +122,10 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 		String savedNamePattern = SearchUIPreferences.getNamePattern();
 		if (savedNamePattern != null && savedNamePattern.length() > 0) {
 			namePatternCombo.setText(savedNamePattern);
-		} else {
-			namePatternCombo.setText("*"); //$NON-NLS-1$
-		}
+		} 
+//		else {
+//			namePatternCombo.setText("*"); //$NON-NLS-1$
+//		}
 
 		namePatternCombo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -242,6 +244,9 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 		}
 		String searchString = searchStringCombo.getText();
 		String namePattern = namePatternCombo.getText();
+		if(StrUtil.isBlank(namePattern)) {
+			namePattern = "*"; //$NON-NLS-1$
+		}
 		MethodSearchScope searchScope = searchScopeViewer.getSearchScope();
 		MethodSearchInput searchInput = new MethodSearchInput(searchString,
 				namePattern, caseSensitiveCheckbox.getSelection(), false,
@@ -288,7 +293,7 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 	 * @return <code>true<code> if the Search button should be enabled
 	 */
 	private boolean getSearchButtonEnabled() {
-		return namePatternCombo.getText().trim().length() > 0;
+		return true;
 	}
 
 }

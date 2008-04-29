@@ -12,7 +12,6 @@ package org.eclipse.epf.search.ui.internal;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +41,7 @@ import org.eclipse.jface.viewers.Viewer;
  * The content provider for the method search result tree viewer.
  * 
  * @author Kelvin Low
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class SearchResultTreeContentProvider implements ITreeContentProvider {
@@ -98,7 +98,7 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 
 	private MethodSearchResult searchResult;
 
-	private Map<Object, Object> elementMap;
+	private Map<Object, Set<Object>> elementMap;
 
 	/**
 	 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(Object)
@@ -110,7 +110,7 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 			if (elements.length == 0) {
 				return EMPTY_LIST;
 			}
-			elementMap = new HashMap<Object, Object>();
+			elementMap = new HashMap<Object, Set<Object>>();
 			for (int i = 0; i < elements.length; i++) {
 				insert(elements[i], false);
 			}
@@ -149,7 +149,7 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 		if (elementMap == null) {
 			return EMPTY_LIST;
 		}
-		Set children = (Set) elementMap.get(parentElement);
+		Set<Object> children = elementMap.get(parentElement);
 		if (children == null) {
 			return EMPTY_LIST;
 		}
@@ -217,10 +217,8 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 						ProcessComponent processComponent = (ProcessComponent) parentPackage;
 						return processComponent.getProcess();
 					}
-					List processElements = parentPackage.getProcessElements();
-					for (Iterator i = processElements.iterator(); i.hasNext();) {
-						ProcessElement processElement = (ProcessElement) i
-								.next();
+					List<ProcessElement> processElements = parentPackage.getProcessElements();
+					for (ProcessElement processElement : processElements) {
 						if (processElement instanceof Activity
 								&& processElement.getName().equals(
 										parentPackage.getName())) {
@@ -237,9 +235,8 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 					ProcessComponent processComponent = (ProcessComponent) processPackage;
 					return processComponent.getProcess();
 				}
-				List processElements = processPackage.getProcessElements();
-				for (Iterator i = processElements.iterator(); i.hasNext();) {
-					ProcessElement processElement = (ProcessElement) i.next();
+				List<ProcessElement> processElements = processPackage.getProcessElements();
+				for (ProcessElement processElement : processElements) {
 					if (processElement instanceof Activity
 							&& processElement.getName().equals(
 									processPackage.getName())) {
@@ -290,9 +287,9 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 	}
 
 	protected boolean insertChild(Object parent, Object child) {
-		Set children = (Set) elementMap.get(parent);
+		Set<Object> children = elementMap.get(parent);
 		if (children == null) {
-			children = new HashSet();
+			children = new HashSet<Object>();
 			elementMap.put(parent, children);
 		}
 		return children.add(child);
@@ -300,9 +297,9 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 
 	protected void replace(Object parent, Object child, Object newChild) {
 		insert(newChild, false);
-		elementMap.put(newChild, (Set) elementMap.get(child));
+		elementMap.put(newChild, elementMap.get(child));
 		elementMap.remove(child);
-		Set children = (Set) elementMap.get(parent);
+		Set<Object> children = elementMap.get(parent);
 		children.remove(child);
 	}
 
@@ -333,9 +330,150 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 	}
 
 	protected void removeFromSiblings(Object element, Object parent) {
-		Set siblings = (Set) elementMap.get(parent);
+		Set<Object> siblings = elementMap.get(parent);
 		if (siblings != null) {
 			siblings.remove(element);
+		}
+	}
+	
+	protected void insertUIFolders(MethodPlugin element) {
+		SearchResultUIFolder methodContentFolder = new SearchResultUIFolder(
+				METHOD_CONTENT, ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+						.getImage("full/obj16/Content")), element); //$NON-NLS-1$
+		SearchResultUIFolder processesFolder = new SearchResultUIFolder(
+				PROCESSES, ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+						.getImage("full/obj16/Processes")), element); //$NON-NLS-1$
+		Object[] methodPackages = getChildren(element);
+		for (int j = 0; j < methodPackages.length; j++) {
+			Object methodPackage = methodPackages[j];
+			if (methodPackage instanceof ContentPackage
+					&& ((ContentPackage) methodPackage).getName()
+							.equals(PKG_NAME_CONTENT)) {
+				Object[] packages = getChildren(methodPackage);
+				for (int k = 0; k < packages.length; k++) {
+					Object pkg = packages[k];
+					if (pkg instanceof ContentPackage) {
+						if (((ContentPackage) pkg).getName().equals(
+								PKG_NAME_CORE_CONTENT)) {
+							replace(
+									element,
+									pkg,
+									new SearchResultUIFolder(
+											CONTENT_PACKAGES,
+											ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+													.getImage("full/obj16/MethodPackages")), methodContentFolder)); //$NON-NLS-1$
+						} else if (((ContentPackage) pkg).getName()
+								.equals(PKG_NAME_CATEGORIES)) {
+							SearchResultUIFolder standardCategoriesFolder = new SearchResultUIFolder(
+									STANDARD_CATEGORIES,
+									ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+											.getImage("full/obj16/StandardCategories")), methodContentFolder); //$NON-NLS-1$
+							SearchResultUIFolder customCategoriesFolder = new SearchResultUIFolder(
+									CUSTOM_CATEGORIES,
+									ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+											.getImage("full/obj16/CustomCategories")), methodContentFolder); //$NON-NLS-1$
+							Object[] contentPackages = getChildren(pkg);
+							for (int l = 0; l < contentPackages.length; l++) {
+								Object contentPackage = contentPackages[l];
+								if (contentPackage instanceof ContentPackage) {
+									String pkgName = ((ContentPackage) contentPackage)
+											.getName();
+									if (pkgName
+											.equals(PKG_NAME_CUSTOM_CATEGORIES)) {
+										insert(customCategoriesFolder,
+												false);
+										elementMap.put(customCategoriesFolder,
+												elementMap.get(contentPackage));
+									} else if (pkgName
+											.equals(PKG_NAME_DISCIPLINES)) {
+										insert(
+												standardCategoriesFolder,
+												false);
+										replace(
+												element,
+												contentPackage,
+												new SearchResultUIFolder(
+														DISCIPLINES,
+														ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+																.getImage("full/obj16/Disciplines")), standardCategoriesFolder)); //$NON-NLS-1$
+									} else if (pkgName
+											.equals(PKG_NAME_DOMAINS)) {
+										insert(
+												standardCategoriesFolder,
+												false);
+										replace(
+												element,
+												contentPackage,
+												new SearchResultUIFolder(
+														DOMAINS,
+														ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+																.getImage("full/obj16/Domains")), standardCategoriesFolder)); //$NON-NLS-1$
+									} else if (pkgName
+											.equals(PKG_NAME_WORK_PRODUCT_TYPES)) {
+										insert(
+												standardCategoriesFolder,
+												false);
+										replace(
+												element,
+												contentPackage,
+												new SearchResultUIFolder(
+														WORK_PRODUCT_TYPES,
+														ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+																.getImage("full/obj16/WorkProductTypes")), standardCategoriesFolder)); //$NON-NLS-1$
+									} else if (pkgName
+											.equals(PKG_NAME_ROLESETS)) {
+										insert(
+												standardCategoriesFolder,
+												false);
+										replace(
+												element,
+												contentPackage,
+												new SearchResultUIFolder(
+														ROLESETS,
+														ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+																.getImage("full/obj16/Roles")), standardCategoriesFolder)); //$NON-NLS-1$
+									} else if (pkgName
+											.equals(PKG_NAME_TOOLS)) {
+										insert(
+												standardCategoriesFolder,
+												false);
+										replace(
+												element,
+												contentPackage,
+												new SearchResultUIFolder(
+														TOOLS,
+														ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+																.getImage("full/obj16/Tools")), standardCategoriesFolder)); //$NON-NLS-1$
+									}
+								}
+							}
+							elementMap.remove(pkg);
+						}
+					} else if (pkg instanceof ProcessPackage
+							&& ((ProcessPackage) pkg).getName().equals(
+									PKG_NAME_CAPABILITY_PATTERNS)) {
+						replace(
+								element,
+								pkg,
+								new SearchResultUIFolder(
+										CAPABILITY_PATTERNS,
+										ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+												.getImage("full/obj16/CapabilityPatterns")), processesFolder)); //$NON-NLS-1$
+					}
+				}
+				Set<Object> children = (Set<Object>) elementMap.get(element);
+				children.remove(methodPackage);
+			} else if (methodPackage instanceof ProcessPackage
+					&& ((ProcessPackage) methodPackage).getName()
+							.equals(PKG_NAME_DELIVERY_PROCESSES)) {
+				replace(
+						element,
+						methodPackage,
+						new SearchResultUIFolder(
+								DELIVERY_PROCESSES,
+								ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
+										.getImage("full/obj16/DeliveryProcesses")), processesFolder)); //$NON-NLS-1$
+			}
 		}
 	}
 
@@ -347,147 +485,7 @@ public class SearchResultTreeContentProvider implements ITreeContentProvider {
 		for (int i = 0; i < elements.length; i++) {
 			Object element = elements[i];
 			if (element instanceof MethodPlugin) {
-				SearchResultUIFolder methodContentFolder = new SearchResultUIFolder(
-						METHOD_CONTENT, ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-								.getImage("full/obj16/Content")), element); //$NON-NLS-1$
-				SearchResultUIFolder processesFolder = new SearchResultUIFolder(
-						PROCESSES, ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-								.getImage("full/obj16/Processes")), element); //$NON-NLS-1$
-				Object[] methodPackages = getChildren(element);
-				for (int j = 0; j < methodPackages.length; j++) {
-					Object methodPackage = methodPackages[j];
-					if (methodPackage instanceof ContentPackage
-							&& ((ContentPackage) methodPackage).getName()
-									.equals(PKG_NAME_CONTENT)) {
-						Object[] packages = getChildren(methodPackage);
-						for (int k = 0; k < packages.length; k++) {
-							Object pkg = packages[k];
-							if (pkg instanceof ContentPackage) {
-								if (((ContentPackage) pkg).getName().equals(
-										PKG_NAME_CORE_CONTENT)) {
-									replace(
-											element,
-											pkg,
-											new SearchResultUIFolder(
-													CONTENT_PACKAGES,
-													ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-															.getImage("full/obj16/MethodPackages")), methodContentFolder)); //$NON-NLS-1$
-								} else if (((ContentPackage) pkg).getName()
-										.equals(PKG_NAME_CATEGORIES)) {
-									SearchResultUIFolder standardCategoriesFolder = new SearchResultUIFolder(
-											STANDARD_CATEGORIES,
-											ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-													.getImage("full/obj16/StandardCategories")), methodContentFolder); //$NON-NLS-1$
-									SearchResultUIFolder customCategoriesFolder = new SearchResultUIFolder(
-											CUSTOM_CATEGORIES,
-											ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-													.getImage("full/obj16/CustomCategories")), methodContentFolder); //$NON-NLS-1$
-									Object[] contentPackages = getChildren(pkg);
-									for (int l = 0; l < contentPackages.length; l++) {
-										Object contentPackage = contentPackages[l];
-										if (contentPackage instanceof ContentPackage) {
-											String pkgName = ((ContentPackage) contentPackage)
-													.getName();
-											if (pkgName
-													.equals(PKG_NAME_CUSTOM_CATEGORIES)) {
-												insert(customCategoriesFolder,
-														false);
-												elementMap
-														.put(
-																customCategoriesFolder,
-																(Set) elementMap
-																		.get(contentPackage));
-											} else if (pkgName
-													.equals(PKG_NAME_DISCIPLINES)) {
-												insert(
-														standardCategoriesFolder,
-														false);
-												replace(
-														element,
-														contentPackage,
-														new SearchResultUIFolder(
-																DISCIPLINES,
-																ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-																		.getImage("full/obj16/Disciplines")), standardCategoriesFolder)); //$NON-NLS-1$
-											} else if (pkgName
-													.equals(PKG_NAME_DOMAINS)) {
-												insert(
-														standardCategoriesFolder,
-														false);
-												replace(
-														element,
-														contentPackage,
-														new SearchResultUIFolder(
-																DOMAINS,
-																ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-																		.getImage("full/obj16/Domains")), standardCategoriesFolder)); //$NON-NLS-1$
-											} else if (pkgName
-													.equals(PKG_NAME_WORK_PRODUCT_TYPES)) {
-												insert(
-														standardCategoriesFolder,
-														false);
-												replace(
-														element,
-														contentPackage,
-														new SearchResultUIFolder(
-																WORK_PRODUCT_TYPES,
-																ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-																		.getImage("full/obj16/WorkProductTypes")), standardCategoriesFolder)); //$NON-NLS-1$
-											} else if (pkgName
-													.equals(PKG_NAME_ROLESETS)) {
-												insert(
-														standardCategoriesFolder,
-														false);
-												replace(
-														element,
-														contentPackage,
-														new SearchResultUIFolder(
-																ROLESETS,
-																ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-																		.getImage("full/obj16/Roles")), standardCategoriesFolder)); //$NON-NLS-1$
-											} else if (pkgName
-													.equals(PKG_NAME_TOOLS)) {
-												insert(
-														standardCategoriesFolder,
-														false);
-												replace(
-														element,
-														contentPackage,
-														new SearchResultUIFolder(
-																TOOLS,
-																ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-																		.getImage("full/obj16/Tools")), standardCategoriesFolder)); //$NON-NLS-1$
-											}
-										}
-									}
-									elementMap.remove(pkg);
-								}
-							} else if (pkg instanceof ProcessPackage
-									&& ((ProcessPackage) pkg).getName().equals(
-											PKG_NAME_CAPABILITY_PATTERNS)) {
-								replace(
-										element,
-										pkg,
-										new SearchResultUIFolder(
-												CAPABILITY_PATTERNS,
-												ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-														.getImage("full/obj16/CapabilityPatterns")), processesFolder)); //$NON-NLS-1$
-							}
-						}
-						Set children = (Set) elementMap.get(element);
-						children.remove(methodPackage);
-					} else if (methodPackage instanceof ProcessPackage
-							&& ((ProcessPackage) methodPackage).getName()
-									.equals(PKG_NAME_DELIVERY_PROCESSES)) {
-						replace(
-								element,
-								methodPackage,
-								new SearchResultUIFolder(
-										DELIVERY_PROCESSES,
-										ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
-												.getImage("full/obj16/DeliveryProcesses")), processesFolder)); //$NON-NLS-1$
-					}
-				}
+				insertUIFolders((MethodPlugin) element);
 			}
 		}
 	}
