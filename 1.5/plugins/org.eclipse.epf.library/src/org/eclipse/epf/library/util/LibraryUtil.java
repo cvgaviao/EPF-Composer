@@ -617,9 +617,9 @@ public class LibraryUtil {
 	 * @param plugin
 	 * @return List of MethodConfiguration
 	 */
-	public static List getAssociatedConfigurations(MethodPlugin plugin) {
+	public static List<MethodConfiguration> getAssociatedConfigurations(MethodPlugin plugin) {
 		// get the configs that references this method plugin
-		List allConfigs = new ArrayList();
+		List<MethodConfiguration> allConfigs = new ArrayList<MethodConfiguration>();
 		List configs = (List) ((MultiResourceEObject) plugin)
 				.getOppositeFeatureValue(AssociationHelper.MethodPlugin_MethodConfigurations);
 		addUniqueItems(configs, allConfigs);
