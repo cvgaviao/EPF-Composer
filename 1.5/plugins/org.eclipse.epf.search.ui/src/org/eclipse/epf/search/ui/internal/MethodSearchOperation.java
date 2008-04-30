@@ -435,7 +435,7 @@ public class MethodSearchOperation implements IMethodSearchOperation {
 							name).matches());
 				}
 				if (foundMatch) {
-					if (searchString.length() == 0 && searchString.equals("*")) { //$NON-NLS-1$
+					if (searchString.length() == 0 || searchString.equals("*")) { //$NON-NLS-1$
 						result.accept(element);
 					} else {
 						try {
