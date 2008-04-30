@@ -620,7 +620,7 @@ public class LibraryUtil {
 	public static List<MethodConfiguration> getAssociatedConfigurations(MethodPlugin plugin) {
 		// get the configs that references this method plugin
 		List<MethodConfiguration> allConfigs = new ArrayList<MethodConfiguration>();
-		List configs = (List) ((MultiResourceEObject) plugin)
+/*		List configs = (List) ((MultiResourceEObject) plugin)
 				.getOppositeFeatureValue(AssociationHelper.MethodPlugin_MethodConfigurations);
 		addUniqueItems(configs, allConfigs);
 
@@ -633,7 +633,7 @@ public class LibraryUtil {
 					.getOppositeFeatureValue(AssociationHelper.MethodPackage_MethodConfigurations);
 			addUniqueItems(configs, allConfigs);
 		}
-
+*/
 		// get the congigurations that referenced by the processes in this
 		// plugin
 		List procs = TngUtil.getAllProcesses(plugin);
