@@ -546,10 +546,17 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	 * Set input for connfiguration viewer
 	 * @param input
 	 */
-	public void setInput(Object input) {
+	private void setInput(Object input) {
 		configViewer.setInput(input);
 		addCategoryViewer.setInput(input);
 		subCategoryViewer.setInput(input);
+		
+		configViewer.expandAll();
+		configViewer.collapseAll();
+		addCategoryViewer.expandAll();
+		addCategoryViewer.collapseAll();
+		subCategoryViewer.expandAll();
+		subCategoryViewer.collapseAll();
 
 //		updateCheckStates();
 	}
