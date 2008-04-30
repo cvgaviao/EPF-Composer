@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.epf.common.utils.CommandLineRunner;
+import org.eclipse.epf.common.service.utils.CommandLineRunner;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.importing.services.PluginImportData.PluginInfo;
 import org.eclipse.epf.library.xmi.XMILibraryUtil;

@@ -55,6 +55,6 @@ public interface IMethodRichText extends IRichText {
 	 * @param element
 	 * @param fieldName
 	 */
-	public void initElementAndLabel(MethodElement element, Label label);
+	public void init(MethodElement element, Label label);
 
 }

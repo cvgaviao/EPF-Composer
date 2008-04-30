@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.epf.common.serviceability.VersionUtil;
+import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.export.services.LibraryDocument;

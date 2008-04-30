@@ -14,7 +14,6 @@ import java.net.URI;
 import java.util.Map;
 
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 
 /**

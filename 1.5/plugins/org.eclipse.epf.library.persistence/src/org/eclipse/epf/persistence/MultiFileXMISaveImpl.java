@@ -27,8 +27,8 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
-import org.eclipse.epf.common.serviceability.EPFVersions;
-import org.eclipse.epf.common.serviceability.VersionUtil;
+import org.eclipse.epf.common.service.versioning.EPFVersions;
+import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.resourcemanager.ResourceManager;
 import org.eclipse.epf.uma.MethodElement;
 

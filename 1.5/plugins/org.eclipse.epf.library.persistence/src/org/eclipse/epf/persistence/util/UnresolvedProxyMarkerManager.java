@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.persistence.util;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,7 +42,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -54,7 +52,6 @@ import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.PersistencePlugin;
-import org.eclipse.epf.persistence.UnnormalizedURIException;
 import org.eclipse.epf.uma.ecore.IProxyResolutionListener;
 import org.eclipse.epf.uma.ecore.ResolveException;
 import org.eclipse.jface.text.BadLocationException;

@@ -11,8 +11,6 @@
 
 package org.eclipse.epf.persistence.migration;
 
-import java.io.File;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.uma.MethodLibrary;
 

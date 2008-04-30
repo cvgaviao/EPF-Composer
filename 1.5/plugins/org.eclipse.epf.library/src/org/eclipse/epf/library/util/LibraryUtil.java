@@ -37,7 +37,6 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
-import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -64,7 +63,6 @@ import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
-import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**

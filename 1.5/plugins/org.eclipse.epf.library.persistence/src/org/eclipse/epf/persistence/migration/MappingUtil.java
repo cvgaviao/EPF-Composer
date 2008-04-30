@@ -22,8 +22,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.CommonPlugin;
-import org.eclipse.epf.common.serviceability.EPFVersions;
-import org.eclipse.epf.common.serviceability.VersionUtil;
+import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.osgi.framework.Bundle;
 

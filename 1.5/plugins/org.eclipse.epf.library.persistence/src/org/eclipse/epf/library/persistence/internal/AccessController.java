@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.persistence.FileManager;
-import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.IAccessController;
 
 /**

@@ -20,7 +20,6 @@ import java.util.Properties;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
-import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.ibm.icu.util.StringTokenizer;
 

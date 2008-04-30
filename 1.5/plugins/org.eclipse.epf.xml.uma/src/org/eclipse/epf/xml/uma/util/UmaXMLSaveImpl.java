@@ -1,14 +1,12 @@
 package org.eclipse.epf.xml.uma.util;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.impl.XMLSaveImpl;
-import org.eclipse.epf.common.serviceability.VersionUtil;
 
 /**
  * This class customize the XMLSaveImpl to save the string tags as CDATA

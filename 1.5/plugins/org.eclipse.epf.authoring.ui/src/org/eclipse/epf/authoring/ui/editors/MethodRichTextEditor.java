@@ -64,12 +64,6 @@ public class MethodRichTextEditor extends RichTextEditor implements
 	private EStructuralFeature modalObjectFeature;
 
 	/**
-	 * Creates a new instance.  Must call init(..) before using this widget.
-	 */
-	public MethodRichTextEditor() {
-	}
-	
-	/**
 	 * Creates a new instance.
 	 * 
 	 * @param parent
@@ -81,14 +75,9 @@ public class MethodRichTextEditor extends RichTextEditor implements
 	 */
 	public MethodRichTextEditor(Composite parent, int style, String basePath,
 			MethodElement methodElement, Label label, IEditorSite editorSite) {
-		init(parent, style, basePath, editorSite, methodElement, label);
-	}
-	
-	public void init(Composite parent, int style, String basePath,
-			IEditorSite editorSite, MethodElement methodElement, Label label) {
-		super.init(parent, style, basePath, editorSite);
+		super(parent, style, editorSite, basePath);
 		this.methodElement = methodElement;
-		initElementAndLabel(methodElement, label);
+		init(methodElement, label);
 	}
 
 	/**
@@ -103,7 +92,7 @@ public class MethodRichTextEditor extends RichTextEditor implements
 	 */
 	protected IRichText createRichTextControl(Composite parent, int style,
 			String basePath) {
-		return MethodRichTextFactory.createMethodRichText(parent, style, basePath);
+		return new MethodRichText(parent, style, basePath);
 	}
 
 	/**
@@ -185,8 +174,8 @@ public class MethodRichTextEditor extends RichTextEditor implements
 		this.modalObjectFeature = modalObjectFeature;
 	}
 
-	public void initElementAndLabel(MethodElement element, Label label) {
+	public void init(MethodElement element, Label label) {
 		if (richText instanceof IMethodRichText)
-			((IMethodRichText)richText).initElementAndLabel(methodElement, label);
+			((IMethodRichText)richText).init(methodElement, label);
 	}
 }

@@ -2,8 +2,6 @@ package org.eclipse.epf.library.layout;
 
 import java.io.UnsupportedEncodingException;
 
-import org.eclipse.epf.library.layout.DefaultContentValidator;
-import org.eclipse.epf.library.layout.LinkInfo;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 

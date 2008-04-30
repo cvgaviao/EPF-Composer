@@ -12,10 +12,6 @@ package org.eclipse.epf.authoring.ui.richtext;
 
 import org.eclipse.epf.richtext.IRichTextEditor;
 import org.eclipse.epf.richtext.IRichTextToolBar;
-import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.ui.IEditorSite;
 
 /**
  * The interface for a Rich Text editor used in the Method editors.
@@ -40,18 +36,5 @@ public interface IMethodRichTextEditor extends IMethodRichText, IRichTextEditor 
 	 *            0 for the Rich Text tab, 1 for the HTML tab.
 	 */
 	public void setSelection(int index);	
-	
-	/**
-	 * Initializes the Method Rich Text Editor.
-	 * 
-	 * @param parent
-	 * @param style
-	 * @param editorSite
-	 * @param basePath
-	 * @param methodElement
-	 * @param label
-	 */
-	public void init(Composite parent, int style, String basePath,
-			IEditorSite editorSite, MethodElement methodElement, Label label);
 
 }

@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.SAXXMIHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
-import org.eclipse.epf.common.serviceability.EPFVersions;
+import org.eclipse.epf.common.service.versioning.EPFVersions;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**

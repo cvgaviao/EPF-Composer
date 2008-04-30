@@ -15,17 +15,15 @@
 
 <xsl:template match="/rte">
 	<xsl:variable name="rte_id"><xsl:value-of select="@id"/></xsl:variable>
+	<xsl:variable name="rte_js"><xsl:value-of select="@js"/></xsl:variable>
 	<html>
 		<head>
-		<xsl:for-each select="rte_js">
-			<xsl:variable name="js"><xsl:value-of select="@js"/></xsl:variable>
-			<script language="JavaScript" type="text/javascript" src="{$js}"></script>
-		</xsl:for-each>
+			<script language="JavaScript" type="text/javascript" src="{$rte_js}"></script>
 		</head>
 		<body leftMargin="0" topMargin="0" marginheight="0" marginwidth="0" scroll="no" style="overflow: hidden">
 			<iframe id="{$rte_id}" name="{$rte_id}" style="border: none;" frameborder="0" scrolling="auto" width="100%" height="100%"></iframe>
 			<script language="JavaScript" type="text/javascript">
-				rte.initEditor('<xsl:value-of select="@id"/>', '<xsl:value-of select="@css"/>', '<xsl:value-of select="@baseURL"/>');
+				initEditor('<xsl:value-of select="@id"/>', '<xsl:value-of select="@css"/>', '<xsl:value-of select="@baseURL"/>');
 			</script>
 		</body>
 	</html>

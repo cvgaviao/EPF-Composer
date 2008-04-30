@@ -157,20 +157,20 @@ public class RichTextEditor implements IRichTextEditor {
 	// The editor's editable flag.
 	protected boolean editable = true;
 	
-	protected OperationHistoryActionHandler undoAction;
+	private OperationHistoryActionHandler undoAction;
 	
-	protected OperationHistoryActionHandler redoAction;
+	private OperationHistoryActionHandler redoAction;
 	
-	protected IEditorSite editorSite;
+	private IEditorSite editorSite;
 
 	/** The actions registered with the editor. */
-	protected Map<String, IAction> fActions= new HashMap<String, IAction>(10);
+	private Map<String, IAction> fActions= new HashMap<String, IAction>(10);
 	
 	/** The verify key listener for activation code triggering. */
-	protected ActivationCodeTrigger fActivationCodeTrigger= new ActivationCodeTrigger();
+	private ActivationCodeTrigger fActivationCodeTrigger= new ActivationCodeTrigger();
 	
 	/** The editor's action activation codes. */
-	protected List fActivationCodes= new ArrayList(2);
+	private List fActivationCodes= new ArrayList(2);
 	
 	final IUndoManager undoManager= new TextViewerUndoManager(10);
 	
@@ -178,7 +178,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 * The key binding scopes of this editor.
 	 * @since 2.1
 	 */
-	protected String[] fKeyBindingScopes;
+	private String[] fKeyBindingScopes;
 
 	
 	protected IDocumentListener sourceEditDocumentListener= new IDocumentListener() {
@@ -236,12 +236,6 @@ public class RichTextEditor implements IRichTextEditor {
 	};
 
 	/**
-	 * Creates a new instance.  Must call init(..) before using this widget.
-	 */
-	public RichTextEditor() {
-	}
-	
-	/**
 	 * Creates a new instance.
 	 * 
 	 * @param parent
@@ -250,7 +244,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 *            the editor style
 	 */
 	public RichTextEditor(Composite parent, int style, IEditorSite editorSite) {
-		this(parent, style, null, editorSite);
+		this(parent, style, editorSite, null);
 	}
 
 	/**
@@ -263,24 +257,12 @@ public class RichTextEditor implements IRichTextEditor {
 	 * @param basePath
 	 *            the base path used for resolving links
 	 */
-	public RichTextEditor(Composite parent, int style, String basePath,
-			IEditorSite editorSite) {
-		init(parent, style, basePath, editorSite);
-	}
-
-	public void init(Composite parent, int style, String basePath,
-			IEditorSite editorSite) {
+	public RichTextEditor(Composite parent, int style, IEditorSite editorSite, String basePath) {
 		this.basePath = basePath;
 		this.editorSite = editorSite;
 		debug = RichTextPlugin.getDefault().isDebugging();
 		logger = RichTextPlugin.getDefault().getLogger();
-		initControl(parent, style);
-	}
-	
-	public void init(Composite parent, int style, String basePath) {
-		if (richText != null) {
-			richText.init(parent, style, basePath);
-		}
+		init(parent, style);
 	}
 
 	/**
@@ -291,7 +273,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 * @param style
 	 *            the editor style
 	 */
-	protected void initControl(Composite parent, int style) {
+	protected void init(Composite parent, int style) {
 		try {
 			form = new ViewForm(parent, style);
 			form.marginHeight = 0;
@@ -956,7 +938,11 @@ public class RichTextEditor implements IRichTextEditor {
 		//addDropSupportToStyledText();
 		fillContextMenu(contextMenu);
 		
-		createHTMLTab(folder, htmlComposite);
+		
+		htmlTab = new CTabItem(folder, SWT.NONE);
+		htmlTab.setText(HTML_TAB_NAME);
+		htmlTab.setToolTipText(RichTextResources.htmlTab_toolTipText); 
+		htmlTab.setControl(htmlComposite);
 
 		folder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
@@ -988,15 +974,8 @@ public class RichTextEditor implements IRichTextEditor {
 		return folder;
 	}
 
-	protected void createHTMLTab(CTabFolder folder, Composite htmlComposite) {
-		htmlTab = new CTabItem(folder, SWT.NONE);
-		htmlTab.setText(HTML_TAB_NAME);
-		htmlTab.setToolTipText(RichTextResources.htmlTab_toolTipText); 
-		htmlTab.setControl(htmlComposite);
-	}
-
 	
-	protected void setDocument(IDocument doc) {
+	private void setDocument(IDocument doc) {
 		if (doc == null) {
 			doc = new Document();
 		}
@@ -1040,7 +1019,7 @@ public class RichTextEditor implements IRichTextEditor {
 			return;
 		if (tabFolder.getSelection() == richTextTab) {
 			executeCommand(RichTextCommand.ADD_HTML, text);
-		} else if (isHTMLTabSelected()) {
+		} else if (tabFolder.getSelection() == htmlTab) {
 			String oldHTML = getSourceEdit().getText();
 			Point sel = sourceViewer.getSelectedRange();
 			int selStartIndex = sel.x;
@@ -1065,7 +1044,7 @@ public class RichTextEditor implements IRichTextEditor {
 					new String[] {
 							imageURL,
 							height, width, altTag });
-		} else if (isHTMLTabSelected()) {
+		} else if (tabFolder.getSelection() == htmlTab) {
 			StringBuffer imageLink = new StringBuffer();
 			// order of these attributes is the same as JTidy'ed HTML
 			imageLink.append("<img"); //$NON-NLS-1$
@@ -1168,7 +1147,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 * @param text
 	 *            the rich text content in XHTML format
 	 */
-	protected void updateRichText(String text) {
+	private void updateRichText(String text) {
 		if (richText != null) {
 			richText.setText(text);
 			richText.checkModify();
@@ -1181,7 +1160,7 @@ public class RichTextEditor implements IRichTextEditor {
 		}
 	}
 	
-	protected void addDropSupportToStyledText() {
+	private void addDropSupportToStyledText() {
 		// this function based heavily on the example at:
 		// http://www.eclipse.org/articles/Article-SWT-DND/DND-in-SWT.html
 		
@@ -1244,7 +1223,7 @@ public class RichTextEditor implements IRichTextEditor {
 	/**
 	 * Displays the given debug message to the console.
 	 */
-	protected void printDebugMessage(String method, String msg, String text) {
+	private void printDebugMessage(String method, String msg, String text) {
 		StringBuffer strBuf = new StringBuffer();
 		strBuf.append("RichTextEditor[").append(richText.getControl().handle).append(']') //$NON-NLS-1$
 				.append('.').append(method);
@@ -1260,7 +1239,7 @@ public class RichTextEditor implements IRichTextEditor {
 	/**
 	 * Displays the given debug message to the console.
 	 */
-	protected void printDebugMessage(String method, String msg) {
+	private void printDebugMessage(String method, String msg) {
 		printDebugMessage(method, msg, null);
 	}
 	
@@ -1296,7 +1275,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 * @return the undo context or <code>null</code> if not available
 	 * @since 3.1
 	 */
-	protected IUndoContext getUndoContext() {
+	private IUndoContext getUndoContext() {
 		if (sourceViewer instanceof ITextViewerExtension6) {
 			IUndoManager undoManager= ((ITextViewerExtension6)sourceViewer).getUndoManager();
 			if (undoManager instanceof IUndoManagerExtension)
@@ -1340,7 +1319,7 @@ public class RichTextEditor implements IRichTextEditor {
 		}
 	}
 	
-	protected IEditorSite getEditorSite() {
+	private IEditorSite getEditorSite() {
 		return editorSite;
 	}
 
@@ -1355,7 +1334,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 * @param action	the action to register
 	 * @since 3.1
 	 */
-	protected void registerAction(String actionId, IAction action) {
+	private void registerAction(String actionId, IAction action) {
 		IAction oldAction= getAction(actionId);
 		if (oldAction instanceof OperationHistoryActionHandler)
 			((OperationHistoryActionHandler)oldAction).dispose();
@@ -1404,7 +1383,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 *
 	 * @since 2.1
 	 */
-	protected void initializeActivationCodeTrigger() {
+	private void initializeActivationCodeTrigger() {
 		fActivationCodeTrigger.install();
 		fActivationCodeTrigger.setScopes(fKeyBindingScopes);
 	}
@@ -1415,12 +1394,12 @@ public class RichTextEditor implements IRichTextEditor {
 	class ActivationCodeTrigger implements VerifyKeyListener {
 
 		/** Indicates whether this trigger has been installed. */
-		protected boolean fIsInstalled= false;
+		private boolean fIsInstalled= false;
 		/**
 		 * The key binding service to use.
 		 * @since 2.0
 		 */
-		protected IKeyBindingService fKeyBindingService;
+		private IKeyBindingService fKeyBindingService;
 		
 		/*
 		 * @see VerifyKeyListener#verifyKey(org.eclipse.swt.events.VerifyEvent)

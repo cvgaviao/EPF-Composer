@@ -11,8 +11,6 @@
 package org.eclipse.epf.persistence;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.security.AccessController;
 import java.text.MessageFormat;
 import java.util.ArrayList;

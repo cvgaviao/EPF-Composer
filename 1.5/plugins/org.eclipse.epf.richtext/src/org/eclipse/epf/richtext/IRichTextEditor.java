@@ -11,8 +11,6 @@
 package org.eclipse.epf.richtext;
 
 import org.eclipse.epf.richtext.actions.FindReplaceAction;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IEditorSite;
 
 /**
  * The interface for a rich text editor.
@@ -48,16 +46,5 @@ public interface IRichTextEditor extends IRichText {
 	 * @param findReplaceAction
 	 */
 	public void setFindReplaceAction(FindReplaceAction findReplaceAction);
-	
-	/**
-	 * Initializes the Rich Text Editor.
-	 * 
-	 * @param parent
-	 * @param style
-	 * @param editorSite
-	 * @param basePath
-	 */
-	public void init(Composite parent, int style, String basePath,
-			IEditorSite editorSite);
 
 }

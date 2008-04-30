@@ -16,109 +16,105 @@
 // Alternatively, the users can use the ctrl-x, ctrl-c and ctrl-v keys.
 //------------------------------------------------------------------------------
 
-var rte = new RTE();
+var STATUS_NOP = 0;
+var STATUS_INITIALIZED = 1;
+var STATUS_MODIFIED = 2;
+var STATUS_GET_TEXT = 3;
+var STATUS_KEY_DOWN = 4;
+var STATUS_KEY_UP = 5;
+var STATUS_SELECT_TEXT = 6;
+var STATUS_SELECT_CONTROL = 7;
+var STATUS_SELECT_NONE = 8;
+var STATUS_EXEC_CMD = 9;
+var STATUS_REFORMAT_LINKS = 10;
 
-function RTE() {
-}
+var KEY_ARROW_DOWN = 40;
+var KEY_ARROW_LEFT = 37;
+var KEY_ARROW_RIGHT = 39;
+var KEY_ARROW_UP = 38;
+var KEY_BACKSPACE = 8;
+var KEY_END = 35;
+var KEY_HOME = 36;
+var KEY_PAGE_DOWN = 34;
+var KEY_PAGE_UP = 33;
+var KEY_TAB = 9;
+var KEY_C = 67;
+var KEY_F = 70;
+var KEY_S = 83;
+var KEY_V = 86;
+var KEY_X = 88;
+var KEY_Z = 90;
 
-RTE.prototype.STATUS_NOP = 0;
-RTE.prototype.STATUS_INITIALIZED = 1;
-RTE.prototype.STATUS_MODIFIED = 2;
-RTE.prototype.STATUS_GET_TEXT = 3;
-RTE.prototype.STATUS_KEY_DOWN = 4;
-RTE.prototype.STATUS_KEY_UP = 5;
-RTE.prototype.STATUS_SELECT_TEXT = 6;
-RTE.prototype.STATUS_SELECT_CONTROL = 7;
-RTE.prototype.STATUS_SELECT_NONE = 8;
-RTE.prototype.STATUS_EXEC_CMD = 9;
-RTE.prototype.STATUS_REFORMAT_LINKS = 10;
+var CMD_COPY = "copy";
+var CMD_CUT = "cut";
+var CMD_FIND_TEXT = "findText";
+var CMD_PASTE = "paste";
+var CMD_SAVE = "save";
+var CMD_SAVE_ALL = "saveAll";
 
-RTE.prototype.KEY_ARROW_DOWN = 40;
-RTE.prototype.KEY_ARROW_LEFT = 37;
-RTE.prototype.KEY_ARROW_RIGHT = 39;
-RTE.prototype.KEY_ARROW_UP = 38;
-RTE.prototype.KEY_BACKSPACE = 8;
-RTE.prototype.KEY_END = 35;
-RTE.prototype.KEY_HOME = 36;
-RTE.prototype.KEY_PAGE_DOWN = 34;
-RTE.prototype.KEY_PAGE_UP = 33;
-RTE.prototype.KEY_TAB = 9;
-RTE.prototype.KEY_C = 67;
-RTE.prototype.KEY_F = 70;
-RTE.prototype.KEY_S = 83;
-RTE.prototype.KEY_V = 86;
-RTE.prototype.KEY_X = 88;
-RTE.prototype.KEY_Z = 90;
+var TABLE_HEADERS_NONE = 0;
+var TABLE_HEADERS_COLS = 1;
+var TABLE_HEADERS_ROWS = 2;
+var TABLE_HEADERS_BOTH = 3;
 
-RTE.prototype.CMD_COPY = "copy";
-RTE.prototype.CMD_CUT = "cut";
-RTE.prototype.CMD_FIND_TEXT = "findText";
-RTE.prototype.CMD_PASTE = "paste";
-RTE.prototype.CMD_SAVE = "save";
-RTE.prototype.CMD_SAVE_ALL = "saveAll";
-
-RTE.prototype.TABLE_HEADERS_NONE = 0;
-RTE.prototype.TABLE_HEADERS_COLS = 1;
-RTE.prototype.TABLE_HEADERS_ROWS = 2;
-RTE.prototype.TABLE_HEADERS_BOTH = 3;
-
-RTE.prototype.STYLE_BOLD = 1;
-RTE.prototype.STYLE_ITALIC = RTE.STYLE_BOLD << 1;
-RTE.prototype.STYLE_UNDERLINE = RTE.STYLE_ITALIC << 1;
-RTE.prototype.STYLE_SUBSCRIPT = RTE.STYLE_UNDERLINE << 1;
-RTE.prototype.STYLE_SUPERSCRIPT = RTE.STYLE_SUBSCRIPT << 1;
-
-RTE.prototype.editorId;
-RTE.prototype.editorCSS;
-RTE.prototype.baseHREF;
-RTE.prototype.supportRichTextEditing = true;
-RTE.prototype.editorDoc;
-RTE.prototype.selection;
-RTE.prototype.selectionRange;
-RTE.prototype.readOnly = false;
-RTE.prototype.initialized = false;
-RTE.prototype.modified = false;
-RTE.prototype.selectionInfo = null;
+var BOLD = 1;
+var ITALIC = BOLD << 1;
+var UNDERLINE = ITALIC << 1;
+var SUBSCRIPT = UNDERLINE << 1;
+var SUPERSCRIPT = SUBSCRIPT << 1;
 
 
-//Initializes the editor.
-RTE.prototype.initEditor = function(id, css, baseURL) {
-	this.editorId = id;
-	this.editorCSS = css;
-	this.baseHREF = baseURL;
+var editorId;
+var editorCSS;
+var baseHREF;
+var supportRichTextEditing = true;
+var editorDoc;
+var selection;
+var selectionRange;
+var readOnly = false;
+var initialized = false;
+var modified = false;
+var checkResizeElement;
+var selectionInfo = null;
+
+// Initializes the editor.
+function initEditor(id, css, baseURL) {
+	editorId = id;
+	editorCSS = css;
+	baseHREF = baseURL;
 	try {
-		this.enableRichTextEditing('');
-		this.initialized = true;
-		this.setStatus(this.STATUS_INITIALIZED, null);
+		enableRichTextEditing('');
+		initialized = true;
+		setStatus(STATUS_INITIALIZED, null);
 	}
 	catch (e) {
-		this.supportRichTextEditing = false;
+		supportRichTextEditing = false;
 	}
 }
 
 // Handles the key events.
-RTE.prototype.keyPressed = function(event) {
+function keyPressed(event) {
 	var keyCode = event.keyCode;
 	if (keyCode == 0 && !document.all) {
 		keyCode = event.charCode;
 		switch (keyCode) {
 			case 99:
-				keyCode = rte.KEY_C;
+				keyCode = KEY_C;
 				break;
 			case 102:
-				keyCode = rte.KEY_F;
+				keyCode = KEY_F;
 				break;
 			case 115:
-				keyCode = rte.KEY_S;
+				keyCode = KEY_S;
 				break;
 			case 118:
-				keyCode = rte.KEY_V;
+				keyCode = KEY_V;
 				break;
 			case 120:
-				keyCode = rte.KEY_X;
+				keyCode = KEY_X;
 				break;
 			case 122:
-				keyCode = rte.KEY_Z;
+				keyCode = KEY_Z;
 				break;
 		}
 	}
@@ -126,30 +122,30 @@ RTE.prototype.keyPressed = function(event) {
 	var shiftKey = event.shiftKey;
 	
 	switch(keyCode) {
-		case rte.KEY_ARROW_DOWN:
-		case rte.KEY_ARROW_LEFT:
-		case rte.KEY_ARROW_RIGHT:
-		case rte.KEY_ARROW_UP:
-		case rte.KEY_END:
-		case rte.KEY_HOME:
-		case rte.KEY_PAGE_DOWN:
-		case rte.KEY_PAGE_UP:
-		case rte.KEY_TAB:
+		case KEY_ARROW_DOWN:
+		case KEY_ARROW_LEFT:
+		case KEY_ARROW_RIGHT:
+		case KEY_ARROW_UP:
+		case KEY_END:
+		case KEY_HOME:
+		case KEY_PAGE_DOWN:
+		case KEY_PAGE_UP:
+		case KEY_TAB:
 			break;
-		case rte.KEY_BACKSPACE:
-			if (!rte.readOnly) {
-				setTimeout("rte.setStatus(rte.STATUS_MODIFIED, null);", 10);
+		case KEY_BACKSPACE:
+			if (!readOnly) {
+				setTimeout("setStatus(STATUS_MODIFIED, null);", 10);
 			}
 			break;
-		case rte.KEY_C:
+		case KEY_C:
 			if (ctrlKey) {
-				rte.setStatus(rte.STATUS_KEY_DOWN, rte.CMD_COPY);
+				setStatus(STATUS_KEY_DOWN, CMD_COPY);
 			}
-			else if (!document.all && rte.readOnly) {
+			else if (!document.all && readOnly) {
 				event.preventDefault();
 			}
 			break;			
-		case rte.KEY_F:
+		case KEY_F:
 			if (ctrlKey) {
 				if (document.all) {
 					event.keyCode = -1;
@@ -158,14 +154,14 @@ RTE.prototype.keyPressed = function(event) {
 				else {
 					event.preventDefault();
 				}
-				rte.setStatus(rte.STATUS_KEY_DOWN, rte.CMD_FIND_TEXT);
+				setStatus(STATUS_KEY_DOWN, CMD_FIND_TEXT);
 			}
-			else if (!document.all && rte.readOnly) {
+			else if (!document.all && readOnly) {
 				event.preventDefault();
 			}
 			break;
-		case rte.KEY_S:
-			if (!rte.readOnly && ctrlKey) {
+		case KEY_S:
+			if (!readOnly && ctrlKey) {
 				if (document.all) {
 					event.keyCode = -1;
 					event.returnValue = false;
@@ -174,78 +170,78 @@ RTE.prototype.keyPressed = function(event) {
 					event.preventDefault();
 				}
 				if (shiftKey) {
-					rte.setStatus(rte.STATUS_KEY_DOWN, rte.CMD_SAVE_ALL);
+					setStatus(STATUS_KEY_DOWN, CMD_SAVE_ALL);
 				}
 				else {
-					rte.setStatus(rte.STATUS_KEY_DOWN, rte.CMD_SAVE);
+					setStatus(STATUS_KEY_DOWN, CMD_SAVE);
 				}
 			}
-			else if (!document.all && rte.readOnly) {
+			else if (!document.all && readOnly) {
 				event.preventDefault();
 			}			
 			break;
-		case rte.KEY_V:
+		case KEY_V:
 			if (ctrlKey) {		
 				if (document.all) {
 					event.keyCode = -1;
 					event.returnValue = false;
-					if (!rte.readOnly) {
-						rte.setStatus(rte.STATUS_KEY_DOWN, rte.CMD_PASTE);
+					if (!readOnly) {
+						setStatus(STATUS_KEY_DOWN, CMD_PASTE);
 					}
 				}
 				else {
-					if (!rte.readOnly) {
+					if (!readOnly) {
 						// Workaround Mozilla/Firefox paste issues.
-						setTimeout("rte.setStatus(rte.STATUS_KEY_DOWN, rte.CMD_PASTE);", 10);
+						setTimeout("setStatus(STATUS_KEY_DOWN, CMD_PASTE);", 10);
 					}
 					else {
 						event.preventDefault();
 					}
 				}
 			}
-			else if (!document.all && rte.readOnly) {
+			else if (!document.all && readOnly) {
 				event.preventDefault();
 			}
 			break;
-		case rte.KEY_X:
+		case KEY_X:
 			if (ctrlKey) {
-				rte.setStatus(rte.STATUS_KEY_DOWN, rte.CMD_CUT);
+				setStatus(STATUS_KEY_DOWN, CMD_CUT);
 			}
-			else if (!document.all && rte.readOnly) {
+			else if (!document.all && readOnly) {
 				event.preventDefault();
 			}
 			break;
-		case rte.KEY_Z:
-			if (!rte.readOnly && ctrlKey) {
-				setTimeout("rte.setStatus(rte.STATUS_MODIFIED, null);", 10);
+		case KEY_Z:
+			if (!readOnly && ctrlKey) {
+				setTimeout("setStatus(STATUS_MODIFIED, null);", 10);
 			}
-			else if (!document.all && rte.readOnly) {
+			else if (!document.all && readOnly) {
 				event.preventDefault();
 			}			
 			break;
 		default:
-			if (!document.all && rte.readOnly) {
+			if (!document.all && readOnly) {
 				event.preventDefault();
 			}
 	}
 }
 
-RTE.prototype.selChanged = function(event) {
-	rte.updateSelection();
+function selChanged(event) {
+	updateSelection();
 }
 
-RTE.prototype.enableRichTextEditing = function(html) {
-	var doc = document.getElementById(this.editorId).contentWindow.document;
+function enableRichTextEditing(html) {
+	var doc = document.getElementById(editorId).contentWindow.document;
 	doc.designMode = "on";
 	
 	var htmlSrc = '<html><head><title></title>';
 	
-	if (this.editorCSS != null && this.editorCSS != '') {
-		htmlSrc += '<link rel="StyleSheet" href="' + this.editorCSS + '" type="text/css"/>';
+	if (editorCSS != null && editorCSS != '') {
+		htmlSrc += '<link rel="StyleSheet" href="' + editorCSS + '" type="text/css"/>';
 	}
 	
-	if (this.baseHREF != null && this.baseHREF != '') {	
-		htmlSrc += '<base href="' + this.baseHREF + '"/>';
+	if (baseHREF != null && baseHREF != '') {	
+		htmlSrc += '<base href="' + baseHREF + '"/>';
 	}
 	
 	if (!document.all && html == '') {
@@ -261,39 +257,39 @@ RTE.prototype.enableRichTextEditing = function(html) {
 	doc.write(htmlSrc);
 	doc.close();
 	
-	this.modified = false;
+	modified = false;
 
 	if ("attachEvent" in doc) {
-		doc.attachEvent("onkeydown", this.keyPressed);
-		doc.attachEvent("onselectionchange", this.selChanged);
+		doc.attachEvent("onkeydown", keyPressed);
+		doc.attachEvent("onselectionchange", selChanged);
 		// for DnD (internal)
-		doc.body.attachEvent("ondrop", this.checkModified);
+		doc.body.attachEvent("ondrop", checkModified);
 		// for image/table resizing:
-		doc.body.attachEvent("onresizeend", this.checkModified);
+		doc.body.attachEvent("onresizeend", checkModified);
 	}	
 	if ("addEventListener" in doc) {
-		doc.addEventListener("keypress", this.keyPressed, true);
-		doc.addEventListener("keypress", this.selChanged, false);
-		doc.addEventListener("mouseup", this.selChanged, false);
-		doc.addEventListener("dragdrop", this.checkModified, false);
+		doc.addEventListener("keypress", keyPressed, true);
+		doc.addEventListener("keypress", selChanged, false);
+		doc.addEventListener("mouseup", selChanged, false);
+		doc.addEventListener("dragdrop", checkModified, false);
 		
 		// check mouseup event for image/table resizing
-		doc.addEventListener("mouseup", this.checkModified, false);
+		doc.addEventListener("mouseup", checkModified, false);
 	}
 
-	this.setStatus(this.STATUS_EXEC_CMD, 1);
+	setStatus(STATUS_EXEC_CMD, 1);
 }
 
 // this one is for modification check on drag n drop within the RTE
 // checkModified listener
-RTE.prototype.checkModified = function(event) {
-	setTimeout("rte.setStatus(rte.STATUS_MODIFIED, null);", 10);
+function checkModified(event) {
+	setTimeout("setStatus(STATUS_MODIFIED, null);", 10);
 }
 
 // Sets the height of the editor.
-RTE.prototype.setHeight = function(height) {
-	if (this.initialized) {
-		document.getElementById(this.editorId).height = height + "px";
+function setHeight(height) {
+	if (initialized) {
+		document.getElementById(editorId).height = height + "px";
 	}
 }
 
@@ -301,18 +297,18 @@ RTE.prototype.setHeight = function(height) {
 // Note: By default, Firefox disables changes to the status bar. For this to work, the user
 // must set the global preference "dom.disable_window_status_change" to false.
 // For Firefox 1.0.x, this setting can be made in /usr/firefox-1.0.7/defaults/pref/firefox.js.
-RTE.prototype.setStatus = function(type, value) {
+function setStatus(type, value) {
 	var status = '$$$' + type;
 	if (value != null && value != '') {
 		status += ('$' + value);		
 	}
 	window.status = status;
-	window.status = '$$$' + this.STATUS_NOP;
+	window.status = '$$$' + STATUS_NOP;
 }
 
 // Returns the HTML source.
-RTE.prototype.getHTML = function() {
-	var html = document.getElementById(this.editorId).contentWindow.document.body.innerHTML;
+function getHTML() {
+	var html = document.getElementById(editorId).contentWindow.document.body.innerHTML;
 	if (html == "<P>&nbsp;</P>") {
 		html = "";
 	}
@@ -326,23 +322,23 @@ RTE.prototype.getHTML = function() {
 }
 
 //Returns the HTML source to the Java layer
-RTE.prototype.getText = function() {
-	var html = this.getHTML();
-	this.setStatus(this.STATUS_GET_TEXT, html);
+function getText() {
+	var html = getHTML();
+	setStatus(STATUS_GET_TEXT, html);
 	return html;
 }
 
-RTE.prototype.setInnerHTML = function(html) {
+function setInnerHTML(html) {
 	if (document.all) {
 		// IE has problem setting complex HTML set via doc.body.innerHTML.
-		this.enableRichTextEditing(html);
+		enableRichTextEditing(html);
 	}
 	else {
 		if (html == '') {
 			// Mozilla/Firefox will only display the caret if <br/> is added to the HTML body.
 			html = "<br/>";
 		}
-		var doc = document.getElementById(this.editorId).contentWindow.document;
+		var doc = document.getElementById(editorId).contentWindow.document;
 		if (doc.body != null) {
 			doc.body.innerHTML = html;
 		}
@@ -350,7 +346,7 @@ RTE.prototype.setInnerHTML = function(html) {
 			// Mozilla/Firefox can take a while to initialize document.body
 			// after document.write().
 			try {
-				setTimeout("this.setInnerHTML('" + html + "');", 10);
+				setTimeout("setInnerHTML('" + html + "');", 10);
 			}
 			catch (e) {
 			}
@@ -359,25 +355,25 @@ RTE.prototype.setInnerHTML = function(html) {
 }
 
 // Sets the HTML source.
-RTE.prototype.setText = function(html) {
-	if (this.supportRichTextEditing) {
-		html = this.decodeString(html);
-		this.selectionInfo = this.getSelectionInfo();
-		this.setInnerHTML(html);
-		if (this.selectionInfo != null) {
-			setTimeout("this.setSelection(this.selectionInfo);", 10);
+function setText(html) {
+	if (supportRichTextEditing) {
+		html = decodeString(html);
+		selectionInfo = getSelectionInfo();
+		setInnerHTML(html);
+		if (selectionInfo != null) {
+			setTimeout("setSelection(selectionInfo);", 10);
 		}
-		this.modified = false;
-		this.setStatus(this.STATUS_EXEC_CMD, 1);
+		modified = false;
+		setStatus(STATUS_EXEC_CMD, 1);
 	}
 }
 
-RTE.prototype.setSelection = function (selectionInfo) {
-	if (!this.supportRichTextEditing) {
+function setSelection(selectionInfo) {
+	if (!supportRichTextEditing) {
 		return;
 	}
 	
-	contentWindow = document.getElementById(this.editorId).contentWindow;
+	contentWindow = document.getElementById(editorId).contentWindow;
 	editorDoc = contentWindow.document;
 	
 	try {
@@ -394,7 +390,7 @@ RTE.prototype.setSelection = function (selectionInfo) {
 			tempRange.select();
 			tempRange.scrollIntoView();
 		} else {
-			selection = window.getSelection();
+			selection = this.window.getSelection();
 			var startContainer = selectionInfo.startContainer;
 			var start = selectionInfo.start;
 			var endContainer = selectionInfo.endContainer;
@@ -410,20 +406,20 @@ RTE.prototype.setSelection = function (selectionInfo) {
 	}
 }
 
-RTE.prototype.getSelectionInfo = function () {
-	if (!this.supportRichTextEditing) {
+function getSelectionInfo() {
+	if (!supportRichTextEditing) {
 		return null;
 	}	
 	
-	contentWindow = document.getElementById(this.editorId).contentWindow;
+	contentWindow = document.getElementById(editorId).contentWindow;
 	editorDoc = contentWindow.document;
 	
 	var tempSelRange;
 	try {
 	    if (document.all) {
-			this.selection = editorDoc.selection;
-			if (this.selection != null) {
-				tempSelRange = this.selection.createRange();
+			selection = editorDoc.selection;
+			if (selection != null) {
+				tempSelRange = selection.createRange();
 			}
 			// length of selection
 			var tempSelLen = tempSelRange.text.length;
@@ -440,9 +436,9 @@ RTE.prototype.getSelectionInfo = function () {
 			
 			return {start:startOffset, len:tempSelLen};
 	    } else {
-			this.selection = contentWindow.getSelection();
-			if (this.selection != null) {
-				tempSelRange = this.selection.getRangeAt(selection.rangeCount - 1).cloneRange();
+			selection = contentWindow.getSelection();
+			if (selection != null) {
+				tempSelRange = selection.getRangeAt(selection.rangeCount - 1).cloneRange();
 			}
 			return {startContainer: tempSelRange.startContainer, start:tempSelRange.startOffset, 
 				endContainer: tempSelRange.endContainer, end:tempSelRange.endOffset};
@@ -451,8 +447,9 @@ RTE.prototype.getSelectionInfo = function () {
 		return null;
 	}
 }
+
 // Decodes the HTML passed from the Java layer.
-RTE.prototype.decodeString = function(str) {
+function decodeString(str) {
 	if (str != null && str != '') {
 		if (document.all) {
 			str = str.replace(/%sq%/g, "'");
@@ -468,31 +465,31 @@ RTE.prototype.decodeString = function(str) {
 }
 
 // updates selection without notifying the Java layer of the selection state
-RTE.prototype.internalUpdateSelection = function() {
-	if (!this.supportRichTextEditing) {
+function internalUpdateSelection() {
+	if (!supportRichTextEditing) {
 		return false;
 	}	
 	
-	contentWindow = document.getElementById(this.editorId).contentWindow;
-	this.editorDoc = contentWindow.document;
+	contentWindow = document.getElementById(editorId).contentWindow;
+	editorDoc = contentWindow.document;
 	
 	if (document.all) {
-		this.selection = this.editorDoc.selection;
-		if (this.selection != null) {
-			this.selectionRange = this.selection.createRange();
-			this.reformatElementLinks();
+		selection = editorDoc.selection;
+		if (selection != null) {
+			selectionRange = selection.createRange();
+			reformatElementLinks();
 		}
 	}
 	else {
-		this.selection = contentWindow.getSelection();
-		if (this.selection != null) {
-			this.selectionRange = this.selection.getRangeAt(this.selection.rangeCount - 1).cloneRange();
-			if (this.selectionRange.startContainer.nodeName == "HTML" &&
-					this.selectionRange.endContainer.nodeName == "HTML") {
+		selection = contentWindow.getSelection();
+		if (selection != null) {
+			selectionRange = selection.getRangeAt(selection.rangeCount - 1).cloneRange();
+			if (selectionRange.startContainer.nodeName == "HTML" &&
+					selectionRange.endContainer.nodeName == "HTML") {
 				// Mozilla selects the whole document when there's no RTE content, so select just the body
-				this.selectionRange = this.editorDoc.createRange();
-				this.selectionRange.setStart(this.editorDoc.body, 0);
-				this.selectionRange.setEnd(this.editorDoc.body, 0);
+				selectionRange = editorDoc.createRange();
+				selectionRange.setStart(editorDoc.body, 0);
+				selectionRange.setEnd(editorDoc.body, 0);
 			}
 		}
 	}
@@ -500,13 +497,13 @@ RTE.prototype.internalUpdateSelection = function() {
 }
 
 // Updates the current selection and selection range.
-RTE.prototype.updateSelection = function() {
-	if (!this.supportRichTextEditing) {
+function updateSelection() {
+	if (!supportRichTextEditing) {
 		return false;
 	}	
 	
-	contentWindow = document.getElementById(this.editorId).contentWindow;
-	this.editorDoc = contentWindow.document;
+	contentWindow = document.getElementById(editorId).contentWindow;
+	editorDoc = contentWindow.document;
 	
 	var tempSelRange;
 	var selOffsetStart = 0;
@@ -518,31 +515,31 @@ RTE.prototype.updateSelection = function() {
 	
 	
 	if (document.all) {
-		this.selection = this.editorDoc.selection;
-		if (this.selection != null) {
-			this.selectionRange = this.selection.createRange();
-			if (this.selectionRange != null && this.selection.type != "Control") {
-				tempSelRange = this.selectionRange.duplicate();
+		selection = editorDoc.selection;
+		if (selection != null) {
+			selectionRange = selection.createRange();
+			if (selectionRange != null && selection.type != "Control") {
+				tempSelRange = selectionRange.duplicate();
 			}
-			this.reformatElementLinks();
+			reformatElementLinks();
 		}
 	}
 	else {
-		this.selection = contentWindow.getSelection();
-		if (this.selection != null) {
-			this.selectionRange = this.selection.getRangeAt(this.selection.rangeCount - 1).cloneRange();
-			tempSelRange = this.selectionRange.cloneRange();
+		selection = contentWindow.getSelection();
+		if (selection != null) {
+			selectionRange = selection.getRangeAt(selection.rangeCount - 1).cloneRange();
+			tempSelRange = selectionRange.cloneRange();
 		}
 	}
 	if (tempSelRange != null) {
 		try {
 			if (document.all) {
-				if (this.selectionRange.text) {
-					selectedText = this.selectionRange.text;
+				if (selectionRange.text) {
+					selectedText = selectionRange.text;
 				}
-				/* for getting this.selection offset - commented because we can't select the
+				/* for getting selection offset - commented because we can't select the
 				 * proper location in the HTML source tab because JTidy's reformatting of the HTML
-				var html = this.getHTML();
+				var html = getHTML();
 	            var tempSelLen = tempSelRange.htmlText.length;			
 	            tempSelRange.moveStart('character', -html.length);
 	            selOffsetStart = tempSelRange.htmlText.length - tempSelLen;
@@ -569,36 +566,36 @@ RTE.prototype.updateSelection = function() {
 					blockStyle = "<p>";
 				}
 				if (tempSelRange.queryCommandValue('bold') == true) {
-					textFlags |= this.STYLE_BOLD;
+					textFlags |= BOLD;
 				}
 				if (tempSelRange.queryCommandValue('italic') == true) {
-					textFlags |= this.STYLE_ITALIC;
+					textFlags |= ITALIC;
 				}
 				if (tempSelRange.queryCommandValue('underline') == true) {
-					textFlags |= this.STYLE_UNDERLINE;
+					textFlags |= UNDERLINE;
 				}
 				if (tempSelRange.queryCommandValue('subscript') == true) {
-					textFlags |= this.STYLE_SUBSCRIPT;
+					textFlags |= SUBSCRIPT;
 				}
 				if (tempSelRange.queryCommandValue('superscript') == true) {
-					textFlags |= this.STYLE_SUPERSCRIPT;
+					textFlags |= SUPERSCRIPT;
 				}
-				this.setStatus(this.STATUS_SELECT_TEXT, /* selOffsetStart + "$" + */
+				setStatus(STATUS_SELECT_TEXT, /* selOffsetStart + "$" + */
 						fontName + "$" + fontSize + "$" + blockStyle + "$" + textFlags + "$" + selectedText);
 			} else {
-				if (this.selectionRange != null) {
-					selectedText = this.selectionRange.toString();
+				if (selectionRange != null) {
+					selectedText = selectionRange.toString();
 				}
-				var selParent = this.selection.focusNode;
-				fontName = this.editorDoc.queryCommandValue('fontName');
+				var selParent = selection.focusNode;
+				fontName = editorDoc.queryCommandValue('fontName');
 				if (fontName == "") {
 					fontName = "default";
 				}
-				fontSize = this.editorDoc.queryCommandValue('fontSize');
+				fontSize = editorDoc.queryCommandValue('fontSize');
 				if (fontSize == "") {
 					fontSize = "default";
 				}
-				blockStyle = this.editorDoc.queryCommandValue('formatBlock');
+				blockStyle = editorDoc.queryCommandValue('formatBlock');
 				if (blockStyle == "p") {
 					if (selParent.parentNode.className == "quote") {
 						blockStyle = "<quote>";
@@ -616,44 +613,44 @@ RTE.prototype.updateSelection = function() {
 				} else if (blockStyle == "") {
 					blockStyle = "<p>";
 				}
-				if (this.editorDoc.queryCommandState('bold') == true) {
-					textFlags |= this.STYLE_BOLD;
+				if (editorDoc.queryCommandState('bold') == true) {
+					textFlags |= BOLD;
 				}
-				if (this.editorDoc.queryCommandState('italic') == true) {
-					textFlags |= this.STYLE_ITALIC;
+				if (editorDoc.queryCommandState('italic') == true) {
+					textFlags |= ITALIC;
 				}
-				if (this.editorDoc.queryCommandState('underline') == true) {
-					textFlags |= this.STYLE_UNDERLINE;
+				if (editorDoc.queryCommandState('underline') == true) {
+					textFlags |= UNDERLINE;
 				}
-				if (this.editorDoc.queryCommandState('subscript') == true) {
-					textFlags |= this.STYLE_SUBSCRIPT;
+				if (editorDoc.queryCommandState('subscript') == true) {
+					textFlags |= SUBSCRIPT;
 				}
-				if (this.editorDoc.queryCommandState('superscript') == true) {
-					textFlags |= this.STYLE_SUPERSCRIPT;
+				if (editorDoc.queryCommandState('superscript') == true) {
+					textFlags |= SUPERSCRIPT;
 				}
-				this.setStatus(this.STATUS_SELECT_TEXT, /* selOffsetStart + "$" + */
+				setStatus(STATUS_SELECT_TEXT, /* selOffsetStart + "$" + */
 						fontName + "$" + fontSize + "$" + blockStyle + "$" + textFlags + "$" + selectedText);
 			}
-		} catch (e) {}
+		} catch (e) { }
 	}	
 
 	return true;
 }
 
 // Sets focus to this editor.
-RTE.prototype.setFocus = function() {
-	if (!this.supportRichTextEditing) {
+function setFocus() {
+	if (!supportRichTextEditing) {
 		return;
 	}	
-	contentWindow = document.getElementById(this.editorId).contentWindow;
+	contentWindow = document.getElementById(editorId).contentWindow;
 	contentWindow.focus();
-	this.setStatus(this.STATUS_EXEC_CMD, 1);	
+	setStatus(STATUS_EXEC_CMD, 1);	
 }
 
 // Reformats element links created via drag & drop.
-RTE.prototype.reformatElementLinks = function() {
+function reformatElementLinks() {
 	var linksReformatted = 0;
-	var elements = this.editorDoc.getElementsByTagName('A');
+	var elements = editorDoc.getElementsByTagName('A');
 	for (var i = 0; i < elements.length; i++) {
 		var element = elements[i];
 		if (element.className.toLowerCase() == 'elementlink' ||
@@ -663,76 +660,76 @@ RTE.prototype.reformatElementLinks = function() {
  				element.firstChild.firstChild.firstChild != null) {
  				var linkText = element.firstChild.firstChild.firstChild.nodeValue;
  				element.removeChild(element.firstChild);
- 				element.appendChild(this.editorDoc.createTextNode(linkText));
+ 				element.appendChild(editorDoc.createTextNode(linkText));
  				linksReformatted++;
  			}
 		}
 	}
 	if (linksReformatted > 0) {
-		this.setStatus(this.STATUS_REFORMAT_LINKS, null);
+		setStatus(STATUS_REFORMAT_LINKS, null);
 	}
 }
 
 // Formats the selected text.
-RTE.prototype.formatText = function(command, option) {
-	if (!this.readOnly && this.internalUpdateSelection()) {
-		if (this.editorDoc.execCommand(command, false, option)) {
-			this.setStatus(this.STATUS_EXEC_CMD, 1);		
-			this.setStatus(this.STATUS_MODIFIED, null);
+function formatText(command, option) {
+	if (!readOnly && internalUpdateSelection()) {
+		if (editorDoc.execCommand(command, false, option)) {
+			setStatus(STATUS_EXEC_CMD, 1);		
+			setStatus(STATUS_MODIFIED, null);
 		}
 	}
 }
 
 // Adds HTML.
-RTE.prototype.addHTML = function(html) {
-	if (!this.readOnly && html != "")  {
-		html = this.decodeString(html);
-		if (this.internalUpdateSelection()) {
+function addHTML(html) {
+	if (!readOnly && html != "")  {
+		html = decodeString(html);
+		if (internalUpdateSelection()) {
 			if (document.all) {
-				if (this.selectionRange.text != null) {
-					this.selectionRange.pasteHTML(html);
-					this.setStatus(this.STATUS_EXEC_CMD, 1);
-					this.setStatus(this.STATUS_MODIFIED, null);
+				if (selectionRange.text != null) {
+					selectionRange.pasteHTML(html);
+					setStatus(STATUS_EXEC_CMD, 1);
+					setStatus(STATUS_MODIFIED, null);
 				}
 			}
 			else {
-				this.selectionRange.deleteContents();
-				var documentFragment = this.selectionRange.createContextualFragment(html);
-				this.selectionRange.insertNode(documentFragment);
-				this.setStatus(this.STATUS_EXEC_CMD, 1);
-				this.setStatus(this.STATUS_MODIFIED, null);
+				selectionRange.deleteContents();
+				var documentFragment = selectionRange.createContextualFragment(html);
+				selectionRange.insertNode(documentFragment);
+				setStatus(STATUS_EXEC_CMD, 1);
+				setStatus(STATUS_MODIFIED, null);
 			}
 		}
 	}
 }
 
 // Adds an image.
-RTE.prototype.addImage = function(url, height, width, alt) {
-	if (this.internalUpdateSelection()) {
+function addImage(url, height, width, alt) {
+	if (internalUpdateSelection()) {
 		if (document.all) {
 			if (url != null && url != '') {
-				this.formatText('insertimage', url);
+				formatText('insertimage', url);
 			}
-			if (this.selection != null && this.selection.type == 'Control' && this.selectionRange != null) {
-				if (height != null && height != '') this.selectionRange.item().height = height;
-				if (width != null && width != '') this.selectionRange.item().width = width;
-				if (alt != null) this.selectionRange.item().alt = alt;		
+			if (selection != null && selection.type == 'Control' && selectionRange != null) {
+				if (height != null && height != '') selectionRange.item().height = height;
+				if (width != null && width != '') selectionRange.item().width = width;
+				if (alt != null) selectionRange.item().alt = alt;		
 			}
 		} else {
 			var START_MARKER = "A_-_-_";
 			var END_MARKER = ":.:.:";
 				// mark img links with START_MARKER + id + END_MARKER in the id, for later recovery
-			var elements = this.editorDoc.getElementsByTagName('img');
+			var elements = editorDoc.getElementsByTagName('img');
 			for (var i = 0; i < elements.length; i++) {
 				var element = elements[i];
 				element.id = START_MARKER + element.id + END_MARKER;
 			}
 			if (url != null && url != '') {
-				this.formatText('insertimage', url);
+				formatText('insertimage', url);
 			}
-			if (this.internalUpdateSelection()) {
+			if (internalUpdateSelection()) {
 				var regExID = new RegExp(START_MARKER + "(.*?)" + END_MARKER);
-				var elements = this.editorDoc.getElementsByTagName('img');
+				var elements = editorDoc.getElementsByTagName('img');
 				for (var i = 0; i < elements.length; i++) {
 					var element = elements[i];
 					var id = element.id;
@@ -756,55 +753,55 @@ RTE.prototype.addImage = function(url, height, width, alt) {
 				}
 			}
 		}
-		this.setStatus(this.STATUS_MODIFIED, null);
+		setStatus(STATUS_MODIFIED, null);
 	}
 }
 
 // Adds a horizontal line.
-RTE.prototype.addLine = function() {
-	this.formatText('inserthorizontalrule', null);
+function addLine() {
+	formatText('inserthorizontalrule', null);
 }
 
 // Adds a link.
-RTE.prototype.addLink = function(url) {
-	if (!this.readOnly && url != null && url != '' && this.internalUpdateSelection()) {
+function addLink(url) {
+	if (!readOnly && url != null && url != '' && internalUpdateSelection()) {
 		if (document.all) {
-			if (this.selectionRange.text == null || this.selectionRange.text == '') {
-				this.selectionRange.text = url;
-				this.setStatus(this.STATUS_EXEC_CMD, 1);
-				this.setStatus(this.STATUS_MODIFIED, null);
+			if (selectionRange.text == null || selectionRange.text == '') {
+				selectionRange.text = url;
+				setStatus(STATUS_EXEC_CMD, 1);
+				setStatus(STATUS_MODIFIED, null);
 			}
-			else if (this.selectionRange.execCommand('createlink', false, url)) {
-				this.setStatus(this.STATUS_EXEC_CMD, 1);
-				this.setStatus(this.STATUS_MODIFIED, null);
+			else if (selectionRange.execCommand('createlink', false, url)) {
+				setStatus(STATUS_EXEC_CMD, 1);
+				setStatus(STATUS_MODIFIED, null);
 			}
 		}
 		else {
-			if (this.selection == null || this.selection == "") {		
-				var urlTextNode = this.editorDoc.createTextNode(url);
+			if (selection == null || selection == "") {		
+				var urlTextNode = editorDoc.createTextNode(url);
 				insertNodeAtSelection(document.getElementById(editorFrameId).contentWindow, urlTextNode);
 			}			
-			if (this.editorDoc.execCommand('createlink', false, url)) {
-				this.setStatus(this.STATUS_EXEC_CMD, 1);
-				this.setStatus(this.STATUS_MODIFIED, null);
+			if (editorDoc.execCommand('createlink', false, url)) {
+				setStatus(STATUS_EXEC_CMD, 1);
+				setStatus(STATUS_MODIFIED, null);
 			}
 		}
 	}
 }
 
 // Adds an ordered list.
-RTE.prototype.addOrderedList = function() {
-	this.formatText('insertorderedlist', null);
+function addOrderedList() {
+	formatText('insertorderedlist', null);
 }
 
 // Adds a table.
-RTE.prototype.addTable = function(rows, cols, width, summary, caption, tableheaders) {
-	if (this.readOnly) return;
+function addTable(rows, cols, width, summary, caption, tableheaders) {
+	if (readOnly) return;
 	if (rows == 0) rows = 2;
 	if (cols == 0) cols = 2;
 	if (width == 0) width = "85%";
-	if (this.internalUpdateSelection()) {
-		var table = this.editorDoc.createElement("table");
+	if (internalUpdateSelection()) {
+		var table = editorDoc.createElement("table");
 		table.cellPadding = "2";
 		table.cellSpacing = "0";
 		table.border = "1";
@@ -816,43 +813,43 @@ RTE.prototype.addTable = function(rows, cols, width, summary, caption, tablehead
 		if (caption != null && caption != '') {
 			table.title = caption;
 			table.createCaption();
-			var captionNode = this.editorDoc.createTextNode(caption);
+			var captionNode = editorDoc.createTextNode(caption);
 			table.caption.appendChild(captionNode);
 		}
-		tbody = this.editorDoc.createElement("tbody");
+		tbody = editorDoc.createElement("tbody");
 		for (var i = 0; i < rows; i++) {
-			tr = this.editorDoc.createElement("tr");
+			tr = editorDoc.createElement("tr");
 			for (var j = 0; j < cols; j++) {
-				if (i == 0 && (tableheaders == this.TABLE_HEADERS_COLS || tableheaders == this.TABLE_HEADERS_BOTH)) {
-					th = this.editorDoc.createElement("th");
+				if (i == 0 && (tableheaders == TABLE_HEADERS_COLS || tableheaders == TABLE_HEADERS_BOTH)) {
+					th = editorDoc.createElement("th");
 					th.scope = "col";
 					th.id = "";
 					th.abbr = th.id;
-					var headerNode = this.editorDoc.createTextNode(th.id);
+					var headerNode = editorDoc.createTextNode(th.id);
 					th.appendChild(headerNode);
 					if (!document.all) {
-						br = this.editorDoc.createElement("br");
+						br = editorDoc.createElement("br");
 						th.appendChild(br);
 					}
 					tr.appendChild(th);
 				}
-				else if (j == 0 && (tableheaders == this.TABLE_HEADERS_ROWS || tableheaders == this.TABLE_HEADERS_BOTH)) {
-					th = this.editorDoc.createElement("th");
+				else if (j == 0 && (tableheaders == TABLE_HEADERS_ROWS || tableheaders == TABLE_HEADERS_BOTH)) {
+					th = editorDoc.createElement("th");
 					th.scope = "row";
 					th.id = "";
 					th.abbr = th.id;
-					var headerNode = this.editorDoc.createTextNode(th.id);
+					var headerNode = editorDoc.createTextNode(th.id);
 					th.appendChild(headerNode);
 					if (!document.all) {
-						br = this.editorDoc.createElement("br");
+						br = editorDoc.createElement("br");
 						th.appendChild(br);
 					}
 					tr.appendChild(th);
 				}
 				else {
-					td = this.editorDoc.createElement("td");
+					td = editorDoc.createElement("td");
 					if (!document.all) {
-						br = this.editorDoc.createElement("br");
+						br = editorDoc.createElement("br");
 						td.appendChild(br);
 					}
 					tr.appendChild(td);
@@ -862,69 +859,69 @@ RTE.prototype.addTable = function(rows, cols, width, summary, caption, tablehead
     	}
 		table.appendChild(tbody);
 		if (document.all) {
-			this.selectionRange.parentElement().appendChild(table);
+			selectionRange.parentElement().appendChild(table);
 		}
 		else {
-			this.selectionRange.insertNode(table);
+			selectionRange.insertNode(table);
 		}
-		this.setStatus(this.STATUS_EXEC_CMD, 1);
-		this.setStatus(this.STATUS_MODIFIED, null);			
+		setStatus(STATUS_EXEC_CMD, 1);
+		setStatus(STATUS_MODIFIED, null);			
 	}
 }
 
 // Adds an unordered list.
-RTE.prototype.addUnorderedList = function() {
-	this.formatText('insertunorderedlist', null);
+function addUnorderedList() {
+	formatText('insertunorderedlist', null);
 }
 
 // Sets the background color of the selected text.
-RTE.prototype.backColor = function(color) {
+function backColor(color) {
 	if (color != null && color != '') {
-		this.formatText('backcolor', color);
+		formatText('backcolor', color);
 	}
 }
 
 // Toggles the 'bold' attribute of the selected text.
-RTE.prototype.bold = function() {
-	this.formatText('bold', null);
+function bold() {
+	formatText('bold', null);
 }
 
 // Copies the selected text to the clipboard.
-RTE.prototype.copy = function() {
-	if (this.internalUpdateSelection()) {
-		if (this.editorDoc.execCommand('copy', false, null)) {
-			this.setStatus(this.STATUS_EXEC_CMD, 1);
+function copy() {
+	if (internalUpdateSelection()) {
+		if (editorDoc.execCommand('copy', false, null)) {
+			setStatus(STATUS_EXEC_CMD, 1);
 		}
 	}
 }
 
 // Cuts the selected text to the clipboard.
-RTE.prototype.cut = function() {
-	this.formatText('cut', null);
+function cut() {
+	formatText('cut', null);
 }
 
 // Deletes the selected text.
-RTE.prototype.deleteText = function() {
-	this.formatText('delete', null);
+function deleteText() {
+	formatText('delete', null);
 }
 
 // Finds text.
-RTE.prototype.findText = function(text, dir, options) {
+function findText(text, dir, options) {
 	if (text == null || text == "") {
 		return;
 	}
 	else {
-		text = this.decodeString(text);
+		text = decodeString(text);
 	}
 	
-	if (this.internalUpdateSelection()) {
+	if (internalUpdateSelection()) {
 		if (document.all) {
-			this.selectionRange.collapse(dir < 0);
-			if (this.selectionRange.findText(text, dir, options)) {
-				this.selectionRange.scrollIntoView();
-				this.selectionRange.select();
-				this.selectionRange.collapse(dir < 0);
-				this.setStatus(this.STATUS_EXEC_CMD, 1);
+			selectionRange.collapse(dir < 0);
+			if (selectionRange.findText(text, dir, options)) {
+				selectionRange.scrollIntoView();
+				selectionRange.select();
+				selectionRange.collapse(dir < 0);
+				setStatus(STATUS_EXEC_CMD, 1);
 			}
 		}
 		else {	
@@ -936,94 +933,94 @@ RTE.prototype.findText = function(text, dir, options) {
 			if (dir == -1) backwards = true;
 			if ((options & 2) == 0) wholeWord = false;
 			if (contentWindow.find(text, caseSensitive, backwards, false, wholeWord, false, false)) {
-				this.setStatus(this.STATUS_EXEC_CMD, 1);
+				setStatus(STATUS_EXEC_CMD, 1);
 			}
 		}
 	}
 }
 
 // Sets the foreground color of the selected text.
-RTE.prototype.foreColor = function(color) {
+function foreColor(color) {
 	if (color != null && color != '') {
-		this.formatText('forecolor', color);
+		formatText('forecolor', color);
 	}
 }
 
 // Formats the selected text using the given HTML heading tag.
-RTE.prototype.formatBlock = function(tag) {
+function formatBlock(tag) {
 	if (tag != null && tag != '') {
-		this.formatText('formatblock', tag);
+		formatText('formatblock', tag);
 	}
 }
 
 
-RTE.prototype.INDENTED_LIST_BAD_HTML_IE = "</li>.*<li style=\"list-style: none\">";
-RTE.prototype.INDENTED_LIST_BAD_HTML_MOZ = "</li>.*<li style=\"list-style-type: none; list-style-image: none; list-style-position: outside;\">";
+var INDENTED_LIST_BAD_HTML_IE = "</li>.*<li style=\"list-style: none\">";
+var INDENTED_LIST_BAD_HTML_MOZ = "</li>.*<li style=\"list-style-type: none; list-style-image: none; list-style-position: outside;\">";
 
 // Indents the selected text.
-RTE.prototype.indent = function() {
-	this.formatText('indent', null);
+function indent() {
+	formatText('indent', null);
 	// fix for sub-lists
-	var html = document.getElementById(this.editorId).contentWindow.document.body.innerHTML;
+	var html = document.getElementById(editorId).contentWindow.document.body.innerHTML;
 	if (document.all) {
-		html = html.replace(this.INDENTED_LIST_BAD_HTML_IE, "");
+		html = html.replace(INDENTED_LIST_BAD_HTML_IE, "");
 	} else {
 		// firefox sometimes puts the same as IE, sometimes more junk
-		html = html.replace(this.INDENTED_LIST_BAD_HTML_IE, "");
-		html = html.replace(this.INDENTED_LIST_BAD_HTML_MOZ, "");
+		html = html.replace(INDENTED_LIST_BAD_HTML_IE, "");
+		html = html.replace(INDENTED_LIST_BAD_HTML_MOZ, "");
 	}
-	this.setText(html);
+	setText(html);
 }
 
 // Toggles the 'italic' attribute of the selected text.
-RTE.prototype.italic = function() {
-	this.formatText('italic', null);
+function italic() {
+	formatText('italic', null);
 }
 
 // Center justifies the selected text.
-RTE.prototype.justifyCenter = function() {
-	this.formatText('justifycenter', null);
+function justifyCenter() {
+	formatText('justifycenter', null);
 }
 
 // Fully justifies the selected text.
-RTE.prototype.justifyFull = function() {
-	this.formatText('justifyfull', null);
+function justifyFull() {
+	formatText('justifyfull', null);
 }
 
 // Left justifies the selected text.
-RTE.prototype.justifyLeft = function() {
-	this.formatText('justifyleft', null);
+function justifyLeft() {
+	formatText('justifyleft', null);
 }
 
 // Right justifies the selected text.
-RTE.prototype.justifyRight = function() {
-	this.formatText('justifyright', null);
+function justifyRight() {
+	formatText('justifyright', null);
 }
 
 // Outdents the selected text.
-RTE.prototype.outdent = function() {
-	this.formatText('outdent', null);
+function outdent() {
+	formatText('outdent', null);
 }
 
 // Pastes text from the clipboard.
-RTE.prototype.paste = function(sourceURL) {
+function paste(sourceURL) {
 	if (sourceURL == null) {
 		sourceURL = "";
 	}
 	else {
-		sourceURL = this.decodeString(sourceURL);
+		sourceURL = decodeString(sourceURL);
 	}
 	if (document.all) {
 		var START_MARKER = "A_-_-_";
 		var END_MARKER = ":.:.:";
 		// mark img and <a /> links with START_MARKER + src/href + END_MARKER in the id, for later recovery
-		var elements = this.editorDoc.getElementsByTagName('img');
+		var elements = editorDoc.getElementsByTagName('img');
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
 			var id = element.id;
 			element.id = START_MARKER + element.src + END_MARKER + id;
 		}
-		var elements = this.editorDoc.getElementsByTagName('a');
+		var elements = editorDoc.getElementsByTagName('a');
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
 			var id = element.id;
@@ -1031,25 +1028,25 @@ RTE.prototype.paste = function(sourceURL) {
 		}
 
 		// change the <base> of the document
-		var oldBaseHREF = this.editorDoc.getElementsByTagName('base')[0].href;
-		this.editorDoc.getElementsByTagName('base')[0].href = sourceURL;
+		var oldBaseHREF = editorDoc.getElementsByTagName('base')[0].href;
+		editorDoc.getElementsByTagName('base')[0].href = sourceURL;
 
-		this.formatText('paste', null);
+		formatText('paste', null);
 		
 		// restore <base>
-		this.editorDoc.getElementsByTagName('base')[0].href = oldBaseHREF;
+		editorDoc.getElementsByTagName('base')[0].href = oldBaseHREF;
 	}
 	else {
-		this.setStatus(this.STATUS_EXEC_CMD, 1);
-		this.setStatus(this.STATUS_MODIFIED, null);
+		setStatus(STATUS_EXEC_CMD, 1);
+		setStatus(STATUS_MODIFIED, null);
 	}
-	if (this.internalUpdateSelection()) {
+	if (internalUpdateSelection()) {
 		try {
 			var regExRes = new RegExp("file\:([^=]+)(/resources/)(.+)", "g");
 			var regExRef = new RegExp("(.+)(#.+)");
 			var regEx = new RegExp("file\:([^=]+)/([^/]+)", "g");	
 			var regExID = new RegExp(START_MARKER + "(.*?)" + END_MARKER + "(.*?)");
-			var elements = this.editorDoc.getElementsByTagName('img');
+			var elements = editorDoc.getElementsByTagName('img');
 			for (var i = 0; i < elements.length; i++) {
 				var element = elements[i];
 				var id = element.id;
@@ -1089,7 +1086,7 @@ RTE.prototype.paste = function(sourceURL) {
 					}
 				}
 			}
-			var elements = this.editorDoc.getElementsByTagName('a');
+			var elements = editorDoc.getElementsByTagName('a');
 			for (var i = 0; i < elements.length; i++) {
 				var element = elements[i];
 				var id = element.id;
@@ -1139,21 +1136,21 @@ RTE.prototype.paste = function(sourceURL) {
 }
 
 // Redo the previous command.
-RTE.prototype.redo = function() {
-	this.formatText('redo', null);
+function redo() {
+	formatText('redo', null);
 }
 
 // Redo the previous command.
-RTE.prototype.removeFormat = function() {
-	this.formatText('removeformat', null);
+function removeFormat() {
+	formatText('removeformat', null);
 }
 
 
 
-RTE.prototype._replaceAllText = function(findText, replaceText, options) {
+function _replaceAllText(findText, replaceText, options) {
 	// this is IE only
 	if (document.all) {
-		var tempRange =  document.getElementById(this.editorId).contentWindow.document.body.createTextRange();
+		var tempRange =  document.getElementById(editorId).contentWindow.document.body.createTextRange();
 		tempRange.moveStart('character', -10000000000);
 		do {
 			tempRange.collapse();
@@ -1168,145 +1165,145 @@ RTE.prototype._replaceAllText = function(findText, replaceText, options) {
 }
 
 // Replaces all text.
-RTE.prototype.replaceAllText = function(findText, replaceText, options) {
-	if (this.readOnly || findText == null || findText == "") {
+function replaceAllText(findText, replaceText, options) {
+	if (readOnly || findText == null || findText == "") {
 		return;
 	}
 	else {
-		findText = this.decodeString(findText);
+		findText = decodeString(findText);
 	}
 	if (replaceText == null) {
 		replaceText = "";
 	}
 	else {
-		replaceText = this.decodeString(replaceText);
+		replaceText = decodeString(replaceText);
 	}
 	
 	if (document.all) {
 		// TODO: Move the insertion point to the start of the HTML
 		// and perform a search and replace in the forward direction. 
-		this._replaceAllText(findText, replaceText, options);
+		_replaceAllText(findText, replaceText, options);
 	}
 	else {
 		// TODO: Emulate the IE implementation.
-		var html = document.getElementById(this.editorId).contentWindow.document.body.innerHTML;
+		var html = document.getElementById(editorId).contentWindow.document.body.innerHTML;
 		var optionStr = "/g";
 		if ((options & 4) == 0) {
 			optionStr += "i";
 		}
 		var regExp = eval("/" + findText + optionStr);
 		html = html.replace(regExp, replaceText);
-		this.setText(html);
+		setText(html);
 	}
 	
-	this.setStatus(this.STATUS_EXEC_CMD, 1);
-	this.setStatus(this.STATUS_MODIFIED, null);
+	setStatus(STATUS_EXEC_CMD, 1);
+	setStatus(STATUS_MODIFIED, null);
 }
 
 // Replaces text.
-RTE.prototype.replaceText = function(replaceText, dir, options) {
-	if (this.readOnly || !this.internalUpdateSelection()) {
+function replaceText(replaceText, dir, options) {
+	if (readOnly || !internalUpdateSelection()) {
 		return;
 	}
 	if (replaceText == null) {
 		replaceText = "";
 	}
 	else {
-		replaceText = this.decodeString(replaceText);
+		replaceText = decodeString(replaceText);
 	}
 	if (document.all) {
-		this.selectionRange.text = replaceText;
+		selectionRange.text = replaceText;
 		if (replaceText != "") {
-			this.selectionRange.moveStart("word", -1);
-			this.selectionRange.select();
-			this.selectionRange.collapse(dir < 0);
+			selectionRange.moveStart("word", -1);
+			selectionRange.select();
+			selectionRange.collapse(dir < 0);
 		}
 	}
 	else {
-		this.selectionRange.deleteContents();
-		this.selectionRange.insertNode(this.editorDoc.createTextNode(replaceText));
+		selectionRange.deleteContents();
+		selectionRange.insertNode(editorDoc.createTextNode(replaceText));
 	}
-	this.setStatus(this.STATUS_EXEC_CMD, 1);
-	this.setStatus(this.STATUS_MODIFIED, null);
+	setStatus(STATUS_EXEC_CMD, 1);
+	setStatus(STATUS_MODIFIED, null);
 }
 
 // Selects all text.
-RTE.prototype.selectAll = function() {
-	if (this.internalUpdateSelection()) {
-		if (this.editorDoc.execCommand('selectall', false, null)) {
-			this.setStatus(this.STATUS_EXEC_CMD, 1);
+function selectAll() {
+	if (internalUpdateSelection()) {
+		if (editorDoc.execCommand('selectall', false, null)) {
+			setStatus(STATUS_EXEC_CMD, 1);
 		}
 	}
 }
 
 // Sets the font name for the selected text.
-RTE.prototype.setFontName = function(name) {
-	if (this.internalUpdateSelection()) {
+function setFontName(name) {
+	if (internalUpdateSelection()) {
 		if (name != null) {
 			if (name == '') {
-				this.formatText('removeFormat');
+				formatText('removeFormat');
 			} else {
-				this.formatText('fontname', name);
+				formatText('fontname', name);
 			}
 		}
 	}
 }
 
 // Sets the font size for the selected text.
-RTE.prototype.setFontSize = function(size) {
-	if (this.internalUpdateSelection()) {
+function setFontSize(size) {
+	if (internalUpdateSelection()) {
 		if (size != null) {
 			if (size == '') {
-				this.formatText('removeFormat');
+				formatText('removeFormat');
 			} else {
-				this.formatText('fontsize', size);
+				formatText('fontsize', size);
 			}
 		}
 	}
 }
 
 // Sets the font style for the selected text.
-RTE.prototype.setFontStyle = function(style) { 
-	if (!this.readOnly && style != null && style != '' && this.internalUpdateSelection()) {
+function setFontStyle(style) { 
+	if (!readOnly && style != null && style != '' && internalUpdateSelection()) {
 		try {
 			if (document.all) {
-				this.selectionRange.execCommand("removeformat");
-				this.selectionRange.parentElement().removeAttribute("className");
+				selectionRange.execCommand("removeformat");
+				selectionRange.parentElement().removeAttribute("className");
 			}
 		}
 		catch (e) {
 		}
 		if (style == "<quote>") {
-			this.formatText('formatblock', '<p>');
+			formatText('formatblock', '<p>');
 			if (document.all) {
-				this.selectionRange.parentElement().className = "quote";
+				selectionRange.parentElement().className = "quote";
 			}
 			else {
-				this.selection.focusNode.parentNode.className = "quote";
+				selection.focusNode.parentNode.className = "quote";
 			}
 		}
 		else if (style == "<code>") {
-			this.formatText('formatblock', '<p>');
+			formatText('formatblock', '<p>');
 			if (document.all) {
-				this.selectionRange.parentElement().className = "codeSample";
+				selectionRange.parentElement().className = "codeSample";
 			}
 			else {
-				this.selection.focusNode.parentNode.className = "codeSample";
+				selection.focusNode.parentNode.className = "codeSample";
 			}
 		}
 		else {
 			if (!document.all && style == "<p>") {
 				// A hack to get rid of the "className" attribute in Mozilla/Firefox.
-				this.formatText('formatblock', '<h4>');
+				formatText('formatblock', '<h4>');
 			}
-			this.formatText('formatblock', style);
+			formatText('formatblock', style);
 		}
 	}
 }
 
 // Sets whether the content can be edited.
-RTE.prototype.setEditable = function(editable) {
-	var doc = document.getElementById(this.editorId).contentWindow.document;
+function setEditable(editable) {
+	var doc = document.getElementById(editorId).contentWindow.document;
     if (editable != null && editable == 'true') {
 		if (document.all) {
 			doc.body.contentEditable = "true";
@@ -1314,7 +1311,7 @@ RTE.prototype.setEditable = function(editable) {
 		else {
 			doc.designMode = "on";
 		}
-		this.readOnly = false;
+		readOnly = false;
 	}
 	else {
 		if (document.all) {		
@@ -1323,34 +1320,34 @@ RTE.prototype.setEditable = function(editable) {
 		else {
 			doc.designMode = "off";
 		}
-		this.readOnly = true;
+		readOnly = true;
 	}
-	this.setStatus(this.STATUS_EXEC_CMD, 1);	
+	setStatus(STATUS_EXEC_CMD, 1);	
 }
 
 // Toggles the 'strike-through' attribute of the selected text.
-RTE.prototype.strikeThrough = function() {
-	this.formatText('strikethrough', size);
+function strikeThrough() {
+	formatText('strikethrough', size);
 }
 
 // Toggles the 'subscript' attribute of the selected text.
-RTE.prototype.subscript = function() {
-	this.formatText('subscript', null);
+function subscript() {
+	formatText('subscript', null);
 }
 
 // Toggles the 'superscript' attribute of the selected text.
-RTE.prototype.superscript = function() {
-	this.formatText('superscript', null);
+function superscript() {
+	formatText('superscript', null);
 }
 
 // Toggles the 'underline' attribute of the selected text.
-RTE.prototype.underline = function() {
-	this.formatText('underline', null);
+function underline() {
+	formatText('underline', null);
 }
 
 // Converts a link to normal text.
-RTE.prototype.unlink = function() {
-	this.formatText('unlink', null);
+function unlink() {
+	formatText('unlink', null);
 }
 
 function ObjToString(object) {

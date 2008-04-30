@@ -18,7 +18,6 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Listener;
 
@@ -353,14 +352,4 @@ public interface IRichText {
 	 * @param text
 	 */
 	public void setInitialText(String text);
-
-	/**
-	 * Initializes the Rich Text.
-	 * 
-	 * @param parent
-	 * @param style
-	 * @param basePath
-	 */
-	public void init(Composite parent, int style, String basePath);
-
 }

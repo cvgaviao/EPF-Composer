@@ -22,7 +22,6 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.util.IElementPropertyProvider;
 import org.eclipse.epf.uma.MethodElement;
-import org.osgi.framework.Bundle;
 
 /**
  * This class loads and manages any elementPropertyProvides registered. This class runs as a singleton.

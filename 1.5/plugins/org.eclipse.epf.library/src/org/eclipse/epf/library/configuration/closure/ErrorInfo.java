@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration.closure;
 
-import org.eclipse.epf.uma.MethodElement;
 
 /**
  * An ErrorInfo object holds the error message info caused by an element. The

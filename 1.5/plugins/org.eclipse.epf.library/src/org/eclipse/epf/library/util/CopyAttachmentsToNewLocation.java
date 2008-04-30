@@ -33,7 +33,6 @@ import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand.BasicResourceManager;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.IContentValidator;
-import org.eclipse.epf.uma.ActivityDescription;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.GuidanceDescription;

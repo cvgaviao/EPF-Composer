@@ -11,10 +11,6 @@
 package org.eclipse.epf.library.ui.wizards;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,24 +19,18 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.epf.common.serviceability.VersionUtil;
+import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgDialog;
-import org.eclipse.epf.common.utils.NetUtil;
-import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
-import org.eclipse.epf.library.layout.LayoutResources;
 import org.eclipse.epf.library.ui.LibraryUIManager;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.LibraryUIResources;
-import org.eclipse.epf.library.ui.dialogs.CopyLibraryDialog;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.library.xmi.XMILibraryManager;
 import org.eclipse.epf.library.xmi.XMILibraryUtil;
 import org.eclipse.epf.persistence.migration.UpgradeCallerInfo;
 import org.eclipse.epf.ui.wizards.BaseWizard;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
-import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.INewWizard;

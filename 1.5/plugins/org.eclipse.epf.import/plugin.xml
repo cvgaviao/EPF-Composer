@@ -36,7 +36,7 @@
       <wizard id="org.eclipse.epf.importing.wizards.ImportConfigurationWizard"/>
    </extension>
    <extension
-         point="org.eclipse.epf.common.commandLineRunners">
+         point="org.eclipse.epf.common.service.commandLineRunners">
       <commandLineRunner
             class="org.eclipse.epf.importing.services.CommandLinePluginImporter"
             runnerId="commandLinePluginImporter"/>

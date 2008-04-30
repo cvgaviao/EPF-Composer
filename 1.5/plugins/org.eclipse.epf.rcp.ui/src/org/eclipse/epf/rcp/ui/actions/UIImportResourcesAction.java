@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.rcp.ui.actions;
 
-import org.eclipse.epf.rcp.ui.wizards.UIExportWizard;
 import org.eclipse.epf.rcp.ui.wizards.UIImportWizard;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ISelection;

@@ -11,7 +11,7 @@
 package org.eclipse.epf.authoring.ui.forms;
 
 import org.eclipse.epf.authoring.ui.editors.MethodRichText;
-import org.eclipse.epf.authoring.ui.editors.MethodRichTextFactory;
+import org.eclipse.epf.authoring.ui.editors.MethodRichTextEditor;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
 import org.eclipse.epf.uma.MethodElement;
@@ -46,12 +46,12 @@ public class MethodFormToolkit {
 	public static IMethodRichText createRichText(FormToolkit toolkit,
 			Composite parent, String text, int style, String basePath,
 			MethodElement methodElement, Label label) {
-		IMethodRichText richText = MethodRichTextFactory.createMethodRichText(parent, style, basePath);
-		richText.initElementAndLabel(methodElement, label);
+		IMethodRichText richText = new MethodRichText(parent, style, basePath);
+		richText.init(methodElement, label);
 		richText.getControl().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
 		if (text != null) {
-			richText.setInitialText(text);
+			richText.setText(text);
 		}
 		return richText;
 	}
@@ -72,12 +72,12 @@ public class MethodFormToolkit {
 	public static IMethodRichTextEditor createRichTextEditor(
 			FormToolkit toolkit, Composite parent, String text, int style,
 			String basePath, MethodElement methodElement, Label label, IEditorSite editorSite) {
-		IMethodRichTextEditor editor = MethodRichTextFactory.createMethodRichTextEditor(parent, style,
-				basePath, editorSite, methodElement, label);
+		IMethodRichTextEditor editor = new MethodRichTextEditor(parent, style,
+				basePath, methodElement, label, editorSite);
 		editor.getControl().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
 		if (text != null) {
-			editor.setInitialText(text);
+			editor.setText(text);
 		}
 		return editor;
 	}

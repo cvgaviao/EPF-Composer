@@ -17,11 +17,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.epf.common.utils.CommandLineRunUtil;
+import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.UmaFactory;
 

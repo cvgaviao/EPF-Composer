@@ -83,12 +83,6 @@ public class MethodRichText extends RichText implements IMethodRichText {
 //	protected static final String MARKER_ID = "org.eclipse.epf.authoring.ui.methodRichText"; //$NON-NLS-1$
 
 	/**
-	 * Creates a new instance.  Must call init(..) before using this widget.
-	 */
-	public MethodRichText() {
-	}
-	
-	/**
 	 * Creates a new instance.
 	 * 
 	 * @param parent
@@ -204,7 +198,7 @@ public class MethodRichText extends RichText implements IMethodRichText {
 		return false;
 	}
 	
-	public void initElementAndLabel(MethodElement element, Label label) {
+	public void init(MethodElement element, Label label) {
 		setMethodElement(element);
 		setDecoratedFieldLabel(label);
 		markerHelper = MethodRichTextMarkerHelper.INSTANCE;

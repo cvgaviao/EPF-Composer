@@ -13,7 +13,6 @@ package org.eclipse.epf.library.xmi.preferences;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.xmi.XMILibraryPlugin;
-import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
  * The XML Method Library preferences.

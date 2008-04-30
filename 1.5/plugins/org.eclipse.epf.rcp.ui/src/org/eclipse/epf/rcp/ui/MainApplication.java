@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.epf.common.utils.CommandLineRunUtil;
+import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.library.ui.LibraryUIManager;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;

@@ -12,8 +12,8 @@ package org.eclipse.epf.richtext.actions;
 
 import java.util.Collection;
 
+import org.eclipse.epf.common.ui.actions.CComboContributionItem;
 import org.eclipse.epf.richtext.IRichText;
-import org.eclipse.epf.ui.actions.CComboContributionItem;
 import org.eclipse.swt.SWT;
 
 /**

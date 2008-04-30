@@ -12,7 +12,6 @@ package org.eclipse.epf.library.preferences;
 
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.library.LibraryPlugin;
-import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
  * The Library preferences.

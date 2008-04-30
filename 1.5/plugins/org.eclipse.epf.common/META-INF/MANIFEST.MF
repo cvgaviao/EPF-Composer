@@ -10,11 +10,10 @@ Bundle-Localization: plugin
 Require-Bundle: com.ibm.icu;visibility:=reexport,
  org.eclipse.core.resources;visibility:=reexport,
  org.eclipse.core.runtime;visibility:=reexport,
- org.apache.ant
+ org.apache.ant;visibility:=reexport
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.epf.common,
  org.eclipse.epf.common.html,
- org.eclipse.epf.common.plugin,
  org.eclipse.epf.common.preferences,
  org.eclipse.epf.common.serviceability,
  org.eclipse.epf.common.utils,

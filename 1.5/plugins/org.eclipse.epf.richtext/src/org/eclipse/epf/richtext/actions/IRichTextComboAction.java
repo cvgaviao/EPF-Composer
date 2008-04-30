@@ -10,8 +10,8 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.richtext.actions;
 
+import org.eclipse.epf.common.ui.actions.CComboContributionItem;
 import org.eclipse.epf.richtext.IRichText;
-import org.eclipse.epf.ui.actions.CComboContributionItem;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 
