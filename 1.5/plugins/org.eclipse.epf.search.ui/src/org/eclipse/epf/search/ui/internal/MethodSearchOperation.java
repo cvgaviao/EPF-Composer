@@ -176,7 +176,7 @@ public class MethodSearchOperation implements IMethodSearchOperation {
 		searchString = searchInput.getSearchString();
 		if (searchString == null)
 			searchString = ""; //$NON-NLS-1$
-		if (searchString.length() > 0) {
+		if (searchString.length() > 0 && !searchString.equals("*")) { //$NON-NLS-1$
 			elementScanner = new MethodElementScanner();
 			searchStringPattern = MethodSearchPattern.createPattern(
 					searchString, caseSensitive, regExp);

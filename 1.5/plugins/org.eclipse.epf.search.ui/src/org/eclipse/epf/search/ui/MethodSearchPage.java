@@ -242,8 +242,8 @@ public class MethodSearchPage extends DialogPage implements ISearchPage {
 					SearchUIResources.searchError_reason); 
 			return false;
 		}
-		String searchString = searchStringCombo.getText();
-		String namePattern = namePatternCombo.getText();
+		String searchString = searchStringCombo.getText().trim();
+		String namePattern = namePatternCombo.getText().trim();
 		if(StrUtil.isBlank(namePattern)) {
 			namePattern = "*"; //$NON-NLS-1$
 		}
