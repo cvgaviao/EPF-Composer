@@ -319,9 +319,10 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							.getShell(), filter, element,
 							FilterConstants.GUIDANCE, getSelectedGuidances());
 
-					fd.setTitle(FilterConstants.ROADMAP);
+					fd.setTitle(FilterConstants.GUIDANCE);
 					fd.setInput(UmaUtil.getMethodLibrary((EObject) element));
 					fd.setBlockOnOpen(true);
+					fd.setTypes(getFilterTypes());				
 					fd.open();
 					addGuidances(fd.getSelectedItems());
 					viewer_1.refresh();
