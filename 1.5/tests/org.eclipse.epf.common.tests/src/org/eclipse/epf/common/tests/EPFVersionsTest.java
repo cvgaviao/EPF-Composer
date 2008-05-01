@@ -5,9 +5,9 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.eclipse.epf.common.serviceability.EPFVersion;
-import org.eclipse.epf.common.serviceability.EPFVersions;
-import org.eclipse.epf.common.serviceability.VersionUtil;
+import org.eclipse.epf.common.service.versioning.EPFVersion;
+import org.eclipse.epf.common.service.versioning.EPFVersions;
+import org.eclipse.epf.common.service.versioning.VersionUtil;
 
 public class EPFVersionsTest extends TestCase {
 

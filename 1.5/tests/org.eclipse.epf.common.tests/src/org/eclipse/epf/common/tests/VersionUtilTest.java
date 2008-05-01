@@ -8,8 +8,8 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-import org.eclipse.epf.common.serviceability.EPFVersions;
-import org.eclipse.epf.common.serviceability.VersionUtil;
+import org.eclipse.epf.common.service.versioning.EPFVersions;
+import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.utils.FileUtil;
 
 public class VersionUtilTest extends TestCase {

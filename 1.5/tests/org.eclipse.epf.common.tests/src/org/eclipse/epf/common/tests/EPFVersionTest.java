@@ -2,9 +2,9 @@ package org.eclipse.epf.common.tests;
 
 import junit.framework.TestCase;
 
-import org.eclipse.epf.common.serviceability.EPFVersion;
-import org.eclipse.epf.common.serviceability.EPFVersions;
-import org.eclipse.epf.common.serviceability.VersionUtil;
+import org.eclipse.epf.common.service.versioning.EPFVersion;
+import org.eclipse.epf.common.service.versioning.EPFVersions;
+import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.osgi.framework.Version;
 
 public class EPFVersionTest extends TestCase {
