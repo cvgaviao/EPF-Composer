@@ -23,6 +23,7 @@ import org.eclipse.emf.transaction.RunnableWithResult;
 import org.eclipse.epf.diagram.ad.edit.policies.UMLTextSelectionEditPolicy;
 import org.eclipse.epf.diagram.ad.part.ActivityDiagramEditorPlugin;
 import org.eclipse.epf.diagram.ad.providers.UMLElementTypes;
+import org.eclipse.epf.diagram.core.providers.DiagramIconProviderManager;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
 import org.eclipse.epf.diagram.core.util.DiagramCoreUtil;
 import org.eclipse.epf.diagram.core.util.ValidatingTextDirectEditManager;
@@ -209,8 +210,11 @@ public class ActivityParameterNodeNameEditPart extends CompartmentEditPart
 	 * @modified
 	 */
 	protected Image getLabelIcon() {
-		return ActivityDiagramEditorPlugin.getInstance().getSharedImage(
-				"diagram/taskdescriptor.gif"); //$NON-NLS-1$
+		Image image =  DiagramIconProviderManager.getInstance().getIcon(resolveSemanticElement(), false);
+		if (image == null) {
+			image = ActivityDiagramEditorPlugin.getInstance().getSharedImage("diagram/taskdescriptor.gif"); //$NON-NLS-1$
+		}
+		return image;		
 	}
 
 	/**

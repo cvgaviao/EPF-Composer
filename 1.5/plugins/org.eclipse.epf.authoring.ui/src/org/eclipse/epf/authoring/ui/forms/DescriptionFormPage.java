@@ -67,12 +67,10 @@ import org.eclipse.epf.library.ui.util.ConvertGuidanceType;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.richtext.RichTextListener;
 import org.eclipse.epf.uma.ContentCategory;
-import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.MethodUnit;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -2605,7 +2603,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 								clientRect = pane1.getClientArea();
 								e.gc.setClipping(clientRect);
 								e.gc.setBackground(Display.getCurrent()
-										.getSystemColor(15));
+										.getSystemColor(SWT.COLOR_WHITE));
 								e.gc.fillRectangle(clientRect);
 								e.gc.drawImage(shapeImage, shapeImage
 										.getBounds().x,
@@ -2681,7 +2679,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 								clientRect = pane3.getClientArea();
 								e.gc.setClipping(clientRect);
 								e.gc.setBackground(Display.getCurrent()
-										.getSystemColor(15));
+										.getSystemColor(SWT.COLOR_WHITE));
 								e.gc.fillRectangle(clientRect);
 								e.gc.drawImage(nodeImage,
 										nodeImage.getBounds().x, nodeImage

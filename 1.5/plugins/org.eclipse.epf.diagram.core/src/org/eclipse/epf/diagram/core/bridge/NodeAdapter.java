@@ -33,6 +33,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.diagram.model.util.TxUtil;
@@ -74,6 +76,16 @@ public class NodeAdapter extends AdapterImpl {
 			switch (msg.getFeatureID(DescribableElement.class)) {
 			case UmaPackage.DESCRIBABLE_ELEMENT__PRESENTATION_NAME:
 				setName(msg.getNewStringValue());
+				break;
+			case UmaPackage.DESCRIBABLE_ELEMENT__SHAPEICON:
+			case UmaPackage.DESCRIBABLE_ELEMENT__NODEICON:
+			   // Create a new notify when we've detected that the icons may have changed,
+			   // by just forcing a notify on the name, we cause the icons to get 
+			   // refreshed as well.
+				ActivityNode e = getNode();
+				e.eNotify(new ENotificationImpl((InternalEObject) e, Notification.SET,
+						UMLPackage.NAMED_ELEMENT__NAME, e.getName(), e.getName(), true));
+				e.eNotify(msg);
 				break;
 			}
 			return Collections.EMPTY_LIST;

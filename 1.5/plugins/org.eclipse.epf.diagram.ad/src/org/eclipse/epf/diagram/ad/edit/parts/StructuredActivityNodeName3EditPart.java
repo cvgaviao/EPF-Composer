@@ -24,6 +24,7 @@ import org.eclipse.epf.diagram.ad.custom.policies.OpenADEditPolicy;
 import org.eclipse.epf.diagram.ad.edit.policies.UMLTextSelectionEditPolicy;
 import org.eclipse.epf.diagram.ad.part.ActivityDiagramEditorPlugin;
 import org.eclipse.epf.diagram.ad.providers.UMLElementTypes;
+import org.eclipse.epf.diagram.core.providers.DiagramIconProviderManager;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
 import org.eclipse.epf.diagram.core.util.DiagramCoreUtil;
 import org.eclipse.epf.diagram.core.util.ValidatingTextDirectEditManager;
@@ -213,8 +214,11 @@ public class StructuredActivityNodeName3EditPart extends CompartmentEditPart
 	 * @modified
 	 */
 	protected Image getLabelIcon() {
-		return ActivityDiagramEditorPlugin.getInstance().getSharedImage(
-				"diagram/iteration.gif"); //$NON-NLS-1$
+		Image image =  DiagramIconProviderManager.getInstance().getIcon(resolveSemanticElement(), false);
+		if (image == null) {
+			image = ActivityDiagramEditorPlugin.getInstance().getSharedImage("diagram/iteration.gif"); //$NON-NLS-1$
+		}
+		return image;		
 	}
 
 	/**
