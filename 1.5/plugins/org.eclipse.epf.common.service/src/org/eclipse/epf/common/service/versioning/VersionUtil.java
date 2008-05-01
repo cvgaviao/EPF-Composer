@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.epf.common.CommonPlugin;
+import org.eclipse.epf.common.service.ServicePlugin;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.osgi.framework.Bundle;
@@ -68,7 +68,7 @@ public class VersionUtil {
 	/**
 	 * The extension point namespace.
 	 */
-	public static final String EXTENSION_POINT_NAMESPACE = CommonPlugin.class
+	public static final String EXTENSION_POINT_NAMESPACE = ServicePlugin.class
 			.getPackage().getName();
 
 	/**
@@ -98,7 +98,7 @@ public class VersionUtil {
 
 		// read properties file
 		try {
-			String valueStr = CommonPlugin.getDefault().getPreferenceStore()
+			String valueStr = ServicePlugin.getDefault().getPreferenceStore()
 					.getString(DISABLE_VERSION_CHECKING_PREF);
 			versionCheckingDisabled = Boolean.valueOf(valueStr).booleanValue();
 		} catch (MissingResourceException e) {
@@ -148,7 +148,7 @@ public class VersionUtil {
 					}
 				}
 			} catch (Exception e) {
-				CommonPlugin.getDefault().getLogger().logError(e);
+				ServicePlugin.getDefault().getLogger().logError(e);
 			}
 		}
 	}
@@ -219,7 +219,7 @@ public class VersionUtil {
 		try {
 			buf = FileUtil.readFile(xmlFile, FileUtil.ENCODING_UTF_8);
 		} catch (Exception ex) {
-			CommonPlugin.getDefault().getLogger().logError(ex);
+			ServicePlugin.getDefault().getLogger().logError(ex);
 		}
 		if (buf != null) {
 			int xmiElementStartIdx = buf.indexOf(XML_ELEMENT_START_TAG);
@@ -280,7 +280,7 @@ public class VersionUtil {
 		try {
 			buf = FileUtil.readFile(xmiFile, FileUtil.ENCODING_UTF_8);
 		} catch (Exception ex) {
-			CommonPlugin.getDefault().getLogger().logError(ex);
+			ServicePlugin.getDefault().getLogger().logError(ex);
 		}
 		if (buf != null) {
 			Matcher docStartMatcher = p_XMI_ELEMENT_START_TAG.matcher(buf);

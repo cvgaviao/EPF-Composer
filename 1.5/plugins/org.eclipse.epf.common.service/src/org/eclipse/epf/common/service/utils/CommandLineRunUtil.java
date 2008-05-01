@@ -55,7 +55,7 @@ public class CommandLineRunUtil {
 				.getExtensionRegistry();
 		IExtensionPoint extensionPoint = extensionRegistry
 				.getExtensionPoint(
-						"org.eclipse.epf.common", "commandLineRunners"); //$NON-NLS-1$ //$NON-NLS-2$			
+						"org.eclipse.epf.common.service", "commandLineRunners"); //$NON-NLS-1$ //$NON-NLS-2$			
 		if (extensionPoint == null) {
 			return null;
 		}

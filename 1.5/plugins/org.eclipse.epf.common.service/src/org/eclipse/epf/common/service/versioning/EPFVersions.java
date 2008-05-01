@@ -45,7 +45,12 @@ public class EPFVersions {
 			"1.0.4.1", //$NON-NLS-1$  library version
 			"1.0.1"); //$NON-NLS-1$  xml schema version
 
-	private static EPFVersion currentVersion = EPF_12;
+	// EPF 1.5 release
+	private static EPFVersion EPF_15 = new EPFVersion("1.5", //$NON-NLS-1$  tool version
+			"1.0.5.0", //$NON-NLS-1$  library version
+			"1.0.2"); //$NON-NLS-1$  xml schema version
+
+	private static EPFVersion currentVersion = EPF_15;
 
 	public EPFVersion getCurrentVersion() {
 		return currentVersion;
@@ -68,6 +73,7 @@ public class EPFVersions {
 		versions.add(EPF_10);
 		versions.add(EPF_11);
 		versions.add(EPF_12);
+		versions.add(EPF_15);
 		return versions;
 	}
 
