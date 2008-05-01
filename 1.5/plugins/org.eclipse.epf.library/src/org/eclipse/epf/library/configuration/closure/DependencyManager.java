@@ -26,6 +26,9 @@ import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.Role;
+import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 
 /**
  * Manages the method element dependencies in a method library.
@@ -288,7 +291,19 @@ public class DependencyManager {
 			}
 			 
 			while ( refElement != null ) {
-				MethodElement selectableRef = (MethodElement)LibraryUtil.getSelectable(refElement);
+				
+				boolean skip = false;
+				if (feature == UmaPackage.eINSTANCE.getRole_Modifies()) {
+					if (element instanceof Role) {
+						Role role = (Role) element;
+						List<WorkProduct> wps = role.getResponsibleFor();
+						if (! wps.contains(refElement)) {
+							skip = true;
+						}
+					}
+				}
+				
+				MethodElement selectableRef = skip ? null : (MethodElement)LibraryUtil.getSelectable(refElement);
 				if (selectableRef != null) {
 					PackageReference pkgRef = dependency.getReference(
 							selectableRef, true);
