@@ -294,14 +294,8 @@ public class DependencyManager {
 				
 				boolean skip = false;
 				if (feature == UmaPackage.eINSTANCE.getRole_Modifies()) {
-					if (element instanceof Role) {
-						Role role = (Role) element;
-						List<WorkProduct> wps = role.getResponsibleFor();
-						if (! wps.contains(refElement)) {
-							skip = true;
-						}
-					}
-				}
+					skip = true;
+				}				
 				
 				MethodElement selectableRef = skip ? null : (MethodElement)LibraryUtil.getSelectable(refElement);
 				if (selectableRef != null) {
