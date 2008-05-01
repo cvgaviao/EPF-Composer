@@ -385,18 +385,7 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 								object, feature);
 						if (otherChildren != null) {
 							replaceChildren = true;
-							if (adapter instanceof IWrapper) {
-								IWrapper wrapper = (IWrapper) adapter;
-								for (Iterator<?> iterator = otherChildren
-										.iterator(); iterator.hasNext();) {
-									Object child = iterator.next();
-									children.add(wrapper.wrap((EObject) object,
-											feature, child,
-											CommandParameter.NO_INDEX));
-								}
-							} else {
-								children.addAll(otherChildren);
-							}
+							children.addAll(otherChildren);
 						}
 					}
 					if (replaceChildren) {
