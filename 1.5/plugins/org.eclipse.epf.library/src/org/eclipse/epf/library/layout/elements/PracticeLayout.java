@@ -97,6 +97,7 @@ public class PracticeLayout extends AbstractElementLayout {
 			PracticeItemProvider.GroupingHelper groupingHelper) {
 		Map<String, List> map = PracticeItemProvider.getSubGroupMap(children, groupingHelper);
 		
+		boolean toSort = true;
 		String[] keys = groupingHelper.getKeysInOrder();
 		for (int i = 0; i < keys.length; i++) {
 			String key = keys[i];
@@ -109,7 +110,9 @@ public class PracticeLayout extends AbstractElementLayout {
 				SubGroupValue subGroupValue = new SubGroupValue(key, subgroupChildren);
 				ret.add(subGroupValue);
 			} else {
-				PracticeItemProvider.sort(subgroupChildren);
+				if (toSort) {
+					PracticeItemProvider.sort(subgroupChildren);
+				}
 				ret.addAll(subgroupChildren);
 			}
 		}
