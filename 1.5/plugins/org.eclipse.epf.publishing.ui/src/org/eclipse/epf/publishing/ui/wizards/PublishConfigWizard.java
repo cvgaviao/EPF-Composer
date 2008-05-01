@@ -156,6 +156,20 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 		}
 	}
 
+	@Override
+	public IWizardPage getNextPage(IWizardPage page) {
+		//override the base wizard's logic, 
+		//let the wizard extender drive the page flow when there is a wizard extender
+		IWizardPage nextPage = null;
+		if (wizardExtender != null) {
+			nextPage = wizardExtender.getNextPage(page);
+		}
+		else {
+			nextPage = super.getNextPage(page);
+		}
+		return nextPage;
+	}
+
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#createPageControls(Composite)
 	 */

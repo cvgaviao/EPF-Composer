@@ -80,6 +80,8 @@ public class SelectDestinationPage extends BaseWizardPage {
 	protected Button includeSearchCheckbox;
 
 	protected MethodConfiguration config;
+	
+	protected Composite composite;
 
 	protected List<MethodConfiguration> selectedConfigs = new ArrayList<MethodConfiguration>();
 
@@ -107,7 +109,7 @@ public class SelectDestinationPage extends BaseWizardPage {
 	public void createControl(Composite parent) {
 		shell = parent.getShell();
 
-		Composite composite = createGridLayoutComposite(parent, 1);
+		composite = createGridLayoutComposite(parent, 1);
 
 		Composite dirComposite = createGridLayoutComposite(composite, 3);
 
