@@ -12,16 +12,23 @@ package org.eclipse.epf.library.layout.elements;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider.GroupingHelper;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -52,7 +59,9 @@ public class PracticeLayout extends AbstractElementLayout {
 			EStructuralFeature feature = UmaPackage.Literals.PRACTICE__CONTENT_REFERENCES;
 			List<MethodElement> children = calc0nFeatureValue(element, null,
 					feature, layoutManager.getElementRealizer());
-
+			
+			List<WorkProduct> wpSlotInputs = getInputWpSlots(children);
+			
 			EStructuralFeature feature1 = UmaPackage.Literals.PRACTICE__ACTIVITY_REFERENCES;
 			List<MethodElement> children1 = calc0nFeatureValue(element, null,
 					feature1, layoutManager.getElementRealizer());
@@ -80,10 +89,47 @@ public class PracticeLayout extends AbstractElementLayout {
 					
 			addReferences(feature,
 					elementXml, "Practice guidance tree", ret); //$NON-NLS-1$
+			
+			if (wpSlotInputs != null) {
+				addReferences(feature,
+					elementXml, "Input work product slots", wpSlotInputs); //$NON-NLS-1$
+			}
 
 		}
 
 		return elementXml;
+	}
+
+	private List<WorkProduct> getInputWpSlots(List<MethodElement> elements) {
+		Set<WorkProduct> slots = new HashSet<WorkProduct>();
+		for (MethodElement elem: elements) {
+			if (elem instanceof Task) {
+				Task task = (Task) elem;
+				for (WorkProduct wp: task.getMandatoryInput()) {
+					if (wp.getIsAbstract()) {
+						slots.add(wp);
+					}
+				}
+				for (WorkProduct wp: task.getOptionalInput()) {
+					if (wp.getIsAbstract()) {
+						slots.add(wp);
+					}
+				}
+			}
+		}
+		if (slots.isEmpty()) {
+			return null;
+		}
+
+		List<WorkProduct> wpSlotInputs = new ArrayList<WorkProduct>();
+		wpSlotInputs.addAll(slots);
+		
+		if (wpSlotInputs.size() > 1) {
+			Comparator comparator = PresentationContext.INSTANCE.getPresNameComparator();
+			Collections.<WorkProduct>sort(wpSlotInputs, comparator);
+		}
+		
+		return wpSlotInputs;
 	}
 	
 	protected boolean acceptFeatureValue(EStructuralFeature feature, Object value) {
