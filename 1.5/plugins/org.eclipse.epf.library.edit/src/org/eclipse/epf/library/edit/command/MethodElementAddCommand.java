@@ -1508,6 +1508,11 @@ public class MethodElementAddCommand extends CommandWrapper implements
 						ref.owner.eSet(ref.feature, VariabilityType.NA);
 					} else {
 						ref.owner.eSet(ref.feature, null);
+						if (ref.feature == UmaPackage.eINSTANCE
+							.getVariabilityElement_VariabilityBasedOnElement()) {
+							ref.owner.eSet(UmaPackage.eINSTANCE
+									.getVariabilityElement_VariabilityType(), VariabilityType.NA);
+						}
 					}
 				}
 				removedReferences.add(ref);
