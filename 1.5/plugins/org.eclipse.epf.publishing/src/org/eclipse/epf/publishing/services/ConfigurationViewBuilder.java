@@ -1017,10 +1017,10 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 
 		// performing roles
 		List items = new ArrayList();
-		Role r = (Role) calc01FeatureValue(element, UmaPackage.eINSTANCE
+		List rList = (List) calc0nFeatureValue(element, UmaPackage.eINSTANCE
 				.getTask_PerformedBy());
-		if (r != null) {
-			items.add(r);
+		if (rList != null) {
+			items.addAll(rList);
 		}
 		items.addAll(calc0nFeatureValue(element, UmaPackage.eINSTANCE
 				.getTask_AdditionallyPerformedBy()));

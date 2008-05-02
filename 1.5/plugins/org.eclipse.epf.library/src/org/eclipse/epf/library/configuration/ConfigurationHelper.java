@@ -2107,12 +2107,14 @@ public class ConfigurationHelper {
 		List modifyRoles = new ArrayList();
 		for (Iterator it = tasks.iterator(); it.hasNext(); ) {
 			Task t = (Task)it.next();
-			Role r = (Role)ConfigurationHelper.calc01FeatureValue(
+			List<Role> rList = (List<Role>)ConfigurationHelper.calc0nFeatureValue(
 					t, 
 					UmaPackage.eINSTANCE.getTask_PerformedBy(), 
 					realizer);
-			if ( (r != null) && !modifyRoles.contains(r) ) {
-				modifyRoles.add(r);
+			for (Role r: rList) {
+				if ( (r != null) && !modifyRoles.contains(r) ) {
+					modifyRoles.add(r);
+				}
 			}
 		}
 		
