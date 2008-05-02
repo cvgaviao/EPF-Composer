@@ -11,18 +11,26 @@
 package org.eclipse.epf.authoring.ui.forms;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.filters.AllFilter;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
+import org.eclipse.epf.library.edit.util.CategorySortHelper;
+import org.eclipse.epf.library.edit.util.ContentElementOrderList;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentElement;
@@ -30,8 +38,16 @@ import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 
 
@@ -49,6 +65,11 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	private Practice practice;
 
 	private IActionManager actionMgr;
+	
+	private ContentElementOrderList contentElementOrderList;
+	private ContentElementOrderList activityOrderList;
+	private Button manualSortCheckButton;
+	private Button typeSortButton;
 
 	/**
 	 * Creates a new instance.
@@ -64,8 +85,76 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		super.init(site, input);
 		practice = (Practice) contentElement;
 		actionMgr = ((MethodElementEditor) getEditor()).getActionManager();
+		setIsUpAndDownButtonsRequired1(true);
 		setUseCategory2(false);
 		setUseCategory3(false);
+	}
+	
+	@Override
+	protected void createFormContent(IManagedForm managedForm) {
+		super.createFormContent(managedForm);
+		manualSortCheckButton = toolkit.createButton(category1pane2, AuthoringUIResources.practiceReferencesPage_sortOrderButton_text, SWT.CHECK);
+		manualSortCheckButton.moveAbove(ctrl_up1);
+		manualSortCheckButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		boolean isManual = CategorySortHelper.isManualCategorySort(contentElement);
+		manualSortCheckButton.setSelection(isManual);
+		manualSortCheckButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				boolean isManual = manualSortCheckButton.getSelection();
+				String value = CategorySortHelper.V_CATEGORY_ELEMENTS__SORT_TYPE_MANUAL;
+				if (!isManual) {
+					value = CategorySortHelper.V_CATEGORY_ELEMENTS__SORT_TYPE_METHOD_TYPE;
+				}
+				actionMgr.execute(new MethodElementSetPropertyCommand(practice,
+						CategorySortHelper.KEY_CATEGORY_ELEMENTS__SORT_TYPE, value));
+				enableUpDownButtons1();
+			}
+		});
+		
+		typeSortButton = toolkit.createButton(category1pane2, AuthoringUIResources.practiceReferencesPage_sortTypeButton_text, SWT.PUSH);
+		typeSortButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		typeSortButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// sort elements
+				List<Object> list = new ArrayList<Object>();
+				list.addAll(practice.getContentReferences());
+				Comparator comparator = PresentationContext.INSTANCE.getMethodElementTypeComparator();
+				Collections.<Object>sort(list, comparator);
+
+				actionMgr.doAction(IActionManager.REMOVE_MANY, practice,
+						UmaPackage.eINSTANCE
+								.getPractice_ContentReferences(), practice.getContentReferences(), -1);
+
+				actionMgr.doAction(IActionManager.ADD_MANY, practice,
+						UmaPackage.eINSTANCE
+								.getPractice_ContentReferences(), list, -1);
+				refreshViewers();
+			}
+		});
+	}
+	
+	@Override
+	protected void enableUpDownButtons1() {
+		super.enableUpDownButtons1();
+		if (typeSortButton != null) {
+			if (isShouldEnableAlphaSort()) {
+				typeSortButton.setEnabled(true);
+			} else {
+				typeSortButton.setEnabled(false);
+			}
+		}
+	}
+
+	protected boolean isShouldEnableAlphaSort() {
+		if (contentElement != null) {
+			if (!TngUtil.isLocked(contentElement) && 
+					CategorySortHelper.isManualCategorySort(contentElement)) {
+				return true;
+			}
+		} 
+		return false;
 	}
 
 	/**
@@ -76,9 +165,21 @@ public class PracticeReferencesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				List list = new ArrayList();
-				list.addAll(practice.getContentReferences());
-				list.addAll(practice.getActivityReferences());
+				if (contentElementOrderList == null) {
+					contentElementOrderList = new ContentElementOrderList(
+							contentElement,
+							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
+							getContentElementOrderFeature());
+				}
+				if (activityOrderList == null) {
+					activityOrderList = new ContentElementOrderList(
+							contentElement,
+							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
+							getActivityOrderFeature());
+				}
+				List<Object> list = new ArrayList<Object>();
+				list.addAll(contentElementOrderList);
+				list.addAll(activityOrderList);
 				return list.toArray();
 			}
 		};
@@ -130,6 +231,65 @@ public class PracticeReferencesPage extends AssociationFormPage {
 			}
 		}
 	}
+		
+	
+	@Override
+	protected EStructuralFeature getOrderFeature() {
+		List<ContentElement> ceList = getSelectedContentElements();
+		List<Activity> aList = getSelectedActivities();
+		if (ceList.size() > 0 && aList.size() == 0) {
+			return getContentElementOrderFeature();
+		} else if (aList.size() > 0 && ceList.size() == 0) {
+			return getActivityOrderFeature();
+		}
+		return null;
+	}
+	
+	private EStructuralFeature getContentElementOrderFeature() {
+		return UmaPackage.eINSTANCE.getPractice_ContentReferences();
+	}
+
+	private EStructuralFeature getActivityOrderFeature() {
+		return UmaPackage.eINSTANCE.getPractice_ActivityReferences();
+	}
+	
+	@Override
+	protected ContentElementOrderList getContentElementOrderList() {
+		List<ContentElement> ceList = getSelectedContentElements();
+		List<Activity> aList = getSelectedActivities();
+		if (ceList.size() > 0 && aList.size() == 0) {
+			return contentElementOrderList;
+		} else if (aList.size() > 0 && ceList.size() == 0) {
+			return activityOrderList;
+		}
+		return null;
+	}
+	
+	private List<ContentElement> getSelectedContentElements() {
+		List<ContentElement> result = new ArrayList<ContentElement>();
+		IStructuredSelection selection = (IStructuredSelection) viewer_selected
+				.getSelection();
+		for (Iterator iter = selection.iterator();iter.hasNext();) {
+			Object o = iter.next();
+			if (o instanceof ContentElement) {
+				result.add((ContentElement)o);
+			}
+		}
+		return result;
+	}
+
+	private List<Activity> getSelectedActivities() {
+		List<Activity> result = new ArrayList<Activity>();
+		IStructuredSelection selection = (IStructuredSelection) viewer_selected
+				.getSelection();
+		for (Iterator iter = selection.iterator();iter.hasNext();) {
+			Object o = iter.next();
+			if (o instanceof Activity) {
+				result.add((Activity)o);
+			}
+		}
+		return result;
+	}
 
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#getContentElement()
@@ -142,7 +302,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#getTabString()
 	 */
 	protected String getTabString() {
-		return FilterConstants.ONLY_CONTENT_ELEMENTS;
+		return FilterConstants.ALL_ELEMENTS;
 	}
 
 	/**

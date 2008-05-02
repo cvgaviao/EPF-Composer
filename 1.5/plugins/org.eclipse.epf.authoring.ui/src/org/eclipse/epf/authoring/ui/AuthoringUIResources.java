@@ -486,6 +486,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String practiceReferencesPage_selectedLabel;
 
 	public static String practiceReferencesPage_multipleSelectDescription;
+	public static String practiceReferencesPage_sortOrderButton_text;
+	public static String practiceReferencesPage_sortTypeButton_text;
 
 	public static String categoryGuidancesPage_sectionName;
 

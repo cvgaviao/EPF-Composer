@@ -22,7 +22,7 @@ import org.eclipse.epf.authoring.ui.providers.VariabilityElementLabelProvider;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
-import org.eclipse.epf.library.edit.command.MoveInCategoryCommand;
+import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
 import org.eclipse.epf.library.edit.util.ModelStructure;
@@ -324,10 +324,9 @@ public class ContentElementsOrderDialog extends Dialog {
 				moveUpItems.addAll(selection.toList());
 				EStructuralFeature feature = UmaPackage.eINSTANCE
 						.getCustomCategory_CategorizedElements();
-				MoveInCategoryCommand cmd = new MoveInCategoryCommand(
+				MoveInListCommand cmd = new MoveInListCommand(
 						(ContentCategory) contentElement, moveUpItems,
-						allSteps, feature,
-						ModelStructure.DEFAULT.customCategoryPath, 1);
+						allSteps, feature, MoveInListCommand.UP);
 
 				actionManager.execute(cmd);
 				commands.add(cmd);
@@ -346,10 +345,9 @@ public class ContentElementsOrderDialog extends Dialog {
 				moveDownItems.addAll(selection.toList());
 				EStructuralFeature feature = UmaPackage.eINSTANCE
 						.getCustomCategory_CategorizedElements();
-				MoveInCategoryCommand cmd = new MoveInCategoryCommand(
+				MoveInListCommand cmd = new MoveInListCommand(
 						(ContentCategory) contentElement, moveDownItems,
-						allSteps, feature,
-						ModelStructure.DEFAULT.customCategoryPath, 0);
+						allSteps, feature, MoveInListCommand.DOWN);
 				actionManager.execute(cmd);
 				commands.add(cmd);
 
@@ -415,8 +413,8 @@ public class ContentElementsOrderDialog extends Dialog {
 		if (!commands.isEmpty()) {
 			for (int i = commands.size() - 1; i > -1; i--) {
 				Object cmd = commands.get(i);
-				if (cmd instanceof MoveInCategoryCommand) {
-					((MoveInCategoryCommand) cmd).undo();
+				if (cmd instanceof MoveInListCommand) {
+					((MoveInListCommand) cmd).undo();
 				}
 			}
 		}

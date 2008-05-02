@@ -214,7 +214,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 					allSteps = new ContentElementOrderList(
 							contentElement,
 							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
-							getContentCategoryOrderFeature());
+							getOrderFeature());
 				}
 				List returnList = CategorySortHelper.sortCategoryElements(contentElement, allSteps.toArray());
 				return returnList.toArray();
@@ -510,7 +510,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 	}
 	
 	@Override
-	protected EStructuralFeature getContentCategoryOrderFeature() {
+	protected EStructuralFeature getOrderFeature() {
 		return UmaPackage.eINSTANCE.getCustomCategory_CategorizedElements();
 	}
 	

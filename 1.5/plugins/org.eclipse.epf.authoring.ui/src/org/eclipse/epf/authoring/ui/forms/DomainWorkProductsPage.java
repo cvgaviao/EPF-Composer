@@ -25,7 +25,7 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
-import org.eclipse.epf.library.edit.command.MoveInCategoryCommand;
+import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
@@ -95,7 +95,7 @@ public class DomainWorkProductsPage extends AssociationFormPage {
 					allSteps = new ContentElementOrderList(
 							contentElement,
 							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
-							getContentCategoryOrderFeature());
+							getOrderFeature());
 				}
 				List returnList = CategorySortHelper.sortCategoryElements(
 						contentElement, allSteps.toArray());
@@ -228,7 +228,7 @@ public class DomainWorkProductsPage extends AssociationFormPage {
 	}
 	
 	@Override
-	protected EStructuralFeature getContentCategoryOrderFeature() {
+	protected EStructuralFeature getOrderFeature() {
 		return UmaPackage.eINSTANCE.getDomain_WorkProducts();
 	}
 	

@@ -29,7 +29,7 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
-import org.eclipse.epf.library.edit.command.MoveInCategoryCommand;
+import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -128,6 +128,13 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	protected Section aSection;
 
 	protected Composite aComposite;
+	
+	protected Composite category1pane1;
+	protected Composite category1pane2;
+	protected Composite category2pane1;
+	protected Composite category2pane2;
+	protected Composite category3pane1;
+	protected Composite category3pane2;
 
 	protected TableViewer viewer_selected, viewer_selected2, viewer_selected3;
 
@@ -159,17 +166,17 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
 	private boolean allowChange3 = true;
 
-	private boolean isUpAndDownButtonsRequired1 = false;
+	protected boolean isUpAndDownButtonsRequired1 = false;
 
-	private boolean isUpAndDownButtonsRequired2 = false;
+	protected boolean isUpAndDownButtonsRequired2 = false;
 
-	private boolean isUpAndDownButtonsRequired3 = false;
+	protected boolean isUpAndDownButtonsRequired3 = false;
 
-	private boolean categoryIsSingleSelection1 = false;
+	protected boolean categoryIsSingleSelection1 = false;
 
-	private boolean categoryIsSingleSelection2 = false;
+	protected boolean categoryIsSingleSelection2 = false;
 
-	private boolean categoryIsSingleSelection3 = false;
+	protected boolean categoryIsSingleSelection3 = false;
 
 	private LibraryViewFindElementAction libraryViewFindElementAction;
 	// strings used in the form
@@ -206,13 +213,12 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
 	protected void moveUpItemsInSelectedItems1(ArrayList moveUpItems) {
 		if (!moveUpItems.isEmpty()) {
-			EStructuralFeature feature = getContentCategoryOrderFeature();
+			EStructuralFeature feature = getOrderFeature();
 			ContentElementOrderList orderList = getContentElementOrderList();
-			String[] path = getModelStructurePath();
-			if (feature != null && orderList != null && path != null) {
-				MoveInCategoryCommand cmd = new MoveInCategoryCommand(
-						(ContentCategory) contentElement, moveUpItems, orderList,
-						feature, path, 1);
+			if (feature != null && orderList != null) {
+				MoveInListCommand cmd = new MoveInListCommand(
+						contentElement, moveUpItems, orderList,
+						feature, MoveInListCommand.UP);
 				getActionManager().execute(cmd);
 			}
 		}
@@ -220,13 +226,12 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
 	protected void moveDownItemsInSelectedItems1(ArrayList moveDownItems) {
 		if (!moveDownItems.isEmpty()) {
-			EStructuralFeature feature = getContentCategoryOrderFeature();
+			EStructuralFeature feature = getOrderFeature();
 			ContentElementOrderList orderList = getContentElementOrderList();
-			String[] path = getModelStructurePath();
-			if (feature != null && orderList != null && path != null) {
-				MoveInCategoryCommand cmd = new MoveInCategoryCommand(
-						(ContentCategory) contentElement, moveDownItems, orderList,
-						feature, path, 0);
+			if (feature != null && orderList != null) {
+				MoveInListCommand cmd = new MoveInListCommand(
+						contentElement, moveDownItems, orderList,
+						feature, MoveInListCommand.DOWN);
 				getActionManager().execute(cmd);
 			}
 		}
@@ -374,18 +379,18 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			numTablesUsed++;
 
 		if (useCategory1) {
-			Composite pane1 = createComposite(toolkit, aComposite, 1);
-			label_Category = createLabel(toolkit, pane1, getSelectedLabel());
+			category1pane1 = createComposite(toolkit, aComposite, 1);
+			label_Category = createLabel(toolkit, category1pane1, getSelectedLabel());
 
 			if (categoryIsSingleSelection1)
-				ctrl_selected = createTable(toolkit, pane1, SINGLE_ROW);
+				ctrl_selected = createTable(toolkit, category1pane1, SINGLE_ROW);
 			else {
 				if (numTablesUsed == 1)
-					ctrl_selected = createTable(toolkit, pane1, LARGE_SIZE);
+					ctrl_selected = createTable(toolkit, category1pane1, LARGE_SIZE);
 				else if (numTablesUsed == 2)
-					ctrl_selected = createTable(toolkit, pane1, MEDIUM_SIZE);
+					ctrl_selected = createTable(toolkit, category1pane1, MEDIUM_SIZE);
 				else
-					ctrl_selected = createTable(toolkit, pane1, SMALL_SIZE);
+					ctrl_selected = createTable(toolkit, category1pane1, SMALL_SIZE);
 			}
 
 			libraryViewFindElementAction = new LibraryViewFindElementAction(AuthoringUIResources.actionLabel_findElementInLibNav); 
@@ -397,51 +402,53 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 				viewer_selected.setSorter(new ViewerSorter());
 
 			createContextMenuFor(viewer_selected);
-			toolkit.paintBordersFor(pane1);
+			toolkit.paintBordersFor(category1pane1);
 
-			Composite pane2 = createCompositeForButtons(toolkit, aComposite);
+			category1pane2 = createCompositeForButtons(toolkit, aComposite);
 			if (allowChange1) {
-				ctrl_add = createButton(toolkit, pane2,
+				ctrl_add = createButton(toolkit, category1pane2,
 						(categoryIsSingleSelection1) ? SELECT_BUTTON
 								: ADD_BUTTON);
-				ctrl_remove = createButton(toolkit, pane2,
+				ctrl_remove = createButton(toolkit, category1pane2,
 						(categoryIsSingleSelection1) ? CLEAR_BUTTON
 								: REMOVE_BUTTON);
 
 				if (isUpAndDownButtonsRequired1) {
-					ctrl_up1 = createButton(toolkit, pane2, UP_BUTTON);
-					ctrl_down1 = createButton(toolkit, pane2, DOWN_BUTTON);
-					ctrl_ordering = createButton(toolkit, pane2, ORDER_BUTTON);
-					ctrl_ordering.setEnabled(true);
-					Combo ctrl_sort1 = createComboWithLabel(toolkit, pane2, LibraryEditResources.SortType_Label);
-					viewer_sort1 = new ComboViewer(ctrl_sort1);
-					viewer_sort1.setContentProvider(contentProviderSort);
-					viewer_sort1.setLabelProvider(labelProviderSort);
-					viewer_sort1.setInput(contentElement);
-					// set initial selection
-					String sortType = CategorySortHelper.getCategorySortValue(contentElement);
-					viewer_sort1.setSelection(new StructuredSelection(sortType), true);
+					ctrl_up1 = createButton(toolkit, category1pane2, UP_BUTTON);
+					ctrl_down1 = createButton(toolkit, category1pane2, DOWN_BUTTON);
+					if (contentElement instanceof ContentCategory) {
+						ctrl_ordering = createButton(toolkit, category1pane2, ORDER_BUTTON);
+						ctrl_ordering.setEnabled(true);
+						Combo ctrl_sort1 = createComboWithLabel(toolkit, category1pane2, LibraryEditResources.SortType_Label);
+						viewer_sort1 = new ComboViewer(ctrl_sort1);
+						viewer_sort1.setContentProvider(contentProviderSort);
+						viewer_sort1.setLabelProvider(labelProviderSort);
+						viewer_sort1.setInput(contentElement);
+						// set initial selection
+						String sortType = CategorySortHelper.getCategorySortValue(contentElement);
+						viewer_sort1.setSelection(new StructuredSelection(sortType), true);
+					}
 
 					// ctrl_ordering.setLayoutData(new
 					// GridData(GridData.FILL_HORIZONTAL));
 
 				}
 			}
-			toolkit.paintBordersFor(pane2);
+			toolkit.paintBordersFor(category1pane2);
 		}
 
 		if (useCategory2) {
-			Composite pane3 = createComposite(toolkit, aComposite, 1);
-			label_Category2 = createLabel(toolkit, pane3, getSelectedLabel2());
+			category2pane1 = createComposite(toolkit, aComposite, 1);
+			label_Category2 = createLabel(toolkit, category2pane1, getSelectedLabel2());
 			if (categoryIsSingleSelection2)
-				ctrl_selected2 = createTable(toolkit, pane3, SINGLE_ROW);
+				ctrl_selected2 = createTable(toolkit, category2pane1, SINGLE_ROW);
 			else {
 				if (numTablesUsed == 1)
-					ctrl_selected2 = createTable(toolkit, pane3, LARGE_SIZE);
+					ctrl_selected2 = createTable(toolkit, category2pane1, LARGE_SIZE);
 				else if (numTablesUsed == 2)
-					ctrl_selected2 = createTable(toolkit, pane3, MEDIUM_SIZE);
+					ctrl_selected2 = createTable(toolkit, category2pane1, MEDIUM_SIZE);
 				else
-					ctrl_selected2 = createTable(toolkit, pane3, SMALL_SIZE);
+					ctrl_selected2 = createTable(toolkit, category2pane1, SMALL_SIZE);
 			}
 			viewer_selected2 = new TableViewer(ctrl_selected2);
 			viewer_selected2.setLabelProvider(labelProviderSelected2);
@@ -450,33 +457,33 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			viewer_selected2.setSorter(new ViewerSorter());
 			createContextMenuFor(viewer_selected2);
 
-			toolkit.paintBordersFor(pane3);
+			toolkit.paintBordersFor(category2pane1);
 
-			Composite pane4 = createCompositeForButtons(toolkit, aComposite);
+			category2pane2 = createCompositeForButtons(toolkit, aComposite);
 			if (allowChange2) {
-				ctrl_add2 = createButton(toolkit, pane4, ADD_BUTTON);
-				ctrl_remove2 = createButton(toolkit, pane4, REMOVE_BUTTON);
+				ctrl_add2 = createButton(toolkit, category2pane2, ADD_BUTTON);
+				ctrl_remove2 = createButton(toolkit, category2pane2, REMOVE_BUTTON);
 
 				if (isUpAndDownButtonsRequired2) {
-					ctrl_up2 = createButton(toolkit, pane4, UP_BUTTON);
-					ctrl_down2 = createButton(toolkit, pane4, DOWN_BUTTON);
+					ctrl_up2 = createButton(toolkit, category2pane2, UP_BUTTON);
+					ctrl_down2 = createButton(toolkit, category2pane2, DOWN_BUTTON);
 				}
 			}
-			toolkit.paintBordersFor(pane4);
+			toolkit.paintBordersFor(category2pane2);
 		}
 
 		if (useCategory3) {
-			Composite pane5 = createComposite(toolkit, aComposite, 1);
-			label_Category3 = createLabel(toolkit, pane5, getSelectedLabel3());
+			category3pane1 = createComposite(toolkit, aComposite, 1);
+			label_Category3 = createLabel(toolkit, category3pane1, getSelectedLabel3());
 			if (categoryIsSingleSelection3)
-				ctrl_selected3 = createTable(toolkit, pane5, SINGLE_ROW);
+				ctrl_selected3 = createTable(toolkit, category3pane1, SINGLE_ROW);
 			else {
 				if (numTablesUsed == 1)
-					ctrl_selected3 = createTable(toolkit, pane5, LARGE_SIZE);
+					ctrl_selected3 = createTable(toolkit, category3pane1, LARGE_SIZE);
 				else if (numTablesUsed == 2)
-					ctrl_selected3 = createTable(toolkit, pane5, MEDIUM_SIZE);
+					ctrl_selected3 = createTable(toolkit, category3pane1, MEDIUM_SIZE);
 				else
-					ctrl_selected3 = createTable(toolkit, pane5, SMALL_SIZE);
+					ctrl_selected3 = createTable(toolkit, category3pane1, SMALL_SIZE);
 			}
 			viewer_selected3 = new TableViewer(ctrl_selected3);
 			viewer_selected3.setLabelProvider(labelProviderSelected3);
@@ -485,19 +492,19 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			viewer_selected3.setSorter(new ViewerSorter());
 			createContextMenuFor(viewer_selected3);
 
-			toolkit.paintBordersFor(pane5);
+			toolkit.paintBordersFor(category3pane1);
 
-			Composite pane6 = createCompositeForButtons(toolkit, aComposite);
+			category3pane2 = createCompositeForButtons(toolkit, aComposite);
 			if (allowChange3) {
-				ctrl_add3 = createButton(toolkit, pane6, ADD_BUTTON);
-				ctrl_remove3 = createButton(toolkit, pane6, REMOVE_BUTTON);
+				ctrl_add3 = createButton(toolkit, category3pane2, ADD_BUTTON);
+				ctrl_remove3 = createButton(toolkit, category3pane2, REMOVE_BUTTON);
 
 				if (isUpAndDownButtonsRequired3) {
-					ctrl_up3 = createButton(toolkit, pane6, UP_BUTTON);
-					ctrl_down3 = createButton(toolkit, pane6, DOWN_BUTTON);
+					ctrl_up3 = createButton(toolkit, category3pane2, UP_BUTTON);
+					ctrl_down3 = createButton(toolkit, category3pane2, DOWN_BUTTON);
 				}
 			}
-			toolkit.paintBordersFor(pane6);
+			toolkit.paintBordersFor(category3pane2);
 		}
 
 		setEnabledAddButtons(true);
@@ -609,7 +616,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	 * Add listeners
 	 * 
 	 */
-	private void addListeners() {
+	protected void addListeners() {
 		form.addListener(SWT.Activate, new Listener() {
 			public void handleEvent(Event e) {
 				if (form != null && !form.isDisposed()) {
@@ -947,56 +954,60 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 				}
 			});
 
-			ctrl_ordering.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent e) {
-					ContentElementsOrderDialog dlg = new ContentElementsOrderDialog(
-							Display.getCurrent().getActiveShell(),
-							contentElement, getActionManager());
-					dlg.setFeature(getContentCategoryOrderFeature());
-					dlg.open();
-					if (allowChange1 && isUpAndDownButtonsRequired1) {
-						String sortType = CategorySortHelper.getCategorySortValue(contentElement);
-						viewer_sort1.setSelection(new StructuredSelection(sortType), true);
-						viewer_sort1.refresh();
+			if (ctrl_ordering != null) {
+				ctrl_ordering.addSelectionListener(new SelectionAdapter() {
+					public void widgetSelected(SelectionEvent e) {
+						ContentElementsOrderDialog dlg = new ContentElementsOrderDialog(
+								Display.getCurrent().getActiveShell(),
+								contentElement, getActionManager());
+						dlg.setFeature(getOrderFeature());
+						dlg.open();
+						if (allowChange1 && isUpAndDownButtonsRequired1) {
+							String sortType = CategorySortHelper.getCategorySortValue(contentElement);
+							viewer_sort1.setSelection(new StructuredSelection(sortType), true);
+							viewer_sort1.refresh();
+						}
 					}
-				}
-			});
+				});
+			}
 			
-			viewer_sort1.addSelectionChangedListener(new ISelectionChangedListener() {
-				public void selectionChanged(SelectionChangedEvent event) {
-					IStructuredSelection selection = (IStructuredSelection) viewer_sort1
-							.getSelection();
-					String sortType = (String)selection.getFirstElement();
-					if (!CategorySortHelper.getCategorySortValue(contentElement).equals(sortType)) {
-						MethodElementProperty prop = CategorySortHelper.getCategorySortProperty(contentElement);
-						
-						if (prop == null) {			
-							prop = CategorySortHelper.createNewSortProperty(sortType);
-							getActionManager()
-							.doAction(
-									IActionManager.ADD,
-									contentElement,
+			if (viewer_sort1 != null) {
+				viewer_sort1.addSelectionChangedListener(new ISelectionChangedListener() {
+					public void selectionChanged(SelectionChangedEvent event) {
+						IStructuredSelection selection = (IStructuredSelection) viewer_sort1
+								.getSelection();
+						String sortType = (String)selection.getFirstElement();
+						if (!CategorySortHelper.getCategorySortValue(contentElement).equals(sortType)) {
+							MethodElementProperty prop = CategorySortHelper.getCategorySortProperty(contentElement);
+							
+							if (prop == null) {			
+								prop = CategorySortHelper.createNewSortProperty(sortType);
+								getActionManager()
+								.doAction(
+										IActionManager.ADD,
+										contentElement,
+										UmaPackage.eINSTANCE
+												.getMethodElement_MethodElementProperty(),
+										prop, -1);
+							}
+							else {
+								getActionManager().doAction(IActionManager.SET,
+									prop,
 									UmaPackage.eINSTANCE
-											.getMethodElement_MethodElementProperty(),
-									prop, -1);
+											.getMethodElementProperty_Value(),
+											sortType, -1);
+							}
+							LibraryView.getView().refreshViews();
 						}
-						else {
-							getActionManager().doAction(IActionManager.SET,
-								prop,
-								UmaPackage.eINSTANCE
-										.getMethodElementProperty_Value(),
-										sortType, -1);
-						}
-						LibraryView.getView().refreshViews();
+						refreshViewers();
+						enableUpDownButtons1();
 					}
-					refreshViewers();
-					enableUpDownButtons1();
-				}
-			});
+				});
+			}
 		}
 	}
 
-	protected EStructuralFeature getContentCategoryOrderFeature() {
+	protected EStructuralFeature getOrderFeature() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -1046,7 +1057,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			}
 		}
 		enableUpDownButtons1();
-		if (isUpAndDownButtonsRequired1) {
+		if (isUpAndDownButtonsRequired1 && viewer_sort1 != null) {
 			if (!TngUtil.isLocked(contentElement)) {
 				viewer_sort1.getCombo().setEnabled(true);
 			} else {
