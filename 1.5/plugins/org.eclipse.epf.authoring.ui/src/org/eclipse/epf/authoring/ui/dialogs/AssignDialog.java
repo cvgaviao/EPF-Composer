@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -42,7 +41,7 @@ import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.UniqueNamePNameHandler;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
-import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
@@ -107,18 +106,8 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	protected AssignDialog(Shell parentShell, Collection elementsToAssign) {
 		super(parentShell);
 
-		// filter out the predefined elements to prevent them from getting moved
-		//
 		elements = new ArrayList();
-		for (Iterator iter = elementsToAssign.iterator(); iter.hasNext();) {
-			Object element = iter.next();
-			Object e = TngUtil.unwrap(element);
-			if (e instanceof MethodElement
-					&& TngUtil.isPredefined((MethodElement) e)) {
-				continue;
-			}
-			elements.add(element);
-		}
+		elements.addAll(elementsToAssign);
 	}
 
 	/*
@@ -203,9 +192,27 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	}
 
 	private boolean isValidDestination() {
-		if (destination instanceof CustomCategory) {
-			return true;
+		if (! (destination instanceof CustomCategory) ) {
+			return false;
 		}
+		if (elements == null || elements.isEmpty()) {
+			return false;
+		}
+		MethodPlugin targetPlugin = LibraryUtil.getMethodPlugin((CustomCategory) destination);
+		if (targetPlugin == null) {
+			return false;
+		}
+		
+		if (elements.get(0) instanceof MethodElement) {
+			MethodPlugin sourcePlugin = LibraryUtil.getMethodPlugin((MethodElement) elements.get(0));
+			if (sourcePlugin == targetPlugin) {
+				return true;
+			}
+			if (targetPlugin.getBases().contains(sourcePlugin)) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 
