@@ -1084,14 +1084,23 @@ public class MethodLibraryPersister implements IFileBasedLibraryPersister {
 	}
 
 	public File getDefaultMethodConfigurationFolder(MethodLibrary library) {
+		return getDefaultMethodConfigurationFolder(library, true);
+	}
+	
+	public File getDefaultMethodConfigurationFolder(MethodLibrary library,
+			boolean create) {
 		File libDir = new File(library.eResource().getURI().toFileString()).getParentFile();
 		File configDir = new File(libDir, MultiFileSaveUtil.METHOD_CONFIGURATION_FOLDER_NAME);
-		if(!configDir.exists()) {
+		if(configDir.exists()) {
+			return configDir;
+		} else if(create) {
 			if(!configDir.mkdirs()) {
 				throw new MultiFileIOException(NLS.bind(PersistenceResources.cannot_create_dir_msg, configDir));				
+			} else {
+				return configDir;
 			}
 		}
-		return configDir;
+		return null;
 	}
 
 	public void setDefaultMethodConfigurationFolder(MethodLibrary library, File file) {

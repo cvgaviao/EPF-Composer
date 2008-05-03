@@ -83,6 +83,8 @@ public interface IFileBasedLibraryPersister extends ILibraryPersister {
 	 */
 	public File getDefaultMethodConfigurationFolder(MethodLibrary library);
 	
+	public File getDefaultMethodConfigurationFolder(MethodLibrary library, boolean create);
+	
 	/**
 	 * Sets the default folder to store method configuration in the specified method library.
 	 * 

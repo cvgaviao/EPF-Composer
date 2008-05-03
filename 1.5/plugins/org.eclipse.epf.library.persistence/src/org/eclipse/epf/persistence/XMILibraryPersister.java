@@ -115,6 +115,11 @@ public class XMILibraryPersister implements IFileBasedLibraryPersister {
 	public File getDefaultMethodConfigurationFolder(MethodLibrary library) {
 		return MethodLibraryPersister.INSTANCE.getDefaultMethodConfigurationFolder(library);
 	}
+	
+	public File getDefaultMethodConfigurationFolder(MethodLibrary library,
+			boolean create) {
+		return MethodLibraryPersister.INSTANCE.getDefaultMethodConfigurationFolder(library, create);
+	}
 
 	public void setDefaultMethodConfigurationFolder(MethodLibrary library, File file) {
 		MethodLibraryPersister.INSTANCE.setDefaultMethodConfigurationFolder(library, file);
