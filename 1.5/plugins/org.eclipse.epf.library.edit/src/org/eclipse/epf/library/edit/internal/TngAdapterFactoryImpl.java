@@ -27,7 +27,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -50,11 +49,11 @@ import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
-import org.eclipse.epf.library.edit.IWrapper;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider;
+import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.OBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.PBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.WBSItemProviderAdapterFactory;
@@ -300,6 +299,7 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 			CLASSES_EXCLUDED_FROM_SORTING.add(CustomCategory.class);
 			CLASSES_EXCLUDED_FROM_SORTING.add(TaskDescriptor.class);
 			CLASSES_EXCLUDED_FROM_SORTING.add(TeamProfile.class);
+			CLASSES_EXCLUDED_FROM_SORTING.add(PracticeSubgroupItemProvider.class);
 		}
 
 		private ItemProviderAdapter adapter;

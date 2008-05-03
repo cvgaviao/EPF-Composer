@@ -26,6 +26,7 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
+import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Checklist;
@@ -35,6 +36,7 @@ import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Guidance;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
@@ -97,6 +99,12 @@ public class PracticeItemProvider extends
 		Map<String, List> map = getSubGroupMap(children, groupingHelper);
 		
 		boolean toSort = true;
+		if (parentObject instanceof MethodElement) {
+			MethodElement elem = (MethodElement) parentObject;
+			if (elem != null) {
+				toSort = ! CategorySortHelper.isManualCategorySort(elem);
+			}
+		}
 		String[] keys = groupingHelper.getKeysInOrder();
 		for (int i = 0; i < keys.length; i++) {
 			String key = keys[i];
@@ -105,6 +113,9 @@ public class PracticeItemProvider extends
 				continue;
 			}
 			if (groupingHelper.toGroup(key, subgroupChildren)) {
+				if (toSort) {
+					sort(subgroupChildren);
+				}
 				subgroupChildren = groupingHelper.nestedGrouping(parentObject, key, subgroupChildren);
 				PracticeSubgroupItemProvider sub = new PracticeSubgroupItemProvider(
 						getAdapterFactory(), key, getImageObject(key), subgroupChildren, parentObject);

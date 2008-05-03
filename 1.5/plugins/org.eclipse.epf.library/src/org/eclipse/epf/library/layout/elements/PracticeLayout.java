@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider.GroupingHelper;
+import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.MethodElement;
@@ -144,6 +145,12 @@ public class PracticeLayout extends AbstractElementLayout {
 		Map<String, List> map = PracticeItemProvider.getSubGroupMap(children, groupingHelper);
 		
 		boolean toSort = true;
+		if (parentObject instanceof PracticeLayout) {
+			MethodElement elem = ((PracticeLayout) parentObject).element;
+			if (elem != null) {
+				toSort = ! CategorySortHelper.isManualCategorySort(elem);
+			}
+		}
 		String[] keys = groupingHelper.getKeysInOrder();
 		for (int i = 0; i < keys.length; i++) {
 			String key = keys[i];
