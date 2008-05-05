@@ -94,11 +94,12 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection2">
-		<xsl:variable name="subPractices" select="referenceList[@name='subPractices']/Element"/>	
+		<xsl:variable name="subPractices" select="referenceList[@name='subPractices']/Element"/>
+		<xsl:variable name="inputSlots" select="referenceList[@name='Input work product slots']/Element"/>
 		<xsl:variable name="contentReferences" select="referenceList[@name='contentReferences']/Element"/>
 		<xsl:variable name="activityReferences" select="referenceList[@name='activityReferences']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($contentReferences) + count($subPractices) + count($activityReferences) + count($categories) > 0">
+		<xsl:if test="count($contentReferences) + count($subPractices) + count($activityReferences) + count($categories) + count($inputSlots) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
@@ -117,6 +118,10 @@
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$activityReferencesText"/>
 						<xsl:with-param name="refElement" select="$activityReferences"/>
+					</xsl:call-template>		
+					<xsl:call-template name="addReferences">
+						<xsl:with-param name="refName" select="$inputsText"/>
+						<xsl:with-param name="refElement" select="$inputSlots"/>
 					</xsl:call-template>					
 				</table>
 			</div>
@@ -137,19 +142,19 @@
 			<div class="sectionHeading"><xsl:value-of select="$descriptionText"/></div>
 			<div class="sectionContent">			
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
-					<xsl:if test="$mainDescription != ''">
-						<tr valign="top">
-							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$mainDescriptionText"/></th>
-							<td class="sectionTableCell">
-								<xsl:value-of disable-output-escaping="yes" select="$mainDescription"/>
-							</td>
-						</tr>
-					</xsl:if>
 					<xsl:if test="$problem != ''">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$problemText"/></th>
 							<td class="sectionTableCell">
 								<xsl:value-of disable-output-escaping="yes" select="$problem"/>
+							</td>
+						</tr>
+					</xsl:if>
+					<xsl:if test="$goals != ''">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$goalsText"/></th>
+							<td class="sectionTableCell">
+								<xsl:value-of disable-output-escaping="yes" select="$goals"/>
 							</td>
 						</tr>
 					</xsl:if>
@@ -161,11 +166,11 @@
 							</td>
 						</tr>
 					</xsl:if>
-					<xsl:if test="$goals != ''">
+					<xsl:if test="$mainDescription != ''">
 						<tr valign="top">
-							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$goalsText"/></th>
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$mainDescriptionText"/></th>
 							<td class="sectionTableCell">
-								<xsl:value-of disable-output-escaping="yes" select="$goals"/>
+								<xsl:value-of disable-output-escaping="yes" select="$mainDescription"/>
 							</td>
 						</tr>
 					</xsl:if>
