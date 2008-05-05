@@ -122,7 +122,7 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 					java.net.URI nodeIconUri = de.getNodeicon();
 					if (nodeIconUri != null) {
 						java.net.URI newNodeIconUri = handleIconURI(de,
-								shapeIconUri);
+								nodeIconUri);
 						if (newNodeIconUri != null) {
 							de.setNodeicon(newNodeIconUri);
 							modifiedResourceSet.add(de.eResource());
@@ -176,9 +176,6 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 
 				// FIXME: this is not always correct this relative of the element's folder might have been changed
 				// during move/copy
-				String oldContentPath2 = contentPath.replaceFirst(UmaUtil
-						.getMethodPlugin(elementToProcess).getName(),
-						lastOldPlugin.getName());
 				String oldContentPath = ResourceHelper
 					.getElementPath(lastOldPlugin);
 
