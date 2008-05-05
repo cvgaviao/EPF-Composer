@@ -67,6 +67,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 			.getName();
 
 	protected Shell shell;
+	
+	protected Group layoutGroup;
 
 	protected Text titleText;
 
@@ -274,6 +276,14 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 		return diagramGroup;
 	}
 
+	public Group getLayoutGroup() {
+		return layoutGroup;
+	}
+
+	public void setLayoutGroup(Group layoutGroup) {
+		this.layoutGroup = layoutGroup;
+	}
+
 	/**
 	 * Creates the Layout group.
 	 * 
@@ -282,7 +292,7 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	 * @return the group composite
 	 */
 	protected Group createLayoutGroup(Composite composite) {
-		Group layoutGroup = createGridLayoutGroup(composite,
+		layoutGroup = createGridLayoutGroup(composite,
 				PublishingUIResources.layoutGroup_text, 1);
 
 		publishLightWeightTreeCheckbox = createCheckbox(layoutGroup,
