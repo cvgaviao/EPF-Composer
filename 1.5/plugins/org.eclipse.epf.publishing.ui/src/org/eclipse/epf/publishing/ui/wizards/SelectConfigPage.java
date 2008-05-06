@@ -300,12 +300,12 @@ public class SelectConfigPage extends BaseWizardPage {
 	 * @return the name of the user selected configuration or <code>null</code>
 	 */
 	public String getConfigName() {
-		return selectedConfigName;
+		return selectedConfig.getName();
 	}
 
 	/**
 	 * Populates the Brief Description text control with the given
-	 * configuration's brief descripotion.
+	 * configuration's brief description.
 	 */
 	private void setBriefDescription(MethodConfiguration config) {
 		briefDescText.setText(config.getBriefDescription());
