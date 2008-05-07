@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -110,6 +110,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private HideUncheckedViewerFilter addCategoryHideUncheckedFilter;
 	private HideUncheckedViewerFilter subCategoryHideUncheckedFilter;
 	
+
+	private ComposedAdapterFactory adapterFactory = TngAdapterFactory.INSTANCE.createLibraryComposedAdapterFactory();
 
 	private ILibraryChangeListener libListener = null;
 	
@@ -416,8 +418,6 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		gd.verticalSpan = 3;
 		configViewer.getTree().setLayoutData(gd);
 
-		AdapterFactory adapterFactory = TngAdapterFactory.INSTANCE
-			.getNavigatorView_ComposedAdapterFactory();
 		contProvider = new ConfigPackageContentProvider(adapterFactory);
 		configViewer.setContentProvider(contProvider);
 		labelProvider = new ConfigPackageLabelProvider(contProvider);
@@ -447,10 +447,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		gd = new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL);
 		gd.heightHint= 200;
 		subCategoryViewer.getTree().setLayoutData(gd);
-		subCategoryViewer.setContentProvider(new CategoryContentProvider(TngAdapterFactory.INSTANCE
-						.getNavigatorView_ComposedAdapterFactory(), config));
-		subCategoryViewer.setLabelProvider(new CategoryLabelProvider(TngAdapterFactory.INSTANCE
-						.getNavigatorView_ComposedAdapterFactory()));
+		subCategoryViewer.setContentProvider(new CategoryContentProvider(adapterFactory, config));
+		subCategoryViewer.setLabelProvider(new CategoryLabelProvider(adapterFactory));
 		createViewerLabelAndButtons(toolkit, subCatsViewerLabelComposite,
 				AuthoringUIResources.ConfigurationPage_SubCategoriesTitleLabel, subCategoryViewer);
 		
@@ -947,6 +945,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		if (closure != null) {
 			closure.dispose();
 			closure = null;
+		}
+		if (adapterFactory != null) {
+			adapterFactory.dispose();
+			adapterFactory = null;
 		}
 	}
 	
