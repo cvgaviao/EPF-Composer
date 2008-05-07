@@ -12,9 +12,11 @@ package org.eclipse.epf.library.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +45,7 @@ public class ResourceScanner {
 	private File tgtPluginRootParent;
 	
 	private Map<File, File> fileMap = new LinkedHashMap<File, File>();
+	private Set<File> tgtFileSet = new HashSet<File>();
 
 	/**
 	 * Creates a new instance.
@@ -54,7 +57,7 @@ public class ResourceScanner {
 		tgtPluginRootParent = tgtPluginRoot.getParentFile();
 	}
 
-	public void scan(MethodElement srcElement, MethodElement tgtElement, String source) {
+	public String scan(MethodElement srcElement, MethodElement tgtElement, String source) {
 		ILibraryResourceManager srcResMgr = ResourceHelper.getResourceMgr(srcElement);
 		String srcPath = ResourceHelper.getElementPath(srcElement);
 		
@@ -64,60 +67,86 @@ public class ResourceScanner {
 		File srcFolder = new File(srcPluginRootParent, srcPath);
 		File tgtFolder = new File(tgtPluginRootParent, tgtPath);
 		
+		StringBuffer sb = new StringBuffer();
 		try {
 			// process images and other src resources
 			Matcher m = p_src_ref.matcher(source);
 			while (m.find()) {
+				String text = m.group();
 				String url = m.group(1);
-				registerFileCopy(srcFolder, tgtFolder, url);
+				String tgtUrl = registerFileCopy(srcFolder, tgtFolder, url);
+				String replaceText = text.replace(url, tgtUrl);
+				m.appendReplacement(sb, Matcher.quoteReplacement(replaceText));	
 			}
+			m.appendTail(sb);
 
 			// process hrefs
-			m = p_href_ref.matcher(source);
-
+			m = p_href_ref.matcher(sb.toString());
 			while (m.find()) {
+				String text = m.group();
 				String url = m.group(1);
-				registerFileCopy(srcFolder, tgtFolder, url);
+				String tgtUrl = registerFileCopy(srcFolder, tgtFolder, url);
+				String replaceText = text.replace(url, tgtUrl);
+				m.appendReplacement(sb, Matcher.quoteReplacement(replaceText));	
 			}
+			m.appendTail(sb);
+			
 		} catch (Exception ex) {
 			LibraryPlugin.getDefault().getLogger().logError(ex);
 		}
+		
+		return null;
 	}
 	
-	public void registerFileCopy(File srcFolder, File tgtFolder, String url) {
-		if (url == null) {
-			return;
+	/**
+	 * @param srcFolder
+	 * @param tgtFolder
+	 * @param url
+	 * @return tgtUrl
+	 */
+	public String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl) {
+		if (srcUrl == null) {
+			return srcUrl;
 		}
 
-		int index = url.indexOf("#"); //$NON-NLS-1$
+		String tgtUrl = srcUrl;
+		int index = tgtUrl.indexOf("#"); //$NON-NLS-1$
 		if (index >= 0) {
-			url = url.substring(0, index);
+			tgtUrl = tgtUrl.substring(0, index);
 		}
 
-		index = url.indexOf("?"); //$NON-NLS-1$
+		index = tgtUrl.indexOf("?"); //$NON-NLS-1$
 		if (index >= 0) {
-			url = url.substring(0, index);
+			tgtUrl = tgtUrl.substring(0, index);
 		}
 
-		if (url.trim().length() == 0) {
-			return;
+		if (tgtUrl.trim().length() == 0) {
+			return srcUrl;
 		}
 
-		// the url is relative to the owner element
-		// need to convert to the path relative to the library root
-		File srcFile = null;
-		File tgtFile = null;
 		try {
+			File srcFile = new File(srcFolder, srcUrl);
+			File tgtFile = new File(tgtFolder, tgtUrl);
+			
 			if (srcFile.isFile() && srcFile.exists()) {
+				if (tgtFile.exists()) {
+					if (tgtFile.lastModified() == srcFile.lastModified()
+							&& tgtFile.length() == srcFile.length()) {
+						return tgtUrl;
+					}
+				}
+				tgtUrl = this.getTargetUrl(srcFile, tgtFolder, tgtUrl);
+				tgtFile = new File(tgtFolder, tgtUrl);;
+				
 				srcFile = srcFile.getCanonicalFile();
-				tgtFile = tgtFile.getCanonicalFile();	
+				tgtFile = tgtFile.getCanonicalFile();				
 				fileMap.put(srcFile, tgtFile);				
 			}
 		} catch (IOException e) {
-			// Log the error and proceed. TODO
-			e.printStackTrace();
+			LibraryPlugin.getDefault().getLogger().logError(e);
 		}
-
+		
+		return tgtUrl;
 	}
 
 
@@ -129,54 +158,46 @@ public class ResourceScanner {
 			Map.Entry entry = (Map.Entry)it.next();
 			File srcFile = (File) entry.getKey();
 			File tgtFile = (File) entry.getValue();
-			tgtFile = getFinalTargetFile(srcFile, tgtFile);
-			if (tgtFile != null) {
-				FileUtil.copyFile(srcFile, tgtFile);
-			}
+			FileUtil.copyFile(srcFile, tgtFile);
 		}	
-
 	}
 	
-	private File getFinalTargetFile(File srcFile, File tgtFile) {
-		if (tgtFile.exists()) {
-			boolean toCopy = (tgtFile.lastModified() != srcFile.lastModified())
-					|| (tgtFile.length() != srcFile.length());
-			return toCopy ? getRenamedTargetFile(tgtFile) : null;
-		}
-		
-		return tgtFile;
-	}
-	
-	private File getRenamedTargetFile(File tgtFile) {
+	private String getTargetUrl(File srcFile, File tgtFolder, String tgtUrl0) {
 		String dot = ".";	//$NON-NLS-1$
-		File parentFile = tgtFile.getParentFile();
-		String name = tgtFile.getName();
-		String name1 = name;
-		String name2 = "";	//$NON-NLS-1$
+		String url1 = tgtUrl0;
+		String url2 = "";	//$NON-NLS-1$
 		
-		int ix = name.lastIndexOf(dot);
-		int len = name.length();
+		int ix = tgtUrl0.lastIndexOf(dot);
+		int len = tgtUrl0.length();
 
 		boolean addDot = false;
 		if (ix > 0 && ix < len) {
-			name1 = name.substring(0, ix);
-			name2 = name.substring(ix, len);
+			url1 = tgtUrl0.substring(0, ix);
+			url2 = tgtUrl0.substring(ix, len);
 			addDot = true;
 		}
 		
-		File file = tgtFile;
+		String tgtUrl = tgtUrl0;
+		File tgtFile = new File(tgtFolder, tgtUrl);
 		String u = "_";	//$NON-NLS-1$
 		int i = 1;
-		while (file.exists()) {
-			String newFileName = name1 + u + i;
+		while (tgtFile.exists() || tgtFileSet.contains(tgtFile)) {
+			tgtUrl = url1 + u + i;
 			if (addDot) {
-				newFileName += dot + name2;
+				tgtUrl += dot + url2;
 			}
-			file = new File(parentFile, newFileName);			
+			tgtFile = new File(tgtFolder, tgtUrl);			
 			i++;
 		}
-		return file;
+		
+		try {
+			tgtFile = tgtFile.getCanonicalFile();
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		tgtFileSet.add(tgtFile);		
+		return tgtUrl;
 	}
-
 
 }
