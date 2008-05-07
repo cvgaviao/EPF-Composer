@@ -66,6 +66,10 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 */
 	protected DescriptorImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -152,6 +156,12 @@ public abstract class DescriptorImpl extends BreakdownElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
 			return IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT == null ? isSynchronizedWithSource != null

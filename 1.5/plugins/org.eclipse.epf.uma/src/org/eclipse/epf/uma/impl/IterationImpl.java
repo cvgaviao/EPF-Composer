@@ -38,6 +38,10 @@ public class IterationImpl extends ActivityImpl implements Iteration {
 	 */
 	protected IterationImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

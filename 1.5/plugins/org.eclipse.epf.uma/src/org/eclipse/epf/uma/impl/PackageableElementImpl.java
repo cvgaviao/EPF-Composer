@@ -39,6 +39,10 @@ public abstract class PackageableElementImpl extends NamedElementImpl implements
 	 */
 	protected PackageableElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

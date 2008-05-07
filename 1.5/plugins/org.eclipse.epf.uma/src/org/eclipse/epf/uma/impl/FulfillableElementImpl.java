@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 import org.eclipse.epf.uma.FulfillableElement;
@@ -61,6 +62,10 @@ public class FulfillableElementImpl extends DescribableElementImpl implements
 	 */
 	protected FulfillableElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -141,6 +146,12 @@ public class FulfillableElementImpl extends DescribableElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.FULFILLABLE_ELEMENT__FULFILLS:
 			return fulfills != null && !fulfills.isEmpty();

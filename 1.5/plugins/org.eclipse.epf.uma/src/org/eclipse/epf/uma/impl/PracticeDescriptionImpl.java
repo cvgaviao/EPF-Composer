@@ -171,6 +171,10 @@ public class PracticeDescriptionImpl extends ContentDescriptionImpl implements
 	 */
 	protected PracticeDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -411,6 +415,12 @@ public class PracticeDescriptionImpl extends ContentDescriptionImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PRACTICE_DESCRIPTION__ADDITIONAL_INFO:
 			return ADDITIONAL_INFO_EDEFAULT == null ? additionalInfo != null

@@ -38,6 +38,10 @@ public abstract class TypeImpl extends PackageableElementImpl implements Type {
 	 */
 	protected TypeImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

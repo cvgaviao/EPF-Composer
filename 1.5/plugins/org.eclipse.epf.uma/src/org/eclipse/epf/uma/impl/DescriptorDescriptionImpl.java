@@ -66,6 +66,10 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 */
 	protected DescriptorDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -152,6 +156,12 @@ public class DescriptorDescriptionImpl extends BreakdownElementDescriptionImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DESCRIPTOR_DESCRIPTION__REFINED_DESCRIPTION:
 			return REFINED_DESCRIPTION_EDEFAULT == null ? refinedDescription != null

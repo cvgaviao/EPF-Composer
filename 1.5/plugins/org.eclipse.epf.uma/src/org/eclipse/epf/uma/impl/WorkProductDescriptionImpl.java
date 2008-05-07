@@ -108,6 +108,10 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 */
 	protected WorkProductDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -258,6 +262,12 @@ public class WorkProductDescriptionImpl extends ContentDescriptionImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTION__PURPOSE:
 			return PURPOSE_EDEFAULT == null ? purpose != null

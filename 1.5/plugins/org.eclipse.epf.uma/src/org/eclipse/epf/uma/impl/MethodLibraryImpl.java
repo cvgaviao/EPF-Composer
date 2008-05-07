@@ -74,6 +74,10 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 */
 	protected MethodLibraryImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -197,6 +201,12 @@ public class MethodLibraryImpl extends MethodUnitImpl implements MethodLibrary {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_LIBRARY__METHOD_PLUGINS:
 			return methodPlugins != null && !methodPlugins.isEmpty();

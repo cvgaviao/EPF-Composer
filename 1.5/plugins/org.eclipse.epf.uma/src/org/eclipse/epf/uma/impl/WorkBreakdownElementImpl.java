@@ -125,6 +125,10 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 */
 	protected WorkBreakdownElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -298,6 +302,12 @@ public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_BREAKDOWN_ELEMENT__IS_REPEATABLE:
 			return IS_REPEATABLE_EDEFAULT == null ? isRepeatable != null

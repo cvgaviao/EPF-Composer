@@ -86,6 +86,10 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 */
 	protected DisciplineImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -228,6 +232,12 @@ public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DISCIPLINE__TASKS:
 			return tasks != null && !tasks.isEmpty();

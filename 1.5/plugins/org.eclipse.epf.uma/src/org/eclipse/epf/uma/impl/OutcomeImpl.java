@@ -38,6 +38,10 @@ public class OutcomeImpl extends WorkProductImpl implements Outcome {
 	 */
 	protected OutcomeImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

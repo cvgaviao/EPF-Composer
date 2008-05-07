@@ -171,6 +171,10 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	 */
 	protected DeliveryProcessDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -418,6 +422,12 @@ public class DeliveryProcessDescriptionImpl extends ProcessDescriptionImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS_DESCRIPTION__SCALE:
 			return SCALE_EDEFAULT == null ? scale != null : !SCALE_EDEFAULT

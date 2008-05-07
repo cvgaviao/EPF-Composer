@@ -97,6 +97,10 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 */
 	protected MethodPluginImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -246,6 +250,12 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
 			return USER_CHANGEABLE_EDEFAULT == null ? userChangeable != null

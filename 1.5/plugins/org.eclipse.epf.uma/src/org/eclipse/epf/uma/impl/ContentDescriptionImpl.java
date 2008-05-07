@@ -149,6 +149,10 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 */
 	protected ContentDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -368,6 +372,12 @@ public class ContentDescriptionImpl extends MethodUnitImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CONTENT_DESCRIPTION__MAIN_DESCRIPTION:
 			return MAIN_DESCRIPTION_EDEFAULT == null ? mainDescription != null

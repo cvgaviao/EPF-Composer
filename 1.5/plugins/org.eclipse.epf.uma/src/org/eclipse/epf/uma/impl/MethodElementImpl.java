@@ -197,6 +197,10 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	 */
 	protected MethodElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -503,6 +507,12 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT__GUID:
 			return GUID_EDEFAULT == null ? guid != null : !GUID_EDEFAULT

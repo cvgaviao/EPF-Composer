@@ -74,6 +74,10 @@ public class DomainImpl extends ContentCategoryImpl implements Domain {
 	 */
 	protected DomainImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -191,6 +195,12 @@ public class DomainImpl extends ContentCategoryImpl implements Domain {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DOMAIN__WORK_PRODUCTS:
 			return workProducts != null && !workProducts.isEmpty();

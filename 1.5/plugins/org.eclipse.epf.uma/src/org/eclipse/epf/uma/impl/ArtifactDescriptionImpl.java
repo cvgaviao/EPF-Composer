@@ -129,6 +129,10 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	 */
 	protected ArtifactDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -308,6 +312,12 @@ public class ArtifactDescriptionImpl extends WorkProductDescriptionImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ARTIFACT_DESCRIPTION__BRIEF_OUTLINE:
 			return BRIEF_OUTLINE_EDEFAULT == null ? briefOutline != null

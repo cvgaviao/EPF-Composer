@@ -60,6 +60,10 @@ public class RoleSetGroupingImpl extends ContentCategoryImpl implements
 	 */
 	protected RoleSetGroupingImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -138,6 +142,12 @@ public class RoleSetGroupingImpl extends ContentCategoryImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ROLE_SET_GROUPING__ROLE_SETS:
 			return roleSets != null && !roleSets.isEmpty();

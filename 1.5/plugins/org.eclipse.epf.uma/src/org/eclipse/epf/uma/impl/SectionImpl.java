@@ -117,6 +117,10 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	 */
 	protected SectionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -325,6 +329,12 @@ public class SectionImpl extends VariabilityElementImpl implements Section {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.SECTION__SECTION_NAME:
 			return SECTION_NAME_EDEFAULT == null ? sectionName != null

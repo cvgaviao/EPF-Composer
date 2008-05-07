@@ -39,6 +39,10 @@ public abstract class NamespaceImpl extends NamedElementImpl implements
 	 */
 	protected NamespaceImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.UmaPackage;
@@ -58,6 +59,10 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements
 	 */
 	protected MilestoneImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -138,6 +143,12 @@ public class MilestoneImpl extends WorkBreakdownElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.MILESTONE__REQUIRED_RESULTS:
 			return requiredResults != null && !requiredResults.isEmpty();

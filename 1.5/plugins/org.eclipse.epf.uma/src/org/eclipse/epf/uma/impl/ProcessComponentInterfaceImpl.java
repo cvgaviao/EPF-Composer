@@ -75,6 +75,10 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 */
 	protected ProcessComponentInterfaceImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -199,6 +203,12 @@ public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_INTERFACE__INTERFACE_SPECIFICATIONS:
 			return interfaceSpecifications != null

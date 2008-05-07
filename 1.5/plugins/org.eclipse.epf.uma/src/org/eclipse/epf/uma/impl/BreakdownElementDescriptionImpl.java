@@ -66,6 +66,10 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 */
 	protected BreakdownElementDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -152,6 +156,12 @@ public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT_DESCRIPTION__USAGE_GUIDANCE:
 			return USAGE_GUIDANCE_EDEFAULT == null ? usageGuidance != null

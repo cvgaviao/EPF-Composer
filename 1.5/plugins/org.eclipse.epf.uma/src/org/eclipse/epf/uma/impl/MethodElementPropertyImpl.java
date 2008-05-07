@@ -69,6 +69,10 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 */
 	protected MethodElementPropertyImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -154,6 +158,12 @@ public class MethodElementPropertyImpl extends PackageableElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_ELEMENT_PROPERTY__VALUE:
 			return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT

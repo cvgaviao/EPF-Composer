@@ -39,6 +39,10 @@ public class CapabilityPatternImpl extends ProcessImpl implements
 	 */
 	protected CapabilityPatternImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

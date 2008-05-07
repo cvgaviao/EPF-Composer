@@ -38,6 +38,10 @@ public class ExampleImpl extends GuidanceImpl implements Example {
 	 */
 	protected ExampleImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

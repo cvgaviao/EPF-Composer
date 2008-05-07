@@ -87,6 +87,10 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 */
 	protected ProcessDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -203,6 +207,12 @@ public class ProcessDescriptionImpl extends ActivityDescriptionImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_DESCRIPTION__SCOPE:
 			return SCOPE_EDEFAULT == null ? scope != null : !SCOPE_EDEFAULT

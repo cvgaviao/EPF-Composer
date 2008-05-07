@@ -86,6 +86,10 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 */
 	protected PracticeImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -228,6 +232,12 @@ public class PracticeImpl extends GuidanceImpl implements Practice {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PRACTICE__SUB_PRACTICES:
 			return subPractices != null && !subPractices.isEmpty();

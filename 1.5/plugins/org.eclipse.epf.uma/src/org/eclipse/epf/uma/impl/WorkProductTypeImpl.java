@@ -60,6 +60,10 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 */
 	protected WorkProductTypeImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -140,6 +144,12 @@ public class WorkProductTypeImpl extends ContentCategoryImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_TYPE__WORK_PRODUCTS:
 			return workProducts != null && !workProducts.isEmpty();

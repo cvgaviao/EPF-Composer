@@ -65,6 +65,10 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 */
 	protected TextElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -150,6 +154,12 @@ public class TextElementImpl extends LeafElementImpl implements TextElement {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.TEXT_ELEMENT__TEXT:
 			return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT

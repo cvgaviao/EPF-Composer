@@ -39,6 +39,10 @@ public abstract class LeafElementImpl extends DiagramElementImpl implements
 	 */
 	protected LeafElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

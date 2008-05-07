@@ -59,6 +59,10 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 */
 	protected ProcessComponentDescriptorImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -169,6 +173,12 @@ public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_COMPONENT_DESCRIPTOR__PROCESS_COMPONENT:
 			return _processComponent != null;

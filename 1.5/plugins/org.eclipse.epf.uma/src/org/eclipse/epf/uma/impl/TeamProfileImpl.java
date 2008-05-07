@@ -89,6 +89,10 @@ public class TeamProfileImpl extends BreakdownElementImpl implements
 	 */
 	protected TeamProfileImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -317,6 +321,12 @@ public class TeamProfileImpl extends BreakdownElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.TEAM_PROFILE__TEAM_ROLES:
 			return teamRoles != null && !teamRoles.isEmpty();

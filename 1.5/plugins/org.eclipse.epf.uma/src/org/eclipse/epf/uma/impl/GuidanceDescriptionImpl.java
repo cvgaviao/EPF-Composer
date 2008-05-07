@@ -66,6 +66,10 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 */
 	protected GuidanceDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -152,6 +156,12 @@ public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GUIDANCE_DESCRIPTION__ATTACHMENTS:
 			return ATTACHMENTS_EDEFAULT == null ? attachments != null

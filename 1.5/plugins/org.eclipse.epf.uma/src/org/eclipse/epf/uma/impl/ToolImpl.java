@@ -59,6 +59,10 @@ public class ToolImpl extends ContentCategoryImpl implements Tool {
 	 */
 	protected ToolImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -138,6 +142,12 @@ public class ToolImpl extends ContentCategoryImpl implements Tool {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.TOOL__TOOL_MENTORS:
 			return toolMentors != null && !toolMentors.isEmpty();

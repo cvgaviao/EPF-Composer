@@ -80,6 +80,10 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 */
 	protected ReferenceImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -285,6 +289,12 @@ public class ReferenceImpl extends DiagramElementImpl implements Reference {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.REFERENCE__IS_INDIVIDUAL_REPRESENTATION:
 			return IS_INDIVIDUAL_REPRESENTATION_EDEFAULT == null ? isIndividualRepresentation != null

@@ -38,6 +38,10 @@ public class TemplateImpl extends GuidanceImpl implements Template {
 	 */
 	protected TemplateImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

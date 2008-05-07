@@ -39,6 +39,10 @@ public abstract class GraphicPrimitiveImpl extends LeafElementImpl implements
 	 */
 	protected GraphicPrimitiveImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

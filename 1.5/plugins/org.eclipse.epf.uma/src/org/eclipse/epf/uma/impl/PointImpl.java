@@ -87,6 +87,10 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 */
 	protected PointImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -202,6 +206,12 @@ public class PointImpl extends MultiResourceEObject implements Point {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.POINT__X:
 			return X_EDEFAULT == null ? x != null : !X_EDEFAULT.equals(x);

@@ -59,6 +59,10 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 */
 	protected ProcessPlanningTemplateImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -140,6 +144,12 @@ public class ProcessPlanningTemplateImpl extends ProcessImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_PLANNING_TEMPLATE__BASED_ON_PROCESSES:
 			return basedOnProcesses != null && !basedOnProcesses.isEmpty();

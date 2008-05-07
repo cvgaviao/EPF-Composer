@@ -38,6 +38,10 @@ public class PackageImpl extends NamespaceImpl implements
 	 */
 	protected PackageImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

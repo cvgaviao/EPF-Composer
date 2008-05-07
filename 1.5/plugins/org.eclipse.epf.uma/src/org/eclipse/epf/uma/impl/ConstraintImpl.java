@@ -65,6 +65,10 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 */
 	protected ConstraintImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -150,6 +154,12 @@ public class ConstraintImpl extends MethodElementImpl implements Constraint {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CONSTRAINT__BODY:
 			return BODY_EDEFAULT == null ? body != null : !BODY_EDEFAULT

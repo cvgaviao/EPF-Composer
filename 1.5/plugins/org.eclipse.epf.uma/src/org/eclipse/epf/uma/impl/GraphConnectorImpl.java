@@ -69,6 +69,10 @@ public class GraphConnectorImpl extends GraphElementImpl implements
 	 */
 	protected GraphConnectorImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -276,6 +280,12 @@ public class GraphConnectorImpl extends GraphElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GRAPH_CONNECTOR__GRAPH_EDGE:
 			return graphEdge != null && !graphEdge.isEmpty();

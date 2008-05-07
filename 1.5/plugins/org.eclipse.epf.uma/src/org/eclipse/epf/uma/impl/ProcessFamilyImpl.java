@@ -60,6 +60,10 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 */
 	protected ProcessFamilyImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -140,6 +144,12 @@ public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_FAMILY__DELIVERY_PROCESSES:
 			return deliveryProcesses != null && !deliveryProcesses.isEmpty();

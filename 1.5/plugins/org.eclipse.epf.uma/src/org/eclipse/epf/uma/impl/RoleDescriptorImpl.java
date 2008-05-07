@@ -82,6 +82,10 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 */
 	protected RoleDescriptorImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -252,6 +256,12 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTOR__ROLE:
 			return role != null;

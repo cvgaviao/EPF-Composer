@@ -60,6 +60,10 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 */
 	protected DisciplineGroupingImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -140,6 +144,12 @@ public class DisciplineGroupingImpl extends ContentCategoryImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DISCIPLINE_GROUPING__DISCIPLINES:
 			return disciplines != null && !disciplines.isEmpty();

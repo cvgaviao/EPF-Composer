@@ -86,6 +86,10 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 */
 	protected PropertyImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -201,6 +205,12 @@ public class PropertyImpl extends DiagramElementImpl implements Property {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROPERTY__KEY:
 			return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT

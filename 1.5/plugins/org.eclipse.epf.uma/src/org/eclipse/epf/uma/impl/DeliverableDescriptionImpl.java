@@ -87,6 +87,10 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 */
 	protected DeliverableDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -204,6 +208,12 @@ public class DeliverableDescriptionImpl extends WorkProductDescriptionImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DELIVERABLE_DESCRIPTION__EXTERNAL_DESCRIPTION:
 			return EXTERNAL_DESCRIPTION_EDEFAULT == null ? externalDescription != null

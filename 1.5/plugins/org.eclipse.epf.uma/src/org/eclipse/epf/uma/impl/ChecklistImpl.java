@@ -38,6 +38,10 @@ public class ChecklistImpl extends GuidanceImpl implements Checklist {
 	 */
 	protected ChecklistImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

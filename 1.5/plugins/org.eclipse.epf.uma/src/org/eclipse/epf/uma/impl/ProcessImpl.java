@@ -86,6 +86,10 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 */
 	protected ProcessImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -242,6 +246,12 @@ public abstract class ProcessImpl extends ActivityImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS__INCLUDES_PATTERNS:
 			return includesPatterns != null && !includesPatterns.isEmpty();

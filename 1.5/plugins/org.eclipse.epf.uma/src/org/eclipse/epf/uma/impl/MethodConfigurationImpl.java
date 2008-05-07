@@ -132,6 +132,10 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 */
 	protected MethodConfigurationImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -384,6 +388,12 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_CONFIGURATION__METHOD_PLUGIN_SELECTION:
 			return methodPluginSelection != null

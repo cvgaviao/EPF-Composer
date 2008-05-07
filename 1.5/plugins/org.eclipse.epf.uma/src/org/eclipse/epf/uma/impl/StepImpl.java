@@ -71,6 +71,10 @@ public class StepImpl extends SectionImpl implements Step {
 	 */
 	protected StepImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -334,6 +338,12 @@ public class StepImpl extends SectionImpl implements Step {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.STEP__PRECONDITION:
 			return precondition != null;

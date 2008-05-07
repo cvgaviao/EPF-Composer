@@ -108,6 +108,10 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	 */
 	protected RoleDescriptionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -255,6 +259,12 @@ public class RoleDescriptionImpl extends ContentDescriptionImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ROLE_DESCRIPTION__SKILLS:
 			return SKILLS_EDEFAULT == null ? skills != null : !SKILLS_EDEFAULT

@@ -39,6 +39,10 @@ public class SupportingMaterialImpl extends GuidanceImpl implements
 	 */
 	protected SupportingMaterialImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

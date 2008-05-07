@@ -63,6 +63,10 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 */
 	protected ContentPackageImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -159,6 +163,12 @@ public class ContentPackageImpl extends MethodPackageImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CONTENT_PACKAGE__CONTENT_ELEMENTS:
 			return contentElements != null && !contentElements.isEmpty();

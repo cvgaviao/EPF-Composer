@@ -145,6 +145,10 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 */
 	protected MethodUnitImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -375,6 +379,12 @@ public abstract class MethodUnitImpl extends MethodElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.METHOD_UNIT__AUTHORS:
 			return AUTHORS_EDEFAULT == null ? authors != null

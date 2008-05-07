@@ -38,6 +38,10 @@ public class ToolMentorImpl extends GuidanceImpl implements ToolMentor {
 	 */
 	protected ToolMentorImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

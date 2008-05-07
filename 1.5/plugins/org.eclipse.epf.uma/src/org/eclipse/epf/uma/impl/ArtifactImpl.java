@@ -66,6 +66,10 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 */
 	protected ArtifactImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -274,6 +278,12 @@ public class ArtifactImpl extends WorkProductImpl implements Artifact {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ARTIFACT__CONTAINER_ARTIFACT:
 			return basicGetContainerArtifact() != null;

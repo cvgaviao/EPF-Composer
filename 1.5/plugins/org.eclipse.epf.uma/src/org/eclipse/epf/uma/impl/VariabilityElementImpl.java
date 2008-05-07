@@ -80,6 +80,10 @@ public abstract class VariabilityElementImpl extends MethodElementImpl
 	 */
 	protected VariabilityElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -226,6 +230,12 @@ public abstract class VariabilityElementImpl extends MethodElementImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.VARIABILITY_ELEMENT__VARIABILITY_TYPE:
 			return variabilityType != VARIABILITY_TYPE_EDEFAULT;

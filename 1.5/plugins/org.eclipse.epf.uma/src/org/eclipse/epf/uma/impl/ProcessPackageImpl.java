@@ -75,6 +75,10 @@ public class ProcessPackageImpl extends MethodPackageImpl implements
 	 */
 	protected ProcessPackageImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -196,6 +200,12 @@ public class ProcessPackageImpl extends MethodPackageImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PROCESS_PACKAGE__PROCESS_ELEMENTS:
 			return processElements != null && !processElements.isEmpty();

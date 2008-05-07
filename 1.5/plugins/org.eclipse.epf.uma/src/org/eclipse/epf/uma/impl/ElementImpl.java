@@ -40,6 +40,10 @@ public abstract class ElementImpl extends MultiResourceEObject implements
 	 */
 	protected ElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

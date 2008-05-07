@@ -60,6 +60,10 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 */
 	protected CompositeRoleImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -138,6 +142,12 @@ public class CompositeRoleImpl extends RoleDescriptorImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.COMPOSITE_ROLE__AGGREGATED_ROLES:
 			return aggregatedRoles != null && !aggregatedRoles.isEmpty();

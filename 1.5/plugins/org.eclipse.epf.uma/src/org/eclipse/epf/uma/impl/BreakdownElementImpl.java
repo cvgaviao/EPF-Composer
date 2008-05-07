@@ -302,6 +302,10 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 */
 	protected BreakdownElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -1035,6 +1039,12 @@ public abstract class BreakdownElementImpl extends ProcessElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.BREAKDOWN_ELEMENT__PREFIX:
 			return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT

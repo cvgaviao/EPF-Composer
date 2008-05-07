@@ -75,6 +75,10 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 */
 	protected GraphEdgeImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -211,6 +215,12 @@ public class GraphEdgeImpl extends GraphElementImpl implements GraphEdge {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GRAPH_EDGE__WAYPOINTS:
 			return waypoints != null && !waypoints.isEmpty();

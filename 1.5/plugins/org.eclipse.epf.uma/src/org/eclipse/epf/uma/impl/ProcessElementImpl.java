@@ -39,6 +39,10 @@ public abstract class ProcessElementImpl extends DescribableElementImpl
 	 */
 	protected ProcessElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

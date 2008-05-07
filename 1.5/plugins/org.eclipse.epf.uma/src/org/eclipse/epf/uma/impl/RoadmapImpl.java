@@ -38,6 +38,10 @@ public class RoadmapImpl extends GuidanceImpl implements Roadmap {
 	 */
 	protected RoadmapImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

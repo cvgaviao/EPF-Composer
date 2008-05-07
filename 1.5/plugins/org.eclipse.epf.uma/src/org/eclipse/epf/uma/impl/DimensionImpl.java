@@ -87,6 +87,10 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 */
 	protected DimensionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -202,6 +206,12 @@ public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DIMENSION__WIDTH:
 			return WIDTH_EDEFAULT == null ? width != null : !WIDTH_EDEFAULT

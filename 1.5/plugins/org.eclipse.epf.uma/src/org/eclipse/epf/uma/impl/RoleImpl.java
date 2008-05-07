@@ -73,6 +73,10 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 */
 	protected RoleImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -192,6 +196,12 @@ public class RoleImpl extends ContentElementImpl implements Role {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ROLE__FULFILLS:
 			return fulfills != null && !fulfills.isEmpty();

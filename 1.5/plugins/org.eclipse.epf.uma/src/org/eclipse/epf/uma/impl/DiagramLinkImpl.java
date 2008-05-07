@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -98,6 +99,10 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 */
 	protected DiagramLinkImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -441,6 +446,12 @@ public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DIAGRAM_LINK__ZOOM:
 			return ZOOM_EDEFAULT == null ? zoom != null : !ZOOM_EDEFAULT

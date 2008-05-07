@@ -38,6 +38,10 @@ public class PhaseImpl extends ActivityImpl implements Phase {
 	 */
 	protected PhaseImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

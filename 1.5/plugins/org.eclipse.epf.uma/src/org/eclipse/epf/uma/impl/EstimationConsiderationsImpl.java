@@ -39,6 +39,10 @@ public class EstimationConsiderationsImpl extends GuidanceImpl implements
 	 */
 	protected EstimationConsiderationsImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

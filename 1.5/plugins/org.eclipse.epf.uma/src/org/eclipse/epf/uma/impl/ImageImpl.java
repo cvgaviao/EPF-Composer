@@ -89,6 +89,10 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 */
 	protected ImageImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -204,6 +208,12 @@ public class ImageImpl extends LeafElementImpl implements Image {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.IMAGE__URI:
 			return URI_EDEFAULT == null ? uri != null : !URI_EDEFAULT

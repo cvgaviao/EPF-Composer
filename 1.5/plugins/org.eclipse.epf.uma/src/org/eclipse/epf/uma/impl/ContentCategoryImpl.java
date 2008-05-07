@@ -39,6 +39,10 @@ public abstract class ContentCategoryImpl extends ContentElementImpl implements
 	 */
 	protected ContentCategoryImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

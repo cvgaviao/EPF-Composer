@@ -59,6 +59,10 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 */
 	protected GraphNodeImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -164,6 +168,12 @@ public class GraphNodeImpl extends GraphElementImpl implements GraphNode {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GRAPH_NODE__SIZE:
 			return size != null;

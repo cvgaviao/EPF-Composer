@@ -114,6 +114,10 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	 */
 	protected GraphElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -442,6 +446,12 @@ public abstract class GraphElementImpl extends DiagramElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.GRAPH_ELEMENT__CONTAINED:
 			return contained != null && !contained.isEmpty();

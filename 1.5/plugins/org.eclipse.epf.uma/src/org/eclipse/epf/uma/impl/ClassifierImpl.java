@@ -12,6 +12,7 @@ package org.eclipse.epf.uma.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.epf.uma.Classifier;
 import org.eclipse.epf.uma.UmaPackage;
@@ -63,6 +64,10 @@ public abstract class ClassifierImpl extends TypeImpl implements Classifier {
 	 */
 	protected ClassifierImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -149,6 +154,12 @@ public abstract class ClassifierImpl extends TypeImpl implements Classifier {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CLASSIFIER__IS_ABSTRACT:
 			return IS_ABSTRACT_EDEFAULT == null ? isAbstract != null

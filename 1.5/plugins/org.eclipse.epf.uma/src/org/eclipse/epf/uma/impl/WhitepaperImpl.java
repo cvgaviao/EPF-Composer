@@ -38,6 +38,10 @@ public class WhitepaperImpl extends ConceptImpl implements Whitepaper {
 	 */
 	protected WhitepaperImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

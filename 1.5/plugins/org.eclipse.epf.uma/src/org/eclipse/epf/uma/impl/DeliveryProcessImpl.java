@@ -70,6 +70,10 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 */
 	protected DeliveryProcessImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -174,6 +178,12 @@ public class DeliveryProcessImpl extends ProcessImpl implements DeliveryProcess 
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DELIVERY_PROCESS__EDUCATION_MATERIALS:
 			return educationMaterials != null && !educationMaterials.isEmpty();

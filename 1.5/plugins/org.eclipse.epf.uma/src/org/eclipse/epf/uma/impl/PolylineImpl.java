@@ -85,6 +85,10 @@ public class PolylineImpl extends GraphicPrimitiveImpl implements Polyline {
 	 */
 	protected PolylineImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -209,6 +213,12 @@ public class PolylineImpl extends GraphicPrimitiveImpl implements Polyline {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.POLYLINE__CLOSED:
 			return CLOSED_EDEFAULT == null ? closed != null : !CLOSED_EDEFAULT

@@ -80,6 +80,10 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 */
 	protected WorkOrderImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -215,6 +219,12 @@ public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_ORDER__LINK_TYPE:
 			return linkType != LINK_TYPE_EDEFAULT;

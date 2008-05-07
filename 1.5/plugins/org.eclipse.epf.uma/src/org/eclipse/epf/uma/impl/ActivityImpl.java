@@ -154,6 +154,10 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 */
 	protected ActivityImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -600,6 +604,12 @@ public class ActivityImpl extends WorkBreakdownElementImpl implements Activity {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ACTIVITY__FULFILLS:
 			return fulfills != null && !fulfills.isEmpty();

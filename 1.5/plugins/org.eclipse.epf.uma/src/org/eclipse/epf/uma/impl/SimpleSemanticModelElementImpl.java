@@ -66,6 +66,10 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 */
 	protected SimpleSemanticModelElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -152,6 +156,12 @@ public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.SIMPLE_SEMANTIC_MODEL_ELEMENT__TYPE_INFO:
 			return TYPE_INFO_EDEFAULT == null ? typeInfo != null

@@ -38,6 +38,10 @@ public class ReusableAssetImpl extends GuidanceImpl implements ReusableAsset {
 	 */
 	protected ReusableAssetImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

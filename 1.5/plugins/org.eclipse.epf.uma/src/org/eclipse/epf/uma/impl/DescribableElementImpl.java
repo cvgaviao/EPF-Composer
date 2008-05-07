@@ -131,6 +131,10 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	 */
 	protected DescribableElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -326,6 +330,12 @@ public abstract class DescribableElementImpl extends MethodElementImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DESCRIBABLE_ELEMENT__IS_ABSTRACT:
 			return IS_ABSTRACT_EDEFAULT == null ? isAbstract != null

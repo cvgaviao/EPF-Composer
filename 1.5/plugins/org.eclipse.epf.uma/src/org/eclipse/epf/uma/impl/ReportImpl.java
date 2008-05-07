@@ -38,6 +38,10 @@ public class ReportImpl extends GuidanceImpl implements Report {
 	 */
 	protected ReportImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

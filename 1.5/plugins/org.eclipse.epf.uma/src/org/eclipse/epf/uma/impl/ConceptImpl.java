@@ -38,6 +38,10 @@ public class ConceptImpl extends GuidanceImpl implements Concept {
 	 */
 	protected ConceptImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

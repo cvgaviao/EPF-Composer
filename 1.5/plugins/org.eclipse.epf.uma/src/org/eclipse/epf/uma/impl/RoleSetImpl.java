@@ -59,6 +59,10 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 */
 	protected RoleSetImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -137,6 +141,12 @@ public class RoleSetImpl extends ContentCategoryImpl implements RoleSet {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.ROLE_SET__ROLES:
 			return roles != null && !roles.isEmpty();

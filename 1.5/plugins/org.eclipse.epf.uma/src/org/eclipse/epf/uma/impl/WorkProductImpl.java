@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.FulfillableElement;
@@ -111,6 +112,10 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 */
 	protected WorkProductImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -283,6 +288,12 @@ public class WorkProductImpl extends ContentElementImpl implements WorkProduct {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT__FULFILLS:
 			return fulfills != null && !fulfills.isEmpty();

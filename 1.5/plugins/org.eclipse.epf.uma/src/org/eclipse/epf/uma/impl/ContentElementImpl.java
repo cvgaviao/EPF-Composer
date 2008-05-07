@@ -171,6 +171,10 @@ public abstract class ContentElementImpl extends DescribableElementImpl
 	 */
 	protected ContentElementImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -463,6 +467,12 @@ public abstract class ContentElementImpl extends DescribableElementImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CONTENT_ELEMENT__VARIABILITY_TYPE:
 			return variabilityType != VARIABILITY_TYPE_EDEFAULT;

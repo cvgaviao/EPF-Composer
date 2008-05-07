@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.epf.uma.ApplicableMetaClassInfo;
@@ -68,6 +69,10 @@ public class ApplicableMetaClassInfoImpl extends ClassifierImpl implements
 	 */
 	protected ApplicableMetaClassInfoImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -156,6 +161,12 @@ public class ApplicableMetaClassInfoImpl extends ClassifierImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.APPLICABLE_META_CLASS_INFO__IS_PRIMARY_EXTENSION:
 			return IS_PRIMARY_EXTENSION_EDEFAULT == null ? isPrimaryExtension != null

@@ -159,6 +159,10 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 */
 	protected TaskImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -601,6 +605,12 @@ public class TaskImpl extends ContentElementImpl implements Task {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.TASK__PRECONDITION:
 			return precondition != null;

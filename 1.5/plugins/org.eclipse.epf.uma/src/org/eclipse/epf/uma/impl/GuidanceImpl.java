@@ -39,6 +39,10 @@ public abstract class GuidanceImpl extends ContentElementImpl implements
 	 */
 	protected GuidanceImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

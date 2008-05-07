@@ -59,6 +59,10 @@ public class DeliverableImpl extends WorkProductImpl implements Deliverable {
 	 */
 	protected DeliverableImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -139,6 +143,12 @@ public class DeliverableImpl extends WorkProductImpl implements Deliverable {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.DELIVERABLE__DELIVERED_WORK_PRODUCTS:
 			return deliveredWorkProducts != null

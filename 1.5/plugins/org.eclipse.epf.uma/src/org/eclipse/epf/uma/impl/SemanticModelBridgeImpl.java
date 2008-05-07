@@ -74,6 +74,10 @@ public abstract class SemanticModelBridgeImpl extends DiagramElementImpl
 	 */
 	protected SemanticModelBridgeImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -359,6 +363,12 @@ public abstract class SemanticModelBridgeImpl extends DiagramElementImpl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.SEMANTIC_MODEL_BRIDGE__PRESENTATION:
 			return PRESENTATION_EDEFAULT == null ? presentation != null

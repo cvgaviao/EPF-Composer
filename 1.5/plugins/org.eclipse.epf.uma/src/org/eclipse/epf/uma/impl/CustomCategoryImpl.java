@@ -72,6 +72,10 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements
 	 */
 	protected CustomCategoryImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -176,6 +180,12 @@ public class CustomCategoryImpl extends ContentCategoryImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.CUSTOM_CATEGORY__CATEGORIZED_ELEMENTS:
 			return categorizedElements != null

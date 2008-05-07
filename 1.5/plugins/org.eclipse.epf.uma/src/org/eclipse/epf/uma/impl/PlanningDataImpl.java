@@ -110,6 +110,10 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	 */
 	protected PlanningDataImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -257,6 +261,12 @@ public class PlanningDataImpl extends ProcessElementImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.PLANNING_DATA__START_DATE:
 			return START_DATE_EDEFAULT == null ? startDate != null

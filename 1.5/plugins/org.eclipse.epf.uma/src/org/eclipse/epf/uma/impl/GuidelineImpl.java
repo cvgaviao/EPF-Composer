@@ -38,6 +38,10 @@ public class GuidelineImpl extends GuidanceImpl implements Guideline {
 	 */
 	protected GuidelineImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

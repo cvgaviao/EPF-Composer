@@ -38,6 +38,10 @@ public class TermDefinitionImpl extends GuidanceImpl implements TermDefinition {
 	 */
 	protected TermDefinitionImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**

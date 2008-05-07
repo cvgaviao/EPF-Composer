@@ -142,6 +142,10 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 */
 	protected WorkProductDescriptorImpl() {
 		super();
+
+		//UMA-->
+		reassignDefaultValues();
+		//UMA<--  
 	}
 
 	/**
@@ -425,6 +429,12 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
+		//UMA-->
+		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);
+		if (feature != null) {
+			return isFeatureWithOverridenDefaultValueSet(feature);
+		}
+		//UMA<--		
 		switch (featureID) {
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
 			return ACTIVITY_ENTRY_STATE_EDEFAULT == null ? activityEntryState != null
