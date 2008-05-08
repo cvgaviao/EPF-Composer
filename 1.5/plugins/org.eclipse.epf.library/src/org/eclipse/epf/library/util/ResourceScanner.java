@@ -33,6 +33,8 @@ import org.eclipse.epf.uma.MethodPlugin;
  *
  */
 public class ResourceScanner {
+	
+	private static boolean localDebug = false;
 
 	public static final Pattern p_src_ref = Pattern.compile(
 			"src\\s*=\\s*\"(.*?)\"", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
@@ -177,12 +179,23 @@ public class ResourceScanner {
 	 * copy all the files to the destination
 	 */
 	public void copyFiles() {
+		if (localDebug) {
+			System.out.println("LD> copyFiles: ");	//$NON-NLS-1$
+		}
+				
 		for (Iterator it = fileMap.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry entry = (Map.Entry)it.next();
 			File srcFile = (File) entry.getKey();
 			File tgtFile = (File) entry.getValue();
-			FileUtil.copyFile(srcFile, tgtFile);
-		}	
+			FileUtil.copyFile(srcFile, tgtFile);			
+			tgtFile.setLastModified(srcFile.lastModified());			
+			
+			if (localDebug) {
+				System.out.println("LD> srcFile: " + srcFile);	//$NON-NLS-1$
+				System.out.println("LD> tgtFile: " + tgtFile);	//$NON-NLS-1$
+				System.out.println("");							//$NON-NLS-1$
+			}
+		}		
 	}
 	
 	private String getTargetUrl(File srcFile, File tgtFolder, String tgtUrl0) {
@@ -196,7 +209,7 @@ public class ResourceScanner {
 		boolean addDot = false;
 		if (ix > 0 && ix < len) {
 			url1 = tgtUrl0.substring(0, ix);
-			url2 = tgtUrl0.substring(ix, len);
+			url2 = tgtUrl0.substring(ix + 1, len);
 			addDot = true;
 		}
 		
@@ -204,7 +217,31 @@ public class ResourceScanner {
 		File tgtFile = new File(tgtFolder, tgtUrl);
 		String u = "_";	//$NON-NLS-1$
 		int i = 1;
-		while (tgtFile.exists() || tgtFileSet.contains(tgtFile)) {
+		while (true) {
+			boolean exists = tgtFile.exists();
+			if (exists) {
+				if (tgtFile.lastModified() == srcFile.lastModified()
+						&& tgtFile.length() == srcFile.length()) {
+					break;
+				}
+			}			
+			
+			boolean inTgtSet = tgtFileSet.contains(tgtFile);
+			if (! exists && !inTgtSet) {
+				break;
+			}
+						
+			if (inTgtSet) {
+				try {
+					File file = fileMap.get(srcFile.getCanonicalFile());
+					if (file != null && file.equals(tgtFile.getCanonicalFile())) {
+						break;
+					}
+				} catch (Exception e) {
+					LibraryPlugin.getDefault().getLogger().logError(e);
+				}
+			}
+								
 			tgtUrl = url1 + u + i;
 			if (addDot) {
 				tgtUrl += dot + url2;
