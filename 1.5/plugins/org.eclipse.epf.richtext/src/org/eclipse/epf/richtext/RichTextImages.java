@@ -240,8 +240,8 @@ public class RichTextImages {
 	public static final String DISABLED_IMG_PATH_ADD_IMAGE = DTOOL16
 			+ "AddImage.gif"; //$NON-NLS-1$
 
-	public static final String DISABLED_IMG_PATH_ADD_LINE = DTOOL16
-			+ "AddLine.gif"; //$NON-NLS-1$
+//	public static final String DISABLED_IMG_PATH_ADD_LINE = DTOOL16
+//			+ "AddLine.gif"; //$NON-NLS-1$
 
 	public static final String DISABLED_IMG_PATH_ADD_LINK = DTOOL16
 			+ "AddLink.gif"; //$NON-NLS-1$
@@ -273,17 +273,17 @@ public class RichTextImages {
 	public static final String DISABLED_IMG_PATH_ITALIC = DTOOL16
 			+ "Italic.gif"; //$NON-NLS-1$
 
-	public static final String DISABLED_IMG_PATH_JUSTIFY_CENTER = DTOOL16
-			+ "JustifyCenter.gif"; //$NON-NLS-1$
-
-	public static final String DISABLED_IMG_PATH_JUSTIFY_FULL = DTOOL16
-			+ "JustifyFull.gif"; //$NON-NLS-1$
-
-	public static final String DISABLED_IMG_PATH_JUSTIFY_LEFT = DTOOL16
-			+ "JustifyLeft.gif"; //$NON-NLS-1$
-
-	public static final String DISABLED_IMG_PATH_JUSTIFY_RIGHT = DTOOL16
-			+ "JustifyRight.gif"; //$NON-NLS-1$
+//	public static final String DISABLED_IMG_PATH_JUSTIFY_CENTER = DTOOL16
+//			+ "JustifyCenter.gif"; //$NON-NLS-1$
+//
+//	public static final String DISABLED_IMG_PATH_JUSTIFY_FULL = DTOOL16
+//			+ "JustifyFull.gif"; //$NON-NLS-1$
+//
+//	public static final String DISABLED_IMG_PATH_JUSTIFY_LEFT = DTOOL16
+//			+ "JustifyLeft.gif"; //$NON-NLS-1$
+//
+//	public static final String DISABLED_IMG_PATH_JUSTIFY_RIGHT = DTOOL16
+//			+ "JustifyRight.gif"; //$NON-NLS-1$
 
 	public static final String DISABLED_IMG_PATH_OUTDENT = DTOOL16
 			+ "Outdent.gif"; //$NON-NLS-1$
@@ -292,8 +292,8 @@ public class RichTextImages {
 
 	public static final String DISABLED_IMG_PATH_PASTE_PLAIN_TEXT = DTOOL16 + "PastePlainText.gif"; //$NON-NLS-1$
 
-	public static final String DISABLED_IMG_PATH_STRIKE_THROUGH = DTOOL16
-			+ "StrikeThrough.gif"; //$NON-NLS-1$
+//	public static final String DISABLED_IMG_PATH_STRIKE_THROUGH = DTOOL16
+//			+ "StrikeThrough.gif"; //$NON-NLS-1$
 
 	public static final String DISABLED_IMG_PATH_SUBSCRIPT = DTOOL16
 			+ "Subscript.gif"; //$NON-NLS-1$
@@ -309,8 +309,8 @@ public class RichTextImages {
 	public static final Image DISABLED_IMG_ADD_IMAGE = richTextPlugin
 			.getSharedImage(DISABLED_IMG_PATH_ADD_IMAGE);
 
-	public static final Image DISABLED_IMG_ADD_LINE = richTextPlugin
-			.getSharedImage(DISABLED_IMG_PATH_ADD_LINE);
+//	public static final Image DISABLED_IMG_ADD_LINE = richTextPlugin
+//			.getSharedImage(DISABLED_IMG_PATH_ADD_LINE);
 
 	public static final Image DISABLED_IMG_ADD_LINK = richTextPlugin
 			.getSharedImage(DISABLED_IMG_PATH_ADD_LINK);
@@ -345,17 +345,17 @@ public class RichTextImages {
 	public static final Image DISABLED_IMG_ITALIC = richTextPlugin
 			.getSharedImage(DISABLED_IMG_PATH_ITALIC);
 
-	public static final Image DISABLED_IMG_JUSTIFY_CENTER = richTextPlugin
-			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_CENTER);
-
-	public static final Image DISABLED_IMG_JUSTIFY_FULL = richTextPlugin
-			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_FULL);
-
-	public static final Image DISABLED_IMG_JUSTIFY_LEFT = richTextPlugin
-			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_LEFT);
-
-	public static final Image DISABLED_IMG_JUSTIFY_RIGHT = richTextPlugin
-			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_RIGHT);
+//	public static final Image DISABLED_IMG_JUSTIFY_CENTER = richTextPlugin
+//			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_CENTER);
+//
+//	public static final Image DISABLED_IMG_JUSTIFY_FULL = richTextPlugin
+//			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_FULL);
+//
+//	public static final Image DISABLED_IMG_JUSTIFY_LEFT = richTextPlugin
+//			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_LEFT);
+//
+//	public static final Image DISABLED_IMG_JUSTIFY_RIGHT = richTextPlugin
+//			.getSharedImage(DISABLED_IMG_PATH_JUSTIFY_RIGHT);
 
 	public static final Image DISABLED_IMG_OUTDENT = richTextPlugin
 			.getSharedImage(DISABLED_IMG_PATH_OUTDENT);
@@ -363,8 +363,8 @@ public class RichTextImages {
 	public static final Image DISABLED_IMG_PASTE = richTextPlugin
 			.getSharedImage(DISABLED_IMG_PATH_PASTE);
 
-	public static final Image DISABLED_IMG_STRIKE_THROUGH = richTextPlugin
-			.getSharedImage(DISABLED_IMG_PATH_STRIKE_THROUGH);
+//	public static final Image DISABLED_IMG_STRIKE_THROUGH = richTextPlugin
+//			.getSharedImage(DISABLED_IMG_PATH_STRIKE_THROUGH);
 
 	public static final Image DISABLED_IMG_SUBSCRIPT = richTextPlugin
 			.getSharedImage(DISABLED_IMG_PATH_SUBSCRIPT);
@@ -378,8 +378,8 @@ public class RichTextImages {
 	public static final ImageDescriptor DISABLED_IMG_DESC_ADD_IMAGE = richTextPlugin
 			.getImageDescriptor(DISABLED_IMG_PATH_ADD_IMAGE);
 
-	public static final ImageDescriptor DISABLED_IMG_DESC_ADD_LINE = richTextPlugin
-			.getImageDescriptor(DISABLED_IMG_PATH_ADD_LINE);
+//	public static final ImageDescriptor DISABLED_IMG_DESC_ADD_LINE = richTextPlugin
+//			.getImageDescriptor(DISABLED_IMG_PATH_ADD_LINE);
 
 	public static final ImageDescriptor DISABLED_IMG_DESC_ADD_LINK = richTextPlugin
 			.getImageDescriptor(DISABLED_IMG_PATH_ADD_LINK);
@@ -414,17 +414,17 @@ public class RichTextImages {
 	public static final ImageDescriptor DISABLED_IMG_DESC_ITALIC = richTextPlugin
 			.getImageDescriptor(DISABLED_IMG_PATH_ITALIC);
 
-	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_CENTER = richTextPlugin
-			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_CENTER);
-
-	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_FULL = richTextPlugin
-			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_FULL);
-
-	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_LEFT = richTextPlugin
-			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_LEFT);
-
-	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_RIGHT = richTextPlugin
-			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_RIGHT);
+//	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_CENTER = richTextPlugin
+//			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_CENTER);
+//
+//	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_FULL = richTextPlugin
+//			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_FULL);
+//
+//	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_LEFT = richTextPlugin
+//			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_LEFT);
+//
+//	public static final ImageDescriptor DISABLED_IMG_DESC_JUSTIFY_RIGHT = richTextPlugin
+//			.getImageDescriptor(DISABLED_IMG_PATH_JUSTIFY_RIGHT);
 
 	public static final ImageDescriptor DISABLED_IMG_DESC_OUTDENT = richTextPlugin
 			.getImageDescriptor(DISABLED_IMG_PATH_OUTDENT);
@@ -435,8 +435,8 @@ public class RichTextImages {
 	public static final ImageDescriptor DISABLED_IMG_DESC_PASTE_PLAIN_TEXT = richTextPlugin
 			.getImageDescriptor(DISABLED_IMG_PATH_PASTE_PLAIN_TEXT);
 
-	public static final ImageDescriptor DISABLED_IMG_DESC_STRIKE_THROUGH = richTextPlugin
-			.getImageDescriptor(DISABLED_IMG_PATH_STRIKE_THROUGH);
+//	public static final ImageDescriptor DISABLED_IMG_DESC_STRIKE_THROUGH = richTextPlugin
+//			.getImageDescriptor(DISABLED_IMG_PATH_STRIKE_THROUGH);
 
 	public static final ImageDescriptor DISABLED_IMG_DESC_SUBSCRIPT = richTextPlugin
 			.getImageDescriptor(DISABLED_IMG_PATH_SUBSCRIPT);
