@@ -20,10 +20,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.FileUtil;
-import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 
 /**
  * Utility class to scan and copy resources from a plugin to another plugin.
@@ -39,8 +40,12 @@ public class ResourceScanner {
 			.compile(
 					"href\\s*=\\s*\"(.*?)\"", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
 
+	private MethodPlugin srcPlugin;
+	private MethodPlugin tgtPlugin;
+	
 	private File srcPluginRoot;
 	private File tgtPluginRoot;
+	
 	private File srcPluginRootParent;
 	private File tgtPluginRootParent;
 	
@@ -50,19 +55,33 @@ public class ResourceScanner {
 	/**
 	 * Creates a new instance.
 	 */
-	public ResourceScanner(File srcPluginRoot, File tgtPluginRoot) {
-		this.srcPluginRoot = srcPluginRoot;
-		this.tgtPluginRoot = tgtPluginRoot;
+	public ResourceScanner(MethodPlugin srcPlugin, MethodPlugin tgtPlugin) {
+		this.srcPlugin = srcPlugin;
+		this.tgtPlugin = tgtPlugin;
+		File srcFile = new File(srcPlugin.eResource().getURI().toFileString());
+		File tgtFile = new File(tgtPlugin.eResource().getURI().toFileString());
+		srcPluginRoot = srcFile.getParentFile();
+		tgtPluginRoot = tgtFile.getParentFile();
 		srcPluginRootParent = srcPluginRoot.getParentFile();
 		tgtPluginRootParent = tgtPluginRoot.getParentFile();
 	}
 
-	public String scan(MethodElement srcElement, MethodElement tgtElement, String source) {
-		ILibraryResourceManager srcResMgr = ResourceHelper.getResourceMgr(srcElement);
+	public String scan(MethodElement srcElement, MethodElement tgtElement, String source, EStructuralFeature feature) {
+/*		if (feature.getName().equals("mainDescription")) {
+			System.out.println("LD> srcElement: " + srcElement.getName() + ", feature: " + feature.getName());
+		}*/
 		String srcPath = ResourceHelper.getElementPath(srcElement);
-		
-		ILibraryResourceManager tgtResMgr = ResourceHelper.getResourceMgr(tgtElement);
+		if (srcPath == null) {
+			return source;
+		}
 		String tgtPath = ResourceHelper.getElementPath(tgtElement);
+		if (tgtPath == null) {
+			if (srcPath.indexOf(srcPlugin.getName()) == 0) {
+				tgtPath = tgtPlugin.getName() + srcPath.substring(srcPlugin.getName().length());
+			} else {
+				return source;
+			}
+		}
 
 		File srcFolder = new File(srcPluginRootParent, srcPath);
 		File tgtFolder = new File(tgtPluginRootParent, tgtPath);
@@ -95,7 +114,11 @@ public class ResourceScanner {
 			LibraryPlugin.getDefault().getLogger().logError(ex);
 		}
 		
-		return null;
+		return sb.toString();
+	}
+	
+	public String registerFileCopy(String srcUrl) {
+		return registerFileCopy(srcPluginRoot, tgtPluginRoot, srcUrl);
 	}
 	
 	/**
@@ -104,7 +127,7 @@ public class ResourceScanner {
 	 * @param url
 	 * @return tgtUrl
 	 */
-	public String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl) {
+	private String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl) {
 		if (srcUrl == null) {
 			return srcUrl;
 		}

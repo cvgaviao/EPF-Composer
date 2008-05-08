@@ -732,6 +732,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String dialogs_MoveDialog_errorTitle;
 
 	public static String dialogs_MoveDialog_errorMessage;
+	
+	public static String dialogs_AssignDialog_errorMessage;
 
 	public static String processFormEditorSaveDialog_title;
 
