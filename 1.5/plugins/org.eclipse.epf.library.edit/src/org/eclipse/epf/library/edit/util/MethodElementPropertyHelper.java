@@ -10,7 +10,12 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
@@ -18,6 +23,7 @@ import org.eclipse.epf.uma.UmaFactory;
 
 /**
  * @author Phong Nguyen Le
+ * @author Weiping Lu
  *
  * @since 1.2
  */
@@ -62,4 +68,42 @@ public class MethodElementPropertyHelper {
 			e.getMethodElementProperty().remove(property);
 		}
 	}
+	
+	public static final List<MethodElementProperty> getPropertyList(MethodElement e, String propertyName) {
+		if (e == null) {
+			return null;
+		}		
+		List<MethodElementProperty> allProps = e.getMethodElementProperty();		
+		if (allProps == null || allProps.isEmpty()) {
+			return null;
+		}
+	
+		List<MethodElementProperty> propList = new ArrayList<MethodElementProperty>();
+		for (MethodElementProperty prop: allProps) {
+			if(prop.getName().equals(propertyName)) {
+				propList.add(prop);
+			}
+		}
+
+		return propList.isEmpty() ? null : propList;
+	}
+	
+	public static final Map<String, List<MethodElementProperty>> getPropertyMap(MethodElement e, Collection<String> propertyNames) {
+		if (e == null || propertyNames == null || propertyNames.isEmpty()) {
+			return null;
+		}
+		
+		List<MethodElementProperty> allProps = e.getMethodElementProperty();		
+		if (allProps == null || allProps.isEmpty()) {
+			return null;
+		}
+	
+		Map propertyMap = new HashMap<String, List<MethodElementProperty>>();
+		for (String propName: propertyNames) {
+			List<MethodElementProperty> propList = getPropertyList(e, propName);
+			propertyMap.put(propName, propList);
+		}
+		return propertyMap;
+	}
+	
 }
