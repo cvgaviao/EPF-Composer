@@ -89,16 +89,11 @@ public class MethodElementPropertyHelper {
 	}
 	
 	public static final Map<String, List<MethodElementProperty>> getPropertyMap(MethodElement e, Collection<String> propertyNames) {
+		Map propertyMap = new HashMap<String, List<MethodElementProperty>>();
 		if (e == null || propertyNames == null || propertyNames.isEmpty()) {
-			return null;
-		}
-		
-		List<MethodElementProperty> allProps = e.getMethodElementProperty();		
-		if (allProps == null || allProps.isEmpty()) {
-			return null;
+			return propertyMap;
 		}
 	
-		Map propertyMap = new HashMap<String, List<MethodElementProperty>>();
 		for (String propName: propertyNames) {
 			List<MethodElementProperty> propList = getPropertyList(e, propName);
 			propertyMap.put(propName, propList);
