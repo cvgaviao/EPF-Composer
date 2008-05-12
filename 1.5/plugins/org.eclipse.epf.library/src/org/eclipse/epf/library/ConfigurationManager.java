@@ -18,6 +18,7 @@ import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.DependencyManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -68,7 +69,8 @@ public class ConfigurationManager implements IConfigurationManager {
 		this.config = config;
 		configData = ConfigurationData.newConfigurationData(config);
 		
-		configProps = new ConfigurationProperties(config); 
+		configProps = new ConfigurationProperties(config);
+		MethodElementPropertyMgr.getInstance().register(config, configProps);
 
 		library = LibraryServiceUtil.getMethodLibrary(config);
 
@@ -187,6 +189,7 @@ public class ConfigurationManager implements IConfigurationManager {
 		dependencyManager = null;
 		layoutManager = null;
 		closure = null;
+		MethodElementPropertyMgr.getInstance().unregister(config);
 		configProps = null;
 	}
 

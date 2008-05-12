@@ -28,6 +28,8 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr.ChangeEvent;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -74,7 +76,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	
 	private List<ClosureListener> listeners;
 
-	private ConfigurationProperties.Listener configPropListener;
+	private MethodElementPropertyMgr.ChangeEventListener configPropListener;
 	/**
 	 * Creates a new instance.
 	 * 
@@ -94,12 +96,12 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			dependencyManager = configManager.getDependencyManager();
 			
 			ConfigurationProperties props = configManager.getConfigurationProperties();
-			configPropListener = new ConfigurationProperties.Listener() {
-				public void fireEvent() {
+			configPropListener = new MethodElementPropertyMgr.ChangeEventListener() {
+				public void notifyChange(ChangeEvent event) {
 					refreshErrormarks();
 				}
 			};			
-			props.addListeners(configPropListener);
+			props.addListener(configPropListener);
 		}
 
 		// configuration changed, re-build the analyze the configuration for errors
@@ -1000,7 +1002,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		
 		if (configManager != null) {
 			ConfigurationProperties props = configManager.getConfigurationProperties();			
-			props.removeListeners(configPropListener);
+			props.removeListener(configPropListener);
 		}
 				
 		configManager = null;

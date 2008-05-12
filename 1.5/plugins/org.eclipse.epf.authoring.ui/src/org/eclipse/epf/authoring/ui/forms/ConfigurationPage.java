@@ -988,33 +988,13 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		showErrors();					
    }
 
-	class ConfigSetPropertyCommand extends MethodElementSetPropertyCommand {		
-		public ConfigSetPropertyCommand(MethodElement element, String key, String value) {
-			super(element, key, value);
-		}
-		
-		@Override
-		public void redo() {
-			super.redo();
-			configProperties.setValue(key, value);
-		}
-		
-		@Override
-		public void undo() {
-			super.undo();
-			boolean b = configProperties.setNotifyListeners(false);
-			configProperties.setValue(key, oldValue);
-			configProperties.setNotifyListeners(b);
-		}
-	}
-
 	private void handleHidesButtonWidgetSelected(SelectionEvent e, String key) {
 		Object obj = e.getSource();
 		if (obj instanceof Button) {
 			Button button = (Button) obj;
 			String value = button.getSelection() ? Boolean.TRUE.toString()
 					: Boolean.FALSE.toString();
-			actionMgr.execute(new ConfigSetPropertyCommand(config, key, value));
+			actionMgr.execute(new MethodElementSetPropertyCommand(config, key, value));
 		}
 	}
 

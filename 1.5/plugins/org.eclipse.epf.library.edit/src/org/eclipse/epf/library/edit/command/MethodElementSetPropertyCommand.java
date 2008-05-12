@@ -8,6 +8,7 @@ import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.UmaPackage;
@@ -53,13 +54,13 @@ public class MethodElementSetPropertyCommand extends AbstractCommand implements
 	}
 
 	public void redo() {
-		MethodElementProperty oldProperty = MethodElementPropertyHelper.getProperty(element, key);
+		MethodElementProperty oldProperty = MethodElementPropertyMgr.getInstance().getProperty(element, key);
 		if (oldProperty != null) {
 			oldValue = oldProperty.getValue();
 		} else {
 			oldValue = null;
 		}
-		MethodElementPropertyHelper.setProperty(element, key, value);
+		MethodElementPropertyMgr.getInstance().setProperty(element, key, value);
 
 	}
 	
