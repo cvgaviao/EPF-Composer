@@ -2482,7 +2482,7 @@ public final class TngUtil {
 		MethodPlugin plugin = UmaUtil.getMethodPlugin(o);
 		if (plugin != null && UmaUtil.hasDirectResource(plugin)) {
 			File pluginDir = new File(plugin.eResource().getURI().toFileString()).getParentFile();
-			if (path.indexOf(plugin.getName()) > -1) {
+			if (path.indexOf(plugin.getName() + "/") == 0) {	//$NON-NLS-1$
 				return new File(f, NetUtil.decodedFileUrl(uri.toString()))
 						.toURI();
 			} else {
