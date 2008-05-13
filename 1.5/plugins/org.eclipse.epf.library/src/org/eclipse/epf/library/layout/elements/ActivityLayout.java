@@ -18,8 +18,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -49,6 +51,7 @@ import org.eclipse.epf.library.prefs.PreferenceUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.CompositeRole;
 import org.eclipse.epf.uma.MethodElement;
@@ -1602,8 +1605,17 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 				e = ((WorkProductDescriptor)item).getWorkProduct();
 			} 
 			
-			if ( e != null ) {
+			if (e != null) {
 				getLayoutMgr().getValidator().addReferencedElement(item, e);
+				if (e instanceof Artifact) {
+					for (TreeIterator<EObject> ti = e.eAllContents(); ti.hasNext();) {
+						EObject obj = ti.next();
+						if (obj instanceof Artifact) {
+							getLayoutMgr().getValidator().addReferencedElement(
+									item, (Artifact) obj);
+						}
+					}
+				}
 			} 
 				
 			MethodElement parent = (MethodElement) LibraryUtil.unwrap(rawitem);
