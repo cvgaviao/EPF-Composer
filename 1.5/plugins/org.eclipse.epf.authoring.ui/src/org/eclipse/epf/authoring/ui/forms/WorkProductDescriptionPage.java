@@ -30,7 +30,6 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.VariabilityBaseElementFilter;
-import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ArtifactDescription;
@@ -123,10 +122,14 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			return list.toArray();
 		}
 	};
-
-	private ILabelProvider slotLabelProvider = new AdapterFactoryLabelProvider(
+	
+	protected ILabelProvider slotLabelProvider = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
-					.getNavigatorView_ComposedAdapterFactory());
+					.getNavigatorView_ComposedAdapterFactory()) {
+		public String getColumnText(Object object, int columnIndex) {
+			return TngUtil.getLabelWithPath(object);
+		}
+	};
 	/**
 	 * Creates a new instance.
 	 */
