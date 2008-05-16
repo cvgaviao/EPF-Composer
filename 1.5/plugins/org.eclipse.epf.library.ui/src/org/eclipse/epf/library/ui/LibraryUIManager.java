@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.I18nUtil;
 import org.eclipse.epf.common.utils.NetUtil;
@@ -450,7 +451,7 @@ public class LibraryUIManager {
 	public static boolean upgradeLibrary(final String libPath,
 			final UpgradeCallerInfo callerInfo) {
 		Shell shell = Display.getCurrent().getActiveShell();
-		if (UpgradeCallerInfo.isUpgradeLibrary(callerInfo)) {
+		if (!CommandLineRunUtil.getInstance().isNeedToRun() && UpgradeCallerInfo.isUpgradeLibrary(callerInfo)) {
 			LibraryBackupUtil.promptBackupLibrary(shell, new File(libPath));
 		}
 

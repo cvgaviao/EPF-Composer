@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgDialog;
 import org.eclipse.epf.library.ui.LibraryUIManager;
@@ -239,7 +240,8 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 			return false;
 		}
 		if (XMILibraryUtil.isMethodLibraryUpgradeRequired(path, libXmi, info)) {
-			if (isUpgradeLibrary(callerInfo)
+			if (!CommandLineRunUtil.getInstance().isNeedToRun() 
+					&& isUpgradeLibrary(callerInfo)
 					&& !LibraryUIPlugin
 							.getDefault()
 							.getMsgDialog()
