@@ -748,21 +748,22 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 			filter = ((ConfigurableComposedAdapterFactory) DEFAULT_ADAPTER_FACTORIES[0])
 					.getFilter();
 		}
-		if (obj instanceof TaskDescriptor
-				&& !filter.accept(((TaskDescriptor) obj)
-						.getPerformedPrimarilyBy()))
-			return null;
 		Node node = null;
 		if (obj instanceof TaskDescriptor) {
-			List desc = ((TaskDescriptor) obj).getPerformedPrimarilyBy();
-			for (Iterator itor = desc.iterator(); itor.hasNext();)	{
-				RoleDescriptor roleDescriptor = (RoleDescriptor) itor.next();
-				node = findNode(this, roleDescriptor);
-				if (node == null) {
-					node = createRoleTaskComposite(roleDescriptor);
-					getNodes().add(node);
-				} else {
-					node = super.addNode(getNodes(), obj);
+			List<RoleDescriptor> descList = ((TaskDescriptor) obj).getPerformedPrimarilyBy();
+			find_node:
+			for (RoleDescriptor roleDescriptor : descList)	{
+				if (filter.accept(roleDescriptor)) {
+					node = findNode(this, roleDescriptor);
+					if (node == null) {
+						node = createRoleTaskComposite(roleDescriptor);
+						getNodes().add(node);
+					} else {
+						node = super.addNode(getNodes(), obj);
+					}
+					if(node != null) {
+						break find_node;
+					}
 				}
 			}
 		} else {
@@ -892,41 +893,44 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 	public void moveNode(Object movedObject, int position, Object oldPosition) {
 		if(!(movedObject instanceof TaskDescriptor))
 			return;
-		TaskDescriptor taskDescriptor = (TaskDescriptor)movedObject;
-		
-		if (!filter.accept(taskDescriptor.getPerformedPrimarilyBy()))
-			return;
-		
-		List desc = ((TaskDescriptor) movedObject).getPerformedPrimarilyBy();
-		for (Iterator itor = desc.iterator(); itor.hasNext();)	{
-			RoleDescriptor roleDescriptor = (RoleDescriptor) itor.next();
-			Node roleNode = findNode(this, roleDescriptor);
-			if(roleNode == null) return;
-			
-			int oldPos = 0;
-			if(oldPosition instanceof Integer){
-				oldPos = ((Integer)oldPosition).intValue();
-			}
-			TaskNode taskNode = (TaskNode)GraphicalDataHelper.findNode(
-			(NodeContainer)roleNode, taskDescriptor,
-			TaskNode.class);
-			
-			//move up
-			if(oldPos > position){
-				int i = taskNode.getIndex();
-				Node prevNode = findTaskNode((RoleTaskComposite)roleNode, i-1);
-				if(prevNode != null){
-					taskNode.setIndex(i-1);
-					((TaskNode)prevNode).setIndex(i);
-			}
-			
-			}else{
-			// move down
-				int i = taskNode.getIndex();
-				Node nextNode = findTaskNode((RoleTaskComposite)roleNode, i+1);
-				if(nextNode != null){
-					taskNode.setIndex(i+1);
-					((TaskNode)nextNode).setIndex(i);
+		TaskDescriptor taskDescriptor = (TaskDescriptor) movedObject;
+		List<RoleDescriptor> descList = ((TaskDescriptor) movedObject)
+				.getPerformedPrimarilyBy();
+		find_node:
+		for (RoleDescriptor roleDescriptor : descList) {
+			if (filter.accept(roleDescriptor)) {
+				Node roleNode = findNode(this, roleDescriptor);
+				if (roleNode != null) {
+					int oldPos = 0;
+					if (oldPosition instanceof Integer) {
+						oldPos = ((Integer) oldPosition).intValue();
+					}
+					TaskNode taskNode = (TaskNode) GraphicalDataHelper
+							.findNode((NodeContainer) roleNode, taskDescriptor,
+									TaskNode.class);
+
+					// move up
+					if (oldPos > position) {
+						int i = taskNode.getIndex();
+						Node prevNode = findTaskNode(
+								(RoleTaskComposite) roleNode, i - 1);
+						if (prevNode != null) {
+							taskNode.setIndex(i - 1);
+							((TaskNode) prevNode).setIndex(i);
+						}
+
+					} else {
+						// move down
+						int i = taskNode.getIndex();
+						Node nextNode = findTaskNode(
+								(RoleTaskComposite) roleNode, i + 1);
+						if (nextNode != null) {
+							taskNode.setIndex(i + 1);
+							((TaskNode) nextNode).setIndex(i);
+						}
+					}
+					
+					break find_node;
 				}
 			}
 		}

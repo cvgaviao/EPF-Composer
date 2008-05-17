@@ -89,7 +89,7 @@ public class DeleteTaskDescriptor extends RemoveUnusedDescriptorsCommand {
 		// get TaskDescriptor relationships references
 		refList.addAll(taskDesc.getAdditionallyPerformedBy());
 		refList.addAll(taskDesc.getAssistedBy());
-		refList.add(taskDesc.getPerformedPrimarilyBy());
+		refList.addAll(taskDesc.getPerformedPrimarilyBy());
 		refList.addAll(taskDesc.getMandatoryInput());
 		refList.addAll(taskDesc.getExternalInput());
 		refList.addAll(taskDesc.getOptionalInput());

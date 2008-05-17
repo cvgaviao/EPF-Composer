@@ -85,6 +85,7 @@ import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.Step;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -777,7 +778,7 @@ public final class ProcessUtil {
 			}
 		}
 
-		for (Step step : task.getSteps()) {
+		for (Section step : task.getSteps()) {			
 			EObject base = step.getVariabilityBasedOnElement();
 			if (base != null) {
 				TngUtil.addToConfiguration(config, base, addedObjects);
@@ -1700,7 +1701,7 @@ public final class ProcessUtil {
 			list.addAll(refObject.getMandatoryInput());
 			list.addAll(refObject.getOptionalInput());
 			list.addAll(refObject.getOutput());
-			list.add(refObject.getPerformedPrimarilyBy());
+			list.addAll(refObject.getPerformedPrimarilyBy());
 
 			for (Iterator refItor = list.iterator(); refItor.hasNext();) {
 				Object refItorObject = (Object) refItor.next();

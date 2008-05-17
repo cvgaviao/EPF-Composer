@@ -25,6 +25,8 @@ import org.eclipse.emf.edit.ui.action.DeleteAction;
 import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.action.LoadResourceAction;
 import org.eclipse.emf.edit.ui.action.PasteAction;
+import org.eclipse.emf.edit.ui.action.RedoAction;
+import org.eclipse.emf.edit.ui.action.UndoAction;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -44,7 +46,9 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.IFormPage;
@@ -141,7 +145,7 @@ public class MethodLibraryActionBarContributor extends
 	 * @return Action
 	 */
 	protected DeleteAction createDeleteAction() {
-		return new DeleteAction();
+		return new DeleteAction(removeAllReferencesOnDelete());
 	}
 
 	 /**
@@ -151,43 +155,43 @@ public class MethodLibraryActionBarContributor extends
 	public void init(IActionBars actionBars) {
 		super.init(actionBars);
 		
-//		ISharedImages sharedImages = PlatformUI.getWorkbench()
-//				.getSharedImages();
-//
-//		deleteAction = createDeleteAction();
-//		deleteAction.setImageDescriptor(sharedImages
-//				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
-//		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
-//				deleteAction);
-//
-//		cutAction = createCutAction();
-//		cutAction.setImageDescriptor(sharedImages
-//				.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
-//		actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), cutAction);
-//
-//		copyAction = createCopyAction();
-//		copyAction.setImageDescriptor(sharedImages
-//				.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
-//		actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(),
-//				copyAction);
-//
-//		pasteAction = createPasteAction();
-//		pasteAction.setImageDescriptor(sharedImages
-//				.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
-//		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(),
-//				pasteAction);
-//
-//		undoAction = new UndoAction();
-//		undoAction.setImageDescriptor(sharedImages
-//				.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-//		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(),
-//				undoAction);
-//
-//		redoAction = new RedoAction();
-//		redoAction.setImageDescriptor(sharedImages
-//				.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
-//		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(),
-//				redoAction);
+		ISharedImages sharedImages = PlatformUI.getWorkbench()
+				.getSharedImages();
+
+		deleteAction = createDeleteAction();
+		deleteAction.setImageDescriptor(sharedImages
+				.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+		actionBars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
+				deleteAction);
+
+		cutAction = createCutAction();
+		cutAction.setImageDescriptor(sharedImages
+				.getImageDescriptor(ISharedImages.IMG_TOOL_CUT));
+		actionBars.setGlobalActionHandler(ActionFactory.CUT.getId(), cutAction);
+
+		copyAction = createCopyAction();
+		copyAction.setImageDescriptor(sharedImages
+				.getImageDescriptor(ISharedImages.IMG_TOOL_COPY));
+		actionBars.setGlobalActionHandler(ActionFactory.COPY.getId(),
+				copyAction);
+
+		pasteAction = createPasteAction();
+		pasteAction.setImageDescriptor(sharedImages
+				.getImageDescriptor(ISharedImages.IMG_TOOL_PASTE));
+		actionBars.setGlobalActionHandler(ActionFactory.PASTE.getId(),
+				pasteAction);
+
+		undoAction = new UndoAction();
+		undoAction.setImageDescriptor(sharedImages
+				.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
+		actionBars.setGlobalActionHandler(ActionFactory.UNDO.getId(),
+				undoAction);
+
+		redoAction = new RedoAction();
+		redoAction.setImageDescriptor(sharedImages
+				.getImageDescriptor(ISharedImages.IMG_TOOL_REDO));
+		actionBars.setGlobalActionHandler(ActionFactory.REDO.getId(),
+				redoAction);
 	}
 
 	/**

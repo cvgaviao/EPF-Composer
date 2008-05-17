@@ -537,7 +537,7 @@ public class GraphicalDataHelper {
 	 */
 	public static boolean hasNoRoleDescriptorAssociated(
 			TaskDescriptor taskDescriptor) {
-		return taskDescriptor.getPerformedPrimarilyBy() == null;
+		return taskDescriptor.getPerformedPrimarilyBy().isEmpty();
 		// commented - requirements not to allow additional performer and
 		// assisted by in diagrams.
 		// && taskDescriptor.getAdditionallyPerformedBy().isEmpty();

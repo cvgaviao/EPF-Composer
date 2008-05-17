@@ -53,6 +53,7 @@ import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Iteration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Phase;
+import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
@@ -604,18 +605,22 @@ public class ActivityDiagramEditor extends AbstractDiagramEditor {
 				DiagramAdapter diagramAdapter = BridgeHelper
 						.getDiagramAdapter(getDiagram().getElement());
 				Suppression suppression = diagramAdapter.getSuppression();
-				for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+				for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 					Object obj = iterator.next();
 					if (obj instanceof TaskDescriptor) {
 						if (suppression != null) {
 							if (suppression.isSuppressed(obj))
 								return false;
 						}
-						Object e = ((TaskDescriptor) obj)
-								.getPerformedPrimarilyBy();
-						if (suppression != null
-								&& diagramAdapter.getSuppression()
-										.isSuppressed(e)) {
+						if (diagramAdapter.getSuppression() != null) {
+							List<RoleDescriptor> roleDescList = ((TaskDescriptor) obj)
+									.getPerformedPrimarilyBy();
+							for (RoleDescriptor roleDescriptor : roleDescList) {
+								if (!diagramAdapter.getSuppression()
+										.isSuppressed(roleDescriptor)) {
+									return true;
+								}
+							}
 							return false;
 						}
 						return true;
