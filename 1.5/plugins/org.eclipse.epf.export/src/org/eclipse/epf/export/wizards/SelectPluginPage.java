@@ -177,6 +177,7 @@ public class SelectPluginPage extends BaseWizardPage implements
 			public void widgetSelected(SelectionEvent e) {
 				ctrl_chkboxTableViewer.setAllChecked(true);
 				if (lib != null) {
+					checkedPluginList.clear();
 					checkedPluginList.addAll(plugins);
 					checkedCount = checkedPluginList.size();
 				}
