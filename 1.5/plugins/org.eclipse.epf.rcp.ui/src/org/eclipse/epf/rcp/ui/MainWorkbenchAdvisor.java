@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.serviceability.Logger;
+import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IViewReference;
@@ -190,6 +191,14 @@ public class MainWorkbenchAdvisor extends WorkbenchAdvisor {
 					.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable() {
 				public void run() {
+					if (! RefreshJob.getInstance().cancel()) {
+						try {
+							RefreshJob.getInstance().join();
+						} catch (Exception e) {							
+						}
+					}
+					RefreshJob.getInstance().setEnabled(false);
+					RefreshJob.getInstance().reset();
 					workbench.close();
 				}
 			});
