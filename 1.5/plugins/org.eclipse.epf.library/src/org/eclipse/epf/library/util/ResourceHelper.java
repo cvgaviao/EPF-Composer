@@ -54,6 +54,8 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -521,20 +523,24 @@ public class ResourceHelper {
 	 * @param linkType String
 	 * @return String
 	 */
-	public static String getLinkText(MethodElement e, String linkType) {
+	public static String getLinkText(MethodElement e, String linkType, MethodConfiguration config) {
 		String linkedText = null;
-		
+
 		// RTE may change the case of attributes.
 		if ((linkType != null)
 				&& !ELEMENT_LINK_CLASS_elementLinkWithUserText.equalsIgnoreCase(linkType)) {
 			if (ELEMENT_LINK_CLASS_elementLinkWithType.equalsIgnoreCase(linkType)) {
-				linkedText = getElementLinkText(e, true);
+				linkedText = getElementLinkText(e, true, config);
 			} else if (ELEMENT_LINK_CLASS_elementLink.equalsIgnoreCase(linkType)) {
-				linkedText = getElementLinkText(e, false);
+				linkedText = getElementLinkText(e, false, config);
 			}
 		}
 
 		return linkedText;
+	}
+	
+	public static String getLinkText(MethodElement e, String linkType) {
+		return getLinkText(e, linkType, null);
 	}
 
 	/**
@@ -545,8 +551,38 @@ public class ResourceHelper {
 	 */
 	public static String getElementLinkText(MethodElement element,
 			boolean withType) {
-		String text = TngUtil.getPresentationName(element);
+		return getElementLinkText(element, withType, null);
+	}
+	
+	public static String getElementLinkText(MethodElement element,
+			boolean withType, final MethodConfiguration config) {
+		
+		TngUtil.PresentationNameHelper pHelper = config == null ? null : 
+								new TngUtil.PresentationNameHelper() {
+			
+			public String getPresentationName(MethodElement element) {
+				if (element == null) {
+					return null;
+				}
+				String str = super.getPresentationName(element);
+				if (StrUtil.isBlank(str) && element instanceof VariabilityElement) {
+					VariabilityElement ve = (VariabilityElement) element;
+					if (ve.getVariabilityType() == VariabilityType.EXTENDS_REPLACES) {
+						VariabilityElement base = ve.getVariabilityBasedOnElement();
+						String baseStr = base == null ? null : base.getPresentationName();
+						if (! StrUtil.isBlank(baseStr)) {
+							return baseStr;
+						}
+					}					
+				}
+				return str;
+			}
+			
+		};
+		
+		String text = TngUtil.getPresentationName(element, pHelper);
 //		if (withType) {
+		
 //			return getElementTypeText(element) + LibraryResources.colon_with_space + text; 
 //		}
 //

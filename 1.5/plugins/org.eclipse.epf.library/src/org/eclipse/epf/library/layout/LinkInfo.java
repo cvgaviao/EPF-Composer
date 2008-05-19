@@ -324,7 +324,7 @@ public class LinkInfo {
 
 				if (isElementLink() && !tag.equals("area")) { //$NON-NLS-1$
 					String text = ResourceHelper.getLinkText(e,
-							getElementLinkType());
+							getElementLinkType(), config);
 					if (text != null) {
 						// if null, can be used text, don't reset it
 						this.linkedText = text;

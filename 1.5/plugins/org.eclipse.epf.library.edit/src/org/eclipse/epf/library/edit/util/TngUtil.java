@@ -1337,6 +1337,10 @@ public final class TngUtil {
 	}
 
 	public static String getPresentationName(Object e) {
+		return getPresentationName(e, null);
+	}
+	
+	public static String getPresentationName(Object e, PresentationNameHelper helper) {
 		if (e instanceof ContentDescription) {
 			e = ((ContentDescription) e).eContainer();
 		}
@@ -1350,7 +1354,12 @@ public final class TngUtil {
 		if (e instanceof MethodElement) {
 			name = ((MethodElement) e).getPresentationName();
 			if (StrUtil.isBlank(name)) 	{
-				name = ((MethodElement) e).getName();
+				if (helper != null) {
+					name = helper.getPresentationName((MethodElement) e);
+				} 
+				if (helper == null || StrUtil.isBlank(name)) {
+					name = ((MethodElement) e).getName();
+				}
 			}
 		}
 
@@ -3053,4 +3062,12 @@ public final class TngUtil {
 		}
 		return cc;
 	}
+	
+	public static class PresentationNameHelper {
+		//to be overriden by subclass
+		public String getPresentationName(MethodElement element) {
+			return element.getPresentationName();
+		}
+	}
+	
 }
