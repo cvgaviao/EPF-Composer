@@ -95,7 +95,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	private Map resourceGUIToMarkersMap;
 	private Map elementGUIToMarkersMap;
 	private ResourceSet resourceSet;
-	private boolean enabled;
+	private boolean enabled = true;
 	private List resourcesToValidateMarkers;
 	private boolean autoScheduled = true;
 
