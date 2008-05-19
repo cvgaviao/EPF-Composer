@@ -715,6 +715,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			SECTIONS++;
 		}
 
+		// Create the Slot Section
+		if (slotSectionOn) {
+			createSlotSection(toolkit);
+			SECTIONS++;
+		}
+		
 		// Create the Detail section.
 		if (detailSectionOn) {
 			createDetailSection(toolkit);
@@ -747,13 +753,6 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			SECTIONS++;
 		}
 		
-		// Create the Slot Section
-		if (slotSectionOn) {
-			createSlotSection(toolkit);
-			SECTIONS++;
-		}
-
-
 		// Icon Section
 		if (iconSectionOn) {
 			createIconSection(toolkit);

@@ -154,17 +154,6 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		slotSectionOn = true;
 	}
 
-	protected void createGeneralSectionContent() {
-		super.createGeneralSectionContent();
-
-		ctrl_slot_button = toolkit.createButton(generalComposite,
-				AuthoringUIResources.workproductDescriptionPage_slot_text,
-				SWT.CHECK);
-		GridData data = new GridData();
-		data.horizontalSpan = 3;
-		ctrl_slot_button.setLayoutData(data);
-	}
-
 	/**
 	 * @see org.eclipse.epf.authoring.ui.forms.DescriptionFormPage#createNotationSectionContent()
 	 */
@@ -237,6 +226,14 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	 * 
 	 */
 	private void createSlotSectionContent() {
+		
+		ctrl_slot_button = toolkit.createButton(slotComposite,
+				AuthoringUIResources.workproductDescriptionPage_slot_text,
+				SWT.CHECK);
+		GridData data = new GridData();
+		data.horizontalSpan = 5;
+		ctrl_slot_button.setLayoutData(data);
+		
 		createLabel(toolkit, slotComposite,
 				AuthoringUIResources.slotsLabel_text, 2);
 		ctrl_slot = createTable(toolkit, slotComposite, SWT.MULTI
