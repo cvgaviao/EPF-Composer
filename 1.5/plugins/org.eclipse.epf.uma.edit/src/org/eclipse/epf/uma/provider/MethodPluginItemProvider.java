@@ -62,6 +62,7 @@ public class MethodPluginItemProvider extends MethodUnitItemProvider implements
 
 			addUserChangeablePropertyDescriptor(object);
 			addBasesPropertyDescriptor(object);
+			addSupportingPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -103,6 +104,26 @@ public class MethodPluginItemProvider extends MethodUnitItemProvider implements
 								"_UI_PropertyDescriptor_description", "_UI_MethodPlugin_bases_feature", "_UI_MethodPlugin_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						UmaPackage.Literals.METHOD_PLUGIN__BASES, true, false,
 						true, null, null, null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Supporting feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSupportingPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+				.add(createItemPropertyDescriptor(
+						((ComposeableAdapterFactory) adapterFactory)
+								.getRootAdapterFactory(),
+						getResourceLocator(),
+						getString("_UI_MethodPlugin_supporting_feature"), //$NON-NLS-1$
+						getString(
+								"_UI_PropertyDescriptor_description", "_UI_MethodPlugin_supporting_feature", "_UI_MethodPlugin_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						UmaPackage.Literals.METHOD_PLUGIN__SUPPORTING, true,
+						false, false,
+						ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -175,6 +196,7 @@ public class MethodPluginItemProvider extends MethodUnitItemProvider implements
 
 		switch (notification.getFeatureID(MethodPlugin.class)) {
 		case UmaPackage.METHOD_PLUGIN__USER_CHANGEABLE:
+		case UmaPackage.METHOD_PLUGIN__SUPPORTING:
 			fireNotifyChanged(new ViewerNotification(notification, notification
 					.getNotifier(), false, true));
 			return;

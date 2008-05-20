@@ -37,6 +37,7 @@ import org.eclipse.epf.uma.UmaPackage;
  *   <li>{@link org.eclipse.epf.uma.impl.MethodPluginImpl#getUserChangeable <em>User Changeable</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.MethodPluginImpl#getMethodPackages <em>Method Packages</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.MethodPluginImpl#getBases <em>Bases</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.MethodPluginImpl#isSupporting <em>Supporting</em>}</li>
  * </ul>
  * </p>
  *
@@ -89,6 +90,26 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * @ordered
 	 */
 	protected EList<MethodPlugin> bases;
+
+	/**
+	 * The default value of the '{@link #isSupporting() <em>Supporting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSupporting()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SUPPORTING_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isSupporting() <em>Supporting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSupporting()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean supporting = SUPPORTING_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -168,6 +189,29 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isSupporting() {
+		return supporting;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSupporting(boolean newSupporting) {
+		boolean oldSupporting = supporting;
+		supporting = newSupporting;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					UmaPackage.METHOD_PLUGIN__SUPPORTING, oldSupporting,
+					supporting));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
@@ -193,6 +237,8 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 			return getMethodPackages();
 		case UmaPackage.METHOD_PLUGIN__BASES:
 			return getBases();
+		case UmaPackage.METHOD_PLUGIN__SUPPORTING:
+			return isSupporting() ? Boolean.TRUE : Boolean.FALSE;
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -218,6 +264,9 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 			getBases().clear();
 			getBases().addAll((Collection<? extends MethodPlugin>) newValue);
 			return;
+		case UmaPackage.METHOD_PLUGIN__SUPPORTING:
+			setSupporting(((Boolean) newValue).booleanValue());
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -238,6 +287,9 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 			return;
 		case UmaPackage.METHOD_PLUGIN__BASES:
 			getBases().clear();
+			return;
+		case UmaPackage.METHOD_PLUGIN__SUPPORTING:
+			setSupporting(SUPPORTING_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -264,6 +316,8 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 			return methodPackages != null && !methodPackages.isEmpty();
 		case UmaPackage.METHOD_PLUGIN__BASES:
 			return bases != null && !bases.isEmpty();
+		case UmaPackage.METHOD_PLUGIN__SUPPORTING:
+			return supporting != SUPPORTING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -281,6 +335,8 @@ public class MethodPluginImpl extends MethodUnitImpl implements MethodPlugin {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (userChangeable: "); //$NON-NLS-1$
 		result.append(userChangeable);
+		result.append(", supporting: "); //$NON-NLS-1$
+		result.append(supporting);
 		result.append(')');
 		return result.toString();
 	}

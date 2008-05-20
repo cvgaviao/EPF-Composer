@@ -3551,6 +3551,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getMethodPlugin_Supporting() {
+		return (EAttribute) methodPluginEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getVariabilityElement() {
 		return variabilityElementEClass;
 	}
@@ -4886,6 +4895,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEAttribute(methodPluginEClass, METHOD_PLUGIN__USER_CHANGEABLE);
 		createEReference(methodPluginEClass, METHOD_PLUGIN__METHOD_PACKAGES);
 		createEReference(methodPluginEClass, METHOD_PLUGIN__BASES);
+		createEAttribute(methodPluginEClass, METHOD_PLUGIN__SUPPORTING);
 
 		processPlanningTemplateEClass = createEClass(PROCESS_PLANNING_TEMPLATE);
 		createEReference(processPlanningTemplateEClass,
@@ -6407,6 +6417,10 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				this.getMethodPlugin(),
 				null,
 				"bases", null, 0, -1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+				getMethodPlugin_Supporting(),
+				ecorePackage.getEBoolean(),
+				"supporting", null, 0, 1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				processPlanningTemplateEClass,

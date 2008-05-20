@@ -30,6 +30,7 @@ import java.util.List;
  *   <li>{@link org.eclipse.epf.uma.MethodPlugin#getUserChangeable <em>User Changeable</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.MethodPlugin#getMethodPackages <em>Method Packages</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.MethodPlugin#getBases <em>Bases</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.MethodPlugin#isSupporting <em>Supporting</em>}</li>
  * </ul>
  * </p>
  *
@@ -96,5 +97,34 @@ public interface MethodPlugin extends MethodUnit, org.eclipse.epf.uma.Package {
 	 * @generated
 	 */
 	List<MethodPlugin> getBases();
+
+	/**
+	 * Returns the value of the '<em><b>Supporting</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Supporting</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A supporting method plug-in is a plug-in that contains supporting and optional method elements. Only the elements that are referenced from non-supporting plug-in are to be considered for inclusion into a method configuration. In other words, if a supporting method plug-in is selected for a configuration only its elements referenced from outside of this plug-in will be considered for the configuration.  All other unreferenced elements will not be.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Supporting</em>' attribute.
+	 * @see #setSupporting(boolean)
+	 * @see org.eclipse.epf.uma.UmaPackage#getMethodPlugin_Supporting()
+	 * @model
+	 * @generated
+	 */
+	boolean isSupporting();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.epf.uma.MethodPlugin#isSupporting <em>Supporting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Supporting</em>' attribute.
+	 * @see #isSupporting()
+	 * @generated
+	 */
+	void setSupporting(boolean value);
 
 } // MethodPlugin

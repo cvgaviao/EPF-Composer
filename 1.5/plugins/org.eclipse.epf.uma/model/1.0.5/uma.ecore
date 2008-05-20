@@ -984,6 +984,11 @@
         lowerBound="1" upperBound="-1" eType="#//MethodPackage" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bases" ordered="false"
         upperBound="-1" eType="#//MethodPlugin"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supporting" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A supporting method plug-in is a plug-in that contains supporting and optional method elements. Only the elements that are referenced from non-supporting plug-in are to be considered for inclusion into a method configuration. In other words, if a supporting method plug-in is selected for a configuration only its elements referenced from outside of this plug-in will be considered for the configuration.  All other unreferenced elements will not be."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessPlanningTemplate" eSuperTypes="#//Process">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

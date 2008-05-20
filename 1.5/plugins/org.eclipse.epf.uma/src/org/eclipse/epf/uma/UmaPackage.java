@@ -17228,13 +17228,22 @@ public interface UmaPackage extends EPackage {
 	int METHOD_PLUGIN__BASES = METHOD_UNIT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Supporting</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_PLUGIN__SUPPORTING = METHOD_UNIT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Method Plugin</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_PLUGIN_FEATURE_COUNT = METHOD_UNIT_FEATURE_COUNT + 3;
+	int METHOD_PLUGIN_FEATURE_COUNT = METHOD_UNIT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -26517,6 +26526,17 @@ public interface UmaPackage extends EPackage {
 	EReference getMethodPlugin_Bases();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.uma.MethodPlugin#isSupporting <em>Supporting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Supporting</em>'.
+	 * @see org.eclipse.epf.uma.MethodPlugin#isSupporting()
+	 * @see #getMethodPlugin()
+	 * @generated
+	 */
+	EAttribute getMethodPlugin_Supporting();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.VariabilityElement <em>Variability Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -30029,6 +30049,15 @@ public interface UmaPackage extends EPackage {
 		 * @generated
 		 */
 		EReference METHOD_PLUGIN__BASES = eINSTANCE.getMethodPlugin_Bases();
+
+		/**
+		 * The meta object literal for the '<em><b>Supporting</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute METHOD_PLUGIN__SUPPORTING = eINSTANCE
+				.getMethodPlugin_Supporting();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.VariabilityElementImpl <em>Variability Element</em>}' class.
