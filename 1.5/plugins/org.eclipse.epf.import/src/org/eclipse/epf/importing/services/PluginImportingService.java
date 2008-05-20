@@ -13,7 +13,10 @@ package org.eclipse.epf.importing.services;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -691,6 +694,26 @@ public class PluginImportingService {
 					}
 				}
 			}
+		}
+		
+		if (data.getPlugins().size() > 1) {
+			Comparator comparator = new Comparator<PluginImportData.PluginInfo>() {
+
+				public int compare(PluginImportData.PluginInfo o1,
+						PluginImportData.PluginInfo o2) {
+					if (o1 == o2) {
+						return 0;
+					}
+					Collator collator = Collator.getInstance();
+
+					return collator.compare(o1.name, o2.name);
+
+				}
+
+			};
+
+			Collections.<PluginImportData.PluginInfo> sort(data.getPlugins(),
+					comparator);
 		}
 	}
 
