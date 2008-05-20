@@ -10,13 +10,17 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.importing.wizards;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.epf.importing.services.ElementDiffTree;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -71,6 +75,20 @@ public class DiffReportContentProvider implements ITreeContentProvider {
 					dirtyItems.add(item);
 				}
 
+				if (e instanceof MethodLibrary) {
+					Comparator comparator = new Comparator<ElementDiffTree>() {
+						public int compare(ElementDiffTree o1, ElementDiffTree o2) {
+							if (o1 == o2) {
+								return 0;
+							}
+							Collator collator = Collator.getInstance();
+	
+							return collator.compare(o1.getName(), o2.getName());
+						}
+					};
+					Collections.<ElementDiffTree> sort(dirtyItems, comparator);
+				}
+				
 				return dirtyItems.toArray();
 			}
 		}
