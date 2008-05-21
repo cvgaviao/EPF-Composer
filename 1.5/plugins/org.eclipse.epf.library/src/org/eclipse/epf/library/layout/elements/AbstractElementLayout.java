@@ -69,6 +69,7 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.Whitepaper;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -1081,6 +1082,27 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			IElementLayout layout = getChildLayout(desc);
 			XmlElement descXml = layout.getXmlElement(false);
 			descListXml.addChild(descXml);
+			
+			//Show entry/exist state values
+			if (desc instanceof WorkProductDescriptor && layout instanceof AbstractElementLayout) {
+				AbstractElementLayout aLayout = (AbstractElementLayout) layout;
+				
+				EAttribute att;
+				String value;
+				att = UmaPackage.eINSTANCE.getWorkProductDescriptor_ActivityEntryState();
+				value = (String) aLayout.getAttributeFeatureValue(att);
+				
+				if (value != null && value.length() > 0) {
+					descXml
+					.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				}
+				att = UmaPackage.eINSTANCE.getWorkProductDescriptor_ActivityExitState();
+				value = (String) aLayout.getAttributeFeatureValue(att);
+				if (value != null && value.length() > 0) {
+					descXml
+					.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				}
+			}
 			
 			List parents = __getSuperActivities(desc);
 			for (int p = 0; p < parents.size(); p++ ) {
