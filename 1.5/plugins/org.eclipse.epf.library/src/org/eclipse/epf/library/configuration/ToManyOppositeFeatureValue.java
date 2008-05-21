@@ -15,9 +15,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.Process;
 
 /**
  * realized feature value for a toMany opposite feature
@@ -62,6 +66,16 @@ public class ToManyOppositeFeatureValue extends ToManyFeatureValue {
 
 		for (Iterator it = ((List) value).iterator(); it.hasNext();) {
 			MethodElement e = (MethodElement) it.next();
+			
+			//A replaced process should not be shown as a process usage 
+			if (of == AssociationHelper.Task_TaskDescriptors && e instanceof TaskDescriptor) {
+				TaskDescriptor td = (TaskDescriptor) e;				
+				Process proc = ProcessUtil.getProcess(td.getSuperActivities());
+				MethodElement realized = ConfigurationHelper.getCalculatedElement(proc, getRealizer());
+				if (realized != proc) {
+					continue;
+				}
+			}
 
 			// Replace does not completely remove
 			// outgoing associations
