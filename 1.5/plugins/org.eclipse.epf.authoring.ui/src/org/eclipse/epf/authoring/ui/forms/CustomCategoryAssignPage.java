@@ -109,6 +109,9 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 	protected void createFormContent(IManagedForm managedForm) {
 		super.createFormContent(managedForm);
 		
+		ctrl_add.setText(AuthoringUIResources.assignAction_text);
+		ctrl_remove.setText(AuthoringUIResources.unassignAction_text);
+		
 		createIncludeComposite();
 	}
 
