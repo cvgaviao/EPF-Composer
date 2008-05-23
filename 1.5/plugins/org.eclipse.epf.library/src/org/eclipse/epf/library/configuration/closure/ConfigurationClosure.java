@@ -12,9 +12,11 @@ package org.eclipse.epf.library.configuration.closure;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +27,7 @@ import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -400,7 +403,22 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 
 	private void processChangedNodes(Object[] changedNodes) {
-		
+		getConfigurationManager().getConfigurationData().beginUpdateSupportingElements();
+		processChangedNodes(changedNodes);
+		Set<ElementReference> refs = new HashSet<ElementReference>();			
+		getConfigurationManager().getConfigurationData().endUpdateSupportingElements(refs);
+		for (ElementReference ref: refs) {
+			ElementError error = ConfigurationErrorMatrix.getError(config, ref);
+			if ( error != null ) {
+				errors.add(error);
+				notifyError(error, ClosureListener.ERROR_ADDED);
+			}
+		}
+	}
+	
+	private void processChangedNodes_(Object[] changedNodes) {
+		ConfigurationData configData = getConfigurationManager().getConfigurationData();
+
 		// for all the changed notes,
 		// all all contained elements and check if the elements are in config or not
 		// if the elements are in config, the referenced elements should also be in config
@@ -409,6 +427,10 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			
 			// the elements are either plugin or package
 			Object changedElement = changedNodes[i];
+			if (configData.isSupportingSelectable((MethodElement) changedElement)) {
+				continue;
+			}
+			
 			PackageDependency dependency = dependencyManager
 					.getDependency((MethodElement) changedElement);
 			if (dependency == null) {
@@ -456,6 +478,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	private void checkReference(ElementReference ref) {
 		MethodElement e = ref.getElement();
 		MethodElement e_ref = ref.getRefElement();
+		ConfigurationData configData = getConfigurationManager().getConfigurationData();
 		
 		if ( e instanceof MethodPackage || e instanceof MethodConfiguration ) {
 			return;
@@ -476,7 +499,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		}
 				
 		// if the referenced element is not in  config, log error
-		if ( !ConfigurationHelper.inConfig(e_ref, config)) {
+		if ( !ConfigurationHelper.inConfig(e_ref, config) && !configData.isSupportingElement(e_ref)) {
 			
 			/*
 			String message = LibraryResources.bind(LibraryResources.ElementError_missing_element, 

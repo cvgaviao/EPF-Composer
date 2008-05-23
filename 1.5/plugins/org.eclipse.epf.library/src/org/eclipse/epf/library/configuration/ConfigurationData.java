@@ -29,6 +29,7 @@ import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
@@ -78,6 +79,7 @@ public class ConfigurationData {
 	private Adapter configListener;
 	private ILibraryChangeListener libListener;
 	private boolean enableUpdate = true;
+	private SupportingElementData supportingElementData;
 	
 	public static ConfigurationData newConfigurationData(MethodConfiguration config) {
 		Object obj = ExtensionHelper.create(ConfigurationData.class, config);
@@ -89,6 +91,7 @@ public class ConfigurationData {
 	
 	public ConfigurationData(MethodConfiguration config) {
 		this.config = config;
+		//supportingElementData = new SupportingElementData(config);
 		
 		configListener = new AdapterImpl() {
 			public void notifyChanged(Notification msg) {
@@ -596,5 +599,34 @@ public class ConfigurationData {
 	
 	public boolean isElementInAddedCategory(MethodElement element) {
 		return addedElemMap.containsKey(element.getGuid());
+	}
+	
+	//SupportingElementData handling methods
+	public void beginUpdateSupportingElements() {
+		if (supportingElementData == null) {
+			return;
+		}
+		supportingElementData.beginUpdateSupportingElements();
+	}
+	
+	public void endUpdateSupportingElements(Set<ElementReference> outConfigRefs) {
+		if (supportingElementData == null) {
+			return;
+		}
+		supportingElementData.endUpdateSupportingElements(outConfigRefs);
+	}
+	
+	public boolean isSupportingSelectable(MethodElement element) {
+		if (supportingElementData == null) {
+			return false;
+		}
+		return supportingElementData.isSupportingSelectable(element);
+	}
+		
+	public boolean isSupportingElement(MethodElement element) {
+		if (supportingElementData == null) {
+			return false;
+		}
+		return supportingElementData.isSupportingElement(element);
 	}
 }
