@@ -92,17 +92,16 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	protected static final String FORM_PREFIX = LibraryUIText.TEXT_METHOD_PLUGIN
 			+ ": "; //$NON-NLS-1$
 
+
 	protected Text ctrl_r_brief_desc;
-
 	protected CheckboxTableViewer ctrl_refModel;
-
 	protected Section refModelSection;
-
 	protected Composite refModelComposite;
 
 	protected MethodPlugin plugin;
 
 	protected Button ctrl_changeable;
+	protected Button supportingPluginCheckbox;
 
 	public boolean notificationEnabled = true;
 
@@ -442,6 +441,55 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	protected void refresh(boolean editable) {
 		super.refresh(editable);
 		ctrl_r_brief_desc.setEditable(false);
+	}
+	
+	@Override
+	protected void createGeneralSectionContent() {
+		super.createGeneralSectionContent();
+		
+		supportingPluginCheckbox = toolkit
+			.createButton(
+				generalComposite,
+				AuthoringUIResources.methodPluginDescriptionPage_supportingPluginLabel, SWT.CHECK);
+	}
+	
+	@Override
+	protected void addGeneralSectionListeners() {
+		super.addGeneralSectionListeners();
+		
+		supportingPluginCheckbox.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				IStatus status = TngUtil.checkEdit(plugin, getSite().getShell());
+				if (status.isOK()) {
+					boolean ret = actionMgr.doAction(IActionManager.SET,
+							plugin, UmaPackage.eINSTANCE
+									.getMethodPlugin_Supporting(),
+							new Boolean(supportingPluginCheckbox.getSelection()),
+							-1);
+					// in case of readonly file, roll back changes.
+					if (!ret) {
+						supportingPluginCheckbox.setSelection(!supportingPluginCheckbox
+								.getSelection());
+						return;
+					}
+				} else {
+					AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
+							AuthoringUIResources.editDialog_title,
+							AuthoringUIResources.editDialog_msgCannotEdit,
+							status);
+					return;
+				}
+			}
+
+			
+		});
+	}
+	
+	@Override
+	protected void loadGeneralSectionData() {
+		super.loadGeneralSectionData();
+		supportingPluginCheckbox
+			.setSelection(plugin.isSupporting());
 	}
 	
 	/**

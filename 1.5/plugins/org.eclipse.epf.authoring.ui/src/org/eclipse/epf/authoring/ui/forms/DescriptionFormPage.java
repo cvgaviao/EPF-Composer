@@ -1357,7 +1357,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 	}
 
-	private void addGeneralSectionListeners() {
+	protected void addGeneralSectionListeners() {
 		ctrl_name.addModifyListener(modelModifyListener);
 		ctrl_name.addFocusListener(nameFocusListener);
 
@@ -1659,7 +1659,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		form.getBody().layout(true, true);
 	}
 
-	private void loadGeneralSectionData() {
+	protected void loadGeneralSectionData() {
 		String name = methodElement.getName();
 		String presentationName = (methodElement).getPresentationName();
 		ctrl_name.setText(name == null ? "" : name); //$NON-NLS-1$
