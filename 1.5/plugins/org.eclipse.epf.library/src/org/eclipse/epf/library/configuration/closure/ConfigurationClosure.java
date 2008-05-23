@@ -404,7 +404,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 
 	private void processChangedNodes(Object[] changedNodes) {
 		getConfigurationManager().getConfigurationData().beginUpdateSupportingElements();
-		processChangedNodes(changedNodes);
+		processChangedNodes_(changedNodes);
 		Set<ElementReference> refs = new HashSet<ElementReference>();			
 		getConfigurationManager().getConfigurationData().endUpdateSupportingElements(refs);
 		for (ElementReference ref: refs) {
