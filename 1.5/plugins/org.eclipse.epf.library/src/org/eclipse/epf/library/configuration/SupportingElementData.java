@@ -15,17 +15,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
- *  Class managing supporint elements
+ *  Class managing supporting elements
  * 
  * @author Weiping Lu - Mar 22, 2008
  * @since 1.5
@@ -37,6 +38,7 @@ class SupportingElementData {
 	private Set<MethodElement> supportingElements;
 	private boolean duringUpdateSupporitngElements = false;
 	private Set<MethodPlugin> supportingPlugins;
+	private Set<MethodPackage> supportingPackages;
 	
 	public SupportingElementData(MethodConfiguration config) {		
 	}
@@ -44,60 +46,74 @@ class SupportingElementData {
 	public void beginUpdateSupportingElements() {
 		setDuringUpdateSupporitngElements(true);
 		supportingElements = new HashSet<MethodElement>();
+		
 		supportingPlugins = new HashSet<MethodPlugin>();
 		List<MethodPlugin> plugins = config.getMethodPluginSelection();
-		for (MethodPlugin plugin: plugins) {
+		for (MethodPlugin plugin : plugins) {
 			if (plugin.isSupporting()) {
-				supportingPlugins.add(plugin);
+				supportingElements.add(plugin);
 			}
 		}
+
+		supportingPackages = new HashSet<MethodPackage>();
+		if (! supportingPlugins.isEmpty()) {
+			List<MethodPackage> packages = config.getMethodPackageSelection();
+			for (MethodPackage pkg : packages) {
+				MethodPlugin plugin = UmaUtil.getMethodPlugin(pkg);
+				if (supportingPlugins.contains(plugin)) {
+					supportingPackages.add(pkg);
+				}
+			}
+		}
+
 	}
 	
-	//Return list of referred references outside the config 
-	public Collection<ElementReference> endUpdateSupportingElements() {
+	// Collect set of referred references outside the config
+	public void endUpdateSupportingElements(Set<ElementReference> outConfigRefs) {
 		Collection<ElementReference> refs = new HashSet<ElementReference>();
-		Set<MethodElement> newAddedSupportingElements = supportingElements;
-		for (MethodElement element: newAddedSupportingElements) {
+		collectReferencesOutsideConfig(supportingElements, outConfigRefs);
+		supportingPlugins = null;
+		supportingPackages = null;
+		setDuringUpdateSupporitngElements(false);
+	}
+	
+	private void collectReferencesOutsideConfig(Collection<MethodElement> elements, Set<ElementReference> outConfigRefs) {
+		for (MethodElement element: elements) {
 			
 		}		
-		setDuringUpdateSupporitngElements(false);
-		return refs;
 	}
 	
-	private void collectReferencesOutsideConfig() {
-		
-	}
-		
 	public boolean isSupportingElement(MethodElement element) {
-		return supportingElements.contains(element);
+		return isSupportingElement(element, null);
 	}
 		
-	public boolean pluginIsSupporting(MethodElement element) {
-		return pluginIsSupporting(element, null);
-	}
-	
-	private boolean pluginIsSupporting(MethodElement element, Set newAddedSet) {
-		if (! isDuringUpdateSupporitngElements()) {
-			throw new UnsupportedOperationException();
-		}
+	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupporitnElements) {
 		if (supportingElements.contains(element)) {
 			return true;
 		}
-		MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
-		if (plugin == null) {
-			return false;
-		}
-		if (supportingPlugins.contains(plugin)) {
-			supportingElements.add(element);
-			if (newAddedSet != null) {
-				newAddedSet.add(element);
-			}
-			return true;
-		}
 		
-		return false;
+		boolean ret = false;
+		if (isDuringUpdateSupporitngElements()) {
+			EObject container = LibraryUtil.getSelectable(element);
+			if (container instanceof MethodPackage) {
+				ret = supportingPackages.contains(container);
+			} else if (container instanceof MethodPlugin) {
+				ret = supportingPlugins.contains(container);				
+			} else if (container instanceof MethodLibrary) {
+				ret = supportingPlugins.contains(element);				
+			}
+			if (ret) {
+				supportingElements.add(element);
+				newSupporitnElements.add(element);
+			}
+		}
+		return ret;
 	}
-
+		
+	public boolean isSupportingSelectable(MethodElement element) {
+		return supportingPackages.contains(element) || supportingPlugins.contains(element);
+	}
+	
 	private boolean isDuringUpdateSupporitngElements() {
 		return duringUpdateSupporitngElements;
 	}
