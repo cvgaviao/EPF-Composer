@@ -10,19 +10,26 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
+import org.eclipse.epf.library.configuration.closure.PackageReference;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -68,26 +75,109 @@ class SupportingElementData {
 
 	}
 	
-	// Collect set of referred references outside the config
-	public void endUpdateSupportingElements(Set<ElementReference> outConfigRefs) {
-		Collection<ElementReference> refs = new HashSet<ElementReference>();
-		collectReferencesOutsideConfig(supportingElements, outConfigRefs);
+	// Collect map of referred references outside the config
+	public void endUpdateSupportingElements(
+			Map<String, ElementReference> outConfigRefMap) {
+		
+		Set<MethodElement> supportingElementsToCollect = supportingElements;
+		while (!supportingElementsToCollect.isEmpty()) {
+			Set<MethodElement> newSupportingElements = new HashSet<MethodElement>();		
+			collectReferencesOutsideConfig(supportingElementsToCollect, outConfigRefMap, newSupportingElements);
+			supportingElementsToCollect = newSupportingElements;
+		}
+		
 		supportingPlugins = null;
 		supportingPackages = null;
 		setDuringUpdateSupporitngElements(false);
 	}
 	
-	private void collectReferencesOutsideConfig(Collection<MethodElement> elements, Set<ElementReference> outConfigRefs) {
-		for (MethodElement element: elements) {
-			
-		}		
+	private void collectReferencesOutsideConfig(
+			Collection<MethodElement> elements,
+			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
+		for (MethodElement element : elements) {
+			collectReferencesOutsideConfig(element, outConfigRefMap, newSupportingElements);
+		}
 	}
 	
+	private void collectReferencesOutsideConfig(MethodElement element,
+			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
+		
+		List properties = LibraryUtil.getStructuralFeatures(element);
+		for (EStructuralFeature f: (List<EStructuralFeature>) properties) {			
+			if (!(f instanceof EReference)) {
+				continue;
+			}
+
+			EReference feature = (EReference) f;
+			if (feature.isContainer() || feature.isContainment()) {
+				continue;
+			}
+
+			Object value = element.eGet(feature);
+			if (value == null) {
+				continue;
+			}
+			
+			List values = null;			
+			if ( feature.isMany() ) {
+				values = (List) value;
+			} else if ( value instanceof MethodElement ) {
+				values = new ArrayList();
+				values.add(value);
+			}
+			
+			String guid = element.getGuid();
+			for (Object referredValue: values) {
+				if (! (referredValue instanceof MethodElement)) {
+					continue;
+				}
+				MethodElement refElement = (MethodElement)	referredValue;
+				if (toAddToOutConfigRefMap(refElement, newSupportingElements)) {				
+					String key = guid + refElement.getGuid();
+					ElementReference elementReference = outConfigRefMap.get(key);
+					if (elementReference == null) {
+						elementReference = new ElementReference(element, refElement);
+						outConfigRefMap.put(key, elementReference);
+					}
+					elementReference.addFeature(feature);
+				}
+			}
+		}
+		
+	}
+
+	private boolean toAddToOutConfigRefMap(MethodElement refElement, Set<MethodElement> newSupportingElements) {
+		if (refElement instanceof MethodPackage
+				|| refElement instanceof MethodConfiguration) {
+			return false;
+		}
+
+		if (refElement instanceof VariabilityElement) {
+			VariabilityElement replacer = ConfigurationHelper.getReplacer(
+					(VariabilityElement) refElement, config);
+			if (replacer != null) {
+				return false;
+			}
+		}
+
+		// the element might be subtracted, so ignore it
+		if (!ConfigurationHelper.inConfig(refElement, config, true, false)) {
+			return false;
+		}
+
+		if (!ConfigurationHelper.inConfig(refElement, config)
+				&& !isSupportingElement(refElement, newSupportingElements)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSupportingElement(MethodElement element) {
 		return isSupportingElement(element, null);
 	}
 		
-	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupporitnElements) {
+	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupportingElements) {
 		if (supportingElements.contains(element)) {
 			return true;
 		}
@@ -104,7 +194,7 @@ class SupportingElementData {
 			}
 			if (ret) {
 				supportingElements.add(element);
-				newSupporitnElements.add(element);
+				newSupportingElements.add(element);
 			}
 		}
 		return ret;

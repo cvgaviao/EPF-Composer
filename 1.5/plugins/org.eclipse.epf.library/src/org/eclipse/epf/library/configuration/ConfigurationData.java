@@ -609,11 +609,11 @@ public class ConfigurationData {
 		supportingElementData.beginUpdateSupportingElements();
 	}
 	
-	public void endUpdateSupportingElements(Set<ElementReference> outConfigRefs) {
+	public void endUpdateSupportingElements(Map<String, ElementReference> outConfigRefMap) {
 		if (supportingElementData == null) {
 			return;
 		}
-		supportingElementData.endUpdateSupportingElements(outConfigRefs);
+		supportingElementData.endUpdateSupportingElements(outConfigRefMap);
 	}
 	
 	public boolean isSupportingSelectable(MethodElement element) {
