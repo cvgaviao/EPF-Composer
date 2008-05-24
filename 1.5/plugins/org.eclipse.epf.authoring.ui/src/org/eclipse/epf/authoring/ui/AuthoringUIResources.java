@@ -63,6 +63,8 @@ public final class AuthoringUIResources extends NLS {
 
 	public static String ItemsFilterDialog_UpdateTreeJob_name;
 
+	public static String Configuration_Problem_Refresh;
+	
 	public static String ProblemExplanationText;
 
 	public static String NewDiagramFile_title;

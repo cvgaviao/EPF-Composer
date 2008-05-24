@@ -71,6 +71,8 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	
 	private List<ElementError> errors = new ArrayList<ElementError>();
 	
+	private boolean abortCheckError = false;
+	
 	// A map of invalid nodes to ElementDependencyError objects.
 	protected Map<Object, ElementDependencyError> invalidNodesMap =
 		new HashMap<Object, ElementDependencyError>();
@@ -405,8 +407,14 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	private void processChangedNodes(Object[] changedNodes) {
 		getConfigurationManager().getConfigurationData().beginUpdateSupportingElements();
 		processChangedNodes_(changedNodes);
+		if (isAbortCheckError()) {
+			return;
+		}
 		Map<String, ElementReference> refMap = new HashMap<String, ElementReference>();			
 		getConfigurationManager().getConfigurationData().endUpdateSupportingElements(refMap);
+		if (isAbortCheckError()) {
+			return;
+		}
 		for (ElementReference ref: refMap.values()) {
 			ElementError error = ConfigurationErrorMatrix.getError(config, ref);
 			if ( error != null ) {
@@ -424,6 +432,9 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		// if the elements are in config, the referenced elements should also be in config
 		
 		for (int i = 0; i <changedNodes.length; i++) {
+			if (isAbortCheckError()) {
+				return;
+			}
 			
 			// the elements are either plugin or package
 			Object changedElement = changedNodes[i];
@@ -1080,6 +1091,14 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			ElementError error = (ElementError)it.next();
 			listener.fireEvent(ClosureListener.ERROR_ADDED, config, error);
 		}
+	}
+
+	public synchronized boolean isAbortCheckError() {
+		return abortCheckError;
+	}
+
+	public synchronized void setAbortCheckError(boolean abortCheckError) {
+		this.abortCheckError = abortCheckError;
 	}
 	
 //	/**

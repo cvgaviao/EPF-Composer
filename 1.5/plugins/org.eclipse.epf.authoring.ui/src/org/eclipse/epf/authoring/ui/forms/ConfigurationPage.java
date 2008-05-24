@@ -11,6 +11,9 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
@@ -40,6 +43,7 @@ import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
+import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
@@ -47,6 +51,7 @@ import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
@@ -134,6 +139,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private Button hideWarnButton;
 	private Button hideInfoButton;
 
+	private ShowErrorJob showErrorJob = new ShowErrorJob(AuthoringUIResources.Configuration_Problem_Refresh); //$NON-NLS-1$
 
 	protected ISelectionChangedListener treeSelectionListener = new ISelectionChangedListener() {
 		/**
@@ -732,8 +738,68 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		// listen to plugin presentation layout changes
 		PluginUIPackageContext.INSTANCE.addListener(layoutListener);
 	}
+	
+	class ShowErrorJob extends Job {
+		
+		public ShowErrorJob(String name) {
+			super(name);
+		}
 
+		@Override
+		protected IStatus run(IProgressMonitor monitor) {
+			// save the previous invalid elements
+			final List<Object> invalid = closure.getInvalidElements();
+			closure.checkError();
+			if (closure.isAbortCheckError()) {
+				return Status.OK_STATUS;
+			}
+			
+			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					if (configViewerHideUncheckedFilter.isHideUnchecked()) {
+						configViewer.refresh();
+					} else {
+						// get the new error elements, add to the previous error elements,
+						// and update them to update the error/warning images
+						invalid.addAll(closure.getInvalidElements());
+
+						// also add the UI folders
+						ConfigPackageContentProvider cp = (ConfigPackageContentProvider) configViewer
+								.getContentProvider();
+						invalid.addAll(cp.getUIElements());
+
+						configViewer.update(invalid.toArray(), null);
+					}
+				}
+
+			});
+			return Status.OK_STATUS;
+		}
+
+	}
+	
 	protected void showErrors() {
+		if (closure.isAbortCheckError()) {
+			return;
+		}
+		
+		if (showErrorJob.getState() == Job.RUNNING) {
+			closure.setAbortCheckError(true);
+		}
+
+		if (! showErrorJob.cancel()) {
+			try {
+				showErrorJob.join();
+			} catch (Exception e) {							
+			}
+		}
+		
+		closure.setAbortCheckError(false);
+		showErrorJob.schedule();
+	}
+	
+	//old code for showErrors method
+	protected void showErrors_old() {
 		// save the previous invalid elements
 		List<Object> invalid = closure.getInvalidElements();
 
