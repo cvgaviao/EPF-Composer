@@ -466,9 +466,9 @@ public class ConfigurationData {
 				return true;
 			}
 
-			if (getSupportingElementData() != null && getSupportingElementData().isSupportingElement(element)) {
-				return true;
-			}
+//			if (getSupportingElementData() != null && getSupportingElementData().isSupportingElement(element)) {
+//				return true;
+//			}
 		} 
 		
 		// elements beyond configuration scope should be always visible
