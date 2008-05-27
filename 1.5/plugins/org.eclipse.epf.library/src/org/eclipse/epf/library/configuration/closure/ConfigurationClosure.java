@@ -167,8 +167,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			return;
 		}
 		try {
-			checkError_();
-		} catch (Exception e) {		 	
+			checkError_();	 	
 		} finally {
 			setRunningCheckError(false);
 		}	
