@@ -162,7 +162,33 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 * Builds the selection list based on the method configuration.
 	 * 
 	 */
-	public synchronized void checkError() {
+	public void checkError() {
+		if (isRunningCheckError()) {
+			return;
+		}
+		try {
+			checkError_();
+		} catch (Exception e) {		 	
+		} finally {
+			setRunningCheckError(false);
+		}	
+	}
+	
+	private boolean runningCheckError = false;
+	
+	//Be aware of side effect of the call
+	private synchronized boolean isRunningCheckError()  {
+		boolean ret = runningCheckError;
+		if (! ret) {	//make sure no 2 threads can be runningCheckError at the same time
+			runningCheckError = true;
+		}
+		return ret;
+	}
+	private synchronized void setRunningCheckError(boolean b)  {
+		runningCheckError = b;
+	}
+	
+	private void checkError_() {
 		
 		// Bug 206724 - SCM: Always prompt check out elements for a opened configuration when refresh source control status
 		// don't need to validate the configuration, rely on the caller to validate it before call this method.

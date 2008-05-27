@@ -42,7 +42,7 @@ public class SupportingElementData extends ConfigDataBase {
 	private Set<MethodElement> supportingElements;
 	private boolean duringUpdateSupporitngElements = false;
 	private Set<MethodPlugin> supportingPlugins;
-	private Set<MethodPackage> supportingPackages;
+	private Set<MethodPackage> selectedPackages;
 	
 	public SupportingElementData(MethodConfiguration config) {
 		super(config);
@@ -60,13 +60,13 @@ public class SupportingElementData extends ConfigDataBase {
 			}
 		}
 
-		supportingPackages = new HashSet<MethodPackage>();
+		selectedPackages = new HashSet<MethodPackage>();
 		if (! supportingPlugins.isEmpty()) {
 			List<MethodPackage> packages = getConfig().getMethodPackageSelection();
 			for (MethodPackage pkg : packages) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(pkg);
 				if (supportingPlugins.contains(plugin)) {
-					supportingPackages.add(pkg);
+					selectedPackages.add(pkg);
 				}
 			}
 		}
@@ -85,7 +85,7 @@ public class SupportingElementData extends ConfigDataBase {
 		}
 		
 		supportingPlugins = null;
-		supportingPackages = null;
+		selectedPackages = null;
 		setUpdatingChanges(false);
 	}
 	
@@ -165,7 +165,7 @@ public class SupportingElementData extends ConfigDataBase {
 		}
 
 		if (!ConfigurationHelper.inConfig(refElement, getConfig())
-				&& !isSupportingElement(refElement, newSupportingElements)) {
+				&& !isSupportingElement(refElement, newSupportingElements, true)) {
 			return true;
 		}
 
@@ -174,13 +174,20 @@ public class SupportingElementData extends ConfigDataBase {
 
 	public boolean isSupportingElement(MethodElement element) {
 		if (isUpdatingChanges()) {				
-			return isSupportingElement(element, null);			
+			return isSupportingElement(element, null, true);			
 		} else if (isNeedUpdateChanges()) {
 			updateChanges();
 			setNeedUpdateChanges(false);
 		}
 		
-		return supportingElements.contains(element);
+		boolean ret = supportingElements.contains(element);
+		if (! ret) {	
+			EObject container = LibraryUtil.getSelectable(element);
+			if (container instanceof MethodPackage) {
+				return isSupportingElement((MethodPackage) container);
+			}
+		}
+		return ret;
 	}
 	
 	protected void updateChangeImpl() {
@@ -188,16 +195,19 @@ public class SupportingElementData extends ConfigDataBase {
 		closure.checkError();
 	}
 		
-	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupportingElements) {
+	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupportingElements, boolean checkContainer) {
 		if (supportingElements.contains(element)) {
 			return true;
 		}
 		
-		boolean ret = false;
+		EObject container = LibraryUtil.getSelectable(element);
 		if (isUpdatingChanges()) {
-			EObject container = LibraryUtil.getSelectable(element);
+			boolean ret = false;
 			if (container instanceof MethodPackage) {
-				ret = supportingPackages.contains(container);
+				ret = selectedPackages.contains(container);
+				if (checkContainer && !ret) {
+					ret = isSupportingElement((MethodPackage)container, newSupportingElements, false);
+				}
 			} else if (container instanceof MethodPlugin) {
 				ret = supportingPlugins.contains(container);				
 			} else if (container instanceof MethodLibrary) {
@@ -207,12 +217,18 @@ public class SupportingElementData extends ConfigDataBase {
 				supportingElements.add(element);
 				newSupportingElements.add(element);
 			}
+			return ret;
 		}
-		return ret;
+		
+		if (checkContainer && container instanceof MethodPackage) {
+			return isSupportingElement((MethodPackage)container, newSupportingElements, false);
+		}
+		
+		return false;
 	}
 		
 	public boolean isSupportingSelectable(MethodElement element) {
-		return supportingPackages.contains(element) || supportingPlugins.contains(element);
+		return selectedPackages.contains(element) || supportingPlugins.contains(element);
 	}
 
 	
