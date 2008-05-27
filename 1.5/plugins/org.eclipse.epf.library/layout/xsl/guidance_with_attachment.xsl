@@ -131,6 +131,7 @@
 						<td class="sectionTableCell">
 							<ul>
 								<xsl:for-each select="$contentElements">
+								<xsl:sort select="@DisplayName"/>
 									<li>
 										<a>
 											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
@@ -169,6 +170,7 @@
 							<td class="sectionTableCell">
 							<UL>
 								<xsl:for-each select="attribute[@name='attachedFile']">
+								<xsl:sort select="@fileName"/>
 								<li>
 									<a href="{@url}" target="_blank"><xsl:value-of select="@fileName"/></a>
 								</li>

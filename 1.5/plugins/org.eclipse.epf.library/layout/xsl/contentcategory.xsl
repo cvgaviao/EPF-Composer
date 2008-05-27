@@ -232,6 +232,7 @@
 							<td class="sectionTableCell">
 								<ul>
 									<xsl:for-each select="$tasks">
+									<xsl:sort select="@DisplayName"/>
 										<li>
 											<a>
 												<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
@@ -334,6 +335,7 @@
 							<td class="sectionTableCell">
 								<ul>
 									<xsl:for-each select="$workProducts">
+									<xsl:sort select="@DisplayName"/>
 										<li>
 											<a>
 												<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
@@ -366,6 +368,7 @@
 						<td class="sectionTableCell">
 							<ul>
 								<xsl:for-each select="$workProducts">
+								<xsl:sort select="@DisplayName"/>
 									<li>
 										<a>
 											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
@@ -429,6 +432,7 @@
 						<td class="sectionTableCell">
 							<ul>
 								<xsl:for-each select="$roles">
+								<xsl:sort select="@DisplayName"/>
 									<li>
 										<a>
 											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
@@ -460,6 +464,7 @@
 						<td class="sectionTableCell">
 							<ul>
 								<xsl:for-each select="$toolMentors">
+								<xsl:sort select="@DisplayName"/>
 									<li>
 										<a>
 											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
@@ -491,6 +496,7 @@
                    		<td class="sectionTableCell">
                        		<ul>
                            		<xsl:for-each select="$categorizedElements">
+								<xsl:sort select="@DisplayName"/>
                                		<li>
                                    		<a>
                                        		<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>

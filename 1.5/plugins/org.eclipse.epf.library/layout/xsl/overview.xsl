@@ -175,6 +175,7 @@
 															<xsl:value-of select="$colon_with_space"/>
 														</xsl:if>
 														<xsl:for-each select="$baseElement">
+														<xsl:sort select="@DisplayName"/>
 															<xsl:call-template name="addElementWithLink">
 																<xsl:with-param name="element" select="."/>
 															</xsl:call-template>
@@ -355,6 +356,7 @@
 						<xsl:value-of select="$colon_with_space"/>
 					</xsl:if>
 					<xsl:for-each select="$baseRole">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -369,6 +371,7 @@
 					<xsl:value-of select="$roleSetsText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$roleSets">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -388,6 +391,7 @@
 					<xsl:value-of select="$basedOnMethodRoleText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$sourceRole">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -407,6 +411,7 @@
 					<xsl:value-of select="$disciplinesText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$disciplines">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -433,6 +438,7 @@
 							<xsl:value-of select="$colon_with_space"/>
 						</xsl:if>
 						<xsl:for-each select="$baseTask">
+						<xsl:sort select="@DisplayName"/>
 							<xsl:call-template name="addElementWithLink">
 								<xsl:with-param name="element" select="."/>
 							</xsl:call-template>
@@ -452,6 +458,7 @@
 					<xsl:value-of select="$basedOnMethodTaskText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$sourceTask">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -470,6 +477,7 @@
 					<xsl:value-of select="$basedOnMethodWorkProductText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$sourceWorkProduct">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -490,6 +498,7 @@
 					<xsl:value-of select="$domainsText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$domains">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -503,6 +512,7 @@
 					<xsl:value-of select="$workProductTypesText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$workProductTypes">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -530,6 +540,7 @@
 						<xsl:value-of select="$colon_with_space"/>
 					</xsl:if>
 					<xsl:for-each select="$baseWorkProduct">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -549,6 +560,7 @@
 					<xsl:value-of select="$toolText"/>
 					<xsl:value-of select="$colon_with_space"/>
 					<xsl:for-each select="$tool">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -576,6 +588,7 @@
 						<xsl:value-of select="$colon_with_space"/>
 					</xsl:if>
 					<xsl:for-each select="$baseElement">
+					<xsl:sort select="@DisplayName"/>
 						<xsl:call-template name="addElementWithLink">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>

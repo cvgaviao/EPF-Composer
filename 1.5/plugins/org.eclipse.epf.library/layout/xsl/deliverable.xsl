@@ -138,6 +138,7 @@
 							<td class="sectionTableCell">
 							<ul>
 								<xsl:for-each select="$deliveredWorkProducts">
+								<xsl:sort select="@DisplayName"/>
 									<li>
 										<a>
 											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>

@@ -77,6 +77,8 @@
 									<h2 class="banner"><xsl:value-of select="@name"/></h2>
 									<ul>
 										<xsl:for-each select="Element">
+										<xsl:sort select="@TypeName"/>
+										<xsl:sort select="@DisplayName"/>
 											<li>
 												<a><xsl:attribute name="href"><xsl:value-of select="$backPath"/><xsl:value-of select="@Url"/></xsl:attribute> <xsl:value-of select="@TypeName"/><xsl:value-of select="$colon_with_space"/><xsl:value-of select="@DisplayName"/></a>
 											</li>

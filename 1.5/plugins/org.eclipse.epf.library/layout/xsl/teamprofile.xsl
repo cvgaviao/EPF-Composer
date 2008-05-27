@@ -172,6 +172,7 @@
 							<td class="sectionTableCell" colspan="3">
 							<ul>
 								<xsl:for-each select="$teamRoles">
+								<xsl:sort select="@DisplayName"/>
 									<li>
 										<a>
 											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>

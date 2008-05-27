@@ -84,6 +84,7 @@
 					<td class="sectionTableCell">
 						<ul>
 							<xsl:for-each select="$refElement">
+							<xsl:sort select="@DisplayName"/>
 								<li>
 									<xsl:call-template name="addElementWithLink">
 										<xsl:with-param name="element" select="."/>
