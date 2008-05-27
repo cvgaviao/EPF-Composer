@@ -12,11 +12,9 @@ package org.eclipse.epf.library.configuration.closure;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -27,9 +25,9 @@ import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr.ChangeEvent;
@@ -164,7 +162,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 * Builds the selection list based on the method configuration.
 	 * 
 	 */
-	public void checkError() {
+	public synchronized void checkError() {
 		
 		// Bug 206724 - SCM: Always prompt check out elements for a opened configuration when refresh source control status
 		// don't need to validate the configuration, rely on the caller to validate it before call this method.
@@ -405,13 +403,13 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 
 	private void processChangedNodes(Object[] changedNodes) {
-		getConfigurationManager().getConfigurationData().beginUpdateSupportingElements();
+		getConfigurationManager().getSupportingElementData().beginUpdateSupportingElements();
 		processChangedNodes_(changedNodes);
 		if (isAbortCheckError()) {
 			return;
 		}
 		Map<String, ElementReference> refMap = new HashMap<String, ElementReference>();			
-		getConfigurationManager().getConfigurationData().endUpdateSupportingElements(refMap);
+		getConfigurationManager().getSupportingElementData().endUpdateSupportingElements(refMap);
 		if (isAbortCheckError()) {
 			return;
 		}
@@ -425,7 +423,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 	
 	private void processChangedNodes_(Object[] changedNodes) {
-		ConfigurationData configData = getConfigurationManager().getConfigurationData();
+		SupportingElementData seData = getConfigurationManager().getSupportingElementData();	
 
 		// for all the changed notes,
 		// all all contained elements and check if the elements are in config or not
@@ -438,7 +436,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			
 			// the elements are either plugin or package
 			Object changedElement = changedNodes[i];
-			if (configData.isSupportingSelectable((MethodElement) changedElement)) {
+			if (seData.isSupportingSelectable((MethodElement) changedElement)) {
 				continue;
 			}
 			
@@ -489,7 +487,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	private void checkReference(ElementReference ref) {
 		MethodElement e = ref.getElement();
 		MethodElement e_ref = ref.getRefElement();
-		ConfigurationData configData = getConfigurationManager().getConfigurationData();
+		SupportingElementData seData = getConfigurationManager().getSupportingElementData();
 		
 		if ( e instanceof MethodPackage || e instanceof MethodConfiguration ) {
 			return;
@@ -510,7 +508,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		}
 				
 		// if the referenced element is not in  config, log error
-		if ( !ConfigurationHelper.inConfig(e_ref, config) && !configData.isSupportingElement(e_ref)) {
+		if ( !ConfigurationHelper.inConfig(e_ref, config) && !seData.isSupportingElement(e_ref)) {
 			
 			/*
 			String message = LibraryResources.bind(LibraryResources.ElementError_missing_element, 

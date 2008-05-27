@@ -29,7 +29,6 @@ import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
-import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
@@ -55,7 +54,7 @@ import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProductType;
 
 /**
- *  Class managing configuration data calculation and cache
+ *  Class managing configuration add/subtracted data calculation and cache
  * 
  * @author Weiping Lu - Mar 20, 2007
  * @author Jinhua Xi
@@ -91,7 +90,6 @@ public class ConfigurationData {
 	
 	public ConfigurationData(MethodConfiguration config) {
 		this.config = config;
-		//supportingElementData = new SupportingElementData(config);
 		
 		configListener = new AdapterImpl() {
 			public void notifyChanged(Notification msg) {
@@ -468,6 +466,9 @@ public class ConfigurationData {
 				return true;
 			}
 
+			if (getSupportingElementData() != null && getSupportingElementData().isSupportingElement(element)) {
+				return true;
+			}
 		} 
 		
 		// elements beyond configuration scope should be always visible
@@ -600,33 +601,13 @@ public class ConfigurationData {
 	public boolean isElementInAddedCategory(MethodElement element) {
 		return addedElemMap.containsKey(element.getGuid());
 	}
-	
-	//SupportingElementData handling methods
-	public void beginUpdateSupportingElements() {
+
+	private SupportingElementData getSupportingElementData() {
 		if (supportingElementData == null) {
-			return;
+			supportingElementData = LibraryService.getInstance()
+			.getConfigurationManager(config).getSupportingElementData();
 		}
-		supportingElementData.beginUpdateSupportingElements();
+		return supportingElementData;
 	}
 	
-	public void endUpdateSupportingElements(Map<String, ElementReference> outConfigRefMap) {
-		if (supportingElementData == null) {
-			return;
-		}
-		supportingElementData.endUpdateSupportingElements(outConfigRefMap);
-	}
-	
-	public boolean isSupportingSelectable(MethodElement element) {
-		if (supportingElementData == null) {
-			return false;
-		}
-		return supportingElementData.isSupportingSelectable(element);
-	}
-		
-	public boolean isSupportingElement(MethodElement element) {
-		if (supportingElementData == null) {
-			return false;
-		}
-		return supportingElementData.isSupportingElement(element);
-	}
 }

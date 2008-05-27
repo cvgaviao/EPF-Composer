@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.DependencyManager;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
@@ -39,6 +40,8 @@ public class ConfigurationManager implements IConfigurationManager {
 	
 	// The managed configuraiton data.
 	private ConfigurationData configData;
+	
+	private SupportingElementData supportingElementData;
 	
 	private ConfigurationProperties configProps;
 
@@ -67,8 +70,10 @@ public class ConfigurationManager implements IConfigurationManager {
 	 */
 	public ConfigurationManager(MethodConfiguration config) {
 		this.config = config;
-		configData = ConfigurationData.newConfigurationData(config);
 		
+		supportingElementData = new SupportingElementData(config);
+		configData = ConfigurationData.newConfigurationData(config);
+				
 		configProps = new ConfigurationProperties(config);
 		MethodElementPropertyMgr.getInstance().register(config, configProps);
 
@@ -103,6 +108,10 @@ public class ConfigurationManager implements IConfigurationManager {
 	 */
 	public ConfigurationData getConfigurationData() {
 		return configData;
+	}
+	
+	public SupportingElementData getSupportingElementData() {
+		return supportingElementData;
 	}
 	
 	/**

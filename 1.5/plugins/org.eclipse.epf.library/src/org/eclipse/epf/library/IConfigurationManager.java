@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.DependencyManager;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -43,6 +44,13 @@ public interface IConfigurationManager {
 	 * @return a ConfigurationData object
 	 */
 	public ConfigurationData getConfigurationData();
+	
+	/**
+	 * Gets SupportingElementData object managed by this configuration manager.
+	 * 
+	 * @return a SupportingElementData object
+	 */
+	public SupportingElementData getSupportingElementData();
 	
 	/**
 	 * Gets ConfigurationProperties object managed by this configuration manager.

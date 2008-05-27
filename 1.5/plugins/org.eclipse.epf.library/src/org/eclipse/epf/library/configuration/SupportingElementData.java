@@ -20,15 +20,14 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
-import org.eclipse.epf.library.configuration.closure.PackageReference;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -38,24 +37,23 @@ import org.eclipse.epf.uma.util.UmaUtil;
  * @author Weiping Lu - Mar 22, 2008
  * @since 1.5
  */
-class SupportingElementData {
-
-	private MethodConfiguration config;
+public class SupportingElementData extends ConfigDataBase {
 	
 	private Set<MethodElement> supportingElements;
 	private boolean duringUpdateSupporitngElements = false;
 	private Set<MethodPlugin> supportingPlugins;
 	private Set<MethodPackage> supportingPackages;
 	
-	public SupportingElementData(MethodConfiguration config) {		
+	public SupportingElementData(MethodConfiguration config) {
+		super(config);
 	}
 	
 	public void beginUpdateSupportingElements() {
-		setDuringUpdateSupporitngElements(true);
+		setUpdatingChanges(true);
 		supportingElements = new HashSet<MethodElement>();
 		
 		supportingPlugins = new HashSet<MethodPlugin>();
-		List<MethodPlugin> plugins = config.getMethodPluginSelection();
+		List<MethodPlugin> plugins = getConfig().getMethodPluginSelection();
 		for (MethodPlugin plugin : plugins) {
 			if (plugin.isSupporting()) {
 				supportingElements.add(plugin);
@@ -64,7 +62,7 @@ class SupportingElementData {
 
 		supportingPackages = new HashSet<MethodPackage>();
 		if (! supportingPlugins.isEmpty()) {
-			List<MethodPackage> packages = config.getMethodPackageSelection();
+			List<MethodPackage> packages = getConfig().getMethodPackageSelection();
 			for (MethodPackage pkg : packages) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(pkg);
 				if (supportingPlugins.contains(plugin)) {
@@ -82,24 +80,24 @@ class SupportingElementData {
 		Set<MethodElement> supportingElementsToCollect = supportingElements;
 		while (!supportingElementsToCollect.isEmpty()) {
 			Set<MethodElement> newSupportingElements = new HashSet<MethodElement>();		
-			collectReferencesOutsideConfig(supportingElementsToCollect, outConfigRefMap, newSupportingElements);
+			processReferencesOutsideConfig(supportingElementsToCollect, outConfigRefMap, newSupportingElements);
 			supportingElementsToCollect = newSupportingElements;
 		}
 		
 		supportingPlugins = null;
 		supportingPackages = null;
-		setDuringUpdateSupporitngElements(false);
+		setUpdatingChanges(false);
 	}
 	
-	private void collectReferencesOutsideConfig(
+	private void processReferencesOutsideConfig(
 			Collection<MethodElement> elements,
 			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
 		for (MethodElement element : elements) {
-			collectReferencesOutsideConfig(element, outConfigRefMap, newSupportingElements);
+			processReferencesOutsideConfig(element, outConfigRefMap, newSupportingElements);
 		}
 	}
 	
-	private void collectReferencesOutsideConfig(MethodElement element,
+	private void processReferencesOutsideConfig(MethodElement element,
 			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
 		
 		List properties = LibraryUtil.getStructuralFeatures(element);
@@ -132,7 +130,8 @@ class SupportingElementData {
 					continue;
 				}
 				MethodElement refElement = (MethodElement)	referredValue;
-				if (toAddToOutConfigRefMap(refElement, newSupportingElements)) {				
+				boolean isOutConfig = checkOutConfigElement(refElement, newSupportingElements);
+				if (isOutConfig && outConfigRefMap != null){				
 					String key = guid + refElement.getGuid();
 					ElementReference elementReference = outConfigRefMap.get(key);
 					if (elementReference == null) {
@@ -146,7 +145,7 @@ class SupportingElementData {
 		
 	}
 
-	private boolean toAddToOutConfigRefMap(MethodElement refElement, Set<MethodElement> newSupportingElements) {
+	private boolean checkOutConfigElement(MethodElement refElement, Set<MethodElement> newSupportingElements) {
 		if (refElement instanceof MethodPackage
 				|| refElement instanceof MethodConfiguration) {
 			return false;
@@ -154,18 +153,18 @@ class SupportingElementData {
 
 		if (refElement instanceof VariabilityElement) {
 			VariabilityElement replacer = ConfigurationHelper.getReplacer(
-					(VariabilityElement) refElement, config);
+					(VariabilityElement) refElement, getConfig());
 			if (replacer != null) {
 				return false;
 			}
 		}
 
 		// the element might be subtracted, so ignore it
-		if (!ConfigurationHelper.inConfig(refElement, config, true, false)) {
+		if (!ConfigurationHelper.inConfig(refElement, getConfig(), true, false)) {
 			return false;
 		}
 
-		if (!ConfigurationHelper.inConfig(refElement, config)
+		if (!ConfigurationHelper.inConfig(refElement, getConfig())
 				&& !isSupportingElement(refElement, newSupportingElements)) {
 			return true;
 		}
@@ -174,7 +173,19 @@ class SupportingElementData {
 	}
 
 	public boolean isSupportingElement(MethodElement element) {
-		return isSupportingElement(element, null);
+		if (isUpdatingChanges()) {				
+			return isSupportingElement(element, null);			
+		} else if (isNeedUpdateChanges()) {
+			updateChanges();
+			setNeedUpdateChanges(false);
+		}
+		
+		return supportingElements.contains(element);
+	}
+	
+	protected void updateChangeImpl() {
+		ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
+		closure.checkError();
 	}
 		
 	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupportingElements) {
@@ -183,7 +194,7 @@ class SupportingElementData {
 		}
 		
 		boolean ret = false;
-		if (isDuringUpdateSupporitngElements()) {
+		if (isUpdatingChanges()) {
 			EObject container = LibraryUtil.getSelectable(element);
 			if (container instanceof MethodPackage) {
 				ret = supportingPackages.contains(container);
@@ -203,16 +214,6 @@ class SupportingElementData {
 	public boolean isSupportingSelectable(MethodElement element) {
 		return supportingPackages.contains(element) || supportingPlugins.contains(element);
 	}
-	
-	private boolean isDuringUpdateSupporitngElements() {
-		return duringUpdateSupporitngElements;
-	}
-
-	private void setDuringUpdateSupporitngElements(
-			boolean duringUpdateSupporitngElements) {
-		this.duringUpdateSupporitngElements = duringUpdateSupporitngElements;
-	}
-
 
 	
 }
