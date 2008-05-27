@@ -438,11 +438,14 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		if (isAbortCheckError()) {
 			return;
 		}
-		for (ElementReference ref: refMap.values()) {
+		for (ElementReference ref : refMap.values()) {
 			ElementError error = ConfigurationErrorMatrix.getError(config, ref);
-			if ( error != null ) {
+			if (error != null) {
 				errors.add(error);
 				notifyError(error, ClosureListener.ERROR_ADDED);
+				processPackageError(LibraryUtil.getSelectable(ref.element),
+						LibraryUtil.getSelectable(ref.refElement), error
+								.getErrorLevel());
 			}
 		}
 	}
