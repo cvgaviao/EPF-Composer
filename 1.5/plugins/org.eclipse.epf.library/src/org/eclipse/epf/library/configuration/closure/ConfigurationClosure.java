@@ -447,7 +447,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		}
 	}
 	
-	private void processChangedNodes_(Object[] changedNodes) {
+	private void processChangedNodes_(Object[] changedNodes) {	
 		SupportingElementData seData = getConfigurationManager().getSupportingElementData();	
 
 		// for all the changed notes,
@@ -483,8 +483,9 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		}
 		
 		// for all the elements in the added category, check their references as well
-		for ( Iterator<MethodElement> it = configManager.getConfigurationData()
-				.getAddedElements().iterator(); it.hasNext(); ) {
+		List<MethodElement> list = new ArrayList<MethodElement>();
+		list.addAll(configManager.getConfigurationData().getAddedElements());
+		for ( Iterator<MethodElement> it = list.iterator(); it.hasNext(); ) {
 			MethodElement e = it.next();
 			
 			PackageDependency dependency = 
