@@ -139,6 +139,29 @@ public class StrUtil {
 	}
 
 	/**
+	 * Removes CR, LF from a string.
+	 * 
+	 * @param str
+	 *            a string
+	 * @return a string with CR, LF removed
+	 */
+	public static String removeNewlines(String str) {
+		StringBuffer sb = new StringBuffer();
+		int len = (str == null) ? 0 : str.length();
+		for (int i = 0; i < len; i++) {
+			char c = str.charAt(i);
+			switch (c) {
+			case '\r':
+			case '\n':
+				break;
+			default:
+				sb.append(c);
+			}
+		}
+		return sb.toString(); //$NON-NLS-1$
+	}
+
+	/**
 	 * Splits a string into an array of string tokens.
 	 * 
 	 * @param str
