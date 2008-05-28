@@ -185,9 +185,9 @@ public class PracticeLayout extends AbstractElementLayout {
 	}
 	
 	protected boolean acceptFeatureValue(OppositeFeature feature, Object value) {
-		if ( feature == AssociationHelper.DescribableElement_CustomCategories) {
+/*		if ( feature == AssociationHelper.DescribableElement_CustomCategories) {
 			return true;
-		}			
+		}*/			
 		return super.acceptFeatureValue(feature, value);
 	}
 
