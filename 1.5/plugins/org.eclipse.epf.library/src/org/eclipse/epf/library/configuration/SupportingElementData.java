@@ -177,14 +177,16 @@ public class SupportingElementData extends ConfigDataBase {
 			return isSupportingElement(element, null, true);			
 		} else if (isNeedUpdateChanges()) {
 			updateChanges();
-			setNeedUpdateChanges(false);
+		}
+		if (supportingElements.isEmpty()) {
+			return false;
 		}
 		
 		boolean ret = supportingElements.contains(element);
 		if (! ret) {	
 			EObject container = LibraryUtil.getSelectable(element);
 			if (container instanceof MethodPackage) {
-				return isSupportingElement((MethodPackage) container);
+				return isSupportingElement((MethodPackage) container, null, false);
 			}
 		}
 		return ret;
@@ -192,7 +194,8 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	protected void updateChangeImpl() {
 		ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
-		closure.checkError();
+		setUpdatingChanges(false);
+		setNeedUpdateChanges(false);
 	}
 		
 	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupportingElements, boolean checkContainer) {
