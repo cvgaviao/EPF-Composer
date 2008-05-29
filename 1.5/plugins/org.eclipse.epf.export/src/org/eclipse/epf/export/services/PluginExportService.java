@@ -133,6 +133,11 @@ public class PluginExportService extends BaseExportService {
 				String uri = document.getResourceUri(guid);
 				File src = null;
 				if (uri == null) {
+					//if a process refers to a config that does not exist
+					//then there would be no resource for the config
+					if (config.eResource() == null) {
+						continue;
+					}
 					URI resUri = config.eResource().getURI();
 					uri = MultiFileSaveUtil.METHOD_CONFIGURATION_FOLDER_NAME + File.separator + resUri.lastSegment();
 					uri = document.decodeUri(uri);
