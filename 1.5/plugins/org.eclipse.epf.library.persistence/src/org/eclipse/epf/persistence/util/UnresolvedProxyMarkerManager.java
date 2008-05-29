@@ -68,7 +68,6 @@ import org.eclipse.osgi.util.NLS;
 public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxyResolutionListener {
 
 	private static final long DELAY = 0;
-	private static final boolean ignoreMarkerStartEndAtts = true;
 	
 	public static final String MARKER_ID = PersistencePlugin.getDefault().getId() + ".unresolvedProxyMarker"; //$NON-NLS-1$
 	public static final String PROXY_URI = "proxyURI"; //$NON-NLS-1$
@@ -328,59 +327,16 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 					.toFileString() : ""; //$NON-NLS-1$					
 			
 			try {
-				file.refreshLocal(IResource.DEPTH_ZERO, null);
-				
-				if (ignoreMarkerStartEndAtts) {
+				file.refreshLocal(IResource.DEPTH_ZERO, null);				
+					IMarker marker = findMarker(file, proxyURI.toString(), 0, 0);
+					if (marker != null) {
+						marker.setAttribute(OWNER_GUID, ownerGUID);
+						return;
+					}
 					createMarker(re, proxyURI,
 							errMsg, ownerGUID, file,
 							location, proxyURI.toString(), 0,
 							0);
-					return;
-				}
-				
-				// locate the text of unresolved URI in file
-				//
-				ITextFileBufferManager manager= FileBuffers.getTextFileBufferManager();
-				try {
-					manager.connect(path, LocationKind.LOCATION, monitor);
-					ITextFileBuffer fileBuffer= manager.getTextFileBuffer(path, LocationKind.LOCATION);
-					fileBuffer.requestSynchronizationContext();
-					fileBuffer.getDocument();
-					IDocument doc = fileBuffer.getDocument();
-					if(doc != null) {
-						String proxyURIStr = proxyURI.toString();
-						Pattern pattern = PatternConstructor.createPattern(proxyURIStr, true, false);
-						Matcher matcher = pattern.matcher(new DocumentCharSequence(doc));
-						while(matcher.find()) {
-							int start = matcher.start();
-							int end = matcher.end();
-							if(start != end) {
-								// make sure that resolver is still in the open library by checking whether its resource
-								// still belongs to a resource set
-								//
-								if(resource != null && resource.getResourceSet() != null) {
-									// create problem marker for file
-									IMarker marker = findMarker(file, proxyURIStr, start, end);
-									if(marker == null) {
-										marker = createMarker(re, proxyURI,
-												errMsg, ownerGUID, file,
-												location, proxyURIStr, start,
-												end);
-									}
-									else {
-										// update owner GUID
-										//
-										marker.setAttribute(OWNER_GUID, ownerGUID);
-									}
-								}
-							}
-						}
-					}
-					fileBuffer.releaseSynchronizationContext();
-				}
-				finally {
-					manager.disconnect(path, LocationKind.LOCATION, monitor);
-				}
 			} catch (CoreException ex) {
 				CommonPlugin.INSTANCE.log(ex);
 				if (MultiFileSaveUtil.DEBUG) {
