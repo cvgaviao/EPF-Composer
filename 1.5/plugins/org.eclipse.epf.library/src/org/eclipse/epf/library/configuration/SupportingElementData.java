@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
+import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -43,6 +44,7 @@ public class SupportingElementData extends ConfigDataBase {
 	private boolean duringUpdateSupporitngElements = false;
 	private Set<MethodPlugin> supportingPlugins;
 	private Set<MethodPackage> selectedPackages;
+	private boolean localDebug = false;
 	
 	public SupportingElementData(MethodConfiguration config) {
 		super(config);
@@ -56,7 +58,7 @@ public class SupportingElementData extends ConfigDataBase {
 		List<MethodPlugin> plugins = getConfig().getMethodPluginSelection();
 		for (MethodPlugin plugin : plugins) {
 			if (plugin.isSupporting()) {
-				supportingElements.add(plugin);
+				supportingPlugins.add(plugin);
 			}
 		}
 
@@ -77,16 +79,15 @@ public class SupportingElementData extends ConfigDataBase {
 	public void endUpdateSupportingElements(
 			Map<String, ElementReference> outConfigRefMap) {
 		
-		Set<MethodElement> supportingElementsToCollect = supportingElements;
+		Set<MethodElement> supportingElementsToCollect = new HashSet<MethodElement>(supportingElements);
 		while (!supportingElementsToCollect.isEmpty()) {
 			Set<MethodElement> newSupportingElements = new HashSet<MethodElement>();		
 			processReferencesOutsideConfig(supportingElementsToCollect, outConfigRefMap, newSupportingElements);
 			supportingElementsToCollect = newSupportingElements;
 		}
 		
-		supportingPlugins = null;
-		selectedPackages = null;
 		setUpdatingChanges(false);
+		setNeedUpdateChanges(false);
 	}
 	
 	private void processReferencesOutsideConfig(
@@ -173,6 +174,16 @@ public class SupportingElementData extends ConfigDataBase {
 	}
 
 	public boolean isSupportingElement(MethodElement element) {
+		boolean ret = isSupportingElement_(element);
+		if (localDebug) {
+			System.out.println("LD> isSE: " + ret + 
+					", element: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ ////$NON-NLS-2$ 
+		}
+		return ret;
+	}
+	
+	
+	private boolean isSupportingElement_(MethodElement element) {
 		if (isUpdatingChanges()) {				
 			return isSupportingElement(element, null, true);			
 		} else if (isNeedUpdateChanges()) {
@@ -194,13 +205,15 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	protected void updateChangeImpl() {
 		ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
-		setUpdatingChanges(false);
-		setNeedUpdateChanges(false);
 	}
 		
 	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupportingElements, boolean checkContainer) {
 		if (supportingElements.contains(element)) {
 			return true;
+		}
+		
+		if (element.getGuid().equals("_avOA0FkVEdul8L-IGeA7TA")) {
+			System.out.println("");
 		}
 		
 		EObject container = LibraryUtil.getSelectable(element);
@@ -218,7 +231,9 @@ public class SupportingElementData extends ConfigDataBase {
 			}
 			if (ret) {
 				supportingElements.add(element);
-				newSupportingElements.add(element);
+				if (newSupportingElements != null) {
+					newSupportingElements.add(element);
+				}
 			}
 			return ret;
 		}

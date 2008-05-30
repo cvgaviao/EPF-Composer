@@ -52,6 +52,7 @@ import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProductType;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
  *  Class managing configuration add/subtracted data calculation and cache
@@ -466,9 +467,11 @@ public class ConfigurationData {
 				return true;
 			}
 
-//			if (getSupportingElementData() != null && getSupportingElementData().isSupportingElement(element)) {
-//				return true;
-//			}
+			MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+			//code not ready yet
+			if (false && plugin != null && plugin.isSupporting()) {
+				return getSupportingElementData().isSupportingElement(element);
+			}
 		} 
 		
 		// elements beyond configuration scope should be always visible

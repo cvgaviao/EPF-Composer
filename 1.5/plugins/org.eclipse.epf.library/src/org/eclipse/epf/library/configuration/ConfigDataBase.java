@@ -44,7 +44,7 @@ public abstract class ConfigDataBase {
 	private Adapter configListener;
 	private ILibraryChangeListener libListener;
 	private boolean enableUpdate = true;
-	private boolean updatingChanges = false;
+	private boolean updatingChanges = false;		
 	
 	public ConfigDataBase(MethodConfiguration config) {
 		this.config = config;
@@ -142,13 +142,16 @@ public abstract class ConfigDataBase {
 		
 		long t = 0;
 		if (profiling) {
-			System.out.println("LD> updateChanges_() -> ");	//$NON-NLS-1$
+			System.out.println("LD> updateChanges_() -> " + getType());	//$NON-NLS-1$
 			t = System.currentTimeMillis();
+		}
+		if (localDebug) {
+			System.out.println("LD> updateChanges(): " + getType());	//$NON-NLS-1$
 		}
 		updateChangeImpl();
 		if (profiling) {
 			t =  System.currentTimeMillis() - t;
-			System.out.println("LD> updateChanges_() <- time: " + t);	//$NON-NLS-1$
+			System.out.println("LD> updateChanges_() <- time: " + t + ", " + getType());	//$NON-NLS-1$//$NON-NLS-2$
 			System.out.println("");										//$NON-NLS-1$
 		}
 		
@@ -162,6 +165,18 @@ public abstract class ConfigDataBase {
 
 	protected void setUpdatingChanges(boolean updatingChanges) {
 		this.updatingChanges = updatingChanges;
+		if (localDebug) {
+			System.out.println("LD> setUpdatingChanges: " + updatingChanges + ", " + getType());//$NON-NLS-1$	//$NON-NLS-2$
+			System.out.println("");										//$NON-NLS-1$
+		}
+	}
+	
+	private String getType() {
+		if (this instanceof SupportingElementData) {
+			return "SupportingElementData"; //$NON-NLS-1$
+		} 
+
+		return "";	//$NON-NLS-1$
 	}
 
 }
