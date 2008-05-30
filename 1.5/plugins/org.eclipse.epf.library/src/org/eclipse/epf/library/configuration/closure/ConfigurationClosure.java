@@ -25,6 +25,7 @@ import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigDataBase;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.SupportingElementData;
@@ -164,10 +165,19 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 */
 	public void checkError() {
 		if (isRunningCheckError()) {
+			if (ConfigDataBase.localDebug) {
+				System.out.println("LD> checkError skipped");//$NON-NLS-1$
+			}
 			return;
 		}
 		try {
-			checkError_();	 	
+			if (ConfigDataBase.localDebug) {
+				System.out.println("LD> checkError_ ->");//$NON-NLS-1$
+			}
+			checkError_();
+			if (ConfigDataBase.localDebug) {
+				System.out.println("LD> checkError_ <-");//$NON-NLS-1$
+			}
 		} finally {
 			setRunningCheckError(false);
 		}	
@@ -1126,6 +1136,9 @@ public class ConfigurationClosure implements IConfigurationClosure {
 
 	public synchronized void setAbortCheckError(boolean abortCheckError) {
 		this.abortCheckError = abortCheckError;
+		if (ConfigDataBase.localDebug) {
+			System.out.println("LD> setAbortCheckError: " + abortCheckError);//$NON-NLS-1$
+		}
 	}
 	
 //	/**

@@ -34,7 +34,7 @@ import org.eclipse.epf.uma.MethodLibrary;
  */
 public abstract class ConfigDataBase {
 
-	private static boolean localDebug = false;
+	public static boolean localDebug = false;
 	private static boolean profiling = false;
 	
 	private MethodConfiguration config;
@@ -166,8 +166,7 @@ public abstract class ConfigDataBase {
 	protected void setUpdatingChanges(boolean updatingChanges) {
 		this.updatingChanges = updatingChanges;
 		if (localDebug) {
-			System.out.println("LD> setUpdatingChanges: " + updatingChanges + ", " + getType());//$NON-NLS-1$	//$NON-NLS-2$
-			System.out.println("");										//$NON-NLS-1$
+			System.out.println("LD> setUpdatingChanges: " + updatingChanges + ", " + getType());//$NON-NLS-1$	//$NON-NLS-2$									//$NON-NLS-1$
 		}
 	}
 	

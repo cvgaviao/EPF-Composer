@@ -44,7 +44,8 @@ public class SupportingElementData extends ConfigDataBase {
 	private boolean duringUpdateSupporitngElements = false;
 	private Set<MethodPlugin> supportingPlugins;
 	private Set<MethodPackage> selectedPackages;
-	private boolean localDebug = false;
+	private static boolean localDebug = false;
+	private static boolean localDebug1 = false;
 	
 	public SupportingElementData(MethodConfiguration config) {
 		super(config);
@@ -52,6 +53,10 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	public void beginUpdateSupportingElements() {
 		setUpdatingChanges(true);
+		if (localDebug) {
+			System.out.println("LD> beginUpdateSupportingElements -> "); //$NON-NLS-1$ 
+		}
+		
 		supportingElements = new HashSet<MethodElement>();
 		
 		supportingPlugins = new HashSet<MethodPlugin>();
@@ -73,21 +78,39 @@ public class SupportingElementData extends ConfigDataBase {
 			}
 		}
 
+		if (localDebug) {
+			System.out.println("LD> supportingPlugins: " + supportingPlugins.size()); //$NON-NLS-1$
+			System.out.println("LD> selectedPackages: " + selectedPackages.size()); //$NON-NLS-1$ 
+			System.out.println("LD> beginUpdateSupportingElements <- "); //$NON-NLS-1$ 
+			System.out.println(""); //$NON-NLS-1$ 
+		}		
 	}
 	
 	// Collect map of referred references outside the config
 	public void endUpdateSupportingElements(
 			Map<String, ElementReference> outConfigRefMap) {
-		
+		if (localDebug) {
+			System.out.println("LD> endUpdateSupportingElements -> "); //$NON-NLS-1$ 
+		}
 		Set<MethodElement> supportingElementsToCollect = new HashSet<MethodElement>(supportingElements);
 		while (!supportingElementsToCollect.isEmpty()) {
 			Set<MethodElement> newSupportingElements = new HashSet<MethodElement>();		
 			processReferencesOutsideConfig(supportingElementsToCollect, outConfigRefMap, newSupportingElements);
+			if (localDebug) {
+				System.out.println("LD> newSupportingElements: " + newSupportingElements.size()); //$NON-NLS-1$
+			}	
 			supportingElementsToCollect = newSupportingElements;
 		}
 		
 		setUpdatingChanges(false);
 		setNeedUpdateChanges(false);
+		
+		if (localDebug) {
+			System.out.println("LD> supportingElements: " + supportingElements.size()); //$NON-NLS-1$
+			System.out.println("LD> outConfigRefMap: " + outConfigRefMap.size()); //$NON-NLS-1$ 
+			System.out.println("LD> endUpdateSupportingElements <- "); //$NON-NLS-1$ 
+			System.out.println(""); //$NON-NLS-1$ 
+		}	
 	}
 	
 	private void processReferencesOutsideConfig(
@@ -175,7 +198,7 @@ public class SupportingElementData extends ConfigDataBase {
 
 	public boolean isSupportingElement(MethodElement element) {
 		boolean ret = isSupportingElement_(element);
-		if (localDebug) {
+		if (localDebug1) {
 			System.out.println("LD> isSE: " + ret + 
 					", element: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ ////$NON-NLS-2$ 
 		}
