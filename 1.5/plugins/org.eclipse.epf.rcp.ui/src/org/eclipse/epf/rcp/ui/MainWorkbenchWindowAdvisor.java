@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.rcp.ui;
 
+import org.eclipse.epf.library.ui.LibraryUIManager;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.MenuManager;
@@ -55,6 +56,8 @@ public class MainWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private IPerspectiveListener perspectiveListener = new IPerspectiveListener() {
 		public void perspectiveChanged(IWorkbenchPage page,
 				IPerspectiveDescriptor perspective, String changeId) {
+			LibraryUIManager.getInstance().startupOpenLibrary();
+			LibraryUIManager.getInstance().checkConfigurationContribution();
 		}
 		
 		public void perspectiveActivated(IWorkbenchPage page,
@@ -63,7 +66,7 @@ public class MainWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			page.hideActionSet(WORKINGSETACTIONSET_ID); 
 			// do not show the External Tools button on the toolbar
 //			page.hideActionSet(EXTERNALTOOLSSET_ID);
-			page.hideActionSet(ANNOTATIONNAVIGATION_ID);	
+			page.hideActionSet(ANNOTATIONNAVIGATION_ID);
 		}
 	};
 	

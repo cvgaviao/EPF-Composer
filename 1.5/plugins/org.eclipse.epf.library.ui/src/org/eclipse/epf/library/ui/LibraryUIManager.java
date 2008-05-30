@@ -72,8 +72,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IPerspectiveDescriptor;
-import org.eclipse.ui.IPerspectiveListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -100,6 +98,8 @@ public class LibraryUIManager {
 	private static final String CONFIG_VIEW_ID = "org.eclipse.epf.authoring.ui.views.ConfigurationView"; //$NON-NLS-1$
 
 	private static final String PROCESS_EDITOR_ID = "org.eclipse.epf.authoring.ui.editors.ProcessEditor"; //$NON-NLS-1$
+	
+	private static final String REPORT_PERS_ID = "org.eclipse.birt.report.designer.ui.ReportPerspective"; //$NON-NLS-1$
 
 	private static LibraryUIManager instance = null;
 	
@@ -134,24 +134,9 @@ public class LibraryUIManager {
 	 * instantiated.
 	 */
 	private LibraryUIManager() {
-		// Monitor perspective changes to display/hide the configuration combo.
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
-		if (window != null) {
-			window.addPerspectiveListener(new IPerspectiveListener() {
-				public void perspectiveActivated(IWorkbenchPage page,
-						IPerspectiveDescriptor desc) {
-					checkConfigurationContribution();
-				}
-
-				public void perspectiveChanged(IWorkbenchPage page,
-						IPerspectiveDescriptor desc, String id) {
-					checkConfigurationContribution();
-				}
-			});
-		}
+		//
 	}
-
+	
 	/**
 	 * Creates and opens a new method library.
 	 * 
@@ -269,15 +254,15 @@ public class LibraryUIManager {
 					shell.setText(LibraryUIResources.openLibraryWizard_title);
 				}
 			};
-			dialog.run(true, false, operation);
+			dialog.run(true, false, operation);			
 			return LibraryService.getInstance().getCurrentMethodLibrary() != null;
 			
 		} catch (Exception e) {
 			// don't do anything
-		}
+		}		
 		return false;
 	}
-
+	
 	/**
 	 * Opens a method library given the library path URI.
 	 * 
@@ -592,7 +577,7 @@ public class LibraryUIManager {
 	 * The method configuration combobox lists all the method configurations in
 	 * the current method library.
 	 */
-	private void checkConfigurationContribution() {
+	public void checkConfigurationContribution() {
 		IWorkbench workbench = LibraryUIPlugin.getDefault().getWorkbench();
 		if (workbench != null) {
 			IWorkbenchWindow window = (IWorkbenchWindow) workbench
@@ -603,7 +588,8 @@ public class LibraryUIManager {
 				try {
 					IWorkbenchPage activePage = window.getActivePage();
 					if (foundConfigView(activePage)
-							|| foundProcessEditor(activePage)) {
+							|| foundProcessEditor(activePage)
+							|| foundPerspective(activePage, REPORT_PERS_ID)) {
 						showConfigurationContribution(coolBarMgr);
 					} else {
 						hideConfigurationContribution(coolBarMgr);
@@ -636,6 +622,18 @@ public class LibraryUIManager {
 		IEditorReference[] editorRefs = activePage.findEditors(null,
 				PROCESS_EDITOR_ID, IWorkbenchPage.MATCH_ID);
 		return editorRefs != null && editorRefs.length > 0;
+	}
+	
+	/**
+	 * Checks for the presence of Report Perspective in the active workbench
+	 * page. 
+	 */
+	private boolean foundPerspective(IWorkbenchPage activePage, String persId) {
+		if (activePage.getPerspective().getId().equals(persId)) {		
+			return true;
+		}
+		
+		return false;
 	}
 
 	/**
