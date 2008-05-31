@@ -468,9 +468,12 @@ public class ConfigurationData {
 			}
 
 			MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
-			//code not ready yet
-			if (false && plugin != null && plugin.isSupporting()) {
-				return getSupportingElementData().isSupportingElement(element);
+			if (plugin != null && plugin.isSupporting()) {
+				SupportingElementData seData = getSupportingElementData();
+				if (seData.isUpdatingChanges()) {
+					return false;
+				}
+				return seData.isSupportingElement(element);
 			}
 		} 
 		

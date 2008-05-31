@@ -547,7 +547,8 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		}
 				
 		// if the referenced element is not in  config, log error
-		if ( !ConfigurationHelper.inConfig(e_ref, config)) {
+		if ( !ConfigurationHelper.inConfig(e_ref, config)
+				&& !seData.isSupportingElementCallDuringUpdating(ref)) {
 			
 			/*
 			String message = LibraryResources.bind(LibraryResources.ElementError_missing_element, 

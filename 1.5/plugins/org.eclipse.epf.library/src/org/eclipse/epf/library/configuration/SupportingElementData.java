@@ -24,12 +24,17 @@ import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Role;
+import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -46,6 +51,8 @@ public class SupportingElementData extends ConfigDataBase {
 	private Set<MethodPackage> selectedPackages;
 	private static boolean localDebug = false;
 	private static boolean localDebug1 = false;
+	
+	private boolean descriptorExclusiveOption = true;	
 	
 	public SupportingElementData(MethodConfiguration config) {
 		super(config);
@@ -144,6 +151,9 @@ public class SupportingElementData extends ConfigDataBase {
 			if ( feature.isMany() ) {
 				values = (List) value;
 			} else if ( value instanceof MethodElement ) {
+				if (descriptorExclusiveCheck((MethodElement) value, element, feature)) {
+					continue;
+				}				
 				values = new ArrayList();
 				values.add(value);
 			}
@@ -153,13 +163,13 @@ public class SupportingElementData extends ConfigDataBase {
 				if (! (referredValue instanceof MethodElement)) {
 					continue;
 				}
-				MethodElement refElement = (MethodElement)	referredValue;
-				boolean isOutConfig = checkOutConfigElement(refElement, newSupportingElements);
+				MethodElement referredElement = (MethodElement)	referredValue;
+				boolean isOutConfig = checkOutConfigElement(referredElement, element, newSupportingElements);
 				if (isOutConfig && outConfigRefMap != null){				
-					String key = guid + refElement.getGuid();
+					String key = guid + referredElement.getGuid();
 					ElementReference elementReference = outConfigRefMap.get(key);
 					if (elementReference == null) {
-						elementReference = new ElementReference(element, refElement);
+						elementReference = new ElementReference(element, referredElement);
 						outConfigRefMap.put(key, elementReference);
 					}
 					elementReference.addFeature(feature);
@@ -168,28 +178,50 @@ public class SupportingElementData extends ConfigDataBase {
 		}
 		
 	}
+	
+	private boolean descriptorExclusiveCheck(MethodElement referredElement, MethodElement referringElement, EStructuralFeature feature) {
+		if (! descriptorExclusiveOption) {
+			return false;
+		}
+		
+		if (! (referringElement instanceof Descriptor)) {
+			return false;
+		}
+		
+		if (feature == UmaPackage.eINSTANCE.getTaskDescriptor_Task()) {
+			return referredElement instanceof Task;
+		}
+		if (feature == UmaPackage.eINSTANCE.getRoleDescriptor_Role()) {
+			return referredElement instanceof Role;		
+		}
+		if (feature == UmaPackage.eINSTANCE.getWorkProductDescriptor_WorkProduct()) {
+			return referredElement instanceof WorkProduct;		
+		}
+		
+		return false;
+	}
 
-	private boolean checkOutConfigElement(MethodElement refElement, Set<MethodElement> newSupportingElements) {
-		if (refElement instanceof MethodPackage
-				|| refElement instanceof MethodConfiguration) {
+	private boolean checkOutConfigElement(MethodElement referredElement, MethodElement referingElement, Set<MethodElement> newSupportingElements) {
+		if (referredElement instanceof MethodPackage
+				|| referredElement instanceof MethodConfiguration) {
 			return false;
 		}
 
-		if (refElement instanceof VariabilityElement) {
+		if (referredElement instanceof VariabilityElement) {
 			VariabilityElement replacer = ConfigurationHelper.getReplacer(
-					(VariabilityElement) refElement, getConfig());
+					(VariabilityElement) referredElement, getConfig());
 			if (replacer != null) {
 				return false;
 			}
 		}
 
 		// the element might be subtracted, so ignore it
-		if (!ConfigurationHelper.inConfig(refElement, getConfig(), true, false)) {
+		if (!supportingElements.contains(referingElement) && !ConfigurationHelper.inConfig(referingElement, getConfig(), true, false)) {
 			return false;
 		}
 
-		if (!ConfigurationHelper.inConfig(refElement, getConfig())
-				&& !isSupportingElement(refElement, newSupportingElements, true)) {
+		if (!ConfigurationHelper.inConfig(referredElement, getConfig())
+				&& !isOwnerSelected(referredElement, newSupportingElements)) {
 			return true;
 		}
 
@@ -208,7 +240,7 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	private boolean isSupportingElement_(MethodElement element) {
 		if (isUpdatingChanges()) {				
-			return isSupportingElement(element, null, true);			
+			throw new UnsupportedOperationException();		
 		} else if (isNeedUpdateChanges()) {
 			updateChanges();
 		}
@@ -216,56 +248,54 @@ public class SupportingElementData extends ConfigDataBase {
 			return false;
 		}
 		
-		boolean ret = supportingElements.contains(element);
-		if (! ret) {	
-			EObject container = LibraryUtil.getSelectable(element);
-			if (container instanceof MethodPackage) {
-				return isSupportingElement((MethodPackage) container, null, false);
-			}
-		}
-		return ret;
+		return supportingElements.contains(element);
 	}
 	
 	protected void updateChangeImpl() {
 		ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
 	}
+	
+	//isSupportingElement check during updating mode
+	public boolean isSupportingElementCallDuringUpdating(ElementReference ref) {
+		MethodElement referringElement = ref.getElement();
+		MethodElement referredElement = ref.getRefElement();
+		EStructuralFeature feature = ref.getSingleFeature();
+		if (descriptorExclusiveCheck(referredElement, referringElement, feature)) {
+			return false;
+		}
+		return isOwnerSelected(referredElement, null);
+	}
+	
+	private boolean isOwnerSelected(MethodElement element,
+			Set<MethodElement> newSupportingElements) {
+		if (! isUpdatingChanges()) {
+			throw new UnsupportedOperationException();	
+		}
 		
-	private boolean isSupportingElement(MethodElement element, Set<MethodElement> newSupportingElements, boolean checkContainer) {
 		if (supportingElements.contains(element)) {
 			return true;
 		}
-		
-		if (element.getGuid().equals("_avOA0FkVEdul8L-IGeA7TA")) {
-			System.out.println("");
+
+		boolean ret = false;
+		EObject selectable = LibraryUtil.getSelectable(element);
+		if (selectable instanceof MethodPackage) {
+			ret = selectedPackages.contains(selectable);
+		} else if (selectable instanceof MethodPlugin) {
+			ret = supportingPlugins.contains(selectable);
+		} else if (selectable instanceof MethodLibrary) {
+			ret = true;
 		}
-		
-		EObject container = LibraryUtil.getSelectable(element);
-		if (isUpdatingChanges()) {
-			boolean ret = false;
-			if (container instanceof MethodPackage) {
-				ret = selectedPackages.contains(container);
-				if (checkContainer && !ret) {
-					ret = isSupportingElement((MethodPackage)container, newSupportingElements, false);
-				}
-			} else if (container instanceof MethodPlugin) {
-				ret = supportingPlugins.contains(container);				
-			} else if (container instanceof MethodLibrary) {
-				ret = supportingPlugins.contains(element);				
+		if (ret) {
+			supportingElements.add(element);
+			if (localDebug1) {
+				System.out
+						.println("LD> supportingElements added: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ ////$NON-NLS-2$ 
 			}
-			if (ret) {
-				supportingElements.add(element);
-				if (newSupportingElements != null) {
-					newSupportingElements.add(element);
-				}
+			if (newSupportingElements != null) {
+				newSupportingElements.add(element);
 			}
-			return ret;
 		}
-		
-		if (checkContainer && container instanceof MethodPackage) {
-			return isSupportingElement((MethodPackage)container, newSupportingElements, false);
-		}
-		
-		return false;
+		return ret;
 	}
 		
 	public boolean isSupportingSelectable(MethodElement element) {

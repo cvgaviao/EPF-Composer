@@ -124,4 +124,14 @@ public class ElementReference {
 		return false;
 	}
 
+	
+	public EStructuralFeature getSingleFeature() {
+		if (features != null && features.size() == 1) {
+			for (EStructuralFeature f: features) {
+				return f;
+			}
+		}		
+		return null;
+	}
+	
 }
