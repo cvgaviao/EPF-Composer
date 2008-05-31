@@ -642,8 +642,13 @@ function setFocus() {
 	if (!supportRichTextEditing) {
 		return;
 	}	
-	contentWindow = document.getElementById(editorId).contentWindow;
-	contentWindow.focus();
+	if (document.all) {
+		iframe = document.getElementById(editorId);
+		iframe.focus();
+	} else {
+		contentWindow = document.getElementById(editorId).contentWindow;
+		contentWindow.focus();
+	}
 	setStatus(STATUS_EXEC_CMD, 1);	
 }
 
