@@ -13,6 +13,7 @@ package org.eclipse.epf.uma.impl;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Kind;
 import org.eclipse.epf.uma.MethodElement;
@@ -52,7 +54,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  * @generated
  */
 public abstract class MethodElementImpl extends PackageableElementImpl
-		implements MethodElement {
+		implements MethodElement, IAdaptable {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -241,6 +243,17 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 			XMLResource resource = ((XMLResource) eResource());
 			resource.setID(this, newGuid);
 		}
+	}
+	
+	public Object getAdapter(Class adapter) {
+		List<IAdaptable> extensions = ExtensionHelper.getExtensions("org.eclipse.epf.uma.ecore", "methodElementIAdaptable", IAdaptable.class); //$NON-NLS-1$ //$NON-NLS-2$
+		for (IAdaptable adaptable : extensions) {
+			Object result = adaptable.getAdapter(adapter);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
 	}
 
 	/**

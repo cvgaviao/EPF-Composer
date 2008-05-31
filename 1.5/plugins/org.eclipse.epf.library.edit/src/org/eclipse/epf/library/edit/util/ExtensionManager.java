@@ -36,42 +36,7 @@ public final class ExtensionManager {
 	private static List oppositeFeatureLoaders;
 	
 	public static <T>List<T> getExtensions(String namespace, String extensionPointName, Class<T> type) {
-		List<T> list = new ArrayList<T>();
-		try {
-			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-			IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(namespace, extensionPointName);
-			if (extensionPoint != null) {
-				IExtension[] extensions = extensionPoint.getExtensions();
-				for (int i = 0; i < extensions.length; i++) {
-					IExtension extension = extensions[i];
-					String pluginId = extension.getNamespaceIdentifier();
-					Bundle bundle = Platform.getBundle(pluginId);
-					IConfigurationElement[] configElements = extension
-					.getConfigurationElements();
-					for (int j = 0; j < configElements.length; j++) {
-						IConfigurationElement configElement = configElements[j];
-						try {
-							String className = configElement.getAttribute("class"); //$NON-NLS-1$
-							if(className != null) {
-								Object ext = bundle.loadClass(className).newInstance();
-								if(type.isInstance(ext)) {
-									list.add((T)ext);
-								}
-							}
-						} catch (Exception e) {
-							LibraryEditPlugin.INSTANCE.log(e);
-						}
-					}
-				}
-			}
-		}
-		catch(Exception e) {
-			LibraryEditPlugin.getDefault().getLogger().logError(e);
-		}
-		if(list.isEmpty()) {
-			return Collections.EMPTY_LIST;
-		}
-		return list;
+		return ExtensionHelper.getExtensions(namespace, extensionPointName, type);
 	}
 	
 	public static Object createExtension(String namespace, String extensionPointName) {

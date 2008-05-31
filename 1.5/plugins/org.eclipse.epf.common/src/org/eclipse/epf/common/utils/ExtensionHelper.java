@@ -10,7 +10,10 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.common.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -104,5 +107,45 @@ public class ExtensionHelper {
 		}
 		return ret.create(type, context);
 	}
+	
+	public static <T>List<T> getExtensions(String namespace, String extensionPointName, Class<T> type) {
+		List<T> list = new ArrayList<T>();
+		try {
+			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+			IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(namespace, extensionPointName);
+			if (extensionPoint != null) {
+				IExtension[] extensions = extensionPoint.getExtensions();
+				for (int i = 0; i < extensions.length; i++) {
+					IExtension extension = extensions[i];
+					String pluginId = extension.getNamespaceIdentifier();
+					Bundle bundle = Platform.getBundle(pluginId);
+					IConfigurationElement[] configElements = extension
+					.getConfigurationElements();
+					for (int j = 0; j < configElements.length; j++) {
+						IConfigurationElement configElement = configElements[j];
+						try {
+							String className = configElement.getAttribute("class"); //$NON-NLS-1$
+							if(className != null) {
+								Object ext = bundle.loadClass(className).newInstance();
+								if(type.isInstance(ext)) {
+									list.add((T)ext);
+								}
+							}
+						} catch (Exception e) {
+							CommonPlugin.getDefault().getLogger().logError(e);
+						}
+					}
+				}
+			}
+		}
+		catch(Exception e) {
+			CommonPlugin.getDefault().getLogger().logError(e);
+		}
+		if(list.isEmpty()) {
+			return Collections.<T>emptyList();
+		}
+		return list;
+	}
+
 
 }
