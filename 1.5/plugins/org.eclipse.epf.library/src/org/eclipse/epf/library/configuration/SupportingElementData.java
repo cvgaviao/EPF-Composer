@@ -51,6 +51,7 @@ public class SupportingElementData extends ConfigDataBase {
 	private Set<MethodPackage> selectedPackages;
 	private static boolean localDebug = false;
 	private static boolean localDebug1 = false;
+	private boolean enabled = true;
 	
 	private boolean descriptorExclusiveOption = true;	
 	
@@ -67,15 +68,19 @@ public class SupportingElementData extends ConfigDataBase {
 		supportingElements = new HashSet<MethodElement>();
 		
 		supportingPlugins = new HashSet<MethodPlugin>();
-		List<MethodPlugin> plugins = getConfig().getMethodPluginSelection();
+		Set<MethodPlugin> plugins = new HashSet<MethodPlugin>(getConfig()
+				.getMethodPluginSelection());
 		for (MethodPlugin plugin : plugins) {
 			if (plugin.isSupporting()) {
 				supportingPlugins.add(plugin);
 			}
 		}
+		
+		setEnabled(supportingPlugins.size() < plugins.size());
 
 		selectedPackages = new HashSet<MethodPackage>();
-		if (! supportingPlugins.isEmpty()) {
+		
+		if (isEnabled() && ! supportingPlugins.isEmpty()) {
 			List<MethodPackage> packages = getConfig().getMethodPackageSelection();
 			for (MethodPackage pkg : packages) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(pkg);
@@ -86,6 +91,7 @@ public class SupportingElementData extends ConfigDataBase {
 		}
 
 		if (localDebug) {
+			System.out.println("LD> isEnabled(): " + isEnabled()); //$NON-NLS-1$
 			System.out.println("LD> supportingPlugins: " + supportingPlugins.size()); //$NON-NLS-1$
 			System.out.println("LD> selectedPackages: " + selectedPackages.size()); //$NON-NLS-1$ 
 			System.out.println("LD> beginUpdateSupportingElements <- "); //$NON-NLS-1$ 
@@ -99,14 +105,16 @@ public class SupportingElementData extends ConfigDataBase {
 		if (localDebug) {
 			System.out.println("LD> endUpdateSupportingElements -> "); //$NON-NLS-1$ 
 		}
-		Set<MethodElement> supportingElementsToCollect = new HashSet<MethodElement>(supportingElements);
-		while (!supportingElementsToCollect.isEmpty()) {
-			Set<MethodElement> newSupportingElements = new HashSet<MethodElement>();		
-			processReferencesOutsideConfig(supportingElementsToCollect, outConfigRefMap, newSupportingElements);
-			if (localDebug) {
-				System.out.println("LD> newSupportingElements: " + newSupportingElements.size()); //$NON-NLS-1$
-			}	
-			supportingElementsToCollect = newSupportingElements;
+		if (isEnabled()) {
+			Set<MethodElement> supportingElementsToCollect = new HashSet<MethodElement>(supportingElements);
+			while (!supportingElementsToCollect.isEmpty()) {
+				Set<MethodElement> newSupportingElements = new HashSet<MethodElement>();		
+				processReferencesOutsideConfig(supportingElementsToCollect, outConfigRefMap, newSupportingElements);
+				if (localDebug) {
+					System.out.println("LD> newSupportingElements: " + newSupportingElements.size()); //$NON-NLS-1$
+				}	
+				supportingElementsToCollect = newSupportingElements;
+			}
 		}
 		
 		setUpdatingChanges(false);
@@ -244,10 +252,6 @@ public class SupportingElementData extends ConfigDataBase {
 		} else if (isNeedUpdateChanges()) {
 			updateChanges();
 		}
-		if (supportingElements.isEmpty()) {
-			return false;
-		}
-		
 		return supportingElements.contains(element);
 	}
 	
@@ -257,6 +261,9 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	//isSupportingElement check during updating mode
 	public boolean isSupportingElementCallDuringUpdating(ElementReference ref) {
+		if (! isEnabled()) {
+			return false;
+		}
 		MethodElement referringElement = ref.getElement();
 		MethodElement referredElement = ref.getRefElement();
 		EStructuralFeature feature = ref.getSingleFeature();
@@ -299,7 +306,18 @@ public class SupportingElementData extends ConfigDataBase {
 	}
 		
 	public boolean isSupportingSelectable(MethodElement element) {
+		if (! isEnabled()) {
+			return false;
+		}
 		return selectedPackages.contains(element) || supportingPlugins.contains(element);
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	private void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	
