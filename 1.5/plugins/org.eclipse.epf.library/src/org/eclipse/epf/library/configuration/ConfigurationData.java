@@ -616,4 +616,21 @@ public class ConfigurationData {
 		return supportingElementData;
 	}
 	
+	
+	public boolean isSubstracted(MethodElement element) {
+		if (getUpdatingChanges()) {
+			throw new UnsupportedOperationException();
+		}
+		updateChanges();
+
+		if (substractedElemMap.containsKey(element.getGuid())) {
+			return true;
+		} else if (element instanceof VariabilityElement) {
+			if (contributedBaseInSubstracted((VariabilityElement) element)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }
