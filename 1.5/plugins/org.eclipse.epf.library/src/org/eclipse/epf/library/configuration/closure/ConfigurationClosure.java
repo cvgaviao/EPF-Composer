@@ -26,6 +26,7 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigDataBase;
+import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.SupportingElementData;
@@ -175,10 +176,12 @@ public class ConfigurationClosure implements IConfigurationClosure {
 				System.out.println("LD> checkError_ ->");//$NON-NLS-1$
 			}
 			checkError_();
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		} finally {
 			if (ConfigDataBase.localDebug) {
 				System.out.println("LD> checkError_ <-");//$NON-NLS-1$
 			}
-		} finally {
 			setRunningCheckError(false);
 		}	
 	}
@@ -440,9 +443,9 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	private void processChangedNodes(Object[] changedNodes) {
 		getConfigurationManager().getSupportingElementData().beginUpdateSupportingElements();
 		processChangedNodes_(changedNodes);
-		if (isAbortCheckError()) {
+/*		if (isAbortCheckError()) {
 			return;
-		}
+		}*/
 		Map<String, ElementReference> refMap = new HashMap<String, ElementReference>();			
 		getConfigurationManager().getSupportingElementData().endUpdateSupportingElements(refMap);
 		if (isAbortCheckError()) {
@@ -527,7 +530,12 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		MethodElement e = ref.getElement();
 		MethodElement e_ref = ref.getRefElement();
 		SupportingElementData seData = getConfigurationManager().getSupportingElementData();
+		ConfigurationData configData = getConfigurationManager().getConfigurationData();
+
 		
+		//System.out.println("LD> e: " + e);
+		//System.out.println("LD> e_ref: " + e_ref);
+				
 		if ( e instanceof MethodPackage || e instanceof MethodConfiguration ) {
 			return;
 		}
@@ -542,7 +550,10 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		}
 		
 		// the element might be subtracted, so ignore it
-		if ( !ConfigurationHelper.inConfig(e, config, true, false)) {
+/*		if ( !ConfigurationHelper.inConfig(e, config, true, false)) {
+			return;
+		}*/
+		if ( configData.isSubstracted(e)) {
 			return;
 		}
 				
