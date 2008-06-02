@@ -18,6 +18,11 @@
          id="descriptionPageColumnProvider"
          name="Editor Description Page Column Provider"
          schema="schema/descriptionPageColumnProvider.exsd"/>
+         
+   <extension-point
+         id="descriptionPageSectionProvider"
+         name="Editor Description Page Section Provider"
+         schema="schema/descriptionPageSectionProvider.exsd"/>
 
    <extension-point
          id="wizardRegistryProvider"
