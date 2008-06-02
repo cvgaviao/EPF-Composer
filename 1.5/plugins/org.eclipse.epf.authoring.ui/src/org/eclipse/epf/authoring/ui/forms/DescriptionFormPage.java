@@ -56,6 +56,7 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.DeleteMethodElementCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
+import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.edit.validation.IValidator;
@@ -148,6 +149,8 @@ import com.ibm.icu.text.DateFormat;
 public abstract class DescriptionFormPage extends BaseFormPage implements IRefreshable {
 
 	public static final int BUTTON_WIDTH = 150;
+	
+	private static List<ISectionProvider> sectionProviders;
 	
 	protected static final String NOT_APPLICABLE_TEXT = AuthoringUIResources.notApplicable_text; 
 	
@@ -343,6 +346,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected ModifyListener modelModifyListener;
 
 	protected ModifyListener contentModifyListener;
+	
 	
 	protected FocusAdapter nameFocusListener = new FocusAdapter() {
 		public void focusGained(FocusEvent e) {
@@ -708,6 +712,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected void createEditorContent(FormToolkit toolkit) {
 		createFormComposites(toolkit);
 		loadSectionDescription();
+		
+		// check for extension section if any
+		loadSectionProviders();
+		
 		// Create the General section.
 		if (generalSectionOn) {
 			createGeneralSection(toolkit);
@@ -715,6 +723,20 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			SECTIONS++;
 		}
 
+		for (int i = 0; i < sectionProviders.size(); i++) {
+			try {
+				Object provider  = sectionProviders.get(i);
+				if (provider instanceof ISectionProvider) {
+					((ISectionProvider) provider).createSection(
+							(MethodElementEditor) getEditor(), toolkit,
+							sectionComposite);
+					SECTIONS++;
+				}
+			} catch (Exception e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+		
 		// Create the Slot Section
 		if (slotSectionOn) {
 			createSlotSection(toolkit);
@@ -764,6 +786,18 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			toolkit.paintBordersFor(expandedComposite);
 	}
 
+	
+	/** 
+	 * Get all section providers
+	 * @return
+	 */
+	private static List<ISectionProvider> loadSectionProviders() {
+		if (sectionProviders == null) {
+			sectionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "descriptionPageSectionProvider", ISectionProvider.class);
+		}
+		return sectionProviders;
+	}
+	
 	private void createFormComposites(FormToolkit toolkit) {
 		// Create the main section (used for swapping display of
 		// sectionComposite and expandedComposite).
@@ -1105,6 +1139,14 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		
 		if (columnProvider != null)
 			columnProvider.refresh(editable);
+		
+		for (int i = 0; i < sectionProviders.size(); i++) {
+			Object provider = sectionProviders.get(i);
+			if (provider != null && provider instanceof ISectionProvider) {
+				((ISectionProvider) provider).refresh(editable);
+			}
+		}
+			
 	}
 
 	/**
@@ -1290,9 +1332,11 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							}
 							setFormTextWithVariableInfo();
 							
-							// IColumnProvider
-							if (columnProvider != null) {
-								columnProvider.refresh(false);
+							for (int i = 0; i < sectionProviders.size(); i++) {
+								Object provider = sectionProviders.get(i);
+								if (provider != null && provider instanceof ISectionProvider) {
+									((ISectionProvider) provider).refresh(false);
+								}
 							}
 						}
 					});
@@ -1343,9 +1387,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 						}
 					}
 					setFormTextWithVariableInfo();
-					// IColumnProvider
-					if (columnProvider != null) {
-						columnProvider.refresh(false);
+					
+					for (int i = 0; i < sectionProviders.size(); i++) {
+						Object provider = sectionProviders.get(i);
+						if (provider != null && provider instanceof ISectionProvider) {
+							((ISectionProvider) provider).refresh(false);
+						}
 					}
 					if ((ctrl_base != null) && (!(ctrl_base.isDisposed())))
 						ctrl_base.redraw();
@@ -2808,6 +2855,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		
 		if (columnProvider != null) {
 			columnProvider.dispose();
+		}
+		for (int i = 0; i < sectionProviders.size(); i++) {
+			Object provider = sectionProviders.get(i);
+			if (provider != null && provider instanceof ISectionProvider) {
+				((ISectionProvider) provider).dispose();
+			}
 		}
 		super.dispose();
 		
