@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.ui.util.PreferenceUtil;
 import org.eclipse.epf.common.utils.FileUtil;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.uma.UmaPackage;
@@ -73,6 +74,8 @@ public class LibraryUIPreferences {
 
 	private static final String DESCRIPTOR_ONGOING = "descriptor_multiple_ongoing"; //$NON-NLS-1$
 
+	private static final String INCLUDE_DESCRIPTORS = "include descriptors"; //$NON-NLS-1$
+
 	private static final String DESCRIPTOR_REPEATABLE = "descriptor_repeatable"; //$NON-NLS-1$
 
 	private static final String DEFAULT_LIBRARY_FOLDER_NAME = "Method Libraries"; //$NON-NLS-1$
@@ -107,6 +110,7 @@ public class LibraryUIPreferences {
 		prefStore.setDefault(DESCRIPTOR_PLANNED, false);
 		prefStore.setDefault(DESCRIPTOR_EVENT_DRIVEN, false);
 		prefStore.setDefault(DESCRIPTOR_ONGOING, false);
+		prefStore.setDefault(INCLUDE_DESCRIPTORS, !SupportingElementData.isDescriptorExclusiveOption());
 		prefStore.setDefault(DESCRIPTOR_REPEATABLE, false);
 	}
 
@@ -559,6 +563,27 @@ public class LibraryUIPreferences {
 		prefStore.setValue(DESCRIPTOR_ONGOING, value);
 	}
 
+	/**
+	 * Returns "include descriptors" feature value in preference store
+	 * 
+	 * @return value - boolean
+	 */
+	public static boolean getIncludeDescriptors() {
+		return prefStore.getBoolean(INCLUDE_DESCRIPTORS);
+	}
+
+	/**
+	 * Saves value for "include descriptors"  feature in preference store
+	 * 
+	 * @param value -
+	 *            boolean true/false
+	 * 
+	 */
+	public static void setIncludeDescriptors(boolean value) {
+		prefStore.setValue(INCLUDE_DESCRIPTORS, value);
+		SupportingElementData.setDescriptorExclusiveOption(!value);
+	}
+	
 	/**
 	 * Returns Repeatable feature value of descriptor in preference store
 	 * 

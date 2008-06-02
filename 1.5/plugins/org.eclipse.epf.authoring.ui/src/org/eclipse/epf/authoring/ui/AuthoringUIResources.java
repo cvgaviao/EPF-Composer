@@ -1969,6 +1969,10 @@ public final class AuthoringUIResources extends NLS {
 	public static String preference_Activity_Diagram;
 
 	public static String preference_Activity_Detail_Diagram;
+	
+	public static String preference_Descriptors;
+	
+	public static String preference_includeDescriptorButton_text;
 
 	public static String configurationPage_QuickfixError_reason1;
 

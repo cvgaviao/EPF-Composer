@@ -53,7 +53,7 @@ public class SupportingElementData extends ConfigDataBase {
 	private static boolean localDebug1 = false;
 	private boolean enabled = true;
 	
-	private boolean descriptorExclusiveOption = true;	
+	private static boolean descriptorExclusiveOption = true;	
 	
 	public SupportingElementData(MethodConfiguration config) {
 		super(config);
@@ -318,6 +318,15 @@ public class SupportingElementData extends ConfigDataBase {
 
 	private void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public static synchronized boolean isDescriptorExclusiveOption() {
+		return descriptorExclusiveOption;
+	}
+
+	public static synchronized void setDescriptorExclusiveOption(
+			boolean descriptorExclusiveOption) {
+		SupportingElementData.descriptorExclusiveOption = descriptorExclusiveOption;
 	}
 
 	
