@@ -15,11 +15,19 @@ public class ConfigurationViewFilter extends ConfigurationFilter {
 		this.viewer = viewer;
 	}
 	
+	private boolean isValidViewer() {
+		return viewer != null &&  viewer.getControl() != null && !viewer.getControl().isDisposed();
+	}
+	
 	public void notifyChanged(final Notification msg) {
-		if (viewer == null) {
+//		if (viewer == null) {
+//			return;
+//		}
+		if (!isValidViewer()) {
 			return;
 		}
 	
+		
 		SafeUpdateController.syncExec(new Runnable() {
 			public void run() {
 				switch (msg.getEventType()) {
