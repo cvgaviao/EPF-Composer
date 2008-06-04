@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.epf.diagram.core.DiagramCoreResources;
-import org.eclipse.epf.diagram.model.Diagram;
 import org.eclipse.epf.diagram.model.ModelPackage;
 import org.eclipse.epf.diagram.wpdd.providers.DiagramElementTypes;
 import org.eclipse.gef.Tool;
@@ -24,7 +23,6 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
-import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * @generated
@@ -57,8 +55,8 @@ public class DiagramPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(DiagramElementTypes.Link_3001);
 		LinkToolEntry entry = new LinkToolEntry(
-				DiagramCoreResources.ActivityDiagram_Palette_control_flow_text,
-				DiagramCoreResources.ActivityDiagram_Palette_control_flow_create_text, types);
+				DiagramCoreResources.WPDD_Palette_control_flow_text,
+				DiagramCoreResources.WPDD_Palette_control_flow_create_text, types);
 		entry.setSmallIcon(DiagramElementTypes.getImageDescriptor(ModelPackage.eINSTANCE.getLink()));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;

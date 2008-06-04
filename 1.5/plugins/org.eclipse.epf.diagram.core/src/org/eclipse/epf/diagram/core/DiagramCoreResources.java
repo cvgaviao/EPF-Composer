@@ -151,5 +151,8 @@ public class DiagramCoreResources extends NLS {
 	public static String ActivityDiagram_kind;
 	public static String ActivityDetail_Diagram_kind;
 	public static String WorkProductDependency_Diagram_kind;
+	
+	public static String WPDD_Palette_control_flow_text;
+	public static String WPDD_Palette_control_flow_create_text;
 
 }
