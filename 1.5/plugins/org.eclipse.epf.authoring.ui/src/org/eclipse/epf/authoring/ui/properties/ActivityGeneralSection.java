@@ -11,17 +11,16 @@
 package org.eclipse.epf.authoring.ui.properties;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
-import org.eclipse.epf.authoring.ui.editors.BreakdownElementEditorInput;
 import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
 import org.eclipse.epf.authoring.ui.filters.ActivityVariabilityFilter;
 import org.eclipse.epf.authoring.ui.forms.ProcessBreakdownStructureFormPage;
@@ -37,7 +36,6 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
-import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityVariabilityCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -164,8 +162,10 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 
 		modelInfoText = FormUI.createText(toolkit, generalComposite,
 				SWT.DEFAULT, horizontalSpan);
-		modelInfoText.setEnabled(false);
+//		modelInfoText.setEnabled(false);
+		modelInfoText.setEditable(false);
 		modelInfoText.setText(getModelInfo());
+		modelInfoText.setForeground(ColorConstants.gray);
 
 		// Type of an Activity
 		activityTypeLabel = FormUI.createLabel(toolkit, generalComposite,
