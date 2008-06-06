@@ -399,6 +399,34 @@ public class ConfigurationHelper {
 		return items;
 	}
 	
+	public static Set<VariabilityElement> getLocalContributersAndReplacers(VariabilityElement element,
+			MethodConfiguration config) {
+		Set<VariabilityElement> items = new HashSet<VariabilityElement>();
+
+		if ( element == null ) {
+			return items;
+		}
+		
+		for (Iterator it = AssociationHelper.getImmediateVarieties(element)
+				.iterator(); it.hasNext();) {
+			VariabilityElement e = (VariabilityElement) it.next();
+			if ((e != null)
+					&& (isLocalContributerOrReplacer(e))
+					&& inConfig(e, config)) {
+					items.add(e);
+			}
+		}
+
+		return items;
+	}
+	
+	private static boolean isLocalContributerOrReplacer(
+			VariabilityElement ve) {
+		VariabilityType type = ve.getVariabilityType();
+		return type == VariabilityType.LOCAL_CONTRIBUTION
+				|| type == VariabilityType.LOCAL_REPLACEMENT;
+	}
+	
 	public static boolean canShow(MethodElement element,
 			MethodConfiguration config) {
 		return canShow(element,config, true);
