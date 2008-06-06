@@ -11,39 +11,26 @@
 package org.eclipse.epf.diagram.ad.edit.parts;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.epf.diagram.ad.edit.policies.ForkNodeCanonicalEditPolicy;
-import org.eclipse.epf.diagram.ad.edit.policies.ForkNodeGraphicalNodeEditPolicy;
+import org.eclipse.epf.diagram.ad.custom.policies.DynamicResizeDirectionsEditPolicy;
 import org.eclipse.epf.diagram.ad.edit.policies.ForkNodeItemSemanticEditPolicy;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
-
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
-
 import org.eclipse.gef.commands.Command;
-
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
-import org.eclipse.gef.editpolicies.ResizableEditPolicy;
-
 import org.eclipse.gef.requests.CreateRequest;
-
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
-
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramColorRegistry;
-
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
-
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
-
 import org.eclipse.gmf.runtime.notation.FillStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
@@ -85,6 +72,7 @@ public class ForkNodeEditPart extends ShapeNodeEditPart {
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
 				new ForkNodeItemSemanticEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
+		
 	}
 
 	/**
@@ -140,12 +128,15 @@ public class ForkNodeEditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
-		EditPolicy result = super.getPrimaryDragEditPolicy();
-		if (result instanceof ResizableEditPolicy) {
-			ResizableEditPolicy ep = (ResizableEditPolicy) result;
-			ep.setResizeDirections(PositionConstants.WEST
-					| PositionConstants.EAST);
-		}
+//		EditPolicy result = super.getPrimaryDragEditPolicy();
+//		if (result instanceof ResizableEditPolicy) {
+//			ResizableEditPolicy ep = (ResizableEditPolicy) result;
+//			ep.setResizeDirections(PositionConstants.WEST
+//					| PositionConstants.EAST);
+//		}
+//		return result;
+		
+		DynamicResizeDirectionsEditPolicy result = new DynamicResizeDirectionsEditPolicy();
 		return result;
 	}
 
@@ -279,4 +270,6 @@ public class ForkNodeEditPart extends ShapeNodeEditPart {
 		else
 			super.handleNotificationEvent(notification);
 	}
+	
+
 }
