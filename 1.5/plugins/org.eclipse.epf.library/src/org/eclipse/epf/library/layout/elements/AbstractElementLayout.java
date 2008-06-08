@@ -15,8 +15,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -66,6 +68,7 @@ import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.Whitepaper;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkProduct;
@@ -84,6 +87,8 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public abstract class AbstractElementLayout implements IElementLayout {
 
+	public static boolean processDescritorsNewOption = false;
+	
 	public static final String TAG_REFERENCE = "reference"; //$NON-NLS-1$
 	public static final String TAG_REFERENCELIST = "referenceList"; //$NON-NLS-1$
 	
@@ -1077,41 +1082,137 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		// create a element nodes for cescriptor list
 		XmlElement descListXml = elementXml.newChild(TAG_REFERENCELIST).setAttribute("name", "descriptors"); //$NON-NLS-1$ //$NON-NLS-2$
 		
+		addDescriptors(descriptors, descListXml);
+	}
+
+	private void addDescriptors(List descriptors, XmlElement descListXml) {
 		for (int i = 0; i < descriptors.size(); i++ ) {
 			Descriptor desc = (Descriptor)descriptors.get(i);
-			IElementLayout layout = getChildLayout(desc);
-			XmlElement descXml = layout.getXmlElement(false);
-			descListXml.addChild(descXml);
+			List parents = __getSuperActivities(desc);
+			addDescriptor(descListXml, desc, parents, true);			
+		}
+	}
+
+	private void addDescriptor(XmlElement descListXml, Descriptor desc, List parents, boolean topLevelCall) {
+		IElementLayout layout = getChildLayout(desc);
+		XmlElement descXml = layout.getXmlElement(false);
+		descListXml.addChild(descXml);
+		
+		//Show entry/exist state values
+		if (desc instanceof WorkProductDescriptor && layout instanceof AbstractElementLayout) {
+			AbstractElementLayout aLayout = (AbstractElementLayout) layout;
 			
-			//Show entry/exist state values
-			if (desc instanceof WorkProductDescriptor && layout instanceof AbstractElementLayout) {
-				AbstractElementLayout aLayout = (AbstractElementLayout) layout;
-				
-				EAttribute att;
-				String value;
-				att = UmaPackage.eINSTANCE.getWorkProductDescriptor_ActivityEntryState();
-				value = (String) aLayout.getAttributeFeatureValue(att);
-				
-				if (value != null && value.length() > 0) {
-					descXml
-					.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			EAttribute att;
+			String value;
+			att = UmaPackage.eINSTANCE.getWorkProductDescriptor_ActivityEntryState();
+			value = (String) aLayout.getAttributeFeatureValue(att);
+			
+			if (value != null && value.length() > 0) {
+				descXml
+				.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			}
+			att = UmaPackage.eINSTANCE.getWorkProductDescriptor_ActivityExitState();
+			value = (String) aLayout.getAttributeFeatureValue(att);
+			if (value != null && value.length() > 0) {
+				descXml
+				.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			}
+		}
+		
+		boolean toProcessExtendedActs = processDescritorsNewOption
+				&& topLevelCall;
+		Set<Activity> processedExtendedActSet = null;
+		Set<Activity> allLocalActSet = null;
+		if (toProcessExtendedActs) {
+			processedExtendedActSet = new HashSet<Activity>();
+			allLocalActSet = getAllLocalActSet(parents);
+		}
+		
+		// List parents = __getSuperActivities(desc);
+		for (int p = 0; p < parents.size(); p++) {
+			Activity act = (Activity) parents.get(p);
+			layout = getChildLayout(act);
+			XmlElement actXml = layout.getXmlElement(false);
+			descXml.addChild(actXml);
+			if (toProcessExtendedActs) {
+				processExtendedAct(desc, descListXml, parents, p, act,
+						processedExtendedActSet, allLocalActSet);
+			}
+		}
+	}
+	
+	private Set getAllLocalActSet(List<Activity> bases) {
+		MethodConfiguration config = getLayoutMgr().getConfiguration();
+		Set ret = new HashSet<Activity>();
+		for (Activity act: bases) {
+			ret.addAll(ConfigurationHelper.getLocalContributersAndReplacers(act, config));
+		}		
+		return ret;
+	}
+	
+	private void processExtendedAct(Descriptor desc, XmlElement descListXml,
+			List parents, int p, Activity act,
+			Set<Activity> processedExtendedActSet,
+			Set<Activity> allLocalActSet) {
+		MethodConfiguration config = getLayoutMgr().getConfiguration();
+
+		List actExtenders = ConfigurationHelper.getExtenders(act, config);
+		if (!actExtenders.isEmpty()) {
+			for (Object obj : actExtenders) {
+				Activity extAct = (Activity) obj;
+				if (processedExtendedActSet.contains(extAct)) {
+					continue;
 				}
-				att = UmaPackage.eINSTANCE.getWorkProductDescriptor_ActivityExitState();
-				value = (String) aLayout.getAttributeFeatureValue(att);
-				if (value != null && value.length() > 0) {
-					descXml
-					.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				processedExtendedActSet.add(extAct);
+
+				List<Activity> extenderParents = __getSuperActivities(extAct);
+				extenderParents.add(extAct);
+				
+				boolean toAdd = true;
+				if (p < parents.size() - 1) {
+					Activity superAct = extAct;
+					for (int pp = p + 1; pp < parents.size(); pp++) {
+						Activity parent = (Activity) parents.get(pp);						
+						parent = checkLocalAct(allLocalActSet, superAct, parent);
+						if (parent != null) {
+							extenderParents.add(parent);
+						} else {
+							toAdd = false;
+							break;
+						}
+					}
+				}
+				
+				if (toAdd) {
+					addDescriptor(descListXml, desc, extenderParents, false);
 				}
 			}
-			
-			List parents = __getSuperActivities(desc);
-			for (int p = 0; p < parents.size(); p++ ) {
-				Activity act = (Activity)parents.get(p);
-				layout = getChildLayout(act);
-				XmlElement actXml = layout.getXmlElement(false);
-				descXml.addChild(actXml);
-			}			
 		}
+
+	}
+
+	//1. return locally contributing act if superAct has a BE locally contributing to parent
+	//2. return null if if superAct has a BE locally replacing parent
+	//3. return parent otherwise
+	private Activity checkLocalAct(Set<Activity> allLocalActSet, Activity superAct,
+			Activity parent) {
+		for (BreakdownElement be : superAct
+				.getBreakdownElements()) {
+			if (be instanceof Activity) {
+				Activity actBe = (Activity) be;
+				if (allLocalActSet.contains(be) && 
+						parent == actBe.getVariabilityBasedOnElement()) {
+					if (actBe.getVariabilityType() == VariabilityType.LOCAL_REPLACEMENT) {
+						return null;
+					}
+					if (actBe.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION) {
+						return actBe;
+					}
+				}
+			}
+		}
+		
+		return parent;
 	}
 	
 	private List __getSuperActivities(BreakdownElement element) {
