@@ -256,7 +256,7 @@ public class WorkProductDescriptorGeneralSection extends
 	private String getMethodElementType(WorkProductDescriptor element) {
 		String str = PropertiesResources.Process_None; 
 		if (element.getWorkProduct() != null) {
-			str = element.getWorkProduct().getType().getName();
+			str = PropertiesUtil.getType(element.getWorkProduct());
 		}
 
 		return str;

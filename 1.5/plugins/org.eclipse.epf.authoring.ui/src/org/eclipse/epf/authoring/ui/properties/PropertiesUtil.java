@@ -13,10 +13,13 @@ package org.eclipse.epf.authoring.ui.properties;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.CapabilityPattern;
+import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Iteration;
 import org.eclipse.epf.uma.Milestone;
+import org.eclipse.epf.uma.Outcome;
 import org.eclipse.epf.uma.Phase;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -65,6 +68,12 @@ public class PropertiesUtil {
 			prefix = LibraryUIText.TEXT_MILESTONE;
 		} else if (obj instanceof TeamProfile) {
 			prefix = LibraryUIText.TEXT_TEAM_PROFILE;
+		} else if (obj instanceof Artifact) {
+			prefix = LibraryUIText.TEXT_ARTIFACT;
+		} else if (obj instanceof Deliverable) {
+			prefix = LibraryUIText.TEXT_DELIVERABLE;
+		} else if (obj instanceof Outcome) {
+			prefix = LibraryUIText.TEXT_OUTCOME;
 		}
 
 		return prefix;
