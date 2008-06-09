@@ -1,8 +1,8 @@
-feature@org.eclipse.epf.base.feature=v20080514-2203,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
-feature@org.eclipse.epf.doc.feature=v20080501-1743,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
-feature@org.eclipse.epf.platform.feature=v20080514-2203,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
-feature@org.eclipse.epf.rcp.feature=v20080501-1743,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
-feature@org.eclipse.epf.richtext.feature=v20080527-1749,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.richtext.feature
+feature@org.eclipse.epf.base.feature=v20080609-1533,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
+feature@org.eclipse.epf.doc.feature=v20080609-1533,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
+feature@org.eclipse.epf.platform.feature=v20080609-1533,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
+feature@org.eclipse.epf.rcp.feature=v20080609-1533,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
+feature@org.eclipse.epf.richtext.feature=v20080609-1533,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.richtext.feature
 feature@org.eclipse.epf.product.feature=v20080514-2203,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.product.feature
 plugin@org.eclipse.epf.authoring.ui=v20080609-1142,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.authoring.ui
 plugin@org.eclipse.epf.base=v20080501-1755,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.base
