@@ -150,8 +150,6 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 	public static final int BUTTON_WIDTH = 150;
 	
-	private static List<ISectionProvider> sectionProviders;
-	
 	protected static final String NOT_APPLICABLE_TEXT = AuthoringUIResources.notApplicable_text; 
 	
 	protected static final String CONTRIBUTES_TEXT = AuthoringUIResources.contributes_text; 
@@ -302,6 +300,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected IStructuredContentProvider contentProviderBase;
 	
 	private IColumnProvider columnProvider;
+	
+	private List<ISectionProvider> sectionProviders;
 	
 	protected ILabelProvider labelProviderVariability = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
@@ -791,7 +791,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 * Get all section providers
 	 * @return
 	 */
-	private static List<ISectionProvider> loadSectionProviders() {
+	private List<ISectionProvider> loadSectionProviders() {
 		if (sectionProviders == null) {
 			sectionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "descriptionPageSectionProvider", ISectionProvider.class);
 		}
