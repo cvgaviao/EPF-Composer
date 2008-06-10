@@ -138,11 +138,21 @@
 	<xsl:template name="descriptionSection">
 		<xsl:param name="description"/>
 		<xsl:variable name="briefOutline" select="$description/attribute[@name='briefOutline']"/>
+		<xsl:variable name="notation" select="$description/attribute[@name='notation']"/>
+		<xsl:variable name="representation" select="$description/attribute[@name='representation']"/>
 		<xsl:variable name="mainDescription" select="$description/attribute[@name='refinedDescription']"/>
 		<xsl:if test="$briefOutline != '' or $mainDescription != ''">
 			<div class="sectionHeading"><xsl:value-of select="$descriptionText"/></div>
 			<div class="sectionContent">			
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:if test="$mainDescription != ''">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$mainDescriptionText"/></th>
+							<td class="sectionTableCell">
+								<xsl:value-of disable-output-escaping="yes" select="$mainDescription"/>
+							</td>
+						</tr>
+					</xsl:if>	
 					<xsl:if test="$briefOutline != ''">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$briefOutlineText"/></th>
@@ -151,11 +161,19 @@
 							</td>
 						</tr>
 					</xsl:if>
-					<xsl:if test="$mainDescription != ''">
+					<xsl:if test="$notation != ''">
 						<tr valign="top">
-							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$mainDescriptionText"/></th>
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$notationText"/></th>
 							<td class="sectionTableCell">
-								<xsl:value-of disable-output-escaping="yes" select="$mainDescription"/>
+								<xsl:value-of disable-output-escaping="yes" select="$notation"/>
+							</td>
+						</tr>
+					</xsl:if>
+					<xsl:if test="$representation != ''">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$representationText"/></th>
+							<td class="sectionTableCell">
+								<xsl:value-of disable-output-escaping="yes" select="$representation"/>
 							</td>
 						</tr>
 					</xsl:if>					
