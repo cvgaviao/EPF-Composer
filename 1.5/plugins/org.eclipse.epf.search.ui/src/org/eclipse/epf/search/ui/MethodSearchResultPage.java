@@ -18,9 +18,9 @@ import org.eclipse.epf.common.ui.util.PerspectiveUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceListener;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
+import org.eclipse.epf.library.ui.providers.ElementTreeLabelProvider;
 import org.eclipse.epf.search.ui.internal.ISearchResultProviderFactory;
 import org.eclipse.epf.search.ui.internal.MethodElementViewSorter;
-import org.eclipse.epf.search.ui.internal.SearchResultLabelProvider;
 import org.eclipse.epf.search.ui.internal.SearchResultTableContentProvider;
 import org.eclipse.epf.search.ui.internal.SearchResultTreeContentProvider;
 import org.eclipse.epf.uma.ContentPackage;
@@ -114,7 +114,7 @@ public class MethodSearchResultPage extends AbstractTextSearchViewPage
 		if(factory != null) {
 			lp = factory.createLabelProvider();
 		}
-		return lp != null ? lp : new SearchResultLabelProvider();
+		return lp != null ? lp : new ElementTreeLabelProvider();
 	}
 
 	/**

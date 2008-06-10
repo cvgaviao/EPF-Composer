@@ -6,7 +6,7 @@ Bundle-Version: 1.5.0.qualifier
 Bundle-Activator: org.eclipse.epf.search.ui.SearchUIPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.epf.authoring.ui,
+Require-Bundle: org.eclipse.epf.authoring.ui;visibility:=reexport,
  org.eclipse.core.runtime,
  org.eclipse.jface.text,
  org.eclipse.search;visibility:=reexport,

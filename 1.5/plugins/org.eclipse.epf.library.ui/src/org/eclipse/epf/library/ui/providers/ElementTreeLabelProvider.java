@@ -8,7 +8,7 @@
 // Contributors:
 // IBM Corporation - initial implementation
 //------------------------------------------------------------------------------
-package org.eclipse.epf.search.ui.internal;
+package org.eclipse.epf.library.ui.providers;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -23,14 +23,14 @@ import org.eclipse.swt.graphics.Image;
  * @author Kelvin Low
  * @since 1.0
  */
-public class SearchResultLabelProvider extends LabelProvider {
+public class ElementTreeLabelProvider extends LabelProvider {
 
 	private static ILabelProvider labelProvider = new AdapterFactoryLabelProvider(TngUtil.umaItemProviderAdapterFactory);
 
 	/**
 	 * Creates a new instance.
 	 */
-	public SearchResultLabelProvider() {
+	public ElementTreeLabelProvider() {
 		super();
 	}
 
@@ -38,8 +38,8 @@ public class SearchResultLabelProvider extends LabelProvider {
 	 * @see LabelProvider#getText(Object)
 	 */
 	public String getText(Object obj) {
-		if (obj instanceof SearchResultUIFolder) {
-			return ((SearchResultUIFolder) obj).getName();
+		if (obj instanceof ElementTreeContentProviderUIFolder) {
+			return ((ElementTreeContentProviderUIFolder) obj).getName();
 		} else if (obj instanceof MethodElement) {
 			return ((MethodElement) obj).getName();
 		}
@@ -50,8 +50,8 @@ public class SearchResultLabelProvider extends LabelProvider {
 	 * @see LabelProvider#getImage(Object)
 	 */
 	public Image getImage(Object obj) {
-		if (obj instanceof SearchResultUIFolder) {
-			return ((SearchResultUIFolder) obj).getImage();
+		if (obj instanceof ElementTreeContentProviderUIFolder) {
+			return ((ElementTreeContentProviderUIFolder) obj).getImage();
 		}
 		return labelProvider.getImage(obj);
 	}

@@ -8,7 +8,7 @@
 // Contributors:
 // IBM Corporation - initial implementation
 //------------------------------------------------------------------------------
-package org.eclipse.epf.search.ui.internal;
+package org.eclipse.epf.library.ui.providers;
 
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
@@ -20,7 +20,7 @@ import org.eclipse.swt.graphics.Image;
  * @author Kelvin Low
  * @since 1.0
  */
-public class SearchResultUIFolder {
+public class ElementTreeContentProviderUIFolder {
 
 	private static final Image DEFAULT_IMAGE = ExtendedImageRegistry.getInstance().getImage(LibraryEditPlugin.INSTANCE
 			.getImage("full/obj16/Folder")); //$NON-NLS-1$
@@ -37,7 +37,7 @@ public class SearchResultUIFolder {
 	 * @param name
 	 *            The name for the folder.
 	 */
-	public SearchResultUIFolder(String name) {
+	public ElementTreeContentProviderUIFolder(String name) {
 		this(name, DEFAULT_IMAGE, null);
 	}
 
@@ -49,7 +49,7 @@ public class SearchResultUIFolder {
 	 * @param parent
 	 *            the parent object
 	 */
-	public SearchResultUIFolder(String name, Object parent) {
+	public ElementTreeContentProviderUIFolder(String name, Object parent) {
 		this(name, DEFAULT_IMAGE, parent);
 	}
 
@@ -63,7 +63,7 @@ public class SearchResultUIFolder {
 	 * @param parent
 	 *            the parent object
 	 */
-	public SearchResultUIFolder(String name, Image image, Object parent) {
+	public ElementTreeContentProviderUIFolder(String name, Image image, Object parent) {
 		this.name = name;
 		this.image = image;
 		this.parent = parent;
