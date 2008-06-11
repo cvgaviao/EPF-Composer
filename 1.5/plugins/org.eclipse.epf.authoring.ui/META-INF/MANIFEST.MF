@@ -8,7 +8,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.epf.library.xmi,
  org.eclipse.epf.library.ui;visibility:=reexport,
- org.eclipse.epf.richtext,
+ org.eclipse.epf.richtext;visibility:=reexport,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
  org.eclipse.draw2d,

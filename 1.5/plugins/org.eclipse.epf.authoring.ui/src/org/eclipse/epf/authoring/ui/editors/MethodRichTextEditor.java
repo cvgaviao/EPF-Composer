@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.authoring.ui.actions.MethodAddImageAction;
 import org.eclipse.epf.authoring.ui.actions.MethodAddLinkAction;
+import org.eclipse.epf.authoring.ui.forms.MethodFormToolkit;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
 import org.eclipse.epf.richtext.IRichText;
@@ -92,7 +93,7 @@ public class MethodRichTextEditor extends RichTextEditor implements
 	 */
 	protected IRichText createRichTextControl(Composite parent, int style,
 			String basePath) {
-		return new MethodRichText(parent, style, basePath);
+		return MethodFormToolkit.createMethodRichText(parent, style, basePath);
 	}
 
 	/**

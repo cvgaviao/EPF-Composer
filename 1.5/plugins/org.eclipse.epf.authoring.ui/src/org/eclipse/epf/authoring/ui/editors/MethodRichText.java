@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.forms.BaseFormPage;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
+import org.eclipse.epf.authoring.ui.richtext.MethodRichTextContext;
 import org.eclipse.epf.authoring.ui.util.MethodRichTextMarkerHelper;
 import org.eclipse.epf.common.html.HTMLFormatter;
 import org.eclipse.epf.library.layout.RichTextContentValidator;
@@ -94,6 +95,16 @@ public class MethodRichText extends RichText implements IMethodRichText {
 	 */
 	public MethodRichText(Composite parent, int style, String basePath) {
 		super(parent, style, basePath);
+	}
+
+	/**
+	 * Creates a new instance.
+	 * 
+	 * @param context
+	 *            The context
+	 */
+	public MethodRichText(MethodRichTextContext context) {
+		super(context.getParent(), context.getStyle(), context.getBasePath());
 	}
 
 	/**

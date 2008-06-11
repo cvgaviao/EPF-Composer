@@ -72,11 +72,11 @@ public class FindReplaceAction extends RichTextAction {
 	public static final int CASE_SENSITIVE_MATCH = 4;
 
 	// Encoded single quote.
-	private static final String ENCODED_SINGLE_QUOTE = "%sq%"; //$NON-NLS-1$
+	protected static final String ENCODED_SINGLE_QUOTE = "%sq%"; //$NON-NLS-1$
 
-	private IRichText richText;
+	protected IRichText richText;
 
-	private StyledText styledText;
+	protected StyledText styledText;
 
 	protected boolean foundMatch = false;
 	
@@ -205,7 +205,7 @@ public class FindReplaceAction extends RichTextAction {
 	 * @param text
 	 *            text to be escaped
 	 */
-	private static String escape(String text) {
+	protected static String escape(String text) {
 		if (text == null || text.length() == 0)
 			return ""; //$NON-NLS-1$
 		StringBuffer sb = new StringBuffer();
@@ -230,7 +230,7 @@ public class FindReplaceAction extends RichTextAction {
 		return sb.toString();
 	}
 
-	private int findText(String findText, int matchDir, int matchOptions) {
+	protected int findText(String findText, int matchDir, int matchOptions) {
 		int status = 0;
 		if (styledText != null) {
 			status = styledTextFindTextAndSelect(findText, matchDir,
@@ -243,7 +243,7 @@ public class FindReplaceAction extends RichTextAction {
 		return status;
 	}
 
-	private int replaceText(String replaceText, int matchDir, int matchOptions) {
+	protected int replaceText(String replaceText, int matchDir, int matchOptions) {
 		int status = 0;
 		if (styledText != null) {
 			status = styledTextReplaceTextAndSelect(replaceText);
@@ -255,7 +255,7 @@ public class FindReplaceAction extends RichTextAction {
 		return status;
 	}
 
-	private int replaceFindText(String findText, String replaceText,
+	protected int replaceFindText(String findText, String replaceText,
 			int matchDir, int matchOptions) {
 		int status = 0;
 		if (styledText != null) {
@@ -272,7 +272,7 @@ public class FindReplaceAction extends RichTextAction {
 		return status;
 	}
 
-	private void replaceAll(String findText, String replaceText,
+	protected void replaceAll(String findText, String replaceText,
 			int matchOptions) {
 		if (styledText != null) {
 			styledTextReplaceAll(findText, replaceText, matchOptions);
@@ -283,7 +283,7 @@ public class FindReplaceAction extends RichTextAction {
 		}
 	}
 
-	private int styledTextFindTextAndSelect(String findText, int matchDir,
+	protected int styledTextFindTextAndSelect(String findText, int matchDir,
 			int matchOptions) {
 		Point selectionOffset = styledText.getSelectionRange();
 		int firstSelectedOffset = selectionOffset.x;
@@ -326,7 +326,7 @@ public class FindReplaceAction extends RichTextAction {
 
 	}
 
-	private int styledTextReplaceTextAndSelect(String replaceText) {
+	protected int styledTextReplaceTextAndSelect(String replaceText) {
 		Point selectionOffset = styledText.getSelectionRange();
 		styledText.replaceTextRange(selectionOffset.x, selectionOffset.y,
 				replaceText);
@@ -335,7 +335,7 @@ public class FindReplaceAction extends RichTextAction {
 		return 1;
 	}
 
-	private void styledTextReplaceAll(String findText, String replaceText,
+	protected void styledTextReplaceAll(String findText, String replaceText,
 			int matchOptions) {
 		styledText.setSelectionRange(0, 0);
 		while (styledTextFindTextAndSelect(findText, FORWARD_MATCH,
@@ -344,13 +344,13 @@ public class FindReplaceAction extends RichTextAction {
 		}
 	}
 
-	private boolean isWordChar(char c) {
+	protected boolean isWordChar(char c) {
 		if (Character.isLetterOrDigit(c))
 			return true;
 		return false;
 	}
 
-	private boolean isPartOfWord(String text, int index, int length) {
+	protected boolean isPartOfWord(String text, int index, int length) {
 		if (index > 0)
 			if (isWordChar(text.charAt(index - 1)))
 				return true;
