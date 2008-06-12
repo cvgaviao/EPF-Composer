@@ -571,7 +571,10 @@ public class ConfigurationHelper {
 				if ( me == null ) {
 					break;
 				} else if (oldMe == me) {
-					me = oldMe.getVariabilityBasedOnElement();						
+					me = oldMe.getVariabilityBasedOnElement();
+					if (me == null) {
+						break;
+					}
 				}					
 				name = ((DescribableElement)me).getPresentationName();
 				if (seens.contains(me)) {	//to prevent loop in case such as											
