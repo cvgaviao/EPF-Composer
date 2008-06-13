@@ -10,13 +10,18 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.publishing.ui.preferences;
 
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.publishing.ui.PublishingUIPlugin;
 import org.eclipse.epf.ui.preferences.BasePreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,9 +29,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-
 
 /**
  * Preference page for diagram options
@@ -37,16 +42,21 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * 
  */
 public class ActivityDiagramPreferencePage extends BasePreferencePage implements
-		IWorkbenchPreferencePage, SelectionListener {
-
+		IWorkbenchPreferencePage, SelectionListener, ModifyListener {
 	Composite composite;
 
 	int NUM_COLUMN = 3;
 
+	private static int MIN_TASKS_PER_ROW = 1;
+
+	private static int MAX_TASKS_PER_ROW = 20;
+
 	private Button ctrl_publish_unopen_activitydd;
 
 	private Button ctrl_publish_ad_for_activity_extension;
-	
+
+	private Text tasksPerRowText;
+
 	public ActivityDiagramPreferencePage() {
 		super();
 	}
@@ -65,28 +75,22 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 				AuthoringUIResources.prompt_for_publish_extend_activity_diagram);
 
 		// Create activity detatil diagram group.
+
 		Group activityDetailDiagramGroup = createGridLayoutGroup(composite,
-				AuthoringUIResources.preference_Activity_Detail_Diagram, 1);
+				AuthoringUIResources.preference_Activity_Detail_Diagram, 2);
 
 		ctrl_publish_unopen_activitydd = createCheckbox(
 				activityDetailDiagramGroup,
-				AuthoringUIResources.promptfor_publish_unopen_activitydd_text);
-		
-//		ctrl_publish_unopen_activitydd = new Button(composite, SWT.CHECK);
-//		ctrl_publish_unopen_activitydd
-//				.setText(AuthoringUIResources.promptfor_publish_unopen_activitydd_text); 
-//
-//		GridData data = new GridData();
-//		data.horizontalSpan = 3;
-//		data.horizontalAlignment = GridData.FILL;
-//		ctrl_publish_unopen_activitydd.setLayoutData(data);
-//		
-//		ctrl_publish_ad_for_activity_extension = new Button(composite, SWT.CHECK);
-//		ctrl_publish_ad_for_activity_extension
-//				.setText(AuthoringUIResources.prompt_for_publish_extend_activity_diagram); 
-//				
-		
+				AuthoringUIResources.promptfor_publish_unopen_activitydd_text,
+				2);
+
+		createLabel(activityDetailDiagramGroup,
+				AuthoringUIResources.add_TasksperRow);
+		tasksPerRowText = createEditableText(activityDetailDiagramGroup, ""); //$NON-NLS-1$
+
 		initializeValues();
+
+		addListeners();
 
 		return composite;
 	}
@@ -120,6 +124,8 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 		// update the settings for browsing
 		PublishingUIPlugin.getDefault().updateLayoutSettings();
 
+		AuthoringUIPlugin.getDefault().savePluginPreferences();
+
 		return true;
 	}
 
@@ -127,9 +133,9 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 	 * Stores the values of the controls back to the preference store.
 	 */
 	private void storeValues() {
-		// IPreferenceStore store = getPreferenceStore();
-		// store.setValue(LibraryPreferenceConstants.PREF_PROMPT_FOR_LIBRARY_AT_STARTUP,
-		// ctrl_publish_unopen_activitydd.getSelection());
+		// set ADD tasks per row
+		AuthoringUIPreferences.setADDTasksPerRow(getTasksPerRow());
+
 		LibraryUIPreferences
 				.setPublishUnopenActivitydd(ctrl_publish_unopen_activitydd
 						.getSelection());
@@ -142,27 +148,67 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 		// IPreferenceStore store = getPreferenceStore();
 		ctrl_publish_unopen_activitydd.setSelection(false);
 		ctrl_publish_ad_for_activity_extension.setSelection(true);
+
+		tasksPerRowText.setText(String.valueOf(AuthoringUIPreferences
+				.getDefaultADDTasksPerRow()));
 	}
 
 	/**
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		// IPreferenceStore store = getPreferenceStore();
-		// ctrl_publish_unopen_activitydd.setSelection(store.getBoolean(LibraryPreferenceConstants.PREF_PROMPT_FOR_LIBRARY_AT_STARTUP));
 		ctrl_publish_unopen_activitydd.setSelection(LibraryUIPreferences
 				.getPublishUnopenActivitydd());
 		ctrl_publish_ad_for_activity_extension
 				.setSelection(LibraryUIPreferences
 						.getPublishADForActivityExtension());
+
+		tasksPerRowText.setText(String.valueOf(AuthoringUIPreferences
+				.getADD_TasksPerRow()));
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.eclipse.epf.authoring.ui.preferences.CommonPrefPage#doGetPreferenceStore()
 	 */
 	protected IPreferenceStore doGetPreferenceStore() {
 		return LibraryUIPlugin.getDefault().getPreferenceStore();
 	}
 
+	/**
+	 * Adds event listeners to the preference page controls.
+	 */
+	protected void addListeners() {
+		tasksPerRowText.addModifyListener(this);
+	}
+
+	/**
+	 * @see org.eclipse.swt.events.ModifyListener#modifyText(ModifyEvent)
+	 */
+	public void modifyText(ModifyEvent e) {
+		setErrorMessage(null);
+		setValid(true);
+
+		int value = 0;
+		if (e.widget == tasksPerRowText) {
+			value = getTasksPerRow();
+			if (value < MIN_TASKS_PER_ROW || value > MAX_TASKS_PER_ROW) {
+				setErrorMessage(AuthoringUIResources.bind(
+						AuthoringUIResources.invalidTaskperRow_msg,
+						new Object[] { new Integer(MIN_TASKS_PER_ROW),
+								new Integer(MAX_TASKS_PER_ROW) }));
+				setValid(false);
+			}
+		}
+
+		updateApplyButton();
+	}
+
+	/**
+	 * Gets the user specified tasks per rown
+	 */
+	protected int getTasksPerRow() {
+		return StrUtil.getIntValue(tasksPerRowText.getText().trim(), 0);
+	}
 }

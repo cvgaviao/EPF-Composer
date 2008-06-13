@@ -29,6 +29,7 @@ import org.eclipse.epf.diagram.model.WorkBreakdownElementNode;
 import org.eclipse.epf.diagram.model.WorkProductComposite;
 import org.eclipse.epf.diagram.model.impl.NamedNodeImpl;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.process.WorkProductDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.IDiagramManager;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -1094,17 +1095,22 @@ public class GraphicalDataHelper {
 	}
 	
 	public static int getTasksPerRow(){
-		String count = LibraryEditPlugin.getDefault().getPreferenceStore()
-				.getString(GraphicalDataHelper.ADD_DIAGRAM_TASKS_PER_ROW);
-		if (count != null && count.length() > 0) {
-			try {
-				int i = Integer.parseInt(count);
-				return i;
-			} catch (NumberFormatException ne) {
-				return 10;
-			}
-		}
-		return 10;
+//		String count = LibraryEditPlugin.getDefault().getPreferenceStore()
+//				.getString(GraphicalDataHelper.ADD_DIAGRAM_TASKS_PER_ROW);
+//		if (count != null && count.length() > 0) {
+//			try {
+//				int i = Integer.parseInt(count);
+//				return i;
+//			} catch (NumberFormatException ne) {
+//				return 10;
+//			}
+//		}
+//		return 10;
+		
+		int count = Providers.getAuthoringPluginPreferenceStore().getInt(GraphicalDataHelper.ADD_DIAGRAM_TASKS_PER_ROW);
+		if (count < 0)
+			return 10;
+		return count;
 	}
 
 	/**

@@ -2023,6 +2023,10 @@ public final class AuthoringUIResources extends NLS {
 	public static String hideWarningsText;
 	
 	public static String hideInfosText;
+	
+	public static String add_TasksperRow;
+	
+	public static String invalidTaskperRow_msg;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);

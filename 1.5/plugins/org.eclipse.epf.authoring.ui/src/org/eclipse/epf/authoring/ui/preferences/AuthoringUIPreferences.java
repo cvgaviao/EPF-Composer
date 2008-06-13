@@ -23,6 +23,11 @@ public class AuthoringUIPreferences {
 
 	public static final String ENABLE_LIBRARY_VALIDATION = "enabledLibraryValidation"; //$NON-NLS-1$
 
+	public static final String ADD_TASKS_PER_ROW = "ACTIVITY_DETAIL_DIAGRAM_TASKS_PER_ROW"; //$NON-NLS-1$
+	
+	private static final int DEFAULT_ADD_TASKS_PER_ROW = 5; 
+	
+	
 	private static final boolean DEFAULT_ENABLE_LIBRARY_VALIDATION = false;
 
 	// The plug-in specific preference store.
@@ -53,6 +58,28 @@ public class AuthoringUIPreferences {
 	 */
 	public static void setEnableLibraryValidation(boolean value) {
 		prefStore.setValue(ENABLE_LIBRARY_VALIDATION, value);
+	}
+	
+	/**
+	 * Gets the ADD_TASKS_PER_ROW preference.
+	 */
+	public static int getADD_TasksPerRow()  {
+		int value = prefStore.getInt(ADD_TASKS_PER_ROW);
+		return value > 0 ? value : DEFAULT_ADD_TASKS_PER_ROW;
+	}
+
+	/**
+	 * Sets the ADD_TASKS_PER_ROW preference.
+	 */
+	public static void setADDTasksPerRow(int value) {
+		prefStore.setValue(ADD_TASKS_PER_ROW, value);
+	}
+	
+	/**
+	 * Gets the default ADD_TASKS_PER_ROW preference.
+	 */
+	public static int getDefaultADDTasksPerRow() {
+		return DEFAULT_ADD_TASKS_PER_ROW;
 	}
 
 }
