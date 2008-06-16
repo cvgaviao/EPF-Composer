@@ -307,16 +307,28 @@ rows: [<xsl:for-each select="breakdown[@name='Work Breakdown Structure']/Element
 					<xsl:value-of select="$element/@TypeName"/>
 				</xsl:otherwise>
 			</xsl:choose>
+		</xsl:variable>		
+		<xsl:variable name="modelInfo" select="$element/@ModelInfo"/>
+		<xsl:variable name="modelInfoResult">
+			<xsl:choose>		
+				<xsl:when test="starts-with($modelInfo, 'replaces')">		
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="$modelInfo"/>
+				</xsl:otherwise>			
+			</xsl:choose>
 		</xsl:variable>
+		
 {id: "<xsl:value-of select="$element/@nodeId"/>", parentId: "<xsl:value-of select="$parentNodeId"/>", relPath: "<xsl:value-of select="$element/@relProcessPath"/>", isSuppressed: "<xsl:value-of select="$element/@isSupressed"/>", indentSize: <xsl:value-of select="$indent"/>, hasChildren:<xsl:value-of select="$hasChildren"/>, 
 	index: "<xsl:value-of select="$element/@Index"/>", prefix: "<xsl:value-of select="$element/attribute[@name='prefix']"/>", name: "<xsl:value-of select="$element/@Name"/>", title: "<xsl:value-of select="$element/@DisplayName"/>", url: "<xsl:value-of select="concat(/Element/@BackPath, $element/@Url)"/>", 
-	predecessors: "<xsl:value-of select="$element/@Predecessors"/>", info: "<xsl:value-of select="$element/@ModelInfo"/>", type: "<xsl:value-of select="$typeName"/>", 
+	predecessors: "<xsl:value-of select="$element/@Predecessors"/>", info: "<xsl:value-of select="$modelInfoResult"/>", type: "<xsl:value-of select="$typeName"/>", 
 	repeatable: "<xsl:value-of select="$element/attribute[@name='isRepeatable']"/>", multiOccurences: "<xsl:value-of select="$element/attribute[@name='hasMultipleOccurrences']"/>", optional: "<xsl:value-of select="$element/attribute[@name='isOptional']"/>", planned: "<xsl:value-of select="$element/attribute[@name='isPlanned']"/>",  ongoing: "<xsl:value-of select="$element/attribute[@name='isOngoing']"/>", eventDriven: "<xsl:value-of select="$element/attribute[@name='isEventDriven']"/>", 
 	team: "<xsl:value-of select="$element/@Team"/>", entryState: "", exitState: "", deliverable: "", variabilityType: "<xsl:value-of select="$element/attribute[@name='variabilityType']"/>",
 	steps: [<xsl:variable name="stepSize"><xsl:value-of select="count($element/Steps/Step)"/></xsl:variable>
 	<xsl:for-each select="$element/Steps/Step"><xsl:value-of select="@selected"/>
 	<xsl:if test="position() != $stepSize">,</xsl:if></xsl:for-each>]},
-<xsl:if test="count($element/Element) > 0">
+	
+		<xsl:if test="count($element/Element) > 0">
 			<xsl:for-each select="$element/Element">
 			<xsl:sort select="@DisplayName"/>
 				<xsl:call-template name="wbsItem">

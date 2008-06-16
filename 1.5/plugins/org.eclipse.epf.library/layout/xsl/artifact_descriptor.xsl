@@ -30,7 +30,9 @@
 		<xsl:variable name="elementPresentationName" select="@DisplayName"/>
 		<xsl:variable name="backPath" select="@BackPath"/>
 		<xsl:variable name="shapeImage" select="concat($backPath,@ShapeiconUrl)"/>
-		<xsl:variable name="imagePath" select="concat($backPath, 'images/')"/>		
+		<xsl:variable name="imagePath" select="concat($backPath, 'images/')"/>
+		<xsl:variable name="workProduct" select="reference[@name='WorkProduct']"/>
+		<xsl:variable name="workProductType" select="$workProduct/Element/@TypeName"/>				
 		<xsl:variable name="presentation" select="reference[@name='presentation']"/>				
 		<xsl:variable name="contentDescription" select="$presentation/Element[@Type='WorkProductDescriptor']"/>
 		<xsl:variable name="workProductDescriptor" select="$presentation/Element[@Type='WorkProductDescriptor']"/>
@@ -86,6 +88,7 @@
 								<xsl:with-param name="elementIcon" select="$shapeImage"/>
 								<xsl:with-param name="backPath" select="$backPath"/>
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
+								<xsl:with-param name="workProductType" select="$workProductType"/>
 							</xsl:call-template>
 							<xsl:call-template name="purposeSection">
 								<xsl:with-param name="description" select="$descriptorDescription"/>

@@ -20,6 +20,7 @@
 		<xsl:param name="elementIcon"/>
 		<xsl:param name="backPath"/>
 		<xsl:param name="showTreeBrowser"/>
+		<xsl:param name="workProductType"/>
 		<xsl:variable name="prefix" select="attribute[@name='prefix']"/>
 		<xsl:variable name="briefDescription" select="attribute[@name='briefDescription']"/>
 		<xsl:variable name="synonyms" select="reference/Element/attribute[@name='synonyms']"/>
@@ -47,7 +48,14 @@
 											<xsl:value-of select="$roleText"/>
 										</xsl:when>
 										<xsl:when test="$elementType = 'WorkProductDescriptor'">
-											<xsl:value-of select="$workProductText"/>
+											<xsl:choose>
+												<xsl:when test="$workProductType != ''">
+													<xsl:value-of select="concat($workProductText, ' (', $workProductType, ')')"/>
+												</xsl:when>
+												<xsl:otherwise>
+													<xsl:value-of select="$workProductText"/>
+												</xsl:otherwise>	
+											</xsl:choose>											
 										</xsl:when>
 										<xsl:otherwise>
 										<!--
