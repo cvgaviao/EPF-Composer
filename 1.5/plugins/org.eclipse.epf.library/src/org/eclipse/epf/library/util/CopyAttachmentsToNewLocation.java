@@ -176,8 +176,15 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 
 				// FIXME: this is not always correct this relative of the element's folder might have been changed
 				// during move/copy
-				String oldContentPath = ResourceHelper
-					.getElementPath(lastOldPlugin);
+				String oldContentPath = contentPath.replaceFirst(UmaUtil
+						.getMethodPlugin(elementToProcess).getName(),
+						lastOldPlugin.getName());
+				
+				//Commented out the following and rolled back to the above to fix a bug
+				//with attached file in content paste. But why it was introduced? Without it
+				//the shape and node icon appear to be working fine.
+				//String oldContentPath = ResourceHelper
+				//	.getElementPath(lastOldPlugin);				
 
 				Iterator iter = elementToProcess.eClass().getEAllAttributes()
 						.iterator();
