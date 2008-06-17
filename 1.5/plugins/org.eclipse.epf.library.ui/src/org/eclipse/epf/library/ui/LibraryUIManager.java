@@ -72,6 +72,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IPerspectiveListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -134,7 +136,22 @@ public class LibraryUIManager {
 	 * instantiated.
 	 */
 	private LibraryUIManager() {
-		//
+		// Monitor perspective changes to display/hide the configuration combo.
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (window != null) {
+			window.addPerspectiveListener(new IPerspectiveListener() {
+				public void perspectiveActivated(IWorkbenchPage page,
+						IPerspectiveDescriptor desc) {
+					checkConfigurationContribution();
+				}
+
+				public void perspectiveChanged(IWorkbenchPage page,
+						IPerspectiveDescriptor desc, String id) {
+					checkConfigurationContribution();
+				}
+			});
+		}
 	}
 	
 	/**

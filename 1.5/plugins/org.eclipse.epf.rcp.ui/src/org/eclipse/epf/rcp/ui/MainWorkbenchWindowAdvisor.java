@@ -56,8 +56,8 @@ public class MainWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private IPerspectiveListener perspectiveListener = new IPerspectiveListener() {
 		public void perspectiveChanged(IWorkbenchPage page,
 				IPerspectiveDescriptor perspective, String changeId) {
-			LibraryUIManager.getInstance().startupOpenLibrary();
 			LibraryUIManager.getInstance().checkConfigurationContribution();
+			LibraryUIManager.getInstance().startupOpenLibrary();
 		}
 		
 		public void perspectiveActivated(IWorkbenchPage page,

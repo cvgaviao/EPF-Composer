@@ -250,7 +250,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 	/*
 	 * @see org.eclipse.jface.action.ContributionItem#void setVisibile(boolean)
 	 */
-	public void setVisibile(boolean visible) {
+	public void setVisible(boolean visible) {
 		if (visible) {
 			LibraryService.getInstance().addListener(libSvcListener);
 		} else {
