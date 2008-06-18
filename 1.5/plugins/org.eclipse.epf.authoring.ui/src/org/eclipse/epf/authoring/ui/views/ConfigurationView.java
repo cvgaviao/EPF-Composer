@@ -12,6 +12,7 @@ package org.eclipse.epf.authoring.ui.views;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -24,11 +25,13 @@ import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.PerspectiveListUtil;
 import org.eclipse.epf.authoring.ui.UIActionDispatcher;
 import org.eclipse.epf.authoring.ui.actions.ConfigurationViewEditAction;
 import org.eclipse.epf.authoring.ui.actions.ILibraryActionBarContributor;
+import org.eclipse.epf.authoring.ui.actions.IMenuAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryActionBarContributor;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewCopyAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewFindElementAction;
@@ -42,6 +45,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.ui.LibraryUIManager;
@@ -53,6 +57,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
@@ -107,6 +112,9 @@ public class ConfigurationView extends AbstractBaseView implements
 
 	private IFilter configFilter;
 
+	private List<Action> menuActionProviders;
+	
+
 	/**
 	 * Creates a new instance.
 	 */
@@ -138,6 +146,34 @@ public class ConfigurationView extends AbstractBaseView implements
 
 		// Open the current configuration.
 		setConfiguration(null);
+		
+		loadMenuActionProviders();
+		IToolBarManager mgr= getViewSite().getActionBars().getToolBarManager();
+
+		for (int i = 0; i < menuActionProviders.size(); i++) {
+			try {
+				Object actionProvider  = menuActionProviders.get(i);
+				if (actionProvider instanceof Action) {
+					mgr.add((Action)actionProvider);
+					if (actionProvider instanceof IMenuAction)
+						((IMenuAction) actionProvider).init(this);
+				}
+				
+			} catch (Exception e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+	}
+	
+	/** 
+	 * Get all menu providers
+	 * @return
+	 */
+	private List<Action> loadMenuActionProviders() {
+		if (menuActionProviders == null) {
+			menuActionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "configurationViewMenuProvider", Action.class);
+		}
+		return menuActionProviders;
 	}
 
 	/**
@@ -145,7 +181,6 @@ public class ConfigurationView extends AbstractBaseView implements
 	 */
 	public void libraryCreated(MethodLibrary library) {
 	}
-
 	/**
 	 * @see org.eclipse.epf.library.ILibraryServiceListener#libraryOpened(MethodLibrary)
 	 */
