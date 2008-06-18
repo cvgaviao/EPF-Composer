@@ -112,11 +112,14 @@ public class ConfigurationImportService {
 			if (handleVersion) {
 				upGradeInfo = new ConfigurationImportService.UpgradeInfo(UpgradeCallerInfo.upgradeImportConfig, importingLibPath);
 				if (! handleToolVersion(importingLibPath, upGradeInfo)) {
+					String errMsg = upGradeInfo.getErrorMsg();
+					if (errMsg == null || errMsg.length() == 0) {
+						errMsg = ImportResources.ImportConfigurationWizard_ERR_Import_configuration;
+					}
 					data
 					.getErrorInfo()
 					.addError(
-							NLS.bind(ImportResources.ImportConfigurationWizard_ERR_Import_configuration, importingLibPath.getParent())); 
-
+							NLS.bind(errMsg, importingLibPath.getParent())); 
 					return;
 				}
 				if (upGradeInfo.getCopiedLibFile() != null) {
