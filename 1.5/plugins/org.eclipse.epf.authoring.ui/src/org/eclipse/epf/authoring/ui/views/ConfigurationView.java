@@ -201,7 +201,10 @@ public class ConfigurationView extends AbstractBaseView implements
 	 * @see org.eclipse.epf.library.ILibraryServiceListener#librarySet(MethodLibrary)
 	 */
 	public void librarySet(MethodLibrary library) {
-		setMethodConfiguration(null);
+		MethodConfiguration config = LibraryService.getInstance().getCurrentMethodConfiguration();
+		if(config != null && config.eContainer() != library) {
+			setMethodConfiguration(null);
+		}
 		// Add a library change listener.
 		ILibraryManager manager = LibraryService.getInstance()
 				.getCurrentLibraryManager();

@@ -204,7 +204,15 @@ public class ConfigurationContributionItem extends ContributionItem {
 		libSvcListener = new ILibraryServiceListener() {
 
 			public void configurationSet(MethodConfiguration config) {
-				selectConfiguration(config);
+				configComboViewer.removePostSelectionChangedListener(postSelectionChangedListener);
+				try {
+					selectConfiguration(config);
+				}
+				finally {
+					configComboViewer
+					.addPostSelectionChangedListener(postSelectionChangedListener);
+				}
+				
 			}
 
 			public void libraryClosed(MethodLibrary library) {
@@ -218,9 +226,11 @@ public class ConfigurationContributionItem extends ContributionItem {
 
 			public void libraryOpened(MethodLibrary library) {
 				configComboViewer.setInput(library);
-				configComboViewer.setSelection(new StructuredSelection(
-						LibraryUIResources.selectConfigLabel_text), true);
 				refresh();
+				MethodConfiguration config = LibraryService.getInstance().getCurrentMethodConfiguration();					
+				configComboViewer.setSelection(new StructuredSelection(
+						config != null ? config : LibraryUIResources.selectConfigLabel_text), true);
+
 			}
 
 			public void libraryReopened(MethodLibrary library) {
