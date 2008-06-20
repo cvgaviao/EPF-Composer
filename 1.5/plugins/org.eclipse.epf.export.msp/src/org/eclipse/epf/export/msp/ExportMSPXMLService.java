@@ -131,7 +131,7 @@ public class ExportMSPXMLService {
 
 	// If true, only export breakdown elements with 'isPlanned' attributes set
 	// to true.
-	private boolean exportOnlyPlannedElements;
+	protected boolean exportOnlyPlannedElements;
 
 	private boolean publishContentSite = false;
 
