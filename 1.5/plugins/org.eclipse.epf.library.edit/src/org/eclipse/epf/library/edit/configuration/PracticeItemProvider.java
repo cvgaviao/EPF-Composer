@@ -151,7 +151,7 @@ public class PracticeItemProvider extends
 		
 		String imageStr = "full/obj16/Folder"; //$NON-NLS-1$
 		
-		if (false) {		//Not used for now
+		if (true) {		
 			if (subGroupName.equals(getUIString("_UI_Key_Concepts"))) { //$NON-NLS-1$
 				imageStr = "full/obj16/Concepts"; //$NON-NLS-1$
 			} else if (subGroupName.equals(getUIString("_UI_WorkProducts_group"))) { //$NON-NLS-1$
