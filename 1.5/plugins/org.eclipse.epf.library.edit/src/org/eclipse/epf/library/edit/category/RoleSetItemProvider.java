@@ -27,6 +27,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.IStatefulItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.internal.IListenerProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.RoleSet;
@@ -43,7 +44,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public class RoleSetItemProvider extends
 		org.eclipse.epf.uma.provider.RoleSetItemProvider implements
-		ILibraryItemProvider, IStatefulItemProvider {
+		ILibraryItemProvider, IStatefulItemProvider, IListenerProvider {
 
 	private Object parent;
 

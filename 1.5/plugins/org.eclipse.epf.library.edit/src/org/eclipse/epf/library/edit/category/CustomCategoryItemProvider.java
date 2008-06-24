@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.IDefaultNameSetter;
@@ -37,6 +38,7 @@ import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
+import org.eclipse.epf.library.edit.internal.IListenerProvider;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.LibraryEditConstants;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
@@ -61,7 +63,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  */
 public class CustomCategoryItemProvider extends
 		org.eclipse.epf.uma.provider.CustomCategoryItemProvider implements
-		IDefaultNameSetter, ILibraryItemProvider {
+		IDefaultNameSetter, ILibraryItemProvider, IListenerProvider {
 
 	/**
 	 * Creates a new instance.
@@ -456,19 +458,11 @@ public class CustomCategoryItemProvider extends
 		// do nothing, already handled by setDefaultName(Notification)
 	}
 
-	public List getNotifyChangedListeners() {
-		if(changeNotifier instanceof Collection) {
-			return new ArrayList((Collection) changeNotifier);
+	public List<INotifyChangedListener> getNotifyChangedListeners() {
+		if(changeNotifier instanceof ChangeNotifier) {
+			return new ArrayList<INotifyChangedListener>((ChangeNotifier) changeNotifier);
 		}
-		return Collections.EMPTY_LIST;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.eclipse.emf.edit.provider.ItemProviderAdapter#addListener(org.eclipse.emf.edit.provider.INotifyChangedListener)
-	 */
-	public void addListener(INotifyChangedListener listener) {
-		// TODO Auto-generated method stub
-		super.addListener(listener);
+		return Collections.emptyList();
 	}
 	
 	public Collection getChildren(Object object) {

@@ -60,6 +60,7 @@ import org.eclipse.emf.edit.provider.FeatureMapEntryWrapperItemProvider;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -75,12 +76,11 @@ import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.category.CustomCategoryItemProvider;
-import org.eclipse.epf.library.edit.category.DisciplineItemProvider;
-import org.eclipse.epf.library.edit.category.RoleSetItemProvider;
 import org.eclipse.epf.library.edit.category.StandardCategoriesItemProvider;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.element.ContentPackageItemProvider;
+import org.eclipse.epf.library.edit.internal.IListenerProvider;
 import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
 import org.eclipse.epf.library.edit.navigator.MethodPluginItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
@@ -3015,19 +3015,22 @@ public final class TngUtil {
 		return null;
 	}
 
-	public static List getNotifyChangedListeners(AdapterFactory adapterFactory, Object obj) {
-		if (obj instanceof CustomCategory) {
-			CustomCategoryItemProvider adapter = (CustomCategoryItemProvider) adapterFactory.adapt(obj, ITreeItemContentProvider.class);
-			return adapter.getNotifyChangedListeners();
+	public static List<INotifyChangedListener> getNotifyChangedListeners(AdapterFactory adapterFactory, Object obj) {
+		Object adapter = adapterFactory.adapt(obj, ITreeItemContentProvider.class);
+		if(adapter instanceof IListenerProvider) {
+			return ((IListenerProvider) adapter).getNotifyChangedListeners();
 		}
-		if (obj instanceof RoleSet) {
-			RoleSetItemProvider adapter = (RoleSetItemProvider) adapterFactory.adapt(obj, ITreeItemContentProvider.class);
-			return adapter.getNotifyChangedListeners();
-		} else if (obj instanceof Discipline) {
-			DisciplineItemProvider adapter = (DisciplineItemProvider) adapterFactory.adapt(obj, ITreeItemContentProvider.class);
-			return adapter.getNotifyChangedListeners();
+		return Collections.emptyList();
+	}
+	
+	public static Collection<?> getWrappers(AdapterFactory adapterFactory, Object obj) {
+		HashSet<Object> wrappers = new HashSet<Object>();
+		for (INotifyChangedListener listener : getNotifyChangedListeners(adapterFactory, obj)) {
+			if(listener instanceof IWrapperItemProvider && unwrap(listener) == obj) {
+				wrappers.add(listener);
+			}
 		}
-		return Collections.EMPTY_LIST;
+		return wrappers;
 	}
 
 	/**

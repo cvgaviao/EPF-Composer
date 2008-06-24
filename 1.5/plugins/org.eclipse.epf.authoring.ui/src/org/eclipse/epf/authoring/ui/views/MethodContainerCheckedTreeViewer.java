@@ -1,6 +1,7 @@
 package org.eclipse.epf.authoring.ui.views;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.ListenerList;
@@ -30,7 +31,7 @@ import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
  * Also, expands the tree for checked items when they are set via
  * setCheckedElements(..) iff expandWhenChecking is true.
  * @author Jeff Hardy
- *
+ * @author Phong Nguyen Le
  */
 public class MethodContainerCheckedTreeViewer extends
 		ContainerCheckedTreeViewer {
@@ -70,8 +71,9 @@ public class MethodContainerCheckedTreeViewer extends
         setUseHashlookup(true);
         addCheckStateListener(new ICheckStateListener() {
             public void checkStateChanged(CheckStateChangedEvent event) {
-                doCheckStateChanged(event.getElement());
-            }
+				updateWrappers(event.getElement());
+				doCheckStateChanged(event.getElement());
+			}
         });
         addTreeListener(new ITreeViewerListener() {
             public void treeCollapsed(TreeExpansionEvent event) {
@@ -158,29 +160,51 @@ public class MethodContainerCheckedTreeViewer extends
         }
     }
     
+    private void updateWrappers(Object object) {
+    	boolean state = getChecked(object);
+    	Object element = TngUtil.unwrap(object);
+    	if(object != element) {
+    		setChecked(element, state);
+    	}
+		AdapterFactory adapterFactory = null;
+		if (getContentProvider() instanceof AdapterFactoryContentProvider) {
+			adapterFactory = ((AdapterFactoryContentProvider) getContentProvider())
+					.getAdapterFactory();
+		}
+		if (adapterFactory != null) {
+			Collection<?> wrappers = TngUtil.getWrappers(adapterFactory,
+					element);
+			if (!wrappers.isEmpty()) {
+				for (Object wrapper : wrappers) {
+					setChecked(wrapper, state);
+				}
+			}
+		}
+	}
     
-    /* (non-Javadoc)
-     * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setCheckedElements(java.lang.Object[])
-     */
+    /*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setCheckedElements(java.lang.Object[])
+	 */
     public void setCheckedElements(Object[] elements) {
     	// fix elements list to use our wrappers
     	List<Object> treeElements = new ArrayList<Object>();
     	AdapterFactory adapterFactory = null;
     	if (getContentProvider() instanceof AdapterFactoryContentProvider) {
     		adapterFactory = ((AdapterFactoryContentProvider)getContentProvider()).getAdapterFactory();
-    	}
-    	for (int i = 0;i < elements.length; i++) {
-    		Object element = elements[i];
-    		if (element instanceof CustomCategory && adapterFactory != null) {
-    			treeElements.add(TngUtil.getFeatureValueWrapperItemProviderForCC(adapterFactory, (CustomCategory)element));
-    		} else {
-    			treeElements.add(element);
-    		}
-    	}
+    	}    	
+    	for (int i = 0; i < elements.length; i++) {
+			Object element = elements[i];
+			if (adapterFactory != null) {
+				treeElements.addAll(TngUtil.getWrappers(adapterFactory, element));
+			}
+			if(!(element instanceof CustomCategory)) {
+				treeElements.add(element);
+			}
+		}
+    	
         super.setCheckedElements(treeElements.toArray());
-        for (Object element : treeElements) {
-        	doCheckStateChanged(element);
-        }
     }
     
     /**

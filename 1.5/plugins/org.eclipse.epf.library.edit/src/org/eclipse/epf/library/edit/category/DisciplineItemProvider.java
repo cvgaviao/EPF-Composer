@@ -31,6 +31,7 @@ import org.eclipse.epf.library.edit.IStatefulItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
+import org.eclipse.epf.library.edit.internal.IListenerProvider;
 import org.eclipse.epf.library.edit.util.LibraryEditConstants;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Discipline;
@@ -50,7 +51,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public class DisciplineItemProvider extends
 		org.eclipse.epf.uma.provider.DisciplineItemProvider implements
-		ILibraryItemProvider, IStatefulItemProvider, IDefaultNameSetter {
+		ILibraryItemProvider, IStatefulItemProvider, IDefaultNameSetter, IListenerProvider {
 
 	private Object parent;
 

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.provider.DelegatingWrapperItemProvider;
 import org.eclipse.emf.edit.provider.IWrapperItemProvider;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodElement;
 
 /**
@@ -55,7 +56,7 @@ public class FeatureValueWrapperItemProvider extends
 	 * @see org.eclipse.emf.edit.provider.DelegatingWrapperItemProvider#createWrapper(java.lang.Object, java.lang.Object, org.eclipse.emf.common.notify.AdapterFactory)
 	 */
 	protected IWrapperItemProvider createWrapper(Object value, Object owner, AdapterFactory adapterFactory) {
-		return new FeatureValueWrapperItemProvider(null, value, owner, adapterFactory);
+		return new FeatureValueWrapperItemProvider(null, TngUtil.unwrap(value), owner, adapterFactory);
 	}
 
 	/**

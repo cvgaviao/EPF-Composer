@@ -604,12 +604,14 @@ public class LibraryUIManager {
 						.getCoolBarManager();
 				try {
 					IWorkbenchPage activePage = window.getActivePage();
-					if (foundConfigView(activePage)
-							|| foundProcessEditor(activePage)
-							|| foundPerspective(activePage, REPORT_PERS_ID)) {
-						showConfigurationContribution(coolBarMgr);
-					} else {
-						hideConfigurationContribution(coolBarMgr);
+					if (activePage != null) {
+						if (foundConfigView(activePage)
+								|| foundProcessEditor(activePage)
+								|| foundPerspective(activePage, REPORT_PERS_ID)) {
+							showConfigurationContribution(coolBarMgr);
+						} else {
+							hideConfigurationContribution(coolBarMgr);
+						}
 					}
 				} catch (Exception e) {
 					LibraryUIPlugin.getDefault().getLogger().logError(e);
