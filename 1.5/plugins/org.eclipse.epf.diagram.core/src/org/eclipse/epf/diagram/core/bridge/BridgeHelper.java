@@ -424,24 +424,31 @@ public final class BridgeHelper {
 //		return null;
 //	}
 	
-	public static MethodElement getMethodElementFromAnnotation(EModelElement node, ResourceSet resourceSet) {
-		EAnnotation eAnnotation = node.getEAnnotation(UMA_ELEMENT);
-		if (eAnnotation != null) {
-			String uri = (String) eAnnotation.getDetails().get(UMA_URI);
-			if (uri != null) {
-				EObject o = resourceSet.getEObject(
-						URI.createURI(uri), false);
-				if (o instanceof MethodElement) {
-					return (MethodElement) o;
-				} else {
-					if(DEBUG) {
-						System.err.println("Not a method element: " + o); //$NON-NLS-1$
-					}
-				}
-			}
-		}
-		return null;
-	}
+	public static MethodElement getMethodElementFromAnnotation(EModelElement node, ResourceSet resourceSet) { 
+        EAnnotation eAnnotation = node.getEAnnotation(UMA_ELEMENT); 
+        try { 
+            if (eAnnotation != null) { 
+                String uri = (String) eAnnotation.getDetails().get(UMA_URI); 
+                if (uri != null) { 
+                    EObject o = resourceSet.getEObject( 
+                                    URI.createURI(uri), false); 
+                    if (o instanceof MethodElement) { 
+                            return (MethodElement) o; 
+                    } else { 
+                            if(DEBUG) { 
+                                    System.err.println("Not a method element: " + o); //$NON-NLS-1$ 
+                            } 
+                    } 
+                } 
+            } 
+        } catch (Exception e) { 
+                DiagramCorePlugin.getDefault().getLogger().logError(e); 
+                return null; 
+        } 
+        
+        return null; 
+	} 
+	
 	
 	/**
 	 * Gets the method element that the given diagram model object represents
