@@ -59,7 +59,14 @@ public final class ProcessCommandUtil {
 	public static final EStructuralFeature[] DESCRIPTOR_REFRESHABLE_FEATURES = {
 		// UmaPackage.eINSTANCE.getNamedElement_Name(),
 		// UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
-		UmaPackage.eINSTANCE.getMethodElement_BriefDescription() 
+		UmaPackage.eINSTANCE.getMethodElement_BriefDescription(),
+		// guidance
+		UmaPackage.eINSTANCE.getBreakdownElement_Checklists(),
+		UmaPackage.eINSTANCE.getBreakdownElement_Concepts(),
+		UmaPackage.eINSTANCE.getBreakdownElement_Examples(),
+		UmaPackage.eINSTANCE.getBreakdownElement_Guidelines(),
+		UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets(),
+		UmaPackage.eINSTANCE.getBreakdownElement_SupportingMaterials()
 	};
 
 	public static final EStructuralFeature[] TASK_DESCRIPTOR_REFRESHABLE_FEATURES = {

@@ -23,23 +23,24 @@ import org.eclipse.epf.uma.Process;
 public class SynchronizationChoices {
 
 	public static int SYNC_NONE = 0;
-	public static int SYNC_FROM_CONETNT = 1;
+	public static int SYNC_FROM_CONTENT = 1;
 	public static int SYNC_FROM_PROCESS = 2;
 	
 	private Process selectedProcess;
 	private MethodConfiguration selectedConfig;
-	private int syncName= SYNC_FROM_CONETNT;
-	private int syncPresName= SYNC_FROM_CONETNT;
-	private int syncBriefDesc= SYNC_FROM_CONETNT;
-	private int syncOptInput= SYNC_FROM_CONETNT;
-	private int syncManInput= SYNC_FROM_CONETNT;
-	private int syncOutput= SYNC_FROM_CONETNT;
-	private int syncPrimPerformer= SYNC_FROM_CONETNT;
-	private int syncAddnPerformer= SYNC_FROM_CONETNT;
-	private int syncRespRole= SYNC_FROM_CONETNT;
-	private int syncContArtifact= SYNC_FROM_CONETNT;
-	private int syncDelivPart= SYNC_FROM_CONETNT;
-	private int syncSelStep= SYNC_FROM_CONETNT;
+	private int syncName= SYNC_FROM_CONTENT;
+	private int syncPresName= SYNC_FROM_CONTENT;
+	private int syncBriefDesc= SYNC_FROM_CONTENT;
+	private int syncOptInput= SYNC_FROM_CONTENT;
+	private int syncManInput= SYNC_FROM_CONTENT;
+	private int syncOutput= SYNC_FROM_CONTENT;
+	private int syncPrimPerformer= SYNC_FROM_CONTENT;
+	private int syncAddnPerformer= SYNC_FROM_CONTENT;
+	private int syncRespRole= SYNC_FROM_CONTENT;
+	private int syncContArtifact= SYNC_FROM_CONTENT;
+	private int syncDelivPart= SYNC_FROM_CONTENT;
+	private int syncSelStep= SYNC_FROM_CONTENT;
+	private int syncGuidance = SYNC_FROM_CONTENT;
 	
 	public boolean isFinishPressed;
 
@@ -277,5 +278,13 @@ public class SynchronizationChoices {
 	 */
 	public void setSyncName(int syncName) {
 		this.syncName = syncName;
+	}
+
+	public void setSyncGuidance(int i) {
+		this.syncGuidance = i;
+	}
+	
+	public int getSyncGuidance() {
+		return syncGuidance;
 	}
 }

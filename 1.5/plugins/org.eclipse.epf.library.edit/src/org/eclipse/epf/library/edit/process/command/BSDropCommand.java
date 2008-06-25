@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.edit.IConfigurationApplicator;
@@ -44,6 +45,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
@@ -52,6 +54,7 @@ import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
 /**
@@ -62,7 +65,16 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
  */
 public abstract class BSDropCommand extends AbstractCommand implements
 		IResourceAwareCommand {
-	public static final Set<EStructuralFeature> DEFAULT_SYNCH_FEATURES = Collections.unmodifiableSet(new HashSet<EStructuralFeature>(Arrays.asList(
+	private static final Set<EReference> BASIC_SYNC_REFERENCES = Collections.unmodifiableSet(new HashSet<EReference>(Arrays.asList(new EReference[] {
+			// guidance
+			UmaPackage.eINSTANCE.getContentElement_Checklists(),
+			UmaPackage.eINSTANCE.getContentElement_ConceptsAndPapers(),
+			UmaPackage.eINSTANCE.getContentElement_Examples(),
+			UmaPackage.eINSTANCE.getContentElement_Guidelines(),
+			UmaPackage.eINSTANCE.getContentElement_Assets(),
+			UmaPackage.eINSTANCE.getContentElement_SupportingMaterials()
+	})));
+	public static final Set<EStructuralFeature> DEFAULT_SYNCH_FEATURES = new HashSet<EStructuralFeature>(Arrays.asList(
 			new EStructuralFeature[] {
 					UmaPackage.eINSTANCE.getNamedElement_Name(),
 					UmaPackage.eINSTANCE.getMethodElement_BriefDescription(),
@@ -77,13 +89,15 @@ public abstract class BSDropCommand extends AbstractCommand implements
 					UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts(),
 					UmaPackage.eINSTANCE.getDeliverable_DeliveredWorkProducts()
 			}
-	)));
+	));
 	
 	/**
 	 * Map of linked element's feature to descriptor's feature
 	 */
 	public static final Map<EStructuralFeature, EStructuralFeature> FEATURE_MAP = new HashMap<EStructuralFeature, EStructuralFeature>();
 	static {
+		DEFAULT_SYNCH_FEATURES.addAll(BASIC_SYNC_REFERENCES);
+		
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getNamedElement_Name(), UmaPackage.eINSTANCE.getNamedElement_Name());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getMethodElement_BriefDescription(), UmaPackage.eINSTANCE.getMethodElement_BriefDescription());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getMethodElement_PresentationName(), UmaPackage.eINSTANCE.getMethodElement_PresentationName());
@@ -96,6 +110,14 @@ public abstract class BSDropCommand extends AbstractCommand implements
 //		FEATURE_MAP.put(UmaPackage.eINSTANCE.getEstimatedMethodElement_Estimate(), UmaPackage.eINSTANCE.getEstimatedMethodElement_Estimate());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy(), UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy());
 		FEATURE_MAP.put(UmaPackage.eINSTANCE.getTask_PerformedBy(), UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy());
+		// guidance
+		FEATURE_MAP.put(UmaPackage.eINSTANCE.getContentElement_Checklists(), UmaPackage.eINSTANCE.getBreakdownElement_Checklists());
+		FEATURE_MAP.put(UmaPackage.eINSTANCE.getContentElement_ConceptsAndPapers(), UmaPackage.eINSTANCE.getBreakdownElement_Concepts());
+		FEATURE_MAP.put(UmaPackage.eINSTANCE.getContentElement_Examples(), UmaPackage.eINSTANCE.getBreakdownElement_Examples());
+		FEATURE_MAP.put(UmaPackage.eINSTANCE.getContentElement_Guidelines(), UmaPackage.eINSTANCE.getBreakdownElement_Guidelines());
+		FEATURE_MAP.put(UmaPackage.eINSTANCE.getContentElement_Assets(), UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets());
+		FEATURE_MAP.put(UmaPackage.eINSTANCE.getContentElement_SupportingMaterials(), UmaPackage.eINSTANCE.getBreakdownElement_SupportingMaterials());
+//		FEATURE_MAP.put(UmaPackage.eINSTANCE.getContentElement_, UmaPackage.eINSTANCE.getBreakdownElement_);	
 	}
 
 	protected Activity activity;
@@ -610,6 +632,33 @@ public abstract class BSDropCommand extends AbstractCommand implements
 	protected void updateDescriptors() {
 		if (synchronize) {
 			clearDescriptors();
+			if(!batchCommand.getDescriptorsToRefresh().isEmpty()) {
+				ArrayList<EReference> basicSyncReferences = new ArrayList<EReference>();
+				for (Object feature : synchFeatures) {
+					if(BASIC_SYNC_REFERENCES.contains(feature)) {
+						basicSyncReferences.add((EReference) feature);
+					}
+				}
+				if (!basicSyncReferences.isEmpty()) {
+					for (Object desc : batchCommand
+							.getDescriptorsToRefresh()) {
+						Descriptor descriptor = (Descriptor) desc;
+						MethodElement element = ProcessUtil.getAssociatedElement(descriptor);
+						if(element instanceof VariabilityElement) {
+							for (EReference ref : basicSyncReferences) {
+								Object value = Providers.getConfigurationApplicator().getReference((VariabilityElement) element, ref, config);
+								EStructuralFeature descriptorFeature = FEATURE_MAP.get(ref);
+								if(descriptorFeature.isMany()) {
+									batchCommand.addFeatureValues(descriptor, descriptorFeature, (Collection) value);
+								} else {
+									batchCommand.addFeatureValue(descriptor, descriptorFeature, value);
+								}
+							}
+							
+						}
+					}
+				}
+			}
 		}
 
 		// update new values;

@@ -98,41 +98,49 @@ implements IWorkbenchPartAction
 	}
 
 	private void addChoicesToSet(HashSet syncSet, SynchronizationChoices choices) {
-		if (choices.getSyncName() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncName() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getNamedElement_Name());
 		}
-		if (choices.getSyncPresName() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncPresName() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getMethodElement_PresentationName());
 		}
-		if (choices.getSyncBriefDesc() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncBriefDesc() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getMethodElement_BriefDescription());
 		}
-		if (choices.getSyncOptInput() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncOptInput() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getTask_OptionalInput());
 		}
-		if (choices.getSyncManInput() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncManInput() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getTask_MandatoryInput());
 		}
-		if (choices.getSyncOutput() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncOutput() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getTask_Output());
 		}
-		if (choices.getSyncPrimPerformer() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncPrimPerformer() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getTask_PerformedBy());
 		}
-		if (choices.getSyncAddnPerformer() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncAddnPerformer() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy());
 		}
-		if (choices.getSyncRespRole() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncRespRole() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getRole_ResponsibleFor());
 		}
-		if (choices.getSyncContArtifact() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncContArtifact() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts());
 		}
-		if (choices.getSyncDelivPart() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncDelivPart() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getDeliverable_DeliveredWorkProducts());
 		}
-		if (choices.getSyncSelStep() == SynchronizationChoices.SYNC_FROM_CONETNT){
+		if (choices.getSyncSelStep() == SynchronizationChoices.SYNC_FROM_CONTENT){
 			syncSet.add(UmaPackage.eINSTANCE.getTask_Steps());
+		}
+		if (choices.getSyncGuidance() == SynchronizationChoices.SYNC_FROM_CONTENT) {
+			syncSet.add(UmaPackage.eINSTANCE.getContentElement_Checklists());
+			syncSet.add(UmaPackage.eINSTANCE.getContentElement_ConceptsAndPapers());
+			syncSet.add(UmaPackage.eINSTANCE.getContentElement_Examples());
+			syncSet.add(UmaPackage.eINSTANCE.getContentElement_Guidelines());
+			syncSet.add(UmaPackage.eINSTANCE.getContentElement_Assets());
+			syncSet.add(UmaPackage.eINSTANCE.getContentElement_SupportingMaterials());
 		}
 	}
 }

@@ -13,6 +13,8 @@ package org.eclipse.epf.authoring.ui.wizards;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -43,6 +45,8 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 	private Button bc_contArtifact;
 	private Button bc_delivPart;
 	private Button bc_selStep;
+
+	private Button bc_guidance;
 	
 //	private Button[] br_presName = new Button[2];
 //	private Button[] br_optInput = new Button[2];
@@ -113,6 +117,8 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_selStep = createCheckbox(composite, AuthoringUIResources.synchronizationWizard_selectDetailsPage_selSteps_label); 
 //		createTwoRadioGroup(composite, br_selStep);
 		
+		bc_guidance = createCheckbox(composite, "Guidance");
+		
 		addListeners(composite);
 		setAllChecked();
 		
@@ -134,6 +140,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_contArtifact.setSelection(true);
 		bc_delivPart.setSelection(true);
 		bc_selStep.setSelection(true);	
+		bc_guidance.setSelection(true);
 	}
 	
 	/**
@@ -143,7 +150,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_name.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				if (bc_name.getSelection()) {
-						syncChoices.setSyncName(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncName(SynchronizationChoices.SYNC_FROM_CONTENT);
 				} else {
 					syncChoices.setSyncName(SynchronizationChoices.SYNC_NONE);
 				}
@@ -156,7 +163,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_presName[0].setEnabled(true);
 //					br_presName[1].setEnabled(true);
 //					if (br_presName[0].getSelection())
-						syncChoices.setSyncPresName(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncPresName(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncPresName(SynchronizationChoices.SYNC_FROM_PROCESS);
 				} else {
@@ -171,7 +178,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_briefDesc.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				if (bc_briefDesc.getSelection()) {
-						syncChoices.setSyncBriefDesc(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncBriefDesc(SynchronizationChoices.SYNC_FROM_CONTENT);
 				} else {
 					syncChoices.setSyncBriefDesc(SynchronizationChoices.SYNC_NONE);
 				}
@@ -184,7 +191,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_optInput[0].setEnabled(true);
 //					br_optInput[1].setEnabled(true);
 //					if (br_optInput[0].getSelection())
-						syncChoices.setSyncOptInput(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncOptInput(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncOptInput(SynchronizationChoices.SYNC_FROM_PROCESS);
 				} else {
@@ -203,7 +210,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_manInput[0].setEnabled(true);
 //					br_manInput[1].setEnabled(true);
 //					if (br_manInput[0].getSelection())
-						syncChoices.setSyncManInput(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncManInput(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncManInput(SynchronizationChoices.SYNC_FROM_PROCESS);
 //					
@@ -223,7 +230,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_output[0].setEnabled(true);
 //					br_output[1].setEnabled(true);
 //					if (br_output[0].getSelection())
-						syncChoices.setSyncOutput(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncOutput(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncOutput(SynchronizationChoices.SYNC_FROM_PROCESS);
 				} else {
@@ -239,7 +246,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_primPerformer.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				if (bc_primPerformer.getSelection()) {
-					syncChoices.setSyncPrimPerformer(SynchronizationChoices.SYNC_FROM_CONETNT);
+					syncChoices.setSyncPrimPerformer(SynchronizationChoices.SYNC_FROM_CONTENT);
 				} else {
 					syncChoices.setSyncPrimPerformer(SynchronizationChoices.SYNC_NONE);
 				}
@@ -250,7 +257,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_addnPerformer.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 					if (bc_addnPerformer.getSelection()) {
-						syncChoices.setSyncAddnPerformer(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncAddnPerformer(SynchronizationChoices.SYNC_FROM_CONTENT);
 					} else {
 						syncChoices.setSyncAddnPerformer(SynchronizationChoices.SYNC_NONE);
 					}
@@ -264,7 +271,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_respRole[0].setEnabled(true);
 //					br_respRole[1].setEnabled(true);
 //					if (br_respRole[0].getSelection())
-						syncChoices.setSyncRespRole(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncRespRole(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncRespRole(SynchronizationChoices.SYNC_FROM_PROCESS);
 				} else {
@@ -283,7 +290,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_contArtifact[0].setEnabled(true);
 //					br_contArtifact[1].setEnabled(true);
 //					if (br_contArtifact[0].getSelection())
-						syncChoices.setSyncContArtifact(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncContArtifact(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncContArtifact(SynchronizationChoices.SYNC_FROM_PROCESS);
 				} else {
@@ -302,7 +309,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_delivPart[0].setEnabled(true);
 //					br_delivPart[1].setEnabled(true);
 //					if (br_delivPart[0].getSelection())
-						syncChoices.setSyncDelivPart(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncDelivPart(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncDelivPart(SynchronizationChoices.SYNC_FROM_PROCESS);
 				} else {
@@ -321,7 +328,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 //					br_selStep[0].setEnabled(true);
 //					br_selStep[1].setEnabled(true);
 //					if (br_selStep[0].getSelection())
-						syncChoices.setSyncSelStep(SynchronizationChoices.SYNC_FROM_CONETNT);
+						syncChoices.setSyncSelStep(SynchronizationChoices.SYNC_FROM_CONTENT);
 //					else
 //						syncChoices.setSyncSelStep(SynchronizationChoices.SYNC_FROM_PROCESS);
 				} else {
@@ -330,6 +337,14 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 					syncChoices.setSyncSelStep(SynchronizationChoices.SYNC_NONE);
 				}
 //				System.out.println("$$$ " + syncChoices.toString());
+				setPageComplete(isPageComplete());
+			}
+		});
+		
+		bc_guidance.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				syncChoices.setSyncGuidance(bc_guidance.getSelection() ? SynchronizationChoices.SYNC_FROM_CONTENT : SynchronizationChoices.SYNC_NONE);
 				setPageComplete(isPageComplete());
 			}
 		});
@@ -426,7 +441,8 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 			syncChoices.getSyncRespRole() > 0 ||
 			syncChoices.getSyncContArtifact() > 0 ||
 			syncChoices.getSyncDelivPart() > 0 ||
-			syncChoices.getSyncSelStep() > 0) {
+			syncChoices.getSyncSelStep() > 0 ||
+			syncChoices.getSyncGuidance() > 0) {
 			return true;
 		} else {
 			return false;
