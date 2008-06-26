@@ -191,7 +191,7 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 		}
 		if (isSlot) {
 			elementXml.setAttribute(
-					"Type", "WorkProductSlot"); //$NON-NLS-1$
+					"Type", "WorkProductSlot"); //$NON-NLS-1$ //$NON-NLS-2$
 			elementXml.setAttribute(
 					"TypeName", LibraryResources.WorkProductSlot_text); //$NON-NLS-1$
 		}

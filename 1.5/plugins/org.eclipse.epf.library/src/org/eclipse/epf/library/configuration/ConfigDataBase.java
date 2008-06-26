@@ -166,7 +166,7 @@ public abstract class ConfigDataBase {
 	protected void setUpdatingChanges(boolean updatingChanges) {
 		this.updatingChanges = updatingChanges;
 		if (localDebug) {
-			System.out.println("LD> setUpdatingChanges: " + updatingChanges + ", " + getType());//$NON-NLS-1$	//$NON-NLS-2$									//$NON-NLS-1$
+			System.out.println("LD> setUpdatingChanges: " + updatingChanges + ", " + getType());//$NON-NLS-1$	//$NON-NLS-2$									
 		}
 	}
 	

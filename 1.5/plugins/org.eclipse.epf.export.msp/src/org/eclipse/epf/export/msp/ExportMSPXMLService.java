@@ -1220,7 +1220,7 @@ public class ExportMSPXMLService {
 	private BigInteger getLinkTypeInt(WorkOrder wo) {
 		if (wo == null) {
 			if (debug) {
-				System.out.println("Warning> getLinkTypeInt, wo == null.");
+				System.out.println("Warning> getLinkTypeInt, wo == null.");//$NON-NLS-1$
 			}
 			return null;
 		}

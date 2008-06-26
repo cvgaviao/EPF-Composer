@@ -567,7 +567,7 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 	{
 		Timer timer = null;
 		if (debug ){
-			System.out.println("START: generating diagram " + imgFile);
+			System.out.println("START: generating diagram " + imgFile);//$NON-NLS-1$
 			timer = new Timer();			
 		}
 		// generate diagram
@@ -597,7 +597,7 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			timer.stop();	
 			String msg = timer.getTime() + " mini seconds generating " + diagramType + " diagram"  ; //$NON-NLS-1$ //$NON-NLS-2$ 			
 			System.out.println(msg);
-			System.out.println("END: generating diagram " + imgFile);
+			System.out.println("END: generating diagram " + imgFile);//$NON-NLS-1$
 		}
 		
 		return diagram;

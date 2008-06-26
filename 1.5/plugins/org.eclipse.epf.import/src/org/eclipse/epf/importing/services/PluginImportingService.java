@@ -658,7 +658,7 @@ public class PluginImportingService {
 						Map<String, String> guidToPlugNameMap = importingLibDoc.getGuidToPlugNameMap();
 						String pluginName = guidToPlugNameMap == null ? null : guidToPlugNameMap.get(guid);
 						if (pluginName == null || pluginName.length() == 0) {
-							message = NLS.bind(ImportResources.PluginImportingService_MSG5, guid); 		//$NON-NLS-1$
+							message = NLS.bind(ImportResources.PluginImportingService_MSG5, guid); 		
 						} else {
 							message = NLS.bind(ImportResources.PluginImportingService_MSG5, 
 									pluginName + ", " + guid); 		//$NON-NLS-1$

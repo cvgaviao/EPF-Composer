@@ -47,7 +47,7 @@ public class HTMLFormatter {
 
 	private String lastErrorStr;
 	
-	private static final Pattern p_whitespace = Pattern.compile("^\\s+", Pattern.MULTILINE);
+	private static final Pattern p_whitespace = Pattern.compile("^\\s+", Pattern.MULTILINE); //$NON-NLS-1$
 
 	/*
 	 * String location = m.group(1);
@@ -284,6 +284,6 @@ public class HTMLFormatter {
 	}
 	
 	public static String removeLeadingWhitespace(String input) {
-		return p_whitespace.matcher(input).replaceAll("");
+		return p_whitespace.matcher(input).replaceAll(""); //$NON-NLS-1$
 	}
 }

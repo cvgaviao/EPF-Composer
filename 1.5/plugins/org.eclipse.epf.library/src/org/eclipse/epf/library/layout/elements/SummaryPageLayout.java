@@ -166,7 +166,7 @@ public class SummaryPageLayout implements IElementLayout {
 				.setAttribute("DisplayName", getDisplayName()); //$NON-NLS-1$
 		
 		if (typeName != null) {
-			elementXml.setAttribute("TypeName", typeName);
+			elementXml.setAttribute("TypeName", typeName);//$NON-NLS-1$
 		}
 
 		if (includeReferences) {

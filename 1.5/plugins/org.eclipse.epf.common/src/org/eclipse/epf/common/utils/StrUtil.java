@@ -158,7 +158,7 @@ public class StrUtil {
 				sb.append(c);
 			}
 		}
-		return sb.toString(); //$NON-NLS-1$
+		return sb.toString(); 
 	}
 
 	/**

@@ -239,8 +239,8 @@ public class SupportingElementData extends ConfigDataBase {
 	public boolean isSupportingElement(MethodElement element) {
 		boolean ret = isSupportingElement_(element);
 		if (localDebug1) {
-			System.out.println("LD> isSE: " + ret + 
-					", element: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ ////$NON-NLS-2$ 
+			System.out.println("LD> isSE: " + ret +  //$NON-NLS-1$
+					", element: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ 
 		}
 		return ret;
 	}
@@ -296,7 +296,7 @@ public class SupportingElementData extends ConfigDataBase {
 			supportingElements.add(element);
 			if (localDebug1) {
 				System.out
-						.println("LD> supportingElements added: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ ////$NON-NLS-2$ 
+						.println("LD> supportingElements added: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ 
 			}
 			if (newSupportingElements != null) {
 				newSupportingElements.add(element);

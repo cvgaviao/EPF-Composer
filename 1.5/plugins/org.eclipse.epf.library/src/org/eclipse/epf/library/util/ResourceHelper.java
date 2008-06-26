@@ -592,7 +592,7 @@ public class ResourceHelper {
 				String xslPath = null;
 
 				if ((LAYOUT_XSL_ROOT_PATH == null)
-						|| (LAYOUT_XSL_ROOT_PATH.equals(""))) {
+						|| (LAYOUT_XSL_ROOT_PATH.equals(""))) {//$NON-NLS-1$
 					LAYOUT_XSL_ROOT_PATH = BrowsingLayoutSettings.INSTANCE.getXslPath()
 							.getAbsolutePath();
 				}
@@ -618,7 +618,7 @@ public class ResourceHelper {
 
 				String type = getElementTypeText(element);
 				String key = type.substring(0, 1).toLowerCase()
-						+ type.substring(1) + "Text";
+						+ type.substring(1) + "Text";//$NON-NLS-1$
 				String value = browsingResource.getProperty(key);
 				if (value != null) {
 					return value + LibraryResources.colon_with_space + text;

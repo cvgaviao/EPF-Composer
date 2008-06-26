@@ -88,7 +88,7 @@ public class MethodLibraryItemProvider extends
 				.createMethodPlugin()));
 	}
 
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
+	@SuppressWarnings("unchecked") 
 	public Collection<?> getChildren(Object object) {
 		List<Object> children;
 		if (object instanceof MethodLibrary && !PluginUIPackageContext.INSTANCE.isFlatLayout()) {

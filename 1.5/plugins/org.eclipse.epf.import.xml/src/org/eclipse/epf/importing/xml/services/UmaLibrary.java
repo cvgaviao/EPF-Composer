@@ -229,7 +229,7 @@ public class UmaLibrary {
 		boolean isOld = obj != null;
 		if (obj == null) {
 			Map options = new HashMap();
-			options.put("renameElementMap", renameElementMap);
+			options.put("renameElementMap", renameElementMap);//$NON-NLS-1$
 			obj = LibraryService.INSTANCE.createPlugin(name, id, options);
 
 			setElement(id, obj);

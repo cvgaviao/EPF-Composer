@@ -1109,13 +1109,13 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			
 			if (value != null && value.length() > 0) {
 				descXml
-				.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ 
 			}
 			att = UmaPackage.eINSTANCE.getWorkProductDescriptor_ActivityExitState();
 			value = (String) aLayout.getAttributeFeatureValue(att);
 			if (value != null && value.length() > 0) {
 				descXml
-				.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.newChild("attribute").setAttribute(att.getName(), value); //$NON-NLS-1$ 
 			}
 		}
 		
