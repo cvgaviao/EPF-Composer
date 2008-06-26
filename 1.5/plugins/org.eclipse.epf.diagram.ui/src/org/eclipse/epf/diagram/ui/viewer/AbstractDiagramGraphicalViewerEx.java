@@ -150,9 +150,11 @@ public abstract class AbstractDiagramGraphicalViewerEx extends
 				for (Iterator<?> iterator = editPart.getChildren().iterator(); iterator.hasNext();) {
 					EditPart name = (EditPart) iterator.next();
 					View view = (View)name.getModel();
-					System.out.println(view.getType() +":" + ViewUtil.getStructuralFeatureValue(view,
-						NotationPackage.eINSTANCE.getLocation_X()) + "," + ViewUtil.getStructuralFeatureValue(view,
+					if (debug) {
+						System.out.println(view.getType() +":" + ViewUtil.getStructuralFeatureValue(view,		//$NON-NLS-1$
+								NotationPackage.eINSTANCE.getLocation_X()) + "," + ViewUtil.getStructuralFeatureValue(view,		//$NON-NLS-1$
 								NotationPackage.eINSTANCE.getLocation_Y()));
+					}
 				}
 			}
 		}

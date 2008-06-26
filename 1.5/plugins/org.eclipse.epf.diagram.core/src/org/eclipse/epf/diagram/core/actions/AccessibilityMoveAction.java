@@ -44,10 +44,10 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class AccessibilityMoveAction extends DiagramAction {
 
-	public static final String MOVE_LEFT_ACTION = "move_left_action";
-	public static final String MOVE_RIGHT_ACTION = "move_right_action";
-	public static final String MOVE_DOWN_ACTION = "move_down_action";
-	public static final String MOVE_UP_ACTION = "move_up_action";
+	public static final String MOVE_LEFT_ACTION = "move_left_action";		//$NON-NLS-1$
+	public static final String MOVE_RIGHT_ACTION = "move_right_action";		//$NON-NLS-1$
+	public static final String MOVE_DOWN_ACTION = "move_down_action";		//$NON-NLS-1$		
+	public static final String MOVE_UP_ACTION = "move_up_action";			//$NON-NLS-1$
 	
 	private int direction;
 	

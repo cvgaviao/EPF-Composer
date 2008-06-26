@@ -35,7 +35,7 @@ import org.eclipse.gmf.runtime.notation.View;
 public class ChangeBoundsCommand extends Command implements
 		IResourceAwareCommand {
 
-	private static final String label = "change bounds command label";
+	private static final String label = "change bounds command label";	//$NON-NLS-1$
 
 	private TransactionalEditingDomain domain;
 

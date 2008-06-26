@@ -414,7 +414,7 @@ public class RoleTaskCompositeImpl extends NodeContainerImpl implements
 	private void removeNode(Object oldValue) {
 		org.eclipse.epf.diagram.model.Diagram diagram = getDiagram();
 		if(diagram == null) {
-			System.err.println("RoleTaskCompositeImpl.removeNode(): [ERROR] no diagram");
+			System.err.println("RoleTaskCompositeImpl.removeNode(): [ERROR] no diagram"); //$NON-NLS-1$
 		}
 		Collection removedNodes = new HashSet();
 		for (Iterator iter = nodes.iterator(); iter.hasNext();) {

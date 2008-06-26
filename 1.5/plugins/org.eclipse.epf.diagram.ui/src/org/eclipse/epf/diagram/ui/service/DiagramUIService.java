@@ -262,7 +262,7 @@ public class DiagramUIService implements IDiagramUIService {
 		if (obj instanceof org.eclipse.uml2.uml.Activity) {
 			parentActivity = (org.eclipse.uml2.uml.Activity) obj;
 		}
-		String name = "";
+		String name = "";	//$NON-NLS-1$
 		if(e.getPresentationName() != null){
 			name = e.getPresentationName();
 		}else{
