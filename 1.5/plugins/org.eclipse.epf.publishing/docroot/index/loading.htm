@@ -37,11 +37,12 @@
 
 <script language="JavaScript">
 <!--
+var already_using_frames_MSG="The Eclipse Process Framework is already displayed using frames";
 function loadTop()
 {
   if(parent.frames.length!=0 && parent.frames[1].name=="ory_toc")
   {
-     alert("The Eclipse Process Framework is already displayed using frames");
+     alert(already_using_frames_MSG);
   }
   else
   {
@@ -121,8 +122,21 @@ MSFPhover =
     }
 // -->
 </script>
+</script>
+<script language="JavaScript">
+//<!--
+   var displayFramesMsg="Display Eclipse Process Framework using frames";
+   function mouseOver()
+   {
+   		if(MSFPhover) 
+   			document['Home'].src=RupBlue.src; 
+   		self.status=displayFramesMsg; 
+   		return true;
+   }
+// -->
+</script>
 
-<a href="JavaScript:loadTop();" onmouseover="if(MSFPhover) document['Home'].src=RupBlue.src; self.status='Display Eclipse Process Framework using frames'; return true" onmouseout="if(MSFPhover) document['Home'].src=RupGray.src; self.status= ' ';return true">
+<a href="JavaScript:loadTop();" onmouseover="JavaScript:mouseOver();" onmouseout="if(MSFPhover) document['Home'].src=RupGray.src; self.status= ' ';return true">
 <p>
 <img src="../images/rup1.gif" border="0" alt="Display Eclipse Process Framework using frames" name="Home" width="20" height="110"></p></a>
 </td></tr></table><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td>
