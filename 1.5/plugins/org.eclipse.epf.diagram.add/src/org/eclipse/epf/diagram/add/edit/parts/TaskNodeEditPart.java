@@ -321,7 +321,7 @@ public class TaskNodeEditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	public static final Font TASKNODENAMEFIGURE_FONT = new Font(Display
-			.getCurrent(), "Arial", 8, SWT.NORMAL);
+			.getCurrent(), "Arial", 8, SWT.NORMAL);	//$NON-NLS-1$
 
 	/**
 	 * @generated

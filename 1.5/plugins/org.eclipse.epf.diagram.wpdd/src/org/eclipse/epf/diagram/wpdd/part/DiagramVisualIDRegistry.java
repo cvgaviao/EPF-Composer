@@ -86,7 +86,7 @@ public class DiagramVisualIDRegistry {
 			if (Boolean.TRUE.toString().equalsIgnoreCase(
 					Platform.getDebugOption(DEBUG_KEY))) {
 				WPDDiagramEditorPlugin.getInstance().logError(
-						"Unable to parse view type as a visualID number: "
+						"Unable to parse view type as a visualID number: "	//$NON-NLS-1$
 								+ type);
 			}
 		}

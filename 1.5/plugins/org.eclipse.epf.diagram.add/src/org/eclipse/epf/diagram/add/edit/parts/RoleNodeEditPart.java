@@ -346,6 +346,6 @@ public class RoleNodeEditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	public static final Font ROLENODENAMEFIGURE_FONT = new Font(Display
-			.getCurrent(), "Arial", 8, SWT.NORMAL);
+			.getCurrent(), "Arial", 8, SWT.NORMAL); //$NON-NLS-1$
 
 }

@@ -340,7 +340,7 @@ public class WorkProductDescriptorNodeEditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	public static final Font WORKPRODUCTNODENAMEFIGURE_FONT = new Font(Display
-			.getCurrent(), "Arial", 8, SWT.NORMAL);
+			.getCurrent(), "Arial", 8, SWT.NORMAL);	//$NON-NLS-1$
 
 	/**
 	 * @generated
