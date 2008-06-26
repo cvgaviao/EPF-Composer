@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class LibraryEditUIPlugin extends AbstractPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.epf.library.edit.ui";
+	public static final String PLUGIN_ID = "org.eclipse.epf.library.edit.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static LibraryEditUIPlugin plugin;

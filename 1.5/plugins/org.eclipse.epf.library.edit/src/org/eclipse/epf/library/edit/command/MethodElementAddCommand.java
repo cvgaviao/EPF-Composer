@@ -811,7 +811,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				};
 				IUserInteractionHandler uiHandler = ExtensionManager.getDefaultUserInteractionHandler();
 				if(uiHandler != null) {
-					UserInput input = new UserInput("", UserInput.TEXT, false, null, null, inputValidator, null);
+					UserInput input = new UserInput("", UserInput.TEXT, false, null, null, inputValidator, null); //$NON-NLS-1$
 					input.setInput(currentValue);
 					List<UserInput> userInputs = Collections.singletonList(input);
 					if(uiHandler.requestInput(title, dlgMsg, userInputs)) {

@@ -233,7 +233,7 @@ public class ActivityDropCommand extends BSDropCommand {
 		}
 		
 		if(TngUtil.DEBUG) {
-			System.out.println("ActivityDropCommand.execute(): done");
+			System.out.println("ActivityDropCommand.execute(): done"); //$NON-NLS-1$
 		}
 	}
 
@@ -379,7 +379,7 @@ public class ActivityDropCommand extends BSDropCommand {
 		}
 		activity.getBreakdownElements().addAll(appliedActivities);
 		if(TngUtil.DEBUG) {
-			System.out.println("ActivityDropCommand.doExecute(): new activities added. " + (System.currentTimeMillis() - time));
+			System.out.println("ActivityDropCommand.doExecute(): new activities added. " + (System.currentTimeMillis() - time)); //$NON-NLS-1$
 		}
 		if(!activityHandler.getDeepCopies().isEmpty()) {
 			if(TngUtil.DEBUG) {
@@ -387,7 +387,7 @@ public class ActivityDropCommand extends BSDropCommand {
 			}
 			postDeepCopy();
 			if(TngUtil.DEBUG) {
-				System.out.println("ActivityDropCommand.doExecute(): postDeepCopy(). " + (System.currentTimeMillis() - time));
+				System.out.println("ActivityDropCommand.doExecute(): postDeepCopy(). " + (System.currentTimeMillis() - time)); //$NON-NLS-1$
 			}
 		}
 

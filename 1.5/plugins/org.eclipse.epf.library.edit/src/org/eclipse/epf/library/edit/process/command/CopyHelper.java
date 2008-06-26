@@ -137,9 +137,6 @@ public class CopyHelper extends CopyCommand.Helper {
 	}		
 
 	public void putWrapperCopy(String guidPath, BreakdownElement e) {
-		if(e.getName().equals("close-out_project")) {
-			System.out.println();
-		}
 		wrapperPathToCopyMap .put(guidPath, e);
 	}
 	

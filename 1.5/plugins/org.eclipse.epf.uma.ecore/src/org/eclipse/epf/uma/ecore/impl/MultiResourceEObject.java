@@ -176,11 +176,11 @@ public class MultiResourceEObject extends EDataObjectImpl implements
 				if (DEBUG) {
 					CommonPlugin.INSTANCE.log(e);
 					e.printStackTrace();
-					System.out.println("MultiResourceEObject.replace():");
-					System.out.println("  object: " + this);
-					System.out.println("  feature: " + feature);
-					System.out.println("  proxy: " + oldValue);
-					System.out.println("  resolved: " + newValue);
+					System.out.println("MultiResourceEObject.replace():"); //$NON-NLS-1$
+					System.out.println("  object: " + this); //$NON-NLS-1$
+					System.out.println("  feature: " + feature); //$NON-NLS-1$
+					System.out.println("  proxy: " + oldValue); //$NON-NLS-1$
+					System.out.println("  resolved: " + newValue); //$NON-NLS-1$
 				}
 			} finally {
 				eSetDeliver(notify);

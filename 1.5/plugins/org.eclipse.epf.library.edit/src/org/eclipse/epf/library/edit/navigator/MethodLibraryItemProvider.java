@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
 import org.eclipse.epf.library.edit.util.Comparators;
@@ -87,7 +88,7 @@ public class MethodLibraryItemProvider extends
 				.createMethodPlugin()));
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public Collection<?> getChildren(Object object) {
 		List<Object> children;
 		if (object instanceof MethodLibrary && !PluginUIPackageContext.INSTANCE.isFlatLayout()) {

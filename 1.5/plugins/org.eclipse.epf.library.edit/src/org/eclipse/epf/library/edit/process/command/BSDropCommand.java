@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.edit.IConfigurationApplicator;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.command.BatchCommand;
 import org.eclipse.epf.library.edit.command.INestedCommandProvider;
@@ -612,7 +613,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 			}
 			nestedCommandExcecutor.executeNestedCommands();
 			if(TngUtil.DEBUG) {
-				System.out.println("BSDropCommand.redo(): executeNestedCommands(). " + (System.currentTimeMillis() - time));
+				System.out.println("BSDropCommand.redo(): executeNestedCommands(). " + (System.currentTimeMillis() - time)); //$NON-NLS-1$
 			}
 			
 			executed = true;

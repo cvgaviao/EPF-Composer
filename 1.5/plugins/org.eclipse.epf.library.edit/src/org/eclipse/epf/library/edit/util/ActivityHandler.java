@@ -34,6 +34,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryTreeIterator;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.edit.IConfigurator;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDeepCopyCommand;
@@ -181,9 +182,9 @@ public class ActivityHandler {
 						cmd.execute();
 						if (TngUtil.DEBUG) {
 							System.out
-									.println("ActivityDeepCopyCommand executed: "
+									.println("ActivityDeepCopyCommand executed: " //$NON-NLS-1$
 											+ (System.currentTimeMillis() - time)
-											+ " ms");
+											+ " ms"); //$NON-NLS-1$
 							time = System.currentTimeMillis();
 						}
 						Collection<?> result = cmd.getResult();
@@ -194,17 +195,17 @@ public class ActivityHandler {
 									.fixBreakdonwElementOrderRecursively(deepCopy);
 							if (TngUtil.DEBUG) {
 								System.out
-										.println("ProcessUtil.fixBreakdonwElementOrderRecursively(): "
+										.println("ProcessUtil.fixBreakdonwElementOrderRecursively(): " //$NON-NLS-1$
 												+ (System.currentTimeMillis() - time)
-												+ " ms");
+												+ " ms"); //$NON-NLS-1$
 								time = System.currentTimeMillis();
 							}
 							cmd.copySuppressionStates();
 							if (TngUtil.DEBUG) {
 								System.out
-										.println("ActivityDeepCopyCommand.copySuppressionStates(): "
+										.println("ActivityDeepCopyCommand.copySuppressionStates(): " //$NON-NLS-1$
 												+ (System.currentTimeMillis() - time)
-												+ " ms");
+												+ " ms"); //$NON-NLS-1$
 								time = System.currentTimeMillis();
 							}
 							deepCopies.add(deepCopy);

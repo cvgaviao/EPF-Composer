@@ -25,6 +25,7 @@ import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -360,7 +361,7 @@ public class PracticeItemProvider extends
 		}
 		
 		public List<?> nestedGrouping(Object parentObject, String key, List<?> subgroupChildren) {
-			if (! key.equals(PracticeItemProvider.getUIString("_UI_Guidances_group"))) {
+			if (! key.equals(PracticeItemProvider.getUIString("_UI_Guidances_group"))) { //$NON-NLS-1$
 				return subgroupChildren;
 			}
 			

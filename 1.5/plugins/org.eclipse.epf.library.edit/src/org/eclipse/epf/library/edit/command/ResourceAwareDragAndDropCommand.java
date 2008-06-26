@@ -63,7 +63,7 @@ implements IResourceAwareCommand
 	 * 
 	 * @see com.ibm.library.edit.command.IResourceAwareCommand#getModifiedResources()
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public Collection<Resource> getModifiedResources() {
 		if(modifiedResources == null) {
 			if(dropCommand != null) {
