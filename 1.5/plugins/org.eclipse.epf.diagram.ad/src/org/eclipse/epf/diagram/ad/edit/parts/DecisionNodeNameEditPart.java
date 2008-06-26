@@ -636,7 +636,7 @@ public class DecisionNodeNameEditPart extends CompartmentEditPart implements
 		 */
 		public NodeNameFigure() {
 
-			this.setText("");
+			this.setText("");		//$NON-NLS-1$
 			createContents();
 		}
 

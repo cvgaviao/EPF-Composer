@@ -153,7 +153,7 @@ public class ActivityXYLayoutEditPolicy extends XYLayoutEditPolicy {
 							}
 						}else{
 							if (ActivityDiagramEditorPlugin.getInstance().isDebugging()) {
-								System.out.println("LayoutConstraint: "+ lConstaint);
+								System.out.println("LayoutConstraint: "+ lConstaint); //$NON-NLS-1$
 							}
 						}
 					}
@@ -244,7 +244,7 @@ public class ActivityXYLayoutEditPolicy extends XYLayoutEditPolicy {
 		
 		public ReparentingElementsCommand(MoveRequest req, EObject element, View view, 
 				IGraphicalEditPart oldParent) {
-			this("reparent on move", element, req);
+			this("reparent on move", element, req); //$NON-NLS-1$
 			this.oldParent = oldParent;
 			this.view = view;
 		}

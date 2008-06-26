@@ -156,7 +156,7 @@ public class ActivityEditPart extends DiagramEditPart {
 		} catch (Exception e) {
 			if (ActivityDiagramEditorPlugin.getInstance().isDebugging()) {
 				ActivityDiagramEditorPlugin.getInstance().getLogger().logError(
-						"Error occured while refresh the connection: " + e);
+						"Error occured while refresh the connection: " + e); //$NON-NLS-1$
 			}
 		}
 	}
