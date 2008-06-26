@@ -119,7 +119,7 @@ public class PublishingContentValidator extends DefaultContentValidator {
 
 	static final String INFO_LOG_FILENAME = "info.log"; //$NON-NLS-1$
 
-	static final String CORE_NET_BUNDLE = "org.eclipse.core.net";
+	static final String CORE_NET_BUNDLE = "org.eclipse.core.net"; //$NON-NLS-1$
 
 	protected File logPath;
 
@@ -283,13 +283,13 @@ public class PublishingContentValidator extends DefaultContentValidator {
 							} catch (Exception e) {
 								if (exceptionMessage == null)
 								{
-									exceptionMessage = proxy.getHost() + ":"
-											+ proxy.getPort() + "[" + proxyType
-											+ "]:" + e.getMessage();
+									exceptionMessage = proxy.getHost() + ":" //$NON-NLS-1$
+											+ proxy.getPort() + "[" + proxyType //$NON-NLS-1$
+											+ "]:" + e.getMessage(); //$NON-NLS-1$
 								} else {
-									exceptionMessage += ";" + proxy.getHost()
-											+ ":" + proxy.getPort() + "["
-											+ proxyType + "]:" + e.getMessage();
+									exceptionMessage += ";" + proxy.getHost() //$NON-NLS-1$
+											+ ":" + proxy.getPort() + "["		//$NON-NLS-1$ //$NON-NLS-2$
+											+ proxyType + "]:" + e.getMessage(); //$NON-NLS-1$
 								}
 							}
 						}
