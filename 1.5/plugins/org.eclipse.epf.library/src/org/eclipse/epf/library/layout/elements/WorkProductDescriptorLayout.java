@@ -25,10 +25,10 @@ import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
-import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
-import org.eclipse.epf.uma.DescriptorDescription;
+import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.ProcessElement;
@@ -173,7 +173,11 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 	 */
 	public XmlElement getXmlElement(boolean includeReferences) {
 		XmlElement elementXml = super.getXmlElement(includeReferences);
-
+		
+		if (includeReferences) {
+			includeContainedWpdReferences(elementXml);
+		}
+		
 		WorkProductDescriptor wpd = null;
 		WorkProduct wp = null;
 
@@ -275,36 +279,43 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 			}
 		}
 		return ret;
-	}
-		
-	protected void processGrandChild(Object feature,
-			MethodElement childElememt, IElementLayout childLayout,
-			XmlElement childXmlElement) {
+	}		
 
-		if (!(childLayout instanceof DescriptorDescriptionLayout)
-				|| childXmlElement == null
-				|| !(childElememt instanceof DescriptorDescription)
-				|| feature != UmaPackage.eINSTANCE.getDescribableElement_Presentation()) {
+	private void includeContainedWpdReferences(XmlElement elementXml) {
+		WorkProductDescriptor wpd = getElement() instanceof WorkProductDescriptor ?
+				(WorkProductDescriptor) getElement() : null;
+		if (wpd == null) {
 			return;
-		}
-	
-		if (! (getElement() instanceof WorkProductDescriptor)) {
-			return;
-		}
-		WorkProduct wp = ((WorkProductDescriptor) getElement()).getWorkProduct();
+		}		
+		WorkProduct wp = wpd.getWorkProduct();
 		if (! (wp instanceof Artifact)) {
 			return;
 		}
 		
-		EStructuralFeature aListFeature = UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts();						
-		DescriptorDescriptionLayout ddChildLayout = (DescriptorDescriptionLayout) childLayout;
-		ElementRealizer realizer = ddChildLayout.layoutManager
-				.getElementRealizer();
-		List aList = ddChildLayout.calc0nFeatureValue(wp, null, aListFeature, realizer);
-		ddChildLayout.addReferences(aListFeature, childXmlElement, aListFeature
-				.getName(), aList);
+		EStructuralFeature containerFeature = UmaPackage.eINSTANCE.getArtifact_ContainerArtifact();
+		Artifact containerArtifact = (Artifact) ConfigurationHelper.calc01FeatureValue(wp, null,
+				containerFeature, layoutManager.getElementRealizer());
+				
+		EStructuralFeature feature = UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts();						
+		List<WorkProductDescriptor> wpdList = new ArrayList<WorkProductDescriptor>();
+		Activity superAct = wpd.getSuperActivities();
+		for (BreakdownElement be: superAct.getBreakdownElements()) {
+			if (be instanceof WorkProductDescriptor) {
+				WorkProduct wpBe = ((WorkProductDescriptor) be).getWorkProduct();
+				if (wpBe instanceof Artifact) {
+					if (((Artifact) wpBe).getContainerArtifact() == wp) {
+						wpdList.add((WorkProductDescriptor) be);
+					}
+					if (containerArtifact != null && containerArtifact == wpBe) {
+						containerArtifact = null;
+						processChild(containerFeature, elementXml
+								.newChild(TAG_REFERENCE).setAttribute("name", containerFeature.getName()), be, false); //$NON-NLS-1$ 
+					}
+				}
+			}
+		}
+				
+		addReferences(feature, elementXml, feature.getName(), wpdList);
 	}
-
-
 	
 }
