@@ -73,7 +73,7 @@ public class MethodElementEditorInput implements IEditorInput, IMethodElementPro
 	public String getFullName() {
 		String result = getName();
 		if (fModalObjectFeature != null) {
-			result += ".";
+			result += ".";	//$NON-NLS-1$
 			result += fModalObjectFeature.getName();
 		}
 		return result;

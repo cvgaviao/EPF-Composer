@@ -128,7 +128,7 @@ public class MethodLibraryActionBarContributor extends
 	public MethodLibraryActionBarContributor() {
 		loadResourceAction = new LoadResourceAction();
 		validateAction = new LibraryValidateAction();
-		this.name = "MethodElementEditor";
+		this.name = "MethodElementEditor";  	//$NON-NLS-1$
 	}
 	
 	/**

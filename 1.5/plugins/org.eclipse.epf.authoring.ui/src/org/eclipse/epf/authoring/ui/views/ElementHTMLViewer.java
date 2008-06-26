@@ -385,7 +385,7 @@ public class ElementHTMLViewer {
 	private String fixPath(String path) {
 		try {
 			String platform = SWT.getPlatform();
-			if ("win32".equals(platform) || "wpf".equals(platform)) { //$NON-NLS-1$ $NON-NLS-2$
+			if ("win32".equals(platform) || "wpf".equals(platform)) { //$NON-NLS-1$ //$NON-NLS-2$
 			// org.eclipse.swt.browser.IE
 				path = URLDecoder.decode(path, "ISO-8859-1"); //$NON-NLS-1$
 			} else {

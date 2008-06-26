@@ -171,7 +171,7 @@ public class ConfigurationView extends AbstractBaseView implements
 	 */
 	private List<Action> loadMenuActionProviders() {
 		if (menuActionProviders == null) {
-			menuActionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "configurationViewMenuProvider", Action.class);
+			menuActionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "configurationViewMenuProvider", Action.class); //$NON-NLS-1$	
 		}
 		return menuActionProviders;
 	}

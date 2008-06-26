@@ -43,7 +43,6 @@ import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
-import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
@@ -51,7 +50,6 @@ import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
-import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
@@ -97,7 +95,7 @@ import org.eclipse.ui.ide.IGotoMarker;
 
 public class ConfigurationPage extends FormPage implements IGotoMarker {
 	
-	public static final String TOUCHED_BY_CONFIG_EDITOR = "TouchedByConfigEditor";
+	public static final String TOUCHED_BY_CONFIG_EDITOR = "TouchedByConfigEditor";	//$NON-NLS-1$	
 	
 	private String formPrefix = AuthoringUIResources.ConfigurationPage_FormPrefix; 
 

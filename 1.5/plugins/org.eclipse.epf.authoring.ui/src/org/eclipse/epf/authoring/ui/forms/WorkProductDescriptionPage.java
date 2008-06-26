@@ -731,7 +731,6 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 				IFilter filter = new WorkProductFilter() {
 					protected boolean childAccept(Object obj) {
 						if (obj instanceof WorkProduct) {
-							System.out.println(obj + " " + ((WorkProduct) obj).getIsAbstract());
 							return ((WorkProduct) obj).getIsAbstract().booleanValue();
 						}
 						return false;

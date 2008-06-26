@@ -117,7 +117,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_selStep = createCheckbox(composite, AuthoringUIResources.synchronizationWizard_selectDetailsPage_selSteps_label); 
 //		createTwoRadioGroup(composite, br_selStep);
 		
-		bc_guidance = createCheckbox(composite, "Guidance");
+		bc_guidance = createCheckbox(composite, AuthoringUIResources.synchronizationWizard_selectDetailsPage_selGuidance_label);
 		
 		addListeners(composite);
 		setAllChecked();

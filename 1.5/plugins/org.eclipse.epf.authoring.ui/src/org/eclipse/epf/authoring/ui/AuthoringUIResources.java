@@ -1604,6 +1604,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String synchronizationWizard_selectDetailsPage_dilvedParts_label;
 
 	public static String synchronizationWizard_selectDetailsPage_selSteps_label;
+	
+	public static String synchronizationWizard_selectDetailsPage_selGuidance_label;
 
 	public static String synchronizationWizard_selectDetailsPage_text;
 

@@ -793,7 +793,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 */
 	private List<ISectionProvider> loadSectionProviders() {
 		if (sectionProviders == null) {
-			sectionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "descriptionPageSectionProvider", ISectionProvider.class);
+			sectionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "descriptionPageSectionProvider", ISectionProvider.class); //$NON-NLS-1$	
 		}
 		return sectionProviders;
 	}
@@ -838,7 +838,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					if (providerClass instanceof IColumnProvider) {
 						columnProvider = (IColumnProvider) providerClass;
 						
-						if (alignment.equals("left")) {
+						if (alignment.equals("left")) {	//$NON-NLS-1$	
 							createSectionComposite(mainComposite, width,
 									100);
 
@@ -857,7 +857,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 								columnComposite.setLayout(layout);
 							}						
 						}
-						if (alignment.equals("right")) {
+						if (alignment.equals("right")) { //$NON-NLS-1$	
 							createSectionComposite(mainComposite, 0,
 									100 - width);
 
