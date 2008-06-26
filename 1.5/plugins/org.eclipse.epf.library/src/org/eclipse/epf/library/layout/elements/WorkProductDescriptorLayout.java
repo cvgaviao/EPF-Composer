@@ -25,7 +25,10 @@ import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
+import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
+import org.eclipse.epf.uma.Artifact;
+import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.ProcessElement;
@@ -273,5 +276,35 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 		}
 		return ret;
 	}
+		
+	protected void processGrandChild(Object feature,
+			MethodElement childElememt, IElementLayout childLayout,
+			XmlElement childXmlElement) {
+
+		if (!(childLayout instanceof DescriptorDescriptionLayout)
+				|| childXmlElement == null
+				|| !(childElememt instanceof DescriptorDescription)
+				|| feature != UmaPackage.eINSTANCE.getDescribableElement_Presentation()) {
+			return;
+		}
+	
+		if (! (getElement() instanceof WorkProductDescriptor)) {
+			return;
+		}
+		WorkProduct wp = ((WorkProductDescriptor) getElement()).getWorkProduct();
+		if (! (wp instanceof Artifact)) {
+			return;
+		}
+		
+		EStructuralFeature aListFeature = UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts();						
+		DescriptorDescriptionLayout ddChildLayout = (DescriptorDescriptionLayout) childLayout;
+		ElementRealizer realizer = ddChildLayout.layoutManager
+				.getElementRealizer();
+		List aList = ddChildLayout.calc0nFeatureValue(wp, null, aListFeature, realizer);
+		ddChildLayout.addReferences(aListFeature, childXmlElement, aListFeature
+				.getName(), aList);
+	}
+
+
 	
 }

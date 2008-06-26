@@ -56,6 +56,8 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -767,6 +769,13 @@ public class ResourceHelper {
 	public static String validateContent(MethodElement element, String source,
 			IContentValidator validator, MethodConfiguration config, String layoutXslRootPath) {
 		
+		if (element instanceof WorkProductDescriptor && validator.showExtraInfoForDescriptors()) {
+			WorkProduct wp = ((WorkProductDescriptor) element).getWorkProduct();
+			if (wp != null) {
+				validator.addReferencedElement(element, wp);
+			}
+		}		
+				
 		try {
 			ResourceHelper.LAYOUT_XSL_ROOT_PATH = layoutXslRootPath;
 			showSkinResource = true;
