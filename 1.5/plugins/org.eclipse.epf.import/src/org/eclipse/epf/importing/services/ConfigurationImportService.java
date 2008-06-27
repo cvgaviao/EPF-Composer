@@ -128,15 +128,6 @@ public class ConfigurationImportService {
 			}
 						
 			importingLibDoc = new LibraryDocument(importingLibPath);
-			
-			if (! handleVersion) {
-				String versionError = versionCheck(importingLibPath.getAbsolutePath(), 
-										ImportResources.importConfigWizard_title);
-				if (versionError != null) {
-					data.getErrorInfo().addError(versionError);
-					return;
-				}
-			}
 
 			boolean isConfigSpecs = importingLibDoc.isConfigSpecsOnly();
 
