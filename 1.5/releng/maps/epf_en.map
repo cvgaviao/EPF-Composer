@@ -1,10 +1,10 @@
-feature@org.eclipse.epf.base.feature=v20080627-0957,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
+feature@org.eclipse.epf.base.feature=v20080627-1117,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
 feature@org.eclipse.epf.doc.feature=v20080624-1311,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
 feature@org.eclipse.epf.platform.feature=v20080624-1311,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
 feature@org.eclipse.epf.rcp.feature=v20080624-1311,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
 feature@org.eclipse.epf.richtext.feature=v20080624-1311,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.richtext.feature
 feature@org.eclipse.epf.product.feature=v20080514-2203,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.product.feature
-plugin@org.eclipse.epf.authoring.ui=v20080626-1414,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.authoring.ui
+plugin@org.eclipse.epf.authoring.ui=v20080627-1117,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.authoring.ui
 plugin@org.eclipse.epf.base=v20080625-1424,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.base
 plugin@org.eclipse.epf.common=v20080626-1457,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.common
 plugin@org.eclipse.epf.common.service=v20080501-1433,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.common.service
