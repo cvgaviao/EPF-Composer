@@ -48,6 +48,7 @@ public class ToolDescriptionPage extends DescriptionFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		tool = (Tool) contentElement;
+		setExternalIDOn(true);
 	}
 
 	/**

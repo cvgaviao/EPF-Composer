@@ -1556,6 +1556,38 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				}
 			});
 		}
+		
+		if (externalIdOn) {
+			ctrl_external_id.addModifyListener(contentModifyListener);
+			ctrl_external_id.addFocusListener(new FocusAdapter() {
+				public void focusGained(FocusEvent e) {
+					((MethodElementEditor) getEditor())
+							.setCurrentFeatureEditor(e.widget,
+									UmaPackage.eINSTANCE
+											.getContentDescription_ExternalId());
+				}
+
+				public void focusLost(FocusEvent e) {
+					String oldContent =  contentElement.getPresentation().getExternalId();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							ctrl_external_id, oldContent)) {
+						return;
+					}
+					String newContent = ctrl_external_id.getText();
+					if (!newContent.equals(oldContent)) {
+						boolean success = actionMgr.doAction(
+								IActionManager.SET, contentElement
+										.getPresentation(),
+								UmaPackage.eINSTANCE
+										.getContentDescription_ExternalId(),
+								newContent, -1);
+						if (success && isVersionSectionOn()) {
+							updateChangeDate();
+						}
+					}
+				}
+			});
+		}
 	}
 
 	protected IValidator getNameValidator() {
@@ -1723,6 +1755,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			ctrl_brief_desc.setText(brief_desc == null ? "" : brief_desc); //$NON-NLS-1$
 		}
 		
+		if (externalIdOn) {
+			if (contentElement != null) {
+				String external_id = contentElement.getPresentation().getExternalId();
+				ctrl_external_id.setText(external_id == null ? "" : external_id); //$NON-NLS-1$
+			}
+		}
+		
 		if (publishCategoryOn) {
 			MethodElementProperty prop = TngUtil.getPublishCategoryProperty(methodElement);
 			if (prop != null) {
@@ -1849,6 +1888,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 	public void setBriefDescOn(boolean briefDescOn) {
 		this.briefDescOn = briefDescOn;
+	}
+	
+	public void setExternalIDOn(boolean exteranlIDOn) {
+		this.externalIdOn = exteranlIDOn;
 	}
 
 	public void setFullDescOn(boolean fullDescOn) {

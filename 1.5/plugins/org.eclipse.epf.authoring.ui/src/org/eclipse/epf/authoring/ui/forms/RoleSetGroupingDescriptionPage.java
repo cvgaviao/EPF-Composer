@@ -48,6 +48,7 @@ public class RoleSetGroupingDescriptionPage extends DescriptionFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		roleSetGrouping = (RoleSetGrouping) contentElement;
+		setExternalIDOn(true);
 	}
 
 	/**

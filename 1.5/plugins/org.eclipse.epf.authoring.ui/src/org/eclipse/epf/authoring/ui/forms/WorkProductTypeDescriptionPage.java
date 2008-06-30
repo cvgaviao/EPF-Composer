@@ -48,6 +48,7 @@ public class WorkProductTypeDescriptionPage extends DescriptionFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		workProductType = (WorkProductType) contentElement;
+		setExternalIDOn(true);
 	}
 
 	/**

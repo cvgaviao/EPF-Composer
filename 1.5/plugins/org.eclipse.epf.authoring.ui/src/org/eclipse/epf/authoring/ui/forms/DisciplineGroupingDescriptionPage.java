@@ -48,6 +48,7 @@ public class DisciplineGroupingDescriptionPage extends DescriptionFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		disciplineGrouping = (DisciplineGrouping) contentElement;
+		setExternalIDOn(true);
 	}
 
 	/**

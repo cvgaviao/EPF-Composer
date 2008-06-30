@@ -49,8 +49,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -328,38 +326,6 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			});
 		}
 
-		if (externalIdOn) {
-			ctrl_external_id.addModifyListener(contentModifyListener);
-			ctrl_external_id.addFocusListener(new FocusAdapter() {
-				public void focusGained(FocusEvent e) {
-					((MethodElementEditor) getEditor())
-							.setCurrentFeatureEditor(e.widget,
-									UmaPackage.eINSTANCE
-											.getContentDescription_ExternalId());
-				}
-
-				public void focusLost(FocusEvent e) {
-					String oldContent = ((org.eclipse.epf.uma.WorkProductDescription) workProduct
-							.getPresentation()).getExternalId();
-					if (((MethodElementEditor) getEditor()).mustRestoreValue(
-							ctrl_external_id, oldContent)) {
-						return;
-					}
-					String newContent = ctrl_external_id.getText();
-					if (!newContent.equals(oldContent)) {
-						boolean success = actionMgr.doAction(
-								IActionManager.SET, contentElement
-										.getPresentation(),
-								UmaPackage.eINSTANCE
-										.getContentDescription_ExternalId(),
-								newContent, -1);
-						if (success && isVersionSectionOn()) {
-							updateChangeDate();
-						}
-					}
-				}
-			});
-		}
 
 		if (tailoringSectionOn) {
 			ctrl_impact.setModalObject(contentElement.getPresentation());
@@ -876,10 +842,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 			}
 		}
 
-		if (externalIdOn) {
-			String external_id = content.getExternalId();
-			ctrl_external_id.setText(external_id == null ? "" : external_id); //$NON-NLS-1$
-		}
+		
 
 		if (notationSectionOn) {
 			if (workProduct instanceof Artifact) {

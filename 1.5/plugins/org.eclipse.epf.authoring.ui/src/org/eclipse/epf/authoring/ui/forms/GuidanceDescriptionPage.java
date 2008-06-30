@@ -85,6 +85,7 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 		setFullDescOn(false);
 		setKeyConsiderationOn(false);
 		setIconSectionOn(true);
+		setExternalIDOn(true);
 	}
 
 	/**

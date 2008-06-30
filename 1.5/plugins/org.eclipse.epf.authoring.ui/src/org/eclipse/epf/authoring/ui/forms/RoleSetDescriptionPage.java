@@ -48,6 +48,7 @@ public class RoleSetDescriptionPage extends DescriptionFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		roleSet = (RoleSet) contentElement;
+		setExternalIDOn(true);
 	}
 
 	/**

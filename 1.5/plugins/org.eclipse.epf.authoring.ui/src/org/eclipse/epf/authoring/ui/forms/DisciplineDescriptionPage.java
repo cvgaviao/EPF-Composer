@@ -48,6 +48,7 @@ public class DisciplineDescriptionPage extends DescriptionFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		discipline = (Discipline) contentElement;
+		setExternalIDOn(true);
 	}
 
 	/**

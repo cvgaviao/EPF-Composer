@@ -50,6 +50,7 @@ public class CustomCategoryDescriptionPage extends DescriptionFormPage {
 		category = (CustomCategory) contentElement;
 		publishCategoryOn = true;
 		setIconSectionOn(true);
+		setExternalIDOn(true);
 		
 	}
 
