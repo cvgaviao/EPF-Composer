@@ -258,11 +258,52 @@
 		<xsl:variable name="superActivities" select="referenceList[@name='superActivities']/Element[@Type='Activity']"/>
 		<xsl:variable name="responsibleRole" select="referenceList[@name='WorkProductDescriptor_ResponsibleRoleDescriptors']/Element[@Type='RoleDescriptor']"/>
 		<xsl:variable name="workedOnBy" select="referenceList[@name='workedOnBy']/Element"/>
+		<xsl:variable name="showFullMethodContent" select="@ShowFullMethodContent"/>
+		<xsl:variable name="containerArtifact" select="reference[@name='containerArtifact']/Element"/>
+		<xsl:variable name="containedArtifacts" select="referenceList[@name='containedArtifacts']/Element[@Type='WorkProductDescriptor']"/>
 
-		<xsl:if test="count($fulfillingWorkProducts) + count($fulfilledSlots) + count($responsibleRole) + count($workedOnBy) + count($mandatoryInputTo) + count($optionalInputTo) + count($externalInputTo) + count($outputFrom) + count($mandatoryInputToTaskDescriptors_fromSlots) + count($optionalInputToTaskDescriptors_fromSlots) + count($outputFromTaskDescriptors_fromSlots) + count($impacts) + count($impactedBy)> 0">
+		<xsl:if test="count($fulfillingWorkProducts) + count($fulfilledSlots) + count($responsibleRole) + count($workedOnBy) + count($mandatoryInputTo) + count($optionalInputTo) + count($externalInputTo) + count($outputFrom) + count($mandatoryInputToTaskDescriptors_fromSlots) + count($optionalInputToTaskDescriptors_fromSlots) + count($outputFromTaskDescriptors_fromSlots) + count($impacts) + count($impactedBy)> 0 or (count($containerArtifact) + count($containedArtifacts) > 0 and $showFullMethodContent = 'true')">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+
+					<xsl:if test="$showFullMethodContent = 'true' and count($containerArtifact) > 0">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$containerArtifactText"/></th>
+							<td class="sectionTableCell" colspan="2">
+							<ul>
+								<xsl:for-each select="$containerArtifact">
+								<xsl:sort select="@DisplayName"/>
+									<li>
+										<a>
+											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+											<xsl:value-of select="@DisplayName"/>
+										</a>
+									</li>
+								</xsl:for-each>
+							</ul>
+							</td>
+						</tr>
+					</xsl:if>		
+							
+					<xsl:if test="$showFullMethodContent = 'true' and count($containedArtifacts) > 0">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$containedArtifactsText"/></th>
+							<td class="sectionTableCell" colspan="2">
+							<ul>
+								<xsl:for-each select="$containedArtifacts">
+									<xsl:sort data-type="text" select="@DisplayName" order="ascending" />
+									<li>
+										<a>
+											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>											
+											<xsl:value-of select="@DisplayName"/>
+										</a>
+									</li>
+								</xsl:for-each>
+							</ul>
+							</td>
+						</tr>
+					</xsl:if>
 					
 					<xsl:if test="count($fulfillingWorkProducts) > 0">
 						<tr valign="top">
