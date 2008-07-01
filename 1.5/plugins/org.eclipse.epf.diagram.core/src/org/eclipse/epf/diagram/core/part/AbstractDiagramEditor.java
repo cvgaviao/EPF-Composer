@@ -66,6 +66,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.ui.IMethodElementProvider;
 import org.eclipse.epf.services.ILibraryPersister;
+import org.eclipse.epf.services.Services;
 import org.eclipse.epf.ui.editors.IMethodEditor;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -479,9 +480,15 @@ public abstract class AbstractDiagramEditor extends FileDiagramEditor implements
 					progressMonitor.beginTask("Saving", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 					.getCurrentPersister().getFailSafePersister();
+					Collection<?> modifiedResources = actionMgr.getModifiedResources();					
+					// check for modifiable
+					//
+					IStatus status = Services.getAccessController().checkModify(modifiedResources.toArray(new Resource[0]), getSite().getShell());
+					if(!status.isOK()) {
+						return;
+					}
 					try {
-						for (Iterator iter = actionMgr.getModifiedResources()
-								.iterator(); iter.hasNext();) {
+						for (Iterator<?> iter = modifiedResources.iterator(); iter.hasNext();) {
 							Resource resource = (Resource) iter.next();
 							progressMonitor.setTaskName(NLS.bind(DiagramCoreResources.Progress_Saving_message,
 									resource.getURI().isFile() ? resource.getURI()

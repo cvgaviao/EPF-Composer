@@ -13,12 +13,16 @@
  */
 package org.eclipse.epf.diagram.core.actions;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.diagram.core.DiagramCorePlugin;
 import org.eclipse.epf.diagram.core.DiagramCoreResources;
 import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
 import org.eclipse.epf.diagram.core.bridge.NodeAdapter;
 import org.eclipse.epf.diagram.core.services.DiagramHelper;
+import org.eclipse.epf.persistence.FileManager;
+import org.eclipse.epf.services.Services;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
@@ -35,6 +39,7 @@ import org.eclipse.uml2.uml.Activity;
 /**
  * Deletes the diagram.
  * @author Shashidhar Kannoori
+ * @author Phong Nguyen Le
  */
 public class DeleteDiagramAction extends ActionDelegate {
 
@@ -73,10 +78,19 @@ public class DeleteDiagramAction extends ActionDelegate {
 			if(mySelectedElement != null){
 				Diagram diagram = (Diagram)mySelectedElement.getModel();
 				if(diagram != null){
-					try{
+					try {
+						Resource resource = diagram.eResource();
+						if(resource != null) {
+							IStatus status = Services.getAccessController().checkModify(new Resource[] { resource }, targetPart.getSite().getShell());
+							if(!status.isOK()) {
+								return;
+							}
+						}
+						
 						DiagramHelper.deleteDiagram(diagram, true);
 						targetPart.getSite().getPage().closeEditor(
-								targetPart.getSite().getPage().getActiveEditor(), false);
+								targetPart.getSite().getPage()
+										.getActiveEditor(), false);
 					} catch(Exception ex) {
 						DiagramCorePlugin.getDefault().getLogger().logError(ex);
 					}
