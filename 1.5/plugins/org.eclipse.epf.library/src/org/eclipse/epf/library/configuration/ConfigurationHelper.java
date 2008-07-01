@@ -752,15 +752,16 @@ public class ConfigurationHelper {
 	public static List<FulfillableElement> calcFulfillableElement_Fulfills(FulfillableElement element,
 					MethodConfiguration config) {
 		List<FulfillableElement> resultList = new ArrayList<FulfillableElement>();
-
-		Object fullfillsObj = calcAttributeFeatureValue(element, null,
-				UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(), config);
+		
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
+		Object fullfillsObj = calc0nFeatureValue(element,
+				UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(),
+				realizer);	
 		
 		if (! (fullfillsObj instanceof List)) {
 			return resultList;
 		}
 
-		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getFulfillableElement_Fulfills();
 		for (FulfillableElement slot : (List<FulfillableElement>) fullfillsObj) {
 			slot = (FulfillableElement) getCalculatedElement(slot, config);
