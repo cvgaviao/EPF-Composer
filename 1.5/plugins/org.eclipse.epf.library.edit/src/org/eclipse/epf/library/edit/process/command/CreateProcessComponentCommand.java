@@ -30,6 +30,7 @@ import org.eclipse.emf.edit.command.CreateChildCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.LibraryEditResources;
+import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IUserInteractionHandler;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
@@ -87,8 +88,14 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 	public static class CompareByName implements Comparator<MethodElement> {
 
 		public int compare(MethodElement obj1, MethodElement obj2) {
-			String name1 = ((MethodElement) obj1).getName();
-			String name2 = ((MethodElement) obj2).getName();
+			String name1, name2;
+			if (PresentationContext.INSTANCE.isShowPresentationNames()) {
+				name1 = TngUtil.getPresentationName(obj1);
+				name2 = TngUtil.getPresentationName(obj2);
+			} else {
+				name1 = ((MethodElement) obj1).getName();
+				name2 = ((MethodElement) obj2).getName();		
+			}
 			return name1.compareToIgnoreCase(name2);
 		}
 	}
@@ -192,7 +199,9 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 				false, methodConfigs, new ItemLabelProvider() {
 			public String getText(Object element) {
 				if (element instanceof MethodElement) {
-					return ((MethodElement) element).getName();
+					if (PresentationContext.INSTANCE.isShowPresentationNames())
+						return TngUtil.getPresentationName(element);
+					else return ((MethodElement) element).getName();
 				} else {
 					return element.toString();
 				}
