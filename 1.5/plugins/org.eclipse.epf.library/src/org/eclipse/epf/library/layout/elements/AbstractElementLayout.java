@@ -866,9 +866,20 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	 */
 	public void addReferences(Object feature, XmlElement elementXml, String referenceName,
 			List items) {
+		if (items == null || items.isEmpty()) {
+			return;
+		}
+		HashSet<Object> itemSet = new HashSet<Object>();
+		List uniqueItems = new ArrayList();
+		for (Object item: items) {
+			if (! itemSet.contains(item)) {
+				itemSet.add(item);
+				uniqueItems.add(item);
+			}
+		}
 		processChild(feature, 
 				elementXml
-						.newChild(TAG_REFERENCELIST).setAttribute("name", referenceName), items, false); //$NON-NLS-1$ 
+						.newChild(TAG_REFERENCELIST).setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$ 
 	}
 
 	/**
