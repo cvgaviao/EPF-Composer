@@ -64,6 +64,8 @@ public class PublishingUIPreferences {
 	private static final String INITIALIZED = "initialized"; //$NON-NLS-1$
 
 	private static final String SHOW_RELATED_DESCRIPTORS = "showRelatedDescriptors"; //$NON-NLS-1$
+	
+	private static final String SHOW_RELATED_DESCRIPTORS_OPTION = "showRelatedDescriptorsOption"; //$NON-NLS-1$
 
 	private static final String SHOW_DESCRIPTORS_IN_NAVIGATIONTREE = "showDescriptorsInNavigationTree"; //$NON-NLS-1$
 
@@ -1052,6 +1054,43 @@ public class PublishingUIPreferences {
 	public static void removeShowRelatedDescriptors(String configId) {
 		prefStore.setToDefault(getConfigPrefPrefix(configId)
 				+ SHOW_RELATED_DESCRIPTORS);
+	}
+	
+	/**
+	 * Gets the show related descriptors option in content page preference value.
+	 * 
+	 * @param configId
+	 *            a method configuration GUID
+	 * @return the preference value
+	 */
+	public static boolean getShowRelatedDescriptorsOption(String configId) {
+		return prefStore.getBoolean(getConfigPrefPrefix(configId)
+				+ SHOW_RELATED_DESCRIPTORS_OPTION);
+	}
+
+	/**
+	 * Sets the show related descriptors option in content page preference value.
+	 * 
+	 * @param configId
+	 *            a method configuration GUID
+	 * @param value
+	 *            the preference value
+	 */
+	public static void setShowRelatedDescriptorsOption(String configId, boolean value) {
+		prefStore.setValue(getConfigPrefPrefix(configId)
+				+ SHOW_RELATED_DESCRIPTORS_OPTION, value);
+	}
+
+	/**
+	 * Sets the show related descriptors option in content page preference to be
+	 * default value.
+	 * 
+	 * @param configId
+	 *            a method configuration GUID
+	 */
+	public static void removeShowRelatedDescriptorsOption(String configId) {
+		prefStore.setToDefault(getConfigPrefPrefix(configId)
+				+ SHOW_RELATED_DESCRIPTORS_OPTION);
 	}
 
 	/**

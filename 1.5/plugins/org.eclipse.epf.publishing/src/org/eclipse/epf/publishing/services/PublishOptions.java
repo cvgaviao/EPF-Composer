@@ -51,6 +51,9 @@ public class PublishOptions {
 	// Show related descriptors in the task, role, and work product pages
 	// option.
 	protected boolean showRelatedDescriptors;
+	
+	//Show all indirect (green) occurrences in extended patterns
+	protected boolean showRelatedDescriptorsOption;
 
 	// Show task descriptors in the navigation tree option.
 	protected boolean showDescriptorsInNavigationTree;
@@ -252,6 +255,27 @@ public class PublishOptions {
 	 */
 	public void setShowRelatedDescriptors(boolean showRelatedDescriptors) {
 		this.showRelatedDescriptors = showRelatedDescriptors;
+	}
+	
+	/**
+	 * Gets show all indirect (green) occurrences in extended patterns option
+	 * 
+	 * @return <code>true</code> if all indirect descriptors will be displayed in
+	 *         the task, role, and work product pages
+	 */
+	public boolean isShowRelatedDescriptorsOption() {
+		return showRelatedDescriptorsOption;
+	}
+
+	/**
+	 * Sets the show all indirect (green) occurrences in extended patterns option
+	 * 
+	 * @param showRelatedDescriptorsOption
+	 *            if <code>true</code>, display all indirect descriptors in
+	 *            the task, role, and work product pages
+	 */
+	public void setShowRelatedDescriptorsOption(boolean showRelatedDescriptorsOption) {
+		this.showRelatedDescriptorsOption = showRelatedDescriptorsOption;
 	}
 
 	/**

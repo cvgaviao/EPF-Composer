@@ -83,10 +83,10 @@ public class PublishHTMLOptions extends PublishOptions {
 		this.publishUnopenADD = options.isPublishUnopenADD();
 		this.publishBaseAD = options.isPublishBaseAD();
 		this.publishLightWeightTree = options.isPublishLightWeightTree();
-		this.publishEmptyCategories = options.isPublishEmptyCategories();
 		this.showMethodContentInDescriptors = options
 				.isShowMethodContentInDescriptors();
 		this.showRelatedDescriptors = options.isShowRelatedDescriptors();
+		this.showRelatedDescriptorsOption = options.isShowRelatedDescriptorsOption();
 		this.showDescriptorsInNavigationTree = options
 				.isShowDescriptorsInNavigationTree();
 		this.publishEmptyCategories = options.isPublishEmptyCategories();

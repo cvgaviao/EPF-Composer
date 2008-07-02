@@ -202,6 +202,8 @@ public final class PublishingUIResources extends NLS {
 	public static String webAppNameCharsError_msg;
 
 	public static String showRelatedDescriptors_text;
+	
+	public static String showRelatedDescriptors_option_text;
 
 	public static String showDescriptorsInNavigationTree_text;
 

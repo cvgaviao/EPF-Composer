@@ -21,6 +21,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.layout.elements.AbstractElementLayout;
 import org.eclipse.epf.library.layout.elements.ActivityLayout;
 import org.eclipse.epf.publishing.services.PublishHTMLOptions;
 import org.eclipse.epf.publishing.services.PublishOptions;
@@ -99,6 +100,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	protected Button extraDescriptorInfoCtr;
 
 	protected Button showRelatedDescriptors;
+	
+	protected Button showRelatedDescriptorsOption;
 
 	protected Button showDescriptorsInNavigationTree;
 
@@ -305,8 +308,11 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				PublishingUIResources.publishExtraDescriptorInfoLabel_text);
 
 		showRelatedDescriptors = createCheckbox(layoutGroup,
-				PublishingUIResources.showRelatedDescriptors_text);
-
+				PublishingUIResources.showRelatedDescriptors_text);		
+		Composite descriptorComposite = createChildGridLayoutComposite(layoutGroup, 1);
+		showRelatedDescriptorsOption = createCheckbox(descriptorComposite,
+				PublishingUIResources.showRelatedDescriptors_option_text);
+		
 		Composite activityTabComposite = createGridLayoutComposite(layoutGroup,
 				2);
 		((GridLayout) activityTabComposite.getLayout()).marginTop = -5;
@@ -384,6 +390,18 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				.getExtraDescriptorInfo(configId));
 		showRelatedDescriptors.setSelection(PublishingUIPreferences
 				.getShowRelatedDescriptors(configId));
+		showRelatedDescriptorsOption.setSelection(PublishingUIPreferences
+				.getShowRelatedDescriptorsOption(configId));
+		if (showRelatedDescriptors.getSelection()) {
+			showRelatedDescriptorsOption.setEnabled(true);
+		} else {
+			showRelatedDescriptorsOption.setEnabled(false);
+		}
+		if (showRelatedDescriptorsOption.getSelection()) {
+			AbstractElementLayout.processDescritorsNewOption = true;
+		} else {
+			AbstractElementLayout.processDescritorsNewOption = false;
+		}
 		showDescriptorsInNavigationTree.setSelection(PublishingUIPreferences
 				.getShowDescriptorsInNavigationTree(configId));
 
@@ -436,6 +454,28 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 		aboutHTMLText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				setPageComplete(isPageComplete());
+			}
+		});
+		
+		showRelatedDescriptors.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				if (showRelatedDescriptors.getSelection()) {
+					showRelatedDescriptorsOption.setEnabled(true);
+				} else {
+					showRelatedDescriptorsOption.setSelection(false);
+					AbstractElementLayout.processDescritorsNewOption = false;
+					showRelatedDescriptorsOption.setEnabled(false);
+				}
+			}
+		});
+		
+		showRelatedDescriptorsOption.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent event) {
+				if (showRelatedDescriptorsOption.getSelection()) {
+					AbstractElementLayout.processDescritorsNewOption = true;
+				} else {
+					AbstractElementLayout.processDescritorsNewOption = false;
+				}
 			}
 		});
 	}
@@ -501,14 +541,10 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 		options.setPublishBaseAD(getPublishBaseADSelection());
 		options.setConvertBrokenLinks(getConvertBrokenLinksSelection());
 		options.setPublishLightWeightTree(getPublishLightWeightTreeSelection());
-		options
-				.setShowMethodContentInDescriptors(getShowExtraDescriptorInfoSelection());
-		options
-				.setShowRelatedDescriptors(showRelatedDescriptors
-						.getSelection());
-		options
-				.setShowDescriptorsInNavigationTree(showDescriptorsInNavigationTree
-						.getSelection());
+		options.setShowMethodContentInDescriptors(getShowExtraDescriptorInfoSelection());
+		options.setShowRelatedDescriptors(showRelatedDescriptors.getSelection());
+		options.setShowRelatedDescriptorsOption(showRelatedDescriptorsOption.getSelection());		
+		options.setShowDescriptorsInNavigationTree(showDescriptorsInNavigationTree.getSelection());
 
 		String defaultActivityTab = getDefaultActivityTabSelection();
 		if (defaultActivityTab != null) {
@@ -610,7 +646,15 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	protected boolean getShowRelatedDescriptorsSelection() {
 		return showRelatedDescriptors.getSelection();
 	}
-
+	
+	/**
+	 * Gets the user specified Show all indirect (green) occurrences 
+	 * in extended patterns
+	 */
+	protected boolean getShowRelatedDescriptorsOptionSelection() {
+		return showRelatedDescriptorsOption.getSelection();
+	}
+	
 	/**
 	 * Gets the user specified show descriptors in navigation tree selection.
 	 */
@@ -696,6 +740,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				getShowExtraDescriptorInfoSelection());
 		PublishingUIPreferences.setShowRelatedDescriptors(configId,
 				getShowRelatedDescriptorsSelection());
+		PublishingUIPreferences.setShowRelatedDescriptorsOption(configId,
+				getShowRelatedDescriptorsOptionSelection());
 		PublishingUIPreferences.setShowDescriptorsInNavigationTree(configId,
 				getShowDescriptorsInNavigationTreeSelection());
 		PublishingUIPreferences.setDefaultActivityTab(configId,
