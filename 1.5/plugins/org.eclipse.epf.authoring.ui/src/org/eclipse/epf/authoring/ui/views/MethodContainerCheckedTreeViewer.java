@@ -37,6 +37,7 @@ public class MethodContainerCheckedTreeViewer extends
 		ContainerCheckedTreeViewer {
 	
 	protected boolean expandWhenChecking = false;
+	protected boolean initializingTreeCheckState = false;
 
 	protected ListenerList childrenCheckStateListeners = new ListenerList();
 
@@ -116,20 +117,25 @@ public class MethodContainerCheckedTreeViewer extends
         }
     }
     
-	/**
-	 * Update element after a checkstate change.
-	 * @param element
-	 */
-    public void doCheckStateChanged(Object element) {
-        Widget item = findItem(element);
-        if (item instanceof TreeItem) {
-            TreeItem treeItem = (TreeItem) item;
-            treeItem.setGrayed(false);
-            updateChildrenItems(treeItem);
-            updateParentItems(treeItem.getParentItem());
-        }
+    @Override
+    protected void doCheckStateChanged(Object element) {
+    	if (initializingTreeCheckState) {
+    		// when initializing, don't update children:
+    		// parent may have been gray-checked and we don't
+    		// want to white-check all children
+    		// children will be checked because setCheckedElements(..)
+    		// typically receives list of all checked elements
+			Widget item = findItem(element);
+			if (item instanceof TreeItem) {
+				TreeItem treeItem = (TreeItem) item;
+				treeItem.setGrayed(false);
+				updateParentItems(treeItem.getParentItem());
+			}
+		} else {
+			super.doCheckStateChanged(element);
+		}
     }
-    
+        
     public void updateParents(Object element) {
         Widget item = findItem(element);
         if (item instanceof TreeItem) {
@@ -188,13 +194,13 @@ public class MethodContainerCheckedTreeViewer extends
 	 * @see org.eclipse.jface.viewers.CheckboxTreeViewer#setCheckedElements(java.lang.Object[])
 	 */
     public void setCheckedElements(Object[] elements) {
-    	// fix elements list to use our wrappers
+    	// fix elements list to use EPF's wrappers
     	List<Object> treeElements = new ArrayList<Object>();
     	AdapterFactory adapterFactory = null;
     	if (getContentProvider() instanceof AdapterFactoryContentProvider) {
     		adapterFactory = ((AdapterFactoryContentProvider)getContentProvider()).getAdapterFactory();
-    	}    	
-    	for (int i = 0; i < elements.length; i++) {
+    	}
+		for (int i = 0; i < elements.length; i++) {
 			Object element = elements[i];
 			if (adapterFactory != null) {
 				treeElements.addAll(TngUtil.getWrappers(adapterFactory, element));
@@ -203,8 +209,9 @@ public class MethodContainerCheckedTreeViewer extends
 				treeElements.add(element);
 			}
 		}
-    	
+    	initializingTreeCheckState = true;
         super.setCheckedElements(treeElements.toArray());
+    	initializingTreeCheckState = false;
     }
     
     /**
