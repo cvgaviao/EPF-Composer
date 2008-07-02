@@ -1108,7 +1108,7 @@ public class GraphicalDataHelper {
 //		return 10;
 		
 		int count = Providers.getAuthoringPluginPreferenceStore().getInt(GraphicalDataHelper.ADD_DIAGRAM_TASKS_PER_ROW);
-		if (count < 0)
+		if (count <= 0)
 			return 10;
 		return count;
 	}
