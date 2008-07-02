@@ -25,7 +25,7 @@ public class AuthoringUIPreferences {
 
 	public static final String ADD_TASKS_PER_ROW = "ACTIVITY_DETAIL_DIAGRAM_TASKS_PER_ROW"; //$NON-NLS-1$
 	
-	private static final int DEFAULT_ADD_TASKS_PER_ROW = 5; 
+	private static final int DEFAULT_ADD_TASKS_PER_ROW = 10; 
 	
 	
 	private static final boolean DEFAULT_ENABLE_LIBRARY_VALIDATION = false;
@@ -37,6 +37,9 @@ public class AuthoringUIPreferences {
 		// Initialize the default preference values.
 		prefStore.setDefault(ENABLE_LIBRARY_VALIDATION,
 				DEFAULT_ENABLE_LIBRARY_VALIDATION);
+		
+		prefStore.setDefault(ADD_TASKS_PER_ROW, DEFAULT_ADD_TASKS_PER_ROW);
+		
 	}
 
 	/**
