@@ -27,7 +27,9 @@ import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
+import org.eclipse.epf.library.layout.elements.AbstractElementLayout;
 import org.eclipse.epf.library.layout.elements.AbstractProcessElementLayout;
+import org.eclipse.epf.library.layout.elements.ElementLayoutExtender;
 import org.eclipse.epf.library.layout.elements.SummaryPageLayout;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -311,6 +313,11 @@ public class ConfigHelperDelegate {
 			}
 		}
 		return file_url;
+	}
+	
+	//Should be overriden by sub classes
+	public ElementLayoutExtender newElementLayoutExtender(AbstractElementLayout layout) {
+		return null;
 	}
 	
 	public void debugDump(String msg) {

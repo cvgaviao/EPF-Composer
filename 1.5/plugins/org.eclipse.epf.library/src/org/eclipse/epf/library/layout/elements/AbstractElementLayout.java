@@ -116,6 +116,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	
 	protected boolean debug = LibraryPlugin.getDefault().isDebugging();
 
+	private ElementLayoutExtender extender;
+	
 	public AbstractElementLayout() {
 	}
 
@@ -1272,6 +1274,22 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}		
 		
 		return false;
+	}
+
+	protected ElementLayoutExtender getExtender() {
+		if (extender == null) {
+			extender = ConfigurationHelper.getDelegate().newElementLayoutExtender(this);
+		}
+		return extender;
+	}
+	
+	protected List<WorkProduct> getTagQualifiedWpList(MethodConfiguration config, List<WorkProduct> items) {
+		ElementLayoutExtender extender = getExtender();
+		if (extender == null) {
+			return items;
+		}
+		
+		return extender.getTagQualifiedWpList(config, items);
 	}
 	
 }
