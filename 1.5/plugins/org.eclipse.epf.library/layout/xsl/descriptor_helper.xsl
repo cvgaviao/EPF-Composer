@@ -39,6 +39,14 @@
 								<xsl:call-template name="addElementWithLink">
 									<xsl:with-param name="element" select="."/>
 								</xsl:call-template>
+								<xsl:variable name="EntryValue" select="attribute/@activityEntryState"/>
+								<xsl:variable name="ExitValue" select="attribute/@activityExitState"/>																 
+								<xsl:if test="$EntryValue != ''">
+									[<xsl:value-of select="$EntryValue"/>]	
+								</xsl:if>								
+								<xsl:if test="$ExitValue != ''">
+									[<xsl:value-of select="$ExitValue"/>]
+								</xsl:if>																
 							</li>
 						</xsl:for-each>
 					</ul>
