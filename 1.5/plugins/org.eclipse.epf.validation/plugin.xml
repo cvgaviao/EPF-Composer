@@ -10,7 +10,7 @@
       <constraintProvider
             cache="true"
             >
-         <package namespaceUri="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"/>
+         <package namespaceUri="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"/>
          <constraints categories="org.eclipse.epf.validation.library.category">
             <constraint
                   class="org.eclipse.epf.validation.constraints.NameConstraint"
@@ -55,7 +55,7 @@
          point="org.eclipse.emf.validation.traversal">
       <traversalStrategy
             class="org.eclipse.epf.validation.constraints.LibraryTraversalStrategy"
-            namespaceUri="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"/>
+            namespaceUri="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"/>
    </extension>
    <extension
          point="org.eclipse.ui.startup">
