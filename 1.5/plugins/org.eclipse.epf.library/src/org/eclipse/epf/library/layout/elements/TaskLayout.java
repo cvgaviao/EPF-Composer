@@ -115,7 +115,7 @@ public class TaskLayout extends AbstractElementLayout {
 			feature == UmaPackage.eINSTANCE.getTask_Output()) {
 			OppositeFeature oFulfillingFeature = AssociationHelper.FulFills_FullFillableElements;
 			List items = wpChildLayout.calc0nFeatureValue(childElememt, oFulfillingFeature, realizer);
-			items = getTagQualifiedWpList(realizer.getConfiguration(), items);
+			items = getTagQualifiedList(realizer.getConfiguration(), items);
 			wpChildLayout.addReferences(oFulfillingFeature, childXmlElement, oFulfillingFeature
 					.getName(), items);
 		}

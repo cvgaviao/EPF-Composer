@@ -13,6 +13,8 @@ package org.eclipse.epf.library.layout.elements;
 import java.util.List;
 
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.WorkProduct;
 
 
@@ -29,7 +31,12 @@ public abstract class ElementLayoutExtender {
 		this.layout = layout;
 	}
 	
-	public abstract List<WorkProduct> getTagQualifiedWpList(MethodConfiguration config, List<WorkProduct> items);
+	public abstract List<MethodElement> getTagQualifiedList(MethodConfiguration config, List<MethodElement> items);
+
+	@Deprecated
+	public List<WorkProduct> getTagQualifiedWpList(MethodConfiguration config, List<WorkProduct> items){
+		return items;
+	}
 
 	public AbstractElementLayout getLayout() {
 		return layout;

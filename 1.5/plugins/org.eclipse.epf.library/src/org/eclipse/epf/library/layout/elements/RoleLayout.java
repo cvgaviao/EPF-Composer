@@ -181,7 +181,7 @@ public class RoleLayout extends AbstractElementLayout {
 			feature == UmaPackage.eINSTANCE.getRole_Modifies()) {
 			OppositeFeature oFulfillingFeature = AssociationHelper.FulFills_FullFillableElements;
 			List items = wpChildLayout.calc0nFeatureValue(childElememt, oFulfillingFeature, realizer);
-			items = getTagQualifiedWpList(realizer.getConfiguration(), items);
+			items = getTagQualifiedList(realizer.getConfiguration(), items);
 			wpChildLayout.addReferences(oFulfillingFeature, childXmlElement, oFulfillingFeature
 					.getName(), items);
 		}

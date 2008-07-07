@@ -189,6 +189,7 @@ public class WorkProductLayout extends AbstractElementLayout {
 		
 		for (FulfillableElement fElement: slots) {
 			List list = ConfigurationHelper.calc0nFeatureValue(fElement, ofeature, realizer);
+			list = getTagQualifiedList(realizer.getConfiguration(), list);
 			references.addAll(list);
 		}
 

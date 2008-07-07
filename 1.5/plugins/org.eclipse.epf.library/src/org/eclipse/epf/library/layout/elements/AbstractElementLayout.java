@@ -1283,13 +1283,13 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		return extender;
 	}
 	
-	protected List<WorkProduct> getTagQualifiedWpList(MethodConfiguration config, List<WorkProduct> items) {
+	protected List<MethodElement> getTagQualifiedList(MethodConfiguration config, List<MethodElement> items) {
 		ElementLayoutExtender extender = getExtender();
 		if (extender == null) {
 			return items;
 		}
 		
-		return extender.getTagQualifiedWpList(config, items);
+		return extender.getTagQualifiedList(config, items);
 	}
 	
 }
