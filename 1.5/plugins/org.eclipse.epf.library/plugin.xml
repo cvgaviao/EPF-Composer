@@ -22,6 +22,13 @@
    <extension
          point="org.eclipse.epf.library.edit.textReferenceReplacer">
       <textReferenceReplacer class="org.eclipse.epf.library.util.TextReferenceReplacerImpl"/>
+   </extension>
+   <extension id="missingBasePlugins" point="org.eclipse.core.resources.markers" name="Missing base plugins"> 
+      <persistent value="false"/> 
+      <super type="org.eclipse.core.resources.problemmarker"/> 
+      <attribute name="name"/>
+      <attribute name="guid"/>
+      <attribute name="missingBaseGuids"/>
    </extension>   
    
 </plugin>

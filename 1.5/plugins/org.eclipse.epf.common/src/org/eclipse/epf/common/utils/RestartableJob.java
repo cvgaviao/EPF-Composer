@@ -28,17 +28,24 @@ public abstract class RestartableJob extends Job {
 	
 	private boolean toRestart = true;
 	private boolean schedulingLocked = false;
+	private boolean enabled = true;
 	
 	public RestartableJob(String name) {
 		super(name);
 	}
 	
 	public final void guardedSchedule(long delay) {
+		if ( ! isEnabled()) {
+			return;
+		}
 		if (getState() != Job.NONE) {
 			return;
 		}
 		if (isSchedulingLocked()) {
 			return;
+		}
+		if (localDebug) {
+			System.out.println("LD> guardedSchedule completed");
 		}
 		setSchedulingLocked(true);
 		schedule(delay);		
@@ -57,7 +64,8 @@ public abstract class RestartableJob extends Job {
 		return Status.OK_STATUS;
 	}
 	
-	protected abstract IStatus restartableRun(IProgressMonitor monitor) throws RestartInterruptException;	
+	protected abstract IStatus restartableRun(IProgressMonitor monitor) throws RestartInterruptException;
+	protected abstract void resetToRestart();
 
 	private synchronized boolean isSchedulingLocked() {
 		return schedulingLocked;
@@ -78,6 +86,13 @@ public abstract class RestartableJob extends Job {
 	public void enableToRestart() {
 		setToRestart(true);
 	}
+	
+	public void checkRestartInterruptException(long delay) throws RestartInterruptException {
+		if (isToRestart()) {
+			resetToRestart();
+			throw new RestartInterruptException(delay);
+		}
+	}
 
 	public static class RestartInterruptException extends Exception {
 		private long delay = 0;
@@ -89,7 +104,13 @@ public abstract class RestartableJob extends Job {
 			return delay;
 		}
 	}
-	
-	
+
+	public synchronized boolean isEnabled() {
+		return enabled;
+	}
+
+	public synchronized void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}	
 
 }

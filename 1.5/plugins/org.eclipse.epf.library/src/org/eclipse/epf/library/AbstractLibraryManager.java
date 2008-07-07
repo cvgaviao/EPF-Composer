@@ -60,6 +60,7 @@ import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.project.MethodLibraryProject;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
 import org.eclipse.epf.library.services.SafeUpdateController;
+import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.persistence.MultiFileXMISaveImpl;
 import org.eclipse.epf.persistence.refresh.IRefreshEvent;
@@ -124,6 +125,8 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 
 	// If true, skip all event processing.
 	protected boolean skipEventProcessing = false;
+	
+	private LibraryProblemMonitor libraryProblemMonitor;
 
 	// TODO: find a better way to notify the change in library instead of
 	// relying on the command stack listener
@@ -387,6 +390,9 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 
 		// Register the editing domain.
 		registerEditingDomain(editingDomain);
+		
+		libraryProblemMonitor = new LibraryProblemMonitor(this);
+		addListener(libraryProblemMonitor);
 	}
 
 	/**
@@ -527,6 +533,7 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 		}
 
 		this.library = library;
+		getLibraryProblemMonitor().kickToRun();
 	}
 
 	/**
@@ -1041,6 +1048,8 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 
 		editingDomain = null;
 		library = null;
+		
+		libraryProblemMonitor.dispose();
 	}
 
 	/**
@@ -1348,6 +1357,10 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 	 */
 	protected abstract String getLibraryPersisterType();
 
-	protected abstract ILibraryResourceSet createResourceSet();	
+	protected abstract ILibraryResourceSet createResourceSet();
+	
+	public LibraryProblemMonitor getLibraryProblemMonitor() {
+		return 	libraryProblemMonitor;
+	}
 
 }

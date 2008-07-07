@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
+import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -320,5 +321,9 @@ public interface ILibraryManager {
 	 */
 	public void unRegisterMethodLibrary() throws LibraryServiceException;
 
+	/**
+	 * @return the libary problem monitor object assocated with this manager
+	 */
+	public LibraryProblemMonitor getLibraryProblemMonitor();
 
 }
