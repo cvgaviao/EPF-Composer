@@ -66,6 +66,8 @@ public class LibraryPlugin extends AbstractActivator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		LibraryService.getInstance().getLibraryProblemMonitor();
 	}
 
 	/**

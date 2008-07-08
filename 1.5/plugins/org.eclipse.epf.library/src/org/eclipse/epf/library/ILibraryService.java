@@ -13,6 +13,7 @@ package org.eclipse.epf.library;
 import java.net.URI;
 import java.util.Map;
 
+import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 
@@ -284,5 +285,10 @@ public interface ILibraryService {
 	 *        performing the operation
 	 */
 	public void unRegisterMethodLibrary(MethodLibrary lib) throws LibraryServiceException;
+	
+	/**
+	 * @return the libary problem monitor object assocated with this manager
+	 */
+	public LibraryProblemMonitor getLibraryProblemMonitor();
 
 }

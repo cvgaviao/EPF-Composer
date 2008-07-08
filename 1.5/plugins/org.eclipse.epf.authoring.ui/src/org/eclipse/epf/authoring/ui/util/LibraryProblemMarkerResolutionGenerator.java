@@ -68,13 +68,8 @@ public class LibraryProblemMarkerResolutionGenerator implements IMarkerResolutio
 			return AuthoringUIResources.LibraryProblemMarkerResolutionGenerator_removeUnresolvedBasePlugins;
 		}
 
-		public void run(IMarker marker) {
-			ILibraryManager libMgr = LibraryService.getInstance().getCurrentLibraryManager();
-			if (libMgr == null) {
-				return;
-			}
-			
-			libMgr.getLibraryProblemMonitor().fixProblem(marker);
+		public void run(IMarker marker) {			
+			LibraryService.getInstance().getLibraryProblemMonitor().fixProblem(marker);
 		}
 
 		@Override

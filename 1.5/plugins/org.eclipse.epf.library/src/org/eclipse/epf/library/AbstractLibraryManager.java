@@ -125,8 +125,6 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 
 	// If true, skip all event processing.
 	protected boolean skipEventProcessing = false;
-	
-	private LibraryProblemMonitor libraryProblemMonitor;
 
 	// TODO: find a better way to notify the change in library instead of
 	// relying on the command stack listener
@@ -390,9 +388,7 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 
 		// Register the editing domain.
 		registerEditingDomain(editingDomain);
-		
-		libraryProblemMonitor = new LibraryProblemMonitor(this);
-		addListener(libraryProblemMonitor);
+
 	}
 
 	/**
@@ -533,9 +529,6 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 		}
 
 		this.library = library;
-		if (library != null) {
-			getLibraryProblemMonitor().kickToRun();
-		}
 	}
 
 	/**
@@ -1050,8 +1043,7 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 
 		editingDomain = null;
 		library = null;
-		
-		libraryProblemMonitor.dispose();
+
 	}
 
 	/**
@@ -1360,9 +1352,5 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 	protected abstract String getLibraryPersisterType();
 
 	protected abstract ILibraryResourceSet createResourceSet();
-	
-	public LibraryProblemMonitor getLibraryProblemMonitor() {
-		return 	libraryProblemMonitor;
-	}
 
 }

@@ -321,9 +321,4 @@ public interface ILibraryManager {
 	 */
 	public void unRegisterMethodLibrary() throws LibraryServiceException;
 
-	/**
-	 * @return the libary problem monitor object assocated with this manager
-	 */
-	public LibraryProblemMonitor getLibraryProblemMonitor();
-
 }

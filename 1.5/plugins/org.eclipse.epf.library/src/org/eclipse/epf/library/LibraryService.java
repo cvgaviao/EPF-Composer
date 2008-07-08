@@ -20,6 +20,7 @@ import java.util.Map;
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
+import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.UmaFactory;
@@ -66,6 +67,7 @@ public class LibraryService implements ILibraryService {
 	// If true, the current method library is being closed.
 	private boolean closingCurrentLibrary;
 
+	private LibraryProblemMonitor libraryProblemMonitor;
 	/**
 	 * Returns the shared instance.
 	 */
@@ -724,6 +726,13 @@ public class LibraryService implements ILibraryService {
 		//libMgr.closeMethodLibrary();
 		libMgr.unRegisterMethodLibrary();
 		libMgr.dispose();
+	}
+	
+	public LibraryProblemMonitor getLibraryProblemMonitor() {
+		if (libraryProblemMonitor == null) {
+			libraryProblemMonitor = new LibraryProblemMonitor();
+		}
+		return 	libraryProblemMonitor;
 	}
 
 }

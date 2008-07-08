@@ -31,8 +31,11 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.utils.RestartableJob;
 import org.eclipse.epf.library.ILibraryManager;
+import org.eclipse.epf.library.ILibraryService;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.LibraryServiceListener;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.services.ILibraryPersister;
@@ -54,17 +57,39 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 	public static final String Guid = "guid"; //$NON-NLS-1$
 	public static final String UnresolvedBaseGuids = "unresolvedBaseGuids"; //$NON-NLS-1$
 	
-	private ILibraryManager libMgr;
 	private long delay = 30000L;
 	private long restartDelay = 1000L;
 	private boolean hasChange = false;
 	private Thread monitorThread;
 	private boolean stopMonitor = false;
+	private MethodLibrary library;
 	private Map<MethodPlugin, IMarker> pluginMarkerMap = new HashMap<MethodPlugin, IMarker>();
 	
-	public LibraryProblemMonitor(ILibraryManager libMgr) {
+	public LibraryProblemMonitor() {
 		super(LibraryResources.libraryProblemMonitor);
-		this.libMgr = libMgr;
+		
+		LibraryServiceListener libServiceListener = new LibraryServiceListener() {
+			public void librarySet(MethodLibrary lib) {
+				ILibraryService libService = LibraryService.getInstance();				
+				if (library != null && library != lib) {
+					ILibraryManager libMgr = libService.getLibraryManager(library);
+					if (libMgr != null) {
+						libMgr.removeListener(LibraryProblemMonitor.this);
+					}
+				}
+				
+				if (lib != null && lib != library) {
+					ILibraryManager libMgr = libService.getLibraryManager(lib);
+					if (libMgr != null) {
+						libMgr.addListener(LibraryProblemMonitor.this);
+					}
+					kickToRun();
+				}
+			
+				library = lib;
+			}
+		};
+		LibraryService.getInstance().addListener(libServiceListener);
 		startMonitor();
 	}
 	
@@ -110,12 +135,9 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 		if (localDebug) {
 			System.out.println("LD> update"); //$NON-NLS-1$
 		}
-		MethodLibrary lib = libMgr.getMethodLibrary();
+		MethodLibrary lib = getLibrary();
 		if (lib == null) {
-			if (localDebug) {
-				System.out.println("LD> lib == null"); //$NON-NLS-1$
-			}
-			enableToRestart();
+			return;
 		}
 		checkRestartInterruptException(restartDelay);		
 
@@ -251,7 +273,7 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 			if (marker.getType() != UnresolvedBasedPluginMARKER_ID) {
 				return;
 			}
-			MethodLibrary lib = libMgr.getMethodLibrary();
+			MethodLibrary lib = getLibrary();
 			if (lib == null) {
 				return;
 			}
@@ -306,6 +328,14 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 	public void dispose() {
 		stopMonitor();
 		cleanUp();
+	}
+
+	public MethodLibrary getLibrary() {
+		return library;
+	}
+
+	public void setLibrary(MethodLibrary library) {
+		this.library = library;
 	}
 
 }
