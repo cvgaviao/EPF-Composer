@@ -22,6 +22,7 @@ import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.library.ui.dialogs.LibraryBackupDialog;
+import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -44,6 +45,12 @@ public class LibraryBackupUtil {
 	 * @param shell
 	 */
 	public static void promptBackupCurrentLibrary(Shell shell, ILibraryService service) {
+		MethodLibrary lib = service.getCurrentMethodLibrary();
+		if (lib != null && lib.getMethodPlugins().isEmpty() &&
+				lib.getPredefinedConfigurations().isEmpty()) {
+			return;
+		}
+				
 		String libPathStr = service.getCurrentMethodLibraryLocation();
 		File libPath = new File(libPathStr);
 		new LibraryBackupUtil().doBackup(shell, libPath, service);
