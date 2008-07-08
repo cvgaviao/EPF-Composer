@@ -12,9 +12,11 @@ package org.eclipse.epf.library.configuration.closure;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
@@ -28,6 +30,8 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProduct;
 
 /**
@@ -54,6 +58,8 @@ public class DependencyManager {
 	// A library change listener.
 	private ILibraryChangeListener libListener = null;
 
+	private Set<VariabilityElement> replacerSet = new HashSet<VariabilityElement>();
+	
 	/**
 	 * Creates a new instance.
 	 */
@@ -288,6 +294,18 @@ public class DependencyManager {
 				}
 			} else if ( value instanceof MethodElement ) {
 				refElement = (MethodElement)value;				
+				
+				if (replacerSet != null) {
+					if (feature == UmaPackage.eINSTANCE.getVariabilityElement_VariabilityBasedOnElement()) {
+						VariabilityElement ve = element instanceof VariabilityElement ?
+								(VariabilityElement) element : null;
+						VariabilityType type = ve == null ? null : ve.getVariabilityType();
+						if (type == VariabilityType.EXTENDS_REPLACES ||
+								type == VariabilityType.REPLACES) {
+							replacerSet.add(ve);
+						}
+					}				
+				}
 			}
 			 
 			while ( refElement != null ) {
@@ -378,6 +396,14 @@ public class DependencyManager {
 		}
 
 		dependency.removeReference(element);
+	}
+
+	public Set<VariabilityElement> getReplacerSet() {
+		return replacerSet;
+	}
+
+	public void setReplacerSet(Set<VariabilityElement> replacerSet) {
+		this.replacerSet = replacerSet;
 	}
 
 }

@@ -649,7 +649,12 @@
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator class="org.eclipse.epf.authoring.ui.util.LibraryProblemMarkerResolutionGenerator"
       markerType="org.eclipse.epf.library.unresolvedBasePlugins"/>
-   </extension>   
+   </extension>  
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator class="org.eclipse.epf.authoring.ui.util.LibraryProblemMarkerResolutionGenerator"
+      markerType="org.eclipse.epf.library.multipleReplacers"/>
+   </extension>  
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator class="org.eclipse.epf.authoring.ui.util.ConfigurationMarkerResolutionGenerator"

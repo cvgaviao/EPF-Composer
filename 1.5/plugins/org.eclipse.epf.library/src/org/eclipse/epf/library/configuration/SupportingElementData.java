@@ -20,6 +20,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.IConfigurationManager;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.edit.util.DebugUtil;
@@ -34,6 +36,7 @@ import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -138,6 +141,12 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	private void processReferencesOutsideConfig(MethodElement element,
 			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
+		IConfigurationManager configManager = LibraryService.getInstance().getConfigurationManager(
+				getConfig());
+		Set<VariabilityElement> replacerSet = null;
+		if (configManager != null) {
+			replacerSet = configManager.getDependencyManager().getReplacerSet();
+		}		
 		
 		List properties = LibraryUtil.getStructuralFeatures(element);
 		for (EStructuralFeature f: (List<EStructuralFeature>) properties) {			
@@ -164,6 +173,19 @@ public class SupportingElementData extends ConfigDataBase {
 				}				
 				values = new ArrayList();
 				values.add(value);
+				
+				if (replacerSet != null) {
+					if (feature == UmaPackage.eINSTANCE.getVariabilityElement_VariabilityBasedOnElement()) {
+						VariabilityElement ve = element instanceof VariabilityElement ?
+								(VariabilityElement) element : null;
+						VariabilityType type = ve == null ? null : ve.getVariabilityType();
+						if (type == VariabilityType.EXTENDS_REPLACES ||
+								type == VariabilityType.REPLACES) {
+							replacerSet.add(ve);
+						}
+					}				
+				}
+				
 			}
 			
 			String guid = element.getGuid();

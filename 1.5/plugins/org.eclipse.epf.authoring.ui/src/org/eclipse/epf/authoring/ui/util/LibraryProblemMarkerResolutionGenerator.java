@@ -18,6 +18,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IMarkerResolution;
@@ -38,6 +39,10 @@ public class LibraryProblemMarkerResolutionGenerator implements IMarkerResolutio
 	public IMarkerResolution[] getResolutions(IMarker marker) {
 		try {
 			if (marker.getType() == LibraryProblemMonitor.UnresolvedBasedPluginMARKER_ID) {
+				return new IMarkerResolution[] {
+						new MissingPluginResolution(marker),
+						};
+			} else if (marker.getType() == ConfigurationClosure.multipleReplacersMARKER_ID) {
 				return new IMarkerResolution[] {
 						new MissingPluginResolution(marker),
 						};

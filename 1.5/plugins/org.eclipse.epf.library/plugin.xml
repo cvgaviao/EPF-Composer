@@ -29,6 +29,12 @@
       <attribute name="name"/>
       <attribute name="guid"/>
       <attribute name="unresolvedBaseGuids"/>
-   </extension>   
+   </extension>  
+      <extension id="multipleReplacers" point="org.eclipse.core.resources.markers" name="%MultipleReplacersTypeName"> 
+      <persistent value="false"/> 
+      <super type="org.eclipse.core.resources.problemmarker"/> 
+      <attribute name="guid"/>
+      <attribute name="replacerGuids"/>
+   </extension>  
    
 </plugin>

@@ -11,13 +11,23 @@
 package org.eclipse.epf.library.configuration.closure;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.library.IConfigurationClosure;
@@ -33,6 +43,7 @@ import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr.ChangeEvent;
+import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -73,6 +84,11 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	
 	private boolean abortCheckError = false;
 	
+	// marker ID 
+	public static final String multipleReplacersMARKER_ID = "org.eclipse.epf.library.multipleReplacers"; //$NON-NLS-1$
+	
+	public static final String replacerGuids = "replacerGuids"; //$NON-NLS-1$
+	
 	// A map of invalid nodes to ElementDependencyError objects.
 	protected Map<Object, ElementDependencyError> invalidNodesMap =
 		new HashMap<Object, ElementDependencyError>();
@@ -82,6 +98,8 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	private List<ClosureListener> listeners;
 
 	private MethodElementPropertyMgr.ChangeEventListener configPropListener;
+	
+	private Map<MethodElement, IMarker> replacerElementMarkerMap;
 	/**
 	 * Creates a new instance.
 	 * 
@@ -220,6 +238,84 @@ public class ConfigurationClosure implements IConfigurationClosure {
 
 		processChangedNodes(getSelection());
 
+		processReplacers();
+		
+	}
+
+	private void processReplacers() {
+		Set<VariabilityElement> replacerSet = dependencyManager.getReplacerSet();
+		if (replacerSet == null || replacerSet.isEmpty()) {
+			return;
+		}
+		
+		clearReplacerElementMarkerMap();		
+		replacerElementMarkerMap = new HashMap<MethodElement, IMarker>();
+		Map<VariabilityElement, List> baseReplacersMap = new HashMap<VariabilityElement, List>();
+		for (VariabilityElement ve: replacerSet) {
+			VariabilityElement base = ve.getVariabilityBasedOnElement();
+			List<MethodElement> replacers = baseReplacersMap.get(base);
+			if (replacers == null) {
+				replacers = new ArrayList<MethodElement>();
+				baseReplacersMap.put(base, replacers);
+			}
+			replacers.add(ve);
+			processReplacerError(replacerElementMarkerMap, base, replacers);
+		}
+		
+	}
+	
+	private static void processReplacerError(Map<MethodElement, IMarker> elementMarkerMap, 
+			MethodElement base, Collection<MethodElement> replacers) {
+		if (replacers == null || replacers.isEmpty() || replacers.size() < 2) {
+			return;
+		}
+		IMarker marker = elementMarkerMap.get(base);
+		if (marker == null) {
+			Resource res = base.eResource();
+			if (res == null) {
+				return;
+			}
+		
+			URI containerURI = res.getURI();
+			IWorkspace workspace = ResourcesPlugin.getWorkspace();
+			IPath path = new Path(containerURI.toFileString());
+			IFile file = workspace.getRoot().getFileForLocation(path);
+			if (file == null) {
+				return;
+			}
+			String location = containerURI != null ? containerURI
+					.toFileString() : ""; //$NON-NLS-1$	
+
+			try {
+				marker = file.createMarker(multipleReplacersMARKER_ID);
+				marker.setAttribute(IMarker.LOCATION, location);				
+				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+				marker.setAttribute(LibraryProblemMonitor.Guid, base.getGuid());
+					
+			} catch (Exception e) {
+				LibraryPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+		
+		
+		String replacerGuidsValue = "";		//$NON-NLS-1$
+		for (MethodElement replacer: replacers) {
+			if (replacerGuidsValue.length() != 0) {
+				replacerGuidsValue += ", "; //$NON-NLS-1$	
+			}
+			replacerGuidsValue += replacer.getGuid();
+		}
+		String errMsg = LibraryResources.bind(LibraryResources.ElementError_having_multiple_replacers, 
+				(new String[] {LibraryUtil.getTypePath(base), 
+						replacerGuidsValue }));
+		
+		try {
+			marker.setAttribute(replacerGuids, replacerGuidsValue);
+			marker.setAttribute(IMarker.MESSAGE, errMsg);
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
+				
 	}
 
 	private void clearErrorMarks() {
@@ -1101,8 +1197,22 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		if (listeners != null) {
 			listeners.clear();
 		}
+		clearReplacerElementMarkerMap();
 	}
 
+	private void clearReplacerElementMarkerMap() {
+		if (replacerElementMarkerMap != null) {
+			for (IMarker marker: replacerElementMarkerMap.values()) {
+				try {
+					marker.delete();
+				} catch (Exception e) {
+					LibraryPlugin.getDefault().getLogger().logError(e);
+				}
+			}
+		}		
+		replacerElementMarkerMap = null;
+	}
+	
 //	private boolean canIgnore(PackageReference pkgRef) {
 //		return pkgRef.canIgnore();
 //	}
