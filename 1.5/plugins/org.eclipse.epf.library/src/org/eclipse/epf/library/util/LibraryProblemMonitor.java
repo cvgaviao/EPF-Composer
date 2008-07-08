@@ -32,10 +32,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.utils.RestartableJob;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
+import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 
 /**
  * The class for monitor library problems.
@@ -46,17 +48,22 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 
 public class LibraryProblemMonitor extends RestartableJob implements ILibraryChangeListener {
 	
-	public static final String MARKER_ID = LibraryPlugin.getDefault().getId() + ".missingBasePlugins"; //$NON-NLS-1$
+	public static final String UnresolvedBasedPluginMARKER_ID = LibraryPlugin.getDefault().getId() + ".unresolvedBasePlugins"; //$NON-NLS-1$
+	
+	public static final String Name = "name"; //$NON-NLS-1$
+	public static final String Guid = "guid"; //$NON-NLS-1$
+	public static final String UnresolvedBaseGuids = "unresolvedBaseGuids"; //$NON-NLS-1$
+	
 	private ILibraryManager libMgr;
-	private long delay = 1000L;
-	private boolean kickToRunBit = false;
-	private boolean kicked = true;
+	private long delay = 30000L;
+	private long restartDelay = 1000L;
+	private boolean hasChange = false;
 	private Thread monitorThread;
 	private boolean stopMonitor = false;
 	private Map<MethodPlugin, IMarker> pluginMarkerMap = new HashMap<MethodPlugin, IMarker>();
 	
 	public LibraryProblemMonitor(ILibraryManager libMgr) {
-		super("Problem Monitor");
+		super(LibraryResources.libraryProblemMonitor);
 		this.libMgr = libMgr;
 		startMonitor();
 	}
@@ -66,17 +73,13 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 			public void run() {
 				while (! stopMonitor) {
 					try {
-						if (kickToRunBit) {
-							kickToRunBit = false;
-						} else {
-							Thread.sleep(delay);
-						}
+						Thread.sleep(delay);
 					} catch (Exception e) {
 						LibraryPlugin.getDefault().getLogger().logError(e);
 						return;
 					}
-					if (isKicked()) {
-						setKicked(false);
+					if (hasChange) {
+						hasChange = false;
 						guardedSchedule(0L);
 					}
 				}
@@ -97,24 +100,24 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 	
 	public void libraryChanged(int option, Collection<Object> changedItems) {
 		if (changedItems != null && changedItems.size() > 0) {
+			hasChange = true;
 			enableToRestart();
-			setKicked(true);
 		}
 	}
 	
 	// Update will abort and re-schedule a job if new change detected
 	private void update()  throws RestartInterruptException {
 		if (localDebug) {
-			System.out.println("LD> update");
+			System.out.println("LD> update"); //$NON-NLS-1$
 		}
 		MethodLibrary lib = libMgr.getMethodLibrary();
 		if (lib == null) {
 			if (localDebug) {
-				System.out.println("LD> lib == null");
+				System.out.println("LD> lib == null"); //$NON-NLS-1$
 			}
-			return;
+			enableToRestart();
 		}
-		checkRestartInterruptException(delay);		
+		checkRestartInterruptException(restartDelay);		
 
 		cleanUp();
 		
@@ -123,23 +126,27 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 		
 		Set<MethodPlugin> pluginSet = new HashSet<MethodPlugin>(plugins);
 		for (MethodPlugin plugin: plugins) {
-			checkRestartInterruptException(delay);
+			checkRestartInterruptException(restartDelay);
 			List<MethodPlugin> baseList = plugin.getBases();
 			boolean missing = false;
 			for (MethodPlugin base: baseList) {
-				checkRestartInterruptException(delay);
+				checkRestartInterruptException(restartDelay);
 				if (! pluginSet.contains(base)) {					
 					if (! missing) {
-						System.out.println("LD> plugin: " + plugin);
-						System.out.println("LD> " + plugin.getName() + " is missing bases:");
+						if (localDebug) {
+							System.out.println("LD> plugin: " + plugin); //$NON-NLS-1$
+							System.out.println("LD> " + plugin.getName() + " references unresolved bases:"); //$NON-NLS-1$ //$NON-NLS-2$
+						}
 						missing = true;
 					}
-					System.out.println("LD> base: " + base);
+					if (localDebug) {
+						System.out.println("LD> base: " + base); //$NON-NLS-1$
+					}
 					addMissingBasePluginError(plugin, base);
 				}
 			}
 			if (missing) {
-				System.out.println("");
+				System.out.println(""); //$NON-NLS-1$
 			}
 		}		
 		
@@ -163,12 +170,12 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 			String location = containerURI != null ? containerURI
 					.toFileString() : ""; //$NON-NLS-1$	
 			try {
-				marker = file.createMarker(MARKER_ID);
+				marker = file.createMarker(UnresolvedBasedPluginMARKER_ID);
 				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
-				marker.setAttribute("name", plugin.getName());
-				marker.setAttribute("guid", plugin.getGuid());
+				marker.setAttribute(Name, plugin.getName());
+				marker.setAttribute(Guid, plugin.getGuid());
 				marker.setAttribute(IMarker.LOCATION, location);
-				marker.setAttribute("guid", plugin.getGuid());	
+				marker.setAttribute(Guid, plugin.getGuid());	
 
 			} catch (Exception e) {
 				LibraryPlugin.getDefault().getLogger().logError(e);
@@ -177,25 +184,27 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 				return;
 			}
 			if (localDebug) {
-				System.out.println("LD> marker: " + marker);
+				System.out.println("LD> marker: " + marker); //$NON-NLS-1$
 			}
 			pluginMarkerMap.put(plugin, marker);				
 		
 		}
 		
-		String missingBaseGuids = null;
+		String unresolvedBaseGuidsValue = null;
 		try {
 
-			String errMsg = plugin.getName();
-			missingBaseGuids = (String) marker.getAttribute("missingBaseGuids");
-			if (missingBaseGuids == null || missingBaseGuids.length() == 0) {
-				missingBaseGuids = base.getGuid();
-				errMsg += " misses base plugin: " + missingBaseGuids;
-			} else if (missingBaseGuids.indexOf(base.getGuid()) < 0) {
-				missingBaseGuids += ", base.getGuid()";
-				errMsg += " misses base plugins: " + missingBaseGuids;
+			String errMsg = plugin.getName() + " references unresolved base "; //$NON-NLS-1$
+			unresolvedBaseGuidsValue = (String) marker.getAttribute(UnresolvedBaseGuids);
+			if (unresolvedBaseGuidsValue == null || unresolvedBaseGuidsValue.length() == 0) {
+				unresolvedBaseGuidsValue = base.getGuid();
+				errMsg += "plugin: "; //$NON-NLS-1$
+			} else if (unresolvedBaseGuidsValue.indexOf(base.getGuid()) < 0) {
+				unresolvedBaseGuidsValue += ", " + base.getGuid(); //$NON-NLS-1$
+				errMsg += "plugins: "; //$NON-NLS-1$
 			}
+			errMsg += unresolvedBaseGuidsValue;
 			marker.setAttribute(IMarker.MESSAGE, errMsg);
+			marker.setAttribute(UnresolvedBaseGuids, unresolvedBaseGuidsValue);
 		} catch (Exception e) {
 			LibraryPlugin.getDefault().getLogger().logError(e);
 		}
@@ -209,7 +218,7 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 	
 	protected void resetToRestart() {
 		if (localDebug) {
-			System.out.println("LD> resetToRestart");
+			System.out.println("LD> resetToRestart"); //$NON-NLS-1$
 		}
 		cleanUp();
 	}
@@ -228,20 +237,69 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 		pluginMarkerMap = new HashMap<MethodPlugin, IMarker>();
 	}
 
-	private boolean isKicked() {
-		return kicked;
-	}
-
 	public void kickToRun() {
-		kickToRunBit = true;
+		if (localDebug) {
+			System.out.println("LD> kickToRun"); //$NON-NLS-1$
+		}
 		enableToRestart();
-		setKicked(true);
+		guardedSchedule(0L);
 	}
 	
-	protected void setKicked(boolean kicked) {
-		this.kicked = kicked;
-		if (localDebug) {
-			System.out.println("LD> setKicked: " + kicked);
+	//To do: allow a cached data to pased and return -> optimize fix of similar problems
+	public void fixProblem(IMarker marker) {
+		try {
+			if (marker.getType() != UnresolvedBasedPluginMARKER_ID) {
+				return;
+			}
+			MethodLibrary lib = libMgr.getMethodLibrary();
+			if (lib == null) {
+				return;
+			}
+
+			Map<String, MethodPlugin> guidToPluginMap = new HashMap<String, MethodPlugin>();
+			for (MethodPlugin plugin : lib.getMethodPlugins()) {
+				guidToPluginMap.put(plugin.getGuid(), plugin);
+			}
+			String guid = (String) marker.getAttribute(Guid); //$NON-NLS-1$
+
+			MethodPlugin plugin = guidToPluginMap.get(guid);
+			if (plugin == null || plugin.eResource() == null) {
+				return;
+			}
+			
+			if (localDebug) {
+				System.out.println("LD> fixProblem, plugin: " + plugin); //$NON-NLS-1$
+			}
+			
+			List<MethodPlugin> bases = new ArrayList<MethodPlugin>();
+			bases.addAll(plugin.getBases());
+
+			boolean modified = false;
+			for (MethodPlugin base : bases) {
+				if (! guidToPluginMap.containsKey(base.getGuid())) {
+					modified = true;
+					plugin.getBases().remove(base);
+				}
+			}
+			if (! modified) {
+				return;
+			}
+			
+			Resource resource = plugin.eResource();
+			ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
+					.getPersisterFor(resource).getFailSafePersister();
+			try {
+				persister.save(resource);
+				persister.commit();
+			}
+			catch(Exception e) {
+				LibraryPlugin.getDefault().getLogger().logError(e);
+				persister.rollback();
+			}
+
+			kickToRun();
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
 		}
 	}
 	

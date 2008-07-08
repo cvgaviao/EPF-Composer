@@ -20,6 +20,7 @@ public final class LibraryResources extends NLS {
 		// Do not instantiate
 	}
 
+	public static String libraryProblemMonitor;
 	public static String libUpgradeRequired_err_msg;
 	public static String oldToolVersion_err_msg;
 	public static String toolVersionMismatch_err_msg;

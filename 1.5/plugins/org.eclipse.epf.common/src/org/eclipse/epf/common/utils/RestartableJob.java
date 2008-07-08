@@ -35,30 +35,37 @@ public abstract class RestartableJob extends Job {
 	}
 	
 	public final void guardedSchedule(long delay) {
+		guardedSchedule(delay, false);
+	}
+	
+	private void guardedSchedule(long delay, boolean inRunCall) {
 		if ( ! isEnabled()) {
 			return;
 		}
-		if (getState() != Job.NONE) {
+		if (!inRunCall && getState() != Job.NONE) {
 			return;
 		}
 		if (isSchedulingLocked()) {
 			return;
 		}
 		if (localDebug) {
-			System.out.println("LD> guardedSchedule completed");
+			System.out.println("LD> guardedSchedule completed"); //$NON-NLS-1$
 		}
 		setSchedulingLocked(true);
 		schedule(delay);		
 	}
 	
 	protected final IStatus run(IProgressMonitor monitor) {
+		if (localDebug) {
+			System.out.println("LD> RestartableJob.run"); //$NON-NLS-1$
+		}
 		setSchedulingLocked(false);
 		setToRestart(false);
 		IStatus status = Status.OK_STATUS; 
 		try {
 			status = restartableRun(monitor);
 		} catch (RestartInterruptException e) {
-			guardedSchedule(e.getDelay());
+			guardedSchedule(e.getDelay(), true);
 		}
 		
 		return Status.OK_STATUS;

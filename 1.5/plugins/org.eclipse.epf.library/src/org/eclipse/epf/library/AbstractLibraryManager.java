@@ -533,7 +533,9 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 		}
 
 		this.library = library;
-		getLibraryProblemMonitor().kickToRun();
+		if (library != null) {
+			getLibraryProblemMonitor().kickToRun();
+		}
 	}
 
 	/**

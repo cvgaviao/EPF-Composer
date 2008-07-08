@@ -412,6 +412,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String taskCategoriesPage_selectedLabel2;
 
 	public static String MarkerResolutionGenerator_removeUnresolvedReference;
+	
+	public static String LibraryProblemMarkerResolutionGenerator_removeUnresolvedBasePlugins;
 
 	public static String MarkerResolutionGenerator_showOwnerInLibraryView;
 
