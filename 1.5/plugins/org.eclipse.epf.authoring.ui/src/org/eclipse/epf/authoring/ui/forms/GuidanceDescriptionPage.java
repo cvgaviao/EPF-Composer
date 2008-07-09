@@ -62,6 +62,7 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 	private String elementLabel;
 
 	private IMethodRichText ctrl_content;
+	protected boolean contentOn = true;
 
 	private int contentFieldHeight = 400;
 
@@ -104,9 +105,11 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 	 */
 	protected void createEditorContent(FormToolkit toolkit) {
 		super.createEditorContent(toolkit);
-		ctrl_content = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.MAIN_DESCRIPTION_TEXT,
-				contentFieldHeight, 400, DETAIL_SECTION_ID);
+		if (contentOn) {
+			ctrl_content = createRichTextEditWithLinkForSection(toolkit,
+					detailComposite, AuthoringUIText.MAIN_DESCRIPTION_TEXT,
+					contentFieldHeight, 400, DETAIL_SECTION_ID);
+		}
 	}
 
 	/**
@@ -114,40 +117,42 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 	 */
 	protected void addListeners() {
 		super.addListeners();
-
-		final MethodElementEditor editor = (MethodElementEditor) getEditor();
-
-		ctrl_content.setModalObject(contentElement.getPresentation());
-		ctrl_content.setModalObjectFeature(UmaPackage.eINSTANCE
-				.getContentDescription_MainDescription());
-		ctrl_content.addModifyListener(contentModifyListener);
-		ctrl_content.addListener(SWT.Deactivate, new Listener() {
-			public void handleEvent(Event e) {
-				IMethodRichText control = descExpandFlag ? ctrl_expanded
-						: ctrl_content;
-				if (!control.getModified()) {
-					return;
-				}
-				String oldContent = guidance.getPresentation()
-						.getMainDescription();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						control, oldContent)) {
-					return;
-				}
-				String newContent = control.getText();
-				if (!newContent.equals(oldContent)) {
-					boolean success = editor.getActionManager().doAction(
-							IActionManager.SET,
-							contentElement.getPresentation(),
-							UmaPackage.eINSTANCE
-									.getContentDescription_MainDescription(),
-							newContent, -1);
-					if (success && isVersionSectionOn()) {
-						updateChangeDate();
+		if (contentOn) {
+	
+			final MethodElementEditor editor = (MethodElementEditor) getEditor();
+	
+			ctrl_content.setModalObject(contentElement.getPresentation());
+			ctrl_content.setModalObjectFeature(UmaPackage.eINSTANCE
+					.getContentDescription_MainDescription());
+			ctrl_content.addModifyListener(contentModifyListener);
+			ctrl_content.addListener(SWT.Deactivate, new Listener() {
+				public void handleEvent(Event e) {
+					IMethodRichText control = descExpandFlag ? ctrl_expanded
+							: ctrl_content;
+					if (!control.getModified()) {
+						return;
+					}
+					String oldContent = guidance.getPresentation()
+							.getMainDescription();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							control, oldContent)) {
+						return;
+					}
+					String newContent = control.getText();
+					if (!newContent.equals(oldContent)) {
+						boolean success = editor.getActionManager().doAction(
+								IActionManager.SET,
+								contentElement.getPresentation(),
+								UmaPackage.eINSTANCE
+										.getContentDescription_MainDescription(),
+								newContent, -1);
+						if (success && isVersionSectionOn()) {
+							updateChangeDate();
+						}
 					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	/**
@@ -155,7 +160,9 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 	 */
 	protected void refresh(boolean editable) {
 		super.refresh(editable);
-		ctrl_content.setEditable(editable);
+		if (contentOn) {
+			ctrl_content.setEditable(editable);
+		}
 	}
 
 	/**
@@ -163,12 +170,14 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 	 */
 	protected void loadData() {
 		super.loadData();
-		if (guidance != null) {
-			String content = null;
-			if (guidance.getPresentation() != null) {
-				content = guidance.getPresentation().getMainDescription();
+		if (contentOn) {
+			if (guidance != null) {
+				String content = null;
+				if (guidance.getPresentation() != null) {
+					content = guidance.getPresentation().getMainDescription();
+				}
+				ctrl_content.setText(content == null ? "" : content); //$NON-NLS-1$
 			}
-			ctrl_content.setText(content == null ? "" : content); //$NON-NLS-1$
 		}
 	}
 

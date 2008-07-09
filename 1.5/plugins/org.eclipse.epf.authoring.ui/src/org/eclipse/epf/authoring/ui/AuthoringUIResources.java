@@ -144,6 +144,7 @@ public final class AuthoringUIResources extends NLS {
 	public static String additionalInfo_text;
 
 	public static String application_text;
+	public static String practice_application_text;
 
 	public static String actionLabel_edit;
 

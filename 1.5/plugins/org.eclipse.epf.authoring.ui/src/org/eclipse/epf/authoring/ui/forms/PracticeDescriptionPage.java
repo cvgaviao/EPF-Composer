@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.forms;
 
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
@@ -56,6 +57,8 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 		super.init(site, input);
 		guidance = (Practice) contentElement;
 		setContentFieldHeight(200);
+		setFullDescOn(true);
+		contentOn = false;
 	}
 
 	/**
@@ -63,27 +66,39 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 	 */
 	protected void createEditorContent(FormToolkit toolkit) {
 		super.createEditorContent(toolkit);
-
-		ctrl_additional_info = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.ADDITIONAL_INFO_TEXT, 40, 400,
+		label_base.setText(AuthoringUIText.BASE_ELEMENT_TEXT);
+	}
+	
+	@Override
+	protected void createDetailSectionContent() {
+		// Problem is named "Purpose" in the UI
+		ctrl_problem = createRichTextEditWithLinkForSection(toolkit,
+				detailComposite, AuthoringUIText.PURPOSE_TEXT, 40, 400,
 				DETAIL_SECTION_ID);
+
 		ctrl_goals = createRichTextEditWithLinkForSection(toolkit,
 				detailComposite, AuthoringUIText.GOALS_TEXT, 40, 400,
-				DETAIL_SECTION_ID);
-		ctrl_application = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.APPLICATION_TEXT, 40, 400,
-				DETAIL_SECTION_ID);
-		ctrl_problem = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.PROBLEM_TEXT, 40, 400,
 				DETAIL_SECTION_ID);
 		ctrl_background = createRichTextEditWithLinkForSection(toolkit,
 				detailComposite, AuthoringUIText.BACKGROUND_TEXT, 40, 400,
 				DETAIL_SECTION_ID);
+
+		if (fullDescOn) {
+			ctrl_full_desc = createRichTextEditWithLinkForSection(toolkit,
+					detailComposite, AuthoringUIText.MAIN_DESCRIPTION_TEXT,
+					100, 400, DETAIL_SECTION_ID);
+		}
+		
+		// Application field is called "How to read this practice" in the UI
+		ctrl_application = createRichTextEditWithLinkForSection(toolkit,
+				detailComposite, AuthoringUIResources.practice_application_text, 40, 400,
+				DETAIL_SECTION_ID);
 		ctrl_levels_adoption = createRichTextEditWithLinkForSection(toolkit,
 				detailComposite, AuthoringUIText.LEVEL_OF_ADOPTION_TEXT, 40,
 				400, DETAIL_SECTION_ID);
-
-		label_base.setText(AuthoringUIText.BASE_ELEMENT_TEXT);
+		ctrl_additional_info = createRichTextEditWithLinkForSection(toolkit,
+				detailComposite, AuthoringUIText.ADDITIONAL_INFO_TEXT, 40, 400,
+				DETAIL_SECTION_ID);
 	}
 
 	/**
@@ -308,7 +323,7 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 		ctrl_additional_info.setEditable(editable);
 		ctrl_application.setEditable(editable);
 		ctrl_goals.setEditable(editable);
-		ctrl_problem.setEditable(editable);
+//		ctrl_problem.setEditable(editable);
 		ctrl_levels_adoption.setEditable(editable);
 		ctrl_background.setEditable(editable);
 	}

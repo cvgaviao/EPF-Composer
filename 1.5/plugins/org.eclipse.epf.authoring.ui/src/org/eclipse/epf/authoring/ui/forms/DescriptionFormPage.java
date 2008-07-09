@@ -1164,7 +1164,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	/**
 	 * Creates the Detail section content.
 	 */
-	private void createDetailSectionContent() {
+	protected void createDetailSectionContent() {
 		if (purposeOn) {
 			ctrl_purpose = createRichTextEditWithLinkForSection(toolkit,
 					detailComposite, AuthoringUIText.PURPOSE_TEXT, 40, 400,
