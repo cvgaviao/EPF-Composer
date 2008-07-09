@@ -518,19 +518,8 @@ function updateSelection() {
 		selection = editorDoc.selection;
 		if (selection != null) {
 			selectionRange = selection.createRange();
-			if (selectionRange != null) {
-				if (selection.type != "Control") {
-					tempSelRange = selectionRange.duplicate();
-				} else {
-					if (selectionRange(0).tagName == "IMG") {
-						img = selectionRange(0);
-						imgHTML = img.parentNode.innerHTML;
-//						alert('selected image: ' + imgHTML);
-						// TODO: setStatus on a new type of status,
-						// STATUS_SELECT_CONTROL
-						// pass the imgHTML as parameter
-					}
-				}
+			if (selectionRange != null && selection.type != "Control") {
+				tempSelRange = selectionRange.duplicate();
 			}
 			reformatElementLinks();
 		}
