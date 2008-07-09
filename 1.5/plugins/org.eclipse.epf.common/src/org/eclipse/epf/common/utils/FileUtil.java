@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -779,6 +780,26 @@ public class FileUtil {
 			}
 		}
 		return charBuffer;
+	}
+
+	public static String readInputStream(InputStream input) throws IOException {
+		String result = "";  //$NON-NLS-1$
+		byte[] readData = new byte[8 * 1024];
+		try {
+			int bytesRead = input.read(readData);
+			while (bytesRead > 0) {
+				result += new String(readData);
+				bytesRead = input.read(readData);
+			}
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		return result;
 	}
 
 	public static StringBuffer readFile(File file, String encoding)

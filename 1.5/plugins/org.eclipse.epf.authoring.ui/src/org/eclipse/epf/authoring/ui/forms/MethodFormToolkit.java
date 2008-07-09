@@ -15,6 +15,7 @@ import org.eclipse.epf.authoring.ui.editors.MethodRichTextEditor;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
 import org.eclipse.epf.authoring.ui.richtext.MethodRichTextContext;
+import org.eclipse.epf.authoring.ui.richtext.MethodRichTextEditorContext;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.swt.widgets.Composite;
@@ -80,7 +81,7 @@ public class MethodFormToolkit {
 	public static IMethodRichTextEditor createRichTextEditor(
 			FormToolkit toolkit, Composite parent, String text, int style,
 			String basePath, MethodElement methodElement, Label label, IEditorSite editorSite) {
-		IMethodRichTextEditor editor = new MethodRichTextEditor(parent, style,
+		IMethodRichTextEditor editor = createMethodRichTextEditor(parent, style,
 				basePath, methodElement, label, editorSite);
 		editor.getControl().setData(FormToolkit.KEY_DRAW_BORDER,
 				FormToolkit.TEXT_BORDER);
@@ -89,5 +90,12 @@ public class MethodFormToolkit {
 		}
 		return editor;
 	}
+	
+	public static IMethodRichTextEditor createMethodRichTextEditor(Composite parent, int style, String basePath, MethodElement methodElement, Label label, IEditorSite editorSite) {
+		MethodRichTextEditorContext context = new MethodRichTextEditorContext(parent, style, basePath, methodElement, label, editorSite);
+		Object provider = ExtensionHelper.create(IMethodRichTextEditor.class, context);
+		return provider instanceof IMethodRichTextEditor ? (IMethodRichTextEditor) provider : new MethodRichTextEditor(context);
+	}
+
 
 }

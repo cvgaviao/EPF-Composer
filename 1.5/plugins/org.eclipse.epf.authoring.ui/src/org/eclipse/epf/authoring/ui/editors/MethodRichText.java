@@ -104,7 +104,7 @@ public class MethodRichText extends RichText implements IMethodRichText {
 	 *            The context
 	 */
 	public MethodRichText(MethodRichTextContext context) {
-		super(context.getParent(), context.getStyle(), context.getBasePath());
+		this(context.getParent(), context.getStyle(), context.getBasePath());
 	}
 
 	/**

@@ -17,6 +17,7 @@ import org.eclipse.epf.authoring.ui.actions.MethodAddLinkAction;
 import org.eclipse.epf.authoring.ui.forms.MethodFormToolkit;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
+import org.eclipse.epf.authoring.ui.richtext.MethodRichTextEditorContext;
 import org.eclipse.epf.richtext.IRichText;
 import org.eclipse.epf.richtext.IRichTextToolBar;
 import org.eclipse.epf.richtext.RichTextEditor;
@@ -80,6 +81,18 @@ public class MethodRichTextEditor extends RichTextEditor implements
 		this.methodElement = methodElement;
 		init(methodElement, label);
 	}
+	
+	/**
+	 * Creates a new instance.
+	 * 
+	 * @param context
+	 *            The context
+	 */
+	public MethodRichTextEditor(MethodRichTextEditorContext context) {
+		this(context.getParent(), context.getStyle(), context.getBasePath(),
+				context.getMethodElement(), context.getLabel(), context.getEditorSite());
+	}
+
 
 	/**
 	 * Creates the underlying rich text control.
