@@ -414,7 +414,9 @@ public final class AuthoringUIResources extends NLS {
 
 	public static String MarkerResolutionGenerator_removeUnresolvedReference;
 	
-	public static String LibraryProblemMarkerResolutionGenerator_removeUnresolvedBasePlugins;
+	public static String LpmResolutionGenerator_removeUnresolvedBasePlugins;
+	
+	public static String LpmResolutionGenerator_removeMultipleRepacers;
 
 	public static String MarkerResolutionGenerator_showOwnerInLibraryView;
 
