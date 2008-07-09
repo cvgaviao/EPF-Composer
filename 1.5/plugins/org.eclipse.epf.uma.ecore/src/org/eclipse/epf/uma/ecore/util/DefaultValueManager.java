@@ -85,8 +85,15 @@ public class DefaultValueManager {
 						if(staticDefaultValue == null) {
 							staticDefaultValue = feature.getDefaultValue();
 						}
+						
+						// default value is overridden either via:
+						// - static default value
+						// - dynamic default value
+						// - dynamic default value that overrode a overriding static default value
+						//
 						if((defaultValue == null &&  staticDefaultValue != null)
-								|| (defaultValue != null && !defaultValue.equals(staticDefaultValue))) {
+								|| (defaultValue != null && (!defaultValue.equals(staticDefaultValue) || 
+										(staticDefaultValue != null && !staticDefaultValue.equals(feature.getDefaultValue()))))) {
 							featureToDefaultValueMap.put(feature, defaultValue);
 						}
 					}
