@@ -1,5 +1,7 @@
 package org.eclipse.epf.authoring.ui.views;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
@@ -62,5 +64,17 @@ public class MethodContainerCheckedTreeViewer2 extends MethodContainerCheckedTre
             }
             updateParentItems(item.getParentItem());
         }
+    }
+    
+    public Object[] getCheckButNotGrayedElements() {
+    	Object[] checked = getCheckedElements();
+    	ArrayList<Object> elements = new ArrayList<Object>();
+    	for (int i = 0; i < checked.length; i++) {
+			Object element = checked[i];
+			if(!getGrayed(element)) {
+				elements.add(element);
+			}
+		}
+    	return elements.toArray();
     }
 }

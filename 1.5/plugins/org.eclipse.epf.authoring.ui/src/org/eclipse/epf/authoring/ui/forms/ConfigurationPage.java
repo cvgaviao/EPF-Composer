@@ -912,8 +912,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     	List<ContentCategory> oldAddCats = new ArrayList<ContentCategory>(config.getAddedCategory());
     	List<ContentCategory> oldSubCats = new ArrayList<ContentCategory>(config.getSubtractedCategory());
     	
-    	Set<ContentCategory> newAddCats = getCheckedContentCategories(addCategoryViewer.getCheckedElements());
-    	Set<ContentCategory> newSubCats = getCheckedContentCategories(subCategoryViewer.getCheckedElements());
+    	Set<ContentCategory> newAddCats = getCheckedContentCategories(addCategoryViewer.getCheckButNotGrayedElements());
+    	Set<ContentCategory> newSubCats = getCheckedContentCategories(subCategoryViewer.getCheckButNotGrayedElements());
     	
     	oldAddCats.removeAll(newAddCats);
     	oldSubCats.removeAll(newSubCats);
