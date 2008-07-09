@@ -2490,7 +2490,8 @@ public final class TngUtil {
 		String path = uri.getPath();
 		MethodPlugin plugin = UmaUtil.getMethodPlugin(o);
 		if (plugin != null && UmaUtil.hasDirectResource(plugin)) {
-			File pluginDir = new File(plugin.eResource().getURI().toFileString()).getParentFile();
+			IFileBasedLibraryPersister persister = (IFileBasedLibraryPersister) Services.getLibraryPersister(Services.XMI_PERSISTENCE_TYPE);
+			File pluginDir = new File(persister.getFolderAbsolutePath(plugin));
 			if (path.indexOf(plugin.getName() + "/") == 0) {	//$NON-NLS-1$
 				return new File(f, NetUtil.decodedFileUrl(uri.toString()))
 						.toURI();
