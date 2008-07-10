@@ -33,11 +33,6 @@ public abstract class ElementLayoutExtender {
 	
 	public abstract List<MethodElement> getTagQualifiedList(MethodConfiguration config, List<MethodElement> items);
 
-	@Deprecated
-	public List<WorkProduct> getTagQualifiedWpList(MethodConfiguration config, List<WorkProduct> items){
-		return items;
-	}
-
 	public AbstractElementLayout getLayout() {
 		return layout;
 	}
