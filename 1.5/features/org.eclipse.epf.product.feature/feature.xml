@@ -40,4 +40,8 @@
          id="org.eclipse.epf.richtext.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.epf.richtext.win32.feature"
+         version="0.0.0"/>
+
 </feature>
