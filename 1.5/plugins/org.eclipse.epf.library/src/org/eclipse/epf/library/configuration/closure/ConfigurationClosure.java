@@ -470,14 +470,15 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	/**
 	 * Returns all the errors.
 	 * 
-	 * @return A a list of <code>PackageError</code>.
 	 */
-	public List<PackageError> getAllErrors() {
-		List<PackageError> errors = new ArrayList<PackageError>();
+	public List<ElementError> getAllErrors() {
+/*		Old code
+ 		List<PackageError> errors = new ArrayList<PackageError>();
 		for (Iterator it = invalidNodesMap.values().iterator(); it.hasNext();) {
 			ElementDependencyError error = (ElementDependencyError) it.next();
 			errors.addAll(error.getAll());
 		}
+*/
 		return errors;
 	}
 
