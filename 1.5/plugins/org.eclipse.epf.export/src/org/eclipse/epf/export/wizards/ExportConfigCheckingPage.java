@@ -12,11 +12,13 @@ package org.eclipse.epf.export.wizards;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.epf.export.ExportPlugin;
 import org.eclipse.epf.export.ExportResources;
 import org.eclipse.epf.export.services.ConfigurationExportData;
 import org.eclipse.epf.library.IConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
+import org.eclipse.epf.library.configuration.closure.ElementError;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -112,13 +114,30 @@ public class ExportConfigCheckingPage extends BaseWizardPage {
 			}
 		}
 
-		List errors = closure.getAllErrors();
+		List<ElementError> errors = closure.getAllErrors();
 		if (errors.size() == 0) {
 			textBuf.append(ExportResources.ExportConfigCheckingPage_summary_3);
 		} else {
+			int eSz = 0;
+			int wSz = 0;
+			int iSz = 0;
+			for (ElementError error: errors) {
+				if (error.getSeverity() == IMarker.SEVERITY_ERROR) {
+					eSz++;
+				} else if (error.getSeverity() == IMarker.SEVERITY_WARNING) {
+					wSz++;
+				} else {
+					iSz++;
+				}
+			}
 			textBuf.append(ExportResources.bind(
 					ExportResources.ExportConfigCheckingPage_summary_4,
-					(new Object[] { Integer.toString(errors.size()) })));
+					(new Object[] { 
+							Integer.toString(errors.size()),
+							Integer.toString(eSz), 
+							Integer.toString(wSz), 
+							Integer.toString(iSz), 
+							})));
 		}
 
 		Document doc = new Document(textBuf.toString());
