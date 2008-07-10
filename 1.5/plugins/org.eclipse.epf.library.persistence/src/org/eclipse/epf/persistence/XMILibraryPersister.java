@@ -143,4 +143,8 @@ public class XMILibraryPersister implements IFileBasedLibraryPersister {
 	public void delete(Collection<MethodElement> elements) {
 		MethodLibraryPersister.INSTANCE.delete(elements);
 	}
+
+	public File getFile(Resource resource) {
+		return MethodLibraryPersister.INSTANCE.getFile(resource);
+	}
 }

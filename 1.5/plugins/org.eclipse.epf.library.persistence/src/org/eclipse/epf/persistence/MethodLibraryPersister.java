@@ -1127,8 +1127,25 @@ public class MethodLibraryPersister implements IFileBasedLibraryPersister {
 
 	public String getFolderAbsolutePath(MethodElement e) {
 		MethodLibrary library = UmaUtil.getMethodLibrary(e);
-		File libDir = new File(MultiFileSaveUtil.getFinalURI(library.eResource()).toFileString()).getParentFile();
-		return new File(libDir, getRelativeElementPath(e)).getAbsolutePath();
+		File libDir = null;
+		if(library == null) {
+			MethodPlugin plugin = UmaUtil.getMethodPlugin(e);
+			Resource resource;
+			if(plugin != null && (resource = ((InternalEObject) plugin).eDirectResource()) != null) {
+				URI uri = MultiFileSaveUtil.getFinalURI(resource);
+				libDir = new File(uri.toFileString()).getParentFile().getParentFile();
+			}			
+		}
+		else {
+			URI uri = MultiFileSaveUtil.getFinalURI(library.eResource());
+			libDir = new File(uri.toFileString()).getParentFile();
+		}
+		if (libDir != null) {
+			return new File(libDir, getRelativeElementPath(e))
+					.getAbsolutePath();
+		} else {
+			return null;
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -1140,6 +1157,11 @@ public class MethodLibraryPersister implements IFileBasedLibraryPersister {
 			getObjectsWithDirectResources(it.next(), elements);
 		}
 		deleteAndSave(elements);
+	}
+
+	public File getFile(Resource resource) {
+		URI uri = MultiFileSaveUtil.getFinalURI(resource);
+		return new File(FileManager.toFileString(uri));
 	}
 
 }

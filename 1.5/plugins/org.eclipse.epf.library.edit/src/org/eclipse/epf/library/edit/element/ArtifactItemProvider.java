@@ -209,10 +209,12 @@ public class ArtifactItemProvider extends
 				URI imgUri = TngUtil.getFullPathofNodeorShapeIconURI(
 						(DescribableElement) object,
 						((DescribableElement) object).getNodeicon());
-				Object image = LibraryEditPlugin.INSTANCE
-						.getSharedImage(imgUri);
-				if (image != null)
-					return image;
+				if (imgUri != null) {
+					Object image = LibraryEditPlugin.INSTANCE
+							.getSharedImage(imgUri);
+					if (image != null)
+						return image;
+				}
 			}
 		}
 		return super.getImage(object);
