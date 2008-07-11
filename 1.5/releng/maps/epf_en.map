@@ -1,11 +1,11 @@
-feature@org.eclipse.epf.base.feature=v20080710-2229,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
+feature@org.eclipse.epf.base.feature=v20080711-0950a,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
 feature@org.eclipse.epf.doc.feature=v20080624-1311,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
 feature@org.eclipse.epf.platform.feature=v20080624-1311,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
 feature@org.eclipse.epf.rcp.feature=v20080710-2244,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
-feature@org.eclipse.epf.richtext.feature=v20080710-1921,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.richtext.feature
+feature@org.eclipse.epf.richtext.feature=v20080711-0950a,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.richtext.feature
 feature@org.eclipse.epf.richtext.win32.feature=v20080710-1921,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.richtext.win32.feature
 feature@org.eclipse.epf.rte.feature=v20080710-1734,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rte.feature
-feature@org.eclipse.epf.product.feature=v20080710-2247,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.product.feature
+feature@org.eclipse.epf.product.feature=v20080711-0950a,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.product.feature
 feature@org.eclipse.epf.product.win32.feature=v20080708-2335,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.product.win32.feature
 plugin@org.eclipse.epf.authoring.ui=v20080709-1606,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.authoring.ui
 plugin@org.eclipse.epf.base=v20080710-1154,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.base
