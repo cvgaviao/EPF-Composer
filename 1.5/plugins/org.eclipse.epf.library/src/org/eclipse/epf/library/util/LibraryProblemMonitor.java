@@ -45,6 +45,20 @@ import org.eclipse.epf.uma.MethodPlugin;
 /**
  * The class for monitor library problems.
  * 
+ * (1) Wake up regularly (say every 30 seconds) 
+ *     to schedule job if any change is registered during sleep
+ *     
+ * (2) Goes to sleep again immediately after "waking up/do nothing" or
+ *     "waking up/scheduling a job"    
+ *     
+ * (3) Job (finding library problems) runs to end only there is no change during run.
+ * 
+ * (4) Job run is aborted (by throwing a RestartInterruptException)
+ *     whenever a change is detected during run, and a new job scheduled 
+ *     with a delay time (say 1 second).
+ *      
+ * (5) Make sure there is always at most one job running
+ * 
  * @author Weiping Lu
  * @since 1.5
  */
