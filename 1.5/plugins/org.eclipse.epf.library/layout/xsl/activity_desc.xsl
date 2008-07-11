@@ -324,10 +324,12 @@
 						<xsl:with-param name="refName" select="$parentActivitiesText"/>
 						<xsl:with-param name="refElement" select="reference[@name='superActivities']/Element"/>
 					</xsl:call-template>
+					<!-- 
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$includedPatternsText"/>
 						<xsl:with-param name="refElement" select="referenceList[@name='includesPatterns']/Element"/>
 					</xsl:call-template>
+					 -->
 				</table>
 			</div>
 		</xsl:if>
