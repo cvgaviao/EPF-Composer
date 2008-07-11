@@ -22,13 +22,16 @@ import org.eclipse.jface.preference.IPreferenceStore;
 public class AuthoringUIPreferences {
 
 	public static final String ENABLE_LIBRARY_VALIDATION = "enabledLibraryValidation"; //$NON-NLS-1$
+	
+	public static final String SHOW_LONG_PRESENTATION_NAME = "showLongPresentationName"; //$NON-NLS-1$
 
 	public static final String ADD_TASKS_PER_ROW = "ACTIVITY_DETAIL_DIAGRAM_TASKS_PER_ROW"; //$NON-NLS-1$
 	
 	private static final int DEFAULT_ADD_TASKS_PER_ROW = 10; 
 	
-	
 	private static final boolean DEFAULT_ENABLE_LIBRARY_VALIDATION = false;
+	
+	private static final boolean DEFAULT_SHOW_LONG_PRESENTATION_NAME = false;
 
 	// The plug-in specific preference store.
 	private static IPreferenceStore prefStore = AuthoringUIPlugin.getDefault()
@@ -37,6 +40,9 @@ public class AuthoringUIPreferences {
 		// Initialize the default preference values.
 		prefStore.setDefault(ENABLE_LIBRARY_VALIDATION,
 				DEFAULT_ENABLE_LIBRARY_VALIDATION);
+		
+		prefStore.setDefault(SHOW_LONG_PRESENTATION_NAME,
+				DEFAULT_SHOW_LONG_PRESENTATION_NAME);
 		
 		prefStore.setDefault(ADD_TASKS_PER_ROW, DEFAULT_ADD_TASKS_PER_ROW);
 		
@@ -61,6 +67,27 @@ public class AuthoringUIPreferences {
 	 */
 	public static void setEnableLibraryValidation(boolean value) {
 		prefStore.setValue(ENABLE_LIBRARY_VALIDATION, value);
+	}
+	
+	/**
+	 * Gets the default show long presentation name preference.
+	 */
+	public static boolean getDefaultShowLongPresentationName() {
+		return DEFAULT_SHOW_LONG_PRESENTATION_NAME;
+	}
+	
+	/**
+	 * Gets the
+	 */
+	public static boolean getShowLongPresentationName() {
+		return prefStore.getBoolean(SHOW_LONG_PRESENTATION_NAME);
+	}
+
+	/**
+	 * Sets the show long presentation name preference.
+	 */
+	public static void setShowLongPresentationName(boolean value) {
+		prefStore.setValue(SHOW_LONG_PRESENTATION_NAME, value);
 	}
 	
 	/**

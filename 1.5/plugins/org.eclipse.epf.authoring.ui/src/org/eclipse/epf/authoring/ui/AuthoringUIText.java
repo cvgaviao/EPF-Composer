@@ -173,6 +173,8 @@ public class AuthoringUIText {
 	public static final String PACKAGING_GUIDANCE_TEXT = AuthoringUIResources.packagingGuidance_text; 
 
 	public static final String PRESENTATION_NAME_TEXT = AuthoringUIResources.presentationName_text; 
+	
+	public static final String LONG_PRESENTATION_NAME_TEXT = AuthoringUIResources.long_presentationName_text;
 
 	public static final String PROBLEM_TEXT = AuthoringUIResources.problem_text; 
 

@@ -49,6 +49,7 @@ public class DisciplineGroupingDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		disciplineGrouping = (DisciplineGrouping) contentElement;
 		setExternalIDOn(true);
+		setLongPresentationNameOn(true);
 	}
 
 	/**

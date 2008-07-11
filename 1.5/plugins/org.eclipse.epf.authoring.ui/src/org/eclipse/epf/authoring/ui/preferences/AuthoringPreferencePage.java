@@ -13,6 +13,7 @@ package org.eclipse.epf.authoring.ui.preferences;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
+import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.common.ui.util.CommonPreferences;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
@@ -28,13 +29,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
  * The Authoring preference page.
  * 
  * @author Kelvin Low
+ * @author Shilpa Toraskar
  * @since 1.2
  */
 public class AuthoringPreferencePage extends BasePreferencePage implements
@@ -57,6 +61,8 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	private Button enableLibraryValidationCheckbox;
 
 	private Text preferenceHistorySizeText;
+	
+	private Button showLongPresentationNameCheckbox;
 
 	/**
 	 * Creates and returns the SWT control for the customized body of this
@@ -103,6 +109,13 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 
 		enableLibraryValidationCheckbox = createCheckbox(debugGroup,
 				AuthoringUIResources.enableLibraryValidationCheckbox_text);
+		
+		// Create the editor group.
+		Group editorGroup = createGridLayoutGroup(composite,
+				AuthoringUIResources.editorGroup_text, 2);
+
+		showLongPresentationNameCheckbox = createCheckbox(editorGroup,
+				AuthoringUIResources.showLongPresentationNameCheckbox_text);
 
 		initControls();
 
@@ -129,6 +142,9 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 
 		enableLibraryValidationCheckbox.setSelection(AuthoringUIPreferences
 				.getEnableLibraryValidation());
+		
+		showLongPresentationNameCheckbox.setSelection(AuthoringUIPreferences
+				.getShowLongPresentationName());
 	}
 
 	/**
@@ -142,6 +158,21 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		});
 
 		preferenceHistorySizeText.addModifyListener(this);
+		
+		showLongPresentationNameCheckbox.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				Shell shell = Display.getCurrent().getActiveShell();
+				if (AuthoringUIPlugin.getDefault().getMsgDialog()
+						.displayConfirmation(shell.getText(), AuthoringUIResources.showLongPresentationNameChange_message)) {
+					// close editors with saving
+					EditorChooser.getInstance().closeAllMethodEditorsWithSaving();
+					
+				} else {
+					showLongPresentationNameCheckbox.setSelection(!showLongPresentationNameCheckbox
+							.getSelection());
+				}
+			}
+		});
 	}
 
 	/**
@@ -201,6 +232,12 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		AuthoringUIPreferences
 				.setEnableLibraryValidation(enableLibraryValidation);
 		enableLibraryValidationCheckbox.setSelection(enableLibraryValidation);
+		
+		boolean showLongPresentationName = AuthoringUIPreferences
+				.getDefaultShowLongPresentationName();
+		AuthoringUIPreferences
+				.setShowLongPresentationName(showLongPresentationName);
+		showLongPresentationNameCheckbox.setSelection(showLongPresentationName);
 	}
 
 	/**
@@ -215,6 +252,8 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		CommonPreferences.setPreferenceHistorySize(getPreferenceHistorySize());
 		AuthoringUIPreferences
 			.setEnableLibraryValidation(getEnableLibraryValidation());
+		AuthoringUIPreferences
+				.setShowLongPresentationName(getShowLongPresentationName());
 		
 		// update the settings for browsing
 		LibraryUIPlugin.getDefault().updateLayoutSettings();
@@ -244,7 +283,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	}
 
 	/**
-	 * Gets the user specified prefefrence history size.
+	 * Gets the user specified preference history size.
 	 */
 	protected int getPreferenceHistorySize() {
 		return StrUtil.getIntValue(preferenceHistorySizeText.getText().trim(),
@@ -257,6 +296,14 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	 */
 	protected boolean getEnableLibraryValidation() {
 		return enableLibraryValidationCheckbox.getSelection();
+	}
+	
+	/**
+	 * Gets the show long presentation name preference
+	 * @return
+	 */
+	protected boolean getShowLongPresentationName() {
+		return showLongPresentationNameCheckbox.getSelection();
 	}
 
 	/**

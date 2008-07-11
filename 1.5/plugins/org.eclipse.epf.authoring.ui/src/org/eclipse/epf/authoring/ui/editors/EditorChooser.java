@@ -418,17 +418,30 @@ public class EditorChooser implements IEditorKeeper {
 	 *
 	 */
 	public void closeAllMethodEditors() {
+		closeAllMethodEditors(false);
+	}
+	
+	public void closeAllMethodEditors(boolean saveFlag) {
 		final IWorkbench workbench = PlatformUI.getWorkbench();
+		final boolean save = saveFlag;
 		workbench.getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 				if (window != null) {
 					IWorkbenchPage workbenchPage = window.getActivePage();
 					List<IEditorReference> closeEditorRefs = getOpenMethodEditors();
-					workbenchPage.closeEditors(closeEditorRefs.toArray(new IEditorReference[closeEditorRefs.size()]), false);
+					workbenchPage.closeEditors(closeEditorRefs.toArray(new IEditorReference[closeEditorRefs.size()]), save);
 				}
 			}
 		});
+	}
+	
+	/**
+	 * Closes all Method Editors with saving.
+	 *
+	 */
+	public void closeAllMethodEditorsWithSaving() {
+		closeAllMethodEditors(true);
 	}
 	
 	/**
@@ -457,6 +470,7 @@ public class EditorChooser implements IEditorKeeper {
 		});
 		return methodEditorRefs;
 	}
+	
 
 	/**
 	 * Close all MethodEditors associated with the given Plugin.

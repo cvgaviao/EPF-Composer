@@ -49,6 +49,7 @@ public class RoleSetGroupingDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		roleSetGrouping = (RoleSetGrouping) contentElement;
 		setExternalIDOn(true);
+		setLongPresentationNameOn(true);
 	}
 
 	/**

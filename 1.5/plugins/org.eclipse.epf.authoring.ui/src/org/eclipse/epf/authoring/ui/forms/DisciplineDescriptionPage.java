@@ -49,6 +49,7 @@ public class DisciplineDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		discipline = (Discipline) contentElement;
 		setExternalIDOn(true);
+		setLongPresentationNameOn(true);
 	}
 
 	/**

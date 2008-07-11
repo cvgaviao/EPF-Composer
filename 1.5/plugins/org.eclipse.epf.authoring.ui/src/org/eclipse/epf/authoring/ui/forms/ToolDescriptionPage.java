@@ -49,6 +49,7 @@ public class ToolDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		tool = (Tool) contentElement;
 		setExternalIDOn(true);
+		setLongPresentationNameOn(true);
 	}
 
 	/**

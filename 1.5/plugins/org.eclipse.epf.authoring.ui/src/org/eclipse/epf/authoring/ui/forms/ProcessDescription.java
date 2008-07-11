@@ -25,6 +25,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
+import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.util.EditorsContextHelper;
 import org.eclipse.epf.authoring.ui.util.UIHelper;
@@ -204,6 +205,12 @@ public class ProcessDescription extends ProcessFormPage {
 		// Presentation name
 		ctrl_presentation_name = createTextEditWithLabel(toolkit,
 				generalComposite, AuthoringUIText.PRESENTATION_NAME_TEXT);
+		
+		// Long Presentation name
+		if (AuthoringUIPreferences.getShowLongPresentationName()) {
+			ctrl_long_presentation_name = createTextEditWithLabel(toolkit,
+					generalComposite, AuthoringUIText.LONG_PRESENTATION_NAME_TEXT);
+		}
 
 		// brief desc
 		ctrl_brief_desc = createTextEditWithLabel2(toolkit, generalComposite,
@@ -476,6 +483,13 @@ public class ProcessDescription extends ProcessFormPage {
 		if ((ctrl_presentation_name != null)
 				&& (!ctrl_presentation_name.isDisposed())) {
 			updateControl(ctrl_presentation_name, process.getPresentationName());
+		}
+		if (AuthoringUIPreferences.getShowLongPresentationName()) {
+			if ((ctrl_long_presentation_name != null)
+					&& (!ctrl_long_presentation_name.isDisposed())) {
+				updateControl(ctrl_long_presentation_name, process
+						.getPresentation().getLongPresentationName());
+			}
 		}
 	}
 
@@ -764,6 +778,34 @@ public class ProcessDescription extends ProcessFormPage {
 				} }
 		});
 
+		if (AuthoringUIPreferences.getShowLongPresentationName()) { 
+			ctrl_long_presentation_name.addModifyListener(modifyListener);
+			ctrl_long_presentation_name.addFocusListener(new FocusAdapter() {
+				public void focusGained(FocusEvent e) {
+					((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
+							UmaPackage.eINSTANCE.getContentDescription_LongPresentationName());
+				}
+	
+				public void focusLost(FocusEvent e) {
+					String oldContent = content.getLongPresentationName();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							ctrl_long_presentation_name, oldContent)) {
+						return;
+					}
+					String newContent = ctrl_long_presentation_name.getText();
+					if (!newContent.equals(oldContent)) {
+						boolean success = actionMgr.doAction(IActionManager.SET,
+								process.getPresentation(), UmaPackage.eINSTANCE
+										.getContentDescription_LongPresentationName(),
+								newContent, -1);
+						if (success) {
+							ctrl_long_presentation_name.setText(newContent);
+						}
+					}
+				}
+			});
+		}
+		
 		ctrl_brief_desc.addModifyListener(modifyListener);
 		ctrl_brief_desc.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
@@ -814,7 +856,6 @@ public class ProcessDescription extends ProcessFormPage {
 					}
 				}
 			}
-
 		});
 
 		ctrl_purpose.setModalObject(process.getPresentation());
@@ -1158,6 +1199,11 @@ public class ProcessDescription extends ProcessFormPage {
 		}
 		if (!ctrl_presentation_name.isDisposed()) {
 			ctrl_presentation_name.setEditable(editable);
+		}
+		if (AuthoringUIPreferences.getShowLongPresentationName()) {
+			if (!ctrl_long_presentation_name.isDisposed()) {
+				ctrl_long_presentation_name.setEditable(editable);
+			}
 		}
 		if (!ctrl_brief_desc.isDisposed()) {
 			ctrl_brief_desc.setEditable(editable);

@@ -62,6 +62,7 @@ public class TaskDescriptionPage extends DescriptionFormPage {
 		task = (Task) contentElement;
 		purposeOn = true;
 		externalIdOn = true;
+		setLongPresentationNameOn(true);
 	}
 
 	/**

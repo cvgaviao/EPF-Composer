@@ -215,6 +215,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String packagingGuidance_text;
 
 	public static String presentationName_text;
+	
+	public static String long_presentationName_text;
 
 	public static String promptforlibary_text;
 
@@ -619,6 +621,12 @@ public final class AuthoringUIResources extends NLS {
 	public static String debugGroup_text;
 	
 	public static String enableLibraryValidationCheckbox_text;
+	
+	public static String editorGroup_text;
+	
+	public static String showLongPresentationNameCheckbox_text;
+	
+	public static String showLongPresentationNameChange_message;
 	
 	public static String invalidPreferenceHistorySizeError_msg;
 

@@ -150,6 +150,7 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		tailoringSectionOn = true;
 		iconSectionOn = true;
 		slotSectionOn = true;
+		setLongPresentationNameOn(true);
 	}
 
 	/**

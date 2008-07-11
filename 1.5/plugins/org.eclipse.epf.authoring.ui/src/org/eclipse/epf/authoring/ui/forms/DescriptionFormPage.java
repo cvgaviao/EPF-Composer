@@ -38,6 +38,7 @@ import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditorInput;
 import org.eclipse.epf.authoring.ui.filters.ContentFilter;
+import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.authoring.ui.providers.ColumnElement;
 import org.eclipse.epf.authoring.ui.providers.DescriptionPageColumnProvider;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
@@ -212,6 +213,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected Text ctrl_name;
 
 	protected Text ctrl_presentation_name;
+	
+	protected Text ctrl_long_presentation_name;
 
 	protected Label ctrl_type_label;
 
@@ -483,12 +486,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected boolean iconSectionOn = false;
 	
 	protected boolean publishCategoryOn = false;
-
-	// commented because these variables are not in use
-	// protected String variabilityTypeNone = NOT_APPLICABLE_TEXT;
-	// protected String variabilityTypeContributes = CONTRIBUTES_TEXT;
-	// protected String variabilityTypeExtends = EXTENDS_TEXT;
-	// protected String variabilityTypeReplaces = REPLACES_TEXT;
+	
+	protected boolean longPresentationNameOn = false;
 
 	// Internal IDs for the sections.
 	protected static final int GENERAL_SECTION_ID = 1;
@@ -951,6 +950,14 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		ctrl_presentation_name = createTextEditWithLabel3(toolkit,
 				generalComposite, AuthoringUIText.PRESENTATION_NAME_TEXT,
 				SWT.DEFAULT, SWT.SINGLE);
+		
+		// Add long  presentation name lable and text control
+		
+		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+			ctrl_long_presentation_name = createTextEditWithLabel3(toolkit,
+					generalComposite, AuthoringUIText.LONG_PRESENTATION_NAME_TEXT,
+					SWT.DEFAULT, SWT.SINGLE);
+		}
 
 		if (elementTypeOn) {
 			createLabel(toolkit, generalComposite, AuthoringUIText.TYPE_TEXT, 2);
@@ -1086,6 +1093,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected void refresh(boolean editable) {
 		ctrl_name.setEditable(editable);
 		ctrl_presentation_name.setEditable(editable);
+		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+			ctrl_long_presentation_name.setEditable(editable);
+		}
 
 		if (briefDescOn) {
 			ctrl_brief_desc.setEditable(editable);
@@ -1443,6 +1453,47 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				ctrl_presentation_name.selectAll();
 			}
 		});
+		
+		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+			ctrl_long_presentation_name.addModifyListener(modelModifyListener);
+			ctrl_long_presentation_name.addFocusListener(new FocusAdapter() {
+				public void focusLost(FocusEvent e) {
+					String oldContent = contentElement.getPresentation().getLongPresentationName();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							ctrl_long_presentation_name, oldContent)) {
+						return;
+					}
+					
+					String newContent = StrUtil.getPlainText(ctrl_long_presentation_name
+							.getText());				
+					if (!newContent.equals(oldContent)) {
+						boolean success = actionMgr.doAction(IActionManager.SET,
+								contentElement.getPresentation(), UmaPackage.eINSTANCE
+										.getContentDescription_LongPresentationName(),
+								newContent, -1);
+						if (success) {
+							ctrl_long_presentation_name.setText(newContent);
+						}
+					}
+					// clear the selection when the focus of the component is lost 
+					if(ctrl_long_presentation_name.getSelectionCount() > 0){
+						ctrl_long_presentation_name.clearSelection();
+					}    
+				}
+				
+				/* (non-Javadoc)
+				 * @see org.eclipse.swt.events.FocusAdapter#focusGained(org.eclipse.swt.events.FocusEvent)
+				 */
+				public void focusGained(FocusEvent e) {
+					// when user tab to this field, select all text
+					ctrl_long_presentation_name.selectAll();
+					((MethodElementEditor) getEditor())
+					.setCurrentFeatureEditor(e.widget,
+							UmaPackage.eINSTANCE
+									.getContentDescription_LongPresentationName());
+				}
+			});
+		}
 
 		if (briefDescOn) {
 			ctrl_brief_desc.addModifyListener(modelModifyListener);
@@ -1745,6 +1796,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		ctrl_presentation_name
 				.setText(presentationName == null ? "" : presentationName); //$NON-NLS-1$
 
+		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+			String longPresentName = contentElement.getPresentation().getLongPresentationName();
+			ctrl_long_presentation_name.setText(longPresentName == null ? "" : longPresentName); //$NON-NLS-1$
+		}
 		if (elementTypeOn) {
 			// String type = methodElement.getType().getName();
 			String type = LibraryUIText.getUIText(methodElement);
@@ -1892,6 +1947,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	public void setExternalIDOn(boolean exteranlIDOn) {
 		this.externalIdOn = exteranlIDOn;
+	}
+	
+	public void setLongPresentationNameOn(boolean longPresentationNameOn) {
+		this.longPresentationNameOn = longPresentationNameOn;
 	}
 
 	public void setFullDescOn(boolean fullDescOn) {
