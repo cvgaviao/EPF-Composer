@@ -19,6 +19,10 @@
       %licenseText
    </license>
 
+   <includes
+      id="org.eclipse.epf.richtext.feature"
+      version="0.0.0"/>
+
    <requires>
       <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.core.runtime"/>

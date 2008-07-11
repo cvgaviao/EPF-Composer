@@ -21,7 +21,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.epf.rte.feature"
+         id="org.eclipse.epf.richtext.feature"
          version="0.0.0"/>
 
    <includes
