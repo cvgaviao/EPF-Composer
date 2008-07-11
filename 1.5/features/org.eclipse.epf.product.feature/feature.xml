@@ -37,11 +37,8 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.epf.richtext.feature"
+         id="org.eclipse.epf.rte.feature"
          version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.epf.richtext.win32.feature"
-         version="0.0.0"/>
 
 </feature>
