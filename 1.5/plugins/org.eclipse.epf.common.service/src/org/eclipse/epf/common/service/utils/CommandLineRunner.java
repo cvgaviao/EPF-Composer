@@ -25,10 +25,7 @@ public class CommandLineRunner implements ICommandLineRunner {
 	
 	public boolean execute(String[] args) {
 		if (localDebug) {
-			System.out.println("LD> CommandLinePluginImporter.execute, args: "); //$NON-NLS-1$
-			for (int i = 0; i < args.length; i++) {
-				System.out.println("LD> args[" + i + "]: " + args[i]); //$NON-NLS-1$//$NON-NLS-2$
-			}
+			debugShowArgs(args);
 		}
 		
 		for (int i = 0; i < args.length; i++) {
@@ -47,6 +44,13 @@ public class CommandLineRunner implements ICommandLineRunner {
 		}
 						
 		return true;
+	}
+
+	protected void debugShowArgs(String[] args) {
+		System.out.println("LD> " + getClass().getName() + ".execute args: "); //$NON-NLS-1$
+		for (int i = 0; i < args.length; i++) {
+			System.out.println("LD> args[" + i + "]: " + args[i]); //$NON-NLS-1$//$NON-NLS-2$
+		}
 	}
 	
 	protected File getInputFile() {
