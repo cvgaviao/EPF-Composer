@@ -97,9 +97,6 @@ public class LibraryService implements ILibraryService {
 		// "org.eclipse.epf.library.libraryManagers" extension point.
 		LibraryManagerFactory.getInstance();
 
-		if (CommandLineRunUtil.getInstance().isNeedToRun()) {
-			return;
-		}
 	}
 
 	/**
@@ -252,6 +249,10 @@ public class LibraryService implements ILibraryService {
 	 * @return a method library or <code>null</code>
 	 */
 	public MethodLibrary openLastOpenedMethodLibrary() {
+		if (CommandLineRunUtil.getInstance().isNeedToRun()) {
+			return null;
+		}
+		
 		String savedMethodLibraryURI = LibraryPreferences
 				.getSavedMethodLibraryURI();
 		try {
