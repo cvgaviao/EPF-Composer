@@ -23,6 +23,7 @@ import org.eclipse.epf.common.serviceability.Logger;
 import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -183,6 +184,10 @@ public class MainWorkbenchAdvisor extends WorkbenchAdvisor {
 	 * @see org.eclipse.ui.application.WorkbenchAdvisor#postStartup()
 	 */
 	public void postStartup() {
+		super.postStartup();
+	}
+	
+	public void eventLoopIdle(Display display) {
 		CommandLineRunUtil runUtil = CommandLineRunUtil.getInstance();
 		if (runUtil.isNeedToRun()) {
 			runUtil.execute(Platform.getApplicationArgs());
@@ -204,7 +209,9 @@ public class MainWorkbenchAdvisor extends WorkbenchAdvisor {
 			});
 		}
 
-		super.postStartup();
+		super.eventLoopIdle(display);
 	}
+
+	
 
 }
