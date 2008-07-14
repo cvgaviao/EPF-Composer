@@ -25,7 +25,6 @@ import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
-import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -37,6 +36,7 @@ import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Guidance;
+import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Report;
@@ -183,6 +183,8 @@ public class PracticeItemProvider extends
 				imageStr = "full/obj16/Templates"; //$NON-NLS-1$
 			} else if (subGroupName.equals(getUIString("_UI_Guidances_ToolMentors"))) { //$NON-NLS-1$
 				imageStr = "full/obj16/ToolMentors"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_WorkProductGuidelines"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/WorkProductGuidelines"; //$NON-NLS-1$
 			}
 		}
 	
@@ -419,6 +421,10 @@ public class PracticeItemProvider extends
 				return getUIString("_UI_Guidances_ToolMentors"); //$NON-NLS-1$
 			}
 			
+			if (obj instanceof Guideline) {
+				return getUIString("_UI_Guidances_WorkProductGuidelines"); //$NON-NLS-1$
+			}
+						
 			return UNKNOWN;
 			
 		}
@@ -433,6 +439,7 @@ public class PracticeItemProvider extends
 					getUIString("_UI_Guidances_SupportingMaterials"),		//$NON-NLS-1$
 					getUIString("_UI_Guidances_Templates"),		//$NON-NLS-1$
 					getUIString("_UI_Guidances_ToolMentors"),		//$NON-NLS-1$
+					getUIString("_UI_Guidances_WorkProductGuidelines"),		//$NON-NLS-1$
 					UNKNOWN				
 			};
 			
