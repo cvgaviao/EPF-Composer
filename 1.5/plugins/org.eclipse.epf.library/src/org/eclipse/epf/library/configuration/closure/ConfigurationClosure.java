@@ -472,14 +472,16 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 * 
 	 */
 	public List<ElementError> getAllErrors() {
-/*		Old code
- 		List<PackageError> errors = new ArrayList<PackageError>();
+		return errors;
+	}
+	
+	private List<PackageError> getAllPackageErrors() {
+		List<PackageError> perrors = new ArrayList<PackageError>();
 		for (Iterator it = invalidNodesMap.values().iterator(); it.hasNext();) {
 			ElementDependencyError error = (ElementDependencyError) it.next();
-			errors.addAll(error.getAll());
+			perrors.addAll(error.getAll());
 		}
-*/
-		return errors;
+		return perrors;
 	}
 
 	/**
@@ -988,7 +990,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		boolean changed = forceCheck;
 
 		// list of errorInfo objects
-		List errors = getAllErrors();
+		List errors = getAllPackageErrors();
 		if (errors.size() > 0) {			
 			invalidNodesMap.clear();
 			PackageError error;
