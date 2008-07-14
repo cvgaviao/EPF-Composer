@@ -18,9 +18,8 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.utils.FileUtil;
-import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.ui.UIHelper;
 import org.eclipse.epf.publishing.services.PublishHTMLOptions;
 import org.eclipse.epf.publishing.services.PublishManager;
@@ -326,7 +325,7 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 		if (file.exists()) {
 			File[] files = file.listFiles();
 			if (files != null && files.length > 0) {
-				answer = PublishingUIPlugin
+				answer =  CommandLineRunUtil.getInstance().isNeedToRun() ? true : PublishingUIPlugin
 						.getDefault()
 						.getMsgDialog()
 						.displayConfirmation(
