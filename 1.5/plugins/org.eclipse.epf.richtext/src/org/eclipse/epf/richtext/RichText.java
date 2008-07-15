@@ -77,31 +77,31 @@ public class RichText implements IRichText {
 
 	private static final String ENCODED_NEWLINE = "%EOL%"; //$NON-NLS-1$
 
-	private static final String STATUS_PREFIX = "$$$"; //$NON-NLS-1$
+	protected static final String STATUS_PREFIX = "$$$"; //$NON-NLS-1$
 
-	private static final int STATUS_PREFIX_LENGTH = STATUS_PREFIX.length();
+	protected static final int STATUS_PREFIX_LENGTH = STATUS_PREFIX.length();
 
-	private static final int STATUS_NOP = 0;
+	protected static final int STATUS_NOP = 0;
 
-	private static final int STATUS_INITIALIZED = 1;
+	protected static final int STATUS_INITIALIZED = 1;
 
-	private static final int STATUS_MODIFIED = 2;
+	protected static final int STATUS_MODIFIED = 2;
 
-	private static final int STATUS_GET_TEXT = 3;
+	protected static final int STATUS_GET_TEXT = 3;
 
-	private static final int STATUS_KEY_DOWN = 4;
+	protected static final int STATUS_KEY_DOWN = 4;
 
-	private static final int STATUS_KEY_UP = 5;
+	protected static final int STATUS_KEY_UP = 5;
 
-	private static final int STATUS_SELECT_TEXT = 6;
+	protected static final int STATUS_SELECT_TEXT = 6;
 
-	private static final int STATUS_SELECT_CONTROL = 7;
+	protected static final int STATUS_SELECT_CONTROL = 7;
 
-	private static final int STATUS_SELECT_NONE = 8;
+	protected static final int STATUS_SELECT_NONE = 8;
 
-	private static final int STATUS_EXEC_CMD = 9;
+	protected static final int STATUS_EXEC_CMD = 9;
 
-	private static final int STATUS_REFORMAT_LINKS = 10;
+	protected static final int STATUS_REFORMAT_LINKS = 10;
 
 	// The default base path used for resolving links (<href>, <img>, etc.)
 	private static final String DEFAULT_BASE_PATH = System
