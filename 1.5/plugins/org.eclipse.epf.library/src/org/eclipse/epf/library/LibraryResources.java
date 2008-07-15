@@ -62,6 +62,7 @@ public final class LibraryResources extends NLS {
 	public static String reusableAsset_text;
 	public static String ActivityLayout_primaryTasks_text;
 	public static String ActivityLayout_additionalTasks_text;
+	public static String ActivityLayout_assistTasks_text;
 	public static String convertGuidanceError_title;
 	public static String loadResourcesError_title;
 	public static String loadResourcesError_reason;

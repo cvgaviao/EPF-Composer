@@ -1009,6 +1009,7 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 		List modifies = new ArrayList();
 		List primaryTasks = new ArrayList();
 		List additionalTasks = new ArrayList();	
+		List assistTasks = new ArrayList();
 		List items;
 		
 		for ( Iterator it = descriptors.iterator(); it.hasNext(); ) {
@@ -1033,6 +1034,11 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 					AssociationHelper.RoleDescriptor_AdditionalTaskDescriptors, 
 					getLayoutMgr().getElementRealizer());
 			additionalTasks.addAll(items);
+			
+			items = ConfigurationHelper.calc0nFeatureValue(roleItem,
+					AssociationHelper.RoleDescriptor_AssistsIn_TaskDescriptors,
+					getLayoutMgr().getElementRealizer());
+			assistTasks.addAll(items);
 		}
 		
 		Collections.sort(responsibleFor, Comparators.PRESENTATION_NAME_COMPARATOR);
@@ -1050,6 +1056,10 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 		Collections.sort(additionalTasks, Comparators.PRESENTATION_NAME_COMPARATOR);
 		createRoleRollupNodes(parentXml, additionalTasks, 
 				LibraryResources.ActivityLayout_additionalTasks_text); 
+		
+		Collections.sort(assistTasks, Comparators.PRESENTATION_NAME_COMPARATOR);
+		createRoleRollupNodes(parentXml, assistTasks, 
+				LibraryResources.ActivityLayout_assistTasks_text);
 
 	}
 	
