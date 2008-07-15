@@ -57,6 +57,7 @@ import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.OBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.PBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.WBSItemProviderAdapterFactory;
+import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
@@ -65,6 +66,7 @@ import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Milestone;
@@ -416,8 +418,12 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 			//
 			if (!TngUtil.isInstanceOf(CLASSES_EXCLUDED_FROM_SORTING, TngUtil
 					.unwrap(object))) {
-				Collections.sort(children,
-						Comparators.PRESENTATION_NAME_COMPARATOR);
+				if (object instanceof ContentCategory) {
+					children = CategorySortHelper.sortCategoryElements((ContentCategory) object, children.toArray(), true);
+				} else {
+					Collections.sort(children,
+							Comparators.PRESENTATION_NAME_COMPARATOR);
+				}
 			}
 
 			// System.out.println("FilterItemProvider.getChildren() returned " +
