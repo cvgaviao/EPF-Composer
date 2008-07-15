@@ -207,7 +207,7 @@ public class ProcessDescription extends ProcessFormPage {
 				generalComposite, AuthoringUIText.PRESENTATION_NAME_TEXT);
 		
 		// Long Presentation name
-		if (AuthoringUIPreferences.getShowLongPresentationName()) {
+		if (AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_long_presentation_name = createTextEditWithLabel(toolkit,
 					generalComposite, AuthoringUIText.LONG_PRESENTATION_NAME_TEXT);
 		}
@@ -217,8 +217,10 @@ public class ProcessDescription extends ProcessFormPage {
 				AuthoringUIText.BRIEF_DESCRIPTION_TEXT);
 
 		// External Id
-		ctrl_external_id = createTextEditWithLabel(toolkit, generalComposite,
-				AuthoringUIResources.Process_ExternalID); 
+		if (AuthoringUIPreferences.getEnableUIFields()) {
+			ctrl_external_id = createTextEditWithLabel(toolkit, generalComposite,
+					AuthoringUIResources.Process_ExternalID);
+		}
 
 		// Purpose
 		ctrl_purpose = createRichTextEditWithLinkForSection(
@@ -484,7 +486,7 @@ public class ProcessDescription extends ProcessFormPage {
 				&& (!ctrl_presentation_name.isDisposed())) {
 			updateControl(ctrl_presentation_name, process.getPresentationName());
 		}
-		if (AuthoringUIPreferences.getShowLongPresentationName()) {
+		if (AuthoringUIPreferences.getEnableUIFields()) {
 			if ((ctrl_long_presentation_name != null)
 					&& (!ctrl_long_presentation_name.isDisposed())) {
 				updateControl(ctrl_long_presentation_name, process
@@ -538,7 +540,12 @@ public class ProcessDescription extends ProcessFormPage {
 
 		updateModelControls();
 
-		updateControl(ctrl_external_id, externalID);
+		if (AuthoringUIPreferences.getEnableUIFields()) {
+			if ((ctrl_external_id != null) && (!ctrl_external_id.isDisposed())) {
+				updateControl(ctrl_external_id, externalID);
+			}
+		}
+		
 		updateControl(ctrl_purpose, purpose);
 		updateControl(ctrl_full_desc, fullDesc);
 		updateControl(ctrl_scope, scope);
@@ -778,7 +785,7 @@ public class ProcessDescription extends ProcessFormPage {
 				} }
 		});
 
-		if (AuthoringUIPreferences.getShowLongPresentationName()) { 
+		if (AuthoringUIPreferences.getEnableUIFields()) { 
 			ctrl_long_presentation_name.addModifyListener(modifyListener);
 			ctrl_long_presentation_name.addFocusListener(new FocusAdapter() {
 				public void focusGained(FocusEvent e) {
@@ -832,31 +839,33 @@ public class ProcessDescription extends ProcessFormPage {
 			}
 		});
 
-		ctrl_external_id.addModifyListener(contentModifyListener);
-		ctrl_external_id.addFocusListener(new FocusAdapter() {
-			public void focusGained(FocusEvent e) {
-				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
-						UmaPackage.eINSTANCE.getContentDescription_ExternalId());
-			}
-
-			public void focusLost(FocusEvent e) {
-				String oldContent = content.getExternalId();
-				if (((MethodElementEditor) getEditor()).mustRestoreValue(
-						ctrl_external_id, oldContent)) {
-					return;
+		if (AuthoringUIPreferences.getEnableUIFields())  {
+			ctrl_external_id.addModifyListener(contentModifyListener);
+			ctrl_external_id.addFocusListener(new FocusAdapter() {
+				public void focusGained(FocusEvent e) {
+					((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
+							UmaPackage.eINSTANCE.getContentDescription_ExternalId());
 				}
-				String newContent = ctrl_external_id.getText();
-				if (!newContent.equals(oldContent)) {
-					boolean success = actionMgr.doAction(IActionManager.SET,
-							process.getPresentation(), UmaPackage.eINSTANCE
-									.getContentDescription_ExternalId(),
-							newContent, -1);
-					if (success) {
-						ctrl_external_id.setText(newContent);
+	
+				public void focusLost(FocusEvent e) {
+					String oldContent = content.getExternalId();
+					if (((MethodElementEditor) getEditor()).mustRestoreValue(
+							ctrl_external_id, oldContent)) {
+						return;
+					}
+					String newContent = ctrl_external_id.getText();
+					if (!newContent.equals(oldContent)) {
+						boolean success = actionMgr.doAction(IActionManager.SET,
+								process.getPresentation(), UmaPackage.eINSTANCE
+										.getContentDescription_ExternalId(),
+								newContent, -1);
+						if (success) {
+							ctrl_external_id.setText(newContent);
+						}
 					}
 				}
-			}
-		});
+			});
+		}
 
 		ctrl_purpose.setModalObject(process.getPresentation());
 		ctrl_purpose.setModalObjectFeature(UmaPackage.eINSTANCE
@@ -1200,7 +1209,7 @@ public class ProcessDescription extends ProcessFormPage {
 		if (!ctrl_presentation_name.isDisposed()) {
 			ctrl_presentation_name.setEditable(editable);
 		}
-		if (AuthoringUIPreferences.getShowLongPresentationName()) {
+		if (AuthoringUIPreferences.getEnableUIFields()) {
 			if (!ctrl_long_presentation_name.isDisposed()) {
 				ctrl_long_presentation_name.setEditable(editable);
 			}
@@ -1217,8 +1226,10 @@ public class ProcessDescription extends ProcessFormPage {
 		if (!ctrl_alternatives.isDisposed()) {
 			ctrl_alternatives.setEditable(editable);
 		}
-		if (!ctrl_external_id.isDisposed())
-			ctrl_external_id.setEditable(editable);
+		if (AuthoringUIPreferences.getEnableUIFields()) {
+			if (!ctrl_external_id.isDisposed())
+				ctrl_external_id.setEditable(editable);
+		}
 		if (!ctrl_key_consideration.isDisposed())
 			ctrl_key_consideration.setEditable(editable);
 		if (!ctrl_how_to_staff.isDisposed())

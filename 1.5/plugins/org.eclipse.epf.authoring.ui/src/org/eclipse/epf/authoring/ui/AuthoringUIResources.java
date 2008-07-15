@@ -264,8 +264,6 @@ public final class AuthoringUIResources extends NLS {
 
 	public static String move;
 
-	public static String uniqueId_text;
-
 	public static String variabilityType_text;
 
 	public static String version_text;
@@ -624,9 +622,9 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String editorGroup_text;
 	
-	public static String showLongPresentationNameCheckbox_text;
+	public static String enableUIFieldsCheckbox_text;
 	
-	public static String showLongPresentationNameChange_message;
+	public static String enableUIFieldsChange_message;
 	
 	public static String invalidPreferenceHistorySizeError_msg;
 

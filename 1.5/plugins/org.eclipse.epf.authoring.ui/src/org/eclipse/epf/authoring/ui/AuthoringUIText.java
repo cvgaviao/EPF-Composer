@@ -200,8 +200,6 @@ public class AuthoringUIText {
 
 	public static final String TYPE_TEXT = AuthoringUIResources.type_text; 
 
-	public static final String UNIQUE_ID_TEXT = AuthoringUIResources.uniqueId_text; 
-
 	public static final String VARIABILITY_TYPE_TEXT = AuthoringUIResources.variabilityType_text; 
 
 	public static final String VERSION_TEXT = AuthoringUIResources.version_text; 

@@ -23,7 +23,7 @@ public class AuthoringUIPreferences {
 
 	public static final String ENABLE_LIBRARY_VALIDATION = "enabledLibraryValidation"; //$NON-NLS-1$
 	
-	public static final String SHOW_LONG_PRESENTATION_NAME = "showLongPresentationName"; //$NON-NLS-1$
+	public static final String ENABLE_UI_FIELDS = "enableUIFields"; //$NON-NLS-1$
 
 	public static final String ADD_TASKS_PER_ROW = "ACTIVITY_DETAIL_DIAGRAM_TASKS_PER_ROW"; //$NON-NLS-1$
 	
@@ -31,7 +31,7 @@ public class AuthoringUIPreferences {
 	
 	private static final boolean DEFAULT_ENABLE_LIBRARY_VALIDATION = false;
 	
-	private static final boolean DEFAULT_SHOW_LONG_PRESENTATION_NAME = false;
+	private static final boolean DEFAULT_ENABLE_UI_FIELDS = false;
 
 	// The plug-in specific preference store.
 	private static IPreferenceStore prefStore = AuthoringUIPlugin.getDefault()
@@ -41,8 +41,8 @@ public class AuthoringUIPreferences {
 		prefStore.setDefault(ENABLE_LIBRARY_VALIDATION,
 				DEFAULT_ENABLE_LIBRARY_VALIDATION);
 		
-		prefStore.setDefault(SHOW_LONG_PRESENTATION_NAME,
-				DEFAULT_SHOW_LONG_PRESENTATION_NAME);
+		prefStore.setDefault(ENABLE_UI_FIELDS,
+				DEFAULT_ENABLE_UI_FIELDS);
 		
 		prefStore.setDefault(ADD_TASKS_PER_ROW, DEFAULT_ADD_TASKS_PER_ROW);
 		
@@ -70,24 +70,24 @@ public class AuthoringUIPreferences {
 	}
 	
 	/**
-	 * Gets the default show long presentation name preference.
+	 * Gets the default enable UI fields preference (long presentation name, external ID)
 	 */
-	public static boolean getDefaultShowLongPresentationName() {
-		return DEFAULT_SHOW_LONG_PRESENTATION_NAME;
+	public static boolean getDefaultEnableUIFields() {
+		return DEFAULT_ENABLE_UI_FIELDS;
 	}
 	
 	/**
-	 * Gets the
+	 * Gets the enable UI fields preference (long presentation name, external ID)
 	 */
-	public static boolean getShowLongPresentationName() {
-		return prefStore.getBoolean(SHOW_LONG_PRESENTATION_NAME);
+	public static boolean getEnableUIFields() {
+		return prefStore.getBoolean(ENABLE_UI_FIELDS);
 	}
 
 	/**
-	 * Sets the show long presentation name preference.
+	 * Sets the enable UI fields preference (long presentation name, external ID)
 	 */
-	public static void setShowLongPresentationName(boolean value) {
-		prefStore.setValue(SHOW_LONG_PRESENTATION_NAME, value);
+	public static void setEnableUIFields(boolean value) {
+		prefStore.setValue(ENABLE_UI_FIELDS, value);
 	}
 	
 	/**

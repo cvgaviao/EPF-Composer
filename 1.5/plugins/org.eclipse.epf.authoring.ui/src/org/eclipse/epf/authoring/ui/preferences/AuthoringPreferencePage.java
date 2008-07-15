@@ -62,7 +62,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 
 	private Text preferenceHistorySizeText;
 	
-	private Button showLongPresentationNameCheckbox;
+	private Button enableUIFieldsCheckbox;
 
 	/**
 	 * Creates and returns the SWT control for the customized body of this
@@ -114,8 +114,8 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		Group editorGroup = createGridLayoutGroup(composite,
 				AuthoringUIResources.editorGroup_text, 2);
 
-		showLongPresentationNameCheckbox = createCheckbox(editorGroup,
-				AuthoringUIResources.showLongPresentationNameCheckbox_text);
+		enableUIFieldsCheckbox = createCheckbox(editorGroup,
+				AuthoringUIResources.enableUIFieldsCheckbox_text);
 
 		initControls();
 
@@ -143,8 +143,8 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		enableLibraryValidationCheckbox.setSelection(AuthoringUIPreferences
 				.getEnableLibraryValidation());
 		
-		showLongPresentationNameCheckbox.setSelection(AuthoringUIPreferences
-				.getShowLongPresentationName());
+		enableUIFieldsCheckbox.setSelection(AuthoringUIPreferences
+				.getEnableUIFields());
 	}
 
 	/**
@@ -159,16 +159,16 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 
 		preferenceHistorySizeText.addModifyListener(this);
 		
-		showLongPresentationNameCheckbox.addSelectionListener(new SelectionAdapter() {
+		enableUIFieldsCheckbox.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				Shell shell = Display.getCurrent().getActiveShell();
 				if (AuthoringUIPlugin.getDefault().getMsgDialog()
-						.displayConfirmation(shell.getText(), AuthoringUIResources.showLongPresentationNameChange_message)) {
+						.displayConfirmation(shell.getText(), AuthoringUIResources.enableUIFieldsChange_message)) {
 					// close editors with saving
 					EditorChooser.getInstance().closeAllMethodEditorsWithSaving();
 					
 				} else {
-					showLongPresentationNameCheckbox.setSelection(!showLongPresentationNameCheckbox
+					enableUIFieldsCheckbox.setSelection(!enableUIFieldsCheckbox
 							.getSelection());
 				}
 			}
@@ -233,11 +233,11 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 				.setEnableLibraryValidation(enableLibraryValidation);
 		enableLibraryValidationCheckbox.setSelection(enableLibraryValidation);
 		
-		boolean showLongPresentationName = AuthoringUIPreferences
-				.getDefaultShowLongPresentationName();
+		boolean enableUIFields = AuthoringUIPreferences
+				.getDefaultEnableUIFields();
 		AuthoringUIPreferences
-				.setShowLongPresentationName(showLongPresentationName);
-		showLongPresentationNameCheckbox.setSelection(showLongPresentationName);
+				.setEnableUIFields(enableUIFields);
+		enableUIFieldsCheckbox.setSelection(enableUIFields);
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		AuthoringUIPreferences
 			.setEnableLibraryValidation(getEnableLibraryValidation());
 		AuthoringUIPreferences
-				.setShowLongPresentationName(getShowLongPresentationName());
+				.setEnableUIFields(getEnableUIFields());
 		
 		// update the settings for browsing
 		LibraryUIPlugin.getDefault().updateLayoutSettings();
@@ -299,11 +299,11 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	}
 	
 	/**
-	 * Gets the show long presentation name preference
+	 * Gets the show long presentation name / external ID preference
 	 * @return
 	 */
-	protected boolean getShowLongPresentationName() {
-		return showLongPresentationNameCheckbox.getSelection();
+	protected boolean getEnableUIFields() {
+		return enableUIFieldsCheckbox.getSelection();
 	}
 
 	/**

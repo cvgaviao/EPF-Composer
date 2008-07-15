@@ -953,7 +953,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		
 		// Add long  presentation name lable and text control
 		
-		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_long_presentation_name = createTextEditWithLabel3(toolkit,
 					generalComposite, AuthoringUIText.LONG_PRESENTATION_NAME_TEXT,
 					SWT.DEFAULT, SWT.SINGLE);
@@ -984,9 +984,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			}
 		}
 
-		if (externalIdOn) {
+		if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_external_id = createTextEditWithLabel3(toolkit,
-					generalComposite, AuthoringUIText.UNIQUE_ID_TEXT,
+					generalComposite, AuthoringUIText.EXTERNAL_ID_TEXT,
 					SWT.DEFAULT, SWT.SINGLE);
 		}
 
@@ -1093,7 +1093,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected void refresh(boolean editable) {
 		ctrl_name.setEditable(editable);
 		ctrl_presentation_name.setEditable(editable);
-		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_long_presentation_name.setEditable(editable);
 		}
 
@@ -1109,7 +1109,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (keyConsiderationOn) {
 			ctrl_key.setEditable(editable);
 		}
-		if (externalIdOn) {
+		if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_external_id.setEditable(editable);
 		}
 		if (elementTypeOn) {
@@ -1454,7 +1454,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			}
 		});
 		
-		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_long_presentation_name.addModifyListener(modelModifyListener);
 			ctrl_long_presentation_name.addFocusListener(new FocusAdapter() {
 				public void focusLost(FocusEvent e) {
@@ -1608,7 +1608,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			});
 		}
 		
-		if (externalIdOn) {
+		if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_external_id.addModifyListener(contentModifyListener);
 			ctrl_external_id.addFocusListener(new FocusAdapter() {
 				public void focusGained(FocusEvent e) {
@@ -1796,7 +1796,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		ctrl_presentation_name
 				.setText(presentationName == null ? "" : presentationName); //$NON-NLS-1$
 
-		if (longPresentationNameOn && AuthoringUIPreferences.getShowLongPresentationName()) {
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			String longPresentName = contentElement.getPresentation().getLongPresentationName();
 			ctrl_long_presentation_name.setText(longPresentName == null ? "" : longPresentName); //$NON-NLS-1$
 		}
@@ -1810,7 +1810,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			ctrl_brief_desc.setText(brief_desc == null ? "" : brief_desc); //$NON-NLS-1$
 		}
 		
-		if (externalIdOn) {
+		if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
 			if (contentElement != null) {
 				String external_id = contentElement.getPresentation().getExternalId();
 				ctrl_external_id.setText(external_id == null ? "" : external_id); //$NON-NLS-1$
