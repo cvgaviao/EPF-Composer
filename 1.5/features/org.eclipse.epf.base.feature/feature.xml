@@ -20,8 +20,8 @@
    </license>
 
    <includes
-      id="org.eclipse.epf.richtext.feature"
-      version="0.0.0"/>
+         id="org.eclipse.epf.richtext.feature"
+         version="0.0.0"/>
 
    <requires>
       <import plugin="org.eclipse.core.resources"/>
@@ -34,28 +34,54 @@
       <import plugin="org.eclipse.ui.views.properties.tabbed"/>
       <import plugin="org.eclipse.ui.workbench.texteditor"/>
       <import plugin="org.eclipse.team.cvs.ui"/>
-      <import plugin="com.ibm.icu"/>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.swt"/>
+      <import plugin="org.eclipse.search"/>
+      <import plugin="org.eclipse.epf.common.ui"/>
       <import plugin="org.apache.ant"/>
+      <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
-      <import plugin="org.eclipse.emf.common.ui"/>
+      <import plugin="org.eclipse.epf.common"/>
       <import plugin="org.eclipse.emf.mapping.ecore2ecore"/>
       <import plugin="org.eclipse.emf.mapping.ecore2xml"/>
       <import plugin="org.eclipse.core.filebuffers"/>
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.ui.ide"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.osgi"/>
+      <import plugin="com.ibm.icu"/>
       <import plugin="org.eclipse.help.base"/>
       <import plugin="org.apache.lucene"/>
-      <import plugin="org.eclipse.search"/>
       <import plugin="org.eclipse.emf.ecore.sdo"/>
       <import plugin="org.eclipse.emf.edit"/>
       <import plugin="org.eclipse.emf.validation"/>
-      <import plugin="org.eclipse.epf.common"/>
-      <import plugin="org.eclipse.epf.common.ui"/>
+      <import plugin="org.eclipse.epf.richtext"/>
+      <import plugin="org.eclipse.gmf.runtime.draw2d.ui.render"/>
+      <import plugin="org.eclipse.gmf.runtime.draw2d.ui.render.awt"/>
+      <import plugin="org.eclipse.emf.transaction"/>
+      <import plugin="org.eclipse.emf.workspace"/>
+      <import plugin="org.eclipse.core.net"/>
+      <import plugin="org.eclipse.ui.browser"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.gmf.runtime.emf.core"/>
+      <import plugin="org.eclipse.gmf.runtime.emf.commands.core"/>
+      <import plugin="org.eclipse.gmf.runtime.emf.ui.properties"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.providers"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.providers.ide"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.render"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide"/>
+      <import plugin="org.eclipse.gmf.runtime.notation.providers"/>
+      <import plugin="org.eclipse.uml2.uml"/>
+      <import plugin="org.eclipse.uml2.uml.edit"/>
+      <import plugin="org.eclipse.emf.ecore.edit"/>
+      <import plugin="org.eclipse.gmf.runtime.draw2d.ui"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.geoshapes"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.actions"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.printing"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.printing.render"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.properties"/>
    </requires>
 
    <plugin
