@@ -57,7 +57,6 @@ import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.OBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.PBSItemProviderAdapterFactory;
 import org.eclipse.epf.library.edit.process.WBSItemProviderAdapterFactory;
-import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
@@ -416,14 +415,11 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 			
 			// alphabetically sort the children
 			//
-			if (!TngUtil.isInstanceOf(CLASSES_EXCLUDED_FROM_SORTING, TngUtil
-					.unwrap(object))) {
-				if (object instanceof ContentCategory) {
-					children = CategorySortHelper.sortCategoryElements((ContentCategory) object, children.toArray(), true);
-				} else {
-					Collections.sort(children,
-							Comparators.PRESENTATION_NAME_COMPARATOR);
-				}
+			Object uObj = TngUtil.unwrap(object);
+			if (!TngUtil.isInstanceOf(CLASSES_EXCLUDED_FROM_SORTING, uObj) &&
+					!(uObj instanceof ContentCategory)) {
+				Collections.sort(children,
+						Comparators.PRESENTATION_NAME_COMPARATOR);
 			}
 
 			// System.out.println("FilterItemProvider.getChildren() returned " +
