@@ -96,7 +96,9 @@ public class MoveInSectionListCommand extends AbstractCommand implements
 	 * @see com.ibm.library.edit.command.IResourceAwareCommand#getModifiedResources()
 	 */
 	public Collection getModifiedResources() {
-		modifiedResources.add(contentElement.eResource());
+		if (contentElement.getPresentation() != null) {
+			modifiedResources.add(contentElement.getPresentation().eResource());
+		}
 		return modifiedResources;
 	}
 
