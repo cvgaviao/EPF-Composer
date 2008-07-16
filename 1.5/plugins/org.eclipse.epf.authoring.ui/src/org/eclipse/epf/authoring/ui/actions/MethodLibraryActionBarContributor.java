@@ -47,11 +47,13 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.IFormPage;
+import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 
 /**
  * The contributor for a Method editor.
@@ -266,6 +268,11 @@ public class MethodLibraryActionBarContributor extends
 //		});
 //
 //		addGlobalActions(submenuManager);
+		
+		IMenuManager editMenu= menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_EDIT);
+		if (editMenu != null) {
+			editMenu.add(new Separator(ITextEditorActionConstants.GROUP_ASSIST));
+		}
 	}
 
 	/**
