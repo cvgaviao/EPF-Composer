@@ -65,6 +65,8 @@ public class PublishingUIPreferences {
 
 	private static final String SHOW_RELATED_DESCRIPTORS = "showRelatedDescriptors"; //$NON-NLS-1$
 	
+	private static final String SHOW_RELATED_LINKS = "showRelatedLinks"; //$NON-NLS-1$
+
 	private static final String SHOW_RELATED_DESCRIPTORS_OPTION = "showRelatedDescriptorsOption"; //$NON-NLS-1$
 
 	private static final String SHOW_DESCRIPTORS_IN_NAVIGATIONTREE = "showDescriptorsInNavigationTree"; //$NON-NLS-1$
@@ -1043,7 +1045,7 @@ public class PublishingUIPreferences {
 		prefStore.setValue(getConfigPrefPrefix(configId)
 				+ SHOW_RELATED_DESCRIPTORS, value);
 	}
-
+	
 	/**
 	 * Sets the show related descriptors in content page preference to be
 	 * default value.
@@ -1056,6 +1058,43 @@ public class PublishingUIPreferences {
 				+ SHOW_RELATED_DESCRIPTORS);
 	}
 	
+	/**
+	 * Gets the show related links of role, task and work product in navigate page.
+	 * 
+	 * @param configId
+	 *            a method configuration GUID
+	 * @return the preference value
+	 */
+	public static boolean getShowRelatedLinks(String configId) {
+		return prefStore.getBoolean(getConfigPrefPrefix(configId)
+				+ SHOW_RELATED_LINKS);
+	}
+
+	/**
+	 * Sets the show related links of role, task and work product in navigate page.
+	 * 
+	 * @param configId
+	 *            a method configuration GUID
+	 * @param value
+	 *            the preference value
+	 */
+	public static void setShowRelatedLinks(String configId, boolean value) {
+		prefStore.setValue(getConfigPrefPrefix(configId)
+				+ SHOW_RELATED_LINKS, value);
+	}
+	
+	/**
+	 * Sets the show related links in navigate page preference to be
+	 * default value.
+	 * 
+	 * @param configId
+	 *            a method configuration GUID
+	 */
+	public static void removeShowRelatedLinks(String configId) {
+		prefStore.setToDefault(getConfigPrefPrefix(configId)
+				+ SHOW_RELATED_LINKS);
+	}
+
 	/**
 	 * Gets the show related descriptors option in content page preference value.
 	 * 

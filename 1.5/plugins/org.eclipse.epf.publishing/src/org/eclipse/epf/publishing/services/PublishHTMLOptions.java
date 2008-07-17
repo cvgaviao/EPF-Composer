@@ -83,6 +83,7 @@ public class PublishHTMLOptions extends PublishOptions {
 		this.publishUnopenADD = options.isPublishUnopenADD();
 		this.publishBaseAD = options.isPublishBaseAD();
 		this.publishLightWeightTree = options.isPublishLightWeightTree();
+		this.showRelatedLinks = options.isShowRelatedLinks();
 		this.showMethodContentInDescriptors = options
 				.isShowMethodContentInDescriptors();
 		this.showRelatedDescriptors = options.isShowRelatedDescriptors();

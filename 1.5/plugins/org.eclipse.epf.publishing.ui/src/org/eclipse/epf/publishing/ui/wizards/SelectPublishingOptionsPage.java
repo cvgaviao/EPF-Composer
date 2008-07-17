@@ -104,6 +104,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	protected Button showRelatedDescriptorsOption;
 
 	protected Button showDescriptorsInNavigationTree;
+	
+	protected Button showRelatedLinks;
 
 	protected ComboViewer activityTabViewer;
 
@@ -301,6 +303,9 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 		publishLightWeightTreeCheckbox = createCheckbox(layoutGroup,
 				PublishingUIResources.publishLightWeightTreeLabel_text);
 
+		showRelatedLinks = createCheckbox(layoutGroup,
+				PublishingUIResources.showRelatedLinks_text);
+
 		showDescriptorsInNavigationTree = createCheckbox(layoutGroup,
 				PublishingUIResources.showDescriptorsInNavigationTree_text);
 
@@ -390,6 +395,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				.getExtraDescriptorInfo(configId));
 		showRelatedDescriptors.setSelection(PublishingUIPreferences
 				.getShowRelatedDescriptors(configId));
+		showRelatedLinks.setSelection(PublishingUIPreferences
+				.getShowRelatedLinks(configId));
 		showRelatedDescriptorsOption.setSelection(PublishingUIPreferences
 				.getShowRelatedDescriptorsOption(configId));
 		if (showRelatedDescriptors.getSelection()) {
@@ -544,6 +551,7 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 		options.setShowMethodContentInDescriptors(getShowExtraDescriptorInfoSelection());
 		options.setShowRelatedDescriptors(showRelatedDescriptors.getSelection());
 		options.setShowRelatedDescriptorsOption(showRelatedDescriptorsOption.getSelection());		
+		options.setShowRelatedLinks(showRelatedLinks.getSelection());
 		options.setShowDescriptorsInNavigationTree(showDescriptorsInNavigationTree.getSelection());
 
 		String defaultActivityTab = getDefaultActivityTabSelection();
@@ -656,6 +664,14 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	}
 	
 	/**
+	 * Gets the user specified show related links in navigate page
+	 * selection.
+	 */
+	protected boolean getShowRelatedLinksSelection() {
+		return showRelatedLinks.getSelection();
+	}
+	
+	/**
 	 * Gets the user specified show descriptors in navigation tree selection.
 	 */
 	protected boolean getShowDescriptorsInNavigationTreeSelection() {
@@ -742,6 +758,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				getShowRelatedDescriptorsSelection());
 		PublishingUIPreferences.setShowRelatedDescriptorsOption(configId,
 				getShowRelatedDescriptorsOptionSelection());
+		PublishingUIPreferences.setShowRelatedLinks(configId,
+				getShowRelatedLinksSelection());
 		PublishingUIPreferences.setShowDescriptorsInNavigationTree(configId,
 				getShowDescriptorsInNavigationTreeSelection());
 		PublishingUIPreferences.setDefaultActivityTab(configId,

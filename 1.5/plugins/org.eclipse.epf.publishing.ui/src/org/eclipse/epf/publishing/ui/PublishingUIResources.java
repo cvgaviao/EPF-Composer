@@ -203,6 +203,8 @@ public final class PublishingUIResources extends NLS {
 
 	public static String showRelatedDescriptors_text;
 	
+	public static String showRelatedLinks_text;
+	
 	public static String showRelatedDescriptors_option_text;
 
 	public static String showDescriptorsInNavigationTree_text;

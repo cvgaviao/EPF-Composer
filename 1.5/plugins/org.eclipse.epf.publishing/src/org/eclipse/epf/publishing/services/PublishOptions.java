@@ -60,6 +60,9 @@ public class PublishOptions {
 
 	// Publish empty categories option (currently not supported in the UI).
 	protected boolean publishEmptyCategories;
+	
+	//Show related links in the task, role, and work product pages
+	protected boolean showRelatedLinks;
 
 	/**
 	 * Creates a new instance.
@@ -256,6 +259,30 @@ public class PublishOptions {
 	public void setShowRelatedDescriptors(boolean showRelatedDescriptors) {
 		this.showRelatedDescriptors = showRelatedDescriptors;
 	}
+	
+	/**
+	 * Gets the show related links in the task, role, and work product
+	 * pages option.
+	 * 
+	 * @return <code>true</code> if related links will be displayed in
+	 *         the task, role, and work product pages
+	 */
+	public boolean isShowRelatedLinks() {
+		return showRelatedLinks;
+	}
+
+	/**
+	 * Sets the show related links in the task, role, and work product
+	 * pages option.
+	 * 
+	 * @param showRelatedDescriptors
+	 *            if <code>true</code>, display the related links in
+	 *            the task, role, and work product pages
+	 */
+	public void setShowRelatedLinks(boolean showRelatedLinks) {
+		this.showRelatedLinks = showRelatedLinks;
+	}
+
 	
 	/**
 	 * Gets show all indirect (green) occurrences in extended patterns option

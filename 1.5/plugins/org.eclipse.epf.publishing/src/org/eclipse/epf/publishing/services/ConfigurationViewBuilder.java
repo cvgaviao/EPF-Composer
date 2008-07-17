@@ -661,12 +661,25 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 	 * @return boolean
 	 */
 	private boolean buildSubTree(Object obj, MethodElement element, Bookmark bm) {
+		boolean isShowRelatedLinks = options.isShowRelatedLinks();
 		if (element instanceof Task) {
-			buildTaskSubTree((Task) element, bm);
+			if(isShowRelatedLinks) {
+				buildTaskSubTree((Task) element, bm);
+			} else {
+				return true;
+			}
 		} else if (element instanceof Role) {
-			buildRoleSubTree((Role) element, bm);
+			if(isShowRelatedLinks) {
+				buildRoleSubTree((Role) element, bm);
+			} else {
+				return true;
+			}
 		} else if (element instanceof WorkProduct) {
-			buildWorkProductSubTree((WorkProduct) element, bm);
+			if(isShowRelatedLinks) {
+				buildWorkProductSubTree((WorkProduct) element, bm);
+			} else {
+				return true;
+			}
 		} else if (LibraryUtil.isProcess(element)) {
 			buildProcessSubTree(obj, (org.eclipse.epf.uma.Process) element, bm);
 		} else {
