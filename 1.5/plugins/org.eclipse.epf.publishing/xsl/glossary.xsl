@@ -37,7 +37,7 @@
 <b>
 <a>
 <xsl:attribute name="id">_GLOSSARY_ITEM_<xsl:value-of select="@name"/></xsl:attribute>
-<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute><xsl:value-of select="@presentationName"/>
+<xsl:attribute name="name">_GLOSSARY_NAME_<xsl:value-of select="@name"/></xsl:attribute><xsl:value-of select="@presentationName"/>
 </a>
 </b>
 </dt>
