@@ -10,10 +10,13 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.diagram.ui.viewer;
 
+import java.util.List;
+
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.epf.diagram.core.figures.WidenedWrapLabel;
 import org.eclipse.epf.diagram.model.Diagram;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -29,12 +32,12 @@ import org.eclipse.gef.LayerConstants;
 import org.eclipse.gef.editparts.LayerManager;
 import org.eclipse.gef.editparts.ScalableFreeformRootEditPart;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-
 
 /**
  * The abstract base class for a graphical viewer of the element diagram.
@@ -61,6 +64,7 @@ public abstract class AbstractDiagramGraphicalViewer {
 		this.wrapper = wrapper;
 		createGraphicalViewer();
 	}
+
 	/**
 	 * Creates the GraphicalViewer on the specified <code>Composite</code>
 	 * 
@@ -109,7 +113,7 @@ public abstract class AbstractDiagramGraphicalViewer {
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates diagram image from figure created in loadDiagram method.
 	 * 
@@ -117,6 +121,30 @@ public abstract class AbstractDiagramGraphicalViewer {
 	public Image createDiagramImage() {
 		IFigure figure = getFigure();
 
+		
+		IFigure borderItemAwareFreeFormLayer = (IFigure) figure.getChildren().get(0);
+	
+		IFigure tempFigure = (IFigure) borderItemAwareFreeFormLayer.getChildren().get(0);
+		List defaultSizeNodeFigureList = null;
+		if( tempFigure != null) 
+		 defaultSizeNodeFigureList =  tempFigure.getChildren(); 
+		
+		
+		for(int i=0;i<defaultSizeNodeFigureList.size();i++){
+			IFigure activityNodeFigure = null;
+			if(defaultSizeNodeFigureList.get(i) != null)
+				activityNodeFigure = (IFigure)((IFigure)defaultSizeNodeFigureList.get(i)).getChildren().get(0);
+			IFigure widenedWrapLabel = null;
+			if(activityNodeFigure != null)
+		  widenedWrapLabel =	 (IFigure)activityNodeFigure.getChildren().get(0); 
+
+			if (widenedWrapLabel instanceof WidenedWrapLabel ) {
+
+				widenedWrapLabel.setForegroundColor(new Color(null, 0, 0, 0));
+		 }
+		}
+
+			
 		SWTGraphics graphics = null;
 		GC gc = null;
 		Image image = null;
@@ -155,13 +183,13 @@ public abstract class AbstractDiagramGraphicalViewer {
 				}
 
 				EditPart editPart = graphicalViewer.getContents();
-				if(editPart != null) {
+				if (editPart != null) {
 					editPart.setModel(null);
 				}
 
 				graphicalViewer = null;
 			}
-			
+
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
@@ -178,8 +206,9 @@ public abstract class AbstractDiagramGraphicalViewer {
 	protected void cleanUpDiagram() {
 		// default implementation does nothing
 	}
-	
+
 	public abstract DiagramInfo getDiagramInfo();
+
 	public abstract EditPart loadDiagram(Object wrapper, boolean needReset,
 			IFilter filter, Suppression sup);
 
