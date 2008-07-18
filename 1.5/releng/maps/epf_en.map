@@ -1,4 +1,4 @@
-feature@org.eclipse.epf.base.feature=v20080718-1026,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
+feature@org.eclipse.epf.base.feature=v20080718-1524,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
 feature@org.eclipse.epf.doc.feature=v20080714-1839,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
 feature@org.eclipse.epf.platform.feature=v20080714-1839,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
 feature@org.eclipse.epf.rcp.feature=v20080710-2244,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
