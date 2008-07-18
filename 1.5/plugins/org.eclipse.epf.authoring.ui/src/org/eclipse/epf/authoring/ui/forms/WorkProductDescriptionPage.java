@@ -143,14 +143,13 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		workProduct = (WorkProduct) contentElement;
 		purposeOn = true;
-		externalIdOn = true;
+		setExternalIDOn(true);
 		if (!(contentElement instanceof Outcome)) {
 			notationSectionOn = true;
 		}
 		tailoringSectionOn = true;
 		iconSectionOn = true;
 		slotSectionOn = true;
-		setLongPresentationNameOn(true);
 	}
 
 	/**

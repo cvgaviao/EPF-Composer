@@ -49,7 +49,6 @@ public class WorkProductTypeDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		workProductType = (WorkProductType) contentElement;
 		setExternalIDOn(true);
-		setLongPresentationNameOn(true);
 	}
 
 	/**

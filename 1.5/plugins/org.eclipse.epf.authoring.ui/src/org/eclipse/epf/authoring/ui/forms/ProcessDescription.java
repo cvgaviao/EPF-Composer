@@ -146,6 +146,7 @@ public class ProcessDescription extends ProcessFormPage {
 	private ModifyListener nameModifyListener;
 
 	private boolean disposed;
+	 
 
 	/**
 	 * Creates a new instance.
@@ -207,7 +208,7 @@ public class ProcessDescription extends ProcessFormPage {
 				generalComposite, AuthoringUIText.PRESENTATION_NAME_TEXT);
 		
 		// Long Presentation name
-		if (AuthoringUIPreferences.getEnableUIFields()) {
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_long_presentation_name = createTextEditWithLabel(toolkit,
 					generalComposite, AuthoringUIText.LONG_PRESENTATION_NAME_TEXT);
 		}
@@ -486,7 +487,7 @@ public class ProcessDescription extends ProcessFormPage {
 				&& (!ctrl_presentation_name.isDisposed())) {
 			updateControl(ctrl_presentation_name, process.getPresentationName());
 		}
-		if (AuthoringUIPreferences.getEnableUIFields()) {
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			if ((ctrl_long_presentation_name != null)
 					&& (!ctrl_long_presentation_name.isDisposed())) {
 				updateControl(ctrl_long_presentation_name, process
@@ -785,7 +786,7 @@ public class ProcessDescription extends ProcessFormPage {
 				} }
 		});
 
-		if (AuthoringUIPreferences.getEnableUIFields()) { 
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) { 
 			ctrl_long_presentation_name.addModifyListener(modifyListener);
 			ctrl_long_presentation_name.addFocusListener(new FocusAdapter() {
 				public void focusGained(FocusEvent e) {
@@ -1209,7 +1210,7 @@ public class ProcessDescription extends ProcessFormPage {
 		if (!ctrl_presentation_name.isDisposed()) {
 			ctrl_presentation_name.setEditable(editable);
 		}
-		if (AuthoringUIPreferences.getEnableUIFields()) {
+		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			if (!ctrl_long_presentation_name.isDisposed()) {
 				ctrl_long_presentation_name.setEditable(editable);
 			}

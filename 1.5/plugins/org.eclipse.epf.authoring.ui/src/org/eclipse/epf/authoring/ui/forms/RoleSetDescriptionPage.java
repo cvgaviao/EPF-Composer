@@ -49,7 +49,6 @@ public class RoleSetDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		roleSet = (RoleSet) contentElement;
 		setExternalIDOn(true);
-		setLongPresentationNameOn(true);
 	}
 
 	/**

@@ -65,8 +65,7 @@ public class RoleDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		role = (Role) contentElement;
 		notationSectionOn = true;
-		externalIdOn = true;
-		setLongPresentationNameOn(true);
+		setExternalIDOn(true);
 	}
 
 	/**

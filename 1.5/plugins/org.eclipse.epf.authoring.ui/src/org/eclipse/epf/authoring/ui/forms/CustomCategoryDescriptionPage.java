@@ -51,7 +51,6 @@ public class CustomCategoryDescriptionPage extends DescriptionFormPage {
 		publishCategoryOn = true;
 		setIconSectionOn(true);
 		setExternalIDOn(true);
-		setLongPresentationNameOn(true);
 	}
 
 	/**

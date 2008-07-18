@@ -49,7 +49,6 @@ public class DomainDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		domain = (Domain) contentElement;
 		setExternalIDOn(true);
-		setLongPresentationNameOn(true);
 	}
 
 	/**

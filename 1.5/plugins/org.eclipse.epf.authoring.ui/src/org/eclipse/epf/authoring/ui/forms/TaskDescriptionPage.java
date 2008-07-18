@@ -61,8 +61,7 @@ public class TaskDescriptionPage extends DescriptionFormPage {
 		super.init(site, input);
 		task = (Task) contentElement;
 		purposeOn = true;
-		externalIdOn = true;
-		setLongPresentationNameOn(true);
+		setExternalIDOn(true);
 	}
 
 	/**
