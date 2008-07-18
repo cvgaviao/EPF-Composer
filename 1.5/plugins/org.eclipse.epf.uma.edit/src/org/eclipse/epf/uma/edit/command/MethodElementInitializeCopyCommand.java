@@ -130,9 +130,14 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 						if (reverseReference != null) {
 							int position = copyList.indexOf(target);
 							if (position == -1) {
-								copyList.add(index, target);
+								copyList.add(target);
 							} else {
-								copyList.move(index, target);
+								// move to end
+								//
+								int newPosition = copyList.size() - 1;
+								if(newPosition != position) {
+									copyList.move(newPosition, position);
+								}
 							}
 						} else {
 							copyList.add(target);

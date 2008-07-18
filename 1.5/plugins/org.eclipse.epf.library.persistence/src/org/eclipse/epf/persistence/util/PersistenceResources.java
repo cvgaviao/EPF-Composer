@@ -52,8 +52,6 @@ public final class PersistenceResources extends NLS {
 
 	public static String backupError_msg;
 
-	public static String marker_err_cannotResolveProxy;
-
 	public static String modifyFileError_msg;
 	
 	public static String filePathNameTooLong_msg;
