@@ -30,5 +30,8 @@
       <migrator
             class="org.eclipse.epf.library.ui.xmi.internal.migration.Migrator103"
             libNsURI="http://www.eclipse.org/epf/uma/1.0.3/uma.ecore"/>
+      <migrator
+            class="org.eclipse.epf.library.ui.xmi.internal.migration.Migrator104"
+            libNsURI="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"/>            
    </extension>
 </plugin>

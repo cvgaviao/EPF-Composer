@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.persistence.migration;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -164,6 +165,11 @@ public final class MappingUtil {
 	public static void migrate(String libPath, IProgressMonitor monitor, UpgradeCallerInfo info)
 			throws Exception {
 		IMigrator migrator = getMigratorByLibPath(libPath);
+		if (migrator == null && info.getUpgradableFiles() != null && !
+				info.getUpgradableFiles().isEmpty()) {
+			File upgradableFile = info.getUpgradableFiles().get(0);
+			migrator = getMigratorByLibPath(upgradableFile.getAbsolutePath());
+		}
 		if (migrator != null) {
 			migrator.migrate(libPath, monitor, info);
 		}
