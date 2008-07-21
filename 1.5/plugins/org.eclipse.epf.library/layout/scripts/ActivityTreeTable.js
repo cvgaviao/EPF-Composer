@@ -221,6 +221,7 @@ ActivityTreeTable.prototype.createToplevelRows = function() {
 			
 			var tr = table.insertRow(table.rows.length);
 			tr.setAttribute(ATTR_ROW_DATA_INDEX, i);
+
 			this.wbsItemHtml.loadRow(tr);
 			
 			//table.appendChild(tr);
@@ -292,6 +293,23 @@ ActivityTreeTable.prototype.getTreeNodeSrc = function(level)
 };
 
 
+ActivityTreeTable.prototype.getIMG = function(trElement)
+{
+	var e = trElement;
+	
+	while ( e != null && e.tagName != "IMG")
+	{	
+		e = e.firstChild;
+		//alert(e.tagName);
+	}
+	
+	if(e.nextSibling!=null){
+		return e.nextSibling;
+	}
+	
+	return e;
+};
+
 ActivityTreeTable.prototype.getTR = function(element)
 {
 	// the heml structure is
@@ -354,6 +372,111 @@ ActivityTreeTable.prototype.expandCollapseTreeNode = function(evtElement) {
 	*/
 	
 	return false;
+};
+
+ActivityTreeTable.prototype.getFirstTreeNodeTR = function(table)
+{
+	var e = table;
+	
+	while ( e != null && e.tagName != "TR") {	
+		e = e.firstChild;
+	}
+	
+	while (e!=null&&e.className != this.tree_node_class) {
+		e = e.nextSibling;
+	}
+	
+	return e;
+};
+
+ActivityTreeTable.prototype.expandAllTreeNode = function() {
+	var table = this.getTreeTable();
+	
+	if ( table == null ) return;
+
+	var firstTreeNode=this.getFirstTreeNodeTR(table);
+	this.createChildRows(firstTreeNode);
+	this.showHideChildren(firstTreeNode,true);
+	var imgElement=this.getIMG(firstTreeNode);
+	if (this._hasChildren(firstTreeNode)) {
+		imgElement.src = this.collapseImage;
+		imgElement.alt = contentPage.res.collapseText;
+		imgElement.title = contentPage.res.collapseText;
+		firstTreeNode.setAttribute(ATTR_EXPANDED, this.NODE_EXPANDED);
+	}
+	else {
+		imgElement.src = this.shimImage;
+	}
+	
+	var nextTR = this.getNextSibling(firstTreeNode);
+	while ( nextTR != null) 
+	{	
+		var imgElement = this.getIMG(nextTR)
+		if (this.isNodeSuppressed(nextTR) == false)
+		{
+			this.createChildRows(nextTR);
+			this.showHideChildren(nextTR,true);
+			if (this._hasChildren(nextTR)) {
+				imgElement.src = this.collapseImage;
+				imgElement.alt = contentPage.res.collapseText;
+				imgElement.title = contentPage.res.collapseText;
+				nextTR.setAttribute(ATTR_EXPANDED, this.NODE_EXPANDED);
+			}
+			else {
+				imgElement.src = this.shimImage;
+			}
+		}
+		nextTR = this.getNextSibling(nextTR);
+	}
+};
+
+ActivityTreeTable.prototype.collapseAllTreeNode = function() {
+
+	var table = this.getTreeTable();
+	
+	if ( table == null ) return;
+
+	var firstTreeNode = this.getFirstTreeNodeTR(table);
+	this.createChildRows(firstTreeNode);
+	this.hideChildren(firstTreeNode);
+	
+	var imgElement = this.getIMG(firstTreeNode);
+	
+	if(this._hasChildren(firstTreeNode)) {
+		imgElement.src = this.expandImage;
+		imgElement.alt = contentPage.res.expandText;
+		imgElement.title = contentPage.res.expandText;
+		firstTreeNode.setAttribute(ATTR_EXPANDED, this.NODE_COLLAPSED);
+	}
+	else {
+		// alert("null");
+		imgElement.src = this.shimImage;
+	}
+	
+	var nextTR = this.getNextSibling(firstTreeNode);
+	
+	//alert("nextTR.getAttribute:"+nextTR.getAttribute("parentId"));
+	while ( nextTR != null) 
+	{
+		if (this.isNodeSuppressed(nextTR) == false)
+		{
+			//this.hideChildren(nextTR);
+			this.createChildRows(nextTR);
+			this.hideChildren(nextTR);
+			var imgElement=this.getIMG(nextTR);
+			if (this._hasChildren(nextTR)) {
+				this.getIMG(nextTR).src = this.expandImage;
+				imgElement.alt = contentPage.res.expandText;
+				imgElement.title = contentPage.res.expandText;
+				nextTR.setAttribute(ATTR_EXPANDED, this.NODE_COLLAPSED);
+			}
+			else {
+				imgElement.src = this.shimImage;
+			}
+		}
+		nextTR = this.getNextSibling(nextTR);
+		//alert("nextTR.getAttribute:"+nextTR.getAttribute("parentId"));
+	}
 };
 
 
@@ -446,6 +569,8 @@ ActivityTreeTable.prototype.getNextSibling = function(element)
 	
 	return nextElement;
 };
+
+
 
 ActivityTreeTable.prototype.getFirstChild = function(trElement, tagName, className)
 {
@@ -861,6 +986,3 @@ WBSItemHtml.prototype.loadCell = function(/*DOM*/tdEl, columnCount) {
 	return tdEl;
 
 };
-
-
-

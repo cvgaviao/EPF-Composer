@@ -89,7 +89,111 @@ ContentPageSection.prototype.createSectionLinks = function(tagName, classSelecto
 		}
 		
 		this.createExpandCollapseAllSectionsLinks(sectionElements[0]);
+		
+		var divElements = document.getElementsByTagName('div');
+		for(var j = 0; j < divElements.length; j++){
+			if(divElements[j].id == 'treeContent'){
+				this.createExpandCollapseAllSectionsLinksForTreeTable(divElements[j]);
+				break;
+			}
+		}
 	}
+};
+
+ContentPageSection.prototype.createExpandCollapseAllSectionsLinksForTreeTable = function(tableDiv) {
+	var div;
+	var self = this;
+	
+	if (document.createElement && (div = document.createElement('div'))) {
+		div.className = 'expandCollapseLink';
+		div.align = 'right';
+		var image = document.createElement('img');
+		image.src = this.expandAllImage;
+		image.alt = this.expandAllText;
+		image.title = this.expandAllText;
+		image.width = '16';
+		image.height = '16';
+		image.border = '0';
+		image.align = 'absmiddle';		
+		var link = document.createElement('a');
+		link.className = 'expandCollapseLink';
+		link.href = '';
+		link.appendChild(image);
+		link.onclick = /*this.expandAll;*/ function(evt) {
+			/*
+			 for (var i = 0; i < self.sectionCollapseDivs.length; i++) {
+			 	self.sectionCollapseDivs[i].style.display = '';
+			 	self.sectionCollapseLinks[i].firstChild.src = self.collapseImage;
+			 }
+			 */
+			 self.expandAllTreeTable();
+			 if (evt && evt.preventDefault) {
+			 	evt.preventDefault();
+			 }
+			 return false;
+		};
+		var span = document.createElement('span');
+		span.className = 'expandCollapseText';
+		span.appendChild(document.createTextNode(this.expandAllText));
+		link.appendChild(span);
+		div.appendChild(link);
+		div.appendChild(document.createTextNode(String.fromCharCode(160)));
+		div.appendChild(document.createTextNode(String.fromCharCode(160)));
+		div.appendChild(document.createTextNode(String.fromCharCode(160)));
+		div.appendChild(document.createTextNode(String.fromCharCode(160)));						
+		
+		image = document.createElement('img');
+		image.src = this.collapseAllImage;
+		image.alt = this.collapseAllText;
+		image.title = this.collapseAllText;
+		image.width = '16';
+		image.height = '16';
+		image.border = '0';
+		image.align = 'absmiddle';
+		link = document.createElement('a');
+		link.className = 'expandCollapseLink';
+		link.href = '#';
+		link.appendChild(image);
+		link.onclick = /*this.collapseAll;*/function(evt) {
+			/*
+			for (var i = 0; i < self.sectionCollapseDivs.length; i++) {
+				self.sectionCollapseDivs[i].style.display = 'none';
+				self.sectionCollapseLinks[i].firstChild.src = self.expandImage;
+			}
+			*/
+			self.collapseAllTreeTable();
+			
+			if (evt && evt.preventDefault) {
+				evt.preventDefault();
+			}
+			return false;
+		};
+		span = document.createElement('span');
+		span.className = 'expandCollapseText';
+		span.appendChild(document.createTextNode(this.collapseAllText));				
+		link.appendChild(span);
+		div.appendChild(link);
+		
+		/*
+		var overviewSeparator = document.getElementById("overviewSeparator");
+		overviewSeparator.parentNode.insertBefore(div, overviewSeparator);
+		*/
+		if (tableDiv != null) {
+			tableDiv.parentNode.insertBefore(div, tableDiv);
+		}
+		
+		/*if (contentPage.getApp() != null) {
+			div.style.display = "none";
+		}*/
+	}
+};
+
+ContentPageSection.prototype.expandAllTreeTable = function() {
+	contentPage.processPage.treeTable.expandAllTreeNode();
+};
+	
+ContentPageSection.prototype.collapseAllTreeTable = function() {
+	contentPage.processPage.treeTable.collapseAllTreeNode();
 };
 
 // Creates a collapsible section.
@@ -292,4 +396,3 @@ ContentPageSection.prototype.createExpandCollapseAllSectionsLinks = function(fir
 			}
 	};
 };
-
