@@ -901,8 +901,8 @@ public class ResourceHelper {
 	public static String regExpEscape(String text) {
 		// escape the regExp reserved words,
 		// the $ sign is reserved for group matching 
-		String newtext = StrUtil.escapeChar(text, '$');
-		newtext = StrUtil.escapeChar(text, '\\');
+		String newtext = StrUtil.escapeChar(text, '\\');
+		newtext = StrUtil.escapeChar(newtext, '$');
 		return newtext;
 	}
 	
