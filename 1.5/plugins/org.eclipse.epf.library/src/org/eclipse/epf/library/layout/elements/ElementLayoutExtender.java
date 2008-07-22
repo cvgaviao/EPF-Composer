@@ -12,10 +12,9 @@ package org.eclipse.epf.library.layout.elements;
 
 import java.util.List;
 
+import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.Task;
-import org.eclipse.epf.uma.WorkProduct;
 
 
 /**
@@ -35,6 +34,9 @@ public abstract class ElementLayoutExtender {
 
 	public AbstractElementLayout getLayout() {
 		return layout;
+	}
+	
+	protected void addAttributes(XmlElement xmlElement) {		
 	}
 	
 }

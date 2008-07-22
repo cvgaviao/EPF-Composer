@@ -540,6 +540,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			elementXml.setAttribute("Url", getUrl()); //$NON-NLS-1$
 		} 
 		
+		if (getExtender() != null) {
+			getExtender().addAttributes(elementXml);
+		}
+		
 		return elementXml;
 	}
 
