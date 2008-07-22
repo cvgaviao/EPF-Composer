@@ -320,6 +320,9 @@ public class ConfigHelperDelegate {
 		return null;
 	}
 	
+	public void configViewRefreshNotified() {		
+	}
+	
 	public void debugDump(String msg) {
 		System.out.println("LD> " + getClass() + ".debugDump: " + msg);	//$NON-NLS-1$//$NON-NLS-2$
 	}

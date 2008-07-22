@@ -43,6 +43,7 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
@@ -675,6 +676,8 @@ public class ConfigurationView extends AbstractBaseView implements
 	}
 	
 	public void refresh() {
+		ConfigurationHelper.getDelegate().configViewRefreshNotified();
+		
 		if(configFilter instanceof ConfigurationViewFilter) {
 			((ConfigurationViewFilter)configFilter).refreshViewer();
 		}
