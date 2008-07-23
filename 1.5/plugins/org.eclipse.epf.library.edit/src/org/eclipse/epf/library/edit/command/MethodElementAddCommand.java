@@ -600,7 +600,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		}
 	}
 
-	private boolean checkStringValue(NamedElement e,
+	protected boolean checkStringValue(NamedElement e,
 			EStructuralFeature feature, Collection objectsToAdd) {
 		Collection excludedFeaturesToCheck = typeToExcludedFeaturesFromCheck.get(e.eClass()); 
 		if(excludedFeaturesToCheck != null && excludedFeaturesToCheck.contains(feature)) {
@@ -2214,7 +2214,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		MethodElementAddCommand.resMgr = resMgr;
 	}
 
-	private static StringValidator getStringValidator() {
+	protected static StringValidator getStringValidator() {
 		if (stringValidator == null) {
 			stringValidator = new StringValidator();
 		}
@@ -2225,7 +2225,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 	private static StringValidator stringValidator = null;
 
-	private static class StringValidator extends AbstractStringValidator {
+	protected static class StringValidator extends AbstractStringValidator {
 
 		private Collection elements;
 
