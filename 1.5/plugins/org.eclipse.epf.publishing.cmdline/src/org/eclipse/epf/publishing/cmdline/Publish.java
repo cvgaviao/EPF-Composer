@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *  ????? ?????? - initial implementation
+ *  Brian Schlosser - initial implementation
  *  Roman Smirak  - update for EPFC 1.2 and 1.5
  *******************************************************************************/ 
 package org.eclipse.epf.publishing.cmdline;
