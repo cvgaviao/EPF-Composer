@@ -121,30 +121,34 @@ public abstract class AbstractDiagramGraphicalViewer {
 	public Image createDiagramImage() {
 		IFigure figure = getFigure();
 
-		
-		IFigure borderItemAwareFreeFormLayer = (IFigure) figure.getChildren().get(0);
-	
-		IFigure tempFigure = (IFigure) borderItemAwareFreeFormLayer.getChildren().get(0);
+		IFigure borderItemAwareFreeFormLayer = (IFigure) figure.getChildren()
+				.get(0);
+
+		IFigure tempFigure = (IFigure) borderItemAwareFreeFormLayer
+				.getChildren().get(0);
 		List defaultSizeNodeFigureList = null;
-		if( tempFigure != null) 
-		 defaultSizeNodeFigureList =  tempFigure.getChildren(); 
-		
-		
-		for(int i=0;i<defaultSizeNodeFigureList.size();i++){
+		if (tempFigure != null)
+			defaultSizeNodeFigureList = tempFigure.getChildren();
+
+		for (int i = 0; i < defaultSizeNodeFigureList.size(); i++) {
 			IFigure activityNodeFigure = null;
-			if(defaultSizeNodeFigureList.get(i) != null)
-				activityNodeFigure = (IFigure)((IFigure)defaultSizeNodeFigureList.get(i)).getChildren().get(0);
+			if (defaultSizeNodeFigureList.get(i) != null)
+				activityNodeFigure = (IFigure) ((IFigure) defaultSizeNodeFigureList
+						.get(i)).getChildren().get(0);
 			IFigure widenedWrapLabel = null;
-			if(activityNodeFigure != null)
-		  widenedWrapLabel =	 (IFigure)activityNodeFigure.getChildren().get(0); 
+			if (activityNodeFigure != null) {
+				List children = ((IFigure) activityNodeFigure).getChildren();
+				if (children != null && !children.isEmpty())
+					widenedWrapLabel = (IFigure) activityNodeFigure
+							.getChildren().get(0);
 
-			if (widenedWrapLabel instanceof WidenedWrapLabel ) {
+			}
 
+			if (widenedWrapLabel instanceof WidenedWrapLabel) {
 				widenedWrapLabel.setForegroundColor(new Color(null, 0, 0, 0));
-		 }
+			}
 		}
 
-			
 		SWTGraphics graphics = null;
 		GC gc = null;
 		Image image = null;
