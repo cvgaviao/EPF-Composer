@@ -74,6 +74,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.HTMLTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -300,8 +301,8 @@ public class ConfigurationView extends AbstractBaseView implements
 		treeViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		// Add drag-and-drop support.
-		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE;
-		Transfer[] transfers = new Transfer[] { HTMLTransfer.getInstance(),
+		int dndOperations = DND.DROP_COPY | DND.DROP_MOVE ;
+		Transfer[] transfers = new Transfer[] { HTMLTransfer.getInstance(), TextTransfer.getInstance(),
 				LocalTransfer.getInstance() };
 		treeViewer.addDragSupport(dndOperations, transfers,
 				new LibraryViewerDragAdapter(treeViewer));
