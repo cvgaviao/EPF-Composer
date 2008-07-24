@@ -123,7 +123,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 	protected ArrayList<EStructuralFeature> featuresToCheck;
 
-	private ArrayList nestedCommands;
+	protected ArrayList nestedCommands;
 
 	private HashSet modifiedResources;
 
