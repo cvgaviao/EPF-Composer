@@ -228,6 +228,8 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 	 */
 	public static final String VIEW_ID = LibraryView.class.getName();
 
+	private static LibraryView INSTANCE = null;
+	
 	private static boolean DEBUG = AuthoringUIPlugin.getDefault().isDebugging();
 
 	protected TreeViewer treeViewer;
@@ -410,6 +412,7 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 			PluginUIPackageContext.INSTANCE.setLayoutHierarchical();
 		}
 
+		INSTANCE = this;
 	}
 	
 	/**
@@ -612,6 +615,13 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		boolean show = ViewHelper.isViewInCurrentPerspective(VIEW_ID);
 		return (LibraryView)ViewHelper.findView(VIEW_ID, show);
 
+	}
+	
+	/**
+	 * Returns this view.
+	 */
+	public static LibraryView getViewInstance() {
+		return INSTANCE;
 	}
 
 	/**
