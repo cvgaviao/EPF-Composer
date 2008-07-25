@@ -278,6 +278,13 @@ ProcessElementPage.prototype.buildProcessElementBreadCrumb = function(url) {
 	if ( viewFrame == null ) {
 		return;
 	}
+	
+	//if the process element are located at the root of this view
+	//this.par_path will be null
+	if ( this.par_path == null ) {
+	    contentPage._buildBreadcrumns(url);
+	    return;
+	}
 		
 	var paths = this.par_path.split(",");
 	
