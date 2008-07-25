@@ -467,16 +467,18 @@ public class ConfigurationData {
 				return true;
 			}
 
-			MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
-			if (plugin != null && plugin.isSupporting()) {
-				SupportingElementData seData = getSupportingElementData();
-				if (seData.isEnabled()) {
-					if (seData.isUpdatingChanges()) {
-						return false;
-					}
-					return seData.isSupportingElement(element);
-				}
-			}
+			//FIXME: commented out until the implementation for supportin plugins works
+			//
+//			MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+//			if (plugin != null && plugin.isSupporting()) {
+//				SupportingElementData seData = getSupportingElementData();
+//				if (seData.isEnabled()) {
+//					if (seData.isUpdatingChanges()) {
+//						return false;
+//					}
+//					return seData.isSupportingElement(element);
+//				}
+//			}
 		} 
 		
 		// elements beyond configuration scope should be always visible
