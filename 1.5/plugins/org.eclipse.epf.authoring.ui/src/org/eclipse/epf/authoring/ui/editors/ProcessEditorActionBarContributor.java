@@ -1534,7 +1534,6 @@ public class ProcessEditorActionBarContributor extends
 	public void init(IActionBars actionBars) {
 		super.init(actionBars);
 		registerActions();
-		contributeToToolBar(actionBars.getToolBarManager());
 	}
 
 	protected IActionManager getActionManager() {
