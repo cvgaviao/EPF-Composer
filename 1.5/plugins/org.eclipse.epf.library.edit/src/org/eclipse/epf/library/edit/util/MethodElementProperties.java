@@ -121,17 +121,21 @@ public class MethodElementProperties extends AdapterImpl {
 	}
 		
 	public void addListener(ChangeEventListener listener) {
-		this.listeners.add(listener);
+		if (this.listeners != null)
+			this.listeners.add(listener);
 	}
 	
 	public void removeListener(ChangeEventListener listener) {
-		this.listeners.remove(listener);
+		if (this.listeners != null)
+			this.listeners.remove(listener);
 	}
 	
 	private void notifyListeners(ChangeEvent event) {
-		for (Object o : listeners.getListeners()) {
-			if (o instanceof ChangeEventListener)
-				((ChangeEventListener) o).notifyChange(event);
+		if (this.listeners != null) {
+			for (Object o : listeners.getListeners()) {
+				if (o instanceof ChangeEventListener)
+					((ChangeEventListener) o).notifyChange(event);
+			}
 		}
 	}	
 	
