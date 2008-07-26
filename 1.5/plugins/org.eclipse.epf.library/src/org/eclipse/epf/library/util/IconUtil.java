@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.configuration.PracticeItemProvider;
+import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 
 /**
@@ -30,6 +33,7 @@ import org.eclipse.epf.uma.provider.UmaEditPlugin;
 public class IconUtil {
 
 	private static URL nodeIconPluginRoot = null;
+	private static URL nodeIconPluginRoot1 = null;
 
 	public static final String ICON_Activity = "full/obj16/Activity"; //$NON-NLS-1$
 
@@ -174,8 +178,14 @@ public class IconUtil {
 					.getBaseURL());
 		} catch (IOException e) {
 			e.printStackTrace();
+		}		
+		
+		try {
+			nodeIconPluginRoot1 = FileLocator.resolve(LibraryEditPlugin.INSTANCE
+					.getInstallURL());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -196,6 +206,19 @@ public class IconUtil {
 
 		return null;
 	}
+	
+	public static URL getNodeIconURL(PracticeSubgroupItemProvider provider) {
+		try {
+			String key = PracticeItemProvider.getImageStr(provider.getText(null));
+			if (key != null) {
+				return new URL(nodeIconPluginRoot1, "icons/" + key + ".gif"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 
 	/**
 	 * get the node icon file location for the element type
@@ -204,6 +227,15 @@ public class IconUtil {
 	 */
 	public static File getNodeIconFile(String type) {
 		URL url = getNodeIconURL(type);
+		if (url != null) {
+			return new File(url.getFile());
+		}
+
+		return null;
+	}
+	
+	public static File getNodeIconFile(PracticeSubgroupItemProvider provider) {
+		URL url = getNodeIconURL(provider);
 		if (url != null) {
 			return new File(url.getFile());
 		}

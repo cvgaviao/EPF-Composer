@@ -825,8 +825,9 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 				summaryPagesGenerated.add(url);
 			}
 
+			String imageString = this.getNodeIconName(provider);
 			Bookmark b = createBookmark(provider.getText(null), EcoreUtil
-					.generateUUID(), url, ICON_FOLDER, ICON_FOLDER, null);
+					.generateUUID(), url, imageString, imageString, null);
 			parent.addChild(b);
 			this.iterate(provider, b);
 		}

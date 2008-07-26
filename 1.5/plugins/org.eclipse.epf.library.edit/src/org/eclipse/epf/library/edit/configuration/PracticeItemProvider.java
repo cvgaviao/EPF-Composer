@@ -149,6 +149,11 @@ public class PracticeItemProvider extends
 	}
 	
 	private Object getImageObject(String subGroupName) {
+		String imageStr = getImageStr(subGroupName); 
+		return imageStr == null ? null : LibraryEditPlugin.INSTANCE.getImage(imageStr);
+	}
+	
+	public static String getImageStr(String subGroupName) {
 		
 		String imageStr = "full/obj16/Folder"; //$NON-NLS-1$
 		
@@ -188,8 +193,9 @@ public class PracticeItemProvider extends
 			}
 		}
 	
-		return imageStr == null ? null : LibraryEditPlugin.INSTANCE.getImage(imageStr);
+		return imageStr;
 	}
+
 	
 	private static String getUIString(String key) {
 		return LibraryEditPlugin.INSTANCE.getString(key);
@@ -459,5 +465,5 @@ public class PracticeItemProvider extends
 		}
 
 	}
-
+	
 }

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.Bookmark;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -299,7 +300,7 @@ public abstract class AbstractViewBuilder {
 
 	}
 
-	private String getNodeIconName(Object obj) {
+	protected String getNodeIconName(Object obj) {
 		File iconFile = null;
 		String iconName = null;
 
@@ -355,6 +356,8 @@ public abstract class AbstractViewBuilder {
 				String type = ((MethodElement) obj).getType().getName()
 						.toLowerCase();
 				iconFile = IconUtil.getNodeIconFile(type);
+			} else if (obj instanceof PracticeSubgroupItemProvider) {
+				iconFile = IconUtil.getNodeIconFile((PracticeSubgroupItemProvider) obj);
 			}
 		}
 
