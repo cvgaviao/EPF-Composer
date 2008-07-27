@@ -17,14 +17,12 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
-import org.eclipse.epf.common.ui.util.CommonPreferences;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.publishing.ui.PublishingUIPlugin;
 import org.eclipse.epf.publishing.ui.PublishingUIResources;
 import org.eclipse.epf.publishing.ui.preferences.PublishingUIPreferences;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -53,9 +51,6 @@ public class SelectDestinationPage extends BaseWizardPage {
 	public static final String PREFERENCE_DELIMITER = "|"; //$NON-NLS-1$
 
 	public static final String SPLIT_PREFERENCE_DELIMITER = "\\" + PREFERENCE_DELIMITER;//$NON-NLS-1$
-
-	private String defaultPath = PublishingUIPreferences
-			.getDefaultPublishPath();
 
 	protected Shell shell;
 
@@ -156,7 +151,7 @@ public class SelectDestinationPage extends BaseWizardPage {
 
 		String dir = PublishingUIPreferences.getPublishPath(configId);
 		if (dir != null && dir.length() > 0) {
-			dirCombo.setItems(subArray(coverStringToArray(dir)));
+			dirCombo.setItems(coverStringToArray(dir));
 			dirCombo.select(0);
 		}
 
@@ -186,6 +181,13 @@ public class SelectDestinationPage extends BaseWizardPage {
 				setPageComplete(isPageComplete());
 			}
 		});
+		
+		dirCombo.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				String dir = dirCombo.getText();
+				processDirectory(dir);
+			}			
+		});
 
 		browseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
@@ -194,7 +196,8 @@ public class SelectDestinationPage extends BaseWizardPage {
 							SWT.NONE);
 					String selectedDir = dialog.open();
 					if (selectedDir != null) {
-						dirCombo.setText(selectedDir);
+						String dir = selectedDir.trim();
+						processDirectory(dir);
 					}
 				} catch (Exception e) {
 					PublishingUIPlugin.getDefault().getLogger().logError(e);
@@ -219,26 +222,6 @@ public class SelectDestinationPage extends BaseWizardPage {
 				setPageComplete(isPageComplete());
 			}
 		});
-	}
-
-	protected String[] subArray(String[] arr) {
-		int ll = CommonPreferences.getPreferenceHistorySize();
-		if (ll < 1)
-			ll = CommonPreferences.getDefaultPreferenceHistorySize();
-
-		int arrLength = arr.length;
-
-		if (arrLength < ll && arr[0].equals(defaultPath))
-			return arr;
-
-		ll = arrLength >= ll ? ll : arrLength + 1;
-		String[] result = new String[ll];
-		for (int i = 0; i < ll - 1; i++) {
-			result[i] = arr[i];
-		}
-		result[ll - 1] = arr[0].equals(defaultPath) ? arr[ll] : defaultPath;
-
-		return result;
 	}
 
 	protected String[] coverStringToArray(String preferenceStr) {
@@ -322,29 +305,27 @@ public class SelectDestinationPage extends BaseWizardPage {
 	 */
 	public String getPublishDirectory() {
 		String dirText = dirCombo.getText().trim();
-		if (dirText.length() > 0) {
-			File dir = new File(dirCombo.getText().trim());
+		if (dirText.length() > 0) {			
+			File dir = new File(dirText);
 			return dir.getAbsolutePath();
 		}
+		
 		return dirText;
 	}
 
 	protected String[] getPublishDirectoryArray() {
-		String selectedtext = dirCombo.getText();
-
-		if (dirCombo.indexOf(selectedtext) > 0) {
-			dirCombo.remove(selectedtext);
-		}
-
-		if (dirCombo.indexOf(selectedtext) < 0) {
-			dirCombo.add(selectedtext, 0);
-		}
-
-		if (dirCombo.indexOf(defaultPath) > 0) {
-			dirCombo.remove(defaultPath);
-		}
-
+		String dir = dirCombo.getText().trim();
+		processDirectory(dir);
+		
 		return dirCombo.getItems();
+	}
+	
+	private void processDirectory(String dir) {
+		if (dirCombo.indexOf(dir) != -1) {
+			dirCombo.remove(dir);
+		}
+		dirCombo.add(dir, 0);
+		dirCombo.select(0);
 	}
 
 	/**
