@@ -291,6 +291,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 				marker.setAttribute(IMarker.LOCATION, location);				
 				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 				marker.setAttribute(LibraryProblemMonitor.Guid, base.getGuid());
+				elementMarkerMap.put(base, marker);
 					
 			} catch (Exception e) {
 				LibraryPlugin.getDefault().getLogger().logError(e);
