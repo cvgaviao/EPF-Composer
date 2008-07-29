@@ -569,7 +569,7 @@ public class LibraryService implements ILibraryService {
 	 *            a method configuration
 	 * @return a configuration manager
 	 */
-	public IConfigurationManager getConfigurationManager(
+	public synchronized IConfigurationManager getConfigurationManager(
 			MethodConfiguration config) {
 		if (config == null) {
 			throw new IllegalArgumentException();
