@@ -597,6 +597,7 @@ public class TaskStepsPage extends BaseFormPage {
 		}
 
 		if (descExpandFlag) {
+			ctrl_expanded.collapse();
 			sectionComposite.setVisible(true);
 			expandedComposite.setVisible(false);
 			formSection.setClient(sectionComposite);

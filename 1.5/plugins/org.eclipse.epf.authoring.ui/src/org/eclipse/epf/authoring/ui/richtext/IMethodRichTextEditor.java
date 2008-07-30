@@ -36,5 +36,11 @@ public interface IMethodRichTextEditor extends IMethodRichText, IRichTextEditor 
 	 *            0 for the Rich Text tab, 1 for the HTML tab.
 	 */
 	public void setSelection(int index);	
+	
+	
+	/**
+	 * Method rich text editor collapsed.
+	 */
+	public void collapse();
 
 }

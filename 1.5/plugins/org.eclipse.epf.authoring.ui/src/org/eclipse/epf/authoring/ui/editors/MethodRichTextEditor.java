@@ -192,4 +192,8 @@ public class MethodRichTextEditor extends RichTextEditor implements
 		if (richText instanceof IMethodRichText)
 			((IMethodRichText)richText).init(methodElement, label);
 	}
+	
+	
+	public void collapse() {	
+	}
 }

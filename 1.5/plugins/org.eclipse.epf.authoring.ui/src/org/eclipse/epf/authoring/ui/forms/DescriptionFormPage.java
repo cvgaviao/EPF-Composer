@@ -1870,6 +1870,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 
 		if (descExpandFlag) {
+			ctrl_expanded.collapse();
+			
 			expandedComposite.setVisible(false);
 			mainComposite.setVisible(true);
 			formSection.setClient(mainComposite);
@@ -1892,7 +1894,6 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				((MethodElementEditorInput)input).setModalObject(null);
 				((MethodElementEditorInput)input).setModalObjectFeature(null);
 			}
-
 		} else {
 			mainComposite.setVisible(false);
 			expandedComposite.setVisible(true);

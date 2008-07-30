@@ -415,6 +415,7 @@ public class BreakdownElementDocumentSection extends AbstractSection {
 		}
 
 		if (expandFlag) {
+			ctrl_document_expanded.collapse();
 			documentComposite.setVisible(true);
 			documentSection.setClient(documentComposite);
 
