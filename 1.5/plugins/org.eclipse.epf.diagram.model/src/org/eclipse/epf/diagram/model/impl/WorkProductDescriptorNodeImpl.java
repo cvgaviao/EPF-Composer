@@ -187,12 +187,12 @@ public class WorkProductDescriptorNodeImpl extends NamedNodeImpl implements
 				break;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
 				if(msg.getEventType() == Notification.SET && isInput()) {
-					state = msg.getNewStringValue();
+					setState(msg.getNewStringValue());
 				}
 				break;
 			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE:
 				if(msg.getEventType() == Notification.SET && isOutput()) {
-					state = msg.getNewStringValue();
+					setState(msg.getNewStringValue());
 				}
 				break;
 			}
