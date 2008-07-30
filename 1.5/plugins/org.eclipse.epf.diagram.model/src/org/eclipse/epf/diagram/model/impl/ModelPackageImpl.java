@@ -523,6 +523,15 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getWorkProductDescriptorNode_State() {
+		return (EAttribute)workProductDescriptorNodeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -645,6 +654,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEAttribute(taskNodeEClass, TASK_NODE__INDEX);
 
 		workProductDescriptorNodeEClass = createEClass(WORK_PRODUCT_DESCRIPTOR_NODE);
+		createEAttribute(workProductDescriptorNodeEClass, WORK_PRODUCT_DESCRIPTOR_NODE__STATE);
 
 		workBreakdownElementNodeEClass = createEClass(WORK_BREAKDOWN_ELEMENT_NODE);
 
@@ -754,6 +764,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEAttribute(getTaskNode_Index(), ecorePackage.getEInt(), "index", "-1", 0, 1, TaskNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(workProductDescriptorNodeEClass, WorkProductDescriptorNode.class, "WorkProductDescriptorNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getWorkProductDescriptorNode_State(), ecorePackage.getEString(), "state", null, 0, 1, WorkProductDescriptorNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(workBreakdownElementNodeEClass, WorkBreakdownElementNode.class, "WorkBreakdownElementNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

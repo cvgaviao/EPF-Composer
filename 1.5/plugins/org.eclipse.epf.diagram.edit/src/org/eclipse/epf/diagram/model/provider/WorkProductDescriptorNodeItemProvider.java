@@ -12,7 +12,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkProductDescriptorNodeItemProvider.java,v 1.1 2008/01/15 08:53:03 jtham Exp $
+ * $Id: WorkProductDescriptorNodeItemProvider.java,v 1.2 2008/07/30 01:52:59 ple Exp $
  */
 package org.eclipse.epf.diagram.model.provider;
 
@@ -25,6 +25,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -32,6 +33,9 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.eclipse.epf.diagram.model.ModelPackage;
 import org.eclipse.epf.diagram.model.WorkProductDescriptorNode;
 
 /**
@@ -69,8 +73,31 @@ public class WorkProductDescriptorNodeItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addStatePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the State feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStatePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_WorkProductDescriptorNode_state_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_WorkProductDescriptorNode_state_feature", "_UI_WorkProductDescriptorNode_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				 ModelPackage.Literals.WORK_PRODUCT_DESCRIPTOR_NODE__STATE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -108,6 +135,12 @@ public class WorkProductDescriptorNodeItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(WorkProductDescriptorNode.class)) {
+			case ModelPackage.WORK_PRODUCT_DESCRIPTOR_NODE__STATE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+		}
 		super.notifyChanged(notification);
 	}
 

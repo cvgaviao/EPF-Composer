@@ -60,7 +60,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="-1"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="WorkProductDescriptorNode" eSuperTypes="#//NamedNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WorkProductDescriptorNode" eSuperTypes="#//NamedNode">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WorkBreakdownElementNode" eSuperTypes="#//NamedNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="WorkProductComposite" eSuperTypes="#//NodeContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>

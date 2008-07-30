@@ -12,10 +12,13 @@ package org.eclipse.epf.diagram.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.epf.diagram.model.ActivityDetailDiagram;
 import org.eclipse.epf.diagram.model.Link;
 import org.eclipse.epf.diagram.model.ModelPackage;
 import org.eclipse.epf.diagram.model.Node;
+import org.eclipse.epf.diagram.model.WorkProductComposite;
 import org.eclipse.epf.diagram.model.WorkProductDescriptorNode;
 import org.eclipse.epf.diagram.model.util.GraphicalDataHelper;
 import org.eclipse.epf.uma.MethodElement;
@@ -28,12 +31,35 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Work Product Descriptor Node</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * The following features are implemented:
+ * <ul>
+ *   <li>{@link org.eclipse.epf.diagram.model.impl.WorkProductDescriptorNodeImpl#getState <em>State</em>}</li>
+ * </ul>
  * </p>
  *
  * @generated
  */
 public class WorkProductDescriptorNodeImpl extends NamedNodeImpl implements
 		WorkProductDescriptorNode {
+	/**
+	 * The default value of the '{@link #getState() <em>State</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getState()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String STATE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getState() <em>State</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getState()
+	 * @generated
+	 * @ordered
+	 */
+	protected String state = STATE_EDEFAULT;
+
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 */
@@ -52,17 +78,123 @@ public class WorkProductDescriptorNodeImpl extends NamedNodeImpl implements
 		return ModelPackage.Literals.WORK_PRODUCT_DESCRIPTOR_NODE;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setState(String newState) {
+		String oldState = state;
+		state = newState;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.WORK_PRODUCT_DESCRIPTOR_NODE__STATE, oldState, state));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case ModelPackage.WORK_PRODUCT_DESCRIPTOR_NODE__STATE:
+				return getState();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case ModelPackage.WORK_PRODUCT_DESCRIPTOR_NODE__STATE:
+				setState((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case ModelPackage.WORK_PRODUCT_DESCRIPTOR_NODE__STATE:
+				setState(STATE_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case ModelPackage.WORK_PRODUCT_DESCRIPTOR_NODE__STATE:
+				return STATE_EDEFAULT == null ? state != null : !STATE_EDEFAULT.equals(state);
+		}
+		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (state: "); //$NON-NLS-1$
+		result.append(state);
+		result.append(')');
+		return result.toString();
+	}
+
 	private class WorkProductDescriptorAdapter extends MethodElementAdapter {
 		
 		@Override
 		protected void handleNotification(Notification msg) {
 			switch (msg.getFeatureID(WorkProductDescriptor.class)) {
-			case UmaPackage.WORK_PRODUCT__SUPPRESSED:
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__SUPPRESSED:
 				switch (msg.getEventType()) {
 				case Notification.SET:
 					Boolean b = (Boolean)msg.getNewValue();
 					// TODO: implement handling suppress.
 				}
+				break;
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_ENTRY_STATE:
+				if(msg.getEventType() == Notification.SET && isInput()) {
+					state = msg.getNewStringValue();
+				}
+				break;
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__ACTIVITY_EXIT_STATE:
+				if(msg.getEventType() == Notification.SET && isOutput()) {
+					state = msg.getNewStringValue();
+				}
+				break;
 			}
 			super.handleNotification(msg);
 		}
@@ -85,6 +217,16 @@ public class WorkProductDescriptorNodeImpl extends NamedNodeImpl implements
 	protected Node findNode(MethodElement linkedElement) {
 		return GraphicalDataHelper.findNode(
 				(ActivityDetailDiagram) getDiagram(), linkedElement);
+	}
+
+	public boolean isOutput() {
+		EObject container = eContainer();
+		return container instanceof WorkProductComposite && ((WorkProductComposite) container).getType() == WorkProductComposite.OUTPUTS;
+	}
+
+	public boolean isInput() {
+		EObject container = eContainer();
+		return container instanceof WorkProductComposite && ((WorkProductComposite) container).getType() == WorkProductComposite.INPUTS;
 	}
 
 	/*

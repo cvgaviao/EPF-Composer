@@ -1376,13 +1376,22 @@ public interface ModelPackage extends EPackage {
 	int WORK_PRODUCT_DESCRIPTOR_NODE__NAME = NAMED_NODE__NAME;
 
 	/**
+	 * The feature id for the '<em><b>State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR_NODE__STATE = NAMED_NODE_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Work Product Descriptor Node</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORK_PRODUCT_DESCRIPTOR_NODE_FEATURE_COUNT = NAMED_NODE_FEATURE_COUNT + 0;
+	int WORK_PRODUCT_DESCRIPTOR_NODE_FEATURE_COUNT = NAMED_NODE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.diagram.model.impl.WorkBreakdownElementNodeImpl <em>Work Breakdown Element Node</em>}' class.
@@ -1978,6 +1987,17 @@ public interface ModelPackage extends EPackage {
 	EClass getWorkProductDescriptorNode();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.diagram.model.WorkProductDescriptorNode#getState <em>State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>State</em>'.
+	 * @see org.eclipse.epf.diagram.model.WorkProductDescriptorNode#getState()
+	 * @see #getWorkProductDescriptorNode()
+	 * @generated
+	 */
+	EAttribute getWorkProductDescriptorNode_State();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.diagram.model.WorkBreakdownElementNode <em>Work Breakdown Element Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2372,6 +2392,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass WORK_PRODUCT_DESCRIPTOR_NODE = eINSTANCE.getWorkProductDescriptorNode();
+
+		/**
+		 * The meta object literal for the '<em><b>State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WORK_PRODUCT_DESCRIPTOR_NODE__STATE = eINSTANCE.getWorkProductDescriptorNode_State();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.diagram.model.impl.WorkBreakdownElementNodeImpl <em>Work Breakdown Element Node</em>}' class.

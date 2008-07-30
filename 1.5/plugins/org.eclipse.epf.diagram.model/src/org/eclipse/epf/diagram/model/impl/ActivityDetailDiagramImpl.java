@@ -419,7 +419,7 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 			}
 
 			// Node newNode = null;
-			ArrayList nodes = new ArrayList();
+			ArrayList<Node> nodes = new ArrayList<Node>();
 			Collection breakdownElements = getAllBreakdownElements(true);
 			Collection roleDescriptors = new HashSet();
 			for (Iterator iterator = breakdownElements.iterator(); iterator
@@ -463,6 +463,10 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 						if (roleDescriptors.contains(roleDescriptor)) {
 							createTaskInputOutputNodes(descriptor, nodes);
 						}
+					}
+					
+					for (Node node : nodes) {
+						
 					}
 				}
 			}
@@ -666,14 +670,41 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 	public WorkProductComposite createWorkProductComposite(
 			TaskDescriptor taskDescriptor, int type) {
 		WorkProductComposite workproductComposite = null;
-		for (Iterator iter = getNodes().iterator(); iter.hasNext();) {
-			Node element = (Node) iter.next();
+		for (Node element : getNodes()) {
 			if (element instanceof WorkProductComposite) {
 				WorkProductComposite wpc = (WorkProductComposite) element;
 				if(wpc.getLinkedElement() == taskDescriptor && wpc.getType() == type) {					
 					workproductComposite = wpc;
 					break;
 				}
+			}
+		}
+		if(workproductComposite == null) {
+			workproductComposite = ModelFactory.eINSTANCE
+			.createWorkProductComposite();
+			workproductComposite.setType(type);
+		}
+		workproductComposite.setUMAContainer(getGraphNode());
+		workproductComposite.setDiagram(this);
+		workproductComposite.setObject(taskDescriptor);
+		return workproductComposite;
+	}
+
+	public WorkProductComposite createWorkProductComposite(
+			TaskNode taskNode, int type) {
+		TaskDescriptor taskDescriptor = (TaskDescriptor) taskNode.getLinkedElement();
+		// find existing WorkProductComposite for the given TaskNode
+		//
+		List<Link> links = type == WorkProductComposite.OUTPUTS ? taskNode.getOutgoingConnections() : taskNode.getIncomingConnections();
+		WorkProductComposite workproductComposite = null;
+		for (Link link : links) {
+			Node node = type == WorkProductComposite.OUTPUTS ? link.getTarget() : link.getSource();
+			if(node instanceof WorkProductComposite) {
+				WorkProductComposite wpc = (WorkProductComposite) node;
+				if(wpc.getLinkedElement() == taskDescriptor && wpc.getType() == type) {					
+					workproductComposite = wpc;
+					break;
+				}				
 			}
 		}
 		if(workproductComposite == null) {
@@ -876,6 +907,22 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 			nodes.add(newNode);
 		}
 	}
+	
+	public void createTaskInputOutputNodes(TaskNode taskNode, Collection nodes) {
+		TaskDescriptor descriptor = (TaskDescriptor) taskNode.getLinkedElement();
+		Node newNode = null;
+		if (!descriptor.getMandatoryInput().isEmpty()) {
+			newNode = createWorkProductComposite(taskNode,
+					WorkProductComposite.INPUTS);
+			nodes.add(newNode);
+		}
+		if (!descriptor.getOutput().isEmpty()) {
+			newNode = createWorkProductComposite(taskNode,
+					WorkProductComposite.OUTPUTS);
+			nodes.add(newNode);
+		}		
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.epf.diagram.model.impl.DiagramImpl#setNew(boolean)
 	 */
