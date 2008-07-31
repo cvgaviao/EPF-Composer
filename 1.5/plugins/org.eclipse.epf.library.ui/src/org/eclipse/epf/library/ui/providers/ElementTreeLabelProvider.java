@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.ui.providers;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -25,7 +26,7 @@ import org.eclipse.swt.graphics.Image;
  */
 public class ElementTreeLabelProvider extends LabelProvider {
 
-	private static ILabelProvider labelProvider = new AdapterFactoryLabelProvider(TngUtil.umaItemProviderAdapterFactory);
+	private static ILabelProvider labelProvider = new AdapterFactoryLabelProvider(TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory());
 
 	/**
 	 * Creates a new instance.
