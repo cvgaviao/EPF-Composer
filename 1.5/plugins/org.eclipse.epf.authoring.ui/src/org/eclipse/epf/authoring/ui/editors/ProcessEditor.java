@@ -48,6 +48,7 @@ import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.actions.IWorkbenchPartAction;
@@ -92,7 +93,6 @@ import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
-import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -710,10 +710,8 @@ public class ProcessEditor extends MethodElementEditor implements
 			if (obj instanceof ProcessComponent) {
 				ProcessComponent pc = (ProcessComponent) obj;
 				Process proc = pc.getProcess();
-				if (proc instanceof CapabilityPattern) {
-					return LibraryUIImages.IMG_CAPABILITY_PATTERN;
-				} else if (proc instanceof DeliveryProcess) {
-					return LibraryUIImages.IMG_DELIVERY_PROCESS;
+				if(proc != null) {
+					return ExtendedImageRegistry.getInstance().getImage(TngUtil.getImage(proc));
 				}
 			}
 		}
@@ -928,7 +926,12 @@ public class ProcessEditor extends MethodElementEditor implements
      */
     protected void setPartFacade(IEditorInput input) {
         setPartName(input.getName());
-        setTitleImage(getProcTitleImage());
+        setTitleImage();
+    }
+    
+    @Override
+    protected void setTitleImage() {
+    	setTitleImage(getProcTitleImage());
     }
 
 	/**

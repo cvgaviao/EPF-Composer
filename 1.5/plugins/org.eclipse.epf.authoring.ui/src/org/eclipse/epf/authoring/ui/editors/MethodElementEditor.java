@@ -53,7 +53,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
@@ -98,6 +98,7 @@ import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.services.ILibraryPersister.FailSafeMethodLibraryPersister;
 import org.eclipse.epf.uma.ContentPackage;
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -105,7 +106,6 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -189,11 +189,17 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 	// the Save or Save All button key is selected.
 	protected IMethodRichText modifiedRichText = null;
 
-	protected Adapter nameChangedListener = new AdapterImpl() {
+	protected Adapter elementChangedListener = new AdapterImpl() {
 		public void notifyChanged(org.eclipse.emf.common.notify.Notification msg) {
 			switch (msg.getFeatureID(MethodElement.class)) {
 			case UmaPackage.METHOD_ELEMENT__NAME:
 				nameChanged();
+				break;
+			}
+			
+			switch(msg.getFeatureID(DescribableElement.class)) {
+			case UmaPackage.DESCRIBABLE_ELEMENT__NODEICON:
+				iconChanged();
 				break;
 			}
 		}
@@ -475,6 +481,16 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		createActionManager();
 	}
 	
+	protected void iconChanged() {
+		SafeUpdateController.asyncExec(new Runnable() {
+
+			public void run() {
+				setTitleImage();
+			}
+			
+		});
+	}
+
 	protected void createEditorErrorTickUpdater() {
 		
 		this.fMethodElementEditorErrorTickUpdater = new MethodElementEditorErrorTickUpdater(this);
@@ -639,6 +655,10 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		return actionMgr;
 	}
 
+	protected void setTitleImage() {
+		Image titleImage = ExtendedImageRegistry.getInstance().getImage(TngUtil.getImage(elementObj));
+		setTitleImage(titleImage);
+	}
 	/**
 	 * @see org.eclipse.ui.forms.editor.FormEditor#init(IEditorSite,
 	 *      IEditorInput)
@@ -664,13 +684,8 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		activationListener = new ActivationListener(site.getWorkbenchWindow()
 				.getPartService());
 
-		ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE
-						.getNavigatorView_ComposedAdapterFactory());
-		Image titleImage = labelProvider.getImage(elementObj);
-		labelProvider.dispose();
-		setTitleImage(titleImage);
-
+		setTitleImage();
+		
 		CommandStack commandStack = actionMgr.getCommandStack();
 		editingDomain = new AdapterFactoryEditingDomain(TngAdapterFactory.INSTANCE
 				.getNavigatorView_ComposedAdapterFactory(), commandStack);
@@ -690,7 +705,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		elementObj = methodElementInput.getMethodElement();
 
 		setPartName();
-		elementObj.eAdapters().add(nameChangedListener);
+		elementObj.eAdapters().add(elementChangedListener);
 		
 		if (fMethodElementEditorErrorTickUpdater != null)
 			fMethodElementEditorErrorTickUpdater.updateEditorImage(elementObj);
@@ -1041,7 +1056,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 				actionMgr.undoAll();
 			}
 			actionMgr.dispose();
-			elementObj.eAdapters().remove(nameChangedListener);
+			elementObj.eAdapters().remove(elementChangedListener);
 			
 			if(resourceInfoMap != null) {
 				resourceInfoMap.clear();
@@ -1978,7 +1993,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 							dirty = false;
 						}
 						if (elementObj.eIsProxy()) {
-							elementObj.eAdapters().remove(nameChangedListener);
+							elementObj.eAdapters().remove(elementChangedListener);
 							EObject e = RefreshJob.getInstance().resolve(
 									elementObj);
 							if (e instanceof MethodElement
