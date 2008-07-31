@@ -82,7 +82,9 @@ public abstract class ConfigDataBase {
 	}
 	
 	protected void handleLibraryChange(int option, Collection changedItems) {
-		if (isNeedUpdateChanges()) {
+		setNeedUpdateChanges(true);
+		
+/*		if (isNeedUpdateChanges()) {
 			return;
 		}
 		for (Iterator it = changedItems.iterator(); it.hasNext();) {
@@ -91,7 +93,7 @@ public abstract class ConfigDataBase {
 				setNeedUpdateChanges(true);
 				return;
 			}
-		}
+		}*/
 	}
 	
 	public void dispose() {
