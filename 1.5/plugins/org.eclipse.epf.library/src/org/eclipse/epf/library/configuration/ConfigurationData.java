@@ -63,6 +63,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public class ConfigurationData {
 
+	public static boolean ignoreSupportingPlugin = true;
 	private static boolean localDebug = false;
 	private static boolean profiling = false;
 	
@@ -467,18 +468,20 @@ public class ConfigurationData {
 				return true;
 			}
 
-			//FIXME: commented out until the implementation for supportin plugins works
+			//FIXME: ignoreSupportingPlugin being true until the implementation for supporting plugins works
 			//
-//			MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
-//			if (plugin != null && plugin.isSupporting()) {
-//				SupportingElementData seData = getSupportingElementData();
-//				if (seData.isEnabled()) {
-//					if (seData.isUpdatingChanges()) {
-//						return false;
-//					}
-//					return seData.isSupportingElement(element);
-//				}
-//			}
+			if (! ignoreSupportingPlugin) {
+				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+				if (plugin != null && plugin.isSupporting()) {
+					SupportingElementData seData = getSupportingElementData();
+					if (seData.isEnabled()) {
+						if (seData.isUpdatingChanges()) {
+							return false;
+						}
+						return seData.isSupportingElement(element);
+					}
+				}
+			}
 		} 
 		
 		// elements beyond configuration scope should be always visible
