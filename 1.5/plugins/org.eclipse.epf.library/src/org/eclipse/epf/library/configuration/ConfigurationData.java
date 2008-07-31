@@ -63,7 +63,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public class ConfigurationData {
 
-	public static boolean ignoreSupportingPlugin = true;
+	public static boolean ignoreSupportingPlugin = false;
 	private static boolean localDebug = false;
 	private static boolean profiling = false;
 	
