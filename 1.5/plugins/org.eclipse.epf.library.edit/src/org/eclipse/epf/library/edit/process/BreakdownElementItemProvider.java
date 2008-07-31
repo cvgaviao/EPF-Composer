@@ -217,8 +217,6 @@ public class BreakdownElementItemProvider extends
 	 *      int)
 	 */
 	public Object getColumnImage(Object object, int columnIndex) {
-		// String colName = (String) columnIndexToNameMap.get(new
-		// Integer(columnIndex));
 		String colName = getColumnName(columnIndex);
 		return TngUtil.getColumnImage(object, colName);
 	}
@@ -405,6 +403,10 @@ public class BreakdownElementItemProvider extends
 	 * @see org.eclipse.epf.uma.provider.DescriptorItemProvider#getImage(java.lang.Object)
 	 */
 	public Object getImage(Object object) {
+		Object image = TngUtil.getCustomNodeIcon(object);
+		if(image != null) {
+			return image;
+		}
 		if (delegateItemProvider != null) {
 			return delegateItemProvider.getImage(object);
 		}

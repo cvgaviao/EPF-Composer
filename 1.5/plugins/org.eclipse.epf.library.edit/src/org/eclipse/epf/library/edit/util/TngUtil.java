@@ -1666,6 +1666,10 @@ public final class TngUtil {
 	}
 	
 	public static Object getImage(Object object) {
+		Object image = TngUtil.getCustomNodeIcon(object);
+		if(image != null) {
+			return image;
+		}
 		Object adapter = null;
 		try {
 			adapter = umaItemProviderAdapterFactory.adapt(object,
@@ -2455,6 +2459,26 @@ public final class TngUtil {
 		}
 
 		return uri;
+	}
+	
+	/**
+	 * 
+	 * @param object
+	 * @return custom node icon or null if the given object does not have one
+	 */
+	public static Object getCustomNodeIcon(Object object) {
+		if (object instanceof DescribableElement) {
+			if (((DescribableElement) object).getNodeicon() != null) {
+				URI imgUri = TngUtil.getFullPathofNodeorShapeIconURI(
+						(DescribableElement) object,
+						((DescribableElement) object).getNodeicon());
+				Object image = LibraryEditPlugin.INSTANCE
+						.getSharedImage(imgUri);
+				if (image != null)
+					return image;
+			}
+		}
+		return null;
 	}
 
 	

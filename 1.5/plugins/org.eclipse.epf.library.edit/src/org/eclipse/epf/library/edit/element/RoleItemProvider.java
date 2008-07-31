@@ -89,4 +89,13 @@ public class RoleItemProvider extends org.eclipse.epf.uma.provider.RoleItemProvi
 		
 		super.notifyChanged(notification);
 	}
+	
+	@Override
+	public Object getImage(Object object) {
+		Object image = TngUtil.getCustomNodeIcon(object);
+		if(image != null) {
+			return image;
+		}
+		return super.getImage(object);
+	}
 }

@@ -420,19 +420,17 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 
 			// Node newNode = null;
 			ArrayList<Node> nodes = new ArrayList<Node>();
-			Collection breakdownElements = getAllBreakdownElements(true);
-			Collection roleDescriptors = new HashSet();
-			for (Iterator iterator = breakdownElements.iterator(); iterator
+			Collection<?> breakdownElements = getAllBreakdownElements(true);
+			Collection<RoleDescriptor> roleDescriptors = new HashSet<RoleDescriptor>();
+			for (Iterator<?> iterator = breakdownElements.iterator(); iterator
 					.hasNext();) {
 				Object object = iterator.next();
 				Object element = TngUtil.unwrap(object);
 				if (element instanceof TaskDescriptor) {
 					TaskDescriptor descriptor = (TaskDescriptor) element;
-					List desc = descriptor
+					List<RoleDescriptor> performers = descriptor
 							.getPerformedPrimarilyBy();
-					for (Iterator itor = desc.iterator(); itor.hasNext();)	{
-						RoleDescriptor roleDescriptor = (RoleDescriptor) itor.next();
-					
+					for (RoleDescriptor roleDescriptor : performers)	{
 						if (roleDescriptor != null
 								&& filter.accept(roleDescriptor)
 								// TODO: need to check if the role descriptor is
@@ -460,16 +458,23 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 							createRoleTaskCompositeRows(roleDescriptor, object,
 									nodes);
 						}
-						if (roleDescriptors.contains(roleDescriptor)) {
-							createTaskInputOutputNodes(descriptor, nodes);
+//						if (roleDescriptors.contains(roleDescriptor)) {
+//							createTaskInputOutputNodes(descriptor, nodes);
+//						}
+					}					
+				}
+			}
+			
+			for (Node node : new ArrayList<Node>(nodes)) {
+				if(node instanceof RoleTaskComposite) {
+					for(Node childNode : ((RoleTaskComposite) node).getNodes()) {
+						if(childNode instanceof TaskNode) {
+							createTaskInputOutputNodes((TaskNode) childNode, nodes);
 						}
-					}
-					
-					for (Node node : nodes) {
-						
 					}
 				}
 			}
+
 			selectNodes(nodes);
 		} finally {
 			notificationEnabled = oldNotify;
@@ -586,12 +591,13 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 				if (child instanceof WorkProductComposite) {
 					// WorkProductComposite workproductComposite =
 					// (WorkProductComposite) child.getObject();
-					WorkProductComposite workproductComposite = (WorkProductComposite) child;
+					WorkProductCompositeImpl workproductComposite = (WorkProductCompositeImpl) child;
 					if (workproductComposite.getType() == WorkProductComposite.INPUTS) {
 						Object object = workproductComposite.getObject();
 						if (object instanceof TaskDescriptor) {
-							Node node = GraphicalDataHelper.findNode(this,
-									object, TaskNode.class);
+//							Node node = GraphicalDataHelper.findNode(this,
+//									object, TaskNode.class);
+							TaskNode node = workproductComposite.getTaskNode();
 							if(node != null && GraphicalDataHelper.findLink(child, object) == null) {
 								Link link = ModelFactory.eINSTANCE.createLink();
 								link.setSource(child);
@@ -605,8 +611,9 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 					if (workproductComposite.getType() == WorkProductComposite.OUTPUTS) {
 						Object object = workproductComposite.getObject();
 						if (object instanceof TaskDescriptor) {
-							Node node = GraphicalDataHelper.findNode(this,
-									object, TaskNode.class);
+//							Node node = GraphicalDataHelper.findNode(this,
+//									object, TaskNode.class);
+							TaskNode node = workproductComposite.getTaskNode();
 							if(node != null && GraphicalDataHelper.findLink(node, object) == null) {
 								Link link = ModelFactory.eINSTANCE.createLink();
 								link.setSource(node);
@@ -711,6 +718,7 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 			workproductComposite = ModelFactory.eINSTANCE
 			.createWorkProductComposite();
 			workproductComposite.setType(type);
+			((WorkProductCompositeImpl) workproductComposite).setTaskNode(taskNode);
 		}
 		workproductComposite.setUMAContainer(getGraphNode());
 		workproductComposite.setDiagram(this);
