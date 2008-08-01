@@ -33,6 +33,7 @@ import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.DescribableElement;
+import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.Guidance;
@@ -190,7 +191,10 @@ public class PracticeItemProvider extends
 				imageStr = "full/obj16/ToolMentors"; //$NON-NLS-1$
 			} else if (subGroupName.equals(getUIString("_UI_Guidances_WorkProductGuidelines"))) { //$NON-NLS-1$
 				imageStr = "full/obj16/WorkProductGuidelines"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_EstimationConsiderations"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/EstimationConsiderations"; //$NON-NLS-1$
 			}
+
 		}
 	
 		return imageStr;
@@ -430,7 +434,11 @@ public class PracticeItemProvider extends
 			if (obj instanceof Guideline) {
 				return getUIString("_UI_Guidances_WorkProductGuidelines"); //$NON-NLS-1$
 			}
-						
+					
+			if (obj instanceof EstimationConsiderations) {
+				return getUIString("_UI_Guidances_EstimationConsiderations"); //$NON-NLS-1$
+			}
+			
 			return UNKNOWN;
 			
 		}
@@ -446,6 +454,7 @@ public class PracticeItemProvider extends
 					getUIString("_UI_Guidances_Templates"),		//$NON-NLS-1$
 					getUIString("_UI_Guidances_ToolMentors"),		//$NON-NLS-1$
 					getUIString("_UI_Guidances_WorkProductGuidelines"),		//$NON-NLS-1$
+					getUIString("_UI_Guidances_EstimationConsiderations"),		//$NON-NLS-1$
 					UNKNOWN				
 			};
 			

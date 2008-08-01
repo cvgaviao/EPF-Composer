@@ -176,16 +176,17 @@ public class IconUtil {
 		try {
 			nodeIconPluginRoot = FileLocator.resolve(UmaEditPlugin.INSTANCE
 					.getBaseURL());
+			nodeIconPluginRoot1 = nodeIconPluginRoot;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
 		
-		try {
+/*		try {
 			nodeIconPluginRoot1 = FileLocator.resolve(LibraryEditPlugin.INSTANCE
 					.getInstallURL());
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/**
@@ -210,6 +211,7 @@ public class IconUtil {
 	public static URL getNodeIconURL(PracticeSubgroupItemProvider provider) {
 		try {
 			String key = PracticeItemProvider.getImageStr(provider.getText(null));
+			key = key.replace("full/obj16", "full/obj16_external");//$NON-NLS-1$ //$NON-NLS-2$
 			if (key != null) {
 				return new URL(nodeIconPluginRoot1, "icons/" + key + ".gif"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
