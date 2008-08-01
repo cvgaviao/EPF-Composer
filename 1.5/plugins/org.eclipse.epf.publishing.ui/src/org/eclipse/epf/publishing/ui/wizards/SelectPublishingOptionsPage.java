@@ -35,10 +35,12 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -68,6 +70,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 			.getName();
 
 	protected Shell shell;
+	
+	protected Composite composite;
 	
 	protected Group layoutGroup;
 
@@ -150,7 +154,13 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	public void createControl(Composite parent) {
 		shell = parent.getShell();
 
-		Composite composite = createGridLayoutComposite(parent, 1);
+		ScrolledComposite scrolledComposite = new ScrolledComposite(
+				parent, 
+				SWT.V_SCROLL | SWT.H_SCROLL);
+		
+		composite = createGridLayoutComposite(scrolledComposite, 1);
+		
+		scrolledComposite.setContent(composite);
 
 		createTitleAndLinksGroup(composite);
 		createGlossaryAndIndexGroup(composite);
@@ -159,17 +169,20 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 		createDiagramGenerationGroup(composite);
 		createLayoutGroup(composite);
 
+		Point defaultSize = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		composite.setSize(defaultSize);
+		
 		initControls();
 
 		addListeners();
 
-		setControl(composite);
+		setControl(scrolledComposite);
 
 		PlatformUI
 				.getWorkbench()
 				.getHelpSystem()
 				.setHelp(
-						composite,
+						scrolledComposite,
 						AuthoringUIHelpContexts.CONFIGURATION_PUBLISH_WIZARD_ALL_PAGES_CONTEXT);
 	}
 
@@ -500,6 +513,15 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				config = selectedConfig;
 				initControls();
 			}
+		}
+		
+		//resize the content composite in the scrolled parent
+		Point size = composite.getSize();
+		Point parentSize = composite.getParent().getSize();
+		int borderWidth = composite.getParent().getBorderWidth();
+		
+		if(size.x < parentSize.x - 2 * borderWidth){
+			composite.setSize(parentSize.x - 2 * borderWidth, size.y);
 		}
 	}
 
