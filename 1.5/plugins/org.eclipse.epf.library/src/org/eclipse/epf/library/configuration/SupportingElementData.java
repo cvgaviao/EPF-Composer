@@ -56,7 +56,7 @@ public class SupportingElementData extends ConfigDataBase {
 	private static boolean localDebug1 = false;
 	private boolean enabled = true;
 	
-	private static boolean descriptorExclusiveOption = true;	
+	public static boolean descriptorExclusiveOption = true;	
 	
 	public SupportingElementData(MethodConfiguration config) {
 		super(config);
@@ -316,6 +316,12 @@ public class SupportingElementData extends ConfigDataBase {
 		}
 		if (ret) {
 			supportingElements.add(element);
+			EObject pkg = element.eContainer();
+			while (pkg != null && pkg instanceof MethodPackage) {
+				supportingElements.add((MethodPackage) pkg);
+				pkg = pkg.eContainer();
+			}
+			
 			if (localDebug1) {
 				System.out
 						.println("LD> supportingElements added: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ 
