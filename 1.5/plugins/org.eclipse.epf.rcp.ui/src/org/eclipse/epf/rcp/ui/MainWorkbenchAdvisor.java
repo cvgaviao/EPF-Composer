@@ -189,7 +189,7 @@ public class MainWorkbenchAdvisor extends WorkbenchAdvisor {
 	
 	public void eventLoopIdle(Display display) {
 		CommandLineRunUtil runUtil = CommandLineRunUtil.getInstance();
-		if (runUtil.isNeedToRun()) {
+		if (runUtil.isNeedToRun() && runUtil.isNeverExcuted()) {
 			runUtil.execute(Platform.getApplicationArgs());
 
 			final IWorkbench workbench = getWorkbenchConfigurer()
