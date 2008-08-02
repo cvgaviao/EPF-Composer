@@ -27,6 +27,7 @@ public class CommandLineRunUtil {
 	
 	private static CommandLineRunUtil instance = new CommandLineRunUtil();
 	private boolean needToRun = false;
+	private boolean neverExcuted = true;
 	
 	public static CommandLineRunUtil getInstance() {
 		return instance;
@@ -36,6 +37,7 @@ public class CommandLineRunUtil {
 	}	
 	
 	public boolean execute(String[] args) {
+		setNeverExcuted(false);
 		//For general case, args should be parsed here to call on right runnerId.
 		//for now, just hard code it with "commandLinePluginImporter"
 		executeCommandRunner(args, "commandLinePluginImporter");	//$NON-NLS-1$ 
@@ -103,6 +105,14 @@ public class CommandLineRunUtil {
 
 	public static void setInstance(CommandLineRunUtil instance) {
 		CommandLineRunUtil.instance = instance;
+	}
+
+	public boolean isNeverExcuted() {
+		return neverExcuted;
+	}
+
+	protected void setNeverExcuted(boolean neverExcuted) {
+		this.neverExcuted = neverExcuted;
 	}
 
 	
