@@ -40,4 +40,11 @@ public class MilestoneItemProvider extends
 	protected void collectNewChildDescriptors(Collection newChildDescriptors, Object object) {
 		return;
 	}
+	
+	@Override
+	public Object getImage(Object object) {
+		Object img = TngUtil.getImage(object);
+		return img != null ? img : super.getImage(object);
+	}
+	
 }
