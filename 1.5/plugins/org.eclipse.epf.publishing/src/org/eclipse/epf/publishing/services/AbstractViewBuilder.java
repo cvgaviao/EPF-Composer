@@ -316,8 +316,8 @@ public abstract class AbstractViewBuilder {
 
 			String elementName = ((DescribableElement) obj).getType().getName()
 					.toLowerCase();
-			if (DefaultElementTypeResources.useDefaultIcon(elementName))
-				uri = null;
+/*			if (DefaultElementTypeResources.useDefaultIcon(elementName))
+				uri = null;*/
 
 			if (uri != null) {
 				// try if this is a valid URL or not
