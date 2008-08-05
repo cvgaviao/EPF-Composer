@@ -26,6 +26,7 @@ import org.eclipse.epf.diagram.add.providers.DiagramElementTypes;
 import org.eclipse.epf.diagram.core.providers.DiagramIconProviderManager;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
 import org.eclipse.epf.diagram.core.util.DiagramCoreUtil;
+import org.eclipse.epf.diagram.model.WorkProductDescriptorNode;
 import org.eclipse.gef.AccessibleEditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
@@ -233,6 +234,13 @@ public class WorkProductDescriptorNodeNameEditPart extends CompartmentEditPart
 			text = defaultText;
 		}
 		text = DiagramCoreUtil.wrap(text, 3);
+		Object element = getParserElement();
+		if (element   instanceof WorkProductDescriptorNode) {
+			String state = ((WorkProductDescriptorNode) element).getState();
+			if (state != null && !state.equals("")) {	//$NON-NLS-1$
+				text = text + " [" + state + "]";		//$NON-NLS-1$	//$NON-NLS-2$
+			}
+		}
 		return text;
 	}
 

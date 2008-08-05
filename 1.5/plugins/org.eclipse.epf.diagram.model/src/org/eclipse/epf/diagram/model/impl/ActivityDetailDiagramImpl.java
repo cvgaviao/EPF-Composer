@@ -33,6 +33,7 @@ import org.eclipse.epf.diagram.model.NodeContainer;
 import org.eclipse.epf.diagram.model.RoleTaskComposite;
 import org.eclipse.epf.diagram.model.TaskNode;
 import org.eclipse.epf.diagram.model.WorkProductComposite;
+import org.eclipse.epf.diagram.model.WorkProductDescriptorNode;
 import org.eclipse.epf.diagram.model.util.GraphicalDataHelper;
 import org.eclipse.epf.diagram.model.util.IActivityDetailDiagramChangeListener;
 import org.eclipse.epf.diagram.model.util.IAdapterFactoryFilter;
@@ -694,6 +695,7 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 		workproductComposite.setUMAContainer(getGraphNode());
 		workproductComposite.setDiagram(this);
 		workproductComposite.setObject(taskDescriptor);
+		setState(type, workproductComposite);
 		return workproductComposite;
 	}
 
@@ -723,6 +725,8 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 		workproductComposite.setUMAContainer(getGraphNode());
 		workproductComposite.setDiagram(this);
 		workproductComposite.setObject(taskDescriptor);
+		
+		setState(type, workproductComposite);
 		return workproductComposite;
 	}
 
@@ -1016,6 +1020,25 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 			}
 		}
 		return list;
+	}
+	
+	private void setState(int type, Node node) {
+		if (node instanceof NodeContainer) {
+			for (Node element : ((NodeContainer)node).getNodes()) {
+				if (element instanceof WorkProductDescriptorNode) {
+					WorkProductDescriptorNode wpNode = (WorkProductDescriptorNode) element;
+					MethodElement methodElement = wpNode.getLinkedElement();
+					if (methodElement instanceof WorkProductDescriptor){
+						String stateText = null;
+						if (type == WorkProductComposite.INPUTS)
+							stateText = ((WorkProductDescriptor) methodElement).getActivityEntryState();
+						else if (type == WorkProductComposite.OUTPUTS)
+							stateText = ((WorkProductDescriptor) methodElement).getActivityExitState();
+						wpNode.setState(stateText);
+					}					
+				}
+			}	
+		}
 	}
 	
 } // ActivityDetailDiagramImpl
