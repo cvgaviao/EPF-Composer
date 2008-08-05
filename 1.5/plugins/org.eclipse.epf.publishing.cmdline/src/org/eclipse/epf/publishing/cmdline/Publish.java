@@ -8,7 +8,7 @@
  * Contributors:
  *  Brian Schlosser - initial implementation
  *  Roman Smirak  - update for EPFC 1.2 and 1.5
- *******************************************************************************/ 
+ *******************************************************************************/
 package org.eclipse.epf.publishing.cmdline;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-// TODO Replace deprecated IPlatformRunnable with IApplication 
+// TODO Replace deprecated IPlatformRunnable with IApplication
 public class Publish implements IPlatformRunnable {
 
 	private static final String ABOUT = "-about"; //$NON-NLS-1$
@@ -66,44 +66,43 @@ public class Publish implements IPlatformRunnable {
 	private Shell shell;
 
 	public Object run(final Object args) throws Exception {
-		// FIXME GMF requires workbench
-		Thread thread = new Thread(new Runnable() {
-			public void run() {
-				try {
-					final Display display = new Display();
-					shell = new Shell(display);
-					shell.setLayoutData(new GridData(1, 1)); // size can't be
-					// 0,0
-					// otherwise the diagram
-					// will not be painted
-					shell.setLayout(new GridLayout());
-					shell.setVisible(false);
-
-					PlatformUI.createAndRunWorkbench(display,
-							new DummyWorkbenchAdvisor());
-
-					shell.close();
-					display.dispose();
-				} catch (Exception e) {
-					CmdlinePlugin.log(e);
-					e.printStackTrace();
-					System.err.println(Messages.internalError);
-				}
-			}
-		});
-		thread.start();
-
 		try {
-
 			// Parse parameters
 			final PublishOptions publishDataModel = parseArgs((String[]) args);
+
+			// FIXME GMF requires workbench
+			Thread thread = new Thread(new Runnable() {
+				public void run() {
+					try {
+						final Display display = new Display();
+						shell = new Shell(display);
+						shell.setLayoutData(new GridData(1, 1)); 
+						// size can't be
+						// 0,0
+						// otherwise the diagram
+						// will not be painted
+						shell.setLayout(new GridLayout());
+						shell.setVisible(false);
+
+						PlatformUI.createAndRunWorkbench(display,
+								new DummyWorkbenchAdvisor());
+
+						shell.close();
+						display.dispose();
+					} catch (Exception e) {
+						CmdlinePlugin.log(e);
+						e.printStackTrace();
+						System.err.println(Messages.internalError);
+					}
+				}
+			});
+			thread.start();
 
 			// Open method library
 			ILibraryService libService = LibraryService.getInstance();
 			Map params = new HashMap();
 			params.put(XMILibraryManager.ARG_LIBRARY_PATH, libraryPath);
-			libService
-					.openMethodLibrary(XMILibraryManager.LIBRARY_TYPE, params);
+			libService.openMethodLibrary(XMILibraryManager.LIBRARY_TYPE, params);
 
 			// Start publishing
 			return Publish.this.run(args, shell, publishDataModel);
@@ -177,7 +176,7 @@ public class Publish implements IPlatformRunnable {
 		// TODO Handle as a parameter
 		options.setPublishConfiguration(true);
 		options.setPublishProcess(true);
-		//options.setPublishJavaScriptTree(false);
+		// options.setPublishJavaScriptTree(false);
 		// options.setPublishLightWeightTree(true);
 
 		// TODO Proper handling of all parameters (e.g. convert broken links)
