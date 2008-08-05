@@ -56,6 +56,7 @@ import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.CompositeRole;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -751,9 +752,14 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 				MethodElement item = (MethodElement) LibraryUtil
 						.unwrap(rawitem);
 
+				boolean aSkipIterCond = false;
 				if ( setting.showTaskOnly && (actLevel > ACTIVITY_SHOW_LEVEL)
 						&& !(item instanceof Activity || item instanceof TaskDescriptor) ) {
-					continue;
+					if (item instanceof Milestone) {
+						aSkipIterCond = true;
+					} else {
+						continue;
+					}
 				}
 
 				if ( item == null ) {
@@ -788,6 +794,10 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 				// show only task task descriptors for sub activities in the tbs layout
 				if ( setting.showTaskOnly && (actLevel > ACTIVITY_SHOW_LEVEL) && !(item instanceof Activity )) {
 					// if act level > 0, only iterate the sub-activities
+					continue;
+				}
+				
+				if (aSkipIterCond) {
 					continue;
 				}
 				
