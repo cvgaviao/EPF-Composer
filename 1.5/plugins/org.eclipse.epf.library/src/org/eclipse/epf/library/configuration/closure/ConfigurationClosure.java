@@ -116,7 +116,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 				config);
 		if (configManager != null) {
 			library = configManager.getMethodLibrary();
-			dependencyManager = configManager.getDependencyManager();
+			//dependencyManager = configManager.getDependencyManager();
 			
 			ConfigurationProperties props = configManager.getConfigurationProperties();
 			configPropListener = new MethodElementPropertyMgr.ChangeEventListener() {
@@ -219,6 +219,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 	
 	private void checkError_() {
+		dependencyManager = new DependencyManager(library);
 		
 		// Bug 206724 - SCM: Always prompt check out elements for a opened configuration when refresh source control status
 		// don't need to validate the configuration, rely on the caller to validate it before call this method.
@@ -246,22 +247,32 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		Set<VariabilityElement> replacerSet = dependencyManager.getReplacerSet();
 		if (replacerSet == null || replacerSet.isEmpty()) {
 			return;
-		}
-		
-		clearReplacerElementMarkerMap();		
-		replacerElementMarkerMap = new HashMap<MethodElement, IMarker>();
+		}			
+
 		Map<VariabilityElement, List> baseReplacersMap = new HashMap<VariabilityElement, List>();
 		for (VariabilityElement ve: replacerSet) {
+			if (! ConfigurationHelper.inConfig(ve, config, true, false)) {
+				continue;
+			}
 			VariabilityElement base = ve.getVariabilityBasedOnElement();
+			if (! ConfigurationHelper.inConfig(base, config, true, false)) {
+				continue;
+			}
 			List<MethodElement> replacers = baseReplacersMap.get(base);
 			if (replacers == null) {
 				replacers = new ArrayList<MethodElement>();
 				baseReplacersMap.put(base, replacers);
 			}
 			replacers.add(ve);
-			processReplacerError(replacerElementMarkerMap, base, replacers);
 		}
 		
+		clearReplacerElementMarkerMap();	
+		replacerElementMarkerMap = new HashMap<MethodElement, IMarker>();
+		for (Map.Entry<VariabilityElement, List> entry: baseReplacersMap.entrySet()) {
+			VariabilityElement base = entry.getKey();
+			List replacers = entry.getValue();
+			processReplacerError(replacerElementMarkerMap, base, replacers);
+		}
 	}
 	
 	private static void processReplacerError(Map<MethodElement, IMarker> elementMarkerMap, 
