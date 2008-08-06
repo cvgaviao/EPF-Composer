@@ -21,6 +21,7 @@ import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
+import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.MethodElement;
@@ -186,4 +187,16 @@ public abstract class DescriptorLayout extends AbstractProcessElementLayout {
 		|| ( feature == AssociationHelper.WorkProductDescriptor_OutputFrom_TaskDescriptors);
 		
 	}
+	
+	public XmlElement getXmlElement(boolean includeReferences) {
+		XmlElement elementXml = super.getXmlElement(includeReferences);
+		if (linkedElement != null) {
+			String cType = linkedElement.getType().getName();
+			elementXml.setAttribute(
+				"ConcreteType", cType); //$NON-NLS-1$ 
+		}
+		
+		return elementXml;
+	}
+	
 }
