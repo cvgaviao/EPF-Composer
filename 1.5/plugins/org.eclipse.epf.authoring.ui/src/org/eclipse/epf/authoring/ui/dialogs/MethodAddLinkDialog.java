@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * Prompts the user to select a link type that will be used to create a HTML <a>
+ * Prompts the user to select a link type that will be used to create a HTML anchor
  * tag in the Rich Text Editor.
  * 
  * @author Jeff Hardy
