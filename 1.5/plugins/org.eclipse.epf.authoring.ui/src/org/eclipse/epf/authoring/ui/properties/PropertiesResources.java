@@ -155,6 +155,8 @@ public final class PropertiesResources extends NLS {
 	public static String TeamProfile_Role_SectionTitle;
 	public static String TeamProfile_Role_SectionDescription;
 	public static String TeamProfile_Role_Table1;
+	public static String Milestone_WorkProducts_SectionDescription;
+	public static String Milestone_WorkProducts_Table1;
 	public static String Process_RichText_CollapseImage;
 	public static String Process_RichText_ExpandImage;
 	public static String Process_Add;

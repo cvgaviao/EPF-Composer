@@ -28,6 +28,7 @@ import org.eclipse.epf.library.edit.process.command.AssignWPToTaskDescriptor;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
@@ -284,7 +285,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected void removeItems1(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand(element,
+			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor)element,
 					items, UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT);
 			actionMgr.execute(cmd);
 		}
@@ -295,7 +296,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected void removeItems2(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand(element,
+			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor)element,
 					items, UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT);
 			actionMgr.execute(cmd);
 		}
@@ -306,7 +307,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected void removeItems3(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand(element,
+			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor)element,
 					items, UmaPackage.TASK_DESCRIPTOR__EXTERNAL_INPUT);
 			actionMgr.execute(cmd);
 		}
@@ -317,7 +318,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected void removeItems4(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand(element,
+			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor)element,
 					items, UmaPackage.TASK_DESCRIPTOR__OUTPUT);
 			actionMgr.execute(cmd);
 		}

@@ -289,6 +289,13 @@
                category="element"
                afterTab="properties.tab.RoleDescriptor.WorkProduct"
                id="properties.tab.RoleDescriptor.Team"/>
+                           
+         <!-- Milestone -->
+         <propertyTab
+               label="%_UI_Properties_WorkProducts"
+               category="element"
+               afterTab="properties.tab.BreakdownElement.Guidance"
+               id="properties.tab.Milestone.WorkProduct"/>
          
          <!-- TEAM PROFILE -->
          <propertyTab
@@ -468,6 +475,14 @@
             <input type="org.eclipse.epf.library.edit.process.RoleDescriptorWrapperItemProvider"/>
          </propertySection> 
       
+        <!-- Sections for Milestone -->
+         <propertySection
+               tab="properties.tab.Milestone.WorkProduct"
+               class="org.eclipse.epf.authoring.ui.properties.MilestoneWorkProductSection"
+               id="properties.section.Milestone.WorkProduct">
+            <input type="org.eclipse.epf.uma.Milestone"/>
+            <input type="org.eclipse.epf.library.edit.process.MilestoneWrapperItemProvider"/>
+         </propertySection> 
 
          <!-- Section for TeamProfile -->
          <propertySection

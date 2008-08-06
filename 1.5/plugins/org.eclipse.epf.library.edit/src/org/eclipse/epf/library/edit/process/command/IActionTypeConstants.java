@@ -27,4 +27,6 @@ public class IActionTypeConstants {
 	public static final int ADD_OUTPUT = 6;
 
 	public static final int ADD_RESPONSIBLE_FOR = 7;
+	
+	public static final int ADD_REQUIRED_RESULT = 8;
 }

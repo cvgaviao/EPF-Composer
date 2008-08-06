@@ -17,7 +17,8 @@ import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
-import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.BreakdownElement;
+//import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -55,7 +56,7 @@ public class RelationSection extends AbstractSection {
 	protected IStructuredContentProvider contentProvider = null;
 
 	// element
-	protected Descriptor element;
+	protected BreakdownElement element;
 
 	// action manager
 	protected IActionManager actionMgr;
@@ -142,7 +143,7 @@ public class RelationSection extends AbstractSection {
 
 	protected void init() {
 		// get descriptor object
-		element = (Descriptor) getElement();
+		element = (BreakdownElement) getElement();
 
 		// get toolkit
 		toolkit = getWidgetFactory();
@@ -157,8 +158,8 @@ public class RelationSection extends AbstractSection {
 	 */
 	public void refresh() {
 		try {
-			if (getElement() instanceof Descriptor) {
-				element = (Descriptor) getElement();
+			if (getElement() instanceof BreakdownElement) {
+				element = (BreakdownElement) getElement();
 
 				initContentProvider1();
 				initContentProvider2();

@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// Copyright (c) 2005, 2006 IBM Corporation and others.
+// Copyright (c) 2005, 2008 IBM Corporation and others.
 // All rights reserved. This program and the accompanying materials
 // are made available under the terms of the Eclipse Public License v1.0
 // which accompanies this distribution, and is available at
@@ -24,13 +24,12 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
-import org.eclipse.epf.library.edit.process.command.AssignWPToRoleDescriptor;
+import org.eclipse.epf.library.edit.process.command.AssignWPToMilestone;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
-import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
-import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.swt.widgets.Composite;
@@ -38,15 +37,16 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 
 /**
- * Role Descriptor - work product section
+ * Milestone - work product section
  * 
  * @author Shilpa Toraskar
- * @since 1.0
+ * @since 1.5
  * 
  */
-public class RoleDescriptorWorkProductSection extends RelationSection {
+public class MilestoneWorkProductSection extends RelationSection {
 	private IFilter filter = null;
 
+	private Milestone milestone;
 	/**
 	 * Get process work product filter
 	 */
@@ -74,47 +74,40 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	protected void initContentProvider1() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				
 				return getFilteredList(
-						((RoleDescriptor) element).getResponsibleFor())
+						((Milestone) milestone).getRequiredResults())
 						.toArray();
 			}
 		};
 		tableViewer1.setContentProvider(contentProvider);
 	}
 
-	/**
-	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#initContentProvider2()
-	 */
-	protected void initContentProvider2() {
-		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
-			public Object[] getElements(Object object) {
-				return getFilteredList(((RoleDescriptor) element).getModifies())
-						.toArray();
-			}
-		};
-		tableViewer2.setContentProvider(contentProvider);
-	}
+	
 
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#init()
 	 */
 	protected void init() {
+		if (getElement() instanceof Milestone) {
+			milestone = (Milestone) getElement();
+		}
 		super.init();
 
 		labelProvider = new AdapterFactoryLabelProvider(
 				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
 
-		int numOfTables = 2;
+		int numOfTables = 1;
 		
 		setTabData(PropertiesResources.RoleDescriptor_WorkProducts_SectionTitle,
-				PropertiesResources.RoleDescriptor_WorkProducts_SectionDescription,
-				PropertiesResources.RoleDescriptor_WorkProducts_Table1,
-				PropertiesResources.RoleDescriptor_WorkProducts_Table2,
+				PropertiesResources.Milestone_WorkProducts_SectionDescription,
+				PropertiesResources.Milestone_WorkProducts_Table1,
+				null,
 				null,
 				null,
 				FilterConstants.WORKPRODUCTS); 
 
-		boolean[] changesAllowed = { true, false };
+		boolean[] changesAllowed = { true };
 		setTableData(numOfTables, changesAllowed);
 	}
 
@@ -123,8 +116,8 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#refresh()
 	 */
 	public void refresh() {
-		if (getElement() instanceof RoleDescriptor) {
-			element = (RoleDescriptor) getElement();
+		if (getElement() instanceof Milestone) {
+			milestone = (Milestone) getElement();
 		}
 		super.refresh();
 	}
@@ -135,7 +128,7 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected List getDescriptorsFromProcess() {
 		List items = new ArrayList();
-		return ProcessUtil.getElementsInScope(getAdapterFactory(), element,
+		return ProcessUtil.getElementsInScope(getAdapterFactory(), milestone,
 				WorkProductDescriptor.class, items);
 	}
 
@@ -144,9 +137,9 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected void addItems1(List items) {
 		if (!items.isEmpty()) {
-			AssignWPToRoleDescriptor cmd = new AssignWPToRoleDescriptor(
-					(RoleDescriptor) element, items,
-					IActionTypeConstants.ADD_RESPONSIBLE_FOR, getConfiguration());
+			AssignWPToMilestone cmd = new AssignWPToMilestone(
+					(Milestone) element, items,
+					IActionTypeConstants.ADD_REQUIRED_RESULT, getConfiguration());
 			actionMgr.execute(cmd);
 		}
 	};
@@ -156,9 +149,10 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected void removeItems1(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor) element,
-					items, UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR);
-			actionMgr.execute(cmd);
+			actionMgr.doAction(IActionManager.REMOVE_MANY, milestone,
+					UmaPackage.eINSTANCE.getMilestone_RequiredResults(),
+					items, -1);
+			
 		}
 	};
 
@@ -178,7 +172,7 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#getExistingElements1()
 	 */
 	protected List getExistingElements1() {
-		return getWorkProducts(((RoleDescriptor) element).getResponsibleFor());
+		return getWorkProducts(((Milestone) milestone).getRequiredResults());
 	};
 
 	/**
@@ -188,8 +182,8 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
 				.getOBS_ComposedAdapterFactory();
 		ItemProviderAdapter adapter = (ItemProviderAdapter) aFactory.adapt(
-				element, ITreeItemContentProvider.class);
-		Object obj = ProcessUtil.getRootProcess(aFactory, adapter, element);
+				milestone, ITreeItemContentProvider.class);
+		Object obj = ProcessUtil.getRootProcess(aFactory, adapter, milestone);
 		return (Process) obj;
 	}
 
@@ -202,7 +196,7 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 				if (obj instanceof Activity) {
 					List list = new ArrayList();
 					getActivitiesInScope(TngAdapterFactory.INSTANCE
-							.getOBS_ComposedAdapterFactory(), element, list);
+							.getWBS_ComposedAdapterFactory(), milestone, list);
 					if (list.contains(obj))
 						return true;
 					else
@@ -237,8 +231,8 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected void addFromProcessItems1(List items) {
 		if (!items.isEmpty()) {
-			actionMgr.doAction(IActionManager.ADD_MANY, element,
-					UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor(),
+			actionMgr.doAction(IActionManager.ADD_MANY, milestone,
+					UmaPackage.eINSTANCE.getMilestone_RequiredResults(),
 					items, -1);
 		}
 	}

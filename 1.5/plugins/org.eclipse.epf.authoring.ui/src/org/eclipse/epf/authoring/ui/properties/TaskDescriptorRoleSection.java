@@ -28,6 +28,7 @@ import org.eclipse.epf.library.edit.process.command.AssignRoleToTaskDescriptor;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -304,7 +305,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected void removeItems1(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand(element,
+			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor)element,
 					items, UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
 			actionMgr.execute(cmd);
 		}
@@ -315,7 +316,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected void removeItems2(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand(element,
+			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor)element,
 					items,
 					UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY);
 			actionMgr.execute(cmd);
@@ -327,7 +328,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected void removeItems3(List items) {
 		if (!items.isEmpty()) {
-			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand(element,
+			RemoveDescriptorCommand cmd = new RemoveDescriptorCommand((Descriptor)element,
 					items, UmaPackage.TASK_DESCRIPTOR__ASSISTED_BY);
 			actionMgr.execute(cmd);
 		}

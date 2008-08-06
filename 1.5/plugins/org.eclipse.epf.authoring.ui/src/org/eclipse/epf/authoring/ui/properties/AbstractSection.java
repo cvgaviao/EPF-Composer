@@ -53,7 +53,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 public class AbstractSection extends AbstractPropertySection implements
 		PropertyChangeListener {
 
-	private BreakdownElement element;
+	protected BreakdownElement element;
 
 	protected boolean editable = false;
 
