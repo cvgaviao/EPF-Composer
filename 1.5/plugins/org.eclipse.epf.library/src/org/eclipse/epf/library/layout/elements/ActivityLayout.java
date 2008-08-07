@@ -49,6 +49,7 @@ import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.prefs.BSColumn;
 import org.eclipse.epf.library.prefs.PreferenceUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.library.util.ModelInfoKeyMap;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
@@ -870,6 +871,7 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 				modelInfo = ProcessUtil.getAttribute(item,
 						IBSItemProvider.COL_MODEL_INFO, adapter);
 			}			
+			String modelInfoKey = ModelInfoKeyMap.getInstance().getModelInfoKey(modelInfo);
 			
 			String team = ProcessUtil.getAttribute(item,
 					IBSItemProvider.COL_TEAMS, adapter);
@@ -914,8 +916,9 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			
 			child.setAttribute("Index", index) //$NON-NLS-1$
 					.setAttribute("ModelInfo", modelInfo) //$NON-NLS-1$
+					.setAttribute("ModelInfoKey", modelInfoKey) //$NON-NLS-1$
 					.setAttribute("Team", team); //$NON-NLS-1$
-
+					
 			child.newChild("attribute").setAttribute("name", "prefix").setValue(prefix); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			
 			child
@@ -1102,6 +1105,8 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			IElementLayout l = layoutManager.getLayout(e, true);
 			XmlElement child = l.getXmlElement(false);
 			child.setAttribute("ModelInfo", info); //$NON-NLS-1$
+			String modelInfoKey = ModelInfoKeyMap.getInstance().getModelInfoKey(info);
+			child.setAttribute("ModelInfoKey", modelInfoKey); //$NON-NLS-1$
 			parentXml.addChild(child);
 		}
 
