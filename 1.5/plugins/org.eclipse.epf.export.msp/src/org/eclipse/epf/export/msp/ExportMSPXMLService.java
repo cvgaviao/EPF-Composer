@@ -888,6 +888,7 @@ public class ExportMSPXMLService {
 		if (element instanceof Milestone) {
 			task.setMilestone(true);
 			task.setDurationFormat(BigInteger.valueOf(7));
+			task.setDuration("PT0H0M0S");
 		}
 
 		// Assign the task to all the associated roles.
