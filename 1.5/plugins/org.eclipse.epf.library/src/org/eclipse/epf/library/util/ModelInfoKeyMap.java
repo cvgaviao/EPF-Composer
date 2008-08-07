@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.library.LibraryResources;
@@ -28,6 +29,7 @@ import org.eclipse.epf.uma.provider.UmaEditPlugin;
  */
 public class ModelInfoKeyMap {
 	
+	private static boolean localDebug = true;
 	private static ModelInfoKeyMap instance = new ModelInfoKeyMap();
 	private Map<String, String> map = new HashMap<String, String>();
 	
@@ -63,9 +65,23 @@ public class ModelInfoKeyMap {
 	}
 	
 	public String getModelInfoKey(String ModelInfo) {
-		String key = "";		//$NON-NLS-1$ 
+		String ModelInfoKey = "";		//$NON-NLS-1$ 
+		List<String> strList = TngUtil.convertStringsToList(ModelInfo);
+		for (String value: strList) {
+			String key = map.get(value);
+			if (key != null) {
+				if (ModelInfoKey.length() > 0) {
+					ModelInfoKey += ", ";	//$NON-NLS-1$ 
+				}
+				ModelInfoKey += key;
+			}
+		}
+		if (localDebug) {
+			System.out.println("LD> getModelInfoKey, ModelInfo: " + ModelInfo);
+			System.out.println("LD> getModelInfoKey, ModelInfoKey: " + ModelInfoKey);
+		}
 		
-		return key;
+		return ModelInfoKey;
 	}
 		
 /*	
