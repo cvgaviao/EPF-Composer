@@ -26,6 +26,7 @@ import org.eclipse.epf.diagram.add.providers.DiagramElementTypes;
 import org.eclipse.epf.diagram.core.providers.DiagramIconProviderManager;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
 import org.eclipse.epf.diagram.core.util.DiagramCoreUtil;
+import org.eclipse.epf.diagram.model.ModelPackage;
 import org.eclipse.epf.diagram.model.WorkProductDescriptorNode;
 import org.eclipse.gef.AccessibleEditPart;
 import org.eclipse.gef.EditPolicy;
@@ -571,9 +572,7 @@ public class WorkProductDescriptorNodeNameEditPart extends CompartmentEditPart
 		removeListenerFilter("PrimaryView"); //$NON-NLS-1$
 	}
 
-	/**
-	 * @generated
-	 */
+	@Override
 	protected void handleNotificationEvent(Notification event) {
 		Object feature = event.getFeature();
 		if (NotationPackage.eINSTANCE.getFontStyle_FontColor().equals(feature)) {
@@ -609,6 +608,10 @@ public class WorkProductDescriptorNodeNameEditPart extends CompartmentEditPart
 					}
 					refreshLabel();
 				}
+			}
+			// if state changes, refresh the label.
+			if (ModelPackage.eINSTANCE.getWorkProductDescriptorNode_State().equals(feature)){
+				refreshLabel();
 			}
 		}
 		super.handleNotificationEvent(event);
