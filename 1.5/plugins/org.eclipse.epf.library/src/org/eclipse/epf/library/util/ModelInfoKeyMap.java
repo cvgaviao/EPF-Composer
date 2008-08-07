@@ -33,7 +33,7 @@ public class ModelInfoKeyMap {
 	private static ModelInfoKeyMap instance = new ModelInfoKeyMap();
 	private Map<String, String> map = new HashMap<String, String>();
 	
-	public ModelInfoKeyMap() {
+	private ModelInfoKeyMap() {
 		map.put(getString("_UI_Task_mandatoryInput_feature"), "mandatoryInput");//$NON-NLS-1$ //$NON-NLS-2$ 
 		map.put(getString("_UI_Task_optionalInput_feature"), "optionalInput");//$NON-NLS-1$ //$NON-NLS-2$ 
 		map.put(getString("_UI_TaskDescriptor_externalInput_feature"), "externalInput");//$NON-NLS-1$ //$NON-NLS-2$ 
