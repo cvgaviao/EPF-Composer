@@ -29,7 +29,7 @@ import org.eclipse.epf.uma.provider.UmaEditPlugin;
  */
 public class ModelInfoKeyMap {
 	
-	private static boolean localDebug = true;
+	private static boolean localDebug = false;
 	private static ModelInfoKeyMap instance = new ModelInfoKeyMap();
 	private Map<String, String> map = new HashMap<String, String>();
 	
@@ -42,15 +42,15 @@ public class ModelInfoKeyMap {
 		map.put(getString("_UI_TaskDescriptor_additionallyPerformedBy_feature"), "additionallyPerformedBy");//$NON-NLS-1$ //$NON-NLS-2$ 
 		map.put(getString("_UI_TaskDescriptor_assistedBy_feature"), "assistedBy");//$NON-NLS-1$ //$NON-NLS-2$ 
 
-		map.put(getString(TngUtil.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor())), 
+		map.put(TngUtil.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor()), 
 				"ResponsibleFor");//$NON-NLS-1$  
-		map.put(getString(TngUtil.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_Modifies())), 
+		map.put(TngUtil.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_Modifies()), 
 				"Modifies");//$NON-NLS-1$ 
-		map.put(getString(LibraryResources.ActivityLayout_primaryTasks_text), 
+		map.put(LibraryResources.ActivityLayout_primaryTasks_text, 
 				"primaryTasks");//$NON-NLS-1$ 
-		map.put(getString(LibraryResources.ActivityLayout_additionalTasks_text), 
+		map.put(LibraryResources.ActivityLayout_additionalTasks_text, 
 				"additionalTasks");//$NON-NLS-1$
-		map.put(getString(LibraryResources.ActivityLayout_assistTasks_text), 
+		map.put(LibraryResources.ActivityLayout_assistTasks_text, 
 				"assistTasks");//$NON-NLS-1$ 
 		
 
@@ -77,8 +77,9 @@ public class ModelInfoKeyMap {
 			}
 		}
 		if (localDebug) {
-			System.out.println("LD> getModelInfoKey, ModelInfo: " + ModelInfo);
-			System.out.println("LD> getModelInfoKey, ModelInfoKey: " + ModelInfoKey);
+			System.out.println("LD> ModelInfo: " + ModelInfo);//$NON-NLS-1$ 
+			System.out.println("LD> ModelInfoKey: " + ModelInfoKey);//$NON-NLS-1$ 
+			System.out.println("");//$NON-NLS-1$ 
 		}
 		
 		return ModelInfoKey;
