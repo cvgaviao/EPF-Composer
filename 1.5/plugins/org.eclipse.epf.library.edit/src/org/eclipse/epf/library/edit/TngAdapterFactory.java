@@ -131,6 +131,15 @@ public interface TngAdapterFactory {
 	public ComposedAdapterFactory createLibraryComposedAdapterFactory();
 	
 	/**
+	 * Creates a new adapter factory for the library to be used in configuration page.
+	 * Client is responsible for disposing it after use by calling
+	 * {@linkplain ComposedAdapterFactory#dispose()}
+	 * 
+	 * @return an adapter factory for the library
+	 */
+	public ComposedAdapterFactory createConfigPage_LibraryComposedAdapterFactory();
+	
+	/**
 	 * Gets the singleton composed adapter factory for the Work Product
 	 * Breakdown Structure editor.
 	 * 

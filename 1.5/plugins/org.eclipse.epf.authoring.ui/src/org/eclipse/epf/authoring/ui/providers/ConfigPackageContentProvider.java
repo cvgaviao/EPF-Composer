@@ -10,7 +10,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.IViewerNotification;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.epf.authoring.ui.views.ConfigurationViewer;
+import org.eclipse.epf.library.edit.navigator.ConfigPageCategoriesItemProvider;
 import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
 import org.eclipse.epf.library.edit.navigator.MethodPackagesItemProvider;
 import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
@@ -70,7 +70,7 @@ public class ConfigPackageContentProvider extends AdapterFactoryContentProvider 
 	private boolean isUIFolder(Object e) {
 		return (e instanceof ContentItemProvider
 				|| e instanceof ProcessesItemProvider || e instanceof MethodPackagesItemProvider ||
-				e instanceof PluginUIPackagesItemProvider
+				e instanceof PluginUIPackagesItemProvider || e instanceof ConfigPageCategoriesItemProvider
 		);
 	}
 

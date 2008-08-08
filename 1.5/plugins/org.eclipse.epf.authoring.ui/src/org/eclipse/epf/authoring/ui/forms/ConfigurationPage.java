@@ -2,6 +2,7 @@ package org.eclipse.epf.authoring.ui.forms;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -43,6 +44,7 @@ import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
+import org.eclipse.epf.library.edit.navigator.ConfigPageCategoriesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
@@ -114,7 +116,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private HideUncheckedViewerFilter subCategoryHideUncheckedFilter;
 	
 
-	private ComposedAdapterFactory adapterFactory = TngAdapterFactory.INSTANCE.createLibraryComposedAdapterFactory();
+	private ComposedAdapterFactory adapterFactory = TngAdapterFactory.INSTANCE.createConfigPage_LibraryComposedAdapterFactory();
 
 	private ILibraryChangeListener libListener = null;
 	
@@ -384,9 +386,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		initializeConfigFactory();
 
     	List<MethodPackage> packages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
-//    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
+    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
 //    	initializeViewerSelection(configViewer, plugins);
     	initializeViewerSelectionForPackages(configViewer, packages);
+    	setStateForCategories(configViewer, plugins);
 		
 		// read from config and check the appropriate items in the CC viewers
 		List<ContentCategory> addCats = new ArrayList<ContentCategory>(config.getAddedCategory());
@@ -399,15 +402,34 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private void initializeViewerSelectionForPackages(
 			ContainerCheckedTreeViewer viewer, List<MethodPackage> elements) {
 		if (!elements.isEmpty()) {
-			for (MethodPackage m : elements) {
+			for (MethodPackage element : elements) {
 				try {
-					if (!contProvider.hasChildren(m)) {
-						viewer.setChecked(m, true);				
+					if (!contProvider.hasChildren(element)) {
+						viewer.setChecked(element, true);				
 					}
 				} catch (Exception e) {
 				}
 			}
 		}
+	}
+
+	private void setStateForCategories(ContainerCheckedTreeViewer viewer, List<MethodPlugin>plugins) {
+		// if plugin is selected then select categories folder  	
+    	for (MethodPlugin plugin : plugins) {
+    		if (viewer.getChecked(plugin)) {
+    			try {
+	    			Object[] children = contProvider.getChildren(plugin);
+	    			for (Object child : children) {
+	    				if (child instanceof ConfigPageCategoriesItemProvider){
+	    					viewer.setChecked(child, true);
+	    				}
+	    			}
+    			}
+    			catch (Exception e) {
+    				
+    			}
+    		}
+    	}
 	}
 	
 	private void initializeViewerSelection(ContainerCheckedTreeViewer viewer, List<? extends Object> elements) {
@@ -603,7 +625,6 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 					throws InvocationTargetException, InterruptedException {
 				createConfigurationClosure();
 			}
-
 		};
 
 		UserInteractionHelper.runWithProgress(runnable, AuthoringUIResources.ConfigurationPage_LoadingMessage); 
@@ -881,20 +902,24 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 		boolean oldNotify = config.eDeliver();
 	    try
-	    {
-	    	
+	    {    	
 	    	List<MethodPackage> oldPackages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
 	    	List<MethodPlugin> oldPlugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
 	    	
 	    	Set<MethodPackage> newPackages = getCheckedMethodPackages(configViewer.getCheckedElements());
 	    	Set<MethodPlugin> newPlugins = getCheckedMethodPlugins(configViewer.getCheckedElements());
 	    	
+	    	// set categories checked for plugins selected
+	    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>();
+	    	plugins.addAll(newPlugins);
+	    	setStateForCategories(configViewer, plugins);
+	    	
 	    	oldPackages.removeAll(newPackages);
 	    	oldPlugins.removeAll(newPlugins);
 	    	
 	    	newPackages.removeAll(config.getMethodPackageSelection());
 	    	newPlugins.removeAll(config.getMethodPluginSelection());
-	    	
+	
 			if (ConfigurationUtil.removeCollFromMethodPluginList(actionMgr, config, oldPlugins) == false)
 				return false;
 			if (ConfigurationUtil.removeCollFromMethodPackageList(actionMgr, config, oldPackages) == false)
