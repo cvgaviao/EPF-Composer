@@ -272,7 +272,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		return markerMananger;		
 	}
 	
-	protected IURIProvider getURIProvider() {
+	public IURIProvider getURIProvider() {
 		if(uriProvider == null) {
 			uriProvider = new FilePathProvider();
 		}
