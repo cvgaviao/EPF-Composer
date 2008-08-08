@@ -386,7 +386,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     	List<MethodPackage> packages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
 //    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
 //    	initializeViewerSelection(configViewer, plugins);
-    	initializeViewerSelection(configViewer, packages);
+    	initializeViewerSelectionForPackages(configViewer, packages);
 		
 		// read from config and check the appropriate items in the CC viewers
 		List<ContentCategory> addCats = new ArrayList<ContentCategory>(config.getAddedCategory());
@@ -394,6 +394,20 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     	List<ContentCategory> subCats = new ArrayList<ContentCategory>(config.getSubtractedCategory());
     	initializeViewerSelection(subCategoryViewer, subCats);
     	
+	}
+	
+	private void initializeViewerSelectionForPackages(
+			ContainerCheckedTreeViewer viewer, List<MethodPackage> elements) {
+		if (!elements.isEmpty()) {
+			for (MethodPackage m : elements) {
+				try {
+					if (!contProvider.hasChildren(m)) {
+						viewer.setChecked(m, true);				
+					}
+				} catch (Exception e) {
+				}
+			}
+		}
 	}
 	
 	private void initializeViewerSelection(ContainerCheckedTreeViewer viewer, List<? extends Object> elements) {
@@ -673,8 +687,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
+						// save configurtion
+						saveConfiguration();
 						if (updateOnClick.getSelection()) {
-							saveConfiguration();
 							// update the closure error
 							showErrors();
 						}
