@@ -17,12 +17,14 @@
 <!-- the element type text -->
 <xsl:param name="activityText"/>
 <xsl:param name="artifactText"/>
+<xsl:param name="artifactDescriptorText"/>
 <xsl:param name="capabilityPatternText"/>
 <xsl:param name="checklistText"/>
 <xsl:param name="compositeRoleText"/>
 <xsl:param name="conceptText"/>
 <xsl:param name="customCategoryText"/>
 <xsl:param name="deliverableText"/>
+<xsl:param name="deliverableDescriptorText"/>
 <xsl:param name="deliveryProcessText"/>
 <xsl:param name="disciplineText"/>
 <xsl:param name="disciplineGroupingText"/>
@@ -33,6 +35,7 @@
 <xsl:param name="iterationText"/>
 <xsl:param name="milestoneText"/>
 <xsl:param name="outcomeText"/>
+<xsl:param name="outcomeDescriptorText"/>
 <xsl:param name="phaseText"/>
 <xsl:param name="practiceText"/>
 <xsl:param name="reportText"/>

@@ -271,24 +271,43 @@ rows: [<xsl:for-each select="breakdown[@name='Team Breakdown Structure']/Element
 		</xsl:variable>
 		<xsl:variable name="typeName">
 			<xsl:choose>
-				<xsl:when test="$showFullMethodContent = 'true'">
+				<xsl:when test="$showFullMethodContent='true'">
 					<xsl:choose>										
-						<xsl:when test="$elementType = 'TaskDescriptor'">
+						<xsl:when test="$elementType='TaskDescriptor'">
 							<xsl:value-of select="$taskText"/>
 						</xsl:when>
-						<xsl:when test="$elementType = 'RoleDescriptor'">
+						<xsl:when test="$elementType='RoleDescriptor'">
 							<xsl:value-of select="$roleText"/>
 						</xsl:when>
-						<xsl:when test="$elementType = 'WorkProductDescriptor'">
-							<xsl:value-of select="$workProductText"/>
+						<xsl:when test="$elementType='WorkProductDescriptor'">
+							<xsl:call-template name="wpdConcreteTypeText">
+								<xsl:with-param name="showFullMethodContent" select="$showFullMethodContent"/>
+								<xsl:with-param name="concreteType" select="$element/@ConcreteType"/>
+							</xsl:call-template>
 						</xsl:when>
 						<xsl:otherwise>
-							<xsl:value-of select="$element/@TypeName"/>
+							<xsl:call-template name="elementTypeText">
+								<xsl:with-param name="elementType" select="$elementType"/>
+								<xsl:with-param name="elementTypeName" select="$element/@TypeName"/>
+							</xsl:call-template>
 						</xsl:otherwise>
 					</xsl:choose>									
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="$element/@TypeName"/>
+					<xsl:choose>														
+						<xsl:when test="$elementType ='WorkProductDescriptor'">
+							<xsl:call-template name="wpdConcreteTypeText">
+								<xsl:with-param name="showFullMethodContent" select="$showFullMethodContent"/>
+								<xsl:with-param name="concreteType" select="$element/@ConcreteType"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:call-template name="elementTypeText">
+								<xsl:with-param name="elementType" select="$elementType"/>
+								<xsl:with-param name="elementTypeName" select="$element/@TypeName"/>
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>															
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>		

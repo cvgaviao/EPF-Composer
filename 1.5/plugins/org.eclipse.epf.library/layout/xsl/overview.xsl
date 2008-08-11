@@ -68,6 +68,16 @@
 										</xsl:otherwise>
 									</xsl:choose>									
 								</xsl:when>
+								<xsl:when test="$elementType = 'WorkProductDescriptor'">
+									<xsl:choose>
+										<xsl:when test="$workProductType != ''">
+											<xsl:value-of select="concat($workProductDescriptorText, ' (', $workProductType, ')')"/>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="$workProductText"/>
+										</xsl:otherwise>	
+									</xsl:choose>	
+								</xsl:when>
 								<xsl:otherwise>
 										<!--
 											<xsl:value-of select="$elementTypeName"/>
@@ -328,6 +338,39 @@
 					<xsl:value-of select="$elementTypeName"/>
 			</xsl:otherwise>
 		</xsl:choose>	
+	</xsl:template>
+	
+	<xsl:template name="wpdConcreteTypeText">
+		<xsl:param name="concreteType"/>
+		<xsl:param name="showFullMethodContent"/>
+		<xsl:choose>
+		    <xsl:when test="$showFullMethodContent='true'">
+		        <xsl:choose>
+			        <xsl:when test="$concreteType='Artifact'">
+					    <xsl:value-of select="$artifactText"/>
+			        </xsl:when>
+			        <xsl:when test="$concreteType='Deliverable'">
+					    <xsl:value-of select="$deliverableText"/>
+			        </xsl:when>
+			        <xsl:when test="$concreteType='Outcome'">
+					    <xsl:value-of select="$outcomeText"/>
+			        </xsl:when>					        
+		        </xsl:choose>
+		    </xsl:when>
+		    <xsl:otherwise>
+		        <xsl:choose>
+		            <xsl:when test="$concreteType='Artifact'">
+					    <xsl:value-of select="$artifactDescriptorText"/>
+		            </xsl:when>
+		            <xsl:when test="$concreteType='Deliverable'">
+					    <xsl:value-of select="$deliverableDescriptorText"/>
+		            </xsl:when>
+		            <xsl:when test="$concreteType='Outcome'">
+					    <xsl:value-of select="$outcomeDescriptorText"/>
+		            </xsl:when>	
+		        </xsl:choose>	    
+		    </xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	<xsl:template name="roleKeyInfo">
