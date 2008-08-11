@@ -466,7 +466,7 @@
 					</th>
 					<td class="sectionTableCell">
 						<ul>
-							<xsl:for-each select="$refElement">
+							<xsl:for-each select="$refElement/../*">
 							<xsl:sort select="@DisplayName"/>
 								<li>
 									<a>

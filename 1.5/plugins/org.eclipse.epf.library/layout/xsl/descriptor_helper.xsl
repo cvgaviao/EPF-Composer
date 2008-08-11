@@ -25,7 +25,7 @@
 				<td class="sectionTableCell">
 					<xsl:attribute name="colspan"><xsl:value-of select="$colspan"/></xsl:attribute>
 					<ul>
-						<xsl:for-each select="$descriptors">
+						<xsl:for-each select="$descriptors/../*">
 						<xsl:sort select="Element[1]/@DisplayName"/>
 							<li>
 								<!-- add the parent link -->

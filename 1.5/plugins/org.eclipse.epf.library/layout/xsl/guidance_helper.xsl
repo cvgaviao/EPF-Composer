@@ -22,7 +22,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$checklists">
+						<xsl:for-each select="$checklists/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -45,7 +45,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$concepts">
+						<xsl:for-each select="$concepts/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -68,7 +68,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$estimationConsiderations">
+						<xsl:for-each select="$estimationConsiderations/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -91,7 +91,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$examples">
+						<xsl:for-each select="$examples/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -114,7 +114,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$guidelines">
+						<xsl:for-each select="$guidelines/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -137,7 +137,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$reports">
+						<xsl:for-each select="$reports/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -160,7 +160,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$reusableAssets">
+						<xsl:for-each select="$reusableAssets/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -183,7 +183,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$supportingMaterials">
+						<xsl:for-each select="$supportingMaterials/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -206,7 +206,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$techniques">
+						<xsl:for-each select="$techniques/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -229,7 +229,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$templates">
+						<xsl:for-each select="$templates/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -252,7 +252,7 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$whitePapers">
+						<xsl:for-each select="$whitePapers/../*">
 						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
@@ -275,7 +275,8 @@
 				</th>
 				<td class="sectionTableCell">
 					<ul>
-						<xsl:for-each select="$toolMentors">
+						<xsl:for-each select="$toolMentors/../*">
+						<xsl:sort select="@DisplayName"/>
 							<li>
 								<xsl:call-template name="addElementWithLink">
 									<xsl:with-param name="element" select="."/>
