@@ -961,4 +961,9 @@ public class LibraryUIManager {
 	public ConfigurationContributionItem getConfigCombo() {
 		return configCombo;
 	}
+
+	public void openDefaultLibrary() {
+		openDefaultLibrary(defaultLibraryURI);	
+	}
+		
 }
