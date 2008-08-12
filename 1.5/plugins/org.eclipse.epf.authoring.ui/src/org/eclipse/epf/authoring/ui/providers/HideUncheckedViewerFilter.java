@@ -10,9 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.providers;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
@@ -49,7 +46,6 @@ public class HideUncheckedViewerFilter extends ViewerFilter {
 	}
 	
 	private boolean isChecked(Object element) {
-		List<Object> checkedItems = Arrays.asList(viewer.getCheckedElements());
-		return checkedItems.contains(element);
+		return viewer.getChecked(element);
 	}
 }
