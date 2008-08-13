@@ -151,6 +151,8 @@ public class AddToCategoryCommand extends AbstractCommand implements
 			} else {
 				usedCategory.setName(category.getName());
 			}
+			// set presentation name empty for new contributors
+			usedCategory.setPresentationName("");
 		}
 		OppositeFeature oppositeFeature = OppositeFeature
 				.getOppositeFeature(feature);

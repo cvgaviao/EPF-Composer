@@ -1122,6 +1122,14 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					.getFirstElement() == VariabilityType.NA) {
 				ctrl_base_button.setEnabled(false);
 			}
+			
+			if (((IStructuredSelection) viewer_variability.getSelection())
+					.getFirstElement() == VariabilityType.CONTRIBUTES) {
+				ctrl_presentation_name.setEditable(false);
+				if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
+					ctrl_external_id.setEditable(false);
+				}
+			}
 		}
 		if (versionSectionOn) {
 			ctrl_change_date.setEditable(false);
@@ -1146,7 +1154,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (publishCategoryOn) {
 			ctrl_publish_categories_button.setEnabled(editable);
 		}
-		
+		if (editable) {
+			refreshForContributor();
+		}
 		if (columnProvider != null)
 			columnProvider.refresh(editable);
 		
@@ -1312,8 +1322,15 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 														.getVariabilityElement_VariabilityType(),
 												(VariabilityType) selection
 														.getFirstElement(), -1);
+								
 								if (!status) {
 									return;
+								}
+								else {
+									if (selection.getFirstElement() == VariabilityType.CONTRIBUTES)
+										updatePNameForContributor(true);	
+									else
+										updatePNameForContributor(false);
 								}
 							}
 							if (selection.getFirstElement() == VariabilityType.NA) {
@@ -1394,6 +1411,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 											(VariabilityType) ((IStructuredSelection) viewer_variability
 													.getSelection())
 													.getFirstElement(), -1);
+							if (status) {
+								if ((VariabilityType) ((IStructuredSelection) viewer_variability
+										.getSelection()).getFirstElement() == VariabilityType.CONTRIBUTES)
+									updatePNameForContributor(true);	
+								else
+									updatePNameForContributor(false);
+							}
 						}
 					}
 					setFormTextWithVariableInfo();
@@ -1414,6 +1438,53 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 	}
 
+	private void updatePNameForContributor(boolean update) {
+		// final MethodElementEditor editor = (MethodElementEditor) getEditor();
+
+		final MethodElementEditor editor = (MethodElementEditor) getEditor();
+
+		actionMgr = editor.getActionManager();
+		if (contentElement.getVariabilityType() == VariabilityType.CONTRIBUTES) {
+			// make presentation name empty
+			actionMgr.doAction(IActionManager.SET, methodElement,
+					UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
+					"", -1);
+			ctrl_presentation_name.setText("");
+
+			// make external Id empty
+			actionMgr.doAction(IActionManager.SET, contentElement
+					.getPresentation(), UmaPackage.eINSTANCE
+					.getContentDescription_ExternalId(), "", -1);
+			if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
+				ctrl_external_id.setText("");
+			}
+		}
+	
+		refreshForContributor();
+	}
+	
+	
+	private void refreshForContributor() {
+		boolean editable = true;
+		ctrl_presentation_name.setEditable(editable);
+		if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
+			ctrl_external_id.setEditable(editable);
+		}
+		
+		if (contentElement != null
+				&& (contentElement.getVariabilityType() == VariabilityType.CONTRIBUTES)) {	
+			if (contentElement.getPresentationName().equals("")) {
+				ctrl_presentation_name.setEditable(false);
+			}
+			if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
+				if (contentElement.getPresentation().getExternalId().equals("")) {
+					ctrl_external_id.setEditable(false);
+				}
+			}
+		}
+	}
+	
+	
 	protected void addGeneralSectionListeners() {
 		ctrl_name.addModifyListener(modelModifyListener);
 		ctrl_name.addFocusListener(nameFocusListener);
