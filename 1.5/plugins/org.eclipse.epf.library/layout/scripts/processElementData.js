@@ -9,4 +9,5 @@
 // IBM Corporation - initial implementation
 //------------------------------------------------------------------------------
 
-// dynamically generated process layout related data from RMC publishing service 
+// This file will include dynamically generated process layout related data from 
+// the publishing service 
