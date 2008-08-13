@@ -22,6 +22,7 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.AssociationHelper;
@@ -208,6 +209,8 @@ public class UpwardReachableInfo implements IDependencyInfo {
 		
 		if (elem instanceof CustomCategory) {
 			parentList = AssociationHelper.getCustomCategories((CustomCategory) elem);
+			parentList = combine(parentList, AssociationHelper.getPractices((CustomCategory) elem));
+						
 		} else if (elem instanceof Deliverable) {
 			parentList = AssociationHelper.getDeliverables((Deliverable) elem);			
 		} else {	
@@ -216,8 +219,23 @@ public class UpwardReachableInfo implements IDependencyInfo {
 				parentList = new ArrayList();
 				parentList.add(parent);
 			}
+			if (elem instanceof Practice) {
+				parentList = combine(parentList, AssociationHelper.getCustomCategories((Practice) elem));
+				parentList = combine(parentList, AssociationHelper.getPractices((Practice) elem));
+			}
 		}
 		return parentList;
+	}
+	
+	private static List combine(List list1, List list2) {
+		List ret = new ArrayList();		
+		if (list1 != null) {
+			ret.addAll(list1);
+		} 
+		if (list2 != null) {
+			ret.addAll(list2);
+		}		
+		return ret;
 	}
 	
 	private void collectParentListByVariantPaths(VariabilityElement ve, List list) {

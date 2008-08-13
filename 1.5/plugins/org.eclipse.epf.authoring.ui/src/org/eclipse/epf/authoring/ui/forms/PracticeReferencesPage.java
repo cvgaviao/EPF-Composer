@@ -18,11 +18,13 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.filters.AllFilter;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -31,6 +33,7 @@ import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentElement;
@@ -44,7 +47,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.forms.IManagedForm;
@@ -190,6 +192,14 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#addItemsToModel1(ArrayList)
 	 */
 	protected void addItemsToModel1(ArrayList addItems) {
+		
+		boolean ok = DependencyChecker.checkCircularForMovingVariabilityElement(practice, addItems);
+		if(! ok) {
+			String title = AuthoringUIResources.circular_dependency_error_title;
+			AuthoringUIPlugin.getDefault().getMsgDialog().displayError(title, LibraryEditResources.circular_dependency_error_msg);						
+			return;
+		}
+		
 		// Update the model.
 		if (!addItems.isEmpty()) {
 			for (Iterator it = addItems.iterator(); it.hasNext();) {
