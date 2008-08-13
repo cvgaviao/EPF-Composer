@@ -44,6 +44,7 @@ import org.eclipse.epf.library.edit.validation.UniqueNamePNameHandler;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceScanner;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
@@ -446,7 +447,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			CustomCategory targetParent = (CustomCategory) getDestination();
 			
 			initDeepCopy(source, targetParent); 
-			CustomCategory copy = (CustomCategory) deepCopy(source);			
+			CustomCategory copy = (CustomCategory) deepCopy(source, null);			
 			
 			//ITextReferenceReplacer txtRefReplacer = ExtensionManager.getTextReferenceReplacer();
 			customCategoryPkg.getContentElements().add(copy);
@@ -462,7 +463,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			return resouresToSave;
 		}		
 		
-		private EObject deepCopy(EObject source) {			
+		private EObject deepCopy(EObject source, MethodElement copiedOwner) {			
 			EObject copy = UmaFactory.eINSTANCE.create(source.eClass());
 			handleNames(source, copy);
 		
@@ -470,7 +471,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			for (int i = 0; i < features.size(); i++) {
 				EStructuralFeature feature = (EStructuralFeature) features.get(i);				
 				//System.out.println("LD> feature: " + feature.getName());
-				copyFeatureValue(source, copy, feature);
+				copyFeatureValue(source, copy, feature, copiedOwner);
 			}
 			return copy;
 		}
@@ -487,18 +488,21 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			}
 		}
 		
-		private void copyFeatureValue(EObject sourceObj, EObject copiedObj, EStructuralFeature feature) {
-				
+		private void copyFeatureValue(EObject sourceObj, EObject copiedObj,
+				EStructuralFeature feature, MethodElement copiedOwner) {
+
 			if (feature instanceof EAttribute) {
-				copyAttributeFeatureValue(sourceObj, copiedObj, (EAttribute) feature);				
+				copyAttributeFeatureValue(sourceObj, copiedObj,
+						(EAttribute) feature, copiedOwner);
 			} else if (feature instanceof EReference) {
-				copyReferenceFeatureValue(sourceObj, copiedObj, (EReference) feature);
+				copyReferenceFeatureValue(sourceObj, copiedObj,
+						(EReference) feature);
 			}
-			
+
 		}
 		
 		private void copyAttributeFeatureValue(EObject sourceObj,
-				EObject copiedObj, EAttribute feature) {
+				EObject copiedObj, EAttribute feature, MethodElement copiedOwner) {
 			Object sourceValue = sourceObj.eGet(feature);
 			if (sourceValue == null) {
 				return;
@@ -513,7 +517,12 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 				} else if (feature == UmaPackage.eINSTANCE.getMethodElement_PresentationName()) {
 					return;
 				}
+			} else if (copiedOwner != null && sourceObj instanceof ContentDescription) {
+				if (feature == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
+					copiedValue =  UmaUtil.generateGUID(copiedOwner.getGuid());
+				}
 			}
+			
 			if (scanner != null) {
 				if (sourceValue instanceof URI) {
 					URI uri = (URI) sourceValue;
@@ -544,18 +553,21 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			}
 			Object copiedValue = sourceValue;
 
+			MethodElement copiedOwner = copiedObj instanceof MethodElement ? (MethodElement) copiedObj
+					: null;
+			
 			if (feature.isContainment()) {
 				if (feature.isMany()) {
 					List<EObject> sourceList = (List<EObject>) sourceValue;
 					List<EObject> copiedList = (List<EObject>) copiedObj
 							.eGet(feature);
 					for (EObject sobj : sourceList) {
-						EObject cobj = deepCopy(sobj);
+						EObject cobj = deepCopy(sobj, copiedOwner);
 						copiedList.add(cobj);
 					}
 					return;
 				}
-				copiedValue = deepCopy((EObject) sourceValue);
+				copiedValue = deepCopy((EObject) sourceValue, copiedOwner);
 
 			} else if (feature.isMany()) {
 				List sourceList = (List) sourceValue;
@@ -563,7 +575,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 				for (Object sobj : sourceList) {
 					Object cobj = sobj;
 					if (sobj instanceof CustomCategory) {
-						cobj = (CustomCategory) deepCopy((CustomCategory) sobj);
+						cobj = (CustomCategory) deepCopy((CustomCategory) sobj, copiedOwner);
 						CustomCategory ccobj = (CustomCategory) cobj;
 						customCategoryPkg.getContentElements().add(ccobj);
 					}
