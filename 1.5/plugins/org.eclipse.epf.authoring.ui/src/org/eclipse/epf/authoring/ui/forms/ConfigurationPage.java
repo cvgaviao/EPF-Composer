@@ -2,7 +2,6 @@ package org.eclipse.epf.authoring.ui.forms;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,6 +14,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
@@ -81,6 +81,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PlatformUI;
@@ -389,7 +391,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
 //    	initializeViewerSelection(configViewer, plugins);
     	initializeViewerSelectionForPackages(configViewer, packages);
-    	setStateForCategories(configViewer, plugins);
+    	setStateForCategoriesUIFolder(configViewer, plugins);
 		
 		// read from config and check the appropriate items in the CC viewers
 		List<ContentCategory> addCats = new ArrayList<ContentCategory>(config.getAddedCategory());
@@ -413,24 +415,41 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		}
 	}
 
-	private void setStateForCategories(ContainerCheckedTreeViewer viewer, List<MethodPlugin>plugins) {
-		// if plugin is selected then select categories folder  	
+	private void setStateForCategoriesUIFolder(ContainerCheckedTreeViewer viewer, List<MethodPlugin>plugins) {	 	
     	for (MethodPlugin plugin : plugins) {
+    		// if plugin is selected then select categories folder as well
     		if (viewer.getChecked(plugin)) {
     			try {
 	    			Object[] children = contProvider.getChildren(plugin);
 	    			for (Object child : children) {
 	    				if (child instanceof ConfigPageCategoriesItemProvider){
 	    					viewer.setChecked(child, true);
-	    				}
-	    			}
+	    				}	
+    				}
     			}
-    			catch (Exception e) {
-    				
+    			catch (Exception e) {			
     			}
     		}
+    		  		
+    		// make categories folder enabled/disbled.
+			Tree t = viewer.getTree();
+			TreeItem[] items = t.getItems();
+			for (TreeItem parent : items) {
+				if (parent.getData().equals(plugin)) {
+					TreeItem[] childItems = parent.getItems();
+					for (TreeItem child : childItems) {
+						if (child.getData() instanceof ConfigPageCategoriesItemProvider) {
+							if (viewer.getChecked(plugin))
+								child.setForeground(ColorConstants.gray);
+							else
+								child.setForeground(ColorConstants.black);
+						}
+					}
+				}
+			}
     	}
 	}
+
 	
 	private void initializeViewerSelection(ContainerCheckedTreeViewer viewer, List<? extends Object> elements) {
 		if (!elements.isEmpty())
@@ -912,11 +931,12 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	    	// set categories checked for plugins selected
 	    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>();
 	    	plugins.addAll(newPlugins);
-	    	setStateForCategories(configViewer, plugins);
+	    	plugins.addAll(oldPlugins);
+	    	setStateForCategoriesUIFolder(configViewer, plugins);
 	    	
 	    	oldPackages.removeAll(newPackages);
-	    	oldPlugins.removeAll(newPlugins);
-	    	
+	    	oldPlugins.removeAll(newPlugins);	
+    	
 	    	newPackages.removeAll(config.getMethodPackageSelection());
 	    	newPlugins.removeAll(config.getMethodPluginSelection());
 	
