@@ -12,9 +12,11 @@ package org.eclipse.epf.library.configuration;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.ContentDescription;
@@ -110,31 +112,46 @@ public class AttributeFeatureValue extends FeatureValue {
 				}
 				return v;
 			}
-
-			if (buffer.length() > 0) {
-				buffer.append(ConfigurationHelper.ATTRIBUTE_VALUE_SEPERATOR); 
-			}
-
-			if ((e == element) && !(e instanceof Section) || e == null ) {
-				buffer.append(v);
+			if (feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments() 
+					&& v instanceof String) {
+				List<String> vList = TngUtil.convertGuidanceAttachmentsToList((String) v);
+				for (String str: vList) {
+					modifyBuffer(buffer, e, str);
+				}
 			} else {
-				String contentPath = ResourceHelper
-						.getElementPath((e instanceof ContentDescription) 
-								? (MethodElement) e.eContainer()
-								: e);
-
-				String backPath = ResourceHelper
-						.getBackPath((element instanceof ContentDescription) 
-								? ((ownerElement != null) ? ownerElement
-								: (MethodElement) element.eContainer())
-								: element);
-
-				buffer.append(ResourceHelper.fixContentUrlPath(v.toString(),
-						contentPath, backPath));
+				modifyBuffer(buffer, e, v);
 			}
 		}
 
 		return buffer.toString();
+	}
+
+	private void modifyBuffer(StringBuffer buffer, MethodElement e, Object v) {
+		if (buffer.length() > 0) {
+			buffer.append(ConfigurationHelper.ATTRIBUTE_VALUE_SEPERATOR); 
+		}
+
+		if ((e == element) && !(e instanceof Section) || e == null ) {
+			buffer.append(v);
+		} else {
+			String contentPath = ResourceHelper
+					.getElementPath((e instanceof ContentDescription) 
+							? (MethodElement) e.eContainer()
+							: e);
+
+			String backPath = ResourceHelper
+					.getBackPath((element instanceof ContentDescription) 
+							? ((ownerElement != null) ? ownerElement
+							: (MethodElement) element.eContainer())
+							: element);
+
+			if (feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments()) {
+				buffer.append(ResourceHelper.resolveUrl(v.toString(), contentPath, backPath));
+			} else {
+				buffer.append(ResourceHelper.fixContentUrlPath(v.toString(),
+					contentPath, backPath));
+			}
+		}
 	}
 
 
