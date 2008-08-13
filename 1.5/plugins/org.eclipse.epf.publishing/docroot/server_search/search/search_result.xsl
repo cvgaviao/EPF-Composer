@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
- Licensed Materials - Property of IBM
- Restricted Materials of IBM  - Modification is prohibited.
-
- (c) Copyright IBM Corporation 2004, 2007. All Rights Reserved. 
-
- Note to U.S. Government Users Restricted Rights:  Use, duplication or
- disclosure restricted by GSA ADP  Schedule Contract with IBM Corp.
+    Copyright (c) 2005, 2007 IBM Corporation and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+    Contributors:
+    IBM Corporation - initial implementation
 -->
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
