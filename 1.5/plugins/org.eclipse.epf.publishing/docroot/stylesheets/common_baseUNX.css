@@ -178,7 +178,7 @@ body {
 	background-color: #DEDEDE;
 }
 
-/*borders used around data, see RUP*/
+/*borders used around data*/
 .bordertbl {
 	background-color: #E9E9E9;
 }
@@ -254,7 +254,7 @@ font-size: 11px;
 	font-size: 15px;
 }
 
-/*black copyright used in RUP*/
+/*black copyright*/
 .copyrightb {
 	color: #000000;
 	font-size: 15px;
