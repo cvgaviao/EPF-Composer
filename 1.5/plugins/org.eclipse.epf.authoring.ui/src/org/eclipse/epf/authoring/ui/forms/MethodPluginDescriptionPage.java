@@ -624,7 +624,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 
 			@Override
 			protected Iterator<? extends MethodPlugin> getChildren(Object object) {
-				if(object instanceof MethodPlugin) {
+				if(object instanceof MethodPlugin && object != plugin) {
 					return ((MethodPlugin)object).getBases().iterator();
 				}
 				Collection<? extends MethodPlugin> empty = Collections.emptyList();
