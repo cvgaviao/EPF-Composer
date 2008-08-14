@@ -59,7 +59,7 @@ public class RoleDiagramPublisher {
 	private int maxImageWidth = 1024;
 
 	// The maximum height of the generated image.
-	private int maxImageHeight = 1024;
+	private int maxImageHeight = 2048;
 
 	// The border width.
 	private int borderWidth = 10;
