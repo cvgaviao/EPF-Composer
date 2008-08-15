@@ -552,7 +552,9 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 
 	private void processChangedNodes(Object[] changedNodes) {
-		getConfigurationManager().getSupportingElementData().beginUpdateSupportingElements();
+		if (getConfigurationManager().getSupportingElementData() != null) {
+			getConfigurationManager().getSupportingElementData().beginUpdateSupportingElements();
+		}
 		processChangedNodes_(changedNodes);
 /*		if (isAbortCheckError()) {
 			return;
@@ -588,7 +590,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			
 			// the elements are either plugin or package
 			Object changedElement = changedNodes[i];
-			if (seData.isSupportingSelectable((MethodElement) changedElement)) {
+			if (seData != null && seData.isSupportingSelectable((MethodElement) changedElement)) {
 				continue;
 			}
 			
@@ -670,7 +672,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 				
 		// if the referenced element is not in  config, log error
 		if ( !ConfigurationHelper.inConfig(e_ref, config)
-				&& !seData.isSupportingElementCallDuringUpdating(ref)) {
+				&& (seData == null || !seData.isSupportingElementCallDuringUpdating(ref))) {
 			
 			/*
 			String message = LibraryResources.bind(LibraryResources.ElementError_missing_element, 

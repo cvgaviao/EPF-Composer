@@ -63,7 +63,9 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public class ConfigurationData {
 
+	//Flag to toggle off supporting plugin feature
 	public static boolean ignoreSupportingPlugin = false;
+	
 	private static boolean localDebug = false;
 	private static boolean profiling = false;
 	
@@ -474,7 +476,7 @@ public class ConfigurationData {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 				if (plugin != null && plugin.isSupporting()) {
 					SupportingElementData seData = getSupportingElementData();
-					if (seData.isEnabled()) {
+					if (seData != null && seData.isEnabled()) {
 						if (seData.isUpdatingChanges()) {
 							return false;
 						}

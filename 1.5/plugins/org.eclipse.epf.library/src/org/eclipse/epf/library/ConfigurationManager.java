@@ -71,7 +71,9 @@ public class ConfigurationManager implements IConfigurationManager {
 	public ConfigurationManager(MethodConfiguration config) {
 		this.config = config;
 		
-		supportingElementData = new SupportingElementData(config);
+		if (! ConfigurationData.ignoreSupportingPlugin) {
+			supportingElementData = new SupportingElementData(config);
+		}
 		configData = ConfigurationData.newConfigurationData(config);
 				
 		configProps = new ConfigurationProperties(config);
