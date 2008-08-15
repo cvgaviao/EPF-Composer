@@ -34,6 +34,7 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.ElementPropertyProviderManager;
@@ -757,7 +758,13 @@ public abstract class AbstractElementLayout implements IElementLayout {
 					layoutManager.getElementRealizer());
 			if ( acceptFeatureValue(feature, pv) ) {
 				if ( elementXml != null ) {
-					addReferences(feature, elementXml, name, pv);
+					XmlElement childXml = addReferences(feature, elementXml, name, pv);
+					if (childXml != null) {
+						String sortValue = CategorySortHelper.getCategorySortValue(element);
+						if (sortValue != null && sortValue.length() > 0) {
+							childXml.setAttribute("sortValue", sortValue);  //$NON-NLS-1$
+						}
+					}
 				}
 				return pv;
 			} else {
@@ -870,10 +877,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	 * @param referenceName
 	 * @param items
 	 */
-	public void addReferences(Object feature, XmlElement elementXml, String referenceName,
+	public XmlElement addReferences(Object feature, XmlElement elementXml, String referenceName,
 			List items) {
 		if (items == null || items.isEmpty()) {
-			return;
+			return null;
 		}
 		HashSet<Object> itemSet = new HashSet<Object>();
 		List uniqueItems = new ArrayList();
@@ -883,9 +890,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				uniqueItems.add(item);
 			}
 		}
-		processChild(feature, 
-				elementXml
-						.newChild(TAG_REFERENCELIST).setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$ 
+		XmlElement childXml = elementXml.newChild(TAG_REFERENCELIST);
+		processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
+		return childXml;
 	}
 
 	/**
