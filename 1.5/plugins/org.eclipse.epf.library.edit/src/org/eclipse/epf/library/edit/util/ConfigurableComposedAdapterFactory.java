@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.IConfigurable;
@@ -129,6 +130,16 @@ public class ConfigurableComposedAdapterFactory extends ComposedAdapterFactory {
 				return;
 			}
 			throw e;
+		}
+	}
+	
+	public void addFirstAdapterFactory(AdapterFactory adapterFactory) {
+	    if (!adapterFactories.contains(adapterFactory)) {
+			adapterFactories.add(0, adapterFactory);
+			if (adapterFactory instanceof ComposeableAdapterFactory) {
+				((ComposeableAdapterFactory) adapterFactory)
+						.setParentAdapterFactory(this);
+			}
 		}
 	}
 }
