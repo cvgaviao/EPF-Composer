@@ -84,6 +84,8 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	
 	private boolean abortCheckError = false;
 	
+	public static ProcessNodeLock processNodeLock = new ProcessNodeLock();
+	
 	// marker ID 
 	public static final String multipleReplacersMARKER_ID = "org.eclipse.epf.library.multipleReplacers"; //$NON-NLS-1$
 	
@@ -237,7 +239,14 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		// Cleanup the old status and rebuild the list.
 		invalidNodesMap.clear();
 
-		processChangedNodes(getSelection());
+		synchronized (processNodeLock) {
+			processNodeLock.setLockingThread(Thread.currentThread());
+			try {
+				processChangedNodes(getSelection());
+			} finally {
+				processNodeLock.setLockingThread(null);
+			}
+		}
 
 		processReplacers();
 		
@@ -551,7 +560,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		return selectedNotes.toArray();
 	}
 
-	private void processChangedNodes(Object[] changedNodes) {
+	private void processChangedNodes(Object[] changedNodes) {		
 		if (getConfigurationManager().getSupportingElementData() != null) {
 			getConfigurationManager().getSupportingElementData().beginUpdateSupportingElements();
 		}
@@ -1307,4 +1316,20 @@ public class ConfigurationClosure implements IConfigurationClosure {
 //		
 //		return Status.OK_STATUS;
 //	}
+	
+	public static class ProcessNodeLock {
+		private Thread lockingThread;
+
+		public synchronized Thread getLockingThread() {
+			return lockingThread;
+		}
+
+		public synchronized void setLockingThread(Thread lockingThread) {
+			this.lockingThread = lockingThread;
+		}
+		
+		
+		
+	}
+	
 }

@@ -26,6 +26,7 @@ import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -62,14 +63,7 @@ public class SupportingElementData extends ConfigDataBase {
 		super(config);
 	}
 	
-	public void beginUpdateSupportingElements() {
-		setUpdatingChanges(true);
-		if (localDebug) {
-			System.out.println("LD> beginUpdateSupportingElements -> "); //$NON-NLS-1$ 
-		}
-		
-		supportingElements = new HashSet<MethodElement>();
-		
+	private boolean determineEnable() {
 		supportingPlugins = new HashSet<MethodPlugin>();
 		Set<MethodPlugin> plugins = new HashSet<MethodPlugin>(getConfig()
 				.getMethodPluginSelection());
@@ -80,6 +74,19 @@ public class SupportingElementData extends ConfigDataBase {
 		}
 		
 		setEnabled(supportingPlugins.size() < plugins.size());
+		
+		return isEnabled();
+	}
+	
+	public void beginUpdateSupportingElements() {
+		setUpdatingChanges(true);
+		if (localDebug) {
+			System.out.println("LD> beginUpdateSupportingElements -> "); //$NON-NLS-1$ 
+		}
+		
+		supportingElements = new HashSet<MethodElement>();
+		
+		determineEnable();
 
 		selectedPackages = new HashSet<MethodPackage>();
 		
@@ -135,6 +142,9 @@ public class SupportingElementData extends ConfigDataBase {
 			Collection<MethodElement> elements,
 			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
 		for (MethodElement element : elements) {
+			if (element instanceof ContentCategory) {
+				continue;
+			}
 			processReferencesOutsideConfig(element, outConfigRefMap, newSupportingElements);
 		}
 	}
@@ -258,8 +268,9 @@ public class SupportingElementData extends ConfigDataBase {
 		return false;
 	}
 
-	public boolean isSupportingElement(MethodElement element) {
-		boolean ret = isSupportingElement_(element);
+	//ret: 0 = unknown, 1 = yes, 2 = no
+	public int checkInConfigIndex(MethodElement element) {
+		int ret = checkInConfigIndex_(element);
 		if (localDebug1) {
 			System.out.println("LD> isSE: " + ret +  //$NON-NLS-1$
 					", element: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ 
@@ -267,18 +278,27 @@ public class SupportingElementData extends ConfigDataBase {
 		return ret;
 	}
 	
-	
-	private boolean isSupportingElement_(MethodElement element) {
-		if (isUpdatingChanges()) {				
-			throw new UnsupportedOperationException();		
+	//ret: 0 = unknown, 1 = yes, 2 = no
+	private int checkInConfigIndex_(MethodElement element) {
+		if (isUpdatingChanges()) {
+			return 2;
+			//throw new UnsupportedOperationException();		
 		} else if (isNeedUpdateChanges()) {
 			updateChanges();
 		}
-		return supportingElements.contains(element);
+		if (! isEnabled()) {
+			return 0;
+		}
+		if (element instanceof ContentCategory) {
+			return 1;
+		}		
+		return supportingElements.contains(element) ? 1 : 2;
 	}
 	
 	protected void updateChangeImpl() {
-		ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
+		if (determineEnable()) {
+			ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
+		}
 	}
 	
 	//isSupportingElement check during updating mode
@@ -356,6 +376,5 @@ public class SupportingElementData extends ConfigDataBase {
 			boolean descriptorExclusiveOption) {
 		SupportingElementData.descriptorExclusiveOption = descriptorExclusiveOption;
 	}
-
 	
 }

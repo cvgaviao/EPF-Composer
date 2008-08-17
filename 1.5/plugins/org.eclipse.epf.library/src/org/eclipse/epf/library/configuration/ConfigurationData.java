@@ -29,6 +29,7 @@ import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
@@ -417,7 +418,7 @@ public class ConfigurationData {
 		return ret;
 	}	
 	
-	public boolean isOwnerSelected(MethodElement element, boolean checkSubtracted) {
+	public boolean isOwnerSelected(MethodElement element, boolean checkSubtracted) {			
 		boolean ret = isOwnerSelected_(element, checkSubtracted);
 		if (localDebug) {
 			System.out.println("LD> isOwnerSelected: " + ret + ", " +  //$NON-NLS-1$ //$NON-NLS-2$
@@ -434,6 +435,17 @@ public class ConfigurationData {
 		if (ConfigurationHelper.isDescriptionElement(element)) {
 			return true;
 		}
+		
+		ConfigurationClosure.ProcessNodeLock lock = ConfigurationClosure.processNodeLock;
+		//Synchronized check only on thread different from the locking thread 
+		if (lock.getLockingThread() != null && lock.getLockingThread() != Thread.currentThread()) {
+			synchronized (lock) {
+				Thread tread = lock.getLockingThread();
+				if (true) {
+					System.out.println("LD> updated locking thread: " + tread);//$NON-NLS-1$ 
+				}
+			}
+		}	
 		
 		if (getUpdatingChanges()) {
 			if (originalSubstracted.containsKey(element.getGuid()) || 
@@ -469,10 +481,8 @@ public class ConfigurationData {
 			if (addedElemMap.containsKey(element.getGuid())) {
 				return true;
 			}
-
-			//FIXME: ignoreSupportingPlugin being true until the implementation for supporting plugins works
-			//
-			if (! ignoreSupportingPlugin) {
+			
+/*			if (! ignoreSupportingPlugin) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 				if (plugin != null && plugin.isSupporting()) {
 					SupportingElementData seData = getSupportingElementData();
@@ -483,7 +493,19 @@ public class ConfigurationData {
 						return seData.isSupportingElement(element);
 					}
 				}
-			}
+			}*/
+			
+			SupportingElementData seData = getSupportingElementData();
+			if (seData != null && seData.isEnabled()) {
+				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+				if (plugin != null && plugin.isSupporting()) {
+					int ix = seData.checkInConfigIndex(element);
+					//ix: 0 = unknown, 1 = yes, 2 = no
+					if (ix == 1 || ix == 2) {
+						return ix == 1;
+					}
+				}
+			}				
 		} 
 		
 		// elements beyond configuration scope should be always visible
