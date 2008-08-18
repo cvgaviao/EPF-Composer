@@ -30,8 +30,7 @@
 							<li>
 								<!-- add the parent link -->
 								<xsl:for-each select="Element">
-								<xsl:sort select="@DisplayName"/>
-										<xsl:call-template name="addElementWithLink">
+									<xsl:call-template name="addElementWithLink">
 										<xsl:with-param name="element" select="."/>
 									</xsl:call-template>
 									&#160;&gt;&#160;
