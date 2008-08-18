@@ -230,5 +230,18 @@
 	
 	<xsl:param name="fulfilledSlotsText"/>
 	<xsl:param name="fulfillingWorkProductsText"/>
-
+	
+	<xsl:param name="modelInfo_mandatoryInputText"/>
+	<xsl:param name="modelInfo_optionalInputText"/>
+	<xsl:param name="modelInfo_externalInputText"/>
+	<xsl:param name="modelInfo_outputText"/>
+	<xsl:param name="modelInfo_performedPrimarilyByText"/>
+	<xsl:param name="modelInfo_additionallyPerformedByText"/>
+	<xsl:param name="modelInfo_assistedByText"/>
+	<xsl:param name="modelInfo_responsibleForText"/>
+	<xsl:param name="modelInfo_modifiesText"/>
+	<xsl:param name="modelInfo_primaryTasksText"/>
+	<xsl:param name="modelInfo_additionalTasksText"/>
+	<xsl:param name="modelInfo_assistTasksText"/>
+	
 </xsl:stylesheet>

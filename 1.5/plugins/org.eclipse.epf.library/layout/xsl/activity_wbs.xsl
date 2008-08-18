@@ -333,8 +333,17 @@ rows: [<xsl:for-each select="breakdown[@name='Work Breakdown Structure']/Element
 				<xsl:when test="starts-with($modelInfo, 'replaces')">		
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="$modelInfo"/>
-				</xsl:otherwise>			
+    	            <xsl:choose>
+    	                <xsl:when test="$element/@ModelInfoKey!=''">
+         	                <xsl:call-template name="modelInfoTextRecursively">
+     				            <xsl:with-param name="modelInfoKey" select="$element/@ModelInfoKey"/>
+			                </xsl:call-template>   	            
+    	                </xsl:when>
+    	                <xsl:otherwise>
+    	                    <xsl:value-of select="''"/>
+    	                </xsl:otherwise>
+    	            </xsl:choose>
+    	        </xsl:otherwise>			
 			</xsl:choose>
 		</xsl:variable>
 		

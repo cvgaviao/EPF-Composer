@@ -372,6 +372,79 @@
 		    </xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+
+	
+	<xsl:template name="modelInfoTextRecursively">
+		<xsl:param name="modelInfoKey"/>
+        <xsl:variable name="normalizedModelInfoKey" select="normalize-space($modelInfoKey)"/>
+        <xsl:choose>
+            <xsl:when test="contains($normalizedModelInfoKey,',')">
+                <xsl:variable name="oneOfKeys" select="substring-before($normalizedModelInfoKey,',')"/>
+                <xsl:variable name="oneOfValues">
+               	    <xsl:call-template name="modelInfoText">
+     				    <xsl:with-param name="modelInfoKey" select="$oneOfKeys"/>
+			        </xsl:call-template>                
+                </xsl:variable>
+                <xsl:variable name="anotherKeys" select="substring-after($normalizedModelInfoKey,',')"/>
+                <xsl:variable name="anotherValues">
+               	    <xsl:call-template name="modelInfoTextRecursively">
+     				    <xsl:with-param name="modelInfoKey" select="$anotherKeys"/>
+			        </xsl:call-template>             
+                </xsl:variable>
+                <xsl:value-of select="concat($oneOfValues, ', ', $anotherValues)"/>
+            </xsl:when>
+            <xsl:otherwise>
+               	<xsl:call-template name="modelInfoText">
+     			    <xsl:with-param name="modelInfoKey" select="$normalizedModelInfoKey"/>
+			    </xsl:call-template>   
+            </xsl:otherwise>
+        </xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="modelInfoText">
+		<xsl:param name="modelInfoKey"/>
+		<xsl:choose>
+		    <xsl:when test="$modelInfoKey='mandatoryInput'">
+		        <xsl:value-of select="$modelInfo_mandatoryInputText"/>
+		    </xsl:when>
+		    <xsl:when test="$modelInfoKey='optionalInput'">
+		        <xsl:value-of select="$modelInfo_optionalInputText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='externalInput'">
+		        <xsl:value-of select="$modelInfo_externalInputText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='output'">
+		        <xsl:value-of select="$modelInfo_outputText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='performedPrimarilyBy'">
+		        <xsl:value-of select="$modelInfo_performedPrimarilyByText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='additionallyPerformedBy'">
+		        <xsl:value-of select="$modelInfo_additionallyPerformedByText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='assistedBy'">
+		        <xsl:value-of select="$modelInfo_assistedByText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='ResponsibleFor'">
+		        <xsl:value-of select="$modelInfo_responsibleForText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='Modifies'">
+		        <xsl:value-of select="$modelInfo_modifiesText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='primaryTasks'">
+		        <xsl:value-of select="$modelInfo_primaryTasksText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='additionalTasks'">
+		        <xsl:value-of select="$modelInfo_additionalTasksText"/>
+		    </xsl:when>		
+		    <xsl:when test="$modelInfoKey='assistTasks'">
+		        <xsl:value-of select="$modelInfo_assistTasksText"/>
+		    </xsl:when>		
+			<xsl:otherwise>
+					<xsl:value-of select="$modelInfoKey"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 	
 	<xsl:template name="roleKeyInfo">
 		<xsl:variable name="synonyms" select="reference/Element/attribute[@name='synonyms']"/>

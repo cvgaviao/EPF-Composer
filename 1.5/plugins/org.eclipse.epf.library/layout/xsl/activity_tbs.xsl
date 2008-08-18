@@ -318,10 +318,22 @@ rows: [<xsl:for-each select="breakdown[@name='Team Breakdown Structure']/Element
 				<xsl:with-param name="replace" select="'&amp;quot;'"/>
 			</xsl:call-template>
     	</xsl:variable>
+    	<xsl:variable name="modelInfoText">
+    	    <xsl:choose>
+    	        <xsl:when test="$element/@ModelInfoKey!=''">
+         	        <xsl:call-template name="modelInfoTextRecursively">
+     				    <xsl:with-param name="modelInfoKey" select="$element/@ModelInfoKey"/>
+			        </xsl:call-template>   	            
+    	        </xsl:when>
+    	        <xsl:otherwise>
+    	            <xsl:value-of select="''"/>
+    	        </xsl:otherwise>
+    	    </xsl:choose>
+    	</xsl:variable>
 
 {id: "<xsl:value-of select="$element/@nodeId"/>", parentId: "<xsl:value-of select="$parentNodeId"/>", relPath: "<xsl:value-of select="$element/@relProcessPath"/>", isSuppressed: "<xsl:value-of select="$element/@isSupressed"/>", indentSize: <xsl:value-of select="$indent"/>, hasChildren:<xsl:value-of select="$hasChildren"/>, 
 	index: "<xsl:value-of select="$element/@Index"/>", prefix: "<xsl:value-of select="$element/attribute[@name='prefix']"/>", name: "<xsl:value-of select="$element/@Name"/>", title: "<xsl:value-of select="$element/@DisplayName"/>", url: "<xsl:value-of select="concat(/Element/@BackPath, $element/@Url)"/>", 
-	predecessors: "<xsl:value-of select="$element/@Predecessors"/>", info: "<xsl:value-of select="$element/@ModelInfo"/>", type: "<xsl:value-of select="$typeName"/>", 
+	predecessors: "<xsl:value-of select="$element/@Predecessors"/>", info: "<xsl:value-of select="$modelInfoText"/>", type: "<xsl:value-of select="$typeName"/>", 
 	repeatable: "<xsl:value-of select="$element/attribute[@name='isRepeatable']"/>", multiOccurences: "<xsl:value-of select="$element/attribute[@name='hasMultipleOccurrences']"/>", optional: "<xsl:value-of select="$element/attribute[@name='isOptional']"/>", planned: "<xsl:value-of select="$element/attribute[@name='isPlanned']"/>",  ongoing: "<xsl:value-of select="$element/attribute[@name='isOngoing']"/>", eventDriven: "<xsl:value-of select="$element/attribute[@name='isEventDriven']"/>", 
 	team: "<xsl:value-of select="$element/@Team"/>", entryState: "", exitState: "", deliverable: "", variabilityType: ""},
 	
