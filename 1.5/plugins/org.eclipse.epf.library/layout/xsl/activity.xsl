@@ -37,6 +37,8 @@
 		<xsl:variable name="responsibleRole" select="reference[@name='responsibleRole']/Element[@Type='Role']"/>
 		<xsl:variable name="queryString" select="@queryString"/>
 		<xsl:variable name="relProcessPath" select="@relProcessPath"/>
+		<xsl:variable name="tagValues" select="@TagValues"/>
+
 		<html>
 			<xsl:attribute name="lang"><xsl:value-of select="@lang"/></xsl:attribute>
 			<xsl:attribute name="xml:lang"><xsl:value-of select="@lang"/></xsl:attribute>
@@ -60,6 +62,9 @@
 				<meta name="role">
 					<xsl:attribute name="content"><xsl:value-of select="$responsibleRole/@DisplayName"/></xsl:attribute>
 				</meta>
+				<xsl:if test="$tagValues!=''">
+				    <meta name="tags" content="{$tagValues}"/>
+				</xsl:if>
 			</head>			
 		</html>
 	</xsl:template>

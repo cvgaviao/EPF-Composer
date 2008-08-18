@@ -34,6 +34,7 @@
 		<xsl:variable name="outcomeDescription" select="$presentation/Element[@Type='WorkProductDescription']"/>
 		<xsl:variable name="copyright" select="copyright"/>
 		<xsl:variable name="showTreeBrowser" select="@showTreeBrowser"/>
+		<xsl:variable name="tagValues" select="@TagValues"/>
 
 		<html>	
 			<xsl:attribute name="lang"><xsl:value-of select="@lang"/></xsl:attribute>
@@ -51,6 +52,9 @@
 					</xsl:call-template>
 				</meta>
 				<meta name="filetype" content="description"/>
+				<xsl:if test="$tagValues!=''">
+				    <meta name="tags" content="{$tagValues}"/>
+				</xsl:if>
 				<link rel="StyleSheet" href="{$backPath}css/default.css" type="text/css"/>
 				<script src="{$backPath}scripts/ContentPageResource.js" type="text/javascript" language="JavaScript"></script>
 				<script src="{$backPath}scripts/ContentPageSection.js" type="text/javascript" language="JavaScript"></script>

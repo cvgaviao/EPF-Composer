@@ -33,6 +33,7 @@
 		<xsl:variable name="copyright" select="copyright"/>
 		<xsl:variable name="showTreeBrowser" select="@showTreeBrowser"/>
 		<xsl:variable name="responsibleRole" select="reference[@name='responsibleRole']/Element[@Type='Role']"/>
+		<xsl:variable name="tagValues" select="@TagValues"/>
 
     	<html>
 			<xsl:attribute name="lang"><xsl:value-of select="@lang"/></xsl:attribute>
@@ -49,6 +50,9 @@
 				<meta name="role">
 				<xsl:attribute name="content"><xsl:value-of select="$responsibleRole/@DisplayName"/></xsl:attribute>
 				</meta>
+				<xsl:if test="$tagValues!=''">
+				    <meta name="tags" content="{$tagValues}"/>
+				</xsl:if>
 				<link rel="StyleSheet" href="{$backPath}css/default.css" type="text/css"/>
 				<script src="{$backPath}scripts/ContentPageResource.js" type="text/javascript" language="JavaScript"></script>
 				<script src="{$backPath}scripts/ContentPageSection.js" type="text/javascript" language="JavaScript"></script>

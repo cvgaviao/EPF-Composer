@@ -43,6 +43,7 @@
 		<xsl:variable name="showTreeBrowser" select="@showTreeBrowser"/>
 		<xsl:variable name="queryString" select="@queryString"/>
 		<xsl:variable name="relProcessPath" select="@relProcessPath"/>
+		<xsl:variable name="tagValues" select="@TagValues"/>
 
 		<html>	
 			<xsl:attribute name="lang"><xsl:value-of select="@lang"/></xsl:attribute>
@@ -56,6 +57,9 @@
 				</xsl:call-template>
 				<meta name="element_type" content="{$elementType}"/>
 				<meta name="filetype" content="description"/>
+				<xsl:if test="$tagValues!=''">
+				    <meta name="tags" content="{$tagValues}"/>
+				</xsl:if>
 				<link rel="StyleSheet" href="{$backPath}css/default.css" type="text/css"/>
 				<script src="{$backPath}scripts/ContentPageResource.js" type="text/javascript" language="JavaScript"></script>
 				<script src="{$backPath}scripts/ContentPageSection.js" type="text/javascript" language="JavaScript"></script>

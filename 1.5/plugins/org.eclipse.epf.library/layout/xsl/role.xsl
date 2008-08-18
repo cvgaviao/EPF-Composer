@@ -40,6 +40,7 @@
 		<xsl:variable name="roleSets" select="referenceList[@name='roleSets']/Element[@Type='RoleSet']"/>
 		<xsl:variable name="copyright" select="copyright"/>
 		<xsl:variable name="showTreeBrowser" select="@showTreeBrowser"/>
+		<xsl:variable name="tagValues" select="@TagValues"/>
 
 		<html>	
 			<xsl:attribute name="lang"><xsl:value-of select="@lang"/></xsl:attribute>
@@ -54,6 +55,9 @@
 				<meta name="element_type" content="{$elementType}"/>
 				<meta name="filetype" content="description"/>
 				<meta name="role" content="{$elementPresentationName}"/>
+				<xsl:if test="$tagValues!=''">
+				    <meta name="tags" content="{$tagValues}"/>
+				</xsl:if>
 				<link rel="StyleSheet" href="{$backPath}css/default.css" type="text/css"/>
 				<script src="{$backPath}scripts/ContentPageResource.js" type="text/javascript" language="JavaScript"></script>
 				<script src="{$backPath}scripts/ContentPageSection.js" type="text/javascript" language="JavaScript"></script>
