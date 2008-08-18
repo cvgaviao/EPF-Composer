@@ -55,6 +55,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
@@ -961,11 +962,40 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 								Display.getCurrent().getActiveShell(),
 								contentElement, getActionManager());
 						dlg.setFeature(getOrderFeature());
-						dlg.open();
-						if (allowChange1 && isUpAndDownButtonsRequired1) {
-							String sortType = CategorySortHelper.getCategorySortValue(contentElement);
-							viewer_sort1.setSelection(new StructuredSelection(sortType), true);
-							viewer_sort1.refresh();
+						if(dlg.open() == Window.OK){
+							if (allowChange1 && isUpAndDownButtonsRequired1) {
+								String sortType = CategorySortHelper.getCategorySortValue(contentElement);
+								viewer_sort1.setSelection(new StructuredSelection(sortType), true);
+								viewer_sort1.refresh();
+							}
+						} else {
+							//undo the type change 
+							String newSortType = CategorySortHelper.getCategorySortValue(contentElement);
+							String oldSortType =  
+								(String)((IStructuredSelection)viewer_sort1
+									.getSelection()).getFirstElement();
+							if(!oldSortType.endsWith(newSortType)){
+								MethodElementProperty prop = CategorySortHelper
+								.getCategorySortProperty(contentElement);
+
+								if (prop == null) {
+									prop = CategorySortHelper
+											.createNewSortProperty(oldSortType);
+									getActionManager()
+											.doAction(
+													IActionManager.ADD,
+													contentElement,
+													UmaPackage.eINSTANCE
+															.getMethodElement_MethodElementProperty(),
+													prop, -1);
+								} else {
+									getActionManager()
+											.doAction(IActionManager.SET, prop,
+													UmaPackage.eINSTANCE
+														.getMethodElementProperty_Value(),
+													oldSortType, -1);
+								}
+							}
 						}
 					}
 				});
