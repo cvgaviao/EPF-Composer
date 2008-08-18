@@ -15,9 +15,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.LibraryEditResources;
@@ -35,6 +37,7 @@ import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProductType;
+import org.eclipse.epf.uma.util.AssociationHelper;
 
 /**
  * Helper class to handle sorting of Category elements
@@ -220,16 +223,17 @@ public class CategorySortHelper {
 						returnList.add(element);
 						guidMap.remove(guid);
 					} else {
-						// try to find element in the guidMap that has a generalizer with "guid"
-						MethodElement me = findElementInGeneralizerList(guidMap, guid);
+						// try to find element in the guidMap that has a variable element with "guid"
+						MethodElement me = findElementInVariableElementList(guidMap, guid);
 						if (me != null) {
 							returnList.add(me);
-							guidMap.remove(guid);
+							guidMap.remove(me.getGuid());
 						} else {
 							// could not locate, will return original list
-						}
+						} 
 					}
 				}
+				
 				if (elementList.size() == returnList.size())
 					return returnList;
 			}
@@ -237,15 +241,20 @@ public class CategorySortHelper {
 		return elementList;
 	}
 	
-	private static MethodElement findElementInGeneralizerList(Map<String, MethodElement> guidMap, String guid) {
+	private static MethodElement findElementInVariableElementList(Map<String, MethodElement> guidMap, String guid) {
 		for (Iterator<MethodElement> iter = guidMap.values().iterator();iter.hasNext();) {
 			MethodElement value = iter.next();
 			if (value instanceof VariabilityElement) {
-				for (Iterator genIter = TngUtil.getGeneralizers((VariabilityElement)value);genIter.hasNext();) {
-					Object generalizer = genIter.next();
-					if (generalizer instanceof MethodElement) {
-						if (((MethodElement)generalizer).getGuid().equals(guid)) {
-							return (MethodElement)generalizer;
+				Set set = new HashSet();
+				set.add(value);
+				Set varElements = AssociationHelper.getVariabilityElements(set, true, true);
+				if(varElements != null && varElements.size() > 0){
+					for (Iterator varIter = varElements.iterator();varIter.hasNext();) {
+						Object variableElement = varIter.next();
+						if (variableElement instanceof MethodElement) {
+							if (((MethodElement)variableElement).getGuid().equals(guid)) {
+								return value;
+							}
 						}
 					}
 				}
