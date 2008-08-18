@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaPackageImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
+ * $Id: UmaPackageImpl.java,v 1.3 2008/08/18 23:44:51 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -2348,8 +2348,17 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMethodPlugin_UserChangeable() {
+	public EAttribute getMethodPlugin_Supporting() {
 		return (EAttribute)methodPluginEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMethodPlugin_UserChangeable() {
+		return (EAttribute)methodPluginEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -4087,6 +4096,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		methodPluginEClass = createEClass(METHOD_PLUGIN);
 		createEAttribute(methodPluginEClass, METHOD_PLUGIN__REFERENCED_METHOD_PLUGIN);
 		createEReference(methodPluginEClass, METHOD_PLUGIN__METHOD_PACKAGE);
+		createEAttribute(methodPluginEClass, METHOD_PLUGIN__SUPPORTING);
 		createEAttribute(methodPluginEClass, METHOD_PLUGIN__USER_CHANGEABLE);
 
 		methodUnitEClass = createEClass(METHOD_UNIT);
@@ -4632,6 +4642,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEClass(methodPluginEClass, MethodPlugin.class, "MethodPlugin", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getMethodPlugin_ReferencedMethodPlugin(), theXMLTypePackage.getString(), "referencedMethodPlugin", null, 0, -1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMethodPlugin_MethodPackage(), this.getMethodPackage(), null, "methodPackage", null, 0, -1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMethodPlugin_Supporting(), theXMLTypePackage.getBoolean(), "supporting", null, 0, 1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMethodPlugin_UserChangeable(), theXMLTypePackage.getBoolean(), "userChangeable", null, 0, 1, MethodPlugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(methodUnitEClass, MethodUnit.class, "MethodUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -6096,6 +6107,13 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "MethodPackage"
+		   });		
+		addAnnotation
+		  (getMethodPlugin_Supporting(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "supporting"
 		   });		
 		addAnnotation
 		  (getMethodPlugin_UserChangeable(), 

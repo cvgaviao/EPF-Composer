@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MethodPlugin.java,v 1.2 2008/01/30 00:41:48 klow Exp $
+ * $Id: MethodPlugin.java,v 1.3 2008/08/18 23:44:51 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.epf.xml.uma.MethodPlugin#getReferencedMethodPlugin <em>Referenced Method Plugin</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.MethodPlugin#getMethodPackage <em>Method Package</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.MethodPlugin#isSupporting <em>Supporting</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.MethodPlugin#isUserChangeable <em>User Changeable</em>}</li>
  * </ul>
  * </p>
@@ -66,6 +67,60 @@ public interface MethodPlugin extends MethodUnit {
 	 * @generated
 	 */
 	EList<MethodPackage> getMethodPackage();
+
+	/**
+	 * Returns the value of the '<em><b>Supporting</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Supporting</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Supporting</em>' attribute.
+	 * @see #isSetSupporting()
+	 * @see #unsetSupporting()
+	 * @see #setSupporting(boolean)
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getMethodPlugin_Supporting()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute' name='supporting'"
+	 * @generated
+	 */
+	boolean isSupporting();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.epf.xml.uma.MethodPlugin#isSupporting <em>Supporting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Supporting</em>' attribute.
+	 * @see #isSetSupporting()
+	 * @see #unsetSupporting()
+	 * @see #isSupporting()
+	 * @generated
+	 */
+	void setSupporting(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link org.eclipse.epf.xml.uma.MethodPlugin#isSupporting <em>Supporting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetSupporting()
+	 * @see #isSupporting()
+	 * @see #setSupporting(boolean)
+	 * @generated
+	 */
+	void unsetSupporting();
+
+	/**
+	 * Returns whether the value of the '{@link org.eclipse.epf.xml.uma.MethodPlugin#isSupporting <em>Supporting</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Supporting</em>' attribute is set.
+	 * @see #unsetSupporting()
+	 * @see #isSupporting()
+	 * @see #setSupporting(boolean)
+	 * @generated
+	 */
+	boolean isSetSupporting();
 
 	/**
 	 * Returns the value of the '<em><b>User Changeable</b></em>' attribute.

@@ -1382,6 +1382,7 @@ Special extensibility mechanisms defined for the meta-classes Variability Elemen
 					<xsd:element name="MethodPackage" type="uma:MethodPackage" minOccurs="0" maxOccurs="unbounded"/>
 				</xsd:sequence>
 				<xsd:attribute name="userChangeable" type="xsd:boolean"/>
+				<xsd:attribute name="supporting" type="xsd:boolean"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>

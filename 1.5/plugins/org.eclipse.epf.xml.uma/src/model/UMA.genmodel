@@ -230,6 +230,7 @@
     <genClasses ecoreClass="UMA.ecore#//MethodPlugin">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//MethodPlugin/referencedMethodPlugin"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference UMA.ecore#//MethodPlugin/methodPackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//MethodPlugin/supporting"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//MethodPlugin/userChangeable"/>
     </genClasses>
     <genClasses ecoreClass="UMA.ecore#//MethodUnit">
