@@ -1,4 +1,4 @@
-feature@org.eclipse.epf.base.feature=v20080815-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
+feature@org.eclipse.epf.base.feature=v20080819-1510,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
 feature@org.eclipse.epf.doc.feature=v20080714-1839,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
 feature@org.eclipse.epf.platform.feature=v20080714-1839,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
 feature@org.eclipse.epf.rcp.feature=v20080710-2244,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
@@ -39,7 +39,7 @@ plugin@org.eclipse.epf.library.xmi=v20080430-1709,:pserver:anonymous@dev.eclipse
 plugin@org.eclipse.epf.migration.diagram=v20080124-1611,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.migration.diagram
 plugin@org.eclipse.epf.msproject=v20080124-1611,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.msproject
 plugin@org.eclipse.epf.platform=v20080124-1611,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.platform
-plugin@org.eclipse.epf.publishing=v20080813-1702,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.publishing
+plugin@org.eclipse.epf.publishing=v20080819-1510,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.publishing
 plugin@org.eclipse.epf.publishing.ui=v20080801-1403,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.publishing.ui
 plugin@org.eclipse.epf.rcp=v20080501-1755,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.rcp
 plugin@org.eclipse.epf.rcp.ui=v20080817-1840,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.rcp.ui
