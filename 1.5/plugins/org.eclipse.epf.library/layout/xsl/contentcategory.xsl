@@ -236,15 +236,29 @@
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$tasksText"/></th>
 							<td class="sectionTableCell">
 								<ul>
-									<xsl:for-each select="$tasks">
-									<xsl:sort select="@DisplayName"/>
-										<li>
-											<a>
-												<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-												<xsl:value-of select="@DisplayName"/>
-											</a>
-										</li>
-									</xsl:for-each>
+									<xsl:choose>
+										<xsl:when test="$tasks/../@sortValue">
+											<xsl:for-each select="$tasks">
+												<li>
+													<a>
+														<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+														<xsl:value-of select="@DisplayName"/>
+													</a>
+												</li>
+											</xsl:for-each>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:for-each select="$tasks">
+											<xsl:sort select="@DisplayName"/>
+												<li>
+													<a>
+														<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+														<xsl:value-of select="@DisplayName"/>
+													</a>
+												</li>
+											</xsl:for-each>
+										</xsl:otherwise>
+									</xsl:choose>
 								</ul>
 							</td>
 						</tr>
