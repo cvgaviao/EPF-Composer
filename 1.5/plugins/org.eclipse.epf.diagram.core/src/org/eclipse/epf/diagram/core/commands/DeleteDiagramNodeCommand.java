@@ -23,18 +23,22 @@ package org.eclipse.epf.diagram.core.commands;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.diagram.core.DiagramCorePlugin;
 import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
 import org.eclipse.epf.diagram.core.services.DiagramService;
+import org.eclipse.epf.diagram.model.util.TxUtil;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.uma.Activity;
-import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
@@ -99,7 +103,24 @@ public class DeleteDiagramNodeCommand extends AbstractCommand implements IResour
 		}
 		if(!viewsToDelete.isEmpty()) {
 			for (View view : viewsToDelete) {
+				final EObject umlElement = view.getElement();			
 				ViewUtil.destroy(view);
+				// delete UML node as well if it is not deleted yet
+				//
+				if(umlElement != null && umlElement.eContainer() != null) {
+					try {
+						TxUtil.runInTransaction(umlElement, new Runnable() {
+
+							public void run() {
+								EcoreUtil.delete(umlElement);
+							}
+							
+						});
+					} catch (ExecutionException e) {
+						DiagramCorePlugin.getDefault().getLogger().logError(e);
+					}
+
+				}
 			}
 		}
 	}

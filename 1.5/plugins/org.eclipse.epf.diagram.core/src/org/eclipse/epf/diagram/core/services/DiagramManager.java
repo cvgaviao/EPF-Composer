@@ -1083,6 +1083,9 @@ public class DiagramManager {
 	}
 	
 	public static boolean isSynchronized(Resource resource) {
+		if(resource == null) {
+			return false;
+		}
 		IFile file = WorkspaceSynchronizer.getFile(resource);
 		if(file != null) {
 			// don't refresh to prevent resource from automatically reloaded
