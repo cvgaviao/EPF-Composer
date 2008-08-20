@@ -178,6 +178,7 @@
 	<xsl:param name="responsibleText"/>
 	<xsl:param name="reusableAssetsText"/>
 	<xsl:param name="riskLevelText"/>
+	<xsl:param name="practice_application_text"/>
 
 	<xsl:param name="roleSetsText"/>
 	<xsl:param name="rolesText"/>

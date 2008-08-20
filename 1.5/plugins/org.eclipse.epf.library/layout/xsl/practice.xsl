@@ -205,7 +205,7 @@
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
 					<xsl:if test="$problem != ''">
 						<tr valign="top">
-							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$problemText"/></th>
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$purposeText"/></th>
 							<td class="sectionTableCell">
 								<xsl:value-of disable-output-escaping="yes" select="$problem"/>
 							</td>
@@ -237,7 +237,7 @@
 					</xsl:if>
 					<xsl:if test="$application != ''">
 						<tr valign="top">
-							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$applicationText"/></th>
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$practice_application_text"/></th>
 							<td class="sectionTableCell">
 								<xsl:value-of disable-output-escaping="yes" select="$application"/>
 							</td>
