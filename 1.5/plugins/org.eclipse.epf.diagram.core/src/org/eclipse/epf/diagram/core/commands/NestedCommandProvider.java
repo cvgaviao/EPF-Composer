@@ -52,6 +52,7 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -376,11 +377,7 @@ public class NestedCommandProvider implements INestedCommandProvider {
 		if(!deletedElements.isEmpty()){
 			for (Iterator iter = deletedElements.iterator(); iter.hasNext();) {
 				Object element = (Object) iter.next();
-				if(element instanceof ProcessComponent){
-					ProcessComponent pc = (ProcessComponent)element;
-					Process process = pc.getProcess();
-					closeDiagramEditors(process);
-				}
+				closeDiagramEditors(element);
 			}
 		}
 		if(!cmd.isEmpty()){
@@ -393,7 +390,7 @@ public class NestedCommandProvider implements INestedCommandProvider {
 	 * Closes Diagram Editors if the owning process is deleted.
 	 * @param process
 	 */
-	private void closeDiagramEditors(Process process) {
+	private void closeDiagramEditors(Object e) {
 		IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
 		IEditorReference[] editorReferences = workbenchPage
@@ -408,7 +405,7 @@ public class NestedCommandProvider implements INestedCommandProvider {
 					DiagramEditorInput input = ((DiagramEditorInputProxy) editorInput)
 							.getDiagramEditorInput();
 					Object wrapper = input.getWrapper();
-					Object owningProcess = null;
+					Process owningProcess = null;
 					if (wrapper != null) {
 						if (wrapper instanceof BreakdownElementWrapperItemProvider) {
 							owningProcess = TngUtil
@@ -421,12 +418,17 @@ public class NestedCommandProvider implements INestedCommandProvider {
 									.getOwningProcess(((BreakdownElement) wrapper));
 						}
 					}
-					if (owningProcess == owningProcess) {
-						editorsToClose.add(editorRef);
+					if (owningProcess != null ) {
+						if (e == owningProcess)
+							editorsToClose.add(editorRef);
+						if ((owningProcess.eContainer() == null || UmaUtil
+									.isContainedBy(owningProcess, e))) {
+							editorsToClose.add(editorRef);
+						}
 					}
 				}
-			} catch (PartInitException e) {
-				DiagramCorePlugin.getDefault().getLogger().logError(e);
+			} catch (PartInitException ex) {
+				DiagramCorePlugin.getDefault().getLogger().logError(ex);
 			}
 		}
 		if(!editorsToClose.isEmpty()) {
