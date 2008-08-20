@@ -39,6 +39,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -56,6 +57,7 @@ public class SupportingElementData extends ConfigDataBase {
 	private static boolean localDebug = false;
 	private static boolean localDebug1 = false;
 	private boolean enabled = true;
+	private Set<VariabilityElement> vChildrenContentCategorySet;
 	
 	public static boolean descriptorExclusiveOption = true;	
 	
@@ -99,6 +101,7 @@ public class SupportingElementData extends ConfigDataBase {
 				}
 			}
 		}
+		vChildrenContentCategorySet = new HashSet<VariabilityElement>();
 
 		if (localDebug) {
 			System.out.println("LD> isEnabled(): " + isEnabled()); //$NON-NLS-1$
@@ -129,6 +132,7 @@ public class SupportingElementData extends ConfigDataBase {
 		
 		setUpdatingChanges(false);
 		setNeedUpdateChanges(false);
+		vChildrenContentCategorySet = null;
 		
 		if (localDebug) {
 			System.out.println("LD> supportingElements: " + supportingElements.size()); //$NON-NLS-1$
@@ -142,7 +146,8 @@ public class SupportingElementData extends ConfigDataBase {
 			Collection<MethodElement> elements,
 			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
 		for (MethodElement element : elements) {
-			if (element instanceof ContentCategory) {
+			processVariabilityChildren(element, newSupportingElements);
+			if (element instanceof ContentCategory && ! vChildrenContentCategorySet.contains(element)) {
 				continue;
 			}
 			processReferencesOutsideConfig(element, outConfigRefMap, newSupportingElements);
@@ -317,6 +322,11 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	private boolean isOwnerSelected(MethodElement element,
 			Set<MethodElement> newSupportingElements) {
+		return isOwnerSelected(element, newSupportingElements, true);
+	}
+		
+	private boolean isOwnerSelected(MethodElement element,
+				Set<MethodElement> newSupportingElements, boolean register) {
 		if (! isUpdatingChanges()) {
 			throw new UnsupportedOperationException();	
 		}
@@ -334,23 +344,31 @@ public class SupportingElementData extends ConfigDataBase {
 		} else if (selectable instanceof MethodLibrary) {
 			ret = true;
 		}
+		if (! register) {
+			return ret;
+		}
 		if (ret) {
-			supportingElements.add(element);
-			EObject pkg = element.eContainer();
-			while (pkg != null && pkg instanceof MethodPackage) {
-				supportingElements.add((MethodPackage) pkg);
-				pkg = pkg.eContainer();
-			}
-			
-			if (localDebug1) {
-				System.out
-						.println("LD> supportingElements added: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ 
-			}
-			if (newSupportingElements != null) {
-				newSupportingElements.add(element);
-			}
+			registerAsSupporting(element, newSupportingElements);
 		}
 		return ret;
+	}
+
+	private void registerAsSupporting(MethodElement element,
+			Set<MethodElement> newSupportingElements) {
+		supportingElements.add(element);
+		EObject pkg = element.eContainer();
+		while (pkg != null && pkg instanceof MethodPackage) {
+			supportingElements.add((MethodPackage) pkg);
+			pkg = pkg.eContainer();
+		}
+		
+		if (localDebug1) {
+			System.out
+					.println("LD> supportingElements added: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ 
+		}
+		if (newSupportingElements != null) {
+			newSupportingElements.add(element);
+		}
 	}
 		
 	public boolean isSupportingSelectable(MethodElement element) {
@@ -376,5 +394,74 @@ public class SupportingElementData extends ConfigDataBase {
 			boolean descriptorExclusiveOption) {
 		SupportingElementData.descriptorExclusiveOption = descriptorExclusiveOption;
 	}
+	
+	public void processVariabilityChildren(MethodElement elementInConfig,
+			Set<MethodElement> newSupportingElements) {
+		if (!(elementInConfig instanceof VariabilityElement)) {
+			return;
+		}
+
+		VariabilityElement base = (VariabilityElement) elementInConfig;
+		List<VariabilityElement> vChildren = AssociationHelper
+				.getImmediateVarieties(base);
+		if (vChildren == null || vChildren.isEmpty()) {
+			return;
+		}
+		
+		boolean isContentCategory = base instanceof ContentCategory;
+		
+		for (VariabilityElement child : vChildren) {
+			if (child.getVariabilityBasedOnElement() == base) { // double check
+				if (child.getVariabilityType() == VariabilityType.CONTRIBUTES
+						|| child.getVariabilityType() == VariabilityType.REPLACES) {
+					// child may not be under an supporting plugin -> ok
+					if (isOwnerSelected(child, null, false)) {
+						List<VariabilityElement> replacers = getReplacers(child);
+						if (replacers != null && !replacers.isEmpty()) {
+							for (VariabilityElement replacer : replacers) {
+								if (isOwnerSelected(replacer,
+										newSupportingElements, true)
+										&& isContentCategory) {
+									vChildrenContentCategorySet.add(child);
+								}
+							}
+						} else {
+							registerAsSupporting(child, newSupportingElements);
+							if (isContentCategory) {
+								vChildrenContentCategorySet.add(child);
+							}
+						}
+					} 
+
+				}
+			}
+		}
+
+	}
+	
+	private  List<VariabilityElement> getReplacers(VariabilityElement base) {
+		MethodConfiguration config = getConfig();
+		
+		List<VariabilityElement> vChildren = AssociationHelper
+		.getImmediateVarieties(base);
+		
+		if (vChildren == null || vChildren.isEmpty()) {
+			return null;
+		}
+		
+		List<VariabilityElement> replacers = new ArrayList<VariabilityElement>();
+		for (VariabilityElement child : vChildren) {
+			if (child.getVariabilityBasedOnElement() == base) { // double check
+				if (child.getVariabilityType() == VariabilityType.REPLACES) {					
+					if (ConfigurationHelper.inConfig(child, config)
+							|| isOwnerSelected(child, null, false)) {
+						replacers.add(child);
+					}
+				}
+			}
+		}
+		return replacers;
+	}
+	
 	
 }

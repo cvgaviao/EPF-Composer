@@ -86,7 +86,7 @@ public class ConfigurationManager implements IConfigurationManager {
 		afcp = new AdapterFactoryContentProvider(libraryManager
 				.getAdapterFactory());
 
-		dependencyManager = new DependencyManager(library);
+		dependencyManager = new DependencyManager(library, config);
 
 		if (config == null) {
 			layoutManager = new ElementLayoutManager();

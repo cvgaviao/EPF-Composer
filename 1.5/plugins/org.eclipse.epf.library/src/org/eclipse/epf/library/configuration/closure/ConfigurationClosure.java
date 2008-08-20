@@ -221,7 +221,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 	
 	private void checkError_() {
-		dependencyManager = new DependencyManager(library);
+		dependencyManager = new DependencyManager(library, getConfiguration());
 		
 		// Bug 206724 - SCM: Always prompt check out elements for a opened configuration when refresh source control status
 		// don't need to validate the configuration, rely on the caller to validate it before call this method.

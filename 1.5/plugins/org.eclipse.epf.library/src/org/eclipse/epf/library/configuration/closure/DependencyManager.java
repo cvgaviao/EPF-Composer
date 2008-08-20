@@ -21,18 +21,19 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
-import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
-import org.eclipse.epf.uma.WorkProduct;
 
 /**
  * Manages the method element dependencies in a method library.
@@ -60,13 +61,16 @@ public class DependencyManager {
 
 	private Set<VariabilityElement> replacerSet = new HashSet<VariabilityElement>();
 	
+	private MethodConfiguration config;	
+	
 	/**
 	 * Creates a new instance.
 	 */
-	public DependencyManager(MethodLibrary library) {
+	public DependencyManager(MethodLibrary library, MethodConfiguration config) {
 		this.library = library;
 		this.libraryManager = LibraryService.getInstance().getLibraryManager(
 				library);
+		this.config = config;
 		init();
 	}
 
@@ -153,7 +157,7 @@ public class DependencyManager {
 	private void buildDependency(MethodElement element) {
 		if (element == null) {
 			return;
-		}
+		}		
 
 		try {
 			PackageDependency dependency = buildDependencyFor(element);
@@ -198,6 +202,14 @@ public class DependencyManager {
 			return null;
 		}
 
+		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
+		if (configMgr != null) {
+			SupportingElementData seData = configMgr.getSupportingElementData();
+			if (seData != null && seData.isEnabled()) {
+				seData.processVariabilityChildren(element, null);
+			}
+		}
+		
 		// Build the dependency on the selectable element/parent only
 		MethodElement selectableElement = (MethodElement)LibraryUtil.getSelectable(element);
 		if (selectableElement == null) {
