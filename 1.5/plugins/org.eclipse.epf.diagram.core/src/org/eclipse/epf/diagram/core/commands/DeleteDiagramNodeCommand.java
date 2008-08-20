@@ -112,7 +112,7 @@ public class DeleteDiagramNodeCommand extends AbstractCommand implements IResour
 						TxUtil.runInTransaction(umlElement, new Runnable() {
 
 							public void run() {
-//								EcoreUtil.delete(umlElement);
+								EcoreUtil.delete(umlElement);
 							}
 							
 						});
