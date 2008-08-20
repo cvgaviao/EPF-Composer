@@ -118,14 +118,16 @@ public class RoleNodeItemSemanticEditPolicy extends
 	 * Returns command to reorient EClass based link. New link target or source
 	 * should be the domain model element associated with this node.
 	 * 
-	 * @generated
+	 * 
 	 */
+	@Override
 	protected Command getReorientRelationshipCommand(
 			ReorientRelationshipRequest req) {
-		switch (getVisualID(req)) {
-		case LinkEditPart.VISUAL_ID:
-			return getMSLWrapper(new LinkReorientCommand(req));
-		}
-		return super.getReorientRelationshipCommand(req);
+//		switch (getVisualID(req)) {
+//		case LinkEditPart.VISUAL_ID:
+//			return getMSLWrapper(new LinkReorientCommand(req));
+//		}
+//		return super.getReorientRelationshipCommand(req);
+		return UnexecutableCommand.INSTANCE;
 	}
 }
