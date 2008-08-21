@@ -256,7 +256,7 @@ columns: [<xsl:for-each select="breakdown[@name='Work Breakdown Structure']/colu
 ["<xsl:value-of select="@id"/>", "<xsl:value-of select="@label"/>"]<xsl:if test="position() != $colSize">,</xsl:if>
 					</xsl:for-each>],
 rows: [<xsl:for-each select="breakdown[@name='Work Breakdown Structure']/Element">
-						<xsl:sort select="@DisplayName"/>
+					 <!-- 	<xsl:sort select="@DisplayName"/> --> 
 						<xsl:call-template name="wbsItem">
 							<xsl:with-param name="element" select="."/>
 							<xsl:with-param name="indent" select="0"/>
