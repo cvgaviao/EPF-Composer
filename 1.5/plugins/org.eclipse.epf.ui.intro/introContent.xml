@@ -191,16 +191,16 @@
 			<text style-id="page-description" id="page-description">Start working on your own method plug-in.</text>
 			<group id="steps-links">               
 			    <anchor id="beginAnchor"/>
-			    <link label="Create your own Method Plug-in" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.authoring.ui.cheatsheets.createmethodplugin&amp;toggle=true" id="epf-steps-two">
+			    <link label="Create your own Method Plug-in" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.help.doc.cheatsheets.createmethodplugin&amp;toggle=true" id="epf-steps-two">
                     <text>Start building a method plug-in using a wizard.</text>
                 </link>
-                <link label="Create your own Method Configuration" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.authoring.ui.cheatsheets.createmethodconfiguration&amp;toggle=true" id="epf-steps-four">
+                <link label="Create your own Method Configuration" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.help.doc.cheatsheets.createmethodconfiguration&amp;toggle=true" id="epf-steps-four">
                     <text>This cheatsheet guides you though the steps of creating your own method configuration.</text>
                 </link>
-                <link label="Add new Method Content such as Roles, Task" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.authoring.ui.cheatsheets.addnewmethodcontent&amp;toggle=true" id="epf-steps-one">
+                <link label="Add new Method Content such as Roles, Task" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.help.doc.cheatsheets.addnewmethodcontent&amp;toggle=true" id="epf-steps-one">
                     <text>This cheatsheet guides you though the steps of creating your own method content.</text>
                 </link>
-                <link label="Create a Process" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.authoring.ui.cheatsheets.createaprocess&amp;toggle=true" id="epf-steps-three">
+                <link label="Create a Process" url="http://org.eclipse.ui.intro/openCheatsheetView?input=org.eclipse.epf.help.doc.cheatsheets.createaprocess&amp;toggle=true" id="epf-steps-three">
                     <text>This cheatsheet takes you through the steps necessary to create a process.</text>
                 </link>  
 				<group id="step-links">
