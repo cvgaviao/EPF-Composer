@@ -191,7 +191,11 @@ public class MultiFileXMIHelperImpl extends XMIHelperImpl {
 
 	public void setValue(EObject object, EStructuralFeature feature,
 			Object value, int position) {
-
+		
+		if(feature.isDerived()) {
+			return;
+		}
+		
 		int kind = getFeatureKind(feature);
 
 		try {
