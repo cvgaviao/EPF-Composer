@@ -201,7 +201,7 @@
 				<script type="text/javascript" language="JavaScript">
 		var teamTree = [
 				<xsl:for-each select="breakdown[@name='Team Breakdown Structure']/Element[@Type='TeamProfile' and @hasSuperTeam = 'false' ]">
-				<xsl:sort select="@DisplayName"/>
+				<!--   <xsl:sort select="@DisplayName"/> -->
 						<xsl:call-template name="teamStructure">
 							<xsl:with-param name="element" select="."/>
 						</xsl:call-template>
@@ -218,7 +218,7 @@
 	["<xsl:value-of select="concat(/Element/@BackPath, $element/@Url)"/>", "<xsl:value-of select="$element/@DisplayName"/>", "<xsl:value-of select="$element/@relProcessPath"/>", "<xsl:value-of select="$element/@isSupressed"/>", 
 		<xsl:if test="count($element/Element[@Type='TeamProfile']) > 0">
 			<xsl:for-each select="$element/Element[@Type='TeamProfile']">
-			<xsl:sort select="@DisplayName"/>
+		<!-- 	<xsl:sort select="@DisplayName"/> -->
 				<xsl:call-template name="teamStructure">
 					<xsl:with-param name="element" select="."/>
 				</xsl:call-template>
@@ -243,7 +243,7 @@ columns: [<xsl:for-each select="breakdown[@name='Team Breakdown Structure']/colu
 ["<xsl:value-of select="@id"/>", "<xsl:value-of select="@label"/>"]<xsl:if test="position() != $colSize">,</xsl:if>
 					</xsl:for-each>],
 rows: [<xsl:for-each select="breakdown[@name='Team Breakdown Structure']/Element">
-						<xsl:sort select="@DisplayName"/>
+						<!-- <xsl:sort select="@DisplayName"/> -->
 						<xsl:call-template name="wbsItem">
 							<xsl:with-param name="element" select="."/>
 							<xsl:with-param name="indent" select="0"/>
@@ -343,7 +343,7 @@ contentPage.processPage.treeTable.wbsItemHtml.writeRow();
 -->
 		<xsl:if test="count($element/Element) > 0">
 			<xsl:for-each select="$element/Element">
-			<xsl:sort select="@DisplayName"/>
+			<!-- <xsl:sort select="@DisplayName"/> -->
 				<xsl:call-template name="wbsItem">
 					<xsl:with-param name="element" select="."/>
 					<xsl:with-param name="indent" select="$indent+1"/>

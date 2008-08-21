@@ -358,7 +358,7 @@ rows: [<xsl:for-each select="breakdown[@name='Work Breakdown Structure']/Element
 	
 		<xsl:if test="count($element/Element) > 0">
 			<xsl:for-each select="$element/Element">
-			<xsl:sort select="@DisplayName"/>
+		<!-- 	<xsl:sort select="@DisplayName"/> -->
 				<xsl:call-template name="wbsItem">
 					<xsl:with-param name="element" select="."/>
 					<xsl:with-param name="indent" select="$indent+1"/>
