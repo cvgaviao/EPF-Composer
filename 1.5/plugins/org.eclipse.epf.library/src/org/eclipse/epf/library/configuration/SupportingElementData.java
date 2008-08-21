@@ -57,7 +57,7 @@ public class SupportingElementData extends ConfigDataBase {
 	private static boolean localDebug = false;
 	private static boolean localDebug1 = false;
 	private boolean enabled = true;
-	private Set<VariabilityElement> vChildrenContentCategorySet;
+	//private Set<VariabilityElement> vChildrenContentCategorySet;
 	
 	public static boolean descriptorExclusiveOption = true;	
 	
@@ -101,7 +101,7 @@ public class SupportingElementData extends ConfigDataBase {
 				}
 			}
 		}
-		vChildrenContentCategorySet = new HashSet<VariabilityElement>();
+		//vChildrenContentCategorySet = new HashSet<VariabilityElement>();
 
 		if (localDebug) {
 			System.out.println("LD> isEnabled(): " + isEnabled()); //$NON-NLS-1$
@@ -132,7 +132,7 @@ public class SupportingElementData extends ConfigDataBase {
 		
 		setUpdatingChanges(false);
 		setNeedUpdateChanges(false);
-		vChildrenContentCategorySet = null;
+		//vChildrenContentCategorySet = null;
 		
 		if (localDebug) {
 			System.out.println("LD> supportingElements: " + supportingElements.size()); //$NON-NLS-1$
@@ -146,10 +146,10 @@ public class SupportingElementData extends ConfigDataBase {
 			Collection<MethodElement> elements,
 			Map<String, ElementReference> outConfigRefMap, Set<MethodElement> newSupportingElements) {
 		for (MethodElement element : elements) {
-			processVariabilityChildren(element, newSupportingElements);
-			if (element instanceof ContentCategory && ! vChildrenContentCategorySet.contains(element)) {
+			if (element instanceof ContentCategory) {
 				continue;
 			}
+			processVariabilityChildren(element, newSupportingElements);
 			processReferencesOutsideConfig(element, outConfigRefMap, newSupportingElements);
 		}
 	}
@@ -422,13 +422,13 @@ public class SupportingElementData extends ConfigDataBase {
 								if (isOwnerSelected(replacer,
 										newSupportingElements, true)
 										&& isContentCategory) {
-									vChildrenContentCategorySet.add(child);
+									//vChildrenContentCategorySet.add(child);
 								}
 							}
 						} else {
 							registerAsSupporting(child, newSupportingElements);
 							if (isContentCategory) {
-								vChildrenContentCategorySet.add(child);
+								//vChildrenContentCategorySet.add(child);
 							}
 						}
 					} 
