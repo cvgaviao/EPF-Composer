@@ -89,24 +89,24 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 				
 	}
 	
-	private Map uriToExceptionsMap;
-	private List exceptions;
-	private Map resourceGUIToMarkersMap;
-	private Map elementGUIToMarkersMap;
+	private Map<URI, Set<ResolveException>> uriToExceptionsMap;
+	private List<ResolveException> exceptions;
+	private Map<String, ValidObject> resourceGUIDToMarkersMap;
+	private Map<String, Collection<ValidObject>> elementGUIToMarkersMap;
 	private ResourceSet resourceSet;
 	private boolean enabled = true;
-	private List resourcesToValidateMarkers;
+	private List<Resource> resourcesToValidateMarkers;
 	private boolean autoScheduled = true;
 
 	public UnresolvedProxyMarkerManager(ResourceSet resourceSet) {
 		super(PersistenceResources.unresolvedProxyLoggerJob_name);		
 		this.resourceSet = resourceSet;
 //		unresolvedResourceGUIDToMarkersMap = new HashMap();
-		uriToExceptionsMap = new HashMap();
-		exceptions = new ArrayList(); 
-		resourceGUIToMarkersMap = new HashMap();
-		elementGUIToMarkersMap = new HashMap();
-		resourcesToValidateMarkers = new UniqueEList();
+		uriToExceptionsMap = new HashMap<URI, Set<ResolveException>>();
+		exceptions = new ArrayList<ResolveException>(); 
+		resourceGUIDToMarkersMap = new HashMap<String, ValidObject>();
+		elementGUIToMarkersMap = new HashMap<String, Collection<ValidObject>>();
+		resourcesToValidateMarkers = new UniqueEList<Resource>();
 	}
 
 	public IMarker findMarker(IFile file, String proxyURI, int start, int end) throws CoreException {
@@ -142,9 +142,9 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	private boolean addException(ResolveException re) {
 		synchronized(exceptions) {
 			URI uri = ((InternalEObject)re.getProxy()).eProxyURI();
-			Set exceptions = (Set) uriToExceptionsMap.get(uri);		
+			Set<ResolveException> exceptions = uriToExceptionsMap.get(uri);		
 			if(exceptions == null) {
-				exceptions = new HashSet();
+				exceptions = new HashSet<ResolveException>();
 				uriToExceptionsMap.put(uri, exceptions);
 			}
 			if(exceptions.add(re)) {
@@ -214,9 +214,6 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		IPath path = new Path(containerURI.toFileString());
 		IFile file = workspace.getRoot().getFileForLocation(path);
 		if (file != null) {
-			String location = containerURI != null ? containerURI
-					.toFileString() : ""; //$NON-NLS-1$
-			
 			try {
 				file.refreshLocal(IResource.DEPTH_ZERO, null);
 				
@@ -414,18 +411,18 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		synchronized(elementGUIToMarkersMap) {
 			String resourceGUID = uri.authority();
 			if(resourceGUID != null) {
-				ValidObject vo = (ValidObject) resourceGUIToMarkersMap.get(resourceGUID);
+				ValidObject vo = (ValidObject) resourceGUIDToMarkersMap.get(resourceGUID);
 				if(vo == null) {
-					vo = new ValidObject(new HashSet());
-					resourceGUIToMarkersMap.put(resourceGUID, vo);
+					vo = new ValidObject(new HashSet<IMarker>());
+					resourceGUIDToMarkersMap.put(resourceGUID, vo);
 				}
-				Collection markers = (Collection) vo.object;
+				Collection<IMarker> markers = (Collection<IMarker>) vo.object;
 				markers.add(marker);
 			}
 			String elementGUID = uri.fragment();
-			Collection markers = (Collection) elementGUIToMarkersMap.get(elementGUID);
+			Collection<ValidObject> markers = elementGUIToMarkersMap.get(elementGUID);
 			if(markers == null) {
-				markers = new HashSet();
+				markers = new HashSet<ValidObject>();
 				elementGUIToMarkersMap.put(elementGUID, markers);
 			}
 			markers.add(new ValidObject(marker));
@@ -444,10 +441,8 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			}
 			synchronized(elementGUIToMarkersMap) {
 				if(!elementGUIToMarkersMap.isEmpty()) {
-					for (Iterator iter = elementGUIToMarkersMap.values().iterator(); iter.hasNext();) {
-						Collection markers = (Collection) iter.next();
-						for (Iterator iter1 = markers.iterator(); iter1.hasNext();) {
-							ValidObject vo = (ValidObject) iter1.next();
+					for (Collection<ValidObject> markers : elementGUIToMarkersMap.values()) {
+						for (ValidObject vo : markers) {
 							IMarker marker = (IMarker) vo.object;
 							try {
 								if(marker.exists()) {
@@ -461,7 +456,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 						markers.clear();
 					}
 					elementGUIToMarkersMap.clear();
-					resourceGUIToMarkersMap.clear();
+					resourceGUIDToMarkersMap.clear();
 				}	
 			}
 			synchronized(resourcesToValidateMarkers) {
@@ -487,7 +482,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			else {
 				ResolveException e = (ResolveException) this.exceptions.remove(0);
 				URI uri = ((InternalEObject)e.getProxy()).eProxyURI();
-				Collection exceptions = (Collection) uriToExceptionsMap.get(uri);
+				Set<ResolveException> exceptions = uriToExceptionsMap.get(uri);
 				if(exceptions != null) {
 					exceptions.remove(e);
 					if(exceptions.isEmpty()) {
@@ -575,12 +570,12 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		URI uri = URI.createURI(proxyURI);
 		String resourceGUID = uri.authority();
 		if(resourceGUID != null) {
-			ValidObject vo = (ValidObject) resourceGUIToMarkersMap.get(resourceGUID);
+			ValidObject vo = (ValidObject) resourceGUIDToMarkersMap.get(resourceGUID);
 			if(vo != null) {
 				Collection markers = ((Collection)vo.object);
 				boolean ret = markers.remove(marker);
 				if(markers.isEmpty()) {
-					resourceGUIToMarkersMap.remove(resourceGUID);
+					resourceGUIDToMarkersMap.remove(resourceGUID);
 				}
 				return ret;
 			}
@@ -592,9 +587,9 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		URI uri = URI.createURI(proxyURI);
 		String elementGUID = uri.fragment();
 		if(elementGUID != null) {
-			Collection validObjects = (Collection) elementGUIToMarkersMap.get(elementGUID);
+			Collection<ValidObject> validObjects = elementGUIToMarkersMap.get(elementGUID);
 			if(validObjects != null) {
-				for (Iterator iterator1 = validObjects.iterator(); iterator1
+				for (Iterator<ValidObject> iterator1 = validObjects.iterator(); iterator1
 				.hasNext();) {
 					ValidObject vo1 = (ValidObject) iterator1.next();
 					if(vo1.object == marker) {
@@ -610,9 +605,8 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	
 	private void removeMarkers(IProgressMonitor monitor) {
 		synchronized(elementGUIToMarkersMap) {
-		for (Iterator iter = elementGUIToMarkersMap.values().iterator(); iter.hasNext();) {
-			Collection markers = (Collection) iter.next();
-			for (Iterator iterator = markers.iterator(); iterator.hasNext();) {
+		for (Collection<ValidObject> markers : elementGUIToMarkersMap.values()) {
+			for (Iterator<ValidObject> iterator = markers.iterator(); iterator.hasNext();) {
 				ValidObject vo = (ValidObject) iterator.next();
 				if(!vo.valid) {
 					try {
@@ -634,12 +628,12 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 				}
 			}
 		}
-		for (Iterator iter = resourceGUIToMarkersMap.values().iterator(); iter.hasNext();) {
+		for (Iterator<ValidObject> iter = resourceGUIDToMarkersMap.values().iterator(); iter.hasNext();) {
 			ValidObject vo = (ValidObject) iter.next();
 			if(!vo.valid) {
 				vo.valid = true;
-				Collection markers = (Collection) vo.object;
-				for (Iterator iterator = markers.iterator(); iterator.hasNext();) {
+				Collection<IMarker> markers = (Collection<IMarker>) vo.object;
+				for (Iterator<IMarker> iterator = markers.iterator(); iterator.hasNext();) {
 					IMarker marker;
 					try {
 						marker = (IMarker) iterator.next();
@@ -762,7 +756,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			boolean ret = false;
 			String resourceGUID = uri.authority();
 			if(resourceGUID != null) {
-				ValidObject vo = (ValidObject) resourceGUIToMarkersMap.get(resourceGUID);
+				ValidObject vo = (ValidObject) resourceGUIDToMarkersMap.get(resourceGUID);
 				if(vo != null) {
 					vo.valid = false;
 					ret = true;
@@ -770,11 +764,10 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			}
 			String elementGUID = uri.fragment();
 			if(elementGUID != null) {
-				Collection markers = (Collection) elementGUIToMarkersMap.get(elementGUID);
+				Collection<ValidObject> markers = elementGUIToMarkersMap.get(elementGUID);
 				if(markers != null && !markers.isEmpty()) {
 					ret = true;
-					for (Iterator iter = markers.iterator(); iter.hasNext();) {
-						ValidObject vo = (ValidObject) iter.next();
+					for (ValidObject vo : markers) {
 						vo.valid = false;
 					}
 				}
@@ -788,7 +781,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	 */
 	private void removeExceptions(URI uri) {
 		synchronized (exceptions) {
-			Collection exceptions = (Collection) uriToExceptionsMap.get(uri);
+			Set<ResolveException> exceptions = uriToExceptionsMap.get(uri);
 			if(exceptions == null || exceptions.isEmpty()) return;
 			this.exceptions.removeAll(exceptions);
 			uriToExceptionsMap.remove(uri);
@@ -878,23 +871,30 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 
 	public void validateAllMarkers() {
 		boolean newlyAdded = false;
-		synchronized(resourcesToValidateMarkers) {
-			if(!elementGUIToMarkersMap.isEmpty()) {
-				for (Iterator iter = elementGUIToMarkersMap.values().iterator(); iter.hasNext();) {
-					Collection markers = (Collection) iter.next();
-					for (Iterator iter1 = markers.iterator(); iter1.hasNext();) {
-						ValidObject vo = (ValidObject) iter1.next();
-						IMarker marker = (IMarker) vo.object;
-						try {
-							String location = (String)marker.getAttribute(IMarker.LOCATION);
-							URI uri = URI.createFileURI(location);
-							Resource resource = resourceSet.getResource(uri, true);
-							newlyAdded = resourcesToValidateMarkers.add(resource) | newlyAdded;
-						} catch (CoreException e) {
-							PersistencePlugin.getDefault().getLogger().logError(e);
+		if(!elementGUIToMarkersMap.isEmpty()) {
+			ArrayList<Collection<ValidObject>> validObjectCollections = null;
+			synchronized (elementGUIToMarkersMap) {
+				if(!elementGUIToMarkersMap.isEmpty()) {
+					validObjectCollections = new ArrayList<Collection<ValidObject>>(elementGUIToMarkersMap.values());
+				}
+			}
+			if(validObjectCollections != null) {
+				synchronized(resourcesToValidateMarkers) {
+					for (Collection<ValidObject> markers :validObjectCollections) {
+						for (ValidObject vo : markers) {
+							IMarker marker = (IMarker) vo.object;
+							try {
+								String location = (String)marker.getAttribute(IMarker.LOCATION);
+								URI uri = URI.createFileURI(location);
+								Resource resource = resourceSet.getResource(uri, true);
+								newlyAdded = resourcesToValidateMarkers.add(resource) | newlyAdded;
+							} catch (CoreException e) {
+								PersistencePlugin.getDefault().getLogger().logError(e);
+							}
 						}
 					}
 				}
+
 			}
 		}
 		if(newlyAdded) {

@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -224,6 +225,14 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 		if (refreshHandler == null)
 			return Status.OK_STATUS;
 
+		// wait for all workspace refresh jobs to finish first
+		//
+		try {
+			getJobManager().join(ResourcesPlugin.FAMILY_AUTO_REFRESH, new NullProgressMonitor());
+		} catch (OperationCanceledException e1) {
+		} catch (InterruptedException e1) {
+		}
+		
 		long start = System.currentTimeMillis();
 		Throwable error = null;
 		try {
