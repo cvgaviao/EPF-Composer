@@ -117,6 +117,7 @@ public final class LibraryResources extends NLS {
 	public static String ElementError_having_multiple_replacers;
 	
 	public static String WorkProductSlot_text;
+	public static String references_unresolved_base_txt;
 	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, LibraryResources.class);

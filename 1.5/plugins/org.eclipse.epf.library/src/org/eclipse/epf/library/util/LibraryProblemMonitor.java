@@ -229,7 +229,7 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 		String unresolvedBaseGuidsValue = null;
 		try {
 
-			String errMsg = plugin.getName() + " references unresolved base "; //$NON-NLS-1$
+			String errMsg = plugin.getName() + " " + LibraryResources.references_unresolved_base_txt; //$NON-NLS-1$
 			unresolvedBaseGuidsValue = (String) marker.getAttribute(UnresolvedBaseGuids);
 			if (unresolvedBaseGuidsValue == null || unresolvedBaseGuidsValue.length() == 0) {
 				unresolvedBaseGuidsValue = base.getGuid();
