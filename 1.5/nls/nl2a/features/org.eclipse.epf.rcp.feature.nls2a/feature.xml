@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.epf.rcp.feature.nls2a"
+      label="%featureName"
+      version="1.5.0.qualifier"
+      provider-name="%providerName"
+      plugin="org.eclipse.epf.rcp"
+      image="eclipse_update_120.jpg">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %licenseText
+   </license>
+
+   <plugin
+         id="org.eclipse.epf.rcp.ui.nl2a"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+</feature>
