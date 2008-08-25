@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %nlFragmentName
+Bundle-SymbolicName: org.eclipse.epf.help.doc.nl2 ;singleton := true
+Bundle-Version: 1.2.0.qualifier
+Bundle-Vendor: %nlProviderName
+Fragment-Host: org.eclipse.epf.help.doc;bundle-version="[1.5.0,2.0.0)"
+Bundle-Localization: nl_fragment
