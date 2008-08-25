@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.BreakdownElementEditorInput;
-import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.diagram.core.part.AbstractDiagramEditor;
@@ -52,6 +51,7 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.osgi.util.TextProcessor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
@@ -138,6 +138,7 @@ public class UIHelper {
 	 * @param element
 	 */
 	public static void setFormText(ScrolledForm form, MethodElement element) {
+		String delimiter = ". ,  ;  ! ? ~ @ # $ % ^ & *  ( ) { } [ ]   < > \\ / \" ' `  | ";	//$NON-NLS-1$
 		if (form != null && !form.isDisposed()) {
 			StringBuffer str = new StringBuffer();
 			str.append(getFormPageTitlePrefixFor(element));
@@ -150,7 +151,7 @@ public class UIHelper {
 			else if(element.getName() != null){
 				str.append(element.getName());
 			}
-			form.setText(str.toString());
+			form.setText(TextProcessor.process(str.toString(), delimiter));
 		}
 	}
 

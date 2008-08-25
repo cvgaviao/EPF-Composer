@@ -261,8 +261,7 @@ public class BaseFormPage extends FormPage {
 	 */
 	protected static Label createLabel(FormToolkit toolkit, Composite parent,
 			String text, int gridDataStyle, int horizontalSpan) {
-		Label label = toolkit.createLabel(parent, text, SWT.WRAP
-				| SWT.LEFT_TO_RIGHT);
+		Label label = toolkit.createLabel(parent, text, SWT.WRAP);
 		GridData gridData = new GridData(gridDataStyle);
 		gridData.horizontalSpan = horizontalSpan;
 		gridData.verticalAlignment = SWT.TOP;
@@ -288,7 +287,7 @@ public class BaseFormPage extends FormPage {
 	 */
 	public static Label createLabelWithNoWrap(FormToolkit toolkit, Composite parent,
 			String text, int gridDataStyle, int horizontalSpan) {
-		Label label = toolkit.createLabel(parent, text, SWT.LEFT_TO_RIGHT);
+		Label label = toolkit.createLabel(parent, text);
 		GridData gridData = new GridData(gridDataStyle);
 		gridData.horizontalSpan = horizontalSpan;
 		gridData.verticalAlignment = SWT.TOP;
