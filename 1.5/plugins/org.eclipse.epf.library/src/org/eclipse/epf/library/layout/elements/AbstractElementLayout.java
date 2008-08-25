@@ -882,10 +882,18 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		if (items == null || items.isEmpty()) {
 			return null;
 		}
+		boolean excludeThisElement = false;
+		if (feature == AssociationHelper.VariabilityElement_ImmediateVarieties) {
+			excludeThisElement = true;
+		}
+		
 		HashSet<Object> itemSet = new HashSet<Object>();
 		List uniqueItems = new ArrayList();
 		for (Object item: items) {
 			if (! itemSet.contains(item)) {
+				if (excludeThisElement && item == element) {
+					continue;
+				}
 				itemSet.add(item);
 				uniqueItems.add(item);
 			}
