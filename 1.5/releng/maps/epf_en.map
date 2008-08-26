@@ -1,4 +1,4 @@
-feature@org.eclipse.epf.base.feature=v20080826-1201,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
+feature@org.eclipse.epf.base.feature=v20080826-1647,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
 feature@org.eclipse.epf.doc.feature=v20080820-1636,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
 feature@org.eclipse.epf.platform.feature=v20080820-1636,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
 feature@org.eclipse.epf.rcp.feature=v20080821-1403,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
@@ -30,7 +30,7 @@ plugin@org.eclipse.epf.help.doc=v20080520-1654,:pserver:anonymous@dev.eclipse.or
 plugin@org.eclipse.epf.import=v20080707-1845,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.import
 plugin@org.eclipse.epf.import.xml=v20080626-1457,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.import.xml
 plugin@org.eclipse.epf.library=v20080825-1200,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.library
-plugin@org.eclipse.epf.library.edit=v20080818-1715,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.library.edit
+plugin@org.eclipse.epf.library.edit=v20080826-1647,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.library.edit
 plugin@org.eclipse.epf.library.edit.ui=v20080625-1917,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.library.edit.ui
 plugin@org.eclipse.epf.library.persistence=v20080822-1705,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.library.persistence
 plugin@org.eclipse.epf.library.ui=v20080811-2108,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.library.ui
