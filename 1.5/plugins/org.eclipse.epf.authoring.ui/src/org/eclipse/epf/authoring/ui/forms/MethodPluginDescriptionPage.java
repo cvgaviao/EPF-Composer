@@ -76,7 +76,6 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.forms.widgets.TableWrapData;
 
 /**
  * Description page for method plugin
@@ -477,6 +476,9 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 							AuthoringUIResources.editDialog_title,
 							AuthoringUIResources.editDialog_msgCannotEdit,
 							status);
+					// restore old value
+					//
+					supportingPluginCheckbox.setSelection(!supportingPluginCheckbox.getSelection());
 					return;
 				}
 			}
@@ -553,6 +555,9 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 							AuthoringUIResources.editDialog_title,
 							AuthoringUIResources.editDialog_msgCannotEdit,
 							status);
+					// restore old value
+					//
+					ctrl_changeable.setSelection(!ctrl_changeable.getSelection());
 					return;
 				}
 				copyright_viewer.refresh();
