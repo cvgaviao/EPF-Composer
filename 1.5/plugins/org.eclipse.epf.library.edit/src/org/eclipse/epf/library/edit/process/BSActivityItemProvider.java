@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.edit.process;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -80,6 +81,10 @@ import org.eclipse.epf.uma.util.AssociationHelper;
 public abstract class BSActivityItemProvider extends ActivityItemProvider
 		implements IProcessItemProvider, IBSItemProvider,
 		ITableItemLabelProvider, IConfigurable, ICachedChildrenItemProvider {
+	private static final Set<VariabilityType> localVariabilityTypes = new HashSet<VariabilityType>(Arrays.asList(new VariabilityType[] {
+			VariabilityType.LOCAL_CONTRIBUTION,
+			VariabilityType.LOCAL_REPLACEMENT
+	}));
 
 	private Object parent;
 
@@ -709,15 +714,15 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		return factory;
 	}
 	
-	private List wrap(Activity owner, Collection breakdownElements, boolean inherited, boolean contributed, Disposable wrappers) {
-		ArrayList wrapperList = new ArrayList();
+	private List<?> wrap(Activity owner, Collection<?> breakdownElements, boolean inherited, boolean contributed, Disposable wrappers) {
+		ArrayList<Object> wrapperList = new ArrayList<Object>();
 		IWrapperItemProviderFactory wrapperFactory = getWrapperItemProviderFactory();
-		for (Iterator iter = breakdownElements.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = breakdownElements.iterator(); iter.hasNext();) {
 			Object object = iter.next();
 			Object unWrapped = TngUtil.unwrap(object);
 			if (unWrapped instanceof BreakdownElement) {
 				BreakdownElement e = (BreakdownElement) unWrapped;
-				if (!TngUtil.isBase(owner.getBreakdownElements(), e)) {
+				if (!TngUtil.isBase(owner.getBreakdownElements(), e, localVariabilityTypes)) {
 					Object child = getWrapper(owner, e, wrappers);
 					if(child == null) {
 						child = wrapperFactory.createWrapper(e, owner, adapterFactory);

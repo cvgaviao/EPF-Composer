@@ -1321,20 +1321,25 @@ public final class TngUtil {
 	 * 
 	 * @param elements
 	 * @param base
+	 * @param variabilityTypes variability types to check against, ignored if <code>null</code>
 	 * @return
 	 */
-	public static boolean isBase(List elements, Object base) {
-		for (Iterator iter = elements.iterator(); iter.hasNext();) {
+	public static boolean isBase(List<?> elements, Object base, Set<VariabilityType> variabilityTypes) {
+		for (Iterator<?> iter = elements.iterator(); iter.hasNext();) {
 			Object element = (Object) iter.next();
 			if (element instanceof VariabilityElement) {
-				if (base == ((VariabilityElement) element)
-						.getVariabilityBasedOnElement()) {
+				VariabilityElement ve = ((VariabilityElement) element);
+				if (base == ve.getVariabilityBasedOnElement()
+						&& (variabilityTypes == null || variabilityTypes
+								.contains(ve.getVariabilityType()))) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
+	
+	
 
 	public static String getPresentationName(Object e) {
 		return getPresentationName(e, null);
