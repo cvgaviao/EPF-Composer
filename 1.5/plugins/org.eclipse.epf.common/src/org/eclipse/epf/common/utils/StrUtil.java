@@ -365,23 +365,15 @@ public class StrUtil {
 			case '%':
 				if (i + 4 < length) {
 					String hexStr = html.substring(i + 1, i + 5);
-					boolean validHextStr = true;
-					for (int j = 0; j < hexStr.length(); j++) {
-						char c = hexStr.charAt(j);
-						if (!(c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
-							validHextStr = false;
-							break;
-						}
-					}
-					if (validHextStr) {
-						try {
-							int codePoint = Integer.parseInt(hexStr, 16);
-							char[] c = UCharacter.toChars(codePoint);
-							result.append(c);
-							i += 4;
-							break;
-						} catch (Exception e) {
-						}
+					try {
+						int codePoint = Integer.parseInt(hexStr, 16);
+						char[] c = UCharacter.toChars(codePoint);
+						result.append(c);
+						i += 4;
+						break;
+					} catch (NumberFormatException e) {
+						// wasn't a valid hex string..
+						// fall through to the result.append(ch)
 					}
 				}
 				result.append(ch);
