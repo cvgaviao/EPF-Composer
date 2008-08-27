@@ -9,7 +9,7 @@
 // IBM Corporation - initial implementation
 //------------------------------------------------------------------------------
 
-package org.eclipse.epf.diagram.core.providers;
+package org.eclipse.epf.library.diagram.providers;
 
 import java.util.ArrayList;
 
@@ -18,18 +18,13 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
-import org.eclipse.epf.diagram.model.NamedNode;
-import org.eclipse.epf.diagram.model.impl.NamedNodeImpl;
 import org.eclipse.epf.library.LibraryPlugin;
-import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.diagram.providers.IDiagramIconProvider;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Role;
+import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.uml2.uml.ObjectNode;
-import org.eclipse.uml2.uml.StructuredActivityNode;
 
 /**
  * This class manages all of the icon providers, and handles querying them for
@@ -37,7 +32,8 @@ import org.eclipse.uml2.uml.StructuredActivityNode;
  * MethodElement then use that to call the provider and retrieve the icon.
  * 
  * 
- * @author Pierre Padovani
+ * @author Shilpa Toraskar
+ * @since 1.5
  * 
  */
 public class DiagramIconProviderManager {
@@ -59,7 +55,7 @@ public class DiagramIconProviderManager {
 	/**
 	 * Reference to myself for singleton instance
 	 */
-	private static DiagramIconProviderManager myself;
+	private static DiagramIconProviderManager instance;
 
 	/**
 	 * The list of registered providers
@@ -79,10 +75,10 @@ public class DiagramIconProviderManager {
 	 * @return ElementPropertyProviderManager
 	 */
 	public static DiagramIconProviderManager getInstance() {
-		if (myself == null) {
-			myself = new DiagramIconProviderManager();
+		if (instance == null) {
+			instance = new DiagramIconProviderManager();
 		}
-		return myself;
+		return instance;
 	}
 
 	/**
@@ -104,39 +100,12 @@ public class DiagramIconProviderManager {
 			loadProviders();
 		}
 
-		// We get back to the MethodElement by retrieving the eAnnotation containing the GUID, then
-		// look up the element from that.
-		if (element instanceof ObjectNode) {
-			EAnnotation eAnnotation = ((ObjectNode) element)
-					.getEAnnotation(BridgeHelper.UMA_ELEMENT);
-			String modelUri = (String) eAnnotation.getDetails().get(
-					BridgeHelper.UMA_URI);
-			String guid = modelUri.substring(modelUri.indexOf('#') + 1);
-			MethodElement me = LibraryService.getInstance()
-					.getCurrentLibraryManager().getMethodElement(guid);
+		if (element instanceof Role || element instanceof Task
+				|| element instanceof WorkProduct) {
 			for (int index = 0; index < providers.size() && image == null; index++) {
 				IDiagramIconProvider iProvider = providers.get(index);
-				image = iProvider.getImageForElement(me, smallIcon);
-			}
-		} else if (element instanceof StructuredActivityNode) {
-			StructuredActivityNode san = (StructuredActivityNode) element;
-			EAnnotation eAnnotation = san
-					.getEAnnotation(BridgeHelper.UMA_ELEMENT);
-			String modelUri = (String) eAnnotation.getDetails().get(
-					BridgeHelper.UMA_URI);
-			String guid = modelUri.substring(modelUri.indexOf('#') + 1);
-			MethodElement me = LibraryService.getInstance()
-					.getCurrentLibraryManager().getMethodElement(guid);
-			for (int index = 0; index < providers.size() && image == null; index++) {
-				IDiagramIconProvider iProvider = providers.get(index);
-				image = iProvider.getImageForElement(me, smallIcon);
-			}
-		} else if (element instanceof NamedNodeImpl) {
-			NamedNode wpn = (NamedNode) element;
-			MethodElement me = wpn.getLinkedElement();
-			for (int index = 0; index < providers.size() && image == null; index++) {
-				IDiagramIconProvider iProvider = providers.get(index);
-				image = iProvider.getImageForElement(me, smallIcon);
+				image = iProvider.getImageForElement((MethodElement) element,
+						false);
 			}
 		}
 

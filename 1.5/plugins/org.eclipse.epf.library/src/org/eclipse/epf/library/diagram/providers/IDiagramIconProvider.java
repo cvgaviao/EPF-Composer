@@ -9,7 +9,7 @@
 // IBM Corporation - initial implementation
 //------------------------------------------------------------------------------
 
-package org.eclipse.epf.diagram.core.providers;
+package org.eclipse.epf.library.diagram.providers;
 
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.epf.uma.MethodElement;

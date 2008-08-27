@@ -20,9 +20,15 @@ import java.awt.RenderingHints;
 import java.awt.TexturePaint;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.DirectColorModel;
+import java.awt.image.IndexColorModel;
+import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -32,13 +38,19 @@ import org.eclipse.epf.common.utils.I18nUtil;
 import org.eclipse.epf.common.utils.ImageUtil;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.diagram.providers.DiagramIconProviderManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.elements.RoleLayout;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
+import org.eclipse.swt.graphics.RGB;
 
 /**
  * Renders the Role diagram using Java2D and saves it as a JPEG file.
@@ -80,9 +92,17 @@ public class RoleDiagramPublisher {
 	// The maximun number of text lines for the element labels.
 	private int maxTextLines;
 
+	// The image width
+	private int imageWidth = 32;
+	
+	// The image height
+	private int imageHeight = 32;
+	
 	private int linePadding = 12;
 
 	private Font textFont = null;
+	
+	private Properties xslParams = null;
 
 	/**
 	 * Creates a new <code>ImagePublisher</code>.
@@ -111,6 +131,13 @@ public class RoleDiagramPublisher {
 		xSpacing = LibraryPreferences.getRoleDiagramHorizontalSpacing();
 		ySpacing = LibraryPreferences.getRoleDiagramVerticalSpacing();
 		maxTextLines = LibraryPreferences.getRoleDiagramMaximumTextLines();
+		
+		try {
+			xslParams = LibraryPlugin.getDefault().getProperties(
+					"/layout/xsl/resources.properties"); //$NON-NLS-1$
+		} catch (IOException e) {
+
+		}
 	}
 	
 	private String getFontName() {
@@ -223,10 +250,17 @@ public class RoleDiagramPublisher {
 					String imageFile = publishDir
 							+ taskLayout.getDiagramiconUrl();
 					try {
-						BufferedImage taskImage = ImageUtil.getBufferedImage(
-								imageFile, panel);
-						int taskWidth = taskImage.getWidth();
-						int taskHeight = taskImage.getHeight();
+						BufferedImage taskImage = null;
+						Image taskShapeIcon = getShapeIcon(task);
+						if (taskShapeIcon != null) {
+							taskImage = convertToAWT(taskShapeIcon.getImageData());
+						}
+						else {
+							taskImage = ImageUtil.getBufferedImage(imageFile, panel);
+						}
+						
+						int taskWidth = imageWidth; //taskImage.getWidth();
+						int taskHeight = imageHeight; // taskImage.getHeight();
 						if (taskNo == 1) {
 							taskEndPoint.x += taskWidth;
 							taskEndPoint.y += taskHeight;
@@ -302,10 +336,17 @@ public class RoleDiagramPublisher {
 					String imageFile = publishDir
 							+ wpLayout.getDiagramiconUrl();
 					try {
-						BufferedImage workProductImage = ImageUtil
-								.getBufferedImage(imageFile, panel);
-						int workProductWidth = workProductImage.getWidth();
-						int workProductHeight = workProductImage.getHeight();
+						BufferedImage workProductImage = null;
+						Image wpShapeIcon = getShapeIcon(workProduct);
+						if (wpShapeIcon != null) {
+							workProductImage = convertToAWT(wpShapeIcon.getImageData());
+						}
+						else {
+							workProductImage = ImageUtil.getBufferedImage(imageFile, panel);
+						}
+					
+						int workProductWidth = imageWidth; // workProductImage.getWidth();
+						int workProductHeight = imageHeight; // workProductImage.getHeight();
 						if (workProductNo == 1) {
 							workProductEndPoint.x += workProductWidth;
 							workProductEndPoint.y += workProductHeight;
@@ -361,10 +402,19 @@ public class RoleDiagramPublisher {
 			try {
 				String roleName = roleLayout.getDisplayName();
 				String imageFile = publishDir + roleLayout.getDiagramiconUrl();
-				BufferedImage roleImage = ImageUtil.getBufferedImage(imageFile,
-						panel);
-				int roleWidth = roleImage.getWidth();
-				int roleHeight = roleImage.getHeight();
+				
+				BufferedImage roleImage = null;
+				Image roleShapeIcon = getShapeIcon(role);
+				if (roleShapeIcon != null) {
+					roleImage = convertToAWT(roleShapeIcon.getImageData());
+				}
+				else {
+					roleImage = ImageUtil.getBufferedImage(imageFile, panel);
+				}
+			
+				// scale image to 32x32
+				int roleWidth = imageWidth; //roleImage.getWidth();
+				int roleHeight = imageHeight; // roleImage.getHeight();
 				x = xOffset - 5;
 				y = borderHeight;
 				roleEndPoint.x += roleWidth;
@@ -386,7 +436,7 @@ public class RoleDiagramPublisher {
 							+ (workProductEndPoint.y - workProductStartPoint.y)
 							/ 2);
 					renderAssociation(g2d, startPoint, endPoint,
-							LibraryResources.roleDiagramResponsibleFor_text,
+							getLabel("roleDiagramResponsibleFor_text"),
 							textFont, Color.BLACK);
 				} else if (totalTasks > 0) {
 					y = borderHeight
@@ -407,7 +457,8 @@ public class RoleDiagramPublisher {
 					Point endPoint = new Point(lineEndPoint, borderHeight
 							+ (taskEndPoint.y - taskStartPoint.y) / 2);
 					renderAssociation(g2d, startPoint, endPoint,
-							LibraryResources.roleDiagramPerforms_text,
+							getLabel("roleDiagramPerforms_text"),
+//							LibraryResources.roleDiagramPerforms_text,
 							textFont, Color.BLACK);
 				}
 				Rectangle roleImageRect = new Rectangle(x, y, roleWidth,
@@ -489,4 +540,84 @@ public class RoleDiagramPublisher {
 		ImageUtil.drawText(g2d, name, font, color, textX, textY, 80, 3);
 	}
 
+	
+	private Image getShapeIcon(MethodElement element) {
+		Image shapeImage = DiagramIconProviderManager.getInstance().getIcon(
+				element, false);
+		if (shapeImage != null) {
+			return shapeImage;
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Converts swt imagedata into awt buffered image
+	 * @param data
+	 * @return
+	 */
+	private BufferedImage convertToAWT(ImageData data) {
+		ColorModel colorModel = null;
+		PaletteData palette = data.palette;
+		if (palette.isDirect) {
+			colorModel = new DirectColorModel(data.depth, palette.redMask,
+					palette.greenMask, palette.blueMask);
+			BufferedImage bufferedImage = new BufferedImage(colorModel,
+					colorModel.createCompatibleWritableRaster(data.width,
+							data.height), false, null);
+			WritableRaster raster = bufferedImage.getRaster();
+			int[] pixelArray = new int[3];
+			for (int y = 0; y < data.height; y++) {
+				for (int x = 0; x < data.width; x++) {
+					int pixel = data.getPixel(x, y);
+					RGB rgb = palette.getRGB(pixel);
+					pixelArray[0] = rgb.red;
+					pixelArray[1] = rgb.green;
+					pixelArray[2] = rgb.blue;
+					raster.setPixels(x, y, 1, 1, pixelArray);
+				}
+			}
+			return bufferedImage;
+		} else {
+			RGB[] rgbs = palette.getRGBs();
+			byte[] red = new byte[rgbs.length];
+			byte[] green = new byte[rgbs.length];
+			byte[] blue = new byte[rgbs.length];
+			for (int i = 0; i < rgbs.length; i++) {
+				RGB rgb = rgbs[i];
+				red[i] = (byte) rgb.red;
+				green[i] = (byte) rgb.green;
+				blue[i] = (byte) rgb.blue;
+			}
+			if (data.transparentPixel != -1) {
+				colorModel = new IndexColorModel(data.depth, rgbs.length, red,
+						green, blue, data.transparentPixel);
+			} else {
+				colorModel = new IndexColorModel(data.depth, rgbs.length, red,
+						green, blue);
+			}
+			BufferedImage bufferedImage = new BufferedImage(colorModel,
+					colorModel.createCompatibleWritableRaster(data.width,
+							data.height), false, null);
+			WritableRaster raster = bufferedImage.getRaster();
+			int[] pixelArray = new int[1];
+			for (int y = 0; y < data.height; y++) {
+				for (int x = 0; x < data.width; x++) {
+					int pixel = data.getPixel(x, y);
+					pixelArray[0] = pixel;
+					raster.setPixel(x, y, pixelArray);
+				}
+			}
+			return bufferedImage;
+		}
+	}
+	
+	private String getLabel(String key) {
+		String label = xslParams.getProperty(key);
+		if ( label == null ) {
+			System.out.println("Can't find property entry for " + key); //$NON-NLS-1$
+			label = key;
+		}
+		return label;
+	}
 }
