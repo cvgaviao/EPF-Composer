@@ -43,6 +43,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -464,11 +465,28 @@ public class MethodLibraryActionBarContributor extends
 			}
 		}
 	}
+	
+	protected void updatePasteAction() {
+		ISelectionProvider selectionProvider = activeEditor instanceof ISelectionProvider ? (ISelectionProvider) activeEditor
+				: activeEditor.getEditorSite().getSelectionProvider();
+
+		if (selectionProvider != null) {
+			ISelection selection = selectionProvider.getSelection();
+			IStructuredSelection structuredSelection = selection instanceof IStructuredSelection ? (IStructuredSelection) selection
+					: StructuredSelection.EMPTY;
+
+			pasteAction.setEnabled(pasteAction.updateSelection(structuredSelection));
+		}
+	}
 
 	/**
 	 * This populates the pop-up menu before it appears.
 	 */
 	public void menuAboutToShow(IMenuManager menuManager) {
+		// This is needed to enable Paste after Copy but the selection has not been changed yet
+		//
+		updatePasteAction();
+		
 		// Add our standard marker.
 		menuManager.add(new Separator("additions")); //$NON-NLS-1$
 		menuManager.add(new Separator("edit")); //$NON-NLS-1$

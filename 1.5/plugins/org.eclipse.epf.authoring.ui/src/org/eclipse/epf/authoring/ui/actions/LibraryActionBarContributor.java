@@ -328,6 +328,19 @@ public class LibraryActionBarContributor extends
 
 		update();
 	}
+	
+	protected void updatePasteAction() {
+		if (activeViewPart == null)
+			return;
+
+		ISelectionProvider selectionProvider = activeViewPart instanceof ISelectionProvider ? (ISelectionProvider) activeViewPart
+				: activeViewPart.getSite().getSelectionProvider();
+		ISelection selection = selectionProvider.getSelection();
+		IStructuredSelection structuredSelection = selection instanceof IStructuredSelection ? (IStructuredSelection) selection
+				: StructuredSelection.EMPTY;
+		pasteAction.setEnabled(pasteAction.updateSelection(structuredSelection));
+	}
+
 
 	/**
 	 * @see org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor#update()

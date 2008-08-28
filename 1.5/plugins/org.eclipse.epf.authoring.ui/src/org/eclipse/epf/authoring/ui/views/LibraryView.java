@@ -1157,9 +1157,11 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		 * @see LibraryActionBarContributor#menuAboutToShow(IMenuManager)
 		 */
 		public void menuAboutToShow(IMenuManager menuManager) {
+			// This is needed to enable Paste after Copy but the selection has not been changed yet
+			//
+			updatePasteAction();
+			
 			checkLocked();
-			
-			
 
 			// Add our standard marker.
 			menuManager.add(new Separator("fixed-additions")); //$NON-NLS-1$
