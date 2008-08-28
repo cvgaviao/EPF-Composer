@@ -42,7 +42,7 @@ public class ElementTreeLabelProvider extends LabelProvider {
 		if (obj instanceof ElementTreeContentProviderUIFolder) {
 			return ((ElementTreeContentProviderUIFolder) obj).getName();
 		} else if (obj instanceof MethodElement) {
-			return ((MethodElement) obj).getName();
+			return TngUtil.getLabel(obj);
 		}
 		return labelProvider.getText(obj);
 	}

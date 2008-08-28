@@ -214,9 +214,10 @@ public class MethodLibraryProject {
 	 * @return A <code>IProject</code>.
 	 * @throws CoreException
 	 *             if an error occurs while performing the operation.
+	 * @throws IOException 
 	 */
 	public static IProject openProject(String path, IProgressMonitor monitor) 
-			throws CoreException {
+			throws CoreException, IOException {
 		return openProject(path, null,  monitor);
 	}
 
@@ -234,9 +235,10 @@ public class MethodLibraryProject {
 	 * @return A <code>IProject</code>.
 	 * @throws CoreException
 	 *             if an error occurs while performing the operation.
+	 * @throws IOException 
 	 */
 	public static IProject openProject(String path, String projectName, IProgressMonitor monitor)
-			throws CoreException {
+			throws CoreException, IOException {
 		IPath projectPath = new Path(path + File.separator
 				+ IProjectDescription.DESCRIPTION_FILE_NAME);
 
@@ -273,7 +275,16 @@ public class MethodLibraryProject {
 				// The project does exist in the workspace.
 				// Verify that the location matches. If not, create a new method
 				// library project.
-				if (new File(path).compareTo(project.getLocation().toFile()) != 0) {
+				File prjLoc = project.getLocation().toFile();
+				File libLoc = new File(path);
+				if (libLoc.compareTo(prjLoc) != 0) {
+					project = MethodLibraryProject.createProject(path, monitor);
+				} else if(!libLoc.getCanonicalPath().equals(prjLoc.getAbsolutePath())) {
+					// letter case change in library path from the last time it was opened
+					// the project need to be recreate to clear cache of path names
+					//
+					project.delete(IProject.FORCE
+							| IProject.NEVER_DELETE_PROJECT_CONTENT, monitor);
 					project = MethodLibraryProject.createProject(path, monitor);
 				}
 			}
