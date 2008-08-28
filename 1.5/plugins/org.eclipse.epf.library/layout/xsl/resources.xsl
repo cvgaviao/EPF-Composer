@@ -174,6 +174,7 @@
 	<xsl:param name="replacesText"/>
 	<xsl:param name="reportsText"/>
 	<xsl:param name="representationOptionsText"/>
+	<xsl:param name="requiredResultsText"/>
 	<xsl:param name="responsibleForText"/>
 	<xsl:param name="responsibleText"/>
 	<xsl:param name="reusableAssetsText"/>

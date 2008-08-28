@@ -163,6 +163,20 @@
 						<xsl:with-param name="fieldText" select="attribute[@name='isRepeatable']"/>
 					</xsl:call-template>
 				</xsl:if>				
+				<xsl:choose>
+				    <xsl:when test="referenceList[@name='requiredResults']/Element">
+					    <xsl:call-template name="addReferences">
+						    <xsl:with-param name="refName" select="$requiredResultsText"/>
+						    <xsl:with-param name="refElement" select="referenceList[@name='requiredResults']/Element"/>
+					    </xsl:call-template>
+				    </xsl:when>
+				    <xsl:otherwise>
+					    <xsl:call-template name="property">
+						    <xsl:with-param name="fieldLabel" select="$requiredResultsText"/>
+						    <xsl:with-param name="fieldText" select="' '"/>
+					    </xsl:call-template>
+				    </xsl:otherwise>
+				</xsl:choose>  
 			</table>
 		</div>
 	</xsl:template>
