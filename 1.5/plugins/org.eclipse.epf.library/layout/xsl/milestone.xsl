@@ -173,7 +173,7 @@
 				    <xsl:otherwise>
 					    <xsl:call-template name="property">
 						    <xsl:with-param name="fieldLabel" select="$requiredResultsText"/>
-						    <xsl:with-param name="fieldText" select="' '"/>
+						    <xsl:with-param name="fieldText" select="'&#160;'"/>
 					    </xsl:call-template>
 				    </xsl:otherwise>
 				</xsl:choose>  
