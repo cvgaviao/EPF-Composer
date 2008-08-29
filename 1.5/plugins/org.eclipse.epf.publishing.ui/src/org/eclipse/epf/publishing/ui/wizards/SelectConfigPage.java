@@ -169,10 +169,10 @@ public class SelectConfigPage extends BaseWizardPage {
 		configViewer.setInput(configsList.toArray());
 		// configViewer.setInput(configs);
 
-		if (configs.length > 0) {
+		if (configsList.size() > 0) {
 			// Select the first config and display its brief description.
 			table.select(0);
-			setBriefDescription(configs[0]);
+			setBriefDescription((MethodConfiguration)configsList.get(0));
 		}
 	}
 
