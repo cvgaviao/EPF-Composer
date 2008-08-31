@@ -22,7 +22,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.edit.util.IResourceScanner;
 import org.eclipse.epf.library.edit.util.ITextReferenceReplacer;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.uma.CapabilityPattern;
@@ -34,7 +36,15 @@ public class TextReferenceReplacerImpl implements ITextReferenceReplacer {
 	private static String CAPABILITY_PATH = MultiFileSaveUtil.CAPABILITY_PATTERN_PATH + "/"; //$NON-NLS-1$
 	private static String DELIVERY_PATH = MultiFileSaveUtil.DELIVERY_PROCESS_PATH + "/"; //$NON-NLS-1$
 	private static boolean debug = LibraryPlugin.getDefault().isDebugging();
-	private final static boolean localDebug  = false;	
+	private final static boolean localDebug  = false;
+	private static IResourceScanner resourceScanner;
+	
+	public IResourceScanner getResourceScanner() {
+		if (resourceScanner == null) {
+			resourceScanner = new ResourceScanner(null, null);
+		}
+		return resourceScanner;
+	}
 	
 	private Map convertMap(Map oldToNewObjectMap) {
 		if (oldToNewObjectMap == null) {
@@ -175,4 +185,6 @@ public class TextReferenceReplacerImpl implements ITextReferenceReplacer {
 		return newText.toString();
 	}
 
+	
+	
 }
