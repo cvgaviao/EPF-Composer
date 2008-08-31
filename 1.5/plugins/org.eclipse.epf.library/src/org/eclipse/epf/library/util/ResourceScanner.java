@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.edit.util.IResourceScanner;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 
@@ -32,7 +33,7 @@ import org.eclipse.epf.uma.MethodPlugin;
  * @since 1.5
  *
  */
-public class ResourceScanner {
+public class ResourceScanner implements IResourceScanner {
 	
 	private static boolean localDebug = false;
 
@@ -51,25 +52,42 @@ public class ResourceScanner {
 	private File srcPluginRootParent;
 	private File tgtPluginRootParent;
 	
-	private Map<File, File> fileMap = new LinkedHashMap<File, File>();
-	private Set<File> tgtFileSet = new HashSet<File>();
+	private Map<File, File> fileMap;
+	private Set<File> tgtFileSet;
 
 	/**
 	 * Creates a new instance.
 	 */
 	public ResourceScanner(MethodPlugin srcPlugin, MethodPlugin tgtPlugin) {
+		init(srcPlugin, tgtPlugin);
+	}
+	
+	public void init(MethodPlugin srcPlugin, MethodPlugin tgtPlugin) {
 		this.srcPlugin = srcPlugin;
 		this.tgtPlugin = tgtPlugin;
+		if (srcPlugin == null || tgtPlugin == null) {
+			srcPluginRoot = null;
+			tgtPluginRoot = null;
+			srcPluginRootParent = null;
+			tgtPluginRootParent = null;
+			fileMap = null;
+			tgtFileSet = null;
+			return;
+		}
+				
 		File srcFile = new File(srcPlugin.eResource().getURI().toFileString());
 		File tgtFile = new File(tgtPlugin.eResource().getURI().toFileString());
 		srcPluginRoot = srcFile.getParentFile();
 		tgtPluginRoot = tgtFile.getParentFile();
 		srcPluginRootParent = srcPluginRoot.getParentFile();
 		tgtPluginRootParent = tgtPluginRoot.getParentFile();
+		
+		fileMap = new LinkedHashMap<File, File>();
+		tgtFileSet = new HashSet<File>();
 	}
 
 	public String scan(MethodElement srcElement, MethodElement tgtElement, String source, EStructuralFeature feature) {
-/*		if (feature.getName().equals("mainDescription")) {
+		/*if (feature.getName().equals("mainDescription")) {
 			System.out.println("LD> srcElement: " + srcElement.getName() + ", feature: " + feature.getName());
 		}*/
 		String srcPath = ResourceHelper.getElementPath(srcElement);
