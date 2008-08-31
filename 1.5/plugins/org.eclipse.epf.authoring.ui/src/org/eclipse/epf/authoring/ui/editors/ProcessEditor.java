@@ -75,9 +75,11 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ProcessAuthoringConfigurator;
 import org.eclipse.epf.library.edit.IAdapterFactoryProvider;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.command.ActionManager;
 import org.eclipse.epf.library.edit.command.CommandStackChangedEvent;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
+import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.EditingDomainComposedAdapterFactory;
@@ -2420,4 +2422,38 @@ public class ProcessEditor extends MethodElementEditor implements
 	protected int getActivePage() {
 		return super.getActivePage();
 	}
+	
+	protected ActionManager newActionManager() {
+
+		final Collection<ActivityDropCommand> adCommands = new ArrayList<ActivityDropCommand>();
+
+		ActionManager mgr = new MeEditorActionManager() {
+
+			protected void registerExecutedCommand(Command command) {
+				if (command instanceof ActivityDropCommand) {
+					ActivityDropCommand adc = (ActivityDropCommand) command;
+					if (adc.getResourceFileCopyHandler() != null) {
+						adCommands.add(adc);
+					}
+				}
+			}
+
+			public void saveIsDone() {
+				for (ActivityDropCommand adc : adCommands) {
+					adc.scanAndCopyResources();
+				}
+				adCommands.clear();
+				super.saveIsDone();
+			}
+
+			public void undo() {
+				adCommands.clear();
+				super.undo();
+			}
+
+		};
+		return mgr;
+	}
+
+	
 }

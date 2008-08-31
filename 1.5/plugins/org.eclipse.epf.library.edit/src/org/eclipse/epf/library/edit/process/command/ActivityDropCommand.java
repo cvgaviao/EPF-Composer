@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -32,8 +33,12 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ActivityHandler;
+import org.eclipse.epf.library.edit.util.ExtensionManager;
+import org.eclipse.epf.library.edit.util.IResourceScanner;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
+import org.eclipse.epf.library.edit.util.ITextReferenceReplacer;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.ResourceFileCopyHandler;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
@@ -46,9 +51,11 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.TeamProfile;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 
 /**
@@ -82,6 +89,8 @@ public class ActivityDropCommand extends BSDropCommand {
 	protected HashSet<?> addedObjects;
 	
 	protected IConfigurator activityDeepCopyConfigurator;
+	
+	private ResourceFileCopyHandler resourceFileCopyHandler;
 
 	public ActivityDropCommand(Activity target, List activities, Object viewer, AdapterFactory adapterFactory) {
 		super(target, activities);
@@ -94,6 +103,37 @@ public class ActivityDropCommand extends BSDropCommand {
 		if (isDeliveryProcess) {
 			oldPatterns = new ArrayList(((DeliveryProcess) targetProcess)
 					.getIncludesPatterns());
+		}
+		
+		initResouceFileCopyHandler(activities);
+		
+	}
+
+	private void initResouceFileCopyHandler(List activities) {
+		if (activities != null && ! activities.isEmpty() &&
+				 activities.get(0) instanceof BreakdownElement) {
+			BreakdownElement dropElement0 = (BreakdownElement) activities.get(0);
+			
+			MethodPlugin srcPlugin = UmaUtil.getMethodPlugin(targetProcess);
+			MethodPlugin tgtPlugin = UmaUtil.getMethodPlugin(dropElement0);
+			
+			boolean toCreateHandler = true;
+			if (srcPlugin == tgtPlugin) {
+				Process sourceProcess = TngUtil.getOwningProcess(dropElement0);
+				boolean sIsDeliveryProcess = sourceProcess instanceof DeliveryProcess;
+				if (isDeliveryProcess == sIsDeliveryProcess) {
+					toCreateHandler = false;
+				}
+			}
+			
+			if (toCreateHandler) {
+				ITextReferenceReplacer txtRefReplacer = ExtensionManager.getTextReferenceReplacer();
+				if (txtRefReplacer != null) {
+					IResourceScanner resourceScanner = txtRefReplacer.getResourceScanner();				
+					resourceScanner.init(srcPlugin, tgtPlugin);				
+					resourceFileCopyHandler = new ResourceFileCopyHandler(resourceScanner);
+				}
+			}
 		}
 	}
 	
@@ -228,7 +268,8 @@ public class ActivityDropCommand extends BSDropCommand {
 			} else {
 				super.execute();
 			}
-		} finally {
+		} finally {			
+			originalToCopyMap = activityHandler.cloneOrignaltoCopyMap();
 			activityHandler.dispose();
 		}
 		
@@ -643,5 +684,24 @@ public class ActivityDropCommand extends BSDropCommand {
 		this.activityDeepCopyConfigurator = activityDeepCopyConfigurator;
 	}
 	
+	private Map originalToCopyMap;
+	
+	public void scanAndCopyResources() {
+		if (resourceFileCopyHandler == null) {
+			return;
+		}
+		try {
+			resourceFileCopyHandler.execute(originalToCopyMap);
+		} catch (Throwable e){
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		} finally {
+			resourceFileCopyHandler.getScanner().init(null, null);
+			originalToCopyMap = null;
+		}
+	}
 
+	public ResourceFileCopyHandler getResourceFileCopyHandler() {
+		return resourceFileCopyHandler;
+	}
+	
 }

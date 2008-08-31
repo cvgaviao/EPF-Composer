@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -34,7 +35,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryTreeIterator;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.edit.IConfigurator;
-import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDeepCopyCommand;
@@ -98,6 +98,30 @@ public class ActivityHandler {
 		copyToOriginal = new HashMap();
 		procPackages = new ArrayList();	
 		copyHelper = new Helper();
+	}
+	
+	public Map<Object, Object> cloneOrignaltoCopyMap() {
+		Map oMap = null;
+		if (deepCopyToOriginalMap != null && !deepCopyToOriginalMap.isEmpty()) {
+			oMap = getDeepCopyHelper().getObjectToCopyMap();
+		} else if (editingDomain instanceof TraceableAdapterFactoryEditingDomain) {
+			TraceableAdapterFactoryEditingDomain td = (TraceableAdapterFactoryEditingDomain) editingDomain;
+			oMap = td.getOriginalToClipboardMap();
+		}
+		return copy(oMap);
+	}
+	
+	private Map copy(Map map) {
+		if (map == null) {
+			return null;
+		}
+		Map ret = new HashMap();		
+		for (Map.Entry entry: (Set<Map.Entry>) map.entrySet()) {
+			Object key = entry.getKey();
+			Object val = entry.getValue();
+			ret.put(key, val);
+		}
+		return ret;
 	}
 	
 	public void dispose() {
