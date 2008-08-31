@@ -28,22 +28,21 @@ import org.eclipse.epf.uma.MethodElement;
 public class ResourceFileCopyHandler {
 	
 	private IResourceScanner scanner;
-	private static boolean localDebug = true;
+	private static boolean localDebug = false;
 	
 	public ResourceFileCopyHandler(IResourceScanner scanner) {
 		this.scanner = scanner;
 	}
 	
-	public void execute(Map<MethodElement, MethodElement> copyToOriginalMap) {
-		int sz = copyToOriginalMap == null ? 0 : copyToOriginalMap.size();
+	public void execute(Map<MethodElement, MethodElement> originalToCopyMap) {
+		int sz = originalToCopyMap == null ? 0 : originalToCopyMap.size();
 		if (localDebug) {
 			System.out.println("LD> copyToOriginalMap: " + sz);
 		}
 		if (sz == 0) {
 			return;
 		}
-		for (Map.Entry<MethodElement, MethodElement> entry: copyToOriginalMap.entrySet()) {
-			//scanElement(entry.getValue(), entry.getKey());
+		for (Map.Entry<MethodElement, MethodElement> entry: originalToCopyMap.entrySet()) {
 			scanElement(entry.getKey(), entry.getValue());
 		}
 		scanner.copyFiles();
