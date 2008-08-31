@@ -103,6 +103,7 @@ public class ResourceScanner {
 
 			// process hrefs
 			m = p_href_ref.matcher(sb.toString());
+			sb = new StringBuffer();
 			while (m.find()) {
 				String text = m.group();
 				String url = m.group(1);
