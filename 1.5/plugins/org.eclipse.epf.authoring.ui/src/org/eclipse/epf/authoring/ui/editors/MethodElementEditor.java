@@ -496,122 +496,132 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		this.fMethodElementEditorErrorTickUpdater = new MethodElementEditorErrorTickUpdater(this);
 	}
 	
-	protected void createActionManager() {
-		actionMgr = new ActionManager() {
-
-			protected FullyRevertibleCommandStack createCommandStack() {
-				return new FullyRevertibleCommandStack(this) {
-					public boolean doExecute(Command command) {
-						// Check modify first.
-						if (command instanceof IResourceAwareCommand) {
-							Collection modifiedResources = ((IResourceAwareCommand) command)
-									.getModifiedResources();
-							if (modifiedResources != null
-									&& !(modifiedResources.isEmpty())) {
-								IStatus status = UserInteractionHelper
-										.checkModify(modifiedResources,
-												getSite().getShell());
-								if (!status.isOK()) {
-									MethodElementEditor.this
-											.handleError(status);
-									return false;
-								}
-							}
-						} else {
-							EObject owner = TngUtil.getOwner(command);
-							if (owner != null) {
-								IStatus status = TngUtil.checkEdit(owner,
-										getSite().getShell());
-								if (!status.isOK()) {
-									AuthoringUIPlugin
-											.getDefault()
-											.getMsgDialog()
-											.display(
-													AuthoringUIResources.errorDialog_title, 
-													AuthoringUIResources.editDialog_msgCannotEdit, 
-													status);
-									return false;
-								}
+	public class MeEditorActionManager extends ActionManager {
+		
+		protected void registerExecutedCommand(Command command) {			
+		}
+		
+		protected FullyRevertibleCommandStack createCommandStack() {
+			return new FullyRevertibleCommandStack(this) {
+				public boolean doExecute(Command command) {
+					registerExecutedCommand(command);
+					// Check modify first.
+					if (command instanceof IResourceAwareCommand) {
+						Collection modifiedResources = ((IResourceAwareCommand) command)
+								.getModifiedResources();
+						if (modifiedResources != null
+								&& !(modifiedResources.isEmpty())) {
+							IStatus status = UserInteractionHelper
+									.checkModify(modifiedResources,
+											getSite().getShell());
+							if (!status.isOK()) {
+								MethodElementEditor.this
+										.handleError(status);
+								return false;
 							}
 						}
-
-						if (changeTime == -1) {
-							changeTime = System.currentTimeMillis();
+					} else {
+						EObject owner = TngUtil.getOwner(command);
+						if (owner != null) {
+							IStatus status = TngUtil.checkEdit(owner,
+									getSite().getShell());
+							if (!status.isOK()) {
+								AuthoringUIPlugin
+										.getDefault()
+										.getMsgDialog()
+										.display(
+												AuthoringUIResources.errorDialog_title, 
+												AuthoringUIResources.editDialog_msgCannotEdit, 
+												status);
+								return false;
+							}
 						}
-						boolean ret = super.doExecute(command);
-						if (!ret && changeTime != -1) {
-							changeTime = -1;
-						}
-						return ret;
 					}
 
-				};
-			}
-
-			public boolean doAction(int actionType, EObject object,
-					org.eclipse.emf.ecore.EStructuralFeature feature,
-					Object value, int index) {
-				final IStatus status = TngUtil
-						.checkEdit(object, getSite().getShell());
-				if (status.isOK()) {
-					return super.doAction(actionType, object, feature, value,
-							index);
-				} else {
-					// this might be called from a non-UI thread
-					// so make sure the message dialog will be shown in a UI thread
-					//
-					SafeUpdateController.syncExec(new Runnable() {
-
-						public void run() {
-							AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
-									AuthoringUIResources.editDialog_title, 
-									AuthoringUIResources.editDialog_msgCannotEdit, 
-									status);
-						}
-						
-					});
-					return false;
+					if (changeTime == -1) {
+						changeTime = System.currentTimeMillis();
+					}
+					boolean ret = super.doExecute(command);
+					if (!ret && changeTime != -1) {
+						changeTime = -1;
+					}
+					return ret;
 				}
-			}
 
-			protected void save(Resource resource) {
-				// don't save resource that is changed outside of this editor
+			};
+		}
+
+		public boolean doAction(int actionType, EObject object,
+				org.eclipse.emf.ecore.EStructuralFeature feature,
+				Object value, int index) {
+			final IStatus status = TngUtil
+					.checkEdit(object, getSite().getShell());
+			if (status.isOK()) {
+				return super.doAction(actionType, object, feature, value,
+						index);
+			} else {
+				// this might be called from a non-UI thread
+				// so make sure the message dialog will be shown in a UI thread
 				//
-				if (changedResources.contains(resource)) {
-					return;
-				}
-				
-				boolean canSave;
-				if(resource.getURI().isFile()) {
-					File file = new File(resource.getURI().toFileString());
-					canSave = file.lastModified() > changeTime;
-				}
-				else {
-					canSave = true;
-				}				
-				try {
-					if(canSave) {
-						ILibraryPersister.FailSafeMethodLibraryPersister persister = getPersister();
+				SafeUpdateController.syncExec(new Runnable() {
+
+					public void run() {
+						AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
+								AuthoringUIResources.editDialog_title, 
+								AuthoringUIResources.editDialog_msgCannotEdit, 
+								status);
+					}
+					
+				});
+				return false;
+			}
+		}
+
+		protected void save(Resource resource) {
+			// don't save resource that is changed outside of this editor
+			//
+			if (changedResources.contains(resource)) {
+				return;
+			}
+			
+			boolean canSave;
+			if(resource.getURI().isFile()) {
+				File file = new File(resource.getURI().toFileString());
+				canSave = file.lastModified() > changeTime;
+			}
+			else {
+				canSave = true;
+			}				
+			try {
+				if(canSave) {
+					ILibraryPersister.FailSafeMethodLibraryPersister persister = getPersister();
+					try {
+						persister.save(resource);
+						persister.commit();
+					} catch (Exception e) {
+						AuthoringUIPlugin.getDefault().getLogger()
+						.logError(e);
 						try {
-							persister.save(resource);
-							persister.commit();
-						} catch (Exception e) {
-							AuthoringUIPlugin.getDefault().getLogger()
-							.logError(e);
-							try {
-								persister.rollback();
-							} catch (Exception ex) {
-								ViewHelper
-								.reloadCurrentLibaryOnRollbackError(getEditorSite()
-										.getShell());
-							}
+							persister.rollback();
+						} catch (Exception ex) {
+							ViewHelper
+							.reloadCurrentLibaryOnRollbackError(getEditorSite()
+									.getShell());
 						}
 					}
-				} finally {
-					changeTime = -1;
 				}
+			} finally {
+				changeTime = -1;
 			}
-		};
+		}
+	};
+
+	protected ActionManager newActionManager() {
+		return new MeEditorActionManager();
+	}
+	
+	protected void createActionManager() {
+		actionMgr = newActionManager();
 
 		actionMgr.getCommandStack().addCommandStackListener(
 				new CommandStackListener() {
