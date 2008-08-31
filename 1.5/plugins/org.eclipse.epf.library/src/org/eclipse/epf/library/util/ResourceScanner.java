@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.FileUtil;
+import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.util.IResourceScanner;
 import org.eclipse.epf.uma.MethodElement;
@@ -169,8 +170,8 @@ public class ResourceScanner implements IResourceScanner {
 		}
 
 		try {
-			File srcFile = new File(srcFolder, srcUrl);
-			File tgtFile = new File(tgtFolder, tgtUrl);
+			File srcFile = newFile(srcFolder, srcUrl);
+			File tgtFile = newFile(tgtFolder, tgtUrl);
 			
 			if (srcFile.isFile() && srcFile.exists()) {
 				if (tgtFile.exists()) {
@@ -180,7 +181,7 @@ public class ResourceScanner implements IResourceScanner {
 					}
 				}
 				tgtUrl = this.getTargetUrl(srcFile, tgtFolder, tgtUrl);
-				tgtFile = new File(tgtFolder, tgtUrl);;
+				tgtFile = newFile(tgtFolder, tgtUrl);;
 				
 				srcFile = srcFile.getCanonicalFile();
 				tgtFile = tgtFile.getCanonicalFile();				
@@ -193,6 +194,15 @@ public class ResourceScanner implements IResourceScanner {
 		return tgtUrl;
 	}
 
+    private File newFile(File parent, String child) {
+    	String decodedChild;
+    	try {
+    		decodedChild = NetUtil.decodeURL(child);
+    	} catch (Exception e) {
+    		decodedChild = child;
+    	}
+    	return new File(parent, decodedChild);
+    }
 
 	/**
 	 * copy all the files to the destination
@@ -233,7 +243,7 @@ public class ResourceScanner implements IResourceScanner {
 		}
 		
 		String tgtUrl = tgtUrl0;
-		File tgtFile = new File(tgtFolder, tgtUrl);
+		File tgtFile = newFile(tgtFolder, tgtUrl);
 		String u = "_";	//$NON-NLS-1$
 		int i = 1;
 		while (true) {
@@ -265,7 +275,7 @@ public class ResourceScanner implements IResourceScanner {
 			if (addDot) {
 				tgtUrl += dot + url2;
 			}
-			tgtFile = new File(tgtFolder, tgtUrl);			
+			tgtFile = newFile(tgtFolder, tgtUrl);			
 			i++;
 		}
 		
