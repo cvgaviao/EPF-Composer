@@ -931,7 +931,7 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 		if (options.isPublishLightWeightTree()) {
 
 			Collections.sort(items_workflow, nameComparator);
-			Collections.sort(items_task, nameComparator);
+			//Collections.sort(items_task, nameComparator);
 			Collections.sort(items_guidance, nameComparator);
 
 			buildItems(items_workflow, bm);
