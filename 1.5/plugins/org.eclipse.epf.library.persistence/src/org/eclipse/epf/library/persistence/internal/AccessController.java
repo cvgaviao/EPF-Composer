@@ -65,9 +65,11 @@ public class AccessController implements IAccessController {
 		ArrayList<String> paths = new ArrayList<String>();
 		for (int i = 0; i < resources.length; i++) {
 			Resource resource = resources[i];
-			String path = FileManager.toFileString(resource.getURI());
-			if(path != null) {
-				paths.add(path);
+			if (resource != null) {
+				String path = FileManager.toFileString(resource.getURI());
+				if(path != null) {
+					paths.add(path);
+				}
 			}
 		}
 		if(!paths.isEmpty()) {
