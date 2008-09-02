@@ -371,9 +371,10 @@ public class StrUtil {
 						result.append(c);
 						i += 4;
 						break;
-					} catch (NumberFormatException e) {
+					} catch (Exception e) {
 						// wasn't a valid hex string..
 						// fall through to the result.append(ch)
+						CommonPlugin.getDefault().getLogger().logError(e);
 					}
 				}
 				result.append(ch);
