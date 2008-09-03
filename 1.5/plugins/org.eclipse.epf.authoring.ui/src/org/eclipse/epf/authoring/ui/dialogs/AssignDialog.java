@@ -211,6 +211,15 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			if (sourcePlugin == targetPlugin) {
 				return true;
 			}
+			
+			//TO DO: remove the following temp solution by implementing the move across plugins.
+			if (this instanceof ReassignDialog && elements.get(0) instanceof CustomCategory) {
+				if (TngUtil.isInPluginWithLessThanOneSuperCustomCategory(
+						(CustomCategory) elements.get(0), sourcePlugin)) {
+					return false;
+				}
+			}						
+			
 			if (targetPlugin.getBases().contains(sourcePlugin)) {
 				return true;
 			}
