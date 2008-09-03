@@ -698,7 +698,15 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		
 		CommandStack commandStack = actionMgr.getCommandStack();
 		editingDomain = new AdapterFactoryEditingDomain(TngAdapterFactory.INSTANCE
-				.getNavigatorView_ComposedAdapterFactory(), commandStack);
+				.getNavigatorView_ComposedAdapterFactory(), commandStack) {
+			@Override
+			public boolean isReadOnly(Resource resource) {
+				if(elementObj != null && TngUtil.isLocked(elementObj)) {
+					return true;
+				}
+				return super.isReadOnly(resource);
+			}
+		};
 
 	}
 
