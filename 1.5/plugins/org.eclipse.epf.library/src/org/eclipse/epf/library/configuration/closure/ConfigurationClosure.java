@@ -253,6 +253,8 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 
 	private void processReplacers() {
+		clearReplacerElementMarkerMap();
+		
 		Set<VariabilityElement> replacerSet = dependencyManager.getReplacerSet();
 		if (replacerSet == null || replacerSet.isEmpty()) {
 			return;
@@ -275,7 +277,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			replacers.add(ve);
 		}
 		
-		clearReplacerElementMarkerMap();	
+		//clearReplacerElementMarkerMap();	
 		replacerElementMarkerMap = new HashMap<MethodElement, IMarker>();
 		for (Map.Entry<VariabilityElement, List> entry: baseReplacersMap.entrySet()) {
 			VariabilityElement base = entry.getKey();
