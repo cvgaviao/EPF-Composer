@@ -33,7 +33,11 @@
 <xsl:choose>
 	<xsl:when test="@navigation-mark='true' ">
 	<P CLASS="indexheading">
-	<a><xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute><xsl:value-of select="@presentationName"/></a>
+	<a>
+		<xsl:attribute name="id">_INDEX_ITEM_<xsl:value-of select="@name"/></xsl:attribute>
+		<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+		<xsl:value-of select="@presentationName"/>
+	</a>
    </P>
 	</xsl:when>
 	<xsl:otherwise>

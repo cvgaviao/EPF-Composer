@@ -426,7 +426,7 @@ class KeyWordHolder {
 						MiscStatic
 								.print(
 										outP,
-										"<A NAME=\"" + beginChar + "\">" + beginChar + "</A>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+										"<A ID=\"_INDEX_ITEM_" + beginChar + "\" NAME=\"" + beginChar + "\">" + beginChar + "</A>"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 						if (fs == null) {
 							MiscStatic.print(outP, "<BR>"); //$NON-NLS-1$
 						}
