@@ -233,7 +233,7 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 			unresolvedBaseGuidsValue = (String) marker.getAttribute(UnresolvedBaseGuids);
 			if (unresolvedBaseGuidsValue == null || unresolvedBaseGuidsValue.length() == 0) {
 				unresolvedBaseGuidsValue = base.getGuid();
-				errMsg += "plugin: "; //$NON-NLS-1$
+				errMsg += ": "; //$NON-NLS-1$
 			} else if (unresolvedBaseGuidsValue.indexOf(base.getGuid()) < 0) {
 				unresolvedBaseGuidsValue += ", " + base.getGuid(); //$NON-NLS-1$
 				errMsg += "plugins: "; //$NON-NLS-1$
