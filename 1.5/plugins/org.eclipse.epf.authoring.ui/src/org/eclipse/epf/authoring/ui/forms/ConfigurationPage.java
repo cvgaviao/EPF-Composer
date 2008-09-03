@@ -418,7 +418,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private void setStateForCategoriesUIFolder(ContainerCheckedTreeViewer viewer, List<MethodPlugin>plugins) {	 	
     	for (MethodPlugin plugin : plugins) {
     		// if plugin is selected then select categories folder as well
-    		if (viewer.getChecked(plugin)) {
+    		if (viewer.getGrayed(plugin)) {
     			try {
 	    			Object[] children = contProvider.getChildren(plugin);
 	    			for (Object child : children) {
