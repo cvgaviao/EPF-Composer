@@ -44,7 +44,7 @@ import org.eclipse.swt.widgets.Text;
 public class AuthoringPreferencePage extends BasePreferencePage implements
 		ModifyListener {
 
-	private static int MIN_PREFERENCE_HISTORY_SIZE = 1;
+	private static int MIN_PREFERENCE_HISTORY_SIZE = 5;
 
 	private static int MAX_PREFERENCE_HISTORY_SIZE = 20;
 

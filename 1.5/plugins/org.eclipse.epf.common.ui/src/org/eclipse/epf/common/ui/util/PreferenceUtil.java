@@ -112,15 +112,22 @@ public class PreferenceUtil {
 			List<String> list = getList(prefStore, name);
 			list.remove(value);
 			list.add(0, value);
-			int preferenceHistorySize = CommonPreferences
-					.getPreferenceHistorySize();
+
+			//adjust the list according to the history size
+			int preferenceHistorySize = CommonPreferences.getPreferenceHistorySize();			
 			if (list.size() > preferenceHistorySize) {
-				list = list.subList(0, 10);
+				list = list.subList(0, preferenceHistorySize - 1);
+			}			
+			if (defaultValue != null && defaultValue.length() > 0) {
+				if (!list.contains(defaultValue)) {
+					if (list.size() == preferenceHistorySize) {
+						list.add(list.size() - 1, defaultValue);
+					} else {
+						list.add(defaultValue);
+					}
+				}
 			}
-			if (list.size() == preferenceHistorySize && defaultValue != null
-					&& defaultValue.length() > 0) {
-				list.set(9, defaultValue);
-			}
+			
 			setList(prefStore, name, list);
 		}
 	}
