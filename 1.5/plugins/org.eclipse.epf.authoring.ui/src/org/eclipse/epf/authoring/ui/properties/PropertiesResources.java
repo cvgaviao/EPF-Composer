@@ -194,6 +194,9 @@ public final class PropertiesResources extends NLS {
 	public static String PredecessorDialog_PredecessorErrorMessage;
 	public static String ProcessEditorFormProperties_textEditCell_problem_msg;
 	public static String ProcessEditorFormProperties_cellEditor_invalidPredcessor_problem_msg;
+	
+	public static String true_text;
+	public static String false_text;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, PropertiesResources.class);

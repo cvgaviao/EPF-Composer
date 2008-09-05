@@ -25,9 +25,7 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.IColumnAware;
 import org.eclipse.epf.uma.Activity;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IContentProvider;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -68,10 +66,36 @@ public abstract class ActivityRollupSection extends AbstractSection {
 
 	protected ComposedAdapterFactory adapterFactory;
 
-	private ILabelProvider labelProvider;
+	private RollupLabelProvider labelProvider;
 
 	private IContentProvider contentProvider;
 
+	private class RollupLabelProvider extends AdapterFactoryLabelProvider {
+		public RollupLabelProvider(AdapterFactory factory) {
+			super(factory);
+		}
+
+		public String getColumnText(Object object, int columnIndex) {
+			ColumnDescriptor columnDesc = columnDescriptors[columnIndex];
+			String columnText = super.getColumnText(object, columnIndex);
+			if (columnDesc.id == IBSItemProvider.COL_IS_EVENT_DRIVEN
+					|| columnDesc.id == IBSItemProvider.COL_IS_ONGOING
+					|| columnDesc.id == IBSItemProvider.COL_IS_OPTIONAL
+					|| columnDesc.id == IBSItemProvider.COL_IS_PLANNED
+					|| columnDesc.id == IBSItemProvider.COL_IS_REPEATABLE
+					|| columnDesc.id == IBSItemProvider.COL_HAS_MULTIPLE_OCCURRENCES) {
+				if (columnText.trim().equals(new Boolean(true).toString())) {
+					return PropertiesResources.true_text;
+				} else if (columnText.trim().equals(
+						new Boolean(false).toString())) {
+					return PropertiesResources.false_text;
+				}
+			}
+
+			return columnText;
+		}
+	};
+	
 	/**
 	 * Initialize
 	 * 
@@ -132,13 +156,13 @@ public abstract class ActivityRollupSection extends AbstractSection {
 		// set up columns
 		viewer.setupColumns(columnDescriptors);
 		setColumnIndexToNameMap(adapterFactory, columnDescriptors);
-
+	
 		// set up providers
-		viewer.setContentProvider(new ExposedAdapterFactoryContentProvider(
-				adapterFactory));
-		viewer
-				.setLabelProvider(new AdapterFactoryLabelProvider(
-						adapterFactory));
+		contentProvider = new ExposedAdapterFactoryContentProvider(adapterFactory);
+		labelProvider = new RollupLabelProvider(adapterFactory);
+		
+		viewer.setContentProvider(contentProvider);
+		viewer.setLabelProvider(labelProvider);
 
 		// do roll up
 		rollUp();
