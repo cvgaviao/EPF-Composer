@@ -45,6 +45,8 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.navigator.ConfigPageCategoriesItemProvider;
+import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
+import org.eclipse.epf.library.edit.navigator.MethodPackagesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
@@ -63,6 +65,7 @@ import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -389,10 +392,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
     	List<MethodPackage> packages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
     	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
-//    	initializeViewerSelection(configViewer, plugins);
-    	initializeViewerSelectionForPackages(configViewer, packages);
+    	initializeConfigViewerSelection(configViewer, packages, plugins);
     	setStateForCategoriesUIFolder(configViewer, plugins);
-		
+    	
 		// read from config and check the appropriate items in the CC viewers
 		List<ContentCategory> addCats = new ArrayList<ContentCategory>(config.getAddedCategory());
 		initializeViewerSelection(addCategoryViewer, addCats);
@@ -401,20 +403,85 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     	
 	}
 	
-	private void initializeViewerSelectionForPackages(
-			ContainerCheckedTreeViewer viewer, List<MethodPackage> elements) {
-		if (!elements.isEmpty()) {
-			for (MethodPackage element : elements) {
+	/** 
+	 * This method is only meant for configuration viewer since there are lot
+	 * of special cases taken care in this.
+	 * 
+	 * @param viewer
+	 * @param packages
+	 * @param plugins
+	 */
+	private void initializeConfigViewerSelection(ContainerCheckedTreeViewer viewer,
+			List<MethodPackage> packages, List<MethodPlugin> plugins) {
+
+		// We need to do following 2 lines because viewer.setChecked doesn't
+		// work correctly
+		// for content packages if viewer setCheckedElements is not run before
+		// Somehow setCheckedElements initializes something...
+		// for process package viwer.setChecked works fine.
+		viewer.setCheckedElements(packages.toArray());
+		viewer.setCheckedElements((new ArrayList()).toArray());
+
+		if (!packages.isEmpty()) {
+			for (MethodPackage element : packages) {
 				try {
 					if (!contProvider.hasChildren(element)) {
-						viewer.setChecked(element, true);				
+						viewer.setChecked(element, true);
 					}
 				} catch (Exception e) {
 				}
 			}
 		}
+
+		// special case for Method Content when plugin is selected but there are
+		// no method content packages
+		IContentProvider contProvider = viewer.getContentProvider();
+		if (contProvider instanceof ConfigPackageContentProvider) {
+			ConfigPackageContentProvider configContProvider = (ConfigPackageContentProvider) contProvider;
+			for (MethodPlugin plugin : plugins) {
+				Object[] children = configContProvider.getChildren(plugin);
+				traverse(viewer, children, configContProvider);
+			}
+		}
+	}
+	
+	
+	/**
+	 * This traverse is only called for plugins when they are included in the configuration.
+	 * This method checks special method packages UI folder if there are no method content  packages and plugin is
+	 * selected.
+	 * 
+	 * @param viewer
+	 * @param items
+	 * @param configContProvider
+	 */
+	private void traverse(ContainerCheckedTreeViewer viewer, Object[] items,
+			ConfigPackageContentProvider configContProvider) {
+		for (Object child: items) {
+			Object[] children = configContProvider.getChildren(child);
+			if (child instanceof MethodPackagesItemProvider) {
+				// for MethodPackages if there are no content pacakges then select this UI folder too if plugin is
+				// selected. We only call this traverse method for selected plugins, so you don't need to check again
+				// if plugin is selected
+				if (children.length == 0) {
+					viewer.setChecked(child, true);
+				}
+				break;
+			}
+			if (child instanceof ContentItemProvider) {
+				// No need to traverse other than contentItem provider
+				traverse(viewer, children, configContProvider);
+			}
+		}
 	}
 
+	/**
+	 * Set state for categories UI folder.
+	 * If plugin is selected, categories UI folder should be selected. There are no methods to disable TreeItem.
+	 * We achieve similar look and feel by changing background/foreground color.
+	 * @param viewer
+	 * @param plugins
+	 */
 	private void setStateForCategoriesUIFolder(ContainerCheckedTreeViewer viewer, List<MethodPlugin>plugins) {	 	
     	for (MethodPlugin plugin : plugins) {
     		// if plugin is selected then select categories folder as well
@@ -430,7 +497,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     			catch (Exception e) {			
     			}
     		}
-    		  		
+    		
     		// make categories folder enabled/disbled.
 			Tree t = viewer.getTree();
 			TreeItem[] items = t.getItems();
@@ -449,7 +516,6 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			}
     	}
 	}
-
 	
 	private void initializeViewerSelection(ContainerCheckedTreeViewer viewer, List<? extends Object> elements) {
 		if (!elements.isEmpty())
