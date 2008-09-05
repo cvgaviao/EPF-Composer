@@ -22,6 +22,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,6 +33,7 @@ import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryAlreadyExistsException;
 import org.eclipse.epf.library.LibraryNotFoundException;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.layout.LayoutResources;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -41,6 +43,7 @@ import org.eclipse.epf.library.util.ModelStorage;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.migration.MappingUtil;
+import org.eclipse.epf.persistence.util.LibrarySchedulingRule;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -248,8 +251,35 @@ public class XMILibraryManager extends AbstractLibraryManager {
 	 * @throw <code>LibraryServiceException</code> if an error occurred while
 	 *        performing the operation.
 	 */
-	protected MethodLibrary openMethodLibrary(File path)
+	protected MethodLibrary openMethodLibrary(final File path)
 			throws LibraryServiceException {
+		final MethodLibrary[] libHolder = new MethodLibrary[1];
+		final LibraryServiceException[] exceptionHolder = new LibraryServiceException[1];
+		IWorkspaceRunnable workspaceRunnable = new IWorkspaceRunnable() {
+
+			public void run(IProgressMonitor monitor) throws CoreException {
+				try {
+					libHolder[0] = doOpenMethodLibrary(path);
+				} catch (LibraryServiceException e) {
+					exceptionHolder[0] = e;
+				}
+			}
+			
+		};
+		try {
+			ResourcesPlugin.getWorkspace().run(workspaceRunnable,
+					ResourcesPlugin.getWorkspace().getRoot(),
+					IWorkspace.AVOID_UPDATE, new NullProgressMonitor());
+		} catch (CoreException e) {
+			throw new LibraryServiceException(e);
+		}
+		if(exceptionHolder[0] != null) {
+			throw exceptionHolder[0];
+		}
+		return libHolder[0];
+	}
+	
+	protected MethodLibrary doOpenMethodLibrary(File path) throws LibraryServiceException {
 		File libraryXMIFile = new File(path, LIBRARY_XMI);
 		if (!libraryXMIFile.exists()) {
 			throw new LibraryNotFoundException();

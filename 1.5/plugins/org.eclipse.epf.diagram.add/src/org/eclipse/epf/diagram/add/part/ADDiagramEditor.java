@@ -40,6 +40,7 @@ import org.eclipse.epf.diagram.core.part.util.DiagramEditorUtil;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
 import org.eclipse.epf.diagram.model.ActivityDetailDiagram;
 import org.eclipse.epf.diagram.model.Diagram;
+import org.eclipse.epf.diagram.model.Node;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.gef.EditPart;
@@ -222,6 +223,6 @@ public class ADDiagramEditor extends AbstractDiagramEditor {
 	
 	@Override
 	protected boolean isOrphan(EObject modelElement) {
-		return BridgeHelper.getMethodElement(modelElement) == null;
+		return modelElement instanceof Node && BridgeHelper.getMethodElement(modelElement) == null;
 	}
 }
