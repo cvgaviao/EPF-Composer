@@ -1589,6 +1589,12 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 		private boolean checkEdit(EObject element, Object control,
 				boolean checkContainerResource) {
+			if(widgetToCheck == control) {
+				// checkEdit is being performed for the control
+				//
+				return true;
+			}
+			
 			// keep a reference to the current widget so mustRestoreValue() can
 			// use it to check
 			// whether a focus lost event is triggered during a checkEdit.
