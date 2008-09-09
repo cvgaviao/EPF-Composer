@@ -252,5 +252,12 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 	public Collection getModifiedResources() {
 		return modifiedResources;
 	}
+	
+	public Collection getAffectedObjects() {
+		if (desc != null) {
+			return Arrays.asList(new Object[] { desc });
+		}
+		return super.getAffectedObjects();
+	}
 
 }

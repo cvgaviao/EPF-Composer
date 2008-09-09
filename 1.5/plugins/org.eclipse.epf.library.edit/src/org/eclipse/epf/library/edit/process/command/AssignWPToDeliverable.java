@@ -46,6 +46,8 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 	private WorkProductDescriptor wpDesc;
 
 	private Collection modifiedResources;
+	
+	private Collection affectedObjects;
 
 	private HashMap map = new HashMap();
 
@@ -68,6 +70,7 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 		}
 
 		this.modifiedResources = new HashSet();
+		this.affectedObjects = new HashSet();
 
 	}
 
@@ -183,5 +186,14 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 			}
 		}
 		return modifiedResources;
+	}
+	
+	public Collection getAffectedObjects() {
+		if (workProducts != null &&  !workProducts.isEmpty()) {
+			affectedObjects.add(activity);
+			affectedObjects.add(wpDesc);
+			return affectedObjects;
+		}
+		return super.getAffectedObjects();
 	}
 }

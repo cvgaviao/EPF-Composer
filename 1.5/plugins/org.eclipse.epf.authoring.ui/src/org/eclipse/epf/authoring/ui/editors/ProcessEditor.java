@@ -60,6 +60,7 @@ import org.eclipse.epf.authoring.ui.forms.ProcessDescription;
 import org.eclipse.epf.authoring.ui.preferences.ApplicationPreferenceConstants;
 import org.eclipse.epf.authoring.ui.properties.EPFPropertySheetPage;
 import org.eclipse.epf.authoring.ui.providers.IMethodElementEditorPageProviderExtension;
+import org.eclipse.epf.authoring.ui.util.ProcessEditorUtil;
 import org.eclipse.epf.authoring.ui.views.ProcessViewer;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeEventWrapper;
@@ -77,6 +78,7 @@ import org.eclipse.epf.library.edit.IAdapterFactoryProvider;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.ActionManager;
 import org.eclipse.epf.library.edit.command.CommandStackChangedEvent;
+import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
@@ -96,6 +98,7 @@ import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.DeliveryProcess;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -2450,10 +2453,30 @@ public class ProcessEditor extends MethodElementEditor implements
 				adCommands.clear();
 				super.undo();
 			}
+			
+			public boolean execute(IResourceAwareCommand cmd) {
+				boolean ret = super.execute(cmd);
+				if (ret) {
+					ProcessEditorUtil.deSelectSynchronize(cmd);
+				}
+				return ret;
+			}
+			
+			public boolean doAction(int actionType, EObject object,
+					org.eclipse.emf.ecore.EStructuralFeature feature,
+					Object value, int index) {
+				boolean ret = super.doAction(actionType, object, feature,
+						value, index);
 
+				if (ret) {
+					ProcessEditorUtil.deSelectSynchonize((Descriptor) object, feature.getFeatureID());					
+				}
+				return ret;
+			}
 		};
 		return mgr;
 	}
-
+	
+	
 	
 }

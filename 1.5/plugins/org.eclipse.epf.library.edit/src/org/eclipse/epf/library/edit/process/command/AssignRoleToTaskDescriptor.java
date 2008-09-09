@@ -50,6 +50,8 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 
 	private Collection modifiedResources;
 
+	private Collection affectedObjects;
+	
 	private int action;
 
 	List existingRoleDescList = new ArrayList();
@@ -86,6 +88,7 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 		}
 
 		this.modifiedResources = new HashSet();
+		this.affectedObjects = new HashSet();
 	}
 
 	/*
@@ -213,6 +216,15 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 			}
 		}
 		return modifiedResources;
+	}
+	
+	public Collection getAffectedObjects() {
+		if (roles != null && !roles.isEmpty()) {
+			affectedObjects.add(activity);
+			affectedObjects.add(taskDesc);
+			return affectedObjects;
+		}
+		return super.getAffectedObjects();
 	}
 
 }

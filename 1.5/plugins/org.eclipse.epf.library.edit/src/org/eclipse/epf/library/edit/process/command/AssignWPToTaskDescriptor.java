@@ -48,6 +48,8 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 	private TaskDescriptor taskDesc;
 
 	private Collection modifiedResources;
+	
+	private Collection affectedObjects;
 
 	private int action;
 
@@ -80,6 +82,7 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			this.activity = (Activity) parent;
 		}
 		this.modifiedResources = new HashSet();
+		this.affectedObjects = new HashSet();
 	}
 
 	/*
@@ -211,4 +214,14 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 		}
 		return modifiedResources;
 	}
+	
+	public Collection getAffectedObjects() {
+		if (workProducts != null &&  !workProducts.isEmpty()) {
+			affectedObjects.add(activity);
+			affectedObjects.add(taskDesc);
+			return affectedObjects;
+		}
+		return super.getAffectedObjects();
+	}
+
 }

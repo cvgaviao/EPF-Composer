@@ -52,6 +52,8 @@ public class AssignPrimaryPerformerToTaskDescriptor extends
 	private TaskDescriptor taskDesc;
 
 	private Collection modifiedResources;
+	
+	private Collection affectedObjects;
 
 	// private boolean descExists = false;
 
@@ -85,6 +87,7 @@ public class AssignPrimaryPerformerToTaskDescriptor extends
 		}
 
 		this.modifiedResources = new HashSet(); 
+		this.affectedObjects  = new HashSet();
 	}
 
 	/*
@@ -171,4 +174,14 @@ public class AssignPrimaryPerformerToTaskDescriptor extends
 		}
 		return modifiedResources;
 	}
+	
+	public Collection getAffectedObjects() {
+		if (role != null) {
+			affectedObjects.add(activity);
+			affectedObjects.add(taskDesc);
+			return affectedObjects;
+		}
+		return super.getAffectedObjects();
+	}
+
 }

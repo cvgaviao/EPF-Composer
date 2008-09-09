@@ -48,6 +48,8 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 	private RoleDescriptor roleDesc;
 
 	private Collection modifiedResources;
+	
+	private Collection affectedObjects;
 
 	private HashMap map = new HashMap();
 
@@ -81,6 +83,7 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 			this.activity = (Activity) parent;
 		}
 		this.modifiedResources = new HashSet();
+		this.affectedObjects = new HashSet();
 	}
 
 	/*
@@ -196,5 +199,14 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 			}
 		}
 		return modifiedResources;
+	}
+	
+	public Collection getAffectedObjects() {
+		if (workProducts != null &&  !workProducts.isEmpty()) {
+			affectedObjects.add(activity);
+			affectedObjects.add(roleDesc);
+			return affectedObjects;
+		}
+		return super.getAffectedObjects();
 	}
 }
