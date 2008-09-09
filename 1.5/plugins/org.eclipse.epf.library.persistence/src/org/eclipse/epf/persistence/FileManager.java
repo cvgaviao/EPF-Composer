@@ -324,8 +324,9 @@ public class FileManager implements IFileManager {
 		for (int i = 0; i < paths.length; i++) {
 			String path = paths[i];
 			try {
+				path = new File(path).getCanonicalPath();
 				refresh(path);
-			} catch (CoreException e) {
+			} catch (Exception e) {
 				PersistencePlugin.getDefault().getLogger().logError(e);
 			}
 			IFile file = workspace.getRoot().getFileForLocation(new Path(path));

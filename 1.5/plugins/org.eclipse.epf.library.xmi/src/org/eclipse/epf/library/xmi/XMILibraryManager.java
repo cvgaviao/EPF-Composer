@@ -195,6 +195,7 @@ public class XMILibraryManager extends AbstractLibraryManager {
 
 			return library;
 		} catch (Exception e) {
+			XMILibraryPlugin.getDefault().getLogger().logError(e);
 			throw new LibraryServiceException(e);
 		} finally {
 			skipEventProcessing = false;

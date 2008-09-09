@@ -112,6 +112,8 @@ public class NewLibraryWizard extends Wizard implements INewWizard {
 				return true;
 			}
 		} catch (Exception e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			
 			String reason = e.getMessage();
 			if (reason == null) {
 				reason = AuthoringUIResources.newLibraryInternlError_reason;

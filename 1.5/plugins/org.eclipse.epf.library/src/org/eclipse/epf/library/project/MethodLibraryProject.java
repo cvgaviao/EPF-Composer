@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
@@ -66,6 +67,21 @@ public class MethodLibraryProject {
 		if ( projectName == null ) {
 			File libraryPath = new File(path);
 			projectName = libraryPath.getName();
+			if(!Workspace.caseSensitive) {
+				// this is a non-case-sensitive file system
+				// find existing method library project with different case variant
+				//
+				IProject[] projects = workspace.getRoot().getProjects();
+				for (IProject prj : projects) {
+					if(isMethodLibraryProject(prj) && prj.getName().equalsIgnoreCase(projectName)) {
+						project = prj;
+						break;
+					}
+				}
+			}
+		}
+		if(project == null) {
+			project = workspace.getRoot().getProject(projectName);
 		}
 		
 		// if a project of the same name also exists, delete it
@@ -73,12 +89,10 @@ public class MethodLibraryProject {
 		// a project is opened but not closed for some reason
 		// now create a new library with the same name (same library folder)
 		// we need to delete the previous one
-		project = workspace.getRoot().getProject(projectName);
 		if (project.exists()) {
 			project.delete(IProject.FORCE
 					| IProject.NEVER_DELETE_PROJECT_CONTENT, monitor);
-		}
-		
+		}		
 
 		IProjectDescription description = workspace
 				.newProjectDescription(projectName);
