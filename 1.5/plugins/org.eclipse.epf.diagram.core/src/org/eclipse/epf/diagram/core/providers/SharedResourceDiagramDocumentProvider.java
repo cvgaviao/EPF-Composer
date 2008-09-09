@@ -183,12 +183,15 @@ public class SharedResourceDiagramDocumentProvider extends StorageDiagramDocumen
 		// if overwrite allowed, this diagram should replace the diagram in the reloaded resource.
 		//
 		Resource resource = diagram.eResource();
-		if (!overwrite) {
-			DiagramManager.checkSynchronizationState(resource);
-		}		
-		IStatus status = Services.getAccessController().checkModify(new Resource[] {resource}, MsgBox.getDefaultShell());
-		if(!status.isOK()) {
-			throw new CoreException(status);
+		if (resource != null) {
+			if (!overwrite) {
+				DiagramManager.checkSynchronizationState(resource);
+			}
+			IStatus status = Services.getAccessController().checkModify(
+					new Resource[] { resource }, MsgBox.getDefaultShell());
+			if (!status.isOK()) {
+				throw new CoreException(status);
+			}
 		}
 		
 		// inform about the upcoming content change
