@@ -19,15 +19,20 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -37,6 +42,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
  * inputs, mandatory inputs, optional inputs and outputs.
  * 
  * @author Shilpa Toraskar
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
@@ -58,6 +64,8 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 	List existingWPDescList = new ArrayList();
 
 	List newWPDescList = new ArrayList();
+	
+	Collection<WorkProductDescriptor> subartifactDescriptors = new ArrayList<WorkProductDescriptor>();
 
 	private MethodConfiguration config;
 
@@ -126,6 +134,53 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			}
 		}
 
+		// add subartifacts to the activity's breakdown element list if there is any
+		//
+		for (Iterator<?> iter = workProducts.iterator(); iter
+		.hasNext();) {
+			Object element = iter.next();
+			if (element instanceof Artifact) {
+				Iterator<?> iterator = new AbstractTreeIterator<Object>(element, false) {
+					
+					/**
+					 * Comment for <code>serialVersionUID</code>
+					 */
+					private static final long serialVersionUID = -4820477887426087262L;
+					
+					protected Iterator<?> getChildren(Object object) {
+						Object subArtifacts = Providers.getConfigurationApplicator().getReference(
+								(VariabilityElement) object,
+								UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts(),
+								config);
+						return ((Collection)subArtifacts).iterator();
+					}
+					
+				};
+				
+				while (iterator.hasNext()) {
+					Artifact subArtifact = (Artifact) iterator.next();
+					WorkProductDescriptor newWpDesc = null;
+
+					boolean isNewDescriptor = false;
+					// check for local descriptor
+					newWpDesc = (WorkProductDescriptor) ProcessCommandUtil
+							.getDescriptor(subArtifact, activity, config);
+					if (newWpDesc == null) {
+						// check for inherited descriptor
+						newWpDesc = (WorkProductDescriptor) ProcessCommandUtil
+								.getInheritedDescriptor(subArtifact, activity, config);
+						if (newWpDesc == null) {
+							newWpDesc = ProcessUtil.createWorkProductDescriptor(subArtifact);
+							isNewDescriptor = true;
+						}
+					}
+					if (isNewDescriptor && !subartifactDescriptors.contains(newWpDesc)) {
+						subartifactDescriptors.add(newWpDesc);
+					}
+				}
+			}
+		}
+
 		redo();
 	}
 
@@ -151,6 +206,9 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 		}
 
 		activity.getBreakdownElements().addAll(newWPDescList);
+		if(!subartifactDescriptors.isEmpty()) {
+			activity.getBreakdownElements().addAll(subartifactDescriptors);
+		}
 
 		if (map != null) {
 			Set keyset = map.keySet();
@@ -183,7 +241,9 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getOutput().removeAll(existingWPDescList);
 			taskDesc.getOutput().removeAll(newWPDescList);
 		}
+		
 		activity.getBreakdownElements().removeAll(newWPDescList);
+		activity.getBreakdownElements().removeAll(subartifactDescriptors);
 
 		if (map != null) {
 			Set keyset = map.keySet();
