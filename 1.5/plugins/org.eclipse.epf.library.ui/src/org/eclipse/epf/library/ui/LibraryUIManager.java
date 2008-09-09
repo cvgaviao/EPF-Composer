@@ -333,6 +333,11 @@ public class LibraryUIManager {
 					monitor.setTaskName(taskName);
 					monitor.worked(1);
 					LibraryService.getInstance().closeCurrentMethodLibrary();
+					URI libURI = Path.fromOSString(path).toFile().toURI();
+					String newPath = handleLibraryOnReadOnlyInstallPath(libURI);
+					if (newPath != null) {
+						args.put(XMILibraryManager.ARG_LIBRARY_PATH, newPath);
+					}
 					MethodLibrary library = LibraryService.getInstance()
 							.openMethodLibrary(type, args);
 					LibraryService.getInstance().setCurrentMethodLibrary(
@@ -876,26 +881,6 @@ public class LibraryUIManager {
 			if (!canonicalLibPath.startsWith(canonicalInstallPath)) {
 				return null;
 			}
-			
-			// determine if OS is not vista or linux
-			String osName = System.getProperty("os.name"); //$NON-NLS-1$
-			String platformOS = Platform.getOS();
-			if ((osName.indexOf("Vista") > -1) //$NON-NLS-1$
-					|| platformOS.equals(Platform.OS_LINUX)) {
-				readOnly = true;
-			}
-			
-			File libraryXMIFile = new File(libPathFile, XMILibraryManager.LIBRARY_XMI);
-
-			// do not allow a read-only default library
-			if (!libPathFile.canWrite() || !libraryXMIFile.canWrite()) {
-				readOnly = true;
-			}
-			
-			if (!readOnly) {
-				return null;
-			}
-			
 			// show dialog, allow copy to new path
 
 			final String defaultCopyPath = new File(new File(LibraryUIPreferences.getDefaultLibraryPath()).getParent(), libPathFile.getName()).getAbsolutePath();
@@ -913,7 +898,7 @@ public class LibraryUIManager {
 						newPath.append(dlg.getPath());
 					}
 				}
-			}, false);
+			}, true);
 			if (newPath.length() > 0) {
 				copyLibrary(libPathFile, new File(newPath.toString()));
 				return newPath.toString();
