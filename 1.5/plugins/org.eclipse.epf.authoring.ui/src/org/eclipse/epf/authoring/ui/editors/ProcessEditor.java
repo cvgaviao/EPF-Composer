@@ -2091,7 +2091,7 @@ public class ProcessEditor extends MethodElementEditor implements
 		Resource modelResource = selectedProcess.eResource();
 		Resource contentResource = selectedProcess.getPresentation()
 				.eResource();
-		if (changedResources.contains(modelResource)
+		if (inputChanged || changedResources.contains(modelResource)
 				|| (contentResource != null && changedResources
 						.contains(contentResource))) {
 			removePage(0);
