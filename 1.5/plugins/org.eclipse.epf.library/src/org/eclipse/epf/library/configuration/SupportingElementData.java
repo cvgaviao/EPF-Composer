@@ -382,7 +382,7 @@ public class SupportingElementData extends ConfigDataBase {
 		return enabled;
 	}
 
-	private void setEnabled(boolean enabled) {
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
