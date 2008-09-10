@@ -287,13 +287,13 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		updateOnClick.setLayoutData(new GridData(SWT.BEGINNING, SWT.DEFAULT, false, false));
 		updateOnClick.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
 				AuthoringUIResources.ConfigurationPage_updateOnClickToolTip));
-		updateOnClick.setSelection(true);
 		
 		noUpdateOnClick = toolkit.createButton(radioComposite, AuthoringUIResources.ConfigurationPage_noUpdateOnClick, SWT.RADIO);
 		noUpdateOnClick.setToolTipText(AuthoringUIResources.ConfigurationPage_noUpdateOnClickToolTip); 
 		noUpdateOnClick.setLayoutData(new GridData(SWT.BEGINNING, SWT.DEFAULT, false, false));
 		noUpdateOnClick.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
 				AuthoringUIResources.ConfigurationPage_noUpdateOnClickToolTip));
+		noUpdateOnClick.setSelection(true);
 
 		Group group = new Group(buttonComposite, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));
