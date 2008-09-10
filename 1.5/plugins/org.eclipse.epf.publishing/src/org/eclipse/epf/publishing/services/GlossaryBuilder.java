@@ -27,6 +27,7 @@ import org.eclipse.epf.common.xml.XSLTProcessor;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationFilter;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.configuration.GuidanceGroupingItemProvider;
@@ -86,6 +87,28 @@ public class GlossaryBuilder {
 	 * @param monitor IProgressMonitor
 	 */
 	public void execute(MethodConfiguration config, String pubDir,
+			String title, IProgressMonitor monitor) {
+		
+		SupportingElementData sdata = LibraryService.getInstance()
+				.getConfigurationManager(config).getSupportingElementData();
+		
+		boolean oldValue = false;
+		if (sdata != null) {
+			oldValue = sdata.isEnabled();
+			sdata.setEnabled(false);
+		}
+		
+		try {
+			execute_(config, pubDir, title, monitor);
+		} finally {
+			if (sdata != null) {
+				sdata.setEnabled(oldValue);
+			}
+		}
+		
+	}
+	
+	private void execute_(MethodConfiguration config, String pubDir,
 			String title, IProgressMonitor monitor) {
 		if (monitor.isCanceled()) {
 			return;
