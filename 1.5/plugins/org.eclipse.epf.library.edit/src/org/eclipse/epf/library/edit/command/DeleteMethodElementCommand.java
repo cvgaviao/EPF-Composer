@@ -30,6 +30,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandWrapper;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
@@ -58,8 +59,10 @@ import org.eclipse.epf.services.Services;
 import org.eclipse.epf.services.ILibraryPersister.FailSafeMethodLibraryPersister;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.CustomCategory;
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
@@ -204,37 +207,83 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 
 	protected void prepareElements() {
 		ArrayList newElements = new ArrayList();
+		Collection<CustomCategory> customCategoriesToDelete = new HashSet<CustomCategory>();
+		RemoveCommand cmd = null;
 		for (Iterator iter = elements.iterator(); iter.hasNext();) {
 			Object element = iter.next();
 			if (element instanceof CustomCategory) {
-				RemoveCommand cmd = getRemoveCommand(element);
+				cmd = getRemoveCommand(element);
 				if (cmd.getFeature() instanceof EReference
 						&& ((EReference) cmd.getFeature()).isContainment()
 						&& cmd.getOwnerList().contains(element)) {
-					// custom category will be deleted permanently
-					// find all subcategory that are not referenced by any other
-					// custom category
-					// in the same plugin to delete them as well
-					//
-					Collection collection = TngUtil
-							.getExclusiveSubCustomCategories((CustomCategory) element);
-					if (!collection.isEmpty()) {
-						for (Iterator iterator = collection.iterator(); iterator
-								.hasNext();) {
-							Object subCat = iterator.next();
-							if (!elements.contains(subCat)
-									&& !newElements.contains(subCat)) {
-//								cmd.getCollection().add(subCat);
-								Collection col = cmd.getCollection();
-								col.add(subCat);								
-								newElements.add(subCat);
-							}
-						}
-					}
+					customCategoriesToDelete.add((CustomCategory) element);
 				}
 			}
 		}
-		elements.addAll(newElements);
+		
+		if (!customCategoriesToDelete.isEmpty()) {
+			ArrayList<CustomCategory> topCustomCategoriesToDelete = new ArrayList<CustomCategory>(
+					customCategoriesToDelete);
+			// find all subcategories in the same plug-in that are not
+			// referenced by
+			// any other custom category to delete them as well
+			//
+			Iterator<CustomCategory> iter = new AbstractTreeIterator<CustomCategory>(
+					new ArrayList<CustomCategory>(
+							topCustomCategoriesToDelete), false) {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Iterator<? extends CustomCategory> getChildren(
+						Object object) {
+					if (object instanceof Collection) {
+						return ((Collection) object).iterator();
+					}
+					ArrayList<CustomCategory> children = new ArrayList<CustomCategory>();
+					CustomCategory cc = ((CustomCategory) object);
+					MethodPlugin plugin = UmaUtil.getMethodPlugin(cc);
+					for (DescribableElement element : cc
+							.getCategorizedElements()) {
+						if (element instanceof CustomCategory
+								&& UmaUtil.getMethodPlugin(element) == plugin) {
+							children.add((CustomCategory) element);
+						}
+					}
+					return children.iterator();
+				}
+
+			};
+			HashSet<CustomCategory> allCustomCategories = new HashSet<CustomCategory>();
+			while(iter.hasNext()) {
+				allCustomCategories.add(iter.next());
+			}
+			int size;
+			do {
+				size = customCategoriesToDelete.size();
+				check_cc:
+				for (CustomCategory cc : allCustomCategories) {
+					if (!customCategoriesToDelete.contains(cc)) {
+						List parents = AssociationHelper
+								.getCustomCategories(cc);
+						for (Object parent : parents) {
+							if (!customCategoriesToDelete.contains(parent)) {
+								// parent is not in the collection of custom
+								// categories to be deleted
+								// cannot delete the sub custom category for now
+								//
+								continue check_cc;
+							}
+						}
+						customCategoriesToDelete.add(cc);
+					}
+				}
+			} while (size != customCategoriesToDelete.size());
+			customCategoriesToDelete.removeAll(topCustomCategoriesToDelete);
+			elements.addAll(customCategoriesToDelete);
+			Collection collection = cmd.getCollection();
+			collection.addAll(customCategoriesToDelete);
+		}
 	}
 
 	/**
