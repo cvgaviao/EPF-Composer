@@ -54,14 +54,13 @@
 			<xsl:attribute name="lang"><xsl:value-of select="@lang"/></xsl:attribute>
 			<xsl:attribute name="xml:lang"><xsl:value-of select="@lang"/></xsl:attribute>
 			<head>
-				<xsl:choose>
-					<xsl:when test="$elementType = 'CustomCategory'">				
-						<title><xsl:value-of select="$elementTypeName"/></title>
-					</xsl:when>				
-					<xsl:otherwise>
-						<title><xsl:value-of select="$elementTypeName"/>: <xsl:value-of select="$elementPresentationName"/></title>
-					</xsl:otherwise>
-				</xsl:choose>
+				<title>
+					<xsl:call-template name="elementPageTitleText">
+						<xsl:with-param name="elementType" select="$elementType"/>
+						<xsl:with-param name="elementTypeName" select="$elementTypeName"/>
+						<xsl:with-param name="elementPresentationName" select="$elementPresentationName"/>
+					</xsl:call-template>
+				</title>
 				<xsl:call-template name="umaMetaTags">
 					<xsl:with-param name="elementType" select="$elementType"/>
 					<xsl:with-param name="elementName" select="$elementName"/>

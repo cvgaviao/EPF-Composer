@@ -33,75 +33,12 @@
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
 				<td class="pageTitle" nowrap="true">
-					<xsl:choose>
-						<xsl:when test="$elementType = 'CustomCategory' or $elementType = 'SupportingMaterial' or $elementType = 'Summary'">
-							<xsl:value-of select="$elementPresentationName"/>
-						</xsl:when>
-						<xsl:otherwise>							
-							<xsl:choose>
-								<xsl:when test="$showFullMethodContent = 'true'">
-									<xsl:choose>										
-										<xsl:when test="$elementType = 'TaskDescriptor'">
-											<xsl:value-of select="$taskText"/>
-										</xsl:when>
-										<xsl:when test="$elementType = 'RoleDescriptor'">
-											<xsl:value-of select="$roleText"/>
-										</xsl:when>
-										<xsl:when test="$elementType = 'WorkProductDescriptor'">
-											<xsl:choose>
-												<xsl:when test="$workProductType != ''">
-													<xsl:value-of select="concat($workProductText, ' (', $workProductType, ')')"/>
-												</xsl:when>
-												<xsl:otherwise>
-													<xsl:value-of select="$workProductText"/>
-												</xsl:otherwise>	
-											</xsl:choose>											
-										</xsl:when>
-										<xsl:otherwise>
-										<!--
-											<xsl:value-of select="$elementTypeName"/>
-										-->
-											<xsl:call-template name="elementTypeText">
-														<xsl:with-param name="elementType" select="$elementType"/>
-														<xsl:with-param name="elementTypeName" select="$elementTypeName"/>
-											</xsl:call-template>
-										</xsl:otherwise>
-									</xsl:choose>									
-								</xsl:when>
-								<xsl:when test="$elementType = 'WorkProductDescriptor'">
-									<xsl:choose>
-										<xsl:when test="$workProductType != ''">
-											<xsl:value-of select="concat($workProductDescriptorText, ' (', $workProductType, ')')"/>
-										</xsl:when>
-										<xsl:otherwise>
-											<xsl:value-of select="$workProductText"/>
-										</xsl:otherwise>	
-									</xsl:choose>	
-								</xsl:when>
-								<xsl:otherwise>
-										<!--
-											<xsl:value-of select="$elementTypeName"/>
-										-->
-											<xsl:call-template name="elementTypeText">
-														<xsl:with-param name="elementType" select="$elementType"/>
-														<xsl:with-param name="elementTypeName" select="$elementTypeName"/>
-											</xsl:call-template>
-								</xsl:otherwise>
-							</xsl:choose>
-							<xsl:value-of select="$colon_with_space"/>
-							<xsl:choose>
-								<xsl:when test="$prefix != ''">
-									<xsl:value-of select="$prefix"/> - <xsl:value-of select="$elementPresentationName"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="$elementPresentationName"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:otherwise>						
-					</xsl:choose>
-					<xsl:if test="$externalId != ''">
-						(<xsl:value-of select="$externalId"/>)
-					</xsl:if>
+					<xsl:call-template name="elementPageTitleText">
+						<xsl:with-param name="elementType" select="$elementType"/>
+						<xsl:with-param name="elementTypeName" select="$elementTypeName"/>
+						<xsl:with-param name="elementPresentationName" select="$elementPresentationName"/>
+						<xsl:with-param name="workProductType" select="$workProductType"/>
+					</xsl:call-template>
 				</td>
 				<td width="100%">
 					<div align="right" id="contentPageToolbar"/>
@@ -736,6 +673,86 @@
 				</td>
 			</tr>
 		</table>
+	</xsl:template>
+	
+	<xsl:template name="elementPageTitleText">
+		<xsl:param name="elementType"/>
+		<xsl:param name="elementTypeName"/>
+		<xsl:param name="elementPresentationName"/>
+		<xsl:param name="workProductType"/>
+		<xsl:variable name="showFullMethodContent" select="@ShowFullMethodContent"/>
+		<xsl:variable name="prefix" select="attribute[@name='prefix']"/>
+		<xsl:variable name="externalId" select="reference/Element/attribute[@name='externalId']"/>
+		
+		<xsl:choose>
+			<xsl:when test="$elementType = 'CustomCategory' or $elementType = 'SupportingMaterial' or $elementType = 'Summary'">
+				<xsl:value-of select="$elementPresentationName"/>
+			</xsl:when>
+			<xsl:otherwise>							
+				<xsl:choose>
+					<xsl:when test="$showFullMethodContent = 'true'">
+						<xsl:choose>										
+							<xsl:when test="$elementType = 'TaskDescriptor'">
+								<xsl:value-of select="$taskText"/>
+							</xsl:when>
+							<xsl:when test="$elementType = 'RoleDescriptor'">
+								<xsl:value-of select="$roleText"/>
+							</xsl:when>
+							<xsl:when test="$elementType = 'WorkProductDescriptor'">
+								<xsl:choose>
+									<xsl:when test="$workProductType != ''">
+										<xsl:value-of select="concat($workProductText, ' (', $workProductType, ')')"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="$workProductText"/>
+									</xsl:otherwise>	
+								</xsl:choose>											
+							</xsl:when>
+							<xsl:otherwise>
+							<!--
+								<xsl:value-of select="$elementTypeName"/>
+							-->
+								<xsl:call-template name="elementTypeText">
+											<xsl:with-param name="elementType" select="$elementType"/>
+											<xsl:with-param name="elementTypeName" select="$elementTypeName"/>
+								</xsl:call-template>
+							</xsl:otherwise>
+						</xsl:choose>									
+					</xsl:when>
+					<xsl:when test="$elementType = 'WorkProductDescriptor'">
+						<xsl:choose>
+							<xsl:when test="$workProductType != ''">
+								<xsl:value-of select="concat($workProductDescriptorText, ' (', $workProductType, ')')"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$workProductText"/>
+							</xsl:otherwise>	
+						</xsl:choose>	
+					</xsl:when>
+					<xsl:otherwise>
+							<!--
+								<xsl:value-of select="$elementTypeName"/>
+							-->
+								<xsl:call-template name="elementTypeText">
+											<xsl:with-param name="elementType" select="$elementType"/>
+											<xsl:with-param name="elementTypeName" select="$elementTypeName"/>
+								</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+				<xsl:value-of select="$colon_with_space"/>
+				<xsl:choose>
+					<xsl:when test="$prefix != ''">
+						<xsl:value-of select="$prefix"/> - <xsl:value-of select="$elementPresentationName"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:value-of select="$elementPresentationName"/>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>						
+		</xsl:choose>
+		<xsl:if test="$externalId != ''">
+			(<xsl:value-of select="$externalId"/>)
+		</xsl:if>
 	</xsl:template>
 
 </xsl:stylesheet>
