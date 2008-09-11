@@ -341,6 +341,7 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 
 
 		if(!confirmRemovingReferences()) {
+			descriptors.clear();
 			return;
 		}
 		
