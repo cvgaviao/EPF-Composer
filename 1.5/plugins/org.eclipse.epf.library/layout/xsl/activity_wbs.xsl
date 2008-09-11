@@ -41,7 +41,11 @@
 			<xsl:attribute name="xml:lang"><xsl:value-of select="@lang"/></xsl:attribute>
 			<head>
 				<title>
-					<xsl:value-of select="$elementTypeName"/>: <xsl:value-of select="$elementPresentationName"/>
+					<xsl:call-template name="elementPageTitleText">
+						<xsl:with-param name="elementType" select="$elementType"/>
+						<xsl:with-param name="elementTypeName" select="$elementTypeName"/>
+						<xsl:with-param name="elementPresentationName" select="$elementPresentationName"/>
+					</xsl:call-template>
 				</title>
 				<xsl:call-template name="umaMetaTags">
 					<xsl:with-param name="elementType" select="$elementType"/>
