@@ -358,9 +358,17 @@ public class PersistenceUtil {
 		return path.endsWith(File.separator) ? path : path + File.separator;
 	}
 	
-	public static void replaceURIPrefix(Collection<Resource> resources, String oldPrefix, String newPrefix) {
+	/**
+	 * 
+	 * @param resources
+	 * @param oldPrefix
+	 * @param newPrefix
+	 * @return Resources with new URI
+	 */
+	public static Collection<Resource> replaceURIPrefix(Collection<Resource> resources, String oldPrefix, String newPrefix) {
 		URI oldPrefixURI = URI.createFileURI(toPrefix(oldPrefix));
 		URI newPrefixURI = URI.createFileURI(toPrefix(newPrefix));
+		ArrayList<Resource> resourcesWithNewURI = new ArrayList<Resource>();
 		for(Resource resource : resources) {
 			URI uri = resource.getURI();
 			URI newURI = null;
@@ -370,10 +378,12 @@ public class PersistenceUtil {
 			catch(Exception e) {
 				
 			}
-			if(newURI != null) {
+			if(newURI != null && !newURI.equals(resource.getURI())) {
 				resource.setURI(newURI);
+				resourcesWithNewURI.add(resource);
 			}
 		}
+		return resourcesWithNewURI;
 	}
 	
 	public static URI getProxyURI(EObject object) {

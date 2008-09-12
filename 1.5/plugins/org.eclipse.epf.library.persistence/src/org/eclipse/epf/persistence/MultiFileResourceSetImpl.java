@@ -2590,8 +2590,12 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		
 		// clear cached resolved URI in all ResourceDescriptors
 		//
+		clearCachedResolvedURIs();
+	}
+	
+	protected void clearCachedResolvedURIs() {
 		ResourceManager resMgr = getRootResourceManager();
-		Iterator iterator = new AbstractTreeIterator(resMgr, false) {
+		Iterator iterator = new AbstractTreeIterator(resMgr, true) {
 			private static final long serialVersionUID = 1L;
 
 			protected Iterator getChildren(Object object) {

@@ -138,9 +138,6 @@ implements ILibraryResource, IFailSafeSavable
 		Object oldID = id != null ? getEObjectToIDMap().put(eObject, id)
 				: getEObjectToIDMap().remove(eObject);
 
-		if(getResourceSet() == null) {
-			System.out.println();
-		}
 		Map guidToMethodElementMap = ((MultiFileResourceSetImpl) getResourceSet())
 				.getGuidToMethodElementMap();
 
@@ -907,7 +904,6 @@ implements ILibraryResource, IFailSafeSavable
 			if(!wasMove) {
 				setModified(false);
 			}
-			FileManager.getInstance().refresh(this);
 			updateTimeStamps();
 			if(!wasMove) {
 				MultiFileResourceSetImpl resourceSet = (MultiFileResourceSetImpl) getResourceSet();

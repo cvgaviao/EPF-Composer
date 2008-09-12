@@ -339,7 +339,6 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 									if(libMgr instanceof XMILibraryManager) {
 										XMILibraryManager xmiLibMgr = ((XMILibraryManager)libMgr);
 										if(project.equals(xmiLibMgr.getMethodLibraryProject())) {	
-											System.out.println();
 											xmiLibMgr.handleLibraryMoved();
 											return false;
 										}
