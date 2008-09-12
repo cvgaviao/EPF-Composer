@@ -2456,7 +2456,7 @@ public class ProcessEditor extends MethodElementEditor implements
 			
 			public boolean execute(IResourceAwareCommand cmd) {
 				boolean ret = super.execute(cmd);
-				if (ret) {
+				if (ret) {				
 					ProcessEditorUtil.deSelectSynchronize(cmd);
 				}
 				return ret;
@@ -2469,7 +2469,9 @@ public class ProcessEditor extends MethodElementEditor implements
 						value, index);
 
 				if (ret) {
-					ProcessEditorUtil.deSelectSynchonize((Descriptor) object, feature.getFeatureID());					
+					if (object instanceof Descriptor) {
+						ProcessEditorUtil.deSelectSynchonize((Descriptor) object, feature.getFeatureID());
+					}
 				}
 				return ret;
 			}
