@@ -1,4 +1,4 @@
-feature@org.eclipse.epf.base.feature=v20080911-1733,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
+feature@org.eclipse.epf.base.feature=v20080912-1027,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
 feature@org.eclipse.epf.doc.feature=v20080820-1636,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
 feature@org.eclipse.epf.platform.feature=v20080820-1636,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
 feature@org.eclipse.epf.rcp.feature=v20080821-1403,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
@@ -15,7 +15,7 @@ plugin@org.eclipse.epf.common.ui=v20080903-1009,:pserver:anonymous@dev.eclipse.o
 plugin@org.eclipse.epf.common.win32.win32.x86=v20080124-1611,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.common.win32.win32.x86
 plugin@org.eclipse.epf.dataexchange=v20080124-1611,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.dataexchange
 plugin@org.eclipse.epf.diagram.ad=v20080819-1804,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.diagram.ad
-plugin@org.eclipse.epf.diagram.add=v20080904-1843,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.diagram.add
+plugin@org.eclipse.epf.diagram.add=v20080912-1027,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.diagram.add
 plugin@org.eclipse.epf.diagram.core=v20080908-1909,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.diagram.core
 plugin@org.eclipse.epf.diagram.edit=v20080729-1853,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.diagram.edit
 plugin@org.eclipse.epf.diagram.model=v20080821-1654,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.diagram.model
