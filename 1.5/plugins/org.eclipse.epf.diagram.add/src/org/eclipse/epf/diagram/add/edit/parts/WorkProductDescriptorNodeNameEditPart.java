@@ -234,7 +234,7 @@ public class WorkProductDescriptorNodeNameEditPart extends CompartmentEditPart
 		if (text == null || text.length() == 0) {
 			text = defaultText;
 		}
-		text = DiagramCoreUtil.wrap(text, 3);
+
 		Object element = getParserElement();
 		if (element   instanceof WorkProductDescriptorNode) {
 			String state = ((WorkProductDescriptorNode) element).getState();
@@ -242,6 +242,7 @@ public class WorkProductDescriptorNodeNameEditPart extends CompartmentEditPart
 				text = text + " [" + state + "]";		//$NON-NLS-1$	//$NON-NLS-2$
 			}
 		}
+		text = DiagramCoreUtil.wrap(text, 3);
 		return text;
 	}
 
