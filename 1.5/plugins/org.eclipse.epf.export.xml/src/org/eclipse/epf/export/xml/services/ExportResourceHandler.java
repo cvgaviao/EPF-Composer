@@ -34,6 +34,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  */
 public class ExportResourceHandler extends BaseResourceHandler {
 	
+	private static boolean localDebug = false;
 	/**
 	 * Creates a new instance.
 	 */
@@ -120,6 +121,29 @@ public class ExportResourceHandler extends BaseResourceHandler {
 				if (manager != null) {
 					MethodElement element = manager.getMethodElement(id);
 					if (element != null) {
+						ILibraryResourceManager libResMgr = ResourceHelper.getResourceMgr(element);
+						if (libResMgr != null) { 
+							String elementPath = ResourceHelper.getFolderAbsolutePath(element);							
+							String pluginPath = libResMgr.getPhysicalPluginPath(element);
+							File pluginParent = (new File(pluginPath)).getParentFile();
+							File file = new File(elementPath, srcUrl);
+							String filePath = file.getCanonicalPath();
+							String retPath = filePath.substring(pluginParent.getCanonicalPath().length() + 1);
+							if (localDebug) {
+								File f = new File(new File(sourceLibRoot,
+										ResourceHelper.getElementPath(element)), srcUrl);
+								String path = f.getCanonicalPath();
+								String oldPath = path.substring(sourceLibRoot.getCanonicalPath()
+										.length() + 1);
+								if (! oldPath.equals(retPath)) {
+									System.out.println("LD> oldPath: " + oldPath);	//$NON-NLS-1
+									System.out.println("LD> retPath: " + retPath);	//$NON-NLS-1
+									System.out.println("");							//$NON-NLS-1
+								}
+							}
+							return retPath;
+						}
+						
 						File f = new File(new File(sourceLibRoot,
 								ResourceHelper.getElementPath(element)), srcUrl);
 						String path = f.getCanonicalPath();
