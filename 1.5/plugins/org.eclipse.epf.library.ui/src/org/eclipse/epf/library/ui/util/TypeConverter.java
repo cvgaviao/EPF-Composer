@@ -371,6 +371,14 @@ public class TypeConverter {
 	public static final EObject prepareConvert(EObject object, EClass newType, Map oldFeatureToNewFeatureMap,
 			Comparator featureComparator, boolean removeIncomingReferences, boolean removeVariability,
 			TypeConversionCommand compoundCommand) {
+		return prepareConvert(object, newType, oldFeatureToNewFeatureMap,
+				featureComparator, removeIncomingReferences, removeVariability,
+				compoundCommand, 0);
+	}
+	
+	private static final EObject prepareConvert(EObject object, EClass newType, Map oldFeatureToNewFeatureMap,
+			Comparator featureComparator, boolean removeIncomingReferences, boolean removeVariability,
+			TypeConversionCommand compoundCommand, int level) {
 		EObject newObject = UmaFactory.eINSTANCE.create(newType);
 		
 		if(object instanceof MethodElement) {
@@ -392,7 +400,9 @@ public class TypeConverter {
 					loader.loadOppositeFeatures(collection);
 				}
 				
-				LibraryUtil.loadAll(LibraryService.getInstance().getCurrentMethodLibrary());
+				if (level == 0) {
+					LibraryUtil.loadAll(LibraryService.getInstance().getCurrentMethodLibrary());
+				}
 				
 				Map referencerToFeatureListMap = AssociationHelper.getReferenceMap(me);
 				for (Iterator iter = referencerToFeatureListMap.entrySet().iterator(); iter
@@ -466,7 +476,7 @@ public class TypeConverter {
 							ContentDescription content = (ContentDescription) object.eGet(ref);
 							EClass contentDescType = ContentDescriptionFactory.getContentDescriptionType(newType);
 							if(contentDescType != null && contentDescType != content.eClass()) {
-								EObject newContent = prepareConvert(content, contentDescType, null, null, removeIncomingReferences, removeVariability, compoundCommand);
+								EObject newContent = prepareConvert(content, contentDescType, null, null, removeIncomingReferences, removeVariability, compoundCommand, level + 1);
 								
 								// remove old content
 								//
