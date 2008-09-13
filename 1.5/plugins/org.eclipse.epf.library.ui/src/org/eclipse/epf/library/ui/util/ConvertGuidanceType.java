@@ -210,6 +210,7 @@ public class ConvertGuidanceType {
 			try {
 				for (Iterator iter = cmd.getModifiedResources().iterator(); iter.hasNext();) {
 					Resource resource = (Resource) iter.next();
+					resource.setModified(true);
 					persister.save(resource);
 				}
 				persister.commit();

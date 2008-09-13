@@ -38,6 +38,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
@@ -50,6 +51,7 @@ import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.util.ContentResourceScanner;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.ILibraryPersister;
@@ -252,6 +254,15 @@ public class TypeConverter {
 					}
 				}
 				
+				for (Object obj: illegalReferencers) {
+					if (obj instanceof MethodElement) {
+						Resource res = ((MethodElement) obj).eResource();
+						if (res != null) {
+							modifiedResources.add(res);
+						}
+					}					
+				}
+				
 				gotModifiedResources = true;
 			}
 			modifiedResources.addAll(nestedCommandExcecutor.getModifiedResources());		
@@ -380,6 +391,8 @@ public class TypeConverter {
 					IOppositeFeatureLoader loader = (IOppositeFeatureLoader) iter.next();
 					loader.loadOppositeFeatures(collection);
 				}
+				
+				LibraryUtil.loadAll(LibraryService.getInstance().getCurrentMethodLibrary());
 				
 				Map referencerToFeatureListMap = AssociationHelper.getReferenceMap(me);
 				for (Iterator iter = referencerToFeatureListMap.entrySet().iterator(); iter
