@@ -440,6 +440,9 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	protected void refresh(boolean editable) {
 		super.refresh(editable);
 		ctrl_r_brief_desc.setEditable(false);
+		if(supportingPluginCheckbox != null) {
+			supportingPluginCheckbox.setEnabled(editable);
+		}
 	}
 	
 	@Override
