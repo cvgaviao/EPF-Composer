@@ -11,7 +11,8 @@
 package org.eclipse.epf.publishing.services;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 	protected static final String CLOSURE_LOG_FILENAME = "processClosure.html"; //$NON-NLS-1$
 
 	// closure elements for process publishing, null for config publishing
-	List closureElements = null;
+	Collection closureElements = null;
 	private boolean isFinalClosure = false;
 	
 //	// maintain the object references generated from TaskDescriptors
@@ -74,7 +75,7 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 	public void addClosureElements(List items) {
 		// do nothing
 		if ( closureElements == null ) {
-			closureElements = new ArrayList();
+			closureElements = new HashSet();
 		}
 		
 		closureElements.addAll(items);
