@@ -649,62 +649,64 @@ public class MethodLibraryPersister implements IFileBasedLibraryPersister {
 		 * @see org.eclipse.epf.uma.persistence.MethodLibraryPersister#save(org.eclipse.emf.ecore.resource.Resource)
 		 */
 		public void save(Resource resource) throws Exception {
-			if(resource.getResourceSet() instanceof MultiFileResourceSetImpl &&
-					resource instanceof MultiFileXMIResourceImpl) {
-				MultiFileResourceSetImpl resourceSet = (MultiFileResourceSetImpl) resource
-				.getResourceSet();
-				if (resourceSet == null) {
-					return;
-				}
-
-				// update version info in library resource if needed
-				//
-				Resource libResourceToSave = null;
-				MethodElement me = PersistenceUtil.getMethodElement(resource);
-				if(me != null) {
-					MethodLibrary lib = UmaUtil.getMethodLibrary(me);
-					if(lib != null) {
-						Resource libResource = lib.eResource();
-						if(libResource != null 
-								&& libResource != resource
-								&& PersistenceUtil.checkToolVersion(libResource) != 0) {
-							libResourceToSave = libResource;
+			if (resource != null) {
+				if(resource.getResourceSet() instanceof MultiFileResourceSetImpl &&
+						resource instanceof MultiFileXMIResourceImpl) {
+					MultiFileResourceSetImpl resourceSet = (MultiFileResourceSetImpl) resource
+					.getResourceSet();
+					if (resourceSet == null) {
+						return;
+					}
+	
+					// update version info in library resource if needed
+					//
+					Resource libResourceToSave = null;
+					MethodElement me = PersistenceUtil.getMethodElement(resource);
+					if(me != null) {
+						MethodLibrary lib = UmaUtil.getMethodLibrary(me);
+						if(lib != null) {
+							Resource libResource = lib.eResource();
+							if(libResource != null 
+									&& libResource != resource
+									&& PersistenceUtil.checkToolVersion(libResource) != 0) {
+								libResourceToSave = libResource;
+							}
 						}
 					}
-				}
-
-				if (MultiFileXMISaveImpl.checkModifyRequired(saveOptions)) {
-					Collection<Resource> resources;
+	
+					if (MultiFileXMISaveImpl.checkModifyRequired(saveOptions)) {
+						Collection<Resource> resources;
+						if(libResourceToSave != null) {
+							resources = new ArrayList<Resource>();
+							resources.add(resource);
+							resources.add(libResourceToSave);
+						}
+						else {
+							resources = Collections.singletonList(resource);
+						}
+						MultiFileSaveUtil.checkModify(resources);
+						
+						// check out-of-sync
+						//
+						MultiFileSaveUtil.checkOutOfSynch(resources, saveOptions);
+						
+						MultiFileSaveUtil.checkFilePathLength(resources);
+					}
+	
+					resourceSet.save(resource, saveOptions);
 					if(libResourceToSave != null) {
-						resources = new ArrayList<Resource>();
-						resources.add(resource);
-						resources.add(libResourceToSave);
+						resourceSet.save(libResourceToSave, saveOptions);
 					}
-					else {
-						resources = Collections.singletonList(resource);
-					}
-					MultiFileSaveUtil.checkModify(resources);
-					
-					// check out-of-sync
-					//
-					MultiFileSaveUtil.checkOutOfSynch(resources, saveOptions);
-					
-					MultiFileSaveUtil.checkFilePathLength(resources);
 				}
-
-				resourceSet.save(resource, saveOptions);
-				if(libResourceToSave != null) {
-					resourceSet.save(libResourceToSave, saveOptions);
+				else if(resource instanceof IFailSafeSavable) {
+					IFailSafeSavable failSafeSavable = (IFailSafeSavable) resource;
+					failSafeSavable.setTxID(txRecord.getTxID());
+					resource.save(saveOptions);
+					txRecord.getResourcesToCommit().add(resource);
 				}
-			}
-			else if(resource instanceof IFailSafeSavable) {
-				IFailSafeSavable failSafeSavable = (IFailSafeSavable) resource;
-				failSafeSavable.setTxID(txRecord.getTxID());
-				resource.save(saveOptions);
-				txRecord.getResourcesToCommit().add(resource);
-			}
-			else {
-				throw new IllegalAccessException("Resource must implement org.eclipse.epf.library.persistence.internal.IFailSafeSavable"); //$NON-NLS-1$
+				else {
+					throw new IllegalAccessException("Resource must implement org.eclipse.epf.library.persistence.internal.IFailSafeSavable"); //$NON-NLS-1$
+				}
 			}
 		}
 
