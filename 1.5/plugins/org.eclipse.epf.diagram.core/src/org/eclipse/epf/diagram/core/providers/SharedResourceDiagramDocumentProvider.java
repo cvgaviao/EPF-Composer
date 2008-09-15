@@ -252,14 +252,16 @@ public class SharedResourceDiagramDocumentProvider extends StorageDiagramDocumen
 	}
 	
 	private static void logResourceErrorsAndWarnings(Resource resource) {
-		for (Iterator iter = resource.getErrors().iterator(); iter.hasNext();) {
-			Resource.Diagnostic diagnostic = (Resource.Diagnostic) iter.next();
-			Log.error(EditorPlugin.getInstance(), EditorStatusCodes.ERROR, diagnostic.getMessage());				
-		}
-
-		for (Iterator iter = resource.getWarnings().iterator(); iter.hasNext();) {
-			Resource.Diagnostic diagnostic = (Resource.Diagnostic) iter.next();
-			Log.warning(EditorPlugin.getInstance(), EditorStatusCodes.WARNING, diagnostic.getMessage());				
+		if (resource != null)  {
+			for (Iterator iter = resource.getErrors().iterator(); iter.hasNext();) {
+				Resource.Diagnostic diagnostic = (Resource.Diagnostic) iter.next();
+				Log.error(EditorPlugin.getInstance(), EditorStatusCodes.ERROR, diagnostic.getMessage());				
+			}
+	
+			for (Iterator iter = resource.getWarnings().iterator(); iter.hasNext();) {
+				Resource.Diagnostic diagnostic = (Resource.Diagnostic) iter.next();
+				Log.warning(EditorPlugin.getInstance(), EditorStatusCodes.WARNING, diagnostic.getMessage());				
+			}
 		}
 	}
 
