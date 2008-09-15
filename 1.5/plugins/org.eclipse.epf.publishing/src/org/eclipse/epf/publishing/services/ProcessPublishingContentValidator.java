@@ -181,6 +181,12 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 		}
 		
 		boolean inCls = inClosure(e);
+		if (!inCls && feature == elementUrlFeature) {
+			inCls = inClosure(owner);
+			if (inCls) {
+				closureElements.add(e);
+			}
+		}
 		if (!inCls && !isFinalClosure ) {
 			// if the closure is not final, then if the owner is in closure and the element is a Guidance, 
 			// this element is also in closure

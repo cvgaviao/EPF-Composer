@@ -331,7 +331,7 @@ public class LinkInfo {
 					}
 				}
 
-				if (validator.isDiscarded(ownerElement, null, e)) {
+				if (validator.isDiscarded(ownerElement, IContentValidator.elementUrlFeature, e)) {
 					isMissingReference = true;
 					validator.logMissingReference(ownerElement, e);
 					e = null; // ignore the element since it's discarded

@@ -24,6 +24,8 @@ import org.eclipse.epf.uma.MethodElement;
  */
 public interface IContentValidator  {
 
+	final Object elementUrlFeature = new Object();
+	
 	/**
 	 * set publish dir
 	 * @param pubDir String
