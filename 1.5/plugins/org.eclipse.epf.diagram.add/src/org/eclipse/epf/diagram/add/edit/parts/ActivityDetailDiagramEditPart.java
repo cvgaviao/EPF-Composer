@@ -257,6 +257,9 @@ public class ActivityDetailDiagramEditPart extends DiagramEditPart {
 
 							TaskDescriptor task = (TaskDescriptor) taskNode
 									.getObject();
+							int inputWidth, inputHeight;
+							int outputWidth, outputHeight;
+							inputWidth = inputHeight = outputWidth = outputHeight = 0;
 							for (Iterator wpitor = inputworkproductCompositeList
 									.iterator(); wpitor.hasNext();) {
 								WorkProductCompositeEditPart wpEditPart = (WorkProductCompositeEditPart) wpitor
@@ -264,30 +267,43 @@ public class ActivityDetailDiagramEditPart extends DiagramEditPart {
 								WorkProductComposite wpCompositeNode = (WorkProductComposite) ((View) wpEditPart
 										.getModel()).getElement();
 								Object wpObject = wpCompositeNode.getObject();
+								
 								if (wpObject != null && wpObject.equals(task)) {
-									int width = wpEditPart.getFigure()
+									inputWidth = wpEditPart.getFigure()
 											.getPreferredSize().width;
-									int height = ((NodeEditPart) obj)
+									inputHeight = ((NodeEditPart) obj)
 											.getFigure().getPreferredSize().height;
-									((NodeEditPart) obj)
-											.getFigure()
-											.setPreferredSize(
-													new Dimension(width, height));
-									if (((WorkProductComposite) ((View) wpEditPart
-											.getModel()).getElement())
-											.getType() == WorkProductComposite.INPUTS) {
-										//										List inputList = (List) ((HashMap) map
-										//												.get(taskNode)).get(INPUTS);
-										//										inputList.add(wpEditPart);
-									} else if (((WorkProductComposite) ((View) wpEditPart
-											.getModel()).getElement())
-											.getType() == WorkProductComposite.OUTPUTS) {
-										//										List outputList = (List) ((HashMap) map
-										//												.get(taskNode)).get(OUTPUTS);
-										//										outputList.add(wpEditPart);
-									}
 								}
 							}
+							
+							for (Iterator wpitor = outputWorkProductCompositeList
+									.iterator(); wpitor.hasNext();) {
+								WorkProductCompositeEditPart wpEditPart = (WorkProductCompositeEditPart) wpitor
+										.next();
+								WorkProductComposite wpCompositeNode = (WorkProductComposite) ((View) wpEditPart
+										.getModel()).getElement();
+								Object wpObject = wpCompositeNode.getObject();
+								if (wpObject != null && wpObject.equals(task)) {
+									outputWidth = wpEditPart.getFigure()
+											.getPreferredSize().width;
+									outputHeight = ((NodeEditPart) obj)
+											.getFigure().getPreferredSize().height;			
+								}
+							}
+							int width, height;
+							if (inputWidth > outputWidth)
+								width = inputWidth;
+							else
+								width = outputWidth;
+							if (inputHeight > outputHeight) 
+								height = inputHeight;
+							else
+								height = outputHeight;
+							
+							((NodeEditPart) obj)
+							.getFigure()
+							.setPreferredSize(
+									new Dimension(width, height));
 						}
 					}
 				}
