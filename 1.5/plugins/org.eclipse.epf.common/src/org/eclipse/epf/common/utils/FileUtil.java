@@ -786,10 +786,9 @@ public class FileUtil {
 		String result = "";  //$NON-NLS-1$
 		byte[] readData = new byte[8 * 1024];
 		try {
-			int bytesRead = input.read(readData);
-			while (bytesRead > 0) {
-				result += new String(readData);
-				bytesRead = input.read(readData);
+			int bytesRead = 0;
+			while ( (bytesRead = input.read(readData)) > 0) {
+				result += new String(readData, 0, bytesRead);
 			}
 		} finally {
 			if (input != null) {
