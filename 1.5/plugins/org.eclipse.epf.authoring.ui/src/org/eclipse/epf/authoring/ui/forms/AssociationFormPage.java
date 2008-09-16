@@ -974,7 +974,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 							String oldSortType =  
 								(String)((IStructuredSelection)viewer_sort1
 									.getSelection()).getFirstElement();
-							if(!oldSortType.endsWith(newSortType)){
+							if(!oldSortType.equals(newSortType)){
 								MethodElementProperty prop = CategorySortHelper
 								.getCategorySortProperty(contentElement);
 
@@ -995,6 +995,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 														.getMethodElementProperty_Value(),
 													oldSortType, -1);
 								}
+								viewer_selected.refresh();
 							}
 						}
 					}
