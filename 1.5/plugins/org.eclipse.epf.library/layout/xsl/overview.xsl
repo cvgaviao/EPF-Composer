@@ -66,11 +66,9 @@
 				<div class="overview">
 					<table width="97%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
-							<xsl:if test="$briefDescription != ''">
-								<td width="50">
-									<img src="{$elementIcon}" alt="" title=""/>
-								</td>
-							</xsl:if>
+							<td width="50">
+								<img src="{$elementIcon}" alt="" title=""/>
+							</td>
 							<td>
 								<table class="overviewTable" border="0" cellspacing="0" cellpadding="0">
 									<tr>
