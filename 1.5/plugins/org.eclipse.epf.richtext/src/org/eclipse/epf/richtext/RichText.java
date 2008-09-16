@@ -627,7 +627,9 @@ public class RichText implements IRichText {
 				if (!isIE && processingJSEvent) {
 					Display.getCurrent().asyncExec(new Runnable() {
 						public void run() {
-							editor.execute(script);
+							if (!isDisposed()) {
+								editor.execute(script);
+							}
 						}
 					});
 				} else {
