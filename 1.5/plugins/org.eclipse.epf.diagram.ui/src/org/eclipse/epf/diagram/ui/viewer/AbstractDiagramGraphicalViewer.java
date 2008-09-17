@@ -138,15 +138,14 @@ public abstract class AbstractDiagramGraphicalViewer {
 			IFigure widenedWrapLabel = null;
 			if (activityNodeFigure != null) {
 				List children = ((IFigure) activityNodeFigure).getChildren();
-				if (children != null && !children.isEmpty())
+				if (children != null && !children.isEmpty()) {
 					widenedWrapLabel = (IFigure) activityNodeFigure
 							.getChildren().get(0);
-
-			}
-
-			if (widenedWrapLabel instanceof WidenedWrapLabel) {
-				widenedWrapLabel.setForegroundColor(new Color(null, 0, 0, 0));
-			}
+					if (widenedWrapLabel instanceof WidenedWrapLabel) {
+						widenedWrapLabel.setForegroundColor(new Color(null, 0, 0, 0));
+					}
+				}
+			}			
 		}
 
 		SWTGraphics graphics = null;
