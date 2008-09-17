@@ -120,6 +120,9 @@ public class LibraryEditPlugin extends AbstractActivator {
 	 * @return The image.
 	 */
 	public Object getSharedImage(URI imageURI) {
+		if(imageURI == null) {
+			return null;
+		}
 		try {
 			return imageURI.toURL();
 		} catch (MalformedURLException e) {

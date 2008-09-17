@@ -21,7 +21,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -251,14 +250,6 @@ public class ContentPackageItemProvider extends
 		} else {
 			txt = TngUtil
 					.getLabel(object, getString("_UI_ContentPackage_type")); //$NON-NLS-1$
-		}
-		// check if the object has its own resource and it is modified to add
-		// the dirty flag
-		//
-		Resource res = ((EObject) object).eResource();
-		if (res != null && res.getContents().get(0) == object
-				&& res.isModified()) {
-			txt = txt + "*"; //$NON-NLS-1$
 		}
 		return txt;
 	}

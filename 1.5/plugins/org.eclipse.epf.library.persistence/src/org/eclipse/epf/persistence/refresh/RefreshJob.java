@@ -344,8 +344,13 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 				
 				public boolean visit(IResourceDelta delta) throws CoreException {
 					Resource resource;
-					if ((delta.getFlags() & IResourceDelta.MARKERS) != IResourceDelta.MARKERS
-							&& delta.getResource().getType() == IResource.FILE) {
+//					System.out.println("type=" + delta.getResource().getType());
+//					System.out.println("kind=" + delta.getKind());
+//					System.out.println(delta.getFlags() != IResourceDelta.MARKERS);
+//					if(delta.getResource().getFullPath().toString().endsWith("plugin.xmi")) {
+//						System.out.println(delta.getResource().getFullPath().toString());
+//					}
+					if (delta.getResource().getType() == IResource.FILE) {
 						switch (delta.getKind()) {
 						case IResourceDelta.ADDED:
 							// handle added resource

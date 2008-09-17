@@ -1178,6 +1178,10 @@ implements ILibraryResource, IFailSafeSavable
 	void setResourceDescriptor(ResourceDescriptor resDesc) {
 		resourceDescriptor = resDesc;
 	}
+	
+	public ResourceDescriptor getResourceDescriptor() {
+		return resourceDescriptor;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.epf.library.persistence.ILibraryResource#getLoadStamp()

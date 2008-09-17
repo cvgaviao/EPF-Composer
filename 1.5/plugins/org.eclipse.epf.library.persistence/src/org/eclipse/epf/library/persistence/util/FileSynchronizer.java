@@ -194,8 +194,7 @@ public class FileSynchronizer implements IResourceChangeListener {
 		public boolean visit(IResourceDelta delta) throws CoreException {
 			if (delta == null)
 				return false;
-			if ((delta.getFlags() & IResourceDelta.MARKERS) != IResourceDelta.MARKERS
-					&& delta.getResource().getType() == IResource.FILE) {
+			if (delta.getResource().getType() == IResource.FILE) {
 				switch (delta.getKind()) {
 				case IResourceDelta.CHANGED:
 					FileInfo info = (FileInfo) getFileInfo(delta.getResource());

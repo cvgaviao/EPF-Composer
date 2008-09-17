@@ -20,8 +20,10 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResourceStatus;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -213,7 +215,14 @@ public class LibraryProblemMonitor extends RestartableJob implements ILibraryCha
 				marker.setAttribute(IMarker.LOCATION, location);
 				marker.setAttribute(Guid, plugin.getGuid());	
 
-			} catch (Exception e) {
+			} catch (CoreException e) {
+				IStatus status = e.getStatus();
+				if(status instanceof IResourceStatus && ((IResourceStatus) status).getCode() == IResourceStatus.RESOURCE_NOT_FOUND) {
+					// do nothing
+				} else {
+					LibraryPlugin.getDefault().getLogger().logError(e);
+				}
+			} catch(Exception e) {
 				LibraryPlugin.getDefault().getLogger().logError(e);
 			}
 			if (marker == null) {

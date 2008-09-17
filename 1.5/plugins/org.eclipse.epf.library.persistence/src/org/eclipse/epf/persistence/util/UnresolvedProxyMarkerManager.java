@@ -28,6 +28,7 @@ import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceStatus;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -48,6 +49,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.IMarkerAttributeContributer;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
@@ -321,23 +323,29 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		IFile file = workspace.getRoot().getFileForLocation(path);
 		if (file != null) {
 			String location = containerURI != null ? containerURI
-					.toFileString() : ""; //$NON-NLS-1$					
+					.toFileString() : StrUtil.EMPTY_STRING;					
 			
 			try {
-				file.refreshLocal(IResource.DEPTH_ZERO, null);				
-					IMarker marker = findMarker(file, proxyURI.toString(), 0, 0);
-					if (marker != null) {
-						marker.setAttribute(OWNER_GUID, ownerGUID);
-						return;
+				file.refreshLocal(IResource.DEPTH_ZERO, null);
+				IMarker marker = findMarker(file, proxyURI.toString(), 0, 0);
+				if (marker != null) {
+					marker.setAttribute(OWNER_GUID, ownerGUID);
+					return;
+				}
+				createMarker(re, proxyURI, errMsg, ownerGUID, file,
+						location, proxyURI.toString(), 0, 0);
+			} catch (CoreException e) {
+				IStatus status = e.getStatus();
+				int code;
+				if(status instanceof IResourceStatus && 
+						((code = ((IResourceStatus) status).getCode()) == IResourceStatus.MARKER_NOT_FOUND
+								|| code == IResourceStatus.RESOURCE_NOT_FOUND)) {
+					// do nothing
+				} else {
+					PersistencePlugin.getDefault().getLogger().logError(e);
+					if (MultiFileSaveUtil.DEBUG) {
+						e.printStackTrace();
 					}
-					createMarker(re, proxyURI,
-							errMsg, ownerGUID, file,
-							location, proxyURI.toString(), 0,
-							0);
-			} catch (CoreException ex) {
-				CommonPlugin.INSTANCE.log(ex);
-				if (MultiFileSaveUtil.DEBUG) {
-					ex.printStackTrace();
 				}
 			}
 		}
@@ -871,23 +879,34 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 
 	public void validateAllMarkers() {
 		boolean newlyAdded = false;
+		boolean invalid = false;
 		if(!elementGUIToMarkersMap.isEmpty()) {
 			ArrayList<Collection<ValidObject>> validObjectCollections = null;
 			synchronized (elementGUIToMarkersMap) {
-				if(!elementGUIToMarkersMap.isEmpty()) {
-					validObjectCollections = new ArrayList<Collection<ValidObject>>(elementGUIToMarkersMap.values());
+				if(!elementGUIToMarkersMap.isEmpty()) {					
+					validObjectCollections = new ArrayList<Collection<ValidObject>>();
+					for (Collection<ValidObject> collection : elementGUIToMarkersMap.values()) {
+						if(!collection.isEmpty()) {
+							validObjectCollections.add(new ArrayList<ValidObject>(collection));
+						}
+					}
 				}
 			}
 			if(validObjectCollections != null) {
 				synchronized(resourcesToValidateMarkers) {
-					for (Collection<ValidObject> markers :validObjectCollections) {
+					for (Collection<ValidObject> markers : validObjectCollections) {
 						for (ValidObject vo : markers) {
 							IMarker marker = (IMarker) vo.object;
 							try {
-								String location = (String)marker.getAttribute(IMarker.LOCATION);
-								URI uri = URI.createFileURI(location);
-								Resource resource = resourceSet.getResource(uri, true);
-								newlyAdded = resourcesToValidateMarkers.add(resource) | newlyAdded;
+								if(marker.exists()) {
+									String location = (String)marker.getAttribute(IMarker.LOCATION);
+									URI uri = URI.createFileURI(location);
+									Resource resource = resourceSet.getResource(uri, true);
+									newlyAdded = resourcesToValidateMarkers.add(resource) | newlyAdded;
+								} else {
+									vo.valid = false;
+									invalid = true;
+								}
 							} catch (CoreException e) {
 								PersistencePlugin.getDefault().getLogger().logError(e);
 							}
@@ -899,13 +918,15 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		}
 		if(newlyAdded) {
 			schedule(DELAY);
+		} else if(invalid) {
+			removeMarkers(new NullProgressMonitor());
 		}
 	}
 	
 	public void doValidateMarkers(Resource resource) {
 		try {
 			IResource file = FileManager.getResourceForLocation(resource.getURI().toFileString());
-			if(file instanceof IFile) {
+			if(file instanceof IFile && file.exists()) {
 				IMarker[] markers = file.findMarkers(MARKER_ID, false, IResource.DEPTH_ZERO);
 				HashSet<IMarker> markersToUpdate = new HashSet<IMarker>();
 				for (int i = 0; i < markers.length; i++) {
