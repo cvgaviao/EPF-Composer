@@ -1431,7 +1431,7 @@ public final class TngUtil {
 					return orderInfo;
 				}
 			}
-		} catch (IOException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		return null;
