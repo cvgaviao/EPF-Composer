@@ -244,20 +244,22 @@ public final class BridgeHelper {
 	 */
 	public static ActivityNode findNode(Activity container, Object object,
 			boolean checkBase) {
-		for (Iterator iter = container.getNodes().iterator(); iter.hasNext();) {
-			ActivityNode node = (ActivityNode) iter.next();
-			MethodElement e = BridgeHelper.getMethodElement(node);
-			if (object == e) {
-				return node;
-			} else if (checkBase && e instanceof VariabilityElement) {
-				for (VariabilityElement ve = ((VariabilityElement) e)
-						.getVariabilityBasedOnElement(); ve != null; ve = ve
-						.getVariabilityBasedOnElement()) {
-					if (ve == object) {
-						return node;
+		if (container != null) {
+			for (Iterator iter = container.getNodes().iterator(); iter.hasNext();) {
+				ActivityNode node = (ActivityNode) iter.next();
+				MethodElement e = BridgeHelper.getMethodElement(node);
+				if (object == e) {
+					return node;
+				} else if (checkBase && e instanceof VariabilityElement) {
+					for (VariabilityElement ve = ((VariabilityElement) e)
+							.getVariabilityBasedOnElement(); ve != null; ve = ve
+							.getVariabilityBasedOnElement()) {
+						if (ve == object) {
+							return node;
+						}
 					}
 				}
-			}
+			}	
 		}
 		return null;
 	}
