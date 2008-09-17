@@ -20,7 +20,6 @@ import org.eclipse.epf.common.serviceability.Logger;
 import org.eclipse.epf.common.ui.util.ClipboardUtil;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.NetUtil;
-import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.richtext.IRichText;
 import org.eclipse.epf.richtext.RichTextCommand;
 import org.eclipse.epf.richtext.RichTextEditor;
@@ -122,19 +121,9 @@ public class PasteAction extends RichTextAction {
 					sourceURL = new URL(sourceURLStr);
 				}
 
-				Matcher matcher = ResourceHelper.p_link_ref.matcher(html);
-				Matcher hrefMatcher;
+				Matcher matcher = HREF_REFERENCES.matcher(html);
 				while (matcher.find()) {
-					String link = matcher.group();
-					if ( ResourceHelper.isLocalElement(link) )
-					{ 
-						continue;
-					}
-					
-					hrefMatcher = HREF_REFERENCES.matcher(link);
-					if ( hrefMatcher.find())
-					{
-						String href = NetUtil.decodeURL(hrefMatcher.group(1));
+					String href = NetUtil.decodeURL(matcher.group(1));
 					try {
 						URL hrefURL = new URL(sourceURL, href);
 						String scheme = hrefURL.getProtocol();
@@ -162,7 +151,7 @@ public class PasteAction extends RichTextAction {
 						logger.logError(e);
 					}
 				}
-				}
+
 				matcher = p_image_ref.matcher(html);
 				while (matcher.find()) {
 					String src = NetUtil.decodeURL(matcher.group(3));

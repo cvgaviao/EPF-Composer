@@ -12,8 +12,7 @@ Require-Bundle: org.eclipse.core.runtime;visibility:=reexport,
  org.eclipse.ui.forms;visibility:=reexport,
  org.eclipse.jface.text;visibility:=reexport,
  org.eclipse.ui.workbench.texteditor;visibility:=reexport,
- org.eclipse.epf.common.ui;visibility:=reexport,
- org.eclipse.epf.library
+ org.eclipse.epf.common.ui;visibility:=reexport
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.epf.richtext,
  org.eclipse.epf.richtext.actions,

@@ -1804,41 +1804,6 @@ public class ResourceHelper {
 				+ discardedElementURL.toString();
 	}
 	
-	/**
-	 * FOR USE WITH RICH TEXT EDITOR
-	 * check whether the url represents a valid element
-	 * 
-	 * @param url
-	 *            String, the url to be analysed
-	 * @return boolean true if it's a valid element of opening method library
-	 */	
-	public static boolean isLocalElement(String url)
-	{
-		Matcher m = p_link_ref.matcher(url);
-		while (m.find()) {
-			//1. get guid
-			String urltext = m.group(1);
-			Matcher m2 = p_tag_attributes.matcher(urltext);
-			while (m2.find()) {
-				String attrName = m2.group(1).trim().toLowerCase();
-				String attrValue = ""; //$NON-NLS-1$
-				if (m2.group(3) != null) {
-					attrValue = m2.group(3).trim();
-				} else if (m2.group(2) != null) {
-					attrValue = m2.group(2).trim();
-				}
-				if (attrName.equals(LinkInfo.LINK_ATTR_GUID)) {
-					//2. get method element
-					MethodElement e = LinkInfo.getMethodElement(attrValue);		
-					if ( null != e)
-						return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-
 	
 	
 	/**
