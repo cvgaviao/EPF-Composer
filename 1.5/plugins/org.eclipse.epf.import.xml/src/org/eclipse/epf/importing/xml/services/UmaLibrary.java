@@ -808,12 +808,12 @@ public class UmaLibrary {
 				if (o instanceof ProcessComponent) {
 					procs.add(o);
 				} else if (o instanceof DescribableElement) {
-					String pName = ((DescribableElement) o).getPresentationName();
+/*					String pName = ((DescribableElement) o).getPresentationName();
 					if (pName == null || pName.length() == 0) {
 						((DescribableElement) o)
 								.setPresentationName(((DescribableElement) o)
 										.getName());
-					}
+					}*/
 				}
 	
 				// fix the name string
