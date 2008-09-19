@@ -196,6 +196,10 @@ public class DefaultContentValidator implements IContentValidator {
 	public boolean isDiscarded(MethodElement owner, Object feature, MethodElement e) {
 		return false;
 	}
+	
+	public boolean isDiscarded(MethodElement owner, Object feature, MethodElement e, MethodConfiguration config) {
+		return false;
+	}
 
 	public void dispose() {
 	}

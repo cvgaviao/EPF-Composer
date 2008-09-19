@@ -145,10 +145,10 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	// collect the elements referenced by the published contents so we can
 	// publish them
 	// this will be the elements to be published
-	protected List referencedElements = new ArrayList();
+	private List referencedElements = new ArrayList();
 
 	// published elements
-	protected List publishedElements = new ArrayList();
+	private List publishedElements = new ArrayList();
 
 	// this is the default target element for the content validator
 	// set this before publishing the element and set to null after the
@@ -555,7 +555,7 @@ public class PublishingContentValidator extends DefaultContentValidator {
 		if (e == null) {
 			return;
 		}
-
+								
 		// don't add discarded elements
 		if (isDiscarded(owner, null, e)) {
 			if (debug) {
@@ -698,7 +698,7 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	 * make a closure
 	 * 
 	 */
-	public void makeElementClosure() {
+	public void makeElementClosure(MethodConfiguration config) {
 		// do nothing
 	}
 

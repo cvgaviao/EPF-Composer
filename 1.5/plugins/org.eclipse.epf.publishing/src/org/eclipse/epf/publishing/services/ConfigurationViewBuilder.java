@@ -373,7 +373,7 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 
 		// now all the published elements are the element closure, make the
 		// final closure
-		getValidator().makeElementClosure();
+		getValidator().makeElementClosure(config);
 	}
 
 	private void makeProcessClosure(org.eclipse.epf.uma.Process proc) {

@@ -140,6 +140,8 @@ public interface IContentValidator  {
 	 * @param e MethodElement the element to be checked
 	 */
 	public boolean isDiscarded(MethodElement owner, Object feature, MethodElement e);
+	
+	public boolean isDiscarded(MethodElement owner, Object feature, MethodElement e, MethodConfiguration config);
 
 	/**
 	 * set an discarded element
