@@ -589,12 +589,11 @@ public class ResourceHelper {
 //		return text;
 		if (withType) {
 			if (showSkinResource) {
-				String xslPath = null;
-
 				if ((LAYOUT_XSL_ROOT_PATH == null)
 						|| (LAYOUT_XSL_ROOT_PATH.equals(""))) {//$NON-NLS-1$
-					LAYOUT_XSL_ROOT_PATH = BrowsingLayoutSettings.INSTANCE.getXslPath()
-							.getAbsolutePath();
+					File xslPath = BrowsingLayoutSettings.INSTANCE.getXslPath();
+					if (xslPath != null) 
+						LAYOUT_XSL_ROOT_PATH = xslPath.getAbsolutePath();
 				}
 				Properties browsingResource = new Properties();
 				File file = new File(LAYOUT_XSL_ROOT_PATH, "resources.properties"); //$NON-NLS-1$
