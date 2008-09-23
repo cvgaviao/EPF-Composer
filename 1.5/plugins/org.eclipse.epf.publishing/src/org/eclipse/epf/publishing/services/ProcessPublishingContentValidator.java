@@ -280,13 +280,15 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 		}
 		
 		boolean inCls = inClosure(e);
-		if (!inCls && feature == elementUrlFeature && config != null) {
+		//Don't remove the following commented out code block.
+		//May put it back in future.
+/*		if (!inCls && feature == elementUrlFeature && config != null) {
 			inCls = inClosure(owner);
 			if (inCls) {
 				closureElements.add(e);
 				addReferencesToClosure(Collections.singletonList(e), config, new HashSet());
 			}
-		}
+		}*/
 		if (!inCls && !isFinalClosure ) {
 			// if the closure is not final, then if the owner is in closure and the element is a Guidance, 
 			// this element is also in closure
