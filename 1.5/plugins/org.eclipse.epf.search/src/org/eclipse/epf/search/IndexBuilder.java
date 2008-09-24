@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.search;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -319,6 +320,7 @@ public class IndexBuilder {
 		Document luceneDocument = null;
 		InputStreamReader input = null;
 		Reader reader = null;
+		BufferedReader bufferedReader = null; 
 		try {
 			
 			input = new InputStreamReader(new FileInputStream(file), "UTF-8"); //$NON-NLS-1$
@@ -329,15 +331,23 @@ public class IndexBuilder {
 			if ( reader == null ) {
 				return null;
 			}
+			
+			StringBuffer htmlContent = new StringBuffer("");
+			String line = "";
+			bufferedReader = new BufferedReader(reader);
+			while((line = bufferedReader.readLine()) != null)
+			{
+				htmlContent.append(line + "\n");
+			}
 
 			Properties metaTags = parser.getMetaTags();
 			if ( isNoSearchableDocument(metaTags) ) {
 				
 				// the LHTMLParser thread will not end if the reader is not processed
 				// causing major resource leak
-				while ( reader.read(cbuf) > 0 ) {
-					;
-				}			
+//				while ( reader.read(cbuf) > 0 ) {
+//					;
+//				}			
 				//System.out.println( ++skipCount + " file skipped: " + file.getAbsolutePath());
 				parser = null;
 				return null;
@@ -348,8 +358,9 @@ public class IndexBuilder {
 			String url = file.getPath().replace(File.pathSeparatorChar, '/');
 			luceneDocument.add(Field.UnIndexed(URL_FIELD, url));
 			
-			luceneDocument.add(Field.Text(CONTENT_FIELD, reader));
-			
+//			luceneDocument.add(Field.Text(CONTENT_FIELD, reader));
+			luceneDocument.add(Field.UnStored(CONTENT_FIELD, htmlContent.toString()));
+
 			String title = parser.getTitle();
 			if (title != null && title.length() > 0) {
 				// Workaround a Linux specific issue.
@@ -404,6 +415,12 @@ public class IndexBuilder {
 			luceneDocument = null;
 			SearchPlugin.getDefault().getLogger().logError(e);
 		} finally {
+			if (bufferedReader != null) {
+				try {
+					bufferedReader.close();
+				} catch (Exception e) {
+				}
+			}
 			if (input != null) {
 				try {
 					input.close();
