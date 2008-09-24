@@ -579,12 +579,30 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			ElementError error = ConfigurationErrorMatrix.getError(config, ref);
 			if (error != null) {
 				errors.add(error);
-				notifyError(error, ClosureListener.ERROR_ADDED);
+/*				notifyError(error, ClosureListener.ERROR_ADDED);
 				processPackageError(LibraryUtil.getSelectable(ref.element),
 						LibraryUtil.getSelectable(ref.refElement), error
-								.getErrorLevel());
+								.getErrorLevel());*/
 			}
 		}
+		
+		List<ElementError> updatedErrors = new ArrayList<ElementError>();
+		for (ElementError error: errors) {
+			if (error.causeElement instanceof MethodElement) {
+				MethodElement referenced = (MethodElement) error.causeElement;
+				if (! ConfigurationHelper.inConfig(referenced, getConfiguration())) {				
+					notifyError(error, ClosureListener.ERROR_ADDED);
+					updatedErrors.add(error);
+					if (error.ownerElement instanceof MethodElement) {
+						MethodElement referencing = (MethodElement) error.ownerElement;
+						processPackageError(LibraryUtil.getSelectable(referencing),
+								LibraryUtil.getSelectable(referenced), error
+										.getErrorLevel());
+					}
+				}
+			}
+		}
+		errors = updatedErrors;
 	}
 	
 	private void processChangedNodes_(Object[] changedNodes) {	
@@ -700,10 +718,10 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			}
 			
 			errors.add(error);
-			notifyError(error, ClosureListener.ERROR_ADDED);
+			//notifyError(error, ClosureListener.ERROR_ADDED);
 			
 			// process package error
-			processPackageError(LibraryUtil.getSelectable(e), LibraryUtil.getSelectable(e_ref), error.getErrorLevel() );
+			//processPackageError(LibraryUtil.getSelectable(e), LibraryUtil.getSelectable(e_ref), error.getErrorLevel() );
 		}	
 	}
 	
