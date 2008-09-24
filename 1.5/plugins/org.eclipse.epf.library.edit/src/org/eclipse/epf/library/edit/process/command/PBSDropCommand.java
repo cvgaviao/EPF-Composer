@@ -165,7 +165,7 @@ public class PBSDropCommand extends BSDropCommand {
 			WorkProductDescriptor wpDesc = null;
 			if (synchronize) {
 				wpDesc = (WorkProductDescriptor) ProcessCommandUtil
-					.getDescriptor(wp, activity, config);
+					.getBestDescriptor(wp, activity, config);
 			}
 			if (wpDesc == null) {
 				wpDesc = ProcessCommandUtil.createWorkProductDescriptor(wp, config,

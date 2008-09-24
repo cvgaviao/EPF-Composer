@@ -119,7 +119,7 @@ public class OBSDropCommand extends BSDropCommand {
 			RoleDescriptor roleDesc = null;
 			if (synchronize) {
 				roleDesc = (RoleDescriptor) ProcessCommandUtil
-					.getDescriptor(role, activity, config);
+					.getBestDescriptor(role, activity, config);
 			}
 
 			if (roleDesc == null) {

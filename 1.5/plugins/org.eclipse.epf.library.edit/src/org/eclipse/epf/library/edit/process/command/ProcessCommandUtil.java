@@ -289,6 +289,36 @@ public final class ProcessCommandUtil {
 	}
 	
 	/**
+	 * Gets the local descriptor, preferably unsuppressed one, of the given role, task, or workProduct.
+	 * 
+	 * @param obj
+	 * @param activity
+	 * @param config
+	 * @return
+	 */
+	static Object getBestDescriptor(Object obj, Activity activity, MethodConfiguration config) {
+		List<?> descriptorList = activity.getBreakdownElements();
+		int size = descriptorList.size();
+		Descriptor descriptor = null;
+		for (int j = 0; j < size; j++) {
+			// iterate thru list to see whether a valid descriptor linked with the given object
+			// already exists
+			//
+			Object object = descriptorList.get(j);
+			if(isValidDescriptorOf(obj, config, object, false)) {
+				Descriptor desc = (Descriptor) object;
+				if(!desc.getSuppressed()) {
+					return desc;
+				} else if (descriptor == null) {
+					descriptor = desc;
+				}
+			}
+		}
+		return descriptor;
+
+	}
+	
+	/**
 	 * Gets the valid descriptor, either local or inherited, of the given object under the given activity
 	 * 
 	 * @param obj
@@ -349,7 +379,7 @@ public final class ProcessCommandUtil {
 					boolean isNewDescriptor = false;
 					// check for roledescriptor whether it's present in activity
 					// breakdown elements
-					RoleDescriptor roleDesc = (RoleDescriptor) getDescriptor(
+					RoleDescriptor roleDesc = (RoleDescriptor) getBestDescriptor(
 							role, activity, config);
 					if (roleDesc == null) {
 						// check for roledescriptor whether it's present in base
@@ -443,7 +473,7 @@ public final class ProcessCommandUtil {
 					if (TngUtil.isContributor(wpObj)) {
 						wpObj = (WorkProduct) TngUtil.getBase(wpObj);
 					}
-					WorkProductDescriptor wpDesc = (WorkProductDescriptor) getDescriptor(wpObj, activity, config);
+					WorkProductDescriptor wpDesc = (WorkProductDescriptor) getBestDescriptor(wpObj, activity, config);
 					if (wpDesc == null) {
 	
 						// get inherited work product descriptors
@@ -529,8 +559,9 @@ public final class ProcessCommandUtil {
 		// create task descriptor object
 		//
 		TaskDescriptor taskDesc = null;
-		if (useExistingDescriptor)
-			taskDesc = 	(TaskDescriptor) getDescriptor(task, activity, config);
+		if (useExistingDescriptor) {
+			taskDesc = (TaskDescriptor) getBestDescriptor(task, activity, config);
+		}
 		boolean isNewTaskDescriptor = false;
 	
 		// if ( taskDesc != null )
@@ -588,7 +619,7 @@ public final class ProcessCommandUtil {
 						// }
 			
 						// check for local descriptor
-						RoleDescriptor primaryRoleDesc = (RoleDescriptor) getDescriptor(
+						RoleDescriptor primaryRoleDesc = (RoleDescriptor) getBestDescriptor(
 								role, activity, config);
 						boolean isNewRoleDescriptor = false;
 						if (primaryRoleDesc == null) {
@@ -631,7 +662,7 @@ public final class ProcessCommandUtil {
 				for (int j = 0; j < additionalPerformers.size(); j++) {
 					Role roleObj = (Role) additionalPerformers.get(j);
 					// check for local descriptor
-					RoleDescriptor roleDesc = (RoleDescriptor) getDescriptor(
+					RoleDescriptor roleDesc = (RoleDescriptor) getBestDescriptor(
 							roleObj, activity, config);
 					boolean isNewRoleDescriptor = false;
 					if (roleDesc == null) {
@@ -811,7 +842,7 @@ public final class ProcessCommandUtil {
 	
 			if (element instanceof Activity) {
 				Activity baseActivity = (Activity) element;
-				Object desc = getDescriptor(obj, baseActivity.getBreakdownElements(), config, false);
+				Object desc = getBestDescriptor(obj, baseActivity, config);
 				if(desc != null) {
 					return desc;
 				}
