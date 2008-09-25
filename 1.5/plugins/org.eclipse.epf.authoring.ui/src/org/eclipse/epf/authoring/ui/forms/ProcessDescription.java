@@ -1057,10 +1057,12 @@ public class ProcessDescription extends ProcessFormPage {
 						if (selection.size() == 1) {
 							MethodConfiguration config = ((MethodConfiguration) selection
 									.getFirstElement());
-							if (config == process.getDefaultContext()) {
-								buttonRemove.setEnabled(false);
-							} else {
-								buttonRemove.setEnabled(true);
+							if (!TngUtil.isLocked(methodElement)) {
+								if (config == process.getDefaultContext()) {
+									buttonRemove.setEnabled(false);
+								} else {
+									buttonRemove.setEnabled(true);
+								}
 							}
 							String desc = config.getBriefDescription();
 							if (desc == null) {
@@ -1242,11 +1244,30 @@ public class ProcessDescription extends ProcessFormPage {
 		if (ctrl_expanded != null && !ctrl_expanded.isDisposed()) {
 			ctrl_expanded.setEditable(editable);
 		}
+		
+		IStructuredSelection selection = (IStructuredSelection) configListViewer
+				.getSelection();
+		if (selection.size() == 1) {
+			MethodConfiguration config = ((MethodConfiguration) selection
+					.getFirstElement());
+			if (config == process.getDefaultContext()) {
+				if (!buttonRemove.isDisposed())
+					buttonRemove.setEnabled(false);
+			} else {
+				if (!buttonRemove.isDisposed())
+					buttonRemove.setEnabled(editable);
+			}
+			String desc = config.getBriefDescription();
+			if (desc == null) {
+				desc = ""; //$NON-NLS-1$
+			}
+			textConfigDescription.setText(desc);
+		}
 		if (!buttonAdd.isDisposed())
 			buttonAdd.setEnabled(editable);
 		if (!buttonMakeDefault.isDisposed())
 			buttonMakeDefault.setEnabled(editable);
-		if (!buttonRemove.isDisposed())
+		if (!buttonRemove.isDisposed() && !editable)
 			buttonRemove.setEnabled(editable);
 	}
 
