@@ -60,10 +60,12 @@ public class MainApplication implements IApplication {
 						LibraryUIManager.setCommandLineLibrary(location);
 					}
 				} else if (appArgs[i].equalsIgnoreCase("-defaultlibrary") && i < (appArgs.length - 1)) { //$NON-NLS-1$
-					String location = appArgs[i + 1];
-					location = buildLocation(location);
-					if (location != null) {
-						LibraryUIManager.setCommandLineDefaultLibrary(location);
+					if (! CommandLineRunUtil.getInstance().isNeedToRun()) {
+						String location = appArgs[i + 1];
+						location = buildLocation(location);
+						if (location != null) {
+							LibraryUIManager.setCommandLineDefaultLibrary(location);
+						}
 					}
 				} else if (appArgs[i].equalsIgnoreCase("-nolock")) { //$NON-NLS-1$
 					noLock = true;
