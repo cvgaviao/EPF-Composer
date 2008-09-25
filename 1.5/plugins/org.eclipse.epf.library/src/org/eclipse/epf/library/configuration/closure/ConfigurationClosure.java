@@ -1222,6 +1222,13 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 * Disposes resources allocated by this closure.
 	 */
 	public void dispose() {
+		try {
+			dispose_();
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}		
+	}
+	private void dispose_() {
 		
 		clearErrorMarks();
 		
