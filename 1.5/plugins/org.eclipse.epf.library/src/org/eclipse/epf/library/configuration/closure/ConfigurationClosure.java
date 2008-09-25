@@ -1222,19 +1222,14 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 * Disposes resources allocated by this closure.
 	 */
 	public void dispose() {
-		try {
-			dispose_();
-		} catch (Exception e) {
-			LibraryPlugin.getDefault().getLogger().logError(e);
-		}		
-	}
-	private void dispose_() {
 		
 		clearErrorMarks();
 		
 		if (configManager != null) {
-			ConfigurationProperties props = configManager.getConfigurationProperties();			
-			props.removeListener(configPropListener);
+			ConfigurationProperties props = configManager.getConfigurationProperties();
+			if (props != null) {
+				props.removeListener(configPropListener);
+			}
 		}
 				
 		configManager = null;
