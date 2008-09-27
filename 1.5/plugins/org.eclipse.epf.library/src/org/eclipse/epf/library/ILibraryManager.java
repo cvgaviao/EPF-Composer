@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
-import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -153,6 +152,8 @@ public interface ILibraryManager {
 	 */
 	public void registerEditingDomain(AdapterFactoryEditingDomain domain);
 
+	public void unregisterEditingDomain(AdapterFactoryEditingDomain domain);
+	
 	/**
 	 * Adds a listener to monitor changes to the managed method library.
 	 * 

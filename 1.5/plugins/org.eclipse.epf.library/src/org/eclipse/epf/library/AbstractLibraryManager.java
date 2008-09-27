@@ -32,6 +32,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
@@ -60,7 +61,6 @@ import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.project.MethodLibraryProject;
 import org.eclipse.epf.library.services.LibraryModificationHelper;
 import org.eclipse.epf.library.services.SafeUpdateController;
-import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.persistence.MultiFileXMISaveImpl;
 import org.eclipse.epf.persistence.refresh.IRefreshEvent;
@@ -571,13 +571,29 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 
 		// Add a listener to monitor library changes made in the given editing
 		// domain.
-		((ComposedAdapterFactory) domain.getAdapterFactory())
-				.addListener(notifyChangedListener);
+		AdapterFactory adapterFactory = domain.getAdapterFactory();
+		if(adapterFactory instanceof ComposedAdapterFactory) {
+			ComposedAdapterFactory composedAdapterFactory = (ComposedAdapterFactory) adapterFactory;
+			// remove the listener before adding it to make sure that the same listener is not added more than one
+			composedAdapterFactory.removeListener(notifyChangedListener);
+			composedAdapterFactory.addListener(notifyChangedListener);
+		}
 
 		// Add a listener to monitor changes made to the command stack.
 		// This is used to select the most recently affected objects in the
 		// viewer.
+		domain.getCommandStack().removeCommandStackListener(commandStackListener);
 		domain.getCommandStack().addCommandStackListener(commandStackListener);
+	}
+	
+	public void unregisterEditingDomain(AdapterFactoryEditingDomain domain) {
+		AdapterFactory adapterFactory = domain.getAdapterFactory();
+		if(adapterFactory instanceof ComposedAdapterFactory) {
+			ComposedAdapterFactory composedAdapterFactory = (ComposedAdapterFactory) adapterFactory;
+			composedAdapterFactory.removeListener(notifyChangedListener);
+		}
+
+		domain.getCommandStack().removeCommandStackListener(commandStackListener);
 	}
 
 	/**
@@ -1040,8 +1056,10 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 		if (resourceChangeListeners.size() > 0) {
 			resourceChangeListeners.clear();
 		}
-
-		editingDomain = null;
+		if(editingDomain != null) {
+			unregisterEditingDomain(editingDomain);
+			editingDomain = null;
+		}
 		library = null;
 
 	}

@@ -400,6 +400,15 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 
 	};
 
+	private IPropertyListener propertyListener = new IPropertyListener() {
+		public void propertyChanged(Object source, int propId) {
+			// TODO: Replace hardcoded constant with variable.
+			if (propId == 1) {
+				firePropertyChange(PROP_DIRTY);
+			}
+		}
+	};
+
 	/**
 	 * Creates a new instance.
 	 */
@@ -674,6 +683,15 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 			statusLineManager.setMessage(path);
 		}
 	}
+	
+	public void registerChangeListeners() {
+		ILibraryManager manager = (ILibraryManager) LibraryService
+		.getInstance().getCurrentLibraryManager();
+		if (manager != null) {
+			manager.registerEditingDomain(editingDomain);
+			manager.addPropertyListener(propertyListener);
+		}
+	}
 
 	/**
 	 * @see org.eclipse.epf.library.ILibraryServiceListener#libraryReopened(MethodLibrary)
@@ -685,20 +703,18 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 	@Override
 	public void librarySet(MethodLibrary library) {
 		super.librarySet(library);
+		registerChangeListeners();
+	}
+	
+	@Override
+	public void libraryClosed(MethodLibrary library) {
 		ILibraryManager manager = (ILibraryManager) LibraryService
-		.getInstance().getCurrentLibraryManager();
+				.getInstance().getCurrentLibraryManager();
 		if (manager != null) {
-			manager.registerEditingDomain(editingDomain);
-		
-			manager.addPropertyListener(new IPropertyListener() {
-				public void propertyChanged(Object source, int propId) {
-					// TODO: Replace hardcoded constant with variable.
-					if (propId == 1) {
-						firePropertyChange(PROP_DIRTY);
-					}
-				}
-			});
+			manager.unregisterEditingDomain(editingDomain);
+			manager.removePropertyListener(propertyListener);
 		}
+		super.libraryClosed(library);
 	}
 
 	/**
