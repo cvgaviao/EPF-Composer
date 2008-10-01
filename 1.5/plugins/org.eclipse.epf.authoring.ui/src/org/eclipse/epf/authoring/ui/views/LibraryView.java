@@ -720,9 +720,9 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 	/**
 	 * The action bar for the library view
 	 */
-	class LibraryViewActionBarContributor extends LibraryActionBarContributor {
+	protected class LibraryViewActionBarContributor extends LibraryActionBarContributor {
 
-		private IAction newPluginAction = new NewPluginAction(
+		protected IAction newPluginAction = new NewPluginAction(
 				AuthoringUIResources.new_plugin);
 
 		private IAction moveAction = new Action(AuthoringUIResources.move) {

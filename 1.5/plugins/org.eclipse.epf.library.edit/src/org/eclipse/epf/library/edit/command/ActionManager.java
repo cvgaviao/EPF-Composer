@@ -42,14 +42,18 @@ public class ActionManager implements IActionManager {
 
 	private EditingDomain editingDomain;
 
-	private FullyRevertibleCommandStack commandStack;
+	protected FullyRevertibleCommandStack commandStack;
 
 	public ActionManager() {
 		commandStack = createCommandStack();
-		editingDomain = new AdapterFactoryEditingDomain(
+		editingDomain = createEditingDomain();
+	}
+	
+	protected EditingDomain createEditingDomain() {
+		return new AdapterFactoryEditingDomain(
 				TngAdapterFactory.INSTANCE
-						.getNavigatorView_ComposedAdapterFactory(),
-				commandStack);
+				.getNavigatorView_ComposedAdapterFactory(),
+		commandStack);
 	}
 
 	protected FullyRevertibleCommandStack createCommandStack() {
