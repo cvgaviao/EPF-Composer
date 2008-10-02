@@ -183,6 +183,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.HTMLTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -1391,7 +1392,11 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		Transfer[] transfers = new Transfer[] { HTMLTransfer.getInstance(),
 				TextTransfer.getInstance(), LocalTransfer.getInstance() };
 		viewer.addDragSupport(dndOperations, transfers,
-				new LibraryViewerDragAdapter(viewer));
+				createDragSourceListener(viewer));
+	}
+	
+	protected DragSourceListener createDragSourceListener(Viewer viewer) {
+		return new LibraryViewerDragAdapter(viewer);
 	}
 
 	/*
