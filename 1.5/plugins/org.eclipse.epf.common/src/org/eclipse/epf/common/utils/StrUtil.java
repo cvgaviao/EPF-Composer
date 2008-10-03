@@ -68,6 +68,8 @@ public class StrUtil {
 	public static final String HTML_REG = "&reg;";//$NON-NLS-1$ 
 
 	public static final String HTML_TRADEMARK = "&trade;";//$NON-NLS-1$
+	
+	public static boolean during_migration = false; 
 
 	/**
 	 * Private constructor to prevent this class from being instantiated. All
@@ -373,6 +375,17 @@ public class StrUtil {
 							break;
 						}
 					}
+					
+					//code below will treat "%20de" as "space + de"
+					//this may lose some double bytes character(Chinese), which start with %20, but keep all url links
+					if (during_migration && validHextStr) {
+						if (hexStr.startsWith("20")) { //$NON-NLS-1$
+							result.append("+"); //$NON-NLS-1$
+							i += 2;
+							break;
+						}
+					}
+					
 					if (validHextStr) {
 						try {
 							int codePoint = Integer.parseInt(hexStr, 16);

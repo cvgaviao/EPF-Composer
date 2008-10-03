@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.sdo.EProperty;
 import org.eclipse.epf.common.html.HTMLFormatter;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.library.util.TextReferenceReplacerImpl;
 import org.eclipse.epf.library.xmi.XMILibraryResourceManager;
@@ -113,7 +114,9 @@ public class MigrationUtil {
 							String str0 = validateGuidAttribute((String) value);							
 							String str1 = ResourceHelper.validateContent(element, str0);
 							
+							StrUtil.during_migration = true;
 							newValue = formater.formatHTML((String) str1);
+							StrUtil.during_migration = false;
 
 							if (localDebug) {
 								System.out.println("LD> feature: " + feature.getName());//$NON-NLS-1$

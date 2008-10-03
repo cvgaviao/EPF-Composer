@@ -331,7 +331,7 @@ public class NetUtil {
 			char ch = url.charAt(i);
 			switch (ch) {
 			case ' ':
-				strBuf.append("%20"); //$NON-NLS-1$
+				strBuf.append("+"); //$NON-NLS-1$
 				break;
 			default:
 				strBuf.append(ch);
