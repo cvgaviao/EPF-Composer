@@ -1162,20 +1162,20 @@ public class ProcessDescription extends ProcessFormPage {
 							.getDefaultContext();
 
 					if (currentConfig != selection.getFirstElement()) {
-						boolean isValid = true;
-						List validContext = process.getValidContext();
-						for (Iterator itor = validContext.iterator(); itor
-								.hasNext();) {
-							MethodConfiguration config = (MethodConfiguration) itor
-									.next();
-							if (!(checkValidityForSuperSet(
-									(MethodConfiguration) selection
-											.getFirstElement(), config))) {
-								isValid = false;
-								break;
-							}
-						}
-						if (isValid) {
+//						boolean isValid = true;
+//						List validContext = process.getValidContext();
+//						for (Iterator itor = validContext.iterator(); itor
+//								.hasNext();) {
+//							MethodConfiguration config = (MethodConfiguration) itor
+//									.next();
+//							if (!(checkValidityForSuperSet(
+//									(MethodConfiguration) selection
+//											.getFirstElement(), config))) {
+//								isValid = false;
+//								break;
+//							}
+//						}
+//						if (isValid) {
 							boolean status = actionMgr.doAction(
 									IActionManager.SET, process,
 									UmaPackage.eINSTANCE
@@ -1184,16 +1184,16 @@ public class ProcessDescription extends ProcessFormPage {
 							if (!status)
 								return;
 							buttonRemove.setEnabled(false);
-						} else {
-							String selectedConfigName = ((MethodConfiguration) selection
-									.getFirstElement()).getName();
-							AuthoringUIPlugin
-									.getDefault()
-									.getMsgDialog()
-									.displayError(
-											AuthoringUIResources.setDefaultConfigErrorDialog_title, 
-											AuthoringUIResources.bind(AuthoringUIResources.setDefaultConfigError_msg, selectedConfigName)); 
-						}
+//						} else {
+//							String selectedConfigName = ((MethodConfiguration) selection
+//									.getFirstElement()).getName();
+//							AuthoringUIPlugin
+//									.getDefault()
+//									.getMsgDialog()
+//									.displayError(
+//											AuthoringUIResources.setDefaultConfigErrorDialog_title, 
+//											AuthoringUIResources.bind(AuthoringUIResources.setDefaultConfigError_msg, selectedConfigName)); 
+//						}
 					}
 				}
 			}
