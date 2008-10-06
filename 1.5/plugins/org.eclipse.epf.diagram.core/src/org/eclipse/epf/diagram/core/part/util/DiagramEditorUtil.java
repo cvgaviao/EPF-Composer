@@ -342,6 +342,7 @@ public class DiagramEditorUtil {
 			if(editor != null && editor.getEditorInput() instanceof DiagramEditorInputProxy) {
 				DiagramEditorInputProxy inputProxy = (DiagramEditorInputProxy) editor.getEditorInput();
 				IProgressMonitor monitor = new NullProgressMonitor();
+				boolean dirty = editor.isDirty();
 				try {
 					if(doInitialize(inputProxy, monitor)) {
 						doRefresh(editPart, monitor, false);
@@ -349,6 +350,17 @@ public class DiagramEditorUtil {
 					}
 				} catch (CoreException e) {
 					DiagramCorePlugin.getDefault().getLogger().logError(e);
+				} finally {
+					if(editor.isDirty() && !dirty) {
+						// initialization made the document dirty
+						// this will clear dirty flag of the editor
+						//
+						IDocumentProvider docProvider = ((DiagramDocumentEditor)editor).getDocumentProvider();
+						if (docProvider instanceof SharedResourceDiagramDocumentProvider) {
+							((SharedResourceDiagramDocumentProvider) docProvider)
+							.markDocumentAsSaved(inputProxy);
+						}			
+					}
 				}
 				
 			}
