@@ -69,7 +69,9 @@ import org.eclipse.epf.library.ui.util.ConvertGuidanceType;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.richtext.RichTextListener;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.Guidance;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -401,6 +403,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 							name, -1);
 					if (!success) {
 						return;
+					}
+					if(methodElement instanceof MethodConfiguration) {
+						Resource resource = methodElement.eResource();
+						if(resource != null) {
+							((MethodElementEditor) getEditor()).addResourceToAdjustLocation(resource);
+						}
 					}
 					if (ContentDescriptionFactory
 							.hasPresentation(methodElement)) {
