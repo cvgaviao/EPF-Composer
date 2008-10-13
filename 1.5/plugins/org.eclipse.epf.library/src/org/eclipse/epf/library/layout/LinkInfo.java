@@ -32,6 +32,7 @@ import org.eclipse.epf.library.layout.util.XmlHelper;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
+import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -289,8 +290,13 @@ public class LinkInfo {
 				if (config != null) {
 					MethodElement e1 = ConfigurationHelper
 							.getCalculatedElement(e, config);
-					if (e1 != null) {
-						e = e1;
+					if (e1 != null) {				
+						if (! validator.showBrokenLinks() && validator.isDiscarded(ownerElement, null, e1)) {
+							isMissingReference = true;
+							validator.logMissingReference(ownerElement, e1);
+						} else {
+							e = e1;
+						}
 					} else {
 						isMissingReference = true;
 						validator.logMissingReference(ownerElement, e);
