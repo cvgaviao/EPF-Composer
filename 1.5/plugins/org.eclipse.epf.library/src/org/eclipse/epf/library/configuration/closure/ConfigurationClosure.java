@@ -1235,6 +1235,9 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		configManager = null;
 		config = null;
 		library = null;
+		if (dependencyManager != null) {
+			dependencyManager.dispose();
+		}
 		dependencyManager = null;
 		actionMgr = null;
 		//selectedNotes.clear();

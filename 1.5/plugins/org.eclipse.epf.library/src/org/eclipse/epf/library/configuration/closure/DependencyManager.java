@@ -25,6 +25,7 @@ import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -416,6 +417,21 @@ public class DependencyManager {
 
 	public void setReplacerSet(Set<VariabilityElement> replacerSet) {
 		this.replacerSet = replacerSet;
+	}
+	
+	public void dispose() {
+
+		if (libraryManager != null) {
+			libraryManager.removeListener(libListener);
+		}
+		
+		library = null;
+		libraryManager = null;
+		dependencyMap = null;
+		libListener = null;
+		replacerSet = null;
+		config = null;
+		
 	}
 
 }

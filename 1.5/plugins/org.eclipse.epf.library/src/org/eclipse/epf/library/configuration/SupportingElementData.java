@@ -303,6 +303,7 @@ public class SupportingElementData extends ConfigDataBase {
 	protected void updateChangeImpl() {
 		if (determineEnable()) {
 			ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
+			closure.dispose();
 		}
 	}
 	
