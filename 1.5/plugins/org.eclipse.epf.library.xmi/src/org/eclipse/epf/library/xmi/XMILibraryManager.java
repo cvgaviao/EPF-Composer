@@ -33,7 +33,6 @@ import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryAlreadyExistsException;
 import org.eclipse.epf.library.LibraryNotFoundException;
 import org.eclipse.epf.library.LibraryResources;
-import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.layout.LayoutResources;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -43,7 +42,6 @@ import org.eclipse.epf.library.util.ModelStorage;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.migration.MappingUtil;
-import org.eclipse.epf.persistence.util.LibrarySchedulingRule;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -256,23 +254,39 @@ public class XMILibraryManager extends AbstractLibraryManager {
 			throws LibraryServiceException {
 		final MethodLibrary[] libHolder = new MethodLibrary[1];
 		final LibraryServiceException[] exceptionHolder = new LibraryServiceException[1];
-		IWorkspaceRunnable workspaceRunnable = new IWorkspaceRunnable() {
-
-			public void run(IProgressMonitor monitor) throws CoreException {
-				try {
-					libHolder[0] = doOpenMethodLibrary(path);
-				} catch (LibraryServiceException e) {
-					exceptionHolder[0] = e;
-				}
+		if (ResourcesPlugin.getWorkspace().isTreeLocked()) {
+			// if user opens a project from Navigator view, the
+			// workspace-runable cannot be run successfully because the
+			// workspace is locked at that time and an exception will be
+			// thrown.
+			// TODO: this work-around however will not defer the notification
+			// of resource change events until after the library is opened.
+			// This might cause concurrent modification exception.
+			//
+			try {
+				libHolder[0] = doOpenMethodLibrary(path);
+			} catch (LibraryServiceException e) {
+				exceptionHolder[0] = e;
 			}
-			
-		};
-		try {
-			ResourcesPlugin.getWorkspace().run(workspaceRunnable,
-					ResourcesPlugin.getWorkspace().getRoot(),
-					IWorkspace.AVOID_UPDATE, new NullProgressMonitor());
-		} catch (CoreException e) {
-			throw new LibraryServiceException(e);
+		} else {
+			IWorkspaceRunnable workspaceRunnable = new IWorkspaceRunnable() {
+
+				public void run(IProgressMonitor monitor) throws CoreException {
+					try {
+						libHolder[0] = doOpenMethodLibrary(path);
+					} catch (LibraryServiceException e) {
+						exceptionHolder[0] = e;
+					}
+				}
+				
+			};
+			try {
+				ResourcesPlugin.getWorkspace().run(workspaceRunnable,
+						ResourcesPlugin.getWorkspace().getRoot(),
+						IWorkspace.AVOID_UPDATE, new NullProgressMonitor());
+			} catch (CoreException e) {
+				throw new LibraryServiceException(e);
+			}
 		}
 		if(exceptionHolder[0] != null) {
 			throw exceptionHolder[0];
