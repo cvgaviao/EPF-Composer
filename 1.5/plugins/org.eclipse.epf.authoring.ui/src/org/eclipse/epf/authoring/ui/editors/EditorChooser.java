@@ -518,4 +518,36 @@ public class EditorChooser implements IEditorKeeper {
 		}
 	}
 
+	public void closeEditors(Object e, boolean promptSave) {
+		IWorkbenchPage workbenchPage = AuthoringUIPlugin.getDefault()
+				.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		IEditorReference[] editorReferences = workbenchPage
+				.getEditorReferences();
+		ArrayList<IEditorReference> closeEditorRefs = new ArrayList<IEditorReference>();
+		for (int i = 0; i < editorReferences.length; i++) {
+			IEditorReference reference = editorReferences[i];
+			IEditorPart editor = reference.getEditor(true);
+			if (editor != null) {
+				IEditorInput input = editor.getEditorInput();
+				MethodElement element = null;
+				if (input instanceof MethodElementEditorInput) {
+					element = ((MethodElementEditorInput) input)
+							.getMethodElement();
+				} else if (input instanceof ConfigurationEditorInput) {
+					element = ((ConfigurationEditorInput) input)
+							.getConfiguration();
+				}
+				if (element != null && (element == e || UmaUtil.isContainedBy(element, e))) {
+					closeEditorRefs.add(reference);
+				}
+			}
+		}
+		int size = closeEditorRefs.size();
+		IEditorReference[] references = new IEditorReference[size];
+		for (int i = 0; i < size; i++) {
+			references[i] = (IEditorReference) closeEditorRefs.get(i);
+		}
+		workbenchPage.closeEditors(references, promptSave);
+	}
+
 }

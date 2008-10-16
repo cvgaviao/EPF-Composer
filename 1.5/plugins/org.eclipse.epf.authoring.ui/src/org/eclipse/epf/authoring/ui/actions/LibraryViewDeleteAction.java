@@ -263,6 +263,8 @@ public class LibraryViewDeleteAction extends MethodElementDeleteAction {
 							refreshList.add(aReference);
 						}
 					}
+					
+					IEditorKeeper.REFERENCE.getEditorKeeper().closeEditors(deletingObject, false);
 				}
 			}
 
