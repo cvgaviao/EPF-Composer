@@ -2588,7 +2588,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 									shapeImage = new Image(
 											Display.getCurrent(), file
 													.getAbsolutePath());
-									shapeIconPath.setText(shapeIconUri.getPath());
+									shapeIconPath.setText(NetUtil.decodedFileUrl(shapeIconUri.getPath()));
 								}
 							} catch (Exception ex) {
 								shapeIconUri = null;
@@ -2720,7 +2720,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 									}
 									nodeImage = new Image(Display.getCurrent(),
 											file.getAbsolutePath());
-									nodeIconPath.setText(nodeIconUri.getPath());
+									nodeIconPath.setText(NetUtil.decodedFileUrl(nodeIconUri.getPath()));
 								}
 							} catch (Exception ex) {
 								nodeIconUri = null;
@@ -2799,7 +2799,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 				java.net.URI uri = contentElement.getShapeicon();
 				if (uri != null) {
-					String path = contentElement.getShapeicon().getPath();
+					String path = NetUtil.decodedFileUrl(contentElement.getShapeicon().getPath());
 					if (path != null) {
 						try {
 							File file = new File(path);
@@ -2826,7 +2826,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 											Display.getCurrent(), path);
 								}
 								if(contentElement.getShapeicon() != null){
-									shapeIconPath.setText(contentElement.getShapeicon().getPath());
+									shapeIconPath.setText(NetUtil.decodedFileUrl(contentElement.getShapeicon().getPath()));
 								}
 								clientRect = pane1.getClientArea();
 								e.gc.setClipping(clientRect);
@@ -2864,7 +2864,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		});
 		pane1.redraw();
 		if(contentElement.getShapeicon() != null){
-			shapeIconPath.setText(contentElement.getShapeicon().getPath());
+			shapeIconPath.setText(NetUtil.decodedFileUrl(contentElement.getShapeicon().getPath()));
 		}
 		
 		pane3.addPaintListener(new PaintListener() {
@@ -2877,7 +2877,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 				java.net.URI uri = contentElement.getNodeicon();
 				if (uri != null) {
-					String path = contentElement.getNodeicon().getPath();
+					String path = NetUtil.decodedFileUrl(contentElement.getNodeicon().getPath());
 					if (path != null) {
 						try {
 							File file = new File(path);
@@ -2902,7 +2902,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 											path);
 								}
 								if(contentElement.getNodeicon() != null){
-									nodeIconPath.setText(contentElement.getNodeicon().getPath());
+									nodeIconPath.setText(NetUtil.decodedFileUrl(contentElement.getNodeicon().getPath()));
 								}
 								clientRect = pane3.getClientArea();
 								e.gc.setClipping(clientRect);
@@ -2940,7 +2940,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		});
 		pane3.redraw();
 		if(contentElement.getNodeicon() != null){
-			nodeIconPath.setText(contentElement.getNodeicon().getPath());
+			nodeIconPath.setText(NetUtil.decodedFileUrl(contentElement.getNodeicon().getPath()));
 		}
 	}
 

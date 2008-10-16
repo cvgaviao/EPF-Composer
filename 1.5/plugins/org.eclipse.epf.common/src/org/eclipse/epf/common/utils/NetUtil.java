@@ -355,6 +355,9 @@ public class NetUtil {
 		for (int i = 0; i < urlLength; i++) {
 			char ch = url.charAt(i);
 			switch (ch) {
+			case '+':
+				strBuf.append(' ');
+				break;
 			case '%':
 				try {
 					strBuf.append((char) Integer.parseInt(url.substring(i + 1,
