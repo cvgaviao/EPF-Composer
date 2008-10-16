@@ -255,7 +255,8 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 			java.net.URI iconUri) throws URISyntaxException {
 		java.net.URI srcUri = TngUtil.getFullPathURI(de,
 				iconUri);
-		String iconPath = iconUri.getPath();
+		String iconPath = NetUtil.decodedFileUrl(iconUri.getPath());
+		
 		if(iconPath.indexOf(lastOldPlugin.getName()) < 0){
 			srcUri = new File(ResourceHelper.getPluginPath(lastOldPlugin) + File.separator + iconPath).toURI();
 		}
