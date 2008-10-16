@@ -11,7 +11,7 @@
 
 <cheatsheet title="Add a Method Reference or Hyperlink (URL)">
 	<intro 
-		href="/org.eclipse.epf.help.doc/html/addareferenceorhyperlink.html">
+		href="/org.eclipse.epf.help.doc/topics/t_add_hyperlink.html">
 		<description>There are two types of references or hyperlinks to other content within your content text: references  to other elements in the method library or references to external text outside the method library with a URL. This cheat sheet walks you through creating both types.</description>
 	</intro>
 

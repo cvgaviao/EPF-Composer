@@ -16,41 +16,7 @@
             file="main.xml"
             primary="true">
       	</toc>
-      	<toc
-		file="getting_started.xml">
-      	</toc>
-      	<toc
-		file="overview.xml">
-      	</toc>
 
-      	<toc
-		file="creating_method_content.xml">
-      	</toc>
-
-      	<toc
-		file="categorizing_method_content.xml">
-      	</toc>
-
-      	<toc
-		file="creating_processes.xml">
-      	</toc>
-
-      	<toc
-		file="publishing_exporting.xml">
-      	</toc>
-
-	<toc
-		file="version_control.xml">
-	</toc>
-	<toc
-		file="accessibility.xml">
-	</toc>
-	<toc
-		file="glossary.xml">
-	</toc>
-	<toc
-		file="tutorials.xml">
-	</toc>
    </extension>
 
 <!-- ============================================================================= -->

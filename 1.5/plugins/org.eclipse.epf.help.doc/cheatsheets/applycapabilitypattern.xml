@@ -12,7 +12,7 @@
 <cheatsheet title="Apply a Capability Pattern">
 
 	<intro 
-		href="/org.eclipse.epf.help.doc/html/applyacapabilitypattern.html">
+		href="/org.eclipse.epf.help.doc/topics/c_capability_pattern.html">
 		<description>When developing a process you do not need to work from scratch by creating activities and descriptors one by one.  This cheat sheet walks you through applying pre-defined capability patterns or even capability pattern or delivery process parts as building blocks to your process.<br/><br/>A capability pattern is a special process that describes a reusable cluster of activities in common process areas.  Capabilities patterns express and communicate process knowledge for a key area of interest such as a discipline and can be directly used by a process practitioner to guide his work.  They are also used as building blocks to assemble delivery processes or larger capability patterns ensuring optimal reuse and application of the key practices they express. You can apply the same pattern several times to the same process and define local modifications to each individual pattern application. This allows you to express specific changes each time the pattern is being performed throughout a lifecycle a process represents.</description>
 	</intro>
 
@@ -29,7 +29,7 @@
 	</item>
 
 	<item
-		href="/org.eclipse.epf.help.doc/html/configurationview.html" 
+		href="/org.eclipse.epf.help.doc/topics/c_configuration_view.html" 
 		title="Select a Capability Pattern in the Configuration View"
 		skip="false">
 		<description>Find a capability pattern in the configuration view. Expand the package "Processes -&gt; Capability Patterns" as well as its sub-packages. Select the pattern you want to apply to your process.</description>

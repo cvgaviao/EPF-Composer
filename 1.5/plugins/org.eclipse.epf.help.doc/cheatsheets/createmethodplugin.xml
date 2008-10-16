@@ -3,7 +3,7 @@
 <cheatsheet title="Create your own Method Plug-in">
 
 	<intro 
-		href="/org.eclipse.epf.help.doc/html/createamethodplugin.html">
+		href="/org.eclipse.epf.help.doc/topics/t_create_method_plugin.html">
 		<description>Because the plug-ins shipped with the method library are locked and read-only, all your changes, additions, and extensions to existing method content and processes have to be placed in your own method plug-ins. However, you can use various capabilities to logically merge your plug-in contents into other plug-ins allowing you, as a result, to publish extended methods and processes that seamlessly incorporate your method elements. To create your own method plug-ins follow these steps.</description>
 	</intro>
 
