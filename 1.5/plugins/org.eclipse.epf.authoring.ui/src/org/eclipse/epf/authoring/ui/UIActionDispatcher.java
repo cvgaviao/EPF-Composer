@@ -18,6 +18,7 @@ import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.views.ConfigurationView;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
 import org.eclipse.epf.common.ui.util.PerspectiveUtil;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Milestone;
@@ -148,10 +149,16 @@ public class UIActionDispatcher implements ISelectionProvider {
 							} else {
 								removeDoubleClickListener(doubleClickListener);
 							}
+							
+							ConfigurationHelper.getDelegate().setAuthoringPerspective(
+									AuthoringPerspective.PERSPECTIVE_ID.equals(desc.getId()));
 						}
 
 						public void perspectiveChanged(IWorkbenchPage page,
 								IPerspectiveDescriptor desc, String id) {
+
+							ConfigurationHelper.getDelegate().setAuthoringPerspective(
+									AuthoringPerspective.PERSPECTIVE_ID.equals(desc.getId()));
 						}
 					});
 		}

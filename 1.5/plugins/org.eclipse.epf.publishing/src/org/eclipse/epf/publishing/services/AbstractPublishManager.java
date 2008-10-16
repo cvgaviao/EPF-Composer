@@ -16,6 +16,7 @@ import java.util.Collection;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.serviceability.DebugTrace;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.util.FileNameGenerator;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.publishing.PublishingPlugin;
@@ -129,6 +130,8 @@ public abstract class AbstractPublishManager {
 		Runtime.getRuntime().gc();
 		
 		try {
+			ConfigurationHelper.getDelegate().setPublishingMode(true);
+			
 			if (profiling) {
 				beginTime = startTime = System.currentTimeMillis();
 			}
@@ -162,6 +165,7 @@ public abstract class AbstractPublishManager {
 		} catch (Exception e) {
 			throw new PublishingServiceException(e);
 		} finally {
+			ConfigurationHelper.getDelegate().setPublishingMode(false);
 			if (profiling) {
 				System.out
 						.println("Time taken to publish configuration '" + config.getName() //$NON-NLS-1$

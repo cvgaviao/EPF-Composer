@@ -57,7 +57,9 @@ public class SupportingElementData extends ConfigDataBase {
 	private static boolean localDebug = false;
 	private static boolean localDebug1 = false;
 	private boolean enabled = true;
+	
 	//private Set<VariabilityElement> vChildrenContentCategorySet;
+	private boolean localUpdate = false;
 	
 	public static boolean descriptorExclusiveOption = true;	
 	
@@ -287,8 +289,11 @@ public class SupportingElementData extends ConfigDataBase {
 	private int checkInConfigIndex_(MethodElement element) {
 		if (isUpdatingChanges()) {
 			return 2;
-			//throw new UnsupportedOperationException();		
+			// throw new UnsupportedOperationException();
 		} else if (isNeedUpdateChanges()) {
+			if (bypassLogic()) {
+				return 0;
+			}
 			updateChanges();
 		}
 		if (! isEnabled()) {
@@ -302,8 +307,11 @@ public class SupportingElementData extends ConfigDataBase {
 	
 	protected void updateChangeImpl() {
 		if (determineEnable()) {
-			ConfigurationClosure closure = new ConfigurationClosure(null, getConfig());
-			closure.dispose();
+			if (! bypassLogic()) {
+				ConfigurationClosure closure = new ConfigurationClosure(null,
+						getConfig());
+				closure.dispose();
+			}
 		}
 	}
 	
@@ -464,5 +472,26 @@ public class SupportingElementData extends ConfigDataBase {
 		return replacers;
 	}
 	
+	public boolean bypassLogic() {
+		boolean ret = bypassLogic_();
+		//System.out.println("LD> bypassLogic: " + ret);
+		return ret;
+	}
+
+	private boolean bypassLogic_() {
+		if (! ConfigurationHelper.getDelegate().isAuthoringMode()) {
+			return false;
+		}
+		
+		if (ConfigurationHelper.getDelegate().isPublishingMode()) {
+			return false;
+		}
+		
+		if (! isUpdatingChanges()) {
+			return true;
+		}	
+		
+		return false;
+	}	
 	
 }

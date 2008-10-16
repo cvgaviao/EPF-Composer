@@ -496,7 +496,7 @@ public class ConfigurationData {
 			}*/
 			
 			SupportingElementData seData = getSupportingElementData();
-			if (seData != null && seData.isEnabled()) {
+			if (seData != null && seData.isEnabled() && !seData.bypassLogic()) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 				if (plugin != null && plugin.isSupporting()) {
 					int ix = seData.checkInConfigIndex(element);

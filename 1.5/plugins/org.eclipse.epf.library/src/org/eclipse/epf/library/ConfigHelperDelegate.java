@@ -55,6 +55,8 @@ import org.eclipse.swt.SWT;
  */
 public class ConfigHelperDelegate {
 
+	private boolean publishingMode = false;
+	private boolean authoringPerspective = false;
 	
 	/**
 	 * Test if pkg is a system package of plugin
@@ -325,5 +327,25 @@ public class ConfigHelperDelegate {
 	
 	public void debugDump(String msg) {
 		System.out.println("LD> " + getClass() + ".debugDump: " + msg);	//$NON-NLS-1$//$NON-NLS-2$
+	}
+
+	public boolean isPublishingMode() {
+		return publishingMode;
+	}
+
+	public void setPublishingMode(boolean publishingMode) {
+		this.publishingMode = publishingMode;
+	}
+
+	public boolean isAuthoringPerspective() {
+		return authoringPerspective;
+	}
+
+	public void setAuthoringPerspective(boolean authoringPerspective) {
+		this.authoringPerspective = authoringPerspective;
+	}
+	
+	public boolean isAuthoringMode() {
+		return isAuthoringPerspective();
 	}
 }
