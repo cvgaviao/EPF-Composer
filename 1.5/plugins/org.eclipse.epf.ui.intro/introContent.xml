@@ -91,25 +91,25 @@
                 <anchor id="beginAnchor"/>       
 				<link 
 					label="Eclipse Process Framework Composer Overview" 
-					url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/overview/a_product_overview.html&amp;embedTarget=page-content"   
+					url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/topics/a_product_overview.html&amp;embedTarget=page-content"   
 					id="epf-ov-rupov">
                     <text>Read about Eclipse Process Framework Composer's purpose and its key concepts.</text>
                 </link>
                 <link 
                 	label="Methods: The reusable building blocks" 
-                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/overview/a_method_content_authoring_overview.html&amp;embedTarget=page-content"   
+                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/topics/a_method_content_authoring_overview.html&amp;embedTarget=page-content"   
                 	id="epf-ov-method">
                     <text>Read about the role and representation of method content elements in EPF Composer.</text>
                 </link>            
                 <link 
                 	label="Authoring Processes"
-                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/overview/a_process_authoring_overview.html&amp;embedTarget=page-content" 
+                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/topics/a_process_authoring_overview.html&amp;embedTarget=page-content" 
                 	id="epf-ov-process">
                     <text>Read about the role and representation of processes in EPF Composer.</text>
                 </link>
                 <link 
                 	label="Configuration and Publishing" 
-              		url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/overview/a_method_configurations_overview.html&amp;embedTarget=page-content"  
+              		url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/topics/a_method_configurations_overview.html&amp;embedTarget=page-content"  
                 	id="epf-ov-configpublish">
                     <text>Read about configuring and publishing method content and processes in EPF Composer.</text>
                 </link>
@@ -223,34 +223,34 @@
 			    <anchor id="beginAnchor"/>
 				<link 
 					label="Explore the user interface" 
-					url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tut1_intro.htm&amp;" 
+					url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tutorial_1_intro.htm&amp;" 
 					id="epf-tut-navigate"
 					class-id="left">
                     <text>Learn to navigate through the user interface: perspectives, views, and search.</text>
                 </link>
                 <link 
                 	label="Working with processes" 
-                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tut5_intro.htm&amp;" 
+                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tutorial_5_intro.htm&amp;" 
                 	id="epf-tut-process">
                     <text>Learn how to create and reuse capability patterns and delivery processes.</text>
                 </link>
                 <link 
                 	label="Create method content " 
-                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tut2_intro.htm&amp;" 
+                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tutorial_2_intro.htm&amp;" 
                 	id="epf-tut-element"
                 	class-id="left">
                     <text>Learn how to use the editors to create roles, tasks, work products and guidance.</text>
                 </link>
                 <link 
                 	label="Publishing and Exporting" 
-                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tut4_intro.htm&amp;" 
+                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tutorial_4_intro.htm&amp;" 
                 	id="epf-tut-pubexp">
                     <text>Learn how to publish configurations to a web site and how to export processes to a planning tool.</text>
                 </link>
                 
                 <link 
                 	label="Reuse method content" 
-                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tut3_intro.htm&amp;" 
+                	url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.epf.help.doc/html/tutorials/tutorial_3_intro.htm&amp;" 
                 	id="epf-tut-content"
                 	class-id="left">
                     <text>Learn how to extend, replace, and contribute to base content elements.</text>
