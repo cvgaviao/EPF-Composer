@@ -16,7 +16,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The Common plug-in activator.
  */
-public class CommonPlugin extends AbstractActivator {
+public final class CommonPlugin extends AbstractActivator {
 
 	// The shared plug-in instance.
 	private static CommonPlugin plugin;
