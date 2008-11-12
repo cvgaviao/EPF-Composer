@@ -390,10 +390,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	private void initializeViewersSelection() {
 		initializeConfigFactory();
 
-    	List<MethodPackage> packages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
-    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
-    	initializeConfigViewerSelection(configViewer, packages, plugins);
-    	setStateForCategoriesUIFolder(configViewer, plugins);
+    	initConfigViewer();
     	
 		// read from config and check the appropriate items in the CC viewers
 		List<ContentCategory> addCats = new ArrayList<ContentCategory>(config.getAddedCategory());
@@ -401,6 +398,13 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
     	List<ContentCategory> subCats = new ArrayList<ContentCategory>(config.getSubtractedCategory());
     	initializeViewerSelection(subCategoryViewer, subCats);
     	
+	}
+
+	private void initConfigViewer() {
+		List<MethodPackage> packages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
+    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
+    	initializeConfigViewerSelection(configViewer, packages, plugins);
+    	setStateForCategoriesUIFolder(configViewer, plugins);
 	}
 	
 	/** 
@@ -948,9 +952,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	 */
 	protected void makeClosure() {
 		closure.fixErrors();
+		initConfigViewer();
 		refreshViewers();
 //		updateCheckStates();
-		saveConfiguration();
+		//saveConfiguration();
 
 	}
 
@@ -960,9 +965,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	protected void fixWarning() {
 
 		closure.fixProblems();
+		initConfigViewer();
 		refreshViewers();	
 //		updateCheckStates();
-		saveConfiguration();
+		//saveConfiguration();
 
 	}
 
