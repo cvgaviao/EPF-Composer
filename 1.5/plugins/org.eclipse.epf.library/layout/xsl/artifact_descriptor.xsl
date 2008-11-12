@@ -151,7 +151,7 @@
 		<xsl:variable name="notation" select="$description/attribute[@name='notation']"/>
 		<xsl:variable name="representation" select="$description/attribute[@name='representation']"/>
 		<xsl:variable name="mainDescription" select="$description/attribute[@name='refinedDescription']"/>
-		<xsl:if test="$briefOutline != '' or $mainDescription != ''">
+		<xsl:if test="$briefOutline != '' or $mainDescription != '' or $representation != '' or $notation != ''">
 			<div class="sectionHeading"><xsl:value-of select="$descriptionText"/></div>
 			<div class="sectionContent">			
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
