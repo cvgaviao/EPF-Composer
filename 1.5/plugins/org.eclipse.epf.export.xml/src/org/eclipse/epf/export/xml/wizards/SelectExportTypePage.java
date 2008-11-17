@@ -42,7 +42,7 @@ public class SelectExportTypePage extends BaseWizardPage implements Listener {
 	private Button exportPluginsRadioButton;
 
 	// Postponed to next release.
-	//private Button exportConfigsRadioButton;
+	private Button exportConfigsRadioButton;
 
 	/**
 	 * Creates a new instance.
@@ -69,8 +69,8 @@ public class SelectExportTypePage extends BaseWizardPage implements Listener {
 				ExportXMLResources.exportPluginsRadioButton_text, 1, false);
 
 		// Postponed to next release.
-		//exportConfigsRadioButton = createRadioButton(container,
-		//		ExportXMLResources.exportConfigsRadioButton_text, 1, false);
+		exportConfigsRadioButton = createRadioButton(container,
+				ExportXMLResources.exportConfigsRadioButton_text, 1, false);
 		
 		switch (ExportXMLPreferences.getExportType()) {
 		case ExportXMLData.EXPORT_METHOD_LIBRARY:
@@ -80,9 +80,9 @@ public class SelectExportTypePage extends BaseWizardPage implements Listener {
 			exportPluginsRadioButton.setSelection(true);
 			break;
 		// Postponed to next release.			
-		//case ExportXMLData.EXPORT_METHOD_CONFIGS:
-		//	exportConfigsRadioButton.setSelection(true);
-		//	break;
+		case ExportXMLData.EXPORT_METHOD_CONFIGS:
+			exportConfigsRadioButton.setSelection(true);
+			break;
 		}
 
 		addListeners();
@@ -94,8 +94,8 @@ public class SelectExportTypePage extends BaseWizardPage implements Listener {
 	private void addListeners() {
 		exportLibraryRadioButton.addListener(SWT.Selection, this);
 		exportPluginsRadioButton.addListener(SWT.Selection, this);
-		// Postponed to next release.		
-		//exportConfigsRadioButton.addListener(SWT.Selection, this);
+		// Postponed to next release.
+		exportConfigsRadioButton.addListener(SWT.Selection, this);
 	}
 
 	/**
@@ -132,10 +132,10 @@ public class SelectExportTypePage extends BaseWizardPage implements Listener {
 			return wizard.selectPluginPage;
 		}
 		// Postponed to next release.
-		//else if (exportConfigsRadioButton.getSelection()) {
-		//	wizard.xmlData.setExportType(ExportXMLData.EXPORT_METHOD_CONFIGS);
-		//	return wizard.selectConfigPage;
-		//}
+		else if (exportConfigsRadioButton.getSelection()) {
+			wizard.xmlData.setExportType(ExportXMLData.EXPORT_METHOD_CONFIGS);
+			return wizard.selectConfigPage;
+		}
 		return null;
 	}
 

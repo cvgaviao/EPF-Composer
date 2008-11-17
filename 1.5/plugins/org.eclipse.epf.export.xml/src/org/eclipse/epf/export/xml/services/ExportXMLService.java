@@ -262,7 +262,8 @@ public class ExportXMLService {
 			return (data.selectedPlugins != null)
 					&& data.selectedPlugins.contains(plugin);
 		} else if (data.exportType == ExportXMLData.EXPORT_METHOD_CONFIGS) {
-			return false;
+			//return false;
+			return true;	//hot fix
 		} else {
 			return true;
 		}
@@ -648,6 +649,9 @@ public class ExportXMLService {
 		// // need to include the content packages
 		// pkgs.addAll(TngUtil.getContentCategoryPackages(plugin));
 
+	}
+	public ExportXMLLogger getLogger() {
+		return logger;
 	}
 
 	// private boolean isSystemPackage(EDataObject element) {
