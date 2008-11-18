@@ -177,6 +177,7 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 					boolean mergeOption = filePage.getMergeOption();
 					boolean checkBasePlugins = filePage.getCheckBasePlugins();
 					service.setOverwrite(!mergeOption);
+					service.setMergeLevel(filePage.getMergerLevel());
 					service.setCheckBasePlugins(checkBasePlugins);
 					succeed = service.loadXml(xmlFile);
 					if (! succeed) {
@@ -186,6 +187,8 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 					ImportXMLPreferences.setXMLFile(xmlFile);
 					ImportXMLPreferences.setMergeOption(mergeOption);
 					ImportXMLPreferences.setCheckBasePluginsOption(checkBasePlugins);
+					ImportXMLPreferences.setMergeLevel(filePage.getMergerLevel());
+					
 				} catch (Exception e) {
 					throw new InvocationTargetException(e);
 				} finally {

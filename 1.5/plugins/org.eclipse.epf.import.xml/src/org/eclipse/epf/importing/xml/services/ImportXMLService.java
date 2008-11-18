@@ -13,9 +13,11 @@ package org.eclipse.epf.importing.xml.services;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -92,6 +94,8 @@ public class ImportXMLService {
 	private Map renameElementMap = new HashMap();
 	
 	private boolean overwrite = false;
+	
+	private int mergeLevel = 0;
 	
 	private IStatus fileCheckedOutStatus = null;
 	
@@ -354,6 +358,7 @@ public class ImportXMLService {
 			}
 
 			this.umaLib = new UmaLibrary(renameElementMap, contentProc, logger, overwrite);
+			this.umaLib.setMergeLevel(mergeLevel);
 
 			EDataObject xmlRoot = this.xmlLib.getRoot();
 			EDataObject umaRoot = this.umaLib.getRoot();
@@ -635,6 +640,7 @@ public class ImportXMLService {
 		boolean isNewElement = umaLib.isNewElement(srcObj.getId()) || srcObj instanceof MethodLibrary;
 		boolean isOldPlugin = !isNewElement && (srcObj instanceof MethodPlugin);
 		
+		Set<EStructuralFeature> seenRmcFeatures = new HashSet<EStructuralFeature>();
 		for (Iterator it = features.iterator(); it.hasNext();) {
 			EStructuralFeature feature = (EStructuralFeature) it.next();
 						
@@ -646,16 +652,21 @@ public class ImportXMLService {
 			}
 
 			Object value = srcObj.eGet(feature);
-			if (value == null) {
-				continue;
-			}
 
 			try {
+				if (value == null) {
+					umaLib.handleNullXmlValue(srcObj, targetObj, feature.getName());
+					continue;
+				}
+				
 				boolean isMep = feature.getName().equals("methodElementProperty"); //$NON-NLS-1$	
 				if (value instanceof List && ! isMep) {
+					umaLib.initListValueMerge(srcObj, targetObj, feature.getName(), 
+							(List) value, seenRmcFeatures);
+					
 					for (Iterator itv = ((List) value).iterator(); itv
 							.hasNext();) {
-						Object src_value = itv.next();
+						Object src_value = itv.next();						
 
 						if (src_value instanceof String) {
 
@@ -869,6 +880,10 @@ public class ImportXMLService {
 
 	public void setCheckBasePlugins(boolean checkBasePlugins) {
 		this.checkBasePlugins = checkBasePlugins;
+	}
+
+	public void setMergeLevel(int mergeLevel) {
+		this.mergeLevel = mergeLevel;
 	}
 	
 }

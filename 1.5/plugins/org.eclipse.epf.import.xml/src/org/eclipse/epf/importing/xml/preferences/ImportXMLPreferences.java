@@ -25,6 +25,11 @@ public class ImportXMLPreferences {
 	public static final String MERGE_OPTION = "mergeOption"; //$NON-NLS-1$
 	
 	/**
+	 * The merge level preference key.
+	 */
+	public static final String MERGE_LEVEL = "mergeLevel"; //$NON-NLS-1$
+	
+	/**
 	 * last import check plugins option preference key
 	 */
 	public static final String CHECK_BASE_PLUGINS_OPTION = "checkBasePluginsOption"; //$NON-NLS-1$
@@ -34,7 +39,8 @@ public class ImportXMLPreferences {
 		IPreferenceStore store = ImportXMLPlugin.getDefault()
 				.getPreferenceStore();
 		store.setDefault(XML_FILE, ""); //$NON-NLS-1$
-		store.setDefault(MERGE_OPTION, false); 
+		store.setDefault(MERGE_OPTION, false);
+		store.setDefault(MERGE_LEVEL, 0); 
 		store.setDefault(CHECK_BASE_PLUGINS_OPTION, true); 	
 	}
 
@@ -99,6 +105,27 @@ public class ImportXMLPreferences {
 	public static void setCheckBasePluginsOption(boolean b) {
 		ImportXMLPlugin.getDefault().getPreferenceStore().setValue(
 				CHECK_BASE_PLUGINS_OPTION, b);
+	}
+	
+	/**
+	 * Returns the merge level file preference.
+	 * 
+	 * @return the merge level file preference
+	 */
+	public static int getMergeLevel() {
+		return ImportXMLPlugin.getDefault().getPreferenceStore().getInt(
+				MERGE_LEVEL);
+	}
+
+	/**
+	 * Sets the merge level file preference.
+	 * 
+	 * @param mergeLevel
+	 *            the user specified merge level
+	 */
+	public static void setMergeLevel(int mergeLevel) {
+		ImportXMLPlugin.getDefault().getPreferenceStore().setValue(
+				MERGE_LEVEL, mergeLevel);
 	}
 
 }

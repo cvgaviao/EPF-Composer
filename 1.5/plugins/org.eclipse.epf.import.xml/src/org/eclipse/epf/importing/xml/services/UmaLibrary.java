@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
@@ -91,7 +92,9 @@ public class UmaLibrary {
 
 	private boolean debug = ImportXMLPlugin.getDefault().isDebugging();
 
-	private boolean overwrite = false;	
+	private boolean overwrite = false;
+	
+	private int mergeLevel = 0;
 	
 	private ILogger logger;
 
@@ -957,6 +960,10 @@ public class UmaLibrary {
 				}
 			}
 			
+			if (!overwrite && mergeLevel == 2) {
+				continue;
+			}			
+			
 			if ( (e instanceof CustomCategory) && TngUtil.isRootCustomCategory( (CustomCategory)e ) ) {
 				continue;
 			}			
@@ -1086,5 +1093,126 @@ public class UmaLibrary {
 	 */
 	public boolean isNewElement(String guid) {
 		return newElementsMap.containsKey(guid);
+	}
+	
+	public void setMergeLevel(int mergeLevel) {
+		this.mergeLevel = mergeLevel;
+	}
+	
+	private boolean toHandle(EDataObject rmcObj, EStructuralFeature rmcFeature) {
+		EStructuralFeature feature = rmcFeature;
+		if (feature == null || feature.isDerived()) {
+			return false;
+		}
+		
+		EReference eref = null;
+		if (rmcFeature instanceof EReference) {
+			eref = (EReference) rmcFeature;
+			if (eref.isContainment()) {
+				if (mergeLevel != 2) {	//The old delete code would take of it
+					return false;
+				}
+				if (eref.isMany()) {
+					return false;
+				}
+			}
+		}
+		
+		if (rmcObj instanceof MethodPlugin) {
+			if (feature == UmaPackage.eINSTANCE.getMethodPlugin_MethodPackages()) {
+				return false;
+			}
+		} else if (rmcObj instanceof MethodConfiguration) {
+			if (eref != null) {
+				return false;
+			}
+		} else if (rmcObj instanceof MethodPackage) {
+			if (rmcFeature == UmaPackage.eINSTANCE.getMethodPackage_ChildPackages() &&
+					!(rmcObj instanceof ProcessPackage)) {
+				return false;
+			}
+		} 
+		
+		return true;
+	}
+	
+	private boolean isManyReference(EStructuralFeature rmcFeature) {
+		if (! (rmcFeature instanceof EReference)) {
+			return false;
+		}		
+		return ((EReference) rmcFeature).isMany();
+	}
+	
+	public void handleNullXmlValue(EDataObject xmlObj, EDataObject rmcObj, String xmlFeatureName) throws Exception {		
+		if (rmcObj instanceof MethodLibrary) {
+			return;
+		}
+		
+		EStructuralFeature feature = FeatureManager.INSTANCE.getRmcFeature(
+				rmcObj.eClass(), xmlFeatureName);
+		if (! toHandle(rmcObj, feature)) {
+			return;
+		}
+
+		Object rmcValue = rmcObj.eGet(feature);
+		if (rmcValue == null) {
+			return;
+		}
+
+		if (rmcValue instanceof List) {
+			initRmcList(rmcObj, feature);
+			return;
+		}
+
+		boolean oldNotify = rmcObj.eDeliver();
+		rmcObj.eSet(feature, null);
+		rmcObj.eSetDeliver(oldNotify);
+		setDirty(rmcObj);
+	}
+	
+	public void initListValueMerge(EDataObject xmlObj, EDataObject rmcObj, String xmlFeatureName,
+			List xmlList, Set<EStructuralFeature> seenRmcFeatures) throws Exception {
+		if (rmcObj instanceof MethodLibrary) {
+			return;
+		}
+		
+		if (! (xmlList instanceof List)) {
+			return;
+		}
+		
+		EStructuralFeature feature = FeatureManager.INSTANCE.getRmcFeature(
+				rmcObj.eClass(), xmlFeatureName);
+		if (feature == null || seenRmcFeatures.contains(feature)) {	//feature could be mapped from more than
+			return;													//one xml features
+		}
+		seenRmcFeatures.add(feature);
+		
+		if (! toHandle(rmcObj, feature)) {
+			return;
+		}
+
+		initRmcList(rmcObj, feature);
+	}
+
+	private void initRmcList(EDataObject rmcObj, EStructuralFeature feature) {
+		if (!isManyReference(feature)) {
+			return;
+		}
+
+		Object rmcValue = rmcObj.eGet(feature);
+		if (!(rmcValue instanceof List)) {
+			return;
+		}
+		List rmcList = (List) rmcValue;
+
+		if (rmcList.isEmpty()) {
+			return;
+		}
+
+		boolean oldNotify = rmcObj.eDeliver();
+		rmcObj.eSetDeliver(false);
+		rmcList.clear();
+		rmcObj.eSetDeliver(oldNotify);
+		setDirty(rmcObj);
 	}
 }
