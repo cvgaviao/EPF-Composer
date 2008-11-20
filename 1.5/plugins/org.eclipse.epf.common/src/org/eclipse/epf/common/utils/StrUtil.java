@@ -376,11 +376,12 @@ public class StrUtil {
 						}
 					}
 					
-					//code below will treat "%20de" as "space + de"
-					//this may lose some double bytes character(Chinese), which start with %20, but keep all url links
-					if (during_migration && validHextStr) {
+					//code below will treat "%20de" as " de"
+					//this may lose some double bytes character(e.g. Chinese), which start with %20, but keep all url links
+					//so far open this convertion not only during library migration to support file like "my design.gif"
+					if (/*during_migration && */validHextStr) {
 						if (hexStr.startsWith("20")) { //$NON-NLS-1$
-							result.append("+"); //$NON-NLS-1$
+							result.append("%20"); //$NON-NLS-1$
 							i += 2;
 							break;
 						}
