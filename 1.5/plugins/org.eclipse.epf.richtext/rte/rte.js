@@ -1236,6 +1236,8 @@ function replaceText(replaceText, dir, options) {
 function selectAll() {
 	if (internalUpdateSelection()) {
 		if (editorDoc.execCommand('selectall', false, null)) {
+		   if ( !document.all )
+		      updateSelection();
 			setStatus(STATUS_EXEC_CMD, 1);
 		}
 	}
