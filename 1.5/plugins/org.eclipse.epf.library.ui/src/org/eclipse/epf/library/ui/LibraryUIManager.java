@@ -876,8 +876,9 @@ public class LibraryUIManager {
 			URL installLocationURL = installLocation.getURL();
 			URI installLocationURI = new URI(NetUtil.encodeFileURL(installLocationURL.toExternalForm()));
 			File installLocFile = new File(installLocationURI);
-			String canonicalLibPath = libPathFile.getCanonicalPath();
-			String canonicalInstallPath = installLocFile.getCanonicalPath();
+			String canonicalLibPath = NetUtil.decodedFileUrl(libPathFile.getCanonicalPath());
+			String canonicalInstallPath = NetUtil.decodedFileUrl(installLocFile.getCanonicalPath());;
+
 			if (!canonicalLibPath.startsWith(canonicalInstallPath)) {
 				return null;
 			}
