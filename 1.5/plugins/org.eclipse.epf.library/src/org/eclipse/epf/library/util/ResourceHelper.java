@@ -597,12 +597,12 @@ public class ResourceHelper {
 				}
 				Properties browsingResource = new Properties();
 				File file = new File(LAYOUT_XSL_ROOT_PATH, "resources.properties"); //$NON-NLS-1$
-				Locale locale = Locale.getDefault();
-				String localFileName = I18nUtil.getLocalizedFile(file
-						.getAbsolutePath(), locale);
-				if (localFileName != null) {
-					file = new File(localFileName);
-				}
+//				Locale locale = Locale.getDefault();
+//				String localFileName = I18nUtil.getLocalizedFile(file
+//						.getAbsolutePath(), locale);
+//				if (localFileName != null) {
+//					file = new File(localFileName);
+//				}
 				if (file.exists()) {
 					try {
 						browsingResource.load(new FileInputStream(file));
@@ -616,8 +616,9 @@ public class ResourceHelper {
 				}
 
 				String type = getElementTypeText(element);
-				String key = type.substring(0, 1).toLowerCase()
-						+ type.substring(1) + "Text";//$NON-NLS-1$
+				String elementName = element.eClass().getName();
+				String key = elementName.substring(0, 1).toLowerCase()
+						+ elementName.substring(1) + "Text";//$NON-NLS-1$
 				String value = browsingResource.getProperty(key);
 				if (value != null) {
 					return value + LibraryResources.colon_with_space + text;
