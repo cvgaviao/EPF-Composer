@@ -24,7 +24,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IImportWizard;
+import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 
 /**
@@ -34,7 +34,7 @@ import org.eclipse.ui.IWorkbench;
  * @author Kelvin Low
  * @since 1.0
  */
-public class ExportPluginWizard extends Wizard implements IImportWizard {
+public class ExportPluginWizard extends Wizard implements IExportWizard {
 
 	protected SelectPluginPage page1;
 

@@ -38,7 +38,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IImportWizard;
+import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 
 import com.ibm.icu.util.Calendar;
@@ -52,7 +52,7 @@ import com.ibm.icu.util.Calendar;
  * @author Kelvin Low
  * @since 1.0
  */
-public class ExportXMLWizard extends Wizard implements IImportWizard {
+public class ExportXMLWizard extends Wizard implements IExportWizard {
 
 	private SelectExportTypePage selectExportTypePage;
 
