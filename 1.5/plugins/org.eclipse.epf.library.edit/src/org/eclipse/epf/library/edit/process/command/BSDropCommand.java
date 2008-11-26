@@ -67,14 +67,8 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 public abstract class BSDropCommand extends AbstractCommand implements
 		IResourceAwareCommand {
 	private static final Set<EReference> BASIC_SYNC_REFERENCES = Collections.unmodifiableSet(new HashSet<EReference>(Arrays.asList(new EReference[] {
-			// guidance
-			UmaPackage.eINSTANCE.getContentElement_Checklists(),
-			UmaPackage.eINSTANCE.getContentElement_ConceptsAndPapers(),
-			UmaPackage.eINSTANCE.getContentElement_Examples(),
-			UmaPackage.eINSTANCE.getContentElement_Guidelines(),
-			UmaPackage.eINSTANCE.getContentElement_Assets(),
-			UmaPackage.eINSTANCE.getContentElement_SupportingMaterials()
 	})));
+	
 	public static final Set<EStructuralFeature> DEFAULT_SYNCH_FEATURES = new HashSet<EStructuralFeature>(Arrays.asList(
 			new EStructuralFeature[] {
 					UmaPackage.eINSTANCE.getNamedElement_Name(),
@@ -153,11 +147,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 	/**
 	 * Map of descriptor to map of feature to new values
 	 */
-//	protected Map descriptorToNewFeatureValuesMap;
-//	private HashMap descriptorToOldFeatureValuesMap;	
 	protected DescriptorUpdateBatchCommand batchCommand;
-
-//	private HashMap wpdToOldResponsibleRoleMap;
 
 	/**
 	 * Map of TaskDescriptor to list of newly added steps
@@ -415,7 +405,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 	 * @param feature
 	 * @return
 	 */
-	private static EStructuralFeature getDescriptorFeature(EStructuralFeature linkedElementFeature) {
+	public static EStructuralFeature getDescriptorFeature(EStructuralFeature linkedElementFeature) {
 		return (EStructuralFeature) FEATURE_MAP.get(linkedElementFeature);
 	}
 	
@@ -634,7 +624,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 		if (synchronize) {
 			clearDescriptors();
 			if(!batchCommand.getDescriptorsToRefresh().isEmpty()) {
-				ArrayList<EReference> basicSyncReferences = new ArrayList<EReference>();
+				Collection<EReference> basicSyncReferences = new ArrayList<EReference>();
 				for (Object feature : synchFeatures) {
 					if(BASIC_SYNC_REFERENCES.contains(feature)) {
 						basicSyncReferences.add((EReference) feature);

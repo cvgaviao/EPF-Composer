@@ -11,8 +11,11 @@
 package org.eclipse.epf.library.edit.process.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,17 +59,27 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  * @since 1.0
  */
 public final class ProcessCommandUtil {
+	public static final Set<EReference> CONTENT_ELEMENT_GUIDANCE_REFERENCES = Collections.unmodifiableSet(new HashSet<EReference>(Arrays.asList(new EReference[] {
+			// guidance
+			UmaPackage.eINSTANCE.getContentElement_Checklists(),
+			UmaPackage.eINSTANCE.getContentElement_ConceptsAndPapers(),
+			UmaPackage.eINSTANCE.getContentElement_Examples(),
+			UmaPackage.eINSTANCE.getContentElement_Guidelines(),
+			UmaPackage.eINSTANCE.getContentElement_Assets(),
+			UmaPackage.eINSTANCE.getContentElement_SupportingMaterials()
+	})));
+
 	public static final EStructuralFeature[] DESCRIPTOR_REFRESHABLE_FEATURES = {
 		// UmaPackage.eINSTANCE.getNamedElement_Name(),
 		// UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
 		UmaPackage.eINSTANCE.getMethodElement_BriefDescription(),
 		// guidance
-		UmaPackage.eINSTANCE.getBreakdownElement_Checklists(),
-		UmaPackage.eINSTANCE.getBreakdownElement_Concepts(),
-		UmaPackage.eINSTANCE.getBreakdownElement_Examples(),
-		UmaPackage.eINSTANCE.getBreakdownElement_Guidelines(),
-		UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets(),
-		UmaPackage.eINSTANCE.getBreakdownElement_SupportingMaterials()
+//		UmaPackage.eINSTANCE.getBreakdownElement_Checklists(),
+//		UmaPackage.eINSTANCE.getBreakdownElement_Concepts(),
+//		UmaPackage.eINSTANCE.getBreakdownElement_Examples(),
+//		UmaPackage.eINSTANCE.getBreakdownElement_Guidelines(),
+//		UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets(),
+//		UmaPackage.eINSTANCE.getBreakdownElement_SupportingMaterials()
 	};
 
 	public static final EStructuralFeature[] TASK_DESCRIPTOR_REFRESHABLE_FEATURES = {
@@ -890,4 +903,5 @@ public final class ProcessCommandUtil {
 		}
 		return featuresMap;
 	}
+
 }

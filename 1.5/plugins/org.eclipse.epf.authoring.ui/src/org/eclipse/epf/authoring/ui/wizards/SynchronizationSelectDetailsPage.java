@@ -13,8 +13,6 @@ package org.eclipse.epf.authoring.ui.wizards;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -46,7 +44,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 	private Button bc_delivPart;
 	private Button bc_selStep;
 
-	private Button bc_guidance;
+//	private Button bc_guidance;
 	
 //	private Button[] br_presName = new Button[2];
 //	private Button[] br_optInput = new Button[2];
@@ -117,7 +115,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_selStep = createCheckbox(composite, AuthoringUIResources.synchronizationWizard_selectDetailsPage_selSteps_label); 
 //		createTwoRadioGroup(composite, br_selStep);
 		
-		bc_guidance = createCheckbox(composite, AuthoringUIResources.synchronizationWizard_selectDetailsPage_selGuidance_label);
+//		bc_guidance = createCheckbox(composite, AuthoringUIResources.synchronizationWizard_selectDetailsPage_selGuidance_label);
 		
 		addListeners(composite);
 		setAllChecked();
@@ -140,7 +138,7 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 		bc_contArtifact.setSelection(true);
 		bc_delivPart.setSelection(true);
 		bc_selStep.setSelection(true);	
-		bc_guidance.setSelection(true);
+//		bc_guidance.setSelection(true);
 	}
 	
 	/**
@@ -341,13 +339,13 @@ public class SynchronizationSelectDetailsPage extends BaseWizardPage implements 
 			}
 		});
 		
-		bc_guidance.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				syncChoices.setSyncGuidance(bc_guidance.getSelection() ? SynchronizationChoices.SYNC_FROM_CONTENT : SynchronizationChoices.SYNC_NONE);
-				setPageComplete(isPageComplete());
-			}
-		});
+//		bc_guidance.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				syncChoices.setSyncGuidance(bc_guidance.getSelection() ? SynchronizationChoices.SYNC_FROM_CONTENT : SynchronizationChoices.SYNC_NONE);
+//				setPageComplete(isPageComplete());
+//			}
+//		});
 
 //		br_presName[0].addListener(SWT.Selection, this);
 //		br_optInput[0].addListener(SWT.Selection, this);
