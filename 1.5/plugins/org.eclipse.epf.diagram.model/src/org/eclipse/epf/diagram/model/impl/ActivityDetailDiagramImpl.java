@@ -37,6 +37,7 @@ import org.eclipse.epf.diagram.model.WorkProductDescriptorNode;
 import org.eclipse.epf.diagram.model.util.GraphicalDataHelper;
 import org.eclipse.epf.diagram.model.util.IActivityDetailDiagramChangeListener;
 import org.eclipse.epf.diagram.model.util.IAdapterFactoryFilter;
+import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
@@ -288,6 +289,15 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 	public Collection getChildren() {
 		return getAllBreakdownElements(true);
 	}
+	
+	private static boolean isValid(IFilter filter) {
+		if(filter instanceof IAdapterFactoryFilter) {
+			IAdapterFactoryFilter adapterFactoryFilter = (IAdapterFactoryFilter) filter;
+			return adapterFactoryFilter.getWBSAdapterFactory() != null && adapterFactoryFilter.getTBSAdapterFactory() != null &&
+			adapterFactoryFilter.getWPBSAdapterFactory() != null;
+		}
+		return filter != null;
+	}
 
 	/**
 	 * Gets all breakdown elements or their wrappers for the activity of this
@@ -297,19 +307,23 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 	 */
 	Collection getAllBreakdownElements(boolean filterSuppressed) {
 		ArrayList breakdownElements = new ArrayList();
-		AdapterFactory[] adapterFactories;
+		AdapterFactory[] adapterFactories = null;
 		if (filter instanceof IAdapterFactoryFilter) {
 			IAdapterFactoryFilter adapterFactoryFilter = (IAdapterFactoryFilter) filter;
-			adapterFactories = new AdapterFactory[] {
-					adapterFactoryFilter.getWBSAdapterFactory(),
-					adapterFactoryFilter.getTBSAdapterFactory(),
-					adapterFactoryFilter.getWPBSAdapterFactory() };
-		} else {
+			// make sure the filter is valid
+			if(isValid(adapterFactoryFilter)) {
+				adapterFactories = new AdapterFactory[] {
+						adapterFactoryFilter.getWBSAdapterFactory(),
+						adapterFactoryFilter.getTBSAdapterFactory(),
+						adapterFactoryFilter.getWPBSAdapterFactory() };
+			}
+		}
+		if(adapterFactories == null) {
 			adapterFactories = DEFAULT_ADAPTER_FACTORIES;
 		}
 		if (wrapper != null) {
-			List wrappers = ProcessUtil.getWrappers(wrapper, adapterFactories);
-			for (Iterator iter = wrappers.iterator(); iter.hasNext();) {
+			List<?> wrappers = ProcessUtil.getWrappers(wrapper, adapterFactories);
+			for (Iterator<?> iter = wrappers.iterator(); iter.hasNext();) {
 				BreakdownElementWrapperItemProvider w = (BreakdownElementWrapperItemProvider) iter
 						.next();
 				extractChildren(w, w, breakdownElements, filterSuppressed);
@@ -414,7 +428,7 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 				super.populateNodes();
 			}
 
-			if (filter == null) {
+			if (!isValid(filter)) {
 				filter = ((ConfigurableComposedAdapterFactory) DEFAULT_ADAPTER_FACTORIES[0])
 						.getFilter();
 			}
@@ -787,7 +801,7 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 	 * @see org.eclipse.epf.diagram.model.impl.DiagramImpl#addNode(java.lang.Object)
 	 */
 	protected Node addNode(Object obj) {
-		if (filter == null) {
+		if (!isValid(filter)) {
 			filter = ((ConfigurableComposedAdapterFactory) DEFAULT_ADAPTER_FACTORIES[0])
 					.getFilter();
 		}

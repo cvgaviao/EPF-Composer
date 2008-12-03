@@ -43,28 +43,28 @@ public class ProcessAdapterFactoryFilter extends ProcessConfigurator implements
 	 * @return AdapterFactory
 	 */
 	public AdapterFactory getWBSAdapterFactory() {
-		return factory.wbsAdapterFactory;
+		return factory != null ? factory.wbsAdapterFactory : null;
 	}
 
 	/**
 	 * @return AdapterFactory
 	 */
 	public AdapterFactory getTBSAdapterFactory() {
-		return factory.tbsAdapterFactory;
+		return factory != null ? factory.tbsAdapterFactory : null;
 	}
 
 	/**
 	 * @return AdapterFactory
 	 */
 	public AdapterFactory getWPBSAdapterFactory() {
-		return factory.wpbsAdapterFactory;
+		return factory != null ? factory.wpbsAdapterFactory : null;
 	}
 
 	/**
 	 * @return AdapterFactory
 	 */
 	public AdapterFactory getCBSAdapterFactory() {
-		return factory.cbsAdapterFactory;
+		return factory != null ? factory.cbsAdapterFactory : null;
 	}
 
 	/**
