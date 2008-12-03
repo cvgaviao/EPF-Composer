@@ -52,8 +52,8 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 
 	protected ConfigurationImportData data = new ConfigurationImportData();
 
-	protected ConfigurationImportService service = new ConfigurationImportService(
-			data);
+	protected ConfigurationImportService service = ConfigurationImportService.newInstance(
+			data);	
 
 	/**
 	 * Creates a new instance.

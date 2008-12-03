@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgBox;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.export.services.LibraryDocument;
 import org.eclipse.epf.export.services.PluginExportService;
@@ -75,6 +76,18 @@ public class ConfigurationImportService {
 		this.data = data;
 	}
 
+	public static ConfigurationImportService newInstance(ConfigurationImportData data) {
+		Object obj = ExtensionHelper.create(ConfigurationImportService.class, data);
+		if (obj instanceof ConfigurationImportService) {
+			return (ConfigurationImportService) obj;
+		}		
+		return new ConfigurationImportService(data);
+	}
+	
+	protected LibraryDocument getImportingLibDoc() {
+		return importingLibDoc;
+	}
+	
 	/**
 	 * Analyzes the imported library with respect to the base library.
 	 */
@@ -274,12 +287,15 @@ public class ConfigurationImportService {
 		}	
 		
 		try {
-			// Reopen the library.
-			LibraryService.getInstance().reopenCurrentMethodLibrary();		
-
+			postImportOperation();
 		} catch (Exception e) {
 			ImportPlugin.getDefault().getLogger().logError(e);
 		}
+	}
+	
+	protected void postImportOperation() throws Exception {
+		// Reopen the library.
+		LibraryService.getInstance().reopenCurrentMethodLibrary();	
 	}
 	
 	/**
