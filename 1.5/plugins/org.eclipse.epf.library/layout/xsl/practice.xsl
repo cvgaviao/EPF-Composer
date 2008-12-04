@@ -76,10 +76,10 @@
 								<xsl:with-param name="backPath" select="$backPath"/>
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
+							<xsl:call-template name="relationshipsSection2"/>
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$contentDescription"/>
 							</xsl:call-template>
-							<xsl:call-template name="relationshipsSection2"/>
 							<xsl:call-template name="copyright">
 								<xsl:with-param name="copyright" select="$copyright"/>
 							</xsl:call-template>
@@ -235,9 +235,13 @@
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>
 					</xsl:call-template>
+					<xsl:call-template name="addReferences">
+						<xsl:with-param name="refName" select="$subPracticesText"/>
+						<xsl:with-param name="refElement" select="$subPractices"/>
+					</xsl:call-template>
 					<tr valign="top">
 						<th class="sectionTableHeading" scope="row">
-							<xsl:value-of select="$relationshipsText"/>
+							<xsl:value-of select="$contentReferencesText"/>
 						</th>
 						<td class="sectionTableCell">
 							<xsl:for-each select="$practiceTree/*">
