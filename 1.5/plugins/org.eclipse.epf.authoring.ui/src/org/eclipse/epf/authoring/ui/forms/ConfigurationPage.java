@@ -952,8 +952,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	 */
 	protected void makeClosure() {
 		closure.fixErrors();
+		configViewer.refresh();
 		initConfigViewer();
-		refreshViewers();
+		//refreshViewers();
 //		updateCheckStates();
 		//saveConfiguration();
 
@@ -965,8 +966,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	protected void fixWarning() {
 
 		closure.fixProblems();
+		configViewer.refresh();
 		initConfigViewer();
-		refreshViewers();	
+		//refreshViewers();	
 //		updateCheckStates();
 		//saveConfiguration();
 
