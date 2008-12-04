@@ -12,6 +12,7 @@ package org.eclipse.epf.library.configuration.closure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +42,7 @@ import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr.ChangeEvent;
 import org.eclipse.epf.library.util.LibraryProblemMonitor;
@@ -1068,16 +1070,33 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		
 		return changed;
 	}
-
+	
 	private boolean selectErrorElement(EObject element) {
-
+		boolean ret = false;		
+		boolean oldNotify = config.eDeliver();
+		config.eSetDeliver(false);
+		try {
+			ret = selectErrorElement_(element);
+		} finally {
+			config.eSetDeliver(oldNotify);
+		}
+		return ret;
+	}
+	
+	private boolean selectErrorElement_(EObject element) {
+		
 		boolean selected = true;
+		List toAdd = Collections.singletonList(element);
 		if (element instanceof MethodPlugin 
 				&& !config.getMethodPluginSelection().contains(element)) {
-			config.getMethodPluginSelection().add((MethodPlugin) element);
+			//config.getMethodPluginSelection().add((MethodPlugin) element);
+			ConfigurationUtil.addCollToMethodPluginList(actionMgr, config, toAdd);
+			config.eResource().setModified(true);
 		} else if ( element instanceof MethodPackage 
 				&& !config.getMethodPackageSelection().contains(element)){
-			config.getMethodPackageSelection().add((MethodPackage) element);
+			//config.getMethodPackageSelection().add((MethodPackage) element);
+			ConfigurationUtil.addCollToMethodPackageList(actionMgr, config, toAdd);
+			config.eResource().setModified(true);
 		} else {
 			selected = false;
 		}
