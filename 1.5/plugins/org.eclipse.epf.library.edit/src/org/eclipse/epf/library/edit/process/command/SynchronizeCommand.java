@@ -96,7 +96,7 @@ public class SynchronizeCommand extends CompoundCommand implements
 	
 	private BatchCommand batchCommand = new BatchCommand(false);
 	private Map<VariabilityElement, VariabilityElement> replacerToBaseMap = new HashMap<VariabilityElement, VariabilityElement>();  
-
+	
 //	private Object UIContext;
 
 	/**
@@ -157,54 +157,58 @@ public class SynchronizeCommand extends CompoundCommand implements
 		}
 		elements.removeAll(deleteList);
 		
-		for (Iterator iter = elements.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = elements.iterator(); iter.hasNext();) {
 			Object object = iter.next();
 			if (object instanceof Descriptor) {
-				Descriptor descriptor = (Descriptor) object;
-				if (descriptor.getIsSynchronizedWithSource().booleanValue()
-						&& !deleteList.contains(descriptor)) {
-					if(descriptor.getSuperActivities() == null) {						
-						// descriptor is used by TeamProfile to represent a role or used by a deliverable descriptor to
-						// represent a deliverable part
-						//
-						if(descriptor instanceof WorkProductDescriptor && ((WorkProductDescriptor)descriptor).getWorkProduct() instanceof Deliverable) {
-							append(new SynchronizeDeliverableDescriptorCommand((WorkProductDescriptor) descriptor, synchFeatures, config));
+				if(!deleteList.contains(object)) {
+					Descriptor descriptor = (Descriptor) object;
+					if (descriptor.getIsSynchronizedWithSource().booleanValue()) {
+						if(descriptor.getSuperActivities() == null) {						
+							// descriptor is used by TeamProfile to represent a role or used by a deliverable descriptor to
+							// represent a deliverable part
+							//
+							if(descriptor instanceof WorkProductDescriptor && ((WorkProductDescriptor)descriptor).getWorkProduct() instanceof Deliverable) {
+								append(new SynchronizeDeliverableDescriptorCommand((WorkProductDescriptor) descriptor, synchFeatures, config));
+							}
+							else {
+								append(new BasicSynchronizeDescriptorCommand(descriptor, synchFeatures, config));
+							}
 						}
 						else {
-							append(new BasicSynchronizeDescriptorCommand(descriptor, synchFeatures, config));
+							Activity act = descriptor.getSuperActivities();
+							if (object instanceof TaskDescriptor) {
+								Task task = ((TaskDescriptor) object).getTask();
+								if (task != null) {
+									if(replacerToBaseMap.containsKey(task)) {
+										task = (Task) replacerToBaseMap.get(task);
+									}
+									append(new WBSDropCommand(act, Collections
+											.singletonList(task), config, synchFeatures));
+								}
+							} else if (object instanceof RoleDescriptor) {
+								Role role = ((RoleDescriptor) object).getRole();
+								if (role != null) {
+									if(replacerToBaseMap.containsKey(role)) {
+										role = (Role) replacerToBaseMap.get(role);
+									}
+									append(new OBSDropCommand(act, Collections
+											.singletonList(role), config, synchFeatures, configurator));
+								}
+							} else if (object instanceof WorkProductDescriptor) {
+								WorkProduct wp = ((WorkProductDescriptor) object)
+								.getWorkProduct();
+								if (wp != null) {
+									if(replacerToBaseMap.containsKey(wp)) {
+										wp = (WorkProduct) replacerToBaseMap.get(wp);
+									}
+									append(new PBSDropCommand(act, Collections
+											.singletonList(wp), config, synchFeatures, configurator));
+								}
+							}
 						}
 					}
 					else {
-						Activity act = descriptor.getSuperActivities();
-						if (object instanceof TaskDescriptor) {
-							Task task = ((TaskDescriptor) object).getTask();
-							if (task != null) {
-								if(replacerToBaseMap.containsKey(task)) {
-									task = (Task) replacerToBaseMap.get(task);
-								}
-								append(new WBSDropCommand(act, Collections
-										.singletonList(task), config, synchFeatures));
-							}
-						} else if (object instanceof RoleDescriptor) {
-							Role role = ((RoleDescriptor) object).getRole();
-							if (role != null) {
-								if(replacerToBaseMap.containsKey(role)) {
-									role = (Role) replacerToBaseMap.get(role);
-								}
-								append(new OBSDropCommand(act, Collections
-										.singletonList(role), config, synchFeatures, configurator));
-							}
-						} else if (object instanceof WorkProductDescriptor) {
-							WorkProduct wp = ((WorkProductDescriptor) object)
-							.getWorkProduct();
-							if (wp != null) {
-								if(replacerToBaseMap.containsKey(wp)) {
-									wp = (WorkProduct) replacerToBaseMap.get(wp);
-								}
-								append(new PBSDropCommand(act, Collections
-										.singletonList(wp), config, synchFeatures, configurator));
-							}
-						}
+						appendRemoveDuplicateGuidanceRefCommand(descriptor);
 					}
 				}
 			} else if (object instanceof Activity) {
@@ -242,46 +246,50 @@ public class SynchronizeCommand extends CompoundCommand implements
 	 * @param activity
 	 */
 	private void appendCommands(Activity activity) {
-		List tasks = new ArrayList();
-		List roles = new ArrayList();
-		List workProducts = new ArrayList();
-		List activities = new ArrayList();
-		for (Iterator iter = activity.getBreakdownElements().iterator(); iter
+		List<Task> tasks = new ArrayList<Task>();
+		List<Role> roles = new ArrayList<Role>();
+		List<WorkProduct> workProducts = new ArrayList<WorkProduct>();
+		List<Activity> activities = new ArrayList<Activity>();
+		for (Iterator<?> iter = activity.getBreakdownElements().iterator(); iter
 				.hasNext();) {
 			Object element = iter.next();
 			if (element instanceof Descriptor) {
-				if (((Descriptor) element).getIsSynchronizedWithSource()
-						.booleanValue()
-						&& !deleteList.contains(element)) {
-					if (element instanceof TaskDescriptor) {
-						Task task = ((TaskDescriptor) element).getTask();
-						if (task != null) {
-							if(replacerToBaseMap.containsKey(task)) {
-								task = (Task) replacerToBaseMap.get(task);
+				if(!deleteList.contains(element)) {
+					Descriptor descriptor = ((Descriptor) element);
+					if (descriptor.getIsSynchronizedWithSource()
+							.booleanValue()) {
+						if (element instanceof TaskDescriptor) {
+							Task task = ((TaskDescriptor) element).getTask();
+							if (task != null) {
+								if(replacerToBaseMap.containsKey(task)) {
+									task = (Task) replacerToBaseMap.get(task);
+								}
+								tasks.add(task);
 							}
-							tasks.add(task);
-						}
-					} else if (element instanceof RoleDescriptor) {
-						Role role = ((RoleDescriptor) element).getRole();
-						if (role != null) {
-							if(replacerToBaseMap.containsKey(role)) {
-								role = (Role) replacerToBaseMap.get(role);
+						} else if (element instanceof RoleDescriptor) {
+							Role role = ((RoleDescriptor) element).getRole();
+							if (role != null) {
+								if(replacerToBaseMap.containsKey(role)) {
+									role = (Role) replacerToBaseMap.get(role);
+								}
+								roles.add(role);
 							}
-							roles.add(role);
-						}
-					} else if (element instanceof WorkProductDescriptor) {
-						WorkProduct wp = ((WorkProductDescriptor) element)
-								.getWorkProduct();
-						if (wp != null) {
-							if(replacerToBaseMap.containsKey(wp)) {
-								wp = (WorkProduct) replacerToBaseMap.get(wp);
+						} else if (element instanceof WorkProductDescriptor) {
+							WorkProduct wp = ((WorkProductDescriptor) element)
+							.getWorkProduct();
+							if (wp != null) {
+								if(replacerToBaseMap.containsKey(wp)) {
+									wp = (WorkProduct) replacerToBaseMap.get(wp);
+								}
+								workProducts.add(wp);
 							}
-							workProducts.add(wp);
 						}
+					} else {
+						appendRemoveDuplicateGuidanceRefCommand(descriptor);
 					}
 				}
 			} else if (element instanceof Activity) {
-				activities.add(element);
+				activities.add((Activity) element);
 			} else if (element instanceof TeamProfile) {
 				appendCommands((TeamProfile)element);
 			}
@@ -296,11 +304,15 @@ public class SynchronizeCommand extends CompoundCommand implements
 			append(new PBSDropCommand(activity, workProducts, config,
 					synchFeatures, configurator));
 		}
-		for (Iterator iter = activities.iterator(); iter.hasNext();) {
-			appendCommands((Activity) iter.next());
+		for (Iterator<Activity> iter = activities.iterator(); iter.hasNext();) {
+			appendCommands(iter.next());
 		}
 	}
 	
+	private void appendRemoveDuplicateGuidanceRefCommand(Descriptor descriptor) {
+		append(new RemoveDuplicateReferenceCommand(descriptor, ProcessCommandUtil.CONTENT_ELEMENT_GUIDANCE_REFERENCES, config));
+	}
+
 	private void appendCommands(TeamProfile team) {
 		Iterator iter = new AbstractTreeIterator(team, false) {
 
