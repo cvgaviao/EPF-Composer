@@ -464,6 +464,23 @@ public class DiagramAdapter extends NodeAdapter {
 		updateView(getView(), selectedNodes);
 	}
 	
+	private static boolean isWorkBreakdownElementType(View node) {
+		// hack by using the visual IDs defined in AD model
+		//  StructuredActivityNodeEditPart 1007 Activity
+		//  StructuredActivityNode2EditPart 1010 Phase
+		//  StructuredActivityNode3EditPart 1011 Iteration
+		//  ActivityParameterNodeEditPart 1009 TaskDescriptor
+		//  ActivityParameterNode2EditPart 1012 Milestone
+		//
+		
+		String type = node.getType();
+		return type != null && ("1007".equals(type) //$NON-NLS-1$
+				|| "1010".equals(type) //$NON-NLS-1$
+				|| "1011".equals(type) //$NON-NLS-1$
+				|| "1009".equals(type) //$NON-NLS-1$
+				|| "1012".equals(type)); //$NON-NLS-1$
+	}
+	
 	private static void updateView(View view, Collection<?> selectedNodes) {
 		// show the selected nodes and hide all the other
 		//	
@@ -486,6 +503,18 @@ public class DiagramAdapter extends NodeAdapter {
 				}
 				else if(node.getElement() instanceof ActivityPartition) {
 					updateView(node, selectedNodes);
+				}
+				// this is a work around to not show any work breakdown element
+				// node that does not have any model reference (View.element)
+				// GMF returns the container view's element if the child node's element
+				// is not set. Therefore, if the child node is shown, it will be displayed
+				// as a node of parent activity. Deleting this node in editor will delete
+				// the parent activity as result.
+				//
+				else if(isWorkBreakdownElementType(node) && (!node.isSetElement() || node.getElement() == view.getElement())) {
+					if(node.isVisible()) {
+						node.setVisible(false);
+					}
 				}
 				else {
 					if(!node.isVisible()) {
