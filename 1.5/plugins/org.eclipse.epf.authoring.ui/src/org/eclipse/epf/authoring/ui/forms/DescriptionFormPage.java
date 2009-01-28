@@ -626,7 +626,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					VariabilityType.NA,
 					VariabilityType.CONTRIBUTES,
 					VariabilityType.REPLACES,
-					VariabilityType.EXTENDS
+					VariabilityType.EXTENDS_REPLACES
 			};
 		} else {
 			types = new VariabilityType[] {
