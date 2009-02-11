@@ -816,7 +816,7 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 			}
 
 			IElementLayout l = new SummaryPageLayout(getHtmlBuilder()
-					.getLayoutManager(), practice, provider.getText(null),
+					.getLayoutManager(), practice, provider.getPrefix(),
 					provider.getText(null), items, provider.getText(null));
 			
 			String url = l.getUrl();

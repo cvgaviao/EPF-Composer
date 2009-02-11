@@ -36,6 +36,8 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 		IItemLabelProvider, IConfigurable {
 
 	private String label;
+	
+	private String prefix;
 
 	private Object parent;
 	
@@ -51,9 +53,10 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 	 * Creates a new instance.
 	 */
 	public PracticeSubgroupItemProvider(AdapterFactory adapterFactory,
-			String name, Object image, List children, Object parentObject) {
+			String name, String prefix, Object image, List children, Object parentObject) {
 		super(adapterFactory);
 		label = name;
+		this.prefix = prefix;
 		this.image = image;
 		this.children = children;
 		if (parentObject instanceof Practice) {
@@ -133,6 +136,14 @@ public class PracticeSubgroupItemProvider extends ItemProviderAdapter implements
 
 	public Practice getPractice() {
 		return practice;
+	}
+	
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+
+	public String getPrefix() {
+		return prefix;
 	}
 
 }

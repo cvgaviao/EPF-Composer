@@ -70,8 +70,25 @@ public class PracticeItemProvider extends
 	
 	private static String ROADMAP = "roadmap"; //$NON-NLS-1$
 	private static String CATEGORIES = "categories"; //$NON-NLS-1$
+	private static String KEY_CONCEPTS = "Key Concepts"; //$NON-NLS-1$
+	private static String WORKPRODUCTS_GROUP = "Work Products"; //$NON-NLS-1$
+	private static String TASKS_GROUP = "Tasks"; //$NON-NLS-1$
+	private static String ROLES_GROUP = "Roles"; //$NON-NLS-1$
+	private static String ACTIVITIES_GROUP = "Activities"; //$NON-NLS-1$
+	private static String GUIDANCES_GROUP = "Guidance"; //$NON-NLS-1$
 	private static String UNKNOWN = "unknown"; //$NON-NLS-1$
 
+	private static String GUIDANCES_CHECKLISTS = "Checklists"; //$NON-NLS-1$
+	private static String GUIDANCES_Example = "Examples"; //$NON-NLS-1$
+	private static String GUIDANCES_PRACTICES = "Practices"; //$NON-NLS-1$
+	private static String GUIDANCES_REPORTS = "Reports"; //$NON-NLS-1$
+	private static String GUIDANCES_REUSABLEASSETS = "Reusable Assets"; //$NON-NLS-1$
+	private static String GUIDANCES_SUPPORTINGMATERIALS = "Supporting Materials"; //$NON-NLS-1$
+	private static String GUIDANCES_TEMPLATES = "Templates"; //$NON-NLS-1$
+	private static String GUIDANCES_TOOLMENTORS = "Tool Mentors"; //$NON-NLS-1$
+	private static String GUIDANCES_WORKPRODUCTGUIDELINES = "Guidelines"; //$NON-NLS-1$
+	private static String GUIDANCES_ESTIMATIONCONSIDERATIONS = "Estimation Considerations"; //$NON-NLS-1$
+	
 	public PracticeItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
@@ -108,8 +125,11 @@ public class PracticeItemProvider extends
 			}
 		}
 		String[] keys = groupingHelper.getKeysInOrder();
+		String[] prefixes = groupingHelper.getPrefixInOrder();
+		
 		for (int i = 0; i < keys.length; i++) {
 			String key = keys[i];
+			String prefix = prefixes[i];
 			List subgroupChildren = map.get(key);
 			if (subgroupChildren == null || subgroupChildren.isEmpty()) {
 				continue;
@@ -120,7 +140,7 @@ public class PracticeItemProvider extends
 				}
 				subgroupChildren = groupingHelper.nestedGrouping(parentObject, key, subgroupChildren);
 				PracticeSubgroupItemProvider sub = new PracticeSubgroupItemProvider(
-						getAdapterFactory(), key, getImageObject(key), subgroupChildren, parentObject);
+						getAdapterFactory(), key, prefix, getImageObject(key), subgroupChildren, parentObject);
 				ret.add(sub);
 			} else {
 				if (toSort) {
@@ -346,6 +366,22 @@ public class PracticeItemProvider extends
 			return UNKNOWN;
 		}
 		
+		public String[] getPrefixInOrder() {
+			String[] prefixes = {
+					ROADMAP,
+					KEY_CONCEPTS,
+					WORKPRODUCTS_GROUP,
+					TASKS_GROUP,	
+					ROLES_GROUP,	
+					ACTIVITIES_GROUP,
+					GUIDANCES_GROUP,
+					CATEGORIES,
+					UNKNOWN
+			};
+			
+			return prefixes;
+		}
+		
 		public String[] getKeysInOrder() {
 			String[] keys = {
 					ROADMAP,
@@ -441,6 +477,24 @@ public class PracticeItemProvider extends
 			
 			return UNKNOWN;
 			
+		}
+		
+		public String[] getPrefixInOrder() {
+			String[] prefixes = {
+					GUIDANCES_CHECKLISTS,	
+					GUIDANCES_Example,	
+					GUIDANCES_PRACTICES,
+					GUIDANCES_REPORTS,
+					GUIDANCES_REUSABLEASSETS,
+					GUIDANCES_SUPPORTINGMATERIALS,	
+					GUIDANCES_TEMPLATES,
+					GUIDANCES_TOOLMENTORS,
+					GUIDANCES_WORKPRODUCTGUIDELINES,
+					GUIDANCES_ESTIMATIONCONSIDERATIONS,	
+					UNKNOWN
+			};
+			
+			return prefixes;
 		}
 		
 		public String[] getKeysInOrder() {

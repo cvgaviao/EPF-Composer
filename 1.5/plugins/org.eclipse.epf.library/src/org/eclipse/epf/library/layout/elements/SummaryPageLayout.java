@@ -197,7 +197,7 @@ public class SummaryPageLayout implements IElementLayout {
 				} else if (e instanceof PracticeSubgroupItemProvider) {
 					PracticeSubgroupItemProvider provider = (PracticeSubgroupItemProvider) e;
 					IElementLayout l = new SummaryPageLayout(getLayoutMgr(),
-							provider.getPractice(), provider.getText(null),
+							provider.getPractice(), provider.getPrefix(),
 							provider.getText(null), (List) provider
 									.getChildren(null), provider.getText(null));
 					refXml.addChild(l.getXmlElement(false));

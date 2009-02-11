@@ -286,7 +286,7 @@ public class ConfigHelperDelegate {
 		} else if (raw_element instanceof PracticeSubgroupItemProvider) {
 			PracticeSubgroupItemProvider provider = (PracticeSubgroupItemProvider) raw_element;
 			layout = new SummaryPageLayout(htmlBuilder.getLayoutManager(),
-					provider.getPractice(), provider.getText(null),
+					provider.getPractice(), provider.getPrefix(),
 					provider.getText(null), (List) provider.getChildren(null),
 					provider.getText(null));
 			((SummaryPageLayout) layout).setHtmlBuilder(htmlBuilder);
