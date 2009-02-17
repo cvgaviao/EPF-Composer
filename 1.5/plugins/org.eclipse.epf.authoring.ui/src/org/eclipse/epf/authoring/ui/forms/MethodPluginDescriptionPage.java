@@ -106,7 +106,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 
 	protected Adapter userChangeableAdapter;
 
-	protected ModifyListener nameModifyListener;
+//	protected ModifyListener nameModifyListener;
 	
 	protected ISelectionChangedListener refModelSelChangedListener = new ISelectionChangedListener() {
 		public void selectionChanged(SelectionChangedEvent event) {
@@ -307,8 +307,8 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		});
 
 		ctrl_name.removeFocusListener(nameFocusListener);
-		nameModifyListener = editor.createModifyListener(plugin, true);
-		ctrl_name.addModifyListener(nameModifyListener);
+//		nameModifyListener = editor.createModifyListener(plugin, true);
+//		ctrl_name.addModifyListener(nameModifyListener);
 		ctrl_name.addListener(SWT.Deactivate, new Listener() {
 			public void handleEvent(Event e) {
 				String oldContent = plugin.getName();
