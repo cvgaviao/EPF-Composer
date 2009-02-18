@@ -621,22 +621,29 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		super.init(site, input);
 		
 		VariabilityType[] types;
-		if (methodElement instanceof ContentCategory) {
-			types = new VariabilityType[] {
-					VariabilityType.NA,
-					VariabilityType.CONTRIBUTES,
-					VariabilityType.REPLACES,
-					VariabilityType.EXTENDS_REPLACES
-			};
-		} else {
-			types = new VariabilityType[] {
-					VariabilityType.NA,
-					VariabilityType.CONTRIBUTES,
-					VariabilityType.EXTENDS,
-					VariabilityType.REPLACES,
-					VariabilityType.EXTENDS_REPLACES
-			};
-		}
+//		if (methodElement instanceof ContentCategory) {
+//			types = new VariabilityType[] {
+//					VariabilityType.NA,
+//					VariabilityType.CONTRIBUTES,
+//					VariabilityType.REPLACES,
+//					VariabilityType.EXTENDS_REPLACES
+//			};
+//		} else {
+//			types = new VariabilityType[] {
+//					VariabilityType.NA,
+//					VariabilityType.CONTRIBUTES,
+//					VariabilityType.EXTENDS,
+//					VariabilityType.REPLACES,
+//					VariabilityType.EXTENDS_REPLACES
+//			};
+//		}
+		types = new VariabilityType[] {
+				VariabilityType.NA,
+				VariabilityType.CONTRIBUTES,
+				VariabilityType.EXTENDS,
+				VariabilityType.REPLACES,
+				VariabilityType.EXTENDS_REPLACES
+		};
 		contentProviderVariability = new VariabilityTypeContentProvider(
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory(), types);
