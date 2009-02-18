@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.CustomCategory;
@@ -195,8 +196,8 @@ public class UpwardReachableInfo implements IDependencyInfo {
 		
 		int sz = parentList == null ? 0 : parentList.size();
 		if (mgr.isMoveElement(elem)) {
-			if (sz > 1 && !(elem instanceof CustomCategory)) {
-				throw new UnsupportedOperationException();	
+			if (sz > 1 && !(elem instanceof CustomCategory || elem instanceof Practice)) {
+				LibraryEditPlugin.getDefault().getLogger().logError("Error in collectParentList"); //$NON-NLS-1$
 			}
 		} else if (sz > 0) {
 			list.addAll(parentList);
