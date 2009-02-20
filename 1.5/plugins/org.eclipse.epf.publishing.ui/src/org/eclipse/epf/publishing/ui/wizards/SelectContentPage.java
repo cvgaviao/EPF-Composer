@@ -29,6 +29,7 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
@@ -171,6 +172,8 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 				| GridData.GRAB_HORIZONTAL);
 		gridData.heightHint = 300;
 		processViewer.getTree().setLayoutData(gridData);
+		processViewer.setContentProvider(new ProcessViewerContentProvider());
+		processViewer.setLabelProvider(new ProcessTreeLabelProvider());
 
 		includeBaseProcessesCheckbox = createCheckbox(processComposite,
 				PublishingUIResources.includeBaseProcessesCheckboxLabel_text);
@@ -186,15 +189,30 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 	 * Initializes the wizard page controls with data.
 	 */
 	protected void initControls() {
-		processViewer.setContentProvider(new ProcessViewerContentProvider());
-		processViewer.setLabelProvider(new ProcessTreeLabelProvider());
-
 		String configId = config != null ? config.getGuid() : ""; //$NON-NLS-1$
-		boolean publishConfig = PublishingUIPreferences
-				.getPublishEntireConfig(configId);
+		boolean publishConfig = PublishingUIPreferences.getPublishEntireConfig(configId);
 		publishConfigRadioButton.setSelection(publishConfig);
 		publishProcessesRadioButton.setSelection(!publishConfig);
 		processViewer.getControl().setEnabled(!publishConfig);
+		
+		if (!publishConfig) {
+			List<String> processIds = PublishingUIPreferences.getProcesses(configId);
+			List<Process> processes = new ArrayList<Process>();
+			if (processIds != null) {
+				for (String guid : processIds) {
+					MethodElement e = LibraryService.getInstance().getCurrentLibraryManager().getMethodElement(guid);
+					if (e instanceof Process) {
+						processes.add((Process) e);
+					}
+				}
+			}
+			processViewer.setCheckedElements(processes.toArray());
+		}
+		
+		boolean includeBaseProcess = PublishingUIPreferences.getIncludeBaseProcesses(configId);
+		includeBaseProcessesCheckbox.setSelection(includeBaseProcess);
+		
+		updateCheckedStates();
 	}
 
 	/**
@@ -314,7 +332,8 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 			if (config != null) {
 				processViewer.setInput(config);
 				processViewer.expandAll();
-			}
+				initControls();
+			}			
 		}
 	}
 
@@ -363,6 +382,25 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 			}
 		}
 		return processes;
+	}
+	
+	public void savePreferences() {
+		if (config != null) {
+			String configId = config.getGuid();
+			boolean publishConfig = publishConfigRadioButton.getSelection();			
+			PublishingUIPreferences.setPublishEntireConfig(configId, publishConfig);
+			if (publishConfig) {
+				List<String> processIds = new ArrayList<String>();
+				PublishingUIPreferences.setProcesses(configId, processIds);
+			} else {
+				List<String> processIds = new ArrayList<String>();
+				for (org.eclipse.epf.uma.Process process : getSelectedProcesses()) {
+					processIds.add(process.getGuid());
+				}
+				PublishingUIPreferences.setProcesses(configId, processIds);
+			}			
+			PublishingUIPreferences.setIncludeBaseProcesses(configId, includeBaseProcessesCheckbox.getSelection());
+		}
 	}
 
 }

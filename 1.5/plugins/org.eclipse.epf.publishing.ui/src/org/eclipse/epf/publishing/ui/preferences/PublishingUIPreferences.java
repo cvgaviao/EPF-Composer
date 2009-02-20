@@ -10,7 +10,10 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.publishing.ui.preferences;
 
+import java.util.List;
+
 import org.eclipse.epf.common.utils.FileUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.elements.ActivityLayout;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.publishing.ui.PublishingUIPlugin;
@@ -26,6 +29,10 @@ import org.eclipse.jface.preference.IPreferenceStore;
 public class PublishingUIPreferences {
 
 	private static final String PUBLISH_ENTIRE_CONFIG = "publishEntireConfig"; //$NON-NLS-1$
+	
+	private static final String PUBLISH_PROCESSES = "publishProcesses"; //$NON-NLS-1$
+	
+	private static final String PUBLISH_INCLUDE_BASE_PROCESS = "publishIncludeBaseProcess"; //$NON-NLS-1$
 
 	private static final String TITLE = "title"; //$NON-NLS-1$
 
@@ -154,6 +161,24 @@ public class PublishingUIPreferences {
 	public static void removePublishEntireConfig(String configId) {
 		prefStore.setToDefault(getConfigPrefPrefix(configId)
 				+ PUBLISH_ENTIRE_CONFIG);
+	}
+	
+	public static List<String> getProcesses(String configId) {
+		String guidStr = prefStore.getString(configId + PUBLISH_PROCESSES);
+		return TngUtil.convertStringsToList(guidStr);
+	}
+
+	public static void setProcesses(String configId, List<String> guidList) {
+		String guidStr = TngUtil.convertListToString(guidList);
+		prefStore.setValue(configId + PUBLISH_PROCESSES, guidStr);
+	}
+	
+	public static Boolean getIncludeBaseProcesses(String configId) {
+		return prefStore.getBoolean(configId + PUBLISH_INCLUDE_BASE_PROCESS);
+	}
+	
+	public static void setIncludeBaseProcesses(String configId, boolean value) {
+		prefStore.setValue(configId + PUBLISH_INCLUDE_BASE_PROCESS, value);
 	}
 
 	/**

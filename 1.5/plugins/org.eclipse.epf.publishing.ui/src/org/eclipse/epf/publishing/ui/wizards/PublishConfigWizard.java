@@ -235,6 +235,9 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 			if (selectDestinationPage != null) {
 				selectDestinationPage.savePreferences();
 			}
+			if (selectContentPage != null) {
+				selectContentPage.savePreferences();
+			}
 			String configId = config.getGuid();
 			PublishingUIPreferences.setConfigPrefInitialized(configId, true);
 			PublishingUIPreferences.saveAllPreferences();
