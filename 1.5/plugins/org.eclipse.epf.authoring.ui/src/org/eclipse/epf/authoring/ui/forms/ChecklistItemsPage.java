@@ -308,12 +308,12 @@ public class ChecklistItemsPage extends BaseFormPage {
 				if (form != null && !form.isDisposed()) {
 					UIHelper.setFormText(form, contentElement);
 				}
-				loadData();
+//				loadData();
 				if (TngUtil.isLocked(contentElement)) {
 					enableControls(false);
 				} else {
 					ctrl_add.setEnabled(true);
-					checkSelection();
+//					checkSelection();
 				}
 			}
 		});
