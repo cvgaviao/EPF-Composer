@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -149,8 +150,11 @@ public abstract class AbstractProcessElementLayout extends
 			IBSItemProvider adapter = (IBSItemProvider) adapterFactory.adapt(
 					wrapper, ITreeItemContentProvider.class);
 	
-			this.displayName = ProcessUtil.getAttribute(element,
-					IBSItemProvider.COL_PRESENTATION_NAME, adapter);
+//			this.displayName = ProcessUtil.getAttribute(element,
+//					IBSItemProvider.COL_PRESENTATION_NAME, adapter);
+			
+			this.displayName = ConfigurationHelper.getPresentationName(element, this.getLayoutMgr().getConfiguration());
+			
 		}
 		
 		return displayName;

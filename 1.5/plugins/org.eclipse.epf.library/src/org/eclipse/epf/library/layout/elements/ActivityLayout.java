@@ -893,8 +893,10 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 							IBSItemProvider.COL_HAS_MULTIPLE_OCCURRENCES,
 							adapter);
 			
-			String displayName = ProcessUtil.getAttribute(item,
-					IBSItemProvider.COL_PRESENTATION_NAME, adapter);
+//			String displayName = ProcessUtil.getAttribute(item,
+//					IBSItemProvider.COL_PRESENTATION_NAME, adapter);
+			
+			String displayName = ConfigurationHelper.getPresentationName(item, this.getLayoutMgr().getConfiguration());
 			
 			String mName = ProcessUtil.getAttribute(item,
 					IBSItemProvider.COL_NAME, adapter);
