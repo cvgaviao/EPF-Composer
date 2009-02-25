@@ -47,11 +47,13 @@
 					<ul>
 						<xsl:for-each select="$concepts/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Concept'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -254,11 +256,13 @@
 					<ul>
 						<xsl:for-each select="$whitePapers/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Whitepaper'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
