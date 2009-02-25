@@ -14,12 +14,16 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
+import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.Template;
+import org.eclipse.epf.uma.ToolMentor;
 
 
 /**
@@ -86,6 +90,14 @@ public class AddGuidanceToActivityCommand extends AddMethodElementCommand {
 						activity.getGuidelines().add((Guideline) item);
 					} else if (item instanceof ReusableAsset) {
 						activity.getReusableAssets().add((ReusableAsset) item);
+					} else if (item instanceof Template) {
+						activity.getTemplates().add((Template) item);
+					} else if (item instanceof Report) {
+						activity.getReports().add((Report) item);
+					} else if (item instanceof EstimationConsiderations) {
+						activity.getEstimationconsiderations().add((EstimationConsiderations) item);
+					} else if (item instanceof ToolMentor) {
+						activity.getToolmentor().add((ToolMentor) item);
 					} else if (item instanceof Roadmap) {
 						activity.getRoadmaps().add((Roadmap) item);
 					} else {
@@ -125,6 +137,14 @@ public class AddGuidanceToActivityCommand extends AddMethodElementCommand {
 						activity.getGuidelines().remove(item);
 					} else if (item instanceof ReusableAsset) {
 						activity.getReusableAssets().remove(item);
+					} else if (item instanceof Template) {
+						activity.getTemplates().remove((Template) item);
+					} else if (item instanceof Report) {
+						activity.getReports().remove((Report) item);
+					} else if (item instanceof EstimationConsiderations) {
+						activity.getEstimationconsiderations().remove((EstimationConsiderations) item);
+					} else if (item instanceof ToolMentor) {
+						activity.getToolmentor().remove((ToolMentor) item);
 					} else if (item instanceof Roadmap) {
 						activity.getRoadmaps().remove(item);
 					} else {

@@ -15,12 +15,16 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
+import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.Template;
+import org.eclipse.epf.uma.ToolMentor;
 
 /**
  * Command to add guidance to breakdown element/activity
@@ -73,7 +77,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 				if (obj instanceof Guidance) {
 					Guidance item = (Guidance) obj;
 
-					// guidances for content element
+					// guidances for breakdown element
 					if (item instanceof Checklist) {
 						brElement.getChecklists().add((Checklist) item);
 					} else if (item instanceof Concept) {
@@ -86,6 +90,14 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 						brElement.getGuidelines().add((Guideline) item);
 					} else if (item instanceof ReusableAsset) {
 						brElement.getReusableAssets().add((ReusableAsset) item);
+					} else if (item instanceof Template) {
+						brElement.getTemplates().add((Template) item);
+					} else if (item instanceof Report) {
+						brElement.getReports().add((Report) item);
+					} else if (item instanceof EstimationConsiderations) {
+						brElement.getEstimationconsiderations().add((EstimationConsiderations) item);
+					} else if (item instanceof ToolMentor) {
+						brElement.getToolmentor().add((ToolMentor) item);
 					} else if (item instanceof Roadmap) {
 						if (brElement instanceof Activity) {
 							((Activity) brElement).getRoadmaps().add((Roadmap) item);
@@ -127,6 +139,14 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 						brElement.getGuidelines().remove(item);
 					} else if (item instanceof ReusableAsset) {
 						brElement.getReusableAssets().remove(item);
+					} else if (item instanceof Template) {
+						brElement.getTemplates().remove((Template) item);
+					} else if (item instanceof Report) {
+						brElement.getReports().remove((Report) item);
+					} else if (item instanceof EstimationConsiderations) {
+						brElement.getEstimationconsiderations().remove((EstimationConsiderations) item);
+					} else if (item instanceof ToolMentor) {
+						brElement.getToolmentor().remove((ToolMentor) item);
 					} else if (item instanceof Roadmap) {
 						if (brElement instanceof Activity) {
 							((Activity) brElement).getRoadmaps().remove((Roadmap) item);

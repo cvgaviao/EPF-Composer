@@ -32,11 +32,15 @@ import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElemen
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
+import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.Template;
+import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -122,7 +126,11 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							|| (obj instanceof Example)
 							|| (obj instanceof Guideline)
 							|| (obj instanceof ReusableAsset)
-							|| (obj instanceof SupportingMaterial))
+							|| (obj instanceof SupportingMaterial)
+							|| (obj instanceof Template)
+							|| (obj instanceof Report)
+							|| (obj instanceof ToolMentor)
+							|| (obj instanceof EstimationConsiderations))
 						return true;
 
 					return false;
@@ -398,6 +406,22 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 					actionMgr.doAction(IActionManager.REMOVE, element,
 							UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets(),
 							item, -1);
+				}else if (item instanceof Template) {
+					actionMgr.doAction(IActionManager.REMOVE, element,
+							UmaPackage.eINSTANCE.getBreakdownElement_Templates(),
+							item, -1);
+				}else if (item instanceof Report) {
+					actionMgr.doAction(IActionManager.REMOVE, element,
+							UmaPackage.eINSTANCE.getBreakdownElement_Reports(),
+							item, -1);
+				}else if (item instanceof ToolMentor) {
+					actionMgr.doAction(IActionManager.REMOVE, element,
+							UmaPackage.eINSTANCE.getBreakdownElement_Toolmentor(),
+							item, -1);
+				}else if (item instanceof EstimationConsiderations) {
+					actionMgr.doAction(IActionManager.REMOVE, element,
+							UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations(),
+							item, -1);
 				} else {
 					logger
 							.logError("Can't remove Guidance: " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$
@@ -421,6 +445,11 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		itemList.addAll(element.getGuidelines());
 		itemList.addAll(element.getReusableAssets());
 		itemList.addAll(element.getSupportingMaterials());
+		itemList.addAll(element.getTemplates());
+		itemList.addAll(element.getReports());
+		itemList.addAll(element.getEstimationconsiderations());
+		itemList.addAll(element.getToolmentor());
+
 
 		return itemList;
 	}
@@ -429,7 +458,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	 * Return list of filter types
 	 */
 	protected String[] getFilterTypes() {
-		String[] str = new String[14];
+		String[] str = new String[12];
 		int i = 0;
 		str[i++] = FilterConstants.GUIDANCE;
 		str[i++] = FilterConstants.space + FilterConstants.CHECKLISTS;
@@ -438,14 +467,12 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 				+ FilterConstants.ESTIMATE_CONSIDERATIONS;
 		str[i++] = FilterConstants.space + FilterConstants.EXAMPLES;
 		str[i++] = FilterConstants.space + FilterConstants.GUIDELINES;
-		str[i++] = FilterConstants.space + FilterConstants.PRACTICES;
 		str[i++] = FilterConstants.space + FilterConstants.REPORTS;
 		str[i++] = FilterConstants.space + FilterConstants.REUSABLE_ASSETS;
 		str[i++] = FilterConstants.space + FilterConstants.SUPPORTING_MATERIALS;
 		str[i++] = FilterConstants.space + FilterConstants.TEMPLATES;
 		str[i++] = FilterConstants.space + FilterConstants.TOOL_MENTORS;
 		str[i++] = FilterConstants.space + FilterConstants.WHITE_PAPERS;
-		str[i++] = FilterConstants.space + FilterConstants.TERM_DEFINITIONS;
 		return str;
 	}
 }
