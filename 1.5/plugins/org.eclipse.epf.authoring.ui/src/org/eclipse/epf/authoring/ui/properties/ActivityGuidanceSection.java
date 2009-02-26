@@ -989,7 +989,7 @@ public class ActivityGuidanceSection extends AbstractSection {
 	 * Return list of filter types
 	 */
 	protected String[] getFilterTypes() {
-		String[] str = new String[13];
+		String[] str = new String[12];
 		int i = 0;
 		str[i++] = FilterConstants.GUIDANCE;
 		str[i++] = FilterConstants.space + FilterConstants.CHECKLISTS;
@@ -1004,7 +1004,6 @@ public class ActivityGuidanceSection extends AbstractSection {
 		str[i++] = FilterConstants.space + FilterConstants.TEMPLATES;
 		str[i++] = FilterConstants.space + FilterConstants.TOOL_MENTORS;
 		str[i++] = FilterConstants.space + FilterConstants.WHITE_PAPERS;
-		str[i++] = FilterConstants.space + FilterConstants.TERM_DEFINITIONS;
 		return str;
 	}
 }
