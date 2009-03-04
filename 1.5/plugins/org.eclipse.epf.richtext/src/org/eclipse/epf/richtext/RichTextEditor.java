@@ -571,7 +571,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 */
 	public Object getData(String key) {
 		if (richText != null) {
-			richText.getData(key);
+			return richText.getData(key);
 		}
 		return null;
 	}

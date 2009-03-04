@@ -594,7 +594,7 @@ public class RichText implements IRichText {
 	 */
 	public Object getData(String key) {
 		if (editor != null) {
-			editor.getData(key);
+			return editor.getData(key);
 		}
 		return null;
 	}

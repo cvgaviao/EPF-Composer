@@ -912,7 +912,7 @@ function deleteText() {
 
 // Finds text.
 function findText(text, dir, options) {
-	if (text == null || text == "") {
+    if (text == null || text == "") {
 		return;
 	}
 	else {
@@ -937,8 +937,30 @@ function findText(text, dir, options) {
 			if ((options & 4) == 0) caseSensitive = false;
 			if (dir == -1) backwards = true;
 			if ((options & 2) == 0) wholeWord = false;
-			if (contentWindow.find(text, caseSensitive, backwards, false, wholeWord, false, false)) {
-				setStatus(STATUS_EXEC_CMD, 1);
+			
+			if ( wholeWord ) 
+			{
+				while ( contentWindow.find(text, caseSensitive, backwards, false, wholeWord, false, false) )
+				{
+					var selection = contentWindow.getSelection();
+	        		var selectionRange = selection.getRangeAt(0).cloneRange();
+					if (selectionRange.startOffset > 0 )
+						selectionRange.setStart(selectionRange.startContainer, selectionRange.startOffset -1);
+					if (selectionRange.endOffset < selectionRange.endContainer.length )
+					{
+						selectionRange.setEnd(selectionRange.endContainer, selectionRange.endOffset+1);
+					}
+					var newText = selectionRange.toString();
+					var	regex = new RegExp("\\b"+text+"\\b");
+	
+					if ( newText.match(regex))
+					{				 	
+					   setStatus(STATUS_EXEC_CMD, 1);
+					   break;
+					}
+				 } 
+			} else if ( contentWindow.find(text, caseSensitive, backwards, false, wholeWord, false, false) ) {
+			       setStatus(STATUS_EXEC_CMD, 1);
 			}
 		}
 	}
@@ -1237,7 +1259,9 @@ function selectAll() {
 	if (internalUpdateSelection()) {
 		if (editorDoc.execCommand('selectall', false, null)) {
 		   if ( !document.all )
+		   {
 		      updateSelection();
+		   }
 			setStatus(STATUS_EXEC_CMD, 1);
 		}
 	}
