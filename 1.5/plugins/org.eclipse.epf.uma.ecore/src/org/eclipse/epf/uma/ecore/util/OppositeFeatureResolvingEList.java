@@ -17,7 +17,6 @@ import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.notify.impl.NotifyingListImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 
 /**
  * A list for resolving multi-valued opposite features.
@@ -25,11 +24,11 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
  * @author Phong Nguyen Le
  * @since 1.0
  */
-public class OppositeFeatureResolvingEList extends NotifyingListImpl {
+public class OppositeFeatureResolvingEList extends NotifyingListImpl<EObject> {
 
 	private static final long serialVersionUID = 3690198763000051768L;
 
-	private MultiResourceEObject owner;
+	private InternalEObject owner;
 
 	private OppositeFeature oppositeFeature;
 
@@ -41,10 +40,10 @@ public class OppositeFeatureResolvingEList extends NotifyingListImpl {
 	 * @param oppositeFeature
 	 *            an opposite feature
 	 */
-	public OppositeFeatureResolvingEList(MultiResourceEObject owner,
+	public OppositeFeatureResolvingEList(EObject owner,
 			OppositeFeature oppositeFeature) {
 		super();
-		this.owner = owner;
+		this.owner = (InternalEObject) owner;
 		this.oppositeFeature = oppositeFeature;
 	}
 
@@ -70,7 +69,7 @@ public class OppositeFeatureResolvingEList extends NotifyingListImpl {
 		return owner.eNotificationRequired();
 	}
 
-	protected Object resolve(int index, Object object) {
+	protected EObject resolve(int index, EObject object) {
 		if (!(object instanceof EObject))
 			return object;
 		EObject eObject = (EObject) object;
@@ -79,7 +78,7 @@ public class OppositeFeatureResolvingEList extends NotifyingListImpl {
 			Object oldObject = data[index];
 			assign(index, validate(index, resolved));
 
-			didSet(index, resolved, oldObject);
+			didSet(index, resolved, (EObject) oldObject);
 
 			// if (isNotificationRequired())
 			// {
@@ -95,8 +94,8 @@ public class OppositeFeatureResolvingEList extends NotifyingListImpl {
 	}
 
 	private void removeDanglingObjects() {
-		for (Iterator iter = iterator(); iter.hasNext();) {
-			EObject obj = (EObject) iter.next();
+		for (Iterator<EObject> iter = iterator(); iter.hasNext();) {
+			EObject obj = iter.next();
 			if (obj.eResource() == null) {
 				iter.remove();
 			}
@@ -108,7 +107,7 @@ public class OppositeFeatureResolvingEList extends NotifyingListImpl {
 	 * 
 	 * @return an unmodifiable list
 	 */
-	public List getUnmodifiableList() {
+	public List<?> getUnmodifiableList() {
 		removeDanglingObjects();
 		return new UnmodifiableEList(size, data);
 	}
