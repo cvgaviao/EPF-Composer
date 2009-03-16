@@ -24,11 +24,13 @@
 					<ul>
 						<xsl:for-each select="$checklists/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Checklist'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -72,11 +74,13 @@
 					<ul>
 						<xsl:for-each select="$estimationConsiderations/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='EstimationConsiderations'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -95,11 +99,13 @@
 					<ul>
 						<xsl:for-each select="$examples/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Example'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -118,11 +124,13 @@
 					<ul>
 						<xsl:for-each select="$guidelines/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Guideline'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -141,11 +149,13 @@
 					<ul>
 						<xsl:for-each select="$reports/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Report'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -164,11 +174,13 @@
 					<ul>
 						<xsl:for-each select="$reusableAssets/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='ReusableAsset'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -187,11 +199,13 @@
 					<ul>
 						<xsl:for-each select="$supportingMaterials/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='SupportingMaterial'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -210,11 +224,13 @@
 					<ul>
 						<xsl:for-each select="$techniques/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Technique'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -233,11 +249,13 @@
 					<ul>
 						<xsl:for-each select="$templates/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='Template'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
@@ -281,11 +299,13 @@
 					<ul>
 						<xsl:for-each select="$toolMentors/../*">
 						<xsl:sort select="@DisplayName"/>
-							<li>
-								<xsl:call-template name="addElementWithLink">
-									<xsl:with-param name="element" select="."/>
-								</xsl:call-template>
-							</li>
+							<xsl:if test="@Type='ToolMentor'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
 						</xsl:for-each>
 					</ul>
 				</td>
