@@ -93,7 +93,7 @@ public class OppositeFeatureResolvingEList extends NotifyingListImpl<EObject> {
 
 	}
 
-	private void removeDanglingObjects() {
+	protected void removeDanglingObjects() {
 		for (Iterator<EObject> iter = iterator(); iter.hasNext();) {
 			EObject obj = iter.next();
 			if (obj.eResource() == null) {

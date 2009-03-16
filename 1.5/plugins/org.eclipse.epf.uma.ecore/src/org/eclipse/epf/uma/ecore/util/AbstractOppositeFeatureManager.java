@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.notify.Adapter;
@@ -26,9 +28,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * 
@@ -37,6 +41,45 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  */
 public abstract class AbstractOppositeFeatureManager {
+	protected Map<Class<?>, Set<OppositeFeature>> classOppositeFeaturesMap = new HashMap<Class<?>, Set<OppositeFeature>>();
+
+	/**
+	 * Maps EStructuralFeature objects to OppositeFeature objects.
+	 */
+	protected Map<EStructuralFeature, OppositeFeature> featureOppositeFeatureMap = new HashMap<EStructuralFeature, OppositeFeature>();
+
+	/**
+	 * Gets the opposite feature for the given feature.
+	 * 
+	 * @param feature
+	 *            an EMF <code>EStructuralFeature</code> feature
+	 * @return an opposite feature that is based on the given feature
+	 */
+	public OppositeFeature getOppositeFeature(
+			EStructuralFeature feature) {
+		return (OppositeFeature) featureOppositeFeatureMap.get(feature);
+	}
+
+	/**
+	 * Registers the given opposite feature.
+	 * 
+	 * @param oppositeFeature
+	 *            the opposite feature to register
+	 */
+	public void registerOppositeFeature(
+			OppositeFeature oppositeFeature) {
+		Class<?> cls = oppositeFeature.getOwnerClass();
+		Set<OppositeFeature> features = classOppositeFeaturesMap.get(cls);
+		if (features == null) {
+			features = new HashSet<OppositeFeature>();
+			classOppositeFeaturesMap.put(cls, features);
+		}
+		features.add(oppositeFeature);
+
+		featureOppositeFeatureMap.put(oppositeFeature.getTargetFeature(),
+				oppositeFeature);
+	}
+	
 	private ArrayList<OppositeFeature> predefinedOppositeFeatures;
 
 	protected AbstractOppositeFeatureManager() {
@@ -66,7 +109,7 @@ public abstract class AbstractOppositeFeatureManager {
 		}
 
 		for (OppositeFeature feature : predefinedOppositeFeatures) {
-			OppositeFeature.registerOppositeFeature(feature);
+			registerOppositeFeature(feature);
 		}
 	}
 
@@ -110,8 +153,13 @@ public abstract class AbstractOppositeFeatureManager {
 	public void manage(EObject eObject) {
 		OppositeFeatureAdapter adapter = getOppositeFeatureAdapter(eObject);
 		if(adapter == null) {
-			eObject.eAdapters().add(createOppositeFeatureAdapter(eObject));
+			adapter = createOppositeFeatureAdapter();
+			eObject.eAdapters().add(adapter);
 		}
+	}
+	
+	protected OppositeFeatureAdapter createOppositeFeatureAdapter() {
+		return new OppositeFeatureAdapter(); 
 	}
 	
 	public void release(EObject eObject) {
@@ -130,16 +178,49 @@ public abstract class AbstractOppositeFeatureManager {
 		return null;
 	}
 	
-	private OppositeFeatureAdapter createOppositeFeatureAdapter(EObject eObject) {
-		OppositeFeatureAdapter adapter = getOppositeFeatureAdapter(eObject);
-		if(adapter == null) {
-			adapter = new OppositeFeatureAdapter();
-			eObject.eAdapters().add(adapter);
+	/**
+	 * Removes all opposite features registered with the system.
+	 */
+	public void removeFromAllOppositeFeatures(EObject eObject) {
+		// find all features that have opposite features and clear those
+		// features. This will remove the references to
+		// unloaded object by those opposite features
+		//
+		for (Iterator iter = eObject.eClass().getEAllReferences().iterator(); iter
+				.hasNext();) {
+			EReference ref = (EReference) iter.next();
+			OppositeFeature oppositeFeature = OppositeFeature.getOppositeFeature(ref);
+			if(oppositeFeature != null) {
+				if(ref.isMany()) {
+					List list = (List) eObject.eGet(ref, false);					
+					if(!list.isEmpty()) {
+						if(!oppositeFeature.resolveOwner()) {
+							list.clear();
+						}
+						else if(list instanceof InternalEList) {
+							List basicList = ((InternalEList)list).basicList();
+							for(int i = basicList.size() - 1; i > -1; i--) {
+								EObject e = (EObject) basicList.get(i);
+								if(!e.eIsProxy()) {
+									list.remove(e);
+								}
+							}
+						}
+					}
+				}
+				else {
+					EObject e = (EObject) eObject.eGet(ref, false);
+					if(e != null && !e.eIsProxy()) {
+						eObject.eSet(ref, null);
+					}
+				}
+			}
 		}
-		return adapter;
+
 	}
 
-	private class OppositeFeatureAdapter extends AdapterImpl {
+	
+	protected class OppositeFeatureAdapter extends AdapterImpl {
 		private static final boolean DEBUG = false;
 		
 		/**
@@ -150,7 +231,7 @@ public abstract class AbstractOppositeFeatureManager {
 		private boolean hasOppositeFeature = true;
 
 		
-		private OppositeFeatureAdapter() {
+		protected OppositeFeatureAdapter() {
 		}
 		
 		@Override
@@ -162,8 +243,7 @@ public abstract class AbstractOppositeFeatureManager {
 			Object f = msg.getFeature();
 			if (f instanceof EStructuralFeature) {
 				EStructuralFeature feature = (EStructuralFeature) f;
-				OppositeFeature oppositeFeature = OppositeFeature
-						.getOppositeFeature(feature);
+				OppositeFeature oppositeFeature = getOppositeFeature(feature);
 				if (oppositeFeature != null) {
 					EObject oldOtherEnd;
 					EObject otherEnd;
@@ -342,9 +422,6 @@ public abstract class AbstractOppositeFeatureManager {
 		/**
 		 * Resolves the given proxy object.
 		 * 
-		 * It does nothing right now, just returns the original object. Subclass to
-		 * override.
-		 * 
 		 * @param object
 		 *            a proxy object to resolve
 		 * @return the resolved object
@@ -367,14 +444,11 @@ public abstract class AbstractOppositeFeatureManager {
 		
 		private Map<OppositeFeature, Object> createOppositeFeatureMap() {
 			Map<OppositeFeature, Object> map = new HashMap<OppositeFeature, Object>();
-			for (Iterator<?> iter = OppositeFeature.classOppositeFeaturesMap
-					.entrySet().iterator(); iter.hasNext();) {
-				Map.Entry entry = (Map.Entry) iter.next();
-				Class cls = (Class) entry.getKey();
-				if (cls.isInstance(this)) {
-					for (Iterator iterator = ((Collection) entry.getValue())
-							.iterator(); iterator.hasNext();) {
-						map.put((OppositeFeature) iterator.next(), null);
+			for (Map.Entry<Class<?>, Set<OppositeFeature>> entry : classOppositeFeaturesMap.entrySet()) {
+				Class<?> cls = entry.getKey();
+				if (cls.isInstance(getTarget())) {
+					for (OppositeFeature oppositeFeature : entry.getValue()) {
+						map.put(oppositeFeature, null);
 					}
 				}
 			}
@@ -399,11 +473,15 @@ public abstract class AbstractOppositeFeatureManager {
 			}
 			return oppositeFeatureMap;
 		}
+		
+		protected List<?> createOppositeFeatureValueList(EObject eObject, OppositeFeature oppositeFeature) {
+			return new OppositeFeatureResolvingEList(eObject, oppositeFeature);
+		}
 
 		protected void oppositeAdd(OppositeFeature oppositeFeature, Object object) {
 			List list = (List) getOppositeFeatureMap().get(oppositeFeature);
 			if (list == null) {
-				list = new OppositeFeatureResolvingEList((EObject) getTarget(), oppositeFeature);
+				list = createOppositeFeatureValueList((EObject) getTarget(), oppositeFeature);
 				getOppositeFeatureMap().put(oppositeFeature, list);
 			}
 			if (!list.contains(object)) {
@@ -414,7 +492,7 @@ public abstract class AbstractOppositeFeatureManager {
 		protected void oppositeRemove(OppositeFeature oppositeFeature, Object object) {
 			List list = (List) getOppositeFeatureMap().get(oppositeFeature);
 			if (list == null) {
-				list = new OppositeFeatureResolvingEList((EObject) getTarget(), oppositeFeature);
+				list = createOppositeFeatureValueList((EObject) getTarget(), oppositeFeature);
 				getOppositeFeatureMap().put(oppositeFeature, list);
 			}
 			list.remove(object);
