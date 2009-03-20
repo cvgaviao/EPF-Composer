@@ -942,8 +942,8 @@ function findText(text, dir, options) {
 			{
 				while ( contentWindow.find(text, caseSensitive, backwards, false, wholeWord, false, false) )
 				{
-					var selection = contentWindow.getSelection();
-	        		var selectionRange = selection.getRangeAt(0).cloneRange();
+	        		var ffSelection = contentWindow.getSelection();
+	        		selectionRange = ffSelection.getRangeAt(0).cloneRange();
 					if (selectionRange.startOffset > 0 )
 						selectionRange.setStart(selectionRange.startContainer, selectionRange.startOffset -1);
 					if (selectionRange.endOffset < selectionRange.endContainer.length )
