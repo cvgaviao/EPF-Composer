@@ -33,6 +33,7 @@ import org.eclipse.epf.library.layout.util.XmlHelper;
 import org.eclipse.epf.library.prefs.PreferenceUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
+import org.eclipse.epf.publish.layout.LayoutPlugin;
 import org.eclipse.epf.uma.MethodElement;
 
 import com.ibm.icu.util.Calendar;
@@ -66,7 +67,7 @@ public class HtmlBuilder {
 	//private IContentValidator validator = null;
 
 	// override this path to specify xsl path
-	private String layoutXslRootPath = LibraryPlugin.getDefault().getLayoutXslPath();
+	private String layoutXslRootPath = LayoutPlugin.getDefault().getLayoutXslPath();
 	
 	/**
 	 * Creates a new instance.
@@ -119,9 +120,9 @@ public class HtmlBuilder {
 	}
 
 	public void loadDefaultLayoutXsl() {
-		layoutXslRootPath = LibraryPlugin.getDefault().getLayoutXslPath();
+		layoutXslRootPath = LayoutPlugin.getDefault().getLayoutXslPath();
 		try {
-			xslParams = LibraryPlugin.getDefault().getProperties(
+			xslParams = LayoutPlugin.getDefault().getProperties(
 					"/layout/xsl/resources.properties"); //$NON-NLS-1$
 			
 			// add the colon property, 

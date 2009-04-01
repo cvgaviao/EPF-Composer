@@ -24,7 +24,6 @@ import java.util.regex.Matcher;
 
 import org.eclipse.epf.common.xml.XSLTProcessor;
 import org.eclipse.epf.library.ILibraryManager;
-import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.layout.util.XmlElement;
@@ -32,7 +31,7 @@ import org.eclipse.epf.library.layout.util.XmlHelper;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
-import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.publish.layout.LayoutPlugin;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -440,7 +439,7 @@ public class LinkInfo {
 
 			OutputStreamWriter output = new OutputStreamWriter(
 					new FileOutputStream(outputFile), "utf-8"); //$NON-NLS-1$
-			Properties xslParams = LibraryPlugin.getDefault().getProperties(
+			Properties xslParams = LayoutPlugin.getDefault().getProperties(
 					"/layout/xsl/resources.properties"); //$NON-NLS-1$
 
 			XSLTProcessor.transform(xsl_uri, xml.toString(), xslParams, output);

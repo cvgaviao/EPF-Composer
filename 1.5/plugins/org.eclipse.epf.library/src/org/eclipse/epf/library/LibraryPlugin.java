@@ -26,19 +26,8 @@ import org.osgi.framework.BundleContext;
  */
 public class LibraryPlugin extends AbstractActivator {
 
-	private static final String LAYOUT_PATH = "layout/"; //$NON-NLS-1$;
-
-	public static final String LAYOUT_XSL_PATH = "layout/xsl/"; //$NON-NLS-1$;
-	private static final String LAYOUT_CSS_PATH = "layout/css/"; //$NON-NLS-1$;
-
-	public static final String LAYOUT_SCRIPTS_FOLDER = "scripts"; //$NON-NLS-1$;
-
-	public static final String LAYOUT_SCRIPTS_PATH = "layout/scripts/"; //$NON-NLS-1$;
-
 	// The shared plug-in instance.
 	private static LibraryPlugin plugin;
-
-	private String layoutPath, layoutXslPath, layoutCssPath;
 
 	/**
 	 * Creates a new instance.
@@ -53,19 +42,6 @@ public class LibraryPlugin extends AbstractActivator {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		try {
-			URL url = new URL(super.getInstallURL(), LAYOUT_PATH);
-			layoutPath = FileLocator.resolve(url).getPath();
-
-			url = new URL(super.getInstallURL(), LAYOUT_XSL_PATH);
-			layoutXslPath = FileLocator.resolve(url).getPath();
-
-			url = new URL(super.getInstallURL(), LAYOUT_CSS_PATH);
-			layoutCssPath = FileLocator.resolve(url).getPath();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		LibraryService.getInstance().getLibraryProblemMonitor();
 	}
@@ -85,17 +61,5 @@ public class LibraryPlugin extends AbstractActivator {
 	 */
 	public static LibraryPlugin getDefault() {
 		return plugin;
-	}
-
-	public String getLayoutPath() {
-		return layoutPath;
-	}
-
-	public String getLayoutXslPath() {
-		return layoutXslPath;
-	}
-
-	public String getLayoutCssPath() {
-		return layoutCssPath;
 	}
 }

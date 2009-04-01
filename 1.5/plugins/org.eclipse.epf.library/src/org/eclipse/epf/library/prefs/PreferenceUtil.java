@@ -20,6 +20,7 @@ import java.util.Properties;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
+import org.eclipse.epf.publish.layout.LayoutPlugin;
 
 import com.ibm.icu.util.StringTokenizer;
 
@@ -42,7 +43,7 @@ public class PreferenceUtil {
 	private static final String ID_STEPS = "steps"; //$NON-NLS-1$
 	static {
 		try {
-			Properties params = LibraryPlugin.getDefault().getProperties(
+			Properties params = LayoutPlugin.getDefault().getProperties(
 					"/layout/xsl/resources.properties"); //$NON-NLS-1$
 			
 			setXslProperties(params);

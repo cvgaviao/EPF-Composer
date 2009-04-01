@@ -197,6 +197,12 @@
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.epf.publish.layout"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+         
+   <plugin
          id="org.eclipse.epf.publishing"
          download-size="0"
          install-size="0"

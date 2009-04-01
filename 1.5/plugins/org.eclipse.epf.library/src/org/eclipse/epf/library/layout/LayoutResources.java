@@ -20,6 +20,7 @@ import org.apache.tools.ant.taskdefs.Expand;
 import org.apache.tools.ant.types.FileSet;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.publish.layout.LayoutPlugin;
 
 import com.ibm.icu.util.Calendar;
 
@@ -109,7 +110,7 @@ public class LayoutResources {
 
 		if (url != null) {
 			// resolve the file
-			return LibraryPlugin.getDefault().getLayoutXslPath() + url;
+			return LayoutPlugin.getDefault().getLayoutXslPath() + url;
 		}
 
 		return ""; //$NON-NLS-1$
@@ -243,13 +244,13 @@ public class LayoutResources {
 	 */
 	public static void copyLayoutFiles(String toDir) {
 		// copy the layout files to the temp folder
-		String sourceDir = LibraryPlugin.getDefault().getLayoutPath();
+		String sourceDir = LayoutPlugin.getDefault().getLayoutPath();
 		copyDir(sourceDir, toDir);
 
 		try {
 			LibraryPlugin.getDefault().copyLocalizedFiles(
-					LibraryPlugin.LAYOUT_SCRIPTS_PATH,
-					new File(toDir, LibraryPlugin.LAYOUT_SCRIPTS_FOLDER), true,
+					LayoutPlugin.LAYOUT_SCRIPTS_PATH,
+					new File(toDir, LayoutPlugin.LAYOUT_SCRIPTS_FOLDER), true,
 					false);
 
 		} catch (Exception ex) {

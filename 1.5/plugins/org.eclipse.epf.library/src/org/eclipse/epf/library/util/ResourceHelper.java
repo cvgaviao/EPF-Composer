@@ -22,14 +22,12 @@ import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.epf.common.utils.FileUtil;
-import org.eclipse.epf.common.utils.I18nUtil;
 import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.common.utils.XMLUtil;
@@ -50,6 +48,7 @@ import org.eclipse.epf.library.layout.elements.ActivityLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.layout.util.XmlHelper;
 import org.eclipse.epf.persistence.MethodLibraryPersister;
+import org.eclipse.epf.publish.layout.LayoutPlugin;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -1509,7 +1508,7 @@ public class ResourceHelper {
 		
 		// if the file is not in the library, check the plugin layout folder
 		if (!source.exists()) {
-			source = new File(LibraryPlugin.getDefault().getLayoutPath(),
+			source = new File(LayoutPlugin.getDefault().getLayoutPath(),
 					filePath);
 		}
 
@@ -1789,7 +1788,7 @@ public class ResourceHelper {
 
 			OutputStreamWriter output = new OutputStreamWriter(
 					new FileOutputStream(outputFile), "utf-8"); //$NON-NLS-1$
-			Properties xslParams = LibraryPlugin.getDefault().getProperties(
+			Properties xslParams = LayoutPlugin.getDefault().getProperties(
 					"/layout/xsl/resources.properties"); //$NON-NLS-1$
 
 			XSLTProcessor
