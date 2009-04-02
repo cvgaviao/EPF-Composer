@@ -77,6 +77,10 @@ public class UniquenessValidator implements IValidator {
 		newText = newText.trim();
 		if (StrUtil.isBlank(newText)) {
 			// return I18nUtil.formatString(RESOURCE_BUNDLE, key, data);
+			if (object instanceof EObject && featureName.equals("name")) {		//$NON-NLS-1$				
+				return NLS.bind(LibraryEditResources.emptyElementNameError_msg,
+						TngUtil.getTypeText((EObject) object));
+			}			
 			return NLS.bind(LibraryEditResources.emptyElementNameError_msg,
 					featureName);
 		}
