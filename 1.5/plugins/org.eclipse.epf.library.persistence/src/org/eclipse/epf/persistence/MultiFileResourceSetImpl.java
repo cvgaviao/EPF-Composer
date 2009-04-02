@@ -2611,4 +2611,9 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			}
 		}
 	}
+	
+	public boolean hasOwnFolder(Object e) {
+		return MultiFileSaveUtil.hasOwnFolder(e);
+	}	
+	
 }

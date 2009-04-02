@@ -446,7 +446,7 @@ public class MethodLibraryPersister implements IFileBasedLibraryPersister {
 		}
 
 		String path;
-		if (MultiFileSaveUtil.hasOwnFolder(e)) {
+		if (resourceSet.hasOwnFolder(e)) {
 			// path is the directory of the MethodPlugin/ProcessComponent
 			//
 			path = new File(resource.getFinalURI().toFileString()).getParent();
