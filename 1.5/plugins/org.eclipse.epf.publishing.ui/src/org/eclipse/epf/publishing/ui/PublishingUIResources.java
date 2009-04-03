@@ -176,6 +176,8 @@ public final class PublishingUIResources extends NLS {
 	public static String viewReportError_title;
 
 	public static String missingViewError_msg;
+	
+	public static String missingProcessError_msg;
 
 	public static String cannotPublishError_msg;
 
