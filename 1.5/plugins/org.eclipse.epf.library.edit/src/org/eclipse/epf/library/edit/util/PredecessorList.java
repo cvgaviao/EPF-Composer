@@ -368,7 +368,10 @@ public class PredecessorList extends ArrayList<Object> {
 								}
 								else {
 									topObject = adapterFactory.adapt(topObject, ITreeItemContentProvider.class);
-									wbe = (WorkBreakdownElement) TngUtil.unwrap(topObject);
+									if (topObject instanceof ITreeItemContentProvider) {
+										topObject = ((ITreeItemContentProvider)topObject).getParent(topObject);
+									}
+									wbe = (WorkBreakdownElement) TngUtil.unwrap(topObject);	
 								}
 							}
 							strBuff.insert(0, ":/").insert(0, Suppression.WBS); //$NON-NLS-1$
