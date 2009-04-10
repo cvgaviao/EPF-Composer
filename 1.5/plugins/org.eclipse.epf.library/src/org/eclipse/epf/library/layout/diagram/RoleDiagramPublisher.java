@@ -42,6 +42,7 @@ import org.eclipse.epf.library.diagram.providers.DiagramIconProviderManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.elements.RoleLayout;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
+import org.eclipse.epf.publish.layout.LayoutPlugin;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
@@ -133,7 +134,7 @@ public class RoleDiagramPublisher {
 		maxTextLines = LibraryPreferences.getRoleDiagramMaximumTextLines();
 		
 		try {
-			xslParams = LibraryPlugin.getDefault().getProperties(
+			xslParams = LayoutPlugin.getDefault().getProperties(
 					"/layout/xsl/resources.properties"); //$NON-NLS-1$
 		} catch (IOException e) {
 
