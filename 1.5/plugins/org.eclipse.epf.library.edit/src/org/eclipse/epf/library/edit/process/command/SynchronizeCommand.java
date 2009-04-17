@@ -183,7 +183,9 @@ public class SynchronizeCommand extends CompoundCommand implements
 										task = (Task) replacerToBaseMap.get(task);
 									}
 									append(new WBSDropCommand(act, Collections
-											.singletonList(task), config, synchFeatures));
+											.singletonList(task), 
+											Collections
+											.singletonList((TaskDescriptor)object), config, synchFeatures));
 								}
 							} else if (object instanceof RoleDescriptor) {
 								Role role = ((RoleDescriptor) object).getRole();
@@ -247,6 +249,8 @@ public class SynchronizeCommand extends CompoundCommand implements
 	 */
 	private void appendCommands(Activity activity) {
 		List<Task> tasks = new ArrayList<Task>();
+		List<TaskDescriptor> tds = new ArrayList<TaskDescriptor>();
+
 		List<Role> roles = new ArrayList<Role>();
 		List<WorkProduct> workProducts = new ArrayList<WorkProduct>();
 		List<Activity> activities = new ArrayList<Activity>();
@@ -265,6 +269,7 @@ public class SynchronizeCommand extends CompoundCommand implements
 									task = (Task) replacerToBaseMap.get(task);
 								}
 								tasks.add(task);
+								tds.add((TaskDescriptor) element);
 							}
 						} else if (element instanceof RoleDescriptor) {
 							Role role = ((RoleDescriptor) element).getRole();
@@ -295,7 +300,7 @@ public class SynchronizeCommand extends CompoundCommand implements
 			}
 		}
 		if (!tasks.isEmpty()) {
-			append(new WBSDropCommand(activity, tasks, config, synchFeatures));
+			append(new WBSDropCommand(activity, tasks, tds, config, synchFeatures));
 		}
 		if (!roles.isEmpty()) {
 			append(new OBSDropCommand(activity, roles, config, synchFeatures, configurator));

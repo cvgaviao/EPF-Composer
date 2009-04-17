@@ -565,6 +565,27 @@ public final class ProcessCommandUtil {
 			Map wpdToDeliverablePartsMap, Map wpdToDeliverableDescriptorMap,
 			Set descriptorsToRefresh, Map descriptorToNewFeatureValuesMap,
 			MethodConfiguration config, boolean useExistingDescriptor, Set synchFeatures) {
+		
+		return createTaskDescriptor(
+				task,
+				null,
+				activity, 
+				roleDescriptors, 
+				wpDescriptors,
+				wpdToDeliverablePartsMap, 
+				wpdToDeliverableDescriptorMap,
+				descriptorsToRefresh, 
+				descriptorToNewFeatureValuesMap,
+				config, 
+				useExistingDescriptor, 
+				synchFeatures);	
+	}
+	
+	public static TaskDescriptor createTaskDescriptor(Task task, TaskDescriptor taskDescriptorTosyn,
+			Activity activity, List roleDescriptors, List wpDescriptors,
+			Map wpdToDeliverablePartsMap, Map wpdToDeliverableDescriptorMap,
+			Set descriptorsToRefresh, Map descriptorToNewFeatureValuesMap,
+			MethodConfiguration config, boolean useExistingDescriptor, Set synchFeatures) {
 		if (TngUtil.isContributor(task)) {
 			task = (Task) TngUtil.getBase(task);
 		}
@@ -573,7 +594,9 @@ public final class ProcessCommandUtil {
 		//
 		TaskDescriptor taskDesc = null;
 		if (useExistingDescriptor) {
-			taskDesc = (TaskDescriptor) getBestDescriptor(task, activity, config);
+			taskDesc = taskDescriptorTosyn == null ? 
+					(TaskDescriptor) getBestDescriptor(task, activity, config) :
+						taskDescriptorTosyn;
 		}
 		boolean isNewTaskDescriptor = false;
 	

@@ -51,6 +51,8 @@ public class WBSDropCommand extends BSDropCommand {
 	private HashMap<RoleDescriptor, TeamProfile> roleDescTeamProfileMap;
 	
 	private IExecutor executor;
+	
+	private List<TaskDescriptor> taskDescriptorsToSyn;
 
 	private class Executor implements IExecutor {
 
@@ -67,7 +69,13 @@ public class WBSDropCommand extends BSDropCommand {
 			
 			for (int i = 0; i < dropElements.size(); i++) {
 				Task task = (Task) dropElements.get(i);
+				TaskDescriptor td = null;
+				if (taskDescriptorsToSyn != null && i < taskDescriptorsToSyn.size()) {
+					td = taskDescriptorsToSyn.get(i);
+				}
+				
 				TaskDescriptor desc = ProcessCommandUtil.createTaskDescriptor(task,
+						td,
 						activity, roleDescList, wpDescList,
 						wpDescToDeliverableParts,
 						wpdToDeliverableDescriptorMap, descriptorsToRefresh,
@@ -272,7 +280,17 @@ public class WBSDropCommand extends BSDropCommand {
 			MethodConfiguration config, Set synchFeatures) {
 		super(activity, dropElements, config, synchFeatures);
 	}
+	
+	public WBSDropCommand(Activity activity, List<Task> sourceTasks,
+			List<TaskDescriptor> tdsToSyn, MethodConfiguration config, Set synchFeatures) {
+		this(activity, sourceTasks, config, synchFeatures);
+		this.taskDescriptorsToSyn = tdsToSyn;
+	}
 
+	protected boolean allowDuplicateDropElements() {
+		return taskDescriptorsToSyn != null && taskDescriptorsToSyn.size() > 1;
+	}
+	
 	public IExecutor getExecutor() {
 		if (executor == null) {
 			executor = new Executor();

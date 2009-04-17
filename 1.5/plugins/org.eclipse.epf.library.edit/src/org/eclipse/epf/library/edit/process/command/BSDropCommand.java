@@ -277,7 +277,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 		for (Object o : dropElements) {
 			Object element = TngUtil.unwrap(o);
 			element = Providers.getConfigurationApplicator().resolve(element, config);
-			if (!elements.contains(element)
+			if ((allowDuplicateDropElements() || !elements.contains(element))
 					&& !(element instanceof EObject && ((EObject) element)
 							.eIsProxy())) {				
 				elements.add(element);
@@ -285,6 +285,10 @@ public abstract class BSDropCommand extends AbstractCommand implements
 			}
 		}
 		dropElements = elements;
+	}
+	
+	protected boolean allowDuplicateDropElements() {
+		return false;
 	}
 	
 //	/**
