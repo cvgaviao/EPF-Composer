@@ -141,7 +141,7 @@ public class Suppression {
 		return null;
 	}
 
-	private Set getSuppressedExternalElementPaths() {
+	public Set getSuppressedExternalElementPaths() {
 		if (suppressedExternalElementPaths == null) {
 			suppressedExternalElementPaths = loadSuppressedElementPaths();
 			if (suppressedExternalElementPaths == null) {
@@ -785,7 +785,7 @@ public class Suppression {
 		doSetSuppressed(selection, false);
 	}
 
-	private static String getViewType(
+	public static String getViewType(
 			BreakdownElementWrapperItemProvider wrapper) {
 		// no need to store separate path for CBS, reuse WBS/TBS/WPBS paths
 		//		

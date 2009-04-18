@@ -3379,4 +3379,19 @@ public final class ProcessUtil {
 		}
 		return null;
 	}
+	
+	/**
+	 * Returns the Process to which a breakdownElement belongs
+	 * @param activity
+	 * @return
+	 */
+	public static Process getProcessForBreakdownElement(BreakdownElement breakdownElement) {
+		if (breakdownElement instanceof Activity) {
+			return getProcess((Activity) breakdownElement);
+		}
+		Activity superAct = breakdownElement.getSuperActivities();		
+		return superAct == null ? null : getProcess(superAct);
+	}
+	
+	
 }

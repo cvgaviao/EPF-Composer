@@ -28,11 +28,13 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.common.utils.Timer;
 import org.eclipse.epf.common.utils.XMLUtil;
+import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.ComposedWPDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.Comparators;
@@ -66,6 +68,8 @@ import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
@@ -836,6 +840,15 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 		boolean isSupressed = setting.sup.isSuppressed(elementItem.rawItem);
 		if ( isSupressed ) {
 			itemDetail.addSuppressed(elementItem.element);
+			
+		} else if (elementItem.rawItem instanceof BreakdownElementWrapperItemProvider &&
+				item instanceof BreakdownElement) {
+			try {
+				isSupressed = isSuppressedDueToContribution((BreakdownElementWrapperItemProvider) elementItem.rawItem, setting.sup.getProcess(), 
+					(BreakdownElement) item);
+			} catch (Exception e) {
+				isSupressed = false;
+			}
 		}
 		
 		XmlElement child = l.getXmlElement(false);
@@ -1006,6 +1019,55 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 		}
 		
 		return child;
+	}
+
+	private boolean isSuppressedDueToContribution(BreakdownElementWrapperItemProvider provider,
+			Process process, BreakdownElement breakdownElement) {
+		
+		Process ownerProcess = ProcessUtil.getProcessForBreakdownElement(breakdownElement);
+		if (ownerProcess == null || ownerProcess == process) {
+			return false;
+		}
+		
+		boolean isSupressed = false;
+		String path = Suppression.getPathWithoutViewType(provider).toString();
+		String viewType = Suppression.getViewType(provider);
+
+		String[] guids = path.substring(1).split("/"); 	//$NON-NLS-1$ /
+		int sz = guids.length;
+		ILibraryManager libMgr = LibraryService.getInstance()
+				.getCurrentLibraryManager();
+
+		for (int i = 1; i < sz - 1; i++) {
+			MethodElement iThElement = libMgr.getMethodElement(guids[i]);
+			if (!(iThElement instanceof Activity)) {
+				break;
+			}
+			Activity act = (Activity) iThElement;
+			Process proc = ProcessUtil.getProcess(act);
+			if (proc == null) {
+				break;
+			}
+
+			VariabilityElement base = proc.getVariabilityBasedOnElement();
+			if (base != null
+					&& proc.getVariabilityType() == VariabilityType.CONTRIBUTES) {
+				String path1 = viewType + "://" + proc.getGuid();	//$NON-NLS-1$ /
+				for (int j = i; j < sz; j++) {
+					path1 += "/" + guids[j];  						//$NON-NLS-1$ /
+				}
+				if (getSuppression(proc).getSuppressedExternalElementPaths()
+						.contains(path1)) {
+					isSupressed = true;
+					break;
+				}
+				if (proc == ownerProcess) {
+					break;
+				}				
+			}
+		}
+
+		return isSupressed;
 	}
 	
 	
