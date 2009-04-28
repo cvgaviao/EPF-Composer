@@ -1115,6 +1115,10 @@ public class UmaLibrary {
 				if (eref.isMany()) {
 					return false;
 				}
+			} else if (rmcObj instanceof ContentCategory) {
+				if (mergeLevel == 2 && eref.isMany()) {
+					return false;
+				}
 			}
 		}
 		
