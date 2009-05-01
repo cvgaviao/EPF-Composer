@@ -299,6 +299,9 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 		EStructuralFeature feature = UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts();						
 		List<WorkProductDescriptor> wpdList = new ArrayList<WorkProductDescriptor>();
 		Activity superAct = wpd.getSuperActivities();
+		if (superAct == null) {
+			return;
+		}
 		for (BreakdownElement be: superAct.getBreakdownElements()) {
 			if (be instanceof WorkProductDescriptor) {
 				WorkProduct wpBe = ((WorkProductDescriptor) be).getWorkProduct();
