@@ -1511,9 +1511,22 @@ public class ResourceHelper {
 			source = new File(LayoutPlugin.getDefault().getLayoutPath(),
 					filePath);
 		}
+		
+		boolean calledFromGuidanceTypeConvert = false;
+		File sourceRootParent = sourceRootPath.getParentFile();
+		if (sourceRootParent.getName().equals("guidances")) {	//$NON-NLS-1$ 
+			File targetRootParent = targetRootPath.getParentFile();
+			if (targetRootParent != null) {
+				targetRootParent = targetRootParent.getParentFile();
+			}
+			if (sourceRootParent.equals(targetRootParent)) {
+				calledFromGuidanceTypeConvert = true;
+				targetRootPath = targetRootPath.getParentFile();				
+			}
+		}
 
 		// if the filePath is relative to the pub root, fix the target path
-		if ( usePubRoot && rootContentPath != null && rootContentPath.length() > 0 ) {
+		if ( !calledFromGuidanceTypeConvert && usePubRoot && rootContentPath != null && rootContentPath.length() > 0 ) {
 			File tmpf =  new File(rootContentPath);
 			while ( tmpf != null ) {
 				tmpf = tmpf.getParentFile();
@@ -1522,6 +1535,18 @@ public class ResourceHelper {
 		}
 		
 		dest = new File(targetRootPath, filePath);
+		
+//			To be re-visited for SCM handling			
+//		if (calledFromGuidanceTypeConvert) {		
+//			IStatus status = Services.getFileManager().checkModify(
+//					new String[] { targetRootPath.getAbsolutePath(),
+//							dest.getAbsolutePath() },
+//					PersistencePlugin.getDefault().getContext());
+//			if (status != null && !status.isOK()) {
+//				Copy file using ws resource API			
+//				return newUrl + url_tail;
+//			}			
+//		}
 
 		if (source.exists()) {
 			FileUtil.copyFile(source, dest);
