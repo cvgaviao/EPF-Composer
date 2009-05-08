@@ -63,6 +63,8 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	private Text preferenceHistorySizeText;
 	
 	private Button enableUIFieldsCheckbox;
+	
+	private Button enableAutoNameGenCheckbox;
 
 	/**
 	 * Creates and returns the SWT control for the customized body of this
@@ -112,11 +114,14 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		
 		// Create the editor group.
 		Group editorGroup = createGridLayoutGroup(composite,
-				AuthoringUIResources.editorGroup_text, 2);
+				AuthoringUIResources.editorGroup_text, 1);
 
 		enableUIFieldsCheckbox = createCheckbox(editorGroup,
 				AuthoringUIResources.enableUIFieldsCheckbox_text);
-
+		
+		enableAutoNameGenCheckbox = createCheckbox(editorGroup,
+				AuthoringUIResources.enableAutoNameGenCheckbox_text);
+		
 		initControls();
 
 		addListeners();
@@ -145,6 +150,9 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		
 		enableUIFieldsCheckbox.setSelection(AuthoringUIPreferences
 				.getEnableUIFields());
+		
+		enableAutoNameGenCheckbox.setSelection(AuthoringUIPreferences
+				.getEnableAutoNameGen());
 	}
 
 	/**
@@ -173,6 +181,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 				}
 			}
 		});
+		
 	}
 
 	/**
@@ -238,6 +247,13 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		AuthoringUIPreferences
 				.setEnableUIFields(enableUIFields);
 		enableUIFieldsCheckbox.setSelection(enableUIFields);
+		
+		boolean enableAutoNameGen = AuthoringUIPreferences
+				.getDefaultEnableAutoNameGen();
+		AuthoringUIPreferences
+			.setEnableAutoNameGen(enableAutoNameGen);
+		enableAutoNameGenCheckbox.setSelection(enableAutoNameGen);
+		
 	}
 
 	/**
@@ -254,6 +270,8 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 			.setEnableLibraryValidation(getEnableLibraryValidation());
 		AuthoringUIPreferences
 				.setEnableUIFields(getEnableUIFields());
+		AuthoringUIPreferences
+				.setEnableAutoNameGen(getEnableAutoNameGen());
 		
 		// update the settings for browsing
 		LibraryUIPlugin.getDefault().updateLayoutSettings();
@@ -306,6 +324,14 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		return enableUIFieldsCheckbox.getSelection();
 	}
 
+	/**
+	 * Gets auto name gen flag
+	 * @return
+	 */
+	protected boolean getEnableAutoNameGen() {
+		return enableAutoNameGenCheckbox.getSelection();
+	}
+	
 	/**
 	 * Opens the directory dialog.
 	 */

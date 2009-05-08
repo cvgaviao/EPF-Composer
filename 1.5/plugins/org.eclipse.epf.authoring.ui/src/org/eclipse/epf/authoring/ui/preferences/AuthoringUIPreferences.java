@@ -24,6 +24,8 @@ public class AuthoringUIPreferences {
 	public static final String ENABLE_LIBRARY_VALIDATION = "enabledLibraryValidation"; //$NON-NLS-1$
 	
 	public static final String ENABLE_UI_FIELDS = "enableUIFields"; //$NON-NLS-1$
+	
+	public static final String ENABLE_AUTO_NAME_GEN = "autoNameGen"; //$NON-NLS-1$
 
 	public static final String ADD_TASKS_PER_ROW = "ACTIVITY_DETAIL_DIAGRAM_TASKS_PER_ROW"; //$NON-NLS-1$
 	
@@ -32,6 +34,8 @@ public class AuthoringUIPreferences {
 	private static final boolean DEFAULT_ENABLE_LIBRARY_VALIDATION = false;
 	
 	private static final boolean DEFAULT_ENABLE_UI_FIELDS = false;
+	
+	private static final boolean DEFAULT_ENABLE_AUTO_NAME_GEN = false;
 
 	// The plug-in specific preference store.
 	private static IPreferenceStore prefStore = AuthoringUIPlugin.getDefault()
@@ -43,6 +47,9 @@ public class AuthoringUIPreferences {
 		
 		prefStore.setDefault(ENABLE_UI_FIELDS,
 				DEFAULT_ENABLE_UI_FIELDS);
+		
+		prefStore.setDefault(ENABLE_AUTO_NAME_GEN,
+				DEFAULT_ENABLE_AUTO_NAME_GEN);
 		
 		prefStore.setDefault(ADD_TASKS_PER_ROW, DEFAULT_ADD_TASKS_PER_ROW);
 		
@@ -88,6 +95,27 @@ public class AuthoringUIPreferences {
 	 */
 	public static void setEnableUIFields(boolean value) {
 		prefStore.setValue(ENABLE_UI_FIELDS, value);
+	}
+	
+	/**
+	 * Gets the default enable auto name gen fields preference 
+	 */
+	public static boolean getDefaultEnableAutoNameGen() {
+		return DEFAULT_ENABLE_AUTO_NAME_GEN;
+	}
+	
+	/**
+	 * Gets the enable enable auto name gen preference 
+	 */
+	public static boolean getEnableAutoNameGen() {
+		return prefStore.getBoolean(ENABLE_AUTO_NAME_GEN);
+	}
+
+	/**
+	 * Sets the enable enable auto name gen preference 
+	 */
+	public static void setEnableAutoNameGen(boolean value) {
+		prefStore.setValue(ENABLE_AUTO_NAME_GEN, value);
 	}
 	
 	/**

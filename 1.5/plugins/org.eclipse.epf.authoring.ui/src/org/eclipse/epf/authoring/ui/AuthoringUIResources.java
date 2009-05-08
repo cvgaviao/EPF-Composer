@@ -623,6 +623,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String editorGroup_text;
 	
 	public static String enableUIFieldsCheckbox_text;
+		
+	public static String enableAutoNameGenCheckbox_text;
 	
 	public static String enableUIFieldsChange_message;
 	
