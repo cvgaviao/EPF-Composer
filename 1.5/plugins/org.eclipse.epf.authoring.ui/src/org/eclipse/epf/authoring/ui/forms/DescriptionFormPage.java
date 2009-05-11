@@ -96,6 +96,7 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -308,6 +309,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	private List<ISectionProvider> sectionProviders;
 	
+	private boolean nameFieldTouched = false;
+	
 	protected ILabelProvider labelProviderVariability = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
@@ -357,6 +360,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		public void focusGained(FocusEvent e) {
 			((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
 					UmaPackage.eINSTANCE.getNamedElement_Name());
+			setNameFieldTouched(true);
 		}
 
 		public void focusLost(FocusEvent e) {
@@ -365,6 +369,15 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			if (((MethodElementEditor) getEditor()).mustRestoreValue(
 					e.widget, methodElement.getName())) {
 				return;
+			}
+			if (AuthoringUIPreferences.getEnableAutoNameGen() && name.length() == 0) {
+				name = generateName(ctrl_presentation_name.getText());
+				if (name.length() >= 0) {
+					ctrl_name.setText(name);
+					changeElementName();
+					setNameFieldTouched(false);
+					return;
+				}				
 			}
 			if (name.equals(methodElement.getName()))
 				return;
@@ -397,30 +410,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				name = StrUtil.makeValidFileName(ctrl_name.getText());
 				ctrl_name.setText(name); //183084
 				if (!name.equals(methodElement.getName())) {						
-					boolean success = actionMgr.doAction(
-							IActionManager.SET, methodElement,
-							UmaPackage.eINSTANCE.getNamedElement_Name(),
-							name, -1);
-					if (!success) {
+					if (!changeElementName(name)) {
 						return;
 					}
-					if(methodElement instanceof MethodConfiguration) {
-						Resource resource = methodElement.eResource();
-						if(resource != null) {
-							((MethodElementEditor) getEditor()).addResourceToAdjustLocation(resource);
-						}
-					}
-					if (ContentDescriptionFactory
-							.hasPresentation(methodElement)) {
-						Resource contentResource = contentElement
-								.getPresentation().eResource();
-						if (contentResource != null) {
-							((MethodElementEditor) getEditor())
-									.addResourceToAdjustLocation(contentResource);
-						}
-					}
-					setFormTextWithVariableInfo();
-					ctrl_name.setText(name);
 				}
 			} else {
 				//Fix missing "&" in error dialog
@@ -444,6 +436,35 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 	};
 
+	private boolean changeElementName(String name) {
+		boolean success = actionMgr.doAction(
+				IActionManager.SET, methodElement,
+				UmaPackage.eINSTANCE.getNamedElement_Name(),
+				name, -1);
+		if (!success) {
+			return false;
+		}
+		if(methodElement instanceof MethodConfiguration) {
+			Resource resource = methodElement.eResource();
+			if(resource != null) {
+				((MethodElementEditor) getEditor()).addResourceToAdjustLocation(resource);
+			}
+		}
+		if (ContentDescriptionFactory
+				.hasPresentation(methodElement)) {
+			Resource contentResource = contentElement
+					.getPresentation().eResource();
+			if (contentResource != null) {
+				((MethodElementEditor) getEditor())
+						.addResourceToAdjustLocation(contentResource);
+			}
+		}
+		setFormTextWithVariableInfo();
+		ctrl_name.setText(name);
+		
+		return true;
+	}
+	
 	// Editing and display flags.
 	protected boolean descExpandFlag = false;
 
@@ -1097,9 +1118,16 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				public void run() {
 					if(ctrl_name.isDisposed()) return;
 					
-					ctrl_name.setFocus();
-					if (methodUnit != null && methodUnit.getChangeDate() == null)
-						ctrl_name.setSelection(0, ctrl_name.getText().length());
+					if (AuthoringUIPreferences.getEnableAutoNameGen()) {
+						ctrl_presentation_name.setFocus();
+						if (methodUnit != null && methodUnit.getChangeDate() == null)
+							ctrl_presentation_name.setSelection(0, ctrl_presentation_name.getText().length());
+					} else {
+						ctrl_name.setFocus();
+						if (methodUnit != null && methodUnit.getChangeDate() == null)
+							ctrl_name.setSelection(0, ctrl_name.getText().length());
+					}
+					
 				}
 			});
 		}
@@ -1505,6 +1533,17 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		ctrl_name.addFocusListener(nameFocusListener);
 
 		ctrl_presentation_name.addModifyListener(modelModifyListener);
+		ctrl_presentation_name.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				if (isAutoGenName()) {
+					String name = generateName(ctrl_presentation_name.getText());
+					if (name.length() > 0) {
+						ctrl_name.setText(name);
+					}
+				}
+			}
+		});
+		
 		ctrl_presentation_name.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent e) {
 				String oldContent = methodElement.getPresentationName();
@@ -1527,7 +1566,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				// clear the selection when the focus of the component is lost 
 				if(ctrl_presentation_name.getSelectionCount() > 0){
 					ctrl_presentation_name.clearSelection();
-				}    
+				} 
+				if (isAutoGenName()) {
+					changeElementName();
+				}
 			}
 			
 			/* (non-Javadoc)
@@ -3238,4 +3280,65 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 		return null;
 	}
+
+	private String generateName(String presentationName) {
+		StringBuffer buf = new StringBuffer();
+		for (int i = 0; i < presentationName.length(); i++) {
+			char c = presentationName.charAt(i);
+			if (c >= 'A' && c <= 'Z') {
+				c -= 'A';
+				c += 'a'; 
+			} else if (c == ' ') {
+				c = '_';
+			}
+			
+			boolean toAdd = (c >= '0' && c <= '9') ||
+							(c >= 'a' && c <= 'z') ||
+							(c == '-' || c == '_' || c== '.');
+			if (toAdd) {
+				buf.append(c);
+			}			
+		}
+		return buf.toString();
+	}
+	
+	private void changeElementName() {
+		String name = ctrl_name.getText();
+		
+		if (! name.equals(methodElement.getName())) {
+			
+			IValidator validator = getNameValidator();
+			if(validator == null){
+				validator = IValidatorFactory.INSTANCE
+					.createNameValidator(
+							methodElement,
+							TngAdapterFactory.INSTANCE
+									.getNavigatorView_ComposedAdapterFactory());
+			}
+			
+			String name0 = name;
+			for  (int i = 1; i < 1000; i++) {
+				String msg = validator.isValid(name);
+				if (msg == null || msg.length() == 0) {
+					ctrl_name.setText(name);
+					break;
+				}
+				name = name0 + "_" + i;		//$NON-NLS-1$
+			}
+			
+			if (! name.equals(methodElement.getName())) {
+				changeElementName(ctrl_name.getText());	
+			}
+		}
+	
+	}
+
+	private boolean isAutoGenName() {
+		return AuthoringUIPreferences.getEnableAutoNameGen() && !nameFieldTouched;
+	}
+
+	private void setNameFieldTouched(boolean touched) {
+		nameFieldTouched = touched;
+	}
+			
 }
