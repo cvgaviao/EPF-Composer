@@ -425,7 +425,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 	};
 
-	private boolean changeElementName(String name) {
+	protected boolean changeElementName(String name) {
 		boolean success = actionMgr.doAction(
 				IActionManager.SET, methodElement,
 				UmaPackage.eINSTANCE.getNamedElement_Name(),
@@ -1116,7 +1116,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				public void run() {
 					if(ctrl_name.isDisposed()) return;
 					
-					if (AuthoringUIPreferences.getEnableAutoNameGen()) {
+					if (isAutoGenName()) {
 						ctrl_presentation_name.setFocus();
 						if (methodUnit != null && methodUnit.getChangeDate() == null)
 							ctrl_presentation_name.setSelection(0, ctrl_presentation_name.getText().length());

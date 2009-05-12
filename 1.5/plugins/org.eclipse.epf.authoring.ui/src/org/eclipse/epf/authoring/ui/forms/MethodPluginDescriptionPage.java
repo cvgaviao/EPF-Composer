@@ -206,8 +206,13 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 			display.asyncExec(new Runnable() {
 				public void run() {
 					if(ctrl_name.isDisposed()) return;
-					ctrl_name.setFocus();
-					ctrl_name.setSelection(0, ctrl_name.getText().length());
+					if (isAutoGenName()) {
+						ctrl_presentation_name.setFocus();
+						ctrl_presentation_name.setSelection(0, ctrl_presentation_name.getText().length());
+					} else {
+						ctrl_name.setFocus();
+						ctrl_name.setSelection(0, ctrl_name.getText().length());
+					}
 				}
 			});
 		}
@@ -344,64 +349,9 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 				}
 				if (msg == null) {
 					if (!validName.equals(plugin.getName())) {
-						Shell shell = getSite().getShell();
-						msg = AuthoringUIResources.bind(AuthoringUIResources.methodPluginDescriptionPage_confirmRename, (new Object[] { plugin.getName(), ctrl_name.getText() })); 
-						String title = AuthoringUIResources.methodPluginDescriptionPage_confirmRename_title; 
-						if (!MessageDialog.openConfirm(shell, title, msg)) {
-							ctrl_name.setText(plugin.getName());
+						if (!changePlguinName(e, validName)) {
 							return;
 						}
-
-						e.doit = true;
-						EditorChooser.getInstance().closeMethodEditorsForPluginElements(plugin);
-						ctrl_name.setText(validName);
-						boolean status = actionMgr.doAction(IActionManager.SET,
-								plugin, UmaPackage.eINSTANCE
-										.getNamedElement_Name(), validName, -1);
-
-						if (!status) {
-							return;
-						}
-						form.setText(FORM_PREFIX + plugin.getName());
-						updateChangeDate();
-
-						// adjust plugin location and save the editor
-						//
-						BusyIndicator.showWhile(getSite().getShell()
-								.getDisplay(), new Runnable() {
-							public void run() {
-								MethodElementEditor editor = (MethodElementEditor) getEditor();
-								editor.doSave(new NullProgressMonitor());
-								ILibraryPersister.FailSafeMethodLibraryPersister persister = editor
-										.getPersister();
-								try {
-									persister
-											.adjustLocation(plugin.eResource());
-									persister.commit();
-								} catch (RuntimeException e) {
-									AuthoringUIPlugin.getDefault().getLogger()
-											.logError(e);
-									try {
-										persister.rollback();
-									} catch (Exception ex) {
-										AuthoringUIPlugin.getDefault()
-												.getLogger().logError(ex);
-										ViewHelper
-												.reloadCurrentLibaryOnRollbackError(getSite()
-														.getShell());
-										return;
-									}
-									AuthoringUIPlugin
-											.getDefault()
-											.getMsgDialog()
-											.displayWarning(
-													getSite().getShell()
-															.getText(),
-													AuthoringUIResources.methodPluginDescriptionPage_cannotRenamePluginFolder
-													, e.getMessage(), e);
-								}
-							}
-						});
 					}
 				} else {
 					ctrl_name.setText(plugin.getName());
@@ -417,6 +367,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 					});
 				}
 			}
+
 		});
 		ctrl_name.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
@@ -730,6 +681,76 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 
 		List<MethodPlugin> currentBaseList = plugin.getBases();
 		setCheckboxForCurrentBase(currentBaseList);
+	}
+	
+	private boolean changePlguinName(Event e, String validName) {
+		String msg;
+		Shell shell = getSite().getShell();
+		msg = AuthoringUIResources.bind(AuthoringUIResources.methodPluginDescriptionPage_confirmRename, (new Object[] { plugin.getName(), ctrl_name.getText() })); 
+		String title = AuthoringUIResources.methodPluginDescriptionPage_confirmRename_title; 
+		if (!MessageDialog.openConfirm(shell, title, msg)) {
+			ctrl_name.setText(plugin.getName());
+			return false;
+		}
+		
+		if (e != null) {
+			e.doit = true;
+		}
+		EditorChooser.getInstance().closeMethodEditorsForPluginElements(plugin);
+		ctrl_name.setText(validName);
+		boolean status = actionMgr.doAction(IActionManager.SET,
+				plugin, UmaPackage.eINSTANCE
+						.getNamedElement_Name(), validName, -1);
+
+		if (!status) {
+			return false;
+		}
+		form.setText(FORM_PREFIX + plugin.getName());
+		updateChangeDate();
+
+		// adjust plugin location and save the editor
+		//
+		BusyIndicator.showWhile(getSite().getShell()
+				.getDisplay(), new Runnable() {
+			public void run() {
+				MethodElementEditor editor = (MethodElementEditor) getEditor();
+				editor.doSave(new NullProgressMonitor());
+				ILibraryPersister.FailSafeMethodLibraryPersister persister = editor
+						.getPersister();
+				try {
+					persister
+							.adjustLocation(plugin.eResource());
+					persister.commit();
+				} catch (RuntimeException e) {
+					AuthoringUIPlugin.getDefault().getLogger()
+							.logError(e);
+					try {
+						persister.rollback();
+					} catch (Exception ex) {
+						AuthoringUIPlugin.getDefault()
+								.getLogger().logError(ex);
+						ViewHelper
+								.reloadCurrentLibaryOnRollbackError(getSite()
+										.getShell());
+						return;
+					}
+					AuthoringUIPlugin
+							.getDefault()
+							.getMsgDialog()
+							.displayWarning(
+									getSite().getShell()
+											.getText(),
+									AuthoringUIResources.methodPluginDescriptionPage_cannotRenamePluginFolder
+									, e.getMessage(), e);
+				}
+			}
+		});
+		
+		return true;
+	}
+
+	protected boolean changeElementName(String name) {
+		return changePlguinName(null, name);
 	}
 
 }
