@@ -58,6 +58,7 @@ import org.eclipse.epf.library.edit.command.DeleteMethodElementCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.edit.validation.IValidator;
@@ -68,8 +69,6 @@ import org.eclipse.epf.library.ui.actions.MethodElementDeleteAction;
 import org.eclipse.epf.library.ui.util.ConvertGuidanceType;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.richtext.RichTextListener;
-import org.eclipse.epf.uma.ContentCategory;
-import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -309,7 +308,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	private List<ISectionProvider> sectionProviders;
 	
-	private boolean nameFieldTouched = false;
+	private boolean autoGenName = false;
 	
 	protected ILabelProvider labelProviderVariability = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
@@ -360,7 +359,6 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		public void focusGained(FocusEvent e) {
 			((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
 					UmaPackage.eINSTANCE.getNamedElement_Name());
-			setNameFieldTouched(true);
 		}
 
 		public void focusLost(FocusEvent e) {
@@ -369,15 +367,6 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			if (((MethodElementEditor) getEditor()).mustRestoreValue(
 					e.widget, methodElement.getName())) {
 				return;
-			}
-			if (AuthoringUIPreferences.getEnableAutoNameGen() && name.length() == 0) {
-				name = generateName(ctrl_presentation_name.getText());
-				if (name.length() >= 0) {
-					ctrl_name.setText(name);
-					changeElementName();
-					setNameFieldTouched(false);
-					return;
-				}				
 			}
 			if (name.equals(methodElement.getName()))
 				return;
@@ -640,7 +629,16 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
-		
+		if (AuthoringUIPreferences.getEnableAutoNameGen()) {
+			MethodElementProperty prop = MethodElementPropertyHelper
+					.getProperty(
+							methodElement,
+							MethodElementPropertyHelper.AUTO_NAME_GEN_DONE);
+			if (prop == null || !prop.getValue().equals("true")) {		//$NON-NLS-1$
+				setAutoGenName(true);
+			}
+		}
+				
 		VariabilityType[] types;
 //		if (methodElement instanceof ContentCategory) {
 //			types = new VariabilityType[] {
@@ -1569,6 +1567,11 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				} 
 				if (isAutoGenName()) {
 					changeElementName();
+					MethodElementPropertyHelper
+							.setProperty(
+									methodElement,
+									MethodElementPropertyHelper.AUTO_NAME_GEN_DONE,
+									"true"); //$NON-NLS-1$
 				}
 			}
 			
@@ -3333,12 +3336,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	}
 
-	private boolean isAutoGenName() {
-		return AuthoringUIPreferences.getEnableAutoNameGen() && !nameFieldTouched;
+	protected boolean isAutoGenName() {
+		return autoGenName;
 	}
 
-	private void setNameFieldTouched(boolean touched) {
-		nameFieldTouched = touched;
+	protected void setAutoGenName(boolean autoGenName) {
+		this.autoGenName = autoGenName;
 	}
 			
 }
