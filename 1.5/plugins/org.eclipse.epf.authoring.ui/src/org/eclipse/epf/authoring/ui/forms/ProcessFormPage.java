@@ -48,6 +48,11 @@ public class ProcessFormPage extends DescriptionFormPage {
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
+		
+		//Always disable auto-gen-name for other sub classes other than ProcessDescription
+		if (! (this instanceof ProcessDescription)) {
+			setAutoGenName(false);
+		}
 
 		// Get the Process object from the editor input.
 		MethodElementEditorInput methodElementInput = (MethodElementEditorInput) input;

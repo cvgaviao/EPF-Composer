@@ -1525,13 +1525,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 	}
 	
-	
-	protected void addGeneralSectionListeners() {
-		ctrl_name.addModifyListener(modelModifyListener);
-		ctrl_name.addFocusListener(nameFocusListener);
-
-		ctrl_presentation_name.addModifyListener(modelModifyListener);
-		ctrl_presentation_name.addModifyListener(new ModifyListener() {
+	protected ModifyListener newNameTackingPNameListener() {
+		ModifyListener ret = new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				if (isAutoGenName()) {
 					String name = generateName(ctrl_presentation_name.getText());
@@ -1540,7 +1535,17 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					}
 				}
 			}
-		});
+		};
+		
+		return ret;
+	}
+	
+	protected void addGeneralSectionListeners() {
+		ctrl_name.addModifyListener(modelModifyListener);
+		ctrl_name.addFocusListener(nameFocusListener);
+
+		ctrl_presentation_name.addModifyListener(modelModifyListener);
+		ctrl_presentation_name.addModifyListener(newNameTackingPNameListener());
 		
 		ctrl_presentation_name.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent e) {
@@ -3305,7 +3310,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		return buf.toString();
 	}
 	
-	private void changeElementName() {
+	protected void changeElementName() {
 		String name = ctrl_name.getText();
 		
 		if (! name.equals(methodElement.getName())) {

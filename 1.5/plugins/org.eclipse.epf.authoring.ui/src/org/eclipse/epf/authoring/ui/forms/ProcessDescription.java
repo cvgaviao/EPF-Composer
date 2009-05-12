@@ -34,6 +34,7 @@ import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.navigator.ConfigurationsItemProvider;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
@@ -180,8 +181,13 @@ public class ProcessDescription extends ProcessFormPage {
 			display.asyncExec(new Runnable() {
 				public void run() {
 					if(ctrl_name.isDisposed()) return;
-					ctrl_name.setFocus();
-					ctrl_name.setSelection(0, ctrl_name.getText().length());
+					if (isAutoGenName()) {
+						ctrl_presentation_name.setFocus();
+						ctrl_presentation_name.setSelection(0, ctrl_presentation_name.getText().length());
+					} else {
+						ctrl_name.setFocus();
+						ctrl_name.setSelection(0, ctrl_name.getText().length());
+					}
 				}
 			});
 		}
@@ -634,67 +640,7 @@ public class ProcessDescription extends ProcessFormPage {
 				}
 				
 				if (msg == null) {
-					String title = AuthoringUIResources.processDescriptionNameChangeConfirm_title; 
-					String message = AuthoringUIResources.processDescriptionNameChangeConfirm_message; 
-					if (AuthoringUIPlugin.getDefault().getMsgDialog()
-							.displayConfirmation(title, message)) {
-						e.doit = true;
-
-						boolean status = actionMgr.doAction(IActionManager.SET,
-								process, UmaPackage.eINSTANCE
-										.getNamedElement_Name(), ctrl_name
-										.getText(), -1);
-						if (!status) {
-							ctrl_name.setText(process.getName());
-							return;
-						}
-						actionMgr.doAction(IActionManager.SET, procComp,
-								UmaPackage.eINSTANCE.getNamedElement_Name(),
-								ctrl_name.getText(), -1);
-
-						setFormText();
-
-						// adjust plugin location and save the editor
-						//
-						BusyIndicator.showWhile(getSite().getShell()
-								.getDisplay(), new Runnable() {
-							public void run() {
-								MethodElementEditor editor = (MethodElementEditor) getEditor();
-								editor
-										.doSave(new NullProgressMonitor());
-								if(editor.isDirty()) {
-									// save failed
-									//
-									return;
-								}
-								ILibraryPersister.FailSafeMethodLibraryPersister persister = editor
-										.getPersister();
-								try {
-									persister.adjustLocation(process
-													.eResource());
-									persister.commit();
-								} catch (RuntimeException e) {
-									persister.rollback();
-									throw e;
-								}
-								// adjust diagram resource as well
-								//
-								DiagramManager mgr = DiagramManager.getInstance(process, this);
-								if(mgr != null) {
-									try {
-										mgr.updateResourceURI();
-									}
-									catch(Exception e) {
-										AuthoringUIPlugin.getDefault().getLogger().logError(e);
-									}
-									finally {
-										mgr.removeConsumer(this);
-									}
-								}
-							}
-						});
-					} else {
-						ctrl_name.setText(process.getName());
+					if (!changeProcessName(actionMgr, e, procComp)) {
 						return;
 					}
 				} else {
@@ -713,6 +659,7 @@ public class ProcessDescription extends ProcessFormPage {
 					});
 				}
 			}
+		
 		});
 		ctrl_name.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
@@ -722,6 +669,7 @@ public class ProcessDescription extends ProcessFormPage {
 		});
 		
 		ctrl_presentation_name.addModifyListener(modifyListener);
+		ctrl_presentation_name.addModifyListener(newNameTackingPNameListener());
 		ctrl_presentation_name.addListener(SWT.Deactivate, new Listener() {
 			public void handleEvent(Event e) {
 				String oldContent = process.getPresentationName();
@@ -783,7 +731,16 @@ public class ProcessDescription extends ProcessFormPage {
 				// clear the selection when the focus of the component is lost 
 				if(ctrl_presentation_name.getSelectionCount() > 0){
 					ctrl_presentation_name.clearSelection();
-				} }
+				} 
+				if (isAutoGenName()) {
+					changeElementName();
+					MethodElementPropertyHelper
+							.setProperty(
+									methodElement,
+									MethodElementPropertyHelper.AUTO_NAME_GEN_DONE,
+									"true"); //$NON-NLS-1$
+				}	
+			}
 		});
 
 		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) { 
@@ -1344,7 +1301,11 @@ public class ProcessDescription extends ProcessFormPage {
 
 					public void run() {
 						ctrl_name.removeModifyListener(nameModifyListener);
-						ctrl_name.setText(newName);
+						if (isAutoGenName()) {
+							ctrl_name.setText(ctrl_name.getText());
+						} else {
+							ctrl_name.setText(newName);
+						}
 						ctrl_name.addModifyListener(nameModifyListener);
 						setFormText();
 					}
@@ -1364,5 +1325,86 @@ public class ProcessDescription extends ProcessFormPage {
 	protected void setContextHelp() {
 		super.setContextHelp();
 		EditorsContextHelper.setHelp(getPartControl(), processType);
+	}
+	
+	private boolean changeProcessName(final IActionManager actionMgr,
+			Event e, ProcessComponent procComp) {
+		String title = AuthoringUIResources.processDescriptionNameChangeConfirm_title; 
+		String message = AuthoringUIResources.processDescriptionNameChangeConfirm_message; 
+		if (AuthoringUIPlugin.getDefault().getMsgDialog()
+				.displayConfirmation(title, message)) {
+			if (e != null) {
+				e.doit = true;
+			}
+
+			boolean status = actionMgr.doAction(IActionManager.SET,
+					process, UmaPackage.eINSTANCE
+							.getNamedElement_Name(), ctrl_name
+							.getText(), -1);
+			if (!status) {
+				ctrl_name.setText(process.getName());
+				return false;
+			}
+			actionMgr.doAction(IActionManager.SET, procComp,
+					UmaPackage.eINSTANCE.getNamedElement_Name(),
+					ctrl_name.getText(), -1);
+
+			setFormText();
+
+			// adjust plugin location and save the editor
+			//
+			BusyIndicator.showWhile(getSite().getShell()
+					.getDisplay(), new Runnable() {
+				public void run() {
+					MethodElementEditor editor = (MethodElementEditor) getEditor();
+					editor
+							.doSave(new NullProgressMonitor());
+					if(editor.isDirty()) {
+						// save failed
+						//
+						return;
+					}
+					ILibraryPersister.FailSafeMethodLibraryPersister persister = editor
+							.getPersister();
+					try {
+						persister.adjustLocation(process
+										.eResource());
+						persister.commit();
+					} catch (RuntimeException e) {
+						persister.rollback();
+						throw e;
+					}
+					// adjust diagram resource as well
+					//
+					DiagramManager mgr = DiagramManager.getInstance(process, this);
+					if(mgr != null) {
+						try {
+							mgr.updateResourceURI();
+						}
+						catch(Exception e) {
+							AuthoringUIPlugin.getDefault().getLogger().logError(e);
+						}
+						finally {
+							mgr.removeConsumer(this);
+						}
+					}
+				}
+			});
+		} else {
+			ctrl_name.setText(process.getName());
+			return false;
+		}
+		
+		return true;
+	}
+
+	protected boolean changeElementName(String name) {
+		if (! ctrl_name.getText().equals(name)) {
+			ctrl_name.setText(name);
+		}
+		if (name.equals(process.getName())) {
+			return true;
+		}
+		return changeProcessName(editor.getActionManager(), null, (ProcessComponent) process.eContainer());
 	}
 }

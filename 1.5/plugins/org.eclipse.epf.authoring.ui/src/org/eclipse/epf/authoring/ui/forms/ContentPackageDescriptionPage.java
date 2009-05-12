@@ -95,8 +95,13 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 			display.asyncExec(new Runnable() {
 				public void run() {
 					if(ctrl_name.isDisposed()) return;
-					ctrl_name.setFocus();
-					ctrl_name.setSelection(0, ctrl_name.getText().length());
+					if (isAutoGenName()) {
+						ctrl_presentation_name.setFocus();
+						ctrl_presentation_name.setSelection(0, ctrl_presentation_name.getText().length());
+					} else {
+						ctrl_name.setFocus();
+						ctrl_name.setSelection(0, ctrl_name.getText().length());
+					}
 				}
 			});
 		}
