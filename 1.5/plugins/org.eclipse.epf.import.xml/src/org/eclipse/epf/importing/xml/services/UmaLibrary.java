@@ -1119,6 +1119,9 @@ public class UmaLibrary {
 				if (mergeLevel == 2 && eref.isMany()) {
 					return false;
 				}
+			} else if (rmcFeature == UmaPackage.eINSTANCE
+					.getWorkBreakdownElement_LinkToPredecessor()) {
+				return false;
 			}
 		}
 		
