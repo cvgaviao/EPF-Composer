@@ -67,6 +67,7 @@ import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.library.ui.LibraryUIUtil;
 import org.eclipse.epf.library.ui.actions.MethodElementDeleteAction;
 import org.eclipse.epf.library.ui.util.ConvertGuidanceType;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.richtext.RichTextListener;
 import org.eclipse.epf.uma.Guidance;
@@ -630,12 +631,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		if (AuthoringUIPreferences.getEnableAutoNameGen()) {
-			MethodElementProperty prop = MethodElementPropertyHelper
-					.getProperty(
-							methodElement,
-							MethodElementPropertyHelper.AUTO_NAME_GEN_DONE);
-			if (prop == null || !prop.getValue().equals("true")) {		//$NON-NLS-1$
-				setAutoGenName(true);
+			if (AuthoringUIPreferences.getEnableAutoNameGen()) {
+				if (LibraryUtil.hasNameTrackPresentationNameMark(methodElement)) {
+					setAutoGenName(true);
+				}
 			}
 		}
 				
@@ -1572,11 +1571,6 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				} 
 				if (isAutoGenName()) {
 					changeElementName();
-					MethodElementPropertyHelper
-							.setProperty(
-									methodElement,
-									MethodElementPropertyHelper.AUTO_NAME_GEN_DONE,
-									"true"); //$NON-NLS-1$
 				}
 			}
 			
@@ -3337,6 +3331,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			if (! name.equals(methodElement.getName())) {
 				changeElementName(ctrl_name.getText());	
 			}
+			
+			LibraryUtil.removeNameTrackPresentationNameMark(methodElement);
 		}
 	
 	}

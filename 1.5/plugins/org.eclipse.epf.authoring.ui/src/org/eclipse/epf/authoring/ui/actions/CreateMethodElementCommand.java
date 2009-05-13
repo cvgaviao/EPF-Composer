@@ -20,13 +20,14 @@ import org.eclipse.emf.edit.command.CommandActionDelegate;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.IEditorKeeper;
+import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.authoring.ui.views.ViewHelper;
-import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.library.edit.command.CommandStatusChecker;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
 import org.eclipse.epf.library.edit.process.command.CreateProcessComponentCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.MethodElement;
 
 /**
  * Creates a new Method element.
@@ -95,6 +96,9 @@ public class CreateMethodElementCommand extends CommandWrapper implements
 			Object obj = TngUtil.unwrap(o);
 			if (obj instanceof EObject && ((EObject) obj).eContainer() != null) {
 				// Open the editor for the newly created element.
+				if (AuthoringUIPreferences.getEnableAutoNameGen() && obj instanceof MethodElement) {
+					LibraryUtil.addNameTrackPresentationNameMark((MethodElement) obj);				
+				}
 				IEditorKeeper.REFERENCE.getEditorKeeper().openEditor(obj);
 			}
 		}

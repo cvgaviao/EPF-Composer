@@ -19,11 +19,13 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.EditorChooser;
+import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.ui.wizards.BaseWizard;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -179,6 +181,9 @@ public class NewPluginWizard extends BaseWizard implements INewWizard {
 					LibraryView.getView().setSelectionToViewer(selection);
 
 					// Open the new method plug-in editor.
+					if (AuthoringUIPreferences.getEnableAutoNameGen()) {
+						LibraryUtil.addNameTrackPresentationNameMark(plugin);
+					}
 					EditorChooser.getInstance().openEditor(newPlugin);
 				}
 			});

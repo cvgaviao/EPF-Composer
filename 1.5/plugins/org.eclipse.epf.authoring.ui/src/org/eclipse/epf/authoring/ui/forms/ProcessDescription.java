@@ -734,11 +734,6 @@ public class ProcessDescription extends ProcessFormPage {
 				} 
 				if (isAutoGenName()) {
 					changeElementName();
-					MethodElementPropertyHelper
-							.setProperty(
-									methodElement,
-									MethodElementPropertyHelper.AUTO_NAME_GEN_DONE,
-									"true"); //$NON-NLS-1$
 				}	
 			}
 		});

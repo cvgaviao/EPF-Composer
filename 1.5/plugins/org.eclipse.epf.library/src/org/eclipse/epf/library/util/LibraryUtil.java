@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -947,4 +949,21 @@ public class LibraryUtil {
 		}
 		return includedElements;
 	}
+	
+	private static Adapter nameTrackPresentationNameMark = new AdapterImpl();		
+	public static void addNameTrackPresentationNameMark(MethodElement element) {
+		element.eAdapters().add(nameTrackPresentationNameMark);
+	}
+	public static void removeNameTrackPresentationNameMark(MethodElement element) {
+		element.eAdapters().remove(nameTrackPresentationNameMark);
+	}
+	public static boolean hasNameTrackPresentationNameMark(MethodElement element) {
+		for (Adapter adpter: element.eAdapters()) {
+			if (adpter == nameTrackPresentationNameMark) {
+				return true;
+			}
+		}		
+		return false;
+	}
+	
 }

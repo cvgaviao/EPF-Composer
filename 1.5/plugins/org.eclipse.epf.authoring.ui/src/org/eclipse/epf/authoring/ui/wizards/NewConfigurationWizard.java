@@ -18,12 +18,14 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.ui.wizards.BaseWizard;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -165,6 +167,9 @@ public class NewConfigurationWizard extends BaseWizard implements INewWizard {
 			try {
 				persister.save(library.eResource());
 				persister.commit();
+				if (AuthoringUIPreferences.getEnableAutoNameGen()) {
+					LibraryUtil.addNameTrackPresentationNameMark(config);
+				}
 			} catch (Exception e) {
 				try {
 					persister.rollback();
