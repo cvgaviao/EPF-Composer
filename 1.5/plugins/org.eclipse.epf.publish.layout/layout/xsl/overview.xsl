@@ -27,6 +27,7 @@
 		<xsl:variable name="externalId" select="reference/Element/attribute[@name='externalId']"/>
 		<xsl:variable name="imagePath" select="concat(/Element/@BackPath, 'images/')"/>
 		<xsl:variable name="showFullMethodContent" select="@ShowFullMethodContent"/>
+		<xsl:variable name="visibleTags" select="@VisibleTags"/>
 		<div id="page-guid">
 			<xsl:attribute name="value"><xsl:value-of select="attribute[@name='guid']"/></xsl:attribute>
 		</div>
@@ -138,6 +139,13 @@
 											</xsl:if>
 										</xsl:otherwise>
 									</xsl:choose>
+									<xsl:if test="$visibleTags">
+										<tr>
+											<td>
+												Tags: <xsl:value-of select="$visibleTags"/>
+											</td>
+										</tr>
+									</xsl:if>
 								</table>
 							</td>
 						</tr>
