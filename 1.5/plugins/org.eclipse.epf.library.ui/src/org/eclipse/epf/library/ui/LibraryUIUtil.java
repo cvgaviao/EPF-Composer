@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.ui.util.MsgDialog;
@@ -25,6 +26,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.persistence.FileManager;
+import org.eclipse.epf.services.Services;
 import org.eclipse.epf.ui.EPFUIResources;
 import org.eclipse.epf.ui.dialogs.RenameFileConflictDialog;
 import org.eclipse.epf.uma.MethodElement;
@@ -189,8 +191,15 @@ public class LibraryUIUtil {
 			if (dialog.getReturnCode() == IDialogConstants.CANCEL_ID) {
 				return null;
 			} else {
+				File oldLibFile = libFile;
 				libFile = new File(resourceLoc, dialog.getFilePath());
-			}
+				if (oldLibFile.equals(libFile)) {
+					IStatus status = Services.getFileManager().checkModify(libFile.getAbsolutePath(), shell);
+					if (!status.isOK()) {
+						return null;
+					}
+				}
+			}			
 		}
 
 		FileUtil.copyFile(resource, libFile);
