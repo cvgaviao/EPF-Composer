@@ -10,21 +10,41 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.preferences;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.EditorChooser;
+import org.eclipse.epf.authoring.ui.util.AuthoringAccessibleListener;
 import org.eclipse.epf.common.ui.util.CommonPreferences;
+import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.ui.preferences.BasePreferencePage;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -33,6 +53,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 
 /**
  * The Authoring preference page.
@@ -65,6 +86,29 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	private Button enableUIFieldsCheckbox;
 	
 	private Button enableAutoNameGenCheckbox;
+	
+	private Button skipAllCheckbox;
+	
+	private Button skipSelectedChebox;
+	
+	private TableViewer selectedHexByteViewer;
+	
+	private Set<String> selectedHexByteStrSet;
+	
+	private Button addButton;
+	private Button removeButton;
+	
+	private static Set<String> skipableSet = new HashSet<String>();
+	
+	static {
+		String str = 
+			"24,26,2B,2C,2F,3A,3B,3D,3F,40,20,22,3C,3E,23,25,7B,7D,7C,5C,5E,7E,5B,5D,60"; //$NON-NLS-1$
+
+		List<String> list = TngUtil.convertStringsToList(str);
+		for (String s : list) {
+			skipableSet.add("%" + s);		//$NON-NLS-1$
+		}		
+	}
 
 	/**
 	 * Creates and returns the SWT control for the customized body of this
@@ -120,7 +164,38 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 				AuthoringUIResources.enableUIFieldsCheckbox_text);
 		
 		enableAutoNameGenCheckbox = createCheckbox(editorGroup,
-				AuthoringUIResources.enableAutoNameGenCheckbox_text);
+				AuthoringUIResources.enableAutoNameGenCheckbox_text);		
+		
+		// Create the editor group.
+		Group rteGroup = createGridLayoutGroup(composite,
+				AuthoringUIResources.rteGroup_text, 2);
+
+		skipAllCheckbox = createCheckbox(rteGroup,
+				AuthoringUIResources.skipAllCheckbox_text, 2);
+		
+		skipSelectedChebox = createCheckbox(rteGroup,
+				AuthoringUIResources.skipSelectedChebox_text, 2);
+		
+		selectedHexByteViewer =  new TableViewer(rteGroup);
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		gridData.heightHint = 100;
+		selectedHexByteViewer.getTable().setLayoutData(gridData);
+		selectedHexByteViewer.setContentProvider(new ArrayContentProvider() {
+		    public Object[] getElements(Object inputElement) {
+		        if (inputElement instanceof Collection) {		        	
+		        	List list = new ArrayList((Collection) inputElement);
+		        	Collections.sort(list);
+					return list.toArray();
+				}
+		        return super.getElements(inputElement);
+		    }
+		});
+		selectedHexByteViewer.setLabelProvider(new LabelProvider());
+		
+		getSelectedHexByteStrSet().add("%20");		
+		selectedHexByteViewer.setInput(getSelectedHexByteStrSet());
+		
+		createAddRemoveButtons(rteGroup);
 		
 		initControls();
 
@@ -347,5 +422,102 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
 		}
 	}
+	
+	protected void createAddRemoveButtons(Composite parent) {
+		Composite buttonComposite = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		buttonComposite.setLayout(layout);
+		GridData data = new GridData(SWT.FILL, SWT.DEFAULT, true, false);
+		buttonComposite.setLayoutData(data);
+
+		addButton = new Button(buttonComposite, SWT.PUSH);
+		data = new GridData(SWT.FILL, SWT.DEFAULT, false, false);
+		addButton.setLayoutData(data);
+		addButton
+				.setText(AuthoringUIText.ADD_BUTTON_TEXT);
+		addButton.getAccessible().addAccessibleListener(
+				new AuthoringAccessibleListener(
+						AuthoringUIText.ADD_BUTTON_TEXT));
+		addButton.addSelectionListener(newAddButtonListener());
+		
+		removeButton = new Button(buttonComposite, SWT.PUSH);
+		data = new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false);
+		removeButton.setLayoutData(data);
+		removeButton
+				.setText(AuthoringUIText.REMOVE_BUTTON_TEXT);
+
+		removeButton.getAccessible().addAccessibleListener(
+				new AuthoringAccessibleListener(
+						AuthoringUIText.REMOVE_BUTTON_TEXT));
+		removeButton
+				.addSelectionListener(newRemoveButtonListener());
+	}
+	
+	private SelectionListener newAddButtonListener() {
+		return new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(MsgBox.getDefaultShell(), 
+						new LabelProvider());
+				
+				List<String> selectableList = new ArrayList<String>();
+				for (String str : skipableSet) {
+					if (! getSelectedHexByteStrSet().contains(str)) {
+						selectableList.add(str);	
+					}
+				}
+				Collections.sort(selectableList);
+				
+				dialog.setElements(selectableList.toArray());
+				dialog.setMultipleSelection(true);
+				dialog.setMessage(AuthoringUIResources.rteGroupAddDialog_msg);
+				dialog.setTitle(AuthoringUIResources.rteGroupAddDialog_title);
+				if (dialog.open() == Dialog.CANCEL) {
+					return;
+				}
+				
+				Object[] objs = dialog.getResult();
+				if (objs == null || objs.length == 0) {
+					return;
+				}
+				
+				for (Object obj : objs) {
+					if (obj instanceof String)
+					getSelectedHexByteStrSet().add((String) obj);
+				}
+				
+				selectedHexByteViewer.refresh();
+			}
+		};
+	}
+	
+	private SelectionListener newRemoveButtonListener() {
+		return new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				ISelection s = selectedHexByteViewer.getSelection();
+				if (s instanceof IStructuredSelection) {					
+					for (Iterator it = ((IStructuredSelection) s).iterator(); it.hasNext();) {
+						getSelectedHexByteStrSet().remove(it.next());
+					}
+				}
+				selectedHexByteViewer.refresh();
+			}
+		};
+	}
+
+	private Set<String> getSelectedHexByteStrSet() {
+		if (selectedHexByteStrSet == null) {
+			selectedHexByteStrSet = new HashSet<String>();
+		}
+		return selectedHexByteStrSet;
+	}
+	
 
 }
