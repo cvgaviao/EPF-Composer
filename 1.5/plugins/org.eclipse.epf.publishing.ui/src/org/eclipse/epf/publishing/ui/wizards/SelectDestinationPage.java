@@ -121,7 +121,7 @@ public class SelectDestinationPage extends BaseWizardPage {
 		staticWebSiteRadioButton = createRadioButton(webAppGroup,
 				PublishingUIResources.staticWebSiteRadioButton_text);
 
-		staticWebSiteComposite = createChildGridLayoutComposite(webAppGroup, 1);
+		staticWebSiteComposite = createChildGridLayoutComposite(webAppGroup, 3);
 
 		javaWebAppRadioButton = createRadioButton(webAppGroup,
 				PublishingUIResources.dynamicWebAppRadioButton_text);
