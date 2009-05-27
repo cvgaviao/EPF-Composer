@@ -26,7 +26,6 @@ import org.eclipse.epf.authoring.ui.util.AuthoringAccessibleListener;
 import org.eclipse.epf.common.ui.util.CommonPreferences;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.utils.StrUtil;
-import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
@@ -95,17 +94,43 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	
 	private Set<String> selectedHexByteStrSet;
 	
+	private Button addOneButton;
 	private Button addButton;
 	private Button removeButton;
+	private Text addOneButtonText;
 	
 	private static Set<String> skipableSet = new HashSet<String>();
 	
 	static {
-		String str = 
-			"24,26,2B,2C,2F,3A,3B,3D,3F,40,20,22,3C,3E,23,25,7B,7D,7C,5C,5E,7E,5B,5D,60"; //$NON-NLS-1$
-
-		List<String> list = TngUtil.convertStringsToList(str);
-		for (String s : list) {
+		String[] hexStrs =  {
+				AuthoringUIResources.hex_24,
+				AuthoringUIResources.hex_26,
+				AuthoringUIResources.hex_2B,
+				AuthoringUIResources.hex_2C,
+				AuthoringUIResources.hex_2F,
+				AuthoringUIResources.hex_3A,
+				AuthoringUIResources.hex_3B,
+				AuthoringUIResources.hex_3D,
+				AuthoringUIResources.hex_3F,	
+				AuthoringUIResources.hex_40,
+				AuthoringUIResources.hex_20,
+				AuthoringUIResources.hex_22,
+				AuthoringUIResources.hex_3C,
+				AuthoringUIResources.hex_3E,
+				AuthoringUIResources.hex_23,
+				AuthoringUIResources.hex_25,
+				AuthoringUIResources.hex_7B,
+				AuthoringUIResources.hex_7D,
+				AuthoringUIResources.hex_7C,
+				AuthoringUIResources.hex_5C,	
+				AuthoringUIResources.hex_5E,
+				AuthoringUIResources.hex_7E,
+				AuthoringUIResources.hex_5B,
+				AuthoringUIResources.hex_5D,
+				AuthoringUIResources.hex_60,
+		};
+		
+		for (String s : hexStrs) {
 			skipableSet.add("%" + s);		//$NON-NLS-1$
 		}		
 	}
@@ -168,13 +193,13 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		
 		// Create the editor group.
 		Group rteGroup = createGridLayoutGroup(composite,
-				AuthoringUIResources.rteGroup_text, 2);
+				AuthoringUIResources.rteGroup_text, 3);
 
 		skipAllCheckbox = createCheckbox(rteGroup,
-				AuthoringUIResources.skipAllCheckbox_text, 2);
+				AuthoringUIResources.skipAllCheckbox_text, 3);
 		
 		skipSelectedChebox = createCheckbox(rteGroup,
-				AuthoringUIResources.skipSelectedChebox_text, 2);
+				AuthoringUIResources.skipSelectedChebox_text, 3);
 		
 		selectedHexByteViewer =  new TableViewer(rteGroup);
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -192,7 +217,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		});
 		selectedHexByteViewer.setLabelProvider(new LabelProvider());
 		
-		getSelectedHexByteStrSet().add("%20");		
+		getSelectedHexByteStrSet().add("%" + AuthoringUIResources.hex_20);		//$NON-NLS-1$
 		selectedHexByteViewer.setInput(getSelectedHexByteStrSet());
 		
 		createAddRemoveButtons(rteGroup);
@@ -430,11 +455,39 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		GridData data = new GridData(SWT.FILL, SWT.DEFAULT, true, false);
 		buttonComposite.setLayoutData(data);
 
-		addButton = new Button(buttonComposite, SWT.PUSH);
+		Group addOneButtonGroup = createGridLayoutGroup(buttonComposite,
+				AuthoringUIResources.rteAddOneButtonGroup_title, 2);
+		
+		addOneButton = new Button(addOneButtonGroup, SWT.PUSH);
 		data = new GridData(SWT.FILL, SWT.DEFAULT, false, false);
+		addOneButton.setLayoutData(data);
+		addOneButton
+				.setText(AuthoringUIResources.rteAddOneButton_text);
+		addOneButton.getAccessible().addAccessibleListener(
+				new AuthoringAccessibleListener(
+						AuthoringUIResources.rteAddOneButton_text));
+		addOneButton.addSelectionListener(newAddOneButtonListener());
+		addOneButton.setEnabled(false);
+		
+		addOneButtonText = createEditableText(addOneButtonGroup, "", 30); //$NON-NLS-1$	
+		
+		addOneButtonText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				addOneButton.setEnabled(true);
+				String text = addOneButtonText.getText();
+				if (! text.startsWith("%")) {
+					addOneButton.setEnabled(false);
+					return;
+				} 
+				
+			}
+		});
+		
+		addButton = new Button(buttonComposite, SWT.PUSH);
+		data = new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false);
 		addButton.setLayoutData(data);
 		addButton
-				.setText(AuthoringUIText.ADD_BUTTON_TEXT);
+				.setText(AuthoringUIResources.rteAddButton_text);
 		addButton.getAccessible().addAccessibleListener(
 				new AuthoringAccessibleListener(
 						AuthoringUIText.ADD_BUTTON_TEXT));
@@ -451,6 +504,20 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 						AuthoringUIText.REMOVE_BUTTON_TEXT));
 		removeButton
 				.addSelectionListener(newRemoveButtonListener());
+	}
+	
+	private SelectionListener newAddOneButtonListener() {
+		return new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				String text = addOneButtonText.getText();
+				getSelectedHexByteStrSet().add(text);				
+				selectedHexByteViewer.refresh();
+			}
+		};
 	}
 	
 	private SelectionListener newAddButtonListener() {

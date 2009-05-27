@@ -628,6 +628,39 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String rteGroupAddDialog_msg;
 	
+	public static String rteAddOneButtonGroup_title;
+	
+	public static String rteAddOneButton_text;
+	
+	public static String rteAddButton_text;
+	
+	
+	public static String hex_24;
+	public static String hex_26;
+	public static String hex_2B;
+	public static String hex_2C;
+	public static String hex_2F;
+	public static String hex_3A;
+	public static String hex_3B;
+	public static String hex_3D;
+	public static String hex_3F;	
+	public static String hex_40;
+	public static String hex_20;
+	public static String hex_22;
+	public static String hex_3C;
+	public static String hex_3E;
+	public static String hex_23;
+	public static String hex_25;
+	public static String hex_7B;
+	public static String hex_7D;
+	public static String hex_7C;
+	public static String hex_5C;	
+	public static String hex_5E;
+	public static String hex_7E;
+	public static String hex_5B;
+	public static String hex_5D;
+	public static String hex_60;
+	
 	public static String enableUIFieldsCheckbox_text;
 		
 	public static String enableAutoNameGenCheckbox_text;
