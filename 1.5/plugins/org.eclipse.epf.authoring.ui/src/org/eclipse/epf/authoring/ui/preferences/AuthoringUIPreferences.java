@@ -10,7 +10,14 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.preferences;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 /**
@@ -26,6 +33,10 @@ public class AuthoringUIPreferences {
 	public static final String ENABLE_UI_FIELDS = "enableUIFields"; //$NON-NLS-1$
 	
 	public static final String ENABLE_AUTO_NAME_GEN = "autoNameGen"; //$NON-NLS-1$
+	
+	public static final String RTE_URL_DECODING_OPTION = "rteUrlDecodingOption"; //$NON-NLS-1$
+	
+	public static final String RTE_URL_DECODING_HEX_NUMBERS = "rteUrlDecodingHexNumbers"; //$NON-NLS-1$
 
 	public static final String ADD_TASKS_PER_ROW = "ACTIVITY_DETAIL_DIAGRAM_TASKS_PER_ROW"; //$NON-NLS-1$
 	
@@ -37,6 +48,10 @@ public class AuthoringUIPreferences {
 	
 	private static final boolean DEFAULT_ENABLE_AUTO_NAME_GEN = false;
 
+	private static final int DEFAULT_RTE_URL_DECODING_OPTION = 2;
+	
+	private static final String DEFAULT_RTE_URL_DECODING_HEX_NUMBERS = "%" + AuthoringUIResources.hex_20;	//$NON-NLS-1$ 
+	
 	// The plug-in specific preference store.
 	private static IPreferenceStore prefStore = AuthoringUIPlugin.getDefault()
 			.getPreferenceStore();
@@ -52,6 +67,10 @@ public class AuthoringUIPreferences {
 				DEFAULT_ENABLE_AUTO_NAME_GEN);
 		
 		prefStore.setDefault(ADD_TASKS_PER_ROW, DEFAULT_ADD_TASKS_PER_ROW);
+		
+		prefStore.setDefault(RTE_URL_DECODING_OPTION, DEFAULT_RTE_URL_DECODING_OPTION);
+		
+		prefStore.setDefault(RTE_URL_DECODING_HEX_NUMBERS, DEFAULT_RTE_URL_DECODING_HEX_NUMBERS);
 		
 	}
 
@@ -116,6 +135,65 @@ public class AuthoringUIPreferences {
 	 */
 	public static void setEnableAutoNameGen(boolean value) {
 		prefStore.setValue(ENABLE_AUTO_NAME_GEN, value);
+	}
+
+	/**
+	 * Gets the default rte url decoding option
+	 */
+	public static int getDefaultRteUrlDecodingOption() {
+		return DEFAULT_RTE_URL_DECODING_OPTION;
+	}
+	
+	/**
+	 * Gets the rte url decoding option
+	 */
+	public static int getRteUrlDecodingOption() {
+		return prefStore.getInt(RTE_URL_DECODING_OPTION);
+	}
+
+	/**
+	 * Sets the rte url decoding option
+	 */
+	public static void setgetRteUrlDecodingOption(int value) {
+		prefStore.setValue(RTE_URL_DECODING_OPTION, value);
+	}
+	
+	
+	/**
+	 * Gets the default rte url decoding hex numbers
+	 */
+	public static String getDefaultRteUrlDecodingHexNumbers() {
+		return DEFAULT_RTE_URL_DECODING_HEX_NUMBERS;
+	}
+	
+	/**
+	 * Gets the rte url decoding hex numbers
+	 */
+	public static String getRteUrlDecodingHexNumbers() {
+		return prefStore.getString(RTE_URL_DECODING_HEX_NUMBERS);
+	}
+
+	/**
+	 * Sets the rte url decoding hex numbers
+	 */
+	public static void setRteUrlDecodingHexNumbers(String value) {
+		prefStore.setValue(RTE_URL_DECODING_HEX_NUMBERS, value);
+	}
+	
+	/**
+	 * Gets the rte url decoding hex number set
+	 */
+	public static Map<String, String> getRteUrlDecodingHexMap() {
+		Map<String, String> map = new HashMap<String, String>();
+		String str = getRteUrlDecodingHexNumbers();		
+		List<String> strValues = TngUtil.convertStringsToList(str, "\n");//$NON-NLS-1$
+		for (String strValue : strValues) {
+			String key = StrUtil.getHexStr(strValue);
+			if (key != null) {
+				map.put(key, strValue);
+			}
+		}		
+		return map;
 	}
 	
 	/**

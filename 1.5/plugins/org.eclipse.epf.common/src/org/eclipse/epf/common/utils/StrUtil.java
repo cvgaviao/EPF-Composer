@@ -616,4 +616,30 @@ public class StrUtil {
 		
 		return buffer.toString();
 	}
+	
+	public static String getHexStr(String str) {
+		if (str.length() < 3) {
+			return null;
+		}
+		if (str.charAt(0) != '%') {
+			return null;
+		}
+		StringBuffer b = new StringBuffer();
+		b.append('%');
+		for (int i = 1 ; i <= 2; i++) {
+			char c = str.charAt(i);
+			if (c >= 'a' && c <= 'z') {
+				c -= 'a';
+				c += 'A'; 
+			} 			
+			boolean valid = (c >= '0' && c <= '9') ||
+							(c >= 'A' && c <= 'Z');
+			if (!valid) {
+				return null;
+			}
+			b.append(c);			
+		}
+		
+		return b.toString();
+	}
 }

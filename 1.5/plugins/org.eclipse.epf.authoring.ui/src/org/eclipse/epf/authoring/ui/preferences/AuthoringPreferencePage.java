@@ -11,11 +11,12 @@
 package org.eclipse.epf.authoring.ui.preferences;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -92,7 +93,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 	
 	private TableViewer selectedHexByteViewer;
 	
-	private Set<String> selectedHexByteStrSet;
+	private Map<String, String> selectedHexByteStrMap;
 	
 	private Button addOneButton;
 	private Button addButton;
@@ -207,18 +208,14 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		selectedHexByteViewer.getTable().setLayoutData(gridData);
 		selectedHexByteViewer.setContentProvider(new ArrayContentProvider() {
 		    public Object[] getElements(Object inputElement) {
-		        if (inputElement instanceof Collection) {		        	
-		        	List list = new ArrayList((Collection) inputElement);
-		        	Collections.sort(list);
+		        if (inputElement instanceof Map) {		        	
+		        	List list = new ArrayList(((Map) inputElement).values());
+		        	Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
 					return list.toArray();
 				}
 		        return super.getElements(inputElement);
 		    }
 		});
-		selectedHexByteViewer.setLabelProvider(new LabelProvider());
-		
-		getSelectedHexByteStrSet().add("%" + AuthoringUIResources.hex_20);		//$NON-NLS-1$
-		selectedHexByteViewer.setInput(getSelectedHexByteStrSet());
 		
 		createAddRemoveButtons(rteGroup);
 		
@@ -226,6 +223,9 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 
 		addListeners();
 
+		selectedHexByteViewer.setLabelProvider(new LabelProvider());		
+		selectedHexByteViewer.setInput(getSelectedHexByteStrMap());
+		
 		return composite;
 	}
 
@@ -253,6 +253,14 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		
 		enableAutoNameGenCheckbox.setSelection(AuthoringUIPreferences
 				.getEnableAutoNameGen());
+
+		for (Map.Entry<String, String> entry : AuthoringUIPreferences.getRteUrlDecodingHexMap().entrySet()) {		
+			getSelectedHexByteStrMap().put(entry.getKey(), entry.getValue());
+		}
+		
+		int ix = AuthoringUIPreferences.getRteUrlDecodingOption();
+		skipAllCheckbox.setSelection(ix == 1);
+		skipSelectedChebox.setSelection(ix == 2);
 	}
 
 	/**
@@ -278,6 +286,28 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 				} else {
 					enableUIFieldsCheckbox.setSelection(!enableUIFieldsCheckbox
 							.getSelection());
+				}
+			}
+		});
+		
+		skipAllCheckbox.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				if (skipAllCheckbox.getSelection()) {
+					skipSelectedChebox.setSelection(false);
+					AuthoringUIPreferences.setgetRteUrlDecodingOption(1);
+				} else if (! skipSelectedChebox.getSelection()) {
+					AuthoringUIPreferences.setgetRteUrlDecodingOption(0);	
+				}
+			}
+		});
+		
+		skipSelectedChebox.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				if (skipSelectedChebox.getSelection()) {
+					skipAllCheckbox.setSelection(false);
+					AuthoringUIPreferences.setgetRteUrlDecodingOption(2);
+				} else if (! skipAllCheckbox.getSelection()) {
+					AuthoringUIPreferences.setgetRteUrlDecodingOption(0);	
 				}
 			}
 		});
@@ -475,7 +505,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 			public void modifyText(ModifyEvent e) {
 				addOneButton.setEnabled(true);
 				String text = addOneButtonText.getText();
-				if (! text.startsWith("%")) {
+				if (StrUtil.getHexStr(text) == null) {
 					addOneButton.setEnabled(false);
 					return;
 				} 
@@ -514,8 +544,13 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 
 			public void widgetSelected(SelectionEvent e) {
 				String text = addOneButtonText.getText();
-				getSelectedHexByteStrSet().add(text);				
+				String key = StrUtil.getHexStr(text);
+				if (key == null) {
+					return;
+				}
+				getSelectedHexByteStrMap().put(key, text);
 				selectedHexByteViewer.refresh();
+				addOneButtonText.setText("");		
 			}
 		};
 	}
@@ -532,7 +567,8 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 				
 				List<String> selectableList = new ArrayList<String>();
 				for (String str : skipableSet) {
-					if (! getSelectedHexByteStrSet().contains(str)) {
+					String key = StrUtil.getHexStr(str);
+					if (! getSelectedHexByteStrMap().containsKey(key)) {
 						selectableList.add(str);	
 					}
 				}
@@ -552,8 +588,13 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 				}
 				
 				for (Object obj : objs) {
-					if (obj instanceof String)
-					getSelectedHexByteStrSet().add((String) obj);
+					if (obj instanceof String) {
+						String value = (String) obj;
+						String key = StrUtil.getHexStr(value);
+						if (key != null) {
+							getSelectedHexByteStrMap().put(key, value);
+						}
+					}
 				}
 				
 				selectedHexByteViewer.refresh();
@@ -571,7 +612,13 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 				ISelection s = selectedHexByteViewer.getSelection();
 				if (s instanceof IStructuredSelection) {					
 					for (Iterator it = ((IStructuredSelection) s).iterator(); it.hasNext();) {
-						getSelectedHexByteStrSet().remove(it.next());
+						Object obj = it.next();
+						if (obj instanceof String) {
+							String key = StrUtil.getHexStr((String) obj);
+							if (key != null) {
+								getSelectedHexByteStrMap().remove(key);
+							}
+						}
 					}
 				}
 				selectedHexByteViewer.refresh();
@@ -579,11 +626,11 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		};
 	}
 
-	private Set<String> getSelectedHexByteStrSet() {
-		if (selectedHexByteStrSet == null) {
-			selectedHexByteStrSet = new HashSet<String>();
+	private Map<String, String> getSelectedHexByteStrMap() {
+		if (selectedHexByteStrMap == null) {
+			selectedHexByteStrMap = new HashMap<String,String>();
 		}
-		return selectedHexByteStrSet;
+		return selectedHexByteStrMap;
 	}
 	
 

@@ -2664,6 +2664,19 @@ public final class TngUtil {
 		}
 		return strList;
 	}
+	
+	public static List<String> convertStringsToList(String string, String seperator) {
+		ArrayList<String> strList = new ArrayList<String>();
+		if (string == null)
+			string = ""; //$NON-NLS-1$
+		String strings[] = string
+				.split(seperator);
+		for (int i = 0; i < strings.length; i++) {
+			if (strings[i].trim().length() > 0)
+				strList.add(strings[i].trim());
+		}
+		return strList;
+	}
 
 	public static String convertListToString(List<String> strList) {
 		String string = ""; //$NON-NLS-1$
