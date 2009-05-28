@@ -12,6 +12,7 @@ package org.eclipse.epf.common.utils;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IPath;
@@ -69,7 +70,9 @@ public class StrUtil {
 
 	public static final String HTML_TRADEMARK = "&trade;";//$NON-NLS-1$
 	
-	public static boolean during_migration = false; 
+	public static boolean during_migration = false;
+	
+	private static StrUtilOptions options;
 
 	/**
 	 * Private constructor to prevent this class from being instantiated. All
@@ -359,6 +362,7 @@ public class StrUtil {
 			return ""; //$NON-NLS-1$
 		}
 
+		StrUtilOptions options = getOptions();
 		StringBuffer result = new StringBuffer();
 		int length = html.length();
 		for (int i = 0; i < length; i++) {
@@ -368,6 +372,7 @@ public class StrUtil {
 				if (i + 4 < length) {
 					String hexStr = html.substring(i + 1, i + 5);
 					boolean validHextStr = true;
+					
 					for (int j = 0; j < hexStr.length(); j++) {
 						char c = hexStr.charAt(j);
 						if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
@@ -376,14 +381,26 @@ public class StrUtil {
 						}
 					}
 					
-					//code below will treat "%20de" as " de"
-					//this may lose some double bytes character(e.g. Chinese), which start with %20, but keep all url links
-					//so far open this convertion not only during library migration to support file like "my design.gif"
-					if (/*during_migration && */validHextStr) {
-						if (hexStr.startsWith("20")) { //$NON-NLS-1$
-							result.append("%20"); //$NON-NLS-1$
-							i += 2;
-							break;
+					if (options == null) {
+						//code below will treat "%20de" as " de"
+						//this may lose some double bytes character(e.g. Chinese), which start with %20, but keep all url links
+						//so far open this convertion not only during library migration to support file like "my design.gif"
+						if (/*during_migration && */validHextStr) {
+							if (hexStr.startsWith("20")) { //$NON-NLS-1$
+								result.append("%20"); //$NON-NLS-1$
+								i += 2;
+								break;
+							}
+						}
+					} else {
+						int ix = options.getRteUrlDecodingOption();
+						if (ix == 1) {
+							validHextStr = false;
+						} else if (ix == 2) {
+							String key = getHexStr("%" + hexStr);
+							if (key != null && options.getRteUrlDecodingHexMap().containsKey(key)) {
+								validHextStr = false;
+							}
 						}
 					}
 					
@@ -642,4 +659,18 @@ public class StrUtil {
 		
 		return b.toString();
 	}
+	
+	public interface StrUtilOptions {
+		int getRteUrlDecodingOption();
+		Map<String, String> getRteUrlDecodingHexMap();		
+	}
+
+	public static StrUtilOptions getOptions() {
+		return options;
+	}
+
+	public static void setOptions(StrUtilOptions options) {
+		StrUtil.options = options;
+	}
+	
 }

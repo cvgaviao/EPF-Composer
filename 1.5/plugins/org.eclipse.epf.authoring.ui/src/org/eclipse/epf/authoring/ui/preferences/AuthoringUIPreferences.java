@@ -13,6 +13,7 @@ package org.eclipse.epf.authoring.ui.preferences;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
@@ -55,6 +56,9 @@ public class AuthoringUIPreferences {
 	// The plug-in specific preference store.
 	private static IPreferenceStore prefStore = AuthoringUIPlugin.getDefault()
 			.getPreferenceStore();
+	
+	private static boolean toClearStrUtilOptionsCache = false;
+	
 	static {
 		// Initialize the default preference values.
 		prefStore.setDefault(ENABLE_LIBRARY_VALIDATION,
@@ -72,6 +76,21 @@ public class AuthoringUIPreferences {
 		
 		prefStore.setDefault(RTE_URL_DECODING_HEX_NUMBERS, DEFAULT_RTE_URL_DECODING_HEX_NUMBERS);
 		
+		StrUtil.StrUtilOptions strUtilOptions = new StrUtil.StrUtilOptions() {
+			private Map<String, String> cachedMap;
+			public int getRteUrlDecodingOption() {
+				return AuthoringUIPreferences.getRteUrlDecodingOption();
+			}
+			public Map<String, String> getRteUrlDecodingHexMap() {
+				if (cachedMap == null || toClearStrUtilOptionsCache) {
+					toClearStrUtilOptionsCache = false;
+					cachedMap =  AuthoringUIPreferences.getRteUrlDecodingHexMap();
+				}
+				return cachedMap;
+			}
+		};
+		
+		StrUtil.setOptions(strUtilOptions);
 	}
 
 	/**
@@ -177,6 +196,7 @@ public class AuthoringUIPreferences {
 	 * Sets the rte url decoding hex numbers
 	 */
 	public static void setRteUrlDecodingHexNumbers(String value) {
+		toClearStrUtilOptionsCache = true;
 		prefStore.setValue(RTE_URL_DECODING_HEX_NUMBERS, value);
 	}
 	
