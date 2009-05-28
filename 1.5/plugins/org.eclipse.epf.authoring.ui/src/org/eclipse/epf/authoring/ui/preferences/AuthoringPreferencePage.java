@@ -294,10 +294,7 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 			public void widgetSelected(SelectionEvent e) {
 				if (skipAllCheckbox.getSelection()) {
 					skipSelectedChebox.setSelection(false);
-					AuthoringUIPreferences.setgetRteUrlDecodingOption(1);
-				} else if (! skipSelectedChebox.getSelection()) {
-					AuthoringUIPreferences.setgetRteUrlDecodingOption(0);	
-				}
+				} 
 			}
 		});
 		
@@ -305,9 +302,6 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 			public void widgetSelected(SelectionEvent e) {
 				if (skipSelectedChebox.getSelection()) {
 					skipAllCheckbox.setSelection(false);
-					AuthoringUIPreferences.setgetRteUrlDecodingOption(2);
-				} else if (! skipAllCheckbox.getSelection()) {
-					AuthoringUIPreferences.setgetRteUrlDecodingOption(0);	
 				}
 			}
 		});
@@ -406,6 +400,22 @@ public class AuthoringPreferencePage extends BasePreferencePage implements
 		// update the settings for browsing
 		LibraryUIPlugin.getDefault().updateLayoutSettings();
 
+		int ix = 0;
+		if (skipAllCheckbox.getSelection()) {
+			ix = 1;
+		} else if (skipSelectedChebox.getSelection()) {
+			ix = 2;
+		}
+		AuthoringUIPreferences.setgetRteUrlDecodingOption(ix);
+		
+		String toSaveStr = "";	//$NON-NLS-1$
+		for (String str : getSelectedHexByteStrMap().values()) {
+			if (toSaveStr.length() > 0) {
+				toSaveStr += "\n";	//$NON-NLS-1$
+			}
+			toSaveStr += str;
+		}
+		AuthoringUIPreferences.setRteUrlDecodingHexNumbers(toSaveStr);
 		return true;
 	}
 
