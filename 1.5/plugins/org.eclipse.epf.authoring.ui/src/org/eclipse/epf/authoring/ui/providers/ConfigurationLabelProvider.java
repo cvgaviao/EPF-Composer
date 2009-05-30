@@ -85,7 +85,11 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 				name = ProcessUtil
 				.getPresentationName((BreakdownElement) element);
 			} else {
-				name = TngUtil.getPresentationName(element);
+				if (element instanceof MethodElement) {
+					name = ConfigurationHelper.getPresentationName((MethodElement) element, config);
+				} else {
+					name = TngUtil.getPresentationName(element);
+				}
 			}
 
 			// name = ConfigurationHelper.getName((MethodElement)object,
