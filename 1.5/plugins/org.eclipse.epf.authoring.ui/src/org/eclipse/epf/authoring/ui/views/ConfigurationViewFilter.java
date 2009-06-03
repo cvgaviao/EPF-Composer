@@ -11,7 +11,7 @@ public class ConfigurationViewFilter extends ConfigurationFilter {
 	protected Viewer viewer;
 	
 	public ConfigurationViewFilter(MethodConfiguration methodConfig, Viewer viewer) {
-		super(methodConfig);
+		super(methodConfig, false);
 		this.viewer = viewer;
 	}
 	
