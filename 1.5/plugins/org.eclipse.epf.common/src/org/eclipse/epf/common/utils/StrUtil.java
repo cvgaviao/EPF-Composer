@@ -650,7 +650,7 @@ public class StrUtil {
 				c += 'A'; 
 			} 			
 			boolean valid = (c >= '0' && c <= '9') ||
-							(c >= 'A' && c <= 'Z');
+							(c >= 'A' && c <= 'F');
 			if (!valid) {
 				return null;
 			}
