@@ -88,6 +88,12 @@ public class WBSDropCommand extends BSDropCommand {
 					taskDescList.add(desc);
 				}
 			}
+			
+			//For DND a task with a Deliverable to process, don't
+			//bring over with the deliverable parts of the deliverable.
+			//This is to be consistent with DND a task with a artifact:
+			//the sub-artifacts don't get bring over.
+			wpDescToDeliverableParts.clear();
 
 			// Add unique name check for roledesc and wp descriptors as well
 			for (int i = 0; i < roleDescList.size(); i++) {
