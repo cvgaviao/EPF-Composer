@@ -78,7 +78,8 @@ public class IndexBuilder {
 	private StringBuffer indexFolder = null;
 	private String productName = null;
 	private List filesToSkip = new ArrayList();
-
+	private File parentFolder = null;
+	
 	public IndexBuilder(String publishDir) {
 		int appletIndex = -1;
 		if (publishDir == null)
@@ -89,6 +90,7 @@ public class IndexBuilder {
 		pDirectory = UNCUtil.convertFilename((appletIndex > -1) ? publishDir
 				.substring(0, appletIndex + 1) : publishDir);
 		String siteName = pDirectory.replace(File.separatorChar, '/');
+		parentFolder = new File(pDirectory);
 		int index = siteName.length();
 		if (siteName.endsWith("/")) { //$NON-NLS-1$
 			index = index - 1;
@@ -354,8 +356,10 @@ public class IndexBuilder {
 			}
 			
 			luceneDocument = new Document();
-
-			String url = file.getPath().replace(File.pathSeparatorChar, '/');
+			
+			String url = productName
+					+ file.getPath().substring(parentFolder.getPath().length())
+							.replace(File.separatorChar, '/'); //$NON-NLS-1$
 			luceneDocument.add(Field.UnIndexed(URL_FIELD, url));
 			
 //			luceneDocument.add(Field.Text(CONTENT_FIELD, reader));
