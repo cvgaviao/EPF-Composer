@@ -12,10 +12,12 @@ package org.eclipse.epf.publishing.services;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.serviceability.DebugTrace;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.util.FileNameGenerator;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -135,6 +137,7 @@ public abstract class AbstractPublishManager {
 			if (profiling) {
 				beginTime = startTime = System.currentTimeMillis();
 			}
+			FileUtil.setCopiedFileMap(new HashMap<File, File>());
 			
 			prePublish(monitor);
 			if (profiling) {
@@ -165,6 +168,8 @@ public abstract class AbstractPublishManager {
 		} catch (Exception e) {
 			throw new PublishingServiceException(e);
 		} finally {
+			FileUtil.setCopiedFileMap(null);
+			
 			ConfigurationHelper.getDelegate().setPublishingMode(false);
 			if (profiling) {
 				System.out

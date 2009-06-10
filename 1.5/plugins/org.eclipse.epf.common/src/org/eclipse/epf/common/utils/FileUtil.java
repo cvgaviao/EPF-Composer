@@ -22,7 +22,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -34,6 +33,7 @@ import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.eclipse.epf.common.CommonPlugin;
 
@@ -80,6 +80,8 @@ public class FileUtil {
 	 * UTF-8 encoding.
 	 */
 	public static final String ENCODING_UTF_8 = "UTF-8";//$NON-NLS-1$
+	
+	private static Map<File, File> copiedFileMap;
 
 	/**
 	 * Private constructor to prevent this class from being instantiated. All
@@ -575,8 +577,27 @@ public class FileUtil {
 	 *            the target file or path
 	 */
 	public static boolean copyFile(File srcFile, File tgtFile) {
+		Map<File, File> map = getCopiedFileMap();
+		File keyFile = null;
+		File valFile = null;
+		if (map != null) {
+			try {
+				keyFile = tgtFile.getCanonicalFile();
+				valFile = srcFile.getCanonicalFile();
+				if (valFile.equals(map.get(keyFile))) {
+					return true;
+				}
+			} catch (Exception e) {
+				keyFile = valFile = null;
+			}			
+		}
+				
 		try {
-			return copyfile(srcFile, tgtFile);
+			boolean ret = copyfile(srcFile, tgtFile);
+			if (map != null && keyFile != null && valFile != null) {
+				map.put(keyFile, valFile);
+			}
+			return ret;
 		} catch (IOException ex) {
 			CommonPlugin.getDefault().getLogger().logError(ex);
 			return false;
@@ -1084,5 +1105,13 @@ public class FileUtil {
 			copyfile(sourceFile, destFile);
 			sourceFile.delete();
 		}
+	}
+
+	private static Map<File, File> getCopiedFileMap() {
+		return copiedFileMap;
+	}
+
+	public static void setCopiedFileMap(Map<File, File> copiedFileMap) {
+		FileUtil.copiedFileMap = copiedFileMap;
 	}
 }
