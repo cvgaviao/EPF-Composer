@@ -184,6 +184,17 @@ public class CategorySortHelper {
 		return returnList;
 	}
 	
+	private static List<Object> findManualSortOrderInContributors(ContentCategory cc, List<Object> elementList,
+			EStructuralFeature feature) {
+		String sortType = getCategorySortValue(cc);
+		if (! V_CATEGORY_ELEMENTS__SORT_TYPE_MANUAL.equals(sortType)) {
+			return elementList;
+		}
+		
+		ManualSort manualSort = new ManualSort();
+		return manualSort.sort(cc, elementList, feature);
+	}
+	
 	private static List<Object> findManualSortOrderInContributors(ContentCategory cc, List<Object> elementList) {
 		OrderInfo latestInfo = null;
 		Map<String, MethodElement> guidMap = new HashMap<String, MethodElement>();
