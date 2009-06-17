@@ -129,9 +129,7 @@ public class ManualSort {
 					}
 					List list = orderedMap.get(guid);
 					if (list != null) {
-						for (Object obj : list) {
-							addedList.addAll(list);
-						}
+						addedList.addAll(list);
 						orderedMap.put(guid, addedList);
 						addedList =  new ArrayList<MethodElement>();
 					}
