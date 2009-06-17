@@ -40,10 +40,10 @@ public class ManualSort {
 			EStructuralFeature feature) {
 		
 		List<OrderInfo> orderInfoList = new ArrayList<OrderInfo>();
-		for (Iterator iter = TngUtil.getContributors(cc);iter.hasNext();) {
+		for (Iterator iter = TngUtil.getContributors(cc); iter.hasNext();) {
 			Object obj = iter.next();
 			if (obj instanceof ContentCategory) {
-				ContentCategory contributor = (ContentCategory)obj;
+				ContentCategory contributor = (ContentCategory) obj;
 				OrderInfo orderInfo = TngUtil.getOrderInfo(contributor, ContentElementOrderList.ORDER_INFO_NAME);
 				if (orderInfo != null) {
 					orderInfoList.add(orderInfo);
@@ -83,17 +83,21 @@ public class ManualSort {
 			Set<String> baseCategorizedElementGuids = new HashSet<String>();
 			ContentCategory base = cc;
 			while (base != null) {
-				Object value = cc.eGet(feature);
-				if (value instanceof List) {
-					for (Object obj : (List) value) {
-						if (obj instanceof MethodElement) {
-							baseCategorizedElementGuids.add(((MethodElement) obj).getGuid());
+				addToBaseCategorizedElementGuids(feature, baseCategorizedElementGuids, base);
+				
+				if (base != cc) {
+					for (Iterator iter = TngUtil.getContributors(base); iter.hasNext();) {
+						Object obj = iter.next();
+						if (obj instanceof ContentCategory) {
+							ContentCategory contributor = (ContentCategory) obj;
+							addToBaseCategorizedElementGuids(feature, baseCategorizedElementGuids, contributor);
 						}
 					}
 				}
-				if (cc.getVariabilityType() == VariabilityType.EXTENDS || 
-						cc.getVariabilityType() == VariabilityType.EXTENDS_REPLACES) {
-					base = (ContentCategory) cc.getVariabilityBasedOnElement();
+								
+				if (base.getVariabilityType() == VariabilityType.EXTENDS || 
+						base.getVariabilityType() == VariabilityType.EXTENDS_REPLACES) {
+					base = (ContentCategory) base.getVariabilityBasedOnElement();
 				} else {
 					base = null;
 				}
@@ -115,6 +119,18 @@ public class ManualSort {
 			}						
 			
 			processedGuidSet = new HashSet<String>();
+		}
+
+		private void addToBaseCategorizedElementGuids(EStructuralFeature feature,
+				Set<String> baseCategorizedElementGuids, ContentCategory cc) {
+			Object value = cc.eGet(feature);
+			if (value instanceof List) {
+				for (Object obj : (List) value) {
+					if (obj instanceof MethodElement) {
+						baseCategorizedElementGuids.add(((MethodElement) obj).getGuid());
+					}
+				}
+			}
 		}
 		
 		public void processOrderInfo(OrderInfo orderInfo) {
