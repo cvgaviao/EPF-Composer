@@ -66,7 +66,7 @@ public class ManualSort {
 		SortData sortData = new SortData(cc, elementList, feature);
 		
 		for (OrderInfo info : orderInfoList) {
-			sortData.processOrderInfo(orderInfo);
+			sortData.processOrderInfo(info);
 		}		
 		return sortData.getSortedList();
 	}
@@ -121,14 +121,20 @@ public class ManualSort {
 			List<MethodElement> addedList = new ArrayList<MethodElement>();
 			for (String guid : (List<String>) orderInfo.getGUIDs()) {
 				MethodElement element = (MethodElement) guidMap.get(guid);
-				if (element != null && !processedGuidSet.contains(guid)) {
-					addedList.add(element);
+				if (element != null) {
+					boolean processed = processedGuidSet.contains(guid);
+					if (! processed) {
+						processedGuidSet.add(guid);
+						addedList.add(element);
+					}
 					List list = orderedMap.get(guid);
 					if (list != null) {
-						list.addAll(addedList);
-						addedList.clear();
+						for (Object obj : list) {
+							addedList.addAll(list);
+						}
+						orderedMap.put(guid, addedList);
+						addedList =  new ArrayList<MethodElement>();
 					}
-					processedGuidSet.add(guid);
 				} 
 			}
 		}

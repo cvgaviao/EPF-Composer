@@ -142,7 +142,7 @@ public class CategorySortHelper {
 	 * @return
 	 */
 	public static List<Object> sortCategoryElements(MethodElement element, Object[] elements) {
-		return sortCategoryElements(element, elements, false);
+		return sortCategoryElements(element, elements, false, null);
 	}
 
 	/**
@@ -152,7 +152,8 @@ public class CategorySortHelper {
 	 * @param forcePresNameSort true to always sort by presName. false will respect the toggle
 	 * @return
 	 */
-	public static List<Object> sortCategoryElements(MethodElement element, Object[] elements, boolean forcePresNameSort) {
+	public static List<Object> sortCategoryElements(MethodElement element, Object[] elements, 
+			boolean forcePresNameSort, EStructuralFeature feature) {
 		/*
 		 * TODO: can't use generics here because EMF doesn't use them yet - the elements param
 		 * usually comes from ContentElementsOrderList class which extends EMF's BasicEList and so
@@ -162,7 +163,7 @@ public class CategorySortHelper {
 		String sortType = getCategorySortValue(element);
 		if (V_CATEGORY_ELEMENTS__SORT_TYPE_MANUAL.equals(sortType)) {
 			if (element instanceof ContentCategory) {
-				return findManualSortOrderInContributors((ContentCategory)element, returnList);
+				return findManualSortOrderInContributors((ContentCategory)element, returnList, feature);
 			}
 			return returnList;
 		} else if (V_CATEGORY_ELEMENTS__SORT_TYPE_ALPHA.equals(sortType)) {
@@ -186,6 +187,9 @@ public class CategorySortHelper {
 	
 	private static List<Object> findManualSortOrderInContributors(ContentCategory cc, List<Object> elementList,
 			EStructuralFeature feature) {
+		if (feature == null) {
+			return elementList;
+		}
 		String sortType = getCategorySortValue(cc);
 		if (! V_CATEGORY_ELEMENTS__SORT_TYPE_MANUAL.equals(sortType)) {
 			return elementList;
@@ -195,6 +199,7 @@ public class CategorySortHelper {
 		return manualSort.sort(cc, elementList, feature);
 	}
 	
+	//Keep this old code for reference
 	private static List<Object> findManualSortOrderInContributors(ContentCategory cc, List<Object> elementList) {
 		OrderInfo latestInfo = null;
 		Map<String, MethodElement> guidMap = new HashMap<String, MethodElement>();
