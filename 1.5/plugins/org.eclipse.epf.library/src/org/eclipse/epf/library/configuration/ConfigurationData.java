@@ -495,8 +495,11 @@ public class ConfigurationData {
 				}
 			}*/
 			
+			boolean isLibOrPluginOrConfig = element instanceof MethodLibrary ||
+			element instanceof MethodConfiguration || element instanceof MethodPlugin;
+			
 			SupportingElementData seData = getSupportingElementData();
-			if (seData != null && seData.isEnabled() && !seData.bypassLogic()) {
+			if (!isLibOrPluginOrConfig && seData != null && seData.isEnabled() && !seData.bypassLogic()) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 				if (plugin != null && plugin.isSupporting()) {
 					int ix = seData.checkInConfigIndex(element);
