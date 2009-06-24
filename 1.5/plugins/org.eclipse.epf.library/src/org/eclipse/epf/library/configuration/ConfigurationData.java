@@ -499,13 +499,18 @@ public class ConfigurationData {
 			element instanceof MethodConfiguration || element instanceof MethodPlugin;
 			
 			SupportingElementData seData = getSupportingElementData();
-			if (!isLibOrPluginOrConfig && seData != null && seData.isEnabled() && !seData.bypassLogic()) {
-				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
-				if (plugin != null && plugin.isSupporting()) {
-					int ix = seData.checkInConfigIndex(element);
-					//ix: 0 = unknown, 1 = yes, 2 = no
-					if (ix == 1 || ix == 2) {
-						return ix == 1;
+			if (!isLibOrPluginOrConfig && seData != null && !seData.bypassLogic()) {
+				if (seData.isNeedUpdateChanges()) {
+					seData.updateChanges();
+				}
+				if (seData.isEnabled()) {
+					MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+					if (plugin != null && plugin.isSupporting()) {
+						int ix = seData.checkInConfigIndex(element);
+						//ix: 0 = unknown, 1 = yes, 2 = no
+						if (ix == 1 || ix == 2) {
+							return ix == 1;
+						}
 					}
 				}
 			}				
