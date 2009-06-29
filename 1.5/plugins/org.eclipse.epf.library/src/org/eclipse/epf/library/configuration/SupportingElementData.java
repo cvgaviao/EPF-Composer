@@ -422,7 +422,8 @@ public class SupportingElementData extends ConfigDataBase {
 		for (VariabilityElement child : vChildren) {
 			if (child.getVariabilityBasedOnElement() == base) { // double check
 				if (child.getVariabilityType() == VariabilityType.CONTRIBUTES
-						|| child.getVariabilityType() == VariabilityType.REPLACES) {
+						|| child.getVariabilityType() == VariabilityType.REPLACES
+						|| child.getVariabilityType() == VariabilityType.EXTENDS_REPLACES) {
 					// child may not be under an supporting plugin -> ok
 					if (isOwnerSelected(child, null, false)) {
 						List<VariabilityElement> replacers = getReplacers(child);
@@ -461,7 +462,8 @@ public class SupportingElementData extends ConfigDataBase {
 		List<VariabilityElement> replacers = new ArrayList<VariabilityElement>();
 		for (VariabilityElement child : vChildren) {
 			if (child.getVariabilityBasedOnElement() == base) { // double check
-				if (child.getVariabilityType() == VariabilityType.REPLACES) {					
+				if (child.getVariabilityType() == VariabilityType.REPLACES ||
+					child.getVariabilityType() == VariabilityType.EXTENDS_REPLACES) {					
 					if (ConfigurationHelper.inConfig(child, config)
 							|| isOwnerSelected(child, null, false)) {
 						replacers.add(child);
