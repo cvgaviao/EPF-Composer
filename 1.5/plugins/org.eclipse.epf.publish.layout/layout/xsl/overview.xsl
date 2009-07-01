@@ -138,19 +138,35 @@
 												</tr>
 											</xsl:if>
 										</xsl:otherwise>
-									</xsl:choose>
+									</xsl:choose>	
 									<xsl:if test="$visibleTags">
-										<tr>
-											<td>
-												Tags: <xsl:value-of select="$visibleTags"/>
-											</td>
-										</tr>
-									</xsl:if>
+										<tr><td>
+										<xsl:call-template name="processTags">
+											<xsl:with-param name="tagStr" select="$visibleTags"/>
+										</xsl:call-template>
+										</td></tr>
+									</xsl:if>					
 								</table>
 							</td>
 						</tr>
 					</table>
 				</div>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template name="processTags">
+		<xsl:param name="tagStr"/>
+		<xsl:choose>
+			<xsl:when test="contains($tagStr,',,')">
+				<xsl:value-of select="substring-before($tagStr,',,')"/>
+				<br/>
+				<xsl:call-template name="processTags">
+					<xsl:with-param name="tagStr" select="substring-after($tagStr,',,')"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$tagStr"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
