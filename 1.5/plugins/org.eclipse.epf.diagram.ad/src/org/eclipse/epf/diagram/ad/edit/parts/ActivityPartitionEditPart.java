@@ -345,7 +345,11 @@ public class ActivityPartitionEditPart extends ShapeNodeEditPart {
 
 		@Override
 		public void paintFigure(Graphics graphics) {
-			if (isOpaque())
+// this was overridden to resolve label overlap issue for all the nodes but this breaks activity partition fill color and 
+// introduced "01483134: Activity Partition Fill Color doesn't do anything."
+// most likely we don't have any issue with label overlap for activity partition
+// hence commenting it to fix fill color--- shilpat
+//			if (isOpaque())
 				super.paintFigure(graphics);
 			return;
 		}
