@@ -388,10 +388,6 @@ a.tab:hover {
 	width: 100%;
 }
 
-.stepTable td {
-	border: #ccc solid 0px;
-}
-
 .stepSeparator {
 	background-color: #cccccc;
 	padding: 0px;
