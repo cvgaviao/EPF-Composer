@@ -14,16 +14,22 @@
 -->
 <plugin>
 
-   <extension point="org.eclipse.core.runtime.preferences">
-      <initializer class="org.eclipse.epf.diagram.ad.part.UMLDiagramPreferenceInitializer"/>
-   </extension>
-
-  <extension point="org.eclipse.team.core.fileTypes">
+	<extension point="org.eclipse.core.runtime.preferences">
+	      <initializer class="org.eclipse.epf.diagram.ad.part.UMLDiagramPreferenceInitializer"/>
+	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+            category="org.eclipse.epf.publishing.ui.preferences.ActivityDiagramPreferencePage"
+            class="org.eclipse.epf.diagram.ad.preferences.DiagramConnectionsPreferencePage"
+            id="org.eclipse.epf.diagram.ad.preferences.DiagramConnectionsPreferencePage"
+            name="%preferences.connections"/>      
+    </extension>
+    <extension point="org.eclipse.team.core.fileTypes">
       <fileTypes
          type="text"
          extension="xmi">
       </fileTypes>
-  </extension>
+    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser

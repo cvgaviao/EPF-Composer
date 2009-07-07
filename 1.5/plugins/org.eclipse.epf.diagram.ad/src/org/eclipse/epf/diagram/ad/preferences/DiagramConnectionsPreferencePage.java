@@ -22,6 +22,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
 	 * @generated
 	 */
 	public DiagramConnectionsPreferencePage() {
+		super();
 		setPreferenceStore(ActivityDiagramEditorPlugin.getInstance()
 				.getPreferenceStore());
 	}
