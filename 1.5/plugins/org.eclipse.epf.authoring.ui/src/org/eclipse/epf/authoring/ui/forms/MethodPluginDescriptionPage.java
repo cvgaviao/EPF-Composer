@@ -57,7 +57,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -107,6 +106,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	protected Adapter userChangeableAdapter;
 
 //	protected ModifyListener nameModifyListener;
+	protected Listener deactiveListener;
 	
 	protected ISelectionChangedListener refModelSelChangedListener = new ISelectionChangedListener() {
 		public void selectionChanged(SelectionChangedEvent event) {
@@ -314,7 +314,12 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		ctrl_name.removeFocusListener(nameFocusListener);
 //		nameModifyListener = editor.createModifyListener(plugin, true);
 //		ctrl_name.addModifyListener(nameModifyListener);
-		ctrl_name.addListener(SWT.Deactivate, new Listener() {
+		
+		//FixFor: RATLC01378591
+		//The changePlguinName() depends SWT.Deactivate listener to be invoked, but when try to close edtior for 
+		//elements which have been changed of the plugin, it will invoke SWT.Deactivate even again, that's
+		//why the dialog pop up again and again 
+		deactiveListener = new Listener() {
 			public void handleEvent(Event e) {
 				String oldContent = plugin.getName();
 				if (((MethodElementEditor) getEditor()).mustRestoreValue(
@@ -349,9 +354,12 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 				}
 				if (msg == null) {
 					if (!validName.equals(plugin.getName())) {
+						ctrl_name.removeListener(SWT.Deactivate, deactiveListener);
 						if (!changePlguinName(e, validName)) {
+							ctrl_name.addListener(SWT.Deactivate, deactiveListener);
 							return;
 						}
+						ctrl_name.addListener(SWT.Deactivate, deactiveListener);
 					}
 				} else {
 					ctrl_name.setText(plugin.getName());
@@ -368,7 +376,9 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 				}
 			}
 
-		});
+		};
+		
+		ctrl_name.addListener(SWT.Deactivate, deactiveListener);
 		ctrl_name.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
 				((MethodElementEditor) getEditor()).setCurrentFeatureEditor(e.widget,
@@ -696,7 +706,8 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 		if (e != null) {
 			e.doit = true;
 		}
-		EditorChooser.getInstance().closeMethodEditorsForPluginElements(plugin);
+		
+		EditorChooser.getInstance().closeMethodEditorsForPluginElements(plugin);		
 		ctrl_name.setText(validName);
 		boolean status = actionMgr.doAction(IActionManager.SET,
 				plugin, UmaPackage.eINSTANCE
