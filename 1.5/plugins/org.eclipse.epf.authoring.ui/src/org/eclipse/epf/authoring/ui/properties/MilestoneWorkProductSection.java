@@ -28,6 +28,7 @@ import org.eclipse.epf.library.edit.process.command.AssignWPToMilestone;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.UmaPackage;
@@ -215,6 +216,48 @@ public class MilestoneWorkProductSection extends RelationSection {
 				if (obj instanceof WorkProductDescriptor)
 					return true;
 				return false;
+			}
+			
+			protected void getActivitiesInScope(AdapterFactory adapterFactory,
+					BreakdownElement element, List activityList) {				
+				// get all parents in scope
+				getParentActivitiesInScope(adapterFactory, element, activityList);
+				
+				// find parent of the element
+				ItemProviderAdapter adapter = (ItemProviderAdapter) adapterFactory.adapt(element, ITreeItemContentProvider.class);
+				Object parent = adapter.getParent(element);
+				
+				// get all children of the parent in other words siblings of the element
+				getChildrenActivitiesInScope(adapterFactory, (BreakdownElement) parent, activityList);
+			}
+			
+			private void getParentActivitiesInScope(AdapterFactory adapterFactory,
+					BreakdownElement element, List activityList) {
+				ItemProviderAdapter adapter = (ItemProviderAdapter) adapterFactory
+						.adapt(element, ITreeItemContentProvider.class);
+				Object parent = adapter.getParent(element);
+				if (parent instanceof Activity && !activityList.contains(parent)) {   
+					activityList.add(parent);
+					getParentActivitiesInScope(adapterFactory, (BreakdownElement) parent,
+							activityList);
+				}
+			}
+			
+			private void getChildrenActivitiesInScope(AdapterFactory adapterFactory,
+					BreakdownElement element, List activityList) {
+				ItemProviderAdapter adapter = (ItemProviderAdapter) adapterFactory
+						.adapt(element, ITreeItemContentProvider.class);
+				List children = (List) adapter.getChildren(element);
+				if (!children.isEmpty() && children.size() > 0) {
+					for (int i=0; i < children.size(); i++) {
+						Object child = children.get(i);
+						if (child instanceof Activity && !activityList.contains(child)) {
+							activityList.add(child);
+							getChildrenActivitiesInScope(adapterFactory, (BreakdownElement) child,
+									activityList);
+						}
+					}	
+				}
 			}
 		};
 	}
