@@ -40,6 +40,7 @@ import org.eclipse.swt.browser.StatusTextListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.HelpListener;
+import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MenuEvent;
@@ -1243,39 +1244,73 @@ public class RichText implements IRichText {
 				}
 			});
 
-			editorControl.addListener(SWT.KeyUp, new Listener() {
-				public void handleEvent(Event event) {
-					int keyCode = event.keyCode;
-					int stateMask = event.stateMask;
-					if (debug) {
-						printDebugMessage(
-								"keyUpListener", "keyCode=" + keyCode //$NON-NLS-1$ //$NON-NLS-2$
-										+ ", stateMask=" + stateMask + ", editable=" + editable); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-					if ((stateMask & SWT.CTRL) > 0
-							|| (stateMask & SWT.ALT) > 0
-							|| ((stateMask & SWT.SHIFT) > 0 && keyCode == stateMask)) {
-						return;
-					}
-					if (editable) {
-						switch (event.keyCode) {
-						case SWT.ARROW_DOWN:
-						case SWT.ARROW_LEFT:
-						case SWT.ARROW_RIGHT:
-						case SWT.ARROW_UP:
-						case SWT.END:
-						case SWT.HOME:
-						case SWT.PAGE_DOWN:
-						case SWT.PAGE_UP:
-						case SWT.TAB:
+	        editorControl.addKeyListener(new KeyAdapter() {
+	        	   public void keyPressed(KeyEvent event) {
+						int keyCode = event.keyCode;
+						int stateMask = event.stateMask;
+						if (debug) {
+							printDebugMessage(
+									"keyUpListener", "keyCode=" + keyCode //$NON-NLS-1$ //$NON-NLS-2$
+											+ ", stateMask=" + stateMask + ", editable=" + editable); //$NON-NLS-1$ //$NON-NLS-2$
+						}
+						if ((stateMask & SWT.CTRL) > 0
+								|| (stateMask & SWT.ALT) > 0
+								|| ((stateMask & SWT.SHIFT) > 0 && keyCode == stateMask)) {
 							return;
-						default:
-							checkModify();
-							break;
+						}
+						if (editable) {
+							switch (event.keyCode) {
+							case SWT.ARROW_DOWN:
+							case SWT.ARROW_LEFT:
+							case SWT.ARROW_RIGHT:
+							case SWT.ARROW_UP:
+							case SWT.END:
+							case SWT.HOME:
+							case SWT.PAGE_DOWN:
+							case SWT.PAGE_UP:
+							case SWT.TAB:
+								return;
+							default:
+								checkModify();
+								break;
+							}
 						}
 					}
-				}
-			});
+				});
+			
+//			editorControl.addListener(SWT.KeyUp, new Listener() {
+//				public void handleEvent(Event event) {
+//					int keyCode = event.keyCode;
+//					int stateMask = event.stateMask;
+//					if (debug) {
+//						printDebugMessage(
+//								"keyUpListener", "keyCode=" + keyCode //$NON-NLS-1$ //$NON-NLS-2$
+//										+ ", stateMask=" + stateMask + ", editable=" + editable); //$NON-NLS-1$ //$NON-NLS-2$
+//					}
+//					if ((stateMask & SWT.CTRL) > 0
+//							|| (stateMask & SWT.ALT) > 0
+//							|| ((stateMask & SWT.SHIFT) > 0 && keyCode == stateMask)) {
+//						return;
+//					}
+//					if (editable) {
+//						switch (event.keyCode) {
+//						case SWT.ARROW_DOWN:
+//						case SWT.ARROW_LEFT:
+//						case SWT.ARROW_RIGHT:
+//						case SWT.ARROW_UP:
+//						case SWT.END:
+//						case SWT.HOME:
+//						case SWT.PAGE_DOWN:
+//						case SWT.PAGE_UP:
+//						case SWT.TAB:
+//							return;
+//						default:
+//							checkModify();
+//							break;
+//						}
+//					}
+//				}
+//			});
 
 			editor.addLocationListener(new LocationAdapter() {
 				public void changing(LocationEvent event) {
