@@ -44,6 +44,7 @@ import org.eclipse.epf.richtext.RichTextListener;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -495,7 +496,11 @@ public class ChecklistItemsPage extends BaseFormPage {
 						AuthoringUIResources.ChecklistOrder_title, 
 						AuthoringUIResources.ChecklistOrder_description, 
 						AuthoringUIResources.ChecklistOrder_checklistitems_text); 
-				dlg.open();
+				boolean isDirty = getEditor().isDirty();
+				int rtnValue = dlg.open();
+				if(!isDirty && rtnValue == Dialog.CANCEL && getEditor().isDirty()){
+					getEditor().doSave(null);
+				}
 			}
 		});
 	}
