@@ -38,6 +38,10 @@ var KEY_HOME = 36;
 var KEY_PAGE_DOWN = 34;
 var KEY_PAGE_UP = 33;
 var KEY_TAB = 9;
+
+var KEY_B = 66;
+var KEY_U = 85;
+var KEY_I = 73;
 var KEY_C = 67;
 var KEY_F = 70;
 var KEY_S = 83;
@@ -98,15 +102,24 @@ function keyPressed(event) {
 	if (keyCode == 0 && !document.all) {
 		keyCode = event.charCode;
 		switch (keyCode) {
+		    case 98:
+		     	keyCode = KEY_B;
+				break;
 			case 99:
 				keyCode = KEY_C;
 				break;
 			case 102:
 				keyCode = KEY_F;
 				break;
+		    case 105:
+		        keyCode = KEY_I;
+		        break;
 			case 115:
 				keyCode = KEY_S;
 				break;
+		    case 117:
+		        keyCode = KEY_U;
+		        break;
 			case 118:
 				keyCode = KEY_V;
 				break;
@@ -137,6 +150,13 @@ function keyPressed(event) {
 				setTimeout("setStatus(STATUS_MODIFIED, null);", 10);
 			}
 			break;
+		case KEY_B:
+		case KEY_U:
+		case KEY_I:
+		   if (!readOnly && ctrlKey) {
+		      setTimeout("setStatus(STATUS_MODIFIED, null);",10);
+		   }
+		   break;
 		case KEY_C:
 			if (ctrlKey) {
 				setStatus(STATUS_KEY_DOWN, CMD_COPY);
