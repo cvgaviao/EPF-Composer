@@ -106,7 +106,8 @@
 							<xsl:call-template name="keyConsiderationsSection">
 								<xsl:with-param name="description" select="$descriptorDescription"/>
 							</xsl:call-template>					
-							<xsl:call-template name="moreInfoSection"/>		
+							<xsl:call-template name="moreInfoSection"/>	
+							<xsl:call-template name="relationshipsSection"/>	
 							<xsl:call-template name="copyright">
 								<xsl:with-param name="copyright" select="$copyright"/>
 							</xsl:call-template>
@@ -234,5 +235,22 @@
 		</xsl:if>
 	</xsl:template>
 
-
+	<xsl:template name="relationshipsSection">
+		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
+		<xsl:if test="count($categories) > 0">
+			<div class="sectionHeading">
+				<xsl:value-of select="$relationshipsText"/>
+			</div>
+			<div class="sectionContent">
+				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="addReferences">
+						<xsl:with-param name="refName" select="$categoriesText"/>
+						<xsl:with-param name="refElement" select="$categories"/>
+					</xsl:call-template>
+				</table>
+			</div>
+		</xsl:if>
+	</xsl:template>	
+					
+					
 </xsl:stylesheet>
