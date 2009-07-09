@@ -19,7 +19,7 @@
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-            category="org.eclipse.epf.publishing.ui.preferences.ActivityDiagramPreferencePage"
+            category="org.eclipse.epf.authoring.ui.preferences.ActivityDiagramPrefPage"
             class="org.eclipse.epf.diagram.ad.preferences.DiagramConnectionsPreferencePage"
             id="org.eclipse.epf.diagram.ad.preferences.DiagramConnectionsPreferencePage"
             name="%preferences.connections"/>      
