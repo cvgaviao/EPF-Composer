@@ -271,7 +271,11 @@ var contentPage = {
 			url = url.replace(/'/g, "\\'");
 			url = url.replace(/\"/g, "\\\"");
 
-			html = html.concat(["<a href=\"", url, "\">", bc.title, "</a>"]) ;
+			if (i == bcs.length-1) {
+				html = html.concat(["<span>", bc.title, "</span>"]);
+			} else {
+				html = html.concat(["<a href=\"", url, "\">", bc.title, "</a>"]);
+			}
 			slen = html.length;
 		}
 
