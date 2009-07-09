@@ -52,6 +52,7 @@ public final class PublishingUIResources extends NLS {
 
 	public static String publishWebSiteGroup_text;
 	public static String browsingLayoutGroup_text;
+	public static String wpSlotDpRuleGroup_text;
 
 	public static String titleAndLinksGroup_text;
 
@@ -88,6 +89,8 @@ public final class PublishingUIResources extends NLS {
 	public static String publishLightWeightTreeLabel_text;
 
 	public static String publishExtraDescriptorInfoLabel_text;
+	
+	public static String fulfillDescriptorSlotByContentCheckbox_text;
 
 	public static String publishEmptyCategoriesLabel_text;
 

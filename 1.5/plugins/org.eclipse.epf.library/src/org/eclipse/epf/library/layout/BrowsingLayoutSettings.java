@@ -28,6 +28,7 @@ public class BrowsingLayoutSettings {
 	private boolean showExtraInfoForDescriptors = false;
 	private boolean publishUnopenActivitydd = false;
 	private boolean publishADForActivityExtension = false;
+	private boolean fulfillDescriptorSlotByContent = false;
 	
 	// if true, the to-many outgoing association from base will be ignored if the extender has its own
 	private boolean useNewExtendSemantics = false;
@@ -136,5 +137,14 @@ public class BrowsingLayoutSettings {
 		}
 		
 		updatedSites.add(builder.getPublishDir());
+	}
+
+	public boolean isFulfillDescriptorSlotByContent() {
+		return fulfillDescriptorSlotByContent;
+	}
+
+	public void setFulfillDescriptorSlotByContent(
+			boolean fulfillDescriptorSlotByContent) {
+		this.fulfillDescriptorSlotByContent = fulfillDescriptorSlotByContent;
 	}
 }

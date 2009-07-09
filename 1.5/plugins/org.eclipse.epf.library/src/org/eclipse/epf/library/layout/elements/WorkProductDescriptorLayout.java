@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.Activity;
@@ -220,12 +221,13 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 				}
 			}
 
+			boolean showWps = BrowsingLayoutSettings.INSTANCE.isFulfillDescriptorSlotByContent();
 			if (isSlot) {
 				OppositeFeature ofeature = AssociationHelper.FulFills_FullFillableElements;
 				List list = ConfigurationHelper
 						.calcFulfills_FulfillableElement(wp, config);
-				List<WorkProductDescriptor> wpdList = getWpdList(wpWpdMap, list);
-				addReferences(ofeature, elementXml, ofeature.getName(), wpdList);
+				List<WorkProductDescriptor> wpdList = showWps ? null : getWpdList(wpWpdMap, list);
+				addReferences(ofeature, elementXml, ofeature.getName(), showWps ? list : wpdList);
 			} else if (wp != null) {
 				EReference feature = UmaPackage.eINSTANCE
 						.getFulfillableElement_Fulfills();

@@ -52,6 +52,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 	private Button browseButton;
 
 	private Button extraDescriptorInfoCheckbox;
+	
+	private Button fulfillDescriptorSlotByContentCheckbox;
 
 	/**
 	 * Creates and returns the SWT control for the customized body of this
@@ -85,7 +87,12 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		Group browsingGroup = createGridLayoutGroup(composite, PublishingUIResources.browsingLayoutGroup_text, 1);
 		extraDescriptorInfoCheckbox = createCheckbox(browsingGroup,
 				PublishingUIResources.publishExtraDescriptorInfoLabel_text, 1);
-
+		
+		// Create the Browsing group.
+		Group wpSlotDpRuleGroup = createGridLayoutGroup(composite, PublishingUIResources.wpSlotDpRuleGroup_text, 1);
+		fulfillDescriptorSlotByContentCheckbox = createCheckbox(wpSlotDpRuleGroup,
+				PublishingUIResources.fulfillDescriptorSlotByContentCheckbox_text, 1);
+		
 		initControls();
 
 		addListeners();
@@ -100,7 +107,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		destinationPathText.setText(PublishingUIPreferences.getPublishPath());
 		feedbackURLText.setText(PublishingUIPreferences.getFeedbackURL());
 		extraDescriptorInfoCheckbox.setSelection(PublishingUIPreferences
-				.getExtraDescriptorInfo());
+				.getExtraDescriptorInfo());		
+		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
+				.getFulfillDescriptorSlotByContent());
 	}
 
 	/**
@@ -156,7 +165,10 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		PublishingUIPreferences
 				.setExtraDescriptorInfo(extraDescriptorInfoCheckbox
 						.getSelection());
-
+		PublishingUIPreferences
+			.setFulfillDescriptorSlotByContent(fulfillDescriptorSlotByContentCheckbox
+				.getSelection());
+		
 //		// FIXME! Review implementation.
 //		// allow to pass the value to the library browsing
 //		// System.setProperty(EXTRA_DESCRIPTOR_INFO,
@@ -173,6 +185,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				.setText(PublishingUIPreferences.getDefaultFeedbackURL());
 		extraDescriptorInfoCheckbox.setSelection(PublishingUIPreferences
 				.getDefaultExtraDescriptorInfo());
+		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
+				.getDefaultFulfillDescriptorSlotByContent());		
 	}
 
 	/**

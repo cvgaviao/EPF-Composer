@@ -53,6 +53,8 @@ public class PublishingUIPreferences {
 	private static final String LIGHT_WEIGHT_TREE = "lightWeightTree"; //$NON-NLS-1$
 
 	private static final String EXTRA_DESCRIPTOR_INFO = "extraDescriptorInfo"; //$NON-NLS-1$
+	
+	private static final String FULFILL_DESCRIPTOR_SLOT_BY_CONTENT = "fulfillDescriptorSlotByContent"; //$NON-NLS-1$
 
 	private static final String PUBLISH_UNOPEN_ACTIVITY_DD = "publishUnopenActivityDD"; //$NON-NLS-1$
 
@@ -113,6 +115,9 @@ public class PublishingUIPreferences {
 		prefStore.setDefault(LIGHT_WEIGHT_TREE, true);
 		prefStore.setDefault(EXTRA_DESCRIPTOR_INFO,
 				getDefaultExtraDescriptorInfo());
+		prefStore.setDefault(FULFILL_DESCRIPTOR_SLOT_BY_CONTENT,
+				getDefaultFulfillDescriptorSlotByContent());
+		
 		prefStore.setDefault(DEFAULT_ACTIVITY_TAB,
 				ActivityLayout.TAB_NAME_ACTIVITY_WBS);
 
@@ -705,7 +710,7 @@ public class PublishingUIPreferences {
 	public static boolean getDefaultExtraDescriptorInfo() {
 		return false;
 	}
-
+	
 	/**
 	 * Gets the extra descriptor info preference value.
 	 * 
@@ -723,6 +728,34 @@ public class PublishingUIPreferences {
 	 */
 	public static void setExtraDescriptorInfo(boolean value) {
 		prefStore.setValue(EXTRA_DESCRIPTOR_INFO, value);
+	}
+	
+	/**
+	 * Gets the default fulfill descriptor slot by content preference value.
+	 * 
+	 * @return <code>true</code> if the preference is set
+	 */
+	public static boolean getDefaultFulfillDescriptorSlotByContent() {
+		return false;
+	}
+	
+	/**
+	 * Gets the fulfill descriptor slot by content preference value.
+	 * 
+	 * @return the preference value
+	 */
+	public static boolean getFulfillDescriptorSlotByContent() {
+		return prefStore.getBoolean(FULFILL_DESCRIPTOR_SLOT_BY_CONTENT);
+	}
+
+	/**
+	 * Sets the fulfill descriptor slot by content preference value.
+	 * 
+	 * @param value
+	 *            the preference value
+	 */
+	public static void setFulfillDescriptorSlotByContent(boolean value) {
+		prefStore.setValue(FULFILL_DESCRIPTOR_SLOT_BY_CONTENT, value);
 	}
 
 	/**

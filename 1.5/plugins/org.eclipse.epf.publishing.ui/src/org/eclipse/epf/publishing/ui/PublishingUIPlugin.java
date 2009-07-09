@@ -82,5 +82,8 @@ public class PublishingUIPlugin extends AbstractPlugin {
 		//BrowsingLayoutSettings.INSTANCE.setPublishUnopenActivitydd(publishUnopenActivitydd);
 		BrowsingLayoutSettings.INSTANCE.setShowExtraInfoForDescriptors(extraDescriptorInfo);
 		
+		boolean fulfillDescriptorSlotByContent = PublishingUIPreferences.getFulfillDescriptorSlotByContent();
+		BrowsingLayoutSettings.INSTANCE.setFulfillDescriptorSlotByContent(fulfillDescriptorSlotByContent);
+		
 	}
 }
