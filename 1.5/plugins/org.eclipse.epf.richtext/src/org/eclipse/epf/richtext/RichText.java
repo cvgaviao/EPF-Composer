@@ -1334,7 +1334,7 @@ public class RichText implements IRichText {
 					if (e.keyCode == SWT.TAB) {
 						if ((e.stateMask & SWT.SHIFT) != 0) {
 							editor.traverse(SWT.TRAVERSE_TAB_PREVIOUS);
-						} else {
+						} else if ((e.stateMask & SWT.CTRL) == 0 ){
 							editor.traverse(SWT.TRAVERSE_TAB_NEXT);
 						}
 						return;

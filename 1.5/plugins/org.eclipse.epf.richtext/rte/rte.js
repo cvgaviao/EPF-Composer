@@ -143,7 +143,26 @@ function keyPressed(event) {
 		case KEY_HOME:
 		case KEY_PAGE_DOWN:
 		case KEY_PAGE_UP:
+		    break;
 		case KEY_TAB:
+	        if ( readOnly || !ctrlKey)
+			  break;
+			
+	        var editorWindow = document.getElementById(editorId).contentWindow;
+          	var editorDocument = editorWindow.document;
+          	var tabText = "&nbsp;&nbsp;&nbsp;&nbsp;";
+			  
+		    if(document.all ){
+		        event.keyCode = -1;
+			    event.returnValue=false; //IE: cancel the default behavior
+			    var rng=editorDocument.selection.createRange();
+			    rng.pasteHTML(tabText);  //insert 4 spaces for one tab key 
+		    } else  {
+				event.preventDefault();
+			    editorDoc.execCommand("insertHTML","",tabText);
+			}
+	        
+			setTimeout("setStatus(STATUS_MODIFIED, null);", 10);
 			break;
 		case KEY_BACKSPACE:
 			if (!readOnly) {
