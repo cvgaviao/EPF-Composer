@@ -24,6 +24,7 @@ fragment@org.eclipse.epf.library.ui.nl2a=v20080828-2225,:pserver:anonymous@dev.e
 fragment@org.eclipse.epf.library.ui.xmi.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.library.ui.xmi.nl2a
 fragment@org.eclipse.epf.library.xmi.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.library.xmi.nl2a
 fragment@org.eclipse.epf.migration.diagram.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.migration.diagram.nl2a
+fragment@org.eclipse.epf.publish.layout.nl2a=v20090715-1412,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.publish.layout.nl2a
 fragment@org.eclipse.epf.publishing.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.publishing.nl2a
 fragment@org.eclipse.epf.publishing.ui.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.publishing.ui.nl2a
 fragment@org.eclipse.epf.rcp.ui.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.rcp.ui.nl2a
