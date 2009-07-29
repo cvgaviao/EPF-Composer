@@ -55,7 +55,7 @@ public class ProcessRoleFilter extends DescriptorConfigurationFilter {
 				while(iter.hasNext()){
 					RoleSetGrouping grouping = (RoleSetGrouping)iter.next();
 					// TODO : Check for (recursive)RoleSets is empty, 
-					// if roleset's roles are empty donot show Discipline grouping 
+					// if roleset's roles are empty donot show roleset grouping 
 					if(!grouping.getRoleSets().isEmpty()) return true;
 				}
 			}
@@ -64,7 +64,22 @@ public class ProcessRoleFilter extends DescriptorConfigurationFilter {
 			return !((RoleSetGrouping)obj).getRoleSets().isEmpty();
 		}
 		if(obj instanceof RoleSet){
-			return !((RoleSet)obj).getRoles().isEmpty();
+			// get roleset roles first 
+			if (!((RoleSet)obj).getRoles().isEmpty()) 
+				// if there are roles, return true
+				return true;
+			else {
+				// else check if there are any contributor roles
+				Iterator roleSetContributors = TngUtil.getContributors((RoleSet) obj);
+				if (roleSetContributors != null) {
+					while (roleSetContributors.hasNext()) {
+						RoleSet roleSetContributor = (RoleSet) roleSetContributors.next();
+						if (!(roleSetContributor.getRoles().isEmpty())) 
+							return true;
+					}
+				}
+				return false;
+			}
 		}
 		else
 			return false;
