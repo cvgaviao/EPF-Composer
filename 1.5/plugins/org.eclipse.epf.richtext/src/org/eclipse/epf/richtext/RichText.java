@@ -191,7 +191,10 @@ public class RichText implements IRichText {
 	
 	// The control's IE flag
 	protected boolean isIE = false;
-
+	
+	// A event type indicate control has been initialized
+	public static final int RICH_TEXT_INITIALIZED = 98979695;
+	
 	/**
 	 * Creates a new instance.
 	 * 
@@ -963,6 +966,7 @@ public class RichText implements IRichText {
 											RichTextCommand.SET_EDITABLE,
 											"" + editable); //$NON-NLS-1$
 								}
+								notifyListeners(RichText.RICH_TEXT_INITIALIZED, new Event());
 							}
 							break;
 						case STATUS_MODIFIED:
