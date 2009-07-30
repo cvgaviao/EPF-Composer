@@ -29,6 +29,7 @@ import org.eclipse.epf.export.xml.services.ExportXMLData;
 import org.eclipse.epf.export.xml.services.ExportXMLService;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.services.SafeUpdateController;
+import org.eclipse.epf.library.ui.LibraryUIManager;
 import org.eclipse.epf.library.ui.wizards.OpenLibraryWizard;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -267,11 +268,15 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 		ex[0] = null;		
 		SafeUpdateController.syncExec(new Runnable() {
 			public void run() {
+				boolean oldB = LibraryUIManager.isSkipInstallPathCheck();
 				try {
-					OpenLibraryWizard wizard = new OpenLibraryWizard();
+					LibraryUIManager.setSkipInstallPathCheck(true);
+					OpenLibraryWizard wizard = new OpenLibraryWizard();					
 					wizard.openMethodLibrary(libFolder.getAbsolutePath(), "xmi"); //$NON-NLS-1$
 				} catch (Exception e) {
 					ex[0] = e;
+				} finally {
+					LibraryUIManager.setSkipInstallPathCheck(oldB);
 				}
 			}
 		});
