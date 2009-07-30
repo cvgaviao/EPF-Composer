@@ -105,6 +105,8 @@ public class LibraryUIManager {
 
 	private static LibraryUIManager instance = null;
 	
+	private static boolean skipInstallPathCheck = false;
+	
 	// The URI of the method library that will be opened regardless of the
 	// saved library preferences.
 	protected static URI libraryURI;
@@ -864,6 +866,9 @@ public class LibraryUIManager {
 	 * 
 	 */
 	private String handleLibraryOnReadOnlyInstallPath(URI libURI) {
+		if (isSkipInstallPathCheck()) {
+			return null;
+		}
 		try {
 			boolean readOnly = false;
 			
@@ -950,6 +955,14 @@ public class LibraryUIManager {
 
 	public void openDefaultLibrary() {
 		openDefaultLibrary(defaultLibraryURI);	
+	}
+
+	public static boolean isSkipInstallPathCheck() {
+		return skipInstallPathCheck;
+	}
+
+	public static void setSkipInstallPathCheck(boolean skipInstallPathCheck) {
+		LibraryUIManager.skipInstallPathCheck = skipInstallPathCheck;
 	}
 		
 }
