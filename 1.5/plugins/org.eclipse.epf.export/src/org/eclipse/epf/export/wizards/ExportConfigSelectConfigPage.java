@@ -107,7 +107,7 @@ public class ExportConfigSelectConfigPage extends BaseWizardPage implements
 
 		ILabelProvider labelProvider = new LabelProvider() {
 			public Image getImage(Object element) {
-				return LibraryUIImages.IMG_METHOD_PLUGIN;
+				return LibraryUIImages.IMG_METHOD_CONFIGURATON;
 			}
 
 			public String getText(Object element) {
