@@ -506,6 +506,9 @@ public class ConfigurationData {
 				if (seData.isEnabled()) {
 					MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 					if (plugin != null && plugin.isSupporting()) {
+						if (! config.getMethodPluginSelection().contains(plugin)) {
+							return false;
+						}
 						int ix = seData.checkInConfigIndex(element);
 						//ix: 0 = unknown, 1 = yes, 2 = no
 						if (ix == 1 || ix == 2) {
