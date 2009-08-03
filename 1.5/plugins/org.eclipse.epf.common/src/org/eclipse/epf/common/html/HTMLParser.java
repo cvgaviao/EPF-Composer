@@ -25,6 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.tidy.Configuration;
 import org.w3c.tidy.Tidy;
 
 /**
@@ -72,8 +73,9 @@ public class HTMLParser {
 			tidy.setIndentAttributes(false);
 			tidy.setIndentContent(false);
 			tidy.setSpaces(2);
-			tidy.setInputEncoding("UTF-8"); //$NON-NLS-1$
-			tidy.setOutputEncoding("UTF-8"); //$NON-NLS-1$
+			tidy.setCharEncoding(Configuration.ISO2022);
+//			tidy.setInputEncoding("UTF-8"); //$NON-NLS-1$
+//			tidy.setOutputEncoding("UTF-8"); //$NON-NLS-1$
 		} catch (Exception e) {
 			tidy = null;
 		}

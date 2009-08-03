@@ -10,12 +10,12 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.common.html;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.regex.Pattern;
 
 import org.eclipse.epf.common.utils.FileUtil;
@@ -147,8 +147,9 @@ public class HTMLFormatter {
 		tidy.setIndentAttributes(false);
 		tidy.setIndentContent(indent);
 		tidy.setSpaces(indentSize);
-		tidy.setInputEncoding("UTF-16"); //$NON-NLS-1$
-		tidy.setOutputEncoding("UTF-16"); //$NON-NLS-1$
+		tidy.setCharEncoding(org.w3c.tidy.Configuration.UTF8);
+//		tidy.setInputEncoding("UTF-16"); //$NON-NLS-1$
+//		tidy.setOutputEncoding("UTF-16");//$NON-NLS-1$
 		tidy.setFixBackslash(false);
 		// this will add <p> around each text block (?that isn't in a block already?)
 //		tidy.setEncloseBlockText(true);
@@ -157,23 +158,28 @@ public class HTMLFormatter {
 		
 		if (forceOutput) {
 			// output document even if errors are present
-			tidy.setForceOutput(true);
+//			tidy.setForceOutput(true);
 		}
 		if (makeBare) {
 			// remove MS clutter
-			tidy.setMakeBare(true);
+//			tidy.setMakeBare(true);
+			tidy.setMakeClean(true);
 		}
 		if (word2000) {
 			// draconian Word2000 cleaning
 			tidy.setWord2000(true);
 		}
 
-		Reader input = new StringReader(html);
-		Writer output = new StringWriter();
+
+//		Reader input = new StringReader(html);
+//		Writer output = new StringWriter();
 
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		tidy.setErrout(pw);
+		InputStream input= new ByteArrayInputStream(html.getBytes("UTF-8"));
+		
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		tidy.parse(input, output);
 		String error = sw.getBuffer().toString();
 		if (error != null && error.length() > 0
@@ -185,7 +191,7 @@ public class HTMLFormatter {
 			}
 		}
 
-		String formattedHTML = output.toString();
+		String formattedHTML = new String(output.toByteArray(), "UTF-8"); //$NON-NLS-1$
 		formattedHTML = StrUtil.getEscapedHTML(formattedHTML);
 		
 		String htmlStartUpper = html.substring(0, Math.min(10, html.length())).toUpperCase();

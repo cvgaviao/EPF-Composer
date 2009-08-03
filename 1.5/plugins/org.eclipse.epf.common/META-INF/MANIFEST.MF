@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.epf.common;singleton:=true
 Bundle-Version: 1.5.0.qualifier
-Bundle-ClassPath: common.jar, lib/jtidy-8.0-20060801.131059-3.jar
+Bundle-ClassPath: common.jar,lib/Tidy.jar
 Bundle-Activator: org.eclipse.epf.common.CommonPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
