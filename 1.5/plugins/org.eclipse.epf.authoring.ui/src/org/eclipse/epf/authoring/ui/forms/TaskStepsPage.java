@@ -20,6 +20,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.dialogs.SectionsOrderDialog;
+import org.eclipse.epf.authoring.ui.editors.AttributeTextBox;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditorInput;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor.ModifyListener;
@@ -90,6 +91,7 @@ public class TaskStepsPage extends BaseFormPage {
 	private static final String FORM_PAGE_ID = "taskStepsPage"; //$NON-NLS-1$
 
 	private Text ctrl_name;
+	private AttributeTextBox nameTextBox;
 
 	private Button ctrl_add, ctrl_delete, ctrl_up, ctrl_down, ctrl_ordering;
 
@@ -244,6 +246,8 @@ public class TaskStepsPage extends BaseFormPage {
 		ctrl_ordering = toolkit.createButton(pane2,
 				AuthoringUIText.ORDER_BUTTON_TEXT, SWT.NONE);
 		ctrl_ordering.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		actionMgr = ((MethodElementEditor) getEditor()).getActionManager();
 
 		// name
 		Label nameLabel = toolkit.createLabel(generalComposite,
@@ -259,6 +263,7 @@ public class TaskStepsPage extends BaseFormPage {
 			gridData.horizontalSpan = 4;
 			ctrl_name.setLayoutData(gridData);
 		}
+		nameTextBox = AttributeTextBox.createAttributeTextBox(ctrl_name, null, UmaPackage.eINSTANCE.getNamedElement_Name(), false, actionMgr);
 
 		createBlankLabel(toolkit, generalComposite, 4);
 
@@ -273,7 +278,6 @@ public class TaskStepsPage extends BaseFormPage {
 		toolkit.paintBordersFor(generalComposite);
 		toolkit.paintBordersFor(expandedComposite);
 
-		actionMgr = ((MethodElementEditor) getEditor()).getActionManager();
 
 		addListeners();
 		loadData();
@@ -287,7 +291,7 @@ public class TaskStepsPage extends BaseFormPage {
 	public void addListeners() {
 		final MethodElementEditor editor = (MethodElementEditor) getEditor();
 		contentModifyListener = editor.createModifyListener(currentStep);
-		ctrl_name.addModifyListener(contentModifyListener);
+//		ctrl_name.addModifyListener(contentModifyListener);
 		((MethodElementEditor.ModifyListener) contentModifyListener)
 				.setDisable(true);
 
@@ -330,27 +334,27 @@ public class TaskStepsPage extends BaseFormPage {
 			}
 		});
 
-		ctrl_name.addModifyListener(contentModifyListener);
-		ctrl_name.addFocusListener(new FocusAdapter() {
-			public void focusLost(FocusEvent e) {
-				if (currentStep != null) {
-					String oldContent = currentStep.getName();
-					String newContent = ctrl_name.getText();
-					if (ctrl_name.getText() == null
-							|| ctrl_name.getText().length() == 0) {
-						String title = AuthoringUIResources.bind(AuthoringUIResources.renameDialog_title, LibraryUIText.TEXT_STEP); 
-						String msg = AuthoringUIResources.bind(AuthoringUIResources.emptyElementNameError_msg, StrUtil.toLower(LibraryUIText.TEXT_STEP)); 
-						AuthoringUIPlugin.getDefault().getMsgDialog()
-								.displayError(title, msg);
-						ctrl_name.setSelection(0, oldContent.length());
-					} else if (!newContent.equals(oldContent)) {
-						actionMgr.doAction(IActionManager.SET, currentStep,
-								UmaPackage.eINSTANCE.getNamedElement_Name(),
-								newContent, -1);
-					}
-				}
-			}
-		});
+//		ctrl_name.addModifyListener(contentModifyListener);
+//		ctrl_name.addFocusListener(new FocusAdapter() {
+//			public void focusLost(FocusEvent e) {
+//				if (currentStep != null) {
+//					String oldContent = currentStep.getName();
+//					String newContent = ctrl_name.getText();
+//					if (ctrl_name.getText() == null
+//							|| ctrl_name.getText().length() == 0) {
+//						String title = AuthoringUIResources.bind(AuthoringUIResources.renameDialog_title, LibraryUIText.TEXT_STEP); 
+//						String msg = AuthoringUIResources.bind(AuthoringUIResources.emptyElementNameError_msg, StrUtil.toLower(LibraryUIText.TEXT_STEP)); 
+//						AuthoringUIPlugin.getDefault().getMsgDialog()
+//								.displayError(title, msg);
+//						ctrl_name.setSelection(0, oldContent.length());
+//					} else if (!newContent.equals(oldContent)) {
+//						actionMgr.doAction(IActionManager.SET, currentStep,
+//								UmaPackage.eINSTANCE.getNamedElement_Name(),
+//								newContent, -1);
+//					}
+//				}
+//			}
+//		});
 
 		ctrl_maindesc.addModifyListener(contentModifyListener);
 		ctrl_maindesc.addListener(SWT.Deactivate, new Listener() {
@@ -526,7 +530,10 @@ public class TaskStepsPage extends BaseFormPage {
 			desc = currentStep.getSectionDescription();
 			ctrl_name.setFocus();
 		}
-		ctrl_name.setText(name == null ? "" : name); //$NON-NLS-1$
+//		ctrl_name.setText(name == null ? "" : name); //$NON-NLS-1$
+//		System.out.println("TaskStepsPage.editStep(): name=" + name);
+		nameTextBox.setElement(currentStep);
+		
 		ctrl_maindesc.setText(desc == null ? "" : desc); //$NON-NLS-1$
 		ctrl_maindesc.setModalObject(currentStep);
 		ctrl_maindesc.setModalObjectFeature(UmaPackage.eINSTANCE
