@@ -222,7 +222,9 @@ public final class TngUtil {
 				|| name.indexOf(':') != -1 || name.indexOf('*') != -1
 				|| name.indexOf('?') != -1 || name.indexOf('"') != -1
 				|| name.indexOf('<') != -1 || name.indexOf('>') != -1
-				|| name.indexOf('|') != -1 || name.indexOf(';') != -1)
+				|| name.indexOf('|') != -1 || name.indexOf(';') != -1
+				|| name.indexOf('[') != -1 || name.indexOf(']') != -1
+				|| name.indexOf('#') != -1)
 			return false;
 		return true;
 	}
