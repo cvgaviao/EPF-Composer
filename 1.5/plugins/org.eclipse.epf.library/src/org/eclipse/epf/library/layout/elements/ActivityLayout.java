@@ -1120,28 +1120,28 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 		
 		Collections.sort(responsibleFor, Comparators.PRESENTATION_NAME_COMPARATOR);
 		createRoleRollupNodes(parentXml, responsibleFor, TngUtil
-				.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor()));
+				.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor()), setting);
 
 		Collections.sort(modifies, Comparators.PRESENTATION_NAME_COMPARATOR);
 		createRoleRollupNodes(parentXml, modifies, TngUtil
-				.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_Modifies()));
+				.getFeatureText(UmaPackage.eINSTANCE.getRoleDescriptor_Modifies()), setting);
 
 		Collections.sort(primaryTasks, Comparators.PRESENTATION_NAME_COMPARATOR);
 		createRoleRollupNodes(parentXml, primaryTasks, 
-				LibraryResources.ActivityLayout_primaryTasks_text); 
+				LibraryResources.ActivityLayout_primaryTasks_text, setting); 
 
 		Collections.sort(additionalTasks, Comparators.PRESENTATION_NAME_COMPARATOR);
 		createRoleRollupNodes(parentXml, additionalTasks, 
-				LibraryResources.ActivityLayout_additionalTasks_text); 
+				LibraryResources.ActivityLayout_additionalTasks_text, setting); 
 		
 		Collections.sort(assistTasks, Comparators.PRESENTATION_NAME_COMPARATOR);
 		createRoleRollupNodes(parentXml, assistTasks, 
-				LibraryResources.ActivityLayout_assistTasks_text);
+				LibraryResources.ActivityLayout_assistTasks_text, setting);
 
 	}
 	
 	private void createRoleRollupNodes(XmlElement parentXml, List items,
-			String info) {
+			String info, ActivityLayoutSetting setting) {
 		
 		// 160188 - Published Team Allocation tab shows redundant information
 		// only show one descriptor if more than one are linked to the same task or wp.
@@ -1172,6 +1172,13 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			String modelInfoKey = ModelInfoKeyMap.getInstance().getModelInfoKey(info);
 			child.setAttribute("ModelInfoKey", modelInfoKey); //$NON-NLS-1$
 			parentXml.addChild(child);
+			
+			if ( setting.escapeString )
+			{
+				String displayName = ConfigurationHelper.getPresentationName(e, this.getLayoutMgr().getConfiguration());
+				displayName = XMLUtil.escape(displayName);
+				child.setAttribute("DisplayName", displayName); //$NON-NLS-1$
+			}
 		}
 
 	}
