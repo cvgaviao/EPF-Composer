@@ -62,8 +62,10 @@ import org.eclipse.uml2.uml.StructuredActivityNode;
 /**
  * Action to refresh the latest changes from base activity diagram into 
  * extend's Activity diagram. Action will keep the existing immediate children's 
- * information of extend diagram, only refresh the base diagram's related information. 
+ * information of extend diagram, only refresh the base diagram's related information.
+ *  
  * @author Shashidhar Kannoori
+ * @author Phong Nguyen Le
  */
 public class RefreshFromBaseAction implements IObjectActionDelegate {
 

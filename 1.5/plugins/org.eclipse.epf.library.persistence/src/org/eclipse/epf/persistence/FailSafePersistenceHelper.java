@@ -215,33 +215,13 @@ public class FailSafePersistenceHelper {
 	}
 
 	public void txFinished(boolean successful) {
-//		boolean wasMove = !oldURI.equals(finalURI);
 		if (successful) {
 			resource.setURI(finalURI);
 			resource.setModified(false);
-//			updateTimeStamps();
-			FileManager.getInstance().refresh(resource);
-//			if(!wasMove) {
-//				MultiFileResourceSetImpl resourceSet = (MultiFileResourceSetImpl) getResourceSet();
-//				if(resourceSet != null) {
-//					resourceSet.getUnresolvedProxyMarkerManager().validateMarkers(this);
-//				}
-//			}
+				FileManager.getInstance().refresh(resource);
 		} else {
 			restoreURI();
-//			if (wasMove) {
-//				// restore uri of ResourceDescriptor of this resource
-//				//
-//				MultiFileSaveUtil.updateURIMappings(this, oldURI, null, true);
-//			}
 		}
-//		if (oldURI != null) {
-//			MultiFileResourceSetImpl resourceSet = (MultiFileResourceSetImpl) getResourceSet();
-//			if (resourceSet != null) {
-//				resourceSet.getURIToTempURIMap().remove(oldURI);
-//			}
-//			oldURI = null;
-//		}
 		currentTxID = null;
 		finalURI = null;
 	}

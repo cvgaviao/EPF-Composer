@@ -735,14 +735,21 @@ public class DiagramManager {
 	public Diagram createDiagram(final Activity act, final int type, final PreferencesHint hint) throws CoreException {
 		checkActivity(act);
 		// check if this activity contributes/extends other activity and try
-		// copy
-		// the existing diagram from the base
+		// copy the existing diagram from the base
 		//
 		if (ProcessUtil.isExtendingOrLocallyContributing(act)) {
-			Activity baseAct = (Activity) act.getVariabilityBasedOnElement();
-			DiagramManager mgr = DiagramManager.getInstance(TngUtil.getOwningProcess(baseAct), this);
+			Activity baseAct = (Activity) act;
+			DiagramManager mgr = null;
+			List<?> baseDiagrams = null;
 			try {
-				List baseDiagrams = mgr.getDiagrams(baseAct, type);
+				do {
+					baseAct = (Activity) baseAct.getVariabilityBasedOnElement();
+					if(mgr != null) {
+						mgr.removeConsumer(this);
+					}
+					mgr = DiagramManager.getInstance(TngUtil.getOwningProcess(baseAct), this);
+					baseDiagrams = mgr.getDiagrams(baseAct, type);
+				} while(baseDiagrams.isEmpty() && ProcessUtil.isExtendingOrLocallyContributing(baseAct));
 				if(!baseDiagrams.isEmpty()) {
 					Diagram baseDiagram = (Diagram) baseDiagrams.get(0);
 					if (baseDiagram != null) {

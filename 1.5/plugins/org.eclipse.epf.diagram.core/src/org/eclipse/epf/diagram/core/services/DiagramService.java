@@ -66,19 +66,19 @@ public class DiagramService {
 	 */
 	
 	public Diagram getBaseDiagram(Activity act, int type) {		
-		if (ProcessUtil.isExtendingOrLocallyContributing(act)) {
-			try {
-				Activity baseAct = (Activity) act
-						.getVariabilityBasedOnElement();
+		try {
+			Activity baseAct = act;
+			while (ProcessUtil.isExtendingOrLocallyContributing(act)) {
+				baseAct = (Activity) baseAct.getVariabilityBasedOnElement();
 				DiagramManager mgr = getDiagramManager(baseAct);
 				List<Diagram> baseDiagrams = mgr.getDiagrams(baseAct, type);
-				if(!baseDiagrams.isEmpty()) {
+				if (!baseDiagrams.isEmpty()) {
 					return baseDiagrams.get(0);
 				}
-			} catch (Exception e) {
-				DiagramCorePlugin.getDefault().getLogger().logError(
-						"Error in getting base diagram: ", e); //$NON-NLS-1$
 			}
+		} catch (Exception e) {
+			DiagramCorePlugin.getDefault().getLogger().logError(
+					"Error in getting base diagram: ", e); //$NON-NLS-1$
 		}
 		return null;
 	}

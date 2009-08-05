@@ -23,13 +23,10 @@ package org.eclipse.epf.diagram.core.part;
 
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.IDiagramManager;
-import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.VariabilityElement;
-import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPersistableElement;
@@ -76,17 +73,6 @@ public class DiagramEditorInput implements IEditorInput {
 			wrapper = (BreakdownElementWrapperItemProvider) object;
 		}
 
-		// 262981 - the AD for a CP extended twice into a DP results in a corrupted diagram in the editor.
-		if ((!ProcessUtil.isInherited(object)) &&(methodElement  instanceof VariabilityElement)) {
-			VariabilityElement ve = (VariabilityElement) methodElement;
-			if (ve.getVariabilityType().equals(VariabilityType.EXTENDS)) {
-				Object base = ve.getVariabilityBasedOnElement();
-				if (base instanceof VariabilityElement && ((VariabilityElement) base).getVariabilityBasedOnElement() != null) {
-					methodElement = (MethodElement) base;
-				}
-			}		
-		}
-		
 		this.suppression = suppression;
 		this.diagramType = diagramType;
 	}
