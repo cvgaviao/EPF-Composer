@@ -20,10 +20,11 @@ import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.sdo.EProperty;
-import org.eclipse.epf.common.html.HTMLFormatter;
+import org.eclipse.epf.common.CommonPlugin;
+import org.eclipse.epf.common.IHTMLFormatter;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
-import org.eclipse.epf.library.util.TextReferenceReplacerImpl;
 import org.eclipse.epf.library.xmi.XMILibraryResourceManager;
 import org.eclipse.epf.uma.MethodElement;
 
@@ -85,7 +86,8 @@ public class MigrationUtil {
 		if (properties != null) {
 			// get all string type attributes
 
-			HTMLFormatter formater = new HTMLFormatter();
+//			HTMLFormatter formater = new HTMLFormatter();
+			IHTMLFormatter formater = (IHTMLFormatter) ExtensionHelper.getExtension(CommonPlugin.getDefault().getId(),"htmlFormatter");
 			
 			if (ResourceHelper.getDefaultResourceMgr() == null) {
 				ResourceHelper.setDefaultResourceMgr(new XMILibraryResourceManager());

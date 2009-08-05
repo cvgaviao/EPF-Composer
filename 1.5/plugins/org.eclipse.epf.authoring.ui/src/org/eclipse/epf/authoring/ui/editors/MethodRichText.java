@@ -23,7 +23,7 @@ import org.eclipse.epf.authoring.ui.forms.BaseFormPage;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.MethodRichTextContext;
 import org.eclipse.epf.authoring.ui.util.MethodRichTextMarkerHelper;
-import org.eclipse.epf.common.html.HTMLFormatter;
+import org.eclipse.epf.common.IHTMLFormatter;
 import org.eclipse.epf.library.layout.RichTextContentValidator;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.richtext.RichText;
@@ -268,13 +268,13 @@ public class MethodRichText extends RichText implements IMethodRichText {
 	
 	protected void createMarker(String fullErrMsg) throws CoreException {
 		if (contentDescription.eContainer() instanceof DescribableElement) {
-			Matcher m = HTMLFormatter.jTidyErrorParser.matcher(fullErrMsg);                                                                          
+			Matcher m = IHTMLFormatter.jTidyErrorParser.matcher(fullErrMsg);                                                                          
 			if (m.find()) {                                                                                                                          
 				String location = m.group(1);
 				String errorMsg = m.group(4);
 				BasicDiagnostic diagnostics = 
 			          new BasicDiagnostic
-			            (HTMLFormatter.DIAGNOSTIC_SOURCE,
+			            (IHTMLFormatter.DIAGNOSTIC_SOURCE,
 			             0, "", //$NON-NLS-1$
 			                new Object[] { contentDescription, fieldNameTrim });
 	

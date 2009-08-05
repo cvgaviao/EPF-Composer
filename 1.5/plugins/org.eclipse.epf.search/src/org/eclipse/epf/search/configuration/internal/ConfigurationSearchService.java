@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.apache.lucene.demo.html.HTMLParser;
 import org.apache.lucene.document.DateField;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -25,7 +26,10 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.epf.common.html.HTMLParser;
+import org.eclipse.epf.common.CommonPlugin;
+import org.eclipse.epf.common.IHTMLFormatter;
+import org.eclipse.epf.common.IHTMLParser;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.search.GenerateSearchIndexException;
 import org.eclipse.epf.search.SearchConfigurationException;
 import org.eclipse.epf.search.SearchResources;
@@ -64,7 +68,7 @@ public class ConfigurationSearchService {
 	public static final String URL_FIELD = "url"; //$NON-NLS-1$
 
 	// The HTML parser.
-	private HTMLParser parser;
+	private IHTMLParser parser;
 
 	// The directory containing the documents to be indexed.
 	private String docDir = null;
@@ -232,7 +236,8 @@ public class ConfigurationSearchService {
 				IndexWriter writer = new IndexWriter(indexDir,
 						new TextAnalyzer(), true);
 				writer.maxFieldLength = 1000000;
-				parser = new HTMLParser();
+//				parser = new HTMLParser();
+				parser = (IHTMLParser) ExtensionHelper.getExtension(CommonPlugin.getDefault().getId(),"htmlParser");
 				indexDocs(new File(docDir), writer, pm);
 				writer.optimize();
 				writer.close();

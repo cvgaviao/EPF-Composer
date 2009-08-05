@@ -16,8 +16,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.regex.Pattern;
 
+import org.eclipse.epf.common.IHTMLFormatter;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.w3c.tidy.Tidy;
@@ -28,48 +28,38 @@ import org.w3c.tidy.Tidy;
  * @author Kelvin Low
  * @since 1.0
  */
-public class HTMLFormatter {
+public class DefaultHTMLFormatter implements IHTMLFormatter{
 
-	private static final String HTML_BODY_START_TAG = "<body"; //$NON-NLS-1$
+	protected static final String HTML_BODY_START_TAG = "<body"; //$NON-NLS-1$
 
-	private static final String HTML_BODY_END_TAG = "</body>"; //$NON-NLS-1$
+	protected static final String HTML_BODY_END_TAG = "</body>"; //$NON-NLS-1$
 
-	private static final int HTML_BODY_START_TAG_LENGTH = HTML_BODY_START_TAG
-			.length();
+//	private static final int HTML_BODY_START_TAG_LENGTH = HTML_BODY_START_TAG
+//			.length();
 
-	public static final String DIAGNOSTIC_SOURCE = "org.eclipse.epf.common.HTMLFormatter"; //$NON-NLS-1$
+	protected int lineWidth;
 
-	private int lineWidth;
+	protected boolean indent;
 
-	private boolean indent;
+	protected int indentSize;
 
-	private int indentSize;
-
-	private String lastErrorStr;
+	protected String lastErrorStr;
 	
-	private static final Pattern p_whitespace = Pattern.compile("^\\s+", Pattern.MULTILINE); //$NON-NLS-1$
+	
 
-	/*
-	 * String location = m.group(1);
-	 * String lineStr = m.group(2);
-	 * String columnStr = m.group(3);
-	 * String errorMsg = m.group(4);
-	 */
-	public static final Pattern jTidyErrorParser = Pattern
-			.compile(
-					"(line\\s+(\\d+)\\s+column\\s+(\\d+))\\s+-\\s+(.+)", Pattern.CASE_INSENSITIVE); //$NON-NLS-1$
+
 
 	/**
 	 * Creates a new instance.
 	 */
-	public HTMLFormatter() {
+	public DefaultHTMLFormatter() {
 		this(132, true, 4);
 	}
 
 	/**
 	 * Creates a new instance.
 	 */
-	public HTMLFormatter(int lineWidth, boolean indent, int indentSize) {
+	public DefaultHTMLFormatter(int lineWidth, boolean indent, int indentSize) {
 		this.lineWidth = lineWidth;
 		this.indent = indent;
 		this.indentSize = indentSize;
@@ -231,7 +221,7 @@ public class HTMLFormatter {
 	/**
 	 * Returns the indent string.
 	 */
-	private static String getIndentStr(int indentLength) {
+	protected static String getIndentStr(int indentLength) {
 		if (indentLength == 0) {
 			return ""; //$NON-NLS-1$
 		}
@@ -255,7 +245,7 @@ public class HTMLFormatter {
 	 * @param indentStr
 	 * @return
 	 */
-	private static String fixIndentation(String html, String indentStr) {
+	protected static String fixIndentation(String html, String indentStr) {
 		if (html.startsWith(indentStr)) {
 			html = html.substring(indentStr.length());
 		}
@@ -289,7 +279,8 @@ public class HTMLFormatter {
 		return lastErrorStr;
 	}
 	
-	public static String removeLeadingWhitespace(String input) {
+	
+	public String removeLeadingWhitespace(String input) {
 		return p_whitespace.matcher(input).replaceAll(""); //$NON-NLS-1$
 	}
 }

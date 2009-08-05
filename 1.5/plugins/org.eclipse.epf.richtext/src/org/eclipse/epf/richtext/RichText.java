@@ -21,8 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.epf.common.html.HTMLFormatter;
+import org.eclipse.epf.common.CommonPlugin;
+import org.eclipse.epf.common.IHTMLFormatter;
 import org.eclipse.epf.common.serviceability.Logger;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.common.xml.XSLTProcessor;
@@ -166,7 +168,7 @@ public class RichText implements IRichText {
 	protected int status = 0;
 
 	// The HTML source formatter.
-	protected HTMLFormatter htmlFormatter;
+	protected IHTMLFormatter htmlFormatter;
 
 	// The SWT event listeners.
 	protected Map<Listener, RichTextListener> listeners;
@@ -302,7 +304,8 @@ public class RichText implements IRichText {
 				printDebugMessage("init", "added listeners"); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
-			htmlFormatter = new HTMLFormatter();
+//			htmlFormatter = new HTMLFormatter();
+			htmlFormatter = (IHTMLFormatter) ExtensionHelper.getExtension(CommonPlugin.getDefault().getId(),"htmlFormatter");
 			if (debug) {
 				printDebugMessage("init", "instantiated HTMLFormatter"); //$NON-NLS-1$ //$NON-NLS-2$
 			}

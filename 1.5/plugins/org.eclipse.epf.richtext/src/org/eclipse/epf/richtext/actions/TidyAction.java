@@ -12,7 +12,9 @@ package org.eclipse.epf.richtext.actions;
 
 import java.io.UnsupportedEncodingException;
 
-import org.eclipse.epf.common.html.HTMLFormatter;
+import org.eclipse.epf.common.CommonPlugin;
+import org.eclipse.epf.common.IHTMLFormatter;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.richtext.IRichText;
 import org.eclipse.epf.richtext.RichTextEditor;
 import org.eclipse.epf.richtext.RichTextImages;
@@ -32,7 +34,7 @@ public class TidyAction extends RichTextAction {
 	boolean word2000 = false;
 	
 	// The HTML source formatter.
-	protected HTMLFormatter htmlFormatter;
+	protected IHTMLFormatter htmlFormatter;
 
 	
 
@@ -46,7 +48,8 @@ public class TidyAction extends RichTextAction {
 		this.word2000 = word2000;
 		setImageDescriptor(RichTextImages.IMG_DESC_TIDY);
 		setDisabledImageDescriptor(RichTextImages.DISABLED_IMG_DESC_TIDY);
-		htmlFormatter = new HTMLFormatter();
+//		htmlFormatter = new HTMLFormatter();
+		htmlFormatter = (IHTMLFormatter) ExtensionHelper.getExtension(CommonPlugin.getDefault().getId(),"htmlFormatter");
 	}
 	
 	@Override

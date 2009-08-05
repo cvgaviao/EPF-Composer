@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
 
+import org.eclipse.epf.common.IHTMLParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -34,7 +35,7 @@ import org.w3c.tidy.Tidy;
  * @author Kelvin Low
  * @since 1.0
  */
-public class HTMLParser {
+public class DefaultHTMLParser implements IHTMLParser{
 
 	private static final int BUFFER_SIZE = 4096;
 
@@ -44,7 +45,7 @@ public class HTMLParser {
 
 	private static final String HTML_META_TAG = "meta"; //$NON-NLS-1$
 
-	private Tidy tidy;
+	protected Tidy tidy;
 
 	private String title;
 
@@ -59,7 +60,7 @@ public class HTMLParser {
 	/**
 	 * Creates a new instance.
 	 */
-	public HTMLParser() {
+	public DefaultHTMLParser() {
 		try {
 			tidy = new Tidy();
 			tidy.setXHTML(true);
