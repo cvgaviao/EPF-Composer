@@ -34,6 +34,7 @@ import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -332,16 +333,32 @@ public abstract class ElementRealizer {
 
 	public List<DescribableElement> calculateList(Collection<?> result,
 			Set<DescribableElement> seenSet) {
+		Set resultSet = null;
 		List<DescribableElement> list = new ArrayList<DescribableElement>();
 		for (Iterator<?> iter = result.iterator(); iter.hasNext();) {
 			Object o = iter.next();
 			if (o instanceof DescribableElement) {
-				DescribableElement contElem = (DescribableElement) o;
-				contElem = (DescribableElement) ConfigurationHelper
-						.getCalculatedElement(contElem, this);
+				DescribableElement contElem0 = (DescribableElement) o;
+				DescribableElement contElem = (DescribableElement) ConfigurationHelper
+						.getCalculatedElement(contElem0, this);
 				if (contElem != null) {
 					if (seenSet.add(contElem)) {
-						list.add(contElem);
+						boolean toAdd = true;
+						if (contElem0 instanceof VariabilityElement) {
+							VariabilityElement ve = (VariabilityElement) contElem0;
+							VariabilityElement base = ve.getVariabilityBasedOnElement();
+							if (base != null && ve.getVariabilityType() == VariabilityType.CONTRIBUTES) {
+								if (resultSet == null) {
+									resultSet = new HashSet<Object>(result);
+								}
+								if (! resultSet.contains(contElem)) {
+									toAdd = false;
+								}									
+							}
+						}
+						if (toAdd) {
+							list.add(contElem);
+						}
 					}
 				}
 			}
