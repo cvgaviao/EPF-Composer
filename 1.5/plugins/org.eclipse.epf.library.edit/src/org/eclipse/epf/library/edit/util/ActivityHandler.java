@@ -111,7 +111,7 @@ public class ActivityHandler {
 		return copy(oMap);
 	}
 	
-	private Map copy(Map map) {
+	public static Map copy(Map map) {
 		if (map == null) {
 			return null;
 		}
