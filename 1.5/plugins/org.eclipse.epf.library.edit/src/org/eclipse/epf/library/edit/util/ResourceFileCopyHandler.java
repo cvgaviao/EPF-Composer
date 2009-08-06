@@ -28,10 +28,15 @@ import org.eclipse.epf.uma.MethodElement;
 public class ResourceFileCopyHandler {
 	
 	private IResourceScanner scanner;
-	private static boolean localDebug = false;
+	private static boolean localDebug = true;
+	private Map<MethodElement, MethodElement> originalToCopyMap_;
 	
 	public ResourceFileCopyHandler(IResourceScanner scanner) {
 		this.scanner = scanner;
+	}
+	
+	public void execute() {
+		execute(getOriginalToCopyMap());
 	}
 	
 	public void execute(Map<MethodElement, MethodElement> originalToCopyMap) {
@@ -96,4 +101,17 @@ public class ResourceFileCopyHandler {
 		
 	}
 
+	private Map<MethodElement, MethodElement> getOriginalToCopyMap() {
+		return originalToCopyMap_;
+	}
+
+	public void setOriginalToCopyMap(
+			Map<MethodElement, MethodElement> originalToCopyMap) {
+		this.originalToCopyMap_ = originalToCopyMap;
+	}
+
+	public void dispose() {
+		originalToCopyMap_ = null;
+	}
+	
 }
