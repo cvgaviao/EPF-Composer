@@ -28,7 +28,7 @@ import org.eclipse.epf.uma.MethodElement;
 public class ResourceFileCopyHandler {
 	
 	private IResourceScanner scanner;
-	private static boolean localDebug = true;
+	private static boolean localDebug = false;
 	private Map<MethodElement, MethodElement> originalToCopyMap_;
 	
 	public ResourceFileCopyHandler(IResourceScanner scanner) {
