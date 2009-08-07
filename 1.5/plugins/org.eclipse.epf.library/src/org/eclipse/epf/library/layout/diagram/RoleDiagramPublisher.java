@@ -52,6 +52,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Renders the Role diagram using Java2D and saves it as a JPEG file.
@@ -104,6 +105,8 @@ public class RoleDiagramPublisher {
 	private Font textFont = null;
 	
 	private Properties xslParams = null;
+	
+	private Image shapeImage = null;
 
 	/**
 	 * Creates a new <code>ImagePublisher</code>.
@@ -543,8 +546,15 @@ public class RoleDiagramPublisher {
 
 	
 	private Image getShapeIcon(MethodElement element) {
-		Image shapeImage = DiagramIconProviderManager.getInstance().getIcon(
-				element, false);
+		final MethodElement e = element;
+	
+		Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+            	Image img = DiagramIconProviderManager.getInstance().getIcon(
+        				e, false);
+            	shapeImage = img;      		
+            }
+         });
 		if (shapeImage != null) {
 			return shapeImage;
 		}
