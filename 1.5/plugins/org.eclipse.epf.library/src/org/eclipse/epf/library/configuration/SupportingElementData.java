@@ -401,7 +401,22 @@ public class SupportingElementData extends ConfigDataBase {
 
 	public static synchronized void setDescriptorExclusiveOption(
 			boolean descriptorExclusiveOption) {
-		SupportingElementData.descriptorExclusiveOption = descriptorExclusiveOption;
+		if (SupportingElementData.descriptorExclusiveOption != descriptorExclusiveOption) {
+			SupportingElementData.descriptorExclusiveOption = descriptorExclusiveOption;
+			MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
+			if (lib != null) {
+				for (MethodConfiguration config : lib.getPredefinedConfigurations()) {
+					IConfigurationManager mgr = LibraryService.getInstance().getConfigurationManager(config);
+					if (mgr != null) {
+						SupportingElementData sdata = mgr.getSupportingElementData();
+						if (sdata != null) {
+							sdata.setNeedUpdateChanges(true);
+						}
+					}
+				}
+			}
+		
+		}
 	}
 	
 	public void processVariabilityChildren(MethodElement elementInConfig,
