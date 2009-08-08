@@ -36,7 +36,9 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.uml2.uml.ActivityNode;
 
 /**
  * @generated
@@ -304,4 +306,11 @@ public class StructuredActivityNodeEditPart extends ShapeNodeEditPart {
 		}
 	}
 
+	@Override
+	public void refresh() {
+		Node node = (Node) getModel();
+		ActivityNode actNode = (ActivityNode) node.getElement();
+		
+		super.refresh();
+	}
 }

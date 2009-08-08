@@ -116,9 +116,4 @@ public class ActivityWrapperItemProvider extends
 		return delegateItemProvider;
 	}
 	
-	@Override
-	public String getText(Object object) {
-		// TODO Auto-generated method stub
-		return super.getText(object);
-	}
 }

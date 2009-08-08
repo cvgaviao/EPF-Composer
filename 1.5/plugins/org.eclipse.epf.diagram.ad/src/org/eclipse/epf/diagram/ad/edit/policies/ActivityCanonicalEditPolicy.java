@@ -171,8 +171,11 @@ public class ActivityCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 			Object element = view.getElement();
 			if (element != null && element instanceof ActivityEdge) {
 				if (((ActivityEdge) element).getSource() == null
-						|| ((ActivityEdge) element).getTarget() == null)
+						|| ((ActivityEdge) element).getTarget() == null) {
 					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 		return view.isSetElement()

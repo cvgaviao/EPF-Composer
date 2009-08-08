@@ -26,8 +26,15 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.epf.diagram.core.util.DiagramCoreValidation;
+import org.eclipse.epf.diagram.model.util.TxUtil;
+import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
@@ -152,11 +159,25 @@ public class WorkBreakdownElementNodeAdapter extends NodeAdapter {
 		return new WorkBreakdownElementAdapter();
 	}
 	
-	protected boolean addToUMA(ActivityEdge link) {
+	/*
+	 * check if successor is a direct breakdown element of diagram activity
+	 */
+	private static boolean isBreakdownElementOf(Activity activity, Object element) {
+		for (Object be : activity.getBreakdownElements()) {
+			if(be == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	protected boolean addToUMA(final ActivityEdge link) {
 		if (!super.addToUMA(link))
 			return false;
 		
 		MethodElement e = BridgeHelper.getMethodElement(link.getSource());
+		Activity diagramActivity = (Activity) BridgeHelper.getMethodElement(getDiagram());
+		ProcessPackage pkg = (ProcessPackage) diagramActivity.eContainer();
 		if (e instanceof WorkBreakdownElement) {
 			// this is a direct link
 			// add new WorkOrder object to UMA
@@ -164,23 +185,42 @@ public class WorkBreakdownElementNodeAdapter extends NodeAdapter {
 			WorkOrder order = null;
 			WorkBreakdownElement succ = (WorkBreakdownElement) BridgeHelper.getMethodElement(link.getTarget());
 			WorkBreakdownElement pred = (WorkBreakdownElement) e;
-			if (UmaUtil.findWorkOrder(succ, pred) == null) {
-				NodeAdapter sourceNodeAdapter = BridgeHelper.getNodeAdapter(link.getSource());	
-				// node adapter can be NULL if the node is not currently visible in the diagram
-				//
-				boolean sourceNotify = sourceNodeAdapter != null ? sourceNodeAdapter.notificationEnabled : false;
-				try {
-					if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = false;
-					//Create a workorder and disable notification flag.
-					order = addDefaultWorkOrder(link.getTarget(), pred);
-				} finally {
-					if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = sourceNotify;
+			if(DiagramCoreValidation.isConnectionToReadOnlyTargetAllowed() && !isBreakdownElementOf(diagramActivity, succ)) {
+				order = ProcessUtil.findWorkOrder(diagramActivity, succ, pred);
+				if(order == null) {
+					NodeAdapter sourceNodeAdapter = BridgeHelper.getNodeAdapter(link.getSource());	
+					// node adapter can be NULL if the node is not currently visible in the diagram
+					//
+					boolean sourceNotify = sourceNodeAdapter != null ? sourceNodeAdapter.notificationEnabled : false;
+					try {
+						// disable notification flag and create a work order
+						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = false;
+						order = ProcessUtil.addDefaultWorkOrderForInheritedChild(diagramActivity, succ, pred);
+						getActionManager().doAction(IActionManager.ADD, pkg, 
+								UmaPackage.Literals.PROCESS_PACKAGE__PROCESS_ELEMENTS, order, -1);
+					} finally {
+						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = sourceNotify;
+					}
 				}
+				BridgeHelper.associate(link, order);
 			}
-
-			// set the WorkOrder as the element of the SemanticModel of the
-			// link's GraphEdge
-			BridgeHelper.setSemanticModel(link, order);
+			else {
+				if (UmaUtil.findWorkOrder(succ, pred) == null) {
+					NodeAdapter sourceNodeAdapter = BridgeHelper.getNodeAdapter(link.getSource());	
+					// node adapter can be NULL if the node is not currently visible in the diagram
+					//
+					boolean sourceNotify = sourceNodeAdapter != null ? sourceNodeAdapter.notificationEnabled : false;
+					try {
+						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = false;
+						//Create a workorder and disable notification flag.
+						order = addDefaultWorkOrder(link.getTarget(), pred);
+					} finally {
+						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = sourceNotify;
+					}
+				}
+			} 	
+			// set the WorkOrder as the element of the link's edge
+//			BridgeHelper.setSemanticModel(link, order);
 		} 
 		else if (BridgeHelper.isSynchBar(link.getSource())) {
 			// get all WorkBreakdownElementNodes that are comming to this

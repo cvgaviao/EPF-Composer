@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
@@ -315,11 +317,10 @@ public class PredecessorList extends ArrayList<Object> {
 	}
 	
 	private void initialize(Map<?, Collection<Object>> map) {
-
-		if (TngUtil.unwrap(object) instanceof WorkBreakdownElement) {
-			WorkBreakdownElement e = (WorkBreakdownElement) TngUtil
-					.unwrap(object);
-			List workOrders = e.getLinkToPredecessor();
+		Object unwrapped = TngUtil.unwrap(object);
+		if (unwrapped instanceof WorkBreakdownElement) {
+			WorkBreakdownElement owner = (WorkBreakdownElement) unwrapped;
+			List workOrders = owner.getLinkToPredecessor();
 			if (workOrders.isEmpty())
 				return;
 			WorkBreakdownElement topElement = (WorkBreakdownElement) TngUtil.unwrap(top);
@@ -391,6 +392,52 @@ public class PredecessorList extends ArrayList<Object> {
 					if (bsItemProvider != null) {
 						add(bsItemProvider);
 						map4LinkType.put(bsItemProvider.getId(), workOrder.getLinkType().getValue());
+					}
+				}
+			}
+			
+			// process custom work order (see
+			// org.eclipse.epf.library.edit.util.ProcessUtil.findWorkOrder(Activity,
+			// WorkBreakdownElement, WorkBreakdownElement))
+			//
+			Activity parent = null;
+			Object parentObject = null;
+			if(object instanceof WorkBreakdownElement) {
+				parent = ((WorkBreakdownElement) object).getSuperActivities();
+				parentObject = parent;
+			} else if (object instanceof ITreeItemContentProvider) {
+				parentObject = ((ITreeItemContentProvider) object).getParent(object);
+				parentObject = TngUtil.unwrap(parentObject);
+				if(parentObject instanceof Activity) {
+					parent = (Activity) parentObject;
+				}
+			}
+			if (parent != null) {
+				// collect all child item providers
+				//
+				ITreeItemContentProvider parentItemProvider = (ITreeItemContentProvider) adapterFactory.adapt(parentObject, ITreeItemContentProvider.class);
+				Map<Object, Object> elementToItemProviderMap = new HashMap<Object, Object>();
+				for (Object child : parentItemProvider.getChildren(parentObject)) {
+					elementToItemProviderMap.put(TngUtil.unwrap(child), adapterFactory.adapt(child, ITreeItemContentProvider.class));
+				}
+				ProcessPackage pkg = (ProcessPackage) parent.eContainer();
+				for (Object element : pkg.getProcessElements()) {
+					if (element instanceof WorkOrder) {
+						WorkOrder workOrder = (WorkOrder) element;
+						MethodElementProperty prop = MethodElementPropertyHelper
+								.getProperty(
+										workOrder,
+										MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
+						if (prop != null
+								&& owner.getGuid().equals(
+										prop.getValue())) {
+							BreakdownElement pred = workOrder.getPred();
+							Object ip = elementToItemProviderMap.get(pred);
+							if(ip != null) {
+								add(ip);
+								map4LinkType.put(((IBSItemProvider) ip).getId(), workOrder.getLinkType().getValue());
+							}
+						}
 					}
 				}
 			}

@@ -10,15 +10,18 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.preferences;
 
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.ui.CommonUIPlugin;
 import org.eclipse.epf.common.ui.PreferenceStoreWrapper;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
@@ -35,8 +38,7 @@ public class ActivityDiagramPrefPage extends PreferencePage implements
 		IWorkbenchPreferencePage {
 
 	private Composite composite_tab;
-
-	
+	private Button allowUpdateReadOnlyConnectionsCheckBox;
 
 	/*
 	 * (non-Javadoc)
@@ -47,7 +49,7 @@ public class ActivityDiagramPrefPage extends PreferencePage implements
 		Composite composite = new Composite(parent, SWT.NULL);
 		composite.setLayout(new GridLayout());
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-
+		allowUpdateReadOnlyConnectionsCheckBox = SWTUtil.createCheckbox(composite, AuthoringUIResources.ActivityDiagramPrefPage_allowCreateConnectionToReadOnlyElements);
 		initializeValues();
 		return composite;
 	}

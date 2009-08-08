@@ -29,6 +29,8 @@ public final class AuthoringUIResources extends NLS {
 		// Do not instantiate.
 	}
 	
+	public static String ActivityDiagramPrefPage_allowCreateConnectionToReadOnlyElements;
+
 	public static String assignAction_text;
 
 	public static String CustomCategoryAssignPage_includeElementsOfType;

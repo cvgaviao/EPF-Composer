@@ -29,6 +29,7 @@ import org.eclipse.epf.uma.UmaFactory;
  */
 public class MethodElementPropertyHelper {
 	public static final String WORK_ORDER__PREDECESSOR_PROCESS_PATH = "pred_process_path"; //$NON-NLS-1$
+	public static final String WORK_ORDER__SUCCESSOR = "successor"; //$NON-NLS-1$
 	public static final String CONFIG_PROPBLEM_HIDE_ERRORS = "hide_errors"; //$NON-NLS-1$
 	public static final String CONFIG_PROPBLEM_HIDE_WARNINGS = "hide_warnings"; //$NON-NLS-1$
 	public static final String CONFIG_PROPBLEM_HIDE_INFOS = "hide_infos"; //$NON-NLS-1$

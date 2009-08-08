@@ -78,6 +78,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
@@ -113,7 +114,8 @@ import com.ibm.icu.util.StringTokenizer;
  * @author Shilpa Toraskar
  * @since 1.0
  */
-public final class ProcessUtil {
+public final class ProcessUtil { 
+
 	private static Collection<EClass> OBSEclasses = null;
 
 	private static Collection<EClass> WBSEclasses = null;
@@ -121,7 +123,7 @@ public final class ProcessUtil {
 	private static Collection<EClass> PBSEclasses = null;
 
 	private static Collection<VariabilityType> extendAndLocalContributionVariabilityTypes = null;
-
+	
 	private static Collection<VariabilityType> getExtendAndLocalContributionVariabilityTypes() {
 		if (extendAndLocalContributionVariabilityTypes == null) {
 			extendAndLocalContributionVariabilityTypes = new ArrayList<VariabilityType>();
@@ -3393,5 +3395,42 @@ public final class ProcessUtil {
 		return superAct == null ? null : getProcess(superAct);
 	}
 	
+	/**
+	 * Finds WorkOrder instance for the specified <code>inheritedChild</code>
+	 * of the specified parent activity with the given predecessor.
+	 * 
+	 * If the inherited (read-only) work breakdown elements of an activity are
+	 * allowed to have additional predecessors, the information about these
+	 * predecessors will be stored in WorkOrder objects that will be saved in
+	 * process package of the activity. The GUID of inherited children will be
+	 * stored in property (@link {@link MethodElementProperty} named "successor" 
+	 * ({@link MethodElementPropertyHelper#WORK_ORDER__SUCCESSOR} of the WorkOrder.
+	 * 
+	 * @param parent
+	 * @param inheritedChild
+	 * @param predecessor
+	 * @return
+	 */
+	public static WorkOrder findWorkOrder(Activity parent, WorkBreakdownElement inheritedChild, WorkBreakdownElement predecessor)  {
+		ProcessPackage pkg = (ProcessPackage) parent.eContainer();
+		for (Object element : pkg.getProcessElements()) {
+			if(element instanceof WorkOrder) {
+				WorkOrder workOrder = (WorkOrder) element;
+				if(workOrder.getPred() == predecessor) {
+					MethodElementProperty prop = MethodElementPropertyHelper.getProperty(workOrder, MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
+					if(prop != null && inheritedChild.getGuid().equals(prop.getValue())) {
+						return workOrder;
+					}
+				}
+			}
+		}
+		return null;
+	}
 	
+	public static WorkOrder addDefaultWorkOrderForInheritedChild(Activity parent, WorkBreakdownElement inheritedChild, WorkBreakdownElement predecessor) {
+		WorkOrder workOrder = UmaFactory.eINSTANCE.createWorkOrder();
+		workOrder.setPred(predecessor);
+		MethodElementPropertyHelper.setProperty(workOrder, MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR, inheritedChild.getGuid());
+		return workOrder;
+	}
 }

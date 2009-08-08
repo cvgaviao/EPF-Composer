@@ -290,17 +290,22 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 					
 					if (link.getSource() != null && link.getSource() instanceof ControlNode)
 						continue linkListWalk;
-
-					Object pred = BridgeHelper.getMethodElement(link.getSource());
+					
 					boolean workOrderFound = false;
-					find_WorkOrder: for (Iterator iterator1 = wbe
-							.getLinkToPredecessor().iterator(); iterator1
-							.hasNext();) {
-						WorkOrder wo = (WorkOrder) iterator1.next();
-						if (isValidWorkOrder(wo, pred)) {
-							workOrderFound = true;
-							break find_WorkOrder;
+					WorkOrder workOrder = (WorkOrder) BridgeHelper.getMethodElement(link);
+					if(workOrder == null) {
+						Object pred = BridgeHelper.getMethodElement(link.getSource());
+						find_WorkOrder: for (Iterator iterator1 = wbe
+								.getLinkToPredecessor().iterator(); iterator1
+								.hasNext();) {
+							WorkOrder wo = (WorkOrder) iterator1.next();
+							if (isValidWorkOrder(wo, pred)) {
+								workOrderFound = true;
+								break find_WorkOrder;
+							}
 						}
+					} else {
+						workOrderFound = true;
 					}
 					if (!workOrderFound) {
 						// invalid link, remove it
