@@ -14,18 +14,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.AdapterFactoryTreeIterator;
+import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
@@ -40,6 +42,7 @@ import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
@@ -107,8 +110,56 @@ public class PredecessorList extends ArrayList<Object> {
 			}
 		}
 	};
+	
+	private Adapter customPredecessorListener = new AdapterImpl() {
+		@Override
+		public void notifyChanged(Notification msg) {
+			switch(msg.getFeatureID(ProcessPackage.class)) {
+			case UmaPackage.PROCESS_PACKAGE__PROCESS_ELEMENTS:
+				Object object = null;
+				switch(msg.getEventType()) {
+				case Notification.ADD:
+				case Notification.ADD_MANY:
+					object = msg.getNewValue();
+					break;
+				case Notification.REMOVE:
+				case Notification.REMOVE_MANY:
+					object = msg.getOldValue();
+					break;
+				}
+				boolean shouldRefresh = false;
+				if(object != null) {
+					WorkBreakdownElement succ = (WorkBreakdownElement) TngUtil.unwrap(PredecessorList.this.object);
+					if(object instanceof WorkOrder) {
+						if(ProcessUtil.isCustomWorkOrderOf((WorkOrder) object, succ)) {
+							shouldRefresh = true;
+						}
+					} else if (object instanceof Collection<?>) {
+						findCustomWorkOrder:
+							for (Object e : (Collection<?>) object) {
+								if(e instanceof WorkOrder && ProcessUtil.isCustomWorkOrderOf((WorkOrder) e, succ)) {
+									shouldRefresh = true;
+									break findCustomWorkOrder;
+								}
+							}
+					}
+				}
+				if(shouldRefresh) {
+					refresh();
+					Object ip = adapterFactory.adapt(PredecessorList.this.object, ITreeItemContentProvider.class);
+					if(ip instanceof IChangeNotifier) {
+						((IChangeNotifier) ip).fireNotifyChanged(new ViewerNotification(msg,
+								PredecessorList.this.object, false, true));
+					}
+				}
+				return;
+			}
+		}
+	};
 
 	private Object top;
+
+	private ArrayList<ProcessPackage> parentPackages;
 
 	private PredecessorList() {
 
@@ -119,6 +170,9 @@ public class PredecessorList extends ArrayList<Object> {
 		this.object = object;
 		BreakdownElement e = (BreakdownElement) TngUtil.unwrap(object);
 		e.eAdapters().add(0, listener);
+		for (ProcessPackage parentPackage : getParentPackages()) {
+			parentPackage.eAdapters().add(0, customPredecessorListener);
+		}
 		if (!map4LinkType.isEmpty())
 			map4LinkType.clear();
 		initialize();
@@ -128,6 +182,9 @@ public class PredecessorList extends ArrayList<Object> {
 		Object e = TngUtil.unwrap(object);
 		if (e instanceof EObject) {
 			((EObject) e).eAdapters().remove(listener);
+		}
+		for (ProcessPackage parentPackage : getParentPackages()) {
+			parentPackage.eAdapters().remove(customPredecessorListener);
 		}
 		clear();
 	}
@@ -308,20 +365,81 @@ public class PredecessorList extends ArrayList<Object> {
 		Object unwrapped = TngUtil.unwrap(object);
 		if (unwrapped instanceof WorkBreakdownElement) {
 			WorkBreakdownElement e = (WorkBreakdownElement) unwrapped;
-			List workOrders = e.getLinkToPredecessor();
-			if (workOrders.isEmpty())
+			List<WorkOrder> workOrders = e.getLinkToPredecessor();
+			List<WorkOrder> customWorkOrders = getCustomWorkOrders();
+			if (workOrders.isEmpty() && customWorkOrders.isEmpty()) {
 				return;
+			}
 			top = getTopItem();	
-			initialize(createBreakdownElementToItemProviderMap(top, adapterFactory));
+			initialize(createBreakdownElementToItemProviderMap(top, adapterFactory), customWorkOrders);
 		}
 	}
 	
-	private void initialize(Map<?, Collection<Object>> map) {
+	private List<ProcessPackage> getParentPackages() {
+		if(parentPackages == null) {
+			parentPackages = new ArrayList<ProcessPackage>();
+			Activity parent = null;
+			if(object instanceof WorkBreakdownElement) {
+				parent = ((WorkBreakdownElement) object).getSuperActivities();
+			} else if (object instanceof ITreeItemContentProvider) {
+				Object parentObject = ((ITreeItemContentProvider) object).getParent(object);
+				parentObject = TngUtil.unwrap(parentObject);
+				if(parentObject instanceof Activity) {
+					parent = (Activity) parentObject;
+				}
+			}
+			if(parent != null) {
+				for(Activity activity = parent; activity != null;) {
+					Object container = activity.eContainer();
+					if(container != null) {
+						parentPackages.add((ProcessPackage) container);
+					}
+					if (activity.getVariabilityType() == VariabilityType.EXTENDS
+							|| activity.getVariabilityType() == VariabilityType.LOCAL_CONTRIBUTION) {
+						activity = (Activity) activity.getVariabilityBasedOnElement();
+					} else {
+						activity = null;
+					}
+				}
+			}
+
+		}
+		return parentPackages;
+	}
+	
+	private List<WorkOrder> getCustomWorkOrders() {
+		Object unwrapped = TngUtil.unwrap(object);
+		if (unwrapped instanceof WorkBreakdownElement) {
+			WorkBreakdownElement owner = (WorkBreakdownElement) unwrapped;
+			ArrayList<WorkOrder> customWorkOrders = new ArrayList<WorkOrder>();
+			for (ProcessPackage pkg : getParentPackages()) {
+				for (Object element : pkg.getProcessElements()) {
+					if (element instanceof WorkOrder) {
+						WorkOrder workOrder = (WorkOrder) element;
+						MethodElementProperty prop = MethodElementPropertyHelper
+						.getProperty(
+								workOrder,
+								MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
+						if (prop != null
+								&& owner.getGuid().equals(
+										prop.getValue())) {
+							customWorkOrders.add(workOrder);
+						}
+					}
+				}
+			}
+			return customWorkOrders;
+		} else {
+			return Collections.emptyList();
+		}
+	}
+	
+	private void initialize(Map<?, Collection<Object>> map, List<WorkOrder> customWorkOrders) {
 		Object unwrapped = TngUtil.unwrap(object);
 		if (unwrapped instanceof WorkBreakdownElement) {
 			WorkBreakdownElement owner = (WorkBreakdownElement) unwrapped;
 			List workOrders = owner.getLinkToPredecessor();
-			if (workOrders.isEmpty())
+			if (workOrders.isEmpty() && customWorkOrders.isEmpty())
 				return;
 			WorkBreakdownElement topElement = (WorkBreakdownElement) TngUtil.unwrap(top);
 			String topGUID = topElement.getGuid();
@@ -400,43 +518,27 @@ public class PredecessorList extends ArrayList<Object> {
 			// org.eclipse.epf.library.edit.util.ProcessUtil.findWorkOrder(Activity,
 			// WorkBreakdownElement, WorkBreakdownElement))
 			//
-			Activity parent = null;
-			Object parentObject = null;
-			if(object instanceof WorkBreakdownElement) {
-				parent = ((WorkBreakdownElement) object).getSuperActivities();
-				parentObject = parent;
-			} else if (object instanceof ITreeItemContentProvider) {
-				parentObject = ((ITreeItemContentProvider) object).getParent(object);
-				parentObject = TngUtil.unwrap(parentObject);
-				if(parentObject instanceof Activity) {
-					parent = (Activity) parentObject;
+			if(!customWorkOrders.isEmpty()) {
+				Object parentObject = null;
+				if(object instanceof WorkBreakdownElement) {
+					parentObject = ((WorkBreakdownElement) object).getSuperActivities();
+				} else if (object instanceof ITreeItemContentProvider) {
+					parentObject = ((ITreeItemContentProvider) object).getParent(object);
 				}
-			}
-			if (parent != null) {
-				// collect all child item providers
-				//
-				ITreeItemContentProvider parentItemProvider = (ITreeItemContentProvider) adapterFactory.adapt(parentObject, ITreeItemContentProvider.class);
-				Map<Object, Object> elementToItemProviderMap = new HashMap<Object, Object>();
-				for (Object child : parentItemProvider.getChildren(parentObject)) {
-					elementToItemProviderMap.put(TngUtil.unwrap(child), adapterFactory.adapt(child, ITreeItemContentProvider.class));
-				}
-				ProcessPackage pkg = (ProcessPackage) parent.eContainer();
-				for (Object element : pkg.getProcessElements()) {
-					if (element instanceof WorkOrder) {
-						WorkOrder workOrder = (WorkOrder) element;
-						MethodElementProperty prop = MethodElementPropertyHelper
-								.getProperty(
-										workOrder,
-										MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
-						if (prop != null
-								&& owner.getGuid().equals(
-										prop.getValue())) {
-							BreakdownElement pred = workOrder.getPred();
-							Object ip = elementToItemProviderMap.get(pred);
-							if(ip != null) {
-								add(ip);
-								map4LinkType.put(((IBSItemProvider) ip).getId(), workOrder.getLinkType().getValue());
-							}
+				if (parentObject != null) {
+					// collect all child item providers
+					//
+					ITreeItemContentProvider parentItemProvider = (ITreeItemContentProvider) adapterFactory.adapt(parentObject, ITreeItemContentProvider.class);
+					Map<Object, Object> elementToItemProviderMap = new HashMap<Object, Object>();
+					for (Object child : parentItemProvider.getChildren(parentObject)) {
+						elementToItemProviderMap.put(TngUtil.unwrap(child), adapterFactory.adapt(child, ITreeItemContentProvider.class));
+					}
+					for (WorkOrder workOrder : customWorkOrders) {
+						BreakdownElement pred = workOrder.getPred();
+						Object ip = elementToItemProviderMap.get(pred);
+						if(ip != null) {
+							add(ip);
+							map4LinkType.put(((IBSItemProvider) ip).getId(), workOrder.getLinkType().getValue());
 						}
 					}
 				}
@@ -458,7 +560,7 @@ public class PredecessorList extends ArrayList<Object> {
 	
 	void refresh(List<DepthLevelItemProvider> list) {
 		clear();
-		initialize(createBreakdownElementToItemProviderMap(list));
+		initialize(createBreakdownElementToItemProviderMap(list), getCustomWorkOrders());
 	}
 	
 	/*

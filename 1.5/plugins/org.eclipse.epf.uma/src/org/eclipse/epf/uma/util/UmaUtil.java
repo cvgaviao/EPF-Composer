@@ -804,4 +804,5 @@ public class UmaUtil {
 	public static void main(String[] args) {
 		System.out.println(generateGUID());
 	}
+
 }

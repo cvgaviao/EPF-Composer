@@ -26,10 +26,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.epf.diagram.core.util.DiagramCoreValidation;
-import org.eclipse.epf.diagram.model.util.TxUtil;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
@@ -41,6 +38,7 @@ import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
+import org.eclipse.uml2.uml.ControlNode;
 
 /**
  * @author Phong Nguyen Le
@@ -159,16 +157,97 @@ public class WorkBreakdownElementNodeAdapter extends NodeAdapter {
 		return new WorkBreakdownElementAdapter();
 	}
 	
-	/*
-	 * check if successor is a direct breakdown element of diagram activity
-	 */
-	private static boolean isBreakdownElementOf(Activity activity, Object element) {
-		for (Object be : activity.getBreakdownElements()) {
-			if(be == element) {
-				return true;
+	@Override
+	protected void removeFromUMA(ActivityEdge link, ActivityNode oldSource,
+			ActivityNode oldTarget) {
+		org.eclipse.epf.uma.Activity diagramActivity = (org.eclipse.epf.uma.Activity) BridgeHelper.getMethodElement(getDiagram());
+		ProcessPackage pkg = (ProcessPackage) diagramActivity.eContainer();
+		MethodElement targetElement = BridgeHelper.getMethodElement(oldTarget);
+		if (targetElement instanceof WorkBreakdownElement) {
+			// this is a direct link
+			// remove WorkOrder
+			//
+			WorkBreakdownElement succ = (WorkBreakdownElement) targetElement;
+			if(diagramActivity != succ.getSuperActivities()) {
+				Object sourceElement = BridgeHelper.getMethodElement(oldSource);
+				if(sourceElement instanceof WorkBreakdownElement) {
+					WorkBreakdownElement pred = (WorkBreakdownElement) sourceElement;
+					WorkOrder order = ProcessUtil.findWorkOrder(diagramActivity, succ, pred);
+					if(order != null) {
+						getActionManager().doAction(IActionManager.REMOVE, pkg, 
+								UmaPackage.Literals.PROCESS_PACKAGE__PROCESS_ELEMENTS, order, -1);
+					}
+				}
+			}
+			else {
+				NodeAdapter targetNodeAdapter = BridgeHelper.getNodeAdapter(oldTarget);
+				boolean notify = targetNodeAdapter != null ? targetNodeAdapter.notificationEnabled : false;
+				try {
+					if(targetNodeAdapter != null) {
+						targetNodeAdapter.notificationEnabled = false;
+					}
+					if (BridgeHelper.canRemoveAllPreds(link, oldSource,
+							oldTarget)) {
+						Object pred = BridgeHelper.getMethodElement(oldSource);
+						if(pred instanceof WorkBreakdownElement) {
+							WorkBreakdownElement e = (WorkBreakdownElement) BridgeHelper.getMethodElement(oldTarget);
+							Collection<WorkOrder> workOrders = UmaUtil.findWorkOrder(e, (WorkBreakdownElement) pred, true);
+							if(!workOrders.isEmpty()) {
+								getActionManager().doAction(IActionManager.REMOVE_MANY, e, 
+										UmaPackage.Literals.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR, workOrders, -1);
+							}
+						}
+					}
+				} finally {
+					if(targetNodeAdapter != null) {
+						targetNodeAdapter.notificationEnabled = notify;
+					}
+				}
+			}
+		} else if(oldTarget instanceof ControlNode && BridgeHelper.isSynchBar(oldTarget)) {
+			// get all the WorkBreakdownElementNodes that this synch bar is
+			// coming to and
+			// remove the WorkOrders with this WorkBreakdownElementNode's
+			// activity as predecessor from them
+			//
+			Collection<ActivityNode> actNodes = new ArrayList<ActivityNode>();
+			BridgeHelper.getSuccessorNodes(actNodes, oldTarget);
+			Object pred = BridgeHelper.getMethodElement(oldSource);
+			for (ActivityNode node : actNodes) {
+				WorkBreakdownElement e = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
+				if(diagramActivity == e.getSuperActivities()) {
+					NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(node);
+					boolean notify = nodeAdapter != null ? nodeAdapter.notificationEnabled : false;
+					try {
+						if(nodeAdapter != null) {
+							nodeAdapter.notificationEnabled = false;
+						}
+						if (BridgeHelper.canRemoveAllPreds(link, oldSource, node)) {
+							WorkOrder wo;
+							while ((wo = UmaUtil.findWorkOrder(e, pred)) != null) {
+								getActionManager().doAction(IActionManager.REMOVE, e, 
+										UmaPackage.Literals.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR, wo, -1);
+							}
+						}
+					} finally {
+						if(nodeAdapter != null) {
+							nodeAdapter.notificationEnabled = notify;
+						}
+					}
+				}
+				else {
+					if(pred instanceof WorkBreakdownElement) {
+						// remove custom work order if there is any
+						//
+						WorkOrder wo = ProcessUtil.findWorkOrder(diagramActivity, e, (WorkBreakdownElement) pred);
+						if(wo != null) {
+							getActionManager().doAction(IActionManager.REMOVE, pkg, 
+									UmaPackage.Literals.PROCESS_PACKAGE__PROCESS_ELEMENTS, wo, -1);
+						}
+					}
+				}
 			}
 		}
-		return false;
 	}
 	
 	protected boolean addToUMA(final ActivityEdge link) {
@@ -182,49 +261,15 @@ public class WorkBreakdownElementNodeAdapter extends NodeAdapter {
 			// this is a direct link
 			// add new WorkOrder object to UMA
 			//
-			WorkOrder order = null;
 			WorkBreakdownElement succ = (WorkBreakdownElement) BridgeHelper.getMethodElement(link.getTarget());
 			WorkBreakdownElement pred = (WorkBreakdownElement) e;
-			if(DiagramCoreValidation.isConnectionToReadOnlyTargetAllowed() && !isBreakdownElementOf(diagramActivity, succ)) {
-				order = ProcessUtil.findWorkOrder(diagramActivity, succ, pred);
-				if(order == null) {
-					NodeAdapter sourceNodeAdapter = BridgeHelper.getNodeAdapter(link.getSource());	
-					// node adapter can be NULL if the node is not currently visible in the diagram
-					//
-					boolean sourceNotify = sourceNodeAdapter != null ? sourceNodeAdapter.notificationEnabled : false;
-					try {
-						// disable notification flag and create a work order
-						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = false;
-						order = ProcessUtil.addDefaultWorkOrderForInheritedChild(diagramActivity, succ, pred);
-						getActionManager().doAction(IActionManager.ADD, pkg, 
-								UmaPackage.Literals.PROCESS_PACKAGE__PROCESS_ELEMENTS, order, -1);
-					} finally {
-						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = sourceNotify;
-					}
-				}
-				BridgeHelper.associate(link, order);
-			}
-			else {
-				if (UmaUtil.findWorkOrder(succ, pred) == null) {
-					NodeAdapter sourceNodeAdapter = BridgeHelper.getNodeAdapter(link.getSource());	
-					// node adapter can be NULL if the node is not currently visible in the diagram
-					//
-					boolean sourceNotify = sourceNodeAdapter != null ? sourceNodeAdapter.notificationEnabled : false;
-					try {
-						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = false;
-						//Create a workorder and disable notification flag.
-						order = addDefaultWorkOrder(link.getTarget(), pred);
-					} finally {
-						if(sourceNodeAdapter != null) sourceNodeAdapter.notificationEnabled = sourceNotify;
-					}
-				}
-			} 	
+			WorkOrder order = addWorkOrder(link.getTarget(), succ, link.getSource(), pred, diagramActivity, link);			
 			// set the WorkOrder as the element of the link's edge
 //			BridgeHelper.setSemanticModel(link, order);
 		} 
 		else if (BridgeHelper.isSynchBar(link.getSource())) {
 			// get all WorkBreakdownElementNodes that are comming to this
-			// TypedNode, both directly and indirectly
+			// join node, both directly and indirectly
 			// and create work orders with their activity as predecessor
 			//
 
@@ -238,20 +283,10 @@ public class WorkBreakdownElementNodeAdapter extends NodeAdapter {
 				// excluding decisionpoint incoming connection
 				BridgeHelper.getSyncBarSourceNodes(link.getSource(), actNodes);
 				WorkBreakdownElement succ = (WorkBreakdownElement) BridgeHelper.getMethodElement(link.getTarget());
-				for (Iterator iter = actNodes.iterator(); iter.hasNext();) {
+				for (Iterator<?> iter = actNodes.iterator(); iter.hasNext();) {
 					ActivityNode node = (ActivityNode) iter.next();
 					WorkBreakdownElement pred = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
-					if (UmaUtil.findWorkOrder(succ, pred) == null) {
-						NodeAdapter sourceNode = BridgeHelper.getNodeAdapter(node);
-						boolean sourceNotify = sourceNode.notificationEnabled;
-						try {
-							sourceNode.notificationEnabled = false;
-							// Create a workorder and disable notification flag.
-							addDefaultWorkOrder(link.getTarget(), pred);
-						} finally {
-							sourceNode.notificationEnabled = sourceNotify;
-						}
-					}
+					addWorkOrder(link.getTarget(), succ, node, pred, diagramActivity, null);
 				}
 		}
 		return true;

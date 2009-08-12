@@ -25,7 +25,10 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
@@ -45,18 +48,18 @@ public class ControlNodeAdapter extends NodeAdapter {
 		if (!super.addToUMA(link))
 			return false;
 
+		Activity diagramActivity = (Activity) BridgeHelper.getMethodElement(getDiagram());
 		MethodElement srcElement = BridgeHelper.getMethodElement(link.getSource());
 		if (srcElement instanceof WorkBreakdownElement) {
 			if (BridgeHelper.isSynchBar(link.getTarget())) {
 				Collection targetActNodes = new ArrayList();
 				BridgeHelper.getSyncBarTargetNodes(link
 						.getTarget(), targetActNodes);
-				for (Iterator iter = targetActNodes.iterator(); iter.hasNext();) {
+				WorkBreakdownElement pred = (WorkBreakdownElement) srcElement;
+				for (Iterator<?> iter = targetActNodes.iterator(); iter.hasNext();) {
 					ActivityNode node = (ActivityNode) iter.next();
 					WorkBreakdownElement targetElement = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
-					if (UmaUtil.findWorkOrder(targetElement, srcElement) == null) {
-						addDefaultWorkOrder(node, (WorkBreakdownElement) srcElement);
-					}
+					addWorkOrder(node, targetElement, null, pred, diagramActivity, null);
 				}
 			}
 		} else if (BridgeHelper.isSynchBar(link.getSource())) {
@@ -69,14 +72,13 @@ public class ControlNodeAdapter extends NodeAdapter {
 
 			for (Iterator iter = targetActNodes.iterator(); iter.hasNext();) {
 				ActivityNode node = ((ActivityNode) iter.next());
-				for (Iterator iterator = srcActNodes.iterator(); iterator
+				WorkBreakdownElement succ = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
+				for (Iterator<?> iterator = srcActNodes.iterator(); iterator
 				.hasNext();) {
+					ActivityNode srcNode = (ActivityNode) iterator.next();
 					WorkBreakdownElement pred = (WorkBreakdownElement) BridgeHelper
-						.getMethodElement((ActivityNode) iterator.next());
-					if (UmaUtil.findWorkOrder((WorkBreakdownElement) BridgeHelper
-							.getMethodElement(node), pred) == null) {
-						addDefaultWorkOrder(node, pred);
-					}
+						.getMethodElement(srcNode);
+					addWorkOrder(node, succ, srcNode, pred, diagramActivity, null);
 				}
 			}
 		}
@@ -85,54 +87,67 @@ public class ControlNodeAdapter extends NodeAdapter {
 	}
 	
 	protected void removeFromUMA(ActivityEdge link, ActivityNode oldSource, ActivityNode oldTarget) {
-		Collection srcActNodes = new ArrayList();			
+		org.eclipse.epf.uma.Activity diagramActivity = (org.eclipse.epf.uma.Activity) BridgeHelper.getMethodElement(getDiagram());
+		ProcessPackage pkg = (ProcessPackage) diagramActivity.eContainer();
+		Collection<Object> srcActNodes = new ArrayList<Object>();			
 		BridgeHelper.getSourceNodes(srcActNodes, oldSource, WorkBreakdownElement.class);
 		MethodElement targetElement = BridgeHelper.getMethodElement(oldTarget);
 		if (targetElement instanceof WorkBreakdownElement) {
-			WorkBreakdownElement targetWbe = (WorkBreakdownElement) targetElement;
-			for (Iterator iterator = srcActNodes.iterator(); iterator.hasNext();) {
-				// Object pred = ((Node) iterator.next()).getObject();
-				// GraphicalDataHelper.removeWorkOrder((NamedNodeImpl)
-				// oldTarget, pred);
+			WorkBreakdownElement targetWbe = (WorkBreakdownElement) targetElement;			
+			for (Iterator<?> iterator = srcActNodes.iterator(); iterator.hasNext();) {
 				ActivityNode node = (ActivityNode) iterator.next();
-				if (BridgeHelper.canRemoveAllPreds(link, node, oldTarget)) {
-					MethodElement srcElement = BridgeHelper.getMethodElement(node);					
-					WorkOrder wo;
-					while ((wo = UmaUtil.findWorkOrder(targetWbe, srcElement)) != null) {
-						getActionManager().doAction(IActionManager.REMOVE, targetWbe, 
-								UmaPackage.Literals.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR, wo, -1);
+				if(targetWbe.getSuperActivities() == diagramActivity) { // target element is local
+					if (BridgeHelper.canRemoveAllPreds(link, node, oldTarget)) {
+						MethodElement srcElement = BridgeHelper.getMethodElement(node);					
+						WorkOrder wo;
+						while ((wo = UmaUtil.findWorkOrder(targetWbe, srcElement)) != null) {
+							getActionManager().doAction(IActionManager.REMOVE, targetWbe, 
+									UmaPackage.Literals.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR, wo, -1);
+						}
+					}
+				} else { // target is an inherited element
+					WorkBreakdownElement pred = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
+					WorkOrder order = ProcessUtil.findWorkOrder(diagramActivity, targetWbe, pred);
+					if(order != null) {
+						getActionManager().doAction(IActionManager.REMOVE, pkg, 
+								UmaPackage.Literals.PROCESS_PACKAGE__PROCESS_ELEMENTS, order, -1);
 					}
 				}
 			}
 		} else if (oldTarget instanceof ControlNode) {
-			Collection targetActNodes = new ArrayList();
+			Collection<Object> targetActNodes = new ArrayList<Object>();
 			BridgeHelper.getTargetNodes(targetActNodes,
 					oldTarget, WorkBreakdownElement.class);
 
 			// remove the work orders of target activities that have the
 			// predecessor in srcActNodes
 			//
-			for (Iterator iter = targetActNodes.iterator(); iter.hasNext();) {
+			for (Iterator<?> iter = targetActNodes.iterator(); iter.hasNext();) {
 				ActivityNode node = ((ActivityNode) iter.next());
-				for (Iterator iterator = srcActNodes.iterator(); iterator
+				WorkBreakdownElement targetE = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
+				for (Iterator<?> iterator = srcActNodes.iterator(); iterator
 						.hasNext();) {
-					// Object pred = ((Node) iterator.next()).getObject();
-					// GraphicalDataHelper.removeWorkOrder(node, pred);
 					ActivityNode prednode = (ActivityNode) iterator.next();
-					if (BridgeHelper.canRemoveAllPreds(link, prednode,
-							node)) {
-						WorkBreakdownElement targetE = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
-						MethodElement srcElement = BridgeHelper.getMethodElement(prednode);
-						WorkOrder wo;
-						while ((wo = UmaUtil.findWorkOrder(targetE, srcElement)) != null) {
-							getActionManager().doAction(IActionManager.REMOVE, targetE, 
-									UmaPackage.Literals.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR, wo, -1);
+					if(targetE.getSuperActivities() == diagramActivity) {  // target element is local
+						if (BridgeHelper.canRemoveAllPreds(link, prednode,
+								node)) {
+							MethodElement srcElement = BridgeHelper.getMethodElement(prednode);
+							WorkOrder wo;
+							while ((wo = UmaUtil.findWorkOrder(targetE, srcElement)) != null) {
+								getActionManager().doAction(IActionManager.REMOVE, targetE, 
+										UmaPackage.Literals.WORK_BREAKDOWN_ELEMENT__LINK_TO_PREDECESSOR, wo, -1);
+							}
+						}
+					} else { // target element is inherited
+						WorkBreakdownElement pred = (WorkBreakdownElement) BridgeHelper.getMethodElement(prednode);
+						WorkOrder order = ProcessUtil.findWorkOrder(diagramActivity, targetE, pred);
+						if(order != null) {
+							getActionManager().doAction(IActionManager.REMOVE, pkg, 
+									UmaPackage.Literals.PROCESS_PACKAGE__PROCESS_ELEMENTS, order, -1);
 						}
 					}
 				}
 			}
 		}
-
-		super.removeFromUMA(link, oldSource, oldTarget);
 	}
 }

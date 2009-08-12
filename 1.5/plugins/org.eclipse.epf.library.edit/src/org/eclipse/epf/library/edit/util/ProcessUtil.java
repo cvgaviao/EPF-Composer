@@ -3427,10 +3427,19 @@ public final class ProcessUtil {
 		return null;
 	}
 	
-	public static WorkOrder addDefaultWorkOrderForInheritedChild(Activity parent, WorkBreakdownElement inheritedChild, WorkBreakdownElement predecessor) {
+	public static WorkOrder createDefaultWorkOrderForInheritedChild(Activity parent, WorkBreakdownElement inheritedChild, WorkBreakdownElement predecessor) {
 		WorkOrder workOrder = UmaFactory.eINSTANCE.createWorkOrder();
 		workOrder.setPred(predecessor);
 		MethodElementPropertyHelper.setProperty(workOrder, MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR, inheritedChild.getGuid());
 		return workOrder;
+	}
+
+	public static boolean isCustomWorkOrder(WorkOrder object) {
+		return MethodElementPropertyHelper.getProperty(object, MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR) != null;
+	}
+	
+	public static boolean isCustomWorkOrderOf(WorkOrder wo, WorkBreakdownElement e) {
+		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(wo, MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
+		return prop != null && e.getGuid().equals(prop.getValue());
 	}
 }
