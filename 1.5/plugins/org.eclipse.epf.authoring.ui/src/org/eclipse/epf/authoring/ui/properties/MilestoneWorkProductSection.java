@@ -24,9 +24,13 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
+import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
+import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
+import org.eclipse.epf.library.edit.process.WorkProductDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.command.AssignWPToMilestone;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Milestone;
@@ -203,16 +207,15 @@ public class MilestoneWorkProductSection extends RelationSection {
 					else
 						return false;
 				}
-				// Uncomment to show extended activity's workproducts
-				// if(obj instanceof WorkProductDescriptorWrapperItemProvider){
-				// Object object =
-				// ((BreakdownElementWrapperItemProvider)obj).getParent(obj);
-				// List list = new ArrayList();
-				// getActivitiesInScope(
-				// TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory(),
-				// element, list);
-				// if(list.contains(object)) return true;
-				// }
+				
+				//  show extended activity's workproducts			
+				 if (obj instanceof ActivityWrapperItemProvider || obj instanceof WorkProductDescriptorWrapperItemProvider){
+					 Object object = ((BreakdownElementWrapperItemProvider)obj).getParent(obj);
+					 List list = new ArrayList();
+				 		getActivitiesInScope(TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory(),element, list);
+				 		if(list.contains(object)) return true;
+				 }
+				 
 				if (obj instanceof WorkProductDescriptor)
 					return true;
 				return false;
@@ -251,10 +254,34 @@ public class MilestoneWorkProductSection extends RelationSection {
 				if (!children.isEmpty() && children.size() > 0) {
 					for (int i=0; i < children.size(); i++) {
 						Object child = children.get(i);
+						if (child instanceof Activity && !activityList.contains(child))  {
+							activityList.add(child);
+							getChildrenActivitiesInScope(adapterFactory, (BreakdownElement) child,
+									activityList);
+						}
+						if (child instanceof ActivityWrapperItemProvider) {
+							activityList.add(TngUtil.unwrap(child));
+							getChildrenActivitiesInScope(adapterFactory, (ActivityWrapperItemProvider) child, activityList);
+						}
+					}	
+				}
+			}
+			
+			private void getChildrenActivitiesInScope(AdapterFactory adapterFactory,
+					ActivityWrapperItemProvider provider, List activityList) {
+				
+				List children = (List) provider.getChildren(element);
+				if (!children.isEmpty() && children.size() > 0) {
+					for (int i=0; i < children.size(); i++) {
+						Object child = children.get(i);
 						if (child instanceof Activity && !activityList.contains(child)) {
 							activityList.add(child);
 							getChildrenActivitiesInScope(adapterFactory, (BreakdownElement) child,
 									activityList);
+						}
+						if (child instanceof ActivityWrapperItemProvider) {
+							activityList.add(TngUtil.unwrap(child));
+							getChildrenActivitiesInScope(adapterFactory, (ActivityWrapperItemProvider) child, activityList);
 						}
 					}	
 				}
