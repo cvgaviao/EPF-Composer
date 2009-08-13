@@ -39,7 +39,7 @@ public class ActivityDiagramPrefPage extends PreferencePage implements
 		IWorkbenchPreferencePage {
 
 	private Composite composite_tab;
-	private Button allowUpdateReadOnlyConnectionsCheckBox;
+//	private Button allowUpdateReadOnlyConnectionsCheckBox;
 
 	/*
 	 * (non-Javadoc)
@@ -50,7 +50,7 @@ public class ActivityDiagramPrefPage extends PreferencePage implements
 		Composite composite = new Composite(parent, SWT.NULL);
 		composite.setLayout(new GridLayout());
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		allowUpdateReadOnlyConnectionsCheckBox = SWTUtil.createCheckbox(composite, AuthoringUIResources.ActivityDiagramPrefPage_allowCreateConnectionToReadOnlyElements);
+//		allowUpdateReadOnlyConnectionsCheckBox = SWTUtil.createCheckbox(composite, AuthoringUIResources.ActivityDiagramPrefPage_allowCreateConnectionToReadOnlyElements);
 		initializeValues();
 		return composite;
 	}
@@ -97,7 +97,7 @@ public class ActivityDiagramPrefPage extends PreferencePage implements
 	 * Stores the values of the controls back to the preference store.
 	 */
 	private void storeValues() {
-		DiagramPreferences.setADAllowConnectionToReadOnlyElements(allowUpdateReadOnlyConnectionsCheckBox.getSelection());
+//		DiagramPreferences.setADAllowConnectionToReadOnlyElements(allowUpdateReadOnlyConnectionsCheckBox.getSelection());
 	}
 
 	/**
@@ -105,14 +105,14 @@ public class ActivityDiagramPrefPage extends PreferencePage implements
 	 * store.
 	 */
 	private void initializeDefaults() {
-		allowUpdateReadOnlyConnectionsCheckBox.setSelection(false);
+//		allowUpdateReadOnlyConnectionsCheckBox.setSelection(false);
 	}
 
 	/**
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		allowUpdateReadOnlyConnectionsCheckBox.setSelection(DiagramPreferences.getADAllowConnectionToReadOnlyElements());
+//		allowUpdateReadOnlyConnectionsCheckBox.setSelection(DiagramPreferences.getADAllowConnectionToReadOnlyElements());
 	}
 
 	

@@ -23,7 +23,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.diagram.core.DiagramCoreResources;
 import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
 import org.eclipse.epf.diagram.core.bridge.NodeAdapter;
-import org.eclipse.epf.diagram.core.preferences.DiagramPreferences;
 import org.eclipse.epf.diagram.core.services.DiagramHelper;
 import org.eclipse.epf.diagram.model.ActivityDetailDiagram;
 import org.eclipse.epf.diagram.model.ActivityDiagram;
@@ -72,7 +71,8 @@ public class DiagramCoreValidation {
 	private static final String errMsg_CanNotDelete = DiagramCoreResources.DiagramValidation_err_cannot_delete_text; //$NON-NLS-1$
 
 	public static boolean isConnectionToReadOnlyTargetAllowed() {
-		return DiagramPreferences.getADAllowConnectionToReadOnlyElements();
+//		return DiagramPreferences.getADAllowConnectionToReadOnlyElements();
+		return true;
 	}
 	
 	public static String isTargetReadonly(EditPart part){
