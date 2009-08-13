@@ -119,6 +119,10 @@ public class HtmlBuilder {
 		loadDefaultLayoutXsl();
 	}
 
+	public void addParam(String key, String value) {
+		xslParams.put(key, value);
+	}
+	
 	public void loadDefaultLayoutXsl() {
 		layoutXslRootPath = LayoutPlugin.getDefault().getLayoutXslPath();
 		try {

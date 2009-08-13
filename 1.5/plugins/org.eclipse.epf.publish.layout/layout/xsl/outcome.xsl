@@ -75,6 +75,9 @@
 				</script>
 			</head>
 			<body>
+			<xsl:if test="$backgroundImage!=''">
+				<xsl:attribute name="background"><xsl:value-of select="concat($imagePath, $backgroundImage)"/></xsl:attribute>
+			</xsl:if>
 			<div id="breadcrumbs"></div>
 				<table border="0" cellpadding="0" cellspacing="0" width="100%">
 					<tr>

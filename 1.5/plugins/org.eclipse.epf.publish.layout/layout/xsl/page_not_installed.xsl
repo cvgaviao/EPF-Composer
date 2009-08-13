@@ -21,6 +21,8 @@
 	<xsl:include href="resources.xsl"/>
 
 	<xsl:template match="/Element">
+		<xsl:variable name="backPath" select="@BackPath"/>
+		<xsl:variable name="imagePath" select="concat($backPath, 'images/')"/>
 		<xsl:variable name="copyright" select="copyright"/>
 		<xsl:variable name="showTreeBrowser" select="@showTreeBrowser"/>		
 		<html>	
@@ -30,6 +32,9 @@
 				<title><xsl:value-of select="$pageNotInstalledText"/></title>
 			</head>		
 			<body>
+			<xsl:if test="$backgroundImage!=''">
+				<xsl:attribute name="background"><xsl:value-of select="concat($imagePath, $backgroundImage)"/></xsl:attribute>
+			</xsl:if>
 			<xsl:choose>
 				<xsl:when test="@invalidLink">
 					<b><h3><xsl:value-of select="$elementDoesNotExistText"/></h3></b>

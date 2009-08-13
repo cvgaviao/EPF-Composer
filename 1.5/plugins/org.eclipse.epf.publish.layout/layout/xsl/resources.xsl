@@ -245,5 +245,6 @@
 	<xsl:param name="modelInfo_primaryTasksText"/>
 	<xsl:param name="modelInfo_additionalTasksText"/>
 	<xsl:param name="modelInfo_assistTasksText"/>
+	<xsl:param name="backgroundImage"/>
 	
 </xsl:stylesheet>
