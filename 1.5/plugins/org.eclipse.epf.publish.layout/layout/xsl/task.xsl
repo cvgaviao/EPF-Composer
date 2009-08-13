@@ -43,7 +43,7 @@
 		<xsl:variable name="taskDescription" select="$presentation/Element[@Type='TaskDescription']"/>
 		<xsl:variable name="copyright" select="copyright"/>
 		<xsl:variable name="showTreeBrowser" select="@showTreeBrowser"/>
-		<xsl:variable name="performingRole" select="reference[@name='performedBy']/Element[@Type='Role']"/>
+		<xsl:variable name="performingRole" select="referenceList[@name='performedBy']/Element[@Type='Role']"/>
 		<xsl:variable name="tagValues" select="@TagValues"/>
 			
 		<html>
@@ -69,7 +69,14 @@
 				</meta>
 				<meta name="filetype" content="description"/>
 				<meta name="role">
-					<xsl:attribute name="content"><xsl:value-of select="$performingRole/@DisplayName"/></xsl:attribute>
+					<xsl:choose>  
+						<xsl:when test="$performingRole/@DisplayName!=''">
+							<xsl:attribute name="content"><xsl:value-of select="$performingRole/@DisplayName"/></xsl:attribute>
+						</xsl:when>  
+						<xsl:otherwise>
+							<xsl:attribute name="content">none</xsl:attribute>
+						</xsl:otherwise>
+					</xsl:choose>
 				</meta>
 				<xsl:if test="$tagValues!=''">
 				    <meta name="tags" content="{$tagValues}"/>

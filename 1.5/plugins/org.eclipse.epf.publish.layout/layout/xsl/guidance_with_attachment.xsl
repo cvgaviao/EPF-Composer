@@ -67,7 +67,14 @@
 				</xsl:if>
 				<meta name="filetype" content="description"/>
 				<meta name="role">
-					<xsl:attribute name="content"><xsl:value-of select="$responsibleRole/@DisplayName"/></xsl:attribute>
+					<xsl:choose>  
+						<xsl:when test="$responsibleRole/@DisplayName!=''">
+							<xsl:attribute name="content"><xsl:value-of select="$responsibleRole/@DisplayName!=''"/></xsl:attribute>
+						</xsl:when>  
+						<xsl:otherwise>
+							<xsl:attribute name="content">none</xsl:attribute>
+						</xsl:otherwise>
+					</xsl:choose>
 				</meta>
 				<xsl:if test="$tagValues!=''">
 				    <meta name="tags" content="{$tagValues}"/>
