@@ -52,6 +52,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.uml2.uml.ActivityParameterNode;
 import org.eclipse.uml2.uml.ActivityPartition;
@@ -166,6 +167,12 @@ public class CopyDiagramForDeepCopyCommand extends AbstractCommand implements
 
 								// update children references
 								updateReferences(diagramCopy, copyActivity, origActivity);
+								
+								// remove "inherted" mark, if there is any, on all edges of diagram copy
+								//
+								for (Object edge : diagramCopy.getEdges()) {
+									BridgeHelper.unmarkInHerited((Edge) edge);
+								}
 
 								// associate with the activity
 								int diagramType = DiagramHelper
@@ -338,6 +345,7 @@ public class CopyDiagramForDeepCopyCommand extends AbstractCommand implements
 		}
 		for (Iterator<?> itor = children.iterator(); itor.hasNext();) {
 			Node node = (Node) itor.next();
+			BridgeHelper.unmarkInHerited(node);
 			EObject obj = node.getElement();
 
 			if (diagramType == IDiagramManager.ACTIVITY_DIAGRAM) {

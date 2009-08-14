@@ -51,6 +51,7 @@ import org.eclipse.epf.library.edit.util.DepthLevelAdapterFactoryTreeIterator;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IDiagramManager;
 import org.eclipse.epf.library.edit.util.ITextReferenceReplacer;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -60,12 +61,16 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.Diagram;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.WorkBreakdownElement;
+import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.edit.command.MethodElementInitializeCopyCommand;
 import org.eclipse.osgi.util.NLS;
 
@@ -643,11 +648,36 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 		Collection<?> result = super.getResult();
 		if(!result.isEmpty()) {
 			pkgCopy = (ProcessPackage) result.iterator().next();
+			fixCustomWorkOrders();
 			fixProcessComponent();
 			replaceTextReferences();
 		}
 	}
 	
+	private void fixCustomWorkOrders() {
+		Map<?, ?> objectToCopyMap = ((CopyHelper) copyHelper).getObjectToCopyMap();
+		Map<String, String> oldGuidToNewGuidMap = new HashMap<String, String>();
+		for (Map.Entry<?, ?> entry : objectToCopyMap.entrySet()) {
+			if(entry.getKey() instanceof WorkBreakdownElement) {
+				oldGuidToNewGuidMap.put(((WorkBreakdownElement) entry.getKey()).getGuid(),
+						((WorkBreakdownElement) entry.getValue()).getGuid());
+			}
+		}
+		for (ProcessElement element : pkgCopy.getProcessElements()) {
+			if(element instanceof WorkOrder) {
+				MethodElementProperty prop = MethodElementPropertyHelper.getProperty(element, MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
+				if(prop != null) {
+					String newGuid = oldGuidToNewGuidMap.get(prop.getValue());
+					if(newGuid != null) {
+						prop.setValue(newGuid);
+					}
+				}
+			}
+		}
+		oldGuidToNewGuidMap.clear();
+		objectToCopyMap.clear();
+	}
+
 	/**
 	 * fix the process component to make it a process package.
 	 * This method might be overriden by subclass to achive difference result.
@@ -699,6 +729,7 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 				}
 			}
 		}
+		oldToNewObjectMap.clear();
 	}
 	
 	/* (non-Javadoc)

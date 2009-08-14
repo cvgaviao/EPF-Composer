@@ -106,9 +106,9 @@ public class ActivityHandler {
 			oMap = getDeepCopyHelper().getObjectToCopyMap();
 		} else if (editingDomain instanceof TraceableAdapterFactoryEditingDomain) {
 			TraceableAdapterFactoryEditingDomain td = (TraceableAdapterFactoryEditingDomain) editingDomain;
-			oMap = td.getOriginalToClipboardMap();
+			oMap = copy(td.getOriginalToClipboardMap());
 		}
-		return copy(oMap);
+		return oMap;
 	}
 	
 	public static Map copy(Map map) {

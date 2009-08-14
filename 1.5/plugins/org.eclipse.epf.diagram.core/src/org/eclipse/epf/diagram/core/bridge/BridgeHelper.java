@@ -651,6 +651,9 @@ public final class BridgeHelper {
 	}
 	
 	public static void markInherited(EModelElement element) {
+		if(isInherited(element)) {
+			return;
+		}
 		EAnnotation eAnnotation = element.getEAnnotation(ANNOTATION_INHERIRED);
 		if (eAnnotation == null) {
 			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();

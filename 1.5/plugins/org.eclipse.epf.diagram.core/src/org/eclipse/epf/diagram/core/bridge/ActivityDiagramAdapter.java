@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.diagram.model.util.IAdapterFactoryFilter;
@@ -38,6 +39,8 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.WBSActivityItemProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.PredecessorList;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -49,6 +52,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
+import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ActivityParameterNode;
@@ -247,6 +251,41 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 		}
 		return false;
 	}
+	
+	private List<WorkBreakdownElement> getLocalPredecessors(ActivityNode node, Collection<?> activityChildren) {
+		MethodElement e = BridgeHelper.getMethodElement(node);
+		if(e instanceof WorkBreakdownElement) {
+			// find item provider
+			//
+			Object object = null;
+			for (Object child : activityChildren) {
+				if(e == TngUtil.unwrap(child)) {
+					object = child;
+					break;
+				}
+			}
+			if(object != null) {
+				Object ip = getAdapterFactory().adapt(object, ITreeItemContentProvider.class);
+				if(ip instanceof IBSItemProvider) {
+					ArrayList<WorkBreakdownElement> preds = new ArrayList<WorkBreakdownElement>();
+					PredecessorList predList = ((IBSItemProvider) ip).getPredecessors();
+					for (Object predIp : predList) {
+						Object pred = TngUtil.unwrap(predIp);
+						if(pred instanceof WorkBreakdownElement) {
+							preds.add((WorkBreakdownElement) pred);
+						} else if (pred instanceof Adapter) {
+							pred = ((Adapter) pred).getTarget();
+							if(pred instanceof WorkBreakdownElement) {
+								preds.add((WorkBreakdownElement) pred);
+							}
+						}
+					}
+					return preds;
+				}
+			}
+		}
+		return Collections.emptyList();
+	}
 
 	AdapterFactory getAdapterFactory(){
 		AdapterFactory adapterFactory = null;
@@ -342,84 +381,70 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 		// add new link for those WorkOrders that still don't have the
 		// corresponding link
 		//
+		Activity diagramActivity = (Activity) BridgeHelper.getMethodElement(getDiagram());
 		AdapterFactory adapterFactory = getAdapterFactory();
+		ITreeItemContentProvider adapter = (ITreeItemContentProvider) adapterFactory.adapt(diagramActivity, ITreeItemContentProvider.class);
+		Collection<?> children = adapter.getChildren(diagramActivity);
 		
 		for (ActivityNode node : selectedNodes) {
-			MethodElement e;
-			if ((e = BridgeHelper.getMethodElement(node)) instanceof WorkBreakdownElement) {
-				List list = new ArrayList(); 
-				// Get the raw data of workorders for object.
-				WorkBreakdownElement local = (WorkBreakdownElement) e;
-				list.addAll(local.getLinkToPredecessor());
-				
-				// Get the Predecessor List on top of raw data, this is need for in case of extend.
-				ITreeItemContentProvider adapter = null;
-				adapter = (ITreeItemContentProvider)adapterFactory
-									.adapt(local, ITreeItemContentProvider.class);
-				if(adapter instanceof IBSItemProvider){
-					list.addAll(((IBSItemProvider)adapter).getPredecessors());
-				}
-				
-				// Iterate work orders and create links.
-				for (Iterator iterator = list.iterator(); iterator
-						.hasNext();) {
-					Object next = iterator.next();
-					WorkOrder workOrder = null;
-					BreakdownElement pred = null;
-					if(next instanceof WorkOrder){
-						workOrder = (WorkOrder)next;
-						pred = workOrder.getPred();
-					}
-					if(next instanceof WBSActivityItemProvider){
-						pred = (BreakdownElement)((WBSActivityItemProvider)next).getTarget(); 
-					}
-					
-					if (pred != null && pred instanceof WorkBreakdownElement) {
-						ActivityNode predNode = BridgeHelper.findNode(getDiagram(),
-								pred, true);
-						if (predNode != null) {
-							// check if there is a link for this work order
-							// already
+			List<WorkBreakdownElement> preds = getLocalPredecessors(node, children);
+
+			// Iterate work orders and create links.
+			for (WorkBreakdownElement pred : preds) {
+				ActivityNode predNode = BridgeHelper.findNode(getDiagram(),
+						pred, true);
+				if (predNode != null) {
+					// check if there is a link for this work order
+					// already
+					//
+					boolean linkFound = false;
+					find_link: for (Iterator<?> iterator1 = node
+							.getIncomings().iterator(); iterator1
+							.hasNext();) {
+						ActivityEdge link = (ActivityEdge) iterator1.next();
+						if (link.getSource() == predNode) {
+							// link already exists
+							// check if work order is set to this link
 							//
-							boolean linkFound = false;
-							find_link: for (Iterator iterator1 = node
-									.getIncomings().iterator(); iterator1
-									.hasNext();) {
-								ActivityEdge link = (ActivityEdge) iterator1.next();
-								if (link.getSource() == predNode) {
-									// link already exists
-									// check if work order is set to this link
-									//
-									linkFound = true;
-//									MethodElement me = BridgeHelper.getMethodElement(link);
-									if (link == null) {
-										BridgeHelper.setSemanticModel(
-												link, workOrder);
-									}
-									break find_link;
-								}
-							}
-							if (!linkFound) {
-								// check if this WorkOrder can be represented
-								// via links of TypedNodes
-								//
-								if (!canReachAsFirstActivityNode(predNode, node)) {
-									// add new link for this work order
-									//
-									NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(node);
-									NodeAdapter predNodeAdapter = BridgeHelper.getNodeAdapter(predNode);
-									if(nodeAdapter != null && predNodeAdapter != null) {
-										boolean oldNotify = nodeAdapter.notificationEnabled;
-										boolean predNodeNotify = predNodeAdapter.notificationEnabled;
-										try {
-											nodeAdapter.notificationEnabled = false;
-											predNodeAdapter.notificationEnabled = false;
-											nodeAdapter.addIncomingConnection(pred); 
-										} finally {
-											nodeAdapter.notificationEnabled = oldNotify;
-											predNodeAdapter.notificationEnabled = predNodeNotify;
+							linkFound = true;
+//							MethodElement me = BridgeHelper.getMethodElement(link);
+//							if (link != null) {
+//								BridgeHelper.setSemanticModel(
+//										link, workOrder);
+//							}
+							break find_link;
+						}
+					}
+					if (!linkFound) {
+						// check if this WorkOrder can be represented
+						// via links of TypedNodes
+						//
+						if (!canReachAsFirstActivityNode(predNode, node)) {
+							// add new link for this work order
+							//
+							NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(node);
+							NodeAdapter predNodeAdapter = BridgeHelper.getNodeAdapter(predNode);
+							if(nodeAdapter != null && predNodeAdapter != null) {
+								boolean oldNotify = nodeAdapter.notificationEnabled;
+								boolean predNodeNotify = predNodeAdapter.notificationEnabled;
+								try {
+									nodeAdapter.notificationEnabled = false;
+									predNodeAdapter.notificationEnabled = false;
+									ActivityEdge edge = nodeAdapter.addIncomingConnection(pred);
+									if(BridgeHelper.isInherited(node)) {
+										// target node is inherited, must find the custom work order and associate it with the edge
+										//
+										WorkBreakdownElement inheritedChild = (WorkBreakdownElement) BridgeHelper.getMethodElement(node);
+										if(inheritedChild != null) {
+											WorkOrder wo = ProcessUtil.findWorkOrder(diagramActivity, inheritedChild, pred);
+											if(wo != null) {
+												BridgeHelper.associate(edge, wo);
+											}
 										}
 									}
+								} finally {
+									nodeAdapter.notificationEnabled = oldNotify;
+									predNodeAdapter.notificationEnabled = predNodeNotify;
 								}
 							}
 						}

@@ -421,6 +421,12 @@ public class DiagramCoreValidation {
 				if(BridgeHelper.isInherited(edge)) {
 					return errMsg_CanNotDelete;
 				}
+				
+				// Since making connection to a inherited, read-only target is
+				// allowed now, the check logic below is no longer needed. We
+				// only need to prevented inherited connections and nodes from
+				// deletion.
+				
 //				// check if this edge is representing any work order
 //				//
 //				if (sourceElement instanceof ActivityNode

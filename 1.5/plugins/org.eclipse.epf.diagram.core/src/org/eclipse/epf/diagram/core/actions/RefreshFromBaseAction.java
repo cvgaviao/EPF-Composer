@@ -16,9 +16,11 @@ package org.eclipse.epf.diagram.core.actions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +32,7 @@ import org.eclipse.epf.diagram.core.DiagramCorePlugin;
 import org.eclipse.epf.diagram.core.DiagramCoreResources;
 import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
 import org.eclipse.epf.diagram.core.bridge.DiagramAdapter;
+import org.eclipse.epf.diagram.core.bridge.NodeAdapter;
 import org.eclipse.epf.diagram.core.part.AbstractDiagramEditor;
 import org.eclipse.epf.diagram.core.part.util.DiagramEditorUtil;
 import org.eclipse.epf.diagram.core.services.DiagramHelper;
@@ -544,14 +547,19 @@ public class RefreshFromBaseAction implements IObjectActionDelegate {
 						}
 					}
 				}
-
+				
+				Map<MethodElement, Edge> targetToCustomLinkMap = new HashMap<MethodElement, Edge>();
 				// Collect the edges thats exists in extend diagram
 				for (Iterator<?> iter = diagram.getEdges().iterator(); iter
 						.hasNext();) {
 					Edge edge = (Edge) iter.next();
-					if (contains(oldNodes, edge.getSource())
-							&& contains(oldNodes, edge.getTarget())) {
-						oldEdges.add(edge);
+					if (contains(oldNodes, edge.getTarget())) {
+						if(contains(oldNodes, edge.getSource())) {
+							oldEdges.add(edge);
+						} else { // must be custom connection
+							MethodElement e = helper.getMethodElement((Node) edge.getTarget(), resourceSet);
+							targetToCustomLinkMap.put(e, edge);
+						}
 					}
 				}
 
@@ -574,7 +582,39 @@ public class RefreshFromBaseAction implements IObjectActionDelegate {
 
 				// Mark inherited
 				for (Object obj : baseCopy.getChildren()) {
-					BridgeHelper.markInherited((View) obj);
+					View child = (View) obj;
+					BridgeHelper.markInherited(child);
+					if(child instanceof Node) {
+						MethodElement e = helper.getMethodElement((Node) child, resourceSet);
+						if(e != null) {
+							Edge edge = targetToCustomLinkMap.get(e);
+							if(edge != null) {
+								// update custom edge with new copy of target from base
+								edge.setTarget(child);
+								Object edgeModel = edge.getElement();
+								if(edgeModel instanceof ActivityEdge && child.getElement() instanceof ActivityNode) {
+									ActivityEdge actEdge = (ActivityEdge) edgeModel;
+									// disable notification for node adapter of
+									// the old target so associated work order
+									// will not be removed
+									ActivityNode oldTarget = actEdge.getTarget();
+									NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(oldTarget);
+									boolean notify = false;
+									if(nodeAdapter != null) {
+										notify = nodeAdapter.isNotificationEnabled();
+										nodeAdapter.setNotificationEnabled(false);
+									}
+									try {
+										((ActivityEdge) edgeModel).setTarget((ActivityNode) child.getElement());
+									} finally {
+										if(nodeAdapter != null) {
+											nodeAdapter.setNotificationEnabled(notify);
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 				for (Object obj : baseCopy.getEdges()) {
 					BridgeHelper.markInherited((View) obj);
@@ -595,7 +635,7 @@ public class RefreshFromBaseAction implements IObjectActionDelegate {
 				if (baseEdgeModels != null && !baseEdgeModels.isEmpty()) {
 					helper.addEdgeModels(model, baseEdgeModels);
 				}
-
+				
 				// TODO: handle the missed links.
 
 				// ActivityDiagramAdapter adapter =
