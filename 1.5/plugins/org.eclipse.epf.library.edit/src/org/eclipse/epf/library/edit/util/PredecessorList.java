@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.AdapterFactoryTreeIterator;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.IFilter;
@@ -457,10 +458,24 @@ public class PredecessorList extends ArrayList<Object> {
 					MethodElementProperty prop = MethodElementPropertyHelper.getProperty(workOrder, 
 							MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_PROCESS_PATH);
 					if(prop == null) {
-						// predecessor is local or WorkOrder is created before support for 'green' predecessor
-						// by saving its process path in methodElementProperty of the work order
-						//
-						bsItemProvider = (IBSItemProvider) itemProviders.iterator().next();
+						prop = MethodElementPropertyHelper.getProperty(workOrder, MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_IS_SIBLING);
+						if (prop == null) {
+							// predecessor is local or WorkOrder is created before support for 'green' predecessor
+							// by saving its process path in methodElementProperty of the work order
+							//
+							bsItemProvider = (IBSItemProvider) itemProviders.iterator().next();
+						} else {
+							// predecessor is not local but a sibling
+							//
+							Object parent = object instanceof IWrapperItemProvider ? ((IWrapperItemProvider) object).getOwner() : owner.getSuperActivities();
+							find_wrapper:
+							for (Object ip : itemProviders) {
+								if(ip instanceof BreakdownElementWrapperItemProvider && ((BreakdownElementWrapperItemProvider) ip).getOwner() == parent) {
+									bsItemProvider = (BreakdownElementWrapperItemProvider) ip;
+									break find_wrapper;
+								}
+							}
+						}
 					}
 					else {
 						String procPath = prop.getValue();
@@ -695,7 +710,7 @@ public class PredecessorList extends ArrayList<Object> {
 						}
 					}
 					else if(pred instanceof BreakdownElementWrapperItemProvider) {
-						if(isPredecessor((BreakdownElementWrapperItemProvider) pred, wo)) {
+						if(isPredecessor((BreakdownElementWrapperItemProvider) pred, wo, wbe)) {
 							found = true;
 							break find_pred;
 						}
@@ -720,7 +735,7 @@ public class PredecessorList extends ArrayList<Object> {
 				wo = (WorkOrder) iterator.next();
 				if (wo.getPred() == element) {
 					if(wrapper != null) {
-						if(isPredecessor(wrapper, wo)) {
+						if(isPredecessor(wrapper, wo, wbe)) {
 							found = true;
 							break find_pred;
 						}
@@ -737,10 +752,14 @@ public class PredecessorList extends ArrayList<Object> {
 				wo = UmaFactory.eINSTANCE.createWorkOrder();
 				wo.setPred(element);
 				if(wrapper != null) {
-					if(procPath == null) {
-						procPath = Suppression.getPath(wrapper);
+					if(wrapper.getOwner() == wbe.getSuperActivities()) {
+						MethodElementPropertyHelper.setProperty(wo, MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_IS_SIBLING, "true"); //$NON-NLS-1$
+					} else {
+						if(procPath == null) {
+							procPath = Suppression.getPath(wrapper);
+						}
+						MethodElementPropertyHelper.setProperty(wo, MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_PROCESS_PATH, procPath);
 					}
-					MethodElementPropertyHelper.setProperty(wo, MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_PROCESS_PATH, procPath);
 				}
 				addList.add(wo);
 			}
@@ -791,16 +810,23 @@ public class PredecessorList extends ArrayList<Object> {
 	 * @param workOrder
 	 * @return
 	 */
-	public static boolean isPredecessor(BreakdownElementWrapperItemProvider wrapper, WorkOrder workOrder) {
-		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(workOrder, 
-				MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_PROCESS_PATH);
-		if(prop == null) {
-			return false;
+	public static boolean isPredecessor(BreakdownElementWrapperItemProvider wrapper, WorkOrder workOrder, WorkBreakdownElement wbe) {
+		if(workOrder.getPred() == TngUtil.unwrap(wrapper)) {
+			MethodElementProperty prop = MethodElementPropertyHelper.getProperty(workOrder, 
+					MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_PROCESS_PATH);
+			if(prop == null) {
+				prop = MethodElementPropertyHelper.getProperty(workOrder, MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_IS_SIBLING);
+				if(prop == null) {
+					return wbe.getSuperActivities() == wrapper.getOwner();
+				}
+				return false;
+			}
+			else {
+				String procPath = prop.getValue();
+				String p = Suppression.getPath(wrapper);
+				return procPath.equals(p);
+			}
 		}
-		else {
-			String procPath = prop.getValue();
-			String p = Suppression.getPath(wrapper);
-			return procPath.equals(p);
-		}
+		return false;
 	}
 }
