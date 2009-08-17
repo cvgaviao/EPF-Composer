@@ -28,6 +28,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -67,6 +68,8 @@ public class SelectDestinationPage extends BaseWizardPage {
 	protected Button javaWebAppRadioButton;
 
 	protected Composite javaWebAppComposite;
+	
+	protected Composite extendComposite;
 
 	protected Label webAppNameLabel;
 
@@ -130,6 +133,11 @@ public class SelectDestinationPage extends BaseWizardPage {
 
 		includeSearchCheckbox = createCheckbox(javaWebAppComposite,
 				PublishingUIResources.includeSearchCheckbox_text, 3);
+		
+		extendComposite = createChildGridLayoutComposite(javaWebAppComposite, 1);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 3;
+		extendComposite.setLayoutData(gd);
 
 		webAppNameLabel = createLabel(javaWebAppComposite,
 				PublishingUIResources.webApplicationNameLabel_text);
