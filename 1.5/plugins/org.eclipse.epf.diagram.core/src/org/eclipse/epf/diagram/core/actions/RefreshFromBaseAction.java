@@ -664,22 +664,6 @@ public class RefreshFromBaseAction implements IObjectActionDelegate {
 		return true;
 	}
 	
-	public static org.eclipse.emf.common.command.Command copyDiagram(EditingDomain domain, Diagram diagram) {
-		ArrayList list = new ArrayList();
-		list.add(diagram.getElement());
-		list.add(diagram);
-		org.eclipse.emf.common.command.Command cmd = CopyCommand.create(domain, list);
-		cmd.execute();
-//		for (Iterator iter = cmd.getResult().iterator(); iter.hasNext();) {
-//			Object element = (Object) iter.next();
-//			if(element instanceof Diagram) {
-//				return (Diagram) element;
-//			}
-//		}
-		return cmd;
-		//return null;
-	}
-	
 	public void initialize(){
 		if(targetPart instanceof AbstractDiagramEditor){
 			AbstractDiagramEditor editor = (AbstractDiagramEditor)targetPart;

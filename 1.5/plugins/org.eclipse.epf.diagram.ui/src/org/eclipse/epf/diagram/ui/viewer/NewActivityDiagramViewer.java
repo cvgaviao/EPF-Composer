@@ -58,6 +58,8 @@ public class NewActivityDiagramViewer extends AbstractDiagramGraphicalViewerEx {
 
 
 
+	private ActivityDiagramAdapter adapter;
+
 	/**
 	 * @param parent
 	 */
@@ -65,13 +67,21 @@ public class NewActivityDiagramViewer extends AbstractDiagramGraphicalViewerEx {
 		super(parent,act);
 	}
 
+	@Override
+	public void dispose() {
+		if(adapter != null && diagram != null && diagram.getElement() != null) {
+			diagram.getElement().eAdapters().remove(adapter);
+		}
+		
+		super.dispose();
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.epf.authoring.gef.viewer.AbstractDiagramGraphicalViewer#createEditPart(java.lang.Object, org.eclipse.epf.library.edit.IFilter, org.eclipse.epf.library.edit.util.Suppression)
 	 */
 	@Override
 	protected EditPart createEditPart(Object wrapper, IFilter filter, Suppression sup) {
 		Activity e = null;
-		ActivityDiagramAdapter adapter = null;
 		if (wrapper instanceof ActivityWrapperItemProvider) {
 			e = (Activity) TngUtil.unwrap(wrapper);
 			adapter = new ActivityDiagramAdapter(
