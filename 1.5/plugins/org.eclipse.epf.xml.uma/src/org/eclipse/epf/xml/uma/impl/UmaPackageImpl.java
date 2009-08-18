@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaPackageImpl.java,v 1.3 2008/08/18 23:44:51 klow Exp $
+ * $Id: UmaPackageImpl.java,v 1.4 2009/08/18 22:07:26 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -3581,6 +3581,15 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getWorkOrder_Properties() {
+		return (EAttribute)workOrderEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getWorkProduct() {
 		return workProductEClass;
 	}
@@ -4271,6 +4280,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEAttribute(workOrderEClass, WORK_ORDER__VALUE);
 		createEAttribute(workOrderEClass, WORK_ORDER__ID);
 		createEAttribute(workOrderEClass, WORK_ORDER__LINK_TYPE);
+		createEAttribute(workOrderEClass, WORK_ORDER__PROPERTIES);
 
 		workProductEClass = createEClass(WORK_PRODUCT);
 		createEAttribute(workProductEClass, WORK_PRODUCT__GROUP2);
@@ -4817,6 +4827,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		initEAttribute(getWorkOrder_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkOrder_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWorkOrder_LinkType(), this.getWorkOrderType(), "linkType", "finishToStart", 0, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWorkOrder_Properties(), theXMLTypePackage.getString(), "properties", null, 0, 1, WorkOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(workProductEClass, WorkProduct.class, "WorkProduct", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getWorkProduct_Group2(), ecorePackage.getEFeatureMapEntry(), "group2", null, 0, -1, WorkProduct.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -7107,6 +7118,13 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "linkType"
+		   });			
+		addAnnotation
+		  (getWorkOrder_Properties(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "Properties"
 		   });			
 		addAnnotation
 		  (workOrderTypeEEnum, 

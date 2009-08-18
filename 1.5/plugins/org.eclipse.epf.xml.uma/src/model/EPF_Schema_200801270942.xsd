@@ -937,6 +937,11 @@ The Work Order class defines predecessor and successor relations amongst Breakdo
 						<xsd:documentation>This attribute expresses the type of the Work Order relationship by assigning a value from the Work Order Type enumeration.</xsd:documentation>
 					</xsd:annotation>
 				</xsd:attribute>
+				<xsd:attribute name="Properties" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>This attribute store method element property values associated with this work order</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:simpleContent>
 	</xsd:complexType>

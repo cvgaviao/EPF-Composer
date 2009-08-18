@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkOrderImpl.java,v 1.2 2008/01/30 00:41:47 klow Exp $
+ * $Id: WorkOrderImpl.java,v 1.3 2009/08/18 22:07:28 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -28,6 +28,7 @@ import org.eclipse.epf.xml.uma.WorkOrderType;
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkOrderImpl#getValue <em>Value</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkOrderImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkOrderImpl#getLinkType <em>Link Type</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.impl.WorkOrderImpl#getProperties <em>Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,6 +103,26 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * @ordered
 	 */
 	protected boolean linkTypeESet;
+
+	/**
+	 * The default value of the '{@link #getProperties() <em>Properties</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProperties()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PROPERTIES_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getProperties()
+	 * @generated
+	 * @ordered
+	 */
+	protected String properties = PROPERTIES_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -215,6 +236,27 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getProperties() {
+		return properties;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setProperties(String newProperties) {
+		String oldProperties = properties;
+		properties = newProperties;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UmaPackage.WORK_ORDER__PROPERTIES, oldProperties, properties));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -224,6 +266,8 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 				return getId();
 			case UmaPackage.WORK_ORDER__LINK_TYPE:
 				return getLinkType();
+			case UmaPackage.WORK_ORDER__PROPERTIES:
+				return getProperties();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -244,6 +288,9 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 				return;
 			case UmaPackage.WORK_ORDER__LINK_TYPE:
 				setLinkType((WorkOrderType)newValue);
+				return;
+			case UmaPackage.WORK_ORDER__PROPERTIES:
+				setProperties((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -266,6 +313,9 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 			case UmaPackage.WORK_ORDER__LINK_TYPE:
 				unsetLinkType();
 				return;
+			case UmaPackage.WORK_ORDER__PROPERTIES:
+				setProperties(PROPERTIES_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -284,6 +334,8 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 			case UmaPackage.WORK_ORDER__LINK_TYPE:
 				return isSetLinkType();
+			case UmaPackage.WORK_ORDER__PROPERTIES:
+				return PROPERTIES_EDEFAULT == null ? properties != null : !PROPERTIES_EDEFAULT.equals(properties);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -304,6 +356,8 @@ public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
 		result.append(id);
 		result.append(", linkType: ");
 		if (linkTypeESet) result.append(linkType); else result.append("<unset>");
+		result.append(", properties: ");
+		result.append(properties);
 		result.append(')');
 		return result.toString();
 	}

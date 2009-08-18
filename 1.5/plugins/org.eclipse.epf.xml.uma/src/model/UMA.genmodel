@@ -393,6 +393,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//WorkOrder/value"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//WorkOrder/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//WorkOrder/linkType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//WorkOrder/properties"/>
     </genClasses>
     <genClasses ecoreClass="UMA.ecore#//WorkProduct">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute UMA.ecore#//WorkProduct/group2"/>

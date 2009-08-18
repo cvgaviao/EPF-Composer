@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaPackage.java,v 1.3 2008/08/18 23:44:51 klow Exp $
+ * $Id: UmaPackage.java,v 1.4 2009/08/18 22:07:30 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -19983,13 +19983,22 @@ public interface UmaPackage extends EPackage {
 	int WORK_ORDER__LINK_TYPE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Properties</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_ORDER__PROPERTIES = 3;
+
+	/**
 	 * The number of structural features of the '<em>Work Order</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORK_ORDER_FEATURE_COUNT = 3;
+	int WORK_ORDER_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.epf.xml.uma.impl.WorkProductDescriptorImpl <em>Work Product Descriptor</em>}' class.
@@ -23975,6 +23984,17 @@ public interface UmaPackage extends EPackage {
 	EAttribute getWorkOrder_LinkType();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.WorkOrder#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Properties</em>'.
+	 * @see org.eclipse.epf.xml.uma.WorkOrder#getProperties()
+	 * @see #getWorkOrder()
+	 * @generated
+	 */
+	EAttribute getWorkOrder_Properties();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.xml.uma.WorkProduct <em>Work Product</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -26946,6 +26966,14 @@ public interface UmaPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute WORK_ORDER__LINK_TYPE = eINSTANCE.getWorkOrder_LinkType();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WORK_ORDER__PROPERTIES = eINSTANCE.getWorkOrder_Properties();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.xml.uma.impl.WorkProductImpl <em>Work Product</em>}' class.

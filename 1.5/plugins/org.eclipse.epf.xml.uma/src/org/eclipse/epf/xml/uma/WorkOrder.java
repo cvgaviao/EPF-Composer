@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkOrder.java,v 1.2 2008/01/30 00:41:48 klow Exp $
+ * $Id: WorkOrder.java,v 1.3 2009/08/18 22:07:29 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.sdo.EDataObject;
  *   <li>{@link org.eclipse.epf.xml.uma.WorkOrder#getValue <em>Value</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkOrder#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.WorkOrder#getLinkType <em>Link Type</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.WorkOrder#getProperties <em>Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -142,5 +143,31 @@ public interface WorkOrder extends EDataObject {
 	 * @generated
 	 */
 	boolean isSetLinkType();
+
+	/**
+	 * Returns the value of the '<em><b>Properties</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * This attribute store method element property values associated with this work order
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Properties</em>' attribute.
+	 * @see #setProperties(String)
+	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkOrder_Properties()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='Properties'"
+	 * @generated
+	 */
+	String getProperties();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.epf.xml.uma.WorkOrder#getProperties <em>Properties</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Properties</em>' attribute.
+	 * @see #getProperties()
+	 * @generated
+	 */
+	void setProperties(String value);
 
 } // WorkOrder
