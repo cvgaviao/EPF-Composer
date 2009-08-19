@@ -83,14 +83,18 @@ public class LibraryModificationHelper {
 			actionMgr = null;
 		}
 	}
-
+	
 	/**
 	 * check if update is allowed
 	 * @param object
 	 * @return boolean
 	 */
 	public static boolean canUpdate(EObject object) {
-		IStatus status = TngUtil.checkEdit(object, null);
+		return canUpdate(object, null);
+	}
+	
+	public static boolean canUpdate(EObject object, Object context) {
+		IStatus status = TngUtil.checkEdit(object, context);
 		if (status.isOK()) {
 			return true;
 		} else {
@@ -103,6 +107,8 @@ public class LibraryModificationHelper {
 			return false;
 		}
 	}
+
+	
 
 	/**
 	 * check if save is needed
@@ -173,4 +179,22 @@ public class LibraryModificationHelper {
 		return null;
 	}
 
+	public static class CheckActionManager extends ActionManager {
+		
+		private Object context;
+
+		public CheckActionManager(Object context) {
+			this.context = context;
+		}
+		
+		public boolean doAction(int actionType, EObject object,
+				EStructuralFeature feature, Object value, int index) {
+			if (canUpdate(object, context)) {
+				return super.doAction(actionType, object, feature, value,
+						index);
+			}
+			return false;
+		}
+
+	}
 }
