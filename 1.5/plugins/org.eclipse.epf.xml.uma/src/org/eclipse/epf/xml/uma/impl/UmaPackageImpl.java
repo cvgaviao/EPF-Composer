@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: UmaPackageImpl.java,v 1.4 2009/08/18 22:07:26 klow Exp $
+ * $Id: UmaPackageImpl.java,v 1.5 2009/08/19 00:36:13 klow Exp $
  */
 package org.eclipse.epf.xml.uma.impl;
 
@@ -7124,7 +7124,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
-			 "name", "Properties"
+			 "name", "properties"
 		   });			
 		addAnnotation
 		  (workOrderTypeEEnum, 

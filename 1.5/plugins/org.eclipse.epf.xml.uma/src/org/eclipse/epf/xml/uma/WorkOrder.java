@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: WorkOrder.java,v 1.3 2009/08/18 22:07:29 klow Exp $
+ * $Id: WorkOrder.java,v 1.4 2009/08/19 00:36:13 klow Exp $
  */
 package org.eclipse.epf.xml.uma;
 
@@ -155,7 +155,7 @@ public interface WorkOrder extends EDataObject {
 	 * @see #setProperties(String)
 	 * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkOrder_Properties()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='Properties'"
+	 *        extendedMetaData="kind='attribute' name='properties'"
 	 * @generated
 	 */
 	String getProperties();

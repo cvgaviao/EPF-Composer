@@ -2597,7 +2597,7 @@
       </eAnnotations>
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="attribute"/>
-        <details key="name" value="Properties"/>
+        <details key="name" value="properties"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
