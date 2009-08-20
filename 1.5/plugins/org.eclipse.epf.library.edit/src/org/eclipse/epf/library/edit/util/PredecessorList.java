@@ -463,7 +463,26 @@ public class PredecessorList extends ArrayList<Object> {
 							// predecessor is local or WorkOrder is created before support for 'green' predecessor
 							// by saving its process path in methodElementProperty of the work order
 							//
-							bsItemProvider = (IBSItemProvider) itemProviders.iterator().next();
+							
+							if(pred.getSuperActivities() == owner.getSuperActivities()) {
+								// predecessor is local
+								//
+								if(itemProviders.size() > 1 && object instanceof IWrapperItemProvider) {
+									// find local item provider of the predecessor
+									//
+									Object parent = ((IWrapperItemProvider) object).getOwner();
+									find_wrapper:
+										for (Object ip : itemProviders) {
+											if(ip instanceof BreakdownElementWrapperItemProvider && ((BreakdownElementWrapperItemProvider) ip).getOwner() == parent) {
+												bsItemProvider = (BreakdownElementWrapperItemProvider) ip;
+												break find_wrapper;
+											}
+										}
+								}
+							}
+							if(bsItemProvider == null && itemProviders.size() > 0) {
+								bsItemProvider = (IBSItemProvider) itemProviders.iterator().next();
+							}
 						} else {
 							// predecessor is not local but a sibling
 							//
