@@ -14,9 +14,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
@@ -33,6 +35,7 @@ import org.eclipse.epf.export.xml.ExportXMLResources;
 import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -45,10 +48,12 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Diagram;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -81,6 +86,8 @@ public class ExportXMLService {
 	
 	//tds with steps
 	private Map<String, TaskDescriptor> tdMap;
+	
+	private Set<WorkOrder> successors;
 
 	/**
 	 * Creates a new instance.
@@ -238,6 +245,7 @@ public class ExportXMLService {
 
 			creatEDataObjectTree(src, target);
 			iteratEDataObject(src);
+			handleSuccessors();
 
 			this.xmlLib.fixLibraryForExport();
 			this.xmlLib.fixTaskDescriptorsForExport(tdMap);
@@ -329,6 +337,14 @@ public class ExportXMLService {
 				// so delay the creation if the owner is a package
 				if (child instanceof WorkOrder
 						&& srcObj instanceof MethodPackage) {
+					WorkOrder workOrder = (WorkOrder) child;
+					MethodElementProperty prop = MethodElementPropertyHelper
+					.getProperty(
+							workOrder,
+							MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
+					if (prop != null) {
+						getSuccessors().add(workOrder);
+					}					
 					continue;
 				}
 
@@ -652,6 +668,48 @@ public class ExportXMLService {
 	}
 	public ExportXMLLogger getLogger() {
 		return logger;
+	}
+	
+	private Set<WorkOrder> getSuccessors() {
+		if (successors == null) {
+			successors = new HashSet<WorkOrder>();
+		}
+		return successors;
+	}
+	
+	private void  handleSuccessors() {
+		if (getSuccessors() == null) {
+			return;
+		}
+		
+		String fname = "linkToPredecessor";	//$NON-NLS-1$
+		for (WorkOrder srcWorkOrder : getSuccessors()) {
+			WorkBreakdownElement wbe = srcWorkOrder.getPred();
+			if (wbe == null) {
+				continue;
+			}			
+			EDataObject targetObj = getXmlObject(wbe);
+			if (targetObj == null) {
+				continue;
+			}			
+			EDataObject tgtWorkOrder = getXmlObject(srcWorkOrder);
+			if (tgtWorkOrder == null) {
+				createXmlObject(srcWorkOrder, targetObj, fname);
+			}			
+			String xmlId = getXmlId(srcWorkOrder.getGuid());
+			if (xmlId == null) {
+				continue;
+			}
+			try {
+				xmlLib.setReferenceValue(targetObj, fname, xmlId, srcWorkOrder
+						.getType());
+			} catch (Exception e) {
+				String msg = NLS.bind(
+						ExportXMLResources.exportXMLService_feature_error,
+						LibraryUtil.getTypeName(wbe), fname);
+				logger.logError(msg, e);
+			}
+		}
 	}
 
 	// private boolean isSystemPackage(EDataObject element) {

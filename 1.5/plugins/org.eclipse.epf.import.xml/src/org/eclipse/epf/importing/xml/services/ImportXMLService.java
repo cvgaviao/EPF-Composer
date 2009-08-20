@@ -692,8 +692,11 @@ public class ImportXMLService {
 							// an id, need special handling
 							// set the prede
 							WorkOrder wr = (WorkOrder) src_value;
-							Object umaWr = workOrderMap.get(wr);
-							umaLib.setWorkOrder(umaWr, wr.getValue());
+							Object umaWr = workOrderMap.get(wr);							
+							//umaLib.setWorkOrder(umaWr, wr.getValue());
+							if (umaWr instanceof org.eclipse.epf.uma.WorkOrder) {
+								umaLib.handleWorkOrder(wr, (org.eclipse.epf.uma.WorkOrder) umaWr);
+							}
 						} else {
 							logger
 									.logMessage(NLS.bind(ImportXMLResources.importXMLService_element_not_handled, src_value));

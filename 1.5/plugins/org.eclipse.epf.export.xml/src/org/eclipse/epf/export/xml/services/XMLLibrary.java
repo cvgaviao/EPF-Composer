@@ -76,6 +76,9 @@ import commonj.sdo.Type;
  */
 public class XMLLibrary {
 
+	public static final String WorkOrderPropStringSep = "\n\n";			//$NON-NLS-1$
+	public static final String WorkOrderPropStringFieldSep = "\n";			//$NON-NLS-1$
+	
 	private String filePath;
 
 	private ILogger logger;
@@ -615,6 +618,11 @@ public class XMLLibrary {
 		if (srcList == null || srcList.isEmpty()) {
 			return;
 		}
+		if (obj instanceof WorkOrder) {
+			setMepFeatureValueForWorkOrder(srcList, (WorkOrder) obj);
+			return;
+		}
+		
 		EStructuralFeature feature = FeatureManager.INSTANCE.getXmlFeature(obj
 				.eClass(), featureName);
 		List tgtList = (List) obj.eGet(feature);
@@ -632,6 +640,29 @@ public class XMLLibrary {
 			}
 		}
 		//obj.eSet(feature, tgtList);
+	}
+
+	private void setMepFeatureValueForWorkOrder(List srcList, WorkOrder xmlWorkOrder) {
+		String propertiesValue = "";	//$NON-NLS-1$	
+		for (Object srcItem : srcList) {
+			if (srcItem instanceof org.eclipse.epf.uma.MethodElementProperty) {
+				org.eclipse.epf.uma.MethodElementProperty mep = 
+						(org.eclipse.epf.uma.MethodElementProperty) srcItem;
+				String srcName = mep.getName();
+				String srcValue = mep.getValue();
+				if (srcName != null && srcValue != null
+						&& srcName.length() > 0 && srcValue.length() > 0) {
+					if (propertiesValue.length() > 0) {
+						propertiesValue += WorkOrderPropStringSep;				//$NON-NLS-1$
+					}
+					propertiesValue += "name=" + srcName;		//$NON-NLS-1$
+					propertiesValue += WorkOrderPropStringFieldSep + "value=" + srcValue;	//$NON-NLS-1$
+				}
+			}
+		}
+		if (propertiesValue.length() > 0) {
+			xmlWorkOrder.setProperties(propertiesValue);
+		}
 	}
 
 	/**

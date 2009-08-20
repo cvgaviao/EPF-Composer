@@ -35,6 +35,7 @@ import org.eclipse.epf.dataexchange.importing.LibraryService;
 import org.eclipse.epf.dataexchange.util.ContentProcessor;
 import org.eclipse.epf.dataexchange.util.ILogger;
 import org.eclipse.epf.export.xml.services.FeatureManager;
+import org.eclipse.epf.export.xml.services.XMLLibrary;
 import org.eclipse.epf.importing.xml.ImportXMLPlugin;
 import org.eclipse.epf.importing.xml.ImportXMLResources;
 import org.eclipse.epf.library.edit.util.ModelStructure;
@@ -720,6 +721,7 @@ public class UmaLibrary {
 	 * Sets work order.
 	 * @param umaWorkOrder
 	 * @param predId
+	 * @deprecated
 	 */
 	public void setWorkOrder(Object umaWorkOrder, String predId) {
 		if (umaWorkOrder instanceof WorkOrder) {
@@ -1222,4 +1224,69 @@ public class UmaLibrary {
 		rmcObj.eSetDeliver(oldNotify);
 		setDirty(rmcObj);
 	}
+	
+	public void handleWorkOrder(org.eclipse.epf.xml.uma.WorkOrder xmlWorkOrder, WorkOrder umaWorkOrder) {	
+		org.eclipse.epf.xml.uma.WorkOrderType xmlLinkType = xmlWorkOrder.getLinkType();
+		if (xmlLinkType != null) {
+			WorkOrderType umaLinkType = org.eclipse.epf.uma.WorkOrderType
+					.get(xmlLinkType.toString());
+			umaWorkOrder.setLinkType(umaLinkType);
+		}
+						
+		boolean isSuccessor = false;
+		String xmlPropertiesValue = xmlWorkOrder.getProperties();
+		if (xmlPropertiesValue != null) {
+			EClass objClass = FeatureManager.INSTANCE.getRmcEClass("MethodElementProperty");	//$NON-NLS-1$
+			List tgtList = umaWorkOrder.getMethodElementProperty();
+			tgtList.removeAll(tgtList);
+			
+			List<String> propList = TngUtil.convertStringsToList(xmlPropertiesValue, XMLLibrary.WorkOrderPropStringSep);
+			for (String prop : propList) {
+				if (! prop.startsWith("name=")) {		//$NON-NLS-1$
+					continue;
+				}
+				int ix = prop.indexOf(XMLLibrary.WorkOrderPropStringFieldSep + "value=");//$NON-NLS-1$
+				if (ix < 6) {
+					continue;
+				}
+				String name = prop.substring(5, ix).trim();
+				if (name.length() == 0) {
+					continue;
+				}
+				int valueStartingIx = ix + 7;
+				if (prop.length() < valueStartingIx) {
+					continue;
+				}
+				String value = prop.substring(valueStartingIx);
+			
+				MethodElementProperty umaMep = (MethodElementProperty) EcoreUtil.create(objClass);
+				umaMep.setName(name);
+				umaMep.setValue(value);
+				tgtList.add(umaMep);
+				if (name.equals("successor")) {		//$NON-NLS-1$						 
+					isSuccessor = true;
+				}
+			}
+		}
+
+		WorkBreakdownElement e = (WorkBreakdownElement) getElement(xmlWorkOrder.getValue());
+		
+		if (isSuccessor) {
+			EObject cont = e.eContainer();
+			if (cont instanceof ProcessPackage) {
+				ProcessPackage parent = (ProcessPackage) cont;
+				cont = parent.eContainer();
+				if (cont instanceof ProcessPackage) {
+					ProcessPackage gparent = (ProcessPackage) cont;
+					parent.getProcessElements().remove(umaWorkOrder);
+					gparent.getProcessElements().add(umaWorkOrder);
+				}
+			}
+			e.getLinkToPredecessor().remove(umaWorkOrder);
+		}
+		
+		umaWorkOrder.setPred(e);
+		setDirty(umaWorkOrder);		
+	}
+	
 }
