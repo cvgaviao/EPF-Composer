@@ -25,6 +25,7 @@
 
 <xsl:template match="/Search">
 	<xsl:variable name="webAppName"><xsl:value-of select="@webAppName"/></xsl:variable>
+	<xsl:variable name="searchURL"><xsl:value-of select="@searchURL"/></xsl:variable>
 	<html>
 			<xsl:attribute name="lang"><xsl:value-of select="@lang"/></xsl:attribute>
 			<xsl:attribute name="xml:lang"><xsl:value-of select="@lang"/></xsl:attribute>
@@ -60,7 +61,9 @@
 		   	function doSearch() {
 		   		var searchString = document.searchForm.searchInput.value;
 		   		var resultsPerPage = document.searchForm.searchScopeSizePerPage.value;
-		   		var url = baseUrl + "\/SearchServlet?searchString=" + encodeURIComponent(searchString) + "&hitsPerPage=" + resultsPerPage;
+		   		var url = baseUrl + "/]]><xsl:choose>  
+						<xsl:when test="$searchURL!=''"><xsl:value-of select="$searchURL"/></xsl:when>  
+						<xsl:otherwise><![CDATA[SearchServlet]]></xsl:otherwise></xsl:choose><![CDATA[?searchString=" + encodeURIComponent(searchString) + "&hitsPerPage=" + resultsPerPage;
      			createRequest();
      			request.open("GET", makeUnique(url), true);
      			request.onreadystatechange = updatePage;
