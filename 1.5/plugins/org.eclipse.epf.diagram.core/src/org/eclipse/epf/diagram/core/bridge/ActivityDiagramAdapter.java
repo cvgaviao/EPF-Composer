@@ -37,7 +37,6 @@ import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
-import org.eclipse.epf.library.edit.process.WBSActivityItemProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -52,7 +51,6 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
-import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ActivityParameterNode;
@@ -252,6 +250,14 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 		return false;
 	}
 	
+	protected List<WorkBreakdownElement> getLocalPredecessors(ActivityNode node) {
+		Activity diagramActivity = (Activity) BridgeHelper.getMethodElement(getDiagram());
+		AdapterFactory adapterFactory = getAdapterFactory();
+		ITreeItemContentProvider adapter = (ITreeItemContentProvider) adapterFactory.adapt(diagramActivity, ITreeItemContentProvider.class);
+		Collection<?> children = adapter.getChildren(diagramActivity);
+		return getLocalPredecessors(node, children);
+	}
+	
 	private List<WorkBreakdownElement> getLocalPredecessors(ActivityNode node, Collection<?> activityChildren) {
 		MethodElement e = BridgeHelper.getMethodElement(node);
 		if(e instanceof WorkBreakdownElement) {
@@ -267,16 +273,21 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 			if(object != null) {
 				Object ip = getAdapterFactory().adapt(object, ITreeItemContentProvider.class);
 				if(ip instanceof IBSItemProvider) {
+					Object parent = ((ITreeItemContentProvider) ip).getParent(object);
 					ArrayList<WorkBreakdownElement> preds = new ArrayList<WorkBreakdownElement>();
 					PredecessorList predList = ((IBSItemProvider) ip).getPredecessors();
 					for (Object predIp : predList) {
 						Object pred = TngUtil.unwrap(predIp);
-						if(pred instanceof WorkBreakdownElement) {
-							preds.add((WorkBreakdownElement) pred);
-						} else if (pred instanceof Adapter) {
-							pred = ((Adapter) pred).getTarget();
+						// make sure that predecessors are sibling
+						//
+						if(((ITreeItemContentProvider) predIp).getParent(pred) == parent) {
 							if(pred instanceof WorkBreakdownElement) {
 								preds.add((WorkBreakdownElement) pred);
+							} else if (pred instanceof Adapter) {
+								pred = ((Adapter) pred).getTarget();
+								if(pred instanceof WorkBreakdownElement) {
+									preds.add((WorkBreakdownElement) pred);
+								}
 							}
 						}
 					}

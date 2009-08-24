@@ -27,10 +27,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.epf.diagram.model.Diagram;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
@@ -54,17 +57,21 @@ public class WorkBreakdownElementNodeAdapter extends NodeAdapter {
 				switch (msg.getEventType()) {
 				case Notification.ADD:
 					obj = (WorkOrder) msg.getNewValue();
-					addIncomingConnection(obj.getPred());
+					if(isValid(obj)) {
+						addIncomingConnection(obj.getPred());
+					}
 					break;
 				case Notification.REMOVE:
 					obj = (WorkOrder) msg.getOldValue();
 					removeIncomingConnection(obj.getPred());
 					break;
 				case Notification.ADD_MANY:
-					Collection collection = (Collection) msg.getNewValue();
-					for (Iterator iter = collection.iterator(); iter.hasNext();) {
+					Collection<?> collection = (Collection<?>) msg.getNewValue();
+					for (Iterator<?> iter = collection.iterator(); iter.hasNext();) {
 						obj = (WorkOrder) iter.next();
-						addIncomingConnection(obj.getPred());
+						if(isValid(obj)) {
+							addIncomingConnection(obj.getPred());
+						}
 					}
 					break;
 				case Notification.REMOVE_MANY:
@@ -96,6 +103,25 @@ public class WorkBreakdownElementNodeAdapter extends NodeAdapter {
 	 */
 	public WorkBreakdownElementNodeAdapter(MethodElement e) {
 		super(e);
+	}
+	
+	/**
+	 * Checks if the specified work order could be valid for the diagram to create
+	 * new connection.
+	 * 
+	 * @param wo
+	 * @return
+	 */
+	private boolean isValid(WorkOrder wo) {
+		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(wo, MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_IS_SIBLING);
+		if(prop != null) {
+			return true;
+		}
+		ActivityNode node = getNode();
+		org.eclipse.uml2.uml.Activity diagram = getDiagram();
+		ActivityDiagramAdapter diagramAdapter = (ActivityDiagramAdapter) BridgeHelper.getDiagramAdapter(diagram);
+		List<WorkBreakdownElement> localPredecessors = diagramAdapter.getLocalPredecessors(node);
+		return localPredecessors.contains(wo.getPred());
 	}
 
 	public void handleSuppressed(boolean b) {
