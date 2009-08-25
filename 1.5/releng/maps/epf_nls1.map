@@ -1,8 +1,8 @@
-feature@org.eclipse.epf.base.feature.nls1=v20080825-1652,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.base.feature.nls1
-feature@org.eclipse.epf.doc.feature.nls1=v20080825-1652,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.doc.feature.nls1
-feature@org.eclipse.epf.platform.feature.nls1=v20080825-1652,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.platform.feature.nls1
-feature@org.eclipse.epf.rcp.feature.nls1=v20080825-1652,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.rcp.feature.nls1
-feature@org.eclipse.epf.richtext.feature.nls1=v20080825-1652,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.richtext.feature.nls1
+feature@org.eclipse.epf.base.feature.nls1=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.base.feature.nls1
+feature@org.eclipse.epf.doc.feature.nls1=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.doc.feature.nls1
+feature@org.eclipse.epf.platform.feature.nls1=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.platform.feature.nls1
+feature@org.eclipse.epf.rcp.feature.nls1=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.rcp.feature.nls1
+feature@org.eclipse.epf.richtext.feature.nls1=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/features/org.eclipse.epf.richtext.feature.nls1
 fragment@org.eclipse.epf.authoring.ui.nl1=v20080911-1439,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/plugins/org.eclipse.epf.authoring.ui.nl1
 fragment@org.eclipse.epf.diagram.ad.nl1=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/plugins/org.eclipse.epf.diagram.ad.nl1
 fragment@org.eclipse.epf.diagram.add.nl1=v20080904-1723,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl1/plugins/org.eclipse.epf.diagram.add.nl1
