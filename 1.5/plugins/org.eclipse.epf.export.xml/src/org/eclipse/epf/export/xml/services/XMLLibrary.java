@@ -39,6 +39,7 @@ import org.eclipse.epf.dataexchange.util.ILogger;
 import org.eclipse.epf.export.xml.ExportXMLResources;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.xml.uma.BreakdownElement;
 import org.eclipse.epf.xml.uma.ContentCategoryPackage;
@@ -94,6 +95,8 @@ public class XMLLibrary {
 	private Map elementsMap = new HashMap();
 	
 	private Map<String, String> guidToPlugNameMap;
+	
+	private Map<WorkOrder, org.eclipse.epf.uma.WorkOrder> successOrWorkOrderMap;
 
 	/**
 	 * Creates a new instance.
@@ -643,6 +646,15 @@ public class XMLLibrary {
 	}
 
 	private void setMepFeatureValueForWorkOrder(List srcList, WorkOrder xmlWorkOrder) {
+		Object obj = getSuccessOrWorkOrderMap().get(xmlWorkOrder);
+		org.eclipse.epf.uma.WorkOrder umaWorkOrder = null;
+		org.eclipse.epf.uma.ProcessElement scopeElement = null;
+		if (obj instanceof org.eclipse.epf.uma.WorkOrder) {
+			umaWorkOrder = (org.eclipse.epf.uma.WorkOrder) obj;
+		}
+		
+		
+		
 		String propertiesValue = "";	//$NON-NLS-1$	
 		for (Object srcItem : srcList) {
 			if (srcItem instanceof org.eclipse.epf.uma.MethodElementProperty) {
@@ -657,6 +669,28 @@ public class XMLLibrary {
 					}
 					propertiesValue += "name=" + srcName;		//$NON-NLS-1$
 					propertiesValue += WorkOrderPropStringFieldSep + "value=" + srcValue;	//$NON-NLS-1$
+					
+					if (umaWorkOrder != null && srcName.equals(MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR)) {
+						if (scopeElement == null) {
+							Object cont = umaWorkOrder.eContainer();
+							if (cont instanceof org.eclipse.epf.uma.ProcessPackage) {
+								List<org.eclipse.epf.uma.ProcessElement> peList = 
+									((org.eclipse.epf.uma.ProcessPackage) cont).getProcessElements();
+								if (peList != null) {
+									for (org.eclipse.epf.uma.ProcessElement pe : peList) {
+										if (pe instanceof org.eclipse.epf.uma.Activity) {
+											scopeElement = pe;
+											break;
+										}
+									}
+								}
+							}
+						}
+						if (scopeElement != null) {
+							propertiesValue += WorkOrderPropStringFieldSep + "scope=" + scopeElement.getGuid();		//$NON-NLS-1$
+						}
+					}
+					
 				}
 			}
 		}
@@ -1120,6 +1154,13 @@ public class XMLLibrary {
 			guidToPlugNameMap = new HashMap<String, String>();
 			e.printStackTrace();
 		}
+	}
+
+	public Map<WorkOrder, org.eclipse.epf.uma.WorkOrder> getSuccessOrWorkOrderMap() {
+		if (successOrWorkOrderMap == null) {
+			successOrWorkOrderMap = new HashMap<WorkOrder, org.eclipse.epf.uma.WorkOrder>();
+		}
+		return successOrWorkOrderMap;
 	}
 	
 }

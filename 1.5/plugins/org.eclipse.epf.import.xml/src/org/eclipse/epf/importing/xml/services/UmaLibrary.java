@@ -38,6 +38,7 @@ import org.eclipse.epf.export.xml.services.FeatureManager;
 import org.eclipse.epf.export.xml.services.XMLLibrary;
 import org.eclipse.epf.importing.xml.ImportXMLPlugin;
 import org.eclipse.epf.importing.xml.ImportXMLResources;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -1235,6 +1236,7 @@ public class UmaLibrary {
 						
 		boolean isSuccessor = false;
 		String xmlPropertiesValue = xmlWorkOrder.getProperties();
+		String scopeValue = null;
 		if (xmlPropertiesValue != null) {
 			EClass objClass = FeatureManager.INSTANCE.getRmcEClass("MethodElementProperty");	//$NON-NLS-1$
 			List tgtList = umaWorkOrder.getMethodElementProperty();
@@ -1257,13 +1259,20 @@ public class UmaLibrary {
 				if (prop.length() < valueStartingIx) {
 					continue;
 				}
-				String value = prop.substring(valueStartingIx);
+				String strFromValueStartingIx = prop.substring(valueStartingIx);
+				String value = strFromValueStartingIx;
+				ix = strFromValueStartingIx.indexOf(XMLLibrary.WorkOrderPropStringFieldSep + "scope=");//$NON-NLS-1$
+				if (ix > 0) {
+					value = strFromValueStartingIx.substring(0, ix);
+					int scopeValueStartingIx = ix + 7;
+					scopeValue = strFromValueStartingIx.substring(scopeValueStartingIx);
+				}
 			
 				MethodElementProperty umaMep = (MethodElementProperty) EcoreUtil.create(objClass);
 				umaMep.setName(name);
 				umaMep.setValue(value);
 				tgtList.add(umaMep);
-				if (name.equals("successor")) {		//$NON-NLS-1$						 
+				if (name.equals(MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR)) {		//$NON-NLS-1$						 
 					isSuccessor = true;
 				}
 			}
@@ -1271,15 +1280,15 @@ public class UmaLibrary {
 
 		WorkBreakdownElement e = (WorkBreakdownElement) getElement(xmlWorkOrder.getValue());
 		
-		if (isSuccessor) {
+		if (isSuccessor && scopeValue != null) {			
 			EObject cont = e.eContainer();
 			if (cont instanceof ProcessPackage) {
 				ProcessPackage parent = (ProcessPackage) cont;
-				cont = parent.eContainer();
-				if (cont instanceof ProcessPackage) {
-					ProcessPackage gparent = (ProcessPackage) cont;
+				ProcessElement scopeElement = (ProcessElement) getElement(scopeValue);
+				if (scopeElement != null) {
+					ProcessPackage scopePkg = (ProcessPackage) scopeElement.eContainer();
 					parent.getProcessElements().remove(umaWorkOrder);
-					gparent.getProcessElements().add(umaWorkOrder);
+					scopePkg.getProcessElements().add(umaWorkOrder);
 				}
 			}
 			e.getLinkToPredecessor().remove(umaWorkOrder);

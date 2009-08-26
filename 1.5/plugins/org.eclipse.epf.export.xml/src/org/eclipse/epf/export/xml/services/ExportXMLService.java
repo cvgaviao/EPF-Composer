@@ -440,7 +440,13 @@ public class ExportXMLService {
 			}
 			
 			if (xmlElement != null) {
-
+				if (umaElement instanceof WorkOrder
+						&& xmlElement instanceof org.eclipse.epf.xml.uma.WorkOrder) {
+					xmlLib.getSuccessOrWorkOrderMap().put(
+							(org.eclipse.epf.xml.uma.WorkOrder) xmlElement,
+							(WorkOrder) umaElement);
+				}
+				
 				// recursive
 				creatEDataObjectTree(umaElement, xmlElement);
 			}
