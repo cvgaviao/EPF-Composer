@@ -242,7 +242,8 @@ public abstract class ElementRealizer {
 			// need to resolve the element to the base if resolveContributor is true
 			// 152230 - Browsing: Role<-->WP relationship shows inconsistancy
 			e = ve;
-			while ((e != null) && ConfigurationHelper.isReplacer(e)) {
+			while ((e != null) && (ConfigurationHelper.isReplacer(e)
+					|| ConfigurationHelper.isExtendReplacer(e))) {
 				e = (VariabilityElement) e.getVariabilityBasedOnElement();
 				if (ConfigurationHelper.isContributor(e)) {
 					return realize(e);

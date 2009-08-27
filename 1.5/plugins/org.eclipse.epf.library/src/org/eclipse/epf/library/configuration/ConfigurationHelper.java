@@ -510,7 +510,7 @@ public class ConfigurationHelper {
 			return false;
 		}
 
-		while ((e != null) && isReplacer(e)) {
+		while ((e != null) && (isReplacer(e) || isExtendReplacer(e))) {
 			e = (VariabilityElement) e.getVariabilityBasedOnElement();
 			if (isContributor(e)) {
 				return false;
