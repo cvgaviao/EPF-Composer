@@ -1,9 +1,13 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2005, 2009 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id: MsprojectAdapterFactory.java,v 1.1 2008/01/15 08:52:41 jtham Exp $
- */
+ * Contributors:
+ * IBM Corporation - initial implementation
+ *******************************************************************************/
 package org.eclipse.epf.msproject.util;
 
 import org.eclipse.emf.common.notify.Adapter;
