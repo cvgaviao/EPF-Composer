@@ -57,6 +57,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.uml2.uml.ActivityNode;
 
 
 /**
@@ -164,7 +165,7 @@ public class DeleteElementActionDelegate extends ActionDelegate {
 	public void selectionChanged(IAction action, ISelection selection) {
 		setEnabled(true);
 		super.selectionChanged(action, selection);
-		for (Iterator iter = selectedParts.iterator(); iter.hasNext();) {
+		for (Iterator<EditPart> iter = selectedParts.iterator(); iter.hasNext();) {
 			EditPart element = (EditPart) iter.next();
 			View view = (View)element.getModel();
 			if(view.getElement() == null) {
@@ -178,7 +179,8 @@ public class DeleteElementActionDelegate extends ActionDelegate {
 					|| TngUtil.isLocked(getOwningProcess())
 					|| (view.getElement() instanceof org.eclipse.epf.diagram.model.LinkedObject && 
 							view.getDiagram().getElement() instanceof ActivityDetailDiagram)
-					|| (BridgeHelper.getMethodElement(view) != null &&
+					|| ((BridgeHelper.getMethodElement(view) != null || 
+							(view.getElement() instanceof ActivityNode && BridgeHelper.isSynchBar((ActivityNode) view.getElement()))) &&
 							BridgeHelper.isInherited(view))
 							) {
 				action.setEnabled(false);
