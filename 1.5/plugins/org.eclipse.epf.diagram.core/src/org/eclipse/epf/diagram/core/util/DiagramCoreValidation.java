@@ -41,6 +41,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.WorkBreakdownElement;
+import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.notation.Diagram;
@@ -405,7 +406,6 @@ public class DiagramCoreValidation {
 	}
 	
 	public static String checkDelete(Edge edge) {
-
 		View source = edge.getSource();
 		View target = edge.getTarget();
 
@@ -420,6 +420,18 @@ public class DiagramCoreValidation {
 				}
 				if(BridgeHelper.isInherited(edge)) {
 					return errMsg_CanNotDelete;
+				} else if(BridgeHelper.isReadOnly(source) && BridgeHelper.isReadOnly(target)) {
+					// check if this edge is a custom one
+					//
+					MethodElement me = BridgeHelper.getMethodElement(edge);
+					if(me instanceof WorkOrder && ProcessUtil.isCustomWorkOrder((WorkOrder) me)) {
+						return null;
+					} else {
+						// edge is automatically created for 2 inherited
+						// predecessor/successor and cannot be deleted
+						//
+						return errMsg_CanNotDelete;
+					}
 				}
 				
 				// Since making connection to a inherited, read-only target is

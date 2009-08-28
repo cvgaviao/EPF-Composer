@@ -572,6 +572,8 @@ public class RefreshFromBaseAction implements IObjectActionDelegate {
 				for (Edge edge : oldEdges) {
 					diagram.removeEdge(edge);
 					helper.removeEdgeModel(model, edge.getElement());
+					edge.setSource(null);
+					edge.setTarget(null);
 				}
 
 				// replace associated base element with

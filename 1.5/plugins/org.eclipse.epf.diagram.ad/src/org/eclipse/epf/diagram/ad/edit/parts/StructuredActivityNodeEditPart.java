@@ -20,8 +20,10 @@ import org.eclipse.epf.diagram.ad.edit.policies.StructuredActivityNodeGraphicalN
 import org.eclipse.epf.diagram.ad.edit.policies.StructuredActivityNodeItemSemanticEditPolicy;
 import org.eclipse.epf.diagram.ad.part.UMLVisualIDRegistry;
 import org.eclipse.epf.diagram.core.DiagramCoreResources;
+import org.eclipse.epf.diagram.core.editparts.InternalNodeEditPart;
 import org.eclipse.epf.diagram.core.figures.WidenedWrapLabel;
 import org.eclipse.epf.diagram.core.util.DiagramCoreUtil;
+import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -36,14 +38,12 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
-import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.uml2.uml.ActivityNode;
 
 /**
  * @generated
  */
-public class StructuredActivityNodeEditPart extends ShapeNodeEditPart {
+public class StructuredActivityNodeEditPart extends ShapeNodeEditPart implements InternalNodeEditPart {
 
 	/**
 	 * @generated
@@ -307,10 +307,14 @@ public class StructuredActivityNodeEditPart extends ShapeNodeEditPart {
 	}
 
 	@Override
-	public void refresh() {
-		Node node = (Node) getModel();
-		ActivityNode actNode = (ActivityNode) node.getElement();
-		
-		super.refresh();
+	public void primAddSourceConnection(ConnectionEditPart connection,
+			int index) {
+		super.primAddSourceConnection(connection, index);
+	}
+	
+	@Override
+	public void primAddTargetConnection(ConnectionEditPart connection,
+			int index) {
+		super.primAddTargetConnection(connection, index);
 	}
 }

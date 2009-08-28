@@ -17,7 +17,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.diagram.ad.custom.policies.DynamicResizeDirectionsEditPolicy;
 import org.eclipse.epf.diagram.ad.edit.policies.JoinNodeItemSemanticEditPolicy;
+import org.eclipse.epf.diagram.core.editparts.InternalNodeEditPart;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
+import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -39,7 +41,7 @@ import org.eclipse.swt.graphics.Color;
 /**
  * @generated
  */
-public class JoinNodeEditPart extends ShapeNodeEditPart {
+public class JoinNodeEditPart extends ShapeNodeEditPart implements InternalNodeEditPart {
 
 	/**
 	 * @generated
@@ -267,6 +269,18 @@ public class JoinNodeEditPart extends ShapeNodeEditPart {
 			handleMajorSemanticChange();
 		else
 			super.handleNotificationEvent(notification);
+	}
+
+	@Override
+	public void primAddSourceConnection(ConnectionEditPart connection,
+			int index) {
+		super.primAddSourceConnection(connection, index);
+	}
+	
+	@Override
+	public void primAddTargetConnection(ConnectionEditPart connection,
+			int index) {
+		super.primAddTargetConnection(connection, index);
 	}
 
 }

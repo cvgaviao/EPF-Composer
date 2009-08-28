@@ -26,8 +26,10 @@ import org.eclipse.epf.diagram.ad.edit.policies.ActivityFinalNodeItemSemanticEdi
 import org.eclipse.epf.diagram.ad.edit.policies.UMLExtNodeLabelHostLayoutEditPolicy;
 
 import org.eclipse.epf.diagram.ad.part.UMLVisualIDRegistry;
+import org.eclipse.epf.diagram.core.editparts.InternalNodeEditPart;
 import org.eclipse.epf.diagram.core.util.DiagramConstants;
 
+import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.GraphicalEditPart;
@@ -65,7 +67,7 @@ import org.eclipse.swt.graphics.Color;
 /**
  * @generated
  */
-public class ActivityFinalNodeEditPart extends AbstractBorderedShapeEditPart {
+public class ActivityFinalNodeEditPart extends AbstractBorderedShapeEditPart implements InternalNodeEditPart {
 
 	/**
 	 * @generated
@@ -320,4 +322,17 @@ public class ActivityFinalNodeEditPart extends AbstractBorderedShapeEditPart {
 		else
 			super.handleNotificationEvent(notification);
 	}
+
+	@Override
+	public void primAddSourceConnection(ConnectionEditPart connection,
+			int index) {
+		super.primAddSourceConnection(connection, index);
+	}
+	
+	@Override
+	public void primAddTargetConnection(ConnectionEditPart connection,
+			int index) {
+		super.primAddTargetConnection(connection, index);
+	}
+
 }
