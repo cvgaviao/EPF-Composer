@@ -25,6 +25,9 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage.Literals;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
@@ -136,6 +139,57 @@ public class ActivityDropCommand extends BSDropCommand {
 			}
 		}
 	}
+
+		
+	/**
+	 * If textual descriptions in the copied elements contain references (URLs)
+	 * to other elements within the same copied process then replace these
+	 * references with references that point to the new elements in the copied
+	 * structures.
+	 */
+	private Collection replaceTextReferences(Map<MethodElement, MethodElement> originalToCopyMap_
+			) {
+		Collection modifiedResources = new HashSet();
+		ITextReferenceReplacer txtRefReplacer = ExtensionManager
+				.getTextReferenceReplacer();
+		if (txtRefReplacer == null)
+			return modifiedResources;
+		
+		for (Map.Entry<MethodElement, MethodElement> entry: originalToCopyMap_.entrySet()) {		
+			if (entry.getValue() instanceof BreakdownElement) {
+				EObject element = (EObject) entry.getValue();
+				for (Iterator childIter = element.eAllContents(); childIter
+						.hasNext();) {
+					EObject child = (EObject) childIter.next();
+					for (Iterator attributes = child.eClass()
+							.getEAllAttributes().iterator(); attributes
+							.hasNext();) {
+						EAttribute attribute = (EAttribute) attributes.next();
+						if (attribute.isChangeable()
+								&& !attribute.isDerived()
+								&& (attribute.isMany() || child
+										.eIsSet(attribute))
+								&& attribute.getEAttributeType()
+										.getInstanceClass() == Literals.STRING
+										.getInstanceClass()) {
+							String text = (String) child.eGet(attribute);
+							if (text != null) {
+								String newtext = txtRefReplacer.replace(text,
+										child, originalToCopyMap_);
+								if (!newtext.equals(text)) {
+									child.eSet(attribute, newtext);
+									modifiedResources.add(child.eResource());
+								}
+							}
+						}
+					}
+				}
+			}		
+		}
+		originalToCopyMap_ = null;
+		return modifiedResources;
+	}
+	
 	
 	public ActivityDropCommand(Activity target, List activities, Object viewer, 
 			AdapterFactory adapterFactory,IConfigurator deepCopyConfigurator){
@@ -272,6 +326,11 @@ public class ActivityDropCommand extends BSDropCommand {
 			originalToCopyMap = activityHandler.cloneOrignaltoCopyMap();
 			activityHandler.dispose();
 		}
+		
+		if (type == IActionTypeProvider.COPY) {
+			replaceTextReferences(originalToCopyMap);
+		}
+		
 		
 		if(TngUtil.DEBUG) {
 			System.out.println("ActivityDropCommand.execute(): done"); //$NON-NLS-1$
