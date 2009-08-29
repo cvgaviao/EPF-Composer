@@ -175,6 +175,10 @@ public class SupportingElementData extends ConfigDataBase {
 			if (feature.isContainer() || feature.isContainment()) {
 				continue;
 			}
+			
+			if (feature == UmaPackage.eINSTANCE.getRole_Modifies()) {
+				continue;
+			}	
 
 			Object value = element.eGet(feature);
 			if (value == null) {
