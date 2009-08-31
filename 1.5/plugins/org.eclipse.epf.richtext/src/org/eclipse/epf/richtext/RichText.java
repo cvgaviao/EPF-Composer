@@ -1271,7 +1271,7 @@ public class RichText implements IRichText {
 			});
 
 	        editorControl.addKeyListener(new KeyAdapter() {
-	        	   public void keyPressed(KeyEvent event) {
+	        	   public void keyReleased(KeyEvent event) {
 						int keyCode = event.keyCode;
 						int stateMask = event.stateMask;
 						if (debug) {
