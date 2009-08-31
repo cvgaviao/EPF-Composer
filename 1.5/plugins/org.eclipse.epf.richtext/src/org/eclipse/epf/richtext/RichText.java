@@ -205,7 +205,8 @@ public class RichText implements IRichText {
 	protected boolean isIE = false;
 	
 	// A event type indicate control has been initialized
-	public static final int RICH_TEXT_INITIALIZED = 98979695;
+	public static final int RICH_TEXT_INITIALIZED_WIN32 = 98979695;
+	public static final int RICH_TEXT_INITIALIZED_LINUX = 98979694;
 	
 	/**
 	 * Creates a new instance.
@@ -646,6 +647,11 @@ public class RichText implements IRichText {
 						public void run() {
 							if (!isDisposed()) {
 								editor.execute(script);
+								if (!Platform.getOS().equals(Platform.OS_WIN32)) {
+									if (script.startsWith(RichTextCommand.SET_TEXT)) {
+										notifyListeners(RichText.RICH_TEXT_INITIALIZED_LINUX, new Event());
+									}
+								}
 							}
 						}
 					});
@@ -978,8 +984,11 @@ public class RichText implements IRichText {
 									executeCommand(
 											RichTextCommand.SET_EDITABLE,
 											"" + editable); //$NON-NLS-1$
+								}								
+								
+								if (Platform.getOS().equals(Platform.OS_WIN32)) {
+									notifyListeners(RichText.RICH_TEXT_INITIALIZED_WIN32, new Event());
 								}
-								notifyListeners(RichText.RICH_TEXT_INITIALIZED, new Event());
 							}
 							break;
 						case STATUS_MODIFIED:
