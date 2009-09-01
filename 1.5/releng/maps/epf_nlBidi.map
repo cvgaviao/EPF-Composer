@@ -1,6 +1,6 @@
-feature@org.eclipse.epf.base.feature.nlsBidi=v20090827-1252,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.base.feature.nlsBidi
-feature@org.eclipse.epf.doc.feature.nlsBidi=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.doc.feature.nlsBidi
-feature@org.eclipse.epf.platform.feature.nlsBidi=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.platform.feature.nlsBidi
+feature@org.eclipse.epf.base.feature.nlsBidi=v20090901-0848,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.base.feature.nlsBidi
+feature@org.eclipse.epf.doc.feature.nlsBidi=v20090901-0848,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.doc.feature.nlsBidi
+feature@org.eclipse.epf.platform.feature.nlsBidi=v20090901-0848,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.platform.feature.nlsBidi
 feature@org.eclipse.epf.rcp.feature.nlsBidi=v20090831-1741,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.rcp.feature.nlsBidi
 feature@org.eclipse.epf.richtext.feature.nlsBidi=v20090824-1800,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/features/org.eclipse.epf.richtext.feature.nlsBidi
 fragment@org.eclipse.epf.authoring.ui.nlBidi=v20090831-1627,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/plugins/org.eclipse.epf.authoring.ui.nlBidi
