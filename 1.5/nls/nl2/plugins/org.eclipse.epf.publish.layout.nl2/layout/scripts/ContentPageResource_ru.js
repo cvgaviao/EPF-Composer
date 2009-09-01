@@ -29,9 +29,9 @@ this.toolbar_expand_all = "Развернуть все";
 this.toolbar_collapse_all = "Свернуть все";
 this.toolbar_print = "Печать";
 
-this.expandText = "Развернуть "
-this.collapseText = "Свернуть "
-this.checkedAltText = "Да "	
+this.expandText = "Развернуть"
+this.collapseText = "Свернуть"
+this.checkedAltText = "Да"	
 
 };
 
