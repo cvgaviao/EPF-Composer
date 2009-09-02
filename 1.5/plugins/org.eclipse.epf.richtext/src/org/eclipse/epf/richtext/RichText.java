@@ -1279,6 +1279,11 @@ public class RichText implements IRichText {
 									"keyUpListener", "keyCode=" + keyCode //$NON-NLS-1$ //$NON-NLS-2$
 											+ ", stateMask=" + stateMask + ", editable=" + editable); //$NON-NLS-1$ //$NON-NLS-2$
 						}
+						
+						if ( stateMask == SWT.CTRL && event.keyCode == 0x11 ) { //0x11 is for all Control key, such as ctrl-b, ctrl-I, ctrl-c, etc.. 
+							executeCommand("updateSelection");
+						} 
+						
 						if ((stateMask & SWT.CTRL) > 0
 								|| (stateMask & SWT.ALT) > 0
 								|| ((stateMask & SWT.SHIFT) > 0 && keyCode == stateMask)) {
