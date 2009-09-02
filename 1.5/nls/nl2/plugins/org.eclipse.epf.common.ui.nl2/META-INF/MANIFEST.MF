@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Nl2 Fragment
+Bundle-SymbolicName: org.eclipse.epf.common.ui.nl2
+Bundle-Version: 1.0.0
+Fragment-Host: org.eclipse.epf.common.ui;bundle-version="1.5.0"

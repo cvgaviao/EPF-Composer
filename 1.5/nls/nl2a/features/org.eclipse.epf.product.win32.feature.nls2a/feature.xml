@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.epf.product.win32.feature.nls2a"
+      label="Nls2a Feature"
+      version="1.0.0">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.eclipse.epf.common.html.feature.nls2a"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.epf.doc.feature.nls2a"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.epf.platform.feature.nls2a"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.epf.rcp.feature.nls2a"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.epf.richtext.feature.nls2a"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.epf.richtext.win32.feature.nls2a"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.epf.rte.feature.nls2a"
+         version="0.0.0"/>
+
+</feature>
