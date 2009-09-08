@@ -151,6 +151,9 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 	 *            the method library type
 	 */
 	public boolean openMethodLibrary(String path, String type) {
+		return openMethodLibrary(path, type, true);
+	}
+	public boolean openMethodLibrary(String path, String type, boolean addOpenLibraryPath) {
 		try {
 			Map<String, String> options = new HashMap<String, String>();
 			File libraryPath = new File(path);
@@ -162,8 +165,10 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 					return false;
 				}
 				if (LibraryUIManager.getInstance().openLibrary(path)) {
-					LibraryUIPreferences.addOpenLibraryPath(libraryPath
-							.getAbsolutePath());
+					if (addOpenLibraryPath) {
+						LibraryUIPreferences.addOpenLibraryPath(libraryPath
+								.getAbsolutePath());
+					}
 					return true;
 				}
 			} else if (XMILibraryUtil

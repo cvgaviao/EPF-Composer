@@ -239,7 +239,7 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 					(new ConfigurationExportService(data)).run(new NullProgressMonitor());
 					monitor.setTaskName(ExportXMLResources.open_lib_from_temp_exported_location);
 					OpenLibraryWizard wizard = new OpenLibraryWizard();
-					wizard.openMethodLibrary(tempExportFolder.getAbsolutePath(), "xmi"); //$NON-NLS-1$ 
+					wizard.openMethodLibrary(tempExportFolder.getAbsolutePath(), "xmi", false); //$NON-NLS-1$ 
 				} catch (Exception e) {
 					ex[0] = e;
 				}
@@ -272,7 +272,7 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 				try {
 					LibraryUIManager.setSkipInstallPathCheck(true);
 					OpenLibraryWizard wizard = new OpenLibraryWizard();					
-					wizard.openMethodLibrary(libFolder.getAbsolutePath(), "xmi"); //$NON-NLS-1$
+					wizard.openMethodLibrary(libFolder.getAbsolutePath(), "xmi", false); //$NON-NLS-1$
 				} catch (Exception e) {
 					ex[0] = e;
 				} finally {
