@@ -658,4 +658,9 @@ public class XMLUtil {
 		}
 		return null;
 	}
+	
+	public static String removeBOM(String xml) {
+		return xml.trim().replaceFirst("^([\\W]+)<", "<"); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
 }
