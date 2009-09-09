@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.epf.authoring.ui.wizards.SaveAllEditorsPage;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.export.services.ConfigurationExportData;
@@ -104,6 +105,10 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 		selectConfigPage = new SelectConfigPage(configData);
 		selectXMLFilePage = new SelectXMLFilePage();
 
+		SaveAllEditorsPage.addPageIfNeeded(this, true, null, null, ExportXMLPlugin
+				.getDefault().getImageDescriptor(
+						"full/wizban/ExportXML.gif")); //$NON-NLS-1$
+		
 		addPage(selectExportTypePage);
 		addPage(selectPluginPage);
 		addPage(viewPluginInfoPage);
