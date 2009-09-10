@@ -556,24 +556,13 @@ public class ResourceHelper {
 	public static String getElementLinkText(MethodElement element,
 			boolean withType, final MethodConfiguration config) {
 		
-		TngUtil.PresentationNameHelper pHelper = config == null ? null : 
-								new TngUtil.PresentationNameHelper() {
+		TngUtil.PresentationNameHelper pHelper = new TngUtil.PresentationNameHelper() {
 			
 			public String getPresentationName(MethodElement element) {
 				if (element == null) {
 					return null;
 				}
-				String str = super.getPresentationName(element);
-				if (StrUtil.isBlank(str) && element instanceof VariabilityElement) {
-					VariabilityElement ve = (VariabilityElement) element;
-					if (ve.getVariabilityType() == VariabilityType.EXTENDS_REPLACES) {
-						VariabilityElement base = ve.getVariabilityBasedOnElement();
-						String baseStr = base == null ? null : base.getPresentationName();
-						if (! StrUtil.isBlank(baseStr)) {
-							return baseStr;
-						}
-					}					
-				}
+				String str = ConfigurationHelper.getPresentationName(element, config);
 				return str;
 			}
 			
