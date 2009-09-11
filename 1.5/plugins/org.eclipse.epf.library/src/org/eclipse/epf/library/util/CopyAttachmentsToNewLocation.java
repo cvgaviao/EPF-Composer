@@ -160,7 +160,7 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 				ILibraryResourceManager resMgr = ResourceHelper.getResourceMgr(elementToProcess);
 				ILibraryResourceManager lastOldPluginResMgr = ResourceHelper.getResourceMgr(lastOldPlugin);
 				
-				ContentResourceScanner scanner = getScanner(elementToProcess);
+				ContentResourceScanner scanner = getScanner(elementToProcess, lastOldPlugin);
 
 				// iterate thru element's content
 				String contentPath = ResourceHelper
@@ -279,15 +279,18 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 	/**
 	 * Returns the content resource scanner for the element.
 	 */
-	private ContentResourceScanner getScanner(MethodElement owner) {
+	private ContentResourceScanner getScanner(MethodElement owner, MethodPlugin sourcePlugin) {
 		ILibraryResourceManager resMgr = ResourceHelper.getResourceMgr(owner);
 		if ( resMgr == null ) {
 			return null;
 		}
 		
 		String rootContentPath = resMgr.getLogicalPluginPath(owner);
-		File src_root = new File(resMgr.getPhysicalPluginPath(owner));
-		File tgt_root = src_root;
+//		File src_root = new File(resMgr.getPhysicalPluginPath(owner));
+//		File tgt_root = src_root;
+		File tgt_root = new File(resMgr.getPhysicalPluginPath(owner));
+		File src_root = new File(resMgr.getPhysicalPluginPath(sourcePlugin));
+		
 		ContentResourceScanner scanner = new ContentResourceScanner(src_root, tgt_root, rootContentPath, getValidator());
 
 		return scanner;
