@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.emf.common.util.AbstractTreeIterator;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.ModelStructure;
@@ -29,6 +31,7 @@ import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.DisciplineGrouping;
 import org.eclipse.epf.uma.Domain;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
@@ -39,6 +42,7 @@ import org.eclipse.epf.uma.ProcessPackage;
  * dialogs.
  * 
  * @author Shashidhar Kannoori
+ * @author Phong Nguyen Le
  * @since 1.0
  */
 public class FilterHelper {
@@ -275,20 +279,16 @@ public class FilterHelper {
 	 * @param CustomCategory
 	 */
 	private boolean hasMatchedActivities(ProcessPackage procPackage) {
-		List list = procPackage.getProcessElements();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			Object element = iterator.next();
-			if (element instanceof Activity) {
-				if (matcher(element)) {
-					return true;
-				} else if (hasMatchedActivities((Activity) element)) {
-					return true;
-				}
+		if(procPackage instanceof ProcessComponent) {
+			Process proc = ((ProcessComponent) procPackage).getProcess();
+			if(proc != null && (matcher(proc) || hasMatchedActivities(proc))) {
+				return true;
 			}
 		}
+		
 		// check child packages
-		list = procPackage.getChildPackages();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+		List<?> list = procPackage.getChildPackages();
+		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
 			Object element = iterator.next();
 			if (element instanceof ProcessPackage) {
 				if (hasMatchedActivities((ProcessPackage) element)) {
@@ -534,8 +534,39 @@ public class FilterHelper {
 	private boolean match(Object obj) {
 
 		// Do not do Pattern match if type or pattern string is null.
-		if (type == null || pattern == null || pattern.equalsIgnoreCase("")) //$NON-NLS-1$
+		if (type == null) {
 			return true;
+		}
+		if (pattern == null || pattern.equalsIgnoreCase(StrUtil.EMPTY_STRING)) {
+			if(type.equals(FilterConstants.ACTIVITIES) && obj instanceof ProcessPackage) {
+				ProcessPackage pkg = (ProcessPackage) obj;
+				
+				// filter out package without any process
+				//
+				if(!pkg.getChildPackages().isEmpty()) {
+					AbstractTreeIterator<MethodPackage> iterator = new AbstractTreeIterator<MethodPackage>(pkg) {
+
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						protected Iterator<? extends MethodPackage> getChildren(
+								Object object) {
+							return ((MethodPackage) object).getChildPackages().iterator();
+						}
+
+					};
+					while(iterator.hasNext()) {
+						MethodPackage childPkg = iterator.next();
+						if(childPkg instanceof ProcessComponent && ((ProcessComponent) childPkg).getProcess() != null) {
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}
+			return true;
+		}
 
 		// Check if type is of Content Package
 		if (type.equals(FilterConstants.CONTENT_PACKAGES)) {

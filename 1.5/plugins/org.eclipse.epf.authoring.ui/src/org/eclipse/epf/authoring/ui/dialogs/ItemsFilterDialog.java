@@ -361,11 +361,14 @@ public class ItemsFilterDialog extends Dialog implements
 
 		if (types == null) {
 			fillFilterTypeCombo();
+			if(helper != null) {
+				helper.setFilterTypeStr(filterTypeStr);
+			}
 		} else {
 			filterType.setItems(types);
 			if (helper != null) {
 				filterTypeStr = filterType.getItem(0);
-				helper.setFilterTypeStr(filterType.getItem(0));
+				helper.setFilterTypeStr(filterTypeStr);
 				if (tabStr == null) {
 					tabStr = filterTypeStr;
 					helper.setTabStr(tabStr);
