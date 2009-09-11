@@ -237,7 +237,11 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 		}
 
 		// handle children
-		Iterator iter = e.eAllContents();
+		//Iterator iter = e.eAllContents();
+		if (e.eContents() == null) {
+			return;
+		}
+		Iterator iter = e.eContents().iterator();
 		while (iter.hasNext()) {
 			EObject child = (EObject) iter.next();
 			HandleAttachmentsPlugin(child);
