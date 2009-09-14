@@ -112,6 +112,8 @@ public class LibraryUIPreferences {
 		prefStore.setDefault(DESCRIPTOR_ONGOING, false);
 		prefStore.setDefault(INCLUDE_DESCRIPTORS, !SupportingElementData.isDescriptorExclusiveOption());
 		prefStore.setDefault(DESCRIPTOR_REPEATABLE, false);
+		
+		SupportingElementData.setDescriptorExclusiveOption(! LibraryUIPreferences.getIncludeDescriptors());
 	}
 
 	/**
