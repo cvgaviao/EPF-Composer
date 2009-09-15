@@ -23,6 +23,7 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidator;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -77,7 +78,8 @@ public class UniquenessValidator implements IValidator {
 		newText = newText.trim();
 		if (StrUtil.isBlank(newText)) {
 			// return I18nUtil.formatString(RESOURCE_BUNDLE, key, data);
-			if (object instanceof EObject && featureName.equals("name")) {		//$NON-NLS-1$				
+			if (object instanceof EObject && 
+					feature == UmaPackage.eINSTANCE.getNamedElement_Name()) {				
 				return NLS.bind(LibraryEditResources.emptyElementNameError_msg,
 						TngUtil.getTypeText((EObject) object));
 			}			
