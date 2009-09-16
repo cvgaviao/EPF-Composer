@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.edit.process.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage.Literals;
@@ -45,6 +47,7 @@ import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.VariabilityInfo;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
+import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.ConfigurationSetter;
 import org.eclipse.epf.library.edit.util.ConstraintManager;
 import org.eclipse.epf.library.edit.util.DepthLevelAdapterFactoryTreeIterator;
@@ -52,6 +55,7 @@ import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IDiagramManager;
 import org.eclipse.epf.library.edit.util.ITextReferenceReplacer;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
+import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -67,6 +71,7 @@ import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
@@ -945,4 +950,87 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 	public CopyHelper getCopyHelper() {
 		return (CopyHelper) copyHelper;
 	}
+	
+	/**
+	 * References to inherited elements could be copied before the inherited
+	 * elements are copied. They are still referencing the inherited elements
+	 * instead of their copies. This method will fix those references to refer
+	 * to the copies.
+	 */
+	public void fixReferences() {
+		List<EReference> referencesToFix = Arrays.asList(new EReference[] {
+			
+		});
+		int refMax = referencesToFix.size();
+		CopyHelper helper = ((CopyHelper) copyHelper);
+		Map<?, ?> objectToCopyMap = helper.getObjectToCopyMap();
+		for (Object copy : objectToCopyMap.values()) {
+			// update WorkOrder copies with correct reference to predecessor
+			//
+			if(copy instanceof WorkBreakdownElement) {
+				WorkBreakdownElement we = (WorkBreakdownElement) copy;
+				Map<WorkOrder, MethodElementProperty> workOrderToPathPropertyMap = new HashMap<WorkOrder, MethodElementProperty>();
+				for (WorkOrder wo : we.getLinkToPredecessor()) {
+					MethodElementProperty prop = MethodElementPropertyHelper.getProperty(wo, 
+							MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_PROCESS_PATH);
+					if(prop != null) {
+						workOrderToPathPropertyMap.put(wo, prop);
+					} else {
+						Object predCopy = copyHelper.getCopy(wo.getPred());
+						if(predCopy instanceof WorkBreakdownElement) {
+							wo.setPred((WorkBreakdownElement) predCopy);
+						}
+						prop = MethodElementPropertyHelper.getProperty(wo, 
+								MethodElementPropertyHelper.WORK_ORDER__PREDECESSOR_IS_SIBLING);
+						if(prop != null && wo.getPred().getSuperActivities() == we.getSuperActivities()) {
+							EcoreUtil.remove(prop);
+						}
+					}
+				}
+				if(!workOrderToPathPropertyMap.isEmpty()) {
+					Object orig = helper.getOriginal(copy);
+					Object ip = TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory().adapt(orig, ITreeItemContentProvider.class);
+					if(ip instanceof IBSItemProvider) {
+						PredecessorList predList = ((IBSItemProvider) ip).getPredecessors();
+						int start = new String(Suppression.WBS + ":/").length();
+						for (Map.Entry<WorkOrder, MethodElementProperty> entry : workOrderToPathPropertyMap.entrySet()) {
+							String path = predList.resolvePredecessorProcessPath(entry.getValue().getValue());
+							if(path != null) {
+								BreakdownElement be = helper.getWrapperCopy(path.substring(start));
+								if(be instanceof WorkBreakdownElement) {
+									entry.getKey().setPred((WorkBreakdownElement) be);
+									// remove the path property from work order
+									//
+									EcoreUtil.remove(entry.getValue());
+								}
+							}
+						}
+					}
+				}
+			}
+			if(copy instanceof EObject) {
+				EObject eObject = (EObject) copy;
+				for(int i = 0; i < refMax; i++) {
+					EReference ref = referencesToFix.get(i);
+					if(ref.getEContainingClass().isSuperTypeOf(eObject.eClass())) {
+						Object value = eObject.eGet(ref);
+						if(ref.isMany()) {
+							Collection<?> values = (Collection<?>) value;
+							Collection<Object> newValues = new ArrayList<Object>();
+							for (Object object : values) {
+								Object refCopy = copyHelper.getCopy((EObject) object);
+								newValues.add(refCopy != null ? refCopy : object);
+							}
+						} else {
+							Object refCopy = copyHelper.getCopy((EObject) value);
+							if(refCopy != null) {
+								eObject.eSet(ref, refCopy);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 }

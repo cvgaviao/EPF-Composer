@@ -25,8 +25,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
 import org.eclipse.epf.diagram.core.DiagramCorePlugin;
@@ -54,6 +56,8 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
+import org.eclipse.uml2.uml.ActivityEdge;
+import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ActivityParameterNode;
 import org.eclipse.uml2.uml.ActivityPartition;
 import org.eclipse.uml2.uml.StructuredActivityNode;
@@ -331,88 +335,141 @@ public class CopyDiagramForDeepCopyCommand extends AbstractCommand implements
 	public void updateReferences(Diagram copy, Activity copyActivity, Activity origActivity) {
 		int diagramType = DiagramHelper.getDiagramType(copy);
 		CopyFinder copyFinder = new CopyFinder(origActivity, copyActivity);
-		List<Object> children = new ArrayList<Object>();
-		// collect all children first e.g. for ActivityPartition
-		// we don't have partition into partition so just getting one level sub-children
-		// are enough for now.
-		for (Iterator<?> itor = copy.getChildren().iterator(); itor.hasNext();) {
-			Node node = (Node) itor.next();
-			EObject obj = node.getElement();
-			children.add(node);
-			if (obj instanceof ActivityPartition){
-				children.addAll(node.getChildren());
+		List<?> copyChildren = copy.getChildren();
+		if(!copyChildren.isEmpty()) {
+			List<Object> children = new ArrayList<Object>();
+			// collect all children first e.g. for ActivityPartition
+			// we don't have partition into partition so just getting one level sub-children
+			// are enough for now.
+			for (Iterator<?> itor = copyChildren.iterator(); itor.hasNext();) {
+				Node node = (Node) itor.next();
+				EObject obj = node.getElement();
+				children.add(node);
+				if (obj instanceof ActivityPartition){
+					children.addAll(node.getChildren());
+				}
 			}
-		}
-		for (Iterator<?> itor = children.iterator(); itor.hasNext();) {
-			Node node = (Node) itor.next();
-			BridgeHelper.unmarkInHerited(node);
-			EObject obj = node.getElement();
+			for (Iterator<?> itor = children.iterator(); itor.hasNext();) {
+				Node node = (Node) itor.next();
+				BridgeHelper.unmarkInHerited(node);
+				EObject obj = node.getElement();
 
-			if (diagramType == IDiagramManager.ACTIVITY_DIAGRAM) {
-				if (obj instanceof StructuredActivityNode
-						|| obj instanceof ActivityParameterNode) {
-					EModelElement modelElement = (EModelElement) obj;
-					MethodElement me = BridgeHelper
-							.getMethodElementFromAnnotation(modelElement,
-									targetProcess.eResource().getResourceSet());
-					if(me instanceof BreakdownElement) {						
-						BreakdownElement mappedMethodElement = copyFinder.findCopy((BreakdownElement) me);
+				if (diagramType == IDiagramManager.ACTIVITY_DIAGRAM) {
+					if (obj instanceof StructuredActivityNode
+							|| obj instanceof ActivityParameterNode) {
+						EModelElement modelElement = (EModelElement) obj;
+						MethodElement me = BridgeHelper
+						.getMethodElementFromAnnotation(modelElement,
+								targetProcess.eResource().getResourceSet());
+						if(me instanceof BreakdownElement) {						
+							BreakdownElement mappedMethodElement = copyFinder.findCopy((BreakdownElement) me);
 
-						if (mappedMethodElement != null) {
-							BridgeHelper.addEAnnotation(modelElement, mappedMethodElement);
+							if (mappedMethodElement != null) {
+								BridgeHelper.addEAnnotation(modelElement, mappedMethodElement);
+							}
 						}
 					}
-				}
-			} else if (diagramType == IDiagramManager.ACTIVITY_DETAIL_DIAGRAM) {
-				if(obj instanceof org.eclipse.epf.diagram.model.Node) {
-					clearReadOnly((org.eclipse.epf.diagram.model.Node)obj);
-				}
-				if (obj instanceof NodeContainer) {
-					NodeContainer nodeContainer = (NodeContainer) obj;
-					// do mapping for nodecontainer
-					MethodElement me = nodeContainer.getLinkedElement();
-					Object mappedMethodElement = null;
-					if(me instanceof BreakdownElement) {
-						mappedMethodElement = copyFinder.findCopy((BreakdownElement) me);
-						if (mappedMethodElement != null) {
-							nodeContainer
-							.setLinkedElement((MethodElement) mappedMethodElement);
+				} else if (diagramType == IDiagramManager.ACTIVITY_DETAIL_DIAGRAM) {
+					if(obj instanceof org.eclipse.epf.diagram.model.Node) {
+						clearReadOnly((org.eclipse.epf.diagram.model.Node)obj);
+					}
+					if (obj instanceof NodeContainer) {
+						NodeContainer nodeContainer = (NodeContainer) obj;
+						// do mapping for nodecontainer
+						MethodElement me = nodeContainer.getLinkedElement();
+						Object mappedMethodElement = null;
+						if(me instanceof BreakdownElement) {
+							mappedMethodElement = copyFinder.findCopy((BreakdownElement) me);
+							if (mappedMethodElement != null) {
+								nodeContainer
+								.setLinkedElement((MethodElement) mappedMethodElement);
+							}
+						}
+
+						// do mapping for its children
+						List<?> nodes = nodeContainer.getNodes();
+
+						for (int i = 0; i < nodes.size(); i++) {
+							NamedNode namedNode = (NamedNode) nodes.get(i);
+							me = namedNode.getLinkedElement();
+							if (me instanceof BreakdownElement) {
+								mappedMethodElement = copyFinder
+								.findCopy((BreakdownElement) me);
+								if (mappedMethodElement != null) {
+									namedNode
+									.setLinkedElement((MethodElement) mappedMethodElement);
+								}
+							}
 						}
 					}
-
-					// do mapping for its children
-					List<?> nodes = nodeContainer.getNodes();
-
-					for (int i = 0; i < nodes.size(); i++) {
-						NamedNode namedNode = (NamedNode) nodes.get(i);
-						me = namedNode.getLinkedElement();
+				} else if (diagramType == IDiagramManager.WORK_PRODUCT_DEPENDENCY_DIAGRAM) {
+					if(obj instanceof org.eclipse.epf.diagram.model.Node) {
+						clearReadOnly((org.eclipse.epf.diagram.model.Node)obj);
+					}
+					if (obj instanceof NamedNode) {
+						NamedNode namedNode = (NamedNode) obj;
+						MethodElement me = namedNode.getLinkedElement();
 						if (me instanceof BreakdownElement) {
-							mappedMethodElement = copyFinder
-									.findCopy((BreakdownElement) me);
+							Object mappedMethodElement = copyFinder.findCopy((BreakdownElement) me);
 							if (mappedMethodElement != null) {
 								namedNode
-										.setLinkedElement((MethodElement) mappedMethodElement);
+								.setLinkedElement((MethodElement) mappedMethodElement);
 							}
 						}
 					}
 				}
-			} else if (diagramType == IDiagramManager.WORK_PRODUCT_DEPENDENCY_DIAGRAM) {
-				if(obj instanceof org.eclipse.epf.diagram.model.Node) {
-					clearReadOnly((org.eclipse.epf.diagram.model.Node)obj);
-				}
-				if (obj instanceof NamedNode) {
-					NamedNode namedNode = (NamedNode) obj;
-					MethodElement me = namedNode.getLinkedElement();
-					if (me instanceof BreakdownElement) {
-						Object mappedMethodElement = copyFinder.findCopy((BreakdownElement) me);
-						if (mappedMethodElement != null) {
-							namedNode
-									.setLinkedElement((MethodElement) mappedMethodElement);
+			}
+		} else {
+			// there is situation where diagram notation does not have any children but its model does
+			// URIs to UMA element in the model elements still need to be updated
+			//
+			switch(diagramType) {
+			case IDiagramManager.ACTIVITY_DIAGRAM:
+				EObject diagramModel = copy.getElement();
+				if(diagramModel instanceof org.eclipse.uml2.uml.Activity) {
+					org.eclipse.uml2.uml.Activity umlActivity = (org.eclipse.uml2.uml.Activity) diagramModel;
+					for (ActivityNode node : umlActivity.getNodes()) {
+						if(node instanceof StructuredActivityNode || node instanceof ActivityParameterNode) {
+							EModelElement modelElement = (EModelElement) node;
+							MethodElement me = BridgeHelper
+							.getMethodElementFromAnnotation(modelElement,
+									targetProcess.eResource().getResourceSet());
+							if(me instanceof BreakdownElement) {						
+								BreakdownElement mappedMethodElement = copyFinder.findCopy((BreakdownElement) me);
+
+								if (mappedMethodElement != null) {
+									BridgeHelper.addEAnnotation(modelElement, mappedMethodElement);
+								}
+							}
+						}
+					}
+					// remove any association to work order from edges
+					//
+					for (ActivityEdge edge : umlActivity.getEdges()) {
+						EAnnotation annotation = edge.getEAnnotation(BridgeHelper.UMA_ELEMENT);
+						if(annotation != null) {
+							EcoreUtil.remove(annotation);
 						}
 					}
 				}
 			}
 		}
+		switch(diagramType) {
+		case IDiagramManager.ACTIVITY_DIAGRAM:
+			EObject diagramModel = copy.getElement();
+			if(diagramModel instanceof org.eclipse.uml2.uml.Activity) {
+				org.eclipse.uml2.uml.Activity umlActivity = (org.eclipse.uml2.uml.Activity) diagramModel;
+				// remove any association to work order from edges
+				//
+				for (ActivityEdge edge : umlActivity.getEdges()) {
+					EAnnotation annotation = edge.getEAnnotation(BridgeHelper.UMA_ELEMENT);
+					if(annotation != null) {
+						EcoreUtil.remove(annotation);
+					}
+				}
+			}
+		}
+
 	}
 
 	/*

@@ -439,11 +439,9 @@ public class PredecessorList extends ArrayList<Object> {
 		Object unwrapped = TngUtil.unwrap(object);
 		if (unwrapped instanceof WorkBreakdownElement) {
 			WorkBreakdownElement owner = (WorkBreakdownElement) unwrapped;
-			List workOrders = owner.getLinkToPredecessor();
+			List<WorkOrder> workOrders = owner.getLinkToPredecessor();
 			if (workOrders.isEmpty() && customWorkOrders.isEmpty())
 				return;
-			WorkBreakdownElement topElement = (WorkBreakdownElement) TngUtil.unwrap(top);
-			String topGUID = topElement.getGuid();
 			
 			int n = workOrders.size();
 			for (int i = 0; i < n; i++) {
@@ -497,38 +495,8 @@ public class PredecessorList extends ArrayList<Object> {
 						}
 					}
 					else {
-						String procPath = prop.getValue();
-						
-						// calculate the path in this process
-						//						
-						int index;
-						String guid = topGUID;
-						VariabilityElement base = topElement instanceof VariabilityElement ? ((VariabilityElement)topElement).getVariabilityBasedOnElement() : null;
-						for(index = procPath.indexOf(guid); index == -1 && base != null; index = procPath.indexOf(guid)) {
-							if(base != null) {
-								guid = base.getGuid(); 
-								base = base.getVariabilityBasedOnElement();
-							}
-						}
-						if(index != -1) {
-							StringBuffer strBuff = new StringBuffer(procPath.substring(index + guid.length()));
-							Object topObject = top;
-							for(WorkBreakdownElement wbe = topElement; wbe != null;) {
-								strBuff.insert(0, wbe.getGuid());
-								strBuff.insert(0, '/');
-								if(topObject instanceof WorkBreakdownElement) {
-									topObject = wbe = ((WorkBreakdownElement)topObject).getSuperActivities();
-								}
-								else {
-									topObject = adapterFactory.adapt(topObject, ITreeItemContentProvider.class);
-									if (topObject instanceof ITreeItemContentProvider) {
-										topObject = ((ITreeItemContentProvider)topObject).getParent(topObject);
-									}
-									wbe = (WorkBreakdownElement) TngUtil.unwrap(topObject);	
-								}
-							}
-							strBuff.insert(0, ":/").insert(0, Suppression.WBS); //$NON-NLS-1$
-							String path = strBuff.toString();
+						String path = resolvePredecessorProcessPath(prop.getValue());
+						if(path != null) {
 							find_wrapper:
 							for (Object itemProvider : itemProviders) {
 								if(itemProvider instanceof BreakdownElementWrapperItemProvider) {
@@ -578,6 +546,43 @@ public class PredecessorList extends ArrayList<Object> {
 				}
 			}
 		}
+	}
+	
+	public String resolvePredecessorProcessPath(String procPath) {
+		WorkBreakdownElement topElement = (WorkBreakdownElement) TngUtil.unwrap(top);
+		String topGUID = topElement.getGuid();
+		// calculate the path in this process
+		//						
+		int index;
+		String guid = topGUID;
+		VariabilityElement base = topElement instanceof VariabilityElement ? ((VariabilityElement)topElement).getVariabilityBasedOnElement() : null;
+		for(index = procPath.indexOf(guid); index == -1 && base != null; index = procPath.indexOf(guid)) {
+			if(base != null) {
+				guid = base.getGuid(); 
+				base = base.getVariabilityBasedOnElement();
+			}
+		}
+		if(index != -1) {
+			StringBuffer strBuff = new StringBuffer(procPath.substring(index + guid.length()));
+			Object topObject = top;
+			for(WorkBreakdownElement wbe = topElement; wbe != null;) {
+				strBuff.insert(0, wbe.getGuid());
+				strBuff.insert(0, '/');
+				if(topObject instanceof WorkBreakdownElement) {
+					topObject = wbe = ((WorkBreakdownElement)topObject).getSuperActivities();
+				}
+				else {
+					topObject = adapterFactory.adapt(topObject, ITreeItemContentProvider.class);
+					if (topObject instanceof ITreeItemContentProvider) {
+						topObject = ((ITreeItemContentProvider)topObject).getParent(topObject);
+					}
+					wbe = (WorkBreakdownElement) TngUtil.unwrap(topObject);	
+				}
+			}
+			strBuff.insert(0, ":/").insert(0, Suppression.WBS); //$NON-NLS-1$
+			return strBuff.toString();
+		}
+		return null;
 	}
 	
 	@Override

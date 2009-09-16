@@ -232,6 +232,7 @@ public class ActivityHandler {
 												+ " ms"); //$NON-NLS-1$
 								time = System.currentTimeMillis();
 							}
+							cmd.fixReferences();
 							deepCopies.add(deepCopy);
 							deepCopyToOriginalMap.put(deepCopy, act);
 						}
