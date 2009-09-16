@@ -1,8 +1,8 @@
-feature@org.eclipse.epf.base.feature.nls2a=v20090901-0021,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.base.feature.nls2a
-feature@org.eclipse.epf.doc.feature.nls2a=v20090901-0021,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.doc.feature.nls2a
-feature@org.eclipse.epf.platform.feature.nls2a=v20090901-0021,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.platform.feature.nls2a
-feature@org.eclipse.epf.rcp.feature.nls2a=v20090901-0021,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.rcp.feature.nls2a
-feature@org.eclipse.epf.richtext.feature.nls2a=v20090901-0021,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.richtext.feature.nls2a
+feature@org.eclipse.epf.base.feature.nls2a=v20090916--1157,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.base.feature.nls2a
+feature@org.eclipse.epf.doc.feature.nls2a=v20090916--1157,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.doc.feature.nls2a
+feature@org.eclipse.epf.platform.feature.nls2a=v20090916--1157,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.platform.feature.nls2a
+feature@org.eclipse.epf.rcp.feature.nls2a=v20090916--1157,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.rcp.feature.nls2a
+feature@org.eclipse.epf.richtext.feature.nls2a=v20090916--1157,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/features/org.eclipse.epf.richtext.feature.nls2a
 fragment@org.eclipse.epf.authoring.ui.nl2a=v20090901-0021,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.authoring.ui.nl2a
 fragment@org.eclipse.epf.diagram.ad.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.diagram.ad.nl2a
 fragment@org.eclipse.epf.diagram.add.nl2a=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nl2a/plugins/org.eclipse.epf.diagram.add.nl2a
