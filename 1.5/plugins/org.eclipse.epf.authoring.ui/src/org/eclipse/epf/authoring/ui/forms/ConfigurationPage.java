@@ -297,13 +297,14 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		updateOnClick.setLayoutData(new GridData(SWT.BEGINNING, SWT.DEFAULT, false, false));
 		updateOnClick.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
 				AuthoringUIResources.ConfigurationPage_updateOnClickToolTip));
+		updateOnClick.setSelection(configProperties.isUpdateOnClick());
 		
 		noUpdateOnClick = toolkit.createButton(radioComposite, AuthoringUIResources.ConfigurationPage_noUpdateOnClick, SWT.RADIO);
 		noUpdateOnClick.setToolTipText(AuthoringUIResources.ConfigurationPage_noUpdateOnClickToolTip); 
 		noUpdateOnClick.setLayoutData(new GridData(SWT.BEGINNING, SWT.DEFAULT, false, false));
 		noUpdateOnClick.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
 				AuthoringUIResources.ConfigurationPage_noUpdateOnClickToolTip));
-		noUpdateOnClick.setSelection(true);
+		noUpdateOnClick.setSelection(configProperties.isNoUpdateOnClick());		
 
 		Group group = new Group(buttonComposite, SWT.NONE);
 		group.setLayout(new GridLayout(1, false));
@@ -739,23 +740,37 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 	
 	private void addListeners() {
+		updateOnClick.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				handleButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_UPDATE_ON_CLICK);
+			}
+		});
+		
+		noUpdateOnClick.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				handleButtonWidgetSelected(e,
+						MethodElementPropertyHelper.CONFIG_NO_UPDATE_ON_CLICK);
+			}
+		});
+		
 		hideErrorButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				handleHidesButtonWidgetSelected(e,
+				handleButtonWidgetSelected(e,
 						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS);
 			}
 		});
 		
 		hideWarnButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				handleHidesButtonWidgetSelected(e,
+				handleButtonWidgetSelected(e,
 						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS);
 			}
 		});
 		
 		hideInfoButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				handleHidesButtonWidgetSelected(e,
+				handleButtonWidgetSelected(e,
 						MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS);
 			}
 		});
@@ -1196,7 +1211,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		showErrors();					
    }
 
-	private void handleHidesButtonWidgetSelected(SelectionEvent e, String key) {
+	private void handleButtonWidgetSelected(SelectionEvent e, String key) {
 		Object obj = e.getSource();
 		if (obj instanceof Button) {
 			Button button = (Button) obj;

@@ -28,10 +28,12 @@ public class ConfigurationProperties extends MethodElementProperties {
 	}
 			
 	private static String[] getPropStrings() {
-		String[] hideProps = { MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
+		String[] props = { MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_ERRORS,
 				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_WARNINGS,
-				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS};
-		return hideProps;
+				MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS,
+				MethodElementPropertyHelper.CONFIG_UPDATE_ON_CLICK,
+				MethodElementPropertyHelper.CONFIG_NO_UPDATE_ON_CLICK};
+		return props;
 	}
 	
 	public boolean toHide(IConfigurationError error) {
@@ -54,6 +56,14 @@ public class ConfigurationProperties extends MethodElementProperties {
 
 	public boolean isHideInfos() {
 		return getBooleanValue(MethodElementPropertyHelper.CONFIG_PROPBLEM_HIDE_INFOS);
+	}
+	
+	public boolean isUpdateOnClick() {
+		return getBooleanValue(MethodElementPropertyHelper.CONFIG_UPDATE_ON_CLICK);
+	}
+	
+	public boolean isNoUpdateOnClick() {
+		return getBooleanValue(MethodElementPropertyHelper.CONFIG_NO_UPDATE_ON_CLICK);
 	}
 		
 }
