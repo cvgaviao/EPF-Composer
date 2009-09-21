@@ -136,7 +136,7 @@ public class ProcessDescription extends ProcessFormPage {
 
 	protected ModifyListener modifyListener;
 
-	protected ModifyListener contentModifyListener;
+//	protected ModifyListener contentModifyListener;
 
 //	private Adapter processListener;
 
