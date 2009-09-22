@@ -121,7 +121,8 @@
             contributorClass="org.eclipse.epf.authoring.ui.editors.ProcessEditorActionBarContributor"
             icon="icons/full/obj16/Process.gif"
             id="org.eclipse.epf.authoring.ui.editors.ProcessEditor"
-            name="%processEditorName"/>
+            name="%processEditorName"
+            matchingStrategy="org.eclipse.epf.authoring.ui.editors.MethodElementEditorMatchingStrategy"/>
       <editor
             class="org.eclipse.epf.authoring.ui.editors.GraphicalWorkflowEditor"
             icon="icons/full/obj16/Activity.gif"
