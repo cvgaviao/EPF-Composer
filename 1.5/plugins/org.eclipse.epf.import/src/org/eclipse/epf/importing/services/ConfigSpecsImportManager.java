@@ -23,6 +23,8 @@ import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.UmaFactory;
 import org.w3c.dom.Element;
@@ -130,6 +132,12 @@ public class ConfigSpecsImportManager {
 								views.add(e);
 							}
 						}
+						
+						setMepFeatureValue(
+								entry.existingConfig,
+								entry.existingConfig.getMethodElementProperty(),
+								config.getMethodElementProperty());
+						
 					} else {
 						// Add the configuration.
 						lib.getPredefinedConfigurations().add(config);
@@ -153,6 +161,7 @@ public class ConfigSpecsImportManager {
 		config.setName(spec.name);
 		config.setBriefDescription(spec.brief_desc);
 		config.setGuid(spec.guid);
+		config.getMethodElementProperty().addAll(spec.mepList);
 
 		List plugins = config.getMethodPluginSelection();
 		List pkgs = config.getMethodPackageSelection();
@@ -187,6 +196,30 @@ public class ConfigSpecsImportManager {
 		}
 
 		return config;
+	}
+	
+	private static void setMepFeatureValue(MethodElement element, List oldValue, List newValue) {
+		int sz = newValue.size();
+		if (oldValue.size() == sz) {
+			if (sz == 0) {
+				return;
+			}
+			boolean same = true;
+			for (int i=0; i < sz; i++) {
+				MethodElementProperty oldMep = (MethodElementProperty) oldValue.get(i);
+				MethodElementProperty newMep = (MethodElementProperty) newValue.get(i);
+				if (! oldMep.getName().equals(newMep.getName()) ||
+					! oldMep.getValue().equals(newMep.getValue())) {
+					same = false;
+					break;
+				}
+			}
+			if (same) {
+				return;
+			}					
+		}
+		oldValue.removeAll(oldValue);
+		oldValue.addAll(newValue);		
 	}
 
 }

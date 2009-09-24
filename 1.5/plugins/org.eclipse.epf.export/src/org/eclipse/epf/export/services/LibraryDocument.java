@@ -24,10 +24,13 @@ import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.export.ExportPlugin;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.UmaPackage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -67,6 +70,8 @@ public class LibraryDocument {
 
 	public static final String libraryFile = "library.xmi"; //$NON-NLS-1$
 
+	public static final String ATTR_name = "name"; //$NON-NLS-1$
+	
 	protected File libFile;
 
 	protected Document document;
@@ -570,6 +575,21 @@ public class LibraryDocument {
 			}
 		}
 
+		// get meps
+		nodes = configNode.getElementsByTagName(TAG_methodElementProperty); //$NON-NLS-1$
+		if (nodes != null) {
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Element node = (Element) nodes.item(i);
+				String name = node.getAttribute(ATTR_name);
+				String value = node.getAttribute(ATTR_value);
+				MethodElementProperty mep = (MethodElementProperty) EcoreUtil
+						.create(UmaPackage.eINSTANCE.getMethodElementProperty());
+				mep.setName(name);
+				mep.setValue(value);
+				spec.mepList.add(mep);
+			}
+		}
+		
 		return spec;
 	}
 	
