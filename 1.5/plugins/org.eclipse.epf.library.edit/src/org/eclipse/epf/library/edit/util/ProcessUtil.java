@@ -3256,7 +3256,7 @@ public final class ProcessUtil {
 	 */
 	public static boolean isRolledUpDescriptor(Object o,
 			AdapterFactory adapterFactory) {
-		if(TngUtil.unwrap(o) instanceof Descriptor) {
+		if(adapterFactory != null && TngUtil.unwrap(o) instanceof Descriptor) {
 			ITreeItemContentProvider adapter = (ITreeItemContentProvider) adapterFactory.adapt(o, ITreeItemContentProvider.class);
 			Object parent = adapter.getParent(o);
 			if(TngUtil.unwrap(parent) instanceof Activity) {
