@@ -144,14 +144,14 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 		}
 		
 		
-		runner = new LibraryLockingOperationRunner();
-		runner.run(new IRunnableWithProgress() {
-			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				String msg = NLS.bind(ImportXMLResources.review_log_files,
-						service.getLogPath());
-					MsgBox.prompt(msg, SWT.OK);
-			}			
-		});		
+//		runner = new LibraryLockingOperationRunner();
+//		runner.run(new IRunnableWithProgress() {
+//			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+//				String msg = NLS.bind(ImportXMLResources.review_log_files,
+//						service.getLogPath());
+//					MsgBox.prompt(msg, SWT.OK);
+//			}			
+//		});		
 		
 		ResourceUtil.refreshResources(LibraryService.getInstance()
 				.getCurrentMethodLibrary(), new NullProgressMonitor());
