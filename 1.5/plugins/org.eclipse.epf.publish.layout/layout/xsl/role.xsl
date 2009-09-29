@@ -126,7 +126,7 @@
 		<div class="sectionContent">
 			<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td class="sectionTableSingleCell" colspan="2" align="center">	
+					<td class="sectionTableSingleCell" colspan="3" align="center">	
 						<xsl:value-of disable-output-escaping="yes" select="diagram"/>
 					</td>
 				</tr>
