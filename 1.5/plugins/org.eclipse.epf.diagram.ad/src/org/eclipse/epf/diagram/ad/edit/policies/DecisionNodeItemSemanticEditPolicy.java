@@ -17,6 +17,9 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.diagram.ad.edit.commands.ControlFlowCreateCommand;
+import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
+import org.eclipse.epf.diagram.core.bridge.NodeAdapter;
+import org.eclipse.epf.diagram.core.util.DiagramCoreValidation;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.commands.UnexecutableCommand;
@@ -114,11 +117,9 @@ public class DecisionNodeItemSemanticEditPolicy extends
 		// allow maximum only one incoming connection to decision node from other activity node
 		//
 		if (req.getTarget() instanceof DecisionNode) {
-			DecisionNode decision = (DecisionNode) req.getTarget();			
-			for (ActivityEdge link : decision.getIncomings()) {
-				if(link.eContainer() != null && link.getSource() != null) {
-					return UnexecutableCommand.INSTANCE;
-				}
+			DecisionNode decision = (DecisionNode) req.getTarget();
+			if(DiagramCoreValidation.hasVisibleSource(decision)) {
+				return UnexecutableCommand.INSTANCE;
 			}
 		}
 		return super.getCreateIncomingComplete(req);

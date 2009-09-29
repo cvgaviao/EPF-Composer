@@ -543,4 +543,42 @@ public class DiagramCoreValidation {
 		}
 		return false;
 	}
+	
+	public static boolean hasVisibleTarget(ActivityNode source) {
+		List<ActivityEdge> list = source.getOutgoings();
+		if (list != null && list.size() >= 1) {
+			// ignore outgoing connections from invisible nodes
+			//
+			for (ActivityEdge edge : list) {
+				ActivityNode node = edge.getTarget();
+				NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(node);
+				if(nodeAdapter != null) {
+					View view = nodeAdapter.getView();
+					if(view != null && view.isVisible()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean hasVisibleSource(ActivityNode target) {
+		List<ActivityEdge> list = target.getIncomings();
+		if (list != null && list.size() >= 1) {
+			// ignore incoming connection from invisible nodes
+			//
+			for (ActivityEdge conn : list) {
+				ActivityNode node = conn.getSource();
+				NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(node);
+				if(nodeAdapter != null) {
+					View view = nodeAdapter.getView();
+					if(view != null && view.isVisible()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 }

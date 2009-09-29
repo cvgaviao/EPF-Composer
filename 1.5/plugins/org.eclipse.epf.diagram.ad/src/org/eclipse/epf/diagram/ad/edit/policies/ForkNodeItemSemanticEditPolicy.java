@@ -11,12 +11,9 @@
  */
 package org.eclipse.epf.diagram.ad.edit.policies;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.diagram.ad.edit.commands.ControlFlowCreateCommand;
-import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
-import org.eclipse.epf.diagram.core.bridge.NodeAdapter;
+import org.eclipse.epf.diagram.core.util.DiagramCoreValidation;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gef.commands.UnexecutableCommand;
@@ -25,7 +22,6 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ForkNode;
 import org.eclipse.uml2.uml.StructuredActivityNode;
@@ -140,20 +136,8 @@ public class ForkNodeItemSemanticEditPolicy extends
 	protected Command getCreateIncomingComplete(CreateRelationshipRequest req) {
 		if (req.getTarget() instanceof ForkNode) {
 			ForkNode fork = (ForkNode) req.getTarget();
-			List<ActivityEdge> list = fork.getIncomings();
-			if (list != null && list.size() >= 1) {
-				// ignore incoming connection from invisible nodes
-				//
-				for (ActivityEdge conn : list) {
-					ActivityNode node = conn.getSource();
-					NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(node);
-					if(nodeAdapter != null) {
-						View view = nodeAdapter.getView();
-						if(view != null && view.isVisible()) {
-							return UnexecutableCommand.INSTANCE;
-						}
-					}
-				}
+			if(DiagramCoreValidation.hasVisibleSource(fork)) {
+				return UnexecutableCommand.INSTANCE;
 			}
 		}
 		return super.getCreateIncomingComplete(req);

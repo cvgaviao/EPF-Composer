@@ -11,33 +11,18 @@
  */
 package org.eclipse.epf.diagram.ad.edit.policies;
 
-import java.util.List;
-
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.epf.diagram.ad.edit.commands.ControlFlowCreateCommand;
+import org.eclipse.epf.diagram.core.util.DiagramCoreValidation;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
+import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gmf.runtime.emf.type.core.commands.DestroyElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.epf.diagram.ad.edit.commands.ControlFlowCreateCommand;
-import org.eclipse.epf.diagram.ad.edit.commands.ControlFlowReorientCommand;
-import org.eclipse.epf.diagram.ad.edit.parts.ControlFlowEditPart;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.epf.diagram.ad.providers.UMLElementTypes;
-import org.eclipse.epf.diagram.core.bridge.BridgeHelper;
-import org.eclipse.epf.diagram.core.bridge.NodeAdapter;
-
-import org.eclipse.gef.commands.UnexecutableCommand;
-
-import org.eclipse.gmf.runtime.emf.type.core.commands.CreateRelationshipCommand;
-
-import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
-import org.eclipse.uml2.uml.ControlFlow;
 import org.eclipse.uml2.uml.JoinNode;
 import org.eclipse.uml2.uml.StructuredActivityNode;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -151,20 +136,8 @@ public class JoinNodeItemSemanticEditPolicy extends
 		// Validation Join Node should allow only one outgoing connection.
 		if (req.getSource() instanceof JoinNode) {
 			JoinNode join = (JoinNode) req.getSource();
-			List<ActivityEdge> list = join.getOutgoings();
-			if (list != null && list.size() >= 1) {
-				// ignore outgoing connections from invisible nodes
-				//
-				for (ActivityEdge edge : list) {
-					ActivityNode node = edge.getTarget();
-					NodeAdapter nodeAdapter = BridgeHelper.getNodeAdapter(node);
-					if(nodeAdapter != null) {
-						View view = nodeAdapter.getView();
-						if(view != null && view.isVisible()) {
-							return UnexecutableCommand.INSTANCE;
-						}
-					}
-				}
+			if(DiagramCoreValidation.hasVisibleTarget(join)) {
+				return UnexecutableCommand.INSTANCE;
 			}
 		}
 		return super.getCreateOutgoing(req);
