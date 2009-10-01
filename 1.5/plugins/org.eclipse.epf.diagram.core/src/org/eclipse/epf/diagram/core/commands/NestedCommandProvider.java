@@ -56,6 +56,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -391,8 +392,11 @@ public class NestedCommandProvider implements INestedCommandProvider {
 	 * @param process
 	 */
 	private void closeDiagramEditors(Object e) {
-		IWorkbenchPage workbenchPage = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if(activeWorkbenchWindow == null) {
+			return;
+		}
+		IWorkbenchPage workbenchPage = activeWorkbenchWindow.getActivePage();
 		IEditorReference[] editorReferences = workbenchPage
 				.getEditorReferences();
 		ArrayList<IEditorReference> editorsToClose = new ArrayList<IEditorReference>();

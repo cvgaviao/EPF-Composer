@@ -664,8 +664,16 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 		Map<String, String> oldGuidToNewGuidMap = new HashMap<String, String>();
 		for (Map.Entry<?, ?> entry : objectToCopyMap.entrySet()) {
 			if(entry.getKey() instanceof WorkBreakdownElement) {
-				oldGuidToNewGuidMap.put(((WorkBreakdownElement) entry.getKey()).getGuid(),
-						((WorkBreakdownElement) entry.getValue()).getGuid());
+				WorkBreakdownElement copy = ((WorkBreakdownElement) entry
+						.getValue());
+				if (copy != null) {
+					WorkBreakdownElement orig = ((WorkBreakdownElement) entry
+							.getKey());
+					if (copy == null) {
+						System.out.println();
+					}
+					oldGuidToNewGuidMap.put(orig.getGuid(), copy.getGuid());
+				}
 			}
 		}
 		for (ProcessElement element : pkgCopy.getProcessElements()) {
