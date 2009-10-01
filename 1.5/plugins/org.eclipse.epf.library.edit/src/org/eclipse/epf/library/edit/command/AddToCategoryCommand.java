@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.Misc;
@@ -61,7 +62,7 @@ public class AddToCategoryCommand extends AbstractCommand implements
 
 	private ContentPackage categoryPkg;
 
-	private Collection modifiedResources;
+	private Collection<Resource> modifiedResources;
 
 	private Object oldOppositeFeatureValue;
 	
@@ -95,8 +96,8 @@ public class AddToCategoryCommand extends AbstractCommand implements
 	public String getLabel() {
 		return "Add To Category"; //$NON-NLS-1$
 	}
-
-	public void execute() {
+	
+	private void prepareCategory() {
 		// create contributor for category if it is not in the same plugin with
 		// the element
 		//
@@ -128,8 +129,12 @@ public class AddToCategoryCommand extends AbstractCommand implements
 		} else {
 			usedCategory = category;
 		}
+	}
 
-		modifiedResources = new HashSet();
+	public void execute() {
+		prepareCategory();
+
+		modifiedResources = new HashSet<Resource>();
 
 		redo();
 	}
@@ -237,11 +242,11 @@ public class AddToCategoryCommand extends AbstractCommand implements
 
 	}
 
-	public Collection getAffectedObjects() {
+	public Collection<?> getAffectedObjects() {
 		return Collections.singletonList(usedCategory);
 	}
 
-	public Collection getModifiedResources() {
+	public Collection<Resource> getModifiedResources() {
 		
 		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=146662
 		// Below adding category's resource to modifiedResources is needed, 
@@ -249,14 +254,22 @@ public class AddToCategoryCommand extends AbstractCommand implements
 		// getModifiedResources() called before executing actual execute() in few cases.
 		// Useful in special cases like if resource is in version control.
 		//
-		if(category != null && category.eResource() != null
-				&& modifiedResources == null){
-			modifiedResources = new HashSet();
-			modifiedResources.add(category.eResource());
+		if(modifiedResources == null) {
+			modifiedResources = new HashSet<Resource>();
+			prepareCategory();
+			if(usedCategory != null && usedCategory.eResource() != null) {
+				modifiedResources.add(usedCategory.eResource());
+			}
+			if(createNewContributor && usedCategory == null && element != null) {
+				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+				if(plugin != null && plugin.eResource() != null) {
+					modifiedResources.add(plugin.eResource());
+				}
+			}
 		}
 		
 		if (modifiedResources == null) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 		return modifiedResources;
 	}

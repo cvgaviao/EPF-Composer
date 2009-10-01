@@ -23,6 +23,6 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public interface IResourceAwareCommand extends Command {
 
-	Collection<Resource> getModifiedResources();
+	Collection<? extends Resource> getModifiedResources();
 
 }
