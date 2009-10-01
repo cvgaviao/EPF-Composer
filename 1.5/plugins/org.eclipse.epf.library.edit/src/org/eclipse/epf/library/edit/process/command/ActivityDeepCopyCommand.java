@@ -669,9 +669,6 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 				if (copy != null) {
 					WorkBreakdownElement orig = ((WorkBreakdownElement) entry
 							.getKey());
-					if (copy == null) {
-						System.out.println();
-					}
 					oldGuidToNewGuidMap.put(orig.getGuid(), copy.getGuid());
 				}
 			}
