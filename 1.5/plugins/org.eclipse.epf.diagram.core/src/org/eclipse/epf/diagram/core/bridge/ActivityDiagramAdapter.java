@@ -26,10 +26,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.epf.diagram.model.util.IAdapterFactoryFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -51,6 +53,8 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
+import org.eclipse.gmf.runtime.notation.Edge;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ActivityParameterNode;
@@ -513,32 +517,61 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 		return selectedNodes;
 	}
 	
-	private List associateControlNodes(Collection methodElements) {
-		List ctrlNodes = new ArrayList();
-		for (Iterator iter = getDiagram().getNodes().iterator(); iter.hasNext();) {
+	@Override
+	protected void updateView(Collection<?> selectedNodes)
+			throws InterruptedException, RollbackException {
+		super.updateView(selectedNodes);
+		hideUnusedSyncBars();
+	}
+	
+	protected void hideUnusedSyncBars() {
+		View diagram = getView();
+		for (Object child : diagram.getVisibleChildren()) {
+			View childView = (View) child;
+			// hide a sync bar that is not connected to any visible target node
+			// or source node, which is associated with a work breakdown element
+			//
+			if(childView.getElement() instanceof ControlNode && 
+					BridgeHelper.isSynchBar((ActivityNode) childView.getElement()) &&
+					!isConnectedToVisibleWBENode(childView)) {
+				childView.setVisible(false);
+			}
+		}
+	}
+	
+	private static boolean isConnectedToVisibleWBENode(View view) {
+		// check source nodes
+		//
+		for(Object object : view.getTargetEdges()) {
+			View connectedView = ((Edge) object).getSource();
+			if(connectedView != null && connectedView.isVisible() && 
+					connectedView.getElement() instanceof ActivityNode &&
+					BridgeHelper.getMethodElement(connectedView) instanceof WorkBreakdownElement) {
+				return true;
+			}
+		}
+		
+		// check target nodes
+		//
+		for(Object object : view.getSourceEdges()) {
+			View connectedView = ((Edge) object).getTarget();
+			if(connectedView != null && connectedView.isVisible() && 
+					connectedView.getElement() instanceof ActivityNode &&
+					BridgeHelper.getMethodElement(connectedView) instanceof WorkBreakdownElement) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private List<? extends ControlNode> associateControlNodes(Collection<?> methodElements) {
+		List<ControlNode> ctrlNodes = new ArrayList<ControlNode>();
+		for (Iterator<?> iter = getDiagram().getNodes().iterator(); iter.hasNext();) {
 			ActivityNode node = (ActivityNode) iter.next();
 			if(node instanceof ControlNode) {
-//				// select this control node for the diagram only if it has a target node or source node,
-//				// direct or indirect, that is associated with a method element in the specified
-//				// method element collection
-//				//
-//				Collection actNodes = new ArrayList();
-//				BridgeHelper.getTargetNodes(actNodes, node, WorkBreakdownElement.class);
-//				BridgeHelper.getSourceNodes(actNodes, node, WorkBreakdownElement.class);
-//				if(!actNodes.isEmpty()) {
-//					for (Iterator iterator = actNodes.iterator(); iterator
-//							.hasNext();) {
-//						ActivityNode elementNode = (ActivityNode) iterator.next();
-//						if(methodElements.contains(BridgeHelper.getMethodElement(elementNode))) {
-//							if(addNodeAdapterTo(node) != null) {
-//								ctrlNodes.add(node);
-//							}
-//						}
-//					}
-//				}
-				
 				if(addNodeAdapterTo(node) != null) {
-					ctrlNodes.add(node);
+					ctrlNodes.add((ControlNode) node);
 				}
 			}
 		}

@@ -52,6 +52,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ActivityPartition;
+import org.eclipse.uml2.uml.ControlNode;
 import org.eclipse.uml2.uml.UMLPackage;
 
 /**
@@ -460,7 +461,7 @@ public class DiagramAdapter extends NodeAdapter {
 		this.suppression = suppression;
 	}	
 	
-	private void updateView(Collection<?> selectedNodes) throws InterruptedException, RollbackException {
+	protected void updateView(Collection<?> selectedNodes) throws InterruptedException, RollbackException {
 		updateView(getView(), selectedNodes);
 	}
 	
@@ -525,7 +526,7 @@ public class DiagramAdapter extends NodeAdapter {
 		}	
 	}
 	
-	private void updateEdges(Collection selectedNodes) throws InterruptedException, RollbackException {
+	protected void updateEdges(Collection selectedNodes) throws InterruptedException, RollbackException {
 		for (Iterator iter = getView().getChildren().iterator(); iter.hasNext();) {
 			View node = (View) iter.next();
 			if(selectedNodes.contains(node.getElement())) {
