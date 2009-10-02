@@ -1143,11 +1143,18 @@ public class FileUtil {
 
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = (ZipEntry) entries.nextElement();
+				
+				File tgtFile = new File(tgtDir, entry.getName());
 
-				if (entry.isDirectory()) {
-					(new File(tgtDir, entry.getName())).mkdir();
+				if (entry.isDirectory() && ! tgtFile.exists()) {
+					tgtFile.mkdirs();
+					
 				} else {
-
+					File parentFolder = tgtFile.getParentFile();
+					if (! parentFolder.exists()) {
+						parentFolder.mkdirs();
+					}
+										
 					copyInputStream(zipFile.getInputStream(entry),
 							new BufferedOutputStream(new FileOutputStream(
 									new File(tgtDir, entry.getName()))));
