@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.common.utils;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,9 +32,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.eclipse.epf.common.CommonPlugin;
 
@@ -1114,4 +1118,59 @@ public class FileUtil {
 	public static void setCopiedFileMap(Map<File, File> copiedFileMap) {
 		FileUtil.copiedFileMap = copiedFileMap;
 	}
+	
+	
+	/**
+	 * Unzips the contents of a zip file to a directory
+	 * 
+	 * @param zipfile
+	 *            source zip file
+	 * @param tgtDir
+	 *            target directory
+	 */
+	public static boolean unzip(File srcZipFile, File tgtDir) {
+		if (! srcZipFile.exists() || ! tgtDir.exists()) {
+			return false;
+		}
+
+		if (! tgtDir.isDirectory()) {
+			return false;
+		}
+
+		try {
+			ZipFile zipFile = new ZipFile(srcZipFile);
+			Enumeration entries = zipFile.entries();
+
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = (ZipEntry) entries.nextElement();
+
+				if (entry.isDirectory()) {
+					(new File(tgtDir, entry.getName())).mkdir();
+				} else {
+
+					copyInputStream(zipFile.getInputStream(entry),
+							new BufferedOutputStream(new FileOutputStream(
+									new File(tgtDir, entry.getName()))));
+				}
+			}
+
+			zipFile.close();
+		} catch (IOException ioe) {
+			return false;
+		}
+		return false;
+	}
+
+	private static final void copyInputStream(InputStream in, OutputStream out)
+			throws IOException {
+		byte[] buffer = new byte[1024];
+		int len;
+
+		while ((len = in.read(buffer)) >= 0)
+			out.write(buffer, 0, len);
+
+		in.close();
+		out.close();
+	}
+	
 }
