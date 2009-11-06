@@ -8,4 +8,5 @@ Bundle-Localization: plugin
 Require-Bundle: org.junit,
  org.eclipse.epf.common.tests,
  org.eclipse.epf.library.tests,
- org.eclipse.epf.authoring.ui
+ org.eclipse.epf.diagram.tests,
+ org.eclipse.epf.library.ui

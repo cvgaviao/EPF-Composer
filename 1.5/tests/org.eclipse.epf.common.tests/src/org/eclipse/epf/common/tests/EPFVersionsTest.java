@@ -17,7 +17,7 @@ public class EPFVersionsTest extends TestCase {
 
 	public void testGetCurrentVersion() {
 		EPFVersions versions = (EPFVersions)VersionUtil.getVersions(EPFVersions.TOOL_ID);
-		assertEquals(new EPFVersion("1.2","1.0.4.1","1.0.1"), versions.getCurrentVersion());
+		assertEquals(new EPFVersion("1.5","1.0.5.0","1.0.2"), versions.getCurrentVersion());
 	}
 
 	public void testGetVersion() {
@@ -31,6 +31,7 @@ public class EPFVersionsTest extends TestCase {
 		expectedList.add(new EPFVersion("1.0","1.0.3.0","1.0.0"));
 		expectedList.add(new EPFVersion("1.1","1.0.4.0","1.0.0"));
 		expectedList.add(new EPFVersion("1.2","1.0.4.1","1.0.1"));
+		expectedList.add(new EPFVersion("1.5","1.0.5.0","1.0.2"));
 		assertEquals(expectedList, versions.getAllVersions());
 	}
 

@@ -15,37 +15,37 @@ public class EPFVersionTest extends TestCase {
 
 	public void testGetToolVersion() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertEquals(new Version("1.2"),version.getToolVersion());
+		assertEquals(new Version("1.5"),version.getToolVersion());
 	}
 
 	public void testGetLibraryVersion() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertEquals(new Version("1.0.4.1"),version.getLibraryVersion());
+		assertEquals(new Version("1.0.5.0"),version.getLibraryVersion());
 	}
 
 	public void testGetXMLSchemaVersion() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertEquals(new Version("1.0.1"),version.getXMLSchemaVersion());
+		assertEquals(new Version("1.0.2"),version.getXMLSchemaVersion());
 	}
 
 	public void testCompareToolVersionTo() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertTrue(version.compareToolVersionTo(new Version("1.2")) == 0);
-		assertTrue(version.compareToolVersionTo(new Version("1.3")) < 0);
+		assertTrue(version.compareToolVersionTo(new Version("1.5")) == 0);
+		assertTrue(version.compareToolVersionTo(new Version("1.6")) < 0);
 		assertTrue(version.compareToolVersionTo(new Version("0.9")) > 0);
 	}
 
 	public void testCompareLibraryVersionTo() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertTrue(version.compareLibraryVersionTo(new Version("1.0.4.1")) == 0);
-		assertTrue(version.compareLibraryVersionTo(new Version("1.0.4.2")) < 0);
+		assertTrue(version.compareLibraryVersionTo(new Version("1.0.5.0")) == 0);
+		assertTrue(version.compareLibraryVersionTo(new Version("1.0.6.2")) < 0);
 		assertTrue(version.compareLibraryVersionTo(new Version("1.0.2.0")) > 0);
 	}
 
 	public void testCompareXMLSchemaVersionTo() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertTrue(version.compareXMLSchemaVersionTo(new Version("1.0.1")) == 0);
-		assertTrue(version.compareXMLSchemaVersionTo(new Version("1.0.2")) < 0);
+		assertTrue(version.compareXMLSchemaVersionTo(new Version("1.0.2")) == 0);
+		assertTrue(version.compareXMLSchemaVersionTo(new Version("1.0.3")) < 0);
 		assertTrue(version.compareXMLSchemaVersionTo(new Version("0.9.9")) > 0);
 	}
 

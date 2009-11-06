@@ -14,6 +14,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.eclipse.epf.common.tests.CommonTests;
+import org.eclipse.epf.diagram.tests.DiagramTests;
 import org.eclipse.epf.library.tests.LibraryTests;
 
 /**
@@ -28,6 +29,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite(AllTests.class.getPackage().getName());
 		//$JUnit-BEGIN$		
 		suite.addTest(CommonTests.suite());
+		suite.addTest(DiagramTests.suite());
 		suite.addTest(LibraryTests.suite());		
 		//$JUnit-END$		
 		return suite;
