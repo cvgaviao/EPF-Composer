@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:MethodConfiguration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="_8fd04E20EduDA6DnzSycKQ" name="ConfigA" guid="_8fd04E20EduDA6DnzSycKQ">
+<org.eclipse.epf.uma:MethodConfiguration xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf"
+    epf:version="1.5.0" xmi:id="_8fd04E20EduDA6DnzSycKQ"
+    name="ConfigA" guid="_8fd04E20EduDA6DnzSycKQ">
   <methodPluginSelection href="uma://_5bS5QE20EduDA6DnzSycKQ#_5bS5QE20EduDA6DnzSycKQ"/>
   <methodPackageSelection xsi:type="org.eclipse.epf.uma:ContentPackage" href="uma://_5bS5QE20EduDA6DnzSycKQ#_5bS5TE20EduDA6DnzSycKQ"/>
   <methodPackageSelection xsi:type="org.eclipse.epf.uma:ContentPackage" href="uma://_5bS5QE20EduDA6DnzSycKQ#_5bS5QU20EduDA6DnzSycKQ"/>

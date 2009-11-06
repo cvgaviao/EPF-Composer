@@ -438,7 +438,8 @@ public class TestCommandMgr implements TestTracer {
 			try {
 				currentBaseLib = XMILibraryUtil.openMethodLibrary(libPath);
 				trace("Base lib \"" + name + "\" is loaded.");
-			} catch (Exception e) {				
+			} catch (Exception e) {			
+				trace(e.getMessage());
 			}
 		}
 		return currentBaseLib;

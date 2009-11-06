@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:RoleDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-YumdsUOHFVhGkewwICNdgw" name="new_role,_8ZN6AEDFEdqO9M3fukYA_A" guid="-YumdsUOHFVhGkewwICNdgw" changeDate="2005-10-19T10:29:59.453-0700">
+<org.eclipse.epf.uma:RoleDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-YumdsUOHFVhGkewwICNdgw"
+    name="new_role,_8ZN6AEDFEdqO9M3fukYA_A" guid="-YumdsUOHFVhGkewwICNdgw" changeDate="2005-10-20T01:29:59.453+0800">
   <mainDescription>main: Role A3</mainDescription>
   <keyConsiderations>key: Role A3</keyConsiderations>
   <skills>skills: Role A3</skills>

@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-d-5QRj7qJmzn62CE-_E6UA" name="term_definition_B1,_EpsjMB8sEdqQvOjX8doCCw" guid="-d-5QRj7qJmzn62CE-_E6UA" changeDate="2005-09-06T16:23:55.484-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-d-5QRj7qJmzn62CE-_E6UA"
+    name="term_definition_B1,_EpsjMB8sEdqQvOjX8doCCw" guid="-d-5QRj7qJmzn62CE-_E6UA"
+    changeDate="2005-09-07T07:23:55.484+0800">
   <mainDescription>Term Definition B1 content</mainDescription>
 </org.eclipse.epf.uma:ContentDescription>

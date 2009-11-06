@@ -75,7 +75,7 @@
 	
 	<CompareToGoldenFile  disable="false"
 		goldenFileName="newActivities.xml" 
-		diffCount="0" 
+		diffCount="1" 
 		elementCount="34"
 		>
 	</CompareToGoldenFile>

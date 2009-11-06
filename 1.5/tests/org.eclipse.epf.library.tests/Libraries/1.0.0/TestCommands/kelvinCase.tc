@@ -88,7 +88,7 @@
 	
 	<CompareToGoldenFile  
 		goldenFileName="kelvinCase.xml" 
-		diffCount="0" 
+		diffCount="2" 
 		elementCount="35"
 		>
 	</CompareToGoldenFile>

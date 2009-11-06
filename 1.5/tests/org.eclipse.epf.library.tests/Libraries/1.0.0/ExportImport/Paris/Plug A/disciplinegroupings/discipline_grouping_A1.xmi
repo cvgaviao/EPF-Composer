@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-muAkXDJfo_KbRF4KObn9OQ" name="discipline_grouping_A1,_CCVjcA-WEdqL2O1PJV9cZA" guid="-muAkXDJfo_KbRF4KObn9OQ" changeDate="2005-08-18T17:42:37.781-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-muAkXDJfo_KbRF4KObn9OQ"
+    name="discipline_grouping_A1,_CCVjcA-WEdqL2O1PJV9cZA" guid="-muAkXDJfo_KbRF4KObn9OQ"
+    changeDate="2005-08-19T08:42:37.781+0800">
   <mainDescription>Discipline Grouping A1 main</mainDescription>
   <keyConsiderations>Discipline Grouping A1 key</keyConsiderations>
 </org.eclipse.epf.uma:ContentDescription>

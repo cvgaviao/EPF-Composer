@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ArtifactDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-Mjeeed_p_MQygrW7DBkArg" name="artifact_B2,__yG7cB8mEdq1Oo-DowdpBg" guid="-Mjeeed_p_MQygrW7DBkArg" changeDate="2005-09-06T15:39:04.969-0700">
+<org.eclipse.epf.uma:ArtifactDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-Mjeeed_p_MQygrW7DBkArg"
+    name="artifact_B2,__yG7cB8mEdq1Oo-DowdpBg" guid="-Mjeeed_p_MQygrW7DBkArg" changeDate="2005-09-07T06:39:04.969+0800">
   <mainDescription>Artifact B2 main</mainDescription>
-  <keyConsiderations>Artifact B2 key</keyConsiderations>
   <externalId>Artifact B2 unique ID</externalId>
+  <keyConsiderations>Artifact B2 key</keyConsiderations>
   <purpose>Artifact B2 porpoise</purpose>
   <impactOfNotHaving>Artifact B2 impact</impactOfNotHaving>
   <reasonsForNotNeeding>Artifact B2 reason</reasonsForNotNeeding>

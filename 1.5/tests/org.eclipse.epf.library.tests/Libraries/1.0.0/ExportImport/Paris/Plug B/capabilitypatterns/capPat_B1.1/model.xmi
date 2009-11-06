@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0">
-  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_ITCSUB81EdqgBITuICLJEw" guid="_ITCSUB81EdqgBITuICLJEw">
-    <resourceDescriptors xmi:id="_ITCSUR81EdqgBITuICLJEw" id="-oEuOdeWJctGfTNYUz82Zng" uri="content.xmi"/>
+<xmi:XMI xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_ITCSUB81EdqgBITuICLJEw"
+      guid="_ITCSUB81EdqgBITuICLJEw">
+    <resourceDescriptors xmi:id="_ITCSUR81EdqgBITuICLJEw" id="-oEuOdeWJctGfTNYUz82Zng"
+        uri="content.xmi"/>
   </org.eclipse.epf.uma.resourcemanager:ResourceManager>
-  <org.eclipse.epf.uma:ProcessComponent xmi:id="_IPdZ4B81EdqgBITuICLJEw" name="capPat_B1.1" guid="_IPdZ4B81EdqgBITuICLJEw">
-    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_IPdZ4R81EdqgBITuICLJEw" name="capPat_B1.1" guid="_IPdZ4R81EdqgBITuICLJEw" presentationName="capPat_B1.1">
+  <org.eclipse.epf.uma:ProcessComponent xmi:id="_IPdZ4B81EdqgBITuICLJEw" name="capPat_B1.1"
+      guid="_IPdZ4B81EdqgBITuICLJEw">
+    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_IPdZ4R81EdqgBITuICLJEw"
+        name="capPat_B1.1" guid="_IPdZ4R81EdqgBITuICLJEw" presentationName="capPat_B1.1">
       <presentation xmi:id="-oEuOdeWJctGfTNYUz82Zng" href="uma://-oEuOdeWJctGfTNYUz82Zng#-oEuOdeWJctGfTNYUz82Zng"/>
       <defaultContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>
       <validContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0">
-  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_nq7goU5REduOopq5TevYaw" guid="_nq7goU5REduOopq5TevYaw">
-    <resourceDescriptors xmi:id="_nq7gok5REduOopq5TevYaw" id="-t72JwbqvK9u4stj31bqCog" uri="content.xmi"/>
+<xmi:XMI xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_nq7goU5REduOopq5TevYaw"
+      guid="_nq7goU5REduOopq5TevYaw">
+    <resourceDescriptors xmi:id="_nq7gok5REduOopq5TevYaw" id="-t72JwbqvK9u4stj31bqCog"
+        uri="content.xmi"/>
   </org.eclipse.epf.uma.resourcemanager:ResourceManager>
-  <org.eclipse.epf.uma:ProcessComponent xmi:id="_CeL9ME5REduGkqWGzwpn7Q" name="cp" guid="_CeL9ME5REduGkqWGzwpn7Q">
-    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_CeL9MU5REduGkqWGzwpn7Q" name="cp" guid="_CeL9MU5REduGkqWGzwpn7Q" presentationName="cp">
+  <org.eclipse.epf.uma:ProcessComponent xmi:id="_CeL9ME5REduGkqWGzwpn7Q" name="cp"
+      guid="_CeL9ME5REduGkqWGzwpn7Q">
+    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_CeL9MU5REduGkqWGzwpn7Q"
+        name="cp" guid="_CeL9MU5REduGkqWGzwpn7Q" presentationName="cp">
       <presentation xmi:id="-t72JwbqvK9u4stj31bqCog" href="uma://-t72JwbqvK9u4stj31bqCog#-t72JwbqvK9u4stj31bqCog"/>
       <defaultContext href="uma://_8ygz0E5QEduGkqWGzwpn7Q#_AgBnYE5REduGkqWGzwpn7Q"/>
       <validContext href="uma://_8ygz0E5QEduGkqWGzwpn7Q#_AgBnYE5REduGkqWGzwpn7Q"/>

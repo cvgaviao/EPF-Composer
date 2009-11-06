@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:WorkProductDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-ybTPuVO4RGwn_wQlvAWaaw" name="outcome_B1,_cXXrsB8nEdq1Oo-DowdpBg" guid="-ybTPuVO4RGwn_wQlvAWaaw" changeDate="2005-09-06T15:47:38.109-0700">
+<org.eclipse.epf.uma:WorkProductDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-ybTPuVO4RGwn_wQlvAWaaw"
+    name="outcome_B1,_cXXrsB8nEdq1Oo-DowdpBg" guid="-ybTPuVO4RGwn_wQlvAWaaw" changeDate="2005-09-07T06:47:38.109+0800">
   <mainDescription>Outcome B1 main</mainDescription>
-  <keyConsiderations>Outcome B1 key</keyConsiderations>
   <externalId>Outcome B1 unique ID</externalId>
+  <keyConsiderations>Outcome B1 key</keyConsiderations>
   <purpose>Outcome B1 porpoise</purpose>
   <impactOfNotHaving>Outcome B1 impact</impactOfNotHaving>
   <reasonsForNotNeeding>Outcome B1 reason</reasonsForNotNeeding>

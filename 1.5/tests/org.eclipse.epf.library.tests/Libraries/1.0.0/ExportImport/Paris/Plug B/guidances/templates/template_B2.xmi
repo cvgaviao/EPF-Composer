@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:GuidanceDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-TGijfkKal48g06qtjHVHJg" name="template_B2,_D-x98B8sEdqQvOjX8doCCw" guid="-TGijfkKal48g06qtjHVHJg" changeDate="2005-09-06T16:24:54.641-0700">
+<org.eclipse.epf.uma:GuidanceDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-TGijfkKal48g06qtjHVHJg"
+    name="template_B2,_D-x98B8sEdqQvOjX8doCCw" guid="-TGijfkKal48g06qtjHVHJg" changeDate="2005-09-07T07:24:54.641+0800">
   <mainDescription>Template B2 content</mainDescription>
   <attachments>resources/Template for Paste Test Cases.doc</attachments>
 </org.eclipse.epf.uma:GuidanceDescription>

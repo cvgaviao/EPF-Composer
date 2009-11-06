@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ProcessDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-X83K1o9bsplNe1_a_KU2FQ" name="capPat_B1,_E6EycR81EdqgBITuICLJEw" guid="-X83K1o9bsplNe1_a_KU2FQ"/>
+<org.eclipse.epf.uma:ProcessDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-X83K1o9bsplNe1_a_KU2FQ"
+    name="capPat_B1,_E6EycR81EdqgBITuICLJEw" guid="-X83K1o9bsplNe1_a_KU2FQ"/>

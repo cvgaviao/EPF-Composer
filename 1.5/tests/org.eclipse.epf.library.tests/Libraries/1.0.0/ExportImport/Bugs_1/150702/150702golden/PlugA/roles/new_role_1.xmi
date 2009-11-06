@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:RoleDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-BQvAft8KRnOuK32NItZG4Q" name="new_role_1,_BIYgwE21EduDA6DnzSycKQ" guid="-BQvAft8KRnOuK32NItZG4Q" authors="1" changeDate="2006-09-26T16:16:41.580-0700" changeDescription="1">
+<org.eclipse.epf.uma:RoleDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-BQvAft8KRnOuK32NItZG4Q"
+    name="new_role_1,_BIYgwE21EduDA6DnzSycKQ" guid="-BQvAft8KRnOuK32NItZG4Q" authors="1"
+    changeDate="2006-09-27T07:16:41.580+0800" changeDescription="1">
   <mainDescription>1</mainDescription>
   <skills>1</skills>
   <assignmentApproaches>1</assignmentApproaches>

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-xoDZaqr7J-wf2lB7rSjSZw" name="roadmap_A1,_Zk39gA-SEdqL2O1PJV9cZA" guid="-xoDZaqr7J-wf2lB7rSjSZw" changeDate="2005-08-18T14:30:04.047-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-xoDZaqr7J-wf2lB7rSjSZw"
+    name="roadmap_A1,_Zk39gA-SEdqL2O1PJV9cZA" guid="-xoDZaqr7J-wf2lB7rSjSZw" changeDate="2005-08-19T05:30:04.047+0800">
   <mainDescription>Roadmap A1 content</mainDescription>
 </org.eclipse.epf.uma:ContentDescription>

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ArtifactDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-UFRoeAKHdXX2SSB1KUXtYA" name="artifact_A2.1,_HEMtEA-REdqL2O1PJV9cZA" guid="-UFRoeAKHdXX2SSB1KUXtYA" changeDate="2005-08-17T19:44:07.781-0700">
+<org.eclipse.epf.uma:ArtifactDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-UFRoeAKHdXX2SSB1KUXtYA"
+    name="artifact_A2.1,_HEMtEA-REdqL2O1PJV9cZA" guid="-UFRoeAKHdXX2SSB1KUXtYA" changeDate="2005-08-18T10:44:07.781+0800">
   <mainDescription>Artifact A2.1 main</mainDescription>
-  <keyConsiderations>Artifact A2.1 key</keyConsiderations>
   <externalId>Artifact A2.1 unique</externalId>
+  <keyConsiderations>Artifact A2.1 key</keyConsiderations>
   <purpose>Artifact A2.1 purpose</purpose>
   <impactOfNotHaving>Artifact A2.1 impact</impactOfNotHaving>
   <reasonsForNotNeeding>Artifact A2.1 reason</reasonsForNotNeeding>

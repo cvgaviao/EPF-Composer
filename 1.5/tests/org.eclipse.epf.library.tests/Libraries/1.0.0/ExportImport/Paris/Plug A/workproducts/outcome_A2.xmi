@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:WorkProductDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-4GbAWGb87Alz-Gz_G_9p1g" name="outcome_A2,_KvLxEA-REdqL2O1PJV9cZA" guid="-4GbAWGb87Alz-Gz_G_9p1g" changeDate="2005-08-18T14:30:21.281-0700">
+<org.eclipse.epf.uma:WorkProductDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-4GbAWGb87Alz-Gz_G_9p1g"
+    name="outcome_A2,_KvLxEA-REdqL2O1PJV9cZA" guid="-4GbAWGb87Alz-Gz_G_9p1g" changeDate="2005-08-19T05:30:21.281+0800">
   <mainDescription>Outcome A1 main</mainDescription>
-  <keyConsiderations>Outcome A1 key</keyConsiderations>
   <externalId>Outcome A1 unique</externalId>
+  <keyConsiderations>Outcome A1 key</keyConsiderations>
   <purpose>Outcome A1 porpoise</purpose>
   <impactOfNotHaving>Outcome A1 impact</impactOfNotHaving>
   <reasonsForNotNeeding>Outcome A1 reason</reasonsForNotNeeding>

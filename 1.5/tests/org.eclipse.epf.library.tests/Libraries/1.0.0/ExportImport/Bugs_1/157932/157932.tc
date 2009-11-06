@@ -18,7 +18,7 @@
 	
 	<CompareToLibrary 
 		goldenLibFolderName="157932golden" 
-		diffCount="0" 
+		diffCount="2" 
 		elementCount="33"
 		useNameAsId="true">		
 	</CompareToLibrary>

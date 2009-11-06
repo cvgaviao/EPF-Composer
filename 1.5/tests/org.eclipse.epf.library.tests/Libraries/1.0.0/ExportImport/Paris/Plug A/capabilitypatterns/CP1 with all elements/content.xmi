@@ -1,965 +1,997 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0">
-  <org.eclipse.epf.uma:ProcessDescription xmi:id="-E-d4Jcu297rxUq8lte8qnw" name="CP1 with all elements,_4sCtsTzgEdq5ysFONr1BGQ" guid="-E-d4Jcu297rxUq8lte8qnw">
-    <mainDescription>&lt;p&gt;
+<xmi:XMI xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
+  <org.eclipse.epf.uma:ProcessDescription xmi:id="-E-d4Jcu297rxUq8lte8qnw" name="CP1 with all elements,_4sCtsTzgEdq5ysFONr1BGQ"
+      guid="-E-d4Jcu297rxUq8lte8qnw">
+    <mainDescription>&lt;p>
     The subcategories of process are delivery process and capability pattern.&amp;nbsp; A delivery process defines a complete
     or end-to-end process.&amp;nbsp; A capability pattern is a process fragment used to compose a delivery process.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     &amp;nbsp;
-&lt;/p&gt;</mainDescription>
+&lt;/p></mainDescription>
+    <externalId>EXternal ID:CP1 with all elements</externalId>
     <keyConsiderations>This capability pattern can be used to quickly construct an Inception phase iteration in a delivery process.&amp;nbsp; Copy or
 extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary for the particular delivery process.</keyConsiderations>
     <purpose>This capability pattern can be used to quickly construct an Inception phase iteration in a delivery process.&amp;nbsp; Copy or
-extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary for the particular delivery process. &lt;br /&gt;
-&lt;br /&gt;</purpose>
-    <alternatives>&lt;p&gt;
+extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary for the particular delivery process. &lt;br />
+&lt;br /></purpose>
+    <alternatives>&lt;p>
     To explain the work involved in the Analysis and Design discipline, the activities and work products are organized into
     a capability pattern for the discipline.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     In the Inception Phase, analysis and design is concerned with establishing whether the system as envisioned is
-    feasible, and with assessing potential technologies for the solution (in &lt;a href=&quot;resources/wfs_archsyn.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Perform Architectural Synthesis&lt;/font&gt;&lt;/a&gt;). If it is felt that little risk attaches to the development
+    feasible, and with assessing potential technologies for the solution (in &lt;a href=&quot;resources/wfs_archsyn.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Perform Architectural Synthesis&lt;/font>&lt;/a>). If it is felt that little risk attaches to the development
     (because, for example, the domain is well understood, the system is not novel, and so on) then this workflow detail may
     be omitted.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     The early Elaboration Phase focuses on creating an initial architecture for the system ( &lt;a
-    href=&quot;resources/wfs_and1.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Define a Candidate Architecture&lt;/font&gt;&lt;/a&gt;) to provide a starting
+    href=&quot;resources/wfs_and1.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Define a Candidate Architecture&lt;/font>&lt;/a>) to provide a starting
     point for the main analysis work. If the architecture already exists (either because it was produced in previous
     iterations, in previous projects, or is obtained from an application framework), the focus of the work changes to
-    refining the architecture ( &lt;a href=&quot;resources/wfs_and2.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Refine the Architecture&lt;/font&gt;&lt;/a&gt;)
+    refining the architecture ( &lt;a href=&quot;resources/wfs_and2.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Refine the Architecture&lt;/font>&lt;/a>)
     and analyzing behavior and creating an initial set of elements which provide the appropriate behavior ( &lt;a
-    href=&quot;resources/wfs_and3.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Analyze Behavior&lt;/font&gt;&lt;/a&gt;).
-&lt;/p&gt;
-&lt;p&gt;
-    After the initial elements are identified, they are further refined. &lt;a href=&quot;resources/wfs_and4.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Design Components&lt;/font&gt;&lt;/a&gt; produce a set of components which provide the appropriate behavior to
-    satisfy the requirements on the system. If the system includes a database, then &lt;a href=&quot;resources/wfs_and7.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Design the Database&lt;/font&gt;&lt;/a&gt; occurs in parallel. The result is an initial set of components which are
-    further refined in &lt;a href=&quot;resources/wfd_imp.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Implementation&lt;/font&gt;&lt;/a&gt;.&lt;br /&gt;
-&lt;/p&gt;&amp;nbsp;&lt;br /&gt;
-&lt;br /&gt;</alternatives>
-    <howtoStaff>&lt;p&gt;
+    href=&quot;resources/wfs_and3.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Analyze Behavior&lt;/font>&lt;/a>).
+&lt;/p>
+&lt;p>
+    After the initial elements are identified, they are further refined. &lt;a href=&quot;resources/wfs_and4.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Design Components&lt;/font>&lt;/a> produce a set of components which provide the appropriate behavior to
+    satisfy the requirements on the system. If the system includes a database, then &lt;a href=&quot;resources/wfs_and7.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Design the Database&lt;/font>&lt;/a> occurs in parallel. The result is an initial set of components which are
+    further refined in &lt;a href=&quot;resources/wfd_imp.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Implementation&lt;/font>&lt;/a>.&lt;br />
+&lt;/p>&amp;nbsp;&lt;br />
+&lt;br /></alternatives>
+    <howtoStaff>&lt;p>
     To explain the work involved in the Analysis and Design discipline, the activities and work products are organized into
     a capability pattern for the discipline.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     In the Inception Phase, analysis and design is concerned with establishing whether the system as envisioned is
-    feasible, and with assessing potential technologies for the solution (in &lt;a href=&quot;resources/wfs_archsyn.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Perform Architectural Synthesis&lt;/font&gt;&lt;/a&gt;). If it is felt that little risk attaches to the development
+    feasible, and with assessing potential technologies for the solution (in &lt;a href=&quot;resources/wfs_archsyn.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Perform Architectural Synthesis&lt;/font>&lt;/a>). If it is felt that little risk attaches to the development
     (because, for example, the domain is well understood, the system is not novel, and so on) then this workflow detail may
     be omitted.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     The early Elaboration Phase focuses on creating an initial architecture for the system ( &lt;a
-    href=&quot;resources/wfs_and1.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Define a Candidate Architecture&lt;/font&gt;&lt;/a&gt;) to provide a starting
+    href=&quot;resources/wfs_and1.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Define a Candidate Architecture&lt;/font>&lt;/a>) to provide a starting
     point for the main analysis work. If the architecture already exists (either because it was produced in previous
     iterations, in previous projects, or is obtained from an application framework), the focus of the work changes to
-    refining the architecture ( &lt;a href=&quot;resources/wfs_and2.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Refine the Architecture&lt;/font&gt;&lt;/a&gt;)
+    refining the architecture ( &lt;a href=&quot;resources/wfs_and2.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Refine the Architecture&lt;/font>&lt;/a>)
     and analyzing behavior and creating an initial set of elements which provide the appropriate behavior ( &lt;a
-    href=&quot;resources/wfs_and3.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Analyze Behavior&lt;/font&gt;&lt;/a&gt;).
-&lt;/p&gt;
-&lt;p&gt;
-    After the initial elements are identified, they are further refined. &lt;a href=&quot;resources/wfs_and4.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Design Components&lt;/font&gt;&lt;/a&gt; produce a set of components which provide the appropriate behavior to
-    satisfy the requirements on the system. If the system includes a database, then &lt;a href=&quot;resources/wfs_and7.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Design the Database&lt;/font&gt;&lt;/a&gt; occurs in parallel. The result is an initial set of components which are
-    further refined in &lt;a href=&quot;resources/wfd_imp.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Implementation&lt;/font&gt;&lt;/a&gt;.&lt;br /&gt;
-&lt;/p&gt;
-&amp;nbsp;&lt;br /&gt;
-&lt;br /&gt;</howtoStaff>
-    <externalId>EXternal ID:CP1 with all elements</externalId>
-    <scope>&lt;p&gt;
+    href=&quot;resources/wfs_and3.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Analyze Behavior&lt;/font>&lt;/a>).
+&lt;/p>
+&lt;p>
+    After the initial elements are identified, they are further refined. &lt;a href=&quot;resources/wfs_and4.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Design Components&lt;/font>&lt;/a> produce a set of components which provide the appropriate behavior to
+    satisfy the requirements on the system. If the system includes a database, then &lt;a href=&quot;resources/wfs_and7.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Design the Database&lt;/font>&lt;/a> occurs in parallel. The result is an initial set of components which are
+    further refined in &lt;a href=&quot;resources/wfd_imp.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Implementation&lt;/font>&lt;/a>.&lt;br />
+&lt;/p>
+&amp;nbsp;&lt;br />
+&lt;br /></howtoStaff>
+    <scope>&lt;p>
     To explain the work involved in the Analysis and Design discipline, the activities and work products are organized into
     a capability pattern for the discipline.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     In the Inception Phase, analysis and design is concerned with establishing whether the system as envisioned is
-    feasible, and with assessing potential technologies for the solution (in &lt;a href=&quot;resources/wfs_archsyn.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Perform Architectural Synthesis&lt;/font&gt;&lt;/a&gt;). If it is felt that little risk attaches to the development
+    feasible, and with assessing potential technologies for the solution (in &lt;a href=&quot;resources/wfs_archsyn.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Perform Architectural Synthesis&lt;/font>&lt;/a>). If it is felt that little risk attaches to the development
     (because, for example, the domain is well understood, the system is not novel, and so on) then this workflow detail may
     be omitted.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     The early Elaboration Phase focuses on creating an initial architecture for the system ( &lt;a
-    href=&quot;resources/wfs_and1.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Define a Candidate Architecture&lt;/font&gt;&lt;/a&gt;) to provide a starting
+    href=&quot;resources/wfs_and1.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Define a Candidate Architecture&lt;/font>&lt;/a>) to provide a starting
     point for the main analysis work. If the architecture already exists (either because it was produced in previous
     iterations, in previous projects, or is obtained from an application framework), the focus of the work changes to
-    refining the architecture ( &lt;a href=&quot;resources/wfs_and2.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Refine the Architecture&lt;/font&gt;&lt;/a&gt;)
+    refining the architecture ( &lt;a href=&quot;resources/wfs_and2.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Refine the Architecture&lt;/font>&lt;/a>)
     and analyzing behavior and creating an initial set of elements which provide the appropriate behavior ( &lt;a
-    href=&quot;resources/wfs_and3.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Analyze Behavior&lt;/font&gt;&lt;/a&gt;).
-&lt;/p&gt;
-&lt;p&gt;
-    After the initial elements are identified, they are further refined. &lt;a href=&quot;resources/wfs_and4.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Design Components&lt;/font&gt;&lt;/a&gt; produce a set of components which provide the appropriate behavior to
-    satisfy the requirements on the system. If the system includes a database, then &lt;a href=&quot;resources/wfs_and7.htm&quot;&gt;&lt;font
-    color=&quot;#0000ff&quot;&gt;Design the Database&lt;/font&gt;&lt;/a&gt; occurs in parallel. The result is an initial set of components which are
-    further refined in &lt;a href=&quot;resources/wfd_imp.htm&quot;&gt;&lt;font color=&quot;#0000ff&quot;&gt;Implementation&lt;/font&gt;&lt;/a&gt;.&lt;br /&gt;
-&lt;/p&gt;&amp;nbsp;&lt;br /&gt;
-&lt;br /&gt;</scope>
-    <usageNotes>&lt;p&gt;
+    href=&quot;resources/wfs_and3.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Analyze Behavior&lt;/font>&lt;/a>).
+&lt;/p>
+&lt;p>
+    After the initial elements are identified, they are further refined. &lt;a href=&quot;resources/wfs_and4.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Design Components&lt;/font>&lt;/a> produce a set of components which provide the appropriate behavior to
+    satisfy the requirements on the system. If the system includes a database, then &lt;a href=&quot;resources/wfs_and7.htm&quot;>&lt;font
+    color=&quot;#0000ff&quot;>Design the Database&lt;/font>&lt;/a> occurs in parallel. The result is an initial set of components which are
+    further refined in &lt;a href=&quot;resources/wfd_imp.htm&quot;>&lt;font color=&quot;#0000ff&quot;>Implementation&lt;/font>&lt;/a>.&lt;br />
+&lt;/p>&amp;nbsp;&lt;br />
+&lt;br /></scope>
+    <usageNotes>&lt;p>
     The subcategories of process are delivery process and capability pattern.&amp;nbsp; A delivery process defines a complete
     or end-to-end process.&amp;nbsp; A capability pattern is a process fragment used to compose a delivery process.
-&lt;/p&gt;</usageNotes>
+&lt;/p></usageNotes>
   </org.eclipse.epf.uma:ProcessDescription>
-  <org.eclipse.epf.uma:ActivityDescription xmi:id="-YVTZRE5oy5oGcue1XXh3dQ" name="Activity1,_E73rITziEdq5ysFONr1BGQ" guid="-YVTZRE5oy5oGcue1XXh3dQ">
-    <mainDescription>&lt;p&gt;
+  <org.eclipse.epf.uma:ActivityDescription xmi:id="-YVTZRE5oy5oGcue1XXh3dQ" name="Activity1,_E73rITziEdq5ysFONr1BGQ"
+      guid="-YVTZRE5oy5oGcue1XXh3dQ">
+    <mainDescription>&lt;p>
     This Workflow Detail:
-&lt;/p&gt;
-&lt;ul&gt;
-    &lt;li&gt;
-        Provides the natural &lt;b&gt;transition from analysis&lt;/b&gt; activities &lt;b&gt;to design&lt;/b&gt; activities, identifying: 
-        &lt;ul&gt;
-            &lt;li&gt;
+&lt;/p>
+&lt;ul>
+    &lt;li>
+        Provides the natural &lt;b>transition from analysis&lt;/b> activities &lt;b>to design&lt;/b> activities, identifying: 
+        &lt;ul>
+            &lt;li>
                 appropriate design elements from analysis elements
-            &lt;/li&gt;
-            &lt;li&gt;
+            &lt;/li>
+            &lt;li>
                 appropriate design mechanisms from related analysis mechanisms
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-    &lt;li&gt;
-        &lt;b&gt;Describes&lt;/b&gt; the organization of the system's &lt;b&gt;run-time and deployment architecture&lt;/b&gt;
-    &lt;/li&gt;
-    &lt;li&gt;
-        &lt;b&gt;Organizes the implementation model&lt;/b&gt; so as to make the transition between design and implementation seamless
-    &lt;/li&gt;
-    &lt;li&gt;
-        &lt;b&gt;Maintains the consistency and integrity of the architecture&lt;/b&gt;, ensuring that: 
-        &lt;ul&gt;
-            &lt;li&gt;
+            &lt;/li>
+        &lt;/ul>
+    &lt;/li>
+    &lt;li>
+        &lt;b>Describes&lt;/b> the organization of the system's &lt;b>run-time and deployment architecture&lt;/b>
+    &lt;/li>
+    &lt;li>
+        &lt;b>Organizes the implementation model&lt;/b> so as to make the transition between design and implementation seamless
+    &lt;/li>
+    &lt;li>
+        &lt;b>Maintains the consistency and integrity of the architecture&lt;/b>, ensuring that: 
+        &lt;ul>
+            &lt;li>
                 new design elements identified for the current iteration are integrated with pre-existing design elements.
-            &lt;/li&gt;
-            &lt;li&gt;
+            &lt;/li>
+            &lt;li>
                 maximal re-use of available components and design elements is achieved as early as possible in the design
                 effort.
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;</mainDescription>
-    <keyConsiderations>&lt;p&gt;
+            &lt;/li>
+        &lt;/ul>
+    &lt;/li>
+&lt;/ul></mainDescription>
+    <keyConsiderations>&lt;p>
     Key considerations:
-&lt;/p&gt;
-&lt;ul&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ul>
+    &lt;li>
         key1
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key2
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key3
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key4
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key5
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key6
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key7
-    &lt;/li&gt;
-&lt;/ul&gt;</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
+    &lt;/li>
+&lt;/ul></keyConsiderations>
+    <usageGuidance>&lt;p>
     The work is best done in several sessions, perhaps performed over a few days (or weeks and months for very large
     systems). The initial focus will be on the activities &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/identify_design_mechanisms,{C7A26BD7-3820-48D9-830F-684C3AF155F9}.html&quot;
-    guid=&quot;{C7A26BD7-3820-48D9-830F-684C3AF155F9}&quot;&gt;Identify Design Mechanisms&lt;/a&gt; and &lt;a class=&quot;elementLink&quot;
+    guid=&quot;{C7A26BD7-3820-48D9-830F-684C3AF155F9}&quot;>Identify Design Mechanisms&lt;/a> and &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/identify_design_elements_real-time_design,{586963D0-607D-4EC2-8D53-292DAFAB9C92}.html&quot;
-    guid=&quot;{586963D0-607D-4EC2-8D53-292DAFAB9C92}&quot;&gt;identify_design_elements_real-time_design&lt;/a&gt;, with a great deal of
+    guid=&quot;{586963D0-607D-4EC2-8D53-292DAFAB9C92}&quot;>identify_design_elements_real-time_design&lt;/a>, with a great deal of
     iteration with the &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/incorporate_design_elements,{5C647173-4E32-4594-96A9-2548B47722FA}.html&quot;
-    guid=&quot;{5C647173-4E32-4594-96A9-2548B47722FA}&quot;&gt;Incorporate Existing Design Elements&lt;/a&gt; activity to make sure that new
+    guid=&quot;{5C647173-4E32-4594-96A9-2548B47722FA}&quot;>Incorporate Existing Design Elements&lt;/a> activity to make sure that new
     elements do not duplicate functionality of existing elements.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     As the design emerges, concurrency and distribution issues are introduced in the activities &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/describe_runtime_architecture,{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}.html&quot;
-    guid=&quot;{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}&quot;&gt;Describe the Run-time Architecture&lt;/a&gt; and &lt;a class=&quot;elementLink&quot;
+    guid=&quot;{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}&quot;>Describe the Run-time Architecture&lt;/a> and &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/describe_distribution,{6A112808-0A90-427A-BAB9-E14F3FBF72B5}.html&quot;
-    guid=&quot;{6A112808-0A90-427A-BAB9-E14F3FBF72B5}&quot;&gt;Describe Distribution&lt;/a&gt;, respectively. As these issues are considered,
+    guid=&quot;{6A112808-0A90-427A-BAB9-E14F3FBF72B5}&quot;>Describe Distribution&lt;/a>, respectively. As these issues are considered,
     changes to design elements may be required to split behavior across processes, threads or nodes.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     As the individual models are refined to incorporate the architectural decisions, the results are documented in
     respective view sections in the Software Architecture Document (e.g., as the Design Model is refined, the Logical View
     of the Software Architecture Document is refined, as well). The resulting architecture is reviewed.
-&lt;/p&gt;
-&lt;br /&gt;
-&lt;br /&gt;</usageGuidance>
-    <purpose>&lt;p&gt;
+&lt;/p>
+&lt;br />
+&lt;br /></usageGuidance>
+    <purpose>&lt;p>
     Purpose of this activity is to have tasks that are associated to other tasks.
-&lt;/p&gt;
-&lt;p&gt;
-    &amp;nbsp;&lt;img height=&quot;71&quot; alt=&quot;&quot; src=&quot;resources/rup.jpg&quot; width=&quot;176&quot; /&gt;
-&lt;/p&gt;</purpose>
-    <alternatives>&lt;p&gt;
+&lt;/p>
+&lt;p>
+    &amp;nbsp;&lt;img height=&quot;71&quot; alt=&quot;&quot; src=&quot;resources/rup.jpg&quot; width=&quot;176&quot; />
+&lt;/p></purpose>
+    <alternatives>&lt;p>
     Alterantives:
-&lt;/p&gt;
-&lt;ol&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ol>
+    &lt;li>
         Alter1
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         Alter2
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         Alter3
-    &lt;/li&gt;
-&lt;/ol&gt;</alternatives>
-    <howtoStaff>&lt;p&gt;
+    &lt;/li>
+&lt;/ol></alternatives>
+    <howtoStaff>&lt;p>
     These activities are best carried out by a small team staffed by cross-functional team members. Issues that are
     typically architecturally significant include usability, performance, scaling, process and thread synchronization, and
     distribution. The team should also include members with domain experience who can identify key abstractions. The team
     should also have experience with model organization and layering. The team will need to be able to pull all these
     disparate threads into a cohesive, coherent (albeit preliminary) architecture.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     Because the focus of the architecture effort is shifting toward implementation issues, greater attention needs to be
     paid to specific technology issues. This will force the architecture team to shift members or expand to include people
     with distribution and deployment expertise (if those issues are architecturally significant). In order to understand
     the potential impact of the structure on the implementation model on the ease of integration, expertise in the software
     build management process is useful to have.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     At the same time, it is essential that the architecture team not be composed of a large extended team. A strategy for
     countering this trend is to retain a relatively small core team with a satellite group of extended team members that
-    are brought in as &quot;consultants&quot; on key issues&lt;b&gt;.&lt;/b&gt; This structure also works well for smaller projects where
+    are brought in as &quot;consultants&quot; on key issues&lt;b>.&lt;/b> This structure also works well for smaller projects where
     specific expertise may be borrowed or contracted from other organizations; they can be brought in as specific issues
     need to be addressed.
-&lt;/p&gt;</howtoStaff>
+&lt;/p></howtoStaff>
   </org.eclipse.epf.uma:ActivityDescription>
-  <org.eclipse.epf.uma:ActivityDescription xmi:id="-VRUCShAvXrsLgs7PZzHgUw" name="Iteration1,_EFVrwTziEdq5ysFONr1BGQ" guid="-VRUCShAvXrsLgs7PZzHgUw">
-    <mainDescription>&lt;p&gt;
+  <org.eclipse.epf.uma:ActivityDescription xmi:id="-VRUCShAvXrsLgs7PZzHgUw" name="Iteration1,_EFVrwTziEdq5ysFONr1BGQ"
+      guid="-VRUCShAvXrsLgs7PZzHgUw">
+    <mainDescription>&lt;p>
     This workflow detail has the following goals:
-&lt;/p&gt;
-&lt;ul&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ul>
+    &lt;li>
         Create an initial sketch of the architecture of the system 
-        &lt;ul&gt;
-            &lt;li&gt;
+        &lt;ul>
+            &lt;li>
                 Define an initial set of architecturally significant elements to use as the basis for analysis
-            &lt;/li&gt;
-            &lt;li&gt;
+            &lt;/li>
+            &lt;li>
                 Define an initial set of analysis mechanisms
-            &lt;/li&gt;
-            &lt;li&gt;
+            &lt;/li>
+            &lt;li>
                 Define the initial layering and organization of the system
-            &lt;/li&gt;
-            &lt;li&gt;
+            &lt;/li>
+            &lt;li>
                 Define the use-case realizations to be addressed in the current iteration
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-    &lt;li&gt;
+            &lt;/li>
+        &lt;/ul>
+    &lt;/li>
+    &lt;li>
         Identify analysis classes from the architecturally significant use cases
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         Update the use-case realizations with analysis class interactions
-    &lt;/li&gt;
-&lt;/ul&gt;</mainDescription>
-    <keyConsiderations>&lt;p&gt;
+    &lt;/li>
+&lt;/ul></mainDescription>
+    <keyConsiderations>&lt;p>
     Key considerations:
-&lt;/p&gt;
-&lt;ul&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ul>
+    &lt;li>
         key11
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key22
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key33
-    &lt;/li&gt;
-&lt;/ul&gt;</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
+    &lt;/li>
+&lt;/ul></keyConsiderations>
+    <usageGuidance>&lt;p>
     The work is best done in several sessions, perhaps performed over a few days (or weeks and months for very large
     systems), with iteration between &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/architectural_analysis,{8CB48402-D4C5-4E17-BB33-507315CB1BBF}.html&quot;
-    guid=&quot;{8CB48402-D4C5-4E17-BB33-507315CB1BBF}&quot;&gt;Architectural Analysis&lt;/a&gt; and &lt;a class=&quot;elementLink&quot;
+    guid=&quot;{8CB48402-D4C5-4E17-BB33-507315CB1BBF}&quot;>Architectural Analysis&lt;/a> and &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/use_case_analysis,{28014615-A62F-452D-B821-30C7CAB0EC44}.html&quot;
-    guid=&quot;{28014615-A62F-452D-B821-30C7CAB0EC44}&quot;&gt;Use-Case Analysis&lt;/a&gt;. Perform an initial pass at the architecture in &lt;a
+    guid=&quot;{28014615-A62F-452D-B821-30C7CAB0EC44}&quot;>Use-Case Analysis&lt;/a>. Perform an initial pass at the architecture in &lt;a
     class=&quot;elementLink&quot; href=&quot;resources/architectural_analysis,{8CB48402-D4C5-4E17-BB33-507315CB1BBF}.html&quot;
-    guid=&quot;{8CB48402-D4C5-4E17-BB33-507315CB1BBF}&quot;&gt;Architectural Analysis&lt;/a&gt;, then choose architecturally significant use
+    guid=&quot;{8CB48402-D4C5-4E17-BB33-507315CB1BBF}&quot;>Architectural Analysis&lt;/a>, then choose architecturally significant use
     cases, performing &lt;a class=&quot;elementLink&quot; href=&quot;resources/use_case_analysis,{28014615-A62F-452D-B821-30C7CAB0EC44}.html&quot;
-    guid=&quot;{28014615-A62F-452D-B821-30C7CAB0EC44}&quot;&gt;Use-Case Analysis&lt;/a&gt; on each one. After (or as) each use case is
+    guid=&quot;{28014615-A62F-452D-B821-30C7CAB0EC44}&quot;>Use-Case Analysis&lt;/a> on each one. After (or as) each use case is
     analyzed, update the architecture as needed to reflect adaptations required to accommodate new behavior of the system
     and to address potential architectural problems which are identified.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     Where the architecture already exists (either from a prior project or iteration), change requests may need to be
     created to change the architecture to account for the new behavior the system must support. These changes may be to any
     artifact in the process, depending on the scope of the change.
-&lt;/p&gt;
-&lt;br /&gt;
-&lt;br /&gt;</usageGuidance>
-    <purpose>&lt;p&gt;
+&lt;/p>
+&lt;br />
+&lt;br /></usageGuidance>
+    <purpose>&lt;p>
     Purpose: This itertaion is created for two activities.
-&lt;/p&gt;
-&lt;p&gt;
-    &amp;nbsp;&lt;img height=&quot;474&quot; alt=&quot;&quot; src=&quot;resources/rup_platform.jpg&quot; width=&quot;504&quot; /&gt;
-&lt;/p&gt;</purpose>
-    <alternatives>&lt;p&gt;
+&lt;/p>
+&lt;p>
+    &amp;nbsp;&lt;img height=&quot;474&quot; alt=&quot;&quot; src=&quot;resources/rup_platform.jpg&quot; width=&quot;504&quot; />
+&lt;/p></purpose>
+    <alternatives>&lt;p>
     Alternatives:
-&lt;/p&gt;
-&lt;ol&gt;
-    &lt;li&gt;
-        &lt;a href=&quot;../roles/role_A1.xmi&quot; target=&quot;_blank&quot;&gt;role_A1.xmi&lt;/a&gt;
-    &lt;/li&gt;
-    &lt;li&gt;
-        &lt;a href=&quot;../tasks/task_A2.xmi&quot; target=&quot;_blank&quot;&gt;task_A2.xmi&lt;/a&gt;
-    &lt;/li&gt;
-&lt;/ol&gt;</alternatives>
-    <howtoStaff>&lt;p&gt;
+&lt;/p>
+&lt;ol>
+    &lt;li>
+        &lt;a href=&quot;../roles/role_A1.xmi&quot; target=&quot;_blank&quot;>role_A1.xmi&lt;/a>
+    &lt;/li>
+    &lt;li>
+        &lt;a href=&quot;../tasks/task_A2.xmi&quot; target=&quot;_blank&quot;>task_A2.xmi&lt;/a>
+    &lt;/li>
+&lt;/ol></alternatives>
+    <howtoStaff>&lt;p>
     These activities are best carried out by a small team staffed by cross-functional team members. Issues that are
     typically architecturally significant include performance, scaling, process and thread synchronization, and
     distribution. The team should also include members with domain experience who can identify key abstractions. The team
     should also have experience with model organization and layering. The team will need to be able to pull all these
     disparate threads into a cohesive, coherent (albeit preliminary) architecture.
-&lt;/p&gt;</howtoStaff>
+&lt;/p></howtoStaff>
   </org.eclipse.epf.uma:ActivityDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nUH0voD7RoKQgPT0rbOwQQ" name="task_B2,_McYH0DzlEdq5ysFONr1BGQ" guid="-nUH0voD7RoKQgPT0rbOwQQ">
-    <keyConsiderations>&lt;p&gt;
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nUH0voD7RoKQgPT0rbOwQQ" name="task_B2,_McYH0DzlEdq5ysFONr1BGQ"
+      guid="-nUH0voD7RoKQgPT0rbOwQQ">
+    <keyConsiderations>&lt;p>
     key considerations:
-&lt;/p&gt;
-&lt;ol&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ol>
+    &lt;li>
         k1
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         k2
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         k3
-    &lt;/li&gt;
-&lt;/ol&gt;</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
+    &lt;/li>
+&lt;/ol></keyConsiderations>
+    <usageGuidance>&lt;p>
     usage guidance for task_B2
-&lt;/p&gt;
-&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;&gt;
-    &lt;tbody&gt;
-        &lt;tr&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;&gt;
-    &lt;tbody&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+&lt;/p>
+&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;>
+    &lt;tbody>
+        &lt;tr>
+            &lt;td>
+            &lt;/td>
+        &lt;/tr>
+    &lt;/tbody>
+&lt;/table>
+&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;>
+    &lt;tbody>
+        &lt;tr>
+            &lt;th scope=&quot;col&quot;>
                 r1
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 c2
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 c3
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 c4
-            &lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/th>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r2
-            &lt;/th&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
                 asd
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
                 dsf
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
                 dsf
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r3
-            &lt;/th&gt;
-            &lt;td&gt;
-                &lt;img height=&quot;28&quot; alt=&quot;&quot; src=&quot;resources/buttons.jpg&quot; width=&quot;337&quot; /&gt; 
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
+                &lt;img height=&quot;28&quot; alt=&quot;&quot; src=&quot;resources/buttons.jpg&quot; width=&quot;337&quot; /> 
+            &lt;/td>
+            &lt;td>
                 dsf
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r4
-            &lt;/th&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
                 sdf
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r5
-            &lt;/th&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
                 daf
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
                 sdf
-            &lt;/td&gt;
-            &lt;td&gt;
-                &lt;img height=&quot;12&quot; alt=&quot;&quot; src=&quot;resources/bullet1.gif&quot; width=&quot;12&quot; /&gt; 
-            &lt;/td&gt;
-        &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;</usageGuidance>
-    <refinedDescription>&lt;p&gt;
-    &lt;a href=&quot;resources/papers.htm&quot; target=&quot;_blank&quot;&gt;papers.htm&lt;/a&gt;
-&lt;/p&gt;
-&lt;p&gt;
+            &lt;/td>
+            &lt;td>
+                &lt;img height=&quot;12&quot; alt=&quot;&quot; src=&quot;resources/bullet1.gif&quot; width=&quot;12&quot; /> 
+            &lt;/td>
+        &lt;/tr>
+    &lt;/tbody>
+&lt;/table>
+&lt;br />
+&lt;br />
+&lt;br />
+&lt;br /></usageGuidance>
+    <refinedDescription>&lt;p>
+    &lt;a href=&quot;resources/papers.htm&quot; target=&quot;_blank&quot;>papers.htm&lt;/a>
+&lt;/p>
+&lt;p>
     refined description:
-&lt;/p&gt;</refinedDescription>
+&lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-aDE4yFzE_m_n2PIzcOt4rA" name="task_A2,_JCrBEDzlEdq5ysFONr1BGQ" guid="-aDE4yFzE_m_n2PIzcOt4rA">
-    <keyConsiderations>&lt;p&gt;
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-aDE4yFzE_m_n2PIzcOt4rA" name="task_A2,_JCrBEDzlEdq5ysFONr1BGQ"
+      guid="-aDE4yFzE_m_n2PIzcOt4rA">
+    <keyConsiderations>&lt;p>
     keys:
-&lt;/p&gt;
-&lt;ol&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ol>
+    &lt;li>
         kk1
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         kk2
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         kk3
-    &lt;/li&gt;
-&lt;/ol&gt;</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
+    &lt;/li>
+&lt;/ol></keyConsiderations>
+    <usageGuidance>&lt;p>
     usage guidance for task_B2
-&lt;/p&gt;
-&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;&gt;
-    &lt;tbody&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+&lt;/p>
+&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;>
+    &lt;tbody>
+        &lt;tr>
+            &lt;th scope=&quot;col&quot;>
                 r1
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 c2
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 c3
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 c4
-            &lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/th>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r2
-            &lt;/th&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
                 asd
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
                 dsf
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
                 dsf
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r3
-            &lt;/th&gt;
-            &lt;td&gt;
-                &lt;img height=&quot;28&quot; alt=&quot;&quot; src=&quot;resources/buttons.jpg&quot; width=&quot;337&quot; /&gt; 
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
+                &lt;img height=&quot;28&quot; alt=&quot;&quot; src=&quot;resources/buttons.jpg&quot; width=&quot;337&quot; /> 
+            &lt;/td>
+            &lt;td>
                 dsf
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r4
-            &lt;/th&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
                 sdf
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;row&quot;&gt;
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;th scope=&quot;row&quot;>
                 r5
-            &lt;/th&gt;
-            &lt;td&gt;
+            &lt;/th>
+            &lt;td>
                 daf
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
                 sdf
-            &lt;/td&gt;
-            &lt;td&gt;
-                &lt;img height=&quot;12&quot; alt=&quot;&quot; src=&quot;resources/bullet1.gif&quot; width=&quot;12&quot; /&gt; 
-            &lt;/td&gt;
-        &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;</usageGuidance>
+            &lt;/td>
+            &lt;td>
+                &lt;img height=&quot;12&quot; alt=&quot;&quot; src=&quot;resources/bullet1.gif&quot; width=&quot;12&quot; /> 
+            &lt;/td>
+        &lt;/tr>
+    &lt;/tbody>
+&lt;/table>
+&lt;br />
+&lt;br />
+&lt;br />
+&lt;br /></usageGuidance>
     <refinedDescription>Task A2's refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5t8GtoL4IBoxfazBI_0crA" name="wpDesc1,_SUGQgDziEdq5ysFONr1BGQ" guid="-5t8GtoL4IBoxfazBI_0crA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5t8GtoL4IBoxfazBI_0crA" name="wpDesc1,_SUGQgDziEdq5ysFONr1BGQ"
+      guid="-5t8GtoL4IBoxfazBI_0crA">
     <keyConsiderations>key:wpDesc1</keyConsiderations>
     <usageGuidance>usage:wpDesc1</usageGuidance>
-    <refinedDescription>&lt;p&gt;
+    <refinedDescription>&lt;p>
     refined: wpDesc1
-&lt;/p&gt;</refinedDescription>
+&lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ifmQNB5y1RZKF1Hrm3CdRA" name="task associated to taskA1,_FrtMoDziEdq5ysFONr1BGQ" guid="-ifmQNB5y1RZKF1Hrm3CdRA">
-    <keyConsiderations>&lt;p&gt;
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ifmQNB5y1RZKF1Hrm3CdRA" name="task associated to taskA1,_FrtMoDziEdq5ysFONr1BGQ"
+      guid="-ifmQNB5y1RZKF1Hrm3CdRA">
+    <keyConsiderations>&lt;p>
     keys:
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     key1,key2
-&lt;/p&gt;</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
+&lt;/p></keyConsiderations>
+    <usageGuidance>&lt;p>
     usage:
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     The work is best done in several sessions, perhaps performed over a few days (or weeks and months for very large
     systems). The initial focus will be on the activities &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/identify_design_mechanisms,{C7A26BD7-3820-48D9-830F-684C3AF155F9}.html&quot;
-    guid=&quot;{C7A26BD7-3820-48D9-830F-684C3AF155F9}&quot;&gt;Identify Design Mechanisms&lt;/a&gt; and &lt;a class=&quot;elementLink&quot;
+    guid=&quot;{C7A26BD7-3820-48D9-830F-684C3AF155F9}&quot;>Identify Design Mechanisms&lt;/a> and &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/identify_design_elements_real-time_design,{586963D0-607D-4EC2-8D53-292DAFAB9C92}.html&quot;
-    guid=&quot;{586963D0-607D-4EC2-8D53-292DAFAB9C92}&quot;&gt;identify_design_elements_real-time_design&lt;/a&gt;, with a great deal of
+    guid=&quot;{586963D0-607D-4EC2-8D53-292DAFAB9C92}&quot;>identify_design_elements_real-time_design&lt;/a>, with a great deal of
     iteration with the &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/incorporate_design_elements,{5C647173-4E32-4594-96A9-2548B47722FA}.html&quot;
-    guid=&quot;{5C647173-4E32-4594-96A9-2548B47722FA}&quot;&gt;Incorporate Existing Design Elements&lt;/a&gt; activity to make sure that new
+    guid=&quot;{5C647173-4E32-4594-96A9-2548B47722FA}&quot;>Incorporate Existing Design Elements&lt;/a> activity to make sure that new
     elements do not duplicate functionality of existing elements.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     As the design emerges, concurrency and distribution issues are introduced in the activities &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/describe_runtime_architecture,{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}.html&quot;
-    guid=&quot;{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}&quot;&gt;Describe the Run-time Architecture&lt;/a&gt; and &lt;a class=&quot;elementLink&quot;
+    guid=&quot;{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}&quot;>Describe the Run-time Architecture&lt;/a> and &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/describe_distribution,{6A112808-0A90-427A-BAB9-E14F3FBF72B5}.html&quot;
-    guid=&quot;{6A112808-0A90-427A-BAB9-E14F3FBF72B5}&quot;&gt;Describe Distribution&lt;/a&gt;, respectively. As these issues are considered,
+    guid=&quot;{6A112808-0A90-427A-BAB9-E14F3FBF72B5}&quot;>Describe Distribution&lt;/a>, respectively. As these issues are considered,
     changes to design elements may be required to split behavior across processes, threads or nodes.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     As the individual models are refined to incorporate the architectural decisions, the results are documented in
     respective view sections in the Software Architecture Document (e.g., as the Design Model is refined, the Logical View
     of the Software Architecture Document is refined, as well). The resulting architecture is reviewed.
-&lt;/p&gt;
-&lt;p&gt;
-    &lt;br /&gt;
-    &lt;br /&gt;
+&lt;/p>
+&lt;p>
+    &lt;br />
+    &lt;br />
     &amp;nbsp;
-&lt;/p&gt;</usageGuidance>
-    <refinedDescription>&lt;p&gt;
+&lt;/p></usageGuidance>
+    <refinedDescription>&lt;p>
     refined description
-&lt;/p&gt;
-&lt;p&gt;
-    &lt;img height=&quot;16&quot; alt=&quot;&quot; src=&quot;resources/helpbook.gif&quot; width=&quot;16&quot; /&gt;
-&lt;/p&gt;
-&lt;p&gt;
-    &lt;a href=&quot;resources/papers.htm&quot; target=&quot;_blank&quot;&gt;papers.htm&lt;/a&gt;
-&lt;/p&gt;</refinedDescription>
+&lt;/p>
+&lt;p>
+    &lt;img height=&quot;16&quot; alt=&quot;&quot; src=&quot;resources/helpbook.gif&quot; width=&quot;16&quot; />
+&lt;/p>
+&lt;p>
+    &lt;a href=&quot;resources/papers.htm&quot; target=&quot;_blank&quot;>papers.htm&lt;/a>
+&lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-pO8LeceGXjKeapuLoFfkxA" name="roleDesc1,_P1sUYDziEdq5ysFONr1BGQ" guid="-pO8LeceGXjKeapuLoFfkxA">
-    <keyConsiderations>&lt;p&gt;
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-pO8LeceGXjKeapuLoFfkxA" name="roleDesc1,_P1sUYDziEdq5ysFONr1BGQ"
+      guid="-pO8LeceGXjKeapuLoFfkxA">
+    <keyConsiderations>&lt;p>
     key considerations:
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     key1
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     key2
-&lt;/p&gt;</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
-    &lt;img height=&quot;474&quot; alt=&quot;&quot; src=&quot;resources/rup_platform.jpg&quot; width=&quot;504&quot; /&gt;usage for roleA1&amp;nbsp;
-&lt;/p&gt;</usageGuidance>
+&lt;/p></keyConsiderations>
+    <usageGuidance>&lt;p>
+    &lt;img height=&quot;474&quot; alt=&quot;&quot; src=&quot;resources/rup_platform.jpg&quot; width=&quot;504&quot; />usage for roleA1&amp;nbsp;
+&lt;/p></usageGuidance>
     <refinedDescription>refined description for roleDesc1</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_Th-jv5jm0h0f0mFhKtqgQ" name="roleDesc2,_Q99kADziEdq5ysFONr1BGQ" guid="-_Th-jv5jm0h0f0mFhKtqgQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_Th-jv5jm0h0f0mFhKtqgQ" name="roleDesc2,_Q99kADziEdq5ysFONr1BGQ"
+      guid="-_Th-jv5jm0h0f0mFhKtqgQ">
     <keyConsiderations>key consideration for roleA2</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
-    &lt;img height=&quot;12&quot; alt=&quot;&quot; src=&quot;resources/bullet1.gif&quot; width=&quot;12&quot; /&gt;
-&lt;/p&gt;
-&lt;p&gt;
+    <usageGuidance>&lt;p>
+    &lt;img height=&quot;12&quot; alt=&quot;&quot; src=&quot;resources/bullet1.gif&quot; width=&quot;12&quot; />
+&lt;/p>
+&lt;p>
     usage guidance for roleA2
-&lt;/p&gt;</usageGuidance>
-    <refinedDescription>&lt;p&gt;
+&lt;/p></usageGuidance>
+    <refinedDescription>&lt;p>
     refined description for roleA2
-&lt;/p&gt;
-&lt;p&gt;
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
+&lt;/p>
+&lt;p>
     refined description for roleA2
-&lt;/p&gt;</refinedDescription>
+&lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-Bkv6VTdMpg4bD0YkfHZ4dg" name="task associated to taskA2,_LwLQgDziEdq5ysFONr1BGQ" guid="-Bkv6VTdMpg4bD0YkfHZ4dg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-Bkv6VTdMpg4bD0YkfHZ4dg" name="task associated to taskA2,_LwLQgDziEdq5ysFONr1BGQ"
+      guid="-Bkv6VTdMpg4bD0YkfHZ4dg">
     <keyConsiderations>keys: task associated to taskA2</keyConsiderations>
     <usageGuidance>usage:task associated to taskA2</usageGuidance>
-    <refinedDescription>&lt;p&gt;
+    <refinedDescription>&lt;p>
     refined:task associated to taskA2
-&lt;/p&gt;
-&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;&gt;
-    &lt;tbody&gt;
-        &lt;tr&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+&lt;/p>
+&lt;table cellspacing=&quot;2&quot; cellpadding=&quot;2&quot; width=&quot;180&quot; border=&quot;1&quot;>
+    &lt;tbody>
+        &lt;tr>
+            &lt;th scope=&quot;col&quot;>
                 1
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 z
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 z
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 z
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 z
-            &lt;/th&gt;
-            &lt;th scope=&quot;col&quot;&gt;
+            &lt;/th>
+            &lt;th scope=&quot;col&quot;>
                 z
-            &lt;/th&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;td&gt;
+            &lt;/th>
+        &lt;/tr>
+        &lt;tr>
+            &lt;td>
                 z
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
                 2
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;td>
                 z
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
                 3
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;td>
                 z
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
                 4
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;td>
                 z
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-            &lt;td&gt;
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+            &lt;td>
                 5
-            &lt;/td&gt;
-            &lt;td&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;</refinedDescription>
+            &lt;/td>
+            &lt;td>
+            &lt;/td>
+        &lt;/tr>
+    &lt;/tbody>
+&lt;/table></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-TRxhxAs1xOKNRrFCEPpAlw" name="task with no links,_5jJYADzkEdq5ysFONr1BGQ" guid="-TRxhxAs1xOKNRrFCEPpAlw">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-TRxhxAs1xOKNRrFCEPpAlw" name="task with no links,_5jJYADzkEdq5ysFONr1BGQ"
+      guid="-TRxhxAs1xOKNRrFCEPpAlw">
     <keyConsiderations>key:task with no links</keyConsiderations>
     <usageGuidance>usage:task with no links</usageGuidance>
-    <refinedDescription>&lt;p&gt;
+    <refinedDescription>&lt;p>
     refined:task with no links
-&lt;/p&gt;</refinedDescription>
+&lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:ActivityDescription xmi:id="-AdwAjn5vRCnEQQLUaYJ1dw" name="Activity2,_BS6gETzlEdq5ysFONr1BGQ" guid="-AdwAjn5vRCnEQQLUaYJ1dw">
-    <mainDescription>&lt;p&gt;
+  <org.eclipse.epf.uma:ActivityDescription xmi:id="-AdwAjn5vRCnEQQLUaYJ1dw" name="Activity2,_BS6gETzlEdq5ysFONr1BGQ"
+      guid="-AdwAjn5vRCnEQQLUaYJ1dw">
+    <mainDescription>&lt;p>
     This Workflow Detail:
-&lt;/p&gt;
-&lt;ul&gt;
-    &lt;li&gt;
-        Provides the natural &lt;b&gt;transition from analysis&lt;/b&gt; activities &lt;b&gt;to design&lt;/b&gt; activities, identifying: 
-        &lt;ul&gt;
-            &lt;li&gt;
+&lt;/p>
+&lt;ul>
+    &lt;li>
+        Provides the natural &lt;b>transition from analysis&lt;/b> activities &lt;b>to design&lt;/b> activities, identifying: 
+        &lt;ul>
+            &lt;li>
                 appropriate design elements from analysis elements
-            &lt;/li&gt;
-            &lt;li&gt;
+            &lt;/li>
+            &lt;li>
                 appropriate design mechanisms from related analysis mechanisms
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-    &lt;li&gt;
-        &lt;b&gt;Describes&lt;/b&gt; the organization of the system's &lt;b&gt;run-time and deployment architecture&lt;/b&gt;
-    &lt;/li&gt;
-    &lt;li&gt;
-        &lt;b&gt;Organizes the implementation model&lt;/b&gt; so as to make the transition between design and implementation seamless
-    &lt;/li&gt;
-    &lt;li&gt;
-        &lt;b&gt;Maintains the consistency and integrity of the architecture&lt;/b&gt;, ensuring that: 
-        &lt;ul&gt;
-            &lt;li&gt;
+            &lt;/li>
+        &lt;/ul>
+    &lt;/li>
+    &lt;li>
+        &lt;b>Describes&lt;/b> the organization of the system's &lt;b>run-time and deployment architecture&lt;/b>
+    &lt;/li>
+    &lt;li>
+        &lt;b>Organizes the implementation model&lt;/b> so as to make the transition between design and implementation seamless
+    &lt;/li>
+    &lt;li>
+        &lt;b>Maintains the consistency and integrity of the architecture&lt;/b>, ensuring that: 
+        &lt;ul>
+            &lt;li>
                 new design elements identified for the current iteration are integrated with pre-existing design elements.
-            &lt;/li&gt;
-            &lt;li&gt;
+            &lt;/li>
+            &lt;li>
                 maximal re-use of available components and design elements is achieved as early as possible in the design
                 effort.
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-&lt;/ul&gt;</mainDescription>
-    <keyConsiderations>&lt;p&gt;
+            &lt;/li>
+        &lt;/ul>
+    &lt;/li>
+&lt;/ul></mainDescription>
+    <keyConsiderations>&lt;p>
     Key considerations:
-&lt;/p&gt;
-&lt;ul&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ul>
+    &lt;li>
         key1
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key2
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key3
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key4
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key5
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key6
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         key7
-    &lt;/li&gt;
-&lt;/ul&gt;</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
+    &lt;/li>
+&lt;/ul></keyConsiderations>
+    <usageGuidance>&lt;p>
     The work is best done in several sessions, perhaps performed over a few days (or weeks and months for very large
     systems). The initial focus will be on the activities &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/identify_design_mechanisms,{C7A26BD7-3820-48D9-830F-684C3AF155F9}.html&quot;
-    guid=&quot;{C7A26BD7-3820-48D9-830F-684C3AF155F9}&quot;&gt;Identify Design Mechanisms&lt;/a&gt; and &lt;a class=&quot;elementLink&quot;
+    guid=&quot;{C7A26BD7-3820-48D9-830F-684C3AF155F9}&quot;>Identify Design Mechanisms&lt;/a> and &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/identify_design_elements_real-time_design,{586963D0-607D-4EC2-8D53-292DAFAB9C92}.html&quot;
-    guid=&quot;{586963D0-607D-4EC2-8D53-292DAFAB9C92}&quot;&gt;identify_design_elements_real-time_design&lt;/a&gt;, with a great deal of
+    guid=&quot;{586963D0-607D-4EC2-8D53-292DAFAB9C92}&quot;>identify_design_elements_real-time_design&lt;/a>, with a great deal of
     iteration with the &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/incorporate_design_elements,{5C647173-4E32-4594-96A9-2548B47722FA}.html&quot;
-    guid=&quot;{5C647173-4E32-4594-96A9-2548B47722FA}&quot;&gt;Incorporate Existing Design Elements&lt;/a&gt; activity to make sure that new
+    guid=&quot;{5C647173-4E32-4594-96A9-2548B47722FA}&quot;>Incorporate Existing Design Elements&lt;/a> activity to make sure that new
     elements do not duplicate functionality of existing elements.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     As the design emerges, concurrency and distribution issues are introduced in the activities &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/describe_runtime_architecture,{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}.html&quot;
-    guid=&quot;{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}&quot;&gt;Describe the Run-time Architecture&lt;/a&gt; and &lt;a class=&quot;elementLink&quot;
+    guid=&quot;{4D35C038-A2D0-48B8-9ECD-52717FEAE33A}&quot;>Describe the Run-time Architecture&lt;/a> and &lt;a class=&quot;elementLink&quot;
     href=&quot;resources/describe_distribution,{6A112808-0A90-427A-BAB9-E14F3FBF72B5}.html&quot;
-    guid=&quot;{6A112808-0A90-427A-BAB9-E14F3FBF72B5}&quot;&gt;Describe Distribution&lt;/a&gt;, respectively. As these issues are considered,
+    guid=&quot;{6A112808-0A90-427A-BAB9-E14F3FBF72B5}&quot;>Describe Distribution&lt;/a>, respectively. As these issues are considered,
     changes to design elements may be required to split behavior across processes, threads or nodes.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     As the individual models are refined to incorporate the architectural decisions, the results are documented in
     respective view sections in the Software Architecture Document (e.g., as the Design Model is refined, the Logical View
     of the Software Architecture Document is refined, as well). The resulting architecture is reviewed.
-&lt;/p&gt;
-&lt;br /&gt;
-&lt;br /&gt;</usageGuidance>
-    <purpose>&lt;p&gt;
+&lt;/p>
+&lt;br />
+&lt;br /></usageGuidance>
+    <purpose>&lt;p>
     Purpose of this activity is to have tasks that are associated to other tasks.
-&lt;/p&gt;
-&lt;p&gt;
-    &amp;nbsp;&lt;img height=&quot;71&quot; alt=&quot;&quot; src=&quot;resources/rup.jpg&quot; width=&quot;176&quot; /&gt;
-&lt;/p&gt;</purpose>
-    <alternatives>&lt;p&gt;
+&lt;/p>
+&lt;p>
+    &amp;nbsp;&lt;img height=&quot;71&quot; alt=&quot;&quot; src=&quot;resources/rup.jpg&quot; width=&quot;176&quot; />
+&lt;/p></purpose>
+    <alternatives>&lt;p>
     Alterantives:
-&lt;/p&gt;
-&lt;ol&gt;
-    &lt;li&gt;
+&lt;/p>
+&lt;ol>
+    &lt;li>
         Alter1
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         Alter2
-    &lt;/li&gt;
-    &lt;li&gt;
+    &lt;/li>
+    &lt;li>
         Alter3
-    &lt;/li&gt;
-&lt;/ol&gt;</alternatives>
-    <howtoStaff>&lt;p&gt;
+    &lt;/li>
+&lt;/ol></alternatives>
+    <howtoStaff>&lt;p>
     These activities are best carried out by a small team staffed by cross-functional team members. Issues that are
     typically architecturally significant include usability, performance, scaling, process and thread synchronization, and
     distribution. The team should also include members with domain experience who can identify key abstractions. The team
     should also have experience with model organization and layering. The team will need to be able to pull all these
     disparate threads into a cohesive, coherent (albeit preliminary) architecture.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     Because the focus of the architecture effort is shifting toward implementation issues, greater attention needs to be
     paid to specific technology issues. This will force the architecture team to shift members or expand to include people
     with distribution and deployment expertise (if those issues are architecturally significant). In order to understand
     the potential impact of the structure on the implementation model on the ease of integration, expertise in the software
     build management process is useful to have.
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     At the same time, it is essential that the architecture team not be composed of a large extended team. A strategy for
     countering this trend is to retain a relatively small core team with a satellite group of extended team members that
-    are brought in as &quot;consultants&quot; on key issues&lt;b&gt;.&lt;/b&gt; This structure also works well for smaller projects where
+    are brought in as &quot;consultants&quot; on key issues&lt;b>.&lt;/b> This structure also works well for smaller projects where
     specific expertise may be borrowed or contracted from other organizations; they can be brought in as specific issues
     need to be addressed.
-&lt;/p&gt;</howtoStaff>
+&lt;/p></howtoStaff>
   </org.eclipse.epf.uma:ActivityDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-BY__tijwRrV41YUrXItU0w" name="role_A2,_JC98ADzlEdq5ysFONr1BGQ" guid="-BY__tijwRrV41YUrXItU0w">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-BY__tijwRrV41YUrXItU0w" name="role_A2,_JC98ADzlEdq5ysFONr1BGQ"
+      guid="-BY__tijwRrV41YUrXItU0w">
     <keyConsiderations>keys consideration:Role A2</keyConsiderations>
     <usageGuidance>usage:Role A2</usageGuidance>
-    <refinedDescription>&lt;p&gt;
+    <refinedDescription>&lt;p>
     refined description : Role A2
-&lt;/p&gt;</refinedDescription>
+&lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DOZrR_sZwwpcUtcou-jIyQ" name="role_A1,_JC98ATzlEdq5ysFONr1BGQ" guid="-DOZrR_sZwwpcUtcou-jIyQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DOZrR_sZwwpcUtcou-jIyQ" name="role_A1,_JC98ATzlEdq5ysFONr1BGQ"
+      guid="-DOZrR_sZwwpcUtcou-jIyQ">
     <keyConsiderations>Role A1:key consideration</keyConsiderations>
     <usageGuidance>Role A1:usage</usageGuidance>
     <refinedDescription>Role A1:Refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-arFrJisByP90YCrMb-iyjg" name="roleDesc with no links,_3_UNwDzkEdq5ysFONr1BGQ" guid="-arFrJisByP90YCrMb-iyjg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-arFrJisByP90YCrMb-iyjg" name="roleDesc with no links,_3_UNwDzkEdq5ysFONr1BGQ"
+      guid="-arFrJisByP90YCrMb-iyjg">
     <keyConsiderations>key consideration:roleDesc with no links</keyConsiderations>
     <usageGuidance>usage:roleDesc with no links</usageGuidance>
     <refinedDescription>refined description : roleDesc with no links</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5OeGPH8JRzSRAFPzBgHnJA" name="role_B2,_Mc0zwDzlEdq5ysFONr1BGQ" guid="-5OeGPH8JRzSRAFPzBgHnJA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5OeGPH8JRzSRAFPzBgHnJA" name="role_B2,_Mc0zwDzlEdq5ysFONr1BGQ"
+      guid="-5OeGPH8JRzSRAFPzBgHnJA">
     <keyConsiderations>key:Role B2</keyConsiderations>
     <usageGuidance>usage:Role B2</usageGuidance>
     <refinedDescription>refined:Role B2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-YerIjDrIlewd8iDhISMg1g" name="role_B1,_Mc0zwTzlEdq5ysFONr1BGQ" guid="-YerIjDrIlewd8iDhISMg1g">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-YerIjDrIlewd8iDhISMg1g" name="role_B1,_Mc0zwTzlEdq5ysFONr1BGQ"
+      guid="-YerIjDrIlewd8iDhISMg1g">
     <keyConsiderations>key:Role B1</keyConsiderations>
     <usageGuidance>usage:Role B1</usageGuidance>
     <refinedDescription>refined: Role B1</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ncLhU4vhg6dhoEKTTkKkDQ" name="wpDesc2,_TCu4IDziEdq5ysFONr1BGQ" guid="-ncLhU4vhg6dhoEKTTkKkDQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ncLhU4vhg6dhoEKTTkKkDQ" name="wpDesc2,_TCu4IDziEdq5ysFONr1BGQ"
+      guid="-ncLhU4vhg6dhoEKTTkKkDQ">
     <keyConsiderations>key:wpdesc2</keyConsiderations>
     <usageGuidance>usage:wpdesc2</usageGuidance>
     <refinedDescription>refined: wpdesc2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-rDXoW6bWZ_7mkL_E9Wcyhg" name="wpDesc3 with no links,_1x57ADzkEdq5ysFONr1BGQ" guid="-rDXoW6bWZ_7mkL_E9Wcyhg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-rDXoW6bWZ_7mkL_E9Wcyhg" name="wpDesc3 with no links,_1x57ADzkEdq5ysFONr1BGQ"
+      guid="-rDXoW6bWZ_7mkL_E9Wcyhg">
     <keyConsiderations>key: wpDesc3 with no links</keyConsiderations>
     <usageGuidance>usage: wpDesc3 with no links</usageGuidance>
     <refinedDescription>refined: wpDesc3 with no links</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-hmCCr-DKZ6zr8S6DXdqfSA" name="artifact_A2,_JC98AjzlEdq5ysFONr1BGQ" guid="-hmCCr-DKZ6zr8S6DXdqfSA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-hmCCr-DKZ6zr8S6DXdqfSA" name="artifact_A2,_JC98AjzlEdq5ysFONr1BGQ"
+      guid="-hmCCr-DKZ6zr8S6DXdqfSA">
     <keyConsiderations>key : Artifact A2</keyConsiderations>
     <usageGuidance>usage: Artifact A2</usageGuidance>
     <refinedDescription>refined: Artifact A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-CDJo_oYCdDi5vp8I69v9Ow" name="deliverable_A2,_JC98AzzlEdq5ysFONr1BGQ" guid="-CDJo_oYCdDi5vp8I69v9Ow">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-CDJo_oYCdDi5vp8I69v9Ow" name="deliverable_A2,_JC98AzzlEdq5ysFONr1BGQ"
+      guid="-CDJo_oYCdDi5vp8I69v9Ow">
     <keyConsiderations>keys: Deliverable A2</keyConsiderations>
     <usageGuidance>usage: Deliverable A2</usageGuidance>
     <refinedDescription>refined:Deliverable A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-QN9RGL5cn0SlbUwnGV2G_A" name="artifact_A2,_JDHtADzlEdq5ysFONr1BGQ" guid="-QN9RGL5cn0SlbUwnGV2G_A">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-QN9RGL5cn0SlbUwnGV2G_A" name="artifact_A2,_JDHtADzlEdq5ysFONr1BGQ"
+      guid="-QN9RGL5cn0SlbUwnGV2G_A">
     <keyConsiderations>keys:Artifact A2</keyConsiderations>
     <usageGuidance>usage:Artifact A2</usageGuidance>
     <refinedDescription>refined:Artifact A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-1jTDqS4Rv_PAEHYFpeojmA" name="outcome_A2,_JDHtATzlEdq5ysFONr1BGQ" guid="-1jTDqS4Rv_PAEHYFpeojmA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-1jTDqS4Rv_PAEHYFpeojmA" name="outcome_A2,_JDHtATzlEdq5ysFONr1BGQ"
+      guid="-1jTDqS4Rv_PAEHYFpeojmA">
     <keyConsiderations>key:Outcome A2</keyConsiderations>
     <usageGuidance>usage:Outcome A2</usageGuidance>
     <refinedDescription>refined:Outcome A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DakzmvA-qhwGESCfZK11sQ" name="artifact_B2,_MdRfsDzlEdq5ysFONr1BGQ" guid="-DakzmvA-qhwGESCfZK11sQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DakzmvA-qhwGESCfZK11sQ" name="artifact_B2,_MdRfsDzlEdq5ysFONr1BGQ"
+      guid="-DakzmvA-qhwGESCfZK11sQ">
     <keyConsiderations>key:Artifact B2</keyConsiderations>
     <usageGuidance>usage:Artifact B2</usageGuidance>
     <refinedDescription>refined:Artifact B2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-LaDyAujxBkPThr28t2Xdwg" name="deliverable_B2,_MdRfsTzlEdq5ysFONr1BGQ" guid="-LaDyAujxBkPThr28t2Xdwg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-LaDyAujxBkPThr28t2Xdwg" name="deliverable_B2,_MdRfsTzlEdq5ysFONr1BGQ"
+      guid="-LaDyAujxBkPThr28t2Xdwg">
     <keyConsiderations>key:Deliverable B2</keyConsiderations>
     <usageGuidance>usage:Deliverable B2</usageGuidance>
     <refinedDescription>refined:Deliverable B2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nTt6H3rXytUsOqpJLEQjdw" name="outcome_B2,_MdkaoTzlEdq5ysFONr1BGQ" guid="-nTt6H3rXytUsOqpJLEQjdw">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nTt6H3rXytUsOqpJLEQjdw" name="outcome_B2,_MdkaoTzlEdq5ysFONr1BGQ"
+      guid="-nTt6H3rXytUsOqpJLEQjdw">
     <usageGuidance>&amp;nbsp;&amp;nbsp;&amp;nbsp;</usageGuidance>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-zBAs11RgLg_YSbs7BdkSuQ" name="task_A1,_0DR_QEDEEdqO9M3fukYA_A" guid="-zBAs11RgLg_YSbs7BdkSuQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-zBAs11RgLg_YSbs7BdkSuQ" name="task_A1,_0DR_QEDEEdqO9M3fukYA_A"
+      guid="-zBAs11RgLg_YSbs7BdkSuQ">
     <keyConsiderations>Task A1&amp;nbsp; key</keyConsiderations>
-    <usageGuidance>&lt;p&gt;
+    <usageGuidance>&lt;p>
     Task A1&amp;nbsp; guidance
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     &lt;img height=&quot;16&quot; alt=&quot;&quot;
     src=&quot;file:///C:/Documents%20and%20Settings/Administrator/IBM/MethodLibraries/Paris/Paris/Plug%20A/capabilitypatterns/resources/synced.gif&quot;
-     width=&quot;16&quot; /&gt;
-&lt;/p&gt;
-&lt;p&gt;
+     width=&quot;16&quot; />
+&lt;/p>
+&lt;p>
     &lt;img height=&quot;16&quot; alt=&quot;&quot;
     src=&quot;file:///C:/Documents%20and%20Settings/Administrator/IBM/MethodLibraries/Paris/Paris/Plug%20A/capabilitypatterns/resources/helpbook.gif&quot;
-     width=&quot;16&quot; /&gt;
-&lt;/p&gt;</usageGuidance>
+     width=&quot;16&quot; />
+&lt;/p></usageGuidance>
     <refinedDescription>Task A1&amp;nbsp; refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-yb-LGikcA5MPeR8L3YW2CA" name="task_A2,_2887EEDEEdqO9M3fukYA_A" guid="-yb-LGikcA5MPeR8L3YW2CA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-yb-LGikcA5MPeR8L3YW2CA" name="task_A2,_2887EEDEEdqO9M3fukYA_A"
+      guid="-yb-LGikcA5MPeR8L3YW2CA">
     <keyConsiderations>Task A2 key</keyConsiderations>
     <usageGuidance>Task A2 guidance</usageGuidance>
     <refinedDescription>Task A2 refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-wBVwnKNA7vxPZpY5h0njBQ" name="role_A1,_0Dk6MEDEEdqO9M3fukYA_A" guid="-wBVwnKNA7vxPZpY5h0njBQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-wBVwnKNA7vxPZpY5h0njBQ" name="role_A1,_0Dk6MEDEEdqO9M3fukYA_A"
+      guid="-wBVwnKNA7vxPZpY5h0njBQ">
     <keyConsiderations>Role A1 key</keyConsiderations>
     <usageGuidance>Role A1 guidance</usageGuidance>
-    <refinedDescription>&lt;p&gt;
+    <refinedDescription>&lt;p>
     Role A1 refined desc
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     &lt;img height=&quot;71&quot; alt=&quot;&quot;
     src=&quot;file:///C:/Documents%20and%20Settings/Administrator/IBM/MethodLibraries/Paris/Paris/Plug%20A/capabilitypatterns/resources/rup.jpg&quot;
-     width=&quot;176&quot; /&gt;
-&lt;/p&gt;</refinedDescription>
+     width=&quot;176&quot; />
+&lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_j3f8djwKxsKaCHDnJIqVA" name="role_A2,_0Dk6MUDEEdqO9M3fukYA_A" guid="-_j3f8djwKxsKaCHDnJIqVA">
-    <keyConsiderations>&lt;p&gt;
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_j3f8djwKxsKaCHDnJIqVA" name="role_A2,_0Dk6MUDEEdqO9M3fukYA_A"
+      guid="-_j3f8djwKxsKaCHDnJIqVA">
+    <keyConsiderations>&lt;p>
     Role A2 key
-&lt;/p&gt;
-&lt;p&gt;
+&lt;/p>
+&lt;p>
     &lt;img height=&quot;167&quot; alt=&quot;&quot;
     src=&quot;file:///C:/Documents%20and%20Settings/Administrator/IBM/MethodLibraries/Paris/Paris/Plug%20A/capabilitypatterns/resources/rup1_a.gif&quot;
-     width=&quot;26&quot; /&gt;
-&lt;/p&gt;</keyConsiderations>
+     width=&quot;26&quot; />
+&lt;/p></keyConsiderations>
     <usageGuidance>Role A2 usage</usageGuidance>
     <refinedDescription>Role A2 refined desc</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:DeliveryProcessDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-63usgQWFjV_gHmQYM3RUyw" name="delProcPak_A1.1,_uq5K8RM1Edqqndi-gDuxpw" guid="-63usgQWFjV_gHmQYM3RUyw">
+<org.eclipse.epf.uma:DeliveryProcessDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-63usgQWFjV_gHmQYM3RUyw"
+    name="delProcPak_A1.1,_uq5K8RM1Edqqndi-gDuxpw" guid="-63usgQWFjV_gHmQYM3RUyw">
   <mainDescription>DelProcPak A1.1 main</mainDescription>
+  <externalId>DelProcPak A1.1 externID</externalId>
   <keyConsiderations>DelProcPak A1.1 key</keyConsiderations>
   <purpose>DelProcPak A1.1 porpoise</purpose>
   <alternatives>DelProcPak A1.1 alt</alternatives>
   <howtoStaff>DelProcPak A1.1 staff</howtoStaff>
-  <externalId>DelProcPak A1.1 externID</externalId>
   <scope>DelProcPak A1.1 scope</scope>
   <usageNotes>DelProcPak A1.1 usage</usageNotes>
   <scale>DelProcPak A1.1 scale</scale>
   <projectCharacteristics>DelProcPak A1.1 char</projectCharacteristics>
   <riskLevel>DelProcPak A1.1 risk</riskLevel>
-  <estimatingTechnique>DelProcPak A1.1&amp;nbsp;estimating tech&lt;!--StartFragment--&gt;&lt;!--EndFragment--&gt;</estimatingTechnique>
+  <estimatingTechnique>DelProcPak A1.1&amp;nbsp;estimating tech&lt;!--StartFragment-->&lt;!--EndFragment--></estimatingTechnique>
   <projectMemberExpertise>DelProcPak A1.1 expertise</projectMemberExpertise>
   <typeOfContract>DelProcPak A1.1&amp;nbsp;contract</typeOfContract>
 </org.eclipse.epf.uma:DeliveryProcessDescription>

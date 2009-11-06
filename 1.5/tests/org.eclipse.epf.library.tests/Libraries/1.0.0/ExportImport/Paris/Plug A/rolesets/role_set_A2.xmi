@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-LRGleHIpNs5Mb9QAOGfZQw" name="role_set_A2,_-ubgcBBKEdqBs7KhdVLRLA" guid="-LRGleHIpNs5Mb9QAOGfZQw" changeDate="2005-08-18T17:50:40.328-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-LRGleHIpNs5Mb9QAOGfZQw"
+    name="role_set_A2,_-ubgcBBKEdqBs7KhdVLRLA" guid="-LRGleHIpNs5Mb9QAOGfZQw" changeDate="2005-08-19T08:50:40.328+0800">
   <mainDescription>Role Set A2 main</mainDescription>
   <keyConsiderations>Role Set A2 key</keyConsiderations>
 </org.eclipse.epf.uma:ContentDescription>

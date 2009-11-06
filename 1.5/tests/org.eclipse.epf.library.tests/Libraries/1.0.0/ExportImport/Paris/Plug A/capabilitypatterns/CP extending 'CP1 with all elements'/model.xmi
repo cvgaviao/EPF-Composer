@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0">
-  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_cnWmEBBNEdqBs7KhdVLRLA" guid="_cnWmEBBNEdqBs7KhdVLRLA">
-    <resourceDescriptors xmi:id="_cnWmERBNEdqBs7KhdVLRLA" id="-bq00o8v12DXUVFtCniJNcg" uri="content.xmi"/>
+<xmi:XMI xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_cnWmEBBNEdqBs7KhdVLRLA"
+      guid="_cnWmEBBNEdqBs7KhdVLRLA">
+    <resourceDescriptors xmi:id="_cnWmERBNEdqBs7KhdVLRLA" id="-bq00o8v12DXUVFtCniJNcg"
+        uri="content.xmi"/>
   </org.eclipse.epf.uma.resourcemanager:ResourceManager>
-  <org.eclipse.epf.uma:ProcessComponent xmi:id="_aHUSQBBNEdqBs7KhdVLRLA" name="CP extending 'CP1 with all elements'" guid="_aHUSQBBNEdqBs7KhdVLRLA">
-    <childPackages xsi:type="org.eclipse.epf.uma:ProcessPackage" xmi:id="_EW09MD0KEdqjAI77DHvBwA" name="CP1 with all elements" guid="_EW09MD0KEdqjAI77DHvBwA">
-      <processElements xsi:type="org.eclipse.epf.uma:Activity" xmi:id="_EXazED0KEdqjAI77DHvBwA" name="CP1 with all elements" guid="_EXazED0KEdqjAI77DHvBwA" superActivities="_aHUSQRBNEdqBs7KhdVLRLA" variabilityType="extends">
-        <variabilityBasedOnElement xsi:type="org.eclipse.epf.uma:CapabilityPattern" href="uma://_4sCtsDzgEdq5ysFONr1BGQ#_4sCtsTzgEdq5ysFONr1BGQ"/>
+  <org.eclipse.epf.uma:ProcessComponent xmi:id="_aHUSQBBNEdqBs7KhdVLRLA" name="CP extending 'CP1 with all elements'"
+      guid="_aHUSQBBNEdqBs7KhdVLRLA">
+    <childPackages xsi:type="org.eclipse.epf.uma:ProcessPackage" xmi:id="_EW09MD0KEdqjAI77DHvBwA"
+        name="CP1 with all elements" guid="_EW09MD0KEdqjAI77DHvBwA">
+      <processElements xsi:type="org.eclipse.epf.uma:Activity" xmi:id="_EXazED0KEdqjAI77DHvBwA"
+          name="CP1 with all elements" guid="_EXazED0KEdqjAI77DHvBwA" superActivities="_aHUSQRBNEdqBs7KhdVLRLA"
+          variabilityType="extends">
+        <variabilityBasedOnElement xsi:type="org.eclipse.epf.uma:CapabilityPattern"
+            href="uma://_4sCtsDzgEdq5ysFONr1BGQ#_4sCtsTzgEdq5ysFONr1BGQ"/>
       </processElements>
     </childPackages>
     <diagrams xmi:id="_ZqJO8EAtEdqFqIu8-ckolg" guid="_ZqJO8EAtEdqFqIu8-ckolg">
-      <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_ZqJO8UAtEdqFqIu8-ckolg" guid="_ZqJO8UAtEdqFqIu8-ckolg" presentation="Activity Detail" element="_aHUSQRBNEdqBs7KhdVLRLA"/>
+      <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_ZqJO8UAtEdqFqIu8-ckolg"
+          guid="_ZqJO8UAtEdqFqIu8-ckolg" presentation="Activity Detail" element="_aHUSQRBNEdqBs7KhdVLRLA"/>
     </diagrams>
-    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_aHUSQRBNEdqBs7KhdVLRLA" name="CP extending 'CP1 with all elements'" guid="_aHUSQRBNEdqBs7KhdVLRLA" briefDescription="briefCP extending 'CP1 with all elements'" presentationName="CP extending 'CP1 with all elements'" breakdownElements="_EXazED0KEdqjAI77DHvBwA">
+    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_aHUSQRBNEdqBs7KhdVLRLA"
+        name="CP extending 'CP1 with all elements'" guid="_aHUSQRBNEdqBs7KhdVLRLA"
+        presentationName="CP extending 'CP1 with all elements'" briefDescription="briefCP extending 'CP1 with all elements'"
+        breakdownElements="_EXazED0KEdqjAI77DHvBwA">
       <presentation xmi:id="-bq00o8v12DXUVFtCniJNcg" href="uma://-bq00o8v12DXUVFtCniJNcg#-bq00o8v12DXUVFtCniJNcg"/>
       <defaultContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>
       <validContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>

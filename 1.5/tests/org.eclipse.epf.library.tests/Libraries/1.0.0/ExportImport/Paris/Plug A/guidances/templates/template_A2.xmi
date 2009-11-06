@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:GuidanceDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-hLSOWrG5biSX-PAk_3Bb9A" name="template_A2,_ZXq9EA-UEdqL2O1PJV9cZA" guid="-hLSOWrG5biSX-PAk_3Bb9A" changeDate="2005-08-18T14:30:58.953-0700">
+<org.eclipse.epf.uma:GuidanceDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-hLSOWrG5biSX-PAk_3Bb9A"
+    name="template_A2,_ZXq9EA-UEdqL2O1PJV9cZA" guid="-hLSOWrG5biSX-PAk_3Bb9A" changeDate="2005-08-19T05:30:58.953+0800">
   <mainDescription>Template A2 content</mainDescription>
 </org.eclipse.epf.uma:GuidanceDescription>

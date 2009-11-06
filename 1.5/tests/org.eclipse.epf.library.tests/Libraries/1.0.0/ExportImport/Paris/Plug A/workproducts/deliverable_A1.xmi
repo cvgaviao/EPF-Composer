@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:DeliverableDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.2.0" xmi:id="-AbXRg44L8Txx4CkB2hx5NQ" name="deliverable_A1,_IISnUA-REdqL2O1PJV9cZA" guid="-AbXRg44L8Txx4CkB2hx5NQ" changeDate="2005-08-18T14:29:59.391-0700">
+<org.eclipse.epf.uma:DeliverableDescription xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
+    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-AbXRg44L8Txx4CkB2hx5NQ"
+    name="deliverable_A1,_IISnUA-REdqL2O1PJV9cZA" guid="-AbXRg44L8Txx4CkB2hx5NQ" changeDate="2005-08-19T05:29:59.391+0800">
   <mainDescription>Deliverable A1 main</mainDescription>
-  <keyConsiderations>Deliverable A1 key</keyConsiderations>
   <externalId>Deliverable A1 unique</externalId>
+  <keyConsiderations>Deliverable A1 key</keyConsiderations>
   <purpose>Deliverable A1 porpoise</purpose>
   <impactOfNotHaving>Deliverable A1 impact</impactOfNotHaving>
   <reasonsForNotNeeding>Deliverable A1 reason</reasonsForNotNeeding>
