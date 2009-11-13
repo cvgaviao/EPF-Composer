@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.epf.xml.uma;
 
+import org.eclipse.epf.uma.ecore.IModelObject;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.sdo.EDataObject;
 
 /**
@@ -34,10 +36,10 @@ import org.eclipse.emf.ecore.sdo.EDataObject;
  *
  * @see org.eclipse.epf.xml.uma.UmaPackage#getWorkOrder()
  * @model extendedMetaData="name='WorkOrder' kind='simple'"
- * @extends EDataObject
+ * @extends IModelObject
  * @generated
  */
-public interface WorkOrder extends EDataObject {
+public interface WorkOrder extends IModelObject {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->

@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.sdo.EDataObject;
 import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.ui.util.MsgDialog;
@@ -57,6 +56,7 @@ import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.services.IFileBasedLibraryPersister;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.ecore.IModelObject;
 import org.eclipse.epf.xml.uma.Activity;
 import org.eclipse.epf.xml.uma.CapabilityPattern;
 import org.eclipse.epf.xml.uma.ContentCategory;
@@ -298,7 +298,7 @@ public class ImportXMLService {
 				protected File[] getFiles(org.eclipse.epf.uma.MethodElement elem) {
 					File[] files = super.getFiles(elem, false);
 										
-					EDataObject xmlObj = xmlLib.getElement(elem.getGuid());
+					IModelObject xmlObj = xmlLib.getElement(elem.getGuid());
 					if (xmlObj instanceof org.eclipse.epf.xml.uma.Process) {
 						org.eclipse.epf.xml.uma.Process proc = 
 								(org.eclipse.epf.xml.uma.Process) xmlObj;
@@ -360,8 +360,8 @@ public class ImportXMLService {
 			this.umaLib = new UmaLibrary(renameElementMap, contentProc, logger, overwrite);
 			this.umaLib.setMergeLevel(mergeLevel);
 
-			EDataObject xmlRoot = this.xmlLib.getRoot();
-			EDataObject umaRoot = this.umaLib.getRoot();
+			IModelObject xmlRoot = this.xmlLib.getRoot();
+			IModelObject umaRoot = this.umaLib.getRoot();
 			
 			logger.logMessage("create target library elements ..."); //$NON-NLS-1$
 			creatEDataObjectTree(xmlRoot, umaRoot);
@@ -460,16 +460,16 @@ public class ImportXMLService {
 		}
 	}
 
-	private void creatEDataObjectTree(EDataObject xmlObj, EDataObject umaObj) {
+	private void creatEDataObjectTree(IModelObject xmlObj, IModelObject umaObj) {
 
 		for (Iterator it = xmlObj.eContents().iterator(); it.hasNext();) {
-			EDataObject child = (EDataObject) it.next();
+			IModelObject child = (IModelObject) it.next();
 			createRmcObject(child, umaObj);
 		}
 	}
 
-	private void createRmcObject(EDataObject xmlElement,
-			EDataObject targetContainer) {
+	private void createRmcObject(IModelObject xmlElement,
+			IModelObject targetContainer) {
 		if (xmlElement instanceof MethodElementProperty) {
 			return;
 		}
@@ -478,15 +478,15 @@ public class ImportXMLService {
 		createRmcObject(xmlElement, targetContainer, feature.getName());
 	}
 
-	private void createRmcObject(EDataObject xmlElement,
-			EDataObject targetContainer, String containmentXmlFeature) {
+	private void createRmcObject(IModelObject xmlElement,
+			IModelObject targetContainer, String containmentXmlFeature) {
 
 		try {
 			if (xmlElement == null) {
 				return;
 			}
 
-			EDataObject umaElement = null;
+			IModelObject umaElement = null;
 
 			// don't create content category package since in uma, it's
 			// seperated based on type
@@ -595,7 +595,7 @@ public class ImportXMLService {
 		return (MethodPlugin) element;
 	}
 
-	private EDataObject getRmcObject(MethodElement xmlObj) {
+	private IModelObject getRmcObject(MethodElement xmlObj) {
 		if (xmlObj instanceof MethodLibrary) {
 			return umaLib.getRoot();
 		} else {
@@ -606,7 +606,7 @@ public class ImportXMLService {
 
 	private void iteratEDataObject(MethodElement srcObj) {
 		iteratEDataObject_(srcObj);
-		EDataObject targetObj = getRmcObject(srcObj);
+		IModelObject targetObj = getRmcObject(srcObj);
 		if (targetObj instanceof org.eclipse.epf.uma.MethodElement) {
 			diagramHandler.registerElement((org.eclipse.epf.uma.MethodElement) targetObj); 
 		}
@@ -633,7 +633,7 @@ public class ImportXMLService {
 			return;
 		}
 
-		EDataObject targetObj = getRmcObject(srcObj);
+		IModelObject targetObj = getRmcObject(srcObj);
 		EClass eClass = srcObj.eClass();
 
 		EList features = eClass.getEAllStructuralFeatures();

@@ -49,13 +49,6 @@ import org.eclipse.epf.uma.util.AssociationHelper;
 public class RoleDescriptorImpl extends DescriptorImpl implements
 		RoleDescriptor {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getRole() <em>Role</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

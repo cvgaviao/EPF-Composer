@@ -46,13 +46,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class TeamProfileImpl extends BreakdownElementImpl implements
 		TeamProfile {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getTeamRoles() <em>Team Roles</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

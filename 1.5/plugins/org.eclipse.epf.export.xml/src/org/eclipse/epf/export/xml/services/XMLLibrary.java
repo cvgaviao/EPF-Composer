@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.sdo.EDataObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
@@ -41,6 +40,8 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.ecore.IModelObject;
+import org.eclipse.epf.uma.ecore.Type;
 import org.eclipse.epf.xml.uma.BreakdownElement;
 import org.eclipse.epf.xml.uma.ContentCategoryPackage;
 import org.eclipse.epf.xml.uma.ContentElement;
@@ -65,7 +66,6 @@ import org.eclipse.epf.xml.uma.util.UmaResourceFactoryImpl;
 import org.eclipse.osgi.util.NLS;
 
 import com.ibm.icu.text.SimpleDateFormat;
-import commonj.sdo.Type;
 
 /**
  * XmlLibrary represents a method library loaded from a specified xml file The
@@ -112,7 +112,7 @@ public class XMLLibrary {
 	/**
 	 * @return root object.
 	 */
-	public EDataObject getRoot() {
+	public IModelObject getRoot() {
 		return this.rootObject;
 	}
 
@@ -143,7 +143,7 @@ public class XMLLibrary {
 	 * @param name
 	 * @return a new XML library.
 	 */
-	public EDataObject createLibrary(String id, String name) {
+	public IModelObject createLibrary(String id, String name) {
 
 		MethodLibrary root = UmaFactory.eINSTANCE.createMethodLibrary();
 		String version = "";								//$NON-NLS-1$	
@@ -257,7 +257,7 @@ public class XMLLibrary {
 	 * @param pluginId
 	 * @return a content catergory package in the plugin given by pluginId.
 	 */
-	public EDataObject getContentCategoryPackage(String pluginId) {
+	public IModelObject getContentCategoryPackage(String pluginId) {
 
 		ContentCategoryPackage pkg = (ContentCategoryPackage) contentCategoryPkgMap
 				.get(pluginId);
@@ -298,7 +298,7 @@ public class XMLLibrary {
 	/**
 	 * @return the root object.
 	 */
-	public EDataObject open() {
+	public IModelObject open() {
 		return rootObject;
 	}
 
@@ -306,15 +306,15 @@ public class XMLLibrary {
 	 * @param guid
 	 * @return the corresponding base library element.
 	 */
-	public EDataObject getElement(String guid) {
-		return (EDataObject) elementsMap.get(guid);
+	public IModelObject getElement(String guid) {
+		return (IModelObject) elementsMap.get(guid);
 	}
 
 	/**
 	 * @param obj
 	 * @return the corresponding base library element.
 	 */
-	public EDataObject getElement(Object obj) {
+	public IModelObject getElement(Object obj) {
 		if (obj instanceof MethodElement) {
 			return getElement(((MethodElement) obj).getId());
 		}
@@ -327,7 +327,7 @@ public class XMLLibrary {
 	 * @param obj
 	 * @return elmenent id string.
 	 */
-	public String getElementId(EDataObject obj) {
+	public String getElementId(IModelObject obj) {
 
 		if (obj instanceof MethodElement) {
 			return ((MethodElement) obj).getId();
@@ -338,7 +338,7 @@ public class XMLLibrary {
 		return null;
 	}
 
-	private void setElement(String guid, EDataObject obj) {
+	private void setElement(String guid, IModelObject obj) {
 		// addElementToContainer(container, obj);
 		if (!elementsMap.containsKey(guid)) {
 
@@ -395,11 +395,11 @@ public class XMLLibrary {
 	 *            guid of the element to be created
 	 * @return EDataObject the Xml uma element
 	 */
-	public EDataObject createElement(EDataObject container,
+	public IModelObject createElement(IModelObject container,
 			String umaFeatureName, String umaEClassName, String umaElementType,
 			String guid) {
 
-		EDataObject obj = getElement(guid);
+		IModelObject obj = getElement(guid);
 		if (obj == null) {
 			if (FeatureManager.INSTANCE.isUnneededRmcFeature(umaFeatureName)) {
 				return null;
@@ -439,7 +439,7 @@ public class XMLLibrary {
 				return null;
 			}
 
-			obj = (EDataObject) EcoreUtil.create(objClass);
+			obj = (IModelObject) EcoreUtil.create(objClass);
 			setElement(guid, obj);
 
 			if (obj instanceof WorkOrder) {
@@ -535,13 +535,13 @@ public class XMLLibrary {
 	 * @param value
 	 * @throws Exception
 	 */
-	public void setAtributeFeatureValue(EDataObject obj, String featureName,
+	public void setAtributeFeatureValue(IModelObject obj, String featureName,
 			Object value) throws Exception {
 		if (obj == null || featureName == null || value == null) {
 			return;
 		}
 
-		if (value instanceof List || value instanceof EDataObject) {
+		if (value instanceof List || value instanceof IModelObject) {
 			if (featureName.equals("methodElementProperty")) {		//$NON-NLS-1$
 				setMepFeatureValue(obj, featureName, value);
 				return;
@@ -616,7 +616,7 @@ public class XMLLibrary {
 
 	}
 
-	private void setMepFeatureValue(EDataObject obj, String featureName, Object value) {
+	private void setMepFeatureValue(IModelObject obj, String featureName, Object value) {
 		List srcList = (List) value;
 		if (srcList == null || srcList.isEmpty()) {
 			return;
@@ -714,7 +714,7 @@ public class XMLLibrary {
 	 *            unique
 	 * @throws Exception
 	 */
-	public void setReferenceValue(EDataObject obj, String featureName,
+	public void setReferenceValue(IModelObject obj, String featureName,
 			String idValue, Type valueType) throws Exception {
 		if (obj == null || featureName == null || idValue == null) {
 			return;
@@ -749,7 +749,7 @@ public class XMLLibrary {
 			// special handling for breakdown element. In uma, breakdown
 			// elements are under process packages
 			// in xml model, they are owned by the activity
-			EDataObject v = getElement(idValue);
+			IModelObject v = getElement(idValue);
 			if (v instanceof BreakdownElement) {
 				EObject old_container = v.eContainer();
 				List l = (List) obj.eGet(feature);
@@ -1011,7 +1011,7 @@ public class XMLLibrary {
 	}
 
 	private void fixProcess(org.eclipse.epf.xml.uma.Process proc) {
-		EDataObject container = (EDataObject) proc.eContainer();
+		IModelObject container = (IModelObject) proc.eContainer();
 		ProcessComponent pc = null;
 		if (container instanceof ProcessComponent) {
 			return;

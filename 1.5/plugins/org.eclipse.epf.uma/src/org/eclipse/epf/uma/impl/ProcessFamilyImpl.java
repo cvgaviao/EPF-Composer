@@ -37,13 +37,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class ProcessFamilyImpl extends MethodConfigurationImpl implements
 		ProcessFamily {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getDeliveryProcesses() <em>Delivery Processes</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

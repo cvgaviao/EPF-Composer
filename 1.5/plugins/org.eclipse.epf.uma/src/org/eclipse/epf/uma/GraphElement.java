@@ -62,7 +62,7 @@ public interface GraphElement extends DiagramElement {
 	/**
 	 * Returns the value of the '<em><b>Contained</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.epf.uma.DiagramElement}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.epf.uma.DiagramElement#getContainer_ <em>Container</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.epf.uma.DiagramElement#getContainer <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Contained</em>' containment reference list isn't clear,
@@ -71,7 +71,7 @@ public interface GraphElement extends DiagramElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Contained</em>' containment reference list.
 	 * @see org.eclipse.epf.uma.UmaPackage#getGraphElement_Contained()
-	 * @see org.eclipse.epf.uma.DiagramElement#getContainer_
+	 * @see org.eclipse.epf.uma.DiagramElement#getContainer
 	 * @model opposite="container" containment="true" resolveProxies="true" ordered="false"
 	 * @generated
 	 */

@@ -37,13 +37,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class CompositeRoleImpl extends RoleDescriptorImpl implements
 		CompositeRole {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getAggregatedRoles() <em>Aggregated Roles</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

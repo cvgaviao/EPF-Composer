@@ -49,13 +49,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class MethodConfigurationImpl extends MethodUnitImpl implements
 		MethodConfiguration {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getMethodPluginSelection() <em>Method Plugin Selection</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

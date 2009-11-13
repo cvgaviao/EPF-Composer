@@ -7,8 +7,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.emf.ecore.sdo;visibility:=reexport
+ org.eclipse.emf.ecore;visibility:=reexport
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.epf.uma.ecore,
  org.eclipse.epf.uma.ecore.impl,

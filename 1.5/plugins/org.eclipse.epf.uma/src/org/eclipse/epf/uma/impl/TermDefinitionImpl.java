@@ -29,13 +29,6 @@ public class TermDefinitionImpl extends GuidanceImpl implements TermDefinition {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	protected TermDefinitionImpl() {
 		super();
 

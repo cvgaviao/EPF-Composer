@@ -56,13 +56,6 @@ import org.eclipse.epf.uma.WorkProduct;
  */
 public class TaskImpl extends ContentElementImpl implements Task {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getPrecondition() <em>Precondition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

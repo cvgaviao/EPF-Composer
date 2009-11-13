@@ -4,8 +4,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.epf.xml.uma/src"
     editDirectory="/org.eclipse.epf.xml.uma.edit/src" editorDirectory="/org.eclipse.epf.xml.uma.editor/src"
     modelPluginID="org.eclipse.epf.xml.uma" templateDirectory="" modelName="UMA" editPluginClass="org.eclipse.epf.xml.uma.edit.UMAEditPlugin"
-    editorPluginClass="org.eclipse.epf.xml.uma.editor.UMAEditorPlugin" rootExtendsInterface="org.eclipse.emf.ecore.sdo.EDataObject"
-    rootExtendsClass="org.eclipse.emf.ecore.sdo.impl.EDataObjectImpl" rootImplementsInterface=""
+    editorPluginClass="org.eclipse.epf.xml.uma.editor.UMAEditorPlugin" rootExtendsInterface="org.eclipse.epf.uma.ecore.IModelObject"
+    rootExtendsClass="org.eclipse.epf.uma.ecore.impl.MultiResourceEObject" rootImplementsInterface=""
     testSuiteClass="org.eclipse.epf.xml.uma.tests.UMAAllTests" importerID="org.eclipse.xsd.ecore.importer"
     complianceLevel="5.0">
   <foreignModel>EPF_Schema_200801270942.xsd</foreignModel>

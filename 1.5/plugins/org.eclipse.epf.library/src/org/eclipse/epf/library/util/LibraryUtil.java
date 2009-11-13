@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.sdo.EProperty;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
@@ -64,6 +63,7 @@ import org.eclipse.epf.uma.MethodUnit;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 

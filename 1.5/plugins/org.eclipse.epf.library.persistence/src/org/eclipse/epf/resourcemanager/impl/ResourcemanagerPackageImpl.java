@@ -245,6 +245,10 @@ public class ResourcemanagerPackageImpl extends EPackageImpl implements Resource
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
+		// Create type parameters
+
+		// Set bounds for type parameters
+
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
@@ -258,8 +262,8 @@ public class ResourcemanagerPackageImpl extends EPackageImpl implements Resource
 		initEReference(getResourceManager_SubManagers(), this.getResourceManager(), null, "subManagers", null, 0, -1, ResourceManager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getResourceManager_ResourceDescriptors(), this.getResourceDescriptor(), null, "resourceDescriptors", null, 0, -1, ResourceManager.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		EOperation op = addEOperation(resourceManagerEClass, this.getResourceDescriptor(), "getResourceDescriptor", 0, 1); //$NON-NLS-1$
-		addEParameter(op, ecorePackage.getEString(), "guid", 0, 1); //$NON-NLS-1$
+		EOperation op = addEOperation(resourceManagerEClass, this.getResourceDescriptor(), "getResourceDescriptor", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEString(), "guid", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

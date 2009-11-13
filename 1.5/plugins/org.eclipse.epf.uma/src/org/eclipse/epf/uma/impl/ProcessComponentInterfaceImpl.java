@@ -42,13 +42,6 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 public class ProcessComponentInterfaceImpl extends BreakdownElementImpl
 		implements ProcessComponentInterface {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getInterfaceSpecifications() <em>Interface Specifications</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

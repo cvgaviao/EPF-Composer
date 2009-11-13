@@ -36,13 +36,6 @@ import org.eclipse.epf.uma.UmaPackage;
  */
 public class ImageImpl extends LeafElementImpl implements Image {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getUri() <em>Uri</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

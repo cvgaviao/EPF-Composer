@@ -52,13 +52,6 @@ import org.eclipse.epf.uma.UmaPackage;
  */
 public class DiagramImpl extends GraphNodeImpl implements Diagram {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getDiagramLink() <em>Diagram Link</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

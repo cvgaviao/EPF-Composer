@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.epf.resourcemanager.*;
 import org.eclipse.epf.resourcemanager.ResourceDescriptor;
 import org.eclipse.epf.resourcemanager.ResourceManager;
 import org.eclipse.epf.resourcemanager.ResourcemanagerPackage;
@@ -31,7 +32,7 @@ import org.eclipse.epf.resourcemanager.ResourcemanagerPackage;
  * @see org.eclipse.epf.resourcemanager.ResourcemanagerPackage
  * @generated
  */
-public class ResourcemanagerSwitch {
+public class ResourcemanagerSwitch<T> {
 	
 	/**
 	 * The cached model package
@@ -60,7 +61,7 @@ public class ResourcemanagerSwitch {
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-    public Object doSwitch(EObject theEObject) {
+    public T doSwitch(EObject theEObject) {
 		return doSwitch(theEObject.eClass(), theEObject);
 	}
 
@@ -71,16 +72,16 @@ public class ResourcemanagerSwitch {
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-    protected Object doSwitch(EClass theEClass, EObject theEObject) {
+    protected T doSwitch(EClass theEClass, EObject theEObject) {
 		if (theEClass.eContainer() == modelPackage) {
 			return doSwitch(theEClass.getClassifierID(), theEObject);
 		}
 		else {
-			List eSuperTypes = theEClass.getESuperTypes();
+			List<EClass> eSuperTypes = theEClass.getESuperTypes();
 			return
 				eSuperTypes.isEmpty() ?
 					defaultCase(theEObject) :
-					doSwitch((EClass)eSuperTypes.get(0), theEObject);
+					doSwitch(eSuperTypes.get(0), theEObject);
 		}
 	}
 
@@ -91,17 +92,17 @@ public class ResourcemanagerSwitch {
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
-    protected Object doSwitch(int classifierID, EObject theEObject) {
+    protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 			case ResourcemanagerPackage.RESOURCE_DESCRIPTOR: {
 				ResourceDescriptor resourceDescriptor = (ResourceDescriptor)theEObject;
-				Object result = caseResourceDescriptor(resourceDescriptor);
+				T result = caseResourceDescriptor(resourceDescriptor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ResourcemanagerPackage.RESOURCE_MANAGER: {
 				ResourceManager resourceManager = (ResourceManager)theEObject;
-				Object result = caseResourceManager(resourceManager);
+				T result = caseResourceManager(resourceManager);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -110,47 +111,47 @@ public class ResourcemanagerSwitch {
 	}
 
 	/**
-	 * Returns the result of interpretting the object as an instance of '<em>Resource Descriptor</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Resource Descriptor</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpretting the object as an instance of '<em>Resource Descriptor</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Resource Descriptor</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-    public Object caseResourceDescriptor(ResourceDescriptor object) {
+    public T caseResourceDescriptor(ResourceDescriptor object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpretting the object as an instance of '<em>Resource Manager</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Resource Manager</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpretting the object as an instance of '<em>Resource Manager</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Resource Manager</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-    public Object caseResourceManager(ResourceManager object) {
+    public T caseResourceManager(ResourceManager object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpretting the object as an instance of '<em>EObject</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch, but this is the last case anyway.
      * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpretting the object as an instance of '<em>EObject</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
-    public Object defaultCase(EObject object) {
+    public T defaultCase(EObject object) {
 		return null;
 	}
 

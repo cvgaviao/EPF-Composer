@@ -33,13 +33,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class BreakdownElementDescriptionImpl extends ContentDescriptionImpl
 		implements BreakdownElementDescription {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getUsageGuidance() <em>Usage Guidance</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

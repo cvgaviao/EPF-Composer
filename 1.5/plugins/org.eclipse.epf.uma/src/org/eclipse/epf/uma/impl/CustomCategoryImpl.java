@@ -39,13 +39,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class CustomCategoryImpl extends ContentCategoryImpl implements
 		CustomCategory {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getCategorizedElements() <em>Categorized Elements</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

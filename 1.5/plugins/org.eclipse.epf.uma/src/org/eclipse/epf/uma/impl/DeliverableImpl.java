@@ -36,13 +36,6 @@ import org.eclipse.epf.uma.WorkProduct;
  */
 public class DeliverableImpl extends WorkProductImpl implements Deliverable {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getDeliveredWorkProducts() <em>Delivered Work Products</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

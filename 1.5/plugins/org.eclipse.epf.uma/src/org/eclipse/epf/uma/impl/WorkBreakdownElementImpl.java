@@ -42,13 +42,6 @@ import org.eclipse.epf.uma.WorkOrder;
 public abstract class WorkBreakdownElementImpl extends BreakdownElementImpl
 		implements WorkBreakdownElement {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getIsRepeatable() <em>Is Repeatable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

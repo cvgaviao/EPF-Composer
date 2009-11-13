@@ -33,13 +33,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class SimpleSemanticModelElementImpl extends SemanticModelBridgeImpl
 		implements SimpleSemanticModelElement {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getTypeInfo() <em>Type Info</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

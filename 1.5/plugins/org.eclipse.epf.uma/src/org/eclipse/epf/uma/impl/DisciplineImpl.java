@@ -43,13 +43,6 @@ import org.eclipse.epf.uma.UmaPackage;
  */
 public class DisciplineImpl extends ContentCategoryImpl implements Discipline {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getTasks() <em>Tasks</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

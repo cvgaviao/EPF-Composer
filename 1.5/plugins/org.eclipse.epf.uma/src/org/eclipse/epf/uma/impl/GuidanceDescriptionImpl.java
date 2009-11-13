@@ -33,13 +33,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class GuidanceDescriptionImpl extends ContentDescriptionImpl implements
 		GuidanceDescription {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getAttachments() <em>Attachments</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

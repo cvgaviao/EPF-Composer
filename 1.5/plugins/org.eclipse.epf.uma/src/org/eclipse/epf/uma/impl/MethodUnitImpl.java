@@ -42,13 +42,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public abstract class MethodUnitImpl extends MethodElementImpl implements
 		MethodUnit {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getAuthors() <em>Authors</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

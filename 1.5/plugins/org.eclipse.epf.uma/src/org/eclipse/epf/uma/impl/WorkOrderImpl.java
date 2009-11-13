@@ -37,13 +37,6 @@ import org.eclipse.epf.uma.WorkOrderType;
  */
 public class WorkOrderImpl extends ProcessElementImpl implements WorkOrder {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getLinkType() <em>Link Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -33,13 +33,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public abstract class NamedElementImpl extends ElementImpl implements
 		NamedElement {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

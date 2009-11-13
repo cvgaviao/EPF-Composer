@@ -33,13 +33,6 @@ import org.eclipse.epf.uma.UmaPackage;
  */
 public class PropertyImpl extends DiagramElementImpl implements Property {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

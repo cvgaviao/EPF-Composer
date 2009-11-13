@@ -38,13 +38,6 @@ import org.eclipse.epf.uma.WorkDefinition;
  */
 public class StepImpl extends SectionImpl implements Step {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getPrecondition() <em>Precondition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

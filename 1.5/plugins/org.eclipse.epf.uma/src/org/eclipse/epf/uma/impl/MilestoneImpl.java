@@ -36,13 +36,6 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 public class MilestoneImpl extends WorkBreakdownElementImpl implements
 		Milestone {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getRequiredResults() <em>Required Results</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

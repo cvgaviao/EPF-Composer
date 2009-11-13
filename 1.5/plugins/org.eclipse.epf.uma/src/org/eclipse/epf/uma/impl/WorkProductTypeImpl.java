@@ -37,13 +37,6 @@ import org.eclipse.epf.uma.WorkProductType;
 public class WorkProductTypeImpl extends ContentCategoryImpl implements
 		WorkProductType {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getWorkProducts() <em>Work Products</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

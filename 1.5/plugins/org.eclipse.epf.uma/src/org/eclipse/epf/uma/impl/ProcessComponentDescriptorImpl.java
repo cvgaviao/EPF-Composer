@@ -36,13 +36,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class ProcessComponentDescriptorImpl extends DescriptorImpl implements
 		ProcessComponentDescriptor {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #get_processComponent() <em>process Component</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

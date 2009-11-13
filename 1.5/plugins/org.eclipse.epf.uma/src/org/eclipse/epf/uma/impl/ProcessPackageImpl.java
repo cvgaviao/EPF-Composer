@@ -42,13 +42,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public class ProcessPackageImpl extends MethodPackageImpl implements
 		ProcessPackage {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getProcessElements() <em>Process Elements</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

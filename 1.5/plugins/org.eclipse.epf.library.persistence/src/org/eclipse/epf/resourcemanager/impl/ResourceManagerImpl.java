@@ -105,7 +105,7 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * @generated
 	 * @ordered
 	 */
-	protected EList subManagers = null;
+	protected EList<ResourceManager> subManagers;
 
 	/**
 	 * The cached value of the '{@link #getResourceDescriptors() <em>Resource Descriptors</em>}' containment reference list.
@@ -115,7 +115,7 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * @generated
 	 * @ordered
 	 */
-    protected EList resourceDescriptors = null;
+    protected EList<ResourceDescriptor> resourceDescriptors;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -132,7 +132,8 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected EClass eStaticClass() {
+    @Override
+				protected EClass eStaticClass() {
 		return ResourcemanagerPackage.Literals.RESOURCE_MANAGER;
 	}
 
@@ -183,9 +184,9 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List getSubManagers() {
+	public List<ResourceManager> getSubManagers() {
 		if (subManagers == null) {
-			subManagers = new EObjectContainmentEList.Resolving(ResourceManager.class, this, ResourcemanagerPackage.RESOURCE_MANAGER__SUB_MANAGERS);
+			subManagers = new EObjectContainmentEList.Resolving<ResourceManager>(ResourceManager.class, this, ResourcemanagerPackage.RESOURCE_MANAGER__SUB_MANAGERS);
 		}
 		return subManagers;
 	}
@@ -195,9 +196,9 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    public List getResourceDescriptors() {
+    public List<ResourceDescriptor> getResourceDescriptors() {
 		if (resourceDescriptors == null) {
-			resourceDescriptors = new EObjectContainmentEList.Resolving(ResourceDescriptor.class, this, ResourcemanagerPackage.RESOURCE_MANAGER__RESOURCE_DESCRIPTORS);
+			resourceDescriptors = new EObjectContainmentEList.Resolving<ResourceDescriptor>(ResourceDescriptor.class, this, ResourcemanagerPackage.RESOURCE_MANAGER__RESOURCE_DESCRIPTORS);
 		}
 		return resourceDescriptors;
 	}
@@ -207,6 +208,7 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
@@ -353,12 +355,13 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ResourcemanagerPackage.RESOURCE_MANAGER__SUB_MANAGERS:
-				return ((InternalEList)getSubManagers()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getSubManagers()).basicRemove(otherEnd, msgs);
 			case ResourcemanagerPackage.RESOURCE_MANAGER__RESOURCE_DESCRIPTORS:
-				return ((InternalEList)getResourceDescriptors()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getResourceDescriptors()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -368,6 +371,7 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ResourcemanagerPackage.RESOURCE_MANAGER__GUID:
@@ -387,6 +391,8 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+		@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ResourcemanagerPackage.RESOURCE_MANAGER__GUID:
@@ -397,11 +403,11 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 				return;
 			case ResourcemanagerPackage.RESOURCE_MANAGER__SUB_MANAGERS:
 				getSubManagers().clear();
-				getSubManagers().addAll((Collection)newValue);
+				getSubManagers().addAll((Collection<? extends ResourceManager>)newValue);
 				return;
 			case ResourcemanagerPackage.RESOURCE_MANAGER__RESOURCE_DESCRIPTORS:
 				getResourceDescriptors().clear();
-				getResourceDescriptors().addAll((Collection)newValue);
+				getResourceDescriptors().addAll((Collection<? extends ResourceDescriptor>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -412,6 +418,7 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ResourcemanagerPackage.RESOURCE_MANAGER__GUID:
@@ -435,6 +442,7 @@ public class ResourceManagerImpl extends MultiResourceEObject implements Resourc
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean eIsSet(int featureID) {
 //UMA-->
 		EStructuralFeature feature = getFeatureWithOverridenDefaultValue(featureID);

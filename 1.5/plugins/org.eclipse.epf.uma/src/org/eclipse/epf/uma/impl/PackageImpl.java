@@ -29,13 +29,6 @@ public class PackageImpl extends NamespaceImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	protected PackageImpl() {
 		super();
 

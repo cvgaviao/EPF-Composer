@@ -6,14 +6,11 @@
     modelPluginID="org.eclipse.epf.resourcemanager" templateDirectory="/org.eclipse.epf.uma.ecore/templates"
     runtimeJar="true" dynamicTemplates="true" modelName="Resourcemanager" editPluginClass="org.eclipse.epf.resourcemanager.provider.ResourcemanagerEditPlugin"
     editorPluginClass="org.eclipse.epf.resourcemanager.presentation.ResourcemanagerEditorPlugin"
-    nonNLSMarkers="true" rootExtendsInterface="org.eclipse.emf.ecore.sdo.EDataObject"
-    rootExtendsClass="org.eclipse.epf.uma.ecore.impl.MultiResourceEObject" rootImplementsInterface="org.eclipse.emf.ecore.sdo.InternalEDataObject"
-    suppressEMFTypes="true" featureMapWrapperInterface="commonj.sdo.Sequence" featureMapWrapperInternalInterface="org.eclipse.emf.ecore.sdo.util.ESequence"
-    featureMapWrapperClass="org.eclipse.emf.ecore.sdo.util.BasicESequence" containmentProxies="true">
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.epf.uma.ecore.impl.MultiResourceEObject"
+    rootImplementsInterface="" suppressEMFTypes="true" featureMapWrapperInterface=""
+    featureMapWrapperInternalInterface="" featureMapWrapperClass="" containmentProxies="true"
+    complianceLevel="5.0">
   <foreignModel>C:\CC_Views\ple_TNG_Authoring\tng_authoring\TNG UML Models\resourcemanager.mdl</foreignModel>
-  <staticPackages>http://www.eclipse.org/emf/2003/SDO</staticPackages>
-  <modelPluginVariables>EMF_COMMONJ_SDO=org.eclipse.emf.commonj.sdo</modelPluginVariables>
-  <modelPluginVariables>EMF_ECORE_SDO=org.eclipse.emf.ecore.sdo</modelPluginVariables>
   <genPackages prefix="Resourcemanager" basePackage="org.eclipse.epf" ecorePackage="resourcemanager.ecore#/">
     <genClasses ecoreClass="resourcemanager.ecore#//ResourceDescriptor">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute resourcemanager.ecore#//ResourceDescriptor/id"/>

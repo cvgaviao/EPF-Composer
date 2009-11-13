@@ -19,7 +19,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.sdo.EProperty;
 import org.eclipse.epf.common.CommonPlugin;
 import org.eclipse.epf.common.IHTMLFormatter;
 import org.eclipse.epf.common.utils.ExtensionHelper;
@@ -27,6 +26,7 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.library.xmi.XMILibraryResourceManager;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.ecore.EProperty;
 
 /**
  * Utility class to help migrate and format the html content.

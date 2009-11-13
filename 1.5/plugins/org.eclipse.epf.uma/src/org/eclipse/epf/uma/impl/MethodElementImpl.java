@@ -54,14 +54,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
  * @generated
  */
 public abstract class MethodElementImpl extends PackageableElementImpl
-		implements MethodElement, IAdaptable {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
+		implements MethodElement {
 	/**
 	 * The default value of the '{@link #getGuid() <em>Guid</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -244,9 +237,11 @@ public abstract class MethodElementImpl extends PackageableElementImpl
 			resource.setID(this, newGuid);
 		}
 	}
-	
+
 	public Object getAdapter(Class adapter) {
-		List<IAdaptable> extensions = ExtensionHelper.getExtensions("org.eclipse.epf.uma.ecore", "methodElementIAdaptable", IAdaptable.class); //$NON-NLS-1$ //$NON-NLS-2$
+		List<IAdaptable> extensions = ExtensionHelper
+				.getExtensions(
+						"org.eclipse.epf.uma.ecore", "methodElementIAdaptable", IAdaptable.class); //$NON-NLS-1$ //$NON-NLS-2$
 		for (IAdaptable adaptable : extensions) {
 			Object result = adaptable.getAdapter(adapter);
 			if (result != null) {

@@ -43,13 +43,6 @@ import org.eclipse.epf.uma.UmaPackage;
  */
 public class PracticeImpl extends GuidanceImpl implements Practice {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getSubPractices() <em>Sub Practices</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

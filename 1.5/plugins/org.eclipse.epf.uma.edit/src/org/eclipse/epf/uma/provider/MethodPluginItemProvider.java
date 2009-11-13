@@ -166,12 +166,9 @@ public class MethodPluginItemProvider extends MethodUnitItemProvider implements
 	 */
 	@Override
 	public Object getImage(Object object) {
-//		return overlayImage(object, getResourceLocator().getImage(
-//				"full/obj16/MethodPlugin")); //$NON-NLS-1$
-		return getResourceLocator().getImage(
-				"full/obj16/MethodPlugin"); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage(
+				"full/obj16/MethodPlugin")); //$NON-NLS-1$
 	}
-	
 
 	/**
 	 * This returns the label text for the adapted class.

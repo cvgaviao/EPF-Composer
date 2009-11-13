@@ -11,7 +11,7 @@
 package org.eclipse.epf.resourcemanager;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.sdo.EDataObject;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,10 +28,9 @@ import org.eclipse.emf.ecore.sdo.EDataObject;
  *
  * @see org.eclipse.epf.resourcemanager.ResourcemanagerPackage#getResourceDescriptor()
  * @model
- * @extends EDataObject
  * @generated
  */
-public interface ResourceDescriptor extends EDataObject {
+public interface ResourceDescriptor extends EObject {
 	
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.

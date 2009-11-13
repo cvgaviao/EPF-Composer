@@ -20,7 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.sdo.EProperty;
 import org.eclipse.epf.importing.services.ResourceScanner;
 import org.eclipse.epf.library.tester.iface.TestTracer;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -29,6 +28,7 @@ import org.eclipse.epf.uma.GraphNode;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
+import org.eclipse.epf.uma.ecore.EProperty;
 
 /**
  * Class to analyze the differneces between two method libraries

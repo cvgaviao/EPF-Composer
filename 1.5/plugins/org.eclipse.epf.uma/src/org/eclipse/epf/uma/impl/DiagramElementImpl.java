@@ -44,7 +44,7 @@ import org.eclipse.epf.uma.UmaPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramElementImpl#getIsVisible <em>Is Visible</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.DiagramElementImpl#getContainer_ <em>Container</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.DiagramElementImpl#getContainer <em>Container</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramElementImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.DiagramElementImpl#getProperty <em>Property</em>}</li>
  * </ul>
@@ -54,13 +54,6 @@ import org.eclipse.epf.uma.UmaPackage;
  */
 public abstract class DiagramElementImpl extends MethodElementImpl implements
 		DiagramElement {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
 	/**
 	 * The default value of the '{@link #getIsVisible() <em>Is Visible</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -152,7 +145,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GraphElement getContainer_() {
+	public GraphElement getContainer() {
 		if (eContainerFeatureID != UmaPackage.DIAGRAM_ELEMENT__CONTAINER)
 			return null;
 		return (GraphElement) eContainer();
@@ -307,7 +300,7 @@ public abstract class DiagramElementImpl extends MethodElementImpl implements
 			return getIsVisible();
 		case UmaPackage.DIAGRAM_ELEMENT__CONTAINER:
 			if (resolve)
-				return getContainer_();
+				return getContainer();
 			return basicGetContainer();
 		case UmaPackage.DIAGRAM_ELEMENT__REFERENCE:
 			return getReference();

@@ -38,13 +38,6 @@ import org.eclipse.epf.uma.WorkDefinition;
 public abstract class WorkDefinitionImpl extends MethodElementImpl implements
 		WorkDefinition {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getPrecondition() <em>Precondition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

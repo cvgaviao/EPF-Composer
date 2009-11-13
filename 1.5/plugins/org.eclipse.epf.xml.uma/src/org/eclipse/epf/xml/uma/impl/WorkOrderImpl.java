@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.sdo.impl.EDataObjectImpl;
 
 import org.eclipse.epf.xml.uma.UmaPackage;
@@ -38,7 +40,7 @@ import org.eclipse.epf.xml.uma.WorkOrderType;
  *
  * @generated
  */
-public class WorkOrderImpl extends EDataObjectImpl implements WorkOrder {
+public class WorkOrderImpl extends MultiResourceEObject implements WorkOrder {
 	/**
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->

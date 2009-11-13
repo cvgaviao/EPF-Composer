@@ -34,13 +34,6 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
  */
 public class DimensionImpl extends MultiResourceEObject implements Dimension {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getWidth() <em>Width</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

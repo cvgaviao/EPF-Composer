@@ -40,13 +40,6 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  */
 public class RoleImpl extends ContentElementImpl implements Role {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getFulfills() <em>Fulfills</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

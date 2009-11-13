@@ -20,7 +20,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.sdo.EProperty;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.tester.TesterOutputUtil;
 import org.eclipse.epf.library.tester.iface.TCExeReply;
@@ -30,6 +29,7 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.ecore.EProperty;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

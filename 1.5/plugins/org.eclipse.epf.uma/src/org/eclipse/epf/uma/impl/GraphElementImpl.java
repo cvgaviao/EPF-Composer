@@ -51,13 +51,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public abstract class GraphElementImpl extends DiagramElementImpl implements
 		GraphElement {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getContained() <em>Contained</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

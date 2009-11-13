@@ -46,13 +46,6 @@ import org.eclipse.epf.uma.UmaPackage;
  */
 public class DiagramLinkImpl extends DiagramElementImpl implements DiagramLink {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getZoom() <em>Zoom</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

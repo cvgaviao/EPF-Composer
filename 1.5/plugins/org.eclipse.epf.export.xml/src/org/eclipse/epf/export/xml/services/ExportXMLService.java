@@ -25,7 +25,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.sdo.EDataObject;
 import org.eclipse.epf.dataexchange.util.ContentProcessor;
 import org.eclipse.epf.dataexchange.util.IResourceHandler;
 import org.eclipse.epf.diagram.ui.service.DiagramImageService;
@@ -56,6 +55,7 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
+import org.eclipse.epf.uma.ecore.IModelObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -142,7 +142,7 @@ public class ExportXMLService {
 						if (value.targetFile == null) {
 							continue;
 						} else if (value.sourceFile != null) {
-							EDataObject xmlObj = getXmlObject(value.element);
+							IModelObject xmlObj = getXmlObject(value.element);
 							if (xmlObj instanceof org.eclipse.epf.xml.uma.Process) {
 								org.eclipse.epf.xml.uma.Process proc = 
 													(org.eclipse.epf.xml.uma.Process) xmlObj;
@@ -241,7 +241,7 @@ public class ExportXMLService {
 					.getXMLFile());
 
 			this.xmlLib.createLibrary(src.getGuid(), src.getName());
-			EDataObject target = this.xmlLib.getRoot();
+			IModelObject target = this.xmlLib.getRoot();
 
 			creatEDataObjectTree(src, target);
 			iteratEDataObject(src);
@@ -286,7 +286,7 @@ public class ExportXMLService {
 	}
 	
 	private void creatEDataObjectTree(MethodElement srcObj,
-			EDataObject targetObj) {
+			IModelObject targetObj) {
 
 		// if it's a plugin, skip all the system packages
 		// and find the top most user packages
@@ -385,7 +385,7 @@ public class ExportXMLService {
 		return discardedElements.contains(o);
 	}
 
-	private EDataObject getXmlObject(MethodElement srcObj) {
+	private IModelObject getXmlObject(MethodElement srcObj) {
 		String id = srcObj.getGuid();
 		if (umaIdToXmlIdMap.containsKey(id)) {
 			id = (String) umaIdToXmlIdMap.get(id);
@@ -400,7 +400,7 @@ public class ExportXMLService {
 	 * @param targetContainer
 	 */
 	private void createXmlObject(MethodElement umaElement,
-			EDataObject targetContainer) {
+			IModelObject targetContainer) {
 		EStructuralFeature feature = umaElement.eContainmentFeature();
 		createXmlObject(umaElement, targetContainer, feature.getName());
 	}
@@ -412,7 +412,7 @@ public class ExportXMLService {
 	 * @param targetContainer
 	 */
 	private void createXmlObject(MethodElement umaElement,
-			EDataObject targetContainer, String containmentFeature) {
+			IModelObject targetContainer, String containmentFeature) {
 
 		try {
 			if (umaElement == null) {
@@ -422,7 +422,7 @@ public class ExportXMLService {
 			// get the containment feature so we can create the object of the
 			// same type
 			String elementType = umaElement.getType().getName();
-			EDataObject xmlElement = xmlLib.createElement(targetContainer,
+			IModelObject xmlElement = xmlLib.createElement(targetContainer,
 					containmentFeature, umaElement.eClass().getName(),
 					elementType, umaElement.getGuid());
 			
@@ -472,7 +472,7 @@ public class ExportXMLService {
 		}
 		setProcessed(srcObj.getGuid());
 
-		EDataObject targetObj = getXmlObject(srcObj);
+		IModelObject targetObj = getXmlObject(srcObj);
 
 		// if object is not created,
 		// which means it's either a system package or something wrong
@@ -518,7 +518,7 @@ public class ExportXMLService {
 						// WorkBreakdownElement
 						if (src_value instanceof WorkOrder) {
 							// get the owner of the WorkOrder
-							EDataObject workOrder = getXmlObject(src_value);
+							IModelObject workOrder = getXmlObject(src_value);
 							if (workOrder == null) {
 								createXmlObject(src_value, targetObj, feature
 										.getName());
@@ -694,11 +694,11 @@ public class ExportXMLService {
 			if (wbe == null) {
 				continue;
 			}			
-			EDataObject targetObj = getXmlObject(wbe);
+			IModelObject targetObj = getXmlObject(wbe);
 			if (targetObj == null) {
 				continue;
 			}			
-			EDataObject tgtWorkOrder = getXmlObject(srcWorkOrder);
+			IModelObject tgtWorkOrder = getXmlObject(srcWorkOrder);
 			if (tgtWorkOrder == null) {
 				createXmlObject(srcWorkOrder, targetObj, fname);
 			}			

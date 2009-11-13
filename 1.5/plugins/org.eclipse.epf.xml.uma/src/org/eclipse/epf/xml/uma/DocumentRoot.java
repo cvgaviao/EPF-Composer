@@ -11,8 +11,10 @@
 package org.eclipse.epf.xml.uma;
 
 import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.sdo.EDataObject;
 import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.epf.uma.ecore.IModelObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,10 +35,10 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *
  * @see org.eclipse.epf.xml.uma.UmaPackage#getDocumentRoot()
  * @model extendedMetaData="name='' kind='mixed'"
- * @extends EDataObject
+ * @extends IModelObject
  * @generated
  */
-public interface DocumentRoot extends EDataObject {
+public interface DocumentRoot extends IModelObject {
 	/**
 	 * Returns the value of the '<em><b>Mixed</b></em>' attribute list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.

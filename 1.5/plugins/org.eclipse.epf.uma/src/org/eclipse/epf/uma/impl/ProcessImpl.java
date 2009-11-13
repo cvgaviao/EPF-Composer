@@ -43,13 +43,6 @@ import org.eclipse.epf.uma.UmaPackage;
 public abstract class ProcessImpl extends ActivityImpl implements
 		org.eclipse.epf.uma.Process {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The cached value of the '{@link #getIncludesPatterns() <em>Includes Patterns</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -26892,11 +26892,11 @@ public interface UmaPackage extends EPackage {
 	EAttribute getDiagramElement_IsVisible();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.epf.uma.DiagramElement#getContainer_ <em>Container</em>}'.
+	 * Returns the meta object for the container reference '{@link org.eclipse.epf.uma.DiagramElement#getContainer <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the container reference '<em>Container</em>'.
-	 * @see org.eclipse.epf.uma.DiagramElement#getContainer_()
+	 * @see org.eclipse.epf.uma.DiagramElement#getContainer()
 	 * @see #getDiagramElement()
 	 * @generated
 	 */

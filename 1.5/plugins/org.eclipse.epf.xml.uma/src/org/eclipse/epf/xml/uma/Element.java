@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.epf.xml.uma;
 
+import org.eclipse.epf.uma.ecore.IModelObject;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.sdo.EDataObject;
 
 /**
@@ -24,8 +26,8 @@ import org.eclipse.emf.ecore.sdo.EDataObject;
  *
  * @see org.eclipse.epf.xml.uma.UmaPackage#getElement()
  * @model extendedMetaData="name='Element' kind='empty'"
- * @extends EDataObject
+ * @extends IModelObject
  * @generated
  */
-public interface Element extends EDataObject {
+public interface Element extends IModelObject {
 } // Element

@@ -29,13 +29,6 @@ public class ReportImpl extends GuidanceImpl implements Report {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	protected ReportImpl() {
 		super();
 

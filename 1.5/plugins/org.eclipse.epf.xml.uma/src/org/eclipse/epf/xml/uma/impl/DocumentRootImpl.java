@@ -16,12 +16,14 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.sdo.impl.EDataObjectImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.xml.uma.DocumentRoot;
 import org.eclipse.epf.xml.uma.MethodConfiguration;
 import org.eclipse.epf.xml.uma.MethodLibrary;
@@ -46,7 +48,7 @@ import org.eclipse.epf.xml.uma.UmaPackage;
  *
  * @generated
  */
-public class DocumentRootImpl extends EDataObjectImpl implements DocumentRoot {
+public class DocumentRootImpl extends MultiResourceEObject implements DocumentRoot {
 	/**
 	 * The cached value of the '{@link #getMixed() <em>Mixed</em>}' attribute list.
 	 * <!-- begin-user-doc -->

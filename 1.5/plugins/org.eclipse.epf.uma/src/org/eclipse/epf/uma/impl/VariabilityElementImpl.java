@@ -37,13 +37,6 @@ import org.eclipse.epf.uma.VariabilityType;
 public abstract class VariabilityElementImpl extends MethodElementImpl
 		implements VariabilityElement {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
 	 * The default value of the '{@link #getVariabilityType() <em>Variability Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

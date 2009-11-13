@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.sdo.EDataObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.dataexchange.importing.LibraryService;
@@ -77,6 +76,7 @@ import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
 import org.eclipse.epf.uma.WorkProductType;
+import org.eclipse.epf.uma.ecore.IModelObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.xml.uma.TaskDescriptor;
 import org.eclipse.osgi.util.NLS;
@@ -159,13 +159,13 @@ public class UmaLibrary {
 	 * @param id
 	 * @return
 	 */
-	public EDataObject createContentCategory(String pluginId,
+	public IModelObject createContentCategory(String pluginId,
 			String xmlEClassName, String xmlElementType, String id) {
 
 		setSourceId(id);
 		
 		// make sure the same object created only once
-		EDataObject obj = getElement(id);
+		IModelObject obj = getElement(id);
 		if (obj != null) {
 			return obj;
 		}
@@ -178,7 +178,7 @@ public class UmaLibrary {
 			return null;
 		}
 
-		obj = (EDataObject) EcoreUtil.create(objClass);
+		obj = (IModelObject) EcoreUtil.create(objClass);
 		setElement(id, obj);
 
 		ContentPackage rootPkg = (ContentPackage) getRootPackage(plugin, obj);
@@ -226,11 +226,11 @@ public class UmaLibrary {
 	 * @return
 	 * @throws Exception
 	 */
-	public EDataObject createMethodPlugin(String id, String name)
+	public IModelObject createMethodPlugin(String id, String name)
 			throws Exception {
 		
 		// make sure the same object created only once
-		EDataObject obj = getElement(id);
+		IModelObject obj = getElement(id);
 		boolean isOld = obj != null;
 		if (obj == null) {
 			Map options = new HashMap();
@@ -259,7 +259,7 @@ public class UmaLibrary {
 	 * @param plugin
 	 * @return
 	 */
-	public EDataObject getContentRootPackage(EDataObject plugin) {
+	public IModelObject getContentRootPackage(IModelObject plugin) {
 		if (!(plugin instanceof MethodPlugin)) {
 			return null;
 		}
@@ -272,7 +272,7 @@ public class UmaLibrary {
 	 * @param plugin
 	 * @return
 	 */
-	public EDataObject getCapabilityPatternRootPackage(EDataObject plugin) {
+	public IModelObject getCapabilityPatternRootPackage(IModelObject plugin) {
 		if (!(plugin instanceof MethodPlugin)) {
 			return null;
 		}
@@ -285,7 +285,7 @@ public class UmaLibrary {
 	 * @param plugin
 	 * @return
 	 */
-	public EDataObject getDeliveryProcessRootPackage(EDataObject plugin) {
+	public IModelObject getDeliveryProcessRootPackage(IModelObject plugin) {
 		if (!(plugin instanceof MethodPlugin)) {
 			return null;
 		}
@@ -310,14 +310,14 @@ public class UmaLibrary {
 	 * @param id
 	 * @return
 	 */
-	public EDataObject createElement(EDataObject container,
+	public IModelObject createElement(IModelObject container,
 			String xmlFeatureName, String xmlEClassName, String xmlElementType,
 			String id) {
 
 		setSourceId(id);
 
 		// make sure the same object created only once
-		EDataObject obj = getElement(id);
+		IModelObject obj = getElement(id);
 		if (obj != null) {
 			if (obj instanceof Activity) {
 				EObject eobj = obj.eContainer();
@@ -347,7 +347,7 @@ public class UmaLibrary {
 			return null;
 		}
 
-		obj = (EDataObject) EcoreUtil.create(objClass);	
+		obj = (IModelObject) EcoreUtil.create(objClass);	
 
 		if (obj instanceof WorkOrder) {
 			// WorkOrder is not a method element in xml uma, need to create it
@@ -441,7 +441,7 @@ public class UmaLibrary {
 		return obj;
 	}
 
-	private void setElement(String guid, EDataObject obj) {
+	private void setElement(String guid, IModelObject obj) {
 		// addElementToContainer(container, obj);
 				
 		if (!elementsMap.containsKey(guid)) {
@@ -477,8 +477,8 @@ public class UmaLibrary {
 	 * @param guid
 	 * @return
 	 */
-	public EDataObject getElement(String guid) {
-		return (EDataObject) elementsMap.get(guid);
+	public IModelObject getElement(String guid) {
+		return (IModelObject) elementsMap.get(guid);
 	}
 
 	private Date createDate(String dateStr) {
@@ -506,7 +506,7 @@ public class UmaLibrary {
 	 * @param value
 	 * @throws Exception
 	 */
-	public void setAtributeFeatureValue(EDataObject obj, String featureName,
+	public void setAtributeFeatureValue(IModelObject obj, String featureName,
 			Object value) throws Exception {
 		boolean oldNotify = obj.eDeliver();
 		obj.eSetDeliver(false);
@@ -514,13 +514,13 @@ public class UmaLibrary {
 		obj.eSetDeliver(oldNotify);
 	}
 	
-	private void setAtributeFeatureValue_(EDataObject obj, String featureName,
+	private void setAtributeFeatureValue_(IModelObject obj, String featureName,
 			Object value) throws Exception {
 		if (obj == null || featureName == null || value == null) {
 			return;
 		}
 		
-		if (value instanceof List || value instanceof EDataObject) {
+		if (value instanceof List || value instanceof IModelObject) {
 			if (featureName.equals("methodElementProperty")) {		//$NON-NLS-1$
 				setMepFeatureValue(obj, featureName, value);
 				return;
@@ -604,7 +604,7 @@ public class UmaLibrary {
 
 	}
 
-	private void setMepFeatureValue(EDataObject obj, String featureName, Object value) {
+	private void setMepFeatureValue(IModelObject obj, String featureName, Object value) {
 		List srcList = (List) value;
 		int sz = srcList == null ? 0 : srcList.size();		
 		EStructuralFeature feature = FeatureManager.INSTANCE.getRmcFeature(obj
@@ -671,7 +671,7 @@ public class UmaLibrary {
 	 * @param id
 	 * @throws Exception
 	 */
-	public void setReferenceValue(EDataObject obj, String featureName, String id)
+	public void setReferenceValue(IModelObject obj, String featureName, String id)
 			throws Exception {
 		if (obj == null || featureName == null || id == null) {
 			return;
@@ -1102,7 +1102,7 @@ public class UmaLibrary {
 		this.mergeLevel = mergeLevel;
 	}
 	
-	private boolean toHandle(EDataObject rmcObj, EStructuralFeature rmcFeature) {
+	private boolean toHandle(IModelObject rmcObj, EStructuralFeature rmcFeature) {
 		EStructuralFeature feature = rmcFeature;
 		if (feature == null || feature.isDerived()) {
 			return false;
@@ -1153,7 +1153,7 @@ public class UmaLibrary {
 		return ((EReference) rmcFeature).isMany();
 	}
 	
-	public void handleNullXmlValue(EDataObject xmlObj, EDataObject rmcObj, String xmlFeatureName) throws Exception {		
+	public void handleNullXmlValue(IModelObject xmlObj, IModelObject rmcObj, String xmlFeatureName) throws Exception {		
 		if (rmcObj instanceof MethodLibrary) {
 			return;
 		}
@@ -1180,7 +1180,7 @@ public class UmaLibrary {
 		setDirty(rmcObj);
 	}
 	
-	public void initListValueMerge(EDataObject xmlObj, EDataObject rmcObj, String xmlFeatureName,
+	public void initListValueMerge(IModelObject xmlObj, IModelObject rmcObj, String xmlFeatureName,
 			List xmlList, Set<EStructuralFeature> seenRmcFeatures) throws Exception {
 		if (rmcObj instanceof MethodLibrary) {
 			return;
@@ -1204,7 +1204,7 @@ public class UmaLibrary {
 		initRmcList(rmcObj, feature);
 	}
 
-	private void initRmcList(EDataObject rmcObj, EStructuralFeature feature) {
+	private void initRmcList(IModelObject rmcObj, EStructuralFeature feature) {
 		if (!isManyReference(feature)) {
 			return;
 		}

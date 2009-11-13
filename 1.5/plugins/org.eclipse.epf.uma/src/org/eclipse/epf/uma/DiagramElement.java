@@ -21,7 +21,7 @@ import java.util.List;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.DiagramElement#getIsVisible <em>Is Visible</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.DiagramElement#getContainer_ <em>Container</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.DiagramElement#getContainer <em>Container</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.DiagramElement#getReference <em>Reference</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.DiagramElement#getProperty <em>Property</em>}</li>
  * </ul>
@@ -75,14 +75,14 @@ public interface DiagramElement extends MethodElement {
 	 * @model opposite="contained" transient="false" ordered="false"
 	 * @generated
 	 */
-	GraphElement getContainer_();
+	GraphElement getContainer();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.epf.uma.DiagramElement#getContainer_ <em>Container</em>}' container reference.
+	 * Sets the value of the '{@link org.eclipse.epf.uma.DiagramElement#getContainer <em>Container</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Container</em>' container reference.
-	 * @see #getContainer_()
+	 * @see #getContainer()
 	 * @generated
 	 */
 	void setContainer(GraphElement value);
