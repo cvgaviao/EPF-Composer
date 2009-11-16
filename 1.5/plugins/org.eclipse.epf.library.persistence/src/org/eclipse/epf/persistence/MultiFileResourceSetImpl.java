@@ -1167,6 +1167,14 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		return result;
 	}
 	
+	  /*
+	   * Javadoc copied from interface.
+	   */
+	  public Resource createResource(URI uri, String contentType)
+	  {
+		  return createResource(uri);
+	  }
+	
 	protected Resource doCreateResource(URI uri) {
 		return new MultiFileXMIResourceImpl(uri);
 	}

@@ -21,7 +21,6 @@ Require-Bundle: org.eclipse.epf.authoring.ui;visibility:=reexport,
  org.eclipse.ui.intro,
  org.eclipse.help.ui,
  org.eclipse.help.webapp,
- org.eclipse.tomcat,
  org.eclipse.epf.publishing.ui,
  org.eclipse.epf.common.ui
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

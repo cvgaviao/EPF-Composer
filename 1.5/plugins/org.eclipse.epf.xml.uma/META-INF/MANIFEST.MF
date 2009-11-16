@@ -11,7 +11,6 @@ Export-Package: org.eclipse.epf.xml.uma,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
-  org.eclipse.emf.ecore.sdo, 
  org.eclipse.epf.uma.ecore
 Eclipse-LazyStart: true
 Import-Package: org.eclipse.epf.common.serviceability

@@ -2422,7 +2422,7 @@ public class ProcessEditor extends MethodElementEditor implements
 	 * Override without any code change just for {@link ProcessEditorActionBarContributor} to access it.
 	 */
 	@Override
-	protected int getActivePage() {
+	public int getActivePage() {
 		return super.getActivePage();
 	}
 	

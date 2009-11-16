@@ -57,9 +57,9 @@ public abstract class VariabilityElementLabelProvider extends
 		return italicFont;
 	}
 
-	public static final Font getDefaultFont() {
-		return regularFont;
-	}
+//	public static final Font getDefaultFont() {
+//		return regularFont;
+//	}
 
 	/**
 	 * @param adapterFactory

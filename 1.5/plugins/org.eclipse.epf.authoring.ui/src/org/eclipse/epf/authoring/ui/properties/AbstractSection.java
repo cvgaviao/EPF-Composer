@@ -39,9 +39,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.internal.views.properties.tabbed.view.Tab;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.ISection;
+import org.eclipse.ui.views.properties.tabbed.TabContents;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 /**
@@ -105,7 +105,7 @@ public class AbstractSection extends AbstractPropertySection implements
 	 */
 	private void sectionRefresh() {
 		if (page != null) {
-			Tab tab = page.getCurrentTab();
+			TabContents tab = page.getCurrentTab();
 			if (tab != null) {
 				ISection section = tab.getSectionAtIndex(0);
 

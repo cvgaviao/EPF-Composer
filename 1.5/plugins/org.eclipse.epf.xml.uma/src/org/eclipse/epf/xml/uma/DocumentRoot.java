@@ -11,8 +11,6 @@
 package org.eclipse.epf.xml.uma;
 
 import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.sdo.EDataObject;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.epf.uma.ecore.IModelObject;
 

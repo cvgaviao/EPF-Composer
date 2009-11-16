@@ -55,7 +55,7 @@ public class RoleTaskFlowLayout extends FlowLayout {
 	/**
 	 * Initializes the state of row data, which is internal to the layout process. 
 	 */
-	private void initRow() {
+	protected void initRow() {
 		data.rowX = 0;
 		data.rowHeight = 0;
 		data.rowWidth = 0;
@@ -68,7 +68,7 @@ public class RoleTaskFlowLayout extends FlowLayout {
 	 * @param parent the parent figure
 	 * @since 2.0 
 	 */
-	private void initVariables(IFigure parent) {
+	protected void initVariables(IFigure parent) {
 		data.row = new IFigure[parent.getChildren().size()];
 		data.bounds = new Rectangle[data.row.length];
 		data.maxWidth = data.area.width;

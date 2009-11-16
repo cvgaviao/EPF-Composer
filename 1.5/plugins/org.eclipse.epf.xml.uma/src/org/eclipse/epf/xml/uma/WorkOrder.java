@@ -11,8 +11,6 @@
 package org.eclipse.epf.xml.uma;
 
 import org.eclipse.epf.uma.ecore.IModelObject;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.sdo.EDataObject;
 
 /**
  * <!-- begin-user-doc -->
