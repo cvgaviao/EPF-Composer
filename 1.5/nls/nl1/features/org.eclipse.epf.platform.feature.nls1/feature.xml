@@ -219,14 +219,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.commonj.sdo.nl1"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecore.nl1"
          download-size="0"
          install-size="0"
@@ -244,14 +236,6 @@
 
    <plugin
          id="org.eclipse.emf.ecore.edit.nl1"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecore.sdo.nl1"
          download-size="0"
          install-size="0"
          version="0.0.0"

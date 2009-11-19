@@ -119,7 +119,6 @@
       <import plugin="org.eclipse.emf.common" version="2.3.2" match="compatible"/>
       <import plugin="org.eclipse.emf.ecore" version="2.3.2" match="compatible"/>
       <import plugin="org.eclipse.emf.edit" version="2.3.2" match="compatible"/>
-      <import plugin="org.eclipse.emf.commonj.sdo" version="2.3.0" match="compatible"/>
       <import plugin="org.eclipse.emf.ecore" version="2.3.0" match="compatible"/>
       <import plugin="org.eclipse.emf.ecore.xmi" version="2.3.0" match="compatible"/>
       <import plugin="org.eclipse.emf.ecore.change" version="2.3.0" match="compatible"/>
@@ -618,7 +617,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.core.resources.win32"
+         id="org.eclipse.core.resources.win32.X86"
          os="win32"
          download-size="0"
          install-size="0"
@@ -981,20 +980,6 @@
 
    <plugin
          id="org.eclipse.emf.ecore.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.commonj.sdo"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecore.sdo"
          download-size="0"
          install-size="0"
          version="0.0.0"
