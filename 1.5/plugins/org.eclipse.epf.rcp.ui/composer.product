@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?pde version="3.1"?>
+<?pde version="3.5"?>
 
-<product name="Eclipse Process Framework Composer" id="org.eclipse.epf.rcp.ui.composer" application="org.eclipse.epf.rcp.ui.MainApplication" useFeatures="true">
+<product name="Eclipse Process Framework Composer" uid="org.eclipse.epf" id="org.eclipse.epf.rcp.ui.composer" application="org.eclipse.epf.rcp.ui.MainApplication" version="1.5.1" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="icons/about.gif"/>
@@ -10,7 +10,8 @@
       </text>
    </aboutInfo>
 
-   <configIni use="default"/>
+   <configIni use="default">
+   </configIni>
 
    <launcherArgs>
       <programArgs>-data @user.home/EPF/workspace.150 -defaultlibrary OpenUP</programArgs>
@@ -30,7 +31,6 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
 
@@ -38,7 +38,8 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.epf.product.feature" version="1.2.0.qualifier"/>
+      <feature id="org.eclipse.epf.product.feature" version="1.5.0.qualifier"/>
    </features>
+
 
 </product>
