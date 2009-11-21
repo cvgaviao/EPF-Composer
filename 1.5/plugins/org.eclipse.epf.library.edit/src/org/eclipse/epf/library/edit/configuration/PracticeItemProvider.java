@@ -85,6 +85,7 @@ public class PracticeItemProvider extends
 	private static String GUIDANCES_REUSABLEASSETS = "Reusable Assets"; //$NON-NLS-1$
 	private static String GUIDANCES_SUPPORTINGMATERIALS = "Supporting Materials"; //$NON-NLS-1$
 	private static String GUIDANCES_TEMPLATES = "Templates"; //$NON-NLS-1$
+	private static String Guidances_TermDefinitions = "Term Definitions"; //$NON-NLS-1$	
 	private static String GUIDANCES_TOOLMENTORS = "Tool Mentors"; //$NON-NLS-1$
 	private static String GUIDANCES_WORKPRODUCTGUIDELINES = "Guidelines"; //$NON-NLS-1$
 	private static String GUIDANCES_ESTIMATIONCONSIDERATIONS = "Estimation Considerations"; //$NON-NLS-1$
@@ -207,6 +208,8 @@ public class PracticeItemProvider extends
 				imageStr = "full/obj16/SupportingMaterials"; //$NON-NLS-1$
 			} else if (subGroupName.equals(getUIString("_UI_Guidances_Templates"))) { //$NON-NLS-1$
 				imageStr = "full/obj16/Templates"; //$NON-NLS-1$
+			} else if (subGroupName.equals(getUIString("_UI_Guidances_TermDefinitions"))) { //$NON-NLS-1$
+				imageStr = "full/obj16/TermDefinitions"; //$NON-NLS-1$
 			} else if (subGroupName.equals(getUIString("_UI_Guidances_ToolMentors"))) { //$NON-NLS-1$
 				imageStr = "full/obj16/ToolMentors"; //$NON-NLS-1$
 			} else if (subGroupName.equals(getUIString("_UI_Guidances_WorkProductGuidelines"))) { //$NON-NLS-1$
@@ -488,6 +491,7 @@ public class PracticeItemProvider extends
 					GUIDANCES_REUSABLEASSETS,
 					GUIDANCES_SUPPORTINGMATERIALS,	
 					GUIDANCES_TEMPLATES,
+					Guidances_TermDefinitions,
 					GUIDANCES_TOOLMENTORS,
 					GUIDANCES_WORKPRODUCTGUIDELINES,
 					GUIDANCES_ESTIMATIONCONSIDERATIONS,	
@@ -506,6 +510,7 @@ public class PracticeItemProvider extends
 					getUIString("_UI_Guidances_ReusableAssets"),			//$NON-NLS-1$
 					getUIString("_UI_Guidances_SupportingMaterials"),		//$NON-NLS-1$
 					getUIString("_UI_Guidances_Templates"),		//$NON-NLS-1$
+					getUIString("_UI_Guidances_TermDefinitions"), //$NON-NLS-1$
 					getUIString("_UI_Guidances_ToolMentors"),		//$NON-NLS-1$
 					getUIString("_UI_Guidances_WorkProductGuidelines"),		//$NON-NLS-1$
 					getUIString("_UI_Guidances_EstimationConsiderations"),		//$NON-NLS-1$
