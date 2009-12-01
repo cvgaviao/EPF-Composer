@@ -66,11 +66,22 @@ public class XmlElement implements IXmlElement {
 		this.element_name = name;
 		
 		if (id == null ) {
-			id = Integer.toHexString(this.toString().hashCode());
+			//id = Integer.toHexString(this.toString().hashCode());
+			id = getNodeId();
 		}
 		
 		this.id = id;
 		setAttribute(NODE_ID, this.id);
+	}
+	
+	private String getNodeId() {			
+		int original_hash = this.toString().hashCode();
+		long confusion = System.currentTimeMillis();
+		int confusion_hash = (int)(confusion ^ (confusion >>> 32));
+		
+		int result = original_hash + confusion_hash;
+		
+		return Integer.toHexString(result);		
 	}
 	
 	/**
