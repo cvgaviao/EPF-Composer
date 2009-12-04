@@ -549,7 +549,7 @@ public class RoleDiagramPublisher {
 		final MethodElement e = element;
 	
 		// add display.async since it's getting called from non-ui thread
-		Display.getDefault().asyncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
             public void run() {
             	Image img = DiagramIconProviderManager.getInstance().getIcon(
         				e, false);
