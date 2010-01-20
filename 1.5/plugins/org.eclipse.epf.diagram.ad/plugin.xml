@@ -334,7 +334,7 @@
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypes">
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.Activity_79"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
@@ -344,7 +344,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <specializationType
                id="org.eclipse.epf.diagram.ad.ActivityPartition_2001"
                name="%element_type_activity_partition"
@@ -355,7 +355,7 @@
          </specializationType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.ActivityFinalNode_1001"
                name="%element_type_end_node"
@@ -366,7 +366,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.MergeNode_1002"
                name="%element_type_merge_node"
@@ -377,7 +377,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.ForkNode_1003"
                name="%element_type_fork_node"
@@ -388,7 +388,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.InitialNode_1004"
                name="%element_type_start_node"
@@ -399,7 +399,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.DecisionNode_1005"
                name="%element_type_decision_node"
@@ -410,7 +410,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.JoinNode_1006"
                name="%element_type_join_node"
@@ -421,7 +421,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.StructuredActivityNode_1007"
                name="%element_type_activity"
@@ -432,7 +432,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.ActivityPartition_1008"
                name="%element_type_activity_partition"
@@ -443,7 +443,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.ActivityParameterNode_1009"
                name="%element_type_task_descriptor"
@@ -454,7 +454,7 @@
          </metamodelType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <specializationType
                id="org.eclipse.epf.diagram.ad.StructuredActivityNode_1010"
                name="%element_type_phase"
@@ -465,7 +465,7 @@
          </specializationType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <specializationType
                id="org.eclipse.epf.diagram.ad.StructuredActivityNode_1011"
                name="%element_type_iteration"
@@ -476,7 +476,7 @@
          </specializationType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <specializationType
                id="org.eclipse.epf.diagram.ad.ActivityParameterNode_1012"
                name="%element_type_milestone"
@@ -487,7 +487,7 @@
          </specializationType>
       </metamodel>
 
-      <metamodel nsURI="http://www.eclipse.org/uml2/2.1.0/UML">
+      <metamodel nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
          <metamodelType
                id="org.eclipse.epf.diagram.ad.ControlFlow_3001"
                name="%element_type_control_flow"
