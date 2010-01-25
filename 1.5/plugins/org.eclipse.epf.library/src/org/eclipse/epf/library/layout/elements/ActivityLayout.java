@@ -1179,8 +1179,19 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 				displayName = XMLUtil.escape(displayName);
 				child.setAttribute("DisplayName", displayName); //$NON-NLS-1$
 			}
-		}
-
+			
+//			lookup the list to see if the item is a suppressed one - for RATLC00264374
+//			if ( !getLayoutMgr().isPublishingMode() )
+//			{
+				for ( Object objItem : itemDetail.suppressedItems) {
+					MethodElement item = (MethodElement)objItem;
+					if ( item.getGuid().equals(l.getId())) {
+						child.setAttribute("isSupressed", "true"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						break;
+					}
+				}
+			}
+//		}
 	}
 
 
