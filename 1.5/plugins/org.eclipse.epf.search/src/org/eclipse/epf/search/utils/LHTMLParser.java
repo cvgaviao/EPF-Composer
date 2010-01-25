@@ -44,8 +44,28 @@ public class LHTMLParser extends org.apache.lucene.demo.html.HTMLParser {
 	 */
 	public LHTMLParser(Reader stream) throws FileNotFoundException {
 		super(stream);
+		doParse();
 	}
 
+	/**
+	 * Add this method due to class org.apache.lucene.demo.html.HTMLParser has
+	 * been changed since Eclipse 3.5
+	 */
+	@SuppressWarnings("restriction")
+	private void doParse() {
+		try {
+			parse();
+		} catch (Exception e) {
+			
+		}
+//		try {
+//			Method m = this.getClass().getMethod("parse");
+//			m.invoke(this);
+//		} catch (NoSuchMethodException e) {		
+//		} catch (Exception e) {
+//		}
+	}
+	
 	/**
 	 * Gets the HTML meta tags.
 	 */
