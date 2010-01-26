@@ -39,6 +39,7 @@ import org.eclipse.epf.export.xml.ExportXMLResources;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.ecore.IModelObject;
 import org.eclipse.epf.uma.ecore.Type;
@@ -871,7 +872,9 @@ public class XMLLibrary {
 			for (int i=0; i<steps.size(); i++) {
 				org.eclipse.epf.uma.MethodElement step = (org.eclipse.epf.uma.MethodElement) steps.get(i);
 				Section xmlStep =  (Section) elementsMap.get(step.getGuid());
-				assert(xmlStep != null);
+				if (xmlStep == null) {	//Bug 300749: this can happen if td's plugin is not in the exported list 
+					xmlStep = buildSection(step);
+				}
 				if (xmlStep != null) {
 					xmlStep = (Section) EcoreUtil.copy(xmlStep);
 					xmlTd.getStep().add(xmlStep);
@@ -1161,6 +1164,35 @@ public class XMLLibrary {
 			successOrWorkOrderMap = new HashMap<WorkOrder, org.eclipse.epf.uma.WorkOrder>();
 		}
 		return successOrWorkOrderMap;
+	}
+	
+	private org.eclipse.epf.xml.uma.Section buildSection(
+			org.eclipse.epf.uma.MethodElement umaStep) {
+		if (! (umaStep instanceof org.eclipse.epf.uma.Section)) {
+			return null;
+		}
+
+		org.eclipse.epf.xml.uma.Section xmlSection = org.eclipse.epf.xml.uma.UmaFactory.eINSTANCE
+				.createSection();
+		
+		List<EStructuralFeature> features = umaStep.eClass()
+				.getEAllStructuralFeatures();
+		
+		for (EStructuralFeature feature : features) {
+			Object value = umaStep.eGet(feature);
+			try {
+				if (value instanceof String) {	//Ignore other type values
+					setAtributeFeatureValue(xmlSection, feature.getName(), value);
+				}
+			} catch (Exception e) {
+				String msg = NLS.bind(
+						ExportXMLResources.exportXMLService_feature_error,
+						LibraryUtil.getTypeName(umaStep), feature.getName());
+				logger.logError(msg, e);
+			}
+		}
+
+		return xmlSection;
 	}
 	
 }
