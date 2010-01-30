@@ -15,7 +15,10 @@
 // (see http://www.mozilla.org/editor/midasdemo/securityprefs.html).
 // Alternatively, the users can use the ctrl-x, ctrl-c and ctrl-v keys.
 //------------------------------------------------------------------------------
-
+// Note: The SWT component in eclipse 3.4.X and above has a bug that 
+// keyReleased event can't be notified to listener. See (https://bugs.eclipse.org/bugs/show_bug.cgi?id=280146).
+// This issue has blocked EPF upgrade to 1.5.0.5. As a workaround, capture keyReleased event in 
+// Javascript. Once this issue is resolved in SWT, we need to resume it  
 var STATUS_NOP = 0;
 var STATUS_INITIALIZED = 1;
 var STATUS_MODIFIED = 2;
@@ -93,6 +96,62 @@ function initEditor(id, css, baseURL) {
 	}
 	catch (e) {
 		supportRichTextEditing = false;
+	}
+}
+
+var excludeModify = new Array(16, KEY_ARROW_DOWN, KEY_ARROW_LEFT,
+		KEY_ARROW_RIGHT, KEY_ARROW_UP, KEY_END, KEY_HOME, KEY_PAGE_DOWN,
+		KEY_PAGE_UP, KEY_TAB);
+
+function keyReleased(event) {
+	var keyCode = event.keyCode;
+	if (keyCode == 0 && !document.all) {
+		keyCode = event.charCode;
+		switch (keyCode) {
+		    case 98:
+		     	keyCode = KEY_B;
+				break;
+			case 99:
+				keyCode = KEY_C;
+				break;
+			case 102:
+				keyCode = KEY_F;
+				break;
+		    case 105:
+		        keyCode = KEY_I;
+		        break;
+			case 115:
+				keyCode = KEY_S;
+				break;
+		    case 117:
+		        keyCode = KEY_U;
+		        break;
+			case 118:
+				keyCode = KEY_V;
+				break;
+			case 120:
+				keyCode = KEY_X;
+				break;
+			case 122:
+				keyCode = KEY_Z;
+				break;
+		}
+	}
+	var ctrlKey = event.ctrlKey;
+	var shiftKey = event.shiftKey;
+	var altKey = event.altKey;
+
+	if ( !ctrlKey && !altKey ) {
+       var modified = true;
+	   for (var i = 0; i < excludeModify.length; i++ ) {
+	     if ( keyCode == excludeModify[i] ) {
+	       modified = false;
+	       break;
+	     }
+	   }
+	   if ( modified == true ) {
+		   setTimeout("setStatus(STATUS_MODIFIED, null);", 10);
+	   }
 	}
 }
 
@@ -300,6 +359,7 @@ function enableRichTextEditing(html) {
 
 	if ("attachEvent" in doc) {
 		doc.attachEvent("onkeydown", keyPressed);
+		doc.attachEvent("onkeyup", keyReleased); 
 		doc.attachEvent("onselectionchange", selChanged);
 		// for DnD (internal)
 		doc.body.attachEvent("ondrop", checkModified);
@@ -308,6 +368,7 @@ function enableRichTextEditing(html) {
 	}	
 	if ("addEventListener" in doc) {
 		doc.addEventListener("keypress", keyPressed, true);
+		doc.addEventListener("keyrelease", keyReleased, true);
 		doc.addEventListener("keypress", selChanged, false);
 		doc.addEventListener("mouseup", selChanged, false);
 		doc.addEventListener("dragdrop", checkModified, false);
