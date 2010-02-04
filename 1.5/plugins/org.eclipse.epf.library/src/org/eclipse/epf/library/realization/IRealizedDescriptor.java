@@ -1,5 +1,8 @@
 package org.eclipse.epf.library.realization;
 
-public interface IRealizedDescriptor extends IRealizedElement {
+import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodElement;
 
+public interface IRealizedDescriptor extends IRealizedElement {
+	
 }
