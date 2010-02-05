@@ -19,9 +19,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
-import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
-import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -141,35 +138,6 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 	 */
 	public boolean isRolledUp() {
 		return false;
-	}
-	
-	@Override
-	protected void addDynamicDescriptors(List<TaskDescriptor> tdList, List children) {
-		if (! IRealizationManager.test) {
-			return;			
-		}
-		
-		if (tdList.isEmpty()) {
-			return;
-		}
-		if (getConfigurator() == null) {
-			return;
-		}
-		
-		IRealizationManager mgr = getConfigurator().getRealizationManager();
-		if (mgr == null) {
-			return;
-		}
-		
-		for (TaskDescriptor td : tdList) {
-			IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);	
-			for (RoleDescriptor rd : rTd.getPerformedPrimarilyBy()) {
-				if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(rd)) {
-					children.add(rd);
-				}
-			}
-		}
-		
 	}
 
 }
