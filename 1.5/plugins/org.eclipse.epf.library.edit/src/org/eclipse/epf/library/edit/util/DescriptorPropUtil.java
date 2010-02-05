@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.edit.util;
 
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.Descriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
@@ -35,6 +36,28 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	public void setNameRepalce(Descriptor d, boolean value) {
 		setCustomization1(d, nameReplace, value);
+	}	
+	
+	public boolean isPresentationNameRepalce(Descriptor d) {
+		if (IRealizationManager.test) {
+			return true;
+		}
+		return getCustomization1(d, presentatioNameReplace);
+	}
+	
+	public void setPresentationNameRepalce(Descriptor d, boolean value) {
+		setCustomization1(d, presentatioNameReplace, value);
+	}
+	
+	public boolean isBriefDesReplaceRepalce(Descriptor d) {
+		if (IRealizationManager.test) {
+			return true;
+		}
+		return getCustomization1(d, briefDesReplace);
+	}
+	
+	public void setBriefDesReplaceRepalce(Descriptor d, boolean value) {
+		setCustomization1(d, briefDesReplace, value);
 	}
 	
 	public boolean isMainDesReplace(Descriptor d) {

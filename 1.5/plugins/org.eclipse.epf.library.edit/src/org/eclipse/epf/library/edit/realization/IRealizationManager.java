@@ -17,4 +17,6 @@ public interface IRealizationManager {
 	IRealizedElement removeRealizedElement(MethodElement element);
 	
 	
+	boolean test = false;
+	
 }
