@@ -497,6 +497,9 @@ public class OBSActivityItemProvider extends BSActivityItemProvider {
 	
 	@Override
 	protected void addDynamicDescriptors(List<TaskDescriptor> tdList, List children) {
+		if (! IRealizationManager.test) {
+			return;			
+		}
 		if (tdList.isEmpty()) {
 			return;
 		}

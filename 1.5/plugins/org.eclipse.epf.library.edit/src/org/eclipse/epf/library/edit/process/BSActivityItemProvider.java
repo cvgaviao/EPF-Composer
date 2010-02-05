@@ -48,6 +48,7 @@ import org.eclipse.epf.library.edit.VariabilityInfo;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.command.ActivityAddCommand;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.GraphicalData;
 import org.eclipse.epf.library.edit.util.PredecessorList;
@@ -430,9 +431,12 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		
 		for (Iterator iter = super.getChildren(object).iterator(); iter.hasNext();) {
 			Object child = (Object) iter.next();
-			Object obj = TngUtil.unwrap(child);
-			if (obj instanceof TaskDescriptor) {
-				tdList.add((TaskDescriptor) obj);
+			
+			if (IRealizationManager.test) {
+				Object obj = TngUtil.unwrap(child);
+				if (obj instanceof TaskDescriptor) {
+					tdList.add((TaskDescriptor) obj);
+				}
 			}
 			if(acceptAsChild(child)) {
 				if(configurator != null) {
@@ -443,8 +447,10 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 					children.add(child);
 				}
 			}
-		}		
-		addDynamicDescriptors(tdList, (List) children) ;
+		}
+		if (IRealizationManager.test) {
+			addDynamicDescriptors(tdList, (List) children) ;
+		}
 		
 		children = addInherited(object, (List) children);
 		return children;
