@@ -1,8 +1,7 @@
-package org.eclipse.epf.library.realization;
+package org.eclipse.epf.library.edit.realization;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 
 public interface IRealizedElement {

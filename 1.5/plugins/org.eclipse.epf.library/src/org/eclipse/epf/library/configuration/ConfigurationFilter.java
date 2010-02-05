@@ -20,6 +20,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.VariabilityInfo;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.Log;
 import org.eclipse.epf.uma.Discipline;
@@ -409,6 +410,13 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 							DefaultElementRealizer.newElementRealizer(methodConfig)).isEmpty();					
 			}
 		};
+	}
+	
+	/**
+	 * @return an IRealizationManager instance
+	 */
+	public IRealizationManager getRealizationManager() {
+		return null;
 	}
 	
 }

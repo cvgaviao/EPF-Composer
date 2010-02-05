@@ -1,7 +1,7 @@
 package org.eclipse.epf.library.realization.impl;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.epf.library.realization.IRealizedElement;
+import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;

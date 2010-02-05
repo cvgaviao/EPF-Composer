@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.common.utils.StrUtil;
-import org.eclipse.epf.library.realization.IRealizationManager;
-import org.eclipse.epf.library.realization.IRealizedElement;
-import org.eclipse.epf.library.realization.RealizationContext;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.realization.IRealizedElement;
+import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -32,6 +32,12 @@ public class RealizationManager implements IRealizationManager {
 	public RealizationManager(RealizationContext context) {
 		this.context = context;
 		init();
+	}
+	
+	public void dispose() {
+		elementMap = null;
+		context = null;
+		actDescrptorsMap = null;
 	}
 	
 	public MethodConfiguration getConfig() {

@@ -1,4 +1,5 @@
-package org.eclipse.epf.library.realization;
+package org.eclipse.epf.library.edit.realization;
+
 
 public interface IRealizedRoleDescriptor extends IRealizedDescriptor {
 

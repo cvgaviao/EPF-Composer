@@ -1,4 +1,4 @@
-package org.eclipse.epf.library.realization;
+package org.eclipse.epf.library.edit.realization;
 
 import java.util.List;
 

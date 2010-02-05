@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.VariabilityElement;
 
@@ -108,5 +109,9 @@ public interface IConfigurator extends IMethodConfigurationProvider, IFilter, Ad
 	 */
 	public IFilter getRoleSetsFilter();
 
-
+	/**
+	 * @return an IRealizationManager instance
+	 */
+	public IRealizationManager getRealizationManager();
+		
 }

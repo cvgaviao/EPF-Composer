@@ -1,4 +1,4 @@
-package org.eclipse.epf.library.realization;
+package org.eclipse.epf.library.edit.realization;
 
 import org.eclipse.epf.uma.MethodConfiguration;
 
@@ -22,6 +22,14 @@ public class RealizationContext {
 	
 	public int getMode() {
 		return mode;
+	}
+	
+	public String getId() {
+		String modeStr = Integer.toString(mode);
+		if (config == null) {
+			return modeStr;
+		}
+		return config.getGuid() + modeStr;
 	}
 	
 }

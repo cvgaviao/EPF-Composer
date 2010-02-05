@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.epf.library.realization.IRealizedWorkProductDescriptor;
+import org.eclipse.epf.library.edit.realization.IRealizedWorkProductDescriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
