@@ -61,6 +61,7 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -425,8 +426,14 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 	
 	private Collection getImmediateChildren(Object object) {
 		Collection children = new ArrayList();
+		List<TaskDescriptor> tdList = new ArrayList<TaskDescriptor>();
+		
 		for (Iterator iter = super.getChildren(object).iterator(); iter.hasNext();) {
 			Object child = (Object) iter.next();
+			Object obj = TngUtil.unwrap(child);
+			if (obj instanceof TaskDescriptor) {
+				tdList.add((TaskDescriptor) obj);
+			}
 			if(acceptAsChild(child)) {
 				if(configurator != null) {
 					child = configurator.resolve(child);
@@ -436,9 +443,14 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 					children.add(child);
 				}
 			}
-		}
+		}		
+		addDynamicDescriptors(tdList, (List) children) ;
+		
 		children = addInherited(object, (List) children);
 		return children;
+	}
+	
+	protected void addDynamicDescriptors(List<TaskDescriptor> tdList, List children) {		
 	}
 	
 	private Collection getRolledUpChildren(Object object) {
@@ -1542,4 +1554,9 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 	protected Command createMoveCommand(EditingDomain domain, EObject owner, EStructuralFeature feature, Object value, int index) {
 		return new MoveCommandEx(domain, owner, feature, value, index);
 	}
+	
+	protected IConfigurator getConfigurator() {
+		return configurator;
+	}
+
 }

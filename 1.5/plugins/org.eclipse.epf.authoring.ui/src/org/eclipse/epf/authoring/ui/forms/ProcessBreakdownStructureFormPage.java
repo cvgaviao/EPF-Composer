@@ -39,12 +39,14 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.IColumnAware;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.DescribableElement;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.UmaPackage;
@@ -157,6 +159,14 @@ public class ProcessBreakdownStructureFormPage extends ProcessFormPage
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
 		public Color getForeground(Object element) {
+			Object obj = TngUtil.unwrap(element);
+			if (obj instanceof Descriptor) {
+				Descriptor d = (Descriptor) obj;
+				if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(d)) {
+					return Colors.DYNAMIC_ELEMENT_LABEL;
+				}
+			}
+			
 			if (isSuppressed(element)) {
 				return Colors.SUPRESSED_ELEMENT_LABEL;
 			}

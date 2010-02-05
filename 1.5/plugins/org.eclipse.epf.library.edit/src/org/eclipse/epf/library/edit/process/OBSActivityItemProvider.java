@@ -28,7 +28,10 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.command.OBSDragAndDropCommand;
 import org.eclipse.epf.library.edit.process.command.OBSDropCommand;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
 import org.eclipse.epf.library.edit.util.Comparators;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -36,6 +39,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -489,5 +493,30 @@ public class OBSActivityItemProvider extends BSActivityItemProvider {
 	protected Object createRollupWrapper(Object object, Object owner, AdapterFactory adapterFactory) {
 		Object wrapper = super.createRollupWrapper(object, owner, adapterFactory);
 		return new RoleDescriptorWrapperItemProvider(wrapper, owner, adapterFactory);
+	}
+	
+	@Override
+	protected void addDynamicDescriptors(List<TaskDescriptor> tdList, List children) {
+		if (tdList.isEmpty()) {
+			return;
+		}
+		if (getConfigurator() == null) {
+			return;
+		}
+		
+		IRealizationManager mgr = getConfigurator().getRealizationManager();
+		if (mgr == null) {
+			return;
+		}
+		
+		for (TaskDescriptor td : tdList) {
+			IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);	
+			for (RoleDescriptor rd : rTd.getPerformedPrimarilyBy()) {
+				if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(rd)) {
+					children.add(rd);
+				}
+			}
+		}
+		
 	}
 }

@@ -82,6 +82,7 @@ import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
+import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.EditingDomainComposedAdapterFactory;
@@ -374,6 +375,8 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 
 	protected static boolean addAdapterFactoryListeners = false;
+	
+	private RealizationContext realizationContext;
 
 	private class ProcessEditorDropAdapter extends
 			EditingDomainTableTreeViewerDropAdapter {
@@ -959,6 +962,8 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 
 	public void dispose() {
+		ProcessAuthoringConfigurator.INSTANCE.endRealizationManager(realizationContext);
+		
 		// close all diagram editors of this process
 		//
 		closeAllDiagramEditors();
@@ -1104,6 +1109,8 @@ public class ProcessEditor extends MethodElementEditor implements
 					.getCurrentMethodConfiguration();
 			ProcessAuthoringConfigurator.INSTANCE
 					.setMethodConfiguration(currentConfig);
+			realizationContext = new RealizationContext(currentConfig);
+			ProcessAuthoringConfigurator.INSTANCE.beginRealizationManager(realizationContext);
 			if (adapterFactory instanceof ConfigurableComposedAdapterFactory) {
 				((ConfigurableComposedAdapterFactory) adapterFactory)
 						.setFilter(ProcessAuthoringConfigurator.INSTANCE);

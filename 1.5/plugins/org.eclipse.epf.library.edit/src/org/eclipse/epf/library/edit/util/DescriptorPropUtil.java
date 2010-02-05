@@ -6,6 +6,7 @@ import org.eclipse.epf.uma.Descriptor;
 public class DescriptorPropUtil extends MethodElementPropUtil {
 
 	public static final String DESCRIPTOR_Syn_Free = "syn_free"; 			//$NON-NLS-1$
+	public static final String DESCRIPTOR_Is_Dynamic = "is_dynamic"; 			//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization1 = "customization1"; 	//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
@@ -23,11 +24,21 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public boolean isSynFree(Descriptor d) {
-		return getBooleanValue(d, DESCRIPTOR_Syn_Free);
+		Boolean value = getBooleanValue(d, DESCRIPTOR_Syn_Free);
+		return value == null ? false : value.booleanValue();
 	}
 	
 	public void setSynFree(Descriptor d, boolean value) {
 		setBooleanValue(d, DESCRIPTOR_Syn_Free, value);
+	}
+	
+	public boolean isDynamic(Descriptor d) {
+		Boolean value = getBooleanValue(d, DESCRIPTOR_Is_Dynamic);
+		return value == null ? false : value.booleanValue();
+	}
+	
+	public void setDynamic(Descriptor d, boolean value) {
+		setBooleanValue(d, DESCRIPTOR_Is_Dynamic, value);
 	}
 	
 	public boolean isNameRepalce(Descriptor d) {

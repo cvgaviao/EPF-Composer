@@ -9,6 +9,7 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.realization.RealizationContext;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -140,7 +141,9 @@ public class RealizationManager implements IRealizationManager {
 		if (descriptor == null) {
 			return null;
 		}
-				
+			
+		DescriptorPropUtil.getDesciptorPropUtil().setDynamic(descriptor, true);
+		
 		if (dList == null) {
 			dList = new ArrayList<Descriptor>();
 			actDescrptorsMap.put(parentAct, dList);
