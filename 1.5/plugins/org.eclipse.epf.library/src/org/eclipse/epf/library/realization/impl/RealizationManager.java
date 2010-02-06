@@ -15,6 +15,7 @@ import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.Task;
@@ -153,7 +154,8 @@ public class RealizationManager implements IRealizationManager {
 		if (descriptor == null) {
 			return null;
 		}
-			
+		addToProcess(parentAct, descriptor);	
+		
 		DescriptorPropUtil.getDesciptorPropUtil().setDynamic(descriptor, true);
 		
 		if (dList == null) {
@@ -173,6 +175,11 @@ public class RealizationManager implements IRealizationManager {
 		return descriptor;
 	}
 	
+	private void addToProcess(Activity parent, Descriptor des) {
+		parent.getBreakdownElements().add(des);
+		ProcessPackage pkg = (ProcessPackage) parent.eContainer();
+		pkg.getProcessElements().add(des);
+	}
 
 	
 }

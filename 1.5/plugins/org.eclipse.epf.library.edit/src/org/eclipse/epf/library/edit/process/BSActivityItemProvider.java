@@ -1582,7 +1582,6 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		if (mgr == null) {
 			return;
 		}
-		System.out.println("LD> mgr: " + mgr);
 		
 		List listValue = null;
 		Set<Descriptor> desSet = new LinkedHashSet<Descriptor>();
@@ -1619,8 +1618,11 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		
 		for (Descriptor des : desSet) {
 			if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(des)) {
-				setParentFor(des, object);
-				children.add(des);
+				if (! children.contains(des)) {
+					setParentFor(des, object);
+					children.add(des);
+
+				}
 			}
 		}		
 	}
