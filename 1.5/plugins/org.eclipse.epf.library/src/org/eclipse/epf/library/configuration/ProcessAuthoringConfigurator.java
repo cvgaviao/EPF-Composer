@@ -19,9 +19,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.ILibraryServiceListener;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.VariabilityInfo;
-import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.realization.RealizationContext;
-import org.eclipse.epf.library.realization.RealizationManagerFactory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.VariabilityElement;
@@ -36,8 +33,6 @@ import org.eclipse.epf.uma.VariabilityElement;
  */
 public class ProcessAuthoringConfigurator extends ProcessConfigurator {
 	public static final ProcessAuthoringConfigurator INSTANCE = new ProcessAuthoringConfigurator();
-
-	IRealizationManager realizationManager;
 	
 	private ProcessAuthoringConfigurator() {
 		super(null);
@@ -110,23 +105,6 @@ public class ProcessAuthoringConfigurator extends ProcessConfigurator {
 				return Collections.EMPTY_LIST;
 			}
 		};
-	}
-	
-	/**
-	 * @return an IRealizationManager instance
-	 */
-	public IRealizationManager getRealizationManager() {
-		return realizationManager;
-	}
-	
-	//To do: need to revisit the following two methods
-	public IRealizationManager beginRealizationManager(RealizationContext context) {
-		realizationManager = RealizationManagerFactory.getInstance().beginUsingRealizationManager(context);
-		return realizationManager;
-	}
-	
-	public void endRealizationManager(RealizationContext context) {
-		RealizationManagerFactory.getInstance().endUsingRealizationManager(context);
 	}
 	
 }
