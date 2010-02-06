@@ -139,5 +139,15 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 	public boolean isRolledUp() {
 		return false;
 	}
+	
+	@Override
+	protected boolean acceptDynamicRd() {
+		return false;
+	}
+	
+	@Override
+	protected boolean acceptDynamicWpd() {
+		return false;
+	}
 
 }

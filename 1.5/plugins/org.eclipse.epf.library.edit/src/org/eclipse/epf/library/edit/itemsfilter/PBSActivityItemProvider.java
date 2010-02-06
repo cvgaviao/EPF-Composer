@@ -54,4 +54,14 @@ public class PBSActivityItemProvider extends BSActivityItemProvider {
 		return ProcessUtil.getPBSEclasses();
 	}
 
+	@Override
+	protected boolean acceptDynamicRd() {
+		return false;
+	}
+	
+	@Override
+	protected boolean acceptDynamicWpd() {
+		return true;
+	}
+	
 }

@@ -375,4 +375,14 @@ implements ICachedChildrenItemProvider
 		return super.isWrappingRollupNeeded(object);
 	}
 	
+	@Override
+	protected boolean acceptDynamicRd() {
+		return false;
+	}
+	
+	@Override
+	protected boolean acceptDynamicWpd() {
+		return false;
+	}
+	
 }

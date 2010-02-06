@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,7 +50,9 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.command.ActivityAddCommand;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.GraphicalData;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -62,6 +65,7 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
+import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
@@ -70,6 +74,7 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.provider.ActivityItemProvider;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -449,14 +454,11 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 			}
 		}
 		if (IRealizationManager.test) {
-			addDynamicDescriptors(tdList, (List) children) ;
+			handleDynamicChildren(object, tdList, (List) children) ;
 		}
 		
 		children = addInherited(object, (List) children);
 		return children;
-	}
-	
-	protected void addDynamicDescriptors(List<TaskDescriptor> tdList, List children) {		
 	}
 	
 	private Collection getRolledUpChildren(Object object) {
@@ -1564,5 +1566,67 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 	protected IConfigurator getConfigurator() {
 		return configurator;
 	}
-
+	
+	protected void handleDynamicChildren(Object object, List<TaskDescriptor> tdList, List children) {
+		if (! IRealizationManager.test) {
+			return;			
+		}
+		if (tdList.isEmpty()) {
+			return;
+		}
+		if (getConfigurator() == null) {
+			return;
+		}
+		
+		IRealizationManager mgr = getConfigurator().getRealizationManager();
+		if (mgr == null) {
+			return;
+		}
+		System.out.println("LD> mgr: " + mgr);
+		
+		List listValue = null;
+		Set<Descriptor> desSet = new LinkedHashSet<Descriptor>();
+		for (TaskDescriptor td : tdList) {
+			IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);	
+			if (acceptDynamicRd()) {
+				listValue = rTd.getPerformedPrimarilyBy();
+				if (listValue != null && !listValue.isEmpty()) { 
+					desSet.addAll(listValue);
+				}
+			}			
+		}
+		
+		//Use 2nd loop to keep rds before wpds
+		for (TaskDescriptor td : tdList) {
+			IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);	
+			if (acceptDynamicWpd()) {
+				listValue = rTd.getMandatoryInput();
+				if (listValue != null && !listValue.isEmpty()) { 
+					desSet.addAll(listValue);
+				}
+			}			
+		}
+		
+		for (Object obj : children) {
+			if ((obj instanceof RoleDescriptor) && acceptDynamicRd() && !desSet.contains(obj)) {
+				children.remove(obj);	
+			}
+					
+			if ((obj instanceof WorkProductDescriptor) && acceptDynamicWpd() && !desSet.contains(obj)) {
+				children.remove(obj);	
+			}	
+		}
+		
+		for (Descriptor des : desSet) {
+			if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(des)) {
+				setParentFor(des, object);
+				children.add(des);
+			}
+		}		
+	}
+	
+	protected abstract boolean acceptDynamicRd();
+	
+	protected abstract boolean acceptDynamicWpd();
+	
 }

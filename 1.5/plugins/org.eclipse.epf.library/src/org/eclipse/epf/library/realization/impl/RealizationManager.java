@@ -29,7 +29,16 @@ public class RealizationManager implements IRealizationManager {
 	private Map<MethodElement, IRealizedElement> elementMap;
 	private RealizationContext context;
 	private Map<Activity, List<Descriptor>> actDescrptorsMap;
+	private boolean caching = false;
 	
+	public boolean isCaching() {
+		return caching;
+	}
+
+	public void setCaching(boolean caching) {
+		this.caching = caching;
+	}
+
 	public RealizationManager(RealizationContext context) {
 		this.context = context;
 		init();

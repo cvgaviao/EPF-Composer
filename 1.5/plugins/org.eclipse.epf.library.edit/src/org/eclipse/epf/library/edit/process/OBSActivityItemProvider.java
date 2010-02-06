@@ -15,7 +15,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -496,30 +498,13 @@ public class OBSActivityItemProvider extends BSActivityItemProvider {
 	}
 	
 	@Override
-	protected void addDynamicDescriptors(List<TaskDescriptor> tdList, List children) {
-		if (! IRealizationManager.test) {
-			return;			
-		}
-		if (tdList.isEmpty()) {
-			return;
-		}
-		if (getConfigurator() == null) {
-			return;
-		}
-		
-		IRealizationManager mgr = getConfigurator().getRealizationManager();
-		if (mgr == null) {
-			return;
-		}
-		
-		for (TaskDescriptor td : tdList) {
-			IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);	
-			for (RoleDescriptor rd : rTd.getPerformedPrimarilyBy()) {
-				if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(rd)) {
-					children.add(rd);
-				}
-			}
-		}
-		
+	protected boolean acceptDynamicRd() {
+		return true;
 	}
+	
+	@Override
+	protected boolean acceptDynamicWpd() {
+		return false;
+	}
+
 }

@@ -250,4 +250,14 @@ public class WBSActivityItemProvider extends BSActivityItemProvider {
 		};
 	}
 	
+	@Override
+	protected boolean acceptDynamicRd() {
+		return false;
+	}
+	
+	@Override
+	protected boolean acceptDynamicWpd() {
+		return false;
+	}
+	
 }
