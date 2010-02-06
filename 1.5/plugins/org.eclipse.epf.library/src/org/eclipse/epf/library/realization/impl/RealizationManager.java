@@ -41,6 +41,9 @@ public class RealizationManager implements IRealizationManager {
 
 	public RealizationManager(RealizationContext context) {
 		this.context = context;
+		if (context.getMode() == 1) {
+			caching = true;
+		}
 		init();
 	}
 	

@@ -19,4 +19,6 @@ public interface IRealizationManager {
 	
 	boolean test = false;
 	
+	boolean debug = false;
+	
 }

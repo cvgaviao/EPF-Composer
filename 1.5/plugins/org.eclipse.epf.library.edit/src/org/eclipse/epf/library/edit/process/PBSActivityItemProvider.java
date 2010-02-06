@@ -382,7 +382,7 @@ implements ICachedChildrenItemProvider
 	
 	@Override
 	protected boolean acceptDynamicWpd() {
-		return false;
+		return true;
 	}
 	
 }

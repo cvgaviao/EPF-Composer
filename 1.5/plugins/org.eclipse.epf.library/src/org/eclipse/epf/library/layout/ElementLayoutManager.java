@@ -30,6 +30,7 @@ import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -66,6 +67,8 @@ public class ElementLayoutManager {
 	private MethodConfiguration config = null;
 
 	private IActivityDiagramService diagramService = null;
+	
+	private RealizationContext realizationContext;
 
 	// need to seperate the adapter factory form content and diagram
 	// diagram adaptor factory should not be rolled up
@@ -511,7 +514,10 @@ public class ElementLayoutManager {
 
 			// set configuration filter
 			configurator = new ProcessAdapterFactoryFilter(methodConfig, this);
-
+			
+			realizationContext = new RealizationContext(methodConfig, 1);
+			configurator.beginRealizationManager(realizationContext);
+			
 			wbsAdapterFactory.setFilter(configurator);
 			tbsAdapterFactory.setFilter(configurator);
 			wpbsAdapterFactory.setFilter(configurator);
@@ -524,7 +530,7 @@ public class ElementLayoutManager {
 		
 		public void clear()
 		{
-			
+						
 			if (wbsAdapterFactory != null) {
 				wbsAdapterFactory.setFilter(null);
 				wbsAdapterFactory.dispose();
@@ -550,6 +556,7 @@ public class ElementLayoutManager {
 			}
 			
 			if ( configurator != null ) {
+				configurator.endRealizationManager(realizationContext);
 				configurator.dispose();
 				configurator = null;
 			}
