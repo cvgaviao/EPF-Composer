@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
@@ -21,8 +22,11 @@ import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 public class RealizationManager implements IRealizationManager {
@@ -114,7 +118,7 @@ public class RealizationManager implements IRealizationManager {
 		return null;
 	}
 	
-	public Descriptor getDescriptor(Activity parentAct, MethodElement element) {
+	public Descriptor getDescriptor(Descriptor referencingDes, Activity parentAct, MethodElement element, EReference feature) {
 		if (parentAct == null) {
 			return null;
 		}
@@ -154,7 +158,7 @@ public class RealizationManager implements IRealizationManager {
 		if (descriptor == null) {
 			return null;
 		}
-		addToProcess(parentAct, descriptor);	
+		addToProcess(referencingDes, parentAct, descriptor, feature);	
 		
 		DescriptorPropUtil.getDesciptorPropUtil().setDynamic(descriptor, true);
 		
@@ -175,10 +179,24 @@ public class RealizationManager implements IRealizationManager {
 		return descriptor;
 	}
 	
-	private void addToProcess(Activity parent, Descriptor des) {
-		parent.getBreakdownElements().add(des);
+	private void addToProcess(Descriptor ReferecingDes, Activity parent, Descriptor referencedDes, EReference feature) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		parent.getBreakdownElements().add(referencedDes);
 		ProcessPackage pkg = (ProcessPackage) parent.eContainer();
-		pkg.getProcessElements().add(des);
+		pkg.getProcessElements().add(referencedDes);
+		if (feature.isMany()) {
+			List listValue = (List) ReferecingDes.eGet(feature);
+			if (listValue != null) {
+				listValue.add(referencedDes);
+			}
+		} else {
+			ReferecingDes.eSet(feature, referencedDes);
+		}
+		
+		if (feature == up.getTaskDescriptor_PerformedPrimarilyBy()) {
+			MultiResourceEObject mreference = (MultiResourceEObject) referencedDes;
+			mreference.oppositeAdd(AssociationHelper.RoleDescriptor_PrimaryTaskDescriptors, ReferecingDes);			
+		}
 	}
 
 	

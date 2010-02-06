@@ -106,7 +106,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 
 		for (Role role : roleSet) {
 			RoleDescriptor rd = (RoleDescriptor) getMgr().getDescriptor(
-					parentAct, role);
+					getTaskDescriptor(), parentAct, role, tdFeature);
 			resultRdList.add(rd);
 		}
 
@@ -165,7 +165,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 
 		for (WorkProduct wp : wpSet) {
 			WorkProductDescriptor wpd = (WorkProductDescriptor) getMgr().getDescriptor(
-					parentAct, wp);
+					getTaskDescriptor(), parentAct, wp, tdFeature);
 			resultWpdList.add(wpd);
 		}
 
