@@ -1627,8 +1627,12 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		}		
 	}
 	
-	protected abstract boolean acceptDynamicRd();
+	protected boolean acceptDynamicRd() {
+		return false;
+	}
 	
-	protected abstract boolean acceptDynamicWpd();
+	protected boolean acceptDynamicWpd() {
+		return false;
+	}
 	
 }
