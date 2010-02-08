@@ -28,6 +28,11 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IPerspectiveListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 public class RealizationManager implements IRealizationManager {
 
@@ -35,6 +40,7 @@ public class RealizationManager implements IRealizationManager {
 	private RealizationContext context;
 	private Map<Activity, List<Descriptor>> actDescrptorsMap;
 	private boolean caching = false;
+	IPerspectiveListener perspectiveListener;
 	
 	public boolean isCaching() {
 		return caching;
@@ -52,10 +58,25 @@ public class RealizationManager implements IRealizationManager {
 		init();
 	}
 	
-	public void dispose() {
+	public void clearCacheData() {
+		if (IRealizationManager.debug) {
+			System.out.println("LD> RealizationManger.clearCacheData!");
+		}
+		for (IRealizedElement element : elementMap.values()) {
+			((RealizedElement) element).dispose();
+		}
 		elementMap = null;
-		context = null;
 		actDescrptorsMap = null;
+	}
+	
+	public void dispose() {
+		clearCacheData();
+		context = null;
+		
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (window != null) {
+			window.removePerspectiveListener(perspectiveListener);
+		}
 	}
 	
 	public MethodConfiguration getConfig() {
@@ -98,6 +119,22 @@ public class RealizationManager implements IRealizationManager {
 		}
 					
 		rElement.setMgr(this);
+		
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (window != null) {
+			perspectiveListener = new IPerspectiveListener() {
+				public void perspectiveActivated(IWorkbenchPage page,
+						IPerspectiveDescriptor desc) {
+					clearCacheData();
+				}
+
+				public void perspectiveChanged(IWorkbenchPage page,
+						IPerspectiveDescriptor desc, String id) {
+					clearCacheData();
+				}
+			};
+			window.addPerspectiveListener(perspectiveListener);
+		}
 		
 		return rElement;
 	}

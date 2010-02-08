@@ -16,6 +16,7 @@ public interface IRealizationManager {
 	 */
 	IRealizedElement removeRealizedElement(MethodElement element);
 	
+	void clearCacheData();
 	
 	boolean test = false;
 	

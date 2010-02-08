@@ -21,6 +21,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.serviceability.DebugTrace;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.diagram.core.services.DiagramManager;
+import org.eclipse.epf.library.ConfigurationManager;
+import org.eclipse.epf.library.IConfigurationManager;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.layout.Bookmark;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -108,6 +111,10 @@ public class PublishManager extends AbstractPublishManager {
 	}
 
 	protected void doPublish(IProgressMonitor monitor) throws Exception {
+		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
+		if (configMgr != null && configMgr.getRealizationManager() != null) {
+				configMgr.getRealizationManager().clearCacheData();
+		}
 		
 		// before doing publishing, load the whole library and remember the resouces loaded
 		// so we can unload those resources later to free memory
@@ -176,6 +183,11 @@ public class PublishManager extends AbstractPublishManager {
 		createWARFile();
 
 		getPublishReportUrl();
+		
+		ConfigurationManager configMgr = (ConfigurationManager) LibraryService.getInstance().getConfigurationManager(config);
+		if (configMgr != null && configMgr.getRealizationManager() != null) {
+				configMgr.getRealizationManager().clearCacheData();
+		}
 	}
 
 	private void generateBookmarks(IProgressMonitor monitor) throws Exception {

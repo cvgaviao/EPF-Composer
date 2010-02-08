@@ -19,8 +19,11 @@ import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.DependencyManager;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
+import org.eclipse.epf.library.realization.RealizationManagerFactory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 
@@ -61,6 +64,9 @@ public class ConfigurationManager implements IConfigurationManager {
 	protected ConfigurationClosure closure;
 
 	protected AdapterFactoryContentProvider afcp;
+	
+	private IRealizationManager realizationManager;
+	private RealizationContext realizationContext;
 
 	/**
 	 * Creates a new instance.
@@ -93,6 +99,10 @@ public class ConfigurationManager implements IConfigurationManager {
 		} else {
 			layoutManager = new ElementLayoutManager(config);
 			// closure = new ConfigurationClosure(this, config);
+			realizationContext = new RealizationContext(config, 1);
+			realizationManager = RealizationManagerFactory.getInstance()
+					.beginUsingRealizationManager(realizationContext, this);
+
 		}
 	}
 
@@ -205,10 +215,22 @@ public class ConfigurationManager implements IConfigurationManager {
 		closure = null;
 		MethodElementPropertyMgr.getInstance().unregister(config);
 		configProps = null;
+		
+		if (realizationManager != null) {
+			RealizationManagerFactory.getInstance().endUsingRealizationManager(realizationContext, this);
+			realizationManager = null;
+		}
 	}
 
 	public ConfigurationProperties getConfigurationProperties() {
 		return configProps;
+	}
+	
+	/**
+	 * @return an IRealizationManager instance
+	 */
+	public IRealizationManager getRealizationManager() {
+		return realizationManager;
 	}
 
 }
