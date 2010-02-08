@@ -36,6 +36,8 @@ import java.util.List;
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getOutput <em>Output</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyBy <em>Performed Primarily By</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getSelectedSteps <em>Selected Steps</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByExcluded <em>Performed Primarily By Excluded</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByIncluded <em>Performed Primarily By Included</em>}</li>
  * </ul>
  * </p>
  *
@@ -197,5 +199,37 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * @generated
 	 */
 	List<Section> getSelectedSteps();
+
+	/**
+	 * Returns the value of the '<em><b>Performed Primarily By Excluded</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Role}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Performed Primarily By Excluded</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Performed Primarily By Excluded</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_PerformedPrimarilyByExcluded()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<Role> getPerformedPrimarilyByExcluded();
+
+	/**
+	 * Returns the value of the '<em><b>Performed Primarily By Included</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Role}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Performed Primarily By Included</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Performed Primarily By Included</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_PerformedPrimarilyByIncluded()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<Role> getPerformedPrimarilyByIncluded();
 
 } // TaskDescriptor

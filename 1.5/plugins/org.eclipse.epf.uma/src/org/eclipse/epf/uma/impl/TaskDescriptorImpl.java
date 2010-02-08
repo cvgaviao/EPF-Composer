@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.Task;
@@ -47,6 +48,8 @@ import org.eclipse.epf.uma.ecore.util.DefaultValueManager;
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getOutput <em>Output</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getPerformedPrimarilyBy <em>Performed Primarily By</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getSelectedSteps <em>Selected Steps</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getPerformedPrimarilyByExcluded <em>Performed Primarily By Excluded</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getPerformedPrimarilyByIncluded <em>Performed Primarily By Included</em>}</li>
  * </ul>
  * </p>
  *
@@ -168,6 +171,26 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @ordered
 	 */
 	protected EList<Section> selectedSteps;
+
+	/**
+	 * The cached value of the '{@link #getPerformedPrimarilyByExcluded() <em>Performed Primarily By Excluded</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPerformedPrimarilyByExcluded()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Role> performedPrimarilyByExcluded;
+
+	/**
+	 * The cached value of the '{@link #getPerformedPrimarilyByIncluded() <em>Performed Primarily By Included</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPerformedPrimarilyByIncluded()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Role> performedPrimarilyByIncluded;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -371,6 +394,34 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<Role> getPerformedPrimarilyByExcluded() {
+		if (performedPrimarilyByExcluded == null) {
+			performedPrimarilyByExcluded = new EObjectResolvingEList<Role>(
+					Role.class, this,
+					UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED);
+		}
+		return performedPrimarilyByExcluded;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Role> getPerformedPrimarilyByIncluded() {
+		if (performedPrimarilyByIncluded == null) {
+			performedPrimarilyByIncluded = new EObjectResolvingEList<Role>(
+					Role.class, this,
+					UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED);
+		}
+		return performedPrimarilyByIncluded;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -396,6 +447,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			return getPerformedPrimarilyBy();
 		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS:
 			return getSelectedSteps();
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED:
+			return getPerformedPrimarilyByExcluded();
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED:
+			return getPerformedPrimarilyByIncluded();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -454,6 +509,16 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			getSelectedSteps().clear();
 			getSelectedSteps().addAll((Collection<? extends Section>) newValue);
 			return;
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED:
+			getPerformedPrimarilyByExcluded().clear();
+			getPerformedPrimarilyByExcluded().addAll(
+					(Collection<? extends Role>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED:
+			getPerformedPrimarilyByIncluded().clear();
+			getPerformedPrimarilyByIncluded().addAll(
+					(Collection<? extends Role>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -495,6 +560,12 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS:
 			getSelectedSteps().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED:
+			getPerformedPrimarilyByExcluded().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED:
+			getPerformedPrimarilyByIncluded().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -538,6 +609,12 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 					&& !performedPrimarilyBy.isEmpty();
 		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS:
 			return selectedSteps != null && !selectedSteps.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED:
+			return performedPrimarilyByExcluded != null
+					&& !performedPrimarilyByExcluded.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED:
+			return performedPrimarilyByIncluded != null
+					&& !performedPrimarilyByIncluded.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

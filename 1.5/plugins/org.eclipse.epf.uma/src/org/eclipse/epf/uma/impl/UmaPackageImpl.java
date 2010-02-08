@@ -1032,20 +1032,10 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link UmaPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -1060,8 +1050,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 
 		// Obtain or create and register package
 		UmaPackageImpl theUmaPackage = (UmaPackageImpl) (EPackage.Registry.INSTANCE
-				.getEPackage(eNS_URI) instanceof UmaPackageImpl ? EPackage.Registry.INSTANCE
-				.getEPackage(eNS_URI)
+				.get(eNS_URI) instanceof UmaPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI)
 				: new UmaPackageImpl());
 
 		isInited = true;
@@ -1075,6 +1065,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		// Mark meta-data to indicate it can't be changed
 		theUmaPackage.freeze();
 
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(UmaPackage.eNS_URI, theUmaPackage);
 		return theUmaPackage;
 	}
 
@@ -2681,6 +2673,26 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	public EReference getTaskDescriptor_SelectedSteps() {
 		return (EReference) taskDescriptorEClass.getEStructuralFeatures()
 				.get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskDescriptor_PerformedPrimarilyByExcluded() {
+		return (EReference) taskDescriptorEClass.getEStructuralFeatures()
+				.get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTaskDescriptor_PerformedPrimarilyByIncluded() {
+		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
+				10);
 	}
 
 	/**
@@ -4858,6 +4870,10 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(taskDescriptorEClass,
 				TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
 		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__SELECTED_STEPS);
+		createEReference(taskDescriptorEClass,
+				TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED);
+		createEReference(taskDescriptorEClass,
+				TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED);
 
 		compositeRoleEClass = createEClass(COMPOSITE_ROLE);
 		createEReference(compositeRoleEClass, COMPOSITE_ROLE__AGGREGATED_ROLES);
@@ -6308,6 +6324,16 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				this.getSection(),
 				null,
 				"selectedSteps", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_PerformedPrimarilyByExcluded(),
+				this.getRole(),
+				null,
+				"performedPrimarilyByExcluded", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getTaskDescriptor_PerformedPrimarilyByIncluded(),
+				this.getRole(),
+				null,
+				"performedPrimarilyByIncluded", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				compositeRoleEClass,

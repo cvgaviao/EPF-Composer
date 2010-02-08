@@ -335,9 +335,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(kind);
 			if (result == null)
-				result = casePackageableElement(kind);
-			if (result == null)
 				result = caseType(kind);
+			if (result == null)
+				result = casePackageableElement(kind);
 			if (result == null)
 				result = caseNamedElement(kind);
 			if (result == null)
@@ -358,9 +358,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(contentElement);
 			if (result == null)
-				result = casePackageableElement(contentElement);
-			if (result == null)
 				result = caseType(contentElement);
+			if (result == null)
+				result = casePackageableElement(contentElement);
 			if (result == null)
 				result = caseNamedElement(contentElement);
 			if (result == null)
@@ -377,9 +377,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(describableElement);
 			if (result == null)
-				result = casePackageableElement(describableElement);
-			if (result == null)
 				result = caseType(describableElement);
+			if (result == null)
+				result = casePackageableElement(describableElement);
 			if (result == null)
 				result = caseNamedElement(describableElement);
 			if (result == null)
@@ -436,9 +436,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(supportingMaterial);
 			if (result == null)
-				result = casePackageableElement(supportingMaterial);
-			if (result == null)
 				result = caseType(supportingMaterial);
+			if (result == null)
+				result = casePackageableElement(supportingMaterial);
 			if (result == null)
 				result = caseNamedElement(supportingMaterial);
 			if (result == null)
@@ -461,9 +461,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(guidance);
 			if (result == null)
-				result = casePackageableElement(guidance);
-			if (result == null)
 				result = caseType(guidance);
+			if (result == null)
+				result = casePackageableElement(guidance);
 			if (result == null)
 				result = caseNamedElement(guidance);
 			if (result == null)
@@ -520,9 +520,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(concept);
 			if (result == null)
-				result = casePackageableElement(concept);
-			if (result == null)
 				result = caseType(concept);
+			if (result == null)
+				result = casePackageableElement(concept);
 			if (result == null)
 				result = caseNamedElement(concept);
 			if (result == null)
@@ -547,9 +547,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(checklist);
 			if (result == null)
-				result = casePackageableElement(checklist);
-			if (result == null)
 				result = caseType(checklist);
+			if (result == null)
+				result = casePackageableElement(checklist);
 			if (result == null)
 				result = caseNamedElement(checklist);
 			if (result == null)
@@ -574,9 +574,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(guideline);
 			if (result == null)
-				result = casePackageableElement(guideline);
-			if (result == null)
 				result = caseType(guideline);
+			if (result == null)
+				result = casePackageableElement(guideline);
 			if (result == null)
 				result = caseNamedElement(guideline);
 			if (result == null)
@@ -601,9 +601,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(example);
 			if (result == null)
-				result = casePackageableElement(example);
-			if (result == null)
 				result = caseType(example);
+			if (result == null)
+				result = casePackageableElement(example);
 			if (result == null)
 				result = caseNamedElement(example);
 			if (result == null)
@@ -628,9 +628,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(reusableAsset);
 			if (result == null)
-				result = casePackageableElement(reusableAsset);
-			if (result == null)
 				result = caseType(reusableAsset);
+			if (result == null)
+				result = casePackageableElement(reusableAsset);
 			if (result == null)
 				result = caseNamedElement(reusableAsset);
 			if (result == null)
@@ -655,9 +655,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(termDefinition);
 			if (result == null)
-				result = casePackageableElement(termDefinition);
-			if (result == null)
 				result = caseType(termDefinition);
+			if (result == null)
+				result = casePackageableElement(termDefinition);
 			if (result == null)
 				result = caseNamedElement(termDefinition);
 			if (result == null)
@@ -701,9 +701,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(artifact);
 			if (result == null)
-				result = casePackageableElement(artifact);
-			if (result == null)
 				result = caseType(artifact);
+			if (result == null)
+				result = casePackageableElement(artifact);
 			if (result == null)
 				result = caseNamedElement(artifact);
 			if (result == null)
@@ -728,9 +728,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(workProduct);
 			if (result == null)
-				result = casePackageableElement(workProduct);
-			if (result == null)
 				result = caseType(workProduct);
+			if (result == null)
+				result = casePackageableElement(workProduct);
 			if (result == null)
 				result = caseNamedElement(workProduct);
 			if (result == null)
@@ -749,9 +749,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(fulfillableElement);
 			if (result == null)
-				result = casePackageableElement(fulfillableElement);
-			if (result == null)
 				result = caseType(fulfillableElement);
+			if (result == null)
+				result = casePackageableElement(fulfillableElement);
 			if (result == null)
 				result = caseNamedElement(fulfillableElement);
 			if (result == null)
@@ -776,9 +776,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(report);
 			if (result == null)
-				result = casePackageableElement(report);
-			if (result == null)
 				result = caseType(report);
+			if (result == null)
+				result = casePackageableElement(report);
 			if (result == null)
 				result = caseNamedElement(report);
 			if (result == null)
@@ -803,9 +803,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(template);
 			if (result == null)
-				result = casePackageableElement(template);
-			if (result == null)
 				result = caseType(template);
+			if (result == null)
+				result = casePackageableElement(template);
 			if (result == null)
 				result = caseNamedElement(template);
 			if (result == null)
@@ -830,9 +830,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(toolMentor);
 			if (result == null)
-				result = casePackageableElement(toolMentor);
-			if (result == null)
 				result = caseType(toolMentor);
+			if (result == null)
+				result = casePackageableElement(toolMentor);
 			if (result == null)
 				result = caseNamedElement(toolMentor);
 			if (result == null)
@@ -857,9 +857,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(estimationConsiderations);
 			if (result == null)
-				result = casePackageableElement(estimationConsiderations);
-			if (result == null)
 				result = caseType(estimationConsiderations);
+			if (result == null)
+				result = casePackageableElement(estimationConsiderations);
 			if (result == null)
 				result = caseNamedElement(estimationConsiderations);
 			if (result == null)
@@ -886,9 +886,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(deliverable);
 			if (result == null)
-				result = casePackageableElement(deliverable);
-			if (result == null)
 				result = caseType(deliverable);
+			if (result == null)
+				result = casePackageableElement(deliverable);
 			if (result == null)
 				result = caseNamedElement(deliverable);
 			if (result == null)
@@ -915,9 +915,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(outcome);
 			if (result == null)
-				result = casePackageableElement(outcome);
-			if (result == null)
 				result = caseType(outcome);
+			if (result == null)
+				result = casePackageableElement(outcome);
 			if (result == null)
 				result = caseNamedElement(outcome);
 			if (result == null)
@@ -980,9 +980,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(whitepaper);
 			if (result == null)
-				result = casePackageableElement(whitepaper);
-			if (result == null)
 				result = caseType(whitepaper);
+			if (result == null)
+				result = casePackageableElement(whitepaper);
 			if (result == null)
 				result = caseNamedElement(whitepaper);
 			if (result == null)
@@ -1007,9 +1007,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(task);
 			if (result == null)
-				result = casePackageableElement(task);
-			if (result == null)
 				result = caseType(task);
+			if (result == null)
+				result = casePackageableElement(task);
 			if (result == null)
 				result = caseNamedElement(task);
 			if (result == null)
@@ -1034,9 +1034,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(role);
 			if (result == null)
-				result = casePackageableElement(role);
-			if (result == null)
 				result = caseType(role);
+			if (result == null)
+				result = casePackageableElement(role);
 			if (result == null)
 				result = caseNamedElement(role);
 			if (result == null)
@@ -1198,9 +1198,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(roleSet);
 			if (result == null)
-				result = casePackageableElement(roleSet);
-			if (result == null)
 				result = caseType(roleSet);
+			if (result == null)
+				result = casePackageableElement(roleSet);
 			if (result == null)
 				result = caseNamedElement(roleSet);
 			if (result == null)
@@ -1223,9 +1223,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(contentCategory);
 			if (result == null)
-				result = casePackageableElement(contentCategory);
-			if (result == null)
 				result = caseType(contentCategory);
+			if (result == null)
+				result = casePackageableElement(contentCategory);
 			if (result == null)
 				result = caseNamedElement(contentCategory);
 			if (result == null)
@@ -1250,9 +1250,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(domain);
 			if (result == null)
-				result = casePackageableElement(domain);
-			if (result == null)
 				result = caseType(domain);
+			if (result == null)
+				result = casePackageableElement(domain);
 			if (result == null)
 				result = caseNamedElement(domain);
 			if (result == null)
@@ -1277,9 +1277,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(workProductType);
 			if (result == null)
-				result = casePackageableElement(workProductType);
-			if (result == null)
 				result = caseType(workProductType);
+			if (result == null)
+				result = casePackageableElement(workProductType);
 			if (result == null)
 				result = caseNamedElement(workProductType);
 			if (result == null)
@@ -1304,9 +1304,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(disciplineGrouping);
 			if (result == null)
-				result = casePackageableElement(disciplineGrouping);
-			if (result == null)
 				result = caseType(disciplineGrouping);
+			if (result == null)
+				result = casePackageableElement(disciplineGrouping);
 			if (result == null)
 				result = caseNamedElement(disciplineGrouping);
 			if (result == null)
@@ -1331,9 +1331,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(discipline);
 			if (result == null)
-				result = casePackageableElement(discipline);
-			if (result == null)
 				result = caseType(discipline);
+			if (result == null)
+				result = casePackageableElement(discipline);
 			if (result == null)
 				result = caseNamedElement(discipline);
 			if (result == null)
@@ -1356,17 +1356,17 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseBreakdownElement(activity);
 			if (result == null)
+				result = caseProcessElement(activity);
+			if (result == null)
 				result = caseDescribableElement(activity);
 			if (result == null)
 				result = caseMethodElement(activity);
 			if (result == null)
-				result = caseProcessElement(activity);
-			if (result == null)
 				result = caseClassifier(activity);
 			if (result == null)
-				result = casePackageableElement(activity);
-			if (result == null)
 				result = caseType(activity);
+			if (result == null)
+				result = casePackageableElement(activity);
 			if (result == null)
 				result = caseNamedElement(activity);
 			if (result == null)
@@ -1389,9 +1389,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(workBreakdownElement);
 			if (result == null)
-				result = casePackageableElement(workBreakdownElement);
-			if (result == null)
 				result = caseType(workBreakdownElement);
+			if (result == null)
+				result = casePackageableElement(workBreakdownElement);
 			if (result == null)
 				result = caseNamedElement(workBreakdownElement);
 			if (result == null)
@@ -1412,9 +1412,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(breakdownElement);
 			if (result == null)
-				result = casePackageableElement(breakdownElement);
-			if (result == null)
 				result = caseType(breakdownElement);
+			if (result == null)
+				result = casePackageableElement(breakdownElement);
 			if (result == null)
 				result = caseNamedElement(breakdownElement);
 			if (result == null)
@@ -1433,9 +1433,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(processElement);
 			if (result == null)
-				result = casePackageableElement(processElement);
-			if (result == null)
 				result = caseType(processElement);
+			if (result == null)
+				result = casePackageableElement(processElement);
 			if (result == null)
 				result = caseNamedElement(processElement);
 			if (result == null)
@@ -1456,9 +1456,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(planningData);
 			if (result == null)
-				result = casePackageableElement(planningData);
-			if (result == null)
 				result = caseType(planningData);
+			if (result == null)
+				result = casePackageableElement(planningData);
 			if (result == null)
 				result = caseNamedElement(planningData);
 			if (result == null)
@@ -1479,9 +1479,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(workOrder);
 			if (result == null)
-				result = casePackageableElement(workOrder);
-			if (result == null)
 				result = caseType(workOrder);
+			if (result == null)
+				result = casePackageableElement(workOrder);
 			if (result == null)
 				result = caseNamedElement(workOrder);
 			if (result == null)
@@ -1506,9 +1506,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(roadmap);
 			if (result == null)
-				result = casePackageableElement(roadmap);
-			if (result == null)
 				result = caseType(roadmap);
+			if (result == null)
+				result = casePackageableElement(roadmap);
 			if (result == null)
 				result = caseNamedElement(roadmap);
 			if (result == null)
@@ -1533,9 +1533,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(tool);
 			if (result == null)
-				result = casePackageableElement(tool);
-			if (result == null)
 				result = caseType(tool);
+			if (result == null)
+				result = casePackageableElement(tool);
 			if (result == null)
 				result = caseNamedElement(tool);
 			if (result == null)
@@ -1560,9 +1560,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(roleSetGrouping);
 			if (result == null)
-				result = casePackageableElement(roleSetGrouping);
-			if (result == null)
 				result = caseType(roleSetGrouping);
+			if (result == null)
+				result = casePackageableElement(roleSetGrouping);
 			if (result == null)
 				result = caseNamedElement(roleSetGrouping);
 			if (result == null)
@@ -1587,9 +1587,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(customCategory);
 			if (result == null)
-				result = casePackageableElement(customCategory);
-			if (result == null)
 				result = caseType(customCategory);
+			if (result == null)
+				result = casePackageableElement(customCategory);
 			if (result == null)
 				result = caseNamedElement(customCategory);
 			if (result == null)
@@ -1654,9 +1654,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(milestone);
 			if (result == null)
-				result = casePackageableElement(milestone);
-			if (result == null)
 				result = caseType(milestone);
+			if (result == null)
+				result = casePackageableElement(milestone);
 			if (result == null)
 				result = caseNamedElement(milestone);
 			if (result == null)
@@ -1681,9 +1681,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(workProductDescriptor);
 			if (result == null)
-				result = casePackageableElement(workProductDescriptor);
-			if (result == null)
 				result = caseType(workProductDescriptor);
+			if (result == null)
+				result = casePackageableElement(workProductDescriptor);
 			if (result == null)
 				result = caseNamedElement(workProductDescriptor);
 			if (result == null)
@@ -1706,9 +1706,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(descriptor);
 			if (result == null)
-				result = casePackageableElement(descriptor);
-			if (result == null)
 				result = caseType(descriptor);
+			if (result == null)
+				result = casePackageableElement(descriptor);
 			if (result == null)
 				result = caseNamedElement(descriptor);
 			if (result == null)
@@ -1733,17 +1733,17 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseBreakdownElement(iteration);
 			if (result == null)
+				result = caseProcessElement(iteration);
+			if (result == null)
 				result = caseDescribableElement(iteration);
 			if (result == null)
 				result = caseMethodElement(iteration);
 			if (result == null)
-				result = caseProcessElement(iteration);
-			if (result == null)
 				result = caseClassifier(iteration);
 			if (result == null)
-				result = casePackageableElement(iteration);
-			if (result == null)
 				result = caseType(iteration);
+			if (result == null)
+				result = casePackageableElement(iteration);
 			if (result == null)
 				result = caseNamedElement(iteration);
 			if (result == null)
@@ -1768,17 +1768,17 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseBreakdownElement(phase);
 			if (result == null)
+				result = caseProcessElement(phase);
+			if (result == null)
 				result = caseDescribableElement(phase);
 			if (result == null)
 				result = caseMethodElement(phase);
 			if (result == null)
-				result = caseProcessElement(phase);
-			if (result == null)
 				result = caseClassifier(phase);
 			if (result == null)
-				result = casePackageableElement(phase);
-			if (result == null)
 				result = caseType(phase);
+			if (result == null)
+				result = casePackageableElement(phase);
 			if (result == null)
 				result = caseNamedElement(phase);
 			if (result == null)
@@ -1801,9 +1801,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(teamProfile);
 			if (result == null)
-				result = casePackageableElement(teamProfile);
-			if (result == null)
 				result = caseType(teamProfile);
+			if (result == null)
+				result = casePackageableElement(teamProfile);
 			if (result == null)
 				result = caseNamedElement(teamProfile);
 			if (result == null)
@@ -1828,9 +1828,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(roleDescriptor);
 			if (result == null)
-				result = casePackageableElement(roleDescriptor);
-			if (result == null)
 				result = caseType(roleDescriptor);
+			if (result == null)
+				result = casePackageableElement(roleDescriptor);
 			if (result == null)
 				result = caseNamedElement(roleDescriptor);
 			if (result == null)
@@ -1857,9 +1857,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(taskDescriptor);
 			if (result == null)
-				result = casePackageableElement(taskDescriptor);
-			if (result == null)
 				result = caseType(taskDescriptor);
+			if (result == null)
+				result = casePackageableElement(taskDescriptor);
 			if (result == null)
 				result = caseNamedElement(taskDescriptor);
 			if (result == null)
@@ -1886,9 +1886,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(compositeRole);
 			if (result == null)
-				result = casePackageableElement(compositeRole);
-			if (result == null)
 				result = caseType(compositeRole);
+			if (result == null)
+				result = casePackageableElement(compositeRole);
 			if (result == null)
 				result = caseNamedElement(compositeRole);
 			if (result == null)
@@ -1915,17 +1915,17 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseBreakdownElement(deliveryProcess);
 			if (result == null)
+				result = caseProcessElement(deliveryProcess);
+			if (result == null)
 				result = caseDescribableElement(deliveryProcess);
 			if (result == null)
 				result = caseMethodElement(deliveryProcess);
 			if (result == null)
-				result = caseProcessElement(deliveryProcess);
-			if (result == null)
 				result = caseClassifier(deliveryProcess);
 			if (result == null)
-				result = casePackageableElement(deliveryProcess);
-			if (result == null)
 				result = caseType(deliveryProcess);
+			if (result == null)
+				result = casePackageableElement(deliveryProcess);
 			if (result == null)
 				result = caseNamedElement(deliveryProcess);
 			if (result == null)
@@ -1950,17 +1950,17 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseBreakdownElement(process);
 			if (result == null)
+				result = caseProcessElement(process);
+			if (result == null)
 				result = caseDescribableElement(process);
 			if (result == null)
 				result = caseMethodElement(process);
 			if (result == null)
-				result = caseProcessElement(process);
-			if (result == null)
 				result = caseClassifier(process);
 			if (result == null)
-				result = casePackageableElement(process);
-			if (result == null)
 				result = caseType(process);
+			if (result == null)
+				result = casePackageableElement(process);
 			if (result == null)
 				result = caseNamedElement(process);
 			if (result == null)
@@ -1987,17 +1987,17 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseBreakdownElement(capabilityPattern);
 			if (result == null)
+				result = caseProcessElement(capabilityPattern);
+			if (result == null)
 				result = caseDescribableElement(capabilityPattern);
 			if (result == null)
 				result = caseMethodElement(capabilityPattern);
 			if (result == null)
-				result = caseProcessElement(capabilityPattern);
-			if (result == null)
 				result = caseClassifier(capabilityPattern);
 			if (result == null)
-				result = casePackageableElement(capabilityPattern);
-			if (result == null)
 				result = caseType(capabilityPattern);
+			if (result == null)
+				result = casePackageableElement(capabilityPattern);
 			if (result == null)
 				result = caseNamedElement(capabilityPattern);
 			if (result == null)
@@ -2062,17 +2062,17 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseBreakdownElement(processPlanningTemplate);
 			if (result == null)
+				result = caseProcessElement(processPlanningTemplate);
+			if (result == null)
 				result = caseDescribableElement(processPlanningTemplate);
 			if (result == null)
 				result = caseMethodElement(processPlanningTemplate);
 			if (result == null)
-				result = caseProcessElement(processPlanningTemplate);
-			if (result == null)
 				result = caseClassifier(processPlanningTemplate);
 			if (result == null)
-				result = casePackageableElement(processPlanningTemplate);
-			if (result == null)
 				result = caseType(processPlanningTemplate);
+			if (result == null)
+				result = casePackageableElement(processPlanningTemplate);
 			if (result == null)
 				result = caseNamedElement(processPlanningTemplate);
 			if (result == null)
@@ -2097,9 +2097,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(practice);
 			if (result == null)
-				result = casePackageableElement(practice);
-			if (result == null)
 				result = caseType(practice);
+			if (result == null)
+				result = casePackageableElement(practice);
 			if (result == null)
 				result = caseNamedElement(practice);
 			if (result == null)
@@ -2233,9 +2233,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(processComponentDescriptor);
 			if (result == null)
-				result = casePackageableElement(processComponentDescriptor);
-			if (result == null)
 				result = caseType(processComponentDescriptor);
+			if (result == null)
+				result = casePackageableElement(processComponentDescriptor);
 			if (result == null)
 				result = caseNamedElement(processComponentDescriptor);
 			if (result == null)
@@ -2496,9 +2496,9 @@ public class UmaSwitch<T> {
 			if (result == null)
 				result = caseClassifier(processComponentInterface);
 			if (result == null)
-				result = casePackageableElement(processComponentInterface);
-			if (result == null)
 				result = caseType(processComponentInterface);
+			if (result == null)
+				result = casePackageableElement(processComponentInterface);
 			if (result == null)
 				result = caseNamedElement(processComponentInterface);
 			if (result == null)

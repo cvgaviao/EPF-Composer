@@ -36,7 +36,7 @@ public interface UmaFactory extends EFactory {
 	 * @return a new object of class '<em>Package</em>'.
 	 * @generated
 	 */
-	org.eclipse.epf.uma.Package createPackage();
+	Package createPackage();
 
 	/**
 	 * Returns a new object of class '<em>Constraint</em>'.

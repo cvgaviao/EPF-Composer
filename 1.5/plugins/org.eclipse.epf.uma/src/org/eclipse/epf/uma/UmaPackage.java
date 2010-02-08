@@ -55,7 +55,7 @@ public interface UmaPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/epf/uma/1.0.5/uma.ecore";
+	String eNS_URI = "http://www.eclipse.org/epf/uma/1.0.6/uma.ecore";
 
 	/**
 	 * The package namespace name.
@@ -15265,13 +15265,31 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__SELECTED_STEPS = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
+	 * The feature id for the '<em><b>Performed Primarily By Excluded</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 10;
+
+	/**
+	 * The feature id for the '<em><b>Performed Primarily By Included</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 11;
+
+	/**
 	 * The number of structural features of the '<em>Task Descriptor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 10;
+	int TASK_DESCRIPTOR_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -25554,6 +25572,28 @@ public interface UmaPackage extends EPackage {
 	EReference getTaskDescriptor_SelectedSteps();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByExcluded <em>Performed Primarily By Excluded</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Performed Primarily By Excluded</em>'.
+	 * @see org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByExcluded()
+	 * @see #getTaskDescriptor()
+	 * @generated
+	 */
+	EReference getTaskDescriptor_PerformedPrimarilyByExcluded();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByIncluded <em>Performed Primarily By Included</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Performed Primarily By Included</em>'.
+	 * @see org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByIncluded()
+	 * @see #getTaskDescriptor()
+	 * @generated
+	 */
+	EReference getTaskDescriptor_PerformedPrimarilyByIncluded();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.WorkProductDescriptor <em>Work Product Descriptor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -29181,6 +29221,24 @@ public interface UmaPackage extends EPackage {
 		 */
 		EReference TASK_DESCRIPTOR__SELECTED_STEPS = eINSTANCE
 				.getTaskDescriptor_SelectedSteps();
+
+		/**
+		 * The meta object literal for the '<em><b>Performed Primarily By Excluded</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED = eINSTANCE
+				.getTaskDescriptor_PerformedPrimarilyByExcluded();
+
+		/**
+		 * The meta object literal for the '<em><b>Performed Primarily By Included</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED = eINSTANCE
+				.getTaskDescriptor_PerformedPrimarilyByIncluded();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl <em>Work Product Descriptor</em>}' class.
