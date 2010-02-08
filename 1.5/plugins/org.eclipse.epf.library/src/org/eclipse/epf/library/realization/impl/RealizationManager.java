@@ -62,8 +62,10 @@ public class RealizationManager implements IRealizationManager {
 		if (IRealizationManager.debug) {
 			System.out.println("LD> RealizationManger.clearCacheData!");
 		}
-		for (IRealizedElement element : elementMap.values()) {
-			((RealizedElement) element).dispose();
+		if (elementMap != null) {
+			for (IRealizedElement element : elementMap.values()) {
+				((RealizedElement) element).dispose();
+			}
 		}
 		elementMap = null;
 		actDescrptorsMap = null;
