@@ -20,7 +20,7 @@ public class RealizationManagerFactory {
 	public RealizationManagerFactory() {		
 	}
 	
-	public IRealizationManager beginUsingRealizationManager(RealizationContext context) {
+	public IRealizationManager beginUsingRealizationManager(RealizationContext context, Object caller) {
 		CachedMgr cachedMgr = map.get(context.getId());
 		if (cachedMgr == null) {
 			cachedMgr = new CachedMgr();
@@ -28,11 +28,25 @@ public class RealizationManagerFactory {
 			cachedMgr.mgr =  new RealizationManager(context);
 		}
 		cachedMgr.contextCount++;
+		if (IRealizationManager.debug) {
+			System.out.println("LD> beginUsingRealizationManager, context: " + context); //$NON-NLS-1$
+			System.out.println("LD> cachedMgr.contextCount: " + cachedMgr.contextCount); //$NON-NLS-1$
+			System.out.println("LD> caller: " + caller); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
+		}
 		return cachedMgr.mgr;
 	}
 	
-	public void endUsingRealizationManager(RealizationContext context) {
+	public void endUsingRealizationManager(RealizationContext context, Object caller) {
 		CachedMgr cachedMgr = map.get(context.getId());
+		if (IRealizationManager.debug) {
+			System.out.println("LD> endUsingRealizationManager, context: " //$NON-NLS-1$
+					+ context);
+			System.out.println("LD> cachedMgr.contextCount: " //$NON-NLS-1$
+					+ (cachedMgr == null ? "0" : cachedMgr.contextCount)); //$NON-NLS-1$
+			System.out.println("LD> caller: " + caller); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
+		}
 		if (cachedMgr != null) {
 			cachedMgr.contextCount--;
 			if (cachedMgr.contextCount == 0) {

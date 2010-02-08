@@ -515,8 +515,10 @@ public class ElementLayoutManager {
 			// set configuration filter
 			configurator = new ProcessAdapterFactoryFilter(methodConfig, this);
 			
-			realizationContext = new RealizationContext(methodConfig, 1);
-			configurator.beginRealizationManager(realizationContext);
+			if (config != null) {
+				realizationContext = new RealizationContext(methodConfig, 1);
+				configurator.beginRealizationManager(realizationContext);
+			}
 			
 			wbsAdapterFactory.setFilter(configurator);
 			tbsAdapterFactory.setFilter(configurator);
@@ -556,7 +558,9 @@ public class ElementLayoutManager {
 			}
 			
 			if ( configurator != null ) {
-				configurator.endRealizationManager(realizationContext);
+				if (realizationContext != null) {
+					configurator.endRealizationManager(realizationContext);
+				}
 				configurator.dispose();
 				configurator = null;
 			}

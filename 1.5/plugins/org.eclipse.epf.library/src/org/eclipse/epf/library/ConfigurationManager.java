@@ -198,6 +198,9 @@ public class ConfigurationManager implements IConfigurationManager {
 		library = null;
 		libraryManager = null;
 		dependencyManager = null;
+		if (layoutManager != null) {
+			layoutManager.clear();
+		}
 		layoutManager = null;
 		closure = null;
 		MethodElementPropertyMgr.getInstance().unregister(config);

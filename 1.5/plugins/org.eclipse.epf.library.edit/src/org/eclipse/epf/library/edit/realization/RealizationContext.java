@@ -32,4 +32,9 @@ public class RealizationContext {
 		return config.getGuid() + modeStr;
 	}
 	
+	@Override
+	public String toString() {
+		return "mode: " + mode + ", config: " + config; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
 }

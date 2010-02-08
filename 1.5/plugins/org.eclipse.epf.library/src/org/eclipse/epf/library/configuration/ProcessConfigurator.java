@@ -122,11 +122,11 @@ public class ProcessConfigurator extends ConfigurationFilter {
 	
 	//To do: need to revisit the following two methods
 	public IRealizationManager beginRealizationManager(RealizationContext context) {
-		realizationManager = RealizationManagerFactory.getInstance().beginUsingRealizationManager(context);
+		realizationManager = RealizationManagerFactory.getInstance().beginUsingRealizationManager(context, this);
 		return realizationManager;
 	}
 	
 	public void endRealizationManager(RealizationContext context) {
-		RealizationManagerFactory.getInstance().endUsingRealizationManager(context);
+		RealizationManagerFactory.getInstance().endUsingRealizationManager(context, this);
 	}
 }
