@@ -12,7 +12,10 @@
             uri="http://www.eclipse.org/epf/uma/1.0.3/uma.ecore"/>
       <package
             class="org.eclipse.epf.uma.UmaPackage"
-            uri="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"/>            
+            uri="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"/>  
+      <package
+            class="org.eclipse.epf.uma.UmaPackage"
+            uri="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"/>             
   </extension>
 
 </plugin>
