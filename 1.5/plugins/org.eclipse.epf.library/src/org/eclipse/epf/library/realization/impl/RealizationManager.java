@@ -60,7 +60,7 @@ public class RealizationManager implements IRealizationManager {
 	
 	public void clearCacheData() {
 		if (IRealizationManager.debug) {
-			System.out.println("LD> RealizationManger.clearCacheData!");
+			System.out.println("LD> RealizationManger.clearCacheData: " + context);
 		}
 		if (elementMap != null) {
 			for (IRealizedElement element : elementMap.values()) {
@@ -105,6 +105,21 @@ public class RealizationManager implements IRealizationManager {
 	private void init() {
 		elementMap = new HashMap<MethodElement, IRealizedElement>();
 		actDescrptorsMap = new HashMap<Activity, List<Descriptor>>();
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (window != null) {
+			perspectiveListener = new IPerspectiveListener() {
+				public void perspectiveActivated(IWorkbenchPage page,
+						IPerspectiveDescriptor desc) {
+					clearCacheData();
+				}
+
+				public void perspectiveChanged(IWorkbenchPage page,
+						IPerspectiveDescriptor desc, String id) {
+					clearCacheData();
+				}
+			};
+			window.addPerspectiveListener(perspectiveListener);
+		}
 	}
 	
 	private IRealizedElement newRealizedElement(MethodElement element) {
@@ -121,22 +136,6 @@ public class RealizationManager implements IRealizationManager {
 		}
 					
 		rElement.setMgr(this);
-		
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		if (window != null) {
-			perspectiveListener = new IPerspectiveListener() {
-				public void perspectiveActivated(IWorkbenchPage page,
-						IPerspectiveDescriptor desc) {
-					clearCacheData();
-				}
-
-				public void perspectiveChanged(IWorkbenchPage page,
-						IPerspectiveDescriptor desc, String id) {
-					clearCacheData();
-				}
-			};
-			window.addPerspectiveListener(perspectiveListener);
-		}
 		
 		return rElement;
 	}
