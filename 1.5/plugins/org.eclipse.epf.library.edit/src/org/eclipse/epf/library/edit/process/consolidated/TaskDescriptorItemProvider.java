@@ -25,10 +25,13 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.provider.WrapperItemProvider;
+import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.IBreakdownElementWrapperItemProviderFactory;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -269,7 +272,9 @@ public class TaskDescriptorItemProvider extends
 					if (((WrapperItemProvider) o).getFeature().equals(
 							UmaPackage.eINSTANCE
 									.getTaskDescriptor_PerformedPrimarilyBy())) {
-						primaryPerformers.add(o);
+						if (! IRealizationManager.test) {
+							primaryPerformers.add(o);
+						}
 					} else if (((WrapperItemProvider) o)
 							.getFeature()
 							.equals(
@@ -284,7 +289,9 @@ public class TaskDescriptorItemProvider extends
 					} else if (((WrapperItemProvider) o).getFeature().equals(
 							UmaPackage.eINSTANCE
 									.getTaskDescriptor_MandatoryInput())) {
-						mandatoryInput.add(o);
+						if (! IRealizationManager.test) {
+							mandatoryInput.add(o);
+						}
 					} else if (((WrapperItemProvider) o).getFeature().equals(
 							UmaPackage.eINSTANCE
 									.getTaskDescriptor_ExternalInput())) {
@@ -300,7 +307,28 @@ public class TaskDescriptorItemProvider extends
 				}
 			}
 		}
-	
+
+		if (IRealizationManager.test && obj instanceof TaskDescriptor) {
+			List listValue = null;
+			if (filter instanceof IConfigurator) {
+				IRealizationManager mgr = ((IConfigurator) filter).getRealizationManager();
+				if (mgr != null) {			
+					TaskDescriptor td = (TaskDescriptor) obj;
+					IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);
+					
+					listValue = rTd.getPerformedPrimarilyBy();
+					if (listValue != null && !listValue.isEmpty()) {
+						primaryPerformers.addAll(listValue);
+					}
+					
+					listValue = rTd.getMandatoryInput();
+					if (listValue != null && !listValue.isEmpty()) {
+						mandatoryInput.addAll(listValue);
+					}
+				}
+			}
+		}
+		
 		// sort for all children
 		Collections.sort(primaryPerformers, Comparators.PRESENTATION_NAME_COMPARATOR);
 		Collections.sort(additionalPerformers, Comparators.PRESENTATION_NAME_COMPARATOR);

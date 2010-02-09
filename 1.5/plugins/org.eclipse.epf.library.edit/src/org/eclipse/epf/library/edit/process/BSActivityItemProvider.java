@@ -454,7 +454,7 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 			}
 		}
 		if (IRealizationManager.test) {
-			handleDynamicChildren(object, tdList, (List) children) ;
+			children = getModifiedChildren(object, tdList, (List) children) ;
 		}
 		
 		children = addInherited(object, (List) children);
@@ -1567,53 +1567,55 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		return configurator;
 	}
 	
-	protected void handleDynamicChildren(Object object, List<TaskDescriptor> tdList, List children) {
+	protected List getModifiedChildren(Object object, List<TaskDescriptor> tdList, List children) {		
 		if (! IRealizationManager.test) {
-			return;			
+			return children;			
 		}
 		if (tdList.isEmpty()) {
-			return;
+			return children;
 		}
 		if (getConfigurator() == null) {
-			return;
+			return children;
 		}
 		
 		IRealizationManager mgr = getConfigurator().getRealizationManager();
 		if (mgr == null) {
-			return;
+			return children;
 		}
 		
 		List listValue = null;
 		Set<Descriptor> desSet = new LinkedHashSet<Descriptor>();
-		for (TaskDescriptor td : tdList) {
-			IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);	
-			if (acceptDynamicRd()) {
+		if (acceptDynamicRd()) {
+			for (TaskDescriptor td : tdList) {
+				IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr
+						.getRealizedElement(td);
 				listValue = rTd.getPerformedPrimarilyBy();
-				if (listValue != null && !listValue.isEmpty()) { 
+				if (listValue != null && !listValue.isEmpty()) {
 					desSet.addAll(listValue);
 				}
-			}			
+			}
 		}
 		
 		//Use 2nd loop to keep rds before wpds
-		for (TaskDescriptor td : tdList) {
-			IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr.getRealizedElement(td);	
-			if (acceptDynamicWpd()) {
+		if (acceptDynamicWpd()) {
+			for (TaskDescriptor td : tdList) {
+				IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr
+						.getRealizedElement(td);
 				listValue = rTd.getMandatoryInput();
-				if (listValue != null && !listValue.isEmpty()) { 
+				if (listValue != null && !listValue.isEmpty()) {
 					desSet.addAll(listValue);
 				}
-			}			
+			}
 		}
 		
+		
+		List modifiedChildren = new ArrayList();		
 		for (Object obj : children) {
-			if ((obj instanceof RoleDescriptor) && acceptDynamicRd() && !desSet.contains(obj)) {
-				children.remove(obj);	
+			boolean toRemove = (obj instanceof RoleDescriptor) && acceptDynamicRd() && !desSet.contains(obj);
+			toRemove |= (obj instanceof WorkProductDescriptor) && acceptDynamicWpd() && !desSet.contains(obj);
+			if (! toRemove) {
+				modifiedChildren.add(obj);
 			}
-					
-			if ((obj instanceof WorkProductDescriptor) && acceptDynamicWpd() && !desSet.contains(obj)) {
-				children.remove(obj);	
-			}	
 		}
 		
 		for (Descriptor des : desSet) {
@@ -1621,10 +1623,11 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 				if (! children.contains(des)) {
 					setParentFor(des, object);
 					children.add(des);
-
 				}
 			}
 		}		
+		
+		return modifiedChildren;
 	}
 	
 	protected boolean acceptDynamicRd() {

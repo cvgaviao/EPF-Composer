@@ -67,12 +67,14 @@ public class RealizationManager implements IRealizationManager {
 				((RealizedElement) element).dispose();
 			}
 		}
-		elementMap = null;
-		actDescrptorsMap = null;
+		elementMap = new HashMap<MethodElement, IRealizedElement>();
+		actDescrptorsMap = new HashMap<Activity, List<Descriptor>>();
 	}
 	
 	public void dispose() {
 		clearCacheData();
+		elementMap = null;
+		actDescrptorsMap = null;
 		context = null;
 		
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
