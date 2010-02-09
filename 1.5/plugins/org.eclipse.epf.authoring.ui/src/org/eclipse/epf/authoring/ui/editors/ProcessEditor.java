@@ -82,6 +82,7 @@ import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
@@ -100,15 +101,19 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -500,6 +505,20 @@ public class ProcessEditor extends MethodElementEditor implements
 
 			}
 
+			if (IRealizationManager.test) {
+				if (collection != null && !collection.isEmpty()) {
+					for (Object obj : collection) {
+						if (obj instanceof Task ||
+							obj instanceof Role ||
+							obj instanceof WorkProduct ||
+							obj instanceof Guidance) {
+							refreshAll();
+							break;
+						}
+					}
+				}
+			}
+			
 		}
 
 	};
