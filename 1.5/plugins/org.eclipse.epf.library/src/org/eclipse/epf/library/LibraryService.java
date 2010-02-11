@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryProblemMonitor;
@@ -571,7 +572,7 @@ public class LibraryService implements ILibraryService {
 	 */
 	public synchronized IConfigurationManager getConfigurationManager(
 			MethodConfiguration config) {
-		if (config == null) {
+		if (config == null || config instanceof Scope) {
 			throw new IllegalArgumentException();
 		}
 		IConfigurationManager manager = (IConfigurationManager) configManagers

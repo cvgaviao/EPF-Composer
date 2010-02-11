@@ -18,6 +18,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.authoring.ui.filters.DescriptorConfigurationFilter;
 import org.eclipse.epf.authoring.ui.filters.DescriptorProcessFilter;
 import org.eclipse.epf.authoring.ui.filters.ProcessRoleFilter;
 import org.eclipse.epf.library.edit.IFilter;
@@ -55,6 +56,8 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		if (roleFilter == null) {
 			roleFilter = new ProcessRoleFilter(getConfiguration(), null,
 					FilterConstants.ROLES);
+		} else if (roleFilter instanceof DescriptorConfigurationFilter) {
+			((DescriptorConfigurationFilter) roleFilter).setMethodConfiguration(getConfiguration());
 		}
 		return roleFilter;
 	}

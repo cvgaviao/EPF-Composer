@@ -27,10 +27,14 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.command.ResourceAwareCompoundCommand;
 import org.eclipse.epf.library.edit.command.ResourceAwareDragAndDropCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.uma.Scope;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 
 
@@ -63,12 +67,23 @@ public abstract class BSDragAndDropCommand extends ResourceAwareDragAndDropComma
 	protected boolean prepareDropLinkOn() {
 		dragCommand = IdentityCommand.INSTANCE;
 		dropCommand = UnexecutableCommand.INSTANCE;
-
+		
+		Scope scope = null;
+		if (owner instanceof Activity) {
+			Process proc = ProcessUtil.getProcess((Activity) owner); 
+			scope = ProcessScopeUtil.getInstance().getScope(proc);
+		}
+		
 		ArrayList list = new ArrayList();
 		ArrayList actList = new ArrayList();
 		for (Iterator iter = collection.iterator(); iter.hasNext();) {
 			Object obj = iter.next();
 			Object e = TngUtil.unwrap(obj);
+			
+			if (scope != null && e instanceof MethodElement) {
+				scope.addToScope((MethodElement) e);
+			}
+			
 			if (TngUtil.isLocked((EObject) owner))
 				return false;
 			if (accept(e)) {

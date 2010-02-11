@@ -408,4 +408,8 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 		return super.eIsSet(featureID);
 	}
 
+	public MethodConfigurationImpl(Object obj) {
+		this();
+	}
+	
 } //MethodConfigurationImpl

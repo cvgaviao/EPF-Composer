@@ -37,6 +37,8 @@ import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
 import org.eclipse.epf.library.edit.command.UserInput;
 import org.eclipse.epf.library.edit.navigator.ProcessPackageItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.uma.Scope;
+import org.eclipse.epf.library.edit.uma.ScopeFactory;
 import org.eclipse.epf.library.edit.util.AdapterFactoryItemLabelProvider;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.ItemLabelProvider;
@@ -142,6 +144,10 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 
 		List configs = lib.getPredefinedConfigurations();
 		List methodConfigs = new ArrayList();
+		
+		Scope scope = ScopeFactory.getInstance().newScope();
+		methodConfigs.add(scope);
+		
 		for (Iterator iter = configs.iterator(); iter.hasNext();) {
 			Object element = iter.next();
 			if (!(element instanceof ProcessFamily)) {
@@ -278,6 +284,7 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 			procCtx.getMethodPluginSelection().add(plugin);
 			
 			process.getValidContext().add(procCtx);
+			
 			process.setPresentation(ContentDescriptionFactory
 					.createContentDescription(process));
 

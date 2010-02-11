@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -55,7 +56,7 @@ public class MethodConfigurationElementList {
 				for (int i = 0; i < size; i++) {
 					Object obj = packages.get(i);
 					if (obj instanceof ContentPackage
-							&& methodConfig.getMethodPackageSelection().contains(obj)) {
+							&& (methodConfig instanceof Scope || methodConfig.getMethodPackageSelection().contains(obj))) {
 						children.add(obj);
 					}
 				}

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.PresentationContext;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.CustomCategory;
@@ -176,6 +177,9 @@ public abstract class ElementRealizer {
 	 * @return MethodElement
 	 */
 	public MethodElement realize(MethodElement element) {
+		if (getConfiguration() instanceof Scope) {
+			return element;
+		}
 		
 		if (element == null || !inConfig(element)) {
 			return null;

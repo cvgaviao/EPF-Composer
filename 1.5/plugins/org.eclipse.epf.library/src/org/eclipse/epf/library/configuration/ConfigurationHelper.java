@@ -29,6 +29,7 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ConfigHelperDelegate;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.SectionList;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -1332,6 +1333,13 @@ public class ConfigurationHelper {
 	public static List calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, ElementRealizer realizer) 
 	{
+		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
+			Object value = element.eGet(feature);
+			if (value instanceof List) {
+				return (List) value;
+			}
+			return null;
+		}
 		return calc0nFeatureValue(element, null, feature, realizer);
 	}
 	
@@ -1550,6 +1558,10 @@ public class ConfigurationHelper {
 	public static Object calcAttributeFeatureValue(MethodElement element,
 			MethodElement ownerElement, EStructuralFeature feature,
 			MethodConfiguration config) {
+		if (config instanceof Scope) {
+			return element.eGet(feature);
+		}
+		
 		if (isMergableAttribute(feature)) {
 			// merge the attribute values
 			ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);

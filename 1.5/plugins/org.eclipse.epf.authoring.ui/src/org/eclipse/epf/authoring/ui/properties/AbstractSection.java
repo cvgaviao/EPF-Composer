@@ -28,6 +28,8 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ProcessAuthoringConfigurator;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
+import org.eclipse.epf.library.edit.uma.Scope;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -276,11 +278,29 @@ public class AbstractSection extends AbstractPropertySection implements
 	 */
 	public List getFilteredList(List list) {
 		List newList = new ArrayList();
+		
+		if (configurator != null) {
+			boolean toSetConfig = true; 
+		
+			if (getEditor() != null || getEditor().getSelectedProcess() != null) {
+				Scope scope = ProcessScopeUtil.getInstance().getScope(getEditor().getSelectedProcess());
+				if (scope != null) {
+					configurator.setMethodConfiguration(scope);
+					toSetConfig = false;
+				}
+			}
+				
+			if (toSetConfig) {
+				configurator.setMethodConfiguration(LibraryService
+				.getInstance().getCurrentMethodConfiguration());
+			}
+		}
+		
 		for (Iterator itor = list.iterator(); itor.hasNext();) {
 			if (configurator != null) {
 				Object obj = (Object) itor.next();
-				configurator.setMethodConfiguration(LibraryService
-						.getInstance().getCurrentMethodConfiguration());
+//				configurator.setMethodConfiguration(LibraryService
+//						.getInstance().getCurrentMethodConfiguration());
 				if (configurator.accept(obj)) {
 					newList.add(obj);
 				}
@@ -318,6 +338,28 @@ public class AbstractSection extends AbstractPropertySection implements
 	 * 			current method configuration
 	 */
 	protected MethodConfiguration getConfiguration() {
+		if (getEditor() != null) {
+			Scope scope = ProcessScopeUtil.getInstance().getScope(
+					getEditor().getSelectedProcess());
+			if (scope != null) {
+				int scopeType = ProcessScopeUtil.getInstance().getElemementSelectionScopeType();
+				if (scopeType == ProcessScopeUtil.ScopeType_Config) {
+					MethodConfiguration config = LibraryService.getInstance()
+					.getCurrentMethodConfiguration();
+					if (config == null) {
+						return scope;
+					}
+					return config;
+				} 
+				if (scopeType == ProcessScopeUtil.ScopeType_Process) {
+					return scope;
+				}
+				if (scopeType == ProcessScopeUtil.ScopeType_Library) {
+					return ProcessScopeUtil.getInstance().getLibraryScope();
+				}
+			}
+		}
+
 		MethodConfiguration config = LibraryService.getInstance()
 				.getCurrentMethodConfiguration();
 		if (config == null) {

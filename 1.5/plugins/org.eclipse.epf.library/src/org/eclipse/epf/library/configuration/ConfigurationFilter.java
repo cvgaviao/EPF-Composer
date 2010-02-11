@@ -21,6 +21,7 @@ import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.VariabilityInfo;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.Log;
 import org.eclipse.epf.uma.Discipline;
@@ -75,9 +76,13 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	public boolean accept(Object obj) {
 		if (methodConfig == null)
 			return true;
-
+		
 		obj = LibraryUtil.unwrap(obj);
 
+		if (methodConfig instanceof Scope && obj instanceof MethodElement) {
+			return ((Scope) methodConfig).inScope((MethodElement) obj);
+		}
+		
 		if ( (ElementRealizer.isExtendReplaceEnabled() ||  
 				(obj instanceof VariabilityElement) && ConfigurationHelper.isExtendReplacer((VariabilityElement)obj) )
 				&& FeatureValue.isBlankIndicator(obj) ) {

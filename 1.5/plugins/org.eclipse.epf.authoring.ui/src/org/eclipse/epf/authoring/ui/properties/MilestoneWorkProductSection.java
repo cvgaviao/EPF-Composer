@@ -18,6 +18,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.authoring.ui.filters.DescriptorConfigurationFilter;
 import org.eclipse.epf.authoring.ui.filters.DescriptorProcessFilter;
 import org.eclipse.epf.authoring.ui.filters.ProcessWorkProductFilter;
 import org.eclipse.epf.library.edit.IFilter;
@@ -59,6 +60,8 @@ public class MilestoneWorkProductSection extends RelationSection {
 		if (filter == null) {
 			filter = new ProcessWorkProductFilter(getConfiguration(),
 					null, FilterConstants.WORKPRODUCTS);
+		} else if (filter instanceof DescriptorConfigurationFilter) {
+			((DescriptorConfigurationFilter) filter).setMethodConfiguration(getConfiguration());
 		}
 		return filter;
 	}

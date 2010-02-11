@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
@@ -77,6 +78,9 @@ public class ConfigHelperDelegate {
 	
 	public boolean isOwnerSelected(MethodElement element,
 			MethodConfiguration config, boolean checkSubtracted) {
+		if (config instanceof Scope) {
+			return ((Scope)config).inScope(element);
+		}
 		MethodLibrary library = LibraryServiceUtil.getMethodLibrary(config);
 		ILibraryManager libraryManager = library == null? null : LibraryService.getInstance().getLibraryManager(library);
 		if (libraryManager != null) {

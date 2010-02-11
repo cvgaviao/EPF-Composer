@@ -20,6 +20,7 @@ import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.epf.library.edit.FeatureValueWrapperItemProvider;
 import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
@@ -98,6 +99,7 @@ public class MethodLibraryItemProvider extends
 
 	public Collection getChildren(Object object) {
 		Collection children = super.getChildren(object);
+		children.addAll(ProcessScopeUtil.getInstance().getScopeInEditdSet());
 		for (Iterator iter1 = children.iterator(); iter1.hasNext();) {
 			Object child = iter1.next();
 			if (filter.accept(child) && child instanceof MethodPlugin) {

@@ -85,8 +85,10 @@ import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.EditingDomainComposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -981,7 +983,13 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 
 	public void dispose() {
-		ProcessAuthoringConfigurator.INSTANCE.endRealizationManager(realizationContext);
+		getConfiguratorInstance().endRealizationManager(realizationContext);
+		if (getSelectedProcess() != null) {
+			Scope scope = ProcessScopeUtil.getInstance().getScope(getSelectedProcess());
+			if (scope != null) {
+				ProcessScopeUtil.getInstance().endProcesEdit(scope);
+			}
+		}
 		
 		// close all diagram editors of this process
 		//
@@ -1128,11 +1136,21 @@ public class ProcessEditor extends MethodElementEditor implements
 					.getCurrentMethodConfiguration();
 			ProcessAuthoringConfigurator.INSTANCE
 					.setMethodConfiguration(currentConfig);
-			realizationContext = new RealizationContext(currentConfig);
-			ProcessAuthoringConfigurator.INSTANCE.beginRealizationManager(realizationContext);
+			if (selectedProcess != null && selectedProcess.getDefaultContext() == null) {	
+				ProcessScopeUtil.getInstance().loadScope(selectedProcess);
+			}
+			
+			Scope scope = ProcessScopeUtil.getInstance().getScope(selectedProcess);
+			if (scope != null) {
+				realizationContext = new RealizationContext(scope);
+				ProcessScopeUtil.getInstance().beginProcessEdit(scope);
+			} else {
+				realizationContext = new RealizationContext(currentConfig);
+			}
+			getConfiguratorInstance().beginRealizationManager(realizationContext);
 			if (adapterFactory instanceof ConfigurableComposedAdapterFactory) {
 				((ConfigurableComposedAdapterFactory) adapterFactory)
-						.setFilter(ProcessAuthoringConfigurator.INSTANCE);
+						.setFilter(getConfiguratorInstance());
 			}
 			WBSTab.setAdapterFactory(adapterFactory);
 			WBSTab.setColumnDescriptors(columnDescriptors);
@@ -1171,7 +1189,7 @@ public class ProcessEditor extends MethodElementEditor implements
 					.getOBS_ComposedAdapterFactory();
 			if (adapterFactory instanceof ConfigurableComposedAdapterFactory) {
 				((ConfigurableComposedAdapterFactory) adapterFactory)
-						.setFilter(ProcessAuthoringConfigurator.INSTANCE);
+						.setFilter(getConfiguratorInstance());
 			}
 			OBSTab.setAdapterFactory(adapterFactory);
 			OBSTab.setColumnDescriptors(columnDescriptors);
@@ -1196,7 +1214,7 @@ public class ProcessEditor extends MethodElementEditor implements
 					.getPBS_ComposedAdapterFactory();
 			if (adapterFactory instanceof ConfigurableComposedAdapterFactory) {
 				((ConfigurableComposedAdapterFactory) adapterFactory)
-						.setFilter(ProcessAuthoringConfigurator.INSTANCE);
+						.setFilter(getConfiguratorInstance());
 			}
 			PBSTab.setAdapterFactory(adapterFactory);
 			PBSTab.setColumnDescriptors(columnDescriptors);
@@ -1219,7 +1237,7 @@ public class ProcessEditor extends MethodElementEditor implements
 					.getProcessComposedAdapterFactory();
 			if (adapterFactory instanceof ConfigurableComposedAdapterFactory) {
 				((ConfigurableComposedAdapterFactory) adapterFactory)
-						.setFilter(ProcessAuthoringConfigurator.INSTANCE);
+						.setFilter(getConfiguratorInstance());
 			}
 			procTab.setAdapterFactory(adapterFactory);
 //			columnDescriptors = toColumnDescriptors(store
@@ -2264,8 +2282,21 @@ public class ProcessEditor extends MethodElementEditor implements
 	 * @see org.eclipse.epf.authoring.ui.editors.MethodElementEditor#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void doSave(IProgressMonitor monitor) {
+		ProcessScopeUtil.getInstance().updateScope(selectedProcess);
 		suppression.saveToModel();
+		Scope scope = ProcessScopeUtil.getInstance().getScope(selectedProcess);
+		try {
+			if (scope != null) {
+				selectedProcess.setDefaultContext(null);
+				selectedProcess.getValidContext().clear();
+			}
 		super.doSave(monitor);
+		} finally {
+			if (scope != null) {
+				selectedProcess.setDefaultContext(scope);
+				selectedProcess.getValidContext().add(scope);
+			}
+		}
 		suppression.saveIsDone();
 		resourcesToSave.clear();
 		firePropertyChange(PROP_DIRTY);
@@ -2505,6 +2536,21 @@ public class ProcessEditor extends MethodElementEditor implements
 		return mgr;
 	}
 	
+	private ProcessAuthoringConfigurator scopeConfigurator;
+	private ProcessAuthoringConfigurator getConfiguratorInstance() {
+		if (selectedProcess != null
+				&& selectedProcess.getDefaultContext() instanceof Scope) {
+			if (scopeConfigurator == null) {
+				Scope scope = (Scope) selectedProcess.getDefaultContext();
+				scopeConfigurator = new ProcessAuthoringConfigurator(scope);
+			}
+			return scopeConfigurator;
+		}
+		return ProcessAuthoringConfigurator.INSTANCE;
+	}
 	
+	public Process getSelectedProcess() {
+		return selectedProcess;
+	}
 	
 }
