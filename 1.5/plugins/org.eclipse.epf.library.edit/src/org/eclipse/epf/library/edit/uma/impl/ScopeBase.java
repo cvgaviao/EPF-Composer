@@ -44,13 +44,10 @@ public abstract class ScopeBase extends MethodConfigurationImpl implements Scope
 		setName(defaultName);
 	}
 	
-	@Override
 	public abstract void addToScope(MethodElement element);
 
-	@Override
 	public abstract boolean inScope(MethodElement element);
 	
-	@Override
 	public void clearAll() {		
 		Scope scope = null;
 	}

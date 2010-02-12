@@ -15,13 +15,11 @@ public class ScopeImpl extends ScopeBase {
 	public ScopeImpl() {		
 	}
 	
-	@Override
 	public boolean inScope(MethodElement element) {
 		MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 		return plugins.contains(plugin);
 	}
 
-	@Override
 	public void addToScope(MethodElement element) {
 		MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 		if (plugin == null) {
@@ -40,12 +38,10 @@ public class ScopeImpl extends ScopeBase {
 		}
 	}
 	
-	@Override
 	public void clearAll() {
 		plugins.clear();
 	}
 	
-	@Override
 	public String toString() {
 		String str = ""; //$NON-NLS-1$
 		for (MethodPlugin p : plugins) {

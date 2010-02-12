@@ -7,12 +7,10 @@ public class LibraryScopeImpl extends ScopeBase {
 	public LibraryScopeImpl() {		
 	}
 	
-	@Override
 	public boolean inScope(MethodElement element) {
 		return true;
 	}
 	
-	@Override
 	public void addToScope(MethodElement element) {
 		
 	}
