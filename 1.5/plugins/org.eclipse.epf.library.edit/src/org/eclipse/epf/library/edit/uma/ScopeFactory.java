@@ -2,6 +2,7 @@ package org.eclipse.epf.library.edit.uma;
 
 import org.eclipse.epf.library.edit.uma.impl.LibraryScopeImpl;
 import org.eclipse.epf.library.edit.uma.impl.ScopeImpl;
+import org.eclipse.epf.uma.Process;
 
 public class ScopeFactory {
 
@@ -13,7 +14,7 @@ public class ScopeFactory {
 	private ScopeFactory() {		
 	}
 	
-	public Scope newScope() {
+	public Scope newProcessScope() {
 		return new ScopeImpl();
 	}
 	

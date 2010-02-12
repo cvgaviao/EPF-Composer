@@ -4,20 +4,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.uma.ScopeFactory;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.MethodElementProperty;
-import org.eclipse.epf.uma.MethodLibrary;
-import org.eclipse.epf.uma.MethodPackage;
-import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
-import org.eclipse.epf.uma.UmaFactory;
-import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.ProcessElement;
 
 public class ProcessScopeUtil {
 
@@ -47,15 +42,14 @@ public class ProcessScopeUtil {
 		return scopeType;
 	}
 	
-	public Scope loadScope(Process proc) {
-		MethodConfiguration config = proc.getDefaultContext();
-		if (config instanceof Scope) {
-			return (Scope) config;
-		} else if (config != null) {
-			return null;
+	public Scope loadScope(Process proc) {				
+		Scope scope = getScope(proc); 
+		if (scope != null) {
+			updateScope(proc);
+			return scope;
 		}
-		
-		Scope scope = ScopeFactory.getInstance().newScope();
+			
+		scope =	ScopeFactory.getInstance().newProcessScope();
 
 		addReferenceToScope(scope, proc, new HashSet<MethodElement>());
 		proc.setDefaultContext(scope);
@@ -79,8 +73,17 @@ public class ProcessScopeUtil {
 		if (handledReferenceSet.contains(element)) {
 			return;
 		}
+		handledReferenceSet.add(element);		
 		scope.addToScope(element);
-		handledReferenceSet.add(element);
+		
+		if (element instanceof ContentElement) {
+			
+		} else if (element instanceof ProcessElement) {
+			
+		} else {
+			return;
+		}
+
 		
 		for (EStructuralFeature f : element.eClass()
 				.getEAllStructuralFeatures()) {
@@ -102,8 +105,8 @@ public class ProcessScopeUtil {
 			} else if (value instanceof List) {
 				List list = (List) value;
 				if (list.size() > 0 && list.get(0) instanceof MethodElement) {
-					for (Object obj : list) {
-						addReferenceToScope(scope, (MethodElement) obj, handledReferenceSet);
+					for (int i = 0; i < list.size(); i++) {
+						addReferenceToScope(scope, (MethodElement) list.get(i), handledReferenceSet);
 					}
 				}
 			}

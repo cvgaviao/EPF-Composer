@@ -42,6 +42,7 @@ import org.eclipse.epf.library.edit.uma.ScopeFactory;
 import org.eclipse.epf.library.edit.util.AdapterFactoryItemLabelProvider;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.ItemLabelProvider;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
@@ -145,7 +146,7 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 		List configs = lib.getPredefinedConfigurations();
 		List methodConfigs = new ArrayList();
 		
-		Scope scope = ScopeFactory.getInstance().newScope();
+		Scope scope = ScopeFactory.getInstance().newProcessScope();
 		methodConfigs.add(scope);
 		
 		for (Iterator iter = configs.iterator(); iter.hasNext();) {
@@ -285,6 +286,12 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 			
 			process.getValidContext().add(procCtx);
 			
+			Scope processScope = ProcessScopeUtil.getInstance().getScope(process);
+			if (processScope != null) {
+				process.setDefaultContext(null);
+				process.getValidContext().clear();
+			}
+			
 			process.setPresentation(ContentDescriptionFactory
 					.createContentDescription(process));
 
@@ -337,7 +344,14 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 							MessageFormat
 									.format(
 											LibraryEditResources.creatingProcessComponentTask_name,
-											new Object[] { procComp.getName() })); 
+											new Object[] { procComp.getName() }));
+			
+			if (processScope != null) {
+				process.setDefaultContext(processScope);
+				process.getValidContext().add(processScope);
+				processScope.addToScope(process);
+			}
+			
 		}
 	}
 

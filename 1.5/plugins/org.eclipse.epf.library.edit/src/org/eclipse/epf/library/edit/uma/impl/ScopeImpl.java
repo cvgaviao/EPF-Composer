@@ -24,6 +24,9 @@ public class ScopeImpl extends ScopeBase {
 	@Override
 	public void addToScope(MethodElement element) {
 		MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+		if (plugin == null) {
+			return;
+		}
 		if (! plugins.contains(plugin)) {
 			plugins.add(plugin);
 			getMethodPluginSelection().add(plugin);

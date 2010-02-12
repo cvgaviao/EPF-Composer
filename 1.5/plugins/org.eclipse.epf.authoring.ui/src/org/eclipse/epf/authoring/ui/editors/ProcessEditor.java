@@ -2282,7 +2282,6 @@ public class ProcessEditor extends MethodElementEditor implements
 	 * @see org.eclipse.epf.authoring.ui.editors.MethodElementEditor#doSave(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	public void doSave(IProgressMonitor monitor) {
-		ProcessScopeUtil.getInstance().updateScope(selectedProcess);
 		suppression.saveToModel();
 		Scope scope = ProcessScopeUtil.getInstance().getScope(selectedProcess);
 		try {
