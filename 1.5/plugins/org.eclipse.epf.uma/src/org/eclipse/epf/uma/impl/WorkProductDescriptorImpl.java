@@ -41,6 +41,8 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getImpactedBy <em>Impacted By</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getImpacts <em>Impacts</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getDeliverableParts <em>Deliverable Parts</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getDeliverablePartsExclude <em>Deliverable Parts Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getDeliverablePartsInclude <em>Deliverable Parts Include</em>}</li>
  * </ul>
  * </p>
  *
@@ -127,6 +129,26 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * @ordered
 	 */
 	protected EList<WorkProductDescriptor> deliverableParts;
+
+	/**
+	 * The cached value of the '{@link #getDeliverablePartsExclude() <em>Deliverable Parts Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDeliverablePartsExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> deliverablePartsExclude;
+
+	/**
+	 * The cached value of the '{@link #getDeliverablePartsInclude() <em>Deliverable Parts Include</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDeliverablePartsInclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> deliverablePartsInclude;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -288,6 +310,36 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<WorkProductDescriptor> getDeliverablePartsExclude() {
+		if (deliverablePartsExclude == null) {
+			deliverablePartsExclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class,
+					this,
+					UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE);
+		}
+		return deliverablePartsExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getDeliverablePartsInclude() {
+		if (deliverablePartsInclude == null) {
+			deliverablePartsInclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class,
+					this,
+					UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE);
+		}
+		return deliverablePartsInclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd,
@@ -344,6 +396,10 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 			return getImpacts();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS:
 			return getDeliverableParts();
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
+			return getDeliverablePartsExclude();
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
+			return getDeliverablePartsInclude();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -381,6 +437,16 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 			getDeliverableParts().addAll(
 					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
+			getDeliverablePartsExclude().clear();
+			getDeliverablePartsExclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
+			getDeliverablePartsInclude().clear();
+			getDeliverablePartsInclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -410,6 +476,12 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS:
 			getDeliverableParts().clear();
+			return;
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
+			getDeliverablePartsExclude().clear();
+			return;
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
+			getDeliverablePartsInclude().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -443,6 +515,12 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 			return impacts != null && !impacts.isEmpty();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS:
 			return deliverableParts != null && !deliverableParts.isEmpty();
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
+			return deliverablePartsExclude != null
+					&& !deliverablePartsExclude.isEmpty();
+		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
+			return deliverablePartsInclude != null
+					&& !deliverablePartsInclude.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

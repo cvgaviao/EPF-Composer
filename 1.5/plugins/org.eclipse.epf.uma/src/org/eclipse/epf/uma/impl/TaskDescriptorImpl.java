@@ -50,6 +50,16 @@ import org.eclipse.epf.uma.ecore.util.DefaultValueManager;
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getSelectedSteps <em>Selected Steps</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getPerformedPrimarilyByExcluded <em>Performed Primarily By Excluded</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getPerformedPrimarilyByIncluded <em>Performed Primarily By Included</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getAdditionallyPerformedByExclude <em>Additionally Performed By Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getAdditionallyPerformedByInclude <em>Additionally Performed By Include</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getMandatoryInputExclude <em>Mandatory Input Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getMandatoryInputInclude <em>Mandatory Input Include</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getOptionalInputExclude <em>Optional Input Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getOptionalInputInclude <em>Optional Input Include</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getOutputExclude <em>Output Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getOutputInclude <em>Output Include</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getSelectedStepsExclude <em>Selected Steps Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getSelectedStepsInclude <em>Selected Steps Include</em>}</li>
  * </ul>
  * </p>
  *
@@ -191,6 +201,106 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @ordered
 	 */
 	protected EList<Role> performedPrimarilyByIncluded;
+
+	/**
+	 * The cached value of the '{@link #getAdditionallyPerformedByExclude() <em>Additionally Performed By Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAdditionallyPerformedByExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<RoleDescriptor> additionallyPerformedByExclude;
+
+	/**
+	 * The cached value of the '{@link #getAdditionallyPerformedByInclude() <em>Additionally Performed By Include</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAdditionallyPerformedByInclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<RoleDescriptor> additionallyPerformedByInclude;
+
+	/**
+	 * The cached value of the '{@link #getMandatoryInputExclude() <em>Mandatory Input Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMandatoryInputExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> mandatoryInputExclude;
+
+	/**
+	 * The cached value of the '{@link #getMandatoryInputInclude() <em>Mandatory Input Include</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMandatoryInputInclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> mandatoryInputInclude;
+
+	/**
+	 * The cached value of the '{@link #getOptionalInputExclude() <em>Optional Input Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOptionalInputExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> optionalInputExclude;
+
+	/**
+	 * The cached value of the '{@link #getOptionalInputInclude() <em>Optional Input Include</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOptionalInputInclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> optionalInputInclude;
+
+	/**
+	 * The cached value of the '{@link #getOutputExclude() <em>Output Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> outputExclude;
+
+	/**
+	 * The cached value of the '{@link #getOutputInclude() <em>Output Include</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutputInclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> outputInclude;
+
+	/**
+	 * The cached value of the '{@link #getSelectedStepsExclude() <em>Selected Steps Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSelectedStepsExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Section> selectedStepsExclude;
+
+	/**
+	 * The cached value of the '{@link #getSelectedStepsInclude() <em>Selected Steps Include</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSelectedStepsInclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Section> selectedStepsInclude;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -422,6 +532,148 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<RoleDescriptor> getAdditionallyPerformedByExclude() {
+		if (additionallyPerformedByExclude == null) {
+			additionallyPerformedByExclude = new EObjectResolvingEList<RoleDescriptor>(
+					RoleDescriptor.class,
+					this,
+					UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE);
+		}
+		return additionallyPerformedByExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<RoleDescriptor> getAdditionallyPerformedByInclude() {
+		if (additionallyPerformedByInclude == null) {
+			additionallyPerformedByInclude = new EObjectResolvingEList<RoleDescriptor>(
+					RoleDescriptor.class,
+					this,
+					UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE);
+		}
+		return additionallyPerformedByInclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getMandatoryInputExclude() {
+		if (mandatoryInputExclude == null) {
+			mandatoryInputExclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE);
+		}
+		return mandatoryInputExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getMandatoryInputInclude() {
+		if (mandatoryInputInclude == null) {
+			mandatoryInputInclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE);
+		}
+		return mandatoryInputInclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getOptionalInputExclude() {
+		if (optionalInputExclude == null) {
+			optionalInputExclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE);
+		}
+		return optionalInputExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getOptionalInputInclude() {
+		if (optionalInputInclude == null) {
+			optionalInputInclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE);
+		}
+		return optionalInputInclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getOutputExclude() {
+		if (outputExclude == null) {
+			outputExclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__OUTPUT_EXCLUDE);
+		}
+		return outputExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getOutputInclude() {
+		if (outputInclude == null) {
+			outputInclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.TASK_DESCRIPTOR__OUTPUT_INCLUDE);
+		}
+		return outputInclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Section> getSelectedStepsExclude() {
+		if (selectedStepsExclude == null) {
+			selectedStepsExclude = new EObjectResolvingEList<Section>(
+					Section.class, this,
+					UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE);
+		}
+		return selectedStepsExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Section> getSelectedStepsInclude() {
+		if (selectedStepsInclude == null) {
+			selectedStepsInclude = new EObjectResolvingEList<Section>(
+					Section.class, this,
+					UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE);
+		}
+		return selectedStepsInclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -451,6 +703,26 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			return getPerformedPrimarilyByExcluded();
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED:
 			return getPerformedPrimarilyByIncluded();
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE:
+			return getAdditionallyPerformedByExclude();
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE:
+			return getAdditionallyPerformedByInclude();
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE:
+			return getMandatoryInputExclude();
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE:
+			return getMandatoryInputInclude();
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE:
+			return getOptionalInputExclude();
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE:
+			return getOptionalInputInclude();
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_EXCLUDE:
+			return getOutputExclude();
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_INCLUDE:
+			return getOutputInclude();
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE:
+			return getSelectedStepsExclude();
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE:
+			return getSelectedStepsInclude();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -519,6 +791,56 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			getPerformedPrimarilyByIncluded().addAll(
 					(Collection<? extends Role>) newValue);
 			return;
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE:
+			getAdditionallyPerformedByExclude().clear();
+			getAdditionallyPerformedByExclude().addAll(
+					(Collection<? extends RoleDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE:
+			getAdditionallyPerformedByInclude().clear();
+			getAdditionallyPerformedByInclude().addAll(
+					(Collection<? extends RoleDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE:
+			getMandatoryInputExclude().clear();
+			getMandatoryInputExclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE:
+			getMandatoryInputInclude().clear();
+			getMandatoryInputInclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE:
+			getOptionalInputExclude().clear();
+			getOptionalInputExclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE:
+			getOptionalInputInclude().clear();
+			getOptionalInputInclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_EXCLUDE:
+			getOutputExclude().clear();
+			getOutputExclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_INCLUDE:
+			getOutputInclude().clear();
+			getOutputInclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE:
+			getSelectedStepsExclude().clear();
+			getSelectedStepsExclude().addAll(
+					(Collection<? extends Section>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE:
+			getSelectedStepsInclude().clear();
+			getSelectedStepsInclude().addAll(
+					(Collection<? extends Section>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -566,6 +888,36 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED:
 			getPerformedPrimarilyByIncluded().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE:
+			getAdditionallyPerformedByExclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE:
+			getAdditionallyPerformedByInclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE:
+			getMandatoryInputExclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE:
+			getMandatoryInputInclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE:
+			getOptionalInputExclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE:
+			getOptionalInputInclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_EXCLUDE:
+			getOutputExclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_INCLUDE:
+			getOutputInclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE:
+			getSelectedStepsExclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE:
+			getSelectedStepsInclude().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -615,6 +967,34 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED:
 			return performedPrimarilyByIncluded != null
 					&& !performedPrimarilyByIncluded.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE:
+			return additionallyPerformedByExclude != null
+					&& !additionallyPerformedByExclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE:
+			return additionallyPerformedByInclude != null
+					&& !additionallyPerformedByInclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE:
+			return mandatoryInputExclude != null
+					&& !mandatoryInputExclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE:
+			return mandatoryInputInclude != null
+					&& !mandatoryInputInclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE:
+			return optionalInputExclude != null
+					&& !optionalInputExclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE:
+			return optionalInputInclude != null
+					&& !optionalInputInclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_EXCLUDE:
+			return outputExclude != null && !outputExclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__OUTPUT_INCLUDE:
+			return outputInclude != null && !outputInclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE:
+			return selectedStepsExclude != null
+					&& !selectedStepsExclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE:
+			return selectedStepsInclude != null
+					&& !selectedStepsInclude.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -41,6 +41,8 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  *   <li>{@link org.eclipse.epf.uma.impl.RoleDescriptorImpl#getRole <em>Role</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.RoleDescriptorImpl#getModifies <em>Modifies</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.RoleDescriptorImpl#getResponsibleFor <em>Responsible For</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.RoleDescriptorImpl#getResponsibleForExclude <em>Responsible For Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.RoleDescriptorImpl#getResponsibleForInclude <em>Responsible For Include</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,6 +69,26 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * @ordered
 	 */
 	protected EList<WorkProductDescriptor> responsibleFor;
+
+	/**
+	 * The cached value of the '{@link #getResponsibleForExclude() <em>Responsible For Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResponsibleForExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> responsibleForExclude;
+
+	/**
+	 * The cached value of the '{@link #getResponsibleForInclude() <em>Responsible For Include</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResponsibleForInclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WorkProductDescriptor> responsibleForInclude;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -180,6 +202,34 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public List<WorkProductDescriptor> getResponsibleForExclude() {
+		if (responsibleForExclude == null) {
+			responsibleForExclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE);
+		}
+		return responsibleForExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<WorkProductDescriptor> getResponsibleForInclude() {
+		if (responsibleForInclude == null) {
+			responsibleForInclude = new EObjectResolvingEList<WorkProductDescriptor>(
+					WorkProductDescriptor.class, this,
+					UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE);
+		}
+		return responsibleForInclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -191,6 +241,10 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 			return getModifies();
 		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR:
 			return getResponsibleFor();
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE:
+			return getResponsibleForExclude();
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE:
+			return getResponsibleForInclude();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -217,6 +271,16 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 			getResponsibleFor().addAll(
 					(Collection<? extends WorkProductDescriptor>) newValue);
 			return;
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE:
+			getResponsibleForExclude().clear();
+			getResponsibleForExclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE:
+			getResponsibleForInclude().clear();
+			getResponsibleForInclude().addAll(
+					(Collection<? extends WorkProductDescriptor>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -237,6 +301,12 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 			return;
 		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR:
 			getResponsibleFor().clear();
+			return;
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE:
+			getResponsibleForExclude().clear();
+			return;
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE:
+			getResponsibleForInclude().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -262,6 +332,12 @@ public class RoleDescriptorImpl extends DescriptorImpl implements
 			return !getModifies().isEmpty();
 		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR:
 			return responsibleFor != null && !responsibleFor.isEmpty();
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE:
+			return responsibleForExclude != null
+					&& !responsibleForExclude.isEmpty();
+		case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE:
+			return responsibleForInclude != null
+					&& !responsibleForInclude.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

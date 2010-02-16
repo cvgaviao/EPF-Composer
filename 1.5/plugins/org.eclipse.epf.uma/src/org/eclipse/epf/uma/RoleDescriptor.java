@@ -27,6 +27,8 @@ import java.util.List;
  *   <li>{@link org.eclipse.epf.uma.RoleDescriptor#getRole <em>Role</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.RoleDescriptor#getModifies <em>Modifies</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.RoleDescriptor#getResponsibleFor <em>Responsible For</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.RoleDescriptor#getResponsibleForExclude <em>Responsible For Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.RoleDescriptor#getResponsibleForInclude <em>Responsible For Include</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,5 +94,37 @@ public interface RoleDescriptor extends Descriptor {
 	 * @generated
 	 */
 	List<WorkProductDescriptor> getResponsibleFor();
+
+	/**
+	 * Returns the value of the '<em><b>Responsible For Exclude</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Responsible For Exclude</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Responsible For Exclude</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getRoleDescriptor_ResponsibleForExclude()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<WorkProductDescriptor> getResponsibleForExclude();
+
+	/**
+	 * Returns the value of the '<em><b>Responsible For Include</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Responsible For Include</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Responsible For Include</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getRoleDescriptor_ResponsibleForInclude()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<WorkProductDescriptor> getResponsibleForInclude();
 
 } // RoleDescriptor

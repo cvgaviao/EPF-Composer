@@ -862,6 +862,10 @@
         upperBound="-1" eType="#//WorkProductDescriptor" eOpposite="#//WorkProductDescriptor/impactedBy"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="deliverableParts" ordered="false"
         upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deliverablePartsExclude"
+        ordered="false" upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deliverablePartsInclude"
+        ordered="false" upperBound="-1" eType="#//WorkProductDescriptor"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Descriptor" abstract="true" eSuperTypes="#//BreakdownElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -900,6 +904,10 @@
         upperBound="-1" eType="#//WorkProductDescriptor" volatile="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="responsibleFor" ordered="false"
         upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsibleForExclude"
+        ordered="false" upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsibleForInclude"
+        ordered="false" upperBound="-1" eType="#//WorkProductDescriptor"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TaskDescriptor" eSuperTypes="#//WorkBreakdownElement #//Descriptor">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -926,6 +934,26 @@
         ordered="false" upperBound="-1" eType="#//Role"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="performedPrimarilyByIncluded"
         ordered="false" upperBound="-1" eType="#//Role"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionallyPerformedByExclude"
+        ordered="false" upperBound="-1" eType="#//RoleDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionallyPerformedByInclude"
+        ordered="false" upperBound="-1" eType="#//RoleDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mandatoryInputExclude"
+        ordered="false" upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mandatoryInputInclude"
+        ordered="false" upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="optionalInputExclude" ordered="false"
+        upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="optionalInputInclude" ordered="false"
+        upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputExclude" ordered="false"
+        upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputInclude" ordered="false"
+        upperBound="-1" eType="#//WorkProductDescriptor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selectedStepsExclude" ordered="false"
+        upperBound="-1" eType="#//Section"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selectedStepsInclude" ordered="false"
+        upperBound="-1" eType="#//Section"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompositeRole" eSuperTypes="#//RoleDescriptor">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
