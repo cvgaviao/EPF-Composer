@@ -411,5 +411,5 @@ public class MethodConfigurationImpl extends MethodUnitImpl implements
 	public MethodConfigurationImpl(Object obj) {
 		this();
 	}
-	
+
 } //MethodConfigurationImpl
