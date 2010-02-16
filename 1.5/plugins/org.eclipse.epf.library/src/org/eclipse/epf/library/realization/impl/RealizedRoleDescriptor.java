@@ -1,13 +1,16 @@
 package org.eclipse.epf.library.realization.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.realization.IRealizedRoleDescriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class RealizedRoleDescriptor extends RealizedDescriptor implements
 		IRealizedRoleDescriptor {
@@ -36,6 +39,22 @@ public class RealizedRoleDescriptor extends RealizedDescriptor implements
 	
 	private RoleDescriptor getRoleDescriptor() {
 		return (RoleDescriptor) getElement();
+	}
+	
+	public List<WorkProductDescriptor> getResponsibleFor() {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		EReference rdReference = up.getRoleDescriptor_ResponsibleFor();
+		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(rdReference);
+		if (wpdList == null) {
+			EReference[] rdFeatures = {
+					rdReference,
+					up.getRoleDescriptor_ResponsibleForExclude(),
+					up.getRoleDescriptor_ResponsibleForInclude(),
+			};
+			wpdList = getWpdList(up.getRole_ResponsibleFor(), rdFeatures);
+			storeCachedValue(rdReference, wpdList);
+		}
+		return wpdList;
 	}
 	
 }

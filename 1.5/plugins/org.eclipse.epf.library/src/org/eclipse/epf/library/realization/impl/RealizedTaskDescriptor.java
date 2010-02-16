@@ -59,22 +59,48 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		EReference tdReference = up.getTaskDescriptor_PerformedPrimarilyBy();
 		List<RoleDescriptor> rdList = (List<RoleDescriptor>) getCachedValue(tdReference);
 		if (rdList == null) {
-			rdList = getRdList(up.getTask_PerformedBy(), tdReference);
+			EReference[] tdFeatures = {
+					tdReference,
+					up.getTaskDescriptor_PerformedPrimarilyByExcluded(),
+					up.getTaskDescriptor_PerformedPrimarilyByIncluded(),
+			};
+			rdList = getRdList(up.getTask_PerformedBy(), tdFeatures);
 			storeCachedValue(tdReference, rdList);
 		}
 		return rdList;
 	}
 
+	public List<RoleDescriptor> getAdditionallyPerformedBy() {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		EReference tdReference = up.getTaskDescriptor_AdditionallyPerformedBy();
+		List<RoleDescriptor> rdList = (List<RoleDescriptor>) getCachedValue(tdReference);
+		if (rdList == null) {
+			EReference[] tdFeatures = {
+					tdReference,
+					up.getTaskDescriptor_AdditionallyPerformedByExclude(),
+					up.getTaskDescriptor_AdditionallyPerformedByInclude(),
+			};
+			rdList = getRdList(up.getTask_AdditionallyPerformedBy(), tdFeatures);
+			storeCachedValue(tdReference, rdList);
+		}
+		return rdList;
+	}
+	
 	private List<RoleDescriptor> getRdList(EReference tFeature,
-			EReference tdFeature) {
+			EReference[] tdFeatures) {
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(getConfig());
+		
+		EReference tdFeature = tdFeatures[0];
 
 		Task task = (Task) getLinkedElement();
 		if (task == null) {
 			return ConfigurationHelper.calc0nFeatureValue(getTaskDescriptor(),
 					tdFeature, realizer);
 		}
+		
+		EReference tdFeatureExclude = tdFeatures[1];
+		EReference tdFeatureInclude = tdFeatures[2];
 
 		List<Role> roleList = ConfigurationHelper.calc0nFeatureValue(task,
 				tFeature, realizer);
@@ -118,61 +144,49 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		EReference tdReference = up.getTaskDescriptor_MandatoryInput();
 		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(tdReference);
 		if (wpdList == null) {
-			wpdList = getWpdList(up.getTask_MandatoryInput(), tdReference);
+			EReference[] tdFeatures = {
+					tdReference,
+					up.getTaskDescriptor_MandatoryInputExclude(),
+					up.getTaskDescriptor_MandatoryInputInclude(),
+			};
+			wpdList = getWpdList(up.getTask_MandatoryInput(), tdFeatures);
 			storeCachedValue(tdReference, wpdList);
 		}
 		return wpdList;
 	}
 	
-	private List<WorkProductDescriptor> getWpdList(EReference tFeature,
-			EReference tdFeature) {
-		ElementRealizer realizer = DefaultElementRealizer
-				.newElementRealizer(getConfig());
-
-		Task task = (Task) getLinkedElement();
-		if (task == null) {
-			return ConfigurationHelper.calc0nFeatureValue(getTaskDescriptor(),
-					tdFeature, realizer);
+	public List<WorkProductDescriptor> getOptionalInput() {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		EReference tdReference = up.getTaskDescriptor_OptionalInput();
+		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(tdReference);
+		if (wpdList == null) {
+			EReference[] tdFeatures = {
+					tdReference,
+					up.getTaskDescriptor_OptionalInputExclude(),
+					up.getTaskDescriptor_OptionalInputInclude(),
+			};
+			wpdList = getWpdList(up.getTask_OptionalInput(), tdFeatures);
+			storeCachedValue(tdReference, wpdList);
 		}
-
-		List<WorkProduct> wpList = ConfigurationHelper.calc0nFeatureValue(task,
-				tFeature, realizer);
-		List<WorkProductDescriptor> resultWpdList = new ArrayList<WorkProductDescriptor>();
-		if (wpList == null || wpList.isEmpty()) {
-			return resultWpdList;
-		}
-		Set<WorkProduct> wpSet = new LinkedHashSet<WorkProduct>(wpList);
-
-		List<WorkProductDescriptor> wpdList = ConfigurationHelper.calc0nFeatureValue(
-				getTaskDescriptor(), tdFeature, realizer);
-
-		for (WorkProductDescriptor wpd : wpdList) {
-			WorkProduct wp = wpd.getWorkProduct();
-			if (wpSet.contains(wp)) {
-				resultWpdList.add(wpd);
-				wpSet.remove(wp);
-			}
-		}
-
-		if (wpSet.isEmpty()) {
-			return resultWpdList;
-		}
-
-		Activity parentAct = getTaskDescriptor().getSuperActivities();
-		if (parentAct == null) {
-			return resultWpdList;
-		}
-
-		for (WorkProduct wp : wpSet) {
-			WorkProductDescriptor wpd = (WorkProductDescriptor) getMgr().getDescriptor(
-					getTaskDescriptor(), parentAct, wp, tdFeature);
-			resultWpdList.add(wpd);
-		}
-
-		return resultWpdList;
+		return wpdList;
 	}
 	
-	
+	public List<WorkProductDescriptor> getOutput() {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		EReference tdReference = up.getTaskDescriptor_Output();
+		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(tdReference);
+		if (wpdList == null) {
+			EReference[] tdFeatures = {
+					tdReference,
+					up.getTaskDescriptor_OutputExclude(),
+					up.getTaskDescriptor_OutputInclude(),
+			};
+			wpdList = getWpdList(up.getTask_Output(), tdFeatures);
+			storeCachedValue(tdReference, wpdList);
+		}
+		return wpdList;
+	}
+		
 	protected MethodElement getLinkedElement() {
 		return getTaskDescriptor().getTask();
 	}
