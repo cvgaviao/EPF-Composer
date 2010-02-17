@@ -1,0 +1,2 @@
+# Turn on debug trace for the toolbox plug-in
+org.eclipse.epf.toolbox/debug=true
