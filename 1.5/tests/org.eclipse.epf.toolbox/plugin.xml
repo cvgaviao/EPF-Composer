@@ -10,6 +10,28 @@
                   runnerId="epfBatchRunner">
             </commandLineRunner>
          </extension>
+         <extension
+               point="org.eclipse.ui.actionSets">
+            <actionSet
+                  description="Convert all processes to syn-free"
+                  id="org.eclipse.epf.toolbox.actionSet.ConvertToSynFree"
+                  label="ConvertToSynFreeActionSetName">
+               <menu
+                     id="epfToolboxMenu"
+                     label="Epf Tools">
+                  <separator
+                        name="ConvertTosynFreetGroup">
+                  </separator>
+               </menu>
+               <action
+                     class="org.eclipse.epf.toolbox.actions.ConvertTosynFree"
+                     id="ogr.eclipse.epf.toolbox.actions.ConvertToSynFreeAction"
+                     label="Conver to syn-free "
+                     menubarPath="epfToolboxMenu/ConvertTosynFreetGroup"
+                     tooltip="Conver to syn-free ">
+               </action>
+            </actionSet>
+         </extension>
    
    
 </plugin>
