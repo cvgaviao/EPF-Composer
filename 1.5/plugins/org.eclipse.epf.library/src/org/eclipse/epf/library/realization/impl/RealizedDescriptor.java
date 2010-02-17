@@ -14,6 +14,7 @@ import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
@@ -72,30 +73,67 @@ public class RealizedDescriptor extends RealizedElement implements
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(getConfig());
 
-		EReference descriptorFeature = descriptorFeatures[0];
+		EReference dFeature = descriptorFeatures[0];
+		EReference dFeatureExclude = descriptorFeatures[1];
+		EReference dFeatureInclude = descriptorFeatures[2];
 		
 		MethodElement element = getLinkedElement();
 		if (element == null) {
 			return ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
-					descriptorFeature, realizer);
+					dFeature, realizer);
 		}
-		
-		
-
+						
 		List<MethodElement> elementList = ConfigurationHelper.calc0nFeatureValue(element,
 				elementFeature, realizer);
-		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();
-		if (elementList == null || elementList.isEmpty()) {
-			return resultDescriptorList;
+		List<Descriptor> includeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
+				dFeatureInclude, realizer); 
+		
+		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();		
+		
+		List<Descriptor> excludeList = 	null;		
+		if (elementList != null && !elementList.isEmpty() ||
+			includeList != null && !includeList.isEmpty()) {
+				excludeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
+						dFeatureExclude, realizer); 
 		}
-		Set<MethodElement> elementSet = new LinkedHashSet<MethodElement>(elementList);
-
+		
+		Set<MethodElement> excludeElements = new HashSet<MethodElement>();
+		if (excludeList != null && !excludeList.isEmpty()) {
+			for (Descriptor des : excludeList) {
+				MethodElement elem = getLinkedElement();
+				if (elem != null) {
+					excludeElements.add(elem);
+				}
+			}
+		}
+		
+		Set<MethodElement> elementSet = new LinkedHashSet<MethodElement>();
+		if (elementList != null) {
+			for (MethodElement elem : elementList) {
+				if (! excludeElements.contains(elem)) {
+					elementSet.add(elem);
+				}
+			}
+		}		
+		if (includeList != null) {
+			for (MethodElement elem : includeList) {
+				if (! includeList.contains(elem)) {
+					elementSet.add(elem);
+				}
+			}
+		}
+		
 		List<Descriptor> descriptorList = ConfigurationHelper.calc0nFeatureValue(
-				getDescriptor(), descriptorFeature, realizer);
+				getDescriptor(), dFeature, realizer);
 
 		for (Descriptor des : descriptorList) {
 			MethodElement me = getLinkedElement(des);
-			if (elementSet.contains(me)) {
+			if (me == null
+					|| DescriptorPropUtil.getDesciptorPropUtil().staticUse(des,
+							getDescriptor())) {
+				resultDescriptorList.add(des);
+
+			} else if (elementSet.contains(me)) {
 				resultDescriptorList.add(des);
 				elementSet.remove(me);
 			}
@@ -112,7 +150,7 @@ public class RealizedDescriptor extends RealizedElement implements
 
 		for (MethodElement me : elementSet) {
 			Descriptor des = (Descriptor) getMgr().getDescriptor(
-					getDescriptor(), parentAct, me, descriptorFeature);
+					getDescriptor(), parentAct, me, dFeature);
 			resultDescriptorList.add(des);
 		}
 

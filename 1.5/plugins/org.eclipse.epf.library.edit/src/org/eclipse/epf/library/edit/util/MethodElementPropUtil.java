@@ -11,7 +11,19 @@ public class MethodElementPropUtil {
 	}
 	
 	protected MethodElementPropUtil() {		
-	}		
+	}	
+	
+	protected String getStringValue(MethodElement element, String propName) {		
+		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(element, propName);
+		if (prop == null) {
+			return null;
+		}
+		return prop.getValue();
+	}
+	
+	protected void setStringValue(MethodElement element, String propName, String value) {	
+		MethodElementPropertyHelper.setProperty(element, propName, value);
+	}	
 	
 	protected Boolean getBooleanValue(MethodElement element, String propName) {		
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(element, propName);

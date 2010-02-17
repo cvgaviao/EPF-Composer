@@ -4,10 +4,13 @@ import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.Descriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
+	
+	private static final String guidSeperator = "/"; 							//$NON-NLS-1$
 
-	public static final String DESCRIPTOR_Syn_Free = "syn_free"; 			//$NON-NLS-1$
+	public static final String DESCRIPTOR_Syn_Free = "syn_free"; 				//$NON-NLS-1$
 	public static final String DESCRIPTOR_Is_Dynamic = "is_dynamic"; 			//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization1 = "customization1"; 	//$NON-NLS-1$
+	public static final String DESCRIPTOR_StaticUsingGuids = "StaticUsingGuids";	//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -87,6 +90,69 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		setCustomization1(d, mainDesAppend, value);
 	}
 	
+	public boolean staticUse(Descriptor usedD, Descriptor usingD) {
+		String value = getStringValue(usedD, DESCRIPTOR_StaticUsingGuids);
+		if (value == null || value.length() == 0) {
+			return false;
+		}
+		
+		String[] guids = value.split(guidSeperator);
+		if (guids == null || guids.length == 0) {
+			return false;
+		}
+		
+		for (String guid : guids) {
+			if (guid.equals(usingD.getGuid())) {
+				return true;
+			} 
+		}
+		
+		return false;
+	}
+	
+	
+	public void addStaticUse(Descriptor usedD, Descriptor usingD) {
+		String oldValue = getStringValue(usedD, DESCRIPTOR_StaticUsingGuids);
+		String newValue = usingD.getGuid();
+		if (oldValue != null && oldValue.length() > 0) {
+			String[] guids = oldValue.split(guidSeperator); 
+			if (guids != null )
+			for (String guid : guids) {
+				if (guid.equals(usingD.getGuid())) {
+					return;
+				}
+			}
+			newValue = oldValue.concat(guidSeperator).concat(usingD.getGuid());
+		}
+		
+		setStringValue(usedD, DESCRIPTOR_StaticUsingGuids, newValue);
+	}
+	
+	public void removeStaticUse(Descriptor usedD, Descriptor usingD) {
+		String oldValue = getStringValue(usedD, DESCRIPTOR_StaticUsingGuids);
+		if (oldValue == null || oldValue.length() == 0) {
+			return;
+		}
+		boolean removed = false;
+		String newValue = ""; //$NON-NLS-1$
+		String[] guids = oldValue.split(guidSeperator);
+		for (String guid : guids) {
+			if (guid.equals(usingD.getGuid())) {
+				removed = true;				
+			} else {
+				if (newValue.length() > 0) {
+					newValue = newValue.concat(guidSeperator);
+				}
+				newValue = newValue.concat(guid);
+			}
+		}
+
+		if (removed) {
+			setStringValue(usedD, DESCRIPTOR_StaticUsingGuids, newValue);
+		}
+
+	}
+		
 	protected boolean getCustomization1(Descriptor d, int maskBit) {
 		int cus = getIntValue(d, DESCRIPTOR_Customization1);
 		return (cus & maskBit) > 0;
