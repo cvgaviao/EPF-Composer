@@ -44,19 +44,19 @@ public class RealizedWorkProductDescriptor extends
 	}
 	
 	public List<WorkProductDescriptor> getDeliverableParts() {
-		if (! (getLinkedElement() instanceof Deliverable)) {
+		if (!(getLinkedElement() instanceof Deliverable)) {
 			return Collections.EMPTY_LIST;
 		}
 		UmaPackage up = UmaPackage.eINSTANCE;
-		EReference wpdReference = up.getWorkProductDescriptor_DeliverableParts();
+		EReference wpdReference = up
+				.getWorkProductDescriptor_DeliverableParts();
 		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(wpdReference);
 		if (wpdList == null) {
-			EReference[] wpdFeatures = {
-					wpdReference,
+			EReference[] wpdFeatures = { wpdReference,
 					up.getWorkProductDescriptor_DeliverablePartsExclude(),
-					up.getWorkProductDescriptor_DeliverablePartsInclude(),
-			};
-			wpdList = getWpdList(up.getDeliverable_DeliveredWorkProducts(), wpdFeatures);
+					up.getWorkProductDescriptor_DeliverablePartsInclude(), };
+			wpdList = (List<WorkProductDescriptor>) getDescriptorList(up
+					.getDeliverable_DeliveredWorkProducts(), wpdFeatures);
 			storeCachedValue(wpdReference, wpdList);
 		}
 		return wpdList;

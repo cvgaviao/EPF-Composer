@@ -17,9 +17,9 @@ import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 
@@ -67,7 +67,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		return (Descriptor) getElement();
 	}
 		
-	protected List<WorkProductDescriptor> getWpdList(EReference elementFeature,
+	protected List<? extends Descriptor> getDescriptorList(EReference elementFeature,
 			EReference[] descriptorFeatures) {
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(getConfig());
@@ -82,41 +82,55 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		
 
-		List<WorkProduct> wpList = ConfigurationHelper.calc0nFeatureValue(element,
+		List<MethodElement> elementList = ConfigurationHelper.calc0nFeatureValue(element,
 				elementFeature, realizer);
-		List<WorkProductDescriptor> resultWpdList = new ArrayList<WorkProductDescriptor>();
-		if (wpList == null || wpList.isEmpty()) {
-			return resultWpdList;
+		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();
+		if (elementList == null || elementList.isEmpty()) {
+			return resultDescriptorList;
 		}
-		Set<WorkProduct> wpSet = new LinkedHashSet<WorkProduct>(wpList);
+		Set<MethodElement> elementSet = new LinkedHashSet<MethodElement>(elementList);
 
-		List<WorkProductDescriptor> wpdList = ConfigurationHelper.calc0nFeatureValue(
+		List<Descriptor> descriptorList = ConfigurationHelper.calc0nFeatureValue(
 				getDescriptor(), descriptorFeature, realizer);
 
-		for (WorkProductDescriptor wpd : wpdList) {
-			WorkProduct wp = wpd.getWorkProduct();
-			if (wpSet.contains(wp)) {
-				resultWpdList.add(wpd);
-				wpSet.remove(wp);
+		for (Descriptor des : descriptorList) {
+			MethodElement me = getLinkedElement(des);
+			if (elementSet.contains(me)) {
+				resultDescriptorList.add(des);
+				elementSet.remove(me);
 			}
 		}
 
-		if (wpSet.isEmpty()) {
-			return resultWpdList;
+		if (elementSet.isEmpty()) {
+			return resultDescriptorList;
 		}
 
 		Activity parentAct = getDescriptor().getSuperActivities();
 		if (parentAct == null) {
-			return resultWpdList;
+			return resultDescriptorList;
 		}
 
-		for (WorkProduct wp : wpSet) {
-			WorkProductDescriptor wpd = (WorkProductDescriptor) getMgr().getDescriptor(
-					getDescriptor(), parentAct, wp, descriptorFeature);
-			resultWpdList.add(wpd);
+		for (MethodElement me : elementSet) {
+			Descriptor des = (Descriptor) getMgr().getDescriptor(
+					getDescriptor(), parentAct, me, descriptorFeature);
+			resultDescriptorList.add(des);
 		}
 
-		return resultWpdList;
+		return resultDescriptorList;
+	}
+	
+	private MethodElement getLinkedElement(Descriptor des) {
+		if (des instanceof TaskDescriptor) {
+			return ((TaskDescriptor) des).getTask();
+		}
+		if (des instanceof RoleDescriptor) {
+			return ((RoleDescriptor) des).getRole();
+		}
+		if (des instanceof WorkProductDescriptor) {
+			return ((WorkProductDescriptor) des).getWorkProduct();
+		}
+		
+		return null;
 	}
 	
 	
