@@ -61,6 +61,14 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	protected MethodElement getLinkedElement() {
+		MethodElement element = getRawLinkedElement();
+		if (element == null) {
+			return null;
+		}
+		return ConfigurationHelper.getCalculatedElement(element, getConfig());
+	}
+	
+	protected MethodElement getRawLinkedElement() {
 		throw new UnsupportedOperationException();
 	}
 				
@@ -158,6 +166,14 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	private MethodElement getLinkedElement(Descriptor des) {
+		MethodElement element = getRawLinkedElement(des);
+		if (element == null) {
+			return null;
+		}
+		return ConfigurationHelper.getCalculatedElement(element, getConfig());
+	}
+	
+	private MethodElement getRawLinkedElement(Descriptor des) {
 		if (des instanceof TaskDescriptor) {
 			return ((TaskDescriptor) des).getTask();
 		}

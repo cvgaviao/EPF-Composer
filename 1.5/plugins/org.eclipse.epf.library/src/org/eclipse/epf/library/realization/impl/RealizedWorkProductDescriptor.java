@@ -35,7 +35,7 @@ public class RealizedWorkProductDescriptor extends
 		return super.handleFeature(feature);
 	}
 	
-	protected MethodElement getLinkedElement() {
+	protected MethodElement getRawLinkedElement() {
 		return getWorkProductDescriptor().getWorkProduct();
 	}
 	

@@ -120,7 +120,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		return wpdList;
 	}
 		
-	protected MethodElement getLinkedElement() {
+	protected MethodElement getRawLinkedElement() {
 		return getTaskDescriptor().getTask();
 	}
 	

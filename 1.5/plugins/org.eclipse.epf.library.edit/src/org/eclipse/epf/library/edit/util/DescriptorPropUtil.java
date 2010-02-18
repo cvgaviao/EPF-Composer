@@ -10,7 +10,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public static final String DESCRIPTOR_Syn_Free = "syn_free"; 				//$NON-NLS-1$
 	public static final String DESCRIPTOR_Is_Dynamic = "is_dynamic"; 			//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization1 = "customization1"; 	//$NON-NLS-1$
-	public static final String DESCRIPTOR_StaticUsingGuids = "StaticUsingGuids";	//$NON-NLS-1$
+	public static final String DESCRIPTOR_LocalUsingGuids = "LocalUsingGuids";	//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -91,7 +91,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public boolean staticUse(Descriptor usedD, Descriptor usingD) {
-		String value = getStringValue(usedD, DESCRIPTOR_StaticUsingGuids);
+		String value = getStringValue(usedD, DESCRIPTOR_LocalUsingGuids);
 		if (value == null || value.length() == 0) {
 			return false;
 		}
@@ -111,8 +111,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	
-	public void addStaticUse(Descriptor usedD, Descriptor usingD) {
-		String oldValue = getStringValue(usedD, DESCRIPTOR_StaticUsingGuids);
+	public void addLocalUse(Descriptor usedD, Descriptor usingD) {
+		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingGuids);
 		String newValue = usingD.getGuid();
 		if (oldValue != null && oldValue.length() > 0) {
 			String[] guids = oldValue.split(guidSeperator); 
@@ -125,11 +125,11 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			newValue = oldValue.concat(guidSeperator).concat(usingD.getGuid());
 		}
 		
-		setStringValue(usedD, DESCRIPTOR_StaticUsingGuids, newValue);
+		setStringValue(usedD, DESCRIPTOR_LocalUsingGuids, newValue);
 	}
 	
-	public void removeStaticUse(Descriptor usedD, Descriptor usingD) {
-		String oldValue = getStringValue(usedD, DESCRIPTOR_StaticUsingGuids);
+	public void removeLocalUse(Descriptor usedD, Descriptor usingD) {
+		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingGuids);
 		if (oldValue == null || oldValue.length() == 0) {
 			return;
 		}
@@ -148,7 +148,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 
 		if (removed) {
-			setStringValue(usedD, DESCRIPTOR_StaticUsingGuids, newValue);
+			setStringValue(usedD, DESCRIPTOR_LocalUsingGuids, newValue);
 		}
 
 	}

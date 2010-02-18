@@ -29,14 +29,14 @@ public class ConvertTosynFree implements IWorkbenchWindowActionDelegate {
 	public void run(IAction action) {
 		if (debug) {
 			System.out.println("");
-			System.out.println("LD> Begin: IConvertTosynFree.run()");
+			System.out.println("LD> Begin: ConvertTosynFree.run()");
 		}
 		MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();		
 		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
 		converter.convertLibrary(lib);
 		
 		if (debug) {
-			System.out.println("LD> End: IConvertTosynFree.run()");
+			System.out.println("LD> End: ConvertTosynFree.run()");
 		}
 	}
 
