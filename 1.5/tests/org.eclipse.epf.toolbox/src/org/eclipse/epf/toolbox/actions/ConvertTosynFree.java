@@ -1,19 +1,9 @@
 package org.eclipse.epf.toolbox.actions;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.eclipse.emf.common.CommonPlugin;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.util.SynFreeProcessConverter;
 import org.eclipse.epf.toolbox.ToolboxPlugin;
-import org.eclipse.epf.toolbox.libutil.LibUtil;
-import org.eclipse.epf.uma.Descriptor;
-import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
-import org.eclipse.epf.uma.Process;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -42,13 +32,8 @@ public class ConvertTosynFree implements IWorkbenchWindowActionDelegate {
 			System.out.println("LD> Begin: IConvertTosynFree.run()");
 		}
 		MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();		
-		Set<Descriptor> descriptors = LibUtil.collectDescriptors(lib);
-		if (debug) {
-			System.out.println("LD> descriptors: " + descriptors.size());
-		}
-		for (Descriptor des : descriptors) {
-			
-		}		
+		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
+		converter.convertLibrary(lib);
 		
 		if (debug) {
 			System.out.println("LD> End: IConvertTosynFree.run()");
