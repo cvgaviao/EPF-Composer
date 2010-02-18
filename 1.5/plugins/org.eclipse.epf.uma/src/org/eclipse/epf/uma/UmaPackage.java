@@ -13447,22 +13447,13 @@ public interface UmaPackage extends EPackage {
 	int WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE = DESCRIPTOR_FEATURE_COUNT + 6;
 
 	/**
-	 * The feature id for the '<em><b>Deliverable Parts Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE = DESCRIPTOR_FEATURE_COUNT + 7;
-
-	/**
 	 * The number of structural features of the '<em>Work Product Descriptor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WORK_PRODUCT_DESCRIPTOR_FEATURE_COUNT = DESCRIPTOR_FEATURE_COUNT + 8;
+	int WORK_PRODUCT_DESCRIPTOR_FEATURE_COUNT = DESCRIPTOR_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -14878,22 +14869,13 @@ public interface UmaPackage extends EPackage {
 	int ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE = DESCRIPTOR_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Responsible For Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE = DESCRIPTOR_FEATURE_COUNT + 4;
-
-	/**
 	 * The number of structural features of the '<em>Role Descriptor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ROLE_DESCRIPTOR_FEATURE_COUNT = DESCRIPTOR_FEATURE_COUNT + 5;
+	int ROLE_DESCRIPTOR_FEATURE_COUNT = DESCRIPTOR_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15310,31 +15292,13 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
-	 * The feature id for the '<em><b>Performed Primarily By Included</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 11;
-
-	/**
 	 * The feature id for the '<em><b>Additionally Performed By Exclude</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 12;
-
-	/**
-	 * The feature id for the '<em><b>Additionally Performed By Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 13;
+	int TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory Input Exclude</b></em>' reference list.
@@ -15343,16 +15307,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 14;
-
-	/**
-	 * The feature id for the '<em><b>Mandatory Input Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 15;
+	int TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Optional Input Exclude</b></em>' reference list.
@@ -15361,16 +15316,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 16;
-
-	/**
-	 * The feature id for the '<em><b>Optional Input Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 17;
+	int TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Output Exclude</b></em>' reference list.
@@ -15379,16 +15325,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__OUTPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 18;
-
-	/**
-	 * The feature id for the '<em><b>Output Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__OUTPUT_INCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 19;
+	int TASK_DESCRIPTOR__OUTPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Selected Steps Exclude</b></em>' reference list.
@@ -15397,16 +15334,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 20;
-
-	/**
-	 * The feature id for the '<em><b>Selected Steps Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 21;
+	int TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The number of structural features of the '<em>Task Descriptor</em>' class.
@@ -15415,7 +15343,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 22;
+	int TASK_DESCRIPTOR_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15740,15 +15668,6 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE_ROLE__RESPONSIBLE_FOR_EXCLUDE = ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE;
-
-	/**
-	 * The feature id for the '<em><b>Responsible For Include</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSITE_ROLE__RESPONSIBLE_FOR_INCLUDE = ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE;
 
 	/**
 	 * The feature id for the '<em><b>Aggregated Roles</b></em>' reference list.
@@ -25512,17 +25431,6 @@ public interface UmaPackage extends EPackage {
 	EReference getRoleDescriptor_ResponsibleForExclude();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.RoleDescriptor#getResponsibleForInclude <em>Responsible For Include</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Responsible For Include</em>'.
-	 * @see org.eclipse.epf.uma.RoleDescriptor#getResponsibleForInclude()
-	 * @see #getRoleDescriptor()
-	 * @generated
-	 */
-	EReference getRoleDescriptor_ResponsibleForInclude();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.WorkOrder <em>Work Order</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25749,17 +25657,6 @@ public interface UmaPackage extends EPackage {
 	EReference getTaskDescriptor_PerformedPrimarilyByExcluded();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByIncluded <em>Performed Primarily By Included</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Performed Primarily By Included</em>'.
-	 * @see org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByIncluded()
-	 * @see #getTaskDescriptor()
-	 * @generated
-	 */
-	EReference getTaskDescriptor_PerformedPrimarilyByIncluded();
-
-	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getAdditionallyPerformedByExclude <em>Additionally Performed By Exclude</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25769,17 +25666,6 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTaskDescriptor_AdditionallyPerformedByExclude();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getAdditionallyPerformedByInclude <em>Additionally Performed By Include</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Additionally Performed By Include</em>'.
-	 * @see org.eclipse.epf.uma.TaskDescriptor#getAdditionallyPerformedByInclude()
-	 * @see #getTaskDescriptor()
-	 * @generated
-	 */
-	EReference getTaskDescriptor_AdditionallyPerformedByInclude();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getMandatoryInputExclude <em>Mandatory Input Exclude</em>}'.
@@ -25793,17 +25679,6 @@ public interface UmaPackage extends EPackage {
 	EReference getTaskDescriptor_MandatoryInputExclude();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getMandatoryInputInclude <em>Mandatory Input Include</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Mandatory Input Include</em>'.
-	 * @see org.eclipse.epf.uma.TaskDescriptor#getMandatoryInputInclude()
-	 * @see #getTaskDescriptor()
-	 * @generated
-	 */
-	EReference getTaskDescriptor_MandatoryInputInclude();
-
-	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getOptionalInputExclude <em>Optional Input Exclude</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25813,17 +25688,6 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTaskDescriptor_OptionalInputExclude();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getOptionalInputInclude <em>Optional Input Include</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Optional Input Include</em>'.
-	 * @see org.eclipse.epf.uma.TaskDescriptor#getOptionalInputInclude()
-	 * @see #getTaskDescriptor()
-	 * @generated
-	 */
-	EReference getTaskDescriptor_OptionalInputInclude();
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getOutputExclude <em>Output Exclude</em>}'.
@@ -25837,17 +25701,6 @@ public interface UmaPackage extends EPackage {
 	EReference getTaskDescriptor_OutputExclude();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getOutputInclude <em>Output Include</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Output Include</em>'.
-	 * @see org.eclipse.epf.uma.TaskDescriptor#getOutputInclude()
-	 * @see #getTaskDescriptor()
-	 * @generated
-	 */
-	EReference getTaskDescriptor_OutputInclude();
-
-	/**
 	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getSelectedStepsExclude <em>Selected Steps Exclude</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -25857,17 +25710,6 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTaskDescriptor_SelectedStepsExclude();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.TaskDescriptor#getSelectedStepsInclude <em>Selected Steps Include</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Selected Steps Include</em>'.
-	 * @see org.eclipse.epf.uma.TaskDescriptor#getSelectedStepsInclude()
-	 * @see #getTaskDescriptor()
-	 * @generated
-	 */
-	EReference getTaskDescriptor_SelectedStepsInclude();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.WorkProductDescriptor <em>Work Product Descriptor</em>}'.
@@ -25955,17 +25797,6 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWorkProductDescriptor_DeliverablePartsExclude();
-
-	/**
-	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.WorkProductDescriptor#getDeliverablePartsInclude <em>Deliverable Parts Include</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Deliverable Parts Include</em>'.
-	 * @see org.eclipse.epf.uma.WorkProductDescriptor#getDeliverablePartsInclude()
-	 * @see #getWorkProductDescriptor()
-	 * @generated
-	 */
-	EReference getWorkProductDescriptor_DeliverablePartsInclude();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.CompositeRole <em>Composite Role</em>}'.
@@ -29349,15 +29180,6 @@ public interface UmaPackage extends EPackage {
 				.getRoleDescriptor_ResponsibleForExclude();
 
 		/**
-		 * The meta object literal for the '<em><b>Responsible For Include</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE = eINSTANCE
-				.getRoleDescriptor_ResponsibleForInclude();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.WorkOrderImpl <em>Work Order</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -29548,15 +29370,6 @@ public interface UmaPackage extends EPackage {
 				.getTaskDescriptor_PerformedPrimarilyByExcluded();
 
 		/**
-		 * The meta object literal for the '<em><b>Performed Primarily By Included</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED = eINSTANCE
-				.getTaskDescriptor_PerformedPrimarilyByIncluded();
-
-		/**
 		 * The meta object literal for the '<em><b>Additionally Performed By Exclude</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -29564,15 +29377,6 @@ public interface UmaPackage extends EPackage {
 		 */
 		EReference TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE = eINSTANCE
 				.getTaskDescriptor_AdditionallyPerformedByExclude();
-
-		/**
-		 * The meta object literal for the '<em><b>Additionally Performed By Include</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE = eINSTANCE
-				.getTaskDescriptor_AdditionallyPerformedByInclude();
 
 		/**
 		 * The meta object literal for the '<em><b>Mandatory Input Exclude</b></em>' reference list feature.
@@ -29584,15 +29388,6 @@ public interface UmaPackage extends EPackage {
 				.getTaskDescriptor_MandatoryInputExclude();
 
 		/**
-		 * The meta object literal for the '<em><b>Mandatory Input Include</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE = eINSTANCE
-				.getTaskDescriptor_MandatoryInputInclude();
-
-		/**
 		 * The meta object literal for the '<em><b>Optional Input Exclude</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -29600,15 +29395,6 @@ public interface UmaPackage extends EPackage {
 		 */
 		EReference TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE = eINSTANCE
 				.getTaskDescriptor_OptionalInputExclude();
-
-		/**
-		 * The meta object literal for the '<em><b>Optional Input Include</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE = eINSTANCE
-				.getTaskDescriptor_OptionalInputInclude();
 
 		/**
 		 * The meta object literal for the '<em><b>Output Exclude</b></em>' reference list feature.
@@ -29620,15 +29406,6 @@ public interface UmaPackage extends EPackage {
 				.getTaskDescriptor_OutputExclude();
 
 		/**
-		 * The meta object literal for the '<em><b>Output Include</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TASK_DESCRIPTOR__OUTPUT_INCLUDE = eINSTANCE
-				.getTaskDescriptor_OutputInclude();
-
-		/**
 		 * The meta object literal for the '<em><b>Selected Steps Exclude</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -29636,15 +29413,6 @@ public interface UmaPackage extends EPackage {
 		 */
 		EReference TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE = eINSTANCE
 				.getTaskDescriptor_SelectedStepsExclude();
-
-		/**
-		 * The meta object literal for the '<em><b>Selected Steps Include</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE = eINSTANCE
-				.getTaskDescriptor_SelectedStepsInclude();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl <em>Work Product Descriptor</em>}' class.
@@ -29718,15 +29486,6 @@ public interface UmaPackage extends EPackage {
 		 */
 		EReference WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE = eINSTANCE
 				.getWorkProductDescriptor_DeliverablePartsExclude();
-
-		/**
-		 * The meta object literal for the '<em><b>Deliverable Parts Include</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE = eINSTANCE
-				.getWorkProductDescriptor_DeliverablePartsInclude();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.CompositeRoleImpl <em>Composite Role</em>}' class.

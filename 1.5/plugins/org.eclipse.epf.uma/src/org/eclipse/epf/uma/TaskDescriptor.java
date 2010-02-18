@@ -37,17 +37,11 @@ import java.util.List;
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyBy <em>Performed Primarily By</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getSelectedSteps <em>Selected Steps</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByExcluded <em>Performed Primarily By Excluded</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getPerformedPrimarilyByIncluded <em>Performed Primarily By Included</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getAdditionallyPerformedByExclude <em>Additionally Performed By Exclude</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getAdditionallyPerformedByInclude <em>Additionally Performed By Include</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getMandatoryInputExclude <em>Mandatory Input Exclude</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getMandatoryInputInclude <em>Mandatory Input Include</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getOptionalInputExclude <em>Optional Input Exclude</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getOptionalInputInclude <em>Optional Input Include</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getOutputExclude <em>Output Exclude</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getOutputInclude <em>Output Include</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getSelectedStepsExclude <em>Selected Steps Exclude</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.TaskDescriptor#getSelectedStepsInclude <em>Selected Steps Include</em>}</li>
  * </ul>
  * </p>
  *
@@ -227,24 +221,8 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	List<Role> getPerformedPrimarilyByExcluded();
 
 	/**
-	 * Returns the value of the '<em><b>Performed Primarily By Included</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.Role}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Performed Primarily By Included</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Performed Primarily By Included</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_PerformedPrimarilyByIncluded()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	List<Role> getPerformedPrimarilyByIncluded();
-
-	/**
 	 * Returns the value of the '<em><b>Additionally Performed By Exclude</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.RoleDescriptor}.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Role}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Additionally Performed By Exclude</em>' reference list isn't clear,
@@ -256,27 +234,11 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * @model ordered="false"
 	 * @generated
 	 */
-	List<RoleDescriptor> getAdditionallyPerformedByExclude();
-
-	/**
-	 * Returns the value of the '<em><b>Additionally Performed By Include</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.RoleDescriptor}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Additionally Performed By Include</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Additionally Performed By Include</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_AdditionallyPerformedByInclude()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	List<RoleDescriptor> getAdditionallyPerformedByInclude();
+	List<Role> getAdditionallyPerformedByExclude();
 
 	/**
 	 * Returns the value of the '<em><b>Mandatory Input Exclude</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
+	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProduct}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Mandatory Input Exclude</em>' reference list isn't clear,
@@ -288,27 +250,11 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * @model ordered="false"
 	 * @generated
 	 */
-	List<WorkProductDescriptor> getMandatoryInputExclude();
-
-	/**
-	 * Returns the value of the '<em><b>Mandatory Input Include</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Mandatory Input Include</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mandatory Input Include</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_MandatoryInputInclude()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	List<WorkProductDescriptor> getMandatoryInputInclude();
+	List<WorkProduct> getMandatoryInputExclude();
 
 	/**
 	 * Returns the value of the '<em><b>Optional Input Exclude</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
+	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProduct}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Optional Input Exclude</em>' reference list isn't clear,
@@ -320,27 +266,11 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * @model ordered="false"
 	 * @generated
 	 */
-	List<WorkProductDescriptor> getOptionalInputExclude();
-
-	/**
-	 * Returns the value of the '<em><b>Optional Input Include</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Optional Input Include</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Optional Input Include</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_OptionalInputInclude()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	List<WorkProductDescriptor> getOptionalInputInclude();
+	List<WorkProduct> getOptionalInputExclude();
 
 	/**
 	 * Returns the value of the '<em><b>Output Exclude</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
+	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProduct}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Output Exclude</em>' reference list isn't clear,
@@ -352,23 +282,7 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * @model ordered="false"
 	 * @generated
 	 */
-	List<WorkProductDescriptor> getOutputExclude();
-
-	/**
-	 * Returns the value of the '<em><b>Output Include</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Output Include</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Output Include</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_OutputInclude()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	List<WorkProductDescriptor> getOutputInclude();
+	List<WorkProduct> getOutputExclude();
 
 	/**
 	 * Returns the value of the '<em><b>Selected Steps Exclude</b></em>' reference list.
@@ -385,21 +299,5 @@ public interface TaskDescriptor extends WorkBreakdownElement, Descriptor {
 	 * @generated
 	 */
 	List<Section> getSelectedStepsExclude();
-
-	/**
-	 * Returns the value of the '<em><b>Selected Steps Include</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.Section}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Selected Steps Include</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Selected Steps Include</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getTaskDescriptor_SelectedStepsInclude()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	List<Section> getSelectedStepsInclude();
 
 } // TaskDescriptor

@@ -2501,16 +2501,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRoleDescriptor_ResponsibleForInclude() {
-		return (EReference) roleDescriptorEClass.getEStructuralFeatures()
-				.get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getWorkOrder() {
 		return workOrderEClass;
 	}
@@ -2710,7 +2700,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTaskDescriptor_PerformedPrimarilyByIncluded() {
+	public EReference getTaskDescriptor_AdditionallyPerformedByExclude() {
 		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
 				10);
 	}
@@ -2720,7 +2710,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTaskDescriptor_AdditionallyPerformedByExclude() {
+	public EReference getTaskDescriptor_MandatoryInputExclude() {
 		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
 				11);
 	}
@@ -2730,7 +2720,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTaskDescriptor_AdditionallyPerformedByInclude() {
+	public EReference getTaskDescriptor_OptionalInputExclude() {
 		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
 				12);
 	}
@@ -2740,7 +2730,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTaskDescriptor_MandatoryInputExclude() {
+	public EReference getTaskDescriptor_OutputExclude() {
 		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
 				13);
 	}
@@ -2750,69 +2740,9 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTaskDescriptor_MandatoryInputInclude() {
-		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
-				14);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTaskDescriptor_OptionalInputExclude() {
-		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
-				15);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTaskDescriptor_OptionalInputInclude() {
-		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
-				16);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTaskDescriptor_OutputExclude() {
-		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
-				17);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTaskDescriptor_OutputInclude() {
-		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
-				18);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getTaskDescriptor_SelectedStepsExclude() {
 		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
-				19);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTaskDescriptor_SelectedStepsInclude() {
-		return (EReference) taskDescriptorEClass.getEStructuralFeatures().get(
-				20);
+				14);
 	}
 
 	/**
@@ -2892,16 +2822,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	public EReference getWorkProductDescriptor_DeliverablePartsExclude() {
 		return (EReference) workProductDescriptorEClass
 				.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getWorkProductDescriptor_DeliverablePartsInclude() {
-		return (EReference) workProductDescriptorEClass
-				.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -4981,8 +4901,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS);
 		createEReference(workProductDescriptorEClass,
 				WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE);
-		createEReference(workProductDescriptorEClass,
-				WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE);
 
 		descriptorEClass = createEClass(DESCRIPTOR);
 		createEAttribute(descriptorEClass,
@@ -5003,8 +4921,6 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(roleDescriptorEClass, ROLE_DESCRIPTOR__RESPONSIBLE_FOR);
 		createEReference(roleDescriptorEClass,
 				ROLE_DESCRIPTOR__RESPONSIBLE_FOR_EXCLUDE);
-		createEReference(roleDescriptorEClass,
-				ROLE_DESCRIPTOR__RESPONSIBLE_FOR_INCLUDE);
 
 		taskDescriptorEClass = createEClass(TASK_DESCRIPTOR);
 		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__TASK);
@@ -5021,25 +4937,14 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		createEReference(taskDescriptorEClass,
 				TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED);
 		createEReference(taskDescriptorEClass,
-				TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_INCLUDED);
-		createEReference(taskDescriptorEClass,
 				TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE);
-		createEReference(taskDescriptorEClass,
-				TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_INCLUDE);
 		createEReference(taskDescriptorEClass,
 				TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE);
 		createEReference(taskDescriptorEClass,
-				TASK_DESCRIPTOR__MANDATORY_INPUT_INCLUDE);
-		createEReference(taskDescriptorEClass,
 				TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE);
-		createEReference(taskDescriptorEClass,
-				TASK_DESCRIPTOR__OPTIONAL_INPUT_INCLUDE);
 		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__OUTPUT_EXCLUDE);
-		createEReference(taskDescriptorEClass, TASK_DESCRIPTOR__OUTPUT_INCLUDE);
 		createEReference(taskDescriptorEClass,
 				TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE);
-		createEReference(taskDescriptorEClass,
-				TASK_DESCRIPTOR__SELECTED_STEPS_INCLUDE);
 
 		compositeRoleEClass = createEClass(COMPOSITE_ROLE);
 		createEReference(compositeRoleEClass, COMPOSITE_ROLE__AGGREGATED_ROLES);
@@ -6383,14 +6288,9 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"deliverableParts", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getWorkProductDescriptor_DeliverablePartsExclude(),
-				this.getWorkProductDescriptor(),
+				this.getWorkProduct(),
 				null,
 				"deliverablePartsExclude", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getWorkProductDescriptor_DeliverablePartsInclude(),
-				this.getWorkProductDescriptor(),
-				null,
-				"deliverablePartsInclude", null, 0, -1, WorkProductDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				descriptorEClass,
@@ -6452,14 +6352,9 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				"responsibleFor", null, 0, -1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getRoleDescriptor_ResponsibleForExclude(),
-				this.getWorkProductDescriptor(),
+				this.getWorkProduct(),
 				null,
 				"responsibleForExclude", null, 0, -1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getRoleDescriptor_ResponsibleForInclude(),
-				this.getWorkProductDescriptor(),
-				null,
-				"responsibleForInclude", null, 0, -1, RoleDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				taskDescriptorEClass,
@@ -6516,60 +6411,30 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				null,
 				"performedPrimarilyByExcluded", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
-				getTaskDescriptor_PerformedPrimarilyByIncluded(),
-				this.getRole(),
-				null,
-				"performedPrimarilyByIncluded", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
 				getTaskDescriptor_AdditionallyPerformedByExclude(),
-				this.getRoleDescriptor(),
+				this.getRole(),
 				null,
 				"additionallyPerformedByExclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
-				getTaskDescriptor_AdditionallyPerformedByInclude(),
-				this.getRoleDescriptor(),
-				null,
-				"additionallyPerformedByInclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
 				getTaskDescriptor_MandatoryInputExclude(),
-				this.getWorkProductDescriptor(),
+				this.getWorkProduct(),
 				null,
 				"mandatoryInputExclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
-				getTaskDescriptor_MandatoryInputInclude(),
-				this.getWorkProductDescriptor(),
-				null,
-				"mandatoryInputInclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
 				getTaskDescriptor_OptionalInputExclude(),
-				this.getWorkProductDescriptor(),
+				this.getWorkProduct(),
 				null,
 				"optionalInputExclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
-				getTaskDescriptor_OptionalInputInclude(),
-				this.getWorkProductDescriptor(),
-				null,
-				"optionalInputInclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
 				getTaskDescriptor_OutputExclude(),
-				this.getWorkProductDescriptor(),
+				this.getWorkProduct(),
 				null,
 				"outputExclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_OutputInclude(),
-				this.getWorkProductDescriptor(),
-				null,
-				"outputInclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getTaskDescriptor_SelectedStepsExclude(),
 				this.getSection(),
 				null,
 				"selectedStepsExclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-				getTaskDescriptor_SelectedStepsInclude(),
-				this.getSection(),
-				null,
-				"selectedStepsInclude", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				compositeRoleEClass,

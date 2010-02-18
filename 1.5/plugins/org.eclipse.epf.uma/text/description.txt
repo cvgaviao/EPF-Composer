@@ -273,8 +273,7 @@ Package uma <http://www.eclipse.org/epf/uma/1.0.6/uma.ecore>
     Reference impactedBy : WorkProductDescriptor<<0..*>>
     Reference impacts : WorkProductDescriptor<<0..*>>
     Reference deliverableParts : WorkProductDescriptor<<0..*>>
-    Reference deliverablePartsExclude : WorkProductDescriptor<<0..*>>
-    Reference deliverablePartsInclude : WorkProductDescriptor<<0..*>>
+    Reference deliverablePartsExclude : WorkProduct<<0..*>>
 
   Class Descriptor -> BreakdownElement
     Attribute isSynchronizedWithSource : Boolean<<1..1>>
@@ -292,8 +291,7 @@ Package uma <http://www.eclipse.org/epf/uma/1.0.6/uma.ecore>
     Reference Role : Role
     Reference /modifies : WorkProductDescriptor<<0..*>>
     Reference responsibleFor : WorkProductDescriptor<<0..*>>
-    Reference responsibleForExclude : WorkProductDescriptor<<0..*>>
-    Reference responsibleForInclude : WorkProductDescriptor<<0..*>>
+    Reference responsibleForExclude : WorkProduct<<0..*>>
 
   Class TaskDescriptor -> WorkBreakdownElement, Descriptor
     Reference Task : Task
@@ -306,17 +304,11 @@ Package uma <http://www.eclipse.org/epf/uma/1.0.6/uma.ecore>
     Reference performedPrimarilyBy : RoleDescriptor<<0..*>>
     Reference selectedSteps : Section<<0..*>>
     Reference performedPrimarilyByExcluded : Role<<0..*>>
-    Reference performedPrimarilyByIncluded : Role<<0..*>>
-    Reference additionallyPerformedByExclude : RoleDescriptor<<0..*>>
-    Reference additionallyPerformedByInclude : RoleDescriptor<<0..*>>
-    Reference mandatoryInputExclude : WorkProductDescriptor<<0..*>>
-    Reference mandatoryInputInclude : WorkProductDescriptor<<0..*>>
-    Reference optionalInputExclude : WorkProductDescriptor<<0..*>>
-    Reference optionalInputInclude : WorkProductDescriptor<<0..*>>
-    Reference outputExclude : WorkProductDescriptor<<0..*>>
-    Reference outputInclude : WorkProductDescriptor<<0..*>>
+    Reference additionallyPerformedByExclude : Role<<0..*>>
+    Reference mandatoryInputExclude : WorkProduct<<0..*>>
+    Reference optionalInputExclude : WorkProduct<<0..*>>
+    Reference outputExclude : WorkProduct<<0..*>>
     Reference selectedStepsExclude : Section<<0..*>>
-    Reference selectedStepsInclude : Section<<0..*>>
 
   Class CompositeRole -> RoleDescriptor
     Reference aggregatedRoles : Role<<0..*>>

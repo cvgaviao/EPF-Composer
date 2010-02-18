@@ -31,7 +31,6 @@ import java.util.List;
  *   <li>{@link org.eclipse.epf.uma.WorkProductDescriptor#getImpacts <em>Impacts</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.WorkProductDescriptor#getDeliverableParts <em>Deliverable Parts</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.WorkProductDescriptor#getDeliverablePartsExclude <em>Deliverable Parts Exclude</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.WorkProductDescriptor#getDeliverablePartsInclude <em>Deliverable Parts Include</em>}</li>
  * </ul>
  * </p>
  *
@@ -176,7 +175,7 @@ public interface WorkProductDescriptor extends Descriptor {
 
 	/**
 	 * Returns the value of the '<em><b>Deliverable Parts Exclude</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
+	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProduct}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Deliverable Parts Exclude</em>' reference list isn't clear,
@@ -188,22 +187,6 @@ public interface WorkProductDescriptor extends Descriptor {
 	 * @model ordered="false"
 	 * @generated
 	 */
-	List<WorkProductDescriptor> getDeliverablePartsExclude();
-
-	/**
-	 * Returns the value of the '<em><b>Deliverable Parts Include</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipse.epf.uma.WorkProductDescriptor}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Deliverable Parts Include</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Deliverable Parts Include</em>' reference list.
-	 * @see org.eclipse.epf.uma.UmaPackage#getWorkProductDescriptor_DeliverablePartsInclude()
-	 * @model ordered="false"
-	 * @generated
-	 */
-	List<WorkProductDescriptor> getDeliverablePartsInclude();
+	List<WorkProduct> getDeliverablePartsExclude();
 
 } // WorkProductDescriptor

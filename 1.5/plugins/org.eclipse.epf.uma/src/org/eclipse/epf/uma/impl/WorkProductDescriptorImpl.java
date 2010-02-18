@@ -42,7 +42,6 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getImpacts <em>Impacts</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getDeliverableParts <em>Deliverable Parts</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getDeliverablePartsExclude <em>Deliverable Parts Exclude</em>}</li>
- *   <li>{@link org.eclipse.epf.uma.impl.WorkProductDescriptorImpl#getDeliverablePartsInclude <em>Deliverable Parts Include</em>}</li>
  * </ul>
  * </p>
  *
@@ -138,17 +137,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<WorkProductDescriptor> deliverablePartsExclude;
-
-	/**
-	 * The cached value of the '{@link #getDeliverablePartsInclude() <em>Deliverable Parts Include</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDeliverablePartsInclude()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<WorkProductDescriptor> deliverablePartsInclude;
+	protected EList<WorkProduct> deliverablePartsExclude;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -310,29 +299,14 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public List<WorkProductDescriptor> getDeliverablePartsExclude() {
+	public List<WorkProduct> getDeliverablePartsExclude() {
 		if (deliverablePartsExclude == null) {
-			deliverablePartsExclude = new EObjectResolvingEList<WorkProductDescriptor>(
-					WorkProductDescriptor.class,
+			deliverablePartsExclude = new EObjectResolvingEList<WorkProduct>(
+					WorkProduct.class,
 					this,
 					UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE);
 		}
 		return deliverablePartsExclude;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public List<WorkProductDescriptor> getDeliverablePartsInclude() {
-		if (deliverablePartsInclude == null) {
-			deliverablePartsInclude = new EObjectResolvingEList<WorkProductDescriptor>(
-					WorkProductDescriptor.class,
-					this,
-					UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE);
-		}
-		return deliverablePartsInclude;
 	}
 
 	/**
@@ -398,8 +372,6 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 			return getDeliverableParts();
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
 			return getDeliverablePartsExclude();
-		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
-			return getDeliverablePartsInclude();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -440,12 +412,7 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
 			getDeliverablePartsExclude().clear();
 			getDeliverablePartsExclude().addAll(
-					(Collection<? extends WorkProductDescriptor>) newValue);
-			return;
-		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
-			getDeliverablePartsInclude().clear();
-			getDeliverablePartsInclude().addAll(
-					(Collection<? extends WorkProductDescriptor>) newValue);
+					(Collection<? extends WorkProduct>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -479,9 +446,6 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 			return;
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
 			getDeliverablePartsExclude().clear();
-			return;
-		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
-			getDeliverablePartsInclude().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -518,9 +482,6 @@ public class WorkProductDescriptorImpl extends DescriptorImpl implements
 		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE:
 			return deliverablePartsExclude != null
 					&& !deliverablePartsExclude.isEmpty();
-		case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_INCLUDE:
-			return deliverablePartsInclude != null
-					&& !deliverablePartsInclude.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
