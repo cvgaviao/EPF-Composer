@@ -53,8 +53,7 @@ public class RealizedWorkProductDescriptor extends
 		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(wpdReference);
 		if (wpdList == null) {
 			EReference[] wpdFeatures = { wpdReference,
-					up.getWorkProductDescriptor_DeliverablePartsExclude(),
-					up.getWorkProductDescriptor_DeliverablePartsInclude(), };
+					up.getWorkProductDescriptor_DeliverablePartsExclude(), };
 			wpdList = (List<WorkProductDescriptor>) getDescriptorList(up
 					.getDeliverable_DeliveredWorkProducts(), wpdFeatures);
 			storeCachedValue(wpdReference, wpdList);

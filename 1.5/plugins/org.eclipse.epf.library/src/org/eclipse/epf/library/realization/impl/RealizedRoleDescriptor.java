@@ -47,8 +47,7 @@ public class RealizedRoleDescriptor extends RealizedDescriptor implements
 		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(rdReference);
 		if (wpdList == null) {
 			EReference[] rdFeatures = { rdReference,
-					up.getRoleDescriptor_ResponsibleForExclude(),
-					up.getRoleDescriptor_ResponsibleForInclude(), };
+					up.getRoleDescriptor_ResponsibleForExclude(), };
 			wpdList = (List<WorkProductDescriptor>) getDescriptorList(up
 					.getRole_ResponsibleFor(), rdFeatures);
 			storeCachedValue(rdReference, wpdList);

@@ -51,8 +51,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		List<RoleDescriptor> rdList = (List<RoleDescriptor>) getCachedValue(tdReference);
 		if (rdList == null) {
 			EReference[] tdFeatures = { tdReference,
-					up.getTaskDescriptor_PerformedPrimarilyByExcluded(),
-					up.getTaskDescriptor_PerformedPrimarilyByIncluded(), };
+					up.getTaskDescriptor_PerformedPrimarilyByExcluded(), };
 			rdList = (List<RoleDescriptor>) getDescriptorList(up
 					.getTask_PerformedBy(), tdFeatures);
 			storeCachedValue(tdReference, rdList);
@@ -66,8 +65,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		List<RoleDescriptor> rdList = (List<RoleDescriptor>) getCachedValue(tdReference);
 		if (rdList == null) {
 			EReference[] tdFeatures = { tdReference,
-					up.getTaskDescriptor_AdditionallyPerformedByExclude(),
-					up.getTaskDescriptor_AdditionallyPerformedByInclude(), };
+					up.getTaskDescriptor_AdditionallyPerformedByExclude(),};
 			rdList = (List<RoleDescriptor>) getDescriptorList(up
 					.getTask_AdditionallyPerformedBy(), tdFeatures);
 			storeCachedValue(tdReference, rdList);
@@ -81,8 +79,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(tdReference);
 		if (wpdList == null) {
 			EReference[] tdFeatures = { tdReference,
-					up.getTaskDescriptor_MandatoryInputExclude(),
-					up.getTaskDescriptor_MandatoryInputInclude(), };
+					up.getTaskDescriptor_MandatoryInputExclude(),};
 			wpdList = (List<WorkProductDescriptor>) getDescriptorList(up
 					.getTask_MandatoryInput(), tdFeatures);
 			storeCachedValue(tdReference, wpdList);
@@ -96,8 +93,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(tdReference);
 		if (wpdList == null) {
 			EReference[] tdFeatures = { tdReference,
-					up.getTaskDescriptor_OptionalInputExclude(),
-					up.getTaskDescriptor_OptionalInputInclude(), };
+					up.getTaskDescriptor_OptionalInputExclude(), };
 			wpdList = (List<WorkProductDescriptor>) getDescriptorList(up
 					.getTask_OptionalInput(), tdFeatures);
 			storeCachedValue(tdReference, wpdList);
@@ -111,8 +107,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(tdReference);
 		if (wpdList == null) {
 			EReference[] tdFeatures = { tdReference,
-					up.getTaskDescriptor_OutputExclude(),
-					up.getTaskDescriptor_OutputInclude(), };
+					up.getTaskDescriptor_OutputExclude(), };
 			wpdList = (List<WorkProductDescriptor>) getDescriptorList(up
 					.getTask_Output(), tdFeatures);
 			storeCachedValue(tdReference, wpdList);

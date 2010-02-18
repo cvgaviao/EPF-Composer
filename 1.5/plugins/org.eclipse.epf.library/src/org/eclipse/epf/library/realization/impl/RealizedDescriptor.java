@@ -83,7 +83,6 @@ public class RealizedDescriptor extends RealizedElement implements
 
 		EReference dFeature = descriptorFeatures[0];
 		EReference dFeatureExclude = descriptorFeatures[1];
-		EReference dFeatureInclude = descriptorFeatures[2];
 		
 		MethodElement element = getLinkedElement();
 		if (element == null) {
@@ -93,14 +92,11 @@ public class RealizedDescriptor extends RealizedElement implements
 						
 		List<MethodElement> elementList = ConfigurationHelper.calc0nFeatureValue(element,
 				elementFeature, realizer);
-		List<Descriptor> includeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
-				dFeatureInclude, realizer); 
 		
 		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();		
 		
 		List<Descriptor> excludeList = 	null;		
-		if (elementList != null && !elementList.isEmpty() ||
-			includeList != null && !includeList.isEmpty()) {
+		if (elementList != null && !elementList.isEmpty()) {
 				excludeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
 						dFeatureExclude, realizer); 
 		}
@@ -123,13 +119,6 @@ public class RealizedDescriptor extends RealizedElement implements
 				}
 			}
 		}		
-		if (includeList != null) {
-			for (MethodElement elem : includeList) {
-				if (! includeList.contains(elem)) {
-					elementSet.add(elem);
-				}
-			}
-		}
 		
 		List<Descriptor> descriptorList = ConfigurationHelper.calc0nFeatureValue(
 				getDescriptor(), dFeature, realizer);
