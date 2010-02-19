@@ -155,26 +155,11 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	private MethodElement getLinkedElement(Descriptor des) {
-		MethodElement element = getRawLinkedElement(des);
+		MethodElement element = DescriptorPropUtil.getDesciptorPropUtil().getLinkedElement(des);
 		if (element == null) {
 			return null;
 		}
 		return ConfigurationHelper.getCalculatedElement(element, getConfig());
-	}
-	
-	private MethodElement getRawLinkedElement(Descriptor des) {
-		if (des instanceof TaskDescriptor) {
-			return ((TaskDescriptor) des).getTask();
-		}
-		if (des instanceof RoleDescriptor) {
-			return ((RoleDescriptor) des).getRole();
-		}
-		if (des instanceof WorkProductDescriptor) {
-			return ((WorkProductDescriptor) des).getWorkProduct();
-		}
-		
-		return null;
-	}
-	
+	}	
 	
 }

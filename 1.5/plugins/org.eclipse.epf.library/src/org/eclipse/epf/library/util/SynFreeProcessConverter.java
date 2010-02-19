@@ -137,12 +137,39 @@ public class SynFreeProcessConverter {
 			convertRd((RoleDescriptor) des);
 			
 		} else if (des instanceof WorkProductDescriptor) {
-			convertWpd((WorkProductDescriptor) des);
-			
-		} else {
-			return;
-		}		
+			convertWpd((WorkProductDescriptor) des);			
+		
+		} 
+		
+		convertSimpleTextAttributes(des);
+		
 		resouresToSave.add(res);				
+	}
+	
+	private void convertSimpleTextAttributes(Descriptor des) {
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		MethodElement element = propUtil.getLinkedElement(des);
+		if (element == null) {
+			return;
+		}
+		if (! propUtil.hasNoValue(des.getName())) {
+			if (! des.getName().equals(element.getName())) {
+				propUtil.setNameRepalce(des, true);
+			}
+		}
+		
+		if (! propUtil.hasNoValue(des.getPresentationName())) {
+			if (! des.getPresentationName().equals(element.getPresentationName())) {
+				propUtil.setPresentationNameRepalce(des, true);
+			}
+		}
+		
+		if (! propUtil.hasNoValue(des.getBriefDescription())) {
+			if (! des.getBriefDescription().equals(element.getBriefDescription())) {
+				propUtil.setBriefDesRepalce(des, true);
+			}
+		}
+		
 	}
 	
 	private void convertTd(TaskDescriptor td) {
@@ -216,15 +243,7 @@ public class SynFreeProcessConverter {
 			
 			for (MethodElement element : elements) {
 				if (! linkedElementSet.contains(element)) {
-					try {
-						excludeList.add(element);
-					} catch (Exception e) {
-						if (debug) {
-							System.out.println("LD> ownerDescriptor: " + ownerDescriptor);
-							System.out.println("LD> element: " + element);
-							System.out.println("");
-						}
-					}
+					excludeList.add(element);
 				}
 			}			
 		}
@@ -286,25 +305,11 @@ public class SynFreeProcessConverter {
 	}
 
 	private MethodElement getLinkedElement(Descriptor des) {
-		MethodElement element = getRawLinkedElement(des);
+		MethodElement element = DescriptorPropUtil.getDesciptorPropUtil().getLinkedElement(des);
 		if (element == null) {
 			return null;
 		}
 		return ConfigurationHelper.getCalculatedElement(element, getRealizer());
-	}
-	
-	private MethodElement getRawLinkedElement(Descriptor des) {
-		if (des instanceof TaskDescriptor) {
-			return ((TaskDescriptor) des).getTask();
-		}
-		if (des instanceof RoleDescriptor) {
-			return ((RoleDescriptor) des).getRole();
-		}
-		if (des instanceof WorkProductDescriptor) {
-			return ((WorkProductDescriptor) des).getWorkProduct();
-		}
-		
-		return null;
 	}
 	
 }

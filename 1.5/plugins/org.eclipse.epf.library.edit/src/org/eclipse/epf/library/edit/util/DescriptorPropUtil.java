@@ -1,7 +1,10 @@
 package org.eclipse.epf.library.edit.util;
 
-import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
@@ -9,8 +12,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 
 	public static final String DESCRIPTOR_Syn_Free = "syn_free"; 				//$NON-NLS-1$
 	public static final String DESCRIPTOR_Is_Dynamic = "is_dynamic"; 			//$NON-NLS-1$
-	public static final String DESCRIPTOR_Customization1 = "customization1"; 	//$NON-NLS-1$
-	public static final String DESCRIPTOR_LocalUsingGuids = "LocalUsingGuids";	//$NON-NLS-1$
+	public static final String DESCRIPTOR_Customization = "customization"; 	//$NON-NLS-1$
+	public static final String DESCRIPTOR_LocalUsingGuids = "localUsingGuids";	//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -45,49 +48,52 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public boolean isNameRepalce(Descriptor d) {
-		return getCustomization1(d, nameReplace);
+		if (hasNoValue(d.getName())) {
+			return false;
+		}
+		return getCustomization(d, nameReplace);
 	}
 	
 	public void setNameRepalce(Descriptor d, boolean value) {
-		setCustomization1(d, nameReplace, value);
+		setCustomization(d, nameReplace, value);
 	}	
 	
 	public boolean isPresentationNameRepalce(Descriptor d) {
-		if (IRealizationManager.test) {
-			return true;
+		if (hasNoValue(d.getPresentationName())) {
+			return false;
 		}
-		return getCustomization1(d, presentatioNameReplace);
+		return getCustomization(d, presentatioNameReplace);
 	}
 	
 	public void setPresentationNameRepalce(Descriptor d, boolean value) {
-		setCustomization1(d, presentatioNameReplace, value);
+		setCustomization(d, presentatioNameReplace, value);
 	}
 	
-	public boolean isBriefDesReplaceRepalce(Descriptor d) {
-		if (IRealizationManager.test) {
-			return true;
+	public boolean isBriefDesRepalce(Descriptor d) {
+		if (hasNoValue(d.getBriefDescription())) {
+			return false;
 		}
-		return getCustomization1(d, briefDesReplace);
+		return getCustomization(d, briefDesReplace);
 	}
 	
-	public void setBriefDesReplaceRepalce(Descriptor d, boolean value) {
-		setCustomization1(d, briefDesReplace, value);
+	public void setBriefDesRepalce(Descriptor d, boolean value) {
+		setCustomization(d, briefDesReplace, value);
 	}
 	
 	public boolean isMainDesReplace(Descriptor d) {
-		return getCustomization1(d, mainDesReplace);
+		return getCustomization(d, mainDesReplace);
 	}
 	
 	public void setMainDesReplace(Descriptor d, boolean value) {
-		setCustomization1(d, mainDesReplace, value);
+		setCustomization(d, mainDesReplace, value);
 	}
 	
 	public boolean isMainDesAppend(Descriptor d) {
-		return getCustomization1(d, mainDesAppend);
+		return getCustomization(d, mainDesAppend);
 	}
 	
 	public void setMainDesAppend(Descriptor d, boolean value) {
-		setCustomization1(d, mainDesAppend, value);
+		setCustomization(d, mainDesAppend, value);
 	}
 	
 	public boolean staticUse(Descriptor usedD, Descriptor usingD) {
@@ -152,14 +158,20 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 
 	}
+	
+	public boolean hasNoValue(String str) {
+		return str == null || str.trim().length() == 0;
+	}
 		
-	protected boolean getCustomization1(Descriptor d, int maskBit) {
-		int cus = getIntValue(d, DESCRIPTOR_Customization1);
+	protected boolean getCustomization(Descriptor d, int maskBit) {
+		Integer cusValue = getIntValue(d, DESCRIPTOR_Customization);
+		int cus = cusValue == null ? 0 : cusValue.intValue();
 		return (cus & maskBit) > 0;
 	}
 	
-	protected void setCustomization1(Descriptor d, int maskBit, boolean value) {
-		int cus = getIntValue(d, DESCRIPTOR_Customization1);
+	protected void setCustomization(Descriptor d, int maskBit, boolean value) {
+		Integer cusValue = getIntValue(d, DESCRIPTOR_Customization);
+		int cus = cusValue == null ? 0 : cusValue.intValue();
 		boolean oldValue = (cus & maskBit) > 0;
 		if (oldValue == value) {
 			return;
@@ -169,7 +181,21 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		} else {
 			cus &= maskBit;
 		}
-		setIntValue(d, DESCRIPTOR_Customization1, cus);
+		setIntValue(d, DESCRIPTOR_Customization, cus);
 	}	
+	
+	public MethodElement getLinkedElement(Descriptor des) {
+		if (des instanceof TaskDescriptor) {
+			return ((TaskDescriptor) des).getTask();
+		}
+		if (des instanceof RoleDescriptor) {
+			return ((RoleDescriptor) des).getRole();
+		}
+		if (des instanceof WorkProductDescriptor) {
+			return ((WorkProductDescriptor) des).getWorkProduct();
+		}
+		
+		return null;
+	}
 	
 }
