@@ -10,8 +10,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private static final String guidSeperator = "/"; 							//$NON-NLS-1$
 
-	public static final String DESCRIPTOR_Syn_Free = "syn_free"; 				//$NON-NLS-1$
-	public static final String DESCRIPTOR_Is_Dynamic = "is_dynamic"; 			//$NON-NLS-1$
+	public static final String DESCRIPTOR_SynFree = "synFree"; 				//$NON-NLS-1$
+	public static final String DESCRIPTOR_IsDynamic = "isDynamic"; 			//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization = "customization"; 	//$NON-NLS-1$
 	public static final String DESCRIPTOR_LocalUsingGuids = "localUsingGuids";	//$NON-NLS-1$
 	
@@ -30,21 +30,21 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public boolean isSynFree(Descriptor d) {
-		Boolean value = getBooleanValue(d, DESCRIPTOR_Syn_Free);
+		Boolean value = getBooleanValue(d, DESCRIPTOR_SynFree);
 		return value == null ? false : value.booleanValue();
 	}
 	
 	public void setSynFree(Descriptor d, boolean value) {
-		setBooleanValue(d, DESCRIPTOR_Syn_Free, value);
+		setBooleanValue(d, DESCRIPTOR_SynFree, value);
 	}
 	
 	public boolean isDynamic(Descriptor d) {
-		Boolean value = getBooleanValue(d, DESCRIPTOR_Is_Dynamic);
+		Boolean value = getBooleanValue(d, DESCRIPTOR_IsDynamic);
 		return value == null ? false : value.booleanValue();
 	}
 	
 	public void setDynamic(Descriptor d, boolean value) {
-		setBooleanValue(d, DESCRIPTOR_Is_Dynamic, value);
+		setBooleanValue(d, DESCRIPTOR_IsDynamic, value);
 	}
 	
 	public boolean isNameRepalce(Descriptor d) {

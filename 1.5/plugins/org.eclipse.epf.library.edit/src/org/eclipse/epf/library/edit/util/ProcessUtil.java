@@ -65,6 +65,7 @@ import org.eclipse.epf.library.edit.process.command.CopyHelper;
 import org.eclipse.epf.library.edit.process.command.ProcessCommandUtil;
 import org.eclipse.epf.library.edit.process.command.ProcessDeepCopyCommand;
 import org.eclipse.epf.library.edit.process.command.WBSDropCommand;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.PredecessorList.DepthLevelItemProvider;
 import org.eclipse.epf.library.edit.validation.NameChecker;
@@ -450,6 +451,16 @@ public final class ProcessUtil {
 	 * @return
 	 */
 	public static RoleDescriptor createRoleDescriptor(Role role) {
+		return createRoleDescriptor(role, false);
+	}
+	
+	/**
+	 * Creates a new RoleDescriptor from the given role.
+	 * 
+	 * @param role
+	 * @return
+	 */
+	public static RoleDescriptor createRoleDescriptor(Role role, boolean isDynamic) {
 		RoleDescriptor roleDesc = UmaFactory.eINSTANCE.createRoleDescriptor();
 		roleDesc.setRole(role);
 		String presentationName = role.getPresentationName();
@@ -457,11 +468,19 @@ public final class ProcessUtil {
 		roleDesc.setPresentationName(StrUtil.isBlank(presentationName) ? role
 				.getName() : presentationName);
 		// roleDesc.setBriefDescription(role.getBriefDescription());
+		if (IRealizationManager.synFree && isDynamic) {
+			DescriptorPropUtil.getDesciptorPropUtil().setDynamic(roleDesc, true);
+		}
 		return roleDesc;
 	}
 
 	public static WorkProductDescriptor createWorkProductDescriptor(
 			WorkProduct wp) {
+		return createWorkProductDescriptor(wp, false);
+	}
+	
+	public static WorkProductDescriptor createWorkProductDescriptor(
+			WorkProduct wp, boolean isDynamic) {
 		WorkProductDescriptor wpDesc = UmaFactory.eINSTANCE
 				.createWorkProductDescriptor();
 		wpDesc.setWorkProduct(wp);
@@ -471,6 +490,9 @@ public final class ProcessUtil {
 						.getName()
 						: wp.getPresentationName());
 		// wpDesc.setBriefDescription(wp.getBriefDescription());
+		if (IRealizationManager.synFree && isDynamic) {
+			DescriptorPropUtil.getDesciptorPropUtil().setDynamic(wpDesc, true);
+		}
 		return wpDesc;
 	}
 

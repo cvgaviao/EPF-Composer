@@ -496,7 +496,7 @@ public final class ProcessCommandUtil {
 							wpDesc = (WorkProductDescriptor) getDescriptor(wpObj, wpDescriptors, config);
 							if (wpDesc == null) {
 								wpDesc = ProcessCommandUtil.createWorkProductDescriptor(wpObj,
-										config, wpdToDeliverablePartsMap);
+										config, wpdToDeliverablePartsMap, true);
 								wpDescriptors.add(wpDesc);
 	
 								// automatic adding to the existing deliverable
@@ -667,7 +667,7 @@ public final class ProcessCommandUtil {
 								primaryRoleDesc = (RoleDescriptor) getDescriptor(role,
 										roleDescriptors, config);
 								if (primaryRoleDesc == null) {
-									primaryRoleDesc = ProcessUtil.createRoleDescriptor(role);
+									primaryRoleDesc = ProcessUtil.createRoleDescriptor(role, true);
 									isNewRoleDescriptor = true;
 									roleDescriptors.add(primaryRoleDesc);
 								}
@@ -709,7 +709,7 @@ public final class ProcessCommandUtil {
 							roleDesc = (RoleDescriptor) getDescriptor(roleObj,
 									roleDescriptors, config);
 							if (roleDesc == null) {
-								roleDesc = ProcessUtil.createRoleDescriptor(roleObj);
+								roleDesc = ProcessUtil.createRoleDescriptor(roleObj, true);
 								isNewRoleDescriptor = true;
 								roleDescriptors.add(roleDesc);
 							}
@@ -840,6 +840,12 @@ public final class ProcessCommandUtil {
 		}
 	}
 
+	public static WorkProductDescriptor createWorkProductDescriptor(
+			WorkProduct wp, MethodConfiguration config,
+			Map wpDescToDeliverableParts) {
+		return createWorkProductDescriptor(wp, config, wpDescToDeliverableParts, false);
+	}
+	
 	/**
 	 * Creates work product descriptor for the given work product
 	 * 
@@ -853,8 +859,8 @@ public final class ProcessCommandUtil {
 	 */
 	public static WorkProductDescriptor createWorkProductDescriptor(
 			WorkProduct wp, MethodConfiguration config,
-			Map wpDescToDeliverableParts) {
-		WorkProductDescriptor wpd = ProcessUtil.createWorkProductDescriptor(wp);
+			Map wpDescToDeliverableParts, boolean isDynamic) {
+		WorkProductDescriptor wpd = ProcessUtil.createWorkProductDescriptor(wp, isDynamic);
 		if (wp instanceof Deliverable && wpDescToDeliverableParts != null) {
 			createDeliverableParts(wpd, (Deliverable) wp, config,
 					wpDescToDeliverableParts, null);
