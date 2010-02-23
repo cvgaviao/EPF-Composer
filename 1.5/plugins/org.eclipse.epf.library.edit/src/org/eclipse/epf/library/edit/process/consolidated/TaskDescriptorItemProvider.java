@@ -272,7 +272,7 @@ public class TaskDescriptorItemProvider extends
 					if (((WrapperItemProvider) o).getFeature().equals(
 							UmaPackage.eINSTANCE
 									.getTaskDescriptor_PerformedPrimarilyBy())) {
-						if (! IRealizationManager.test) {
+						if (! IRealizationManager.synFree) {
 							primaryPerformers.add(o);
 						}
 					} else if (((WrapperItemProvider) o)
@@ -289,7 +289,7 @@ public class TaskDescriptorItemProvider extends
 					} else if (((WrapperItemProvider) o).getFeature().equals(
 							UmaPackage.eINSTANCE
 									.getTaskDescriptor_MandatoryInput())) {
-						if (! IRealizationManager.test) {
+						if (! IRealizationManager.synFree) {
 							mandatoryInput.add(o);
 						}
 					} else if (((WrapperItemProvider) o).getFeature().equals(
@@ -308,7 +308,7 @@ public class TaskDescriptorItemProvider extends
 			}
 		}
 
-		if (IRealizationManager.test && obj instanceof TaskDescriptor) {
+		if (IRealizationManager.synFree && obj instanceof TaskDescriptor) {
 			List listValue = null;
 			if (filter instanceof IConfigurator) {
 				IRealizationManager mgr = ((IConfigurator) filter).getRealizationManager();

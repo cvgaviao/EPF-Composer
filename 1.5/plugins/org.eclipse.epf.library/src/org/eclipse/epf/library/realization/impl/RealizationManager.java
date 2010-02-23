@@ -2,8 +2,10 @@ package org.eclipse.epf.library.realization.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
@@ -16,6 +18,7 @@ import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -239,5 +242,57 @@ public class RealizationManager implements IRealizationManager {
 		}
 	}
 
+	public void updateModel(Process proc) {		
+		updateModelImpl(proc);			
+	}
+	
+	private void updateModelImpl(Activity act) {
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		
+		Set<Descriptor> tdReferencedSet = new HashSet<Descriptor>();
+		List<Descriptor> rdwpdList = new ArrayList<Descriptor>();
+		List<BreakdownElement> beList =  act.getBreakdownElements();
+		for (int i = 0; i < beList.size(); i++) {
+			BreakdownElement be = beList.get(i);
+			if (be instanceof Activity) {
+				updateModelImpl((Activity) be);
+				
+			} else if (be instanceof TaskDescriptor) {
+				TaskDescriptor td = (TaskDescriptor) be;
+				RealizedTaskDescriptor rtd = (RealizedTaskDescriptor) getRealizedElement(td);
+				tdReferencedSet.addAll(rtd.getAllReferenced());
+
+			} else if (be instanceof RoleDescriptor) {
+				RoleDescriptor rd = (RoleDescriptor) be;
+				rdwpdList.add(rd);
+				
+			} else if (be instanceof WorkProductDescriptor) {
+				WorkProductDescriptor wpd = (WorkProductDescriptor) be;
+				rdwpdList.add(wpd);
+			}
+		}
+		
+		boolean oldDeliver = act.eDeliver();
+		try {
+			if (oldDeliver) {
+				act.eSetDeliver(false);
+			}
+			for (Descriptor des : rdwpdList) {
+				if (des instanceof TaskDescriptor || !propUtil.isDynamic(des)) {
+					continue;
+				}
+				if (!tdReferencedSet.contains(des)) {
+					act.getBreakdownElements().remove(des);
+				}
+			}
+		} finally {
+			if (oldDeliver) {
+				act.eSetDeliver(oldDeliver);
+			}
+		}
+		
+		
+	}
+	
 	
 }

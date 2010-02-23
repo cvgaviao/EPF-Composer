@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.realization.impl;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -121,6 +123,17 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 	
 	private TaskDescriptor getTaskDescriptor() {
 		return (TaskDescriptor) getElement();
+	}
+	
+	@Override
+	public Set<Descriptor> getAllReferenced() {
+		Set<Descriptor> referenced = new HashSet<Descriptor>();
+		addToSet(referenced, getPerformedPrimarilyBy());
+		addToSet(referenced, getMandatoryInput());
+		addToSet(referenced, getAdditionallyPerformedBy());
+		addToSet(referenced, getOptionalInput());
+		addToSet(referenced, getOutput());
+		return referenced;
 	}
 	
 }

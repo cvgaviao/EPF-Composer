@@ -7,6 +7,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.realization.IRealizedRoleDescriptor;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
@@ -53,6 +54,13 @@ public class RealizedRoleDescriptor extends RealizedDescriptor implements
 			storeCachedValue(rdReference, wpdList);
 		}
 		return wpdList;
+	}
+	
+	@Override
+	public Set<Descriptor> getAllReferenced() {
+		Set<Descriptor> referenced = new HashSet<Descriptor>();
+		addToSet(referenced, getResponsibleFor());
+		return referenced;
 	}
 	
 }

@@ -50,15 +50,5 @@ public class OBSActivityItemProvider extends BSActivityItemProvider {
 	public Collection getEClasses() {
 		return null;
 	}
-
-	@Override
-	protected boolean acceptDynamicRd() {
-		return true;
-	}
-	
-	@Override
-	protected boolean acceptDynamicWpd() {
-		return false;
-	}
 	
 }

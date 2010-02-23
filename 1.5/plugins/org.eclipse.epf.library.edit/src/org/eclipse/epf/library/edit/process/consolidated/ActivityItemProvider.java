@@ -140,14 +140,5 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 		return false;
 	}
 	
-	@Override
-	protected boolean acceptDynamicRd() {
-		return false;
-	}
-	
-	@Override
-	protected boolean acceptDynamicWpd() {
-		return false;
-	}
 
 }

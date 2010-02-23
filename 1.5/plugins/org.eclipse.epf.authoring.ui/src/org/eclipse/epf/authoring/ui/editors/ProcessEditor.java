@@ -507,13 +507,13 @@ public class ProcessEditor extends MethodElementEditor implements
 
 			}
 
-			if (IRealizationManager.test) {
+			if (IRealizationManager.synFree) {
 				if (collection != null && !collection.isEmpty()) {
 					for (Object obj : collection) {
-						if (obj instanceof Task ||
-							obj instanceof Role ||
-							obj instanceof WorkProduct ||
-							obj instanceof Guidance) {
+						if (obj instanceof Task || obj instanceof Role
+								|| obj instanceof WorkProduct
+								|| obj instanceof Guidance) {
+							updateProcessModel();
 							refreshAll();
 							break;
 						}
@@ -1148,6 +1148,10 @@ public class ProcessEditor extends MethodElementEditor implements
 				realizationContext = new RealizationContext(currentConfig);
 			}
 			getConfiguratorInstance().beginRealizationManager(realizationContext);
+			if (IRealizationManager.synFree) {
+				updateProcessModel();
+			}
+			
 			if (adapterFactory instanceof ConfigurableComposedAdapterFactory) {
 				((ConfigurableComposedAdapterFactory) adapterFactory)
 						.setFilter(getConfiguratorInstance());
@@ -1341,6 +1345,14 @@ public class ProcessEditor extends MethodElementEditor implements
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
 			e.printStackTrace();
 		}
+	}
+
+	private void updateProcessModel() {
+		Process proc = getSelectedProcess();
+		IRealizationManager mgr = getConfiguratorInstance()
+				.getRealizationManager();
+		if (proc != null && mgr != null)
+			mgr.updateModel(proc);
 	}
 
 	protected void setActivePage(int pageIndex) {

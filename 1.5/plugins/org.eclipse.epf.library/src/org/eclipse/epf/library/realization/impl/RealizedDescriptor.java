@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.realization.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,10 +19,7 @@ import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.RoleDescriptor;
-import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 
 public class RealizedDescriptor extends RealizedElement implements
@@ -161,5 +159,16 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 		return ConfigurationHelper.getCalculatedElement(element, getConfig());
 	}	
+	
+	public Set<Descriptor> getAllReferenced() {
+		return Collections.EMPTY_SET;
+	}
+	
+	protected void addToSet(Set<Descriptor> set, List<? extends Descriptor> list) {
+		if (list == null || list.isEmpty()) {
+			return;
+		}
+		set.addAll(list);
+	}
 	
 }

@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,10 +48,7 @@ import org.eclipse.epf.library.edit.VariabilityInfo;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.command.ActivityAddCommand;
-import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
-import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.GraphicalData;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -65,8 +61,6 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
-import org.eclipse.epf.uma.RoleDescriptor;
-import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -74,7 +68,6 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
-import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.provider.ActivityItemProvider;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -432,17 +425,8 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 	
 	private Collection getImmediateChildren(Object object) {
 		Collection children = new ArrayList();
-		List<TaskDescriptor> tdList = new ArrayList<TaskDescriptor>();
-		
 		for (Iterator iter = super.getChildren(object).iterator(); iter.hasNext();) {
 			Object child = (Object) iter.next();
-			
-			if (IRealizationManager.test) {
-				Object obj = TngUtil.unwrap(child);
-				if (obj instanceof TaskDescriptor) {
-					tdList.add((TaskDescriptor) obj);
-				}
-			}
 			if(acceptAsChild(child)) {
 				if(configurator != null) {
 					child = configurator.resolve(child);
@@ -453,10 +437,6 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 				}
 			}
 		}
-		if (IRealizationManager.test) {
-			children = getModifiedChildren(object, tdList, (List) children) ;
-		}
-		
 		children = addInherited(object, (List) children);
 		return children;
 	}
@@ -1565,77 +1545,6 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 	
 	protected IConfigurator getConfigurator() {
 		return configurator;
-	}
-	
-	protected List getModifiedChildren(Object object, List<TaskDescriptor> tdList, List children) {		
-		if (! IRealizationManager.test) {
-			return children;			
-		}
-		if (tdList.isEmpty()) {
-			return children;
-		}
-		if (getConfigurator() == null) {
-			return children;
-		}
-		
-		IRealizationManager mgr = getConfigurator().getRealizationManager();
-		if (mgr == null) {
-			return children;
-		}
-		
-		List listValue = null;
-		Set<Descriptor> desSet = new LinkedHashSet<Descriptor>();
-		if (acceptDynamicRd()) {
-			for (TaskDescriptor td : tdList) {
-				IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr
-						.getRealizedElement(td);
-				listValue = rTd.getPerformedPrimarilyBy();
-				if (listValue != null && !listValue.isEmpty()) {
-					desSet.addAll(listValue);
-				}
-			}
-		}
-		
-		//Use 2nd loop to keep rds before wpds
-		if (acceptDynamicWpd()) {
-			for (TaskDescriptor td : tdList) {
-				IRealizedTaskDescriptor rTd = (IRealizedTaskDescriptor) mgr
-						.getRealizedElement(td);
-				listValue = rTd.getMandatoryInput();
-				if (listValue != null && !listValue.isEmpty()) {
-					desSet.addAll(listValue);
-				}
-			}
-		}
-		
-		
-		List modifiedChildren = new ArrayList();		
-		for (Object obj : children) {
-			boolean toRemove = (obj instanceof RoleDescriptor) && acceptDynamicRd() && !desSet.contains(obj);
-			toRemove |= (obj instanceof WorkProductDescriptor) && acceptDynamicWpd() && !desSet.contains(obj);
-			if (! toRemove) {
-				modifiedChildren.add(obj);
-			}
-		}
-		
-		for (Descriptor des : desSet) {
-			if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(des)) {
-				if (! children.contains(des)) {
-					setParentFor(des, object);
-					children.add(des);
-				}
-			}
-		}		
-		
-		return modifiedChildren;
-	}
-	
-	protected boolean acceptDynamicRd() {
-		return false;
-	}
-	
-	protected boolean acceptDynamicWpd() {
-		return false;
 	}
 	
 }

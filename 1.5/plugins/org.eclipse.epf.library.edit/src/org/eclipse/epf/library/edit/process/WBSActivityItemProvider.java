@@ -248,16 +248,6 @@ public class WBSActivityItemProvider extends BSActivityItemProvider {
 					|| property == IBSItemProvider.COL_MODEL_INFO;
 			}
 		};
-	}
-	
-	@Override
-	protected boolean acceptDynamicRd() {
-		return false;
-	}
-	
-	@Override
-	protected boolean acceptDynamicWpd() {
-		return false;
-	}
+	}	
 	
 }

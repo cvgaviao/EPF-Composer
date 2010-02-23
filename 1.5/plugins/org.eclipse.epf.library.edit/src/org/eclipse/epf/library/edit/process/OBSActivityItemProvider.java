@@ -15,9 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -30,10 +28,7 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.command.OBSDragAndDropCommand;
 import org.eclipse.epf.library.edit.process.command.OBSDropCommand;
-import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
 import org.eclipse.epf.library.edit.util.Comparators;
-import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -41,7 +36,6 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
-import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -497,14 +491,5 @@ public class OBSActivityItemProvider extends BSActivityItemProvider {
 		return new RoleDescriptorWrapperItemProvider(wrapper, owner, adapterFactory);
 	}
 	
-	@Override
-	protected boolean acceptDynamicRd() {
-		return true;
-	}
-	
-	@Override
-	protected boolean acceptDynamicWpd() {
-		return false;
-	}
 
 }
