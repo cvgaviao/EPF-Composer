@@ -28,4 +28,6 @@ public interface IRealizationManager {
 	
 	boolean debug = false;
 	
+	boolean timing = false;
+	
 }

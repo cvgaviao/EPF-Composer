@@ -280,7 +280,9 @@ public class TaskDescriptorItemProvider extends
 							.equals(
 									UmaPackage.eINSTANCE
 											.getTaskDescriptor_AdditionallyPerformedBy())) {
-						additionalPerformers.add(o);
+						if (! IRealizationManager.synFree) {
+							additionalPerformers.add(o);
+						}
 					} else if (((WrapperItemProvider) o).getFeature()
 							.equals(
 									UmaPackage.eINSTANCE
@@ -299,10 +301,14 @@ public class TaskDescriptorItemProvider extends
 					} else if (((WrapperItemProvider) o).getFeature().equals(
 							UmaPackage.eINSTANCE
 									.getTaskDescriptor_OptionalInput())) {
-						optionalInput.add(o);
+						if (! IRealizationManager.synFree) {
+							optionalInput.add(o);
+						}
 					} else if (((WrapperItemProvider) o).getFeature().equals(
 							UmaPackage.eINSTANCE.getTaskDescriptor_Output())) {
-						output.add(o);
+						if (! IRealizationManager.synFree) {
+							output.add(o);
+						}
 					}
 				}
 			}
@@ -321,10 +327,26 @@ public class TaskDescriptorItemProvider extends
 						primaryPerformers.addAll(listValue);
 					}
 					
+					listValue = rTd.getAdditionallyPerformedBy();
+					if (listValue != null && !listValue.isEmpty()) {
+						additionalPerformers.addAll(listValue);
+					}
+					
 					listValue = rTd.getMandatoryInput();
 					if (listValue != null && !listValue.isEmpty()) {
 						mandatoryInput.addAll(listValue);
 					}
+					
+					listValue = rTd.getOptionalInput();
+					if (listValue != null && !listValue.isEmpty()) {
+						optionalInput.addAll(listValue);
+					}
+					
+					listValue = rTd.getOutput();
+					if (listValue != null && !listValue.isEmpty()) {
+						output.addAll(listValue);
+					}
+					
 				}
 			}
 		}

@@ -63,7 +63,7 @@ public class RealizationManager implements IRealizationManager {
 	
 	public void clearCacheData() {
 		if (IRealizationManager.debug) {
-			System.out.println("LD> RealizationManger.clearCacheData: " + context);
+			System.out.println("LD> RealizationManger.clearCacheData: " + context); //$NON-NLS-1$
 		}
 		if (elementMap != null) {
 			for (IRealizedElement element : elementMap.values()) {
@@ -242,8 +242,16 @@ public class RealizationManager implements IRealizationManager {
 		}
 	}
 
-	public void updateModel(Process proc) {		
-		updateModelImpl(proc);			
+	public void updateModel(Process proc) {	
+		long time;
+		if (timing) {
+			time = System.currentTimeMillis();
+		}
+		updateModelImpl(proc);
+		if (timing) {
+			time = System.currentTimeMillis() - time;
+			System.out.println("LD> updateModel: " + time); //$NON-NLS-1$
+		}
 	}
 	
 	private void updateModelImpl(Activity act) {
