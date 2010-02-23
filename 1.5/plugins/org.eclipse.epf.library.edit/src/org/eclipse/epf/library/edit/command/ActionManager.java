@@ -28,8 +28,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
-import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
-import org.eclipse.epf.uma.Descriptor;
 
 /**
  * Manages the execution of editing commands with full support for dirty flag,
@@ -45,7 +43,6 @@ public class ActionManager implements IActionManager {
 	private EditingDomain editingDomain;
 
 	protected FullyRevertibleCommandStack commandStack;
-	private Set<Descriptor> modifiedDynamicDescriptors;
 
 	public ActionManager() {
 		commandStack = createCommandStack();
@@ -100,26 +97,8 @@ public class ActionManager implements IActionManager {
 			}
 		}
 	}
-	
-	public boolean doAction(int actionType, EObject object,
-			EStructuralFeature feature, Object value, int index) {
-		boolean ret = doAction_(actionType, object, feature, value, index);
-		if (ret && object instanceof Descriptor) {
-			Descriptor des = (Descriptor) object;
-			boolean isDynamic = DescriptorPropUtil.getDesciptorPropUtil().isDynamic(des);
-			if (isDynamic) {
-				DescriptorPropUtil.getDesciptorPropUtil().setDynamic(des, false);
-				if (modifiedDynamicDescriptors == null) {
-					modifiedDynamicDescriptors = new HashSet<Descriptor>();
-				}
-				modifiedDynamicDescriptors.add(des);
-			}
-		}
-		
-		return ret;
-	}
 
-	private boolean doAction_(int actionType, EObject object,
+	public boolean doAction(int actionType, EObject object,
 			EStructuralFeature feature, Object value, int index) {
 		Command cmd = null;
 		Object oldValue = null;
@@ -179,12 +158,6 @@ public class ActionManager implements IActionManager {
 		boolean b = commandStack.undoAll();
 		unregisterAsModifier();
 		// fireNotifyChanged(null);
-		if (modifiedDynamicDescriptors != null) {
-			for (Descriptor des : modifiedDynamicDescriptors) {
-				DescriptorPropUtil.getDesciptorPropUtil().setDynamic(des, true);
-			}
-			modifiedDynamicDescriptors = null;
-		}
 		return b;
 	}
 
