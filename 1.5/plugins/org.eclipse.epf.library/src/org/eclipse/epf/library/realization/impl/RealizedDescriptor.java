@@ -126,7 +126,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		for (Descriptor des : descriptorList) {
 			MethodElement me = getLinkedElement(des);
 			if (me == null
-					|| DescriptorPropUtil.getDesciptorPropUtil().staticUse(des,
+					|| DescriptorPropUtil.getDesciptorPropUtil().localUse(des,
 							getDescriptor())) {
 				resultDescriptorList.add(des);
 

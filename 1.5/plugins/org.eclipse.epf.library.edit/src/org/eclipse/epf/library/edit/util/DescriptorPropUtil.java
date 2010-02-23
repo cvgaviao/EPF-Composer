@@ -96,7 +96,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		setCustomization(d, mainDesAppend, value);
 	}
 	
-	public boolean staticUse(Descriptor usedD, Descriptor usingD) {
+	//Check if usedD is locally used by usingD
+	public boolean localUse(Descriptor usedD, Descriptor usingD) {
 		String value = getStringValue(usedD, DESCRIPTOR_LocalUsingGuids);
 		if (value == null || value.length() == 0) {
 			return false;
