@@ -17,7 +17,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.filters.DescriptorConfigurationFilter;
 import org.eclipse.epf.authoring.ui.filters.DescriptorProcessFilter;
 import org.eclipse.epf.authoring.ui.filters.ProcessRoleFilter;
@@ -119,7 +118,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	protected void init() {
 		super.init();
 
-		labelProvider = new AdapterFactoryLabelProvider(
+		labelProvider = new LabelProvider(
 				TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory());
 
 		int numOfTables = 3;
