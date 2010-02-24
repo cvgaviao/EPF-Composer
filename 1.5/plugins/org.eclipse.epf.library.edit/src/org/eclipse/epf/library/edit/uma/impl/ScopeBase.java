@@ -41,6 +41,7 @@ public abstract class ScopeBase extends MethodConfigurationImpl implements Scope
 	
 	public ScopeBase() {
 		super(null);
+		eSetDeliver(false);
 		setName(defaultName);
 	}
 	

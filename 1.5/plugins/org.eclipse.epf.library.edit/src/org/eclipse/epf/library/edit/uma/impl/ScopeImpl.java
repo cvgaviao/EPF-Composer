@@ -44,10 +44,11 @@ public class ScopeImpl extends ScopeBase {
 	
 	public String toString() {
 		String str = ""; //$NON-NLS-1$
-		for (MethodPlugin p : plugins) {
-			str += p + "\n"; //$NON-NLS-1$
-		}
-		
+		if (plugins != null) {
+			for (MethodPlugin p : plugins) {
+				str += p + "\n"; //$NON-NLS-1$
+			}
+		}		
 		return str;
 	}
 	
