@@ -135,12 +135,12 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 
 		if (elementSet.isEmpty()) {
-			return resultDescriptorList;
+			return processResultDescriptorList(resultDescriptorList, dFeature);
 		}
 
 		Activity parentAct = getDescriptor().getSuperActivities();
 		if (parentAct == null) {
-			return resultDescriptorList;
+			return processResultDescriptorList(resultDescriptorList, dFeature);
 		}
 
 		for (MethodElement me : elementSet) {
@@ -149,6 +149,29 @@ public class RealizedDescriptor extends RealizedElement implements
 			resultDescriptorList.add(des);
 		}
 
+		
+		return processResultDescriptorList(resultDescriptorList, dFeature);
+	}
+	
+	private List<Descriptor> processResultDescriptorList(
+			List<Descriptor> resultDescriptorList, EReference dFeature) {
+		if (dFeature.isMany()) {
+			List<Descriptor> listValue = (List<Descriptor>) getDescriptor().eGet(
+					dFeature);
+			if (listValue != null && !listValue.isEmpty()) {
+				Set<Descriptor> resultSet = new HashSet<Descriptor>(
+						resultDescriptorList);
+				DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+				
+				for (int i = listValue.size() - 1; i >= 0; i--) {
+					Descriptor des = listValue.get(i);
+					if (propUtil.isDynamic(des) && !resultSet.contains(des)) {
+						listValue.remove(i);
+					}
+				}
+			}
+		}
+		
 		return resultDescriptorList;
 	}
 	

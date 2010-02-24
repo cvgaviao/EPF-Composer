@@ -236,10 +236,10 @@ public class RealizationManager implements IRealizationManager {
 			ReferecingDes.eSet(feature, referencedDes);
 		}
 		
-		if (feature == up.getTaskDescriptor_PerformedPrimarilyBy()) {
-			MultiResourceEObject mreference = (MultiResourceEObject) referencedDes;
-			mreference.oppositeAdd(AssociationHelper.RoleDescriptor_PrimaryTaskDescriptors, ReferecingDes);			
-		}
+//		if (feature == up.getTaskDescriptor_PerformedPrimarilyBy()) {
+//			MultiResourceEObject mreference = (MultiResourceEObject) referencedDes;
+//			mreference.oppositeAdd(AssociationHelper.RoleDescriptor_PrimaryTaskDescriptors, ReferecingDes);			
+//		}
 	}
 
 	public void updateModel(Process proc) {	
