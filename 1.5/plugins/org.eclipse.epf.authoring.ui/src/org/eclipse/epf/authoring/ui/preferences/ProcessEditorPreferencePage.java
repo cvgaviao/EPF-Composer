@@ -21,6 +21,7 @@ import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.ui.PreferenceStoreWrapper;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -113,6 +114,8 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 	private Button configSwitchPromptButton;
 
 	private Button inheritSuppressionButton;
+	
+	private Button synFreeButton;	
 
 	private static class ColumnDescriptorProvider implements
 			ITreeContentProvider, ILabelProvider {
@@ -509,7 +512,34 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 
 		inheritSuppressionButton.setSelection(getPreferenceStore().getBoolean(
 				ApplicationPreferenceConstants.PREF_INHERIT_SUPPRESSION_STATE));
+		
+		// synFreeButton states
+		Group synFreeGroup = new Group(composite, SWT.SHADOW_OUT);
+		synFreeGroup.setLayout(new GridLayout());
+		synFreeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		synFreeGroup
+				.setText(AuthoringUIResources.ProcessEditorPreferencePage_synchronizationGroupTitle); 
+
+		synFreeButton = new Button(synFreeGroup, SWT.CHECK);
+		
+		synFreeButton
+				.setText(AuthoringUIResources.ProcessEditorPreferencePage_synchronizationFree); 
+
+		setSynFreeButtonSelection(getPreferenceStore().getBoolean(
+				ApplicationPreferenceConstants.PREF_SYN_FREE));
+		
+		synFreeButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				ProcessUtil.setSynFree(synFreeButton.getSelection());
+			}
+		});
+		
 		return composite;
+	}
+	
+	private void setSynFreeButtonSelection(boolean selected) {
+		synFreeButton.setSelection(selected);
+		ProcessUtil.setSynFree(selected);
 	}
 
 	/**
@@ -584,7 +614,10 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 				.setSelection(getPreferenceStore()
 						.getDefaultBoolean(
 								ApplicationPreferenceConstants.PREF_INHERIT_SUPPRESSION_STATE));
-
+		
+		setSynFreeButtonSelection(getPreferenceStore().getDefaultBoolean(
+				ApplicationPreferenceConstants.PREF_SYN_FREE));
+				
 		setSwitchConfigButton(MessageDialogWithToggle.PROMPT);
 	}
 
@@ -603,6 +636,9 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 		store.setValue(
 				ApplicationPreferenceConstants.PREF_INHERIT_SUPPRESSION_STATE,
 				inheritSuppressionButton.getSelection());
+		store.setValue(
+				ApplicationPreferenceConstants.PREF_SYN_FREE,
+				synFreeButton.getSelection());
 		// switch config preference is in library.ui
 		LibraryUIPreferences.setSwitchConfig(getSwitchConfigValue());
 

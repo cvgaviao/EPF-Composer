@@ -1384,6 +1384,10 @@ public final class AuthoringUIResources extends NLS {
 	public static String ProcessEditorPreferencePage_suppressionGroupTitle;
 
 	public static String ProcessEditorPreferencePage_inheritSuppressionState;
+	
+	public static String ProcessEditorPreferencePage_synchronizationGroupTitle;
+
+	public static String ProcessEditorPreferencePage_synchronizationFree;
 
 	public static String ProcessEditor_Action_OpenWorkProductDependencyDiagram;
 

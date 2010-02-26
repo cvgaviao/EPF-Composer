@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.prefs.LibraryPreferenceConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -46,6 +47,10 @@ public class LibraryPreferenceInitializer extends AbstractPreferenceInitializer 
 		store.setDefault(
 				ApplicationPreferenceConstants.PREF_INHERIT_SUPPRESSION_STATE,
 				true);
+		store.setDefault(
+				ApplicationPreferenceConstants.PREF_SYN_FREE,
+				false);
+		
 	}
 
 }

@@ -30,6 +30,8 @@ public class ApplicationPreferenceConstants implements PreferenceConstants {
 
 	public static final String PREF_INHERIT_SUPPRESSION_STATE = LibraryEditConstants.PREF_INHERIT_SUPPRESSION_STATE;
 	
+	public static final String PREF_SYN_FREE = LibraryEditConstants.PREF_SYN_FREE;
+	
 	public static final String PREF_LIB_VIEW_LAYOUT = "layout"; //$NON-NLS-1$
 	
 	public static final String PREF_LIB_VIEW_DND_DEFAULT_LINKTYPE = "libViewDNDDefaultLinkType"; //$NON-NLS-1$

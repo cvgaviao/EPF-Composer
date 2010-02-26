@@ -133,6 +133,7 @@ public final class ProcessUtil {
 
 	public static void setSynFree(boolean synFree) {
 		ProcessUtil.synFree = synFree;
+		System.out.println("LD> setSynFree: " + synFree);
 	}
 
 	private static Collection<VariabilityType> getExtendAndLocalContributionVariabilityTypes() {

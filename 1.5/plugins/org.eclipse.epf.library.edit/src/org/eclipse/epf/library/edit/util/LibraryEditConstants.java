@@ -82,6 +82,9 @@ public final class LibraryEditConstants {
 	public static final String PREF_INHERIT_SUPPRESSION_STATE = PREF_PREFIX
 			+ "inherit_suppression_state"; //$NON-NLS-1$
 
+	public static final String PREF_SYN_FREE = PREF_PREFIX
+			+ "syn_free"; //$NON-NLS-1$
+
 	public static final String PREF_WBS_COLUMNS = PREF_PREFIX + "wbs_columns"; //$NON-NLS-1$
 
 	public static final String PREF_TBS_COLUMNS = PREF_PREFIX + "tbs_columns"; //$NON-NLS-1$
