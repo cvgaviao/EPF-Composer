@@ -910,7 +910,7 @@ public class RelationSection extends AbstractSection {
 		}
 		
 	    public Color getForeground(Object element, int columnIndex) {
-	    	if (IRealizationManager.synFree) {
+	    	if (ProcessUtil.isSynFree()) {
 	    		if (element instanceof Descriptor) {
 	    			if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic((Descriptor) element)) {
 	    				return Colors.DYNAMIC_ELEMENT_LABEL;

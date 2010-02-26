@@ -507,7 +507,7 @@ public class ProcessEditor extends MethodElementEditor implements
 
 			}
 
-			if (IRealizationManager.synFree) {
+			if (ProcessUtil.isSynFree()) {
 				if (collection != null && !collection.isEmpty()) {
 					for (Object obj : collection) {
 						if (obj instanceof Task || obj instanceof Role
@@ -1148,7 +1148,7 @@ public class ProcessEditor extends MethodElementEditor implements
 				realizationContext = new RealizationContext(currentConfig);
 			}
 			getConfiguratorInstance().beginRealizationManager(realizationContext);
-			if (IRealizationManager.synFree) {
+			if (ProcessUtil.isSynFree()) {
 				updateProcessModel();
 			}
 			
