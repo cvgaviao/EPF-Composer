@@ -24,8 +24,6 @@ public interface IRealizationManager {
 	
 	void clearCacheData();
 	
-	boolean synFree = false;
-	
 	boolean debug = false;
 	
 	boolean timing = false;

@@ -125,6 +125,16 @@ public final class ProcessUtil {
 
 	private static Collection<VariabilityType> extendAndLocalContributionVariabilityTypes = null;
 	
+	private static boolean synFree = false;
+	
+	public static boolean isSynFree() {
+		return synFree;
+	}
+
+	public static void setSynFree(boolean synFree) {
+		ProcessUtil.synFree = synFree;
+	}
+
 	private static Collection<VariabilityType> getExtendAndLocalContributionVariabilityTypes() {
 		if (extendAndLocalContributionVariabilityTypes == null) {
 			extendAndLocalContributionVariabilityTypes = new ArrayList<VariabilityType>();
@@ -468,7 +478,7 @@ public final class ProcessUtil {
 		roleDesc.setPresentationName(StrUtil.isBlank(presentationName) ? role
 				.getName() : presentationName);
 		// roleDesc.setBriefDescription(role.getBriefDescription());
-		if (IRealizationManager.synFree && isDynamic) {
+		if (isSynFree() && isDynamic) {
 			DescriptorPropUtil.getDesciptorPropUtil().setDynamic(roleDesc, true);
 		}
 		return roleDesc;
@@ -490,7 +500,7 @@ public final class ProcessUtil {
 						.getName()
 						: wp.getPresentationName());
 		// wpDesc.setBriefDescription(wp.getBriefDescription());
-		if (IRealizationManager.synFree && isDynamic) {
+		if (isSynFree() && isDynamic) {
 			DescriptorPropUtil.getDesciptorPropUtil().setDynamic(wpDesc, true);
 		}
 		return wpDesc;
