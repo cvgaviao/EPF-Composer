@@ -113,7 +113,7 @@ public class PublishManager extends AbstractPublishManager {
 	protected void doPublish(IProgressMonitor monitor) throws Exception {
 		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
 		if (configMgr != null && configMgr.getRealizationManager() != null) {
-				configMgr.getRealizationManager().clearCacheData();
+				configMgr.getRealizationManager().beginPublish();
 		}
 		
 		// before doing publishing, load the whole library and remember the resouces loaded
@@ -186,7 +186,7 @@ public class PublishManager extends AbstractPublishManager {
 		
 		ConfigurationManager configMgr = (ConfigurationManager) LibraryService.getInstance().getConfigurationManager(config);
 		if (configMgr != null && configMgr.getRealizationManager() != null) {
-				configMgr.getRealizationManager().clearCacheData();
+				configMgr.getRealizationManager().endPublish();
 		}
 	}
 

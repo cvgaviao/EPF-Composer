@@ -13,6 +13,7 @@ import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -43,7 +44,8 @@ public class RealizationManager implements IRealizationManager {
 	private RealizationContext context;
 	private Map<Activity, List<Descriptor>> actDescrptorsMap;
 	private boolean caching = false;
-	IPerspectiveListener perspectiveListener;
+	private IPerspectiveListener perspectiveListener;
+	private boolean localTiming = true;
 	
 	public boolean isCaching() {
 		return caching;
@@ -244,11 +246,11 @@ public class RealizationManager implements IRealizationManager {
 
 	public void updateModel(Process proc) {	
 		long time;
-		if (timing) {
+		if (timing && localTiming) {
 			time = System.currentTimeMillis();
 		}
 		updateModelImpl(proc);
-		if (timing) {
+		if (timing && localTiming) {
 			time = System.currentTimeMillis() - time;
 			System.out.println("LD> updateModel: " + time); //$NON-NLS-1$
 		}
@@ -258,6 +260,7 @@ public class RealizationManager implements IRealizationManager {
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		
 		Set<Descriptor> tdReferencedSet = new HashSet<Descriptor>();
+		Set<Descriptor> seenSet = new HashSet<Descriptor>();
 		List<Descriptor> rdwpdList = new ArrayList<Descriptor>();
 		List<BreakdownElement> beList =  act.getBreakdownElements();
 		for (int i = 0; i < beList.size(); i++) {
@@ -267,8 +270,7 @@ public class RealizationManager implements IRealizationManager {
 				
 			} else if (be instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) be;
-				RealizedTaskDescriptor rtd = (RealizedTaskDescriptor) getRealizedElement(td);
-				tdReferencedSet.addAll(rtd.getAllReferenced());
+				collectAllReferences(td, tdReferencedSet, seenSet);
 
 			} else if (be instanceof RoleDescriptor) {
 				RoleDescriptor rd = (RoleDescriptor) be;
@@ -302,5 +304,44 @@ public class RealizationManager implements IRealizationManager {
 		
 	}
 	
+	
+	private void collectAllReferences(Descriptor des, Set<Descriptor> collectingSet, Set<Descriptor> seenSet) {
+		if (seenSet.contains(des)) {
+			return;
+		}
+		seenSet.add(des);
+		
+		RealizedDescriptor rdes = (RealizedDescriptor) getRealizedElement(des);
+		Set<Descriptor> references = rdes.getAllReferenced();
+		collectingSet.addAll(references);
+		for (Descriptor ref : references) {
+			collectAllReferences(ref, collectingSet, seenSet);
+		}
+	}
+	
+	public void beginPublish() {
+		
+		boolean oldLocalTiming = localTiming;
+		long time;
+		if (timing) {
+			time = System.currentTimeMillis();
+			localTiming = false;
+		}
+
+		clearCacheData();
+		for (Process proc : LibUtil.getInstance().collectProcessesFromConfig(
+				getConfig())) {
+			updateModel(proc);
+		}
+		if (timing) {
+			time = System.currentTimeMillis() - time;
+			System.out.println("LD> beginPublish: " + time); //$NON-NLS-1$
+			localTiming = oldLocalTiming;
+		}
+	}
+	
+	public void endPublish() {
+		clearCacheData();
+	}
 	
 }

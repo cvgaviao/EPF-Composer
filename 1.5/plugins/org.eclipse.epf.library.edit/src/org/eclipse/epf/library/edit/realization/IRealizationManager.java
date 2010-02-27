@@ -22,7 +22,15 @@ public interface IRealizationManager {
 	 */
 	void updateModel(Process proc);
 	
-	void clearCacheData();
+	/**
+	 * Called at the beginning of publishing
+	 */
+	void beginPublish();
+	
+	/**
+	 * Called at the end of publishing
+	 */
+	void endPublish();
 	
 	boolean debug = false;
 	
