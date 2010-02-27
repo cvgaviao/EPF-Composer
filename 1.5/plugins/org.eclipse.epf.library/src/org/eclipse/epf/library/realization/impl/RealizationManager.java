@@ -245,7 +245,7 @@ public class RealizationManager implements IRealizationManager {
 	}
 
 	public void updateModel(Process proc) {	
-		long time;
+		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
 		}
@@ -322,7 +322,7 @@ public class RealizationManager implements IRealizationManager {
 	public void beginPublish() {
 		
 		boolean oldLocalTiming = localTiming;
-		long time;
+		long time = 0;
 		if (timing) {
 			time = System.currentTimeMillis();
 			localTiming = false;
