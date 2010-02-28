@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.realization.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -7,8 +8,14 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.realization.IRealizedWorkProductDescriptor;
+import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.Deliverable;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
@@ -60,4 +67,45 @@ public class RealizedWorkProductDescriptor extends
 		}
 		return wpdList;
 	}
+	
+	public List<WorkProductDescriptor> getContainedArtifacts() {
+		if (!(getLinkedElement() instanceof Artifact)) {
+			return Collections.EMPTY_LIST;
+		}
+		UmaPackage up = UmaPackage.eINSTANCE;
+		EReference wpdReference = ArtifactDescriptor_ContainedArtifacts;
+		List<WorkProductDescriptor> wpdList = (List<WorkProductDescriptor>) getCachedValue(wpdReference);
+		if (wpdList == null) {
+			wpdList = new ArrayList<WorkProductDescriptor>();
+			ElementRealizer realizer = DefaultElementRealizer
+					.newElementRealizer(getConfig());
+			List<MethodElement> elementList = ConfigurationHelper
+					.calc0nFeatureValue(getLinkedElement(), up
+							.getArtifact_ContainedArtifacts(), realizer);
+			if (elementList != null && !elementList.isEmpty()) {
+				Activity parentAct = getDescriptor().getSuperActivities();
+				if (parentAct != null) {
+
+					for (MethodElement me : elementList) {
+						WorkProductDescriptor des = (WorkProductDescriptor) getMgr()
+								.getDescriptor(getDescriptor(), parentAct, me,
+										wpdReference);
+						wpdList.add(des);
+					}
+				}
+			}
+			storeCachedValue(wpdReference, wpdList);
+		}
+		return wpdList;
+	}
+	
+	@Override
+	public Set<Descriptor> getAllReferenced() {
+		Set<Descriptor> referenced = new HashSet<Descriptor>();
+		addToSet(referenced, getDeliverableParts());
+		addToSet(referenced, getContainedArtifacts());
+		return referenced;
+	}
+	
+	
 }

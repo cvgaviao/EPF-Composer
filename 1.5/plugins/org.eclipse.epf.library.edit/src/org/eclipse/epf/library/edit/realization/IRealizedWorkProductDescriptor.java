@@ -9,4 +9,6 @@ public interface IRealizedWorkProductDescriptor  extends IRealizedDescriptor {
 
 	List<WorkProductDescriptor> getDeliverableParts();
 	
+	List<WorkProductDescriptor> getContainedArtifacts();
+	
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
@@ -29,8 +30,6 @@ import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
-import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
-import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
@@ -42,7 +41,6 @@ public class RealizationManager implements IRealizationManager {
 
 	private Map<MethodElement, IRealizedElement> elementMap;
 	private RealizationContext context;
-	private Map<Activity, List<Descriptor>> actDescrptorsMap;
 	private boolean caching = false;
 	private IPerspectiveListener perspectiveListener;
 	private boolean localTiming = true;
@@ -55,6 +53,13 @@ public class RealizationManager implements IRealizationManager {
 		this.caching = caching;
 	}
 
+	private Map<MethodElement, IRealizedElement> getElementMap() {
+		if (elementMap == null) {
+			elementMap = new HashMap<MethodElement, IRealizedElement>();
+		}
+		return elementMap;
+	}
+	
 	public RealizationManager(RealizationContext context) {
 		this.context = context;
 		if (context.getMode() == 1) {
@@ -67,19 +72,16 @@ public class RealizationManager implements IRealizationManager {
 		if (IRealizationManager.debug) {
 			System.out.println("LD> RealizationManger.clearCacheData: " + context); //$NON-NLS-1$
 		}
-		if (elementMap != null) {
-			for (IRealizedElement element : elementMap.values()) {
-				((RealizedElement) element).dispose();
-			}
+		for (IRealizedElement element : getElementMap().values()) {
+			((RealizedElement) element).dispose();
 		}
-		elementMap = new HashMap<MethodElement, IRealizedElement>();
-		actDescrptorsMap = new HashMap<Activity, List<Descriptor>>();
+		
+		elementMap = null;
+
 	}
 	
 	public void dispose() {
 		clearCacheData();
-		elementMap = null;
-		actDescrptorsMap = null;
 		context = null;
 		
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -97,21 +99,19 @@ public class RealizationManager implements IRealizationManager {
 	}
 
 	public IRealizedElement getRealizedElement(MethodElement element) {
-		IRealizedElement rElement = elementMap.get(element);
+		IRealizedElement rElement = getElementMap().get(element);
 		if (rElement == null) {
 			rElement = newRealizedElement(element);
-			elementMap.put(element, rElement);
+			getElementMap().put(element, rElement);
 		}
 		return rElement;
 	}
 	
 	public IRealizedElement removeRealizedElement(MethodElement element) {
-		return elementMap.remove(element);
+		return getElementMap().remove(element);
 	}
 	
 	private void init() {
-		elementMap = new HashMap<MethodElement, IRealizedElement>();
-		actDescrptorsMap = new HashMap<Activity, List<Descriptor>>();
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window != null) {
 			perspectiveListener = new IPerspectiveListener() {
@@ -174,15 +174,6 @@ public class RealizationManager implements IRealizationManager {
 			}
 		}
 		
-		List<Descriptor> dList = actDescrptorsMap.get(parentAct);
-		if (dList != null) {
-			for (Descriptor d : dList) {
-				if (getLinkedElement(d) == element) {
-					return d;
-				}
-			}
-		}
-		
 		Descriptor descriptor = null;
 		if (element instanceof Role) {
 			RoleDescriptor rd = UmaFactory.eINSTANCE.createRoleDescriptor();
@@ -206,13 +197,6 @@ public class RealizationManager implements IRealizationManager {
 		addToProcess(referencingDes, parentAct, descriptor, feature);	
 		
 		DescriptorPropUtil.getDesciptorPropUtil().setDynamic(descriptor, true);
-		
-		if (dList == null) {
-			dList = new ArrayList<Descriptor>();
-			actDescrptorsMap.put(parentAct, dList);
-		}
-		dList.add(descriptor);
-
 			
 		String presentationName = element.getPresentationName();
 		descriptor.setName(element.getName());
@@ -229,6 +213,9 @@ public class RealizationManager implements IRealizationManager {
 		parent.getBreakdownElements().add(referencedDes);
 		ProcessPackage pkg = (ProcessPackage) parent.eContainer();
 		pkg.getProcessElements().add(referencedDes);
+		if (feature == IRealizedDescriptor.ArtifactDescriptor_ContainedArtifacts) {
+			return;
+		}
 		if (feature.isMany()) {
 			List listValue = (List) ReferecingDes.eGet(feature);
 			if (listValue != null) {
@@ -238,10 +225,6 @@ public class RealizationManager implements IRealizationManager {
 			ReferecingDes.eSet(feature, referencedDes);
 		}
 		
-//		if (feature == up.getTaskDescriptor_PerformedPrimarilyBy()) {
-//			MultiResourceEObject mreference = (MultiResourceEObject) referencedDes;
-//			mreference.oppositeAdd(AssociationHelper.RoleDescriptor_PrimaryTaskDescriptors, ReferecingDes);			
-//		}
 	}
 
 	public void updateModel(Process proc) {	
