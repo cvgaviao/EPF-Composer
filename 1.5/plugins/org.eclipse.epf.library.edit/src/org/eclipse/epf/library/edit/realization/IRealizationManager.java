@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.edit.realization;
 
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 
@@ -20,7 +21,12 @@ public interface IRealizationManager {
 	/**
 	 * Update process model with realization
 	 */
-	void updateModel(Process proc);
+	void updateProcessModel(Process proc);
+	
+	/**
+	 * Update activity model with realization
+	 */
+	void updateActivityModel(Activity act);
 	
 	/**
 	 * Called at the beginning of publishing
@@ -32,7 +38,7 @@ public interface IRealizationManager {
 	 */
 	void endPublish();
 	
-	boolean debug = false;
+	boolean debug = true;
 	
 	boolean timing = true;
 	

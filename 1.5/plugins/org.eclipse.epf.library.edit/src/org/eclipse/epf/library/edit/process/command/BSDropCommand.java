@@ -32,15 +32,16 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.edit.IConfigurationApplicator;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
-import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.command.BatchCommand;
 import org.eclipse.epf.library.edit.command.INestedCommandProvider;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.command.NestedCommandExcecutor;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
+import org.eclipse.epf.library.edit.util.LibUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -608,6 +609,11 @@ public abstract class BSDropCommand extends AbstractCommand implements
 			nestedCommandExcecutor.executeNestedCommands();
 			if(TngUtil.DEBUG) {
 				System.out.println("BSDropCommand.redo(): executeNestedCommands(). " + (System.currentTimeMillis() - time)); //$NON-NLS-1$
+			}
+			
+			IRealizationManager mgr = LibUtil.getInstance().getRelizationManager(ProcessUtil.getProcess(activity));
+			if (mgr != null) {
+				mgr.updateActivityModel(activity);
 			}
 			
 			executed = true;

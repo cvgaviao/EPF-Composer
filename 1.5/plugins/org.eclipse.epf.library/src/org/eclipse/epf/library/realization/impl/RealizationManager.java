@@ -162,8 +162,26 @@ public class RealizationManager implements IRealizationManager {
 		
 		return null;
 	}
-	
+
 	public Descriptor getDescriptor(Descriptor referencingDes, Activity parentAct, MethodElement element, EReference feature) {
+		Descriptor descriptor = getDescriptor_(referencingDes, parentAct, element, feature);
+		if (feature == IRealizedDescriptor.ArtifactDescriptor_ContainedArtifacts) {
+			return descriptor;
+		}
+		
+		if (feature.isMany()) {
+			List listValue = (List) referencingDes.eGet(feature);
+			if (listValue != null) {
+				listValue.add(descriptor);
+			}
+		} else {
+			referencingDes.eSet(feature, descriptor);
+		}
+
+		return descriptor;
+	}
+	
+	private Descriptor getDescriptor_(Descriptor referencingDes, Activity parentAct, MethodElement element, EReference feature) {
 		if (parentAct == null) {
 			return null;
 		}
@@ -194,7 +212,6 @@ public class RealizationManager implements IRealizationManager {
 		if (descriptor == null) {
 			return null;
 		}
-		addToProcess(referencingDes, parentAct, descriptor, feature);	
 		
 		DescriptorPropUtil.getDesciptorPropUtil().setDynamic(descriptor, true);
 			
@@ -204,30 +221,24 @@ public class RealizationManager implements IRealizationManager {
 				.getName() : presentationName);
 		String guid = UmaUtil.generateGUID();
 		descriptor.setBriefDescription(element.getBriefDescription());
-				
+
+		addToProcess(parentAct, descriptor, feature);	
+		
 		return descriptor;
 	}
 	
-	private void addToProcess(Descriptor ReferecingDes, Activity parent, Descriptor referencedDes, EReference feature) {
+	private void addToProcess(Activity parent, Descriptor referencedDes, EReference feature) {
 		UmaPackage up = UmaPackage.eINSTANCE;
 		parent.getBreakdownElements().add(referencedDes);
 		ProcessPackage pkg = (ProcessPackage) parent.eContainer();
 		pkg.getProcessElements().add(referencedDes);
-		if (feature == IRealizedDescriptor.ArtifactDescriptor_ContainedArtifacts) {
-			return;
-		}
-		if (feature.isMany()) {
-			List listValue = (List) ReferecingDes.eGet(feature);
-			if (listValue != null) {
-				listValue.add(referencedDes);
-			}
-		} else {
-			ReferecingDes.eSet(feature, referencedDes);
-		}
 		
+		if (feature == up.getWorkProductDescriptor_DeliverableParts()) {
+			referencedDes.setSuperActivities(null);
+		}
 	}
 
-	public void updateModel(Process proc) {	
+	public void updateProcessModel(Process proc) {	
 		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
@@ -237,6 +248,10 @@ public class RealizationManager implements IRealizationManager {
 			time = System.currentTimeMillis() - time;
 			System.out.println("LD> updateModel: " + time); //$NON-NLS-1$
 		}
+	}
+	
+	public void updateActivityModel(Activity act) {
+		updateModelImpl(act);
 	}
 	
 	private void updateModelImpl(Activity act) {
@@ -314,7 +329,7 @@ public class RealizationManager implements IRealizationManager {
 		clearCacheData();
 		for (Process proc : LibUtil.getInstance().collectProcessesFromConfig(
 				getConfig())) {
-			updateModel(proc);
+			updateProcessModel(proc);
 		}
 		if (timing) {
 			time = System.currentTimeMillis() - time;

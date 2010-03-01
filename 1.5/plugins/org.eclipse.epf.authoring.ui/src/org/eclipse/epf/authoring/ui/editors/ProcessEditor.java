@@ -88,6 +88,7 @@ import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.EditingDomainComposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.LibUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -983,6 +984,9 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 
 	public void dispose() {
+		if (getSelectedProcess() != null) {
+			LibUtil.getInstance().removeFromRealizationManagerMap(getSelectedProcess());
+		}
 		getConfiguratorInstance().endRealizationManager(realizationContext);
 		if (getSelectedProcess() != null) {
 			Scope scope = ProcessScopeUtil.getInstance().getScope(getSelectedProcess());
@@ -1147,8 +1151,17 @@ public class ProcessEditor extends MethodElementEditor implements
 			} else {
 				realizationContext = new RealizationContext(currentConfig);
 			}
-			getConfiguratorInstance().beginRealizationManager(realizationContext);
+			IRealizationManager mgr = getConfiguratorInstance().beginRealizationManager(realizationContext);
+			if (IRealizationManager.debug) {
+				if (selectedProcess == null) {
+					Thread.dumpStack();
+				}
+			}
+			
 			if (ProcessUtil.isSynFree()) {
+				if (selectedProcess != null && mgr != null) {
+					LibUtil.getInstance().addToRealizationManagerMap(selectedProcess, mgr);
+				}
 				updateProcessModel();
 			}
 			
@@ -1352,7 +1365,7 @@ public class ProcessEditor extends MethodElementEditor implements
 		IRealizationManager mgr = getConfiguratorInstance()
 				.getRealizationManager();
 		if (proc != null && mgr != null)
-			mgr.updateModel(proc);
+			mgr.updateProcessModel(proc);
 	}
 
 	protected void setActivePage(int pageIndex) {
