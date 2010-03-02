@@ -18,7 +18,9 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
+import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
@@ -51,6 +53,10 @@ public abstract class DescriptorLayout extends AbstractProcessElementLayout {
 	});
 
 	MethodElement linkedElement = null;
+
+	public MethodElement getLinkedElement() {
+		return linkedElement;
+	}
 
 	AbstractElementLayout elementLayout = null;
 	
@@ -199,4 +205,18 @@ public abstract class DescriptorLayout extends AbstractProcessElementLayout {
 		return elementXml;
 	}
 	
+	@Override
+	protected MethodElement getElementForElementPath() {
+		// This method gets called before "linkedElement" is assigned a value
+		if (BrowsingLayoutSettings.INSTANCE.isShowLinkedPageForDescriptors()
+				&& element instanceof Descriptor) {
+			MethodElement linkedContentElement = ProcessUtil
+					.getAssociatedElement((Descriptor) element);
+			if (linkedContentElement != null) {
+				return linkedContentElement;
+			}
+		}
+		return super.getElementForElementPath();
+	}
+
 }

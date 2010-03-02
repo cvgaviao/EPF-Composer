@@ -28,6 +28,7 @@ import org.eclipse.epf.common.utils.Timer;
 import org.eclipse.epf.common.xml.XSLTProcessor;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.layout.elements.DescriptorLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.layout.util.XmlHelper;
 import org.eclipse.epf.library.prefs.PreferenceUtil;
@@ -398,6 +399,20 @@ public class HtmlBuilder {
 		
 		try {
 			StringWriter sw = new StringWriter();
+			
+			if (BrowsingLayoutSettings.INSTANCE
+					.isShowLinkedPageForDescriptors()
+					&& layout instanceof DescriptorLayout) {
+
+				DescriptorLayout dLayout = (DescriptorLayout) layout;
+				MethodElement linedElement = dLayout.getLinkedElement();
+				if (linedElement != null) {
+					getValidator().addReferencedElement(dLayout.getElement(),
+							linedElement);
+					return;
+				}
+			}		
+			
 			XSLTProcessor.transform(xsl_uri, xml.toString(), xslParams, sw);
 			sw.flush();
 			String content = sw.getBuffer().toString();

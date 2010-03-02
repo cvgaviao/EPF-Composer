@@ -387,7 +387,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	 */
 
 	public String getFileName(String ext) {
-		return ResourceHelper.getFileName(element, ext);
+		MethodElement elementForElementPath = getElementForElementPath();
+		return ResourceHelper.getFileName(elementForElementPath, ext);
 	}
 
 
@@ -410,13 +411,18 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		backPath = "./"; //$NON-NLS-1$
 		if ( !(element instanceof MethodConfiguration || element instanceof MethodLibrary) )
 		{
-			String path = ResourceHelper.getElementPath(element);
+			MethodElement elementForElementPath = getElementForElementPath();
+			String path = ResourceHelper.getElementPath(elementForElementPath);
 			if ( path != null ) {
 				elementPath = path.replace(File.separatorChar, '/');
-				backPath = ResourceHelper.getBackPath(element);
+				backPath = ResourceHelper.getBackPath(elementForElementPath);
 			}
 
 		}
+	}
+	
+	protected MethodElement getElementForElementPath() {
+		return element;
 	}
 
 	/**
