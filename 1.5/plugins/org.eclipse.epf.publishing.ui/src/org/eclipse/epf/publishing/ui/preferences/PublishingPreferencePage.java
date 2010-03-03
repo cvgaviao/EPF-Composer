@@ -53,6 +53,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 
 	private Button extraDescriptorInfoCheckbox;
 	
+	private Button showLinkedPageForDescriptorCheckbox;
+	
 	private Button fulfillDescriptorSlotByContentCheckbox;
 
 	/**
@@ -88,6 +90,11 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		extraDescriptorInfoCheckbox = createCheckbox(browsingGroup,
 				PublishingUIResources.publishExtraDescriptorInfoLabel_text, 1);
 		
+		showLinkedPageForDescriptorCheckbox = createCheckbox(browsingGroup,
+				PublishingUIResources.showLinkedPageForDescriptorLabel_text, 1);
+		
+		
+		
 		// Create the Browsing group.
 		Group wpSlotDpRuleGroup = createGridLayoutGroup(composite, PublishingUIResources.wpSlotDpRuleGroup_text, 1);
 		fulfillDescriptorSlotByContentCheckbox = createCheckbox(wpSlotDpRuleGroup,
@@ -107,7 +114,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		destinationPathText.setText(PublishingUIPreferences.getPublishPath());
 		feedbackURLText.setText(PublishingUIPreferences.getFeedbackURL());
 		extraDescriptorInfoCheckbox.setSelection(PublishingUIPreferences
-				.getExtraDescriptorInfo());		
+				.getExtraDescriptorInfo());	
+		showLinkedPageForDescriptorCheckbox.setSelection(PublishingUIPreferences
+				.getShowLinkedElementForDescriptor());	
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
 				.getFulfillDescriptorSlotByContent());
 	}
@@ -166,6 +175,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				.setExtraDescriptorInfo(extraDescriptorInfoCheckbox
 						.getSelection());
 		PublishingUIPreferences
+				.setShowLinkedElementForDescriptor(showLinkedPageForDescriptorCheckbox
+						.getSelection());
+		PublishingUIPreferences
 			.setFulfillDescriptorSlotByContent(fulfillDescriptorSlotByContentCheckbox
 				.getSelection());
 		
@@ -185,6 +197,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				.setText(PublishingUIPreferences.getDefaultFeedbackURL());
 		extraDescriptorInfoCheckbox.setSelection(PublishingUIPreferences
 				.getDefaultExtraDescriptorInfo());
+		showLinkedPageForDescriptorCheckbox.setSelection(PublishingUIPreferences
+				.getDefaultShowLinkedElementForDescriptor());
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
 				.getDefaultFulfillDescriptorSlotByContent());		
 	}

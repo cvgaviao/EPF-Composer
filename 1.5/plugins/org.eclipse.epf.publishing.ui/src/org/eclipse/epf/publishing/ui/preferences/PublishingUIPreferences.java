@@ -54,6 +54,8 @@ public class PublishingUIPreferences {
 
 	private static final String EXTRA_DESCRIPTOR_INFO = "extraDescriptorInfo"; //$NON-NLS-1$
 	
+	private static final String SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR = "showLinkedElementForDescriptor"; //$NON-NLS-1$
+	
 	private static final String FULFILL_DESCRIPTOR_SLOT_BY_CONTENT = "fulfillDescriptorSlotByContent"; //$NON-NLS-1$
 
 	private static final String PUBLISH_UNOPEN_ACTIVITY_DD = "publishUnopenActivityDD"; //$NON-NLS-1$
@@ -115,6 +117,8 @@ public class PublishingUIPreferences {
 		prefStore.setDefault(LIGHT_WEIGHT_TREE, true);
 		prefStore.setDefault(EXTRA_DESCRIPTOR_INFO,
 				getDefaultExtraDescriptorInfo());
+		prefStore.setDefault(SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR,
+				getDefaultShowLinkedElementForDescriptor());
 		prefStore.setDefault(FULFILL_DESCRIPTOR_SLOT_BY_CONTENT,
 				getDefaultFulfillDescriptorSlotByContent());
 		
@@ -718,6 +722,34 @@ public class PublishingUIPreferences {
 	 */
 	public static boolean getExtraDescriptorInfo() {
 		return prefStore.getBoolean(EXTRA_DESCRIPTOR_INFO);
+	}
+
+	/**
+	 * Gets the default linked element for descriptor preference value.
+	 * 
+	 * @return <code>true</code> if the preference is set
+	 */
+	public static boolean getDefaultShowLinkedElementForDescriptor() {
+		return false;
+	}
+	
+	/**
+	 * Sets linked element for descriptor preference value.
+	 * 
+	 * @param value
+	 *            the preference value
+	 */
+	public static void setShowLinkedElementForDescriptor(boolean value) {
+		prefStore.setValue(SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR, value);
+	}
+	
+	/**
+	 * Gets the linked element for descriptor preference value.
+	 * 
+	 * @return the preference value
+	 */
+	public static boolean getShowLinkedElementForDescriptor() {
+		return prefStore.getBoolean(SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR);
 	}
 
 	/**

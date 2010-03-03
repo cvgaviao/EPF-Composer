@@ -401,7 +401,7 @@ public class HtmlBuilder {
 			StringWriter sw = new StringWriter();
 			
 			if (BrowsingLayoutSettings.INSTANCE
-					.isShowLinkedPageForDescriptors()
+					.isShowLinkedPageForDescriptor()
 					&& layout instanceof DescriptorLayout) {
 
 				DescriptorLayout dLayout = (DescriptorLayout) layout;

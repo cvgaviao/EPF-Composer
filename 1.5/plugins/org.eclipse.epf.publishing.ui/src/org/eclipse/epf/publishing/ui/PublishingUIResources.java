@@ -90,6 +90,8 @@ public final class PublishingUIResources extends NLS {
 
 	public static String publishExtraDescriptorInfoLabel_text;
 	
+	public static String showLinkedPageForDescriptorLabel_text;
+	
 	public static String fulfillDescriptorSlotByContentCheckbox_text;
 
 	public static String publishEmptyCategoriesLabel_text;

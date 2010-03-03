@@ -29,7 +29,7 @@ public class BrowsingLayoutSettings {
 	private boolean publishUnopenActivitydd = false;
 	private boolean publishADForActivityExtension = false;
 	private boolean fulfillDescriptorSlotByContent = false;
-	private boolean showLinkedPageForDescriptors = false;
+	private boolean showLinkedPageForDescriptor = false;
 
 	// if true, the to-many outgoing association from base will be ignored if the extender has its own
 	private boolean useNewExtendSemantics = false;
@@ -149,12 +149,12 @@ public class BrowsingLayoutSettings {
 		this.fulfillDescriptorSlotByContent = fulfillDescriptorSlotByContent;
 	}
 	
-	public boolean isShowLinkedPageForDescriptors() {
-		return showLinkedPageForDescriptors;
+	public boolean isShowLinkedPageForDescriptor() {
+		return showLinkedPageForDescriptor;
 	}
 
-	public void setShowLinkedPageForDescriptors(boolean showLinkedPageForDescriptors) {
-		this.showLinkedPageForDescriptors = showLinkedPageForDescriptors;
+	public void setShowLinkedPageForDescriptor(boolean showLinkedPageForDescriptor) {
+		this.showLinkedPageForDescriptor = showLinkedPageForDescriptor;
 	}
 	
 }
