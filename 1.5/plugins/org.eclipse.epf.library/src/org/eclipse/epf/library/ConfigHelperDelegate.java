@@ -27,6 +27,7 @@ import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
@@ -440,7 +441,7 @@ public class ConfigHelperDelegate {
 	}
 	
 	public IRealizationManager getRealizationManager(MethodConfiguration config) {
-		if (config == null || config instanceof Scope) {
+		if (config == null || config instanceof Scope || ! ProcessUtil.isSynFree()) {
 			return null;
 		}
 		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);

@@ -73,7 +73,6 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.ILibraryServiceListener;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ProcessAuthoringConfigurator;
 import org.eclipse.epf.library.edit.IAdapterFactoryProvider;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
@@ -84,7 +83,6 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
@@ -384,8 +382,6 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 
 	protected static boolean addAdapterFactoryListeners = false;
-	
-	private RealizationContext realizationContext;
 
 	private class ProcessEditorDropAdapter extends
 			EditingDomainTableTreeViewerDropAdapter {
@@ -1143,10 +1139,7 @@ public class ProcessEditor extends MethodElementEditor implements
 			
 			Scope scope = ProcessScopeUtil.getInstance().getScope(selectedProcess);
 			if (scope != null) {
-				realizationContext = new RealizationContext(scope);
 				ProcessScopeUtil.getInstance().beginProcessEdit(scope);
-			} else {
-				realizationContext = new RealizationContext(currentConfig);
 			}
 			if (IRealizationManager.debug) {
 				if (selectedProcess == null) {

@@ -28,7 +28,7 @@ public class LibUtil {
 	}
 
 	public IRealizationManager getDefaultRealizationManager() {
-		return defaultRealizationManager;
+		return ProcessUtil.isSynFree() ? defaultRealizationManager : null;
 	}
 
 	public void setDefaultRealizationManager(

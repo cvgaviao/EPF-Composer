@@ -21,9 +21,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.serviceability.DebugTrace;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.diagram.core.services.DiagramManager;
-import org.eclipse.epf.library.IConfigurationManager;
-import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.layout.Bookmark;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.HtmlBuilder;
@@ -110,9 +110,9 @@ public class PublishManager extends AbstractPublishManager {
 	}
 
 	protected void doPublish(IProgressMonitor monitor) throws Exception {
-		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
-		if (configMgr != null && configMgr.getRealizationManager() != null) {
-				configMgr.getRealizationManager().updateAllProcesseModels();
+		IRealizationManager mgr = ConfigurationHelper.getDelegate().getRealizationManager(config);
+		if (mgr != null) {
+			mgr.updateAllProcesseModels();
 		}
 		
 		// before doing publishing, load the whole library and remember the resouces loaded

@@ -20,7 +20,6 @@ import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.DependencyManager;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.realization.RealizationManagerFactory;
@@ -66,7 +65,6 @@ public class ConfigurationManager implements IConfigurationManager {
 	protected AdapterFactoryContentProvider afcp;
 	
 	private IRealizationManager realizationManager;
-	private RealizationContext realizationContext;
 
 	/**
 	 * Creates a new instance.
@@ -99,7 +97,6 @@ public class ConfigurationManager implements IConfigurationManager {
 		} else {
 			layoutManager = new ElementLayoutManager(config);
 			// closure = new ConfigurationClosure(this, config);
-			realizationContext = new RealizationContext(config, 1);
 			realizationManager = RealizationManagerFactory.getInstance()
 					.newRealizationManager(config);
 
