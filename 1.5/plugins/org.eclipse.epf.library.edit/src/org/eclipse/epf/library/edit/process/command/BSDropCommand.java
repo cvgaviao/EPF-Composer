@@ -611,7 +611,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 				System.out.println("BSDropCommand.redo(): executeNestedCommands(). " + (System.currentTimeMillis() - time)); //$NON-NLS-1$
 			}
 			
-			IRealizationManager mgr = LibUtil.getInstance().getRelizationManager(ProcessUtil.getProcess(activity));
+			IRealizationManager mgr = LibUtil.getInstance().getDefaultRealizationManager();
 			if (mgr != null) {
 				mgr.updateActivityModel(activity);
 			}

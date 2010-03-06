@@ -10,11 +10,10 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.realization.RealizationContext;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
-import org.eclipse.epf.library.realization.RealizationManagerFactory;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -33,8 +32,6 @@ import org.eclipse.epf.uma.TeamProfile;
  */
 public class ProcessConfigurator extends ConfigurationFilter {
 
-	private IRealizationManager realizationManager;
-	
 	private boolean checkOwningProcess;
 
 	/**
@@ -117,16 +114,8 @@ public class ProcessConfigurator extends ConfigurationFilter {
 	 * @return an IRealizationManager instance
 	 */
 	public IRealizationManager getRealizationManager() {
-		return realizationManager;
+		MethodConfiguration c = LibraryService.getInstance().getCurrentMethodConfiguration();
+		return ConfigurationHelper.getDelegate().getRealizationManager(c);
 	}
 	
-	//To do: need to revisit the following two methods
-	public IRealizationManager beginRealizationManager(RealizationContext context) {
-		realizationManager = RealizationManagerFactory.getInstance().beginUsingRealizationManager(context, this);
-		return realizationManager;
-	}
-	
-	public void endRealizationManager(RealizationContext context) {
-		RealizationManagerFactory.getInstance().endUsingRealizationManager(context, this);
-	}
 }

@@ -101,7 +101,7 @@ public class ConfigurationManager implements IConfigurationManager {
 			// closure = new ConfigurationClosure(this, config);
 			realizationContext = new RealizationContext(config, 1);
 			realizationManager = RealizationManagerFactory.getInstance()
-					.beginUsingRealizationManager(realizationContext, this);
+					.newRealizationManager(config);
 
 		}
 	}
@@ -217,7 +217,7 @@ public class ConfigurationManager implements IConfigurationManager {
 		configProps = null;
 		
 		if (realizationManager != null) {
-			RealizationManagerFactory.getInstance().endUsingRealizationManager(realizationContext, this);
+			realizationManager.dispose();
 			realizationManager = null;
 		}
 	}

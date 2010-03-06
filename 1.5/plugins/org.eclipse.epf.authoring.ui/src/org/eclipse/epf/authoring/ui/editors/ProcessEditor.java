@@ -73,6 +73,7 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.ILibraryServiceListener;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ProcessAuthoringConfigurator;
 import org.eclipse.epf.library.edit.IAdapterFactoryProvider;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
@@ -985,10 +986,6 @@ public class ProcessEditor extends MethodElementEditor implements
 
 	public void dispose() {
 		if (getSelectedProcess() != null) {
-			LibUtil.getInstance().removeFromRealizationManagerMap(getSelectedProcess());
-		}
-		getConfiguratorInstance().endRealizationManager(realizationContext);
-		if (getSelectedProcess() != null) {
 			Scope scope = ProcessScopeUtil.getInstance().getScope(getSelectedProcess());
 			if (scope != null) {
 				ProcessScopeUtil.getInstance().endProcesEdit(scope);
@@ -1151,7 +1148,6 @@ public class ProcessEditor extends MethodElementEditor implements
 			} else {
 				realizationContext = new RealizationContext(currentConfig);
 			}
-			IRealizationManager mgr = getConfiguratorInstance().beginRealizationManager(realizationContext);
 			if (IRealizationManager.debug) {
 				if (selectedProcess == null) {
 					Thread.dumpStack();
@@ -1159,9 +1155,6 @@ public class ProcessEditor extends MethodElementEditor implements
 			}
 			
 			if (ProcessUtil.isSynFree()) {
-				if (selectedProcess != null && mgr != null) {
-					LibUtil.getInstance().addToRealizationManagerMap(selectedProcess, mgr);
-				}
 				updateProcessModel();
 			}
 			
@@ -2123,6 +2116,10 @@ public class ProcessEditor extends MethodElementEditor implements
 		MethodConfiguration config = LibraryService.getInstance()
 				.getCurrentMethodConfiguration();
 		if (config != currentConfig) {
+			if (! isEditingConfigFreeProcess()) {
+				updateProcessModel();
+			}
+			
 			// refresh only if the active part is this editor or diagram editor
 			// of any activity in this process
 			//
@@ -2566,11 +2563,19 @@ public class ProcessEditor extends MethodElementEditor implements
 				&& selectedProcess.getDefaultContext() instanceof Scope) {
 			if (scopeConfigurator == null) {
 				Scope scope = (Scope) selectedProcess.getDefaultContext();
-				scopeConfigurator = new ProcessAuthoringConfigurator(scope);
+				scopeConfigurator = new ProcessAuthoringConfigurator(scope) {
+					public IRealizationManager getRealizationManager() {
+						return LibUtil.getInstance().getDefaultRealizationManager();
+					}
+				};
 			}
 			return scopeConfigurator;
 		}
 		return ProcessAuthoringConfigurator.INSTANCE;
+	}
+	
+	private boolean isEditingConfigFreeProcess() {
+		return getConfiguratorInstance() == scopeConfigurator;
 	}
 	
 	public Process getSelectedProcess() {

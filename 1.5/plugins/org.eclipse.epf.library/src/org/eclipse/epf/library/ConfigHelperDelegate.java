@@ -24,7 +24,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.uma.Scope;
+import org.eclipse.epf.library.edit.util.LibUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
@@ -33,8 +35,10 @@ import org.eclipse.epf.library.layout.elements.AbstractProcessElementLayout;
 import org.eclipse.epf.library.layout.elements.ElementLayoutExtender;
 import org.eclipse.epf.library.layout.elements.SummaryPageLayout;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
+import org.eclipse.epf.library.realization.RealizationManagerFactory;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -47,6 +51,11 @@ import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.swt.SWT;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IPerspectiveListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * Delegate class used in ConfigurationHelper
@@ -58,6 +67,14 @@ public class ConfigHelperDelegate {
 
 	private boolean publishingMode = false;
 	private boolean authoringPerspective = false;
+	private MethodConfiguration config;
+	private boolean loadForBrowsingNeeded = true;
+	
+	public ConfigHelperDelegate() {
+		LibraryService.getInstance().addListener(libServiceListener);		
+		IRealizationManager mgr = RealizationManagerFactory.getInstance().newRealizationManager(null);
+		LibUtil.getInstance().setDefaultRealizationManager(mgr);
+	}
 	
 	/**
 	 * Test if pkg is a system package of plugin
@@ -273,6 +290,8 @@ public class ConfigHelperDelegate {
 	}
 	
 	public String generateHtml(Object raw_element, HtmlBuilder htmlBuilder) {
+		loadForBrowsing(raw_element);
+		
 		IElementLayout layout = null;
 		String file_url = "about:blank"; //$NON-NLS-1$
 		Object element = LibraryUtil.unwrap(raw_element);
@@ -352,4 +371,84 @@ public class ConfigHelperDelegate {
 	public boolean isAuthoringMode() {
 		return isAuthoringPerspective();
 	}
+	
+	private IPerspectiveListener perspectiveListener;
+
+	private void addPerspectiveListener() {
+		if (perspectiveListener != null) {
+			return;
+		}
+		
+		IWorkbenchWindow window = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (window != null) {
+			perspectiveListener = new IPerspectiveListener() {
+				public void perspectiveActivated(IWorkbenchPage page,
+						IPerspectiveDescriptor desc) {
+					handleConfigOrPersepctiveChange();
+				}
+
+				public void perspectiveChanged(IWorkbenchPage page,
+						IPerspectiveDescriptor desc, String id) {
+					handleConfigOrPersepctiveChange();
+				}
+				
+			};
+			window.addPerspectiveListener(perspectiveListener);
+		}
+
+	}
+	
+	private ILibraryServiceListener libServiceListener = new LibraryServiceListener() {
+
+		public void configurationSet(MethodConfiguration newConfig) {
+			addPerspectiveListener();
+			
+			if (config == newConfig) {
+				return;
+			}			
+			
+			handleConfigOrPersepctiveChange();				
+			config = newConfig;
+		}
+
+	};
+	
+	private void loadForBrowsing(Object raw_element) {
+		if (!loadForBrowsingNeeded) {
+			return;
+		}
+		if (raw_element instanceof BreakdownElement
+				|| raw_element instanceof ActivityWrapperItemProvider) {
+
+			MethodConfiguration config = LibraryService.getInstance()
+					.getCurrentMethodConfiguration();
+			if (config == null) {
+				LibraryUtil.loadAll(LibraryService.getInstance()
+						.getCurrentMethodLibrary());
+			} else {
+				LibraryUtil.loadAllPlugins(config);
+				IRealizationManager mgr = getRealizationManager(config);
+				if (mgr != null) {
+					mgr.updateAllProcesseModels();
+				}
+
+			}
+		}
+		
+		loadForBrowsingNeeded = false;
+	}
+	
+	public IRealizationManager getRealizationManager(MethodConfiguration config) {
+		if (config == null || config instanceof Scope) {
+			return null;
+		}
+		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
+		return configMgr == null ? null : configMgr.getRealizationManager();
+	}
+	
+	private void handleConfigOrPersepctiveChange() {
+		loadForBrowsingNeeded = true;
+	}
+	
 }

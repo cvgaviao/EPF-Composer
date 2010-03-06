@@ -1,10 +1,8 @@
 package org.eclipse.epf.library.edit.util;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -23,29 +21,19 @@ public class LibUtil {
 	
 	private static boolean debug = false;
 	private static LibUtil instance = new LibUtil();
-	private Map<Process, IRealizationManager> realizationManagerMap;
-	
+	private IRealizationManager defaultRealizationManager;
+
 	public static LibUtil getInstance() {
 		return instance;
 	}
-	
-	private Map<Process, IRealizationManager> getRealizationManagerMap() {
-		if (realizationManagerMap == null) {
-			realizationManagerMap = new HashMap<Process, IRealizationManager>();
-		}
-		return realizationManagerMap;
-	}
-	
-	public void addToRealizationManagerMap(Process proc, IRealizationManager mgr) {
-		getRealizationManagerMap().put(proc, mgr);
-	}
-	
-	public void removeFromRealizationManagerMap(Process proc) {
-		getRealizationManagerMap().remove(proc);
+
+	public IRealizationManager getDefaultRealizationManager() {
+		return defaultRealizationManager;
 	}
 
-	public IRealizationManager getRelizationManager(Process proc) {
-		return getRealizationManagerMap().get(proc);
+	public void setDefaultRealizationManager(
+			IRealizationManager defaultRealizationManager) {
+		this.defaultRealizationManager = defaultRealizationManager;
 	}
 	
 	public Set<Descriptor> collectDescriptors(Process process) {			

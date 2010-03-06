@@ -9,12 +9,15 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
-import org.eclipse.epf.library.edit.realization.RealizationContext;
+import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -40,10 +43,12 @@ import org.eclipse.ui.PlatformUI;
 public class RealizationManager implements IRealizationManager {
 
 	private Map<MethodElement, IRealizedElement> elementMap;
-	private RealizationContext context;
+	private MethodConfiguration config;
+	private MethodConfiguration dynamicConfig;
+
 	private boolean caching = false;
 	private IPerspectiveListener perspectiveListener;
-	private boolean localTiming = true;
+	private boolean localTiming = true;	
 	
 	public boolean isCaching() {
 		return caching;
@@ -60,17 +65,14 @@ public class RealizationManager implements IRealizationManager {
 		return elementMap;
 	}
 	
-	public RealizationManager(RealizationContext context) {
-		this.context = context;
-		if (context.getMode() == 1) {
-			caching = true;
-		}
+	public RealizationManager(MethodConfiguration config) {
+		this.config = config;
 		init();
 	}
 	
 	public void clearCacheData() {
 		if (IRealizationManager.debug) {
-			System.out.println("LD> RealizationManger.clearCacheData: " + context); //$NON-NLS-1$
+			System.out.println("LD> RealizationManger.clearCacheData: " + config); //$NON-NLS-1$
 		}
 		for (IRealizedElement element : getElementMap().values()) {
 			((RealizedElement) element).dispose();
@@ -82,7 +84,6 @@ public class RealizationManager implements IRealizationManager {
 	
 	public void dispose() {
 		clearCacheData();
-		context = null;
 		
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window != null) {
@@ -91,12 +92,11 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	public MethodConfiguration getConfig() {
-		return context == null ? null : context.getConfig();
+		if (config == null) {	//Default RealizationManager instance would not have a null config
+			return dynamicConfig;
+		}
+		return config;
 	}	
-	
-	public int getRealizationMode() {
-		return context == null ? -1 : context.getMode();
-	}
 
 	public IRealizedElement getRealizedElement(MethodElement element) {
 		IRealizedElement rElement = getElementMap().get(element);
@@ -237,13 +237,17 @@ public class RealizationManager implements IRealizationManager {
 			referencedDes.setSuperActivities(null);
 		}
 	}
-
+	
 	public void updateProcessModel(Process proc) {	
+		updateProcessModel(proc, true);
+	}
+
+	private void updateProcessModel(Process proc, boolean setCacheFlag) {	
 		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
 		}
-		updateModelImpl(proc);
+		updateModelImpl(proc, setCacheFlag);
 		if (timing && localTiming) {
 			time = System.currentTimeMillis() - time;
 			System.out.println("LD> updateModel: " + time); //$NON-NLS-1$
@@ -251,10 +255,35 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	public void updateActivityModel(Activity act) {
+		updateModelImpl(act, true);
+	}
+
+	private void updateModelImpl(Activity act, boolean setCacheFlag) {
+		if (setCacheFlag) {
+			clearCacheData();
+			setCaching(true);
+		}
+		
 		updateModelImpl(act);
+		
+		if (setCacheFlag) {
+			clearCacheData();
+			setCaching(false);
+		}
 	}
 	
 	private void updateModelImpl(Activity act) {
+		if (config == null) {
+			Process proc = ProcessUtil.getProcess(act);
+			Scope scope = ProcessScopeUtil.getInstance().getScope(proc);
+			if (scope != null) {
+				dynamicConfig = scope;
+			} else {
+				dynamicConfig = LibraryService.getInstance()
+						.getCurrentMethodConfiguration();
+			}
+		}
+		
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		
 		Set<Descriptor> tdReferencedSet = new HashSet<Descriptor>();
@@ -298,8 +327,7 @@ public class RealizationManager implements IRealizationManager {
 				act.eSetDeliver(oldDeliver);
 			}
 		}
-		
-		
+				
 	}
 	
 	
@@ -317,8 +345,7 @@ public class RealizationManager implements IRealizationManager {
 		}
 	}
 	
-	public void beginPublish() {
-		
+	public void updateAllProcesseModels() {		
 		boolean oldLocalTiming = localTiming;
 		long time = 0;
 		if (timing) {
@@ -327,19 +354,19 @@ public class RealizationManager implements IRealizationManager {
 		}
 
 		clearCacheData();
+		setCaching(true);
 		for (Process proc : LibUtil.getInstance().collectProcessesFromConfig(
 				getConfig())) {
-			updateProcessModel(proc);
+			updateProcessModel(proc, false);
 		}
+		clearCacheData();
+		setCaching(false);
 		if (timing) {
 			time = System.currentTimeMillis() - time;
 			System.out.println("LD> beginPublish: " + time); //$NON-NLS-1$
 			localTiming = oldLocalTiming;
 		}
 	}
-	
-	public void endPublish() {
-		clearCacheData();
-	}
+
 	
 }

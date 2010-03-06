@@ -29,14 +29,11 @@ public interface IRealizationManager {
 	void updateActivityModel(Activity act);
 	
 	/**
-	 * Called at the beginning of publishing
+	 * Update all process models 
 	 */
-	void beginPublish();
-	
-	/**
-	 * Called at the end of publishing
-	 */
-	void endPublish();
+	void updateAllProcesseModels();
+		
+	void dispose();
 	
 	boolean debug = true;
 	
