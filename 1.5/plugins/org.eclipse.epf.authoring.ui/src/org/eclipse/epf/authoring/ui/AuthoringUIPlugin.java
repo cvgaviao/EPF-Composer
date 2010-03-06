@@ -12,8 +12,12 @@ package org.eclipse.epf.authoring.ui;
 
 import org.eclipse.epf.authoring.ui.internal.ImageDescriptorRegistry;
 import org.eclipse.epf.authoring.ui.internal.ProblemMarkerManager;
+import org.eclipse.epf.authoring.ui.preferences.ApplicationPreferenceConstants;
 import org.eclipse.epf.authoring.ui.preferences.LibraryViewPrefPage;
+import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.ui.AbstractPlugin;
+import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -63,6 +67,12 @@ public class AuthoringUIPlugin extends AbstractPlugin {
 		super.init(context);
 		
 		LibraryViewPrefPage.initDefaults(getDefault().getPreferenceStore());
+		
+		IPreferenceStoreWrapper store = LibraryPlugin.getDefault()
+				.getPreferenceStore();
+		boolean synFree = store
+				.getBoolean(ApplicationPreferenceConstants.PREF_SYN_FREE);
+		ProcessUtil.setSynFree(synFree);
 	}
 
 	/**

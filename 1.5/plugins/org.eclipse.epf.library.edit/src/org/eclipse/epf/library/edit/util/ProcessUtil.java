@@ -128,12 +128,17 @@ public final class ProcessUtil {
 	private static boolean synFree = false;
 	
 	public static boolean isSynFree() {
+		if (IRealizationManager.debug) {
+			System.out.println("LD> getSynFree: " + synFree);
+		}
 		return synFree;
 	}
 
 	public static void setSynFree(boolean synFree) {
 		ProcessUtil.synFree = synFree;
-		System.out.println("LD> setSynFree: " + synFree);
+		if (IRealizationManager.debug) {
+			System.out.println("LD> setSynFree: " + synFree);
+		}
 	}
 
 	private static Collection<VariabilityType> getExtendAndLocalContributionVariabilityTypes() {

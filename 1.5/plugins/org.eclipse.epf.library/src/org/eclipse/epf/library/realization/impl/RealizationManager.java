@@ -71,15 +71,10 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	public void clearCacheData() {
-		if (IRealizationManager.debug) {
-			System.out.println("LD> RealizationManger.clearCacheData: " + config); //$NON-NLS-1$
-		}
 		for (IRealizedElement element : getElementMap().values()) {
 			((RealizedElement) element).dispose();
-		}
-		
+		}		
 		elementMap = null;
-
 	}
 	
 	public void dispose() {
@@ -207,6 +202,10 @@ public class RealizationManager implements IRealizationManager {
 			WorkProductDescriptor wpd = UmaFactory.eINSTANCE.createWorkProductDescriptor();
 			wpd.setWorkProduct((WorkProduct) element);
 			descriptor = wpd;
+		}
+		
+		if (debug) {
+			System.out.println("LD> Creating descriptor: " + descriptor); //$NON-NLS-1$
 		}
 		
 		if (descriptor == null) {
