@@ -16,8 +16,10 @@ import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.ProcessPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.util.SynFreeProcessConverter;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -245,6 +247,11 @@ public class RealizationManager implements IRealizationManager {
 		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
+		}
+		ProcessPropUtil propUtil = ProcessPropUtil.getProcessPropUtil();
+		if (! propUtil.isSynFree(proc)) {
+			SynFreeProcessConverter converter = new SynFreeProcessConverter(getConfig());
+			converter.convertProcess(proc, false);
 		}
 		updateModelImpl(proc, setCacheFlag);
 		if (timing && localTiming) {

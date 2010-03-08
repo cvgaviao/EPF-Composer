@@ -10,10 +10,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private static final String guidSeperator = "/"; 							//$NON-NLS-1$
 
-	public static final String DESCRIPTOR_SynFree = "synFree"; 				//$NON-NLS-1$
-	public static final String DESCRIPTOR_IsDynamic = "isDynamic"; 			//$NON-NLS-1$
-	public static final String DESCRIPTOR_Customization = "customization"; 	//$NON-NLS-1$
-	public static final String DESCRIPTOR_LocalUsingGuids = "localUsingGuids";	//$NON-NLS-1$
+	public static final String DESCRIPTOR_SynFree = "descriptor_synFree"; 				//$NON-NLS-1$
+	public static final String DESCRIPTOR_IsDynamic = "descriptor_isDynamic"; 			//$NON-NLS-1$
+	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 	//$NON-NLS-1$
+	public static final String DESCRIPTOR_LocalUsingGuids = "descriptor_localUsingGuids";	//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010

@@ -14,10 +14,12 @@ import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.ProcessPropUtil;
 import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -36,6 +38,8 @@ public class SynFreeProcessConverter {
 	
 	private ElementRealizer realizer;
 	
+	private MethodConfiguration config;
+	
 	private ElementRealizer getRealizer() {
 		return realizer;
 	}
@@ -49,6 +53,14 @@ public class SynFreeProcessConverter {
 	private UmaPackage up = UmaPackage.eINSTANCE;
 	
 	public SynFreeProcessConverter() {		
+	}
+	
+	public SynFreeProcessConverter(MethodConfiguration config) {
+		this.config = config;
+	}
+	
+	private MethodConfiguration getConfig() {
+		return config;
 	}
 	
 	public void convertLibrary(MethodLibrary lib) {
@@ -93,7 +105,12 @@ public class SynFreeProcessConverter {
 			System.out.println("");
 		}
 		
-		setRealizer(DefaultElementRealizer.newElementRealizer(proc.getDefaultContext()));		
+		MethodConfiguration c = getConfig();
+		if (c == null) {
+			c = proc.getDefaultContext();
+		}
+		ElementRealizer r = DefaultElementRealizer.newElementRealizer(c);		
+		setRealizer(r);		
 		
 		Set<Descriptor> descriptors = LibUtil.getInstance().collectDescriptors(proc);
 
@@ -102,7 +119,9 @@ public class SynFreeProcessConverter {
 		}
 		for (Descriptor des : descriptors) {
 			convert(des);
-		}		
+		}
+		ProcessPropUtil.getProcessPropUtil().setSynFree(proc, true);
+		
 		if (toSave) {
 			save();
 		}
