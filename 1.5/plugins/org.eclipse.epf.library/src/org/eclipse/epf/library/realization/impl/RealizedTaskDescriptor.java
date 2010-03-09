@@ -1,6 +1,5 @@
 package org.eclipse.epf.library.realization.impl;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +36,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 	
 	public Object getFeatureValue(EStructuralFeature feature) {
 		if (! featureSet.contains(feature)) {
-			return null; 
+			return super.getFeatureValue(feature); 
 		}		
 		UmaPackage up = UmaPackage.eINSTANCE;		
 		if (feature == up.getTaskDescriptor_PerformedPrimarilyBy()) {

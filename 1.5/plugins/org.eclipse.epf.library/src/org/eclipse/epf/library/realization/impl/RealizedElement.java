@@ -33,6 +33,10 @@ public class RealizedElement implements IRealizedElement {
 		return (String) getFeatureValue(UmaPackage.eINSTANCE.getMethodElement_PresentationName());
 	}
 	
+	public String getBriefDescription() {
+		return (String) getFeatureValue(UmaPackage.eINSTANCE.getMethodElement_BriefDescription());
+	}
+	
 	protected Object getCachedValue(EStructuralFeature feature) {
 		return getMgr().isCaching() ? featureValueMap.get(feature) : null;
 	}

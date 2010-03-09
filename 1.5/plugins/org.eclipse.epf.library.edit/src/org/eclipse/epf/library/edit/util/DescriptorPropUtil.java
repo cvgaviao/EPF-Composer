@@ -1,9 +1,11 @@
 package org.eclipse.epf.library.edit.util;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
@@ -198,5 +200,21 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		
 		return null;
 	}
+	
+	public boolean isValueReplaced(EStructuralFeature feature, Descriptor d) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		if (feature == up.getNamedElement_Name()) {
+			return isNameRepalce(d);
+		}
+		if (feature == up.getMethodElement_PresentationName()) {
+			return isPresentationNameRepalce(d);
+		}
+		if (feature == up.getMethodElement_BriefDescription()) {
+			return isBriefDesRepalce(d);
+		}
+		
+		return true;
+	}
+	
 	
 }

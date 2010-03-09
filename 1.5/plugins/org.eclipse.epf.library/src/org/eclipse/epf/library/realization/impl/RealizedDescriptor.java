@@ -30,6 +30,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		UmaPackage up = UmaPackage.eINSTANCE;		
 		featureSet.add(up.getNamedElement_Name());
 		featureSet.add(up.getMethodElement_PresentationName());
+		featureSet.add(up.getMethodElement_BriefDescription());
 	}
 	
 	public RealizedDescriptor(Descriptor descriptor) {
@@ -42,17 +43,31 @@ public class RealizedDescriptor extends RealizedElement implements
 	
 	public Object getFeatureValue(EStructuralFeature feature) {
 		if (! featureSet.contains(feature)) {
-			return null; 
+			return super.getFeatureValue(feature); 
 		}		
-		MethodElement linkedElement = getLinkedElement();
-		if (feature instanceof EAttribute) {
-			MethodElement elementUsed = linkedElement == null ? getDescriptor() : linkedElement;
-			Object value = ConfigurationHelper.calcAttributeFeatureValue(elementUsed, feature, getConfig());
-			return value;
+
+		if (feature instanceof EAttribute) {	
+
+			Object value = getDescriptor().eGet(feature);
+			if (getLinkedElement() == null) {
+				return value;
+			}
+			
+			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+			if (propUtil.isValueReplaced(feature, getDescriptor())) {
+				return value;
+			}
+			
+			Object linkedValue = ConfigurationHelper.calcAttributeFeatureValue(getLinkedElement(), feature, getConfig());
+			if (linkedValue != null && !linkedValue.equals(value)) {
+				getDescriptor().eSet(feature, linkedValue);
+			}
+			
+			return linkedValue;
 		}
 
 		return super.getFeatureValue(feature);
-	}	
+	}
 	
 	public Object getOFeatureValue(OppositeFeature ofeature) {
 		return super.getOFeatureValue(ofeature);
@@ -192,6 +207,12 @@ public class RealizedDescriptor extends RealizedElement implements
 			return;
 		}
 		set.addAll(list);
+	}
+	
+	public void updatePlainTextValues() {
+		for (EStructuralFeature feature : featureSet) {
+			getFeatureValue(feature);
+		}
 	}
 	
 }

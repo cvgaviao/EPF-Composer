@@ -20,5 +20,6 @@ public interface IRealizedElement {
 		
 	String getName();	
 	String getPresentationName();
+	String getBriefDescription();
 	
 }

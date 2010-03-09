@@ -315,27 +315,25 @@ public class RealizationManager implements IRealizationManager {
 			}
 		}
 		
-		boolean oldDeliver = act.eDeliver();
-		try {
-			if (oldDeliver) {
-				act.eSetDeliver(false);
+		for (Descriptor des : rdwpdList) {
+			if (des instanceof TaskDescriptor || !propUtil.isDynamic(des)) {
+				continue;
 			}
-			for (Descriptor des : rdwpdList) {
-				if (des instanceof TaskDescriptor || !propUtil.isDynamic(des)) {
-					continue;
-				}
-				if (!tdReferencedSet.contains(des)) {
-					act.getBreakdownElements().remove(des);
-				}
+			if (!tdReferencedSet.contains(des)) {
+				act.getBreakdownElements().remove(des);
 			}
-		} finally {
-			if (oldDeliver) {
-				act.eSetDeliver(oldDeliver);
+		}
+		
+		beList =  act.getBreakdownElements();
+		for (int i = 0; i < beList.size(); i++) {
+			BreakdownElement be = beList.get(i);
+			if (be instanceof Descriptor) {
+				RealizedDescriptor rdes = (RealizedDescriptor) getRealizedElement(be);	
+				rdes.updatePlainTextValues();
 			}
 		}
 				
 	}
-	
 	
 	private void collectAllReferences(Descriptor des, Set<Descriptor> collectingSet, Set<Descriptor> seenSet) {
 		if (seenSet.contains(des)) {
