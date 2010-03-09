@@ -140,7 +140,7 @@ public class RealizedDescriptor extends RealizedElement implements
 			MethodElement me = getLinkedElement(des);
 			if (me == null
 					|| DescriptorPropUtil.getDesciptorPropUtil().localUse(des,
-							getDescriptor())) {
+							getDescriptor(), dFeature)) {
 				resultDescriptorList.add(des);
 
 			} else if (elementSet.contains(me)) {

@@ -1,6 +1,8 @@
 package org.eclipse.epf.library.edit.util;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -10,18 +12,16 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
-	private static final String guidSeperator = "/"; 							//$NON-NLS-1$
+	private static final String infoSeperator = "/"; 							//$NON-NLS-1$
 
 	public static final String DESCRIPTOR_SynFree = "descriptor_synFree"; 				//$NON-NLS-1$
 	public static final String DESCRIPTOR_IsDynamic = "descriptor_isDynamic"; 			//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 	//$NON-NLS-1$
-	public static final String DESCRIPTOR_LocalUsingGuids = "descriptor_localUsingGuids";	//$NON-NLS-1$
+	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";	//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
 	private static int briefDesReplace = 			4;		//0000000000000100
-	private static int mainDesReplace = 			8;		//0000000000001000
-	private static int mainDesAppend = 				16;		//0000000000010000
 	
 	private static DescriptorPropUtil descriptorPropUtil = new DescriptorPropUtil();
 	public static DescriptorPropUtil getDesciptorPropUtil() {
@@ -82,82 +82,111 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		setCustomization(d, briefDesReplace, value);
 	}
 	
-	public boolean isMainDesReplace(Descriptor d) {
-		return getCustomization(d, mainDesReplace);
-	}
-	
-	public void setMainDesReplace(Descriptor d, boolean value) {
-		setCustomization(d, mainDesReplace, value);
-	}
-	
-	public boolean isMainDesAppend(Descriptor d) {
-		return getCustomization(d, mainDesAppend);
-	}
-	
-	public void setMainDesAppend(Descriptor d, boolean value) {
-		setCustomization(d, mainDesAppend, value);
-	}
-	
 	//Check if usedD is locally used by usingD
-	public boolean localUse(Descriptor usedD, Descriptor usingD) {
-		String value = getStringValue(usedD, DESCRIPTOR_LocalUsingGuids);
+	public boolean localUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		try {
+			return localUse_(usedD, usingD, feature);			
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}		
+		return false;
+	}
+	
+	private boolean localUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
+		String value = getStringValue(usedD, DESCRIPTOR_LocalUsingInfo);
 		if (value == null || value.length() == 0) {
 			return false;
 		}
 		
-		String[] guids = value.split(guidSeperator);
-		if (guids == null || guids.length == 0) {
+		String[] infos = value.split(infoSeperator);
+		if (infos == null || infos.length == 0) {
 			return false;
 		}
 		
-		for (String guid : guids) {
-			if (guid.equals(usingD.getGuid())) {
+		int sz = infos.length / 2; 		
+		for (int i = 0; i < sz; i++) {
+			int i1 = i*2;
+			int i2 = i1 + 1;
+			String iGuid = infos[i1];
+			String iFeature = infos[i2];
+			if (iGuid.equals(usingD.getGuid()) && iFeature.endsWith(feature.getName())) {
 				return true;
 			} 
-		}
-		
+		}		
 		return false;
-	}
-	
-	
-	public void addLocalUse(Descriptor usedD, Descriptor usingD) {
-		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingGuids);
-		String newValue = usingD.getGuid();
-		if (oldValue != null && oldValue.length() > 0) {
-			String[] guids = oldValue.split(guidSeperator); 
-			if (guids != null )
-			for (String guid : guids) {
-				if (guid.equals(usingD.getGuid())) {
-					return;
-				}
-			}
-			newValue = oldValue.concat(guidSeperator).concat(usingD.getGuid());
-		}
 		
-		setStringValue(usedD, DESCRIPTOR_LocalUsingGuids, newValue);
 	}
 	
-	public void removeLocalUse(Descriptor usedD, Descriptor usingD) {
-		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingGuids);
+	public void addLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		try {
+			addLocalUse_(usedD, usingD, feature);			
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
+	private void addLocalUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
+		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingInfo);
+		String newValue = usingD.getGuid().concat(feature.getName());
+
+		if (oldValue != null && oldValue.length() > 0) {			
+			String[] infos = oldValue.split(infoSeperator); 
+			
+			int sz = infos.length / 2; 		
+			for (int i = 0; i < sz; i++) {
+				int i1 = i*2;
+				int i2 = i1 + 1;
+				String iGuid = infos[i1];
+				String iFeature = infos[i2];
+				if (iGuid.equals(usingD.getGuid()) && iFeature.equals(feature.getName())) {
+					return;
+				} 
+			}
+			
+			newValue = oldValue.concat(infoSeperator).concat(newValue);
+		}				
+		setStringValue(usedD, DESCRIPTOR_LocalUsingInfo, newValue);
+	}
+	
+	public void removeLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		try {
+			removeLocalUse_(usedD, usingD, feature);			
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
+	private void removeLocalUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
+		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingInfo);
 		if (oldValue == null || oldValue.length() == 0) {
 			return;
 		}
 		boolean removed = false;
 		String newValue = ""; //$NON-NLS-1$
-		String[] guids = oldValue.split(guidSeperator);
-		for (String guid : guids) {
-			if (guid.equals(usingD.getGuid())) {
-				removed = true;				
-			} else {
-				if (newValue.length() > 0) {
-					newValue = newValue.concat(guidSeperator);
-				}
-				newValue = newValue.concat(guid);
-			}
-		}
 
+		if (oldValue != null && oldValue.length() > 0) {			
+			String[] infos = oldValue.split(infoSeperator); 
+			
+			int sz = infos.length / 2; 		
+			for (int i = 0; i < sz; i++) {
+				int i1 = i*2;
+				int i2 = i1 + 1;
+				String iGuid = infos[i1];
+				String iFeature = infos[i2];
+				if (iGuid.equals(usingD.getGuid()) && iFeature.equals(feature.getName())) {
+					removed = true;		
+				} else {
+					if (newValue.length() > 0) {
+						newValue = newValue.concat(infoSeperator);
+					}
+					newValue = newValue.concat(iGuid.concat(iFeature));
+				}
+			}
+
+		}
+		
 		if (removed) {
-			setStringValue(usedD, DESCRIPTOR_LocalUsingGuids, newValue);
+			setStringValue(usedD, DESCRIPTOR_LocalUsingInfo, newValue);
 		}
 
 	}

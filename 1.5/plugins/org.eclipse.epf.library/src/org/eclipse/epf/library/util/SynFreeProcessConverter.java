@@ -270,7 +270,7 @@ public class SynFreeProcessConverter {
 		//Handle localList
 		DescriptorPropUtil descriptorPropUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		for (Descriptor des : localList) {
-			descriptorPropUtil.addLocalUse(des, ownerDescriptor);
+			descriptorPropUtil.addLocalUse(des, ownerDescriptor, dFeature);
 		}
 	}	
 	
