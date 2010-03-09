@@ -1,5 +1,7 @@
 package org.eclipse.epf.library.edit.util;
 
+import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 
@@ -10,8 +12,18 @@ public class MethodElementPropUtil {
 		return methodElementPropUtil;
 	}
 	
+	private IActionManager actionManager;
+	
 	protected MethodElementPropUtil() {		
+	}
+	
+	protected MethodElementPropUtil(IActionManager actionManager) {
+		this.actionManager = actionManager;
 	}	
+	
+	public IActionManager getActionManager() {
+		return actionManager;
+	}
 	
 	protected String getStringValue(MethodElement element, String propName) {		
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(element, propName);
@@ -22,7 +34,7 @@ public class MethodElementPropUtil {
 	}
 	
 	protected void setStringValue(MethodElement element, String propName, String value) {	
-		MethodElementPropertyHelper.setProperty(element, propName, value);
+		setProperty(element, propName, value);
 	}	
 	
 	protected Boolean getBooleanValue(MethodElement element, String propName) {		
@@ -36,7 +48,7 @@ public class MethodElementPropUtil {
 	
 	protected void setBooleanValue(MethodElement element, String propName, boolean value) {	
 		String strValue = value ? Boolean.TRUE.toString() : Boolean.FALSE.toString();
-		MethodElementPropertyHelper.setProperty(element, propName, strValue);
+		setProperty(element, propName, strValue);
 	}
 	
 	protected Integer getIntValue(MethodElement element, String propName) {		
@@ -50,7 +62,17 @@ public class MethodElementPropUtil {
 	
 	protected void setIntValue(MethodElement element, String propName, int value) {	
 		String strValue = Integer.toString(value);
-		MethodElementPropertyHelper.setProperty(element, propName, strValue);
+		setProperty(element, propName, strValue);
+	}
+	
+	private void setProperty(MethodElement e, String propName, String propValue) {
+		if (getActionManager() == null) {
+			MethodElementPropertyHelper.setProperty(e, propName, propValue);
+		} else {
+			MethodElementSetPropertyCommand cmd = new MethodElementSetPropertyCommand(
+					e, propName, propValue);
+			getActionManager().execute(cmd);
+		}
 	}
 	
 }

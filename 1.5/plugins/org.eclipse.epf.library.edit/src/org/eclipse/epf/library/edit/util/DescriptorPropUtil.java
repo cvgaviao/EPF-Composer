@@ -3,6 +3,7 @@ package org.eclipse.epf.library.edit.util;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -27,8 +28,15 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public static DescriptorPropUtil getDesciptorPropUtil() {
 		return descriptorPropUtil;
 	}
+	public static DescriptorPropUtil getDesciptorPropUtil(IActionManager actionManager) {
+		return new DescriptorPropUtil(actionManager);
+	}
 	
 	protected DescriptorPropUtil() {		
+	}
+	
+	protected DescriptorPropUtil(IActionManager actionManager) {
+		super(actionManager);
 	}
 	
 	public boolean isSynFree(Descriptor d) {
