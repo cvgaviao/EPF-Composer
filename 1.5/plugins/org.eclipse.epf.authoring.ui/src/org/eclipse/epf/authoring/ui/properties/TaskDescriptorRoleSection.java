@@ -26,9 +26,11 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.AssignRoleToTaskDescriptor;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -77,9 +79,17 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	protected void initContentProvider1() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				return getFilteredList(
-						((TaskDescriptor) element).getPerformedPrimarilyBy())
-						.toArray();
+				TaskDescriptor td = (TaskDescriptor) element;
+				List<MethodElement> elements = new ArrayList<MethodElement>();
+				elements.addAll(td.getPerformedPrimarilyBy());
+				
+				if (ProcessUtil.isSynFree()
+						&& DescriptorPropUtil.getDesciptorPropUtil()
+								.isNoAutoSyn(td)) {
+					elements.addAll(td.getPerformedPrimarilyByExcluded());
+				}
+				
+				return getFilteredList(elements).toArray();
 			}
 		};
 		tableViewer1.setContentProvider(contentProvider);
@@ -341,6 +351,17 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	 */
 	protected List getExistingElements1() {
 		return ((TaskDescriptor) element).getPerformedPrimarilyBy();
+	};
+	
+	protected List<MethodElement> getExistingContentElements1() {
+		List<MethodElement> list = super.getExistingContentElements1();
+		TaskDescriptor td = (TaskDescriptor) element;
+		if (ProcessUtil.isSynFree()
+				&& DescriptorPropUtil.getDesciptorPropUtil()
+						.isNoAutoSyn(td)) {
+			list.addAll(td.getPerformedPrimarilyByExcluded());
+		}
+		return list;
 	};
 
 	/**

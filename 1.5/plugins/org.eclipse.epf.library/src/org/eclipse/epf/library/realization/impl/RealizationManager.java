@@ -214,7 +214,7 @@ public class RealizationManager implements IRealizationManager {
 			return null;
 		}
 		
-		DescriptorPropUtil.getDesciptorPropUtil().setDynamic(descriptor, true);
+		DescriptorPropUtil.getDesciptorPropUtil().setCreatedByReference(descriptor, true);
 			
 		String presentationName = element.getPresentationName();
 		descriptor.setName(element.getName());
@@ -316,7 +316,7 @@ public class RealizationManager implements IRealizationManager {
 		}
 		
 		for (Descriptor des : rdwpdList) {
-			if (des instanceof TaskDescriptor || !propUtil.isDynamic(des)) {
+			if (des instanceof TaskDescriptor || !propUtil.isCreatedByReference(des)) {
 				continue;
 			}
 			if (!tdReferencedSet.contains(des)) {

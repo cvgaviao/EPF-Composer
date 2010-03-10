@@ -19,18 +19,22 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
+import org.eclipse.epf.uma.UmaPackage;
 
 
 /**
@@ -153,6 +157,8 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getAssistedBy().addAll(existingRoleDescList);
 			taskDesc.getAssistedBy().addAll(newRoleDescList);
 		}
+		addLocalUsingInfo(existingRoleDescList, getFeature(action));
+		addLocalUsingInfo(newRoleDescList, getFeature(action));
 
 		activity.getBreakdownElements().addAll(newRoleDescList);
 
@@ -167,6 +173,46 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 			}
 		}
 
+		
+	}
+	
+	private EReference getFeature(int action) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		
+		if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
+			return up.getTaskDescriptor_PerformedPrimarilyBy();		
+		} 
+		
+		if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
+			return up.getTaskDescriptor_AdditionallyPerformedBy();	
+		}
+
+		if (action == IActionTypeConstants.ADD_ASSISTED_BY) {
+			return up.getTaskDescriptor_AssistedBy();	
+		}
+		
+		return null;
+	}
+	
+	private void addLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
+		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
+			return;
+		}		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		for (Descriptor des : deslIst) {
+			propUtil.addLocalUse(des, taskDesc, feature);
+		}
+		
+	}
+	
+	private void removeLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
+		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
+			return;
+		}		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		for (Descriptor des : deslIst) {
+			propUtil.removeLocalUse(des, taskDesc, feature);
+		}
 		
 	}
 
@@ -187,6 +233,10 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getAssistedBy().removeAll(existingRoleDescList);
 			taskDesc.getAssistedBy().removeAll(newRoleDescList);
 		}
+		
+		removeLocalUsingInfo(existingRoleDescList, getFeature(action));
+		removeLocalUsingInfo(newRoleDescList, getFeature(action));
+		
 		activity.getBreakdownElements().removeAll(newRoleDescList);
 
 		if (map != null) {

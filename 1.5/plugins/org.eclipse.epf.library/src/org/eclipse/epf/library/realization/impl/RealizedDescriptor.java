@@ -180,7 +180,7 @@ public class RealizedDescriptor extends RealizedElement implements
 				
 				for (int i = listValue.size() - 1; i >= 0; i--) {
 					Descriptor des = listValue.get(i);
-					if (propUtil.isDynamic(des) && !resultSet.contains(des)) {
+					if (propUtil.isCreatedByReference(des) && !resultSet.contains(des)) {
 						listValue.remove(i);
 					}
 				}

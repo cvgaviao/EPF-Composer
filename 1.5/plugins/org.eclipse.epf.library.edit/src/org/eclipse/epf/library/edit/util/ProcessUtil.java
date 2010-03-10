@@ -485,7 +485,7 @@ public final class ProcessUtil {
 				.getName() : presentationName);
 		// roleDesc.setBriefDescription(role.getBriefDescription());
 		if (isSynFree() && isDynamic) {
-			DescriptorPropUtil.getDesciptorPropUtil().setDynamic(roleDesc, true);
+			DescriptorPropUtil.getDesciptorPropUtil().setCreatedByReference(roleDesc, true);
 		}
 		return roleDesc;
 	}
@@ -507,7 +507,7 @@ public final class ProcessUtil {
 						: wp.getPresentationName());
 		// wpDesc.setBriefDescription(wp.getBriefDescription());
 		if (isSynFree() && isDynamic) {
-			DescriptorPropUtil.getDesciptorPropUtil().setDynamic(wpDesc, true);
+			DescriptorPropUtil.getDesciptorPropUtil().setCreatedByReference(wpDesc, true);
 		}
 		return wpDesc;
 	}

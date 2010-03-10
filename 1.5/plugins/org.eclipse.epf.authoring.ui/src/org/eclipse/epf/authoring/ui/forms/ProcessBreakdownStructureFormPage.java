@@ -162,7 +162,7 @@ public class ProcessBreakdownStructureFormPage extends ProcessFormPage
 			Object obj = TngUtil.unwrap(element);
 			if (obj instanceof Descriptor) {
 				Descriptor d = (Descriptor) obj;
-				if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic(d)) {
+				if (DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference(d)) {
 					return Colors.DYNAMIC_ELEMENT_LABEL;
 				}
 			}

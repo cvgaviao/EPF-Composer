@@ -15,10 +15,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private static final String infoSeperator = "/"; 							//$NON-NLS-1$
 
-	public static final String DESCRIPTOR_SynFree = "descriptor_synFree"; 				//$NON-NLS-1$
-	public static final String DESCRIPTOR_IsDynamic = "descriptor_isDynamic"; 			//$NON-NLS-1$
-	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 	//$NON-NLS-1$
-	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";	//$NON-NLS-1$
+	public static final String DESCRIPTOR_NoAutoSyn = "descriptor_noAutoSyn"; 								//$NON-NLS-1$	
+	public static final String DESCRIPTOR_CreatedByReference = "descriptor_createdByReferebce"; 			//$NON-NLS-1$
+	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 						//$NON-NLS-1$
+	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";						//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -39,22 +39,29 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		super(actionManager);
 	}
 	
-	public boolean isSynFree(Descriptor d) {
-		Boolean value = getBooleanValue(d, DESCRIPTOR_SynFree);
+	//Test if the descriptor is not to be automatically synchronized
+	//Specifically, if the linked element of a descriptor is selected from UI by user,
+	//then we don't want to automatically synchronize it.
+	public boolean isNoAutoSyn(Descriptor d) {
+		if (getLinkedElement(d) == null) {
+			return false;
+		}
+		Boolean value = getBooleanValue(d, DESCRIPTOR_NoAutoSyn);
 		return value == null ? false : value.booleanValue();
 	}
 	
-	public void setSynFree(Descriptor d, boolean value) {
-		setBooleanValue(d, DESCRIPTOR_SynFree, value);
+	public void setNoAutoSyn(Descriptor d, boolean value) {
+		setBooleanValue(d, DESCRIPTOR_NoAutoSyn, value);
 	}
 	
-	public boolean isDynamic(Descriptor d) {
-		Boolean value = getBooleanValue(d, DESCRIPTOR_IsDynamic);
+	//Test if the descriptor is created indirectly due to a reference relationship 
+	public boolean isCreatedByReference(Descriptor d) {
+		Boolean value = getBooleanValue(d, DESCRIPTOR_CreatedByReference);
 		return value == null ? false : value.booleanValue();
 	}
 	
-	public void setDynamic(Descriptor d, boolean value) {
-		setBooleanValue(d, DESCRIPTOR_IsDynamic, value);
+	public void setCreatedByReference(Descriptor d, boolean value) {
+		setBooleanValue(d, DESCRIPTOR_CreatedByReference, value);
 	}
 	
 	public boolean isNameRepalce(Descriptor d) {
@@ -90,7 +97,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		setCustomization(d, briefDesReplace, value);
 	}
 	
-	//Check if usedD is locally used by usingD
+	//Test if usedD is locally used by usingD through relationship specified by the
+	//given feature.
 	public boolean localUse(Descriptor usedD, Descriptor usingD, EReference feature) {
 		try {
 			return localUse_(usedD, usingD, feature);			
@@ -225,17 +233,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}	
 	
 	public MethodElement getLinkedElement(Descriptor des) {
-		if (des instanceof TaskDescriptor) {
-			return ((TaskDescriptor) des).getTask();
-		}
-		if (des instanceof RoleDescriptor) {
-			return ((RoleDescriptor) des).getRole();
-		}
-		if (des instanceof WorkProductDescriptor) {
-			return ((WorkProductDescriptor) des).getWorkProduct();
-		}
-		
-		return null;
+		return ProcessUtil.getAssociatedElement(des);
 	}
 	
 	public boolean isValueReplaced(EStructuralFeature feature, Descriptor d) {

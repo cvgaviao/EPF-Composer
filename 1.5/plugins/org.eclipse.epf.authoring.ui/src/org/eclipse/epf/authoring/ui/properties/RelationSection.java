@@ -19,7 +19,6 @@ import org.eclipse.epf.authoring.gef.figures.Colors;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
-import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -494,8 +493,7 @@ public class RelationSection extends AbstractSection {
 				ctrl_add_1.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
 						IFilter filter = getFilter();
-						List existingElements = ProcessUtil
-								.getAssociatedElementList(getExistingElements1());
+						List existingElements = getExistingContentElements1();
 
 						ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 								.getWorkbench().getActiveWorkbenchWindow()
@@ -891,6 +889,10 @@ public class RelationSection extends AbstractSection {
 	protected List getExistingElements1() {
 		return null;
 	};
+	
+	protected List<MethodElement> getExistingContentElements1() {
+		return ProcessUtil.getAssociatedElementList(getExistingElements1());
+	};
 
 	protected List getExistingElements2() {
 		return null;
@@ -912,7 +914,7 @@ public class RelationSection extends AbstractSection {
 	    public Color getForeground(Object element, int columnIndex) {
 	    	if (ProcessUtil.isSynFree()) {
 	    		if (element instanceof Descriptor) {
-	    			if (DescriptorPropUtil.getDesciptorPropUtil().isDynamic((Descriptor) element)) {
+	    			if (DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference((Descriptor) element)) {
 	    				return Colors.DYNAMIC_ELEMENT_LABEL;
 	    			}
 	    		}
