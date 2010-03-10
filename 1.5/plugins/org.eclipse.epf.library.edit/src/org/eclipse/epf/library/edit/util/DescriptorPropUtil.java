@@ -227,7 +227,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		if (value) {
 			cus |= maskBit;
 		} else {
-			cus &= maskBit;
+			cus ^= maskBit;
 		}
 		setIntValue(d, DESCRIPTOR_Customization, cus);
 	}	
