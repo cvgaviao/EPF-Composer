@@ -19,6 +19,8 @@ import java.util.Map;
 
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.library.edit.uma.Scope;
+import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryProblemMonitor;
@@ -453,6 +455,10 @@ public class LibraryService implements ILibraryService {
 	 */
 	public void setCurrentMethodLibrary(MethodLibrary library) {
 		currentLibrary = library;
+		if (currentLibrary != null) {
+			boolean isSynFree = MethodLibraryPropUtil.getMethodLibraryPropUtil().isSynFree(currentLibrary);
+			ProcessUtil.setSynFree(isSynFree);
+		}
 		notifyListeners(library, EVENT_SET_CURRENT_LIBRARY);
 	}
 

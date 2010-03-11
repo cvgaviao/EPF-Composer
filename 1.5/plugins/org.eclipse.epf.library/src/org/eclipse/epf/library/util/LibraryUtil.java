@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -37,17 +38,24 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
+import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.persistence.PersistenceService;
+import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileXMISaveImpl;
+import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
@@ -66,6 +74,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Jinhua Xi
@@ -966,4 +975,124 @@ public class LibraryUtil {
 		return false;
 	}
 	
+	public static boolean markLibrarySynFree(final MethodLibrary lib, boolean toSave) {
+		boolean b = markLibrarySynFree(lib, toSave, true);
+		if (b) {
+			if (lib == LibraryService.getInstance().getCurrentMethodLibrary()) {
+				ProcessUtil.setSynFree(true);
+			}
+		}
+		
+		return b;
+	}
+	
+	public static boolean markLibrarySynFree(final MethodLibrary lib, boolean toSave, boolean synFreeValue) {
+		if (lib == null) {
+			return true;
+		}
+		MethodLibraryPropUtil propUtil = MethodLibraryPropUtil.getMethodLibraryPropUtil();
+		if (propUtil.isSynFree(lib) == synFreeValue) {
+			return true;
+		}
+
+		final List<MethodPlugin> plugins = lib.getMethodPlugins();
+		final List<Resource> resourcesToSave = new ArrayList<Resource>(); 
+		if (toSave) {
+			MethodPluginPropUtil pluginPropUtil = MethodPluginPropUtil.getMethodPluginPropUtil();
+			for (int i = 0; i < plugins.size(); i++) {
+				MethodPlugin plugin = plugins.get(i);
+				if (pluginPropUtil.isSynFree(plugin) != synFreeValue) {
+					Resource res = plugin.eResource();
+					if (res != null) {
+						resourcesToSave.add(res);
+					}
+				}
+			}
+			resourcesToSave.add(lib.eResource());			
+			if (! checkModify(resourcesToSave)) {
+				return false;
+			}
+		}
+		
+		propUtil.setSynFree(lib, synFreeValue);
+		for (int i = 0; i < plugins.size(); i++) {
+			markPluginSynFree(plugins.get(i), true, synFreeValue);
+		}
+		
+		if (toSave) {
+			SafeUpdateController.syncExec(new Runnable() {
+				public void run() {
+					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
+							.getCurrentPersister().getFailSafePersister();
+					try {
+						for (Resource res : resourcesToSave) {
+							persister.save(res);
+						}
+						persister.commit();
+					} catch (Exception e) {
+						persister.rollback();
+						LibraryPlugin.getDefault().getLogger().logError(e);
+					}
+				}
+			});
+		}
+		
+		return true;
+	}
+	
+	public static boolean markPluginSynFree(final MethodPlugin plugin, boolean toSave) {
+		return markPluginSynFree(plugin, toSave, true);
+	}
+	
+	public static boolean markPluginSynFree(final MethodPlugin plugin, boolean toSave, boolean synFreeValue) {
+		if (plugin == null) {
+			return true;
+		}
+		MethodPluginPropUtil propUtil = MethodPluginPropUtil.getMethodPluginPropUtil();
+		if (propUtil.isSynFree(plugin) == synFreeValue) {
+			return true;
+		}
+		
+		if (toSave && plugin.eResource() != null) {
+			List<Resource> resourcesToSave = new ArrayList<Resource>(); 
+			resourcesToSave.add(plugin.eResource());
+			if (! checkModify(resourcesToSave)) {
+				return false;
+			}
+		}
+		
+
+		propUtil.setSynFree(plugin, synFreeValue);
+
+		if (toSave && plugin.eResource() != null) {
+			SafeUpdateController.syncExec(new Runnable() {
+				public void run() {
+					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
+							.getCurrentPersister().getFailSafePersister();
+					try {
+						persister.save(plugin.eResource());
+						persister.commit();
+					} catch (Exception e) {
+						persister.rollback();
+						LibraryPlugin.getDefault().getLogger().logError(e);		
+					}
+				}
+			});
+		}
+	
+		return true;
+		
+	}
+	
+	private static boolean checkModify(List<Resource> resourcesToSave) {
+		IStatus status = UserInteractionHelper.checkModify(resourcesToSave,
+				Display.getCurrent().getActiveShell());
+
+		if (!status.isOK()) {
+			// To do: display error msg
+			return false;
+		}
+		
+		return true;
+	}
 }
