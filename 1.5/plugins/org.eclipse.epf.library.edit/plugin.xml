@@ -11,6 +11,7 @@
    <extension-point id="validationSupport" name="Validation Support" schema="schema/validationSupport.exsd"/>
    <extension-point id="uiHelper" name="UI Helper" schema="schema/uiHelper.exsd"/>
    <extension-point id="adapterFactories" name="Adapter Factories" schema="schema/adapterFactories.exsd"/>
+   <extension-point id="libraryEditUtilProvider" name="LibraryEditUtilProvider" schema="schema/libraryEditUtilProvider.exsd"/>
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 

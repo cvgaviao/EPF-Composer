@@ -50,6 +50,10 @@ public final class ExtensionManager {
 	public static ITextReferenceReplacer getTextReferenceReplacer() {
 		return (ITextReferenceReplacer) getExtension(LibraryEditPlugin.getDefault().getId(), "textReferenceReplacer"); //$NON-NLS-1$ 
 	}
+	
+	public static ILibraryEditUtilProvider getLibraryEditUtilProvider() {
+		return (ILibraryEditUtilProvider) getExtension(LibraryEditPlugin.getDefault().getId(), "libraryEditUtilProvider"); //$NON-NLS-1$ 
+	}
 
 	public static List<INestedCommandProvider> getNestedCommandProviders() {
 		if(nestedCommandProviders == null) {

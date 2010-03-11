@@ -22,11 +22,22 @@ public class LibraryEditUtil {
 	private static boolean debug = false;
 	private static LibraryEditUtil instance = new LibraryEditUtil();
 	private IRealizationManager defaultRealizationManager;
+	private ILibraryEditUtilProvider provider;
 
 	public static LibraryEditUtil getInstance() {
 		return instance;
 	}
-
+	
+	private LibraryEditUtil() {		
+	}
+	
+	public ILibraryEditUtilProvider getProvider() {
+		if (provider == null) {
+			provider = ExtensionManager.getLibraryEditUtilProvider();
+		}
+		return provider;
+	}
+	
 	public IRealizationManager getDefaultRealizationManager() {
 		return ProcessUtil.isSynFree() ? defaultRealizationManager : null;
 	}
@@ -88,5 +99,9 @@ public class LibraryEditUtil {
 		return result;
 	}
 
-	
+	public boolean isSynFree() {
+		ILibraryEditUtilProvider p = getProvider();				
+		return p == null ? true : p.isSynFree();
+	}
+		
 }

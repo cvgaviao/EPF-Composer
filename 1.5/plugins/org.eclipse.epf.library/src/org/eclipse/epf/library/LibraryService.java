@@ -455,10 +455,6 @@ public class LibraryService implements ILibraryService {
 	 */
 	public void setCurrentMethodLibrary(MethodLibrary library) {
 		currentLibrary = library;
-		if (currentLibrary != null) {
-			boolean isSynFree = MethodLibraryPropUtil.getMethodLibraryPropUtil().isSynFree(currentLibrary);
-			ProcessUtil.setSynFree(isSynFree);
-		}
 		notifyListeners(library, EVENT_SET_CURRENT_LIBRARY);
 	}
 

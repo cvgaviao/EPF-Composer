@@ -35,6 +35,12 @@
       <super type="org.eclipse.core.resources.problemmarker"/> 
       <attribute name="guid"/>
       <attribute name="replacerGuids"/>
-   </extension>  
+   </extension>
+      <extension
+            point="org.eclipse.epf.library.edit.libraryEditUtilProvider">
+         <libraryEditUtilProvider
+               class="org.eclipse.epf.library.util.LibraryEditUtilProvider">
+         </libraryEditUtilProvider>
+      </extension>  
    
 </plugin>

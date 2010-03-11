@@ -125,20 +125,12 @@ public final class ProcessUtil {
 
 	private static Collection<VariabilityType> extendAndLocalContributionVariabilityTypes = null;
 	
-	private static boolean synFree = false;
-	
 	public static boolean isSynFree() {
+		boolean synFree = LibraryEditUtil.getInstance().isSynFree();
 		if (IRealizationManager.debug) {
 			System.out.println("LD> getSynFree: " + synFree);
 		}
 		return synFree;
-	}
-
-	public static void setSynFree(boolean synFree) {
-		ProcessUtil.synFree = synFree;
-		if (IRealizationManager.debug) {
-			System.out.println("LD> setSynFree: " + synFree);
-		}
 	}
 
 	private static Collection<VariabilityType> getExtendAndLocalContributionVariabilityTypes() {

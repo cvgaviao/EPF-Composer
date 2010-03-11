@@ -977,12 +977,6 @@ public class LibraryUtil {
 	
 	public static boolean markLibrarySynFree(final MethodLibrary lib, boolean toSave) {
 		boolean b = markLibrarySynFree(lib, toSave, true);
-		if (b) {
-			if (lib == LibraryService.getInstance().getCurrentMethodLibrary()) {
-				ProcessUtil.setSynFree(true);
-			}
-		}
-		
 		return b;
 	}
 	
