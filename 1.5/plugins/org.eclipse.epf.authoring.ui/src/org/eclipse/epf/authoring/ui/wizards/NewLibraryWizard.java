@@ -19,6 +19,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.common.ui.util.PerspectiveUtil;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
@@ -102,6 +103,9 @@ public class NewLibraryWizard extends Wizard implements INewWizard {
 			MethodLibrary library = LibraryService.getInstance()
 					.createMethodLibrary(name, type, options);
 			if (library != null) {
+				MethodLibraryPropUtil propUtil = MethodLibraryPropUtil.getMethodLibraryPropUtil();
+				propUtil.setSynFree(library, mainPage.isSynFree());
+				
 				if (desc.length() > 0) {
 					library.setBriefDescription(desc);
 				}

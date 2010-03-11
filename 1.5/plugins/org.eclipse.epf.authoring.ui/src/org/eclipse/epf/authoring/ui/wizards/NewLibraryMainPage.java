@@ -56,6 +56,9 @@ public class NewLibraryMainPage extends BaseWizardPage {
 	private Text briefDescText;
 
 	private String libraryType;
+	
+	private Button dummyButton;
+	private Button synFreeButton;
 
 	/**
 	 * Creates a new instance.
@@ -87,6 +90,14 @@ public class NewLibraryMainPage extends BaseWizardPage {
 				AuthoringUIText.DESCRIPTION_TEXT);
 
 		briefDescText = createEditableText(composite, 400, 80, 1);
+		
+		dummyButton = new Button(composite, SWT.CHECK);
+		dummyButton.setVisible(false);
+		
+		synFreeButton = new Button(composite, SWT.CHECK);		
+		synFreeButton
+				.setText(AuthoringUIResources.ProcessEditorPreferencePage_synchronizationFree);
+		synFreeButton.setSelection(true);
 
 		Map types = LibraryManagerFactory.getInstance().getLibraryTypes();
 		for (Iterator it = types.keySet().iterator(); it.hasNext();) {
@@ -202,4 +213,8 @@ public class NewLibraryMainPage extends BaseWizardPage {
 		return libraryType;
 	}
 
+	public boolean isSynFree() {
+		return synFreeButton.getSelection();
+	}
+	
 }
