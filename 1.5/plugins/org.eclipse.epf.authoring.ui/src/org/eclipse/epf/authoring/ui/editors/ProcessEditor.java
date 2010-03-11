@@ -87,7 +87,7 @@ import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.EditingDomainComposedAdapterFactory;
-import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -2558,7 +2558,7 @@ public class ProcessEditor extends MethodElementEditor implements
 				Scope scope = (Scope) selectedProcess.getDefaultContext();
 				scopeConfigurator = new ProcessAuthoringConfigurator(scope) {
 					public IRealizationManager getRealizationManager() {
-						return LibUtil.getInstance().getDefaultRealizationManager();
+						return LibraryEditUtil.getInstance().getDefaultRealizationManager();
 					}
 				};
 			}

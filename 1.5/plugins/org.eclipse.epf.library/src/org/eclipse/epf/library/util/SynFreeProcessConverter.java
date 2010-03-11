@@ -13,7 +13,7 @@ import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
-import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessPropUtil;
 import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
 import org.eclipse.epf.services.ILibraryPersister;
@@ -87,7 +87,7 @@ public class SynFreeProcessConverter {
 		if (toSave) {
 			resouresToSave = new HashSet<Resource>();
 		}
-		Set<Process> processes = LibUtil.getInstance().collectProcesses(plugin);
+		Set<Process> processes = LibraryEditUtil.getInstance().collectProcesses(plugin);
 		for (Process proc : processes) {
 			convertProcess(proc, false);
 		}		
@@ -112,7 +112,7 @@ public class SynFreeProcessConverter {
 		ElementRealizer r = DefaultElementRealizer.newElementRealizer(c);		
 		setRealizer(r);		
 		
-		Set<Descriptor> descriptors = LibUtil.getInstance().collectDescriptors(proc);
+		Set<Descriptor> descriptors = LibraryEditUtil.getInstance().collectDescriptors(proc);
 
 		if (toSave) {
 			resouresToSave = new HashSet<Resource>();

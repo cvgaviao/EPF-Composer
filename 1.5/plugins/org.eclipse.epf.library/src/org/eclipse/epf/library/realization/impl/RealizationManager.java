@@ -15,7 +15,7 @@ import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
-import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -359,7 +359,7 @@ public class RealizationManager implements IRealizationManager {
 
 		clearCacheData();
 		setCaching(true);
-		for (Process proc : LibUtil.getInstance().collectProcessesFromConfig(
+		for (Process proc : LibraryEditUtil.getInstance().collectProcessesFromConfig(
 				getConfig())) {
 			updateProcessModel(proc, false);
 		}

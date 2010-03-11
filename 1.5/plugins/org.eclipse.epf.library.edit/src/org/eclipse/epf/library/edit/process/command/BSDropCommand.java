@@ -41,7 +41,7 @@ import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
-import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -611,7 +611,7 @@ public abstract class BSDropCommand extends AbstractCommand implements
 				System.out.println("BSDropCommand.redo(): executeNestedCommands(). " + (System.currentTimeMillis() - time)); //$NON-NLS-1$
 			}
 			
-			IRealizationManager mgr = LibUtil.getInstance().getDefaultRealizationManager();
+			IRealizationManager mgr = LibraryEditUtil.getInstance().getDefaultRealizationManager();
 			if (mgr != null) {
 				mgr.updateActivityModel(activity);
 			}

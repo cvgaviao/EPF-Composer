@@ -17,13 +17,13 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 
-public class LibUtil {
+public class LibraryEditUtil {
 	
 	private static boolean debug = false;
-	private static LibUtil instance = new LibUtil();
+	private static LibraryEditUtil instance = new LibraryEditUtil();
 	private IRealizationManager defaultRealizationManager;
 
-	public static LibUtil getInstance() {
+	public static LibraryEditUtil getInstance() {
 		return instance;
 	}
 

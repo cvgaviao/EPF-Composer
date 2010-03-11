@@ -26,7 +26,7 @@ import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.uma.Scope;
-import org.eclipse.epf.library.edit.util.LibUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.HtmlBuilder;
@@ -74,7 +74,7 @@ public class ConfigHelperDelegate {
 	public ConfigHelperDelegate() {
 		LibraryService.getInstance().addListener(libServiceListener);		
 		IRealizationManager mgr = RealizationManagerFactory.getInstance().newRealizationManager(null);
-		LibUtil.getInstance().setDefaultRealizationManager(mgr);
+		LibraryEditUtil.getInstance().setDefaultRealizationManager(mgr);
 	}
 	
 	/**
