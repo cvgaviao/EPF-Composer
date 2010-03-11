@@ -24,7 +24,6 @@ import org.eclipse.epf.common.ui.PreferenceStoreWrapper;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
-import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
@@ -564,8 +563,8 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 								.getDefault()
 								.getMsgDialog()
 								.displayConfirmation(
-										"Converting to library with synchronization free processes",
-										"To Convert");//$NON-NLS-1$ //$NON-NLS-2$
+										AuthoringUIResources.ProcessEditorPreferencePage_conversionDialogTitle,
+										AuthoringUIResources.ProcessEditorPreferencePage_conversionDialogText);
 						if (! toConvertToSynFree) {
 							synFreeButton.setSelection(false);
 							synFreeButton.setEnabled(true);
