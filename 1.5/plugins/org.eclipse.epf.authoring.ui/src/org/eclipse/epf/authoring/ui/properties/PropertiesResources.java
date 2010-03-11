@@ -47,7 +47,9 @@ public final class PropertiesResources extends NLS {
 	public static String Descriptor_documentInformationDescription;
 	public static String Process_None;
 	public static String Process_name;
+	public static String Process_name_restore;
 	public static String Process_PresentationName;
+	public static String Process_PresentationName_restore;
 	public static String Process_briefDescription;
 	public static String Process_mainDescription;
 	public static String Process_purpose;
