@@ -41,6 +41,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.MethodUnit;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -65,6 +66,16 @@ import org.eclipse.epf.uma.WorkProductType;
  * @since 1.0
  */
 public class UmaUtil {
+
+	private static IUmaUtilProvider provider;
+	
+	private static IUmaUtilProvider getProvider() {
+		return provider;
+	}
+
+	public static void setProvider(IUmaUtilProvider provider) {
+		UmaUtil.provider = provider;
+	}
 
 	/**
 	 * Replaces the feature values of an old method element with the
@@ -803,6 +814,45 @@ public class UmaUtil {
 	
 	public static void main(String[] args) {
 		System.out.println(generateGUID());
+	}
+	
+	public static boolean isSynFreeLibrary(MethodLibrary lib) {
+		IUmaUtilProvider p = getProvider();
+		return p == null ? true : p.isSynFreeLibrary(lib);
+	}
+	
+	public static boolean isSynFreePlugin(MethodPlugin plugin) {
+		IUmaUtilProvider p = getProvider();
+		return p == null ? true : p.isSynFreePlugin(plugin);
+	}
+	
+	public static boolean isSynFreeProcess(Process proc) {
+		IUmaUtilProvider p = getProvider();
+		return p == null ? true : p.isSynFreeProcess(proc);	
+	}
+	
+	public static void setSynFreeLibrary(MethodLibrary lib, boolean value) {
+		IUmaUtilProvider p = getProvider();
+		if (p == null) {
+			return;
+		}
+		p.setSynFreeLibrary(lib, value);
+	}
+	
+	public static void setSynFreePlugin(MethodPlugin plugin, boolean value) {
+		IUmaUtilProvider p = getProvider();
+		if (p == null) {
+			return;
+		}
+		p.setSynFreePlugin(plugin, value);
+	}
+	
+	public static void setSynFreeProcess(Process proc, boolean value) {
+		IUmaUtilProvider p = getProvider();
+		if (p == null) {
+			return;
+		}
+		p.setSynFreeProcess(proc, value);
 	}
 
 }

@@ -51,11 +51,15 @@ import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.DefaultValueManager;
 import org.eclipse.epf.uma.ecore.util.OppositeFeatureNotification;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -752,6 +756,9 @@ implements ILibraryResource, IFailSafeSavable
 			// MethodConfigurations from library file.
 			//
 			MethodElement e = PersistenceUtil.getMethodElement(this);
+			
+			handleSynFreeFlag(e);
+			
 			if (e instanceof MethodLibrary) {
 				MethodLibrary lib = (MethodLibrary) e;
 				// remove ResourceDescriptors of configuration files
@@ -1208,5 +1215,30 @@ implements ILibraryResource, IFailSafeSavable
 	
 	private ILibraryPersister getLibraryPersister() {
 		return ((MultiFileResourceSetImpl)resourceSet).getPersister();
+	}
+	
+	private void handleSynFreeFlag(MethodElement e) {
+		if (e instanceof MethodPlugin || e instanceof ProcessComponent) {
+			MethodLibrary lib = UmaUtil.getMethodLibrary(e);
+			if (lib == null) {
+				lib = ((MultiFileResourceSetImpl)resourceSet).getMethodLibrary();
+			}
+			if (lib != null) {
+				boolean isSynFree = UmaUtil.isSynFreeLibrary(lib);
+				if (isSynFree) {
+					if (e instanceof MethodPlugin) {
+						MethodPlugin p = (MethodPlugin) e;
+						if (! UmaUtil.isSynFreePlugin(p)) {
+							UmaUtil.setSynFreePlugin(p, true);
+						}					
+					} else if (e instanceof ProcessComponent) {
+						Process proc = ((ProcessComponent) e).getProcess();
+						if (proc != null && ! UmaUtil.isSynFreeProcess(proc)) {
+							UmaUtil.setSynFreeProcess(proc, true);
+						}
+					}
+				}
+			}
+		}
 	}
 }
