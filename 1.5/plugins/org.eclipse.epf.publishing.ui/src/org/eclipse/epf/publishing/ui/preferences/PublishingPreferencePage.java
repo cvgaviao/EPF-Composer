@@ -56,6 +56,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 	private Button showLinkedPageForDescriptorCheckbox;
 	
 	private Button fulfillDescriptorSlotByContentCheckbox;
+	
+	private Text forbiddenURLChars;
 
 	/**
 	 * Creates and returns the SWT control for the customized body of this
@@ -95,10 +97,15 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		
 		
 		
-		// Create the Browsing group.
+		// Create the slot fulfillment rule group.
 		Group wpSlotDpRuleGroup = createGridLayoutGroup(composite, PublishingUIResources.wpSlotDpRuleGroup_text, 1);
 		fulfillDescriptorSlotByContentCheckbox = createCheckbox(wpSlotDpRuleGroup,
 				PublishingUIResources.fulfillDescriptorSlotByContentCheckbox_text, 1);
+		
+		// Create the forbidden URL chars group.
+		Group forbiddenURLCharsGroup = createGridLayoutGroup(composite, PublishingUIResources.forbiddenURLCharsGroup_text, 2);
+		forbiddenURLChars = createEditableText(forbiddenURLCharsGroup, 1);
+		createLabel(forbiddenURLCharsGroup, PublishingUIResources.forbiddenURLCharsText_label);
 		
 		initControls();
 
@@ -119,6 +126,7 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				.getShowLinkedElementForDescriptor());	
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
 				.getFulfillDescriptorSlotByContent());
+		forbiddenURLChars.setText(PublishingUIPreferences.getForbiddenChars());
 	}
 
 	/**
@@ -181,6 +189,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 			.setFulfillDescriptorSlotByContent(fulfillDescriptorSlotByContentCheckbox
 				.getSelection());
 		
+		PublishingUIPreferences.setForbiddenChars(forbiddenURLChars.getText()
+				.trim());
+		
 //		// FIXME! Review implementation.
 //		// allow to pass the value to the library browsing
 //		// System.setProperty(EXTRA_DESCRIPTOR_INFO,
@@ -200,7 +211,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		showLinkedPageForDescriptorCheckbox.setSelection(PublishingUIPreferences
 				.getDefaultShowLinkedElementForDescriptor());
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
-				.getDefaultFulfillDescriptorSlotByContent());		
+				.getDefaultFulfillDescriptorSlotByContent());
+		forbiddenURLChars
+			.setText(PublishingUIPreferences.getForbiddenChars());
 	}
 
 	/**

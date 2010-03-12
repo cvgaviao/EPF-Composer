@@ -53,6 +53,8 @@ public final class PublishingUIResources extends NLS {
 	public static String publishWebSiteGroup_text;
 	public static String browsingLayoutGroup_text;
 	public static String wpSlotDpRuleGroup_text;
+	public static String forbiddenURLCharsGroup_text;
+	public static String forbiddenURLCharsText_label;
 
 	public static String titleAndLinksGroup_text;
 

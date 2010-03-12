@@ -42,6 +42,8 @@ public class PublishingUIPreferences {
 
 	private static final String FEEDBACK_URL = "feedbackURL"; //$NON-NLS-1$	
 
+	private static final String FORBIDDEN_CHARS = "fobiddenChars"; //$NON-NLS-1$	
+
 	private static final String INCLUDE_GLOSSARY = "includeGlossary"; //$NON-NLS-1$
 
 	private static final String INCLUDE_INDEX = "includeIndex"; //$NON-NLS-1$
@@ -108,6 +110,7 @@ public class PublishingUIPreferences {
 		prefStore.setDefault(BANNER_IMAGE, getDefaultBannerImage());
 		prefStore.setDefault(ABOUT_HTML, getDefaultAboutHTML());
 		prefStore.setDefault(FEEDBACK_URL, getDefaultFeedbackURL());
+		prefStore.setDefault(FORBIDDEN_CHARS, getDefaultForbiddenChars());
 		prefStore.setDefault(INCLUDE_GLOSSARY, false);
 		prefStore.setDefault(INCLUDE_INDEX, false);
 		prefStore.setDefault(CHECK_EXTERNAL_LINKS, false);
@@ -365,6 +368,34 @@ public class PublishingUIPreferences {
 		return defaultFeedbackURL;
 	}
 
+	/**
+	 * Gets the default forbidden chars string
+	 * 
+	 * @return the default forbidden chars string
+	 */
+	public static String getDefaultForbiddenChars() {
+			return ""; 	//$NON-NLS-1$
+	}
+	
+	/**
+	 * Gets the forbidden chars string
+	 * 
+	 * @return the forbidden chars string
+	 */
+	public static String getForbiddenChars() {
+		return prefStore.getString(FORBIDDEN_CHARS);
+	}
+
+	/**
+	 * Sets the forbidden chars string value.
+	 * 
+	 * @param value
+	 *            the forbidden chars string value
+	 */
+	public static void setForbiddenChars(String value) {
+		prefStore.setValue(FORBIDDEN_CHARS, value);
+	}
+	
 	/**
 	 * Gets the feedback URL preference value.
 	 * 
