@@ -841,7 +841,6 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	}
 	
 	private class SyncFreeNameModifyListener implements ModifyListener {
-		@Override
 		public void modifyText(ModifyEvent e) {
 			if (getReferenceMethodElement(element) != null) {
 				descriptorPropUtil.setNameRepalce((Descriptor)element, true);
@@ -860,7 +859,6 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	}
 		
 	private class SyncFreePresentationNameModifyListener implements ModifyListener {
-		@Override
 		public void modifyText(ModifyEvent e) {
 			if (getReferenceMethodElement(element) != null) {
 				descriptorPropUtil.setPresentationNameRepalce((Descriptor)element, true);
