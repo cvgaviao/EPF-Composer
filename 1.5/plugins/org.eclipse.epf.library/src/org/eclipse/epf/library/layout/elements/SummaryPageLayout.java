@@ -130,6 +130,10 @@ public class SummaryPageLayout implements IElementLayout {
 		return elementLayout.getFilePath();
 	}
 
+	public String getNoAdjustedElementPath() {
+		return elementLayout.getNoAdjustedElementPath();
+	}
+	
 	public String getFilePath(IElementLayout relativeTo) {
 		return elementLayout.getFilePath(relativeTo);
 	}

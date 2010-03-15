@@ -148,8 +148,10 @@ public abstract class AbstractPublishManager {
 			if (profiling) {
 				startTime = System.currentTimeMillis();
 			}
-						
+			
+			getViewBuilder().getLayoutMgr().prepareElementPathAdjustment();
 			doPublish(monitor);
+			getViewBuilder().getLayoutMgr().handlePluginFolderRename();
 			if (profiling) {
 				DebugTrace.print(this, "doPublish", //$NON-NLS-1$
 						(System.currentTimeMillis() - startTime) + " ms"); //$NON-NLS-1$

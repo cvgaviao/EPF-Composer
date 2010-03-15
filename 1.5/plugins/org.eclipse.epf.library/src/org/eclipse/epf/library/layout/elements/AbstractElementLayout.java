@@ -119,6 +119,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 
 	private ElementLayoutExtender extender;
 	
+	private String noAdjustedElementPath;
+	
 	public AbstractElementLayout() {
 	}
 
@@ -366,9 +368,13 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	 * @see org.eclipse.epf.library.layout.IElementLayout#getFilePath()
 	 */
 	public String getFilePath() {
-		return elementPath;
+		return 	elementPath;
 	}
 
+	public String getNoAdjustedElementPath() {
+		return 	noAdjustedElementPath == null ? elementPath : noAdjustedElementPath;
+	}
+	
 	/**
 	 * Returns the file path relative to another element. This is the
 	 * relativeTo.backpath + this.elementpath.
@@ -416,6 +422,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			if ( path != null ) {
 				elementPath = path.replace(File.separatorChar, '/');
 				backPath = ResourceHelper.getBackPath(elementForElementPath);
+				
+				noAdjustedElementPath = elementPath;
+				elementPath = getLayoutMgr().getAdjustedElementPath(elementPath);
 			}
 
 		}
@@ -575,7 +584,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 				EAttribute attrib = (EAttribute)p;
 				String name = p.getName();
-									
+				
 				Object value;
 				if (name.equals("presentationName")) //$NON-NLS-1$
 				{
@@ -631,9 +640,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 
 			value = ResourceHelper.fixContentUrlPath(value.toString(),
 					contentPath, backPath);
-
+			
 		}
-
+		
 		return value;
 	}
 

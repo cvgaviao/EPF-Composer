@@ -180,5 +180,8 @@ public interface IElementLayout {
 	 * @deprecated this method is not needed any more
 	 */
 	public void setShowElementLink(boolean show);
+	
 
+	public String getNoAdjustedElementPath();
+	
 }

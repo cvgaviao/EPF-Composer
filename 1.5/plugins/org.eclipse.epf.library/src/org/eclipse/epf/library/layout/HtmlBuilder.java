@@ -316,7 +316,7 @@ public class HtmlBuilder {
 		
 		// add time logging when publishing element
 		long time_start = Calendar.getInstance().getTimeInMillis();
-		String elementPath = layout.getFilePath().replace('/',
+		String elementPath = layout.getNoAdjustedElementPath().replace('/',
 				File.separatorChar);
 		String elementPathName = elementPath
 				+ layout.getFileName(ResourceHelper.FILE_EXT_HTML);
@@ -423,14 +423,18 @@ public class HtmlBuilder {
 				timer.start();
 			}
 			// Always validate and fix the content before publishing.
+			
 			content = ResourceHelper.validateContent(layout.getElement(),
 					content, getValidator(), layout.getLayoutMgr()
 							.getConfiguration(), this.layoutXslRootPath);
+						
 			if (contentScanEnabled()) {
 //				scanContentForResources(layout.getElement(), content, layout
 //						.getFilePath());
 				getValidator().scanContent(layout, content);
 			}
+			
+			content = getLayoutManager().getAdjustedElementPathStringValue(content);		
 
 			if ( debug) {
 				timer.stop();
