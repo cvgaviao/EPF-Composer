@@ -581,8 +581,8 @@ public class ElementLayoutManager {
 	}
 	
 	public void prepareElementPathAdjustment() {
-		boolean doTest = false;
-		if (! doTest) {			//if flag is not set
+		String fChars = BrowsingLayoutSettings.INSTANCE.getForbiddenUrlChars();
+		if (fChars == null || fChars.trim().length() == 0) {			//if flag is not set
 			return;
 		}
 		MethodConfiguration c = getConfiguration();
@@ -598,18 +598,40 @@ public class ElementLayoutManager {
 		}
 		
 		List<MethodPlugin> plugins = c.getMethodPluginSelection();
+		Set<String> forbidenChars = new HashSet<String>();
+		for (int i = 0; i < fChars.length(); i++) {			
+			String str = String.valueOf((fChars.charAt(i)));
+			if (str.trim().length() > 0) {
+				forbidenChars.add(str);
+			}
+		}
 		for (MethodPlugin plugin : plugins) {
 			String name = plugin.getName();
-			if (name.contains(".")) {   //$NON-NLS-1$
-				String replacingName = name.replaceAll("\\.", "_");//$NON-NLS-1$ //$NON-NLS-2$
+			String replacingName = getReplacingName(name, forbidenChars);
+			if (! name.equals(replacingName)) {
 				replacingName = getUniqueName(replacingName, usedNameSet);
 				usedNameSet.add(replacingName);
 				toRenamePluginFolderMap.put(plugin.getName(), replacingName);
 			}
-		}
+					}
 		if (toRenamePluginFolderMap.isEmpty()) {
 			toRenamePluginFolderMap = null;
 		}
+	}
+	
+	private String getReplacingName(String name, Set<String> forbidenChars) {
+		StringBuffer b = new StringBuffer();
+		boolean modified = false;
+		for (int i = 0; i < name.length(); i++) {			
+			String str = String.valueOf((name.charAt(i)));
+			if (forbidenChars.contains(str)) {
+				b.append("_"); //$NON-NLS-1$ 
+				modified = true;
+			} else {
+				b.append(str);
+			}			
+		}
+		return modified ? b.toString() : name;
 	}
 	
 	public String getAdjustedElementPath(String elementPath) {

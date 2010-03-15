@@ -85,5 +85,8 @@ public class PublishingUIPlugin extends AbstractPlugin {
 		boolean fulfillDescriptorSlotByContent = PublishingUIPreferences.getFulfillDescriptorSlotByContent();
 		BrowsingLayoutSettings.INSTANCE.setFulfillDescriptorSlotByContent(fulfillDescriptorSlotByContent);
 		
+		String forbiddenUrlChars = PublishingUIPreferences.getForbiddenChars();
+		BrowsingLayoutSettings.INSTANCE.setForbiddenUrlChars(forbiddenUrlChars);
+		
 	}
 }

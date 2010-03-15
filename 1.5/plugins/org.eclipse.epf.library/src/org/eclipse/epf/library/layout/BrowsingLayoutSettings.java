@@ -30,6 +30,7 @@ public class BrowsingLayoutSettings {
 	private boolean publishADForActivityExtension = false;
 	private boolean fulfillDescriptorSlotByContent = false;
 	private boolean showLinkedPageForDescriptor = false;
+	private String forbiddenUrlChars;
 
 	// if true, the to-many outgoing association from base will be ignored if the extender has its own
 	private boolean useNewExtendSemantics = false;
@@ -155,6 +156,14 @@ public class BrowsingLayoutSettings {
 
 	public void setShowLinkedPageForDescriptor(boolean showLinkedPageForDescriptor) {
 		this.showLinkedPageForDescriptor = showLinkedPageForDescriptor;
+	}
+	
+	public String getForbiddenUrlChars() {
+		return forbiddenUrlChars;
+	}
+
+	public void setForbiddenUrlChars(String forbiddenUrlChars) {
+		this.forbiddenUrlChars = forbiddenUrlChars;
 	}
 	
 }
