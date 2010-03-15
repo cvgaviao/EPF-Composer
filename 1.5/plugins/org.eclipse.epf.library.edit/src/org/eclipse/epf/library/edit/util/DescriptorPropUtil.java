@@ -13,6 +13,9 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
+	
+	private static boolean localDebug = true;
+	
 	private static final String infoSeperator = "/"; 							//$NON-NLS-1$
 
 	public static final String DESCRIPTOR_NoAutoSyn = "descriptor_noAutoSyn"; 								//$NON-NLS-1$	
@@ -101,7 +104,16 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	//given feature.
 	public boolean localUse(Descriptor usedD, Descriptor usingD, EReference feature) {
 		try {
-			return localUse_(usedD, usingD, feature);			
+			boolean be = localUse_(usedD, usingD, feature);
+			if (localDebug) {
+				System.out.println("LD> localUse: " + be + 		
+						", usingD: " + usingD.getName() +
+						", usedD: " + usedD.getName() +
+						", feature: " + feature.getName());;
+						//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			}
+			
+			return be;
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}		
@@ -135,6 +147,11 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	public void addLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
 		try {
+			if (localDebug) {
+				System.out.println("LD> addLocalUse, usingD: " + usingD.getName() +
+						", usedD: " + usedD.getName() + ", feature: " + feature.getName());
+				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			}
 			addLocalUse_(usedD, usingD, feature);			
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
@@ -143,7 +160,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private void addLocalUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
 		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingInfo);
-		String newValue = usingD.getGuid().concat(feature.getName());
+		String newValue = usingD.getGuid().concat(infoSeperator).concat(feature.getName());
 
 		if (oldValue != null && oldValue.length() > 0) {			
 			String[] infos = oldValue.split(infoSeperator); 

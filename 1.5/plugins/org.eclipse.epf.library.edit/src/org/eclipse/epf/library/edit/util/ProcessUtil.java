@@ -127,9 +127,6 @@ public final class ProcessUtil {
 	
 	public static boolean isSynFree() {
 		boolean synFree = LibraryEditUtil.getInstance().isSynFree();
-		if (IRealizationManager.debug) {
-			System.out.println("LD> getSynFree: " + synFree);
-		}
 		return synFree;
 	}
 
