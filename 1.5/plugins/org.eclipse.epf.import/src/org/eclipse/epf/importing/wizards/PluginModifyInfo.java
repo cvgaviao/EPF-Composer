@@ -45,8 +45,15 @@ public class PluginModifyInfo {
 	 */
 	public StringBuffer getLockedMessage() {
 		StringBuffer buffer = new StringBuffer();
+		int i = 0;
 		for (Iterator it = lockedPlugins.iterator(); it.hasNext();) {
+			i++;
 			MethodPlugin plugin = (MethodPlugin) it.next();
+			if (i > 20) {
+				String msg = "..."; //$NON-NLS-1$
+				buffer.append(msg);
+				break;
+			}
 			String msg = NLS
 					.bind(
 							ImportResources.SelectImportConfigurationSource_plugin_locked,
