@@ -67,12 +67,12 @@ public class PracticeLayout extends AbstractElementLayout {
 			List<MethodElement> children1 = calc0nFeatureValue(element, null,
 					feature1, layoutManager.getElementRealizer());
 			
-			EStructuralFeature feature2 = UmaPackage.Literals.PRACTICE__SUB_PRACTICES;
-			List<MethodElement> children2 = calc0nFeatureValue(element, null,
-					feature2, layoutManager.getElementRealizer());
+//			EStructuralFeature feature2 = UmaPackage.Literals.PRACTICE__SUB_PRACTICES;
+//			List<MethodElement> children2 = calc0nFeatureValue(element, null,
+//					feature2, layoutManager.getElementRealizer());
 			
 			children.addAll(children1);
-			children.addAll(children2);
+//			children.addAll(children2);
 			
 			List ret = new ArrayList();
 
