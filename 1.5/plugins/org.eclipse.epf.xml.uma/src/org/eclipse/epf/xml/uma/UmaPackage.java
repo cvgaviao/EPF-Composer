@@ -18215,22 +18215,22 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__TASK = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Performed Primarily By</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The feature id for the '<em><b>Group3</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__GROUP3 = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
+	int TASK_DESCRIPTOR__GROUP3 = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Performed Primarily By</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Additionally Performed By</b></em>' attribute list.
@@ -23612,10 +23612,10 @@ public interface UmaPackage extends EPackage {
 	EAttribute getTaskDescriptor_Task();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.epf.xml.uma.TaskDescriptor#getPerformedPrimarilyBy <em>Performed Primarily By</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipse.epf.xml.uma.TaskDescriptor#getPerformedPrimarilyBy <em>Performed Primarily By</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Performed Primarily By</em>'.
+	 * @return the meta object for the attribute list '<em>Performed Primarily By</em>'.
 	 * @see org.eclipse.epf.xml.uma.TaskDescriptor#getPerformedPrimarilyBy()
 	 * @see #getTaskDescriptor()
 	 * @generated
@@ -26674,7 +26674,7 @@ public interface UmaPackage extends EPackage {
 		EAttribute TASK_DESCRIPTOR__TASK = eINSTANCE.getTaskDescriptor_Task();
 
 		/**
-		 * The meta object literal for the '<em><b>Performed Primarily By</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Performed Primarily By</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

@@ -8,7 +8,7 @@
     rootExtendsClass="org.eclipse.epf.uma.ecore.impl.MultiResourceEObject" rootImplementsInterface=""
     testSuiteClass="org.eclipse.epf.xml.uma.tests.UMAAllTests" importerID="org.eclipse.xsd.ecore.importer"
     complianceLevel="5.0">
-  <foreignModel>EPF_Schema_200801270942.xsd</foreignModel>
+  <foreignModel>EPF_Schema_201003161045.xsd</foreignModel>
   <genPackages prefix="Uma" basePackage="org.eclipse.epf.xml" resource="XML" disposableProviderFactory="true"
       ecorePackage="UMA.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="UMA.ecore#//VariabilityType">
@@ -353,8 +353,8 @@
     </genClasses>
     <genClasses ecoreClass="UMA.ecore#//TaskDescriptor">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//TaskDescriptor/task"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//TaskDescriptor/performedPrimarilyBy"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute UMA.ecore#//TaskDescriptor/group3"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//TaskDescriptor/performedPrimarilyBy"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//TaskDescriptor/additionallyPerformedBy"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//TaskDescriptor/assistedBy"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute UMA.ecore#//TaskDescriptor/externalInput"/>

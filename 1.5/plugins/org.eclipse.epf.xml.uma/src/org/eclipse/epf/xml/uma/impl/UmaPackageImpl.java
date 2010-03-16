@@ -3271,7 +3271,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EAttribute getTaskDescriptor_PerformedPrimarilyBy() {
-		return (EAttribute)taskDescriptorEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)taskDescriptorEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -3280,7 +3280,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * @generated
 	 */
 	public EAttribute getTaskDescriptor_Group3() {
-		return (EAttribute)taskDescriptorEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)taskDescriptorEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -4240,8 +4240,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 
 		taskDescriptorEClass = createEClass(TASK_DESCRIPTOR);
 		createEAttribute(taskDescriptorEClass, TASK_DESCRIPTOR__TASK);
-		createEAttribute(taskDescriptorEClass, TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
 		createEAttribute(taskDescriptorEClass, TASK_DESCRIPTOR__GROUP3);
+		createEAttribute(taskDescriptorEClass, TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
 		createEAttribute(taskDescriptorEClass, TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY);
 		createEAttribute(taskDescriptorEClass, TASK_DESCRIPTOR__ASSISTED_BY);
 		createEAttribute(taskDescriptorEClass, TASK_DESCRIPTOR__EXTERNAL_INPUT);
@@ -4787,8 +4787,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 
 		initEClass(taskDescriptorEClass, TaskDescriptor.class, "TaskDescriptor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTaskDescriptor_Task(), theXMLTypePackage.getString(), "task", null, 0, 1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTaskDescriptor_PerformedPrimarilyBy(), theXMLTypePackage.getString(), "performedPrimarilyBy", null, 0, 1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskDescriptor_Group3(), ecorePackage.getEFeatureMapEntry(), "group3", null, 0, -1, TaskDescriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTaskDescriptor_PerformedPrimarilyBy(), theXMLTypePackage.getString(), "performedPrimarilyBy", null, 0, -1, TaskDescriptor.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskDescriptor_AdditionallyPerformedBy(), theXMLTypePackage.getString(), "additionallyPerformedBy", null, 0, -1, TaskDescriptor.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskDescriptor_AssistedBy(), theXMLTypePackage.getString(), "assistedBy", null, 0, -1, TaskDescriptor.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTaskDescriptor_ExternalInput(), theXMLTypePackage.getString(), "externalInput", null, 0, -1, TaskDescriptor.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -6855,18 +6855,19 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 			 "name", "Task"
 		   });		
 		addAnnotation
-		  (getTaskDescriptor_PerformedPrimarilyBy(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "PerformedPrimarilyBy"
-		   });		
-		addAnnotation
 		  (getTaskDescriptor_Group3(), 
 		   source, 
 		   new String[] {
 			 "kind", "group",
-			 "name", "group:37"
+			 "name", "group:36"
+		   });		
+		addAnnotation
+		  (getTaskDescriptor_PerformedPrimarilyBy(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "PerformedPrimarilyBy",
+			 "group", "#group:36"
 		   });		
 		addAnnotation
 		  (getTaskDescriptor_AdditionallyPerformedBy(), 
@@ -6874,7 +6875,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "AdditionallyPerformedBy",
-			 "group", "#group:37"
+			 "group", "#group:36"
 		   });		
 		addAnnotation
 		  (getTaskDescriptor_AssistedBy(), 
@@ -6882,7 +6883,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "AssistedBy",
-			 "group", "#group:37"
+			 "group", "#group:36"
 		   });		
 		addAnnotation
 		  (getTaskDescriptor_ExternalInput(), 
@@ -6890,7 +6891,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "ExternalInput",
-			 "group", "#group:37"
+			 "group", "#group:36"
 		   });		
 		addAnnotation
 		  (getTaskDescriptor_MandatoryInput(), 
@@ -6898,7 +6899,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "MandatoryInput",
-			 "group", "#group:37"
+			 "group", "#group:36"
 		   });		
 		addAnnotation
 		  (getTaskDescriptor_OptionalInput(), 
@@ -6906,7 +6907,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "OptionalInput",
-			 "group", "#group:37"
+			 "group", "#group:36"
 		   });		
 		addAnnotation
 		  (getTaskDescriptor_Output(), 
@@ -6914,7 +6915,7 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "Output",
-			 "group", "#group:37"
+			 "group", "#group:36"
 		   });		
 		addAnnotation
 		  (getTaskDescriptor_Step(), 

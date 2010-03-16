@@ -34,8 +34,8 @@ import org.eclipse.epf.xml.uma.UmaPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.TaskDescriptorImpl#getTask <em>Task</em>}</li>
- *   <li>{@link org.eclipse.epf.xml.uma.impl.TaskDescriptorImpl#getPerformedPrimarilyBy <em>Performed Primarily By</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.TaskDescriptorImpl#getGroup3 <em>Group3</em>}</li>
+ *   <li>{@link org.eclipse.epf.xml.uma.impl.TaskDescriptorImpl#getPerformedPrimarilyBy <em>Performed Primarily By</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.TaskDescriptorImpl#getAdditionallyPerformedBy <em>Additionally Performed By</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.TaskDescriptorImpl#getAssistedBy <em>Assisted By</em>}</li>
  *   <li>{@link org.eclipse.epf.xml.uma.impl.TaskDescriptorImpl#getExternalInput <em>External Input</em>}</li>
@@ -69,26 +69,6 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements Task
 	 * @ordered
 	 */
 	protected String task = TASK_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getPerformedPrimarilyBy() <em>Performed Primarily By</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPerformedPrimarilyBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PERFORMED_PRIMARILY_BY_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPerformedPrimarilyBy() <em>Performed Primarily By</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPerformedPrimarilyBy()
-	 * @generated
-	 * @ordered
-	 */
-	protected String performedPrimarilyBy = PERFORMED_PRIMARILY_BY_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getGroup3() <em>Group3</em>}' attribute list.
@@ -184,20 +164,8 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements Task
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPerformedPrimarilyBy() {
-		return performedPrimarilyBy;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPerformedPrimarilyBy(String newPerformedPrimarilyBy) {
-		String oldPerformedPrimarilyBy = performedPrimarilyBy;
-		performedPrimarilyBy = newPerformedPrimarilyBy;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY, oldPerformedPrimarilyBy, performedPrimarilyBy));
+	public EList<String> getPerformedPrimarilyBy() {
+		return getGroup3().list(UmaPackage.Literals.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY);
 	}
 
 	/**
@@ -350,11 +318,11 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements Task
 		switch (featureID) {
 			case UmaPackage.TASK_DESCRIPTOR__TASK:
 				return getTask();
-			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-				return getPerformedPrimarilyBy();
 			case UmaPackage.TASK_DESCRIPTOR__GROUP3:
 				if (coreType) return getGroup3();
 				return ((FeatureMap.Internal)getGroup3()).getWrapper();
+			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
+				return getPerformedPrimarilyBy();
 			case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
 				return getAdditionallyPerformedBy();
 			case UmaPackage.TASK_DESCRIPTOR__ASSISTED_BY:
@@ -387,11 +355,12 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements Task
 			case UmaPackage.TASK_DESCRIPTOR__TASK:
 				setTask((String)newValue);
 				return;
-			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-				setPerformedPrimarilyBy((String)newValue);
-				return;
 			case UmaPackage.TASK_DESCRIPTOR__GROUP3:
 				((FeatureMap.Internal)getGroup3()).set(newValue);
+				return;
+			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
+				getPerformedPrimarilyBy().clear();
+				getPerformedPrimarilyBy().addAll((Collection<? extends String>)newValue);
 				return;
 			case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
 				getAdditionallyPerformedBy().clear();
@@ -439,11 +408,11 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements Task
 			case UmaPackage.TASK_DESCRIPTOR__TASK:
 				setTask(TASK_EDEFAULT);
 				return;
-			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-				setPerformedPrimarilyBy(PERFORMED_PRIMARILY_BY_EDEFAULT);
-				return;
 			case UmaPackage.TASK_DESCRIPTOR__GROUP3:
 				getGroup3().clear();
+				return;
+			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
+				getPerformedPrimarilyBy().clear();
 				return;
 			case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
 				getAdditionallyPerformedBy().clear();
@@ -483,10 +452,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements Task
 		switch (featureID) {
 			case UmaPackage.TASK_DESCRIPTOR__TASK:
 				return TASK_EDEFAULT == null ? task != null : !TASK_EDEFAULT.equals(task);
-			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
-				return PERFORMED_PRIMARILY_BY_EDEFAULT == null ? performedPrimarilyBy != null : !PERFORMED_PRIMARILY_BY_EDEFAULT.equals(performedPrimarilyBy);
 			case UmaPackage.TASK_DESCRIPTOR__GROUP3:
 				return group3 != null && !group3.isEmpty();
+			case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
+				return !getPerformedPrimarilyBy().isEmpty();
 			case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
 				return !getAdditionallyPerformedBy().isEmpty();
 			case UmaPackage.TASK_DESCRIPTOR__ASSISTED_BY:
@@ -519,8 +488,6 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements Task
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (task: ");
 		result.append(task);
-		result.append(", performedPrimarilyBy: ");
-		result.append(performedPrimarilyBy);
 		result.append(", group3: ");
 		result.append(group3);
 		result.append(", isSynchronizedWithSource: ");
