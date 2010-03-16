@@ -108,7 +108,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();		
 		
-		List<Descriptor> excludeList = 	null;		
+		List<MethodElement> excludeList = 	null;		
 		if (elementList != null && !elementList.isEmpty()) {
 				excludeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
 						dFeatureExclude, realizer); 
@@ -116,7 +116,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		Set<MethodElement> excludeElements = new HashSet<MethodElement>();
 		if (excludeList != null && !excludeList.isEmpty()) {
-			for (Descriptor des : excludeList) {
+			for (MethodElement des : excludeList) {
 				MethodElement elem = getLinkedElement();
 				if (elem != null) {
 					excludeElements.add(elem);
