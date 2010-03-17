@@ -986,7 +986,7 @@ public class RelationSection extends AbstractSection {
 		}
 	    
 	    public Font getFont(Object obj, int columnIndex) {	    	
-	    	if (isDynamicAndExclude(obj, ref) || isDynamic(obj)) {
+	    	if (isDynamicAndExclude(obj, ref) || isDynamic(obj, ref)) {
 	    		return newFont;
 	    	}	    	
 	    	
@@ -1051,16 +1051,23 @@ public class RelationSection extends AbstractSection {
 //		return false;
 	}
 	
-	public boolean isDynamic(Object element) {
+	public boolean isDynamic(Object element, EReference ref) {
 		if (isSyncFree()) {
-			if (! (element instanceof Descriptor)) {
+			if (!(element instanceof Descriptor)) {// Excluded elements are not descriptors
 				return true;
 			}
-    		if (DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference((Descriptor)element)) {
-    			return true;
-    		}
+			
+			Descriptor des = (Descriptor) element;			
+			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+			if (! propUtil.isCreatedByReference(des)) {
+				return false;
+			}
+			
+			if (! propUtil.localUse(des, (Descriptor) this.element, ref)) {
+				return true;
+			}
 		}
-		
+
 		return false;
 	}
 	
@@ -1103,7 +1110,7 @@ public class RelationSection extends AbstractSection {
 			MethodElement desc = (MethodElement) list.get(i);
 			if (isDynamicAndExclude(desc, ref)) {
 				dynamicExclude ++;
-			} else if (isDynamic(desc)) {
+			} else if (isDynamic(desc, ref)) {
 				dynamic ++;
 			} else {
 				local ++;

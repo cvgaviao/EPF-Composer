@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -492,25 +493,27 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		if (selection.size() == 0) {
 			return true;			
 		} 
-		boolean result = checkSelection(selection.toList(), UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy());
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
+		boolean result = checkSelection(selection.toList(), ref);
 		if (! result) {
 			return true;
 		}
 
 		Object testObj = selection.getFirstElement();
-		if (isDynamicAndExclude(testObj, UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy())) {
+		if (isDynamicAndExclude(testObj, ref)) {
 			return true;
 		} 
 		
-		if (isDynamic(testObj)) {
+		if (isDynamic(testObj, ref)) {
 			MoveDescriptorCommand cmd = new MoveDescriptorCommand((Descriptor)element, selection.toList(),
 					UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY,
 					UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED);
 			actionMgr.execute(cmd);
 			tableViewer1.refresh();
+			return true;
 		} 
 				
-		return true;
+		return false;
 	}
 
 }
