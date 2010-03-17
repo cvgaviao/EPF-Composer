@@ -68,15 +68,26 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 
 	private boolean isNewRoleDescriptor = false;
 
+	private boolean calledForExculded = false;
+	
 	/**
 	 * Assign role to task descriptor Used for both additionally performed by
 	 * and assisted by
 	 */
 	public AssignRoleToTaskDescriptor(TaskDescriptor taskDesc, List roles,
 			int action, MethodConfiguration config) {
-
+		this(taskDesc, roles, action, config, false);
+	}
+	
+	/**
+	 * Assign role to task descriptor Used for both additionally performed by
+	 * and assisted by
+	 */
+	public AssignRoleToTaskDescriptor(TaskDescriptor taskDesc, List roles,
+			int action, MethodConfiguration config, boolean calledForExculded) {
 		super(TngUtil.getOwningProcess(taskDesc));
 
+		this.calledForExculded = calledForExculded;
 		this.roles = roles;
 		this.taskDesc = taskDesc;
 		this.action = action;
@@ -158,7 +169,22 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getAssistedBy().addAll(newRoleDescList);
 		}
 		addLocalUsingInfo(existingRoleDescList, getFeature(action));
-		addLocalUsingInfo(newRoleDescList, getFeature(action));
+		addLocalUsingInfo(newRoleDescList, getFeature(action));		
+		if (calledForExculded) {
+			List excludedList = null;
+			if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
+				excludedList = taskDesc.getPerformedPrimarilyByExcluded();
+			} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
+				excludedList = taskDesc.getAdditionallyPerformedByExclude();
+			}
+			if (excludedList != null) {
+				excludedList.removeAll(roles);
+			}
+			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+			for (RoleDescriptor rd : (List<RoleDescriptor>) newRoleDescList) {
+				propUtil.setCreatedByReference(rd, true);
+			}
+		}
 
 		activity.getBreakdownElements().addAll(newRoleDescList);
 
@@ -195,6 +221,9 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 	}
 	
 	private void addLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
+		if (calledForExculded) {
+			return;
+		}
 		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
 			return;
 		}		
@@ -206,6 +235,9 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 	}
 	
 	private void removeLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
+		if (calledForExculded) {
+			return;
+		}
 		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
 			return;
 		}		
@@ -236,6 +268,17 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 		
 		removeLocalUsingInfo(existingRoleDescList, getFeature(action));
 		removeLocalUsingInfo(newRoleDescList, getFeature(action));
+		if (calledForExculded) {
+			List excludedList = null;
+			if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
+				excludedList = taskDesc.getPerformedPrimarilyByExcluded();
+			} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
+				excludedList = taskDesc.getAdditionallyPerformedByExclude();
+			}
+			if (excludedList != null) {
+				excludedList.addAll(roles);
+			}
+		}
 		
 		activity.getBreakdownElements().removeAll(newRoleDescList);
 

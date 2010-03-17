@@ -14,29 +14,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.epf.authoring.gef.figures.Colors;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableColorProvider;
+import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -71,7 +78,7 @@ public class RelationSection extends AbstractSection {
 
 	private Button ctrl_add_1, ctrl_add_2, ctrl_add_3, ctrl_add_4;
 
-	private Button ctrl_remove_1, ctrl_remove_2, ctrl_remove_3, ctrl_remove_4;
+	protected Button ctrl_remove_1, ctrl_remove_2, ctrl_remove_3, ctrl_remove_4;
 
 	private Button ctrl_add_proc_1, ctrl_add_proc_2, ctrl_add_proc_3,
 			ctrl_add_proc_4;;
@@ -81,9 +88,9 @@ public class RelationSection extends AbstractSection {
 	protected TableViewer tableViewer1, tableViewer2, tableViewer3,
 			tableViewer4;
 
-	private Text ctrl_brief_desc;
+	protected Text ctrl_brief_desc;
 
-	private String tabString;
+	protected String tabString;
 	
 	private String title, desc, table1, table2, table3, table4;
 
@@ -94,7 +101,11 @@ public class RelationSection extends AbstractSection {
 	Process process;
 
 	IFilter descriptorProcessfilter;
-
+	
+	private Font initialFont;
+	
+	private Font newFont;
+	
 	protected Process getProcess() {
 		return process;
 	}
@@ -128,7 +139,11 @@ public class RelationSection extends AbstractSection {
 
 		// update controls
 		updateControls();
-
+		
+		// load font
+		if (isSyncFree()) {
+			createFont();
+		}
 	}
 
 	protected void setTabData(String title, String desc, String table1, String table2, String table3, String table4, String tabString) {
@@ -256,6 +271,9 @@ public class RelationSection extends AbstractSection {
 		if (contentProvider != null) {
 			contentProvider.dispose();
 		}
+		if (newFont != null) {
+			newFont.dispose();
+		}
 	}
 
 	/**
@@ -284,6 +302,22 @@ public class RelationSection extends AbstractSection {
 	 *
 	 */
 	protected void initContentProvider4() {
+	}
+	
+	protected void initLabelProvider1() {
+		
+	}
+	
+	protected void initLabelProvider2() {
+		
+	}
+
+	protected void initLabelProvider3() {
+		
+	}
+	
+	protected void initLabelProvider4() {
+		
 	}
 
 	/**
@@ -325,8 +359,11 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_1 = FormUI.createTable(toolkit, pane1, tableHeight);
 			tableViewer1 = new TableViewer(ctrl_table_1);
 			initContentProvider1();
-
-			tableViewer1.setLabelProvider(labelProvider);
+			if (isSyncFree()) {
+				initLabelProvider1();
+			} else {			
+				tableViewer1.setLabelProvider(labelProvider);
+			}
 			tableViewer1.setInput(element);
 
 			// create buttons for table1
@@ -356,8 +393,11 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_2 = FormUI.createTable(toolkit, pane3, tableHeight);
 			tableViewer2 = new TableViewer(ctrl_table_2);
 			initContentProvider2();
-
-			tableViewer2.setLabelProvider(labelProvider);
+			if (isSyncFree()) {
+				initLabelProvider2();
+			} else {
+				tableViewer2.setLabelProvider(labelProvider);
+			}
 			tableViewer2.setInput(element);
 
 			// create buttons for table2
@@ -387,8 +427,11 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_3 = FormUI.createTable(toolkit, pane5, tableHeight);
 			tableViewer3 = new TableViewer(ctrl_table_3);
 			initContentProvider3();
-
-			tableViewer3.setLabelProvider(labelProvider);
+			if (isSyncFree()) {
+				initLabelProvider3();
+			} else {
+				tableViewer3.setLabelProvider(labelProvider);
+			}
 			tableViewer3.setInput(element);
 
 			// create buttons for table2
@@ -416,8 +459,11 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_4 = FormUI.createTable(toolkit, pane7, tableHeight);
 			tableViewer4 = new TableViewer(ctrl_table_4);
 			initContentProvider4();
-
-			tableViewer4.setLabelProvider(labelProvider);
+			if (isSyncFree()) {
+				initLabelProvider4();
+			} else {
+				tableViewer4.setLabelProvider(labelProvider);
+			}
 			tableViewer4.setInput(element);
 
 			// create buttons for table4
@@ -492,9 +538,17 @@ public class RelationSection extends AbstractSection {
 			if (changesAllowed[count]) {
 				ctrl_add_1.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
+						if (isSyncFree()) {
+							IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
+							if (selection.size() > 0) { 
+								syncFreeAdd1(selection); 	
+								return;
+							}
+						} 
+												
 						IFilter filter = getFilter();
-						List existingElements = getExistingContentElements1();
-
+						List existingElements = ProcessUtil
+								.getAssociatedElementList(getExistingElements1());
 						ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 								.getWorkbench().getActiveWorkbenchWindow()
 								.getShell(), filter, element, tabString,
@@ -505,12 +559,12 @@ public class RelationSection extends AbstractSection {
 						fd.open();
 						addItems1(fd.getSelectedItems());
 						tableViewer1.refresh();
-
 					}
+					
 				});
 
 				ctrl_add_proc_1.addSelectionListener(new SelectionAdapter() {
-					public void widgetSelected(SelectionEvent e) {
+					public void widgetSelected(SelectionEvent e) {						
 						descriptorProcessfilter = getFilterForDescriptors();
 						process = getProcess();
 						if (descriptorProcessfilter != null && process != null) {
@@ -526,13 +580,20 @@ public class RelationSection extends AbstractSection {
 							fd.open();
 							addFromProcessItems1(fd.getSelectedItems());
 							tableViewer1.refresh();
-						}
-
+						}						
 					}
 				});
 
 				ctrl_remove_1.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
+						if (isSyncFree()) {
+							IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
+							if (syncFreeRemove1(selection)) {
+								tableViewer1.refresh();
+								return;
+							}							
+						} 
+						
 						IStructuredSelection selection = (IStructuredSelection) tableViewer1
 								.getSelection();
 						if (selection.size() > 0) {
@@ -548,6 +609,7 @@ public class RelationSection extends AbstractSection {
 						}
 						ctrl_remove_1.setEnabled(false);
 					}
+				
 				});
 			}
 		}
@@ -849,7 +911,7 @@ public class RelationSection extends AbstractSection {
 			}
 		}
 	}
-
+	
 	protected void addItems1(List list) {
 	};
 
@@ -889,10 +951,6 @@ public class RelationSection extends AbstractSection {
 	protected List getExistingElements1() {
 		return null;
 	};
-	
-	protected List<MethodElement> getExistingContentElements1() {
-		return ProcessUtil.getAssociatedElementList(getExistingElements1());
-	};
 
 	protected List getExistingElements2() {
 		return null;
@@ -906,22 +964,159 @@ public class RelationSection extends AbstractSection {
 		return null;
 	};
 	
-	static class LabelProvider extends AdapterFactoryLabelProvider implements ITableColorProvider {
-		public LabelProvider(AdapterFactory adapterFactory) {
-			super(adapterFactory);
-		}
+	protected void syncFreeAdd1(IStructuredSelection selection) {
 		
-	    public Color getForeground(Object element, int columnIndex) {
-	    	if (ProcessUtil.isSynFree()) {
-	    		if (element instanceof Descriptor) {
-	    			if (DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference((Descriptor) element)) {
-	    				return Colors.DYNAMIC_ELEMENT_LABEL;
-	    			}
-	    		}
+	}
+	
+	protected void syncFreeAddFromProcess1(IStructuredSelection selection) {
+		
+	}
+	
+	protected boolean syncFreeRemove1(IStructuredSelection selection) {
+		return false;
+	}
+	
+	
+	class SyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
+		private EReference ref;
+		
+		public SyncFreeLabelProvider(AdapterFactory adapterFactory, EReference ref) {
+			super(adapterFactory);
+			this.ref = ref;
+		}
+	    
+	    public Font getFont(Object obj, int columnIndex) {	    	
+	    	if (isDynamicAndExclude(obj, ref) || isDynamic(obj)) {
+	    		return newFont;
+	    	}	    	
+	    	
+	    	return initialFont;
+	    }	    	
+	    
+	    public String getColumnText(Object obj, int columnIndex) {
+	    	String original = super.getColumnText(obj, columnIndex);
+	    	if (isDynamicAndExclude(obj, ref)) {
+	    		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
 	    	}
 	    	
-	    	return super.getForeground(element, columnIndex);
+	    	return original;	    	
 	    }
-	};
-
+	}
+	
+	private EReference getExcludeFeature(EReference ref) {		
+		return LibraryEditUtil.getInstance().getExcludeFeature(ref);
+	}
+	
+	private void createFont() {
+		if (tableViewer1 != null) {
+	    	initialFont = tableViewer1.getTable().getFont();
+	    	FontData[] fontData = initialFont.getFontData();
+	    	for (int i = 0; i < fontData.length; i++) {
+	    		fontData[i].setStyle(SWT.BOLD);
+	    	}	    	
+	    	newFont = new Font(tableViewer1.getTable().getDisplay(), fontData);
+		}
+	}
+	
+	public boolean isDynamicAndExclude(Object obj, EReference ref) {
+		if (! (obj instanceof MethodElement) || !ref.isMany()) {
+			return false;
+		}
+		EReference eRef = getExcludeFeature(ref);
+		if (eRef == null) {
+			return false;
+		}
+		
+		List<MethodElement> listValue = (List<MethodElement> ) element.eGet(eRef);
+	    if (listValue == null) {
+	    	return false;
+	    }
+		return listValue.contains(obj);	    
+				
+//		if (isDynamic(obj)) {
+//			List list = null;
+//			if (ref == UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy()) {
+//				list = ((TaskDescriptor)element).getPerformedPrimarilyByExcluded();
+//			} else if (ref == UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy()) {
+//				list = ((TaskDescriptor)element).getAdditionallyPerformedByExclude();
+//			}
+//			
+//			MethodElement e = getReferenceMethodElement((BreakdownElement)obj);			
+//			
+//			if ((list != null) && list.contains(e)) {
+//				return true;
+//			}			
+//		}
+//		
+//		return false;
+	}
+	
+	public boolean isDynamic(Object element) {
+		if (isSyncFree()) {
+			if (! (element instanceof Descriptor)) {
+				return true;
+			}
+    		if (DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference((Descriptor)element)) {
+    			return true;
+    		}
+		}
+		
+		return false;
+	}
+	
+	protected boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
+	private MethodElement getReferenceMethodElement(BreakdownElement element) {
+		MethodElement e = null;
+		
+		if (element instanceof TaskDescriptor) {
+			e = ((TaskDescriptor)element).getTask();
+		} else if (element instanceof RoleDescriptor) {
+			e = ((RoleDescriptor)element).getRole();
+		} else if (element instanceof WorkProductDescriptor) {
+			e = ((WorkProductDescriptor)element).getWorkProduct();
+		}
+		
+		if (e != null) {
+			e = ConfigurationHelper.getCalculatedElement(e, getConfiguration());
+		}
+		
+		return e;
+	}
+	
+	/**
+	 * 
+	 * Check all the elements in list, to see if contains elements with
+	 * different type
+	 * @return true single type
+	 *         flase multiple type
+	 * 
+	 */
+	public boolean checkSelection(List list, EReference ref) {
+		int dynamic = 0;
+		int dynamicExclude = 0;
+		int local = 0;
+		
+		for (int i = 0; i < list.size(); i++) {
+			MethodElement desc = (MethodElement) list.get(i);
+			if (isDynamicAndExclude(desc, ref)) {
+				dynamicExclude ++;
+			} else if (isDynamic(desc)) {
+				dynamic ++;
+			} else {
+				local ++;
+			}
+		}
+		
+		if (((dynamic > 0) && (dynamicExclude > 0))
+			|| ((dynamic > 0) && (local > 0))
+			|| ((local > 0) && (dynamicExclude > 0))) {
+			return false;
+		}
+		
+		return true;		
+	}
+	
 }

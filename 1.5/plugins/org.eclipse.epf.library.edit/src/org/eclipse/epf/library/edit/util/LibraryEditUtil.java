@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
@@ -16,6 +17,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.UmaPackage;
 
 public class LibraryEditUtil {
 	
@@ -104,4 +106,17 @@ public class LibraryEditUtil {
 		return p == null ? true : p.isSynFree();
 	}
 		
+	public EReference getExcludeFeature(EReference ref) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		if (ref == up.getTaskDescriptor_PerformedPrimarilyBy()) {
+			return up.getTaskDescriptor_PerformedPrimarilyByExcluded();
+		}
+		
+		if (ref == up.getTaskDescriptor_AdditionallyPerformedBy()) {
+			return up.getTaskDescriptor_AdditionallyPerformedByExclude();				
+		}
+		//...		
+		return null;
+	}
+	
 }

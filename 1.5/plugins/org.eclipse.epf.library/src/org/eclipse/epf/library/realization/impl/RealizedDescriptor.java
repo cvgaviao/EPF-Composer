@@ -116,12 +116,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		Set<MethodElement> excludeElements = new HashSet<MethodElement>();
 		if (excludeList != null && !excludeList.isEmpty()) {
-			for (MethodElement des : excludeList) {
-				MethodElement elem = getLinkedElement();
-				if (elem != null) {
-					excludeElements.add(elem);
-				}
-			}
+			excludeElements.addAll(excludeList);
 		}
 		
 		Set<MethodElement> elementSet = new LinkedHashSet<MethodElement>();
