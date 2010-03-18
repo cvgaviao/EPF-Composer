@@ -487,4 +487,8 @@ public class ConfigurationImportService {
 		}
 	};	
 	
+	public boolean isSynFreeLib() {
+		return importingLibDoc.isSynFreeLib();
+	}
+	
 }

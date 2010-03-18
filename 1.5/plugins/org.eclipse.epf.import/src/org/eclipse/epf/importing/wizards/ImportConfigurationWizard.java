@@ -21,6 +21,7 @@ import org.eclipse.epf.importing.services.ConfigurationImportData;
 import org.eclipse.epf.importing.services.ConfigurationImportService;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.LibraryUIImages;
 import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
 import org.eclipse.epf.services.IFileManager;
@@ -124,6 +125,22 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 	 * @see org.eclipse.jface.wizard.IWizard#performFinish()
 	 */
 	public boolean performFinish() {
+		if (ProcessUtil.isSynFree() && !service.isSynFreeLib()) {
+			String message = ImportResources.ImportNoSynLib_ConvertMsg;
+			boolean yes = ImportPlugin.getDefault().getMsgDialog()
+					.displayConfirmation(
+							ImportResources.importConfigWizard_title, message);
+			if (!yes) {
+				return false;
+			}
+		} else if (!ProcessUtil.isSynFree() && service.isSynFreeLib()) {
+			String message = ImportResources.ImportSynLibToNoSynLib_Error;
+			ImportPlugin.getDefault().getMsgDialog()
+					.displayError(
+							ImportResources.importConfigWizard_title, message);
+			return false;
+		}
+		
 		// Prompt the user to back up library.
 		LibraryBackupUtil.promptBackupCurrentLibrary(null, LibraryService
 				.getInstance());

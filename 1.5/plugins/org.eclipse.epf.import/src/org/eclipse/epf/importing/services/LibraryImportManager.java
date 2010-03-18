@@ -35,6 +35,8 @@ import org.eclipse.epf.importing.ImportPlugin;
 import org.eclipse.epf.importing.ImportResources;
 import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -958,7 +960,12 @@ public class LibraryImportManager {
 		if (owner instanceof MethodLibrary) {			
 			// can be configuration or plugin
 			if (newObj instanceof MethodPlugin) {
-				MethodPlugin plugin = (MethodPlugin)newObj;				
+				MethodPlugin plugin = (MethodPlugin)newObj;
+				
+				MethodPluginPropUtil propUtil = MethodPluginPropUtil.getMethodPluginPropUtil();				
+				if (ProcessUtil.isSynFree() && ! propUtil.isSynFree(plugin)) {
+					propUtil.setSynFree(plugin, true);
+				}
 				
 				checkModifiedFiles();				
 				error = ! fileCheckedOutStatus.isOK();				
