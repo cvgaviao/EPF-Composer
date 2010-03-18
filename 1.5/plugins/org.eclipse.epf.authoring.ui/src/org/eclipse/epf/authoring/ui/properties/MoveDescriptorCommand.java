@@ -49,8 +49,7 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 		if (value instanceof List) {
 			List listValue = (List) value;
 			listValue.addAll(methodElements);
-		}
-			
+		}			
 	}
 	
 	public void undo() {
@@ -61,10 +60,6 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 			List listValue = (List) value;
 			listValue.removeAll(methodElements);
 		}
-	}
-	
-	protected boolean prepare() {
-		return true;
 	}
 
 }

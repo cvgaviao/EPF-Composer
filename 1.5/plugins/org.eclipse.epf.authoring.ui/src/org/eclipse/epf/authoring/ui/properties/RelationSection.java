@@ -17,7 +17,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
-import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
@@ -27,9 +26,6 @@ import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
-import org.eclipse.epf.uma.RoleDescriptor;
-import org.eclipse.epf.uma.TaskDescriptor;
-import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -542,13 +538,18 @@ public class RelationSection extends AbstractSection {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
 							if (selection.size() > 0) { 
 								syncFreeAdd1(selection); 	
+								tableViewer1.refresh();
 								return;
 							}
 						} 
 												
 						IFilter filter = getFilter();
-						List existingElements = ProcessUtil
-								.getAssociatedElementList(getExistingElements1());
+						List existingElements = null;
+						if (isSyncFree()) {
+							existingElements = getExistingContentElements1();
+						} else {
+							existingElements = ProcessUtil.getAssociatedElementList(getExistingElements1());
+						}
 						ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 								.getWorkbench().getActiveWorkbenchWindow()
 								.getShell(), filter, element, tabString,
@@ -657,9 +658,22 @@ public class RelationSection extends AbstractSection {
 			if (changesAllowed[count]) {
 				ctrl_add_2.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
+						if (isSyncFree()) {
+							IStructuredSelection selection = (IStructuredSelection) tableViewer2.getSelection();
+							if (selection.size() > 0) { 
+								syncFreeAdd2(selection); 	
+								tableViewer2.refresh();
+								return;
+							}
+						} 
+						
 						IFilter filter = getFilter();
-						List existingElements = ProcessUtil
-								.getAssociatedElementList(getExistingElements2());
+						List existingElements = null;
+						if (isSyncFree()) {
+							existingElements = getExistingContentElements2();
+						} else {
+							existingElements = ProcessUtil.getAssociatedElementList(getExistingElements2());
+						}
 						ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 								.getWorkbench().getActiveWorkbenchWindow()
 								.getShell(), filter, element, tabString,
@@ -696,6 +710,14 @@ public class RelationSection extends AbstractSection {
 
 				ctrl_remove_2.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
+						if (isSyncFree()) {
+							IStructuredSelection selection = (IStructuredSelection) tableViewer2.getSelection();
+							if (syncFreeRemove2(selection)) {
+								tableViewer2.refresh();
+								return;
+							}							
+						}						
+						
 						IStructuredSelection selection = (IStructuredSelection) tableViewer2
 								.getSelection();
 						if (selection.size() > 0) {
@@ -964,15 +986,27 @@ public class RelationSection extends AbstractSection {
 		return null;
 	};
 	
+	protected List getExistingContentElements1() {
+		return null;
+	}
+	
+	protected List getExistingContentElements2() {
+		return null;
+	}
+	
 	protected void syncFreeAdd1(IStructuredSelection selection) {
 		
 	}
 	
-	protected void syncFreeAddFromProcess1(IStructuredSelection selection) {
+	protected void syncFreeAdd2(IStructuredSelection selection) {
 		
 	}
 	
 	protected boolean syncFreeRemove1(IStructuredSelection selection) {
+		return false;
+	}
+	
+	protected boolean syncFreeRemove2(IStructuredSelection selection) {
 		return false;
 	}
 	
@@ -986,7 +1020,7 @@ public class RelationSection extends AbstractSection {
 		}
 	    
 	    public Font getFont(Object obj, int columnIndex) {	    	
-	    	if (isDynamicAndExclude(obj, ref) || isDynamic(obj, ref)) {
+	    	if (isDynamic(obj, ref)) {
 	    		return newFont;
 	    	}	    	
 	    	
@@ -1031,24 +1065,8 @@ public class RelationSection extends AbstractSection {
 	    if (listValue == null) {
 	    	return false;
 	    }
+	    
 		return listValue.contains(obj);	    
-				
-//		if (isDynamic(obj)) {
-//			List list = null;
-//			if (ref == UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy()) {
-//				list = ((TaskDescriptor)element).getPerformedPrimarilyByExcluded();
-//			} else if (ref == UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy()) {
-//				list = ((TaskDescriptor)element).getAdditionallyPerformedByExclude();
-//			}
-//			
-//			MethodElement e = getReferenceMethodElement((BreakdownElement)obj);			
-//			
-//			if ((list != null) && list.contains(e)) {
-//				return true;
-//			}			
-//		}
-//		
-//		return false;
 	}
 	
 	public boolean isDynamic(Object element, EReference ref) {
@@ -1071,26 +1089,8 @@ public class RelationSection extends AbstractSection {
 		return false;
 	}
 	
-	protected boolean isSyncFree() {
+	public boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
-	}
-	
-	private MethodElement getReferenceMethodElement(BreakdownElement element) {
-		MethodElement e = null;
-		
-		if (element instanceof TaskDescriptor) {
-			e = ((TaskDescriptor)element).getTask();
-		} else if (element instanceof RoleDescriptor) {
-			e = ((RoleDescriptor)element).getRole();
-		} else if (element instanceof WorkProductDescriptor) {
-			e = ((WorkProductDescriptor)element).getWorkProduct();
-		}
-		
-		if (e != null) {
-			e = ConfigurationHelper.getCalculatedElement(e, getConfiguration());
-		}
-		
-		return e;
 	}
 	
 	/**
