@@ -1231,11 +1231,6 @@ implements ILibraryResource, IFailSafeSavable
 						if (! UmaUtil.isSynFreePlugin(p)) {
 							UmaUtil.setSynFreePlugin(p, true);
 						}					
-					} else if (e instanceof ProcessComponent) {
-						Process proc = ((ProcessComponent) e).getProcess();
-						if (proc != null && ! UmaUtil.isSynFreeProcess(proc)) {
-							UmaUtil.setSynFreeProcess(proc, true);
-						}
 					}
 				}
 			}
