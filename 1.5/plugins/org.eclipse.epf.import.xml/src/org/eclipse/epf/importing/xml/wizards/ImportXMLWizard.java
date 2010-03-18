@@ -18,12 +18,16 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.epf.authoring.ui.wizards.SaveAllEditorsPage;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.export.xml.ExportXMLPlugin;
+import org.eclipse.epf.importing.ImportPlugin;
+import org.eclipse.epf.importing.ImportResources;
 import org.eclipse.epf.importing.xml.ImportXMLPlugin;
 import org.eclipse.epf.importing.xml.ImportXMLResources;
 import org.eclipse.epf.importing.xml.preferences.ImportXMLPreferences;
 import org.eclipse.epf.importing.xml.services.ImportXMLService;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
 import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
 import org.eclipse.epf.library.util.ResourceUtil;
@@ -35,7 +39,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
@@ -182,7 +185,12 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 					succeed = service.loadXml(xmlFile);
 					if (! succeed) {
 						return;
-					}					
+					}
+					
+					if (! handleSynFreeFlag()) {
+						return;
+					}
+					
 					service.doImport(monitor);
 					ImportXMLPreferences.setXMLFile(xmlFile);
 					ImportXMLPreferences.setMergeOption(mergeOption);
@@ -196,6 +204,7 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 				}
 
 			}
+
 		};
 		try {
 			getContainer().run(true, false, op);
@@ -224,5 +233,39 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 	 */
 	public void dispose() {
 		service.dispose();
+	}
+	
+	private boolean handleSynFreeFlag() {
+		final boolean needToConvert = ProcessUtil.isSynFree() && !service.isSynFreeLib();
+		final boolean toReject = !ProcessUtil.isSynFree() && service.isSynFreeLib();
+		final boolean result[] = new boolean[1];
+		result[0] = true;
+		
+		if (needToConvert || toReject) {
+			SafeUpdateController.syncExec(new Runnable() {
+				public void run() {
+					if (needToConvert) {
+						String message = ImportResources.ImportNoSynLib_ConvertMsg;
+						result[0] = ImportPlugin
+								.getDefault()
+								.getMsgDialog()
+								.displayConfirmation(
+										ImportXMLResources.importXMLWizard_title,
+										message);
+					} else if (toReject) {
+						String message = ImportResources.ImportSynLibToNoSynLib_Error;
+						ImportPlugin
+								.getDefault()
+								.getMsgDialog()
+								.displayError(
+										ImportXMLResources.importXMLWizard_title,
+										message);
+						result[0] = false;
+					}
+				}
+			});
+		}
+		
+		return result[0];
 	}
 }

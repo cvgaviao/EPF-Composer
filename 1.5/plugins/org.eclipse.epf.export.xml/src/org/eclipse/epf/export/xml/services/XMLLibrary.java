@@ -39,6 +39,7 @@ import org.eclipse.epf.export.xml.ExportXMLResources;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
+import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.ecore.IModelObject;
@@ -98,6 +99,8 @@ public class XMLLibrary {
 	private Map<String, String> guidToPlugNameMap;
 	
 	private Map<WorkOrder, org.eclipse.epf.uma.WorkOrder> successOrWorkOrderMap;
+	
+	private int synFreeLibIx = -1; //-1: unset, 0: false, 1: true;
 
 	/**
 	 * Creates a new instance.
@@ -1193,6 +1196,30 @@ public class XMLLibrary {
 		}
 
 		return xmlSection;
+	}
+	
+	public boolean isSynFreeLib() {
+		if (synFreeLibIx == -1) {
+			synFreeLibIx = 0;
+			
+			EStructuralFeature feature = FeatureManager.INSTANCE.getXmlFeature(rootObject
+					.eClass(), "methodElementProperty");		//$NON-NLS-1$
+			
+			List<MethodElementProperty> mepList = (List<MethodElementProperty>) rootObject.eGet(feature);
+			if (mepList == null || mepList.isEmpty()) {
+				return false;
+			}
+			
+			for (MethodElementProperty mep : mepList) {
+				String name = mep.getName();
+				if (name != null && name.equals(MethodLibraryPropUtil.Library_SynFree)) {
+					String value = mep.getValue();
+					synFreeLibIx = Boolean.parseBoolean(value) ? 1 : 0;
+					break;
+				}
+			}
+		}
+		return synFreeLibIx > 0;
 	}
 	
 }

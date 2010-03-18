@@ -47,6 +47,8 @@ import org.eclipse.epf.importing.wizards.SelectImportConfigurationSource;
 import org.eclipse.epf.importing.xml.ImportXMLPlugin;
 import org.eclipse.epf.importing.xml.ImportXMLResources;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
@@ -120,6 +122,8 @@ public class ImportXMLService {
 	private IMigrator migrator;
 	
 	private boolean checkBasePlugins = true;
+	
+	private boolean isBaseLibSynFree = false;
 
 	/**
 	 * The constructor
@@ -273,6 +277,10 @@ public class ImportXMLService {
 	 * @throws Exception
 	 */
 	public void doImport(IProgressMonitor monitor) throws Exception {
+		isBaseLibSynFree = MethodLibraryPropUtil.getMethodLibraryPropUtil()
+				.isSynFree(
+						LibraryService.getInstance().getCurrentMethodLibrary());
+		
 		boolean refresh = RefreshJob.getInstance().isEnabled();
 		try {
 			if (refresh) {
@@ -419,6 +427,25 @@ public class ImportXMLService {
 				if (unlockedPlugins != null && ! unlockedPlugins.isEmpty()) {
 					LibraryImportManager.lockUnlockedPlugins(unlockedPlugins);
 				}
+
+				if (isBaseLibSynFree && !isSynFreeLib()) {
+					MethodLibraryPropUtil libPropUtil = MethodLibraryPropUtil
+							.getMethodLibraryPropUtil();
+					org.eclipse.epf.uma.MethodLibrary lib = LibraryService
+							.getInstance().getCurrentMethodLibrary();
+					if (!libPropUtil.isSynFree(lib)) {
+						libPropUtil.setSynFree(lib, true);
+					}
+					MethodPluginPropUtil pluginPropUtil = MethodPluginPropUtil
+							.getMethodPluginPropUtil();
+					for (org.eclipse.epf.uma.MethodPlugin p : lib
+							.getMethodPlugins()) {
+						if (!pluginPropUtil.isSynFree(p)) {
+							pluginPropUtil.setSynFree(p, true);
+						}
+					}
+				}		
+				
 				LibraryUtil.saveLibrary(LibraryService.getInstance()
 						.getCurrentMethodLibrary(), false, false);
 				diagramHandler.execute();				
@@ -887,6 +914,10 @@ public class ImportXMLService {
 
 	public void setMergeLevel(int mergeLevel) {
 		this.mergeLevel = mergeLevel;
+	}
+	
+	public boolean isSynFreeLib() {
+		return xmlLib == null ? false : xmlLib.isSynFreeLib();
 	}
 	
 }
