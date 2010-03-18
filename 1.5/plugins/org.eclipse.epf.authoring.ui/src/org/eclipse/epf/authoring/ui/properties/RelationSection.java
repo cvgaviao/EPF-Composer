@@ -1077,9 +1077,9 @@ public class RelationSection extends AbstractSection {
 			
 			Descriptor des = (Descriptor) element;			
 			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-			if (! propUtil.isCreatedByReference(des)) {
-				return false;
-			}
+//			if (! propUtil.isCreatedByReference(des)) {
+//				return false;
+//			}
 			
 			if (! propUtil.localUse(des, (Descriptor) this.element, ref)) {
 				return true;
