@@ -27,6 +27,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.export.ExportPlugin;
+import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -83,6 +84,8 @@ public class LibraryDocument {
 	private HashMap guidToUriMap = null;
 	
 	private Map<String, String> guidToPlugNameMap;
+	
+	private int synFreeLibIx = -1; //-1: unset, 0: false, 1: true;
 
 	/**
 	 * Creates a new instance.
@@ -707,12 +710,25 @@ public class LibraryDocument {
 			if (nodes == null || nodes.getLength() == 0) {
 				return;
 			}
-			Element versionNode = (Element) nodes.item(0);
+			int ix = -1;
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Element node = (Element) nodes.item(i);
+				String name = node.getAttribute(ATTR_name);
+				if (name ==null || name.trim().length() == 0) {
+					ix = i;
+					break;
+				}
+			}
+			if (ix == -1) {
+				return;
+			}
+			
+			Element versionNode = (Element) nodes.item(ix);
 			String versionStr = versionNode.getAttribute(ATTR_value);
 			
 			if (versionStr.equals("0")) { //$NON-NLS-1$ 
 				guidToPlugNameMap = new HashMap<String, String>();
-				for (int i = 1; i < nodes.getLength();) {
+				for (int i = ix + 1; i < nodes.getLength();) {
 					Element node = (Element) nodes.item(i);
 					String guid = node.getAttribute(ATTR_value);
 					node = (Element) nodes.item(i + 1);
@@ -748,5 +764,26 @@ public class LibraryDocument {
 	private NodeList getMethodElementProperties() {
 		return libTag.getElementsByTagName(TAG_methodElementProperty);
 	}
+	
+	public boolean isSynFreeLib() {
+		if (synFreeLibIx == -1) {
+			synFreeLibIx = 0;
+			
+			NodeList nodes = getMethodElementProperties();
+			if (nodes != null) {
+				for (int i = 0; i < nodes.getLength(); i++) {
+					Element node = (Element) nodes.item(i);
+					String name = node.getAttribute(ATTR_name);
+					if (name != null && name.equals(MethodLibraryPropUtil.Library_SynFree)) {
+						String value = node.getAttribute(ATTR_value);
+						synFreeLibIx = Boolean.parseBoolean(value) ? 1 : 0;
+						break;
+					}
+				}
+			}
+		}
+		return synFreeLibIx > 0;
+	}
+
 	
 }

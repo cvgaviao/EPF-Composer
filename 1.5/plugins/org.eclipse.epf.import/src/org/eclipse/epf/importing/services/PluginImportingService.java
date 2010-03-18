@@ -47,6 +47,8 @@ import org.eclipse.epf.importing.services.PluginImportData.PluginInfo;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceUtil;
@@ -246,8 +248,26 @@ public class PluginImportingService {
 					});
 					return;
 				}
+				
+				
+				boolean toSave = false;
+				if (ProcessUtil.isSynFree() && ! isSynFreeLib()) {
+					MethodPluginPropUtil propUtil = MethodPluginPropUtil.getMethodPluginPropUtil();
+					MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
+					for (MethodPlugin plugin : lib.getMethodPlugins()) {
+						if (! propUtil.isSynFree(plugin)) {
+							propUtil.setSynFree(plugin, true);
+						}
+					}					
+					toSave = true;
+				}
+								
 				if (unlockedPlugins.size() > 0) {
 					lockUnlockedPlugins(unlockedPlugins);
+					toSave = true;
+				}
+				
+				if (toSave) {
 					LibraryService.getInstance().saveCurrentMethodLibrary();
 					LibraryService.getInstance().reopenCurrentMethodLibrary();
 				}
@@ -1315,5 +1335,10 @@ public class PluginImportingService {
 	public void setValidateHookData(Object validateHookData) {
 		this.validateHookData = validateHookData;
 	}
+	
+	public boolean isSynFreeLib() {
+		return importingLibDoc.isSynFreeLib();
+	}
+	
 	
 }

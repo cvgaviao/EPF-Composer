@@ -24,6 +24,7 @@ import org.eclipse.epf.importing.services.PluginImportData;
 import org.eclipse.epf.importing.services.PluginImportingService;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.PluginDepInfo;
 import org.eclipse.epf.library.edit.validation.PluginDependencyInfoMgr;
@@ -180,6 +181,22 @@ public class ImportPluginWizard extends Wizard implements IImportWizard {
 			if (!yes) {
 				return false;
 			}
+		}
+		
+		if (ProcessUtil.isSynFree() && !service.isSynFreeLib()) {
+			String message = ImportResources.ImportNoSynLib_ConvertMsg;
+			boolean yes = ImportPlugin.getDefault().getMsgDialog()
+					.displayConfirmation(
+							ImportResources.importPluginsWizard_title, message);
+			if (!yes) {
+				return false;
+			}
+		} else if (!ProcessUtil.isSynFree() && service.isSynFreeLib()) {
+			String message = ImportResources.ImportSynLibToNoSynLib_Error;
+			ImportPlugin.getDefault().getMsgDialog()
+					.displayError(
+							ImportResources.importPluginsWizard_title, message);
+			return false;
 		}
 
 		// Prompt user to back up library.
