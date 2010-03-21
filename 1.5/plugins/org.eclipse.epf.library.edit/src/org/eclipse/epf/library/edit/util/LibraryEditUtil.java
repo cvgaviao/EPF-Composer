@@ -115,6 +115,19 @@ public class LibraryEditUtil {
 		if (ref == up.getTaskDescriptor_AdditionallyPerformedBy()) {
 			return up.getTaskDescriptor_AdditionallyPerformedByExclude();				
 		}
+		
+		if (ref == up.getTaskDescriptor_MandatoryInput()) {
+			return up.getTaskDescriptor_MandatoryInputExclude();
+		}
+		
+		if (ref == up.getTaskDescriptor_OptionalInput()) {
+			return up.getTaskDescriptor_OptionalInputExclude();
+		}
+		
+		if (ref == up.getTaskDescriptor_Output()) {
+			return up.getTaskDescriptor_OutputExclude();
+		}
+		
 		//...		
 		return null;
 	}

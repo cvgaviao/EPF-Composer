@@ -20,16 +20,20 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
@@ -68,14 +72,19 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 	Collection<WorkProductDescriptor> subartifactDescriptors = new ArrayList<WorkProductDescriptor>();
 
 	private MethodConfiguration config;
+	
+	private boolean calledForExculded = false;
 
-	/**
-	 * 
-	 */
 	public AssignWPToTaskDescriptor(TaskDescriptor taskDesc, List workProducts,
 			int action, MethodConfiguration config) {
+		this(taskDesc, workProducts, action, config, false);
+	}
+	
+	public AssignWPToTaskDescriptor(TaskDescriptor taskDesc, List workProducts,
+			int action, MethodConfiguration config, boolean calledForExculded) {
 		super(TngUtil.getOwningProcess(taskDesc));
 
+		this.calledForExculded = calledForExculded;
 		this.workProducts = workProducts;
 		this.taskDesc = taskDesc;
 		this.action = action;
@@ -204,6 +213,25 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getOutput().addAll(existingWPDescList);
 			taskDesc.getOutput().addAll(newWPDescList);
 		}
+		addLocalUsingInfo(existingWPDescList, getFeature(action));
+		addLocalUsingInfo(newWPDescList, getFeature(action));
+		if (calledForExculded) {
+			List excludedList = null;
+			if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
+				excludedList = taskDesc.getMandatoryInputExclude();
+			} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
+				excludedList = taskDesc.getOptionalInputExclude();
+			} else if (action == IActionTypeConstants.ADD_OUTPUT) {
+				excludedList = taskDesc.getOutputExclude();
+			}
+			if (excludedList != null) {
+				excludedList.removeAll(workProducts);
+			}
+			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+			for (RoleDescriptor rd : (List<RoleDescriptor>) newWPDescList) {
+				propUtil.setCreatedByReference(rd, true);
+			}
+		}
 
 		activity.getBreakdownElements().addAll(newWPDescList);
 		if(!subartifactDescriptors.isEmpty()) {
@@ -221,6 +249,56 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 				wpDesc.getDeliverableParts().add((WorkProductDescriptor) key);
 			}
 		}
+	}
+	
+	private void addLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
+		if (calledForExculded) {
+			return;
+		}
+		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
+			return;
+		}		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		for (Descriptor des : deslIst) {
+			propUtil.addLocalUse(des, taskDesc, feature);
+		}
+		
+	}
+	
+	private void removeLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
+		if (calledForExculded) {
+			return;
+		}
+		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
+			return;
+		}		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		for (Descriptor des : deslIst) {
+			propUtil.removeLocalUse(des, taskDesc, feature);
+		}
+		
+	}
+	
+	private EReference getFeature(int action) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		
+		if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
+			return up.getTaskDescriptor_MandatoryInput();		
+		} 
+		
+		if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
+			return up.getTaskDescriptor_OptionalInput();	
+		}
+
+		if (action == IActionTypeConstants.ADD_OUTPUT) {
+			return up.getTaskDescriptor_Output();	
+		}
+		
+		if (action == IActionTypeConstants.ADD_EXTERNAL_INPUT) {
+			return up.getTaskDescriptor_ExternalInput();	
+		}
+		
+		return null;
 	}
 
 	public void undo() {
@@ -240,6 +318,21 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 		} else if (action == IActionTypeConstants.ADD_OUTPUT) {
 			taskDesc.getOutput().removeAll(existingWPDescList);
 			taskDesc.getOutput().removeAll(newWPDescList);
+		}
+		removeLocalUsingInfo(existingWPDescList, getFeature(action));
+		removeLocalUsingInfo(newWPDescList, getFeature(action));
+		if (calledForExculded) {
+			List excludedList = null;
+			if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
+				excludedList = taskDesc.getMandatoryInputExclude();
+			} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
+				excludedList = taskDesc.getOptionalInputExclude();
+			} else if (action == IActionTypeConstants.ADD_OUTPUT) {
+				excludedList = taskDesc.getOutputExclude();
+			}
+			if (excludedList != null) {
+				excludedList.addAll(workProducts);
+			}
 		}
 		
 		activity.getBreakdownElements().removeAll(newWPDescList);

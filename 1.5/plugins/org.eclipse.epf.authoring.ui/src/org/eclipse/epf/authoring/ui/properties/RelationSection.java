@@ -72,7 +72,7 @@ public class RelationSection extends AbstractSection {
 
 	private FormToolkit toolkit;
 
-	private Button ctrl_add_1, ctrl_add_2, ctrl_add_3, ctrl_add_4;
+	protected Button ctrl_add_1, ctrl_add_2, ctrl_add_3, ctrl_add_4;
 
 	protected Button ctrl_remove_1, ctrl_remove_2, ctrl_remove_3, ctrl_remove_4;
 
@@ -514,8 +514,14 @@ public class RelationSection extends AbstractSection {
 						public void selectionChanged(SelectionChangedEvent event) {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer1
 									.getSelection();
-							if ((selection.size() > 0) & editable)
-								ctrl_remove_1.setEnabled(true);
+							if ((selection.size() > 0) & editable) {
+								if (isSyncFree()) {
+									syncFreeUpdateBtnStatus1(selection);
+								} else {
+									ctrl_remove_1.setEnabled(true);
+								}
+							}
+							
 							if (selection.size() == 1) {
 								String desc = ((MethodElement) selection
 										.getFirstElement())
@@ -591,6 +597,7 @@ public class RelationSection extends AbstractSection {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
 							if (syncFreeRemove1(selection)) {
 								tableViewer1.refresh();
+								ctrl_remove_1.setEnabled(false);
 								return;
 							}							
 						} 
@@ -637,8 +644,11 @@ public class RelationSection extends AbstractSection {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer2
 									.getSelection();
 							if ((selection.size() > 0) && editable) {
-								if (ctrl_remove_2 != null)
+								if (isSyncFree()) {
+									syncFreeUpdateBtnStatus2(selection);
+								} else {
 									ctrl_remove_2.setEnabled(true);
+								}
 							}
 							if (selection.size() == 1) {
 								String desc = ((MethodElement) selection
@@ -714,6 +724,7 @@ public class RelationSection extends AbstractSection {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer2.getSelection();
 							if (syncFreeRemove2(selection)) {
 								tableViewer2.refresh();
+								ctrl_remove_2.setEnabled(false);
 								return;
 							}							
 						}						
@@ -855,8 +866,13 @@ public class RelationSection extends AbstractSection {
 						public void selectionChanged(SelectionChangedEvent event) {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer4
 									.getSelection();
-							if ((selection.size() > 0) && editable)
-								ctrl_remove_4.setEnabled(true);
+							if ((selection.size() > 0) & editable) {
+								if (isSyncFree()) {
+									syncFreeUpdateBtnStatus4(selection);
+								} else {
+									ctrl_remove_4.setEnabled(true);
+								}
+							}
 							if (selection.size() == 1) {
 								String desc = ((MethodElement) selection
 										.getFirstElement())
@@ -875,9 +891,22 @@ public class RelationSection extends AbstractSection {
 			if ((new Boolean(changesAllowed[count])).booleanValue()) {
 				ctrl_add_4.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
+						if (isSyncFree()) {
+							IStructuredSelection selection = (IStructuredSelection) tableViewer4.getSelection();
+							if (selection.size() > 0) { 
+								syncFreeAdd4(selection); 	
+								tableViewer4.refresh();
+								return;
+							}
+						} 
+						
 						IFilter filter = getFilter();
-						List existingElements = ProcessUtil
-								.getAssociatedElementList(getExistingElements4());
+						List existingElements = null;
+						if (isSyncFree()) {
+							existingElements = getExistingContentElements4();
+						} else {
+							existingElements = ProcessUtil.getAssociatedElementList(getExistingElements4());
+						}
 						ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 								.getWorkbench().getActiveWorkbenchWindow()
 								.getShell(), filter, element, tabString,
@@ -914,6 +943,15 @@ public class RelationSection extends AbstractSection {
 
 				ctrl_remove_4.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent e) {
+						if (isSyncFree()) {
+							IStructuredSelection selection = (IStructuredSelection) tableViewer4.getSelection();
+							if (syncFreeRemove4(selection)) {
+								tableViewer4.refresh();
+								ctrl_remove_4.setEnabled(false);
+								return;
+							}							
+						}
+						
 						IStructuredSelection selection = (IStructuredSelection) tableViewer4
 								.getSelection();
 						if (selection.size() > 0) {
@@ -994,11 +1032,19 @@ public class RelationSection extends AbstractSection {
 		return null;
 	}
 	
+	protected List getExistingContentElements4() {
+		return null;
+	}
+	
 	protected void syncFreeAdd1(IStructuredSelection selection) {
 		
 	}
 	
 	protected void syncFreeAdd2(IStructuredSelection selection) {
+		
+	}
+	
+	protected void syncFreeAdd4(IStructuredSelection selection) {
 		
 	}
 	
@@ -1010,6 +1056,9 @@ public class RelationSection extends AbstractSection {
 		return false;
 	}
 	
+	protected boolean syncFreeRemove4(IStructuredSelection selection) {
+		return false;
+	}
 	
 	class SyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
 		private EReference ref;
@@ -1124,6 +1173,18 @@ public class RelationSection extends AbstractSection {
 		}
 		
 		return true;		
+	}
+	
+	protected void syncFreeUpdateBtnStatus1(IStructuredSelection selection) {
+		
+	}
+	
+	protected void syncFreeUpdateBtnStatus2(IStructuredSelection selection) {
+		
+	}
+	
+	protected void syncFreeUpdateBtnStatus4(IStructuredSelection selection) {
+		
 	}
 	
 }

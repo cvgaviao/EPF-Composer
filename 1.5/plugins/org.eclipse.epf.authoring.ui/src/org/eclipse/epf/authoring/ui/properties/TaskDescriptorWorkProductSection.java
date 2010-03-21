@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -27,14 +28,18 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.AssignWPToTaskDescriptor;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
@@ -79,9 +84,17 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected void initContentProvider1() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				return getFilteredList(
-						((TaskDescriptor) element).getMandatoryInput())
-						.toArray();
+				TaskDescriptor td = (TaskDescriptor) element;
+				List<MethodElement> elements = new ArrayList<MethodElement>();
+				elements.addAll(td.getMandatoryInput());
+				
+				if (ProcessUtil.isSynFree()
+						&& ! DescriptorPropUtil.getDesciptorPropUtil()
+								.isNoAutoSyn(td)) {
+					elements.addAll(td.getMandatoryInputExclude());
+				}
+				
+				return getFilteredList(elements).toArray();
 			}
 		};
 		tableViewer1.setContentProvider(contentProvider);
@@ -93,9 +106,17 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected void initContentProvider2() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				return getFilteredList(
-						((TaskDescriptor) element).getOptionalInput())
-						.toArray();
+				TaskDescriptor td = (TaskDescriptor) element;
+				List<MethodElement> elements = new ArrayList<MethodElement>();
+				elements.addAll(td.getOptionalInput());
+				
+				if (ProcessUtil.isSynFree()
+						&& ! DescriptorPropUtil.getDesciptorPropUtil()
+								.isNoAutoSyn(td)) {
+					elements.addAll(td.getOptionalInputExclude());
+				}
+				
+				return getFilteredList(elements).toArray();
 			}
 		};
 		tableViewer2.setContentProvider(contentProvider);
@@ -121,11 +142,48 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected void initContentProvider4() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				return getFilteredList(((TaskDescriptor) element).getOutput())
-						.toArray();
+				TaskDescriptor td = (TaskDescriptor) element;
+				List<MethodElement> elements = new ArrayList<MethodElement>();
+				elements.addAll(td.getOutput());
+				
+				if (ProcessUtil.isSynFree()
+						&& ! DescriptorPropUtil.getDesciptorPropUtil()
+								.isNoAutoSyn(td)) {
+					elements.addAll(td.getOutputExclude());
+				}
+				
+				return getFilteredList(elements).toArray();
 			}
 		};
 		tableViewer4.setContentProvider(contentProvider);
+	}
+	
+	protected void initLabelProvider1() {
+		ILabelProvider provider = new SyncFreeLabelProvider(TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
+				UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput());
+		
+		tableViewer1.setLabelProvider(provider);
+	}
+	
+	protected void initLabelProvider2() {
+		ILabelProvider provider = new SyncFreeLabelProvider(TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
+				UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput());
+		
+		tableViewer2.setLabelProvider(provider);		
+	}
+
+	protected void initLabelProvider3() {
+		ILabelProvider provider = new AdapterFactoryLabelProvider(
+				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
+		
+		tableViewer3.setLabelProvider(provider);
+	}
+	
+	protected void initLabelProvider4() {
+		ILabelProvider provider = new SyncFreeLabelProvider(TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
+				UmaPackage.eINSTANCE.getTaskDescriptor_Output());
+		
+		tableViewer4.setLabelProvider(provider);
 	}
 
 	/**
@@ -184,10 +242,14 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		return wpList;
 	}
 
+	protected void addItems1(List list) {
+		addItems1(list, false);
+	};
+	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#addItems1(java.util.List)
 	 */
-	protected void addItems1(List items) {
+	protected void addItems1(List items, boolean calledForExculded) {
 		if (!items.isEmpty()) {
 			List elementList = getWorkProducts(((TaskDescriptor) element)
 					.getOptionalInput());
@@ -206,16 +268,20 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				AssignWPToTaskDescriptor cmd = new AssignWPToTaskDescriptor(
 						(TaskDescriptor) element, newList,
 						IActionTypeConstants.ADD_MANDATORY_INPUT,
-						getConfiguration());
+						getConfiguration(), calledForExculded);
 				actionMgr.execute(cmd);
 			}
 		}
 	};
 
+	protected void addItems2(List items) {
+		addItems2(items, false);
+	}
+	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#addItems2(java.util.List)
 	 */
-	protected void addItems2(List items) {
+	protected void addItems2(List items, boolean calledForExculded) {
 		if (!items.isEmpty()) {
 			List elementList = getWorkProducts(((TaskDescriptor) element)
 					.getMandatoryInput());
@@ -236,7 +302,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				AssignWPToTaskDescriptor cmd = new AssignWPToTaskDescriptor(
 						(TaskDescriptor) element, newList,
 						IActionTypeConstants.ADD_OPTIONAL_INPUT,
-						getConfiguration());
+						getConfiguration(), calledForExculded);
 				actionMgr.execute(cmd);
 			}
 		}
@@ -271,14 +337,18 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		}
 	};
 
+	protected void addItems4(List items) {
+		addItems4(items, false);
+	}
+	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#addItems4(java.util.List)
 	 */
-	protected void addItems4(List items) {
+	protected void addItems4(List items, boolean calledForExculded) {
 		if (!items.isEmpty()) {
 			AssignWPToTaskDescriptor cmd = new AssignWPToTaskDescriptor(
 					(TaskDescriptor) element, items,
-					IActionTypeConstants.ADD_OUTPUT, getConfiguration());
+					IActionTypeConstants.ADD_OUTPUT, getConfiguration(), calledForExculded);
 			actionMgr.execute(cmd);
 		}
 	};
@@ -333,12 +403,36 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected List getExistingElements1() {
 		return ((TaskDescriptor) element).getMandatoryInput();
 	};
+	
+	protected List getExistingContentElements1() {		
+		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements1());
+		
+		TaskDescriptor td = (TaskDescriptor) element;
+		if (ProcessUtil.isSynFree()
+				&& ! DescriptorPropUtil.getDesciptorPropUtil()
+						.isNoAutoSyn(td)) {
+			list.addAll(td.getMandatoryInputExclude());
+		}
+		return list;
+	};
 
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#getExistingElements2()
 	 */
 	protected List getExistingElements2() {
 		return ((TaskDescriptor) element).getOptionalInput();
+	};
+	
+	protected List getExistingContentElements2() {		
+		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements2());
+		
+		TaskDescriptor td = (TaskDescriptor) element;
+		if (ProcessUtil.isSynFree()
+				&& ! DescriptorPropUtil.getDesciptorPropUtil()
+						.isNoAutoSyn(td)) {
+			list.addAll(td.getOptionalInputExclude());
+		}
+		return list;
 	};
 
 	/**
@@ -353,6 +447,18 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	 */
 	protected List getExistingElements4() {
 		return ((TaskDescriptor) element).getOutput();
+	};
+	
+	protected List getExistingContentElements4() {		
+		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements4());
+		
+		TaskDescriptor td = (TaskDescriptor) element;
+		if (ProcessUtil.isSynFree()
+				&& ! DescriptorPropUtil.getDesciptorPropUtil()
+						.isNoAutoSyn(td)) {
+			list.addAll(td.getOutputExclude());
+		}
+		return list;
 	};
 
 	/**
@@ -444,5 +550,194 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected String getDescriptorTabName() {
 		return FilterConstants.WORK_PRODUCT_DESCRIPTORS;
 	}
+	
+	protected void syncFreeAdd1(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
+		
+		boolean result = checkSelection(selection.toList(), ref);	
+		
+		if (! result) {
+			return;
+		}
+		
+		Object testObj = selection.getFirstElement();
+		if (isDynamicAndExclude(testObj, ref)) {				
+			addItems1(selection.toList(), true);
+		} 
+	}
+	
+	protected void syncFreeAdd2(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
+		
+		boolean result = checkSelection(selection.toList(), ref);	
+		
+		if (! result) {
+			return;
+		}
+		
+		Object testObj = selection.getFirstElement();
+		if (isDynamicAndExclude(testObj, ref)) {				
+			addItems2(selection.toList(), true);
+		} 
+	}
+	
+	protected void syncFreeAdd4(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
+		
+		boolean result = checkSelection(selection.toList(), ref);	
+		
+		if (! result) {
+			return;
+		}
+		
+		Object testObj = selection.getFirstElement();
+		if (isDynamicAndExclude(testObj, ref)) {				
+			addItems4(selection.toList(), true);
+		} 
+	}
+	
+	protected boolean syncFreeRemove1(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return true;			
+		} 
+		
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		if (! result) {
+			return true;
+		}
 
+		Object testObj = selection.getFirstElement();
+		if (isDynamicAndExclude(testObj, ref)) {
+			return true;
+		} 
+		
+		if (isDynamic(testObj, ref)) {
+			MoveDescriptorCommand cmd = new MoveDescriptorCommand((Descriptor)element, selection.toList(),
+					UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT,
+					UmaPackage.TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE);
+			actionMgr.execute(cmd);
+			return true;
+		} 
+				
+		return false;
+	}
+	
+	protected boolean syncFreeRemove2(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return true;			
+		} 
+		
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		if (! result) {
+			return true;
+		}
+
+		Object testObj = selection.getFirstElement();
+		if (isDynamicAndExclude(testObj, ref)) {
+			return true;
+		} 
+		
+		if (isDynamic(testObj, ref)) {
+			MoveDescriptorCommand cmd = new MoveDescriptorCommand((Descriptor)element, selection.toList(),
+					UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT,
+					UmaPackage.TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE);
+			actionMgr.execute(cmd);
+			return true;
+		} 
+				
+		return false;
+	}
+	
+	protected boolean syncFreeRemove4(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return true;			
+		} 
+		
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		if (! result) {
+			return true;
+		}
+
+		Object testObj = selection.getFirstElement();
+		if (isDynamicAndExclude(testObj, ref)) {
+			return true;
+		} 
+		
+		if (isDynamic(testObj, ref)) {
+			MoveDescriptorCommand cmd = new MoveDescriptorCommand((Descriptor)element, selection.toList(),
+					UmaPackage.TASK_DESCRIPTOR__OUTPUT,
+					UmaPackage.TASK_DESCRIPTOR__OUTPUT_EXCLUDE);
+			actionMgr.execute(cmd);
+			return true;
+		} 
+				
+		return false;
+	}
+	
+	protected void syncFreeUpdateBtnStatus1(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		
+		if (!result) {
+			ctrl_add_1.setEnabled(false);
+			ctrl_remove_1.setEnabled(false);
+		} else {
+			Object testObj = selection.getFirstElement();
+			if (isDynamicAndExclude(testObj, ref)) {
+				ctrl_add_1.setEnabled(true);
+				ctrl_remove_1.setEnabled(false);
+			} else {
+				ctrl_add_1.setEnabled(false);
+				ctrl_remove_1.setEnabled(true);
+			}
+		}		
+	}
+
+	protected void syncFreeUpdateBtnStatus2(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		
+		if (!result) {
+			ctrl_add_2.setEnabled(false);
+			ctrl_remove_2.setEnabled(false);
+		} else {
+			Object testObj = selection.getFirstElement();
+			if (isDynamicAndExclude(testObj, ref)) {
+				ctrl_add_2.setEnabled(true);
+				ctrl_remove_2.setEnabled(false);
+			} else {
+				ctrl_add_2.setEnabled(false);
+				ctrl_remove_2.setEnabled(true);
+			}
+		}		
+	}
+	
+	protected void syncFreeUpdateBtnStatus4(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		
+		if (!result) {
+			ctrl_add_4.setEnabled(false);
+			ctrl_remove_4.setEnabled(false);
+		} else {
+			Object testObj = selection.getFirstElement();
+			if (isDynamicAndExclude(testObj, ref)) {
+				ctrl_add_4.setEnabled(true);
+				ctrl_remove_4.setEnabled(false);
+			} else {
+				ctrl_add_4.setEnabled(false);
+				ctrl_remove_4.setEnabled(true);
+			}
+		}		
+	}
+	
 }

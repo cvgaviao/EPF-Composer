@@ -492,32 +492,31 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	}
 	
 	protected void syncFreeAdd1(IStructuredSelection selection) {
-		//The result check should be called at selection change and used to enable/disable add button
-		boolean result = checkSelection(selection.toList(),
-				UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy());	
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
+		
+		boolean result = checkSelection(selection.toList(), ref);	
 		
 		if (! result) {
 			return;
 		}
 		
 		Object testObj = selection.getFirstElement();
-		if (isDynamicAndExclude(testObj, UmaPackage.eINSTANCE
-				.getTaskDescriptor_PerformedPrimarilyBy())) {				
+		if (isDynamicAndExclude(testObj, ref)) {				
 			addItems1(selection.toList(), true);
 		} 
 	}
 	
 	protected void syncFreeAdd2(IStructuredSelection selection) {
-		boolean result = checkSelection(selection.toList(),
-				UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy());	
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
+		
+		boolean result = checkSelection(selection.toList(), ref);	
 		
 		if (! result) {
 			return;
 		}
 		
 		Object testObj = selection.getFirstElement();
-		if (isDynamicAndExclude(testObj, UmaPackage.eINSTANCE
-				.getTaskDescriptor_AdditionallyPerformedBy())) {				
+		if (isDynamicAndExclude(testObj, ref)) {				
 			addItems2(selection.toList(), true);
 		} 
 	}
@@ -529,6 +528,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		} 
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
+		
 		boolean result = checkSelection(selection.toList(), ref);
 		if (! result) {
 			return true;
@@ -556,6 +556,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		} 
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
+		
 		boolean result = checkSelection(selection.toList(), ref);
 		if (! result) {
 			return true;
@@ -575,6 +576,46 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		} 
 				
 		return false;
+	}
+	
+	protected void syncFreeUpdateBtnStatus1(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		
+		if (!result) {
+			ctrl_add_1.setEnabled(false);
+			ctrl_remove_1.setEnabled(false);
+		} else {
+			Object testObj = selection.getFirstElement();
+			if (isDynamicAndExclude(testObj, ref)) {
+				ctrl_add_1.setEnabled(true);
+				ctrl_remove_1.setEnabled(false);
+			} else {
+				ctrl_add_1.setEnabled(false);
+				ctrl_remove_1.setEnabled(true);
+			}
+		}		
+	}
+	
+	protected void syncFreeUpdateBtnStatus2(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
+		
+		boolean result = checkSelection(selection.toList(), ref);
+		
+		if (!result) {
+			ctrl_add_2.setEnabled(false);
+			ctrl_remove_2.setEnabled(false);
+		} else {
+			Object testObj = selection.getFirstElement();
+			if (isDynamicAndExclude(testObj, ref)) {
+				ctrl_add_2.setEnabled(true);
+				ctrl_remove_2.setEnabled(false);
+			} else {
+				ctrl_add_2.setEnabled(false);
+				ctrl_remove_2.setEnabled(true);
+			}
+		}		
 	}
 
 }
