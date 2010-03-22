@@ -44,8 +44,6 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 		IResourceAwareCommand {
 
 	private List elements;
-	
-	private List<Descriptor> descriptors;
 
 	private Descriptor desc;
 
@@ -56,32 +54,31 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 	private int featureID;
 
 	private List references;
+	
+	private boolean localUse;
+	
+	private DescriptorPropUtil propUtil;
+	
+	public RemoveDescriptorCommand(Descriptor desc, List elements, int featureID) {
+		this(desc, elements, featureID, true);
+	}
 
 	/**
 	 * Remove relationships
 	 */
-	public RemoveDescriptorCommand(Descriptor desc, List elements, int featureID) {
+	public RemoveDescriptorCommand(Descriptor desc, List elements, int featureID, boolean localUse) {
 
 		super();
 
 		this.elements = elements;
-		this.descriptors = getDescriptors(elements);
 		this.desc = desc;
 		this.featureID = featureID;
+		this.localUse = localUse;
+		this.propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 		this.modifiedResources = new HashSet();
 	}
 	
-	private List<Descriptor> getDescriptors(List list) {
-		List<Descriptor> descriptors = new ArrayList<Descriptor>();
-		for (int i = 0; i < list.size(); i++) {
-			Descriptor o = (Descriptor) list.get(i);
-			descriptors.add(o);
-		}
-		
-		return descriptors;
-	}
-
 	/**
 	 * @see org.eclipse.emf.common.command.Command#execute()
 	 */
@@ -158,7 +155,9 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 			}
 		}
 		
-		removeLocalUsingInfo(descriptors, (EReference)desc.eClass().getEStructuralFeature(featureID));
+		if (localUse) {
+			propUtil.removeLocalUsingInfo(elements, desc, (EReference)desc.eClass().getEStructuralFeature(featureID));
+		}
 
 		if (references != null && !references.isEmpty()) {
 			if (deleteUnusedDescriptorsCommand == null) {
@@ -179,30 +178,6 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 				modifiedResources.add(desc.eResource());
 			}
 		}
-	}
-	
-	private void addLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
-		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
-			return;
-		}		
-		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		for (Descriptor des : deslIst) {
-			if (!propUtil.localUse(des, desc, feature)) {
-				propUtil.addLocalUse(des, desc, feature);
-			}
-		}		
-	}
-	
-	private void removeLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
-		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
-			return;
-		}		
-		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		for (Descriptor des : deslIst) {
-			if (propUtil.localUse(des, desc, feature)) {
-				propUtil.removeLocalUse(des, desc, feature);
-			}
-		}		
 	}
 
 	/**
@@ -251,8 +226,10 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 				break;
 			}
 		}
-
-		addLocalUsingInfo(descriptors, (EReference)desc.eClass().getEStructuralFeature(featureID));
+		
+		if (localUse) {
+			propUtil.addLocalUsingInfo(elements, desc, (EReference)desc.eClass().getEStructuralFeature(featureID));
+		}
 		
 		if (references != null && !references.isEmpty()) {
 			try {

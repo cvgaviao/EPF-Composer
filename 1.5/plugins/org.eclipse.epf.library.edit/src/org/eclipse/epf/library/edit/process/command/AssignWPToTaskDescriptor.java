@@ -31,7 +31,6 @@ import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
-import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -74,6 +73,8 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 	private MethodConfiguration config;
 	
 	private boolean calledForExculded = false;
+	
+	private DescriptorPropUtil propUtil;
 
 	public AssignWPToTaskDescriptor(TaskDescriptor taskDesc, List workProducts,
 			int action, MethodConfiguration config) {
@@ -89,6 +90,7 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 		this.taskDesc = taskDesc;
 		this.action = action;
 		this.config = config;
+		this.propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
 				.getWBS_ComposedAdapterFactory();
@@ -213,8 +215,7 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getOutput().addAll(existingWPDescList);
 			taskDesc.getOutput().addAll(newWPDescList);
 		}
-		addLocalUsingInfo(existingWPDescList, getFeature(action));
-		addLocalUsingInfo(newWPDescList, getFeature(action));
+
 		if (calledForExculded) {
 			List excludedList = null;
 			if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
@@ -231,6 +232,9 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			for (RoleDescriptor rd : (List<RoleDescriptor>) newWPDescList) {
 				propUtil.setCreatedByReference(rd, true);
 			}
+		} else {
+			propUtil.addLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
+			propUtil.addLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
 		}
 
 		activity.getBreakdownElements().addAll(newWPDescList);
@@ -249,34 +253,6 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 				wpDesc.getDeliverableParts().add((WorkProductDescriptor) key);
 			}
 		}
-	}
-	
-	private void addLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
-		if (calledForExculded) {
-			return;
-		}
-		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
-			return;
-		}		
-		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		for (Descriptor des : deslIst) {
-			propUtil.addLocalUse(des, taskDesc, feature);
-		}
-		
-	}
-	
-	private void removeLocalUsingInfo(List<Descriptor> deslIst, EReference feature) {
-		if (calledForExculded) {
-			return;
-		}
-		if (! ProcessUtil.isSynFree() || deslIst == null || feature == null) {
-			return;
-		}		
-		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		for (Descriptor des : deslIst) {
-			propUtil.removeLocalUse(des, taskDesc, feature);
-		}
-		
 	}
 	
 	private EReference getFeature(int action) {
@@ -319,8 +295,7 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getOutput().removeAll(existingWPDescList);
 			taskDesc.getOutput().removeAll(newWPDescList);
 		}
-		removeLocalUsingInfo(existingWPDescList, getFeature(action));
-		removeLocalUsingInfo(newWPDescList, getFeature(action));
+
 		if (calledForExculded) {
 			List excludedList = null;
 			if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
@@ -333,6 +308,9 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			if (excludedList != null) {
 				excludedList.addAll(workProducts);
 			}
+		} else {
+			propUtil.removeLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
+			propUtil.removeLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
 		}
 		
 		activity.getBreakdownElements().removeAll(newWPDescList);

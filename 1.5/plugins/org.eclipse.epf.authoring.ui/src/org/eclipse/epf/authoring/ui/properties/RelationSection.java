@@ -542,13 +542,12 @@ public class RelationSection extends AbstractSection {
 					public void widgetSelected(SelectionEvent e) {
 						if (isSyncFree()) {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
-							if (selection.size() > 0) { 
-								syncFreeAdd1(selection); 	
+							if (syncFreeAdd1(selection)) { 
 								tableViewer1.refresh();
 								return;
 							}
-						} 
-												
+						}
+						
 						IFilter filter = getFilter();
 						List existingElements = null;
 						if (isSyncFree()) {
@@ -670,8 +669,7 @@ public class RelationSection extends AbstractSection {
 					public void widgetSelected(SelectionEvent e) {
 						if (isSyncFree()) {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer2.getSelection();
-							if (selection.size() > 0) { 
-								syncFreeAdd2(selection); 	
+							if (syncFreeAdd2(selection)) {								 	
 								tableViewer2.refresh();
 								return;
 							}
@@ -893,8 +891,7 @@ public class RelationSection extends AbstractSection {
 					public void widgetSelected(SelectionEvent e) {
 						if (isSyncFree()) {
 							IStructuredSelection selection = (IStructuredSelection) tableViewer4.getSelection();
-							if (selection.size() > 0) { 
-								syncFreeAdd4(selection); 	
+							if (syncFreeAdd4(selection)) {								 	
 								tableViewer4.refresh();
 								return;
 							}
@@ -1036,16 +1033,16 @@ public class RelationSection extends AbstractSection {
 		return null;
 	}
 	
-	protected void syncFreeAdd1(IStructuredSelection selection) {
-		
+	protected boolean syncFreeAdd1(IStructuredSelection selection) {
+		return false;
 	}
 	
-	protected void syncFreeAdd2(IStructuredSelection selection) {
-		
+	protected boolean syncFreeAdd2(IStructuredSelection selection) {
+		return false;
 	}
 	
-	protected void syncFreeAdd4(IStructuredSelection selection) {
-		
+	protected boolean syncFreeAdd4(IStructuredSelection selection) {
+		return false;
 	}
 	
 	protected boolean syncFreeRemove1(IStructuredSelection selection) {

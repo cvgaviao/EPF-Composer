@@ -1,15 +1,14 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.RoleDescriptor;
-import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
@@ -222,6 +221,26 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			setStringValue(usedD, DESCRIPTOR_LocalUsingInfo, newValue);
 		}
 
+	}
+	
+	public void addLocalUsingInfo(List<Descriptor> deslIst, Descriptor desc, EReference feature) {
+		if (! ProcessUtil.isSynFree() || deslIst == null || desc == null || feature == null) {
+			return;
+		}
+		
+		for (Descriptor des : deslIst) {
+			addLocalUse(des, desc, feature);
+		}
+	}
+	
+	public void removeLocalUsingInfo(List<Descriptor> deslIst, Descriptor desc, EReference feature) {
+		if (! ProcessUtil.isSynFree() || deslIst == null || desc == null || feature == null) {
+			return;
+		}		
+
+		for (Descriptor des : deslIst) {
+			removeLocalUse(des, desc, feature);
+		}		
 	}
 	
 	public boolean hasNoValue(String str) {

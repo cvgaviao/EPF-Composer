@@ -28,14 +28,13 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 	private int toFeature;
 	
 	public MoveDescriptorCommand(Descriptor desc, List items, int fromFeature, int toFeature) {
-		super(desc, items, fromFeature);
+		super(desc, items, fromFeature, false);
 		
 		this.desc = desc;
 		this.items = items;
 		methodElements = ProcessUtil.getAssociatedElementList(items);
 		this.fromFeature = fromFeature;
 		this.toFeature = toFeature;
-
 	}
 	
 	public void execute() {
@@ -43,7 +42,7 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 	}
 
 	public void redo() {
-		super.redo();
+		super.redo();		
 		EStructuralFeature feature = desc.eClass().getEStructuralFeature(toFeature);		
 		Object value = desc.eGet(feature);
 		if (value instanceof List) {
@@ -53,7 +52,7 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 	}
 	
 	public void undo() {
-		super.undo();
+		super.undo();		
 		EStructuralFeature feature = desc.eClass().getEStructuralFeature(toFeature);		
 		Object value = desc.eGet(feature);
 		if (value instanceof List) {

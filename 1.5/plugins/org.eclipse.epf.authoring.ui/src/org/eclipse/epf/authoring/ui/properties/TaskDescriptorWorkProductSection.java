@@ -551,49 +551,70 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		return FilterConstants.WORK_PRODUCT_DESCRIPTORS;
 	}
 	
-	protected void syncFreeAdd1(IStructuredSelection selection) {
+	protected boolean syncFreeAdd1(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return false;			
+		} 
+		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
 		
 		boolean result = checkSelection(selection.toList(), ref);	
 		
 		if (! result) {
-			return;
+			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
 		if (isDynamicAndExclude(testObj, ref)) {				
 			addItems1(selection.toList(), true);
+			return true;
 		} 
+		
+		return false;
 	}
 	
-	protected void syncFreeAdd2(IStructuredSelection selection) {
+	protected boolean syncFreeAdd2(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return false;			
+		} 
+		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
 		
 		boolean result = checkSelection(selection.toList(), ref);	
 		
 		if (! result) {
-			return;
+			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
 		if (isDynamicAndExclude(testObj, ref)) {				
 			addItems2(selection.toList(), true);
+			return true;
 		} 
+		
+		return false;
 	}
 	
-	protected void syncFreeAdd4(IStructuredSelection selection) {
+	protected boolean syncFreeAdd4(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return false;			
+		} 
+		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
 		
 		boolean result = checkSelection(selection.toList(), ref);	
 		
 		if (! result) {
-			return;
+			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
 		if (isDynamicAndExclude(testObj, ref)) {				
 			addItems4(selection.toList(), true);
+			return true;
 		} 
+		
+		return false;
 	}
 	
 	protected boolean syncFreeRemove1(IStructuredSelection selection) {
@@ -694,7 +715,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(false);
 			} else {
-				ctrl_add_1.setEnabled(false);
+				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(true);
 			}
 		}		
@@ -714,7 +735,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				ctrl_add_2.setEnabled(true);
 				ctrl_remove_2.setEnabled(false);
 			} else {
-				ctrl_add_2.setEnabled(false);
+				ctrl_add_2.setEnabled(true);
 				ctrl_remove_2.setEnabled(true);
 			}
 		}		
@@ -734,7 +755,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				ctrl_add_4.setEnabled(true);
 				ctrl_remove_4.setEnabled(false);
 			} else {
-				ctrl_add_4.setEnabled(false);
+				ctrl_add_4.setEnabled(true);
 				ctrl_remove_4.setEnabled(true);
 			}
 		}		

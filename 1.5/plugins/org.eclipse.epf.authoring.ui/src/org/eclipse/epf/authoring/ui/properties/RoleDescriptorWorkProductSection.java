@@ -27,13 +27,16 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.AssignWPToRoleDescriptor;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
@@ -77,9 +80,17 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	protected void initContentProvider1() {
 		contentProvider = new AdapterFactoryContentProvider(getAdapterFactory()) {
 			public Object[] getElements(Object object) {
-				return getFilteredList(
-						((RoleDescriptor) element).getResponsibleFor())
-						.toArray();
+				RoleDescriptor td = (RoleDescriptor) element;
+				List<MethodElement> elements = new ArrayList<MethodElement>();
+				elements.addAll(td.getResponsibleFor());
+				
+				if (ProcessUtil.isSynFree()
+						&& ! DescriptorPropUtil.getDesciptorPropUtil()
+								.isNoAutoSyn(td)) {
+					elements.addAll(td.getResponsibleForExclude());
+				}
+				
+				return getFilteredList(elements).toArray();
 			}
 		};
 		tableViewer1.setContentProvider(contentProvider);
@@ -96,6 +107,19 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 			}
 		};
 		tableViewer2.setContentProvider(contentProvider);
+	}
+	
+	protected void initLabelProvider1() {
+		ILabelProvider provider = new SyncFreeLabelProvider(TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory(),
+				UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor());
+		
+		tableViewer1.setLabelProvider(provider);
+	}
+	
+	protected void initLabelProvider2() {
+		ILabelProvider provider = new AdapterFactoryLabelProvider(TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
+		
+		tableViewer2.setLabelProvider(provider);
 	}
 
 	/**

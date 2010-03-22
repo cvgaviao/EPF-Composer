@@ -491,34 +491,49 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		return FilterConstants.ROLE_DESCRIPTORS;
 	}
 	
-	protected void syncFreeAdd1(IStructuredSelection selection) {
+	//Return true if handled in this method
+	protected boolean syncFreeAdd1(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return false;			
+		} 
+		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
 		
 		boolean result = checkSelection(selection.toList(), ref);	
 		
 		if (! result) {
-			return;
+			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
 		if (isDynamicAndExclude(testObj, ref)) {				
 			addItems1(selection.toList(), true);
+			return true;
 		} 
+		
+		return false;
 	}
 	
-	protected void syncFreeAdd2(IStructuredSelection selection) {
+	protected boolean syncFreeAdd2(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return false;			
+		} 
+		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
 		
 		boolean result = checkSelection(selection.toList(), ref);	
 		
 		if (! result) {
-			return;
+			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
 		if (isDynamicAndExclude(testObj, ref)) {				
 			addItems2(selection.toList(), true);
+			return true;
 		} 
+		
+		return false;
 	}
 	
 	//Return true if handled in this method
@@ -592,7 +607,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(false);
 			} else {
-				ctrl_add_1.setEnabled(false);
+				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(true);
 			}
 		}		
@@ -612,7 +627,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 				ctrl_add_2.setEnabled(true);
 				ctrl_remove_2.setEnabled(false);
 			} else {
-				ctrl_add_2.setEnabled(false);
+				ctrl_add_2.setEnabled(true);
 				ctrl_remove_2.setEnabled(true);
 			}
 		}		
