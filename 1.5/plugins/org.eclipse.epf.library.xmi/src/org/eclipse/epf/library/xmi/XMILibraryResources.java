@@ -48,6 +48,8 @@ public class XMILibraryResources extends NLS {
 	public static String libraryAlreadyExistsError_msg;
 	
 	public static String migrateXMLLibrary_taskName;
+	
+	public static String convertToSynFree_taskName;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, XMILibraryResources.class);

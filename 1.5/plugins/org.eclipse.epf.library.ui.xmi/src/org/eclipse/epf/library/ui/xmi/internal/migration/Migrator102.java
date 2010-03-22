@@ -11,7 +11,6 @@
 package org.eclipse.epf.library.ui.xmi.internal.migration;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -51,7 +50,6 @@ import org.eclipse.epf.library.xmi.XMILibraryPlugin;
 import org.eclipse.epf.library.xmi.XMILibraryResources;
 import org.eclipse.epf.persistence.MethodLibraryPersister;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
-import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.MultiFileXMISaveImpl;
 import org.eclipse.epf.persistence.migration.MigrationResourceHandler;
 import org.eclipse.epf.persistence.migration.MigratorImpl;
@@ -277,6 +275,7 @@ public class Migrator102 extends MigratorImpl {
 			}
 
 			
+			handleConverToSynFree(monitor, info, lib);
 			
 			removeOldDefaultValues();
 
@@ -674,6 +673,10 @@ public class Migrator102 extends MigratorImpl {
 	}
 	
 	protected void migrateDiagram(IProgressMonitor monitor) throws Exception {	
+	}
+	
+	protected void handleConverToSynFree(IProgressMonitor monitor, UpgradeCallerInfo info, MethodLibrary lib) {
+		throw new UnsupportedOperationException();
 	}
 
 }

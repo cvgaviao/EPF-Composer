@@ -25,13 +25,16 @@
    <extension
          point="org.eclipse.epf.library.persistence.migrators">
       <migrator
-            class="org.eclipse.epf.library.ui.xmi.internal.migration.Migrator102_103"
+            class="org.eclipse.epf.library.ui.xmi.internal.migration.Uma106Migrator102"
             libNsURI="http://www.ibm.com/uma/1.0.2/uma.ecore"/>
       <migrator
-            class="org.eclipse.epf.library.ui.xmi.internal.migration.Migrator103"
+            class="org.eclipse.epf.library.ui.xmi.internal.migration.Uma106Migrator103"
             libNsURI="http://www.eclipse.org/epf/uma/1.0.3/uma.ecore"/>
       <migrator
-            class="org.eclipse.epf.library.ui.xmi.internal.migration.Migrator104"
-            libNsURI="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"/>            
+            class="org.eclipse.epf.library.ui.xmi.internal.migration.Uma106Migrator104"
+            libNsURI="http://www.eclipse.org/epf/uma/1.0.4/uma.ecore"/>
+      <migrator
+            class="org.eclipse.epf.library.ui.xmi.internal.migration.Uma106Migrator105"
+            libNsURI="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"/>               
    </extension>
 </plugin>

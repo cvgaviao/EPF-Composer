@@ -28,6 +28,16 @@ import org.eclipse.epf.uma.MethodLibrary;
  * @since 1.2
  */
 public abstract class MigratorBase extends MigratorImpl {
+	private UpgradeCallerInfo callerInfo;	
+	
+	public UpgradeCallerInfo getCallerInfo() {
+		return callerInfo;
+	}
+
+	public void setCallerInfo(UpgradeCallerInfo callerInfo) {
+		this.callerInfo = callerInfo;
+	}
+
 	protected static final boolean DEBUG = XMILibraryPlugin.getDefault()
 			.isDebugging();
 	

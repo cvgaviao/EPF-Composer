@@ -218,6 +218,10 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 	 */
 	public static boolean handleToolVersion(String path,
 			UpgradeCallerInfo callerInfo) {
+		if (callerInfo == null) {
+			callerInfo = new UpgradeCallerInfo(UpgradeCallerInfo.upgradeLibrary, null);
+		}
+		
 		String libXmi = XMILibraryManager.LIBRARY_XMI;
 		if (callerInfo != null && callerInfo.getIsExportedPluginLib()) {
 			libXmi = XMILibraryManager.exportFile;
@@ -255,6 +259,12 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 									LibraryUIResources.upgradeLibraryDialog_text)) {
 				return false;
 			}
+			
+			boolean b = LibraryUIPlugin.getDefault().getMsgDialog()
+					.displayPrompt(LibraryUIResources.openLibraryWizard_title,
+							LibraryUIResources.convertToSynProcessLib_msg);
+			callerInfo.setConverToSynFree(b);
+			
 			if (!isUpgradeLibrary(callerInfo)) {
 				callerInfo.copyLibrary();
 				if (callerInfo.getCopiedLibFile() != null) {

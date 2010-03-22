@@ -36,7 +36,8 @@ public class UpgradeCallerInfo {
 	private File copiedLibFile;
 	private List<File> upgradableFiles;
 	private MultiFileResourceSetImpl resourceSet;
-	
+	private boolean converToSynFree = false;
+
 	public UpgradeCallerInfo(int callerType, File libFile) {
 		this.callerType = callerType;
 		this.libFile = libFile;
@@ -96,6 +97,14 @@ public class UpgradeCallerInfo {
 	
 	public MethodLibrary loadLibrary(File libFile) throws Exception {
 		return null;
+	}
+	
+	public boolean isConverToSynFree() {
+		return converToSynFree;
+	}
+
+	public void setConverToSynFree(boolean converToSynFree) {
+		this.converToSynFree = converToSynFree;
 	}
 	
 }

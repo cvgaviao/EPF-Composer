@@ -258,6 +258,8 @@ public class LibraryUIResources extends NLS {
 	public static String application_title;
 
 	public static String openLibraryWizard_title;
+	
+	public static String convertToSynProcessLib_msg;
 
 	public static String openLibraryMainWizardPage_title;
 
