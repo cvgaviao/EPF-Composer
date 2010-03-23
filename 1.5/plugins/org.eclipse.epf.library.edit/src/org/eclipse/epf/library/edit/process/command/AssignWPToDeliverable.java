@@ -22,10 +22,13 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -54,15 +57,25 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 	List existingWPDescList = new ArrayList();
 
 	List newWPDescList = new ArrayList();
+	
+	private boolean calledForExculded = false;
+	
+	private DescriptorPropUtil propUtil;
 
+	public AssignWPToDeliverable(WorkProductDescriptor wpDesc, List workProducts) {
+		this(wpDesc, workProducts, false);
+	}
+	
 	/**
 	 * 
 	 */
-	public AssignWPToDeliverable(WorkProductDescriptor wpDesc, List workProducts) {
+	public AssignWPToDeliverable(WorkProductDescriptor wpDesc, List workProducts, boolean calledForExculded) {
 		super(TngUtil.getOwningProcess(wpDesc));
 
 		this.workProducts = workProducts;
 		this.wpDesc = wpDesc;
+		this.calledForExculded = calledForExculded;
+		this.propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 		Object parent = getParentActivity(wpDesc);
 		if (parent instanceof Activity) {
@@ -155,10 +168,23 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 
 		wpDesc.getDeliverableParts().addAll(existingWPDescList);
 		wpDesc.getDeliverableParts().addAll(newWPDescList);
+		
+		if (calledForExculded) {
+			List excludedList = wpDesc.getDeliverablePartsExclude();
+			if (excludedList != null) {
+				excludedList.removeAll(workProducts);
+			}
+			for (RoleDescriptor rd : (List<RoleDescriptor>) newWPDescList) {
+				propUtil.setCreatedByReference(rd, true);
+			}
+		} else {
+			propUtil.addLocalUsingInfo(existingWPDescList, wpDesc,
+					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+			propUtil.addLocalUsingInfo(newWPDescList, wpDesc,
+					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+		}
 
 		// activity.getBreakdownElements().addAll(newWPDescList);
-
-		
 	}
 
 	public void undo() {
@@ -168,6 +194,18 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 
 		wpDesc.getDeliverableParts().removeAll(existingWPDescList);
 		wpDesc.getDeliverableParts().removeAll(newWPDescList);
+		
+		if (calledForExculded) {
+			List excludedList = wpDesc.getDeliverablePartsExclude();			
+			if (excludedList != null) {
+				excludedList.addAll(workProducts);
+			}
+		} else {
+			propUtil.removeLocalUsingInfo(existingWPDescList, wpDesc,
+					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+			propUtil.removeLocalUsingInfo(newWPDescList, wpDesc,
+					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+		}
 
 		// activity.getBreakdownElements().removeAll(newWPDescList);
 	}

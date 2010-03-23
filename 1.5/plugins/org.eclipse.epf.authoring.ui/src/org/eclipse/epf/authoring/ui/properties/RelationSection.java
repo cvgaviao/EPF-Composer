@@ -13,33 +13,24 @@ package org.eclipse.epf.authoring.ui.properties;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
-import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
-import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -98,9 +89,7 @@ public class RelationSection extends AbstractSection {
 
 	IFilter descriptorProcessfilter;
 	
-	private Font initialFont;
-	
-	private Font newFont;
+	protected DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 	
 	protected Process getProcess() {
 		return process;
@@ -135,11 +124,6 @@ public class RelationSection extends AbstractSection {
 
 		// update controls
 		updateControls();
-		
-		// load font
-		if (isSyncFree()) {
-			createFont();
-		}
 	}
 
 	protected void setTabData(String title, String desc, String table1, String table2, String table3, String table4, String tabString) {
@@ -266,9 +250,6 @@ public class RelationSection extends AbstractSection {
 		}
 		if (contentProvider != null) {
 			contentProvider.dispose();
-		}
-		if (newFont != null) {
-			newFont.dispose();
 		}
 	}
 
@@ -1057,121 +1038,6 @@ public class RelationSection extends AbstractSection {
 		return false;
 	}
 	
-	class SyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
-		private EReference ref;
-		
-		public SyncFreeLabelProvider(AdapterFactory adapterFactory, EReference ref) {
-			super(adapterFactory);
-			this.ref = ref;
-		}
-	    
-	    public Font getFont(Object obj, int columnIndex) {	    	
-	    	if (isDynamic(obj, ref)) {
-	    		return newFont;
-	    	}	    	
-	    	
-	    	return initialFont;
-	    }	    	
-	    
-	    public String getColumnText(Object obj, int columnIndex) {
-	    	String original = super.getColumnText(obj, columnIndex);
-	    	if (isDynamicAndExclude(obj, ref)) {
-	    		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
-	    	}
-	    	
-	    	return original;	    	
-	    }
-	}
-	
-	private EReference getExcludeFeature(EReference ref) {		
-		return LibraryEditUtil.getInstance().getExcludeFeature(ref);
-	}
-	
-	private void createFont() {
-		if (tableViewer1 != null) {
-	    	initialFont = tableViewer1.getTable().getFont();
-	    	FontData[] fontData = initialFont.getFontData();
-	    	for (int i = 0; i < fontData.length; i++) {
-	    		fontData[i].setStyle(SWT.BOLD);
-	    	}	    	
-	    	newFont = new Font(tableViewer1.getTable().getDisplay(), fontData);
-		}
-	}
-	
-	public boolean isDynamicAndExclude(Object obj, EReference ref) {
-		if (! (obj instanceof MethodElement) || !ref.isMany()) {
-			return false;
-		}
-		EReference eRef = getExcludeFeature(ref);
-		if (eRef == null) {
-			return false;
-		}
-		
-		List<MethodElement> listValue = (List<MethodElement> ) element.eGet(eRef);
-	    if (listValue == null) {
-	    	return false;
-	    }
-	    
-		return listValue.contains(obj);	    
-	}
-	
-	public boolean isDynamic(Object element, EReference ref) {
-		if (isSyncFree()) {
-			if (!(element instanceof Descriptor)) {// Excluded elements are not descriptors
-				return true;
-			}
-			
-			Descriptor des = (Descriptor) element;			
-			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-//			if (! propUtil.isCreatedByReference(des)) {
-//				return false;
-//			}
-			
-			if (! propUtil.localUse(des, (Descriptor) this.element, ref)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-	
-	public boolean isSyncFree() {
-		return ProcessUtil.isSynFree();
-	}
-	
-	/**
-	 * 
-	 * Check all the elements in list, to see if contains elements with
-	 * different type
-	 * @return true single type
-	 *         flase multiple type
-	 * 
-	 */
-	public boolean checkSelection(List list, EReference ref) {
-		int dynamic = 0;
-		int dynamicExclude = 0;
-		int local = 0;
-		
-		for (int i = 0; i < list.size(); i++) {
-			MethodElement desc = (MethodElement) list.get(i);
-			if (isDynamicAndExclude(desc, ref)) {
-				dynamicExclude ++;
-			} else if (isDynamic(desc, ref)) {
-				dynamic ++;
-			} else {
-				local ++;
-			}
-		}
-		
-		if (((dynamic > 0) && (dynamicExclude > 0))
-			|| ((dynamic > 0) && (local > 0))
-			|| ((local > 0) && (dynamicExclude > 0))) {
-			return false;
-		}
-		
-		return true;		
-	}
-	
 	protected void syncFreeUpdateBtnStatus1(IStructuredSelection selection) {
 		
 	}
@@ -1182,6 +1048,10 @@ public class RelationSection extends AbstractSection {
 	
 	protected void syncFreeUpdateBtnStatus4(IStructuredSelection selection) {
 		
+	}
+			
+	public boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
 	}
 	
 }

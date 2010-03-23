@@ -19,15 +19,18 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -60,12 +63,21 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 	List newWPDescList = new ArrayList();
 
 	private MethodConfiguration config;
+	
+	private boolean calledForExculded = false;
+	
+	private DescriptorPropUtil propUtil;
 
+	public AssignWPToRoleDescriptor(RoleDescriptor roleDesc, List workProducts,
+			int action, MethodConfiguration config) {
+		this(roleDesc, workProducts, action, config, false);
+	}
+	
 	/**
 	 * 
 	 */
 	public AssignWPToRoleDescriptor(RoleDescriptor roleDesc, List workProducts,
-			int action, MethodConfiguration config) {
+			int action, MethodConfiguration config, boolean calledForExculded) {
 
 		super(TngUtil.getOwningProcess(roleDesc));
 
@@ -73,6 +85,8 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 		this.roleDesc = roleDesc;
 		this.action = action;
 		this.config = config;
+		this.calledForExculded = calledForExculded;
+		this.propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
 				.getOBS_ComposedAdapterFactory();
@@ -141,6 +155,22 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 			roleDesc.getResponsibleFor().addAll(existingWPDescList);
 			roleDesc.getResponsibleFor().addAll(newWPDescList);
 		}
+		
+		if (calledForExculded) {
+			List excludedList = null;
+			if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
+				excludedList = roleDesc.getResponsibleForExclude();
+			}
+			if (excludedList != null) {
+				excludedList.removeAll(workProducts);
+			}
+			for (RoleDescriptor rd : (List<RoleDescriptor>) newWPDescList) {
+				propUtil.setCreatedByReference(rd, true);
+			}
+		} else {
+			propUtil.addLocalUsingInfo(existingWPDescList, roleDesc, getFeature(action));
+			propUtil.addLocalUsingInfo(newWPDescList, roleDesc, getFeature(action));
+		}
 
 		activity.getBreakdownElements().addAll(newWPDescList);
 
@@ -154,9 +184,17 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 				// add to deliverable
 				wpDesc.getDeliverableParts().add((WorkProductDescriptor) key);
 			}
-		}
-
+		}		
+	}
+	
+	private EReference getFeature(int action) {
+		UmaPackage up = UmaPackage.eINSTANCE;
 		
+		if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
+			return up.getRoleDescriptor_ResponsibleFor();		
+		}
+		
+		return null;
 	}
 
 	public void undo() {
@@ -167,6 +205,19 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 		if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
 			roleDesc.getResponsibleFor().removeAll(existingWPDescList);
 			roleDesc.getResponsibleFor().removeAll(newWPDescList);
+		}
+		
+		if (calledForExculded) {
+			List excludedList = null;
+			if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
+				excludedList = roleDesc.getResponsibleForExclude();
+			}
+			if (excludedList != null) {
+				excludedList.addAll(workProducts);
+			}
+		} else {
+			propUtil.removeLocalUsingInfo(existingWPDescList, roleDesc, getFeature(action));
+			propUtil.removeLocalUsingInfo(newWPDescList, roleDesc, getFeature(action));
 		}
 
 		activity.getBreakdownElements().removeAll(newWPDescList);

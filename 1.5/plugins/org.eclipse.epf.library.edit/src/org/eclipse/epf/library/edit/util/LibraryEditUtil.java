@@ -132,6 +132,10 @@ public class LibraryEditUtil {
 			return up.getRoleDescriptor_ResponsibleForExclude();
 		}
 		
+		if (ref == up.getWorkProductDescriptor_DeliverableParts()) {
+			return up.getWorkProductDescriptor_DeliverablePartsExclude();
+		}
+		
 		//...		
 		return null;
 	}

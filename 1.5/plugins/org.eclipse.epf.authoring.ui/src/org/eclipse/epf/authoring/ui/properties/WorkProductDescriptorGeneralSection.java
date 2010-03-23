@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -36,6 +37,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.AssignWPToDeliverable;
 import org.eclipse.epf.library.edit.process.command.LinkMethodElementCommand;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
@@ -43,13 +45,16 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Deliverable;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
@@ -96,6 +101,8 @@ public class WorkProductDescriptorGeneralSection extends
 	private Section deliverableSection;
 
 	private ModifyListener wpModelModifyListener;
+	
+	protected DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.DescriptorGeneralSection#init()
@@ -153,20 +160,32 @@ public class WorkProductDescriptorGeneralSection extends
 			public Object[] getElements(Object object) {
 				List newList = new ArrayList();
 				List deliverableParts = element.getDeliverableParts();
-				for (Iterator itor = deliverableParts.iterator(); itor
-						.hasNext();) {
-					WorkProductDescriptor wpDesc = (WorkProductDescriptor) itor
-							.next();
-					if (wpDesc.getSuperActivities() == null
-							|| wpDesc.getSuperActivities() == null)
+				for (Iterator itor = deliverableParts.iterator(); itor.hasNext();) {
+					WorkProductDescriptor wpDesc = (WorkProductDescriptor) itor.next();
+					if (wpDesc.getSuperActivities() == null)
 						newList.add(wpDesc);
 				}
+				
+				if (ProcessUtil.isSynFree()
+						&& ! DescriptorPropUtil.getDesciptorPropUtil()
+								.isNoAutoSyn(element)) {
+					newList.addAll(element.getDeliverablePartsExclude());
+				}
+				
 				return getFilteredList(newList).toArray();
 			}
 		};
 
-		ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
+		ILabelProvider labelProvider = null;		
+		if (isSyncFree()) {
+			labelProvider = new SyncFreeLabelProvider(
+					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
+					(Descriptor)element,
+					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());  
+		} else {
+			labelProvider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
+		}	
 		viewer_1.setContentProvider(contentProvider);
 		viewer_1.setLabelProvider(labelProvider);
 		viewer_1.setInput(element);
@@ -335,24 +354,49 @@ public class WorkProductDescriptorGeneralSection extends
 				if (selection.size() > 0)
 					ctrl_remove_1.setEnabled(true);
 			}
+		});		
+		
+		viewer_1.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection)viewer_1.getSelection();
+				if ((selection.size() > 0) & editable) {
+					if (isSyncFree()) {
+						syncFreeUpdateBtnStatus(selection);
+					} else {
+						ctrl_remove_1.setEnabled(true);
+					}
+				}
+			}
 		});
-
+		
 		ctrl_add_1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				if (isSyncFree()) {
+					IStructuredSelection selection = (IStructuredSelection) viewer_1.getSelection();
+					if (syncFreeAdd(selection)) { 
+						viewer_1.refresh();
+						return;
+					}
+				}
+				
 				IFilter filter = new ProcessWorkProductFilter(
 						getConfiguration(), null, FilterConstants.WORKPRODUCTS); 
 				// block it's deliverable parts
 				List existingElements = new ArrayList();
-				existingElements
-						.addAll(ProcessUtil
-								.getAssociatedElementList(((WorkProductDescriptor) element)
-										.getDeliverableParts()));
+				existingElements.addAll(ProcessUtil.getAssociatedElementList(
+						((WorkProductDescriptor) element).getDeliverableParts()));
 				// block itself
-				existingElements.add(ProcessUtil
-						.getAssociatedElement((WorkProductDescriptor) element));
+				existingElements.add(ProcessUtil.getAssociatedElement((WorkProductDescriptor) element));
 				// also block it's parent work products, if any
-				existingElements
-						.addAll((Collection) getParentWorkProducts((WorkProductDescriptor) element));
+				existingElements.addAll((Collection) getParentWorkProducts((WorkProductDescriptor) element));
+				
+				if (isSyncFree()) {
+					if (ProcessUtil.isSynFree()
+							&& ! DescriptorPropUtil.getDesciptorPropUtil()
+									.isNoAutoSyn(element)) {
+						existingElements.addAll(element.getDeliverablePartsExclude());
+					}
+				}				
 
 				ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 						.getWorkbench().getActiveWorkbenchWindow().getShell(),
@@ -396,6 +440,15 @@ public class WorkProductDescriptorGeneralSection extends
 
 		ctrl_remove_1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				if (isSyncFree()) {
+					IStructuredSelection selection = (IStructuredSelection) viewer_1.getSelection();
+					if (syncFreeRemove(selection)) {
+						viewer_1.refresh();
+						ctrl_remove_1.setEnabled(false);
+						return;
+					}							
+				} 
+				
 				IStructuredSelection selection = (IStructuredSelection) viewer_1
 						.getSelection();
 				if (selection.size() > 0) {
@@ -407,8 +460,8 @@ public class WorkProductDescriptorGeneralSection extends
 
 					// clear the selection
 					viewer_1.setSelection(null, true);
-
 				}
+				ctrl_remove_1.setEnabled(false);
 			}
 		});
 
@@ -586,8 +639,12 @@ public class WorkProductDescriptorGeneralSection extends
 							"Error refreshing WorkProductDescriptor general section : " + element, ex); //$NON-NLS-1$
 		}
 	}
-
+	
 	private void addItems(List items) {
+		addItems(items, false);
+	}
+
+	private void addItems(List items, boolean calledForExculded) {
 		if (items != null) {
 			List wps = new ArrayList();
 
@@ -602,7 +659,7 @@ public class WorkProductDescriptorGeneralSection extends
 			}
 			if (!wps.isEmpty()) {
 				AssignWPToDeliverable cmd = new AssignWPToDeliverable(
-						(WorkProductDescriptor) element, wps);
+						(WorkProductDescriptor) element, wps, calledForExculded);
 				actionMgr.execute(cmd);
 			}
 		}
@@ -656,7 +713,10 @@ public class WorkProductDescriptorGeneralSection extends
 										UmaPackage.eINSTANCE
 												.getWorkProductDescriptor_DeliverableParts(),
 										obj, -1);
-						
+						if (isSyncFree()) {
+							propUtil.addLocalUse((Descriptor)obj, element,
+									UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());								
+						}						
 					} else {
 						MessageFormat mf = new MessageFormat(
 								PropertiesResources.Process_DeliverableAssignError); 
@@ -872,4 +932,79 @@ public class WorkProductDescriptorGeneralSection extends
 
 		return false;
 	}
+	
+	public boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
+	protected boolean syncFreeAdd(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return false;			
+		} 
+		
+		EReference ref = UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts();
+		
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);	
+		
+		if (! result) {
+			return true;
+		}
+		
+		Object testObj = selection.getFirstElement();
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {				
+			addItems(selection.toList(), true);
+			return true;
+		} 
+		
+		return false;
+	}
+	
+	protected boolean syncFreeRemove(IStructuredSelection selection) {
+		if (selection.size() == 0) {
+			return true;			
+		} 
+		
+		EReference ref = UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts();
+		
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		if (! result) {
+			return true;
+		}
+
+		Object testObj = selection.getFirstElement();
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+			return true;
+		} 
+		
+		if (propUtil.isDynamic(testObj, (Descriptor)element, ref)) {
+			MoveDescriptorCommand cmd = new MoveDescriptorCommand((Descriptor)element, selection.toList(),
+					UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS,
+					UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS_EXCLUDE);
+			actionMgr.execute(cmd);
+			return true;
+		} 
+				
+		return false;
+	}
+	
+	protected void syncFreeUpdateBtnStatus(IStructuredSelection selection) {
+		EReference ref = UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts();
+		
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		
+		if (!result) {
+			ctrl_add_1.setEnabled(false);
+			ctrl_remove_1.setEnabled(false);
+		} else {
+			Object testObj = selection.getFirstElement();
+			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+				ctrl_add_1.setEnabled(true);
+				ctrl_remove_1.setEnabled(false);
+			} else {
+				ctrl_add_1.setEnabled(true);
+				ctrl_remove_1.setEnabled(true);
+			}
+		}		
+	}
+	
 }

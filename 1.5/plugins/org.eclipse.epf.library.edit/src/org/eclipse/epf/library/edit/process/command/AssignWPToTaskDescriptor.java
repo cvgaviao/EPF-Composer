@@ -228,7 +228,6 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			if (excludedList != null) {
 				excludedList.removeAll(workProducts);
 			}
-			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 			for (RoleDescriptor rd : (List<RoleDescriptor>) newWPDescList) {
 				propUtil.setCreatedByReference(rd, true);
 			}

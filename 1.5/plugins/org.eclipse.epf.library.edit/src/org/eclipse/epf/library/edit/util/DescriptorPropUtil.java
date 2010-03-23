@@ -287,5 +287,77 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return true;
 	}
 	
+	private EReference getExcludeFeature(EReference ref) {		
+		return LibraryEditUtil.getInstance().getExcludeFeature(ref);
+	}
+
+	public boolean isDynamicAndExclude(Object obj, Descriptor desc, EReference ref) {
+		if (! (obj instanceof MethodElement) || !ref.isMany()) {
+			return false;
+		}
+		EReference eRef = getExcludeFeature(ref);
+		if (eRef == null) {
+			return false;
+		}
+		
+		List<MethodElement> listValue = (List<MethodElement> )desc.eGet(eRef);
+	    if (listValue == null) {
+	    	return false;
+	    }
+	    
+		return listValue.contains(obj);	    
+	}
+	
+	public boolean isDynamic(Object obj, Descriptor desc, EReference ref) {
+		if (ProcessUtil.isSynFree()) {
+			if (!(obj instanceof Descriptor)) {// Excluded elements are not descriptors
+				return true;
+			}
+			
+			Descriptor des = (Descriptor)obj;			
+//			if (! isCreatedByReference(des)) {
+//				return false;
+//			}
+			
+			if (! localUse(des, desc, ref)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Check all the elements in list, to see if contains elements with
+	 * different type
+	 * @return true single type
+	 *         flase multiple type
+	 * 
+	 */
+	public boolean checkSelection(List list, Descriptor desc, EReference ref) {		
+		int dynamic = 0;
+		int dynamicExclude = 0;
+		int local = 0;
+		
+		for (int i = 0; i < list.size(); i++) {
+			MethodElement des = (MethodElement) list.get(i);
+			if (isDynamicAndExclude(des, desc, ref)) {
+				dynamicExclude ++;
+			} else if (isDynamic(des, desc, ref)) {
+				dynamic ++;
+			} else {
+				local ++;
+			}
+		}
+		
+		if (((dynamic > 0) && (dynamicExclude > 0))
+			|| ((dynamic > 0) && (local > 0))
+			|| ((local > 0) && (dynamicExclude > 0))) {
+			return false;
+		}
+		
+		return true;		
+	}
 	
 }

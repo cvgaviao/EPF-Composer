@@ -153,6 +153,12 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 				((RoleDescriptor) desc).getResponsibleFor().removeAll(elements);
 				break;
 			}
+		} else if (desc instanceof WorkProductDescriptor) {
+			switch (featureID){
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS:
+				((WorkProductDescriptor) desc).getDeliverableParts().removeAll(elements);
+				break;
+			}
 		}
 		
 		if (localUse) {
@@ -223,6 +229,12 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 			switch (featureID) {
 			case UmaPackage.ROLE_DESCRIPTOR__RESPONSIBLE_FOR:
 				((RoleDescriptor) desc).getResponsibleFor().addAll(elements);
+				break;
+			}
+		} else if (desc instanceof WorkProductDescriptor) {
+			switch (featureID){
+			case UmaPackage.WORK_PRODUCT_DESCRIPTOR__DELIVERABLE_PARTS:
+				((WorkProductDescriptor) desc).getDeliverableParts().addAll(elements);
 				break;
 			}
 		}
