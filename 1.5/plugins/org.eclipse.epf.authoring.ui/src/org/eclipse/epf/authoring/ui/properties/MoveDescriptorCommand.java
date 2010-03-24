@@ -24,7 +24,6 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 	private Descriptor desc;
 	private List items;
 	private List methodElements;
-	private int fromFeature;
 	private int toFeature;
 	
 	public MoveDescriptorCommand(Descriptor desc, List items, int fromFeature, int toFeature) {
@@ -33,7 +32,6 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 		this.desc = desc;
 		this.items = items;
 		methodElements = ProcessUtil.getAssociatedElementList(items);
-		this.fromFeature = fromFeature;
 		this.toFeature = toFeature;
 	}
 	

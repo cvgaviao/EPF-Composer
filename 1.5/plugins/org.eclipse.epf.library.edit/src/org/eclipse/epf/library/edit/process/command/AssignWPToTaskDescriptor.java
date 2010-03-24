@@ -32,7 +32,6 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
@@ -228,7 +227,7 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			if (excludedList != null) {
 				excludedList.removeAll(workProducts);
 			}
-			for (RoleDescriptor rd : (List<RoleDescriptor>) newWPDescList) {
+			for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
 				propUtil.setCreatedByReference(rd, true);
 			}
 		} else {
