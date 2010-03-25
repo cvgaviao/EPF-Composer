@@ -21,6 +21,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public static final String DESCRIPTOR_CreatedByReference = "descriptor_createdByReferebce"; 			//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 						//$NON-NLS-1$
 	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";						//$NON-NLS-1$
+	public static final String DESCRIPTOR_GreenParent = "descriptor_greenParent";						//$NON-NLS-1$
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -287,7 +288,16 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return true;
 	}
 	
-	private EReference getExcludeFeature(EReference ref) {		
+	//Return green parent guid
+	public String getGreenParent(Descriptor d) {
+		return getStringValue(d, this.DESCRIPTOR_GreenParent);
+	}
+	
+	public void setGreenParent(Descriptor d, String value) {
+		setStringValue(d, this.DESCRIPTOR_GreenParent, value);
+	}
+	
+ 	private EReference getExcludeFeature(EReference ref) {		
 		return LibraryEditUtil.getInstance().getExcludeFeature(ref);
 	}
 

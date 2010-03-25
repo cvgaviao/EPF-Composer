@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +50,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.command.ActivityAddCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.GraphicalData;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -424,10 +426,25 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 //	}
 	
 	private Collection getImmediateChildren(Object object) {
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		boolean isSynFree = ProcessUtil.isSynFree();
+		
 		Collection children = new ArrayList();
 		for (Iterator iter = super.getChildren(object).iterator(); iter.hasNext();) {
 			Object child = (Object) iter.next();
 			if(acceptAsChild(child)) {
+
+				if (isSynFree) {
+					Object unwrapped = TngUtil.unwrap(child);
+					if (unwrapped instanceof Descriptor) {
+						Descriptor des = (Descriptor) unwrapped;
+						String greenParent = propUtil.getGreenParent(des);
+						if (greenParent != null && greenParent.length() > 0) {
+							continue;
+						}
+					}
+				}
+				
 				if(configurator != null) {
 					child = configurator.resolve(child);
 				}
@@ -891,6 +908,8 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 							adapter.basicSetRolledUp(false);
 						}
 						allChildren = wrapInherited(act, adapter.getChildren(baseAct));
+						
+						handleCustomizingGreenDescriptors(act, allChildren);
 					}
 					finally {
 						if(oldRolledUp) {
@@ -917,6 +936,51 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 			}
 		}
 		return myChildren;
+	}
+
+	private void handleCustomizingGreenDescriptors(Activity act,
+			List allChildren) {
+		if (allChildren == null || allChildren.isEmpty()
+				|| !ProcessUtil.isSynFree()) {
+			return;
+		}
+		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		Map<String, Descriptor> map = new HashMap<String, Descriptor>();
+		
+		List<BreakdownElement> beList = act.getBreakdownElements();
+		for (int i = 0; i < beList.size(); i++) {
+			BreakdownElement be = beList.get(i);
+			if (be instanceof Descriptor) {
+				Descriptor des = (Descriptor) be;
+				String greenParent = propUtil.getGreenParent(des);
+				if (greenParent != null) {
+					map.put(greenParent, des);
+				}
+			}
+		}
+		
+		int sz = map.size();
+		
+		if (sz == 0) {
+			return;
+		}
+		
+		for (int i = 0; i < allChildren.size(); i++) {
+			Object child = TngUtil.unwrap(allChildren.get(i));
+			if (child instanceof Descriptor) {
+				Descriptor greenDes = (Descriptor) child;
+				Descriptor des = map.get(greenDes.getGuid());
+				if (des != null) {
+					allChildren.set(i, des);
+					sz--;
+					if (sz == 0) {
+						return;
+					}
+				}
+			}
+		}
+		
 	}
 
 	/**

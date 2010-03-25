@@ -1327,6 +1327,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String UserDefinedDiagramDialog_useWPDImage;
 
 	public static String ProcessEditor_Action_Contribute;
+	
+	public static String ProcessEditor_Action_Customize;
 
 	public static String ProcessEditor_Action_Replace;
 

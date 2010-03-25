@@ -86,6 +86,7 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
 import org.eclipse.epf.library.edit.process.command.ContributeToActivityCommand;
+import org.eclipse.epf.library.edit.process.command.CustomizeDescriptorCommand;
 import org.eclipse.epf.library.edit.process.command.LocallyReplaceAndDeepCopyCommand;
 import org.eclipse.epf.library.edit.process.command.ReplaceActivityCommand;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
@@ -490,6 +491,18 @@ public class ProcessEditorActionBarContributor extends
 		}
 	};
 
+	private IAction customizeAction = new Action(
+			AuthoringUIResources.ProcessEditor_Action_Customize) {
+		public void run() {
+			if (!(bsItemProvider instanceof BreakdownElementWrapperItemProvider)) {
+				return;
+			}
+			CustomizeDescriptorCommand command = new CustomizeDescriptorCommand(
+					(BreakdownElementWrapperItemProvider) bsItemProvider);
+			getActionManager().execute(command);			
+		}
+	};
+	
 	private class EditorSuppressionCommand extends SuppressionCommand {
 		EditorSuppressionCommand(Suppression suppression, List selection,
 				boolean suppressed) {
@@ -1826,7 +1839,9 @@ public class ProcessEditorActionBarContributor extends
 			menuManager.insertBefore(IWorkbenchActionConstants.MB_ADDITIONS,
 					localReplacementAndDeepCopy);
 		}
-
+		
+		addCustomizeActionToMenu(menuManager);
+				
 		if (!isRolledUP) {
 			if (createChildActions != null && !createChildActions.isEmpty()) {
 				menuManager.insertBefore(
@@ -1951,6 +1966,45 @@ public class ProcessEditorActionBarContributor extends
 			menuManager.appendToGroup("open", expandAllAction); //$NON-NLS-1$
 			menuManager.appendToGroup("open", collapseAllAction); //$NON-NLS-1$
 		}
+	}
+
+	private void addCustomizeActionToMenu(IMenuManager menuManager) {
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
+
+		if (!(bsItemProvider instanceof BreakdownElementWrapperItemProvider)) {
+			return;
+		}
+
+		if (!(TngUtil.unwrap(bsItemProvider) instanceof Descriptor)) {
+			return;
+		}
+
+		BreakdownElementWrapperItemProvider provider = (BreakdownElementWrapperItemProvider) bsItemProvider;
+		if (!ProcessUtil.isInherited(provider)) {
+			return;
+		}
+
+		Object parentObj = provider.getParent(null);
+		Activity parentAct = parentObj instanceof Activity ? (Activity) parentObj
+				: null;
+		if (parentAct == null) {
+			return;
+		}
+
+		VariabilityType extendType = parentAct.getVariabilityType();
+		if (extendType != VariabilityType.LOCAL_CONTRIBUTION
+				&& extendType != VariabilityType.EXTENDS) {
+			return;
+		}
+
+		if (provider.getTopItem() != ProcessUtil.getProcess(parentAct)) {
+			return;
+		}
+		menuManager.appendToGroup(IWorkbenchActionConstants.MB_ADDITIONS,
+				customizeAction); //$NON-NLS-1$		
+
 	}
 
 	/**
