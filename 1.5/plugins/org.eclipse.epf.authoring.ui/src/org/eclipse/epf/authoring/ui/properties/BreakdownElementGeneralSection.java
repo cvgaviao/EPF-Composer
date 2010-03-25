@@ -774,11 +774,13 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 					//
 				} else {
 					nameText.setText(element.getName());
+					updateNameRestoreBtn();
 				}				
 				if (isPresentationNameReplace && descriptorPropUtil.isPresentationNameRepalce((Descriptor)element)) {
 					//
 				} else {
 					presentationNameText.setText(element.getPresentationName());
+					updatePresentationNameRestoreBtn();
 				}
 
 				if (modelModifyListener instanceof MethodElementEditor.ModifyListener) {
