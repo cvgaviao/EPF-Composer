@@ -1,15 +1,20 @@
 package org.eclipse.epf.library.realization.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.realization.IRealizedTaskDescriptor;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
@@ -102,6 +107,67 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		return wpdList;
 	}
 	
+	public List<Section> getSelectedSteps() {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		EReference dFeature = up.getTaskDescriptor_SelectedSteps();
+		
+		List<Section> stepList = (List<Section>) getCachedValue(dFeature);
+		if (stepList == null) {
+			stepList = calculateSelectedSteps();
+		}
+		return stepList;
+	}
+	
+	private List<Section> calculateSelectedSteps() {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		EReference dFeature = up.getTaskDescriptor_SelectedSteps();
+		EReference dFeatureExclude = up.getTaskDescriptor_SelectedStepsExclude();
+		EReference elementFeature = up.getTask_Steps();
+		
+		ElementRealizer realizer = DefaultElementRealizer
+				.newElementRealizer(getConfig());
+		MethodElement element = getLinkedElement();
+		if (element == null) {
+			return ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
+					dFeature, realizer);
+		}		
+		List<Section> elementStepList = ConfigurationHelper.calc0nFeatureValue(element,
+				elementFeature, realizer);
+		if (elementStepList == null) {
+			elementStepList = new ArrayList<Section>();
+		}
+		
+		List<Section> excludeList = null;		
+		if (!elementStepList.isEmpty()) {
+			excludeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
+						dFeatureExclude, realizer);
+			if (excludeList != null && ! excludeList.isEmpty()) {
+				elementStepList.removeAll(excludeList);
+			}
+		} 		
+		boolean same = true;
+		List<Section> valueList = ((TaskDescriptor) getDescriptor()).getSelectedSteps();
+		if (elementStepList.size() == valueList.size()) {
+			for (int i = 0; i < valueList.size(); i++) {
+				if (valueList.get(i) != elementStepList.get(i)) {
+					same = false;
+					break;
+				}
+			}
+		} else {
+			same = false;
+		}
+		
+		if (! same) {
+			valueList.clear();
+			if (! elementStepList.isEmpty()) {
+				valueList.addAll(elementStepList);
+			}
+		}
+
+		return valueList;
+	}
+	
 	public List<WorkProductDescriptor> getOutput() {
 		UmaPackage up = UmaPackage.eINSTANCE;
 		EReference tdReference = up.getTaskDescriptor_Output();
@@ -132,6 +198,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		addToSet(referenced, getAdditionallyPerformedBy());
 		addToSet(referenced, getOptionalInput());
 		addToSet(referenced, getOutput());
+		getSelectedSteps();
 		return referenced;
 	}
 	

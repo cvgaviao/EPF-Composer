@@ -18,5 +18,5 @@ public interface IRealizedTaskDescriptor  extends IRealizedDescriptor {
 
 	List<WorkProductDescriptor> getOutput();
 	
-//	List<Section> getSelectedSteps();
+	List<Section> getSelectedSteps();
 }
