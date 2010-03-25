@@ -1977,7 +1977,7 @@ public class ProcessEditorActionBarContributor extends
 			return;
 		}
 
-		if (!(TngUtil.unwrap(bsItemProvider) instanceof Descriptor)) {
+		if (!(TngUtil.unwrap(bsItemProvider) instanceof TaskDescriptor)) {
 			return;
 		}
 

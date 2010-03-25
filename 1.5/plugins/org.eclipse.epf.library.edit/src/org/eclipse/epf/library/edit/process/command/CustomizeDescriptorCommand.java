@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.command.AbstractCommand;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
@@ -12,8 +15,11 @@ import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.UmaPackage;
 
 
 public class CustomizeDescriptorCommand extends AbstractCommand implements
@@ -70,7 +76,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 	 */
 	static int cc = 0;
 	public void execute() {
-		if (greenParent == null) {
+		if (greenParent == null || ! (greenParent instanceof TaskDescriptor)) {
 			return;
 		}		
 		Object parentObj = wrapper.getParent(null);
@@ -84,15 +90,95 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		
 		Descriptor des = UmaFactory.eINSTANCE.createTaskDescriptor();
 		
-		//To do: copy some feature values of greenParent to newDes
-		des.setName(greenParent.getName());
-		des.setPresentationName(greenParent.getPresentationName());
+		updateFromGreenParent(greenParent, des);
 		
 		parentAct.getBreakdownElements().add(des);
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		propUtil.setGreenParent(des, greenParent.getGuid());
 	}
 
+	private boolean isAttToCopy(EAttribute attribute) {
+		if (!attribute.isChangeable()) {
+			return false;	
+		}
+		if (attribute.isDerived()) {
+			return false;
+		}
+		if (attribute == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
+			return false;
+		}
+		if (attribute == UmaPackage.eINSTANCE.getNamedElement_Name()) {
+			return false;
+		}
+		return true;
+	}
+	
+
+	private boolean isRefToCopy(EReference ref) {
+		if (!ref.isChangeable()) {
+			return false;	
+		}
+		if (ref.isDerived()) {
+			return false;
+		}
+		if (ref == UmaPackage.eINSTANCE.getDescribableElement_Presentation()) {
+			return false;
+		}
+		return true;
+	}
+	
+	private void copyAttributes(MethodElement source, MethodElement target) {
+		if (source == null || target == null || source.eClass() != target.eClass()) {
+			return;
+		}				
+		Collection<EAttribute> attributes = source.eClass().getEAllAttributes();		
+		for (EAttribute attribute : attributes) {
+			if (isAttToCopy(attribute)) {
+				Object value = source.eGet(attribute);
+				if (value != null) {
+					target.eSet(attribute, value);
+				}
+			}
+		}
+	}
+	
+	private void copyReferences(MethodElement source, MethodElement target) {
+		if (source == null || target == null || source.eClass() != target.eClass()) {
+			return;
+		}	
+		Collection<EReference> references = source.eClass().getEAllReferences();
+		
+		for (EReference reference : references) {
+			if (!reference.isChangeable() || reference.isDerived()) {
+				continue;
+			}
+			Object value = source.eGet(reference);
+			if (value == null) {
+				continue;
+			}
+
+			if (reference.isMany()) {
+				List valueList = (List) value;
+				if (! valueList.isEmpty()) {
+					EList copyList = (EList) target.eGet(reference);
+					copyList.clear();
+					copyList.addAll(valueList);
+				}
+			} else {
+				target.eSet(reference, value);
+			}
+		}
+	}
+	
+	public void updateFromGreenParent(Descriptor greenParent, Descriptor child) {
+		child.setName(greenParent.getName());
+		copyAttributes(greenParent, child);
+		copyAttributes(greenParent.getPresentation(), child.getPresentation());
+		
+		copyReferences(greenParent, child);
+		copyReferences(greenParent.getPresentation(), child.getPresentation());	
+	}	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
