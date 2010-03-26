@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
@@ -16,12 +17,17 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	private static boolean localDebug = true;
 	
 	private static final String infoSeperator = "/"; 							//$NON-NLS-1$
+	private static final String plus = "+"; 							//$NON-NLS-1$
+	private static final String minus = "-"; 							//$NON-NLS-1$
+
 
 	public static final String DESCRIPTOR_NoAutoSyn = "descriptor_noAutoSyn"; 								//$NON-NLS-1$	
 	public static final String DESCRIPTOR_CreatedByReference = "descriptor_createdByReferebce"; 			//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 						//$NON-NLS-1$
 	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";						//$NON-NLS-1$
 	public static final String DESCRIPTOR_GreenParent = "descriptor_greenParent";						//$NON-NLS-1$
+	
+	public static final String DESCRIPTOR_ExcludeRefDelta = "descriptor_excludeRefDelta";
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -152,78 +158,20 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 						", usedD: " + usedD.getName() + ", feature: " + feature.getName());
 				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
-			addLocalUse_(usedD, usingD, feature);			
+			addRefInfo(usedD, usingD, DESCRIPTOR_LocalUsingInfo, feature.getName());
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
-	}
-	
-	private void addLocalUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
-		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingInfo);
-		String newValue = usingD.getGuid().concat(infoSeperator).concat(feature.getName());
-
-		if (oldValue != null && oldValue.length() > 0) {			
-			String[] infos = oldValue.split(infoSeperator); 
-			
-			int sz = infos.length / 2; 		
-			for (int i = 0; i < sz; i++) {
-				int i1 = i*2;
-				int i2 = i1 + 1;
-				String iGuid = infos[i1];
-				String iFeature = infos[i2];
-				if (iGuid.equals(usingD.getGuid()) && iFeature.equals(feature.getName())) {
-					return;
-				} 
-			}
-			
-			newValue = oldValue.concat(infoSeperator).concat(newValue);
-		}				
-		setStringValue(usedD, DESCRIPTOR_LocalUsingInfo, newValue);
 	}
 	
 	public void removeLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
 		try {
-			removeLocalUse_(usedD, usingD, feature);			
+			removeRefInfo(usedD, usingD, DESCRIPTOR_LocalUsingInfo, feature.getName());
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
 	}
-	
-	private void removeLocalUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
-		String oldValue = getStringValue(usedD, DESCRIPTOR_LocalUsingInfo);
-		if (oldValue == null || oldValue.length() == 0) {
-			return;
-		}
-		boolean removed = false;
-		String newValue = ""; //$NON-NLS-1$
 
-		if (oldValue != null && oldValue.length() > 0) {			
-			String[] infos = oldValue.split(infoSeperator); 
-			
-			int sz = infos.length / 2; 		
-			for (int i = 0; i < sz; i++) {
-				int i1 = i*2;
-				int i2 = i1 + 1;
-				String iGuid = infos[i1];
-				String iFeature = infos[i2];
-				if (iGuid.equals(usingD.getGuid()) && iFeature.equals(feature.getName())) {
-					removed = true;		
-				} else {
-					if (newValue.length() > 0) {
-						newValue = newValue.concat(infoSeperator);
-					}
-					newValue = newValue.concat(iGuid.concat(iFeature));
-				}
-			}
-
-		}
-		
-		if (removed) {
-			setStringValue(usedD, DESCRIPTOR_LocalUsingInfo, newValue);
-		}
-
-	}
-	
 	public void addLocalUsingInfo(List<Descriptor> deslIst, Descriptor desc, EReference feature) {
 		if (! ProcessUtil.isSynFree() || deslIst == null || desc == null || feature == null) {
 			return;
@@ -368,6 +316,133 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 		
 		return true;		
+	}
+	
+	public Descriptor getGreenParentDescriptor(Descriptor des) {
+		String guid = getGreenParent(des);
+		if (guid == null) {
+			return null;
+		}
+		return (Descriptor) LibraryEditUtil.getInstance().getMethodElement(guid);
+	}	
+	
+	public void addExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
+		String refName = feature.getDefaultValueLiteral() + (positive ? plus : minus);
+		try {
+			addRefInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
+	public List<MethodElement> getExcludeRefDeltaList(Descriptor des,			
+			EReference feature, boolean positive) {
+		
+		String refName = feature.getDefaultValueLiteral() + (positive ? plus : minus);
+		try {
+			return getExcludeRefDeltaList_(des, refName);			
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return null;
+	}
+	
+	private List<MethodElement> getExcludeRefDeltaList_(Descriptor des, String refName) { 		
+		String value = getStringValue(des, refName);
+		
+		if (value == null || value.length() == 0) {
+			return null;
+		}
+		
+		String[] infos = value.split(infoSeperator);
+		if (infos == null || infos.length == 0) {
+			return null;
+		}
+		
+		List<MethodElement> deltaList = new ArrayList<MethodElement>();
+		int sz = infos.length / 2; 		
+		for (int i = 0; i < sz; i++) {
+			int i1 = i*2;
+			int i2 = i1 + 1;
+			String iGuid = infos[i1];
+			String iFeature = infos[i2];
+			if (iFeature.endsWith(refName)) {
+				MethodElement element = LibraryEditUtil.getInstance().getMethodElement(iGuid);
+				if (element != null) {
+					deltaList.add(element);
+				}
+			} 
+		}		
+		
+		return deltaList;		
+	}
+	
+	public void removeExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
+		String refName = feature.getDefaultValueLiteral() + (positive ? plus : minus);
+		try {
+			removeRefInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
+	private void addRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
+		String oldValue = getStringValue(descriptor, propName);
+		String newValue = descriptor.getGuid().concat(infoSeperator).concat(refName);
+
+		if (oldValue != null && oldValue.length() > 0) {			
+			String[] infos = oldValue.split(infoSeperator); 
+			
+			int sz = infos.length / 2; 		
+			for (int i = 0; i < sz; i++) {
+				int i1 = i*2;
+				int i2 = i1 + 1;
+				String iGuid = infos[i1];
+				String iFeature = infos[i2];
+				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
+					return;
+				} 
+			}
+			
+			newValue = oldValue.concat(infoSeperator).concat(newValue);
+		}				
+		setStringValue(descriptor, propName, newValue);
+	}
+		
+	private void removeRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
+		String oldValue = getStringValue(descriptor, propName);
+		if (oldValue == null || oldValue.length() == 0) {
+			return;
+		}
+		boolean removed = false;
+		String newValue = ""; //$NON-NLS-1$
+
+		if (oldValue != null && oldValue.length() > 0) {			
+			String[] infos = oldValue.split(infoSeperator); 
+			
+			int sz = infos.length / 2; 		
+			for (int i = 0; i < sz; i++) {
+				int i1 = i*2;
+				int i2 = i1 + 1;
+				String iGuid = infos[i1];
+				String iFeature = infos[i2];
+				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
+					removed = true;		
+				} else {
+					if (newValue.length() > 0) {
+						newValue = newValue.concat(infoSeperator);
+					}
+					newValue = newValue.concat(iGuid.concat(iFeature));
+				}
+			}
+
+		}
+		
+		if (removed) {
+			setStringValue(descriptor, propName, newValue);
+		}
+
 	}
 	
 }

@@ -105,6 +105,11 @@ public class LibraryEditUtil {
 		ILibraryEditUtilProvider p = getProvider();				
 		return p == null ? true : p.isSynFree();
 	}
+	
+	public MethodElement getMethodElement(String guid) {
+		ILibraryEditUtilProvider p = getProvider();				
+		return p == null ? null : p.getMethodElement(guid);
+	}
 		
 	public EReference getExcludeFeature(EReference ref) {
 		UmaPackage up = UmaPackage.eINSTANCE;
