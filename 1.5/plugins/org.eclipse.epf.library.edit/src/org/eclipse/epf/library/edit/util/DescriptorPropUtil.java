@@ -326,8 +326,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return (Descriptor) LibraryEditUtil.getInstance().getMethodElement(guid);
 	}	
 	
+	//positive = true:  feature name appended with "+" -> extra exclude added
+	//positive = false: feature name appended with "-" -> toggle off parent's exclude
 	public void addExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
-		String refName = feature.getDefaultValueLiteral() + (positive ? plus : minus);
+		String refName = feature.getName() + (positive ? plus : minus);
 		try {
 			addRefInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
 		} catch (Throwable e) {
@@ -338,7 +340,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public List<MethodElement> getExcludeRefDeltaList(Descriptor des,			
 			EReference feature, boolean positive) {
 		
-		String refName = feature.getDefaultValueLiteral() + (positive ? plus : minus);
+		String refName = feature.getName() + (positive ? plus : minus);
 		try {
 			return getExcludeRefDeltaList_(des, refName);			
 		} catch (Throwable e) {
@@ -349,7 +351,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	private List<MethodElement> getExcludeRefDeltaList_(Descriptor des, String refName) { 		
-		String value = getStringValue(des, refName);
+		String value = getStringValue(des, DESCRIPTOR_ExcludeRefDelta);
 		
 		if (value == null || value.length() == 0) {
 			return null;
@@ -379,7 +381,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public void removeExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
-		String refName = feature.getDefaultValueLiteral() + (positive ? plus : minus);
+		String refName = feature.getName() + (positive ? plus : minus);
 		try {
 			removeRefInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
 		} catch (Throwable e) {
@@ -389,7 +391,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private void addRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
 		String oldValue = getStringValue(descriptor, propName);
-		String newValue = descriptor.getGuid().concat(infoSeperator).concat(refName);
+		String newValue = referenced.getGuid().concat(infoSeperator).concat(refName);
 
 		if (oldValue != null && oldValue.length() > 0) {			
 			String[] infos = oldValue.split(infoSeperator); 
@@ -433,7 +435,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 					if (newValue.length() > 0) {
 						newValue = newValue.concat(infoSeperator);
 					}
-					newValue = newValue.concat(iGuid.concat(iFeature));
+					newValue = newValue.concat(iGuid.concat(infoSeperator).concat(iFeature));
 				}
 			}
 

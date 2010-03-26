@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -173,15 +174,34 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 
 		if (calledForExculded) {
 			List excludedList = null;
+			EReference ref = null;
 			if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
 				excludedList = taskDesc.getPerformedPrimarilyByExcluded();
+				ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
 			} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
 				excludedList = taskDesc.getAdditionallyPerformedByExclude();
+				ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
 			}
 			if (excludedList != null) {
 				excludedList.removeAll(roles);
 			}
 			
+			TaskDescriptor greenParent = (TaskDescriptor) propUtil
+					.getGreenParentDescriptor(taskDesc);
+			if (greenParent != null) {
+				EReference eRef = LibraryEditUtil.getInstance()
+						.getExcludeFeature(ref);
+				List<Role> parentExecludeList = (List<Role>) greenParent
+						.eGet(eRef);
+				for (Role role : (List<Role>) roles) {
+					propUtil.removeExcludeRefDelta(taskDesc, role, ref, true);
+					if (parentExecludeList != null && parentExecludeList.contains(role)) {
+						propUtil.addExcludeRefDelta(taskDesc, role, ref,
+								false);
+					}
+				}
+			}
+						
 			for (RoleDescriptor rd : (List<RoleDescriptor>) newRoleDescList) {
 				propUtil.setCreatedByReference(rd, true);
 			}

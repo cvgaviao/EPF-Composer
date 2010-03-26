@@ -10,14 +10,17 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
@@ -108,16 +111,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();		
 		
-		List<MethodElement> excludeList = 	null;		
-		if (elementList != null && !elementList.isEmpty()) {
-				excludeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
-						dFeatureExclude, realizer); 
-		}
-		
-		Set<MethodElement> excludeElements = new HashSet<MethodElement>();
-		if (excludeList != null && !excludeList.isEmpty()) {
-			excludeElements.addAll(excludeList);
-		}
+		Set<MethodElement> excludeElements = this.getExcludeRefSet(getDescriptor(), dFeature, realizer);
 		
 		Set<MethodElement> elementSet = new LinkedHashSet<MethodElement>();
 		if (elementList != null) {
@@ -209,5 +203,62 @@ public class RealizedDescriptor extends RealizedElement implements
 			getFeatureValue(feature);
 		}
 	}
+	
+	private Set<MethodElement> getExcludeRefSet(Descriptor des,
+			EReference ref, ElementRealizer realizer) {
+		Set<MethodElement> set = new LinkedHashSet<MethodElement>();
+		if (des == null) {
+			return set;
+		}
+		try {
+			EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(
+					ref);
+			Set<MethodElement> rawSet = getRawExcludeRefSet(des, ref, eRef,
+					realizer.getConfiguration(), true);
+			for (MethodElement elem : rawSet) {
+				MethodElement realized = ConfigurationHelper.getCalculatedElement(elem, realizer);
+				if (realized != null) {
+					set.add(realized);
+				}
+			}
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
+
+		return set;
+	}	
+
+	private Set<MethodElement> getRawExcludeRefSet(Descriptor des,
+			EReference ref, EReference eRef, MethodConfiguration config, boolean topLevelCall) {
+		List<MethodElement> list;
+		Set<MethodElement> refSet = new LinkedHashSet<MethodElement>();
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		Descriptor greenParent = propUtil.getGreenParentDescriptor(des);
+		if (greenParent != null && ConfigurationHelper.inConfig(greenParent, config)) {
+			Set<MethodElement> parentSet = getRawExcludeRefSet(greenParent,
+					ref, eRef, config, false);
+			refSet.addAll(parentSet);
+			list = propUtil.getExcludeRefDeltaList(des, ref, false);
+			if (list != null && !list.isEmpty()) {
+				refSet.removeAll(list);
+			}
+			list = propUtil.getExcludeRefDeltaList(des, ref, true);
+			if (list != null && !list.isEmpty()) {
+				refSet.addAll(list);
+			}
+		}
+		list = (List<MethodElement>) des.eGet(eRef);
+		if (greenParent == null && list != null && ! list.isEmpty()) {
+			refSet.addAll(list);
+		}
+		if (topLevelCall && greenParent != null) {
+			if (list.size() != refSet.size()) {
+				list.clear();
+				list.addAll(refSet);
+			}
+		}
+		return refSet;
+	}
+	
 	
 }

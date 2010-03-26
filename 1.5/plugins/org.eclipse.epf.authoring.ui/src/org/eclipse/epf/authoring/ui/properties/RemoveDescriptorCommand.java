@@ -291,5 +291,9 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 		}
 		return super.getAffectedObjects();
 	}
+	
+	protected int getFeatureID() {
+		return featureID;
+	}
 
 }
