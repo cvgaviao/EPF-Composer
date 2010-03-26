@@ -113,6 +113,7 @@ public class ProcessDescription extends ProcessFormPage {
 	private IMethodRichText ctrl_alternatives, ctrl_how_to_staff,
 			ctrl_key_consideration;
 
+	//for configuration section
 	private Section configSection;
 
 	protected Composite configComposite;
@@ -127,7 +128,6 @@ public class ProcessDescription extends ProcessFormPage {
 
 	protected Button buttonRemove;
 
-	// private Button buttonEdit;
 	protected Button buttonMakeDefault;
 
 	private Text textConfigDescription;
@@ -174,7 +174,12 @@ public class ProcessDescription extends ProcessFormPage {
 	 */
 	protected void createEditorContent(FormToolkit toolkit) {
 		super.createEditorContent(toolkit);
-		createConfigurationSection(toolkit);
+		
+		if (isConfigFree()) {
+			createPluginSection(toolkit);
+		} else {
+			createConfigurationSection(toolkit);
+		}
 		// Set focus on the Name text control.
 		Display display = form.getBody().getDisplay();
 		if (!(display == null || display.isDisposed())) {
@@ -404,6 +409,10 @@ public class ProcessDescription extends ProcessFormPage {
 		textConfigDescription.setEditable(false);
 		toolkit.paintBordersFor(configComposite);
 	}
+	
+	protected void createPluginSection(FormToolkit toolkit) {
+		//
+	}
 
 	/**
 	 * @see org.eclipse.ui.forms.editor.FormPage#dispose()
@@ -561,6 +570,14 @@ public class ProcessDescription extends ProcessFormPage {
 		updateControl(ctrl_how_to_staff, howToStaff);
 		updateControl(ctrl_key_consideration, keyConsideration);
 
+		if (isConfigFree()) {
+			//
+		} else {
+			loadDataForConfiguration();
+		}
+	}
+	
+	public void loadDataForConfiguration() {
 		if (configListAdapter == null) {
 			configListAdapter = new ConfigListItemProvider(
 					TngAdapterFactory.INSTANCE
@@ -1001,6 +1018,14 @@ public class ProcessDescription extends ProcessFormPage {
 			}
 		});
 
+		if (isConfigFree()) {
+			//
+		} else {
+			addListenersForConfiguration();
+		}
+	}
+	
+	protected void addListenersForConfiguration() {
 		configListViewer
 				.addSelectionChangedListener(new ISelectionChangedListener() {
 					public void selectionChanged(SelectionChangedEvent event) {
@@ -1039,7 +1064,7 @@ public class ProcessDescription extends ProcessFormPage {
 						input,
 						contentProvider,
 						labelProvider,
-						AuthoringUIResources.ProcessDescription_selectConfiguration) { 
+						AuthoringUIResources.ProcessDescription_selectConfiguration) {
 					protected Control createDialogArea(Composite parent) {
 						Control control = super.createDialogArea(parent);
 						getViewer().addFilter(new ViewerFilter() {
@@ -1071,13 +1096,13 @@ public class ProcessDescription extends ProcessFormPage {
 					Object obs[] = dlg.getResult();
 					MethodConfiguration config;
 					// get default configuration
-//					MethodConfiguration defaultConfig = process
-//							.getDefaultContext();
+					// MethodConfiguration defaultConfig = process
+					// .getDefaultContext();
 					for (int i = 0; i < obs.length; i++) {
 						config = (MethodConfiguration) obs[i];
 						if (config != null) {
-//								|| checkValidityForSuperSet(defaultConfig,
-//										config)) {
+							// || checkValidityForSuperSet(defaultConfig,
+							// config)) {
 							actionMgr.doAction(IActionManager.ADD, process,
 									UmaPackage.eINSTANCE
 											.getProcess_ValidContext(), config,
@@ -1087,8 +1112,11 @@ public class ProcessDescription extends ProcessFormPage {
 									.getDefault()
 									.getMsgDialog()
 									.displayError(
-											AuthoringUIResources.addConfigErrorDialog_title, 
-											AuthoringUIResources.bind(AuthoringUIResources.invalidConfigError_msg, config.getName())); 
+											AuthoringUIResources.addConfigErrorDialog_title,
+											AuthoringUIResources
+													.bind(
+															AuthoringUIResources.invalidConfigError_msg,
+															config.getName()));
 						}
 					}
 				}
@@ -1114,38 +1142,40 @@ public class ProcessDescription extends ProcessFormPage {
 							.getDefaultContext();
 
 					if (currentConfig != selection.getFirstElement()) {
-//						boolean isValid = true;
-//						List validContext = process.getValidContext();
-//						for (Iterator itor = validContext.iterator(); itor
-//								.hasNext();) {
-//							MethodConfiguration config = (MethodConfiguration) itor
-//									.next();
-//							if (!(checkValidityForSuperSet(
-//									(MethodConfiguration) selection
-//											.getFirstElement(), config))) {
-//								isValid = false;
-//								break;
-//							}
-//						}
-//						if (isValid) {
-							boolean status = actionMgr.doAction(
-									IActionManager.SET, process,
-									UmaPackage.eINSTANCE
-											.getProcess_DefaultContext(),
-									selection.getFirstElement(), -1);
-							if (!status)
-								return;
-							buttonRemove.setEnabled(false);
-//						} else {
-//							String selectedConfigName = ((MethodConfiguration) selection
-//									.getFirstElement()).getName();
-//							AuthoringUIPlugin
-//									.getDefault()
-//									.getMsgDialog()
-//									.displayError(
-//											AuthoringUIResources.setDefaultConfigErrorDialog_title, 
-//											AuthoringUIResources.bind(AuthoringUIResources.setDefaultConfigError_msg, selectedConfigName)); 
-//						}
+						// boolean isValid = true;
+						// List validContext = process.getValidContext();
+						// for (Iterator itor = validContext.iterator(); itor
+						// .hasNext();) {
+						// MethodConfiguration config = (MethodConfiguration)
+						// itor
+						// .next();
+						// if (!(checkValidityForSuperSet(
+						// (MethodConfiguration) selection
+						// .getFirstElement(), config))) {
+						// isValid = false;
+						// break;
+						// }
+						// }
+						// if (isValid) {
+						boolean status = actionMgr.doAction(IActionManager.SET,
+								process, UmaPackage.eINSTANCE
+										.getProcess_DefaultContext(), selection
+										.getFirstElement(), -1);
+						if (!status)
+							return;
+						buttonRemove.setEnabled(false);
+						// } else {
+						// String selectedConfigName = ((MethodConfiguration)
+						// selection
+						// .getFirstElement()).getName();
+						// AuthoringUIPlugin
+						// .getDefault()
+						// .getMsgDialog()
+						// .displayError(
+						// AuthoringUIResources.setDefaultConfigErrorDialog_title,
+						// AuthoringUIResources.bind(AuthoringUIResources.setDefaultConfigError_msg,
+						// selectedConfigName));
+						// }
 					}
 				}
 			}
@@ -1197,6 +1227,14 @@ public class ProcessDescription extends ProcessFormPage {
 			ctrl_expanded.setEditable(editable);
 		}
 		
+		if (isConfigFree()) {
+			//
+		} else {
+			refreshFroConfiguration(editable);
+		}
+	}
+	
+	protected void refreshFroConfiguration(boolean editable) {
 		IStructuredSelection selection = (IStructuredSelection) configListViewer
 				.getSelection();
 		if (selection.size() == 1) {
@@ -1267,6 +1305,15 @@ public class ProcessDescription extends ProcessFormPage {
 			detailSectionExpandFlag = detailSection.isExpanded();
 			detailSection.setExpanded(enable);
 		}
+		
+		if (isConfigFree()) {
+			//
+		} else {
+			enableSectionsForConfiguration(enable);
+		}
+	}
+	
+	protected void enableSectionsForConfiguration(boolean enable) {
 		configSection.setVisible(enable);
 		if (enable) {
 			configSection.setExpanded(configSectionExpandFlag);
@@ -1402,4 +1449,10 @@ public class ProcessDescription extends ProcessFormPage {
 		}
 		return changeProcessName(editor.getActionManager(), null, (ProcessComponent) process.eContainer());
 	}
+	
+	private boolean isConfigFree() {
+		//will use util provide by Weiping later
+		return false;
+	}
+	
 }

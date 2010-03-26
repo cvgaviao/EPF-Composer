@@ -22,6 +22,7 @@ import org.eclipse.epf.library.edit.IConfigurationApplicator;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -496,6 +497,11 @@ public class TaskDescriptorStepSection extends AbstractSection {
 				actionMgr.doAction(IActionManager.ADD, element,
 						UmaPackage.eINSTANCE.getTaskDescriptor_SelectedSteps(),
 						item, -1);
+				if (isSyncFree()) {
+					actionMgr.doAction(IActionManager.REMOVE, element,
+							UmaPackage.eINSTANCE.getTaskDescriptor_SelectedStepsExclude(),
+							item, -1);
+				}
 			}
 		}
 	}
@@ -514,6 +520,11 @@ public class TaskDescriptorStepSection extends AbstractSection {
 				actionMgr.doAction(IActionManager.REMOVE, element,
 						UmaPackage.eINSTANCE.getTaskDescriptor_SelectedSteps(),
 						item, -1);
+				if (isSyncFree()) {
+					actionMgr.doAction(IActionManager.ADD, element,
+							UmaPackage.eINSTANCE.getTaskDescriptor_SelectedStepsExclude(),
+							item, -1);
+				}
 			}
 		}
 	}
@@ -536,4 +547,9 @@ public class TaskDescriptorStepSection extends AbstractSection {
 		steps.removeAll(element.getSelectedSteps());
 		return steps;
 	}
+	
+	private boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
 }
