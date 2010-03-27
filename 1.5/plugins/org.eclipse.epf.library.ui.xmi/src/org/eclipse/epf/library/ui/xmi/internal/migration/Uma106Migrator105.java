@@ -21,7 +21,7 @@ public class Uma106Migrator105 extends Migrator104 {
 		}	
 		updateStatus(monitor, XMILibraryResources.convertToSynFree_taskName);
 		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
-		converter.convertLibrary(lib);
+		converter.convertLibrary(lib, false);
 	}
 
 }

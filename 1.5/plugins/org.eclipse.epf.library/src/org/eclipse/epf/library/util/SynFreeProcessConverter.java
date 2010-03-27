@@ -64,16 +64,24 @@ public class SynFreeProcessConverter {
 	}
 	
 	public void convertLibrary(MethodLibrary lib) {
+		convertLibrary(lib, true);
+	}
+	
+	public void convertLibrary(MethodLibrary lib,  boolean toSave) {
 		if (lib == null) {
 			return;
 		}
 		List<MethodPlugin> plugins = lib.getMethodPlugins();
 		
-		resouresToSave = new HashSet<Resource>();
+		if (toSave) {
+			resouresToSave = new HashSet<Resource>();
+		}
 		for (int i = 0; i < plugins.size(); i++) {
 			convertPlugin(plugins.get(i), false);
 		}
-		save();
+		if (toSave) {
+			save();
+		}
 	}
 		
 	public void convertPlugin(MethodPlugin plugin, boolean toSave) {
@@ -162,7 +170,9 @@ public class SynFreeProcessConverter {
 		
 		convertSimpleTextAttributes(des);
 		
-		resouresToSave.add(res);				
+		if (resouresToSave != null) {
+			resouresToSave.add(res);	
+		}
 	}
 	
 	private void convertSimpleTextAttributes(Descriptor des) {
