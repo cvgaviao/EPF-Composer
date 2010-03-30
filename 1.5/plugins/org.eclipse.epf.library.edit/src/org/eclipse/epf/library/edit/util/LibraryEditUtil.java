@@ -25,6 +25,7 @@ public class LibraryEditUtil {
 	private static LibraryEditUtil instance = new LibraryEditUtil();
 	private IRealizationManager defaultRealizationManager;
 	private ILibraryEditUtilProvider provider;
+	private boolean junitTest = false;
 
 	public static LibraryEditUtil getInstance() {
 		return instance;
@@ -143,6 +144,14 @@ public class LibraryEditUtil {
 		
 		//...		
 		return null;
+	}
+	
+	public boolean isJunitTest() {
+		return junitTest;
+	}
+
+	public void setJunitTest(boolean junitTest) {
+		this.junitTest = junitTest;
 	}
 	
 }

@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgDialog;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.ui.LibraryUIManager;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.LibraryUIResources;
@@ -260,10 +261,12 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 				return false;
 			}
 			
-			boolean b = LibraryUIPlugin.getDefault().getMsgDialog()
-					.displayPrompt(LibraryUIResources.openLibraryWizard_title,
-							LibraryUIResources.convertToSynProcessLib_msg);
-			callerInfo.setConverToSynFree(b);
+			if (! LibraryEditUtil.getInstance().isJunitTest()) {
+				boolean b = LibraryUIPlugin.getDefault().getMsgDialog()
+						.displayPrompt(LibraryUIResources.openLibraryWizard_title,
+								LibraryUIResources.convertToSynProcessLib_msg);
+				callerInfo.setConverToSynFree(b);
+			}
 			
 			if (!isUpgradeLibrary(callerInfo)) {
 				callerInfo.copyLibrary();
