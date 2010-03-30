@@ -32,15 +32,15 @@ public class TestCommandFileTest extends TestCase {
 /*		"TestCommands",
 		"newMethodPlugin",
 		"newMethodPlugin.tc"*/
-/*		
+
 		"ExportImport",
 		"Bugs_1",
-		"150702",
-		"150702.tc"*/		
+		"143867",
+		"143867.tc"		
 		
-		"TestCommands",
-		"newMethodElements",
-		"newMethodElements.tc"
+//		"TestCommands",
+//		"newMethodElements",
+//		"newMethodElements.tc"
 		
 /*		"TestCommands",
 		"kelvinCase.tc"*/

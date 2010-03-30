@@ -17,7 +17,9 @@
 	</ImportPlugins>
 	
 	<CompareToLibrary 
-		goldenLibFolderName="143867golden" >		
+		goldenLibFolderName="143867golden" 	
+		diffCount="1"
+		elementCount="37" >		
 	</CompareToLibrary>
 
 </MethodLibraryTest>

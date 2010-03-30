@@ -23,6 +23,7 @@ import java.util.Map;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.importing.services.PluginImportingService;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.project.MethodLibraryProject;
 import org.eclipse.epf.library.tester.LibraryDiffAnalyzor;
 import org.eclipse.epf.library.tester.LibraryTestService;
@@ -172,6 +173,8 @@ public class TestCommandMgr implements TestTracer {
 			this.trace = trace;
 			this.removeFiles = !trace;
 		}
+		
+		LibraryEditUtil.getInstance().setJunitTest(true);
 	}	
 	
 	public String getTagName(TestCommand tcInstance) {
