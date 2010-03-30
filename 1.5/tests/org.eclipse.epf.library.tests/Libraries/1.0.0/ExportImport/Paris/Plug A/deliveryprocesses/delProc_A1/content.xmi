@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:DeliveryProcessDescription xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-U8_LGvMSof-db24aFAMb6w"
-    name="DelProc A1,_W6a4cRBNEdqBs7KhdVLRLA" guid="-U8_LGvMSof-db24aFAMb6w">
+<org.eclipse.epf.uma:DeliveryProcessDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-U8_LGvMSof-db24aFAMb6w" name="DelProc A1,_W6a4cRBNEdqBs7KhdVLRLA" guid="-U8_LGvMSof-db24aFAMb6w">
   <mainDescription>DelProc A1 main</mainDescription>
   <externalId>DelProc A1 externID</externalId>
   <keyConsiderations>DelProc A1 key con</keyConsiderations>

@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
-  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_8zFbkE5QEduGkqWGzwpn7Q"
-      guid="_8zFbkE5QEduGkqWGzwpn7Q">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_8zFbkE5QEduGkqWGzwpn7Q" guid="_8zFbkE5QEduGkqWGzwpn7Q">
     <subManagers xmi:id="_-PJJ4U5QEduGkqWGzwpn7Q" href="uma://_-PDDQE5QEduGkqWGzwpn7Q#_-PJJ4U5QEduGkqWGzwpn7Q"/>
-    <resourceDescriptors xmi:id="_8zRo0E5QEduGkqWGzwpn7Q" id="_8ygz0E5QEduGkqWGzwpn7Q"
-        uri=""/>
-    <resourceDescriptors xmi:id="_-PJJ4k5QEduGkqWGzwpn7Q" id="_-PJJ4U5QEduGkqWGzwpn7Q"
-        uri="new_plug-in/plugin.xmi"/>
-    <resourceDescriptors xmi:id="_-PJJ405QEduGkqWGzwpn7Q" id="_-PDDQE5QEduGkqWGzwpn7Q"
-        uri="new_plug-in/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_8zRo0E5QEduGkqWGzwpn7Q" id="_8ygz0E5QEduGkqWGzwpn7Q" uri=""/>
+    <resourceDescriptors xmi:id="_-PJJ4k5QEduGkqWGzwpn7Q" id="_-PJJ4U5QEduGkqWGzwpn7Q" uri="new_plug-in/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_-PJJ405QEduGkqWGzwpn7Q" id="_-PDDQE5QEduGkqWGzwpn7Q" uri="new_plug-in/plugin.xmi"/>
   </org.eclipse.epf.uma.resourcemanager:ResourceManager>
-  <org.eclipse.epf.uma:MethodLibrary xmi:id="_8ygz0E5QEduGkqWGzwpn7Q" name="158913n158925m"
-      guid="_8ygz0E5QEduGkqWGzwpn7Q">
+  <org.eclipse.epf.uma:MethodLibrary xmi:id="_8ygz0E5QEduGkqWGzwpn7Q" name="158913n158925m" guid="_8ygz0E5QEduGkqWGzwpn7Q">
     <methodPlugins xmi:id="_-PDDQE5QEduGkqWGzwpn7Q" href="uma://_-PDDQE5QEduGkqWGzwpn7Q#_-PDDQE5QEduGkqWGzwpn7Q"/>
   </org.eclipse.epf.uma:MethodLibrary>
 </xmi:XMI>

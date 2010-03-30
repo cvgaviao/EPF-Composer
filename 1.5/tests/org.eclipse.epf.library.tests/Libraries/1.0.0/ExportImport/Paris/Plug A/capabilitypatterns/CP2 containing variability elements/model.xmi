@@ -1,31 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
-  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_ZzDXQUDFEdqO9M3fukYA_A"
-      guid="_ZzDXQUDFEdqO9M3fukYA_A">
-    <resourceDescriptors xmi:id="_ZzDXQkDFEdqO9M3fukYA_A" id="-icO6pIHdZm9Vxyc-JZ9Uyw"
-        uri="content.xmi"/>
-    <resourceDescriptors xmi:id="_tGF4wUDGEdqO9M3fukYA_A" id="-SrcVS-7dSYDE2Rpm7SIkyA"
-        uri="content.xmi"/>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_ZzDXQUDFEdqO9M3fukYA_A" guid="_ZzDXQUDFEdqO9M3fukYA_A">
+    <resourceDescriptors xmi:id="_ZzDXQkDFEdqO9M3fukYA_A" id="-icO6pIHdZm9Vxyc-JZ9Uyw" uri="content.xmi"/>
+    <resourceDescriptors xmi:id="_tGF4wUDGEdqO9M3fukYA_A" id="-SrcVS-7dSYDE2Rpm7SIkyA" uri="content.xmi"/>
   </org.eclipse.epf.uma.resourcemanager:ResourceManager>
-  <org.eclipse.epf.uma:ProcessComponent xmi:id="_ZtZbMEDFEdqO9M3fukYA_A" name="CP2 containing variability elements"
-      guid="_ZtZbMEDFEdqO9M3fukYA_A">
-    <childPackages xsi:type="org.eclipse.epf.uma:ProcessPackage" xmi:id="_lC7wEEDFEdqO9M3fukYA_A"
-        name="activity_for_variability_elements" guid="_lC7wEEDFEdqO9M3fukYA_A">
-      <processElements xsi:type="org.eclipse.epf.uma:Activity" xmi:id="_lDhl8EDFEdqO9M3fukYA_A"
-          name="activity_for_variability_elements" guid="_lDhl8EDFEdqO9M3fukYA_A"
-          presentationName="Activity for variability elements" briefDescription="brief: Activity for variability elements"
-          prefix="Prefix" superActivities="_ZtZbMUDFEdqO9M3fukYA_A" breakdownElements="_GqX1MEDQEdqrhsZh3QNAMQ _GqX1MUDQEdqrhsZh3QNAMQ _GqhmMEDQEdqrhsZh3QNAMQ _GqhmMUDQEdqrhsZh3QNAMQ _GqhmMkDQEdqrhsZh3QNAMQ _GqhmM0DQEdqrhsZh3QNAMQ _GqhmNEDQEdqrhsZh3QNAMQ">
+  <org.eclipse.epf.uma:ProcessComponent xmi:id="_ZtZbMEDFEdqO9M3fukYA_A" name="CP2 containing variability elements" guid="_ZtZbMEDFEdqO9M3fukYA_A">
+    <childPackages xsi:type="org.eclipse.epf.uma:ProcessPackage" xmi:id="_lC7wEEDFEdqO9M3fukYA_A" name="activity_for_variability_elements" guid="_lC7wEEDFEdqO9M3fukYA_A">
+      <processElements xsi:type="org.eclipse.epf.uma:Activity" xmi:id="_lDhl8EDFEdqO9M3fukYA_A" name="activity_for_variability_elements" guid="_lDhl8EDFEdqO9M3fukYA_A" presentationName="Activity for variability elements" briefDescription="brief: Activity for variability elements" prefix="Prefix" superActivities="_ZtZbMUDFEdqO9M3fukYA_A" breakdownElements="_GqX1MEDQEdqrhsZh3QNAMQ _GqX1MUDQEdqrhsZh3QNAMQ _GqhmMEDQEdqrhsZh3QNAMQ _GqhmMUDQEdqrhsZh3QNAMQ _GqhmMkDQEdqrhsZh3QNAMQ _GqhmM0DQEdqrhsZh3QNAMQ _GqhmNEDQEdqrhsZh3QNAMQ">
         <presentation xmi:id="-SrcVS-7dSYDE2Rpm7SIkyA" href="uma://-icO6pIHdZm9Vxyc-JZ9Uyw#-SrcVS-7dSYDE2Rpm7SIkyA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:TaskDescriptor" xmi:id="_GqX1MEDQEdqrhsZh3QNAMQ"
-          name="task_A3" guid="_GqX1MEDQEdqrhsZh3QNAMQ" presentationName="Task A3 extends Task A2"
-          briefDescription="brief: Task A3" superActivities="_lDhl8EDFEdqO9M3fukYA_A"
-          additionallyPerformedBy="_GqhmMEDQEdqrhsZh3QNAMQ _GqhmMUDQEdqrhsZh3QNAMQ"
-          mandatoryInput="_GqhmMkDQEdqrhsZh3QNAMQ" optionalInput="_GqhmM0DQEdqrhsZh3QNAMQ"
-          output="_GqhmNEDQEdqrhsZh3QNAMQ" performedPrimarilyBy="_GqX1MUDQEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:TaskDescriptor" xmi:id="_GqX1MEDQEdqrhsZh3QNAMQ" name="task_A3" guid="_GqX1MEDQEdqrhsZh3QNAMQ" presentationName="Task A3 extends Task A2" briefDescription="brief: Task A3" superActivities="_lDhl8EDFEdqO9M3fukYA_A" additionallyPerformedBy="_GqhmMEDQEdqrhsZh3QNAMQ _GqhmMUDQEdqrhsZh3QNAMQ" mandatoryInput="_GqhmMkDQEdqrhsZh3QNAMQ" optionalInput="_GqhmM0DQEdqrhsZh3QNAMQ" output="_GqhmNEDQEdqrhsZh3QNAMQ" performedPrimarilyBy="_GqX1MUDQEdqrhsZh3QNAMQ">
         <Task href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_oUluEEDFEdqO9M3fukYA_A"/>
         <selectedSteps href="uma://-bR9TX1bZ6W9RY5IvIPGUjg#_rCWwUEDPEdqrhsZh3QNAMQ"/>
         <selectedSteps href="uma://-bR9TX1bZ6W9RY5IvIPGUjg#_umygYEDPEdqrhsZh3QNAMQ"/>
@@ -34,120 +18,68 @@
         <selectedSteps href="uma://-13q8JJAa0ix6rDMZAqwy1w#_tk7sEBBOEdqBs7KhdVLRLA"/>
         <selectedSteps href="uma://-13q8JJAa0ix6rDMZAqwy1w#_tndboBBOEdqBs7KhdVLRLA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_GqX1MUDQEdqrhsZh3QNAMQ"
-          name="role_A3" guid="_GqX1MUDQEdqrhsZh3QNAMQ" presentationName="Role A3 extends Role A2"
-          briefDescription="brief : Role A3" superActivities="_lDhl8EDFEdqO9M3fukYA_A"
-          modifies="_GqhmNEDQEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_GqX1MUDQEdqrhsZh3QNAMQ" name="role_A3" guid="_GqX1MUDQEdqrhsZh3QNAMQ" presentationName="Role A3 extends Role A2" briefDescription="brief : Role A3" superActivities="_lDhl8EDFEdqO9M3fukYA_A" modifies="_GqhmNEDQEdqrhsZh3QNAMQ">
         <Role href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_8ZN6AEDFEdqO9M3fukYA_A"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_GqhmMEDQEdqrhsZh3QNAMQ"
-          name="role_A2" guid="_GqhmMEDQEdqrhsZh3QNAMQ" presentationName="Role A2 extended by Role A3"
-          briefDescription="Role A2 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A"
-          responsibleFor="_GqhmMkDQEdqrhsZh3QNAMQ _GqhmM0DQEdqrhsZh3QNAMQ _GqhmNEDQEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_GqhmMEDQEdqrhsZh3QNAMQ" name="role_A2" guid="_GqhmMEDQEdqrhsZh3QNAMQ" presentationName="Role A2 extended by Role A3" briefDescription="Role A2 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A" responsibleFor="_GqhmMkDQEdqrhsZh3QNAMQ _GqhmM0DQEdqrhsZh3QNAMQ _GqhmNEDQEdqrhsZh3QNAMQ">
         <Role href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_6k3UAA-PEdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_GqhmMUDQEdqrhsZh3QNAMQ"
-          name="role_A1" guid="_GqhmMUDQEdqrhsZh3QNAMQ" presentationName="Role A1"
-          briefDescription="Role A1 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A">
+      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_GqhmMUDQEdqrhsZh3QNAMQ" name="role_A1" guid="_GqhmMUDQEdqrhsZh3QNAMQ" presentationName="Role A1" briefDescription="Role A1 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A">
         <Role href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_55zk0A-PEdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqhmMkDQEdqrhsZh3QNAMQ"
-          name="artifact_A2" guid="_GqhmMkDQEdqrhsZh3QNAMQ" presentationName="Artifact A2 present"
-          briefDescription="Artifact A2 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqhmMkDQEdqrhsZh3QNAMQ" name="artifact_A2" guid="_GqhmMkDQEdqrhsZh3QNAMQ" presentationName="Artifact A2 present" briefDescription="Artifact A2 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_E7Z0kA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqhmM0DQEdqrhsZh3QNAMQ"
-          name="deliverable_A2" guid="_GqhmM0DQEdqrhsZh3QNAMQ" presentationName="Deliverable A2 present"
-          briefDescription="Deliverable A2 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A"
-          deliverableParts="_GqqwIEDQEdqrhsZh3QNAMQ _GqqwIUDQEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqhmM0DQEdqrhsZh3QNAMQ" name="deliverable_A2" guid="_GqhmM0DQEdqrhsZh3QNAMQ" presentationName="Deliverable A2 present" briefDescription="Deliverable A2 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A" deliverableParts="_GqqwIEDQEdqrhsZh3QNAMQ _GqqwIUDQEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_JBqfUA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqhmNEDQEdqrhsZh3QNAMQ"
-          name="outcome_A2" guid="_GqhmNEDQEdqrhsZh3QNAMQ" presentationName="Outcome A2 present"
-          briefDescription="Outcome A1 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqhmNEDQEdqrhsZh3QNAMQ" name="outcome_A2" guid="_GqhmNEDQEdqrhsZh3QNAMQ" presentationName="Outcome A2 present" briefDescription="Outcome A1 brief" superActivities="_lDhl8EDFEdqO9M3fukYA_A">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_KvLxEA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqqwIEDQEdqrhsZh3QNAMQ"
-          name="artifact_A2" guid="_GqqwIEDQEdqrhsZh3QNAMQ" presentationName="Artifact A2 present"
-          briefDescription="Artifact A2 brief">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqqwIEDQEdqrhsZh3QNAMQ" name="artifact_A2" guid="_GqqwIEDQEdqrhsZh3QNAMQ" presentationName="Artifact A2 present" briefDescription="Artifact A2 brief">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_E7Z0kA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqqwIUDQEdqrhsZh3QNAMQ"
-          name="outcome_A2" guid="_GqqwIUDQEdqrhsZh3QNAMQ" presentationName="Outcome A2 present"
-          briefDescription="Outcome A1 brief">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_GqqwIUDQEdqrhsZh3QNAMQ" name="outcome_A2" guid="_GqqwIUDQEdqrhsZh3QNAMQ" presentationName="Outcome A2 present" briefDescription="Outcome A1 brief">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_KvLxEA-REdqL2O1PJV9cZA"/>
       </processElements>
       <diagrams xmi:id="__pldkEDQEdqrhsZh3QNAMQ" guid="__pldkEDQEdqrhsZh3QNAMQ">
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldkUDQEdqrhsZh3QNAMQ"
-            guid="__pldkUDQEdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldk0DQEdqrhsZh3QNAMQ"
-              guid="__pldk0DQEdqrhsZh3QNAMQ" element="_GqX1MEDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldkUDQEdqrhsZh3QNAMQ" guid="__pldkUDQEdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldk0DQEdqrhsZh3QNAMQ" guid="__pldk0DQEdqrhsZh3QNAMQ" element="_GqX1MEDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldlUDQEdqrhsZh3QNAMQ"
-            guid="__pldlUDQEdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldl0DQEdqrhsZh3QNAMQ"
-              guid="__pldl0DQEdqrhsZh3QNAMQ" element="_GqX1MUDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldlUDQEdqrhsZh3QNAMQ" guid="__pldlUDQEdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldl0DQEdqrhsZh3QNAMQ" guid="__pldl0DQEdqrhsZh3QNAMQ" element="_GqX1MUDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldmUDQEdqrhsZh3QNAMQ"
-            guid="__pldmUDQEdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldm0DQEdqrhsZh3QNAMQ"
-              guid="__pldm0DQEdqrhsZh3QNAMQ" element="_GqhmMEDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldmUDQEdqrhsZh3QNAMQ" guid="__pldmUDQEdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldm0DQEdqrhsZh3QNAMQ" guid="__pldm0DQEdqrhsZh3QNAMQ" element="_GqhmMEDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldnUDQEdqrhsZh3QNAMQ"
-            guid="__pldnUDQEdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldn0DQEdqrhsZh3QNAMQ"
-              guid="__pldn0DQEdqrhsZh3QNAMQ" element="_GqhmMUDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldnUDQEdqrhsZh3QNAMQ" guid="__pldnUDQEdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldn0DQEdqrhsZh3QNAMQ" guid="__pldn0DQEdqrhsZh3QNAMQ" element="_GqhmMUDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldoUDQEdqrhsZh3QNAMQ"
-            guid="__pldoUDQEdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldo0DQEdqrhsZh3QNAMQ"
-              guid="__pldo0DQEdqrhsZh3QNAMQ" element="_GqhmMkDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldoUDQEdqrhsZh3QNAMQ" guid="__pldoUDQEdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldo0DQEdqrhsZh3QNAMQ" guid="__pldo0DQEdqrhsZh3QNAMQ" element="_GqhmMkDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldpUDQEdqrhsZh3QNAMQ"
-            guid="__pldpUDQEdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldp0DQEdqrhsZh3QNAMQ"
-              guid="__pldp0DQEdqrhsZh3QNAMQ" element="_GqhmM0DQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldpUDQEdqrhsZh3QNAMQ" guid="__pldpUDQEdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldp0DQEdqrhsZh3QNAMQ" guid="__pldp0DQEdqrhsZh3QNAMQ" element="_GqhmM0DQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldqUDQEdqrhsZh3QNAMQ"
-            guid="__pldqUDQEdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldq0DQEdqrhsZh3QNAMQ"
-              guid="__pldq0DQEdqrhsZh3QNAMQ" element="_GqhmNEDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__pldqUDQEdqrhsZh3QNAMQ" guid="__pldqUDQEdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldq0DQEdqrhsZh3QNAMQ" guid="__pldq0DQEdqrhsZh3QNAMQ" element="_GqhmNEDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__p4YgEDQEdqrhsZh3QNAMQ"
-            guid="__p4YgEDQEdqrhsZh3QNAMQ">
-          <property xmi:id="__p4YgUDQEdqrhsZh3QNAMQ" guid="__p4YgUDQEdqrhsZh3QNAMQ"
-              key="wpCompositeType" value="1"/>
-          <contained xsi:type="org.eclipse.epf.uma:GraphEdge" xmi:id="__qCJgUDQEdqrhsZh3QNAMQ"
-              guid="__qCJgUDQEdqrhsZh3QNAMQ" anchor="__qCJgEDQEdqrhsZh3QNAMQ"/>
-          <anchorage xmi:id="__qCJgEDQEdqrhsZh3QNAMQ" guid="__qCJgEDQEdqrhsZh3QNAMQ"
-              graphEdge="__qCJgUDQEdqrhsZh3QNAMQ"/>
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__p4Yg0DQEdqrhsZh3QNAMQ"
-              guid="__p4Yg0DQEdqrhsZh3QNAMQ" element="_GqX1MEDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__p4YgEDQEdqrhsZh3QNAMQ" guid="__p4YgEDQEdqrhsZh3QNAMQ">
+          <property xmi:id="__p4YgUDQEdqrhsZh3QNAMQ" guid="__p4YgUDQEdqrhsZh3QNAMQ" key="wpCompositeType" value="1"/>
+          <contained xsi:type="org.eclipse.epf.uma:GraphEdge" xmi:id="__qCJgUDQEdqrhsZh3QNAMQ" guid="__qCJgUDQEdqrhsZh3QNAMQ" anchor="__qCJgEDQEdqrhsZh3QNAMQ"/>
+          <anchorage xmi:id="__qCJgEDQEdqrhsZh3QNAMQ" guid="__qCJgEDQEdqrhsZh3QNAMQ" graphEdge="__qCJgUDQEdqrhsZh3QNAMQ"/>
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__p4Yg0DQEdqrhsZh3QNAMQ" guid="__p4Yg0DQEdqrhsZh3QNAMQ" element="_GqX1MEDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__p4YhUDQEdqrhsZh3QNAMQ"
-            guid="__p4YhUDQEdqrhsZh3QNAMQ">
-          <property xmi:id="__p4YhkDQEdqrhsZh3QNAMQ" guid="__p4YhkDQEdqrhsZh3QNAMQ"
-              key="wpCompositeType" value="2"/>
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__p4YiEDQEdqrhsZh3QNAMQ"
-              guid="__p4YiEDQEdqrhsZh3QNAMQ" element="_GqX1MEDQEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="__p4YhUDQEdqrhsZh3QNAMQ" guid="__p4YhUDQEdqrhsZh3QNAMQ">
+          <property xmi:id="__p4YhkDQEdqrhsZh3QNAMQ" guid="__p4YhkDQEdqrhsZh3QNAMQ" key="wpCompositeType" value="2"/>
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__p4YiEDQEdqrhsZh3QNAMQ" guid="__p4YiEDQEdqrhsZh3QNAMQ" element="_GqX1MEDQEdqrhsZh3QNAMQ"/>
         </contained>
-        <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldrUDQEdqrhsZh3QNAMQ"
-            guid="__pldrUDQEdqrhsZh3QNAMQ" presentation="Activity Detail" element="_lDhl8EDFEdqO9M3fukYA_A"/>
+        <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="__pldrUDQEdqrhsZh3QNAMQ" guid="__pldrUDQEdqrhsZh3QNAMQ" presentation="Activity Detail" element="_lDhl8EDFEdqO9M3fukYA_A"/>
       </diagrams>
     </childPackages>
-    <childPackages xsi:type="org.eclipse.epf.uma:ProcessPackage" xmi:id="_dXDd8EDPEdqrhsZh3QNAMQ"
-        name="Activity for other plugin variability elements" guid="_dXDd8EDPEdqrhsZh3QNAMQ">
-      <processElements xsi:type="org.eclipse.epf.uma:Activity" xmi:id="_dYGm0EDPEdqrhsZh3QNAMQ"
-          name="Activity for other plugin variability elements" guid="_dYGm0EDPEdqrhsZh3QNAMQ"
-          presentationName="Activity for other plugin variability elements" superActivities="_ZtZbMUDFEdqO9M3fukYA_A"
-          breakdownElements="_l5yUAEDPEdqrhsZh3QNAMQ _l5yUAUDPEdqrhsZh3QNAMQ _l5yUAkDPEdqrhsZh3QNAMQ _l5yUA0DPEdqrhsZh3QNAMQ _l5yUBEDPEdqrhsZh3QNAMQ _l5yUBUDPEdqrhsZh3QNAMQ _l5yUBkDPEdqrhsZh3QNAMQ _l5yUB0DPEdqrhsZh3QNAMQ _l5yUCEDPEdqrhsZh3QNAMQ _l5yUCUDPEdqrhsZh3QNAMQ _l5yUCkDPEdqrhsZh3QNAMQ"/>
-      <processElements xsi:type="org.eclipse.epf.uma:TaskDescriptor" xmi:id="_l5yUAEDPEdqrhsZh3QNAMQ"
-          name="task_B2" guid="_l5yUAEDPEdqrhsZh3QNAMQ" presentationName="Task B2 extends Task A1"
-          briefDescription="Task B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ"
-          additionallyPerformedBy="_l5yUAkDPEdqrhsZh3QNAMQ _l5yUA0DPEdqrhsZh3QNAMQ"
-          mandatoryInput="_l5yUBEDPEdqrhsZh3QNAMQ _l5yUBUDPEdqrhsZh3QNAMQ _l5yUBkDPEdqrhsZh3QNAMQ"
-          optionalInput="_l5yUB0DPEdqrhsZh3QNAMQ _l5yUCEDPEdqrhsZh3QNAMQ" output="_l5yUCUDPEdqrhsZh3QNAMQ _l5yUCkDPEdqrhsZh3QNAMQ"
-          performedPrimarilyBy="_l5yUAUDPEdqrhsZh3QNAMQ">
+    <childPackages xsi:type="org.eclipse.epf.uma:ProcessPackage" xmi:id="_dXDd8EDPEdqrhsZh3QNAMQ" name="Activity for other plugin variability elements" guid="_dXDd8EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:Activity" xmi:id="_dYGm0EDPEdqrhsZh3QNAMQ" name="Activity for other plugin variability elements" guid="_dYGm0EDPEdqrhsZh3QNAMQ" presentationName="Activity for other plugin variability elements" superActivities="_ZtZbMUDFEdqO9M3fukYA_A" breakdownElements="_l5yUAEDPEdqrhsZh3QNAMQ _l5yUAUDPEdqrhsZh3QNAMQ _l5yUAkDPEdqrhsZh3QNAMQ _l5yUA0DPEdqrhsZh3QNAMQ _l5yUBEDPEdqrhsZh3QNAMQ _l5yUBUDPEdqrhsZh3QNAMQ _l5yUBkDPEdqrhsZh3QNAMQ _l5yUB0DPEdqrhsZh3QNAMQ _l5yUCEDPEdqrhsZh3QNAMQ _l5yUCUDPEdqrhsZh3QNAMQ _l5yUCkDPEdqrhsZh3QNAMQ"/>
+      <processElements xsi:type="org.eclipse.epf.uma:TaskDescriptor" xmi:id="_l5yUAEDPEdqrhsZh3QNAMQ" name="task_B2" guid="_l5yUAEDPEdqrhsZh3QNAMQ" presentationName="Task B2 extends Task A1" briefDescription="Task B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ" additionallyPerformedBy="_l5yUAkDPEdqrhsZh3QNAMQ _l5yUA0DPEdqrhsZh3QNAMQ" mandatoryInput="_l5yUBEDPEdqrhsZh3QNAMQ _l5yUBUDPEdqrhsZh3QNAMQ _l5yUBkDPEdqrhsZh3QNAMQ" optionalInput="_l5yUB0DPEdqrhsZh3QNAMQ _l5yUCEDPEdqrhsZh3QNAMQ" output="_l5yUCUDPEdqrhsZh3QNAMQ _l5yUCkDPEdqrhsZh3QNAMQ" performedPrimarilyBy="_l5yUAUDPEdqrhsZh3QNAMQ">
         <Task href="uma://_ecy5wBM3Edqqndi-gDuxpw#_ZLOMsB8PEdqshMNSI07XOg"/>
         <selectedSteps href="uma://-J3z0IGfjehit0uFbTJca7g#_oqYswB84EdqNvelybDXZFQ"/>
         <selectedSteps href="uma://-J3z0IGfjehit0uFbTJca7g#_quQpAB84EdqNvelybDXZFQ"/>
@@ -156,166 +88,99 @@
         <selectedSteps href="uma://-S1igLSi6AI_vluzWOCu6Tw#_tzkIgBBPEdqBs7KhdVLRLA"/>
         <selectedSteps href="uma://-S1igLSi6AI_vluzWOCu6Tw#_uCBbQBBPEdqBs7KhdVLRLA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_l5yUAUDPEdqrhsZh3QNAMQ"
-          name="role_B2" guid="_l5yUAUDPEdqrhsZh3QNAMQ" presentationName="Role B2 present"
-          briefDescription="Role B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ"
-          modifies="_l5yUCUDPEdqrhsZh3QNAMQ _l5yUCkDPEdqrhsZh3QNAMQ" responsibleFor="_l5yUBEDPEdqrhsZh3QNAMQ _l5yUB0DPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_l5yUAUDPEdqrhsZh3QNAMQ" name="role_B2" guid="_l5yUAUDPEdqrhsZh3QNAMQ" presentationName="Role B2 present" briefDescription="Role B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ" modifies="_l5yUCUDPEdqrhsZh3QNAMQ _l5yUCkDPEdqrhsZh3QNAMQ" responsibleFor="_l5yUBEDPEdqrhsZh3QNAMQ _l5yUB0DPEdqrhsZh3QNAMQ">
         <Role href="uma://_ecy5wBM3Edqqndi-gDuxpw#_KCM_IB8PEdqshMNSI07XOg"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_l5yUAkDPEdqrhsZh3QNAMQ"
-          name="role_B1" guid="_l5yUAkDPEdqrhsZh3QNAMQ" presentationName="Role B1 present"
-          briefDescription="Role B1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_l5yUAkDPEdqrhsZh3QNAMQ" name="role_B1" guid="_l5yUAkDPEdqrhsZh3QNAMQ" presentationName="Role B1 present" briefDescription="Role B1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
         <Role href="uma://_ecy5wBM3Edqqndi-gDuxpw#_A9DYgB8PEdqshMNSI07XOg"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_l5yUA0DPEdqrhsZh3QNAMQ"
-          name="role_A2" guid="_l5yUA0DPEdqrhsZh3QNAMQ" presentationName="Role A2 extended by Role A3"
-          briefDescription="Role A2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:RoleDescriptor" xmi:id="_l5yUA0DPEdqrhsZh3QNAMQ" name="role_A2" guid="_l5yUA0DPEdqrhsZh3QNAMQ" presentationName="Role A2 extended by Role A3" briefDescription="Role A2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
         <Role href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_6k3UAA-PEdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUBEDPEdqrhsZh3QNAMQ"
-          name="artifact_B2" guid="_l5yUBEDPEdqrhsZh3QNAMQ" presentationName="Artifact B2 present"
-          briefDescription="Artifact B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUBEDPEdqrhsZh3QNAMQ" name="artifact_B2" guid="_l5yUBEDPEdqrhsZh3QNAMQ" presentationName="Artifact B2 present" briefDescription="Artifact B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_ecy5wBM3Edqqndi-gDuxpw#__yG7cB8mEdq1Oo-DowdpBg"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUBUDPEdqrhsZh3QNAMQ"
-          name="sub_artifact_A1.1" guid="_l5yUBUDPEdqrhsZh3QNAMQ" presentationName="Sub_Artifact A1.1 present"
-          briefDescription="Sub_Artifact A1.1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUBUDPEdqrhsZh3QNAMQ" name="sub_artifact_A1.1" guid="_l5yUBUDPEdqrhsZh3QNAMQ" presentationName="Sub_Artifact A1.1 present" briefDescription="Sub_Artifact A1.1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_F51ywA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUBkDPEdqrhsZh3QNAMQ"
-          name="artifact_A1" guid="_l5yUBkDPEdqrhsZh3QNAMQ" presentationName="Artifact A1 present"
-          briefDescription="Artifact A1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUBkDPEdqrhsZh3QNAMQ" name="artifact_A1" guid="_l5yUBkDPEdqrhsZh3QNAMQ" presentationName="Artifact A1 present" briefDescription="Artifact A1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_9Kt78A-PEdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUB0DPEdqrhsZh3QNAMQ"
-          name="deliverable_B2" guid="_l5yUB0DPEdqrhsZh3QNAMQ" presentationName="Deliverable B2 present"
-          briefDescription="Deliverable B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ"
-          deliverableParts="_l57d8EDPEdqrhsZh3QNAMQ _l57d8UDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUB0DPEdqrhsZh3QNAMQ" name="deliverable_B2" guid="_l5yUB0DPEdqrhsZh3QNAMQ" presentationName="Deliverable B2 present" briefDescription="Deliverable B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ" deliverableParts="_l57d8EDPEdqrhsZh3QNAMQ _l57d8UDPEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_ecy5wBM3Edqqndi-gDuxpw#_nqFWEB8nEdq1Oo-DowdpBg"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUCEDPEdqrhsZh3QNAMQ"
-          name="deliverable_A1" guid="_l5yUCEDPEdqrhsZh3QNAMQ" presentationName="Deliverable A1 present"
-          briefDescription="Deliverable A1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ"
-          deliverableParts="_l57d8kDPEdqrhsZh3QNAMQ _l57d80DPEdqrhsZh3QNAMQ _l57d9EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUCEDPEdqrhsZh3QNAMQ" name="deliverable_A1" guid="_l5yUCEDPEdqrhsZh3QNAMQ" presentationName="Deliverable A1 present" briefDescription="Deliverable A1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ" deliverableParts="_l57d8kDPEdqrhsZh3QNAMQ _l57d80DPEdqrhsZh3QNAMQ _l57d9EDPEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_IISnUA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUCUDPEdqrhsZh3QNAMQ"
-          name="outcome_B2" guid="_l5yUCUDPEdqrhsZh3QNAMQ" presentationName="Outcome B2 present"
-          briefDescription="Outcome B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUCUDPEdqrhsZh3QNAMQ" name="outcome_B2" guid="_l5yUCUDPEdqrhsZh3QNAMQ" presentationName="Outcome B2 present" briefDescription="Outcome B2 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_ecy5wBM3Edqqndi-gDuxpw#_asFOkB8nEdq1Oo-DowdpBg"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUCkDPEdqrhsZh3QNAMQ"
-          name="outcome_A1" guid="_l5yUCkDPEdqrhsZh3QNAMQ" presentationName="Outcome A1 present"
-          briefDescription="Outcome A1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l5yUCkDPEdqrhsZh3QNAMQ" name="outcome_A1" guid="_l5yUCkDPEdqrhsZh3QNAMQ" presentationName="Outcome A1 present" briefDescription="Outcome A1 brief" superActivities="_dYGm0EDPEdqrhsZh3QNAMQ">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_KA_1YA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d8EDPEdqrhsZh3QNAMQ"
-          name="artifact_B2" guid="_l57d8EDPEdqrhsZh3QNAMQ" presentationName="Artifact B2 present"
-          briefDescription="Artifact B2 brief">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d8EDPEdqrhsZh3QNAMQ" name="artifact_B2" guid="_l57d8EDPEdqrhsZh3QNAMQ" presentationName="Artifact B2 present" briefDescription="Artifact B2 brief">
         <WorkProduct href="uma://_ecy5wBM3Edqqndi-gDuxpw#__yG7cB8mEdq1Oo-DowdpBg"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d8UDPEdqrhsZh3QNAMQ"
-          name="outcome_B2" guid="_l57d8UDPEdqrhsZh3QNAMQ" presentationName="Outcome B2 present"
-          briefDescription="Outcome B2 brief">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d8UDPEdqrhsZh3QNAMQ" name="outcome_B2" guid="_l57d8UDPEdqrhsZh3QNAMQ" presentationName="Outcome B2 present" briefDescription="Outcome B2 brief">
         <WorkProduct href="uma://_ecy5wBM3Edqqndi-gDuxpw#_asFOkB8nEdq1Oo-DowdpBg"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d8kDPEdqrhsZh3QNAMQ"
-          name="artifact_A1" guid="_l57d8kDPEdqrhsZh3QNAMQ" presentationName="Artifact A1 present"
-          briefDescription="Artifact A1 brief">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d8kDPEdqrhsZh3QNAMQ" name="artifact_A1" guid="_l57d8kDPEdqrhsZh3QNAMQ" presentationName="Artifact A1 present" briefDescription="Artifact A1 brief">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_9Kt78A-PEdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d80DPEdqrhsZh3QNAMQ"
-          name="sub_artifact_A1.1" guid="_l57d80DPEdqrhsZh3QNAMQ" presentationName="Sub_Artifact A1.1 present"
-          briefDescription="Sub_Artifact A1.1 brief">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d80DPEdqrhsZh3QNAMQ" name="sub_artifact_A1.1" guid="_l57d80DPEdqrhsZh3QNAMQ" presentationName="Sub_Artifact A1.1 present" briefDescription="Sub_Artifact A1.1 brief">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_F51ywA-REdqL2O1PJV9cZA"/>
       </processElements>
-      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d9EDPEdqrhsZh3QNAMQ"
-          name="outcome_A1" guid="_l57d9EDPEdqrhsZh3QNAMQ" presentationName="Outcome A1 present"
-          briefDescription="Outcome A1 brief">
+      <processElements xsi:type="org.eclipse.epf.uma:WorkProductDescriptor" xmi:id="_l57d9EDPEdqrhsZh3QNAMQ" name="outcome_A1" guid="_l57d9EDPEdqrhsZh3QNAMQ" presentationName="Outcome A1 present" briefDescription="Outcome A1 brief">
         <WorkProduct href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_KA_1YA-REdqL2O1PJV9cZA"/>
       </processElements>
       <diagrams xmi:id="_B9G_YEDREdqrhsZh3QNAMQ" guid="_B9G_YEDREdqrhsZh3QNAMQ">
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_YUDREdqrhsZh3QNAMQ"
-            guid="_B9G_YUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_Y0DREdqrhsZh3QNAMQ"
-              guid="_B9G_Y0DREdqrhsZh3QNAMQ" element="_l5yUAEDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_YUDREdqrhsZh3QNAMQ" guid="_B9G_YUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_Y0DREdqrhsZh3QNAMQ" guid="_B9G_Y0DREdqrhsZh3QNAMQ" element="_l5yUAEDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_ZUDREdqrhsZh3QNAMQ"
-            guid="_B9G_ZUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_Z0DREdqrhsZh3QNAMQ"
-              guid="_B9G_Z0DREdqrhsZh3QNAMQ" element="_l5yUAUDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_ZUDREdqrhsZh3QNAMQ" guid="_B9G_ZUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_Z0DREdqrhsZh3QNAMQ" guid="_B9G_Z0DREdqrhsZh3QNAMQ" element="_l5yUAUDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_aUDREdqrhsZh3QNAMQ"
-            guid="_B9G_aUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_a0DREdqrhsZh3QNAMQ"
-              guid="_B9G_a0DREdqrhsZh3QNAMQ" element="_l5yUAkDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_aUDREdqrhsZh3QNAMQ" guid="_B9G_aUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_a0DREdqrhsZh3QNAMQ" guid="_B9G_a0DREdqrhsZh3QNAMQ" element="_l5yUAkDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_bUDREdqrhsZh3QNAMQ"
-            guid="_B9G_bUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_b0DREdqrhsZh3QNAMQ"
-              guid="_B9G_b0DREdqrhsZh3QNAMQ" element="_l5yUA0DPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_bUDREdqrhsZh3QNAMQ" guid="_B9G_bUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_b0DREdqrhsZh3QNAMQ" guid="_B9G_b0DREdqrhsZh3QNAMQ" element="_l5yUA0DPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_cUDREdqrhsZh3QNAMQ"
-            guid="_B9G_cUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_c0DREdqrhsZh3QNAMQ"
-              guid="_B9G_c0DREdqrhsZh3QNAMQ" element="_l5yUBEDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_cUDREdqrhsZh3QNAMQ" guid="_B9G_cUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_c0DREdqrhsZh3QNAMQ" guid="_B9G_c0DREdqrhsZh3QNAMQ" element="_l5yUBEDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_dUDREdqrhsZh3QNAMQ"
-            guid="_B9G_dUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_d0DREdqrhsZh3QNAMQ"
-              guid="_B9G_d0DREdqrhsZh3QNAMQ" element="_l5yUBUDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_dUDREdqrhsZh3QNAMQ" guid="_B9G_dUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_d0DREdqrhsZh3QNAMQ" guid="_B9G_d0DREdqrhsZh3QNAMQ" element="_l5yUBUDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_eUDREdqrhsZh3QNAMQ"
-            guid="_B9G_eUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_e0DREdqrhsZh3QNAMQ"
-              guid="_B9G_e0DREdqrhsZh3QNAMQ" element="_l5yUBkDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_eUDREdqrhsZh3QNAMQ" guid="_B9G_eUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_e0DREdqrhsZh3QNAMQ" guid="_B9G_e0DREdqrhsZh3QNAMQ" element="_l5yUBkDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_fUDREdqrhsZh3QNAMQ"
-            guid="_B9G_fUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_f0DREdqrhsZh3QNAMQ"
-              guid="_B9G_f0DREdqrhsZh3QNAMQ" element="_l5yUB0DPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_fUDREdqrhsZh3QNAMQ" guid="_B9G_fUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_f0DREdqrhsZh3QNAMQ" guid="_B9G_f0DREdqrhsZh3QNAMQ" element="_l5yUB0DPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_gUDREdqrhsZh3QNAMQ"
-            guid="_B9G_gUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_g0DREdqrhsZh3QNAMQ"
-              guid="_B9G_g0DREdqrhsZh3QNAMQ" element="_l5yUCEDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_gUDREdqrhsZh3QNAMQ" guid="_B9G_gUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_g0DREdqrhsZh3QNAMQ" guid="_B9G_g0DREdqrhsZh3QNAMQ" element="_l5yUCEDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_hUDREdqrhsZh3QNAMQ"
-            guid="_B9G_hUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_h0DREdqrhsZh3QNAMQ"
-              guid="_B9G_h0DREdqrhsZh3QNAMQ" element="_l5yUCUDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_hUDREdqrhsZh3QNAMQ" guid="_B9G_hUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_h0DREdqrhsZh3QNAMQ" guid="_B9G_h0DREdqrhsZh3QNAMQ" element="_l5yUCUDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_iUDREdqrhsZh3QNAMQ"
-            guid="_B9G_iUDREdqrhsZh3QNAMQ">
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_i0DREdqrhsZh3QNAMQ"
-              guid="_B9G_i0DREdqrhsZh3QNAMQ" element="_l5yUCkDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_iUDREdqrhsZh3QNAMQ" guid="_B9G_iUDREdqrhsZh3QNAMQ">
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_i0DREdqrhsZh3QNAMQ" guid="_B9G_i0DREdqrhsZh3QNAMQ" element="_l5yUCkDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_jkDREdqrhsZh3QNAMQ"
-            guid="_B9G_jkDREdqrhsZh3QNAMQ">
-          <property xmi:id="_B9G_j0DREdqrhsZh3QNAMQ" guid="_B9G_j0DREdqrhsZh3QNAMQ"
-              key="wpCompositeType" value="1"/>
-          <contained xsi:type="org.eclipse.epf.uma:GraphEdge" xmi:id="_B9G_mUDREdqrhsZh3QNAMQ"
-              guid="_B9G_mUDREdqrhsZh3QNAMQ" anchor="_B9G_mEDREdqrhsZh3QNAMQ"/>
-          <anchorage xmi:id="_B9G_mEDREdqrhsZh3QNAMQ" guid="_B9G_mEDREdqrhsZh3QNAMQ"
-              graphEdge="_B9G_mUDREdqrhsZh3QNAMQ"/>
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_kUDREdqrhsZh3QNAMQ"
-              guid="_B9G_kUDREdqrhsZh3QNAMQ" element="_l5yUAEDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_jkDREdqrhsZh3QNAMQ" guid="_B9G_jkDREdqrhsZh3QNAMQ">
+          <property xmi:id="_B9G_j0DREdqrhsZh3QNAMQ" guid="_B9G_j0DREdqrhsZh3QNAMQ" key="wpCompositeType" value="1"/>
+          <contained xsi:type="org.eclipse.epf.uma:GraphEdge" xmi:id="_B9G_mUDREdqrhsZh3QNAMQ" guid="_B9G_mUDREdqrhsZh3QNAMQ" anchor="_B9G_mEDREdqrhsZh3QNAMQ"/>
+          <anchorage xmi:id="_B9G_mEDREdqrhsZh3QNAMQ" guid="_B9G_mEDREdqrhsZh3QNAMQ" graphEdge="_B9G_mUDREdqrhsZh3QNAMQ"/>
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_kUDREdqrhsZh3QNAMQ" guid="_B9G_kUDREdqrhsZh3QNAMQ" element="_l5yUAEDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_k0DREdqrhsZh3QNAMQ"
-            guid="_B9G_k0DREdqrhsZh3QNAMQ">
-          <property xmi:id="_B9G_lEDREdqrhsZh3QNAMQ" guid="_B9G_lEDREdqrhsZh3QNAMQ"
-              key="wpCompositeType" value="2"/>
-          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_lkDREdqrhsZh3QNAMQ"
-              guid="_B9G_lkDREdqrhsZh3QNAMQ" element="_l5yUAEDPEdqrhsZh3QNAMQ"/>
+        <contained xsi:type="org.eclipse.epf.uma:GraphNode" xmi:id="_B9G_k0DREdqrhsZh3QNAMQ" guid="_B9G_k0DREdqrhsZh3QNAMQ">
+          <property xmi:id="_B9G_lEDREdqrhsZh3QNAMQ" guid="_B9G_lEDREdqrhsZh3QNAMQ" key="wpCompositeType" value="2"/>
+          <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_lkDREdqrhsZh3QNAMQ" guid="_B9G_lkDREdqrhsZh3QNAMQ" element="_l5yUAEDPEdqrhsZh3QNAMQ"/>
         </contained>
-        <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_jUDREdqrhsZh3QNAMQ"
-            guid="_B9G_jUDREdqrhsZh3QNAMQ" presentation="Activity Detail" element="_dYGm0EDPEdqrhsZh3QNAMQ"/>
+        <semanticModel xsi:type="org.eclipse.epf.uma:UMASemanticModelBridge" xmi:id="_B9G_jUDREdqrhsZh3QNAMQ" guid="_B9G_jUDREdqrhsZh3QNAMQ" presentation="Activity Detail" element="_dYGm0EDPEdqrhsZh3QNAMQ"/>
       </diagrams>
     </childPackages>
-    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_ZtZbMUDFEdqO9M3fukYA_A"
-        name="CP2 containing variability elements" guid="_ZtZbMUDFEdqO9M3fukYA_A"
-        presentationName="CP2 containing variability elements" briefDescription="Brief: CP2 containing variability elements"
-        breakdownElements="_lDhl8EDFEdqO9M3fukYA_A _dYGm0EDPEdqrhsZh3QNAMQ">
+    <process xsi:type="org.eclipse.epf.uma:CapabilityPattern" xmi:id="_ZtZbMUDFEdqO9M3fukYA_A" name="CP2 containing variability elements" guid="_ZtZbMUDFEdqO9M3fukYA_A" presentationName="CP2 containing variability elements" briefDescription="Brief: CP2 containing variability elements" breakdownElements="_lDhl8EDFEdqO9M3fukYA_A _dYGm0EDPEdqrhsZh3QNAMQ">
       <presentation xmi:id="-icO6pIHdZm9Vxyc-JZ9Uyw" href="uma://-icO6pIHdZm9Vxyc-JZ9Uyw#-icO6pIHdZm9Vxyc-JZ9Uyw"/>
       <defaultContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>
       <validContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>

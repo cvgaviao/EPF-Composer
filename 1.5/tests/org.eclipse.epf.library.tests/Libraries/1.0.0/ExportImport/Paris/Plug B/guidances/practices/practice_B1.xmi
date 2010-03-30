@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:PracticeDescription xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-yNsKwwP8BZfs12PbZA5AeQ"
-    name="practice_B1,_1I-nUB8rEdqQvOjX8doCCw" guid="-yNsKwwP8BZfs12PbZA5AeQ" changeDate="2005-09-07T07:42:00.047+0800">
+<org.eclipse.epf.uma:PracticeDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-yNsKwwP8BZfs12PbZA5AeQ" name="practice_B1,_1I-nUB8rEdqQvOjX8doCCw" guid="-yNsKwwP8BZfs12PbZA5AeQ" changeDate="2005-09-06T16:42:00.047-0700">
   <mainDescription>Practice B1 content</mainDescription>
   <additionalInfo>Practice B1 add</additionalInfo>
   <problem>Practice B1 prob</problem>

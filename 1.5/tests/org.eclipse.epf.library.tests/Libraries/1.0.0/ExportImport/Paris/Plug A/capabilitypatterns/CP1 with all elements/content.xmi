@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
-  <org.eclipse.epf.uma:ProcessDescription xmi:id="-E-d4Jcu297rxUq8lte8qnw" name="CP1 with all elements,_4sCtsTzgEdq5ysFONr1BGQ"
-      guid="-E-d4Jcu297rxUq8lte8qnw">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+  <org.eclipse.epf.uma:ProcessDescription xmi:id="-E-d4Jcu297rxUq8lte8qnw" name="CP1 with all elements,_4sCtsTzgEdq5ysFONr1BGQ" guid="-E-d4Jcu297rxUq8lte8qnw">
     <mainDescription>&lt;p>
     The subcategories of process are delivery process and capability pattern.&amp;nbsp; A delivery process defines a complete
     or end-to-end process.&amp;nbsp; A capability pattern is a process fragment used to compose a delivery process.
@@ -107,8 +104,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     or end-to-end process.&amp;nbsp; A capability pattern is a process fragment used to compose a delivery process.
 &lt;/p></usageNotes>
   </org.eclipse.epf.uma:ProcessDescription>
-  <org.eclipse.epf.uma:ActivityDescription xmi:id="-YVTZRE5oy5oGcue1XXh3dQ" name="Activity1,_E73rITziEdq5ysFONr1BGQ"
-      guid="-YVTZRE5oy5oGcue1XXh3dQ">
+  <org.eclipse.epf.uma:ActivityDescription xmi:id="-YVTZRE5oy5oGcue1XXh3dQ" name="Activity1,_E73rITziEdq5ysFONr1BGQ" guid="-YVTZRE5oy5oGcue1XXh3dQ">
     <mainDescription>&lt;p>
     This Workflow Detail:
 &lt;/p>
@@ -238,8 +234,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     need to be addressed.
 &lt;/p></howtoStaff>
   </org.eclipse.epf.uma:ActivityDescription>
-  <org.eclipse.epf.uma:ActivityDescription xmi:id="-VRUCShAvXrsLgs7PZzHgUw" name="Iteration1,_EFVrwTziEdq5ysFONr1BGQ"
-      guid="-VRUCShAvXrsLgs7PZzHgUw">
+  <org.eclipse.epf.uma:ActivityDescription xmi:id="-VRUCShAvXrsLgs7PZzHgUw" name="Iteration1,_EFVrwTziEdq5ysFONr1BGQ" guid="-VRUCShAvXrsLgs7PZzHgUw">
     <mainDescription>&lt;p>
     This workflow detail has the following goals:
 &lt;/p>
@@ -328,8 +323,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     disparate threads into a cohesive, coherent (albeit preliminary) architecture.
 &lt;/p></howtoStaff>
   </org.eclipse.epf.uma:ActivityDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nUH0voD7RoKQgPT0rbOwQQ" name="task_B2,_McYH0DzlEdq5ysFONr1BGQ"
-      guid="-nUH0voD7RoKQgPT0rbOwQQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nUH0voD7RoKQgPT0rbOwQQ" name="task_B2,_McYH0DzlEdq5ysFONr1BGQ" guid="-nUH0voD7RoKQgPT0rbOwQQ">
     <keyConsiderations>&lt;p>
     key considerations:
 &lt;/p>
@@ -437,8 +431,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     refined description:
 &lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-aDE4yFzE_m_n2PIzcOt4rA" name="task_A2,_JCrBEDzlEdq5ysFONr1BGQ"
-      guid="-aDE4yFzE_m_n2PIzcOt4rA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-aDE4yFzE_m_n2PIzcOt4rA" name="task_A2,_JCrBEDzlEdq5ysFONr1BGQ" guid="-aDE4yFzE_m_n2PIzcOt4rA">
     <keyConsiderations>&lt;p>
     keys:
 &lt;/p>
@@ -533,16 +526,14 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
 &lt;br /></usageGuidance>
     <refinedDescription>Task A2's refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5t8GtoL4IBoxfazBI_0crA" name="wpDesc1,_SUGQgDziEdq5ysFONr1BGQ"
-      guid="-5t8GtoL4IBoxfazBI_0crA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5t8GtoL4IBoxfazBI_0crA" name="wpDesc1,_SUGQgDziEdq5ysFONr1BGQ" guid="-5t8GtoL4IBoxfazBI_0crA">
     <keyConsiderations>key:wpDesc1</keyConsiderations>
     <usageGuidance>usage:wpDesc1</usageGuidance>
     <refinedDescription>&lt;p>
     refined: wpDesc1
 &lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ifmQNB5y1RZKF1Hrm3CdRA" name="task associated to taskA1,_FrtMoDziEdq5ysFONr1BGQ"
-      guid="-ifmQNB5y1RZKF1Hrm3CdRA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ifmQNB5y1RZKF1Hrm3CdRA" name="task associated to taskA1,_FrtMoDziEdq5ysFONr1BGQ" guid="-ifmQNB5y1RZKF1Hrm3CdRA">
     <keyConsiderations>&lt;p>
     keys:
 &lt;/p>
@@ -592,8 +583,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     &lt;a href=&quot;resources/papers.htm&quot; target=&quot;_blank&quot;>papers.htm&lt;/a>
 &lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-pO8LeceGXjKeapuLoFfkxA" name="roleDesc1,_P1sUYDziEdq5ysFONr1BGQ"
-      guid="-pO8LeceGXjKeapuLoFfkxA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-pO8LeceGXjKeapuLoFfkxA" name="roleDesc1,_P1sUYDziEdq5ysFONr1BGQ" guid="-pO8LeceGXjKeapuLoFfkxA">
     <keyConsiderations>&lt;p>
     key considerations:
 &lt;/p>
@@ -608,8 +598,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
 &lt;/p></usageGuidance>
     <refinedDescription>refined description for roleDesc1</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_Th-jv5jm0h0f0mFhKtqgQ" name="roleDesc2,_Q99kADziEdq5ysFONr1BGQ"
-      guid="-_Th-jv5jm0h0f0mFhKtqgQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_Th-jv5jm0h0f0mFhKtqgQ" name="roleDesc2,_Q99kADziEdq5ysFONr1BGQ" guid="-_Th-jv5jm0h0f0mFhKtqgQ">
     <keyConsiderations>key consideration for roleA2</keyConsiderations>
     <usageGuidance>&lt;p>
     &lt;img height=&quot;12&quot; alt=&quot;&quot; src=&quot;resources/bullet1.gif&quot; width=&quot;12&quot; />
@@ -626,8 +615,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     refined description for roleA2
 &lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-Bkv6VTdMpg4bD0YkfHZ4dg" name="task associated to taskA2,_LwLQgDziEdq5ysFONr1BGQ"
-      guid="-Bkv6VTdMpg4bD0YkfHZ4dg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-Bkv6VTdMpg4bD0YkfHZ4dg" name="task associated to taskA2,_LwLQgDziEdq5ysFONr1BGQ" guid="-Bkv6VTdMpg4bD0YkfHZ4dg">
     <keyConsiderations>keys: task associated to taskA2</keyConsiderations>
     <usageGuidance>usage:task associated to taskA2</usageGuidance>
     <refinedDescription>&lt;p>
@@ -722,16 +710,14 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     &lt;/tbody>
 &lt;/table></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-TRxhxAs1xOKNRrFCEPpAlw" name="task with no links,_5jJYADzkEdq5ysFONr1BGQ"
-      guid="-TRxhxAs1xOKNRrFCEPpAlw">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-TRxhxAs1xOKNRrFCEPpAlw" name="task with no links,_5jJYADzkEdq5ysFONr1BGQ" guid="-TRxhxAs1xOKNRrFCEPpAlw">
     <keyConsiderations>key:task with no links</keyConsiderations>
     <usageGuidance>usage:task with no links</usageGuidance>
     <refinedDescription>&lt;p>
     refined:task with no links
 &lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:ActivityDescription xmi:id="-AdwAjn5vRCnEQQLUaYJ1dw" name="Activity2,_BS6gETzlEdq5ysFONr1BGQ"
-      guid="-AdwAjn5vRCnEQQLUaYJ1dw">
+  <org.eclipse.epf.uma:ActivityDescription xmi:id="-AdwAjn5vRCnEQQLUaYJ1dw" name="Activity2,_BS6gETzlEdq5ysFONr1BGQ" guid="-AdwAjn5vRCnEQQLUaYJ1dw">
     <mainDescription>&lt;p>
     This Workflow Detail:
 &lt;/p>
@@ -861,92 +847,77 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
     need to be addressed.
 &lt;/p></howtoStaff>
   </org.eclipse.epf.uma:ActivityDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-BY__tijwRrV41YUrXItU0w" name="role_A2,_JC98ADzlEdq5ysFONr1BGQ"
-      guid="-BY__tijwRrV41YUrXItU0w">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-BY__tijwRrV41YUrXItU0w" name="role_A2,_JC98ADzlEdq5ysFONr1BGQ" guid="-BY__tijwRrV41YUrXItU0w">
     <keyConsiderations>keys consideration:Role A2</keyConsiderations>
     <usageGuidance>usage:Role A2</usageGuidance>
     <refinedDescription>&lt;p>
     refined description : Role A2
 &lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DOZrR_sZwwpcUtcou-jIyQ" name="role_A1,_JC98ATzlEdq5ysFONr1BGQ"
-      guid="-DOZrR_sZwwpcUtcou-jIyQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DOZrR_sZwwpcUtcou-jIyQ" name="role_A1,_JC98ATzlEdq5ysFONr1BGQ" guid="-DOZrR_sZwwpcUtcou-jIyQ">
     <keyConsiderations>Role A1:key consideration</keyConsiderations>
     <usageGuidance>Role A1:usage</usageGuidance>
     <refinedDescription>Role A1:Refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-arFrJisByP90YCrMb-iyjg" name="roleDesc with no links,_3_UNwDzkEdq5ysFONr1BGQ"
-      guid="-arFrJisByP90YCrMb-iyjg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-arFrJisByP90YCrMb-iyjg" name="roleDesc with no links,_3_UNwDzkEdq5ysFONr1BGQ" guid="-arFrJisByP90YCrMb-iyjg">
     <keyConsiderations>key consideration:roleDesc with no links</keyConsiderations>
     <usageGuidance>usage:roleDesc with no links</usageGuidance>
     <refinedDescription>refined description : roleDesc with no links</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5OeGPH8JRzSRAFPzBgHnJA" name="role_B2,_Mc0zwDzlEdq5ysFONr1BGQ"
-      guid="-5OeGPH8JRzSRAFPzBgHnJA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-5OeGPH8JRzSRAFPzBgHnJA" name="role_B2,_Mc0zwDzlEdq5ysFONr1BGQ" guid="-5OeGPH8JRzSRAFPzBgHnJA">
     <keyConsiderations>key:Role B2</keyConsiderations>
     <usageGuidance>usage:Role B2</usageGuidance>
     <refinedDescription>refined:Role B2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-YerIjDrIlewd8iDhISMg1g" name="role_B1,_Mc0zwTzlEdq5ysFONr1BGQ"
-      guid="-YerIjDrIlewd8iDhISMg1g">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-YerIjDrIlewd8iDhISMg1g" name="role_B1,_Mc0zwTzlEdq5ysFONr1BGQ" guid="-YerIjDrIlewd8iDhISMg1g">
     <keyConsiderations>key:Role B1</keyConsiderations>
     <usageGuidance>usage:Role B1</usageGuidance>
     <refinedDescription>refined: Role B1</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ncLhU4vhg6dhoEKTTkKkDQ" name="wpDesc2,_TCu4IDziEdq5ysFONr1BGQ"
-      guid="-ncLhU4vhg6dhoEKTTkKkDQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-ncLhU4vhg6dhoEKTTkKkDQ" name="wpDesc2,_TCu4IDziEdq5ysFONr1BGQ" guid="-ncLhU4vhg6dhoEKTTkKkDQ">
     <keyConsiderations>key:wpdesc2</keyConsiderations>
     <usageGuidance>usage:wpdesc2</usageGuidance>
     <refinedDescription>refined: wpdesc2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-rDXoW6bWZ_7mkL_E9Wcyhg" name="wpDesc3 with no links,_1x57ADzkEdq5ysFONr1BGQ"
-      guid="-rDXoW6bWZ_7mkL_E9Wcyhg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-rDXoW6bWZ_7mkL_E9Wcyhg" name="wpDesc3 with no links,_1x57ADzkEdq5ysFONr1BGQ" guid="-rDXoW6bWZ_7mkL_E9Wcyhg">
     <keyConsiderations>key: wpDesc3 with no links</keyConsiderations>
     <usageGuidance>usage: wpDesc3 with no links</usageGuidance>
     <refinedDescription>refined: wpDesc3 with no links</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-hmCCr-DKZ6zr8S6DXdqfSA" name="artifact_A2,_JC98AjzlEdq5ysFONr1BGQ"
-      guid="-hmCCr-DKZ6zr8S6DXdqfSA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-hmCCr-DKZ6zr8S6DXdqfSA" name="artifact_A2,_JC98AjzlEdq5ysFONr1BGQ" guid="-hmCCr-DKZ6zr8S6DXdqfSA">
     <keyConsiderations>key : Artifact A2</keyConsiderations>
     <usageGuidance>usage: Artifact A2</usageGuidance>
     <refinedDescription>refined: Artifact A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-CDJo_oYCdDi5vp8I69v9Ow" name="deliverable_A2,_JC98AzzlEdq5ysFONr1BGQ"
-      guid="-CDJo_oYCdDi5vp8I69v9Ow">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-CDJo_oYCdDi5vp8I69v9Ow" name="deliverable_A2,_JC98AzzlEdq5ysFONr1BGQ" guid="-CDJo_oYCdDi5vp8I69v9Ow">
     <keyConsiderations>keys: Deliverable A2</keyConsiderations>
     <usageGuidance>usage: Deliverable A2</usageGuidance>
     <refinedDescription>refined:Deliverable A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-QN9RGL5cn0SlbUwnGV2G_A" name="artifact_A2,_JDHtADzlEdq5ysFONr1BGQ"
-      guid="-QN9RGL5cn0SlbUwnGV2G_A">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-QN9RGL5cn0SlbUwnGV2G_A" name="artifact_A2,_JDHtADzlEdq5ysFONr1BGQ" guid="-QN9RGL5cn0SlbUwnGV2G_A">
     <keyConsiderations>keys:Artifact A2</keyConsiderations>
     <usageGuidance>usage:Artifact A2</usageGuidance>
     <refinedDescription>refined:Artifact A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-1jTDqS4Rv_PAEHYFpeojmA" name="outcome_A2,_JDHtATzlEdq5ysFONr1BGQ"
-      guid="-1jTDqS4Rv_PAEHYFpeojmA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-1jTDqS4Rv_PAEHYFpeojmA" name="outcome_A2,_JDHtATzlEdq5ysFONr1BGQ" guid="-1jTDqS4Rv_PAEHYFpeojmA">
     <keyConsiderations>key:Outcome A2</keyConsiderations>
     <usageGuidance>usage:Outcome A2</usageGuidance>
     <refinedDescription>refined:Outcome A2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DakzmvA-qhwGESCfZK11sQ" name="artifact_B2,_MdRfsDzlEdq5ysFONr1BGQ"
-      guid="-DakzmvA-qhwGESCfZK11sQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-DakzmvA-qhwGESCfZK11sQ" name="artifact_B2,_MdRfsDzlEdq5ysFONr1BGQ" guid="-DakzmvA-qhwGESCfZK11sQ">
     <keyConsiderations>key:Artifact B2</keyConsiderations>
     <usageGuidance>usage:Artifact B2</usageGuidance>
     <refinedDescription>refined:Artifact B2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-LaDyAujxBkPThr28t2Xdwg" name="deliverable_B2,_MdRfsTzlEdq5ysFONr1BGQ"
-      guid="-LaDyAujxBkPThr28t2Xdwg">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-LaDyAujxBkPThr28t2Xdwg" name="deliverable_B2,_MdRfsTzlEdq5ysFONr1BGQ" guid="-LaDyAujxBkPThr28t2Xdwg">
     <keyConsiderations>key:Deliverable B2</keyConsiderations>
     <usageGuidance>usage:Deliverable B2</usageGuidance>
     <refinedDescription>refined:Deliverable B2</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nTt6H3rXytUsOqpJLEQjdw" name="outcome_B2,_MdkaoTzlEdq5ysFONr1BGQ"
-      guid="-nTt6H3rXytUsOqpJLEQjdw">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-nTt6H3rXytUsOqpJLEQjdw" name="outcome_B2,_MdkaoTzlEdq5ysFONr1BGQ" guid="-nTt6H3rXytUsOqpJLEQjdw">
     <usageGuidance>&amp;nbsp;&amp;nbsp;&amp;nbsp;</usageGuidance>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-zBAs11RgLg_YSbs7BdkSuQ" name="task_A1,_0DR_QEDEEdqO9M3fukYA_A"
-      guid="-zBAs11RgLg_YSbs7BdkSuQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-zBAs11RgLg_YSbs7BdkSuQ" name="task_A1,_0DR_QEDEEdqO9M3fukYA_A" guid="-zBAs11RgLg_YSbs7BdkSuQ">
     <keyConsiderations>Task A1&amp;nbsp; key</keyConsiderations>
     <usageGuidance>&lt;p>
     Task A1&amp;nbsp; guidance
@@ -963,14 +934,12 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
 &lt;/p></usageGuidance>
     <refinedDescription>Task A1&amp;nbsp; refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-yb-LGikcA5MPeR8L3YW2CA" name="task_A2,_2887EEDEEdqO9M3fukYA_A"
-      guid="-yb-LGikcA5MPeR8L3YW2CA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-yb-LGikcA5MPeR8L3YW2CA" name="task_A2,_2887EEDEEdqO9M3fukYA_A" guid="-yb-LGikcA5MPeR8L3YW2CA">
     <keyConsiderations>Task A2 key</keyConsiderations>
     <usageGuidance>Task A2 guidance</usageGuidance>
     <refinedDescription>Task A2 refined description</refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-wBVwnKNA7vxPZpY5h0njBQ" name="role_A1,_0Dk6MEDEEdqO9M3fukYA_A"
-      guid="-wBVwnKNA7vxPZpY5h0njBQ">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-wBVwnKNA7vxPZpY5h0njBQ" name="role_A1,_0Dk6MEDEEdqO9M3fukYA_A" guid="-wBVwnKNA7vxPZpY5h0njBQ">
     <keyConsiderations>Role A1 key</keyConsiderations>
     <usageGuidance>Role A1 guidance</usageGuidance>
     <refinedDescription>&lt;p>
@@ -982,8 +951,7 @@ extend the pattern&amp;nbsp;repeatedly to create as many iterations as necessary
      width=&quot;176&quot; />
 &lt;/p></refinedDescription>
   </org.eclipse.epf.uma:DescriptorDescription>
-  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_j3f8djwKxsKaCHDnJIqVA" name="role_A2,_0Dk6MUDEEdqO9M3fukYA_A"
-      guid="-_j3f8djwKxsKaCHDnJIqVA">
+  <org.eclipse.epf.uma:DescriptorDescription xmi:id="-_j3f8djwKxsKaCHDnJIqVA" name="role_A2,_0Dk6MUDEEdqO9M3fukYA_A" guid="-_j3f8djwKxsKaCHDnJIqVA">
     <keyConsiderations>&lt;p>
     Role A2 key
 &lt;/p>

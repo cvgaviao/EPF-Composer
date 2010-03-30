@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:GuidanceDescription xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-7PZHLFSKVLsYOANn0gGqIw"
-    name="whitepaper_A1,_h8RGQA-SEdqL2O1PJV9cZA" guid="-7PZHLFSKVLsYOANn0gGqIw" changeDate="2005-08-19T05:31:13.359+0800">
+<org.eclipse.epf.uma:GuidanceDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-7PZHLFSKVLsYOANn0gGqIw" name="whitepaper_A1,_h8RGQA-SEdqL2O1PJV9cZA" guid="-7PZHLFSKVLsYOANn0gGqIw" changeDate="2005-08-18T14:31:13.359-0700">
   <mainDescription>Whitepaper A1 content</mainDescription>
 </org.eclipse.epf.uma:GuidanceDescription>

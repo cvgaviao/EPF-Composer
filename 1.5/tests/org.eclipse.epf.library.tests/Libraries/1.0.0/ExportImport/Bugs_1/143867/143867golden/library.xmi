@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
-  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_xKMuMEziEdusTL_I3jJQtA"
-      guid="_xKMuMEziEdusTL_I3jJQtA">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_xKMuMEziEdusTL_I3jJQtA" guid="_xKMuMEziEdusTL_I3jJQtA">
     <subManagers xmi:id="_BI9RAUzjEdusTL_I3jJQtA" href="uma://_BI9Q8EzjEdusTL_I3jJQtA#_BI9RAUzjEdusTL_I3jJQtA"/>
     <subManagers xmi:id="_zBMsEUziEdusTL_I3jJQtA" href="uma://_zBGlcEziEdusTL_I3jJQtA#_zBMsEUziEdusTL_I3jJQtA"/>
-    <resourceDescriptors xmi:id="_xKS00EziEdusTL_I3jJQtA" id="_xKGnkEziEdusTL_I3jJQtA"
-        uri=""/>
-    <resourceDescriptors xmi:id="_zBMsEkziEdusTL_I3jJQtA" id="_zBMsEUziEdusTL_I3jJQtA"
-        uri="Plug_A/plugin.xmi"/>
-    <resourceDescriptors xmi:id="_BI9RAkzjEdusTL_I3jJQtA" id="_BI9RAUzjEdusTL_I3jJQtA"
-        uri="Plug_A/plugin.xmi"/>
-    <resourceDescriptors xmi:id="_BI9RA0zjEdusTL_I3jJQtA" id="_BI9Q8EzjEdusTL_I3jJQtA"
-        uri="Plug_A_renamed/plugin.xmi"/>
-    <resourceDescriptors xmi:id="_zy3OsLc_EduQ1vNdJeJiFQ" id="_zBGlcEziEdusTL_I3jJQtA"
-        uri="Plug_A/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_xKS00EziEdusTL_I3jJQtA" id="_xKGnkEziEdusTL_I3jJQtA" uri=""/>
+    <resourceDescriptors xmi:id="_zBMsEkziEdusTL_I3jJQtA" id="_zBMsEUziEdusTL_I3jJQtA" uri="Plug_A/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_BI9RAkzjEdusTL_I3jJQtA" id="_BI9RAUzjEdusTL_I3jJQtA" uri="Plug_A/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_BI9RA0zjEdusTL_I3jJQtA" id="_BI9Q8EzjEdusTL_I3jJQtA" uri="Plug_A_renamed/plugin.xmi"/>
+    <resourceDescriptors xmi:id="_zy3OsLc_EduQ1vNdJeJiFQ" id="_zBGlcEziEdusTL_I3jJQtA" uri="Plug_A/plugin.xmi"/>
   </org.eclipse.epf.uma.resourcemanager:ResourceManager>
-  <org.eclipse.epf.uma:MethodLibrary xmi:id="_xKGnkEziEdusTL_I3jJQtA" name="143867m"
-      guid="_xKGnkEziEdusTL_I3jJQtA">
+  <org.eclipse.epf.uma:MethodLibrary xmi:id="_xKGnkEziEdusTL_I3jJQtA" name="143867m" guid="_xKGnkEziEdusTL_I3jJQtA">
     <methodPlugins xmi:id="_BI9Q8EzjEdusTL_I3jJQtA" href="uma://_BI9Q8EzjEdusTL_I3jJQtA#_BI9Q8EzjEdusTL_I3jJQtA"/>
     <methodPlugins xmi:id="_zBGlcEziEdusTL_I3jJQtA" href="uma://_zBGlcEziEdusTL_I3jJQtA#_zBGlcEziEdusTL_I3jJQtA"/>
   </org.eclipse.epf.uma:MethodLibrary>

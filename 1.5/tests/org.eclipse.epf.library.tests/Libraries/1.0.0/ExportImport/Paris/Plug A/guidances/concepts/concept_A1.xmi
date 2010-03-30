@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-6y7aBQt3cCSBLo8smMRemA"
-    name="concept_A1,_NDL-kA-SEdqL2O1PJV9cZA" guid="-6y7aBQt3cCSBLo8smMRemA" changeDate="2005-08-19T05:30:30.938+0800">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-6y7aBQt3cCSBLo8smMRemA" name="concept_A1,_NDL-kA-SEdqL2O1PJV9cZA" guid="-6y7aBQt3cCSBLo8smMRemA" changeDate="2005-08-18T14:30:30.938-0700">
   <mainDescription>&lt;p>
     Concept A1 content
 &lt;/p>

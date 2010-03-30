@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
-  <org.eclipse.epf.uma:ProcessDescription xmi:id="-icO6pIHdZm9Vxyc-JZ9Uyw" name="CP2 containing variability elements,_ZtZbMUDFEdqO9M3fukYA_A"
-      guid="-icO6pIHdZm9Vxyc-JZ9Uyw">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+  <org.eclipse.epf.uma:ProcessDescription xmi:id="-icO6pIHdZm9Vxyc-JZ9Uyw" name="CP2 containing variability elements,_ZtZbMUDFEdqO9M3fukYA_A" guid="-icO6pIHdZm9Vxyc-JZ9Uyw">
     <mainDescription>main: CP2 containing variability elements</mainDescription>
     <externalId>External ID: CP2 containing variability elements</externalId>
     <keyConsiderations>Keys: CP2 containing variability elements</keyConsiderations>
@@ -14,8 +11,7 @@
     <scope>scope: CP2 containing variability elements</scope>
     <usageNotes>usage: CP2 containing variability elements</usageNotes>
   </org.eclipse.epf.uma:ProcessDescription>
-  <org.eclipse.epf.uma:ActivityDescription xmi:id="-SrcVS-7dSYDE2Rpm7SIkyA" name=",_lDhl8EDFEdqO9M3fukYA_A"
-      guid="-SrcVS-7dSYDE2Rpm7SIkyA">
+  <org.eclipse.epf.uma:ActivityDescription xmi:id="-SrcVS-7dSYDE2Rpm7SIkyA" name=",_lDhl8EDFEdqO9M3fukYA_A" guid="-SrcVS-7dSYDE2Rpm7SIkyA">
     <mainDescription>main: Activity for variability elements</mainDescription>
     <keyConsiderations>key: Activity for variability elements</keyConsiderations>
     <usageGuidance>usage: Activity for variability elements</usageGuidance>

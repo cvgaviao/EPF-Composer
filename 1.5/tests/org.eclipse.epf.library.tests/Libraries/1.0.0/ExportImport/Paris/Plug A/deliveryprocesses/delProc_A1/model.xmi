@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0">
-  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_XVY9MBBNEdqBs7KhdVLRLA"
-      guid="_XVY9MBBNEdqBs7KhdVLRLA">
-    <resourceDescriptors xmi:id="_XViuMBBNEdqBs7KhdVLRLA" id="-U8_LGvMSof-db24aFAMb6w"
-        uri="content.xmi"/>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+  <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_XVY9MBBNEdqBs7KhdVLRLA" guid="_XVY9MBBNEdqBs7KhdVLRLA">
+    <resourceDescriptors xmi:id="_XViuMBBNEdqBs7KhdVLRLA" id="-U8_LGvMSof-db24aFAMb6w" uri="content.xmi"/>
   </org.eclipse.epf.uma.resourcemanager:ResourceManager>
-  <org.eclipse.epf.uma:ProcessComponent xmi:id="_W6a4cBBNEdqBs7KhdVLRLA" name="delProc_A1"
-      guid="_W6a4cBBNEdqBs7KhdVLRLA">
-    <process xsi:type="org.eclipse.epf.uma:DeliveryProcess" xmi:id="_W6a4cRBNEdqBs7KhdVLRLA"
-        name="delProc_A1" guid="_W6a4cRBNEdqBs7KhdVLRLA" presentationName="DelProc A1 present"
-        briefDescription="DelProc A1 brief">
+  <org.eclipse.epf.uma:ProcessComponent xmi:id="_W6a4cBBNEdqBs7KhdVLRLA" name="delProc_A1" guid="_W6a4cBBNEdqBs7KhdVLRLA">
+    <process xsi:type="org.eclipse.epf.uma:DeliveryProcess" xmi:id="_W6a4cRBNEdqBs7KhdVLRLA" name="delProc_A1" guid="_W6a4cRBNEdqBs7KhdVLRLA" presentationName="DelProc A1 present" briefDescription="DelProc A1 brief">
       <presentation xmi:id="-U8_LGvMSof-db24aFAMb6w" href="uma://-U8_LGvMSof-db24aFAMb6w#-U8_LGvMSof-db24aFAMb6w"/>
       <defaultContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>
       <validContext href="uma://_qzwywA-PEdqL2O1PJV9cZA#_rrmCIBAdEdq7Frc_yMhQ-A"/>

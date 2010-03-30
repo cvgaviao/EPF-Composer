@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:RoleDescription xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-FideD01pUDUXMXEsVrs3GQ"
-    name="role_B2,_KCM_IB8PEdqshMNSI07XOg" guid="-FideD01pUDUXMXEsVrs3GQ" changeDate="2005-09-07T03:48:21.734+0800">
+<org.eclipse.epf.uma:RoleDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-FideD01pUDUXMXEsVrs3GQ" name="role_B2,_KCM_IB8PEdqshMNSI07XOg" guid="-FideD01pUDUXMXEsVrs3GQ" changeDate="2005-09-06T12:48:21.734-0700">
   <mainDescription>Role B2 main</mainDescription>
   <keyConsiderations>Role B2 key</keyConsiderations>
   <skills>Role B2 skill</skills>

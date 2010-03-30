@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-GaGl5kHJ4xKC_Shg6Z16Zg"
-    name="discipline_A1,_C5d_wA-WEdqL2O1PJV9cZA" guid="-GaGl5kHJ4xKC_Shg6Z16Zg" changeDate="2005-08-23T01:45:02.969+0800">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-GaGl5kHJ4xKC_Shg6Z16Zg" name="discipline_A1,_C5d_wA-WEdqL2O1PJV9cZA" guid="-GaGl5kHJ4xKC_Shg6Z16Zg" changeDate="2005-08-22T10:45:02.969-0700">
   <mainDescription>Discipline A1 main</mainDescription>
   <keyConsiderations>Discipline A1 key</keyConsiderations>
 </org.eclipse.epf.uma:ContentDescription>

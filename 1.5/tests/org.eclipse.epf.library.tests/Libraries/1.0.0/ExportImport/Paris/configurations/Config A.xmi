@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:MethodConfiguration xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf"
-    epf:version="1.5.0" xmi:id="_rrmCIBAdEdq7Frc_yMhQ-A"
-    name="Config A" guid="_rrmCIBAdEdq7Frc_yMhQ-A" briefDescription="Config A description">
+<org.eclipse.epf.uma:MethodConfiguration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="_rrmCIBAdEdq7Frc_yMhQ-A" name="Config A" guid="_rrmCIBAdEdq7Frc_yMhQ-A" briefDescription="Config A description">
   <methodPluginSelection href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_yUeLIA-PEdqL2O1PJV9cZA"/>
   <methodPluginSelection href="uma://_ecy5wBM3Edqqndi-gDuxpw#_ecy5wBM3Edqqndi-gDuxpw"/>
   <methodPackageSelection xsi:type="org.eclipse.epf.uma:ContentPackage" href="uma://_yUeLIA-PEdqL2O1PJV9cZA#_yUeLLA-PEdqL2O1PJV9cZA"/>

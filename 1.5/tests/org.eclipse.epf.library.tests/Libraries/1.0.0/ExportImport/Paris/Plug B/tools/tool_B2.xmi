@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore"
-    xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.0" xmi:id="-3_-Aazzs_l43HOOG8DAsYw"
-    name="tool_B2,_17HxwB8yEdqgBITuICLJEw" guid="-3_-Aazzs_l43HOOG8DAsYw" changeDate="2005-09-07T08:15:58.719+0800">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-3_-Aazzs_l43HOOG8DAsYw" name="tool_B2,_17HxwB8yEdqgBITuICLJEw" guid="-3_-Aazzs_l43HOOG8DAsYw" changeDate="2005-09-06T17:15:58.719-0700">
   <mainDescription>Tool B2 main</mainDescription>
   <keyConsiderations>Tool B2 key</keyConsiderations>
 </org.eclipse.epf.uma:ContentDescription>
