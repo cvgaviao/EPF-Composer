@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.ContentCategory;
@@ -37,7 +38,7 @@ import org.eclipse.epf.uma.impl.MethodConfigurationImpl;
  */
 public abstract class ScopeBase extends MethodConfigurationImpl implements Scope {
 
-	private static final String defaultName = "-- None --";		//$NON-NLS-1$ 
+	private static final String defaultName = LibraryEditResources.scope_defualtName;
 	
 	public ScopeBase() {
 		super(null);

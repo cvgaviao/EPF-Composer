@@ -415,6 +415,8 @@ public final class LibraryEditResources extends NLS {
 	
 	public static String SpecifyNameText;
 	
+	public static String scope_defualtName;
+	
 	public static String WorkOrderTypeAbbreviation_FINISH_TO_START;
 	public static String WorkOrderTypeAbbreviation_FINISH_TO_FINISH;
 	public static String WorkOrderTypeAbbreviation_START_TO_FINISH;
