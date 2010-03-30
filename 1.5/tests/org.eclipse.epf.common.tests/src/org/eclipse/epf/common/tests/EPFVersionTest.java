@@ -15,12 +15,12 @@ public class EPFVersionTest extends TestCase {
 
 	public void testGetToolVersion() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertEquals(new Version("1.5"),version.getToolVersion());
+		assertEquals(new Version("1.5.1"),version.getToolVersion());
 	}
 
 	public void testGetLibraryVersion() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertEquals(new Version("1.0.5.0"),version.getLibraryVersion());
+		assertEquals(new Version("1.0.6.0"),version.getLibraryVersion());
 	}
 
 	public void testGetXMLSchemaVersion() {
@@ -30,14 +30,14 @@ public class EPFVersionTest extends TestCase {
 
 	public void testCompareToolVersionTo() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertTrue(version.compareToolVersionTo(new Version("1.5")) == 0);
+		assertTrue(version.compareToolVersionTo(new Version("1.5.1")) == 0);
 		assertTrue(version.compareToolVersionTo(new Version("1.6")) < 0);
 		assertTrue(version.compareToolVersionTo(new Version("0.9")) > 0);
 	}
 
 	public void testCompareLibraryVersionTo() {
 		EPFVersion version = VersionUtil.getVersions(EPFVersions.TOOL_ID).getCurrentVersion();
-		assertTrue(version.compareLibraryVersionTo(new Version("1.0.5.0")) == 0);
+		assertTrue(version.compareLibraryVersionTo(new Version("1.0.6.0")) == 0);
 		assertTrue(version.compareLibraryVersionTo(new Version("1.0.6.2")) < 0);
 		assertTrue(version.compareLibraryVersionTo(new Version("1.0.2.0")) > 0);
 	}
