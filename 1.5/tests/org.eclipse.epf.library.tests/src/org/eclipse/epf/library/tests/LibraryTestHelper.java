@@ -108,21 +108,27 @@ public class LibraryTestHelper {
 	/**
 	 * Closes the current method library and delete the library resource files.
 	 */
-	public static void closeLibrary() {
+	public static void closeLibrary(boolean removeLibFiles) {
 		try {
 			File path = new File(org.eclipse.epf.library.LibraryService
 					.getInstance().getCurrentMethodLibraryLocation());
 			org.eclipse.epf.library.LibraryService.getInstance()
 					.closeCurrentMethodLibrary();
-
+			
 			// Delete the library folder and files.
-			FileUtil.deleteAllFiles(path.getAbsolutePath());
-			path.delete();
+			if (removeLibFiles) {
+				FileUtil.deleteAllFiles(path.getAbsolutePath());
+				path.delete();
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
+	public static void closeLibrary() {
+		closeLibrary(true);
+	}
+	
 	public static void saveLibrary() {
 		try {
 			org.eclipse.epf.library.LibraryService.getInstance()
