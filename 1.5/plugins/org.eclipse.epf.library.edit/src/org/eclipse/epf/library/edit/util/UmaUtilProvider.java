@@ -8,9 +8,8 @@ import org.eclipse.epf.uma.util.UmaUtil;
 
 public class UmaUtilProvider implements IUmaUtilProvider {
 		
-	private static UmaUtilProvider instance = new UmaUtilProvider();
-	static {
-		UmaUtil.setProvider(instance);
+	public static void init() {
+		UmaUtil.setProvider(new UmaUtilProvider());
 	}
 	
 	private UmaUtilProvider() {		

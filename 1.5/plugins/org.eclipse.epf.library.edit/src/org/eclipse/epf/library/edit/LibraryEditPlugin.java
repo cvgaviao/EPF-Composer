@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.epf.common.AbstractActivator;
+import org.eclipse.epf.library.edit.util.UmaUtilProvider;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -56,6 +57,8 @@ public class LibraryEditPlugin extends AbstractActivator {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		
+		UmaUtilProvider.init();
 	}
 
 	/**
