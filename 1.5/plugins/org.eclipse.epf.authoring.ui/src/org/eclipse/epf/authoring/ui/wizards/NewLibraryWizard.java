@@ -14,12 +14,15 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.common.ui.util.PerspectiveUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
+import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
@@ -109,6 +112,18 @@ public class NewLibraryWizard extends Wizard implements INewWizard {
 				if (desc.length() > 0) {
 					library.setBriefDescription(desc);
 				}
+				if (mainPage.isSynFree() || desc.length() > 0) {
+					Resource res = library.eResource();
+					ResourceSet resourceSet = res == null ? null : res.getResourceSet();
+					if (resourceSet instanceof ILibraryResourceSet) {
+						try {
+							((ILibraryResourceSet) resourceSet).save(null);
+						} catch (Exception e) {
+							AuthoringUIPlugin.getDefault().getLogger().logError(e);
+						}
+					}
+				}
+				
 				LibraryUIPreferences.addNewLibraryPath(libraryPath
 						.getAbsolutePath());
 				PerspectiveUtil
