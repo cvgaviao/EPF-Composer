@@ -166,6 +166,11 @@ public class RelationSection extends AbstractSection {
 				initContentProvider2();
 				initContentProvider3();
 				initContentProvider4();
+				
+				initLabelProvider1();
+				initLabelProvider2();
+				initLabelProvider3();
+				initLabelProvider4();
 
 				// hide/show controls based on editable
 				updateControls();

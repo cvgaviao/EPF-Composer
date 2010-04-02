@@ -155,6 +155,26 @@ public class WorkProductDescriptorGeneralSection extends
 		int tableHeight = 80;
 		ctrl_table_1 = FormUI.createTable(toolkit, pane1, tableHeight);
 		viewer_1 = new TableViewer(ctrl_table_1);
+		initContentProvider();
+		initLabelProvider();
+		viewer_1.setInput(element);
+
+		// create buttons for table2
+		Composite pane2 = FormUI.createComposite(toolkit, sectionComposite,
+				GridData.VERTICAL_ALIGN_CENTER
+						| GridData.HORIZONTAL_ALIGN_CENTER);
+
+		ctrl_add_1 = FormUI.createButton(toolkit, pane2, PropertiesResources.Process_Add); 
+		ctrl_add_proc_1 = FormUI.createButton(toolkit, pane2,
+				PropertiesResources.Process_AddFromProcess); 
+		ctrl_remove_1 = FormUI.createButton(toolkit, pane2, PropertiesResources.Process_Remove); 
+
+		toolkit.paintBordersFor(pane1);
+
+		deliverableSection = section;
+	}
+	
+	protected void initContentProvider() {
 		IStructuredContentProvider contentProvider = new AdapterFactoryContentProvider(
 				getAdapterFactory()) {
 			public Object[] getElements(Object object) {
@@ -175,7 +195,11 @@ public class WorkProductDescriptorGeneralSection extends
 				return getFilteredList(newList).toArray();
 			}
 		};
-
+		
+		viewer_1.setContentProvider(contentProvider);
+	}
+	
+	protected void initLabelProvider() {
 		ILabelProvider labelProvider = null;		
 		if (isSyncFree()) {
 			labelProvider = new SyncFreeLabelProvider(
@@ -186,23 +210,8 @@ public class WorkProductDescriptorGeneralSection extends
 			labelProvider = new AdapterFactoryLabelProvider(
 					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
 		}	
-		viewer_1.setContentProvider(contentProvider);
+		
 		viewer_1.setLabelProvider(labelProvider);
-		viewer_1.setInput(element);
-
-		// create buttons for table2
-		Composite pane2 = FormUI.createComposite(toolkit, sectionComposite,
-				GridData.VERTICAL_ALIGN_CENTER
-						| GridData.HORIZONTAL_ALIGN_CENTER);
-
-		ctrl_add_1 = FormUI.createButton(toolkit, pane2, PropertiesResources.Process_Add); 
-		ctrl_add_proc_1 = FormUI.createButton(toolkit, pane2,
-				PropertiesResources.Process_AddFromProcess); 
-		ctrl_remove_1 = FormUI.createButton(toolkit, pane2, PropertiesResources.Process_Remove); 
-
-		toolkit.paintBordersFor(pane1);
-
-		deliverableSection = section;
 	}
 
 	/**
@@ -623,6 +632,9 @@ public class WorkProductDescriptorGeneralSection extends
 
 				activityEntryState.addModifyListener(wpModelModifyListener);
 				activityExitState.addModifyListener(wpModelModifyListener);
+				
+				initContentProvider();
+				initLabelProvider();
 
 				if (viewer_1 != null) {
 					viewer_1.refresh();
