@@ -28,7 +28,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 	private Process proc;
 	private BreakdownElementWrapperItemProvider wrapper;
 	private Descriptor greenParent;
-
+	private boolean debug = false;
 
 
 	protected List createdActivities;
@@ -148,7 +148,17 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		}	
 		Collection<EReference> references = source.eClass().getEAllReferences();
 		
+		if (debug) {
+			System.out.println("\nLD> source: " + source); //$NON-NLS-1$
+		}
+		
 		for (EReference reference : references) {
+			if (debug) {				
+				if (! reference.isContainment()) {
+					System.out.println("LD> reference: " + reference.getName() + ", type : " + reference.getEType()); //$NON-NLS-1$
+				}				
+			}			
+			
 			if (!reference.isChangeable() || reference.isDerived()) {
 				continue;
 			}
@@ -174,6 +184,11 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		child.setName(greenParent.getName());
 		copyAttributes(greenParent, child);
 		copyAttributes(greenParent.getPresentation(), child.getPresentation());
+		
+		if (debug) {
+			child.setName(greenParent.getName() + "_n-modified");		//$NON-NLS-1$
+			child.setPresentationName(greenParent.getPresentationName() + "_p-modified");//$NON-NLS-1$
+		}
 		
 		copyReferences(greenParent, child);
 		copyReferences(greenParent.getPresentation(), child.getPresentation());	
