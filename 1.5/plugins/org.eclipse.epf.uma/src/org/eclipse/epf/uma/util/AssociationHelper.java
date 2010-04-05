@@ -469,7 +469,7 @@ public final class AssociationHelper {
 	 */
 	public static final OppositeFeature WorkOrder_Successor = new OppositeFeature(
 			WorkOrder.class,
-			"WorkOrder_Successor", UmaPackage.eINSTANCE.getWorkBreakdownElement_LinkToPredecessor(), false); //$NON-NLS-1$
+			"WorkOrder_Successor", UmaPackage.eINSTANCE.getWorkBreakdownElement_LinkToPredecessor(), true); //$NON-NLS-1$
 
 	/**
 	 * An opposite feature used for retrieving the successor link of a work
