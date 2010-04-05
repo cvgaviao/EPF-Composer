@@ -77,6 +77,13 @@ public class LibraryTestHelper {
 		return org.eclipse.epf.library.LibraryService.getInstance()
 				.createMethodLibrary(LIBRARY_XMI, XMI_TYPE, params);
 	}
+	
+	public static String generateTempLibraryPath() {
+		String path = TEMP_TEST_DIR
+				+ Long.toHexString(Calendar.getInstance().getTimeInMillis())
+				+ File.separator;
+		return path;
+	}
 
 	/**
 	 * Creates a test method library on a given path.
