@@ -20,14 +20,17 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	private static final String plus = "+"; 							//$NON-NLS-1$
 	private static final String minus = "-"; 							//$NON-NLS-1$
 
-
-	public static final String DESCRIPTOR_NoAutoSyn = "descriptor_noAutoSyn"; 								//$NON-NLS-1$	
-	public static final String DESCRIPTOR_CreatedByReference = "descriptor_createdByReferebce"; 			//$NON-NLS-1$
-	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 						//$NON-NLS-1$
-	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";						//$NON-NLS-1$
+	//Method property name strings
+	public static final String DESCRIPTOR_NoAutoSyn = "descriptor_noAutoSyn"; 							//$NON-NLS-1$	
+	public static final String DESCRIPTOR_CreatedByReference = "descriptor_createdByReferebce"; 		//$NON-NLS-1$
+	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 					//$NON-NLS-1$
+	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";					//$NON-NLS-1$
 	public static final String DESCRIPTOR_GreenParent = "descriptor_greenParent";						//$NON-NLS-1$
-	
 	public static final String DESCRIPTOR_ExcludeRefDelta = "descriptor_excludeRefDelta";
+	
+	//Volatile obhect name strings
+	public static final String V_DESCRIPTOR_CustomizingChildren = "v_descriptor_customizingChildren";			//$NON-NLS-1$
+	
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -446,5 +449,52 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 
 	}
+	
+	public List<? extends Descriptor> getCustomizingChildren(Descriptor des) {
+		String value = getValitileString(des, V_DESCRIPTOR_CustomizingChildren);
+		
+		if (value == null || value.length() == 0) {
+			return null;
+		}
+		
+		String[] guids = value.split(infoSeperator);
+		if (guids == null || guids.length == 0) {
+			return null;
+		}
+		
+		List<Descriptor> children = new ArrayList<Descriptor>();
+		for (String guid : guids) {
+			MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
+			if (element instanceof Descriptor) {
+				children.add((Descriptor) element);
+			}
+		}
+
+		return children;
+	}
+	
+	public void addToCstomizingChildren(Descriptor parent, Descriptor child) {
+		String childGuild =  child.getGuid();
+		
+		String oldValue = getValitileString(parent, V_DESCRIPTOR_CustomizingChildren);
+		if (oldValue == null || oldValue.length() == 0) {
+			storeValitileString(parent, V_DESCRIPTOR_CustomizingChildren, childGuild);
+			return;
+		}
+		
+		String[] guids = oldValue.split(infoSeperator);
+		if (guids != null) {
+			for (String guid : guids) {
+				if (childGuild.equals(guid)) {
+					return;
+				}
+			}
+		}
+
+		String newValue = oldValue.concat(infoSeperator).concat(childGuild);
+		storeValitileString(parent, V_DESCRIPTOR_CustomizingChildren, newValue);
+
+	}
+	
 	
 }

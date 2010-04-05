@@ -4,6 +4,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 
 public class MethodElementPropUtil {
 	
@@ -73,6 +74,16 @@ public class MethodElementPropUtil {
 					e, propName, propValue);
 			getActionManager().execute(cmd);
 		}
+	}
+	
+	protected String getValitileString(MethodElement element, String key) {
+		MultiResourceEObject mobj = (MultiResourceEObject) element;
+		return mobj.getVolatileString(key);
+	}
+	
+	protected void storeValitileString(MethodElement element, String key, String value) {
+		MultiResourceEObject mobj = (MultiResourceEObject) element;
+		mobj.storeVolatileString(key, value);
 	}
 	
 }

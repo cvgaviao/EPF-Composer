@@ -127,15 +127,22 @@ public class MultiResourceEObject extends EObjectImpl implements
 	/**
 	 * A map of name/object entries, which allow to store arbitrary
 	 * non-persistent data in this MultiResourceEObject object.
+	 * 
+	 * Limiting to string values for now - otherwise, need to be 
+	 * concerned about handling memory leak and cleaning issues
 	 */
 	private Map<String, Object> volatileObjectMap;
 	
-	public Map<String, Object> getVolatileObjectMap() {
-		return volatileObjectMap;
+	
+	public String getVolatileString(String key) {
+		return volatileObjectMap == null ? null : (String) volatileObjectMap.get(key);
 	}
 
-	public void setVolatileObjectMap(Map<String, Object> volatileObjectMap) {
-		this.volatileObjectMap = volatileObjectMap;
+	public void storeVolatileString(String key, String value) {
+		if (volatileObjectMap == null) {
+			volatileObjectMap = new HashMap<String, Object>();
+		}
+		volatileObjectMap.put(key, value);
 	}
 
 	/**
