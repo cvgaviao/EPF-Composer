@@ -123,6 +123,20 @@ public class MultiResourceEObject extends EObjectImpl implements
 	private Boolean notifyOpposite = null;
 
 	private boolean valid = true;
+	
+	/**
+	 * A map of name/object entries, which allow to store arbitrary
+	 * non-persistent data in this MultiResourceEObject object.
+	 */
+	private Map<String, Object> volatileObjectMap;
+	
+	public Map<String, Object> getVolatileObjectMap() {
+		return volatileObjectMap;
+	}
+
+	public void setVolatileObjectMap(Map<String, Object> volatileObjectMap) {
+		this.volatileObjectMap = volatileObjectMap;
+	}
 
 	/**
 	 * Checks the validity of this object.
