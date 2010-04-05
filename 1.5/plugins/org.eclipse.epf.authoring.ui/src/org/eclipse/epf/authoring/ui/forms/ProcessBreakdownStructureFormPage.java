@@ -159,6 +159,12 @@ public class ProcessBreakdownStructureFormPage extends ProcessFormPage
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
 		public Color getForeground(Object element) {
+			if (isSuppressed(element)) {
+				return Colors.SUPRESSED_ELEMENT_LABEL;
+			}
+			else if (isExternal(element)) {
+				return Colors.INHERITED_ELEMENT_LABEL;
+			}
 			Object obj = TngUtil.unwrap(element);
 			if (obj instanceof Descriptor) {
 				Descriptor d = (Descriptor) obj;
@@ -166,13 +172,6 @@ public class ProcessBreakdownStructureFormPage extends ProcessFormPage
 					return Colors.DYNAMIC_ELEMENT_LABEL;
 				}
 			}
-			
-			if (isSuppressed(element)) {
-				return Colors.SUPRESSED_ELEMENT_LABEL;
-			}
-			else if (isExternal(element)) {
-				return Colors.INHERITED_ELEMENT_LABEL;
-			}			
 			return null;
 		}
 
