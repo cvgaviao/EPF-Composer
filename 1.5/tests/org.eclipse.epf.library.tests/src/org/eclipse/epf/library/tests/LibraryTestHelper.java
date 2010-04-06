@@ -80,8 +80,7 @@ public class LibraryTestHelper {
 	
 	public static String generateTempLibraryPath() {
 		String path = TEMP_TEST_DIR
-				+ Long.toHexString(Calendar.getInstance().getTimeInMillis())
-				+ File.separator;
+				+ Long.toHexString(Calendar.getInstance().getTimeInMillis());
 		return path;
 	}
 
