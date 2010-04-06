@@ -13087,13 +13087,31 @@ public interface UmaPackage extends EPackage {
 	int DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE = BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Guidance Exclude</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__GUIDANCE_EXCLUDE = BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Additional</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DESCRIPTOR__GUIDANCE_ADDITIONAL = BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Descriptor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTOR_FEATURE_COUNT = BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
+	int DESCRIPTOR_FEATURE_COUNT = BREAKDOWN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -13382,6 +13400,24 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int WORK_PRODUCT_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE = DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Exclude</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__GUIDANCE_EXCLUDE = DESCRIPTOR__GUIDANCE_EXCLUDE;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Additional</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WORK_PRODUCT_DESCRIPTOR__GUIDANCE_ADDITIONAL = DESCRIPTOR__GUIDANCE_ADDITIONAL;
 
 	/**
 	 * The feature id for the '<em><b>Activity Entry State</b></em>' attribute.
@@ -14833,6 +14869,24 @@ public interface UmaPackage extends EPackage {
 	int ROLE_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE = DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE;
 
 	/**
+	 * The feature id for the '<em><b>Guidance Exclude</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__GUIDANCE_EXCLUDE = DESCRIPTOR__GUIDANCE_EXCLUDE;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Additional</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ROLE_DESCRIPTOR__GUIDANCE_ADDITIONAL = DESCRIPTOR__GUIDANCE_ADDITIONAL;
+
+	/**
 	 * The feature id for the '<em><b>Role</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -15202,13 +15256,31 @@ public interface UmaPackage extends EPackage {
 	int TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Guidance Exclude</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__GUIDANCE_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Additional</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The feature id for the '<em><b>Task</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__TASK = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 1;
+	int TASK_DESCRIPTOR__TASK = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Additionally Performed By</b></em>' reference list.
@@ -15217,7 +15289,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 2;
+	int TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Assisted By</b></em>' reference list.
@@ -15226,7 +15298,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__ASSISTED_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 3;
+	int TASK_DESCRIPTOR__ASSISTED_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>External Input</b></em>' reference list.
@@ -15235,7 +15307,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__EXTERNAL_INPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 4;
+	int TASK_DESCRIPTOR__EXTERNAL_INPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory Input</b></em>' reference list.
@@ -15244,7 +15316,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__MANDATORY_INPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 5;
+	int TASK_DESCRIPTOR__MANDATORY_INPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Optional Input</b></em>' reference list.
@@ -15253,7 +15325,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__OPTIONAL_INPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 6;
+	int TASK_DESCRIPTOR__OPTIONAL_INPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Output</b></em>' reference list.
@@ -15262,7 +15334,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__OUTPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 7;
+	int TASK_DESCRIPTOR__OUTPUT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Performed Primarily By</b></em>' reference list.
@@ -15271,7 +15343,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 8;
+	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Selected Steps</b></em>' reference list.
@@ -15280,7 +15352,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__SELECTED_STEPS = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 9;
+	int TASK_DESCRIPTOR__SELECTED_STEPS = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Performed Primarily By Excluded</b></em>' reference list.
@@ -15289,7 +15361,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 10;
+	int TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY_EXCLUDED = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Additionally Performed By Exclude</b></em>' reference list.
@@ -15298,7 +15370,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 11;
+	int TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Mandatory Input Exclude</b></em>' reference list.
@@ -15307,7 +15379,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 12;
+	int TASK_DESCRIPTOR__MANDATORY_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Optional Input Exclude</b></em>' reference list.
@@ -15316,7 +15388,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 13;
+	int TASK_DESCRIPTOR__OPTIONAL_INPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Output Exclude</b></em>' reference list.
@@ -15325,7 +15397,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__OUTPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 14;
+	int TASK_DESCRIPTOR__OUTPUT_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 16;
 
 	/**
 	 * The feature id for the '<em><b>Selected Steps Exclude</b></em>' reference list.
@@ -15334,7 +15406,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 15;
+	int TASK_DESCRIPTOR__SELECTED_STEPS_EXCLUDE = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 17;
 
 	/**
 	 * The number of structural features of the '<em>Task Descriptor</em>' class.
@@ -15343,7 +15415,7 @@ public interface UmaPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TASK_DESCRIPTOR_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 16;
+	int TASK_DESCRIPTOR_FEATURE_COUNT = WORK_BREAKDOWN_ELEMENT_FEATURE_COUNT + 18;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -15632,6 +15704,24 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE_ROLE__IS_SYNCHRONIZED_WITH_SOURCE = ROLE_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Exclude</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__GUIDANCE_EXCLUDE = ROLE_DESCRIPTOR__GUIDANCE_EXCLUDE;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Additional</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE_ROLE__GUIDANCE_ADDITIONAL = ROLE_DESCRIPTOR__GUIDANCE_ADDITIONAL;
 
 	/**
 	 * The feature id for the '<em><b>Role</b></em>' reference.
@@ -19395,6 +19485,24 @@ public interface UmaPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROCESS_COMPONENT_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE = DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Exclude</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_DESCRIPTOR__GUIDANCE_EXCLUDE = DESCRIPTOR__GUIDANCE_EXCLUDE;
+
+	/**
+	 * The feature id for the '<em><b>Guidance Additional</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROCESS_COMPONENT_DESCRIPTOR__GUIDANCE_ADDITIONAL = DESCRIPTOR__GUIDANCE_ADDITIONAL;
 
 	/**
 	 * The feature id for the '<em><b>process Component</b></em>' reference.
@@ -25537,6 +25645,28 @@ public interface UmaPackage extends EPackage {
 	EAttribute getDescriptor_IsSynchronizedWithSource();
 
 	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.Descriptor#getGuidanceExclude <em>Guidance Exclude</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Guidance Exclude</em>'.
+	 * @see org.eclipse.epf.uma.Descriptor#getGuidanceExclude()
+	 * @see #getDescriptor()
+	 * @generated
+	 */
+	EReference getDescriptor_GuidanceExclude();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipse.epf.uma.Descriptor#getGuidanceAdditional <em>Guidance Additional</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Guidance Additional</em>'.
+	 * @see org.eclipse.epf.uma.Descriptor#getGuidanceAdditional()
+	 * @see #getDescriptor()
+	 * @generated
+	 */
+	EReference getDescriptor_GuidanceAdditional();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.epf.uma.TaskDescriptor <em>Task Descriptor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -29269,6 +29399,24 @@ public interface UmaPackage extends EPackage {
 		 */
 		EAttribute DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE = eINSTANCE
 				.getDescriptor_IsSynchronizedWithSource();
+
+		/**
+		 * The meta object literal for the '<em><b>Guidance Exclude</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DESCRIPTOR__GUIDANCE_EXCLUDE = eINSTANCE
+				.getDescriptor_GuidanceExclude();
+
+		/**
+		 * The meta object literal for the '<em><b>Guidance Additional</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DESCRIPTOR__GUIDANCE_ADDITIONAL = eINSTANCE
+				.getDescriptor_GuidanceAdditional();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl <em>Task Descriptor</em>}' class.

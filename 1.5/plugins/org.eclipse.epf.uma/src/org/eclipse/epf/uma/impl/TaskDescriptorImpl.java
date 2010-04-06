@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.Section;
@@ -40,6 +41,8 @@ import org.eclipse.epf.uma.ecore.util.DefaultValueManager;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getIsSynchronizedWithSource <em>Is Synchronized With Source</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getGuidanceExclude <em>Guidance Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getGuidanceAdditional <em>Guidance Additional</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getTask <em>Task</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getAdditionallyPerformedBy <em>Additionally Performed By</em>}</li>
  *   <li>{@link org.eclipse.epf.uma.impl.TaskDescriptorImpl#getAssistedBy <em>Assisted By</em>}</li>
@@ -86,6 +89,26 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	 * @ordered
 	 */
 	protected Boolean isSynchronizedWithSource = IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getGuidanceExclude() <em>Guidance Exclude</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGuidanceExclude()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Guidance> guidanceExclude;
+
+	/**
+	 * The cached value of the '{@link #getGuidanceAdditional() <em>Guidance Additional</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGuidanceAdditional()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Guidance> guidanceAdditional;
 
 	/**
 	 * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
@@ -281,6 +304,34 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE,
 					oldIsSynchronizedWithSource, isSynchronizedWithSource));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Guidance> getGuidanceExclude() {
+		if (guidanceExclude == null) {
+			guidanceExclude = new EObjectResolvingEList<Guidance>(
+					Guidance.class, this,
+					UmaPackage.TASK_DESCRIPTOR__GUIDANCE_EXCLUDE);
+		}
+		return guidanceExclude;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public List<Guidance> getGuidanceAdditional() {
+		if (guidanceAdditional == null) {
+			guidanceAdditional = new EObjectResolvingEList<Guidance>(
+					Guidance.class, this,
+					UmaPackage.TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL);
+		}
+		return guidanceAdditional;
 	}
 
 	/**
@@ -529,6 +580,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
 			return getIsSynchronizedWithSource();
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_EXCLUDE:
+			return getGuidanceExclude();
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL:
+			return getGuidanceAdditional();
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			if (resolve)
 				return getTask();
@@ -576,6 +631,16 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 		switch (featureID) {
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
 			setIsSynchronizedWithSource((Boolean) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_EXCLUDE:
+			getGuidanceExclude().clear();
+			getGuidanceExclude().addAll(
+					(Collection<? extends Guidance>) newValue);
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL:
+			getGuidanceAdditional().clear();
+			getGuidanceAdditional().addAll(
+					(Collection<? extends Guidance>) newValue);
 			return;
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			setTask((Task) newValue);
@@ -664,6 +729,12 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 		case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
 			setIsSynchronizedWithSource(IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT);
 			return;
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_EXCLUDE:
+			getGuidanceExclude().clear();
+			return;
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL:
+			getGuidanceAdditional().clear();
+			return;
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			setTask((Task) null);
 			return;
@@ -731,6 +802,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			return IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT == null ? isSynchronizedWithSource != null
 					: !IS_SYNCHRONIZED_WITH_SOURCE_EDEFAULT
 							.equals(isSynchronizedWithSource);
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_EXCLUDE:
+			return guidanceExclude != null && !guidanceExclude.isEmpty();
+		case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL:
+			return guidanceAdditional != null && !guidanceAdditional.isEmpty();
 		case UmaPackage.TASK_DESCRIPTOR__TASK:
 			return task != null;
 		case UmaPackage.TASK_DESCRIPTOR__ADDITIONALLY_PERFORMED_BY:
@@ -783,6 +858,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			switch (derivedFeatureID) {
 			case UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
 				return UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE;
+			case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_EXCLUDE:
+				return UmaPackage.DESCRIPTOR__GUIDANCE_EXCLUDE;
+			case UmaPackage.TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL:
+				return UmaPackage.DESCRIPTOR__GUIDANCE_ADDITIONAL;
 			default:
 				return -1;
 			}
@@ -801,6 +880,10 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 			switch (baseFeatureID) {
 			case UmaPackage.DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE:
 				return UmaPackage.TASK_DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE;
+			case UmaPackage.DESCRIPTOR__GUIDANCE_EXCLUDE:
+				return UmaPackage.TASK_DESCRIPTOR__GUIDANCE_EXCLUDE;
+			case UmaPackage.DESCRIPTOR__GUIDANCE_ADDITIONAL:
+				return UmaPackage.TASK_DESCRIPTOR__GUIDANCE_ADDITIONAL;
 			default:
 				return -1;
 			}
@@ -832,8 +915,8 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	static {
 		// override the default value of BreakdownElement.isPlanned
 		//
-//		DefaultValueManager.INSTANCE.setStaticDefaultValue(UmaPackage.eINSTANCE
-//				.getTaskDescriptor(), UmaPackage.eINSTANCE
-//				.getBreakdownElement_IsPlanned(), Boolean.FALSE);
+		//		DefaultValueManager.INSTANCE.setStaticDefaultValue(UmaPackage.eINSTANCE
+		//				.getTaskDescriptor(), UmaPackage.eINSTANCE
+		//				.getBreakdownElement_IsPlanned(), Boolean.FALSE);
 	}
 } //TaskDescriptorImpl

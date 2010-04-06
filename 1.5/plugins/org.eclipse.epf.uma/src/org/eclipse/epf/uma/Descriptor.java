@@ -10,6 +10,8 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma;
 
+import java.util.List;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Descriptor</b></em>'.
@@ -25,6 +27,8 @@ package org.eclipse.epf.uma;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipse.epf.uma.Descriptor#getIsSynchronizedWithSource <em>Is Synchronized With Source</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.Descriptor#getGuidanceExclude <em>Guidance Exclude</em>}</li>
+ *   <li>{@link org.eclipse.epf.uma.Descriptor#getGuidanceAdditional <em>Guidance Additional</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,5 +63,37 @@ public interface Descriptor extends BreakdownElement {
 	 * @generated
 	 */
 	void setIsSynchronizedWithSource(Boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Guidance Exclude</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Guidance}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Guidance Exclude</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guidance Exclude</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getDescriptor_GuidanceExclude()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<Guidance> getGuidanceExclude();
+
+	/**
+	 * Returns the value of the '<em><b>Guidance Additional</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.epf.uma.Guidance}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Guidance Additional</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Guidance Additional</em>' reference list.
+	 * @see org.eclipse.epf.uma.UmaPackage#getDescriptor_GuidanceAdditional()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	List<Guidance> getGuidanceAdditional();
 
 } // Descriptor

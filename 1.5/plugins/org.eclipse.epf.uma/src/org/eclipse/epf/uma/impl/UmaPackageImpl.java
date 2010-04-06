@@ -2591,6 +2591,24 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getDescriptor_GuidanceExclude() {
+		return (EReference) descriptorEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDescriptor_GuidanceAdditional() {
+		return (EReference) descriptorEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTaskDescriptor() {
 		return taskDescriptorEClass;
 	}
@@ -4905,6 +4923,8 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 		descriptorEClass = createEClass(DESCRIPTOR);
 		createEAttribute(descriptorEClass,
 				DESCRIPTOR__IS_SYNCHRONIZED_WITH_SOURCE);
+		createEReference(descriptorEClass, DESCRIPTOR__GUIDANCE_EXCLUDE);
+		createEReference(descriptorEClass, DESCRIPTOR__GUIDANCE_ADDITIONAL);
 
 		iterationEClass = createEClass(ITERATION);
 
@@ -6300,6 +6320,16 @@ public class UmaPackageImpl extends EPackageImpl implements UmaPackage {
 				getDescriptor_IsSynchronizedWithSource(),
 				this.getBoolean(),
 				"isSynchronizedWithSource", "true", 1, 1, org.eclipse.epf.uma.Descriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(
+				getDescriptor_GuidanceExclude(),
+				this.getGuidance(),
+				null,
+				"guidanceExclude", null, 0, -1, org.eclipse.epf.uma.Descriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getDescriptor_GuidanceAdditional(),
+				this.getGuidance(),
+				null,
+				"guidanceAdditional", null, 0, -1, org.eclipse.epf.uma.Descriptor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				iterationEClass,

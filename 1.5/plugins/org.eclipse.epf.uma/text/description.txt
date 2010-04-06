@@ -277,6 +277,8 @@ Package uma <http://www.eclipse.org/epf/uma/1.0.6/uma.ecore>
 
   Class Descriptor -> BreakdownElement
     Attribute isSynchronizedWithSource : Boolean<<1..1>>
+    Reference guidanceExclude : Guidance<<0..*>>
+    Reference guidanceAdditional : Guidance<<0..*>>
 
   Class Iteration -> Activity
 
