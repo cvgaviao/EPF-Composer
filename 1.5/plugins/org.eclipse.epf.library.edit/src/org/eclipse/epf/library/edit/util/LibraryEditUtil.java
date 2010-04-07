@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +18,10 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class LibraryEditUtil {
 	
@@ -152,6 +156,27 @@ public class LibraryEditUtil {
 
 	public void setJunitTest(boolean junitTest) {
 		this.junitTest = junitTest;
+	}
+	
+	public List<EReference> getExcludeRefList(Descriptor des) {
+		List<EReference> list = new ArrayList<EReference>();
+		UmaPackage up = UmaPackage.eINSTANCE;
+
+		if (des instanceof TaskDescriptor) {
+			list.add(up.getTaskDescriptor_PerformedPrimarilyByExcluded());
+			list.add(up.getTaskDescriptor_AdditionallyPerformedByExclude());
+			list.add(up.getTaskDescriptor_MandatoryInputExclude());
+			list.add(up.getTaskDescriptor_OptionalInputExclude());
+			list.add(up.getTaskDescriptor_OutputExclude());
+
+		} else if (des instanceof RoleDescriptor) {
+			list.add(up.getRoleDescriptor_ResponsibleForExclude());
+
+		} else if (des instanceof WorkProductDescriptor) {
+			list.add(up.getWorkProductDescriptor_DeliverablePartsExclude());
+		}
+
+		return list;
 	}
 	
 }

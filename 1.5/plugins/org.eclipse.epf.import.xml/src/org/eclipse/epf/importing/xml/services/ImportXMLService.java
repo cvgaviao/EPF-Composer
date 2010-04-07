@@ -47,6 +47,7 @@ import org.eclipse.epf.importing.wizards.SelectImportConfigurationSource;
 import org.eclipse.epf.importing.xml.ImportXMLPlugin;
 import org.eclipse.epf.importing.xml.ImportXMLResources;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.services.SafeUpdateController;
@@ -60,6 +61,7 @@ import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.ecore.IModelObject;
 import org.eclipse.epf.xml.uma.Activity;
+import org.eclipse.epf.xml.uma.BreakdownElement;
 import org.eclipse.epf.xml.uma.CapabilityPattern;
 import org.eclipse.epf.xml.uma.ContentCategory;
 import org.eclipse.epf.xml.uma.ContentCategoryPackage;
@@ -663,6 +665,8 @@ public class ImportXMLService {
 		IModelObject targetObj = getRmcObject(srcObj);
 		EClass eClass = srcObj.eClass();
 
+		handleDescriptorExtraReferences(srcObj, targetObj);
+		
 		EList features = eClass.getEAllStructuralFeatures();
 		boolean isNewElement = umaLib.isNewElement(srcObj.getId()) || srcObj instanceof MethodLibrary;
 		boolean isOldPlugin = !isNewElement && (srcObj instanceof MethodPlugin);
@@ -918,6 +922,66 @@ public class ImportXMLService {
 	
 	public boolean isSynFreeLib() {
 		return xmlLib == null ? false : xmlLib.isSynFreeLib();
+	}
+	
+	private void handleDescriptorExtraReferences(MethodElement srcObj,
+			IModelObject targetObj) {
+		if (!(targetObj instanceof org.eclipse.epf.uma.Descriptor)) {
+			return;
+		}
+
+		boolean ok = srcObj instanceof org.eclipse.epf.xml.uma.RoleDescriptor
+				|| srcObj instanceof org.eclipse.epf.xml.uma.WorkProductDescriptor
+				|| srcObj instanceof org.eclipse.epf.xml.uma.TaskDescriptor;
+
+		if (!ok) {
+			return;
+		}
+
+		org.eclipse.epf.uma.Descriptor tgtDes = (org.eclipse.epf.uma.Descriptor) targetObj;
+		BreakdownElement srcDes = (BreakdownElement) srcObj;
+
+		EList<MethodElementProperty> mepPropList = srcDes.getMethodElementProperty();
+		if (mepPropList == null || mepPropList.isEmpty()) {
+			return;
+		}
+
+		for (int i = mepPropList.size() - 1; i >=0; i--) {
+			MethodElementProperty mep = mepPropList.get(i);
+			if (mep.getName().startsWith("XML_")) {		//$NON-NLS-1$
+				handleExtraRef(srcDes, tgtDes, mep);
+				mepPropList.remove(i);
+			}
+		}				
+
+	}
+	
+	private void handleExtraRef(BreakdownElement srcDes,
+			org.eclipse.epf.uma.Descriptor tgtDes, MethodElementProperty mep) {
+		String refName = mep.getName().substring(4);
+		EStructuralFeature feature = tgtDes.eClass().getEStructuralFeature(
+				refName);
+		if (feature instanceof EReference) {
+			EReference ref = (EReference) feature;
+			if (ref.isMany()) {
+				List<org.eclipse.epf.uma.MethodElement> list = (List<org.eclipse.epf.uma.MethodElement>) tgtDes
+						.eGet(ref);
+				list.clear();
+				String[] guidStrList = mep.getValue().split(
+						DescriptorPropUtil.infoSeperator);
+				if (guidStrList == null || guidStrList.length == 0) {
+					return;
+				}
+				for (String guid : guidStrList) {
+					org.eclipse.epf.uma.MethodElement element = (org.eclipse.epf.uma.MethodElement) umaLib
+							.getElement(guid);
+					if (element != null) {
+						list.add(element);
+					}
+				}
+
+			}
+		}
 	}
 	
 }

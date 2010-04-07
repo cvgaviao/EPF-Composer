@@ -24,7 +24,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.dataexchange.util.ContentProcessor;
 import org.eclipse.epf.dataexchange.util.IResourceHandler;
 import org.eclipse.epf.diagram.ui.service.DiagramImageService;
@@ -34,6 +36,8 @@ import org.eclipse.epf.export.xml.ExportXMLResources;
 import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -44,6 +48,7 @@ import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.MigrationUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Diagram;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -494,6 +499,8 @@ public class ExportXMLService {
 
 			return;
 		}
+		
+		handleDescriptorExtraReferences(srcObj, targetObj);		
 
 		EClass eClass = srcObj.eClass();
 
@@ -718,18 +725,57 @@ public class ExportXMLService {
 		}
 	}
 
-	// private boolean isSystemPackage(EDataObject element) {
-	//		
-	// if ( !(element instanceof MethodPackage) ) {
-	// return false;
-	// }
-	//		
-	// MethodPlugin plugin = LibraryUtil.getMethodPlugin(element);
-	// if ( plugin == null ) {
-	// return false;
-	// }
-	//		
-	// return TngUtil.getAllSystemPackages(plugin).contains(element);
-	//		
-	// }
+	private void handleDescriptorExtraReferences(MethodElement srcObj,
+			IModelObject targetObj) {
+		if (!(srcObj instanceof Descriptor)) {
+			return;
+		}
+
+		boolean ok = targetObj instanceof org.eclipse.epf.xml.uma.RoleDescriptor
+				|| targetObj instanceof org.eclipse.epf.xml.uma.WorkProductDescriptor
+				|| targetObj instanceof org.eclipse.epf.xml.uma.TaskDescriptor;
+
+		if (!ok) {
+			return;
+		}
+
+		Descriptor srcDes = (Descriptor) srcObj;
+		org.eclipse.epf.xml.uma.BreakdownElement tgtDes = (org.eclipse.epf.xml.uma.BreakdownElement) targetObj;
+		List<EReference> refList = LibraryEditUtil.getInstance()
+				.getExcludeRefList(srcDes);
+		
+		for (EReference ref : refList) {
+			handleExtraRef(srcDes, tgtDes, ref);		
+		}		
+		handleExtraRef(srcDes, tgtDes, org.eclipse.epf.uma.UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional());	
+	}
+	
+	private void handleExtraRef(Descriptor srcDes,
+			org.eclipse.epf.xml.uma.BreakdownElement tgtDes, EReference ref) {
+		org.eclipse.epf.xml.uma.UmaPackage xmlUp = org.eclipse.epf.xml.uma.UmaPackage.eINSTANCE;
+		EClass mepClass = xmlUp.getMethodElementProperty();
+		
+		List<MethodElement> refValueList = (List<MethodElement>) srcDes
+				.eGet(ref);
+		if (refValueList != null && !refValueList.isEmpty()) {
+			List<org.eclipse.epf.xml.uma.MethodElementProperty> xmlMepList = tgtDes
+					.getMethodElementProperty();
+			org.eclipse.epf.xml.uma.MethodElementProperty xmlMep = (org.eclipse.epf.xml.uma.MethodElementProperty) EcoreUtil
+					.create(mepClass);
+			xmlMep.setName("XML_" + ref.getName()); //$NON-NLS-1$
+			String value = ""; //$NON-NLS-1$
+
+			for (int i = 0; i < refValueList.size(); i++) {
+				MethodElement elem = refValueList.get(i);
+				if (value.length() > 0) {
+					value += DescriptorPropUtil.infoSeperator;
+				}
+				value += elem.getGuid();
+			}
+			xmlMep.setValue(value);
+
+			xmlMepList.add(xmlMep);
+		}
+	}
+	
 }
