@@ -926,6 +926,15 @@ public class ImportXMLService {
 	
 	private void handleDescriptorExtraReferences(MethodElement srcObj,
 			IModelObject targetObj) {
+		try {
+			handleDescriptorExtraReferences_(srcObj, targetObj);
+		} catch (Exception e) {
+			logger.logError(e.getMessage(), e);
+		}
+	}
+	
+	private void handleDescriptorExtraReferences_(MethodElement srcObj,
+			IModelObject targetObj) {
 		if (!(targetObj instanceof org.eclipse.epf.uma.Descriptor)) {
 			return;
 		}

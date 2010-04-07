@@ -724,8 +724,17 @@ public class ExportXMLService {
 			}
 		}
 	}
-
+	
 	private void handleDescriptorExtraReferences(MethodElement srcObj,
+			IModelObject targetObj) {
+		try {
+			handleDescriptorExtraReferences_(srcObj, targetObj);
+		} catch (Exception e) {
+			logger.logError(e.getMessage(), e);
+		}
+	}
+	
+	private void handleDescriptorExtraReferences_(MethodElement srcObj,
 			IModelObject targetObj) {
 		if (!(srcObj instanceof Descriptor)) {
 			return;
