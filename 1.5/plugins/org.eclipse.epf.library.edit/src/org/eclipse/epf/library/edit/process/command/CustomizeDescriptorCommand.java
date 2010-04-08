@@ -8,6 +8,7 @@ import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
@@ -16,6 +17,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.PlanningData;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
@@ -28,12 +30,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 	private Process proc;
 	private BreakdownElementWrapperItemProvider wrapper;
 	private Descriptor greenParent;
-	private boolean debug = false;
-
-
-	protected List createdActivities;
-	
-	public Activity superActivity;
+	private boolean debug = true;
 
 	public CustomizeDescriptorCommand(BreakdownElementWrapperItemProvider wrapper) {
 		this.wrapper = wrapper;
@@ -95,6 +92,8 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		parentAct.getBreakdownElements().add(des);
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		propUtil.setGreenParent(des, greenParent.getGuid());
+		propUtil.addToCustomizingChildren(greenParent, des);
+		
 	}
 
 	private boolean isAttToCopy(EAttribute attribute) {
@@ -122,6 +121,9 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 			return false;
 		}
 		if (ref == UmaPackage.eINSTANCE.getDescribableElement_Presentation()) {
+			return false;
+		}
+		if (ref == UmaPackage.eINSTANCE.getBreakdownElement_SuperActivities()) {
 			return false;
 		}
 		return true;
@@ -154,20 +156,29 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		
 		for (EReference reference : references) {
 			if (debug) {				
-				if (! reference.isContainment()) {
+				if (reference.isContainment()) {
 					System.out.println("LD> reference: " + reference.getName() + ", type : " + reference.getEType()); //$NON-NLS-1$
 				}				
 			}			
 			
-			if (!reference.isChangeable() || reference.isDerived()) {
+			if ( ! isRefToCopy(reference)) {
 				continue;
 			}
+			
 			Object value = source.eGet(reference);
 			if (value == null) {
 				continue;
 			}
-
-			if (reference.isMany()) {
+			
+			if (reference.isContainment()) {
+				if (reference == UmaPackage.eINSTANCE
+						.getBreakdownElement_PlanningData()
+						&& value instanceof PlanningData) {
+					PlanningData srcData = (PlanningData) value;
+					PlanningData tgtData = (PlanningData) EcoreUtil.copy(srcData);					
+					target.eSet(reference, tgtData);
+				}
+			} else if (reference.isMany()) {
 				List valueList = (List) value;
 				if (! valueList.isEmpty()) {
 					EList copyList = (EList) target.eGet(reference);

@@ -16,7 +16,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private static boolean localDebug = true;
 	
-	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
+	private static final String infoSeperator = "/"; 							//$NON-NLS-1$
 	private static final String plus = "+"; 							//$NON-NLS-1$
 	private static final String minus = "-"; 							//$NON-NLS-1$
 
@@ -473,7 +473,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return children;
 	}
 	
-	public void addToCstomizingChildren(Descriptor parent, Descriptor child) {
+	public void addToCustomizingChildren(Descriptor parent, Descriptor child) {
 		String childGuild =  child.getGuid();
 		
 		String oldValue = getValitileString(parent, V_DESCRIPTOR_CustomizingChildren);
