@@ -16,7 +16,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private static boolean localDebug = true;
 	
-	private static final String infoSeperator = "/"; 							//$NON-NLS-1$
+	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
 	private static final String plus = "+"; 							//$NON-NLS-1$
 	private static final String minus = "-"; 							//$NON-NLS-1$
 
