@@ -40,6 +40,7 @@ import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessPackage;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
@@ -287,6 +288,17 @@ public class PredecessorList extends ArrayList<Object> {
 			map.put(element, itemProviders);
 		}
 		itemProviders.add(itemProvider);
+		if (ProcessUtil.isSynFree()) {
+			DescriptorPropUtil propUtil = DescriptorPropUtil
+					.getDesciptorPropUtil();
+			if (element instanceof TaskDescriptor) {
+				Descriptor greenParent = propUtil
+						.getGreenParentDescriptor((TaskDescriptor) element);
+				if (greenParent != null) {
+					map.put(greenParent, itemProviders);
+				}
+			}
+		}
 		if (element instanceof VariabilityElement) {
 			VariabilityElement ve = (VariabilityElement) element;
 			if (ve.getVariabilityBasedOnElement() != null) {

@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.process.command.CustomizeDescriptorCommand;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
@@ -303,6 +304,11 @@ public class RealizationManager implements IRealizationManager {
 				
 			} else if (be instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) be;
+				Descriptor greenParent = propUtil.getGreenParentDescriptor(td);
+				if (greenParent != null) {
+					CustomizeDescriptorCommand.updateFromGreenParent(greenParent, td);
+				}
+				
 				collectAllReferences(td, tdReferencedSet, seenSet);
 
 			} else if (be instanceof RoleDescriptor) {

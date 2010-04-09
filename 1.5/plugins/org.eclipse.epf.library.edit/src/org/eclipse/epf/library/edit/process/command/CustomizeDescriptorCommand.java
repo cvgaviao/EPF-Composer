@@ -30,7 +30,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 	private Process proc;
 	private BreakdownElementWrapperItemProvider wrapper;
 	private Descriptor greenParent;
-	private boolean debug = true;
+	private static boolean debug = true;
 
 	public CustomizeDescriptorCommand(BreakdownElementWrapperItemProvider wrapper) {
 		this.wrapper = wrapper;
@@ -71,7 +71,6 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 	 * 
 	 * @see org.eclipse.emf.common.command.Command#execute()
 	 */
-	static int cc = 0;
 	public void execute() {
 		if (greenParent == null || ! (greenParent instanceof TaskDescriptor)) {
 			return;
@@ -87,16 +86,11 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		
 		Descriptor des = UmaFactory.eINSTANCE.createTaskDescriptor();
 		
-		updateFromGreenParent(greenParent, des);
-		
-		parentAct.getBreakdownElements().add(des);
-		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		propUtil.setGreenParent(des, greenParent.getGuid());
-		propUtil.addToCustomizingChildren(greenParent, des);
-		
+		updateFromGreenParent(greenParent, des);		
+		parentAct.getBreakdownElements().add(des);		
 	}
 
-	private boolean isAttToCopy(EAttribute attribute) {
+	private static boolean isAttToCopy(EAttribute attribute) {
 		if (!attribute.isChangeable()) {
 			return false;	
 		}
@@ -113,7 +107,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 	}
 	
 
-	private boolean isRefToCopy(EReference ref) {
+	private static boolean isRefToCopy(EReference ref) {
 		if (!ref.isChangeable()) {
 			return false;	
 		}
@@ -129,13 +123,17 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		return true;
 	}
 	
-	private void copyAttributes(MethodElement source, MethodElement target) {
+	private static void copyAttributes(MethodElement source, MethodElement target) {
 		if (source == null || target == null || source.eClass() != target.eClass()) {
 			return;
 		}				
 		Collection<EAttribute> attributes = source.eClass().getEAllAttributes();		
 		for (EAttribute attribute : attributes) {
 			if (isAttToCopy(attribute)) {
+				if (debug) {
+					System.out.println("\nLD> attribute: " + attribute); //$NON-NLS-1$
+				}
+				
 				Object value = source.eGet(attribute);
 				if (value != null) {
 					target.eSet(attribute, value);
@@ -144,7 +142,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		}
 	}
 	
-	private void copyReferences(MethodElement source, MethodElement target) {
+	private static void copyReferences(MethodElement source, MethodElement target) {
 		if (source == null || target == null || source.eClass() != target.eClass()) {
 			return;
 		}	
@@ -191,18 +189,24 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		}
 	}
 	
-	public void updateFromGreenParent(Descriptor greenParent, Descriptor child) {
+	public static void updateFromGreenParent(Descriptor greenParent, Descriptor child) {
 		child.setName(greenParent.getName());
 		copyAttributes(greenParent, child);
 		copyAttributes(greenParent.getPresentation(), child.getPresentation());
 		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		if (debug) {
 			child.setName(greenParent.getName() + "_n-modified");		//$NON-NLS-1$
 			child.setPresentationName(greenParent.getPresentationName() + "_p-modified");//$NON-NLS-1$
+			propUtil.setNameRepalce(child, true);
+			propUtil.setPresentationNameRepalce(child, true);
 		}
 		
 		copyReferences(greenParent, child);
 		copyReferences(greenParent.getPresentation(), child.getPresentation());	
+		
+		propUtil.setGreenParent(child, greenParent.getGuid());
+		propUtil.addToCustomizingChildren(greenParent, child);
 	}	
 	
 	/*

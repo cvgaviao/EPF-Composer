@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -40,11 +39,13 @@ import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -282,6 +283,24 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 					PredecessorList predList = ((IBSItemProvider) ip).getPredecessors();
 					for (Object predIp : predList) {
 						Object pred = TngUtil.unwrap(predIp);
+						
+						if (ProcessUtil.isSynFree() && pred instanceof TaskDescriptor) {
+							DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+							List<? extends Descriptor> childList = propUtil.getCustomizingChildren((TaskDescriptor) pred);
+							if (childList != null && ! childList.isEmpty()) {
+								boolean processed = false;
+								for (Descriptor des : childList) {
+									if (des.getSuperActivities() == parent) {
+										preds.add((WorkBreakdownElement) des);
+										processed = true;
+										break;
+									}
+								}
+								if (processed) {
+									continue;
+								}
+							}
+						}
 						// make sure that predecessors are sibling
 						//
 						if(((ITreeItemContentProvider) predIp).getParent(pred) == parent) {
@@ -291,6 +310,14 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 								pred = ((Adapter) pred).getTarget();
 								if(pred instanceof WorkBreakdownElement) {
 									preds.add((WorkBreakdownElement) pred);
+								}
+							}
+						} else if (ProcessUtil.isSynFree() && pred instanceof Adapter) {
+							pred = ((Adapter) pred).getTarget();
+							if (pred instanceof TaskDescriptor) {
+								TaskDescriptor td = (TaskDescriptor) pred;
+								if (td.getSuperActivities() == parent) {
+									preds.add(td);
 								}
 							}
 						}
