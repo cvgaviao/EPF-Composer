@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryPlugin;
@@ -20,9 +22,13 @@ import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 
 public class RealizedDescriptor extends RealizedElement implements
@@ -187,7 +193,8 @@ public class RealizedDescriptor extends RealizedElement implements
 		return ConfigurationHelper.getCalculatedElement(element, getConfig());
 	}	
 	
-	public Set<Descriptor> getAllReferenced() {
+	public Set<Descriptor> updateAndGetAllReferenced() {
+		List<Guidance> gList = getGuidances();
 		return Collections.EMPTY_SET;
 	}
 	
@@ -259,6 +266,79 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 		return refSet;
 	}
+
+	public List<Guidance> getGuidances() {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		List<Guidance> resultList = new ArrayList<Guidance>();
+
+		Map<EReference, EReference> refMap = LibraryEditUtil.getInstance()
+				.getGuidanceRefMap(getLinkedElementType());
+
+		ElementRealizer realizer = DefaultElementRealizer
+				.newElementRealizer(getConfig());
+
+		List<Guidance> excludeList = ConfigurationHelper.calc0nFeatureValue(
+				getDescriptor(), up.getDescriptor_GuidanceExclude(), realizer);
+
+		List<Guidance> addtionList = ConfigurationHelper.calc0nFeatureValue(
+				getDescriptor(), up.getDescriptor_GuidanceAdditional(),
+				realizer);
+
+		for (Map.Entry<EReference, EReference> entry : refMap.entrySet()) {
+			List<Guidance> subList = calculateGuidances(entry.getKey(), entry
+					.getValue(), excludeList, addtionList);
+			resultList.addAll(subList);
+		}
+
+		return resultList;
+	}
+	
+	private List<Guidance> calculateGuidances(EReference eRef, EReference dRef,
+			List<Guidance> excludeList, List<Guidance> addtionList) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		
+		ElementRealizer realizer = DefaultElementRealizer
+				.newElementRealizer(getConfig());
+		
+		MethodElement element = getLinkedElement();
+		if (element == null) {
+			return ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
+					dRef, realizer);
+		}
+		
+		List<Guidance> elementGuidanceList = ConfigurationHelper.calc0nFeatureValue(element,
+				eRef, realizer);
+		if (elementGuidanceList == null) {
+			elementGuidanceList = new ArrayList<Guidance>();
+		}
+
+		if (!elementGuidanceList.isEmpty()) {
+			if (excludeList != null && ! excludeList.isEmpty()) {
+				elementGuidanceList.removeAll(excludeList);
+			}
+		} 
+				
+		List<Guidance> valueList = (List<Guidance>) getDescriptor().eGet(dRef);
+		valueList.clear();
+		if (!elementGuidanceList.isEmpty()) {
+			valueList.addAll(elementGuidanceList);
+		}
+
+		return valueList;
+	}
 	
 	
+	private EClass getLinkedElementType() {
+		if (getDescriptor() instanceof TaskDescriptor) {
+			return UmaPackage.eINSTANCE.getTask();
+		}
+		if (getDescriptor() instanceof RoleDescriptor) {
+			return UmaPackage.eINSTANCE.getRole();
+		}
+		if (getDescriptor() instanceof WorkProductDescriptor) {
+			return UmaPackage.eINSTANCE.getWorkProduct();
+		}
+	
+		throw new UnsupportedOperationException();
+	}
 }

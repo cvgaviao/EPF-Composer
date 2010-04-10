@@ -1,17 +1,22 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -20,6 +25,7 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -30,6 +36,11 @@ public class LibraryEditUtil {
 	private IRealizationManager defaultRealizationManager;
 	private ILibraryEditUtilProvider provider;
 	private boolean junitTest = false;
+	
+	private static Map<EReference, EReference> taskGuidanceRefMap;
+	private static Map<EReference, EReference> roleGuidanceRefMap;
+	private static Map<EReference, EReference> workproductGuidanceRefMap;
+	private static UmaPackage up = UmaPackage.eINSTANCE;
 
 	public static LibraryEditUtil getInstance() {
 		return instance;
@@ -117,7 +128,6 @@ public class LibraryEditUtil {
 	}
 		
 	public EReference getExcludeFeature(EReference ref) {
-		UmaPackage up = UmaPackage.eINSTANCE;
 		if (ref == up.getTaskDescriptor_PerformedPrimarilyBy()) {
 			return up.getTaskDescriptor_PerformedPrimarilyByExcluded();
 		}
@@ -160,7 +170,6 @@ public class LibraryEditUtil {
 	
 	public List<EReference> getExcludeRefList(Descriptor des) {
 		List<EReference> list = new ArrayList<EReference>();
-		UmaPackage up = UmaPackage.eINSTANCE;
 
 		if (des instanceof TaskDescriptor) {
 			list.add(up.getTaskDescriptor_PerformedPrimarilyByExcluded());
@@ -177,6 +186,65 @@ public class LibraryEditUtil {
 		}
 
 		return list;
+	}
+	
+	public boolean isGuidanceListReference(EReference ref) {
+		if (ref.isContainment() || !ref.isMany()) {
+			return false;
+		}
+		if (ref == UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional()
+				|| ref == UmaPackage.eINSTANCE.getDescriptor_GuidanceExclude()) {
+			return false;
+		}
+		if (ref.getEType() instanceof EClass) {
+			Object obj = UmaFactory.eINSTANCE.create((EClass) ref.getEType());
+			return obj instanceof Guidance;
+		}
+		return false;
+	}
+	
+	public Map<EReference, EReference> getGuidanceRefMap(EClass cls) {
+		if (cls == up.getTask()) {
+			if (taskGuidanceRefMap == null) {
+				taskGuidanceRefMap = buildGuidanceMap(cls, up.getTaskDescriptor());
+			}
+			return taskGuidanceRefMap;
+		}
+		if (cls == up.getRole()) {
+			if (roleGuidanceRefMap == null) {
+				roleGuidanceRefMap = buildGuidanceMap(cls, up.getRoleDescriptor());
+			}
+			return roleGuidanceRefMap;
+		}
+		if (cls == up.getWorkProduct()) {
+			if (workproductGuidanceRefMap == null) {
+				workproductGuidanceRefMap = buildGuidanceMap(cls, up.getWorkProductDescriptor());
+			}
+			return workproductGuidanceRefMap;
+		}
+		return null;
+	}
+	
+	private  Map<EReference, EReference> buildGuidanceMap(EClass cls, EClass desCls) {
+		Map<EReference, EReference> resultMap = new HashMap<EReference, EReference>();
+		
+		Map<EClassifier, EReference> map = new HashMap<EClassifier, EReference>();
+		for (EReference ref : desCls.getEAllReferences()) {
+			if (isGuidanceListReference(ref)) {
+				map.put(ref.getEType(), ref);
+			}
+		}
+		
+		for (EReference ref : cls.getEAllReferences()) {
+			if (isGuidanceListReference(ref)) {
+				EReference value = map.get(ref.getEType());
+				if (value != null) {
+					resultMap.put(ref, value);
+				}
+			}
+		}
+		
+		return resultMap;
 	}
 	
 }

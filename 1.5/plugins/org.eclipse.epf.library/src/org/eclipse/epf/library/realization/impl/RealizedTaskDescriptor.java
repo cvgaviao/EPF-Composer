@@ -191,14 +191,18 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 	}
 	
 	@Override
-	public Set<Descriptor> getAllReferenced() {
+	public Set<Descriptor> updateAndGetAllReferenced() {
+		super.updateAndGetAllReferenced();
+		
 		Set<Descriptor> referenced = new HashSet<Descriptor>();
 		addToSet(referenced, getPerformedPrimarilyBy());
 		addToSet(referenced, getMandatoryInput());
 		addToSet(referenced, getAdditionallyPerformedBy());
 		addToSet(referenced, getOptionalInput());
 		addToSet(referenced, getOutput());
+		
 		getSelectedSteps();
+		
 		return referenced;
 	}
 	

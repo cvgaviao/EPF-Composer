@@ -322,6 +322,8 @@ public class RealizationManager implements IRealizationManager {
 		}
 		
 		for (Descriptor des : rdwpdList) {
+			collectAllReferences(des, null, seenSet);
+			
 			if (des instanceof TaskDescriptor || !propUtil.isCreatedByReference(des)) {
 				continue;
 			}
@@ -348,8 +350,10 @@ public class RealizationManager implements IRealizationManager {
 		seenSet.add(des);
 		
 		RealizedDescriptor rdes = (RealizedDescriptor) getRealizedElement(des);
-		Set<Descriptor> references = rdes.getAllReferenced();
-		collectingSet.addAll(references);
+		Set<Descriptor> references = rdes.updateAndGetAllReferenced();
+		if (collectingSet != null) {
+			collectingSet.addAll(references);
+		}
 		for (Descriptor ref : references) {
 			collectAllReferences(ref, collectingSet, seenSet);
 		}
