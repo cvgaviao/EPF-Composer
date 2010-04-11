@@ -76,14 +76,14 @@ public class MethodElementPropUtil {
 		}
 	}
 	
-	protected String getValitileString(MethodElement element, String key) {
+	protected Object getValitileObject(MethodElement element, String key) {
 		MultiResourceEObject mobj = (MultiResourceEObject) element;
-		return mobj.getVolatileString(key);
+		return mobj.getVolatileObject(key);
 	}
 	
-	protected void storeValitileString(MethodElement element, String key, String value) {
+	protected void storeValitileObject(MethodElement element, String key, Object value) {
 		MultiResourceEObject mobj = (MultiResourceEObject) element;
-		mobj.storeVolatileString(key, value);
+		mobj.storeVolatileObject(key, value);
 	}
 	
 }

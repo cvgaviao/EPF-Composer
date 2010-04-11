@@ -451,7 +451,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public List<? extends Descriptor> getCustomizingChildren(Descriptor des) {
-		String value = getValitileString(des, V_DESCRIPTOR_CustomizingChildren);
+		String value = (String) getValitileObject(des, V_DESCRIPTOR_CustomizingChildren);
 		
 		if (value == null || value.length() == 0) {
 			return null;
@@ -476,9 +476,9 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public void addToCustomizingChildren(Descriptor parent, Descriptor child) {
 		String childGuild =  child.getGuid();
 		
-		String oldValue = getValitileString(parent, V_DESCRIPTOR_CustomizingChildren);
+		String oldValue = (String) getValitileObject(parent, V_DESCRIPTOR_CustomizingChildren);
 		if (oldValue == null || oldValue.length() == 0) {
-			storeValitileString(parent, V_DESCRIPTOR_CustomizingChildren, childGuild);
+			storeValitileObject(parent, V_DESCRIPTOR_CustomizingChildren, childGuild);
 			return;
 		}
 		
@@ -492,7 +492,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 
 		String newValue = oldValue.concat(infoSeperator).concat(childGuild);
-		storeValitileString(parent, V_DESCRIPTOR_CustomizingChildren, newValue);
+		storeValitileObject(parent, V_DESCRIPTOR_CustomizingChildren, newValue);
 
 	}
 	
