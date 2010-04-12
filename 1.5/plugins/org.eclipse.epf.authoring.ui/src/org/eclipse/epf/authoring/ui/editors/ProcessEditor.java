@@ -2298,19 +2298,19 @@ public class ProcessEditor extends MethodElementEditor implements
 	 */
 	public void doSave(IProgressMonitor monitor) {
 		suppression.saveToModel();
-		Scope scope = ProcessScopeUtil.getInstance().getScope(selectedProcess);
-		try {
-			if (scope != null) {
-				selectedProcess.setDefaultContext(null);
-				selectedProcess.getValidContext().clear();
-			}
+//		Scope scope = ProcessScopeUtil.getInstance().getScope(selectedProcess);
+//		try {
+//			if (scope != null) {
+//				selectedProcess.setDefaultContext(null);
+//				selectedProcess.getValidContext().clear();
+//			}
 		super.doSave(monitor);
-		} finally {
-			if (scope != null) {
-				selectedProcess.setDefaultContext(scope);
-				selectedProcess.getValidContext().add(scope);
-			}
-		}
+//		} finally {
+//			if (scope != null) {
+//				selectedProcess.setDefaultContext(scope);
+//				selectedProcess.getValidContext().add(scope);
+//			}
+//		}
 		suppression.saveIsDone();
 		resourcesToSave.clear();
 		firePropertyChange(PROP_DIRTY);

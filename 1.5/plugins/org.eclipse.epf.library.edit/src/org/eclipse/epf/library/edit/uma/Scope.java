@@ -10,12 +10,6 @@ import org.eclipse.epf.uma.MethodElement;
  * @author Weiping Lu
  * @since 1.5.1
  */
-public interface Scope extends MethodConfiguration {
-
-	boolean inScope(MethodElement element);
-	void addToScope(MethodElement element);
-	void clearAll();
-		
-	boolean debug = true;
+public interface Scope extends org.eclipse.epf.uma.util.Scope {
 	
 }

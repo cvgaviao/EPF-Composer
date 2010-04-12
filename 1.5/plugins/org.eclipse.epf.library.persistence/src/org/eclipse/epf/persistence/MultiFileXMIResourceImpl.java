@@ -59,6 +59,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.DefaultValueManager;
 import org.eclipse.epf.uma.ecore.util.OppositeFeatureNotification;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -750,12 +751,24 @@ implements ILibraryResource, IFailSafeSavable
 				options = MultiFileResourceSetImpl.DEFAULT_SAVE_OPTIONS;
 			}
 
+			MethodElement e = PersistenceUtil.getMethodElement(this);
+			Process proc = null;
+			Scope scope = null;
+			if (e instanceof ProcessComponent) {
+				proc = ((ProcessComponent) e).getProcess();
+				if (proc != null && proc.getDefaultContext() instanceof Scope) {
+					scope = (Scope) proc.getDefaultContext();
+					proc.setDefaultContext(null);
+					proc.getValidContext().clear();
+				}
+			}			
+			
 			super.save(options);
 
 			// Special handling for saving MethodLibrary to remove all references to
 			// MethodConfigurations from library file.
 			//
-			MethodElement e = PersistenceUtil.getMethodElement(this);
+			//MethodElement e = PersistenceUtil.getMethodElement(this);
 			
 			handleSynFreeFlag(e);
 			
@@ -789,6 +802,10 @@ implements ILibraryResource, IFailSafeSavable
 				} finally {
 					lib.getPredefinedConfigurations().addAll(configs);
 					lib.eSetDeliver(oldDeliver);
+					if (proc != null && scope != null) {
+						proc.setDefaultContext(scope);
+						proc.getValidContext().add(scope);
+					}
 				}
 			}
 		}
