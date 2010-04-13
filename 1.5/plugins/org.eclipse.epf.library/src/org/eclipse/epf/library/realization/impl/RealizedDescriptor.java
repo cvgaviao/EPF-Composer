@@ -319,7 +319,9 @@ public class RealizedDescriptor extends RealizedElement implements
 		} 
 				
 		List<Guidance> valueList = (List<Guidance>) getDescriptor().eGet(dRef);
-		valueList.clear();
+		if (! valueList.isEmpty()) {
+			valueList.clear();
+		}
 		if (!elementGuidanceList.isEmpty()) {
 			valueList.addAll(elementGuidanceList);
 		}
