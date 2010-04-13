@@ -28,8 +28,7 @@ public class ScopeImpl extends ScopeBase {
 		if (! plugins.contains(plugin)) {
 			plugins.add(plugin);
 			getMethodPluginSelection().add(plugin);
-		}
-		if (Scope.debug) {
+		}		if (Scope.debug) {
 			System.out.println("LD> addToScope: " + element);//$NON-NLS-1$
 			System.out.println("LD> this: " + super.toString());//$NON-NLS-1$	
 			System.out.println("LD> plugins: \n" + this);//$NON-NLS-1$	
@@ -43,12 +42,13 @@ public class ScopeImpl extends ScopeBase {
 	}
 	
 	public String toString() {
-		String str = ""; //$NON-NLS-1$
+		String str = getClass().getName() + '@'
+				+ Integer.toHexString(this.hashCode()) + "plugins: \n"; //$NON-NLS-1$ //$NON-NLS-2$
 		if (plugins != null) {
 			for (MethodPlugin p : plugins) {
 				str += p + "\n"; //$NON-NLS-1$
 			}
-		}		
+		}
 		return str;
 	}
 	

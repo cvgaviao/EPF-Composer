@@ -744,6 +744,10 @@ implements ILibraryResource, IFailSafeSavable
 
 	public void save(Map options) throws IOException {
 		boolean old = DefaultValueManager.INSTANCE.isUseStatic();
+		
+		Process proc = null;
+		Scope scope = null;
+		
 		try {
 			DefaultValueManager.INSTANCE.setUseStatic(true);
 			
@@ -752,8 +756,6 @@ implements ILibraryResource, IFailSafeSavable
 			}
 
 			MethodElement e = PersistenceUtil.getMethodElement(this);
-			Process proc = null;
-			Scope scope = null;
 			if (e instanceof ProcessComponent) {
 				proc = ((ProcessComponent) e).getProcess();
 				if (proc != null && proc.getDefaultContext() instanceof Scope) {
@@ -802,14 +804,14 @@ implements ILibraryResource, IFailSafeSavable
 				} finally {
 					lib.getPredefinedConfigurations().addAll(configs);
 					lib.eSetDeliver(oldDeliver);
-					if (proc != null && scope != null) {
-						proc.setDefaultContext(scope);
-						proc.getValidContext().add(scope);
-					}
 				}
 			}
 		}
 		finally {
+			if (proc != null && scope != null) {
+				proc.setDefaultContext(scope);
+				proc.getValidContext().add(scope);
+			}
 			DefaultValueManager.INSTANCE.setUseStatic(old);
 		}
 	}
