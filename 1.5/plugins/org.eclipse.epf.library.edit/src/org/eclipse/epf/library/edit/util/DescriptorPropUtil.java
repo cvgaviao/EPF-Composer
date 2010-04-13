@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
 
@@ -35,6 +36,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
 	private static int briefDesReplace = 			4;		//0000000000000100
+	private static int mainDesReplace = 			8;		//0000000000001000
+	private static int keyConsiderReplace =		   16;		//0000000000010000
 	
 	private static DescriptorPropUtil descriptorPropUtil = new DescriptorPropUtil();
 	public static DescriptorPropUtil getDesciptorPropUtil() {
@@ -107,6 +110,34 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	public void setBriefDesRepalce(Descriptor d, boolean value) {
 		setCustomization(d, briefDesReplace, value);
+	}
+	
+	public boolean isMainDesRepalce(Descriptor d) {
+		if (d.getPresentation() instanceof DescriptorDescription) {
+			String value = ((DescriptorDescription) d.getPresentation()).getRefinedDescription();
+			if (hasNoValue(value)) {
+				return false;
+			}
+		}
+		return getCustomization(d, mainDesReplace);
+	}
+	
+	public void setMainDesRepalce(Descriptor d, boolean value) {
+		setCustomization(d, mainDesReplace, value);
+	}
+	
+	public boolean isKeyConsiderRepalce(Descriptor d) {
+		if (d.getPresentation() instanceof DescriptorDescription) {
+			String value = ((DescriptorDescription) d.getPresentation()).getKeyConsiderations();
+			if (hasNoValue(value)) {
+				return false;
+			}
+		}
+		return getCustomization(d, keyConsiderReplace);
+	}
+	
+	public void setKeyConsiderRepalce(Descriptor d, boolean value) {
+		setCustomization(d, keyConsiderReplace, value);
 	}
 	
 	//Test if usedD is locally used by usingD through relationship specified by the
@@ -235,8 +266,13 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		if (feature == up.getMethodElement_BriefDescription()) {
 			return isBriefDesRepalce(d);
 		}
-		
-		return true;
+		if (feature == up.getDescriptorDescription_RefinedDescription()) {
+			return isMainDesRepalce(d);
+		}
+		if (feature == up.getContentDescription_KeyConsiderations()) {
+			return isKeyConsiderRepalce(d);
+		}
+		return false;
 	}
 	
 	//Return green parent guid

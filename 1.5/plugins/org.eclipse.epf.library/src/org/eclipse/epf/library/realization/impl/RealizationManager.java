@@ -337,7 +337,7 @@ public class RealizationManager implements IRealizationManager {
 			BreakdownElement be = beList.get(i);
 			if (be instanceof Descriptor) {
 				RealizedDescriptor rdes = (RealizedDescriptor) getRealizedElement(be);	
-				rdes.updatePlainTextValues();
+				rdes.updateStringValues();
 			}
 		}
 				

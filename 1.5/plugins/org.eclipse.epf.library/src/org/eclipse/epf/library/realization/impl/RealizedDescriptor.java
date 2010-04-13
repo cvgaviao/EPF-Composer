@@ -2,6 +2,7 @@ package org.eclipse.epf.library.realization.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -35,11 +37,20 @@ public class RealizedDescriptor extends RealizedElement implements
 		IRealizedDescriptor, IRealizedElement {
 
 	private static Set<EStructuralFeature> featureSet = new HashSet<EStructuralFeature>();
+	private static Map<EStructuralFeature, EStructuralFeature> contentFeatureMap = new HashMap<EStructuralFeature, EStructuralFeature>();
+
 	static {
-		UmaPackage up = UmaPackage.eINSTANCE;		
+		UmaPackage up = UmaPackage.eINSTANCE;
 		featureSet.add(up.getNamedElement_Name());
 		featureSet.add(up.getMethodElement_PresentationName());
 		featureSet.add(up.getMethodElement_BriefDescription());
+
+		contentFeatureMap.put(up.getDescriptorDescription_RefinedDescription(),
+				up.getContentDescription_MainDescription());
+		contentFeatureMap.put(up.getContentDescription_KeyConsiderations(), up
+				.getContentDescription_KeyConsiderations());		
+		contentFeatureMap.put(up.getContentDescription_LongPresentationName(), up
+				.getContentDescription_LongPresentationName());
 	}
 	
 	public RealizedDescriptor(Descriptor descriptor) {
@@ -50,7 +61,42 @@ public class RealizedDescriptor extends RealizedElement implements
 		return featureSet.contains(feature);
 	}
 	
+	private Object getContentFeatureValue(EStructuralFeature feature) {
+		EStructuralFeature elementFeature = contentFeatureMap.get(feature);
+		
+		if (elementFeature != null) {	
+
+			Object value = null;
+			if (getDescriptor().getPresentation() != null) {
+				value = getDescriptor().getPresentation().eGet(feature);
+			}
+			
+			if (getLinkedElement() == null || getLinkedElement().getPresentation() == null) {
+				return value;
+			}
+			
+			DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+			if (propUtil.isValueReplaced(feature, getDescriptor())) {
+				return value;
+			}
+			
+			Object linkedValue = ConfigurationHelper.calcAttributeFeatureValue(
+					getLinkedElement().getPresentation(), elementFeature, getConfig());
+			if (getDescriptor().getPresentation() != null && linkedValue != null && !linkedValue.equals(value)) {
+				getDescriptor().getPresentation().eSet(feature, linkedValue);
+			}
+
+			return linkedValue;
+		}
+		
+		throw new UnsupportedOperationException();
+	}
+	
 	public Object getFeatureValue(EStructuralFeature feature) {
+		if (contentFeatureMap.containsKey(feature)) {
+			return getContentFeatureValue(feature);
+		}
+		
 		if (! featureSet.contains(feature)) {
 			return super.getFeatureValue(feature); 
 		}		
@@ -82,12 +128,12 @@ public class RealizedDescriptor extends RealizedElement implements
 		return super.getOFeatureValue(ofeature);
 	}
 	
-	protected MethodElement getLinkedElement() {
+	protected ContentElement getLinkedElement() {
 		MethodElement element = getRawLinkedElement();
 		if (element == null) {
 			return null;
 		}
-		return ConfigurationHelper.getCalculatedElement(element, getConfig());
+		return (ContentElement) ConfigurationHelper.getCalculatedElement(element, getConfig());
 	}
 	
 	protected MethodElement getRawLinkedElement() {
@@ -205,8 +251,12 @@ public class RealizedDescriptor extends RealizedElement implements
 		set.addAll(list);
 	}
 	
-	public void updatePlainTextValues() {
+	public void updateStringValues() {
 		for (EStructuralFeature feature : featureSet) {
+			getFeatureValue(feature);
+		}
+		
+		for (EStructuralFeature feature : contentFeatureMap.keySet()) {
 			getFeatureValue(feature);
 		}
 	}
