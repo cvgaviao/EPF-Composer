@@ -177,7 +177,18 @@ public abstract class ElementRealizer {
 	 * @return MethodElement
 	 */
 	public MethodElement realize(MethodElement element) {
-		if (getConfiguration() instanceof Scope) {
+		if (getConfiguration() instanceof Scope) {			
+			if (element instanceof VariabilityElement) {
+				VariabilityElement ve = (VariabilityElement) element;
+				while(ve.getVariabilityType() == VariabilityType.CONTRIBUTES) {
+					VariabilityElement base = ve.getVariabilityBasedOnElement();
+					if (base == null) {
+						break;
+					}
+					ve = base;
+				}
+				return ve;
+			}
 			return element;
 		}
 		
