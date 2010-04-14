@@ -35,8 +35,8 @@ public interface IRealizationManager {
 		
 	void dispose();
 	
-	boolean debug = true;
+	boolean debug = false;
 	
-	boolean timing = true;
+	boolean timing = false;
 	
 }

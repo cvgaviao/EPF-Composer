@@ -16,6 +16,6 @@ public interface Scope extends MethodConfiguration {
 	void addToScope(MethodElement element);
 	void clearAll();
 		
-	boolean debug = true;
+	boolean debug = false;
 	
 }

@@ -15,7 +15,7 @@ import org.eclipse.epf.uma.UmaPackage;
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	
-	private static boolean localDebug = true;
+	private static boolean localDebug = false;
 	
 	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
 	private static final String plus = "+"; 							//$NON-NLS-1$
