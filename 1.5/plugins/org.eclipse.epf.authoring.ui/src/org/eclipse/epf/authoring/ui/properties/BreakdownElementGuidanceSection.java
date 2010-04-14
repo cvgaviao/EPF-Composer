@@ -14,13 +14,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.filters.ProcessGuidanceFilter;
-import org.eclipse.epf.diagram.model.util.DiagramInfo;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -29,34 +30,43 @@ import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.FilterInitializer;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -71,10 +81,6 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
  * 
  */
 public class BreakdownElementGuidanceSection extends AbstractSection {
-	protected ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-			TngAdapterFactory.INSTANCE
-					.getNavigatorView_ComposedAdapterFactory());
-
 	private FormToolkit toolkit;
 
 	private Button ctrl_add_1, ctrl_remove_1;
@@ -207,6 +213,9 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 			if (getElement() instanceof BreakdownElement) {
 				element = (BreakdownElement) getElement();
 
+				initContentProvider();
+				initLabelProvider();
+				
 				viewer_1.refresh();
 
 				// hide/show controls
@@ -223,10 +232,6 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	 */
 	public void dispose() {
 		super.dispose();
-
-		if (labelProvider != null) {
-			labelProvider.dispose();
-		}
 	}
 
 	/**
@@ -258,15 +263,10 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 
 			ctrl_table_1 = FormUI.createTable(toolkit, pane1, tableHeight);
 			viewer_1 = new TableViewer(ctrl_table_1);
-			IStructuredContentProvider contentProvider = new AdapterFactoryContentProvider(
-					getAdapterFactory()) {
-				public Object[] getElements(Object object) {
-					return getFilteredList(getSelectedGuidances()).toArray();
-				}
-			};
+			
+			initContentProvider();
+			initLabelProvider();
 
-			viewer_1.setContentProvider(contentProvider);
-			viewer_1.setLabelProvider(labelProvider);
 			viewer_1.setInput(element);
 
 			// create buttons for table2
@@ -281,6 +281,70 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 
 			toolkit.paintBordersFor(pane1);
 		}
+	}
+	
+	protected void initContentProvider() {
+		IStructuredContentProvider contentProvider = new AdapterFactoryContentProvider(
+				getAdapterFactory()) {
+			public Object[] getElements(Object object) {
+				List<MethodElement> elements = new ArrayList<MethodElement>();
+				elements.addAll(getSelectedGuidances());
+				
+				if (element instanceof Descriptor) {
+					if (ProcessUtil.isSynFree()
+							&& !DescriptorPropUtil.getDesciptorPropUtil().isNoAutoSyn((Descriptor) element)) {
+						elements.addAll(((Descriptor) element).getGuidanceExclude());
+					}
+				}
+				
+				return getFilteredList(elements).toArray();				
+			}
+		};
+
+		viewer_1.setContentProvider(contentProvider);		
+	}
+	
+	protected void initLabelProvider() {		
+		ILabelProvider labelProvider = null;
+		
+		if (isSyncFree() && (element instanceof Descriptor)) {
+			labelProvider = new GuidanceSyncFreeLabelProvider(
+					TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory(),
+					(Descriptor)element);  
+		} else {
+			labelProvider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory());
+		}
+		
+		viewer_1.setLabelProvider(labelProvider);
+	}
+	
+	protected EReference getEReference(Guidance item) {
+		EReference ref = null;
+		
+		if (item instanceof Checklist) {		
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Checklists();		
+		} else if (item instanceof Concept) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Concepts();
+		} else if (item instanceof Example) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Examples();
+		} else if (item instanceof SupportingMaterial) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_SupportingMaterials();
+		} else if (item instanceof Guideline) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Guidelines();
+		} else if (item instanceof ReusableAsset) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets();
+		}else if (item instanceof Template) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Templates();
+		}else if (item instanceof Report) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Reports();
+		}else if (item instanceof ToolMentor) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Toolmentor();
+		}else if (item instanceof EstimationConsiderations) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations();
+		}
+		
+		return ref;
 	}
 
 	/**
@@ -475,4 +539,49 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		str[i++] = FilterConstants.space + FilterConstants.WHITE_PAPERS;
 		return str;
 	}
+	
+	public boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
+	class GuidanceSyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
+		private FontRegistry registry = new FontRegistry();
+		private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		
+		private Font systemFont;
+		private Descriptor desc;
+
+		public GuidanceSyncFreeLabelProvider(AdapterFactory adapterFactory, Descriptor desc) {
+			super(adapterFactory);
+			this.desc = desc;		
+		}
+	    
+	    public Font getFont(Object obj, int columnIndex) {
+	    	if (systemFont == null) {
+	    		systemFont = Display.getCurrent().getSystemFont();
+	    	}
+	    	
+	    	EReference ref = getEReference((Guidance)obj);
+	    	
+	    	if (propUtil.isDynamic(obj, desc, ref)) {
+	    		return registry.getBold(systemFont.getFontData()[0].getName());    		
+	    	}
+	    	
+	    	return systemFont;
+	    }	    	
+	    
+	    public String getColumnText(Object obj, int columnIndex) {
+	    	String original = super.getColumnText(obj, columnIndex);
+	    	
+	    	EReference ref = getEReference((Guidance)obj);
+	    	
+	    	if (propUtil.isDynamicAndExclude(obj, desc, ref)) {
+	    		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
+	    	}
+	    	
+	    	return original;	    	
+	    }
+	    
+	}
+	
 }
