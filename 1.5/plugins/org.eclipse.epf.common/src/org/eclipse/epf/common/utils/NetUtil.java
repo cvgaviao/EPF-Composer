@@ -98,6 +98,8 @@ public class NetUtil {
 			"%F0", "%F1", "%F2", "%F3", "%F4", "%F5", "%F6", "%F7", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
 			"%F8", "%F9", "%FA", "%FB", "%FC", "%FD", "%FE", "%FF" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
 	};
+	
+	public static final String RAW_RMC_RAW = "raw_rmc_raw"; //$NON-NLS-1$
 
 	/**
 	 * Private constructor to prevent this class from being instantiated. All
@@ -349,6 +351,10 @@ public class NetUtil {
 	 * @return the ASCII-escaped respresentation.
 	 */
 	public static String decodedFileUrl(String fileURL) {
+		if (isRmcRawUrl(fileURL)) {
+			return fileURL;
+		}
+		
 		String url = fileURL;
 		StringBuffer strBuf = new StringBuffer();
 		int urlLength = url.length();
@@ -379,6 +385,16 @@ public class NetUtil {
 //		url = url.replaceAll("\\+", "%2B"); //$NON-NLS-1$
 		url = URLDecoder.decode(url, "UTF-8"); //$NON-NLS-1$
 		return url;
+	}
+	
+	public static boolean isRmcRawUrl(String url) {
+		boolean result = false;
+		
+		if (url.endsWith(RAW_RMC_RAW)) {
+			result = true;
+		}
+		
+		return result;
 	}
 
 }

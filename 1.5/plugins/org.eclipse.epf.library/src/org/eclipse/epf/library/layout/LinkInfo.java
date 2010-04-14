@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 
+import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.common.xml.XSLTProcessor;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
@@ -239,6 +240,10 @@ public class LinkInfo {
 	}
 
 	protected String decode(String str) throws UnsupportedEncodingException {
+		if (NetUtil.isRmcRawUrl(str)) {
+			return str;
+		}
+		
 		return URLDecoder.decode(str, "UTF-8"); //$NON-NLS-1$
 	}
 
