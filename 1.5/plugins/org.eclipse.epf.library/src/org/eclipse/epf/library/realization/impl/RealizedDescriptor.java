@@ -368,12 +368,18 @@ public class RealizedDescriptor extends RealizedElement implements
 			}
 		} 
 				
+		boolean oldDeliver =  getDescriptor().eDeliver();		
 		List<Guidance> valueList = (List<Guidance>) getDescriptor().eGet(dRef);
-		if (! valueList.isEmpty()) {
-			valueList.clear();
-		}
-		if (!elementGuidanceList.isEmpty()) {
-			valueList.addAll(elementGuidanceList);
+		try {
+			getDescriptor().eSetDeliver(false);
+			if (! valueList.isEmpty()) {
+				valueList.clear();
+			}
+			if (!elementGuidanceList.isEmpty()) {
+				valueList.addAll(elementGuidanceList);
+			}
+		} finally {
+			getDescriptor().eSetDeliver(oldDeliver);
 		}
 
 		return valueList;
