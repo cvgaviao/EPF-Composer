@@ -358,31 +358,50 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		List<Guidance> elementGuidanceList = ConfigurationHelper.calc0nFeatureValue(element,
 				eRef, realizer);
-		if (elementGuidanceList == null) {
-			elementGuidanceList = new ArrayList<Guidance>();
-		}
+		
+		Set<Guidance> resultGuidanceSet = new LinkedHashSet<Guidance>();
 
 		if (!elementGuidanceList.isEmpty()) {
+			resultGuidanceSet.addAll(elementGuidanceList);
 			if (excludeList != null && ! excludeList.isEmpty()) {
-				elementGuidanceList.removeAll(excludeList);
+				resultGuidanceSet.removeAll(excludeList);
+			}
+			if (addtionList != null) {
+				for (Guidance g : addtionList) {
+					if (eRef.getEType().isInstance(g)) {
+						resultGuidanceSet.add(g);
+					}
+				}
 			}
 		} 
 				
+		List<Guidance> resultGuidanceList = new ArrayList<Guidance>();
 		boolean oldDeliver =  getDescriptor().eDeliver();		
-		List<Guidance> valueList = (List<Guidance>) getDescriptor().eGet(dRef);
 		try {
 			getDescriptor().eSetDeliver(false);
-			if (! valueList.isEmpty()) {
-				valueList.clear();
+			List<Guidance> desCuidanceList = (List<Guidance>) getDescriptor().eGet(dRef);
+			for (int i = desCuidanceList.size() -1; i >= 0 ; i--) {
+				boolean keepInList = resultGuidanceSet.remove(desCuidanceList.get(i));
+				if (! keepInList) {
+					desCuidanceList.remove(i);
+				}
 			}
-			if (!elementGuidanceList.isEmpty()) {
-				valueList.addAll(elementGuidanceList);
-			}
+			if (! resultGuidanceSet.isEmpty()) {
+				Set<Guidance> desGuidanceSet = new HashSet<Guidance>();
+				desGuidanceSet.addAll(desCuidanceList);
+				for (Guidance g : resultGuidanceSet) {
+					if (! desGuidanceSet.contains(g)) {
+						desCuidanceList.add(g);
+					}
+				}
+			}			
+			resultGuidanceList.addAll(desCuidanceList);
+			
 		} finally {
 			getDescriptor().eSetDeliver(oldDeliver);
 		}
 
-		return valueList;
+		return resultGuidanceList;
 	}
 	
 	

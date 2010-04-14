@@ -1331,23 +1331,20 @@ public class ConfigurationHelper {
 	 * @return List a list of {@link MethodElement}
 	 */
 	public static List calc0nFeatureValue(MethodElement element,
-			EStructuralFeature feature, ElementRealizer realizer) 
-	{
+			EStructuralFeature feature, ElementRealizer realizer) {
 		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
 			Object value = element.eGet(feature);
 			if (value instanceof List) {
-				List listValue = (List) value;
-				if (listValue != null) {
-					for (int i = 0; i < listValue.size(); i++) {
-						if (listValue.get(i) instanceof MethodElement) {
-							MethodElement e0 = (MethodElement) listValue.get(i);
-							MethodElement e1 = realizer.realize(e0);
-							if (e1 != null && e1 != e0) {
-								listValue.set(i, e1);
-							}							
-						} else {
-							break;
+				List listValue = new ArrayList((List) value); 
+				for (int i = 0; i < listValue.size(); i++) {
+					if (listValue.get(i) instanceof MethodElement) {
+						MethodElement e0 = (MethodElement) listValue.get(i);
+						MethodElement e1 = realizer.realize(e0);
+						if (e1 != null && e1 != e0) {
+							listValue.set(i, e1);
 						}
+					} else {
+						break;
 					}
 				}
 				return listValue;
