@@ -1336,7 +1336,21 @@ public class ConfigurationHelper {
 		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
 			Object value = element.eGet(feature);
 			if (value instanceof List) {
-				return (List) value;
+				List listValue = (List) value;
+				if (listValue != null) {
+					for (int i = 0; i < listValue.size(); i++) {
+						if (listValue.get(i) instanceof MethodElement) {
+							MethodElement e0 = (MethodElement) listValue.get(i);
+							MethodElement e1 = realizer.realize(e0);
+							if (e1 != null && e1 != e0) {
+								listValue.set(i, e1);
+							}							
+						} else {
+							break;
+						}
+					}
+				}
+				return listValue;
 			}
 			return null;
 		}
@@ -1559,7 +1573,12 @@ public class ConfigurationHelper {
 			MethodElement ownerElement, EStructuralFeature feature,
 			MethodConfiguration config) {
 		if (config instanceof Scope) {
-			return element.eGet(feature);
+			Object value = element.eGet(feature);
+			if (value instanceof MethodElement) {
+				ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
+				value = realizer.realize((MethodElement) value);
+			}
+			return value;
 		}
 		
 		if (isMergableAttribute(feature)) {

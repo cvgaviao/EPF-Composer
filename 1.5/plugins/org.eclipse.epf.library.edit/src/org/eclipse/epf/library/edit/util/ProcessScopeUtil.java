@@ -42,7 +42,14 @@ public class ProcessScopeUtil {
 		return scopeType;
 	}
 	
-	public Scope loadScope(Process proc) {				
+	public Scope loadScope(Process proc) {
+		if (proc == null) {
+			return null;
+		}
+		if (proc.getDefaultContext() != null && !(proc.getDefaultContext() instanceof Scope)) {
+			return null;
+		}
+		
 		Scope scope = getScope(proc); 
 		if (scope != null) {
 			updateScope(proc);
