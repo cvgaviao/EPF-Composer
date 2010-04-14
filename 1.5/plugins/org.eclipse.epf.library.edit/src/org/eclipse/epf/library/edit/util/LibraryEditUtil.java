@@ -156,6 +156,14 @@ public class LibraryEditUtil {
 			return up.getWorkProductDescriptor_DeliverablePartsExclude();
 		}
 		
+		if (ref == up.getBreakdownElement_Checklists() || ref == up.getBreakdownElement_Concepts()
+				|| ref == up.getBreakdownElement_Examples() || ref == up.getBreakdownElement_SupportingMaterials()
+				|| ref == up.getBreakdownElement_Guidelines() || ref == up.getBreakdownElement_ReusableAssets()
+				|| ref == up.getBreakdownElement_Templates() || ref == up.getBreakdownElement_Reports()
+				|| ref == up.getBreakdownElement_Toolmentor() || ref == up.getBreakdownElement_Estimationconsiderations()) {
+			return up.getDescriptor_GuidanceExclude();
+		}
+		
 		//...		
 		return null;
 	}
