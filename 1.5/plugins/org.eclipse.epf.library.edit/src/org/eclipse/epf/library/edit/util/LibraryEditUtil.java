@@ -126,6 +126,16 @@ public class LibraryEditUtil {
 		ILibraryEditUtilProvider p = getProvider();				
 		return p == null ? null : p.getMethodElement(guid);
 	}
+	
+	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
+			EReference ref, MethodConfiguration config) {
+		return getProvider().isDynamicAndExclude(obj, desc, ref, config);
+	}
+
+	public boolean isDynamic(Object obj, Descriptor desc, EReference ref,
+			MethodConfiguration config) {
+		return getProvider().isDynamic(obj, desc, ref, config);
+	}
 		
 	public EReference getExcludeFeature(EReference ref) {
 		if (ref == up.getTaskDescriptor_PerformedPrimarilyBy()) {

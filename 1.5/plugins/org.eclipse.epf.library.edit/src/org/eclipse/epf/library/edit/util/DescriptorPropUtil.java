@@ -9,6 +9,7 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.DescriptorDescription;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
 
@@ -530,6 +531,17 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		String newValue = oldValue.concat(infoSeperator).concat(childGuild);
 		storeValitileObject(parent, V_DESCRIPTOR_CustomizingChildren, newValue);
 
+	}
+	
+	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
+			EReference ref, MethodConfiguration config) {
+		return LibraryEditUtil.getInstance().isDynamicAndExclude(obj, desc,
+				ref, config);
+	}
+
+	public boolean isDynamic(Object obj, Descriptor desc, EReference ref,
+			MethodConfiguration config) {
+		return LibraryEditUtil.getInstance().isDynamic(obj, desc, ref, config);
 	}
 	
 	
