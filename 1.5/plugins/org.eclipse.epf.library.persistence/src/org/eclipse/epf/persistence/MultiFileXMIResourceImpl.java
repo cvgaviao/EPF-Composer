@@ -759,9 +759,15 @@ implements ILibraryResource, IFailSafeSavable
 			if (e instanceof ProcessComponent) {
 				proc = ((ProcessComponent) e).getProcess();
 				if (proc != null && proc.getDefaultContext() instanceof Scope) {
-					scope = (Scope) proc.getDefaultContext();
-					proc.setDefaultContext(null);
-					proc.getValidContext().clear();
+					boolean oldDeliver = proc.eDeliver();
+					try {
+						proc.eSetDeliver(false);
+						scope = (Scope) proc.getDefaultContext();
+						proc.setDefaultContext(null);
+						proc.getValidContext().clear();
+					} finally {
+						proc.eSetDeliver(oldDeliver);
+					}
 				}
 			}			
 			
@@ -808,11 +814,17 @@ implements ILibraryResource, IFailSafeSavable
 			}
 		}
 		finally {
-			if (proc != null && scope != null) {
-				proc.setDefaultContext(scope);
-				proc.getValidContext().add(scope);
-			}
 			DefaultValueManager.INSTANCE.setUseStatic(old);
+			if (proc != null && scope != null) {
+				boolean oldDeliver = proc.eDeliver();
+				try {
+					proc.eSetDeliver(false);
+					proc.setDefaultContext(scope);
+					proc.getValidContext().add(scope);
+				} finally {
+					proc.eSetDeliver(oldDeliver);
+				}
+			}
 		}
 	}
 
