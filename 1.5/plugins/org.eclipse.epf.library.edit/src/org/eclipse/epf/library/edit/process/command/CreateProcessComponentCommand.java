@@ -349,7 +349,8 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 			if (processScope != null) {
 				process.setDefaultContext(processScope);
 				process.getValidContext().add(processScope);
-				processScope.addToScope(process);
+				ProcessScopeUtil.getInstance().addReferenceToScope(
+						processScope, process, new HashSet<MethodElement>());
 			}
 			
 		}

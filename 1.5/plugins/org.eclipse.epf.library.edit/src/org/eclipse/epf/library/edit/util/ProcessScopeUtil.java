@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.uma.ScopeFactory;
 import org.eclipse.epf.uma.ContentElement;
-import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessElement;
@@ -75,7 +74,7 @@ public class ProcessScopeUtil {
 
 	}
 	
-	private void addReferenceToScope(Scope scope, MethodElement element, 
+	public void addReferenceToScope(Scope scope, MethodElement element, 
 			Set<MethodElement> handledReferenceSet) {
 		if (handledReferenceSet.contains(element)) {
 			return;

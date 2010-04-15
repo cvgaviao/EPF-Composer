@@ -13,6 +13,7 @@ package org.eclipse.epf.library.edit.process.command;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -81,7 +82,8 @@ public abstract class BSDragAndDropCommand extends ResourceAwareDragAndDropComma
 			Object e = TngUtil.unwrap(obj);
 			
 			if (scope != null && e instanceof MethodElement) {
-				scope.addToScope((MethodElement) e);
+				ProcessScopeUtil.getInstance().addReferenceToScope(
+						scope, (MethodElement) e, new HashSet<MethodElement>());
 			}
 			
 			if (TngUtil.isLocked((EObject) owner))
