@@ -1055,7 +1055,7 @@ public class RelationSection extends AbstractSection {
 		
 	}
 			
-	public boolean isSyncFree() {
+	protected boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
 	}
 	

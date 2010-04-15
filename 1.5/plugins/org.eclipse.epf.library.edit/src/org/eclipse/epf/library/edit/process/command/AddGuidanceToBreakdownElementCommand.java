@@ -17,11 +17,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
@@ -46,13 +48,22 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 	private BreakdownElement brElement;
 
 	private Collection modifiedResources;
-
+	
+	private boolean calledForExculded = false;
+	
+	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+	
 	public AddGuidanceToBreakdownElementCommand(BreakdownElement brElement, List<Guidance> guidances) {
+		this(brElement, guidances, false);
+	}
+
+	public AddGuidanceToBreakdownElementCommand(BreakdownElement brElement, List<Guidance> guidances, boolean calledForExculded) {
 
 		super(TngUtil.getOwningProcess(brElement));
 
 		this.guidances = guidances;
 		this.brElement = brElement;
+		this.calledForExculded = calledForExculded;
 
 		this.modifiedResources = new HashSet();
 	}
@@ -115,6 +126,14 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 					}
 				}
 			}
+			
+			if (propUtil.isDescriptor(brElement)) {
+				if (calledForExculded) {
+					((Descriptor)brElement).getGuidanceExclude().removeAll(guidances);					
+				} else {
+					((Descriptor)brElement).getGuidanceAdditional().addAll(guidances);
+				}
+			}
 		}
 	}
 
@@ -162,6 +181,14 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 						LibraryEditPlugin.getDefault().getLogger()
 								.logError("Cant set guidance " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 					}
+				}
+			}
+			
+			if (propUtil.isDescriptor(brElement)) {
+				if (calledForExculded) {
+					((Descriptor)brElement).getGuidanceExclude().addAll(guidances);					
+				} else {
+					((Descriptor)brElement).getGuidanceAdditional().removeAll(guidances);
 				}
 			}
 		}

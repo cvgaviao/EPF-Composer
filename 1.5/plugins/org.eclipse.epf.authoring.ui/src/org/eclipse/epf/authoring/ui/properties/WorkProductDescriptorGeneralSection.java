@@ -759,6 +759,11 @@ public class WorkProductDescriptorGeneralSection extends
 									UmaPackage.eINSTANCE
 											.getWorkProductDescriptor_DeliverableParts(),
 									(WorkProductDescriptor) obj, -1);
+					
+					if (isSyncFree()) {
+						propUtil.removeLocalUse((Descriptor)obj, element,
+								UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+					}
 				}
 
 				// find matching deliverable parts
@@ -945,7 +950,7 @@ public class WorkProductDescriptorGeneralSection extends
 		return false;
 	}
 	
-	public boolean isSyncFree() {
+	private boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
 	}
 	

@@ -123,6 +123,8 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	private ILabelProvider labelProvider;
 
 	final boolean ignoreSuppressed = true;
+	
+	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 	protected Listener nameDeactivateListener = new Listener() {
 		public void handleEvent(Event e) {
@@ -575,7 +577,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 
 		// name
 		FormUI.createLabel(toolkit, generalComposite, PropertiesResources.Process_name);
-		if (isSyncFree() && isDescriptor(element)) {
+		if (isSyncFree() && propUtil.isDescriptor(element)) {
 			nameText = FormUI.createText(toolkit, generalComposite, SWT.DEFAULT, 1);
 			Composite buttonComposite = FormUI.createComposite(toolkit, generalComposite, SWT.NONE, 2, true);
 			nameRestoreBtn = FormUI.createButton(toolkit, buttonComposite, PropertiesResources.Process_name_restore);
@@ -587,7 +589,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 
 		// presentation name
 		FormUI.createLabel(toolkit, generalComposite, PropertiesResources.Activity_presentationName);
-		if (isSyncFree() && isDescriptor(element)) {
+		if (isSyncFree() && propUtil.isDescriptor(element)) {
 			presentationNameText = FormUI.createText(toolkit, generalComposite, SWT.DEFAULT, 1);
 			Composite buttonComposite = FormUI.createComposite(toolkit, generalComposite, SWT.NONE, 2, true);
 			presentationNameRestoreBtn = FormUI.createButton(toolkit, buttonComposite,
@@ -630,15 +632,6 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	
 	private boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
-	}
-	
-	private boolean isDescriptor(BreakdownElement element) {
-		if ((element instanceof TaskDescriptor) || (element instanceof RoleDescriptor)
-				|| (element instanceof WorkProductDescriptor)) {
-			return true;
-		}
-		
-		return false;
 	}
 	
 	private void updateNameRestoreBtn() {
@@ -853,7 +846,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	}
 	
 	private ModifyListener createSyncFreeNameModifyListener() {
-		if (isSyncFree() && isDescriptor(element)) {
+		if (isSyncFree() && propUtil.isDescriptor(element)) {
 			return new SyncFreeNameModifyListener();
 		}
 		
@@ -871,7 +864,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	}
 	
 	private ModifyListener createSyncFreePresentationNameModifyListener() {
-		if (isSyncFree() && isDescriptor(element)) {
+		if (isSyncFree() && propUtil.isDescriptor(element)) {
 			return new SyncFreePresentationNameModifyListener();
 		}
 		

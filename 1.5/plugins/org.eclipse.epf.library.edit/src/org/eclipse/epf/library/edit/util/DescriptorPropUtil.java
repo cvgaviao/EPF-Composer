@@ -7,11 +7,26 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Checklist;
+import org.eclipse.epf.uma.Concept;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.DescriptorDescription;
+import org.eclipse.epf.uma.EstimationConsiderations;
+import org.eclipse.epf.uma.Example;
+import org.eclipse.epf.uma.Guidance;
+import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Report;
+import org.eclipse.epf.uma.ReusableAsset;
+import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.Template;
+import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
@@ -325,6 +340,23 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return false;
 	}
 	
+	public boolean isGuidanceDynamic(Object obj, Descriptor desc) {
+		if (ProcessUtil.isSynFree()) {
+			EReference aRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional();
+			
+			List<MethodElement> listValue = (List<MethodElement> )desc.eGet(aRef);
+		    if (listValue == null) {
+		    	return false;
+		    }
+		    
+		    if (!listValue.contains(obj)) {
+		    	return true;		    	
+		    }
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * 
 	 * Check all the elements in list, to see if contains elements with
@@ -356,6 +388,32 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 		
 		return true;		
+	}
+	
+	public boolean CheckSelectionForGuidance(List list, Descriptor desc) {
+		int dynamic = 0;
+		int dynamicExclude = 0;
+		int local = 0;
+		
+		for (int i = 0; i < list.size(); i++) {
+			MethodElement des = (MethodElement) list.get(i);
+			EReference ref = getGuidanceEReference((Guidance)des);
+			if (isDynamicAndExclude(des, desc, ref)) {
+				dynamicExclude ++;
+			} else if (isGuidanceDynamic(des, desc)) {
+				dynamic ++;
+			} else {
+				local ++;
+			}
+		}
+		
+		if (((dynamic > 0) && (dynamicExclude > 0))
+			|| ((dynamic > 0) && (local > 0))
+			|| ((local > 0) && (dynamicExclude > 0))) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public Descriptor getGreenParentDescriptor(Descriptor des) {
@@ -544,5 +602,41 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return LibraryEditUtil.getInstance().isDynamic(obj, desc, ref, config);
 	}
 	
+	public boolean isDescriptor(BreakdownElement element) {
+		if ((element instanceof TaskDescriptor) || (element instanceof RoleDescriptor)
+				|| (element instanceof WorkProductDescriptor)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public EReference getGuidanceEReference(Guidance item) {
+		EReference ref = null;
+		
+		if (item instanceof Checklist) {		
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Checklists();		
+		} else if (item instanceof Concept) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Concepts();
+		} else if (item instanceof Example) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Examples();
+		} else if (item instanceof SupportingMaterial) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_SupportingMaterials();
+		} else if (item instanceof Guideline) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Guidelines();
+		} else if (item instanceof ReusableAsset) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_ReusableAssets();
+		}else if (item instanceof Template) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Templates();
+		}else if (item instanceof Report) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Reports();
+		}else if (item instanceof ToolMentor) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Toolmentor();
+		}else if (item instanceof EstimationConsiderations) {
+			ref = UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations();
+		}
+		
+		return ref;
+	}
 	
 }
