@@ -345,6 +345,11 @@ public class RealizedDescriptor extends RealizedElement implements
 	
 	private List<Guidance> calculateGuidances(EReference eRef, EReference dRef,
 			List<Guidance> excludeList, List<Guidance> addtionList) {
+		
+//		System.out.println("LD> eRef: " + eRef);
+//		System.out.println("LD> dRef: " + dRef);
+//		System.out.println("");
+		
 		UmaPackage up = UmaPackage.eINSTANCE;
 		
 		ElementRealizer realizer = DefaultElementRealizer
@@ -360,18 +365,17 @@ public class RealizedDescriptor extends RealizedElement implements
 				eRef, realizer);
 		
 		Set<Guidance> resultGuidanceSet = new LinkedHashSet<Guidance>();
-
+		if (addtionList != null) {
+			for (Guidance g : addtionList) {
+				if (eRef.getEType().isInstance(g)) {
+					resultGuidanceSet.add(g);
+				}
+			}
+		}
 		if (!elementGuidanceList.isEmpty()) {
 			resultGuidanceSet.addAll(elementGuidanceList);
 			if (excludeList != null && ! excludeList.isEmpty()) {
 				resultGuidanceSet.removeAll(excludeList);
-			}
-			if (addtionList != null) {
-				for (Guidance g : addtionList) {
-					if (eRef.getEType().isInstance(g)) {
-						resultGuidanceSet.add(g);
-					}
-				}
 			}
 		} 
 				
