@@ -309,7 +309,7 @@ public final class ProcessCommandUtil {
 	 * @param config
 	 * @return
 	 */
-	static Object getBestDescriptor(Object obj, Activity activity, MethodConfiguration config) {
+	public static Object getBestDescriptor(Object obj, Activity activity, MethodConfiguration config) {
 		List<?> descriptorList = activity.getBreakdownElements();
 		int size = descriptorList.size();
 		Descriptor descriptor = null;
@@ -877,6 +877,9 @@ public final class ProcessCommandUtil {
 	 * @return descriptor of the object, null if not exists
 	 */
 	public static Object getInheritedDescriptor(Object obj, Activity activity, MethodConfiguration config) {
+		if (ProcessUtil.isSynFree()) {
+			return null;
+		}
 		for (VariabilityType variabilityType = activity.getVariabilityType();
 			variabilityType == VariabilityType.EXTENDS || variabilityType == VariabilityType.LOCAL_CONTRIBUTION;
 			variabilityType = activity.getVariabilityType()) {

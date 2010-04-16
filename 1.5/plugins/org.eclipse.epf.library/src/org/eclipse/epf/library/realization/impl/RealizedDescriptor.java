@@ -204,7 +204,6 @@ public class RealizedDescriptor extends RealizedElement implements
 					getDescriptor(), parentAct, me, dFeature);
 			resultDescriptorList.add(des);
 		}
-
 		
 		return processResultDescriptorList(resultDescriptorList, dFeature);
 	}
@@ -217,14 +216,22 @@ public class RealizedDescriptor extends RealizedElement implements
 			if (listValue != null && !listValue.isEmpty()) {
 				Set<Descriptor> resultSet = new HashSet<Descriptor>(
 						resultDescriptorList);
-				DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+
+				LibraryEditUtil libEditUtil = LibraryEditUtil.getInstance();
 				
-				for (int i = listValue.size() - 1; i >= 0; i--) {
-					Descriptor des = listValue.get(i);
-					if (propUtil.isCreatedByReference(des) && !resultSet.contains(des)) {
-						listValue.remove(i);
+				boolean oldDeliver = getDescriptor().eDeliver();
+				getDescriptor().eSetDeliver(false);
+				try {
+					for (int i = listValue.size() - 1; i >= 0; i--) {
+						Descriptor des = listValue.get(i);
+						if (!resultSet.contains(des)) {
+							listValue.remove(i);
+							libEditUtil.removeOppositeFeature(getDescriptor(), des, dFeature);
+						}
 					}
-				}
+				} finally {
+					getDescriptor().eSetDeliver(oldDeliver);
+				}								
 			}
 		}
 		
@@ -382,12 +389,14 @@ public class RealizedDescriptor extends RealizedElement implements
 		List<Guidance> resultGuidanceList = new ArrayList<Guidance>();
 		boolean oldDeliver =  getDescriptor().eDeliver();		
 		try {
+			LibraryEditUtil libEditUtil = LibraryEditUtil.getInstance();
 			getDescriptor().eSetDeliver(false);
 			List<Guidance> desCuidanceList = (List<Guidance>) getDescriptor().eGet(dRef);
 			for (int i = desCuidanceList.size() -1; i >= 0 ; i--) {
 				boolean keepInList = resultGuidanceSet.remove(desCuidanceList.get(i));
 				if (! keepInList) {
-					desCuidanceList.remove(i);
+					Guidance g = desCuidanceList.remove(i);
+					libEditUtil.removeOppositeFeature(getDescriptor(), g, dRef);
 				}
 			}
 			if (! resultGuidanceSet.isEmpty()) {
@@ -396,6 +405,7 @@ public class RealizedDescriptor extends RealizedElement implements
 				for (Guidance g : resultGuidanceSet) {
 					if (! desGuidanceSet.contains(g)) {
 						desCuidanceList.add(g);
+						libEditUtil.addOppositeFeature(getDescriptor(), g, dRef);
 					}
 				}
 			}			

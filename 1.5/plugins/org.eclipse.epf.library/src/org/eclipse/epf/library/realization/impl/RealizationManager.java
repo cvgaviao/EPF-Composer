@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.process.command.CustomizeDescriptorCommand;
+import org.eclipse.epf.library.edit.process.command.ProcessCommandUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
@@ -167,13 +168,22 @@ public class RealizationManager implements IRealizationManager {
 			return descriptor;
 		}
 		
-		if (feature.isMany()) {
-			List listValue = (List) referencingDes.eGet(feature);
-			if (listValue != null) {
-				listValue.add(descriptor);
+		boolean oldDeliver = referencingDes.eDeliver();
+		referencingDes.eSetDeliver(false);
+		LibraryEditUtil libEditUtil = LibraryEditUtil.getInstance();
+		try {
+			if (feature.isMany()) {
+				List listValue = (List) referencingDes.eGet(feature);
+				if (listValue != null) {
+					listValue.add(descriptor);
+					libEditUtil.addOppositeFeature(referencingDes, descriptor, feature);
+				}
+			} else {
+				referencingDes.eSet(feature, descriptor);
+				libEditUtil.addOppositeFeature(referencingDes, descriptor, feature);
 			}
-		} else {
-			referencingDes.eSet(feature, descriptor);
+		} finally {
+			referencingDes.eSetDeliver(oldDeliver);
 		}
 
 		return descriptor;
@@ -184,14 +194,9 @@ public class RealizationManager implements IRealizationManager {
 			return null;
 		}
 		
-		for (BreakdownElement be : parentAct.getBreakdownElements()) {
-			if (getLinkedElement(be) == element) {
-				Descriptor foundDes = (Descriptor) be;
-				if (DescriptorPropUtil.getDesciptorPropUtil()
-						.isCreatedByReference(foundDes)) {
-					return foundDes;
-				}
-			}
+		Object foundDes = ProcessCommandUtil.getBestDescriptor(element, parentAct, getConfig());
+		if (foundDes instanceof Descriptor) {
+			return (Descriptor) foundDes;
 		}
 		
 		Descriptor descriptor = null;
@@ -233,15 +238,33 @@ public class RealizationManager implements IRealizationManager {
 		return descriptor;
 	}
 	
-	private void addToProcess(Activity parent, Descriptor referencedDes, EReference feature) {
+	private void addToProcess(Activity parent, Descriptor referencedDes,
+			EReference feature) {
 		UmaPackage up = UmaPackage.eINSTANCE;
-		parent.getBreakdownElements().add(referencedDes);
 		ProcessPackage pkg = (ProcessPackage) parent.eContainer();
-		pkg.getProcessElements().add(referencedDes);
-		
-		if (feature == up.getWorkProductDescriptor_DeliverableParts()) {
-			referencedDes.setSuperActivities(null);
+
+		boolean oldParentDeliver = parent.eDeliver();
+		boolean oldPkgDeliver = pkg.eDeliver();
+		boolean oldReferencedDesDeliver = referencedDes.eDeliver();
+		parent.eSetDeliver(false);
+		pkg.eSetDeliver(false);
+
+		try {
+			parent.getBreakdownElements().add(referencedDes);
+			pkg.getProcessElements().add(referencedDes);
+
+			if (feature == up.getWorkProductDescriptor_DeliverableParts()) {
+				referencedDes.eSetDeliver(false);
+				referencedDes.setSuperActivities(null);
+			}
+		} finally {
+			parent.eSetDeliver(oldParentDeliver);
+			pkg.eSetDeliver(oldPkgDeliver);
+			if (referencedDes.eDeliver() != oldReferencedDesDeliver) {
+				referencedDes.eSetDeliver(oldReferencedDesDeliver);
+			}
 		}
+
 	}
 	
 	public void updateProcessModel(Process proc) {	

@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
@@ -28,6 +29,8 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 
 public class LibraryEditUtil {
 	
@@ -267,6 +270,34 @@ public class LibraryEditUtil {
 		}
 		
 		return resultMap;
+	}
+	
+	public void addOppositeFeature(MethodElement referencing,
+			MethodElement referenced, EStructuralFeature feature) {
+		if (referencing == null || referenced == null) {
+			return;
+		}
+		OppositeFeature oppositeFeature = OppositeFeature
+				.getOppositeFeature(feature);
+		if (oppositeFeature == null) {
+			return;
+		}		
+		MultiResourceEObject mreferenced = (MultiResourceEObject) referenced;
+		mreferenced.oppositeAdd(oppositeFeature, referencing);
+	}
+	
+	public void removeOppositeFeature(MethodElement referencing,
+			MethodElement referenced, EStructuralFeature feature) {
+		if (referencing == null || referenced == null) {
+			return;
+		}
+		OppositeFeature oppositeFeature = OppositeFeature
+				.getOppositeFeature(feature);
+		if (oppositeFeature == null) {
+			return;
+		}
+		MultiResourceEObject mreferenced = (MultiResourceEObject) referenced;
+		mreferenced.oppositeRemove(oppositeFeature, referencing);
 	}
 	
 }
