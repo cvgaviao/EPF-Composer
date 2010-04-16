@@ -115,7 +115,7 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 		ILabelProvider provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory(),
 				(Descriptor)element,
-				UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor());
+				UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor(), getConfiguration());
 		
 		tableViewer1.setLabelProvider(provider);
 	}
@@ -307,14 +307,14 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		
 		if (! result) {
 			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {				
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {				
 			addItems1(selection.toList(), true);
 			return true;
 		} 
@@ -329,13 +329,13 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		if (! result) {
 			return true;
 		}
 
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 			return true;
 		} 
 		
@@ -353,14 +353,14 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	protected void syncFreeUpdateBtnStatus1(IStructuredSelection selection) {
 		EReference ref = UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		
 		if (!result) {
 			ctrl_add_1.setEnabled(false);
 			ctrl_remove_1.setEnabled(false);
 		} else {
 			Object testObj = selection.getFirstElement();
-			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(false);
 			} else {

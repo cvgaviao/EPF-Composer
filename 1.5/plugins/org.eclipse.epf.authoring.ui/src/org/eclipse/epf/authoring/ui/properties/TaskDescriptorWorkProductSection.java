@@ -162,7 +162,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		ILabelProvider provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 				(Descriptor)element,
-				UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput());
+				UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput(), getConfiguration());
 		
 		tableViewer1.setLabelProvider(provider);
 	}
@@ -171,7 +171,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		ILabelProvider provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 				(Descriptor)element,
-				UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput());
+				UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput(), getConfiguration());
 		
 		tableViewer2.setLabelProvider(provider);		
 	}
@@ -187,7 +187,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		ILabelProvider provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 				(Descriptor)element,
-				UmaPackage.eINSTANCE.getTaskDescriptor_Output());
+				UmaPackage.eINSTANCE.getTaskDescriptor_Output(), getConfiguration());
 		
 		tableViewer4.setLabelProvider(provider);
 	}
@@ -591,14 +591,14 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);	
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());	
 		
 		if (! result) {
 			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {				
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {				
 			addItems1(selection.toList(), true);
 			return true;
 		} 
@@ -613,14 +613,14 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);	
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());	
 		
 		if (! result) {
 			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {				
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {				
 			addItems2(selection.toList(), true);
 			return true;
 		} 
@@ -635,14 +635,14 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);	
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());	
 		
 		if (! result) {
 			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {				
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {				
 			addItems4(selection.toList(), true);
 			return true;
 		} 
@@ -657,13 +657,13 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		if (! result) {
 			return true;
 		}
 
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 			return true;
 		} 
 		
@@ -685,13 +685,13 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		if (! result) {
 			return true;
 		}
 
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 			return true;
 		} 
 		
@@ -713,13 +713,13 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		if (! result) {
 			return true;
 		}
 
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 			return true;
 		} 
 		
@@ -737,14 +737,14 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected void syncFreeUpdateBtnStatus1(IStructuredSelection selection) {
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		
 		if (!result) {
 			ctrl_add_1.setEnabled(false);
 			ctrl_remove_1.setEnabled(false);
 		} else {
 			Object testObj = selection.getFirstElement();
-			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(false);
 			} else {
@@ -757,14 +757,14 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected void syncFreeUpdateBtnStatus2(IStructuredSelection selection) {
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		
 		if (!result) {
 			ctrl_add_2.setEnabled(false);
 			ctrl_remove_2.setEnabled(false);
 		} else {
 			Object testObj = selection.getFirstElement();
-			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 				ctrl_add_2.setEnabled(true);
 				ctrl_remove_2.setEnabled(false);
 			} else {
@@ -777,14 +777,14 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected void syncFreeUpdateBtnStatus4(IStructuredSelection selection) {
 		EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		
 		if (!result) {
 			ctrl_add_4.setEnabled(false);
 			ctrl_remove_4.setEnabled(false);
 		} else {
 			Object testObj = selection.getFirstElement();
-			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 				ctrl_add_4.setEnabled(true);
 				ctrl_remove_4.setEnabled(false);
 			} else {

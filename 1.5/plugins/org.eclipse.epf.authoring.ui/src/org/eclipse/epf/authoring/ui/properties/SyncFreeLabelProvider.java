@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.swt.graphics.Font;
@@ -26,11 +27,13 @@ public class SyncFreeLabelProvider extends AdapterFactoryLabelProvider implement
 	private Font systemFont;
 	private Descriptor desc;
 	private EReference ref;
+	private MethodConfiguration config;
 
-	public SyncFreeLabelProvider(AdapterFactory adapterFactory, Descriptor desc, EReference ref) {
+	public SyncFreeLabelProvider(AdapterFactory adapterFactory, Descriptor desc, EReference ref, MethodConfiguration config) {
 		super(adapterFactory);
 		this.desc = desc;
 		this.ref = ref;		
+		this.config = config;
 	}
     
     public Font getFont(Object obj, int columnIndex) {
@@ -48,7 +51,7 @@ public class SyncFreeLabelProvider extends AdapterFactoryLabelProvider implement
     public String getColumnText(Object obj, int columnIndex) {
     	String original = super.getColumnText(obj, columnIndex);
     	
-    	if (propUtil.isDynamicAndExclude(obj, desc, ref)) {
+    	if (propUtil.isDynamicAndExclude(obj, desc, ref, config)) {
     		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
     	}
     	

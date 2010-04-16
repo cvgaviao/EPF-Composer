@@ -300,61 +300,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		setStringValue(d, this.DESCRIPTOR_GreenParent, value);
 	}
 	
- 	private EReference getExcludeFeature(EReference ref) {		
+ 	public EReference getExcludeFeature(EReference ref) {		
 		return LibraryEditUtil.getInstance().getExcludeFeature(ref);
-	}
-
-	public boolean isDynamicAndExclude(Object obj, Descriptor desc, EReference ref) {
-		if (! (obj instanceof MethodElement) || !ref.isMany()) {
-			return false;
-		}
-		EReference eRef = getExcludeFeature(ref);
-		if (eRef == null) {
-			return false;
-		}
-		
-		List<MethodElement> listValue = (List<MethodElement> )desc.eGet(eRef);
-	    if (listValue == null) {
-	    	return false;
-	    }
-	    
-		return listValue.contains(obj);	    
-	}
-	
-	public boolean isDynamic(Object obj, Descriptor desc, EReference ref) {
-		if (ProcessUtil.isSynFree()) {
-			if (!(obj instanceof Descriptor)) {// Excluded elements are not descriptors
-				return true;
-			}
-			
-			Descriptor des = (Descriptor)obj;			
-//			if (! isCreatedByReference(des)) {
-//				return false;
-//			}
-			
-			if (! localUse(des, desc, ref)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-	
-	public boolean isGuidanceDynamic(Object obj, Descriptor desc) {
-		if (ProcessUtil.isSynFree()) {
-			EReference aRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional();
-			
-			List<MethodElement> listValue = (List<MethodElement> )desc.eGet(aRef);
-		    if (listValue == null) {
-		    	return false;
-		    }
-		    
-		    if (!listValue.contains(obj)) {
-		    	return true;		    	
-		    }
-		}
-		
-		return false;
 	}
 	
 	/**
@@ -365,14 +312,14 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	 *         flase multiple type
 	 * 
 	 */
-	public boolean checkSelection(List list, Descriptor desc, EReference ref) {		
+	public boolean checkSelection(List list, Descriptor desc, EReference ref, MethodConfiguration config) {		
 		int dynamic = 0;
 		int dynamicExclude = 0;
 		int local = 0;
 		
 		for (int i = 0; i < list.size(); i++) {
 			MethodElement des = (MethodElement) list.get(i);
-			if (isDynamicAndExclude(des, desc, ref)) {
+			if (isDynamicAndExclude(des, desc, ref, config)) {
 				dynamicExclude ++;
 			} else if (isDynamic(des, desc, ref)) {
 				dynamic ++;
@@ -390,7 +337,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return true;		
 	}
 	
-	public boolean CheckSelectionForGuidance(List list, Descriptor desc) {
+	public boolean CheckSelectionForGuidance(List list, Descriptor desc, MethodConfiguration config) {
 		int dynamic = 0;
 		int dynamicExclude = 0;
 		int local = 0;
@@ -398,9 +345,9 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		for (int i = 0; i < list.size(); i++) {
 			MethodElement des = (MethodElement) list.get(i);
 			EReference ref = getGuidanceEReference((Guidance)des);
-			if (isDynamicAndExclude(des, desc, ref)) {
+			if (isDynamicAndExclude(des, desc, ref, config)) {
 				dynamicExclude ++;
-			} else if (isGuidanceDynamic(des, desc)) {
+			} else if (isGuidanceDynamic(des, desc, config)) {
 				dynamic ++;
 			} else {
 				local ++;
@@ -597,9 +544,13 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 				ref, config);
 	}
 
-	public boolean isDynamic(Object obj, Descriptor desc, EReference ref,
+	public boolean isDynamic(Object obj, Descriptor desc, EReference ref) {
+		return LibraryEditUtil.getInstance().isDynamic(obj, desc, ref);
+	}
+	
+	public boolean isGuidanceDynamic(Object obj, Descriptor desc,
 			MethodConfiguration config) {
-		return LibraryEditUtil.getInstance().isDynamic(obj, desc, ref, config);
+		return LibraryEditUtil.getInstance().isGuidanceDynamic(obj, desc, config);
 	}
 	
 	public boolean isDescriptor(BreakdownElement element) {

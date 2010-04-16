@@ -132,9 +132,13 @@ public class LibraryEditUtil {
 		return getProvider().isDynamicAndExclude(obj, desc, ref, config);
 	}
 
-	public boolean isDynamic(Object obj, Descriptor desc, EReference ref,
+	public boolean isDynamic(Object obj, Descriptor desc, EReference ref) {
+		return getProvider().isDynamic(obj, desc, ref);
+	}
+	
+	public boolean isGuidanceDynamic(Object obj, Descriptor desc,
 			MethodConfiguration config) {
-		return getProvider().isDynamic(obj, desc, ref, config);
+		return getProvider().isGuidanceDynamic(obj, desc, config);
 	}
 		
 	public EReference getExcludeFeature(EReference ref) {

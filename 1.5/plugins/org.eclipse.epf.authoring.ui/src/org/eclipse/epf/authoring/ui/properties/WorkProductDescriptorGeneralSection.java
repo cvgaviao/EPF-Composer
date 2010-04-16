@@ -205,7 +205,7 @@ public class WorkProductDescriptorGeneralSection extends
 			labelProvider = new SyncFreeLabelProvider(
 					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 					(Descriptor)element,
-					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());  
+					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts(), getConfiguration());  
 		} else {
 			labelProvider = new AdapterFactoryLabelProvider(
 					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
@@ -961,14 +961,14 @@ public class WorkProductDescriptorGeneralSection extends
 		
 		EReference ref = UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);	
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());	
 		
 		if (! result) {
 			return true;
 		}
 		
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {				
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {				
 			addItems(selection.toList(), true);
 			return true;
 		} 
@@ -983,13 +983,13 @@ public class WorkProductDescriptorGeneralSection extends
 		
 		EReference ref = UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		if (! result) {
 			return true;
 		}
 
 		Object testObj = selection.getFirstElement();
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 			return true;
 		} 
 		
@@ -1007,14 +1007,14 @@ public class WorkProductDescriptorGeneralSection extends
 	protected void syncFreeUpdateBtnStatus(IStructuredSelection selection) {
 		EReference ref = UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts();
 		
-		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref);
+		boolean result = propUtil.checkSelection(selection.toList(), (Descriptor)element, ref, getConfiguration());
 		
 		if (!result) {
 			ctrl_add_1.setEnabled(false);
 			ctrl_remove_1.setEnabled(false);
 		} else {
 			Object testObj = selection.getFirstElement();
-			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(false);
 			} else {

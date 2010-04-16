@@ -40,6 +40,7 @@ import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
@@ -289,12 +290,10 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(getSelectedGuidances());
 				
-				if (propUtil.isDescriptor(element)) {
-					if (isSyncFree() && !propUtil.isNoAutoSyn((Descriptor) element)) {
-						elements.addAll(((Descriptor) element).getGuidanceExclude());
-					}
+				if (isSyncFree() && !propUtil.isNoAutoSyn((Descriptor) element)) {
+					elements.addAll(((Descriptor) element).getGuidanceExclude());
 				}
-				
+
 				return getFilteredList(elements).toArray();				
 			}
 		};
@@ -305,10 +304,10 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	protected void initLabelProvider() {		
 		ILabelProvider labelProvider = null;
 		
-		if (propUtil.isDescriptor(element) && isSyncFree()) {
+		if (isSyncFree()) {
 			labelProvider = new GuidanceSyncFreeLabelProvider(
 					TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory(),
-					(Descriptor)element);  
+					(Descriptor)element, getConfiguration());  
 		} else {
 			labelProvider = new AdapterFactoryLabelProvider(
 					TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory());
@@ -360,7 +359,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 
 			ctrl_add_1.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					if (propUtil.isDescriptor(element) && isSyncFree()) {
+					if (isSyncFree()) {
 						IStructuredSelection selection = (IStructuredSelection) viewer_1.getSelection();
 						if (syncFreeAdd(selection)) { 
 							viewer_1.refresh();
@@ -370,7 +369,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 					
 					IFilter filter = getGeneralGuidanceFilter();
 					List existingElements = null;
-					if (propUtil.isDescriptor(element) && isSyncFree()) {
+					if (isSyncFree()) {
 						existingElements = getSelectedGuidances();
 						if (! propUtil.isNoAutoSyn((Descriptor)element)) {
 							existingElements.addAll(((Descriptor)element).getGuidanceExclude());
@@ -395,7 +394,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 
 			ctrl_remove_1.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-					if (propUtil.isDescriptor(element) && isSyncFree()) {
+					if (isSyncFree()) {
 						IStructuredSelection selection = (IStructuredSelection) viewer_1.getSelection();
 						if (syncFreeRemove(selection)) {
 							viewer_1.refresh();
@@ -500,7 +499,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							.logError("Can't remove Guidance: " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				
-				if (propUtil.isDescriptor(element) && isSyncFree()) {
+				if (isSyncFree()) {
 					if (localUse) {
 						actionMgr.doAction(IActionManager.REMOVE, element,
 								UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional(),
@@ -561,7 +560,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	}
 	
 	private boolean isSyncFree() {
-		return ProcessUtil.isSynFree();
+		return propUtil.isDescriptor(element) && ProcessUtil.isSynFree();
 	}
 	
 	protected boolean syncFreeAdd(IStructuredSelection selection) {
@@ -569,7 +568,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 			return false;			
 		} 
 				
-		boolean result = propUtil.CheckSelectionForGuidance(selection.toList(), (Descriptor)element);	
+		boolean result = propUtil.CheckSelectionForGuidance(selection.toList(), (Descriptor)element, getConfiguration());	
 		
 		if (! result) {
 			return true;
@@ -577,7 +576,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		
 		Object testObj = selection.getFirstElement();
 		EReference ref = propUtil.getGuidanceEReference((Guidance)testObj);
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {				
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {				
 			addGuidances(selection.toList(), true);
 			return true;
 		} 
@@ -590,18 +589,18 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 			return true;			
 		} 
 		
-		boolean result = propUtil.CheckSelectionForGuidance(selection.toList(), (Descriptor)element);
+		boolean result = propUtil.CheckSelectionForGuidance(selection.toList(), (Descriptor)element, getConfiguration());
 		if (! result) {
 			return true;
 		}
 
 		Object testObj = selection.getFirstElement();
 		EReference ref = propUtil.getGuidanceEReference((Guidance)testObj);		
-		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+		if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 			return true;
 		} 
 		
-		if (propUtil.isGuidanceDynamic(testObj, (Descriptor)element)) {
+		if (propUtil.isGuidanceDynamic(testObj, (Descriptor)element, getConfiguration())) {
 			removeGuidances(selection.toList(), false);
 			return true;
 		} 
@@ -610,7 +609,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	}
 	
 	protected void syncFreeUpdateBtnStatus(IStructuredSelection selection) {		
-		boolean result = propUtil.CheckSelectionForGuidance(selection.toList(), (Descriptor)element);
+		boolean result = propUtil.CheckSelectionForGuidance(selection.toList(), (Descriptor)element, getConfiguration());
 		
 		if (!result) {
 			ctrl_add_1.setEnabled(false);
@@ -618,7 +617,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		} else {
 			Object testObj = selection.getFirstElement();
 			EReference ref = propUtil.getGuidanceEReference((Guidance)testObj);
-			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref)) {
+			if (propUtil.isDynamicAndExclude(testObj, (Descriptor)element, ref, getConfiguration())) {
 				ctrl_add_1.setEnabled(true);
 				ctrl_remove_1.setEnabled(false);
 			} else {
@@ -634,10 +633,12 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		
 		private Font systemFont;
 		private Descriptor desc;
+		private MethodConfiguration config;
 
-		public GuidanceSyncFreeLabelProvider(AdapterFactory adapterFactory, Descriptor desc) {
+		public GuidanceSyncFreeLabelProvider(AdapterFactory adapterFactory, Descriptor desc, MethodConfiguration config) {
 			super(adapterFactory);
 			this.desc = desc;		
+			this.config = config;
 		}
 	    
 	    public Font getFont(Object obj, int columnIndex) {
@@ -645,7 +646,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	    		systemFont = Display.getCurrent().getSystemFont();
 	    	}
 	    	
-	    	if (propUtil.isGuidanceDynamic(obj, desc)) {
+	    	if (propUtil.isGuidanceDynamic(obj, desc, config)) {
 	    		return registry.getBold(systemFont.getFontData()[0].getName());    		
 	    	}
 	    	
@@ -657,7 +658,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	    	
 	    	EReference ref = propUtil.getGuidanceEReference((Guidance)obj);
 	    	
-	    	if (propUtil.isDynamicAndExclude(obj, desc, ref)) {
+	    	if (propUtil.isDynamicAndExclude(obj, desc, ref, config)) {
 	    		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
 	    	}
 	    	

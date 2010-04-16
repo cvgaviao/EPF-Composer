@@ -14,7 +14,9 @@ public interface ILibraryEditUtilProvider {
 	boolean isDynamicAndExclude(Object obj, Descriptor desc, EReference ref,
 			MethodConfiguration config);
 
-	boolean isDynamic(Object obj, Descriptor desc, EReference ref,
+	boolean isDynamic(Object obj, Descriptor desc, EReference ref);
+	
+	public boolean isGuidanceDynamic(Object obj, Descriptor desc,
 			MethodConfiguration config);
 
 }
