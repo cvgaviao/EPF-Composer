@@ -298,7 +298,10 @@ public class RealizationManager implements IRealizationManager {
 			setCaching(true);
 		}
 		
+//		System.out.println("LD> Begin: updateModelImpl"); //$NON-NLS-1$
+//		Thread.dumpStack();
 		updateModelImpl(act);
+//		System.out.println("LD> End: updateModelImpl"); //$NON-NLS-1$
 		
 		if (setCacheFlag) {
 			clearCacheData();

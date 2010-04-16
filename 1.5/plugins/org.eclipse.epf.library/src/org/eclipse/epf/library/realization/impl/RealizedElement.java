@@ -79,10 +79,17 @@ public class RealizedElement implements IRealizedElement {
 	}
 	
 	public RealizationManager getMgr() {
+//		System.out.println("getMgr(), this: " + this);
+//		System.out.println("getMgr(): " + mgr);
+//		System.out.println("");		
 		return mgr;
 	}
 	
 	public void setMgr(RealizationManager mgr) {
+//		System.out.println("setMgr(), this: " + this);
+//		System.out.println("setMgr(), this.mgr: " + this.mgr);
+//		System.out.println("setMgr(), mgr: " + mgr);
+//		System.out.println("");
 		this.mgr = mgr;
 	}
 	
