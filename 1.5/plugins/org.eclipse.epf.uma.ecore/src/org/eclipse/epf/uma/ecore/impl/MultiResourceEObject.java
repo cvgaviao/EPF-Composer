@@ -157,7 +157,13 @@ public class MultiResourceEObject extends EObjectImpl implements
 			getOppositeFeatureMap().put(oppositeFeature, list);
 		}
 		if (!list.contains(object)) {
-			list.add(object);
+			boolean oldDeliver = eDeliver();
+			eSetDeliver(false);
+			try {
+				list.add(object);
+			} finally {
+				eSetDeliver(oldDeliver);
+			}
 		}
 	}
 
@@ -167,7 +173,13 @@ public class MultiResourceEObject extends EObjectImpl implements
 			list = new OppositeFeatureResolvingEList(this, oppositeFeature);
 			getOppositeFeatureMap().put(oppositeFeature, list);
 		}
-		list.remove(object);
+		boolean oldDeliver = eDeliver();
+		eSetDeliver(false);
+		try {
+			list.remove(object);
+		} finally {
+			eSetDeliver(oldDeliver);
+		}
 	}
 
 	/**

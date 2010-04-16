@@ -507,10 +507,9 @@ public class ProcessEditor extends MethodElementEditor implements
 
 			if (ProcessUtil.isSynFree()) {
 				if (collection != null && !collection.isEmpty()) {
-					for (Object obj : collection) {
+					for (Object obj : collection) {					
 						if (obj instanceof Task || obj instanceof Role
-								|| obj instanceof WorkProduct
-								|| obj instanceof Guidance) {
+								|| obj instanceof WorkProduct) {
 							updateProcessModel();
 							refreshAll();
 							break;
