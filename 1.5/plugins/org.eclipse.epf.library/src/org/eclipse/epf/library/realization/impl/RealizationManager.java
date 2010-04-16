@@ -186,7 +186,11 @@ public class RealizationManager implements IRealizationManager {
 		
 		for (BreakdownElement be : parentAct.getBreakdownElements()) {
 			if (getLinkedElement(be) == element) {
-				return (Descriptor) be;
+				Descriptor foundDes = (Descriptor) be;
+				if (DescriptorPropUtil.getDesciptorPropUtil()
+						.isCreatedByReference(foundDes)) {
+					return foundDes;
+				}
 			}
 		}
 		

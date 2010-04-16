@@ -286,7 +286,7 @@ public class SynFreeProcessConverter {
 						localList.add(des);
 					} else {
 						linkedElementSet.add(linkedElement);
-						if (elements.contains(linkedElement)) {
+						if (elementSet.contains(linkedElement)) {
 							propUtil.setCreatedByReference(des, true);
 						} else {
 							localList.add(des);
