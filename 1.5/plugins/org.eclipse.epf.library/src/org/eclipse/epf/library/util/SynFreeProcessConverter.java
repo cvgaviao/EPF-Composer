@@ -14,6 +14,8 @@ import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessPropUtil;
 import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
 import org.eclipse.epf.services.ILibraryPersister;
@@ -68,6 +70,18 @@ public class SynFreeProcessConverter {
 	}
 	
 	public void convertLibrary(MethodLibrary lib,  boolean toSave) {
+		if (debug) {
+			System.out.println("LD> Begin convertLibrary: " + lib);
+			System.out.println("");
+		}
+		convertLibrary_(lib, toSave);
+		if (debug) {
+			System.out.println("LD> End convertLibrary: " + lib);
+			System.out.println("");
+		}
+	}
+	
+	private void convertLibrary_(MethodLibrary lib,  boolean toSave) {
 		if (lib == null) {
 			return;
 		}
@@ -79,7 +93,11 @@ public class SynFreeProcessConverter {
 		for (int i = 0; i < plugins.size(); i++) {
 			convertPlugin(plugins.get(i), false);
 		}
+		
+		MethodLibraryPropUtil propUtil = MethodLibraryPropUtil.getMethodLibraryPropUtil();
+		propUtil.setSynFree(lib, true);
 		if (toSave) {
+			resouresToSave.add(lib.eResource());
 			save();
 		}
 	}
@@ -99,6 +117,9 @@ public class SynFreeProcessConverter {
 		for (Process proc : processes) {
 			convertProcess(proc, false);
 		}		
+		
+		MethodPluginPropUtil propUtil = MethodPluginPropUtil.getMethodPluginPropUtil();
+		propUtil.setSynFree(plugin, true);
 		if (toSave) {
 			save();
 		}
@@ -241,6 +262,8 @@ public class SynFreeProcessConverter {
 
 	private void convertManyEReference(Descriptor ownerDescriptor, MethodElement ownerLinkedElement,
 			EReference dFeature, EReference dFeatureExclude, EReference efeature) {
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		
 		List<MethodElement> elements = ConfigurationHelper.calc0nFeatureValue(
 				ownerLinkedElement, efeature, getRealizer());
 		
@@ -263,7 +286,9 @@ public class SynFreeProcessConverter {
 						localList.add(des);
 					} else {
 						linkedElementSet.add(linkedElement);
-						if (! elements.contains(linkedElement)) {
+						if (elements.contains(linkedElement)) {
+							propUtil.setCreatedByReference(des, true);
+						} else {
 							localList.add(des);
 						}
 					}
@@ -278,9 +303,8 @@ public class SynFreeProcessConverter {
 		}
 		
 		//Handle localList
-		DescriptorPropUtil descriptorPropUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		for (Descriptor des : localList) {
-			descriptorPropUtil.addLocalUse(des, ownerDescriptor, dFeature);
+			propUtil.addLocalUse(des, ownerDescriptor, dFeature);
 		}
 	}	
 	
