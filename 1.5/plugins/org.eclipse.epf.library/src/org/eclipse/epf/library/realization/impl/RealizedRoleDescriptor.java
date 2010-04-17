@@ -19,8 +19,7 @@ public class RealizedRoleDescriptor extends RealizedDescriptor implements
 	private static Set<EStructuralFeature> featureSet = new HashSet<EStructuralFeature>();
 	static {
 		UmaPackage up = UmaPackage.eINSTANCE;		
-//		featureSet.add(up.getNamedElement_Name());
-//		featureSet.add(up.getMethodElement_PresentationName());
+		featureSet.add(up.getRoleDescriptor_ResponsibleFor());
 	}
 	
 	public RealizedRoleDescriptor(RoleDescriptor rd) {
@@ -64,6 +63,15 @@ public class RealizedRoleDescriptor extends RealizedDescriptor implements
 		addToSet(referenced, getResponsibleFor());
 		
 		return referenced;
+	}
+	
+	public Object getFeatureValue(EStructuralFeature feature) {		
+		UmaPackage up = UmaPackage.eINSTANCE;		
+		if (feature == up.getRoleDescriptor_ResponsibleFor()) {
+			return getResponsibleFor();
+		}
+
+		return super.getFeatureValue(feature); 
 	}
 	
 }

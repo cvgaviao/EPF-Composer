@@ -26,6 +26,11 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 	static {
 		UmaPackage up = UmaPackage.eINSTANCE;		
 		featureSet.add(up.getTaskDescriptor_PerformedPrimarilyBy());
+		featureSet.add(up.getTaskDescriptor_MandatoryInput());
+		featureSet.add(up.getTaskDescriptor_AdditionallyPerformedBy());
+		featureSet.add(up.getTaskDescriptor_Output());
+		featureSet.add(up.getTaskDescriptor_SelectedSteps());
+		
 	}
 	
 	public RealizedTaskDescriptor(TaskDescriptor td) {
@@ -39,16 +44,25 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		return super.handleFeature(feature);
 	}
 	
-	public Object getFeatureValue(EStructuralFeature feature) {
-		if (! featureSet.contains(feature)) {
-			return super.getFeatureValue(feature); 
-		}		
+	public Object getFeatureValue(EStructuralFeature feature) {		
 		UmaPackage up = UmaPackage.eINSTANCE;		
 		if (feature == up.getTaskDescriptor_PerformedPrimarilyBy()) {
 			return getPerformedPrimarilyBy();
 		}
+		if (feature == up.getTaskDescriptor_MandatoryInput()) {
+			return getMandatoryInput();
+		}
+		if (feature == up.getTaskDescriptor_AdditionallyPerformedBy()) {
+			return getAdditionallyPerformedBy();
+		}
+		if (feature == up.getTaskDescriptor_Output()) {
+			return getOutput();
+		}
+		if (feature == up.getTaskDescriptor_SelectedSteps()) {
+			return getSelectedSteps();
+		}
 
-		return null;
+		return super.getFeatureValue(feature); 
 	}	
 	
 	public List<RoleDescriptor> getPerformedPrimarilyBy() {

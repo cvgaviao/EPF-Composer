@@ -202,22 +202,23 @@ public class SynFreeProcessConverter {
 		if (element == null) {
 			return;
 		}
-		if (! propUtil.hasNoValue(des.getName())) {
-			if (! des.getName().equals(element.getName())) {
-				propUtil.setNameRepalce(des, true);
-			}
+		
+		if (propUtil.hasNoValue(des.getName())) {
+			des.setName(element.getName());		
+		} else if (!des.getName().equals(element.getName())) {
+			propUtil.setNameRepalce(des, true);
 		}
 		
-		if (! propUtil.hasNoValue(des.getPresentationName())) {
-			if (! des.getPresentationName().equals(element.getPresentationName())) {
-				propUtil.setPresentationNameRepalce(des, true);
-			}
+		if (propUtil.hasNoValue(des.getPresentationName())) {
+			des.setPresentationName(element.getPresentationName());			
+		} else if (!des.getPresentationName().equals(element.getPresentationName())) {
+			propUtil.setPresentationNameRepalce(des, true);
 		}
 		
-		if (! propUtil.hasNoValue(des.getBriefDescription())) {
-			if (! des.getBriefDescription().equals(element.getBriefDescription())) {
-				propUtil.setBriefDesRepalce(des, true);
-			}
+		if (propUtil.hasNoValue(des.getBriefDescription())) {
+			des.setBriefDescription(element.getBriefDescription());			
+		} else if (!des.getBriefDescription().equals(element.getBriefDescription())) {
+			propUtil.setBriefDesRepalce(des, true);
 		}
 		
 	}

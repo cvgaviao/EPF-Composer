@@ -26,8 +26,7 @@ public class RealizedWorkProductDescriptor extends
 	private static Set<EStructuralFeature> featureSet = new HashSet<EStructuralFeature>();
 	static {
 		UmaPackage up = UmaPackage.eINSTANCE;		
-//		featureSet.add(up.getNamedElement_Name());
-//		featureSet.add(up.getMethodElement_PresentationName());
+		featureSet.add(up.getWorkProductDescriptor_DeliverableParts());
 	}
 	
 	public RealizedWorkProductDescriptor(WorkProductDescriptor wpd) {
@@ -110,5 +109,13 @@ public class RealizedWorkProductDescriptor extends
 		return referenced;
 	}
 	
+	public Object getFeatureValue(EStructuralFeature feature) {		
+		UmaPackage up = UmaPackage.eINSTANCE;		
+		if (feature == up.getWorkProductDescriptor_DeliverableParts()) {
+			return getDeliverableParts();
+		}
+
+		return super.getFeatureValue(feature); 
+	}
 	
 }
