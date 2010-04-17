@@ -28,6 +28,7 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
@@ -37,11 +38,11 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 public class SynFreeProcessConverter {
 
 	private boolean debug = true;
-	
+
 	private ElementRealizer realizer;
-	
+
 	private MethodConfiguration config;
-	
+
 	private ElementRealizer getRealizer() {
 		return realizer;
 	}
@@ -51,25 +52,25 @@ public class SynFreeProcessConverter {
 	}
 
 	private Set<Resource> resouresToSave;
-	
+
 	private UmaPackage up = UmaPackage.eINSTANCE;
-	
-	public SynFreeProcessConverter() {		
+
+	public SynFreeProcessConverter() {
 	}
-	
+
 	public SynFreeProcessConverter(MethodConfiguration config) {
 		this.config = config;
 	}
-	
+
 	private MethodConfiguration getConfig() {
 		return config;
 	}
-	
+
 	public void convertLibrary(MethodLibrary lib) {
 		convertLibrary(lib, true);
 	}
-	
-	public void convertLibrary(MethodLibrary lib,  boolean toSave) {
+
+	public void convertLibrary(MethodLibrary lib, boolean toSave) {
 		if (debug) {
 			System.out.println("LD> Begin convertLibrary: " + lib);
 			System.out.println("");
@@ -80,28 +81,29 @@ public class SynFreeProcessConverter {
 			System.out.println("");
 		}
 	}
-	
-	private void convertLibrary_(MethodLibrary lib,  boolean toSave) {
+
+	private void convertLibrary_(MethodLibrary lib, boolean toSave) {
 		if (lib == null) {
 			return;
 		}
 		List<MethodPlugin> plugins = lib.getMethodPlugins();
-		
+
 		if (toSave) {
 			resouresToSave = new HashSet<Resource>();
 		}
 		for (int i = 0; i < plugins.size(); i++) {
 			convertPlugin(plugins.get(i), false);
 		}
-		
-		MethodLibraryPropUtil propUtil = MethodLibraryPropUtil.getMethodLibraryPropUtil();
+
+		MethodLibraryPropUtil propUtil = MethodLibraryPropUtil
+				.getMethodLibraryPropUtil();
 		propUtil.setSynFree(lib, true);
 		if (toSave) {
 			resouresToSave.add(lib.eResource());
 			save();
 		}
 	}
-		
+
 	public void convertPlugin(MethodPlugin plugin, boolean toSave) {
 		if (plugin == null) {
 			return;
@@ -113,18 +115,20 @@ public class SynFreeProcessConverter {
 		if (toSave) {
 			resouresToSave = new HashSet<Resource>();
 		}
-		Set<Process> processes = LibraryEditUtil.getInstance().collectProcesses(plugin);
+		Set<Process> processes = LibraryEditUtil.getInstance()
+				.collectProcesses(plugin);
 		for (Process proc : processes) {
 			convertProcess(proc, false);
-		}		
-		
-		MethodPluginPropUtil propUtil = MethodPluginPropUtil.getMethodPluginPropUtil();
+		}
+
+		MethodPluginPropUtil propUtil = MethodPluginPropUtil
+				.getMethodPluginPropUtil();
 		propUtil.setSynFree(plugin, true);
 		if (toSave) {
 			save();
 		}
 	}
-	
+
 	public void convertProcess(Process proc, boolean toSave) {
 		if (proc == null || proc.getDefaultContext() == null) {
 			return;
@@ -133,15 +137,16 @@ public class SynFreeProcessConverter {
 			System.out.println("LD> convertProcess: " + proc);
 			System.out.println("");
 		}
-		
+
 		MethodConfiguration c = getConfig();
 		if (c == null) {
 			c = proc.getDefaultContext();
 		}
-		ElementRealizer r = DefaultElementRealizer.newElementRealizer(c);		
-		setRealizer(r);		
-		
-		Set<Descriptor> descriptors = LibraryEditUtil.getInstance().collectDescriptors(proc);
+		ElementRealizer r = DefaultElementRealizer.newElementRealizer(c);
+		setRealizer(r);
+
+		Set<Descriptor> descriptors = LibraryEditUtil.getInstance()
+				.collectDescriptors(proc);
 
 		if (toSave) {
 			resouresToSave = new HashSet<Resource>();
@@ -150,11 +155,12 @@ public class SynFreeProcessConverter {
 			convert(des);
 		}
 		ProcessPropUtil.getProcessPropUtil().setSynFree(proc, true);
-		
+
 		if (toSave) {
 			save();
 		}
 	}
+
 	private void convert(Descriptor des) {
 		boolean oldDeliver = des.eDeliver();
 		try {
@@ -168,7 +174,7 @@ public class SynFreeProcessConverter {
 			}
 		}
 	}
-	
+
 	private void convert_(Descriptor des) {
 		Resource res = des.eResource();
 		if (res == null) {
@@ -177,157 +183,164 @@ public class SynFreeProcessConverter {
 		if (debug) {
 			System.out.println("LD> convert: " + des);
 		}
-		
+
 		if (des instanceof TaskDescriptor) {
 			convertTd((TaskDescriptor) des);
-			
+
 		} else if (des instanceof RoleDescriptor) {
 			convertRd((RoleDescriptor) des);
-			
+
 		} else if (des instanceof WorkProductDescriptor) {
-			convertWpd((WorkProductDescriptor) des);			
-		
-		} 
-		
+			convertWpd((WorkProductDescriptor) des);
+
+		}
+
 		convertSimpleTextAttributes(des);
-		
+
 		if (resouresToSave != null) {
-			resouresToSave.add(res);	
+			resouresToSave.add(res);
 		}
 	}
-	
+
 	private void convertSimpleTextAttributes(Descriptor des) {
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		MethodElement element = propUtil.getLinkedElement(des);
 		if (element == null) {
 			return;
 		}
-		
+
 		if (propUtil.hasNoValue(des.getName())) {
-			des.setName(element.getName());		
+			des.setName(element.getName());
 		} else if (!des.getName().equals(element.getName())) {
 			propUtil.setNameRepalce(des, true);
 		}
-		
+
 		if (propUtil.hasNoValue(des.getPresentationName())) {
-			des.setPresentationName(element.getPresentationName());			
-		} else if (!des.getPresentationName().equals(element.getPresentationName())) {
+			des.setPresentationName(element.getPresentationName());
+		} else if (!des.getPresentationName().equals(
+				element.getPresentationName())) {
 			propUtil.setPresentationNameRepalce(des, true);
 		}
-		
+
 		if (propUtil.hasNoValue(des.getBriefDescription())) {
-			des.setBriefDescription(element.getBriefDescription());			
-		} else if (!des.getBriefDescription().equals(element.getBriefDescription())) {
+			des.setBriefDescription(element.getBriefDescription());
+		} else if (!des.getBriefDescription().equals(
+				element.getBriefDescription())) {
 			propUtil.setBriefDesRepalce(des, true);
 		}
-		
+
 	}
-	
+
 	private void convertTd(TaskDescriptor td) {
 		Task task = (Task) getLinkedElement(td);
 		if (task == null) {
 			return;
 		}
 
-		convertManyEReference(td, task, 
-					up.getTaskDescriptor_PerformedPrimarilyBy(),
-					up.getTaskDescriptor_PerformedPrimarilyByExcluded(),
-					up.getTask_PerformedBy());
-		
-		convertManyEReference(td, task, 
-				up.getTaskDescriptor_AdditionallyPerformedBy(),
-				up.getTaskDescriptor_AdditionallyPerformedByExclude(),
-				up.getTask_AdditionallyPerformedBy());
-		
-		convertManyEReference(td, task, 
-				up.getTaskDescriptor_MandatoryInput(),
-				up.getTaskDescriptor_MandatoryInputExclude(),
-				up.getTask_MandatoryInput());
-		
-		convertManyEReference(td, task, 
-				up.getTaskDescriptor_OptionalInput(),
-				up.getTaskDescriptor_OptionalInputExclude(),
-				up.getTask_OptionalInput());
-		
-		convertManyEReference(td, task, 
-				up.getTaskDescriptor_Output(),
-				up.getTaskDescriptor_OutputExclude(),
-				up.getTask_Output());
-		
-//		convertManyEReference(td, task, 
-//				up.getTaskDescriptor_SelectedSteps(),
-//				up.getTaskDescriptor_SelectedStepsExclude(),
-//				up.getTask_Steps());
-		
+		convertManyEReference(td, task, up
+				.getTaskDescriptor_PerformedPrimarilyBy(), up
+				.getTaskDescriptor_PerformedPrimarilyByExcluded(), up
+				.getTask_PerformedBy());
+
+		if (task.getName().equals("run_tests")) {
+			System.out.println("LD>");
+		}
+
+		convertManyEReference(td, task, up
+				.getTaskDescriptor_AdditionallyPerformedBy(), up
+				.getTaskDescriptor_AdditionallyPerformedByExclude(), up
+				.getTask_AdditionallyPerformedBy());
+
+		convertManyEReference(td, task, up.getTaskDescriptor_MandatoryInput(),
+				up.getTaskDescriptor_MandatoryInputExclude(), up
+						.getTask_MandatoryInput());
+
+		convertManyEReference(td, task, up.getTaskDescriptor_OptionalInput(),
+				up.getTaskDescriptor_OptionalInputExclude(), up
+						.getTask_OptionalInput());
+
+		convertManyEReference(td, task, up.getTaskDescriptor_Output(), up
+				.getTaskDescriptor_OutputExclude(), up.getTask_Output());
+
+		convertManyEReference(td, task, up.getTaskDescriptor_SelectedSteps(),
+				up.getTaskDescriptor_SelectedStepsExclude(), up.getTask_Steps());
+
 	}
 
-	private void convertManyEReference(Descriptor ownerDescriptor, MethodElement ownerLinkedElement,
-			EReference dFeature, EReference dFeatureExclude, EReference efeature) {
+	private void convertManyEReference(Descriptor ownerDescriptor,
+			MethodElement ownerLinkedElement, EReference dFeature,
+			EReference dFeatureExclude, EReference efeature) {
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		
+
 		List<MethodElement> elements = ConfigurationHelper.calc0nFeatureValue(
 				ownerLinkedElement, efeature, getRealizer());
-		
-		List<RoleDescriptor> descriptors = ConfigurationHelper.calc0nFeatureValue(
-				ownerDescriptor, dFeature, getRealizer());
-	
-		//exclude list and local list
-		List<MethodElement> excludeList = (List<MethodElement> ) ownerDescriptor.eGet(dFeatureExclude);
+
+		List<MethodElement> descriptors = ConfigurationHelper
+				.calc0nFeatureValue(ownerDescriptor, dFeature, getRealizer());
+
+		// exclude list and local list
+		List<MethodElement> excludeList = (List<MethodElement>) ownerDescriptor
+				.eGet(dFeatureExclude);
 		List<Descriptor> localList = new ArrayList<Descriptor>();
+		Set<MethodElement> elementSet = new HashSet<MethodElement>();
+
 		if (elements != null && !elements.isEmpty()) {
-			Set<MethodElement> elementSet = new HashSet<MethodElement>(elements);
-			
-			List<MethodElement> linkedElements = new ArrayList<MethodElement>();
-			Set<MethodElement> linkedElementSet = new HashSet<MethodElement>();
-			
-			if (descriptors != null && !descriptors.isEmpty()) {
-				for (Descriptor des : descriptors) {
-					MethodElement linkedElement = getLinkedElement(des);
+		}
+
+		List<MethodElement> linkedElements = new ArrayList<MethodElement>();
+		Set<MethodElement> linkedElementSet = new HashSet<MethodElement>();
+
+		if (descriptors != null) {
+			for (MethodElement des : descriptors) {
+				if (des instanceof Descriptor) {
+					Descriptor d = (Descriptor) des;
+					MethodElement linkedElement = getLinkedElement(d);
 					if (linkedElement == null) {
-						localList.add(des);
+						localList.add(d);
 					} else {
 						linkedElementSet.add(linkedElement);
 						if (elementSet.contains(linkedElement)) {
-							propUtil.setCreatedByReference(des, true);
+							propUtil.setCreatedByReference(d, true);
 						} else {
-							localList.add(des);
+							localList.add(d);
 						}
 					}
+				} else {
+					linkedElementSet.addAll(descriptors);
+					break;
 				}
 			}
-			
-			for (MethodElement element : elements) {
-				if (! linkedElementSet.contains(element)) {
-					excludeList.add(element);
-				}
-			}			
 		}
-		
-		//Handle localList
+
+		for (MethodElement element : elements) {
+			if (!linkedElementSet.contains(element)) {
+				excludeList.add(element);
+			}
+		}
+
+		// Handle localList
 		for (Descriptor des : localList) {
 			propUtil.addLocalUse(des, ownerDescriptor, dFeature);
 		}
-	}	
-	
-	
+	}
+
 	private void convertRd(RoleDescriptor rd) {
 		Role role = (Role) getLinkedElement(rd);
 		if (role == null) {
 			return;
 		}
-		
-		convertManyEReference(rd, role, 
-				up.getRoleDescriptor_ResponsibleFor(),
-				up.getRoleDescriptor_ResponsibleForExclude(),
-				up.getRole_ResponsibleFor());
+
+		convertManyEReference(rd, role, up.getRoleDescriptor_ResponsibleFor(),
+				up.getRoleDescriptor_ResponsibleForExclude(), up
+						.getRole_ResponsibleFor());
 	}
-	
+
 	private void convertWpd(WorkProductDescriptor wpd) {
 		WorkProduct wp = (WorkProduct) getLinkedElement(wpd);
 		if (wp == null) {
 			return;
 		}
-		
+
 		if (wp instanceof Deliverable) {
 			convertManyEReference(wpd, wp, up
 					.getWorkProductDescriptor_DeliverableParts(), up
@@ -348,7 +361,7 @@ public class SynFreeProcessConverter {
 				persister.save(res);
 			}
 			persister.commit();
-			
+
 		} catch (Exception e) {
 			persister.rollback();
 			e.printStackTrace();
@@ -359,11 +372,12 @@ public class SynFreeProcessConverter {
 	}
 
 	private MethodElement getLinkedElement(Descriptor des) {
-		MethodElement element = DescriptorPropUtil.getDesciptorPropUtil().getLinkedElement(des);
+		MethodElement element = DescriptorPropUtil.getDesciptorPropUtil()
+				.getLinkedElement(des);
 		if (element == null) {
 			return null;
 		}
 		return ConfigurationHelper.getCalculatedElement(element, getRealizer());
 	}
-	
+
 }
