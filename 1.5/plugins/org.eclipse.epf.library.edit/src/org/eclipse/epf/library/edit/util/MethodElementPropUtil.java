@@ -2,9 +2,11 @@ package org.eclipse.epf.library.edit.util;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
+import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 
 public class MethodElementPropUtil {
 	
@@ -75,15 +77,19 @@ public class MethodElementPropUtil {
 			getActionManager().execute(cmd);
 		}
 	}
-	
-	protected Object getValitileObject(MethodElement element, String key) {
-		MultiResourceEObject mobj = (MultiResourceEObject) element;
-		return mobj.getVolatileObject(key);
+		
+	public MethodElementExt getExtendObject(MethodElement element, boolean create) {
+		MultiResourceEObject mobj = (MultiResourceEObject) element;		
+		ExtendObject obj = mobj.getExtendObject();
+		if (create && !(obj instanceof MethodElementExt)) {
+			obj = createExtendObject(element);
+			mobj.setExtendObject(obj);
+		}
+		return (MethodElementExt) obj;
 	}
 	
-	protected void storeValitileObject(MethodElement element, String key, Object value) {
-		MultiResourceEObject mobj = (MultiResourceEObject) element;
-		mobj.storeVolatileObject(key, value);
+	protected MethodElementExt createExtendObject(MethodElement element) {
+		return new MethodElementExt(element);
 	}
 	
 }

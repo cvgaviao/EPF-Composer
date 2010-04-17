@@ -7,6 +7,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.uma.DescriptorExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
@@ -43,11 +45,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 					//$NON-NLS-1$
 	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";					//$NON-NLS-1$
 	public static final String DESCRIPTOR_GreenParent = "descriptor_greenParent";						//$NON-NLS-1$
-	public static final String DESCRIPTOR_ExcludeRefDelta = "descriptor_excludeRefDelta";
-	
-	//Volatile obhect name strings
-	public static final String V_DESCRIPTOR_CustomizingChildren = "v_descriptor_customizingChildren";			//$NON-NLS-1$
-	
+	public static final String DESCRIPTOR_ExcludeRefDelta = "descriptor_excludeRefDelta";	
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -493,49 +491,20 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public List<? extends Descriptor> getCustomizingChildren(Descriptor des) {
-		String value = (String) getValitileObject(des, V_DESCRIPTOR_CustomizingChildren);
-		
-		if (value == null || value.length() == 0) {
+		if (des == null) {
 			return null;
 		}
-		
-		String[] guids = value.split(infoSeperator);
-		if (guids == null || guids.length == 0) {
-			return null;
-		}
-		
-		List<Descriptor> children = new ArrayList<Descriptor>();
-		for (String guid : guids) {
-			MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
-			if (element instanceof Descriptor) {
-				children.add((Descriptor) element);
-			}
-		}
+		DescriptorExt ext = (DescriptorExt) getExtendObject(des, false);
 
-		return children;
+		return ext == null ? null : ext.getCustomizingChildren();
 	}
 	
 	public void addToCustomizingChildren(Descriptor parent, Descriptor child) {
-		String childGuild =  child.getGuid();
-		
-		String oldValue = (String) getValitileObject(parent, V_DESCRIPTOR_CustomizingChildren);
-		if (oldValue == null || oldValue.length() == 0) {
-			storeValitileObject(parent, V_DESCRIPTOR_CustomizingChildren, childGuild);
+		if (parent == null || child == null) {
 			return;
 		}
-		
-		String[] guids = oldValue.split(infoSeperator);
-		if (guids != null) {
-			for (String guid : guids) {
-				if (childGuild.equals(guid)) {
-					return;
-				}
-			}
-		}
-
-		String newValue = oldValue.concat(infoSeperator).concat(childGuild);
-		storeValitileObject(parent, V_DESCRIPTOR_CustomizingChildren, newValue);
-
+		DescriptorExt ext = (DescriptorExt) getExtendObject(parent, true);
+		ext.addToCustomizingChildren(child);
 	}
 	
 	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
@@ -588,6 +557,13 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 		
 		return ref;
+	}
+	
+	protected MethodElementExt createExtendObject(MethodElement element) {
+		if (element instanceof Descriptor) {
+			return new DescriptorExt((Descriptor) element);
+		}
+		return super.createExtendObject(element);
 	}
 	
 }

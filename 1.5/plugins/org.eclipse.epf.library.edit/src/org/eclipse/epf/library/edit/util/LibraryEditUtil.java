@@ -165,6 +165,10 @@ public class LibraryEditUtil {
 			return up.getTaskDescriptor_OutputExclude();
 		}
 		
+		if (ref == up.getTaskDescriptor_SelectedSteps()) {
+			return up.getTaskDescriptor_SelectedStepsExclude();
+		}
+		
 		if (ref == up.getRoleDescriptor_ResponsibleFor()) {
 			return up.getRoleDescriptor_ResponsibleForExclude();
 		}

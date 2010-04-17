@@ -124,21 +124,14 @@ public class MultiResourceEObject extends EObjectImpl implements
 
 	private boolean valid = true;
 	
-	/**
-	 * A map of name/object entries, which allow to store arbitrary
-	 * non-persistent data in this MultiResourceEObject object.
-	 */
-	private Map<String, Object> volatileObjectMap;
+	private ExtendObject extendObject;
 	
-	public Object getVolatileObject(String key) {
-		return volatileObjectMap == null ? null : volatileObjectMap.get(key);
+	public ExtendObject getExtendObject() {
+		return extendObject;
 	}
 
-	public void storeVolatileObject(String key, Object value) {
-		if (volatileObjectMap == null) {
-			volatileObjectMap = new HashMap<String, Object>();
-		}
-		volatileObjectMap.put(key, value);
+	public void setExtendObject(ExtendObject extendObject) {
+		this.extendObject = extendObject;
 	}
 
 	/**
@@ -974,5 +967,9 @@ public class MultiResourceEObject extends EObjectImpl implements
 	public void set(int propertyIndex, Object value) {
 		EStructuralFeature feature = eClass().getEStructuralFeature(propertyIndex);
 		eSet(feature, value);
+	}	
+	
+	public static abstract class ExtendObject {
+		
 	}
 }
