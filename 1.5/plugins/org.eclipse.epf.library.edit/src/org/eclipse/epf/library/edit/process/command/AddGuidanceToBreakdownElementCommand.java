@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -127,7 +128,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 				}
 			}
 			
-			if (propUtil.isDescriptor(brElement)) {
+			if (propUtil.isDescriptor(brElement) && ProcessUtil.isSynFree()) {
 				if (calledForExculded) {
 					((Descriptor)brElement).getGuidanceExclude().removeAll(guidances);					
 				} else {
@@ -184,7 +185,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 				}
 			}
 			
-			if (propUtil.isDescriptor(brElement)) {
+			if (propUtil.isDescriptor(brElement) && ProcessUtil.isSynFree()) {
 				if (calledForExculded) {
 					((Descriptor)brElement).getGuidanceExclude().addAll(guidances);					
 				} else {

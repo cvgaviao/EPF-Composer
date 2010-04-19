@@ -161,8 +161,10 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 			}
 		}
 		
-		if (localUse) {
-			propUtil.removeLocalUsingInfo(elements, desc, (EReference)desc.eClass().getEStructuralFeature(featureID));
+		if (ProcessUtil.isSynFree()) {
+			if (localUse) {
+				propUtil.removeLocalUsingInfo(elements, desc, (EReference)desc.eClass().getEStructuralFeature(featureID));
+			}
 		}
 
 		if (references != null && !references.isEmpty()) {
@@ -239,8 +241,10 @@ public class RemoveDescriptorCommand extends AbstractCommand implements
 			}
 		}
 		
-		if (localUse) {
-			propUtil.addLocalUsingInfo(elements, desc, (EReference)desc.eClass().getEStructuralFeature(featureID));
+		if (ProcessUtil.isSynFree()) {
+			if (localUse) {
+				propUtil.addLocalUsingInfo(elements, desc, (EReference)desc.eClass().getEStructuralFeature(featureID));
+			}
 		}
 		
 		if (references != null && !references.isEmpty()) {

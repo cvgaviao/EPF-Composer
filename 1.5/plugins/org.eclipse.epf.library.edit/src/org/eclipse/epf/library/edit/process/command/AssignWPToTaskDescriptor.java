@@ -215,24 +215,26 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getOutput().addAll(newWPDescList);
 		}
 
-		if (calledForExculded) {
-			List excludedList = null;
-			if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
-				excludedList = taskDesc.getMandatoryInputExclude();
-			} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
-				excludedList = taskDesc.getOptionalInputExclude();
-			} else if (action == IActionTypeConstants.ADD_OUTPUT) {
-				excludedList = taskDesc.getOutputExclude();
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = null;
+				if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
+					excludedList = taskDesc.getMandatoryInputExclude();
+				} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
+					excludedList = taskDesc.getOptionalInputExclude();
+				} else if (action == IActionTypeConstants.ADD_OUTPUT) {
+					excludedList = taskDesc.getOutputExclude();
+				}
+				if (excludedList != null) {
+					excludedList.removeAll(workProducts);
+				}
+				for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
+					propUtil.setCreatedByReference(rd, true);
+				}
+			} else {
+				propUtil.addLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
+				propUtil.addLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
 			}
-			if (excludedList != null) {
-				excludedList.removeAll(workProducts);
-			}
-			for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
-				propUtil.setCreatedByReference(rd, true);
-			}
-		} else {
-			propUtil.addLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
-			propUtil.addLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
 		}
 
 		activity.getBreakdownElements().addAll(newWPDescList);
@@ -294,21 +296,23 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getOutput().removeAll(newWPDescList);
 		}
 
-		if (calledForExculded) {
-			List excludedList = null;
-			if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
-				excludedList = taskDesc.getMandatoryInputExclude();
-			} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
-				excludedList = taskDesc.getOptionalInputExclude();
-			} else if (action == IActionTypeConstants.ADD_OUTPUT) {
-				excludedList = taskDesc.getOutputExclude();
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = null;
+				if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
+					excludedList = taskDesc.getMandatoryInputExclude();
+				} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
+					excludedList = taskDesc.getOptionalInputExclude();
+				} else if (action == IActionTypeConstants.ADD_OUTPUT) {
+					excludedList = taskDesc.getOutputExclude();
+				}
+				if (excludedList != null) {
+					excludedList.addAll(workProducts);
+				}
+			} else {
+				propUtil.removeLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
+				propUtil.removeLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
 			}
-			if (excludedList != null) {
-				excludedList.addAll(workProducts);
-			}
-		} else {
-			propUtil.removeLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
-			propUtil.removeLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
 		}
 		
 		activity.getBreakdownElements().removeAll(newWPDescList);

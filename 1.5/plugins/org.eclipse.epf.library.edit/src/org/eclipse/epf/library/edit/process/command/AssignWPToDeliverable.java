@@ -169,19 +169,21 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 		wpDesc.getDeliverableParts().addAll(existingWPDescList);
 		wpDesc.getDeliverableParts().addAll(newWPDescList);
 		
-		if (calledForExculded) {
-			List excludedList = wpDesc.getDeliverablePartsExclude();
-			if (excludedList != null) {
-				excludedList.removeAll(workProducts);
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = wpDesc.getDeliverablePartsExclude();
+				if (excludedList != null) {
+					excludedList.removeAll(workProducts);
+				}
+				for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
+					propUtil.setCreatedByReference(rd, true);
+				}
+			} else {
+				propUtil.addLocalUsingInfo(existingWPDescList, wpDesc,
+						UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+				propUtil.addLocalUsingInfo(newWPDescList, wpDesc,
+						UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
 			}
-			for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
-				propUtil.setCreatedByReference(rd, true);
-			}
-		} else {
-			propUtil.addLocalUsingInfo(existingWPDescList, wpDesc,
-					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
-			propUtil.addLocalUsingInfo(newWPDescList, wpDesc,
-					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
 		}
 
 		// activity.getBreakdownElements().addAll(newWPDescList);
@@ -195,16 +197,18 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 		wpDesc.getDeliverableParts().removeAll(existingWPDescList);
 		wpDesc.getDeliverableParts().removeAll(newWPDescList);
 		
-		if (calledForExculded) {
-			List excludedList = wpDesc.getDeliverablePartsExclude();			
-			if (excludedList != null) {
-				excludedList.addAll(workProducts);
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = wpDesc.getDeliverablePartsExclude();			
+				if (excludedList != null) {
+					excludedList.addAll(workProducts);
+				}
+			} else {
+				propUtil.removeLocalUsingInfo(existingWPDescList, wpDesc,
+						UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+				propUtil.removeLocalUsingInfo(newWPDescList, wpDesc,
+						UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
 			}
-		} else {
-			propUtil.removeLocalUsingInfo(existingWPDescList, wpDesc,
-					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
-			propUtil.removeLocalUsingInfo(newWPDescList, wpDesc,
-					UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
 		}
 
 		// activity.getBreakdownElements().removeAll(newWPDescList);

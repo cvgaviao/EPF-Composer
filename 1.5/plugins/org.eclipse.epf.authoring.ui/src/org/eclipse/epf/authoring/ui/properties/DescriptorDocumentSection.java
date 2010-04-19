@@ -14,6 +14,8 @@ import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.util.RichTextImageLinkContainer;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.UmaPackage;
@@ -22,6 +24,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.ui.forms.widgets.ImageHyperlink;
 
 
 /**
@@ -35,7 +38,11 @@ public class DescriptorDocumentSection extends BreakdownElementDocumentSection {
 
 	protected Descriptor element;
 
+	private ImageHyperlink refinedLink;
+	
 	private IMethodRichText refinedDesc;
+	
+	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 	private Listener listener = new Listener() {
 		public void handleEvent(Event e) {
@@ -81,6 +88,7 @@ public class DescriptorDocumentSection extends BreakdownElementDocumentSection {
 				documentComposite, heightHint, contentElementPath, element,
 				PropertiesResources.Descriptor_RefinedDescription);
 		addHyperLinkListener(refinedContainer.link);
+		refinedLink = refinedContainer.link;
 		refinedDesc = refinedContainer.richText;
 	}
 
@@ -101,9 +109,11 @@ public class DescriptorDocumentSection extends BreakdownElementDocumentSection {
 	protected void updateControls() {
 		super.updateControls();
 		refinedDesc.setEditable(editable);
+		if (isSyncFree()) {
+			syncFreeUpdateControls();
+		}
 	}
-
-
+	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.BreakdownElementDocumentSection#refresh()
 	 */
@@ -163,6 +173,23 @@ public class DescriptorDocumentSection extends BreakdownElementDocumentSection {
 					.logError(
 							"Error while refreshing descriptor documentation section :", ex); //$NON-NLS-1$
 		}
+	}
+	
+	private boolean isSyncFree() {
+		return propUtil.isDescriptor(element) && ProcessUtil.isSynFree();
+	}
+	
+	private void syncFreeUpdateControls() {
+		//main description
+		refinedLink.setEnabled(false);
+		refinedDesc.setEditable(false);
+		
+		//key considerations
+		keyConsiderationsLink.setEnabled(false);
+		keyConsiderations.setEditable(false);
+		
+		//brief description
+		briefDescText.setEditable(false);
 	}
 
 }

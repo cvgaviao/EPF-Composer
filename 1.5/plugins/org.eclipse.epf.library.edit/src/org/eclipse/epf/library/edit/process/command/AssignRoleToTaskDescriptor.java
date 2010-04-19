@@ -172,42 +172,44 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getAssistedBy().addAll(newRoleDescList);
 		}
 
-		if (calledForExculded) {
-			List excludedList = null;
-			EReference ref = null;
-			if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
-				excludedList = taskDesc.getPerformedPrimarilyByExcluded();
-				ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
-			} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
-				excludedList = taskDesc.getAdditionallyPerformedByExclude();
-				ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
-			}
-			if (excludedList != null) {
-				excludedList.removeAll(roles);
-			}
-			
-			TaskDescriptor greenParent = (TaskDescriptor) propUtil
-					.getGreenParentDescriptor(taskDesc);
-			if (greenParent != null) {
-				EReference eRef = LibraryEditUtil.getInstance()
-						.getExcludeFeature(ref);
-				List<Role> parentExecludeList = (List<Role>) greenParent
-						.eGet(eRef);
-				for (Role role : (List<Role>) roles) {
-					propUtil.removeExcludeRefDelta(taskDesc, role, ref, true);
-					if (parentExecludeList != null && parentExecludeList.contains(role)) {
-						propUtil.addExcludeRefDelta(taskDesc, role, ref,
-								false);
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = null;
+				EReference ref = null;
+				if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
+					excludedList = taskDesc.getPerformedPrimarilyByExcluded();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
+				} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
+					excludedList = taskDesc.getAdditionallyPerformedByExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
+				}
+				if (excludedList != null) {
+					excludedList.removeAll(roles);
+				}
+				
+				TaskDescriptor greenParent = (TaskDescriptor) propUtil
+						.getGreenParentDescriptor(taskDesc);
+				if (greenParent != null) {
+					EReference eRef = LibraryEditUtil.getInstance()
+							.getExcludeFeature(ref);
+					List<Role> parentExecludeList = (List<Role>) greenParent
+							.eGet(eRef);
+					for (Role role : (List<Role>) roles) {
+						propUtil.removeExcludeRefDelta(taskDesc, role, ref, true);
+						if (parentExecludeList != null && parentExecludeList.contains(role)) {
+							propUtil.addExcludeRefDelta(taskDesc, role, ref,
+									false);
+						}
 					}
 				}
+							
+				for (RoleDescriptor rd : (List<RoleDescriptor>) newRoleDescList) {
+					propUtil.setCreatedByReference(rd, true);
+				}
+			} else {
+				propUtil.addLocalUsingInfo(existingRoleDescList, taskDesc, getFeature(action));
+				propUtil.addLocalUsingInfo(newRoleDescList, taskDesc, getFeature(action));		
 			}
-						
-			for (RoleDescriptor rd : (List<RoleDescriptor>) newRoleDescList) {
-				propUtil.setCreatedByReference(rd, true);
-			}
-		} else {
-			propUtil.addLocalUsingInfo(existingRoleDescList, taskDesc, getFeature(action));
-			propUtil.addLocalUsingInfo(newRoleDescList, taskDesc, getFeature(action));		
 		}
 
 		activity.getBreakdownElements().addAll(newRoleDescList);
@@ -262,19 +264,21 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 			taskDesc.getAssistedBy().removeAll(newRoleDescList);
 		}
 		
-		if (calledForExculded) {
-			List excludedList = null;
-			if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
-				excludedList = taskDesc.getPerformedPrimarilyByExcluded();
-			} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
-				excludedList = taskDesc.getAdditionallyPerformedByExclude();
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = null;
+				if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
+					excludedList = taskDesc.getPerformedPrimarilyByExcluded();
+				} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
+					excludedList = taskDesc.getAdditionallyPerformedByExclude();
+				}
+				if (excludedList != null) {
+					excludedList.addAll(roles);
+				}
+			} else {
+				propUtil.removeLocalUsingInfo(existingRoleDescList, taskDesc, getFeature(action));
+				propUtil.removeLocalUsingInfo(newRoleDescList, taskDesc, getFeature(action));
 			}
-			if (excludedList != null) {
-				excludedList.addAll(roles);
-			}
-		} else {
-			propUtil.removeLocalUsingInfo(existingRoleDescList, taskDesc, getFeature(action));
-			propUtil.removeLocalUsingInfo(newRoleDescList, taskDesc, getFeature(action));
 		}
 		
 		activity.getBreakdownElements().removeAll(newRoleDescList);

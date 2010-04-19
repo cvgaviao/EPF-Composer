@@ -87,6 +87,8 @@ public class BreakdownElementDocumentSection extends AbstractSection {
 	
 	protected RichTextImageLinkContainer usageGuidanceContainer;
 
+	protected ImageHyperlink keyConsiderationsLink;
+	
 	protected IMethodRichText keyConsiderations;
 	
 	protected RichTextImageLinkContainer keyConsiderationsContainer;
@@ -369,6 +371,7 @@ public class BreakdownElementDocumentSection extends AbstractSection {
 				documentComposite, heightHint, contentElementPath, element,
 				PropertiesResources.BreakdownElement_keyConsiderations);
 		addHyperLinkListener(keyConsiderationsContainer.link);
+		keyConsiderationsLink = keyConsiderationsContainer.link;
 		keyConsiderations = keyConsiderationsContainer.richText;
 
 		// create expanded composite

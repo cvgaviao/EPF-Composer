@@ -156,20 +156,22 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 			roleDesc.getResponsibleFor().addAll(newWPDescList);
 		}
 		
-		if (calledForExculded) {
-			List excludedList = null;
-			if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
-				excludedList = roleDesc.getResponsibleForExclude();
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = null;
+				if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
+					excludedList = roleDesc.getResponsibleForExclude();
+				}
+				if (excludedList != null) {
+					excludedList.removeAll(workProducts);
+				}
+				for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
+					propUtil.setCreatedByReference(rd, true);
+				}
+			} else {
+				propUtil.addLocalUsingInfo(existingWPDescList, roleDesc, getFeature(action));
+				propUtil.addLocalUsingInfo(newWPDescList, roleDesc, getFeature(action));
 			}
-			if (excludedList != null) {
-				excludedList.removeAll(workProducts);
-			}
-			for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
-				propUtil.setCreatedByReference(rd, true);
-			}
-		} else {
-			propUtil.addLocalUsingInfo(existingWPDescList, roleDesc, getFeature(action));
-			propUtil.addLocalUsingInfo(newWPDescList, roleDesc, getFeature(action));
 		}
 
 		activity.getBreakdownElements().addAll(newWPDescList);
@@ -207,17 +209,19 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 			roleDesc.getResponsibleFor().removeAll(newWPDescList);
 		}
 		
-		if (calledForExculded) {
-			List excludedList = null;
-			if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
-				excludedList = roleDesc.getResponsibleForExclude();
+		if (ProcessUtil.isSynFree()) {
+			if (calledForExculded) {
+				List excludedList = null;
+				if (action == IActionTypeConstants.ADD_RESPONSIBLE_FOR) {
+					excludedList = roleDesc.getResponsibleForExclude();
+				}
+				if (excludedList != null) {
+					excludedList.addAll(workProducts);
+				}
+			} else {
+				propUtil.removeLocalUsingInfo(existingWPDescList, roleDesc, getFeature(action));
+				propUtil.removeLocalUsingInfo(newWPDescList, roleDesc, getFeature(action));
 			}
-			if (excludedList != null) {
-				excludedList.addAll(workProducts);
-			}
-		} else {
-			propUtil.removeLocalUsingInfo(existingWPDescList, roleDesc, getFeature(action));
-			propUtil.removeLocalUsingInfo(newWPDescList, roleDesc, getFeature(action));
 		}
 
 		activity.getBreakdownElements().removeAll(newWPDescList);
