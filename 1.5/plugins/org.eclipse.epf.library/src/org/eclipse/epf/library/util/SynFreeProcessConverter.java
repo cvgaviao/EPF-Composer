@@ -17,6 +17,7 @@ import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.Deliverable;
@@ -28,7 +29,6 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
-import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
@@ -130,7 +130,13 @@ public class SynFreeProcessConverter {
 	}
 
 	public void convertProcess(Process proc, boolean toSave) {
-		if (proc == null || proc.getDefaultContext() == null) {
+		if (proc == null) {
+			return;
+		}
+		if (proc.getDefaultContext() == null) {
+			ProcessScopeUtil.getInstance().loadScope(proc);
+		}
+		if (proc.getDefaultContext() == null) {
 			return;
 		}
 		if (debug) {
@@ -242,10 +248,6 @@ public class SynFreeProcessConverter {
 				.getTaskDescriptor_PerformedPrimarilyByExcluded(), up
 				.getTask_PerformedBy());
 
-		if (task.getName().equals("run_tests")) {
-			System.out.println("LD>");
-		}
-
 		convertManyEReference(td, task, up
 				.getTaskDescriptor_AdditionallyPerformedBy(), up
 				.getTaskDescriptor_AdditionallyPerformedByExclude(), up
@@ -285,6 +287,7 @@ public class SynFreeProcessConverter {
 		Set<MethodElement> elementSet = new HashSet<MethodElement>();
 
 		if (elements != null && !elements.isEmpty()) {
+			elementSet.addAll(elements);
 		}
 
 		List<MethodElement> linkedElements = new ArrayList<MethodElement>();
