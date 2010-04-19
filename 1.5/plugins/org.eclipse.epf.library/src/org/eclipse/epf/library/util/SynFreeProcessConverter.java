@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.LibraryServiceUtil;
@@ -18,10 +20,12 @@ import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -201,6 +205,8 @@ public class SynFreeProcessConverter {
 
 		}
 
+		convertGuidances(des);
+		
 		convertSimpleTextAttributes(des);
 
 		if (resouresToSave != null) {
@@ -327,6 +333,53 @@ public class SynFreeProcessConverter {
 		}
 	}
 
+	private void convertGuidances(Descriptor des) {
+		MethodElement element = ProcessUtil.getAssociatedElement(des);
+		if (element == null) {
+			return;
+		}
+
+		// if (des.getGuid().equals("_kF8tYTbsEduMn613sF6-Uw")) {
+		// System.out.println("");
+		// }
+
+		Map<EReference, EReference> refMap = LibraryEditUtil.getInstance()
+				.getGuidanceRefMap(getLinkedElementType(des));
+
+		Set<Guidance> elementGuidanceSet = new HashSet<Guidance>();
+		Set<Guidance> descripGuidanceSet = new HashSet<Guidance>();
+		for (Map.Entry<EReference, EReference> entry : refMap.entrySet()) {
+			EReference elementRef = entry.getKey();
+			EReference descripRef = entry.getValue();
+			Object elementValue = ConfigurationHelper.calc0nFeatureValue(
+					element, elementRef, getRealizer());
+			Object descripValue = ConfigurationHelper.calc0nFeatureValue(
+					des, descripRef, getRealizer());
+			if (elementValue instanceof List) {
+				List list = (List) elementValue;
+				if (!list.isEmpty()) {
+					elementGuidanceSet.addAll((List) elementValue);
+				}
+			}
+			if (descripValue instanceof List) {
+				List list = (List) descripValue;
+				if (!list.isEmpty()) {
+					descripGuidanceSet.addAll((List) descripValue);
+				}
+			}
+		}
+		for (Guidance g : elementGuidanceSet) {
+			if (!descripGuidanceSet.contains(g)) {
+				des.getGuidanceExclude().add(g);
+			}
+		}
+		for (Guidance g : descripGuidanceSet) {
+			if (!elementGuidanceSet.contains(g)) {
+				des.getGuidanceAdditional().add(g);
+			}
+		}
+	}	
+	
 	private void convertRd(RoleDescriptor rd) {
 		Role role = (Role) getLinkedElement(rd);
 		if (role == null) {
@@ -383,4 +436,18 @@ public class SynFreeProcessConverter {
 		return ConfigurationHelper.getCalculatedElement(element, getRealizer());
 	}
 
+	public static EClass getLinkedElementType(Descriptor des) {
+		if (des instanceof TaskDescriptor) {
+			return UmaPackage.eINSTANCE.getTask();
+		}
+		if (des instanceof RoleDescriptor) {
+			return UmaPackage.eINSTANCE.getRole();
+		}
+		if (des instanceof WorkProductDescriptor) {
+			return UmaPackage.eINSTANCE.getWorkProduct();
+		}
+	
+		throw new UnsupportedOperationException();
+	}
+	
 }
