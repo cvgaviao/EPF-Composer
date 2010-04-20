@@ -69,8 +69,8 @@ public class SynFreeProcessConverter {
 		this.config = config;
 	}
 
-	private MethodConfiguration getConfig() {
-		return config;
+	private MethodConfiguration getConfig(Process proc) {
+		return config == null ? proc.getDefaultContext() : config;
 	}
 
 	public void convertLibrary(MethodLibrary lib) {
@@ -151,10 +151,7 @@ public class SynFreeProcessConverter {
 			System.out.println("");
 		}
 
-		MethodConfiguration c = getConfig();
-		if (c == null) {
-			c = proc.getDefaultContext();
-		}
+		MethodConfiguration c = getConfig(proc);
 		ElementRealizer r = DefaultElementRealizer.newElementRealizer(c);
 		setRealizer(r);
 
@@ -165,7 +162,7 @@ public class SynFreeProcessConverter {
 			resouresToSave = new HashSet<Resource>();
 		}
 		for (Descriptor des : descriptors) {
-			convert(des);
+			convert(proc, des);
 		}
 		ProcessPropUtil.getProcessPropUtil().setSynFree(proc, true);
 
@@ -174,13 +171,13 @@ public class SynFreeProcessConverter {
 		}
 	}
 
-	private void convert(Descriptor des) {
+	private void convert(Process proc, Descriptor des) {
 		boolean oldDeliver = des.eDeliver();
 		try {
 			if (oldDeliver) {
 				des.eSetDeliver(false);
 			}
-			convert_(des);
+			convert_(proc, des);
 		} finally {
 			if (oldDeliver) {
 				des.eSetDeliver(oldDeliver);
@@ -188,7 +185,7 @@ public class SynFreeProcessConverter {
 		}
 	}
 
-	private void convert_(Descriptor des) {
+	private void convert_(Process proc, Descriptor des) {
 		Resource res = des.eResource();
 		if (res == null) {
 			return;
@@ -198,26 +195,26 @@ public class SynFreeProcessConverter {
 		}
 
 		if (des instanceof TaskDescriptor) {
-			convertTd((TaskDescriptor) des);
+			convertTd(proc, (TaskDescriptor) des);
 
 		} else if (des instanceof RoleDescriptor) {
-			convertRd((RoleDescriptor) des);
+			convertRd(proc, (RoleDescriptor) des);
 
 		} else if (des instanceof WorkProductDescriptor) {
-			convertWpd((WorkProductDescriptor) des);
+			convertWpd(proc, (WorkProductDescriptor) des);
 
 		}
 
-		convertGuidances(des);
+		convertGuidances(proc, des);
 		
-		convertTextAttributes(des);
+		convertTextAttributes(proc, des);
 
 		if (resouresToSave != null) {
 			resouresToSave.add(res);
 		}
 	}
 
-	private void convertTextAttributes(Descriptor des) {
+	private void convertTextAttributes(Process proc, Descriptor des) {
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		ContentElement element = (ContentElement) propUtil.getLinkedElement(des);
 		if (element == null) {
@@ -230,7 +227,7 @@ public class SynFreeProcessConverter {
 			propUtil.setNameRepalce(des, true);
 		}
 
-		String elementStrValue = ConfigurationHelper.getPresentationName(element, getConfig());
+		String elementStrValue = ConfigurationHelper.getPresentationName(element, getConfig(proc));
 		if (propUtil.hasNoValue(des.getPresentationName())) {
 			des.setPresentationName(element.getPresentationName());
 		} else if (!des.getPresentationName().equals(
@@ -240,7 +237,7 @@ public class SynFreeProcessConverter {
 
 		elementStrValue = (String) ConfigurationHelper
 				.calcAttributeFeatureValue(element, up
-						.getMethodElement_BriefDescription(), getConfig());
+						.getMethodElement_BriefDescription(), getConfig(proc));
 		if (propUtil.hasNoValue(des.getBriefDescription())) {
 			des.setBriefDescription(elementStrValue);
 		} else if (!des.getBriefDescription().equals(
@@ -251,7 +248,7 @@ public class SynFreeProcessConverter {
 		ContentDescription ePrentation = element.getPresentation();
 		DescriptorDescription dPrentation = (DescriptorDescription) des
 				.getPresentation();
-
+		
 		boolean oldDeliver = dPrentation.eDeliver();
 		try {
 			if (oldDeliver) {
@@ -261,7 +258,7 @@ public class SynFreeProcessConverter {
 			elementStrValue = (String) ConfigurationHelper
 					.calcAttributeFeatureValue(ePrentation, element, up
 							.getContentDescription_MainDescription(),
-							getConfig());
+							getConfig(proc));
 			if (propUtil.hasNoValue(dPrentation.getRefinedDescription())) {
 				dPrentation.setRefinedDescription(elementStrValue);
 			} else if (!dPrentation.getRefinedDescription().equals(
@@ -272,7 +269,7 @@ public class SynFreeProcessConverter {
 			elementStrValue = (String) ConfigurationHelper
 					.calcAttributeFeatureValue(ePrentation, element, up
 							.getContentDescription_KeyConsiderations(),
-							getConfig());
+							getConfig(proc));
 			if (propUtil.hasNoValue(dPrentation.getKeyConsiderations())) {
 				dPrentation.setKeyConsiderations(elementStrValue);
 			} else if (!dPrentation.getKeyConsiderations().equals(
@@ -288,39 +285,39 @@ public class SynFreeProcessConverter {
 
 	}
 
-	private void convertTd(TaskDescriptor td) {
+	private void convertTd(Process proc, TaskDescriptor td) {
 		Task task = (Task) getLinkedElement(td);
 		if (task == null) {
 			return;
 		}
 
-		convertManyEReference(td, task, up
+		convertManyEReference(proc, td, task, up
 				.getTaskDescriptor_PerformedPrimarilyBy(), up
 				.getTaskDescriptor_PerformedPrimarilyByExcluded(), up
 				.getTask_PerformedBy());
 
-		convertManyEReference(td, task, up
+		convertManyEReference(proc, td, task, up
 				.getTaskDescriptor_AdditionallyPerformedBy(), up
 				.getTaskDescriptor_AdditionallyPerformedByExclude(), up
 				.getTask_AdditionallyPerformedBy());
 
-		convertManyEReference(td, task, up.getTaskDescriptor_MandatoryInput(),
+		convertManyEReference(proc, td, task, up.getTaskDescriptor_MandatoryInput(),
 				up.getTaskDescriptor_MandatoryInputExclude(), up
 						.getTask_MandatoryInput());
 
-		convertManyEReference(td, task, up.getTaskDescriptor_OptionalInput(),
+		convertManyEReference(proc, td, task, up.getTaskDescriptor_OptionalInput(),
 				up.getTaskDescriptor_OptionalInputExclude(), up
 						.getTask_OptionalInput());
 
-		convertManyEReference(td, task, up.getTaskDescriptor_Output(), up
+		convertManyEReference(proc, td, task, up.getTaskDescriptor_Output(), up
 				.getTaskDescriptor_OutputExclude(), up.getTask_Output());
 
-		convertManyEReference(td, task, up.getTaskDescriptor_SelectedSteps(),
+		convertManyEReference(proc, td, task, up.getTaskDescriptor_SelectedSteps(),
 				up.getTaskDescriptor_SelectedStepsExclude(), up.getTask_Steps());
 
 	}
 
-	private void convertManyEReference(Descriptor ownerDescriptor,
+	private void convertManyEReference(Process proc, Descriptor ownerDescriptor,
 			MethodElement ownerLinkedElement, EReference dFeature,
 			EReference dFeatureExclude, EReference efeature) {
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
@@ -378,15 +375,11 @@ public class SynFreeProcessConverter {
 		}
 	}
 
-	private void convertGuidances(Descriptor des) {
+	private void convertGuidances(Process proc, Descriptor des) {
 		MethodElement element = ProcessUtil.getAssociatedElement(des);
 		if (element == null) {
 			return;
 		}
-
-		// if (des.getGuid().equals("_kF8tYTbsEduMn613sF6-Uw")) {
-		// System.out.println("");
-		// }
 
 		Map<EReference, EReference> refMap = LibraryEditUtil.getInstance()
 				.getGuidanceRefMap(getLinkedElementType(des));
@@ -425,25 +418,25 @@ public class SynFreeProcessConverter {
 		}
 	}	
 	
-	private void convertRd(RoleDescriptor rd) {
+	private void convertRd(Process proc, RoleDescriptor rd) {
 		Role role = (Role) getLinkedElement(rd);
 		if (role == null) {
 			return;
 		}
 
-		convertManyEReference(rd, role, up.getRoleDescriptor_ResponsibleFor(),
+		convertManyEReference(proc, rd, role, up.getRoleDescriptor_ResponsibleFor(),
 				up.getRoleDescriptor_ResponsibleForExclude(), up
 						.getRole_ResponsibleFor());
 	}
 
-	private void convertWpd(WorkProductDescriptor wpd) {
+	private void convertWpd(Process proc, WorkProductDescriptor wpd) {
 		WorkProduct wp = (WorkProduct) getLinkedElement(wpd);
 		if (wp == null) {
 			return;
 		}
 
 		if (wp instanceof Deliverable) {
-			convertManyEReference(wpd, wp, up
+			convertManyEReference(proc, wpd, wp, up
 					.getWorkProductDescriptor_DeliverableParts(), up
 					.getWorkProductDescriptor_DeliverablePartsExclude(), up
 					.getDeliverable_DeliveredWorkProducts());
