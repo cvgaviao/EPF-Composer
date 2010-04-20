@@ -27,7 +27,7 @@ import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
-import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.library.util.SynFreeProcessConverter;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -689,7 +689,9 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 			
 			MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
 			LibraryBackupUtil.promptBackupCurrentLibrary(Display.getCurrent().getActiveShell(), LibraryService.getInstance());
-			LibraryUtil.markLibrarySynFree(lib, true);
+//			LibraryUtil.markLibrarySynFree(lib, true);
+			SynFreeProcessConverter converter = new SynFreeProcessConverter();
+			converter.convertLibrary(lib);
 		}
 		
 		return true;
