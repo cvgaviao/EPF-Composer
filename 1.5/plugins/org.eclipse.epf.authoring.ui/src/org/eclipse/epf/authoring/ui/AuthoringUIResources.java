@@ -1345,6 +1345,20 @@ public final class AuthoringUIResources extends NLS {
 	public static String ProcessEditor_Action_SuppressAll;
 
 	public static String FilterDialog_Pattern_description;
+	
+	public static String FilterDialog_Process_Scope_Grp;
+	
+	public static String FilterDialog_Process_Scope_Grp_defaultPluginsBtn;
+	
+	public static String FilterDialog_Process_Scope_Grp_newPluginsBtn;
+	
+	public static String FilterDialog_Process_Scope_Grp_libBtn;
+	
+	public static String FilterDialog_Process_Scope_Grp_configBtn;
+	
+	public static String FilterDialog_Process_Scope_Grp_viewBtn;
+	
+	public static String FilterDialog_Process_Scope_Grp_editBtn;
 
 	public static String ConfigurationPage_TreeTitleLabel;
 

@@ -146,7 +146,8 @@ public class ProcessDescription extends ProcessFormPage {
 	private ModifyListener nameModifyListener;
 
 	private boolean disposed;
-	 
+	
+	private ProcessScopeUtil processUtil = ProcessScopeUtil.getInstance();
 
 	/**
 	 * Creates a new instance.
@@ -1221,7 +1222,7 @@ public class ProcessDescription extends ProcessFormPage {
 		if (!buttonRemove.isDisposed() && !editable)
 			buttonRemove.setEnabled(editable);
 		
-		if (isConfigFree()) {
+		if (processUtil.isConfigFree(process)) {
 			configSection.setEnabled(false);
 			buttonAdd.setEnabled(false);
 			buttonRemove.setEnabled(false);
@@ -1407,12 +1408,6 @@ public class ProcessDescription extends ProcessFormPage {
 			return true;
 		}
 		return changeProcessName(editor.getActionManager(), null, (ProcessComponent) process.eContainer());
-	}
-	
-	private boolean isConfigFree() {
-		boolean result = ProcessScopeUtil.getInstance().getScope(process) != null;
-		
-		return result;
 	}
 	
 }

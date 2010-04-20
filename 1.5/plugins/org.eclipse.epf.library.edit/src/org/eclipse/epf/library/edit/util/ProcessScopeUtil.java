@@ -145,4 +145,10 @@ public class ProcessScopeUtil {
 		return scopeInEditdSet;
 	}
 	
+	public boolean isConfigFree(Process process) {
+		boolean result = getScope(process) != null;
+		
+		return result;
+	}
+	
 }

@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -40,6 +42,8 @@ import org.eclipse.epf.library.edit.navigator.MethodPluginItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -78,6 +82,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -110,7 +115,18 @@ public class ItemsFilterDialog extends Dialog implements
 	private ArrayList selectedList = new ArrayList();
 
 	private boolean viewerSelectionSingle = false;
+	
 	private String viewerLabel = null;
+	
+	private ProcessScopeUtil processUtil = ProcessScopeUtil.getInstance();
+	
+	private Button libBtn;
+	
+	private Button configBtn;
+	
+	private Button defaultPluginsBtn, viewBtn;
+	
+	private Button newPluginsBtn, editBtn;
 	
 	/*
 	 * Treeviewer for ContentElements to display.
@@ -401,6 +417,11 @@ public class ItemsFilterDialog extends Dialog implements
 			GridData gD = new GridData(SWT.DEFAULT, SWT.DEFAULT, false, false, 3, 1);
 			gD.widthHint = 550;
 			ctrl_patternLabel1.setLayoutData(gD);
+		}
+		
+		//for config free process
+		if (supportProcessScope(contentElement)) {
+			createProcessScopeGroup(composite);
 		}
 		
 		Composite buttonsComposite = new Composite(composite, SWT.NONE);		
@@ -1139,4 +1160,68 @@ public class ItemsFilterDialog extends Dialog implements
 			return PatternConstructor.createPattern(FilterConstants.ANY_STRING, false, false); 
 		}
 	}
+	
+	private void createProcessScopeGroup(Composite parent) {
+		Group scopeGrp = new Group(parent, SWT.NONE);		
+		GridData gd = new GridData(GridData.FILL_VERTICAL);
+		gd.horizontalSpan = 3;
+		gd.widthHint = 300;
+		scopeGrp.setLayoutData(gd);
+		scopeGrp.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp);
+		scopeGrp.setLayout(new GridLayout(2, false));
+		
+		Composite scopeCompo = new Composite(scopeGrp, SWT.NONE);
+		scopeCompo.setLayoutData(new GridData(GridData.FILL_BOTH));
+		scopeCompo.setLayout(new GridLayout(1, false));
+
+		defaultPluginsBtn = new Button(scopeCompo, SWT.RADIO);
+		defaultPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_defaultPluginsBtn);
+		
+		newPluginsBtn = new Button(scopeCompo, SWT.RADIO);
+		newPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_newPluginsBtn);
+		
+		libBtn = new Button(scopeCompo, SWT.RADIO);
+		libBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_libBtn);
+
+		configBtn = new Button(scopeCompo, SWT.RADIO);
+		configBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_configBtn);
+		
+		Composite btnCompo = new Composite(scopeGrp, SWT.NONE);
+		btnCompo.setLayoutData(new GridData(GridData.FILL_BOTH));
+		btnCompo.setLayout(new GridLayout(1, false));
+		
+		viewBtn = new Button(btnCompo, SWT.PUSH); 
+		viewBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_viewBtn);
+		viewBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		editBtn = new Button(btnCompo, SWT.PUSH);
+		editBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_editBtn);
+		editBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+	}
+	
+	private boolean supportProcessScope(Object inputElement) {
+		boolean result = false;
+		
+		if (inputElement != null) {
+			if (inputElement instanceof Process) {
+				result = processUtil.isConfigFree((Process)inputElement);
+			} else if (inputElement instanceof BreakdownElement) {
+				Process process = getProcess((BreakdownElement)inputElement);
+				result = processUtil.isConfigFree(process);
+			}			
+		}	
+		
+		return result;
+	}
+	
+	private Process getProcess(BreakdownElement element) {
+		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
+				.getWBS_ComposedAdapterFactory();
+		ItemProviderAdapter adapter = (ItemProviderAdapter) aFactory.adapt(
+				element, ITreeItemContentProvider.class);
+		Object obj = ProcessUtil.getRootProcess(aFactory, adapter, element);
+		
+		return (Process) obj;
+	}
+	
 }
