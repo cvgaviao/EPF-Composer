@@ -49,8 +49,7 @@ public class RealizedDescriptor extends RealizedElement implements
 				up.getContentDescription_MainDescription());
 		contentFeatureMap.put(up.getContentDescription_KeyConsiderations(), up
 				.getContentDescription_KeyConsiderations());		
-		contentFeatureMap.put(up.getContentDescription_LongPresentationName(), up
-				.getContentDescription_LongPresentationName());
+
 	}
 	
 	public RealizedDescriptor(Descriptor descriptor) {

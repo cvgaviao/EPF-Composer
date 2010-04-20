@@ -23,8 +23,11 @@ import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
 import org.eclipse.epf.services.ILibraryPersister;
+import org.eclipse.epf.uma.ContentDescription;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -207,16 +210,16 @@ public class SynFreeProcessConverter {
 
 		convertGuidances(des);
 		
-		convertSimpleTextAttributes(des);
+		convertTextAttributes(des);
 
 		if (resouresToSave != null) {
 			resouresToSave.add(res);
 		}
 	}
 
-	private void convertSimpleTextAttributes(Descriptor des) {
+	private void convertTextAttributes(Descriptor des) {
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		MethodElement element = propUtil.getLinkedElement(des);
+		ContentElement element = (ContentElement) propUtil.getLinkedElement(des);
 		if (element == null) {
 			return;
 		}
@@ -227,6 +230,7 @@ public class SynFreeProcessConverter {
 			propUtil.setNameRepalce(des, true);
 		}
 
+		String elementStrValue = ConfigurationHelper.getPresentationName(element, getConfig());
 		if (propUtil.hasNoValue(des.getPresentationName())) {
 			des.setPresentationName(element.getPresentationName());
 		} else if (!des.getPresentationName().equals(
@@ -234,11 +238,52 @@ public class SynFreeProcessConverter {
 			propUtil.setPresentationNameRepalce(des, true);
 		}
 
+		elementStrValue = (String) ConfigurationHelper
+				.calcAttributeFeatureValue(element, up
+						.getMethodElement_BriefDescription(), getConfig());
 		if (propUtil.hasNoValue(des.getBriefDescription())) {
-			des.setBriefDescription(element.getBriefDescription());
+			des.setBriefDescription(elementStrValue);
 		} else if (!des.getBriefDescription().equals(
-				element.getBriefDescription())) {
+				elementStrValue)) {
 			propUtil.setBriefDesRepalce(des, true);
+		}
+		
+		ContentDescription ePrentation = element.getPresentation();
+		DescriptorDescription dPrentation = (DescriptorDescription) des
+				.getPresentation();
+
+		boolean oldDeliver = dPrentation.eDeliver();
+		try {
+			if (oldDeliver) {
+				dPrentation.eSetDeliver(false);
+			}
+
+			elementStrValue = (String) ConfigurationHelper
+					.calcAttributeFeatureValue(ePrentation, element, up
+							.getContentDescription_MainDescription(),
+							getConfig());
+			if (propUtil.hasNoValue(dPrentation.getRefinedDescription())) {
+				dPrentation.setRefinedDescription(elementStrValue);
+			} else if (!dPrentation.getRefinedDescription().equals(
+					elementStrValue)) {
+				propUtil.setMainDesRepalce(des, true);
+			}
+
+			elementStrValue = (String) ConfigurationHelper
+					.calcAttributeFeatureValue(ePrentation, element, up
+							.getContentDescription_KeyConsiderations(),
+							getConfig());
+			if (propUtil.hasNoValue(dPrentation.getKeyConsiderations())) {
+				dPrentation.setKeyConsiderations(elementStrValue);
+			} else if (!dPrentation.getKeyConsiderations().equals(
+					elementStrValue)) {
+				propUtil.setKeyConsiderRepalce(des, true);
+			}
+
+		} finally {
+			if (oldDeliver) {
+				dPrentation.eSetDeliver(oldDeliver);
+			}
 		}
 
 	}
