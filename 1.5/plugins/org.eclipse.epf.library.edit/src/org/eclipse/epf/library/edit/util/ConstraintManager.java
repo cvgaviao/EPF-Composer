@@ -10,12 +10,17 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 
 
 /**
@@ -33,6 +38,8 @@ public final class ConstraintManager {
 	public static final String PROCESS_SUPPRESSION = ""; //$NON-NLS-1$
 	
 	public static final String WORKPRODUCT_STATE = "state"; //$NON-NLS-1$
+	
+	public static final String TASKDESCRIPTOR_WP_STATES = "wp_states"; //$NON-NLS-1$
 
 	public static final Constraint getConstraint(MethodElement e,
 			String constraintName, boolean create) {
@@ -57,7 +64,7 @@ public final class ConstraintManager {
 	
 	public static final Constraint getWorkProductState(WorkProduct wp,
 			String stateName, boolean create) {
-		if (wp == null || stateName == null) {
+		if (wp == null || stateName == null || stateName.trim().length() == 0) {
 			return null;
 		}
 
@@ -73,9 +80,50 @@ public final class ConstraintManager {
 		if (create) {
 			constraint = UmaFactory.eINSTANCE.createConstraint();
 			constraint.setName(WORKPRODUCT_STATE);
+			constraint.setBody(stateName);
 			wp.getOwnedRules().add(constraint);
 		}
 
 		return constraint;
 	}
+	
+	public static final List<Constraint> getWorkProductStates(WorkProduct wp) {
+		List<Constraint> states = new ArrayList<Constraint>();
+
+		if (wp != null) {
+			for (Constraint constraint : wp.getOwnedRules()) {
+				if (constraint.getName().equals(WORKPRODUCT_STATE)) {
+					states.add(constraint);
+				}
+			}
+		}
+
+		return states;
+	}
+	
+	public static void addWpState(TaskDescriptor td, WorkProductDescriptor wpd,
+			Constraint state, EReference ref) {
+		if (td == null || wpd == null || state == null || ref == null) {
+			return;
+		}
+		
+		//Find the wp states holder constraint object for wpd  
+		Constraint wpStatesHolder = null;
+		for (Constraint constraint : td.getOwnedRules()) {
+			if (constraint.getName().equals(TASKDESCRIPTOR_WP_STATES)
+					&& constraint.getBody().equals(wpd.getGuid())) {
+				wpStatesHolder = constraint;
+				break;
+			}
+		}
+		if (wpStatesHolder ==null) {
+			wpStatesHolder = UmaFactory.eINSTANCE.createConstraint();
+			wpStatesHolder.setName(ref.getName());
+			wpStatesHolder.setBody(wpd.getGuid());
+			td.getOwnedRules().add(wpStatesHolder);
+		}
+		
+	}
+	
+	
 }
