@@ -35,7 +35,6 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	private static boolean localDebug = false;
 	
-	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
 	private static final String plus = "+"; 							//$NON-NLS-1$
 	private static final String minus = "-"; 							//$NON-NLS-1$
 
@@ -433,61 +432,11 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	private void addRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
-		String oldValue = getStringValue(descriptor, propName);
-		String newValue = referenced.getGuid().concat(infoSeperator).concat(refName);
-
-		if (oldValue != null && oldValue.length() > 0) {			
-			String[] infos = oldValue.split(infoSeperator); 
-			
-			int sz = infos.length / 2; 		
-			for (int i = 0; i < sz; i++) {
-				int i1 = i*2;
-				int i2 = i1 + 1;
-				String iGuid = infos[i1];
-				String iFeature = infos[i2];
-				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
-					return;
-				} 
-			}
-			
-			newValue = oldValue.concat(infoSeperator).concat(newValue);
-		}				
-		setStringValue(descriptor, propName, newValue);
+		addReferenceInfo(descriptor, referenced, propName, refName);
 	}
 		
 	private void removeRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
-		String oldValue = getStringValue(descriptor, propName);
-		if (oldValue == null || oldValue.length() == 0) {
-			return;
-		}
-		boolean removed = false;
-		String newValue = ""; //$NON-NLS-1$
-
-		if (oldValue != null && oldValue.length() > 0) {			
-			String[] infos = oldValue.split(infoSeperator); 
-			
-			int sz = infos.length / 2; 		
-			for (int i = 0; i < sz; i++) {
-				int i1 = i*2;
-				int i2 = i1 + 1;
-				String iGuid = infos[i1];
-				String iFeature = infos[i2];
-				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
-					removed = true;		
-				} else {
-					if (newValue.length() > 0) {
-						newValue = newValue.concat(infoSeperator);
-					}
-					newValue = newValue.concat(iGuid.concat(infoSeperator).concat(iFeature));
-				}
-			}
-
-		}
-		
-		if (removed) {
-			setStringValue(descriptor, propName, newValue);
-		}
-
+		removeReferenceInfo(descriptor, referenced, propName, refName);
 	}
 	
 	public List<? extends Descriptor> getCustomizingChildren(Descriptor des) {

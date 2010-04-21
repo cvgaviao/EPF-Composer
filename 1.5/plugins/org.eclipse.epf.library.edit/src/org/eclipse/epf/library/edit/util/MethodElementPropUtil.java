@@ -3,6 +3,7 @@ package org.eclipse.epf.library.edit.util;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
@@ -10,6 +11,8 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 
 public class MethodElementPropUtil {
 	
+	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
+
 	private static MethodElementPropUtil methodElementPropUtil = new MethodElementPropUtil();
 	public static MethodElementPropUtil getMethodElementPropUtil() {
 		return methodElementPropUtil;
@@ -91,5 +94,64 @@ public class MethodElementPropUtil {
 	protected MethodElementExt createExtendObject(MethodElement element) {
 		return new MethodElementExt(element);
 	}
+	
+	protected void addReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
+		String oldValue = getStringValue(referencing, propName);
+		String newValue = referenced.getGuid().concat(infoSeperator).concat(refName);
+
+		if (oldValue != null && oldValue.length() > 0) {			
+			String[] infos = oldValue.split(infoSeperator); 
+			
+			int sz = infos.length / 2; 		
+			for (int i = 0; i < sz; i++) {
+				int i1 = i*2;
+				int i2 = i1 + 1;
+				String iGuid = infos[i1];
+				String iFeature = infos[i2];
+				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
+					return;
+				} 
+			}
+			
+			newValue = oldValue.concat(infoSeperator).concat(newValue);
+		}				
+		setStringValue(referencing, propName, newValue);
+	}
+	
+	protected void removeReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
+		String oldValue = getStringValue(referencing, propName);
+		if (oldValue == null || oldValue.length() == 0) {
+			return;
+		}
+		boolean removed = false;
+		String newValue = ""; //$NON-NLS-1$
+
+		if (oldValue != null && oldValue.length() > 0) {			
+			String[] infos = oldValue.split(infoSeperator); 
+			
+			int sz = infos.length / 2; 		
+			for (int i = 0; i < sz; i++) {
+				int i1 = i*2;
+				int i2 = i1 + 1;
+				String iGuid = infos[i1];
+				String iFeature = infos[i2];
+				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
+					removed = true;		
+				} else {
+					if (newValue.length() > 0) {
+						newValue = newValue.concat(infoSeperator);
+					}
+					newValue = newValue.concat(iGuid.concat(infoSeperator).concat(iFeature));
+				}
+			}
+
+		}
+		
+		if (removed) {
+			setStringValue(referencing, propName, newValue);
+		}
+
+	}
+	
 	
 }
