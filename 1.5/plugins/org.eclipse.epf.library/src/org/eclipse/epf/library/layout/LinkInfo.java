@@ -240,7 +240,7 @@ public class LinkInfo {
 	}
 
 	protected String decode(String str) throws UnsupportedEncodingException {
-		if (NetUtil.isRmcRawUrl(str)) {
+		if (NetUtil.isRawUrl(str)) {
 			return str;
 		}
 		

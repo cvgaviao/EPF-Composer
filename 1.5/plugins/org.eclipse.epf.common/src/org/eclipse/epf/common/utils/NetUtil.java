@@ -99,7 +99,7 @@ public class NetUtil {
 			"%F8", "%F9", "%FA", "%FB", "%FC", "%FD", "%FE", "%FF" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
 	};
 	
-	public static final String RAW_RMC_RAW = "raw_rmc_raw"; //$NON-NLS-1$
+	public static final String RAW_URL_RAW = "raw_URL_raw"; //$NON-NLS-1$
 
 	/**
 	 * Private constructor to prevent this class from being instantiated. All
@@ -351,7 +351,7 @@ public class NetUtil {
 	 * @return the ASCII-escaped respresentation.
 	 */
 	public static String decodedFileUrl(String fileURL) {
-		if (isRmcRawUrl(fileURL)) {
+		if (isRawUrl(fileURL)) {
 			return fileURL;
 		}
 		
@@ -387,10 +387,10 @@ public class NetUtil {
 		return url;
 	}
 	
-	public static boolean isRmcRawUrl(String url) {
+	public static boolean isRawUrl(String url) {
 		boolean result = false;
 		
-		if (url.endsWith(RAW_RMC_RAW)) {
+		if (url.endsWith(RAW_URL_RAW)) {
 			result = true;
 		}
 		

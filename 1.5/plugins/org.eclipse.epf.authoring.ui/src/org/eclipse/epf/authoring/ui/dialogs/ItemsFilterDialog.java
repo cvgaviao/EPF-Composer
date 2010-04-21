@@ -999,9 +999,44 @@ public class ItemsFilterDialog extends Dialog implements
 				expandOrCollapse(false);
 			}
 		});
-
+		if (supportProcessScope(contentElement)) {
+			defaultPluginsBtn.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					updateBtnStatus();
+					updateFilterDialog();
+				}
+			});
+			newPluginsBtn.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					updateBtnStatus();
+					updateFilterDialog();
+				}
+			});
+			libBtn.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					updateBtnStatus();
+					updateFilterDialog();
+				}
+			});
+			configBtn.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					updateBtnStatus();
+					updateFilterDialog();
+				}
+			});
+			viewBtn.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+				
+				}
+			});
+			editBtn.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+				
+				}
+			});
+		}
 	}
-
+	
 	public ArrayList getSelectedItems() {
 		return selectedList;
 	}
@@ -1185,6 +1220,7 @@ public class ItemsFilterDialog extends Dialog implements
 
 		configBtn = new Button(scopeCompo, SWT.RADIO);
 		configBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_configBtn);
+		configBtn.setSelection(true);
 		
 		Composite btnCompo = new Composite(scopeGrp, SWT.NONE);
 		btnCompo.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -1193,10 +1229,12 @@ public class ItemsFilterDialog extends Dialog implements
 		viewBtn = new Button(btnCompo, SWT.PUSH); 
 		viewBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_viewBtn);
 		viewBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		viewBtn.setEnabled(false);
 
 		editBtn = new Button(btnCompo, SWT.PUSH);
 		editBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_editBtn);
 		editBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		editBtn.setEnabled(false);
 	}
 	
 	private boolean supportProcessScope(Object inputElement) {
@@ -1204,7 +1242,8 @@ public class ItemsFilterDialog extends Dialog implements
 		
 		if (inputElement != null) {
 			if (inputElement instanceof Process) {
-				result = processUtil.isConfigFree((Process)inputElement);
+				//Won't display process scope selection if invoke filter dialog
+				//from "Add from process" button in properties view editor
 			} else if (inputElement instanceof BreakdownElement) {
 				Process process = getProcess((BreakdownElement)inputElement);
 				result = processUtil.isConfigFree(process);
@@ -1222,6 +1261,38 @@ public class ItemsFilterDialog extends Dialog implements
 		Object obj = ProcessUtil.getRootProcess(aFactory, adapter, element);
 		
 		return (Process) obj;
+	}
+	
+	private void updateBtnStatus() {
+		if (defaultPluginsBtn.getSelection()) {
+			viewBtn.setEnabled(true);
+		} else {
+			viewBtn.setEnabled(false);
+		}
+		
+		if (newPluginsBtn.getSelection()) {
+			editBtn.setEnabled(true);
+		} else {
+			editBtn.setEnabled(false);
+		}	
+	}
+	
+	private void updateFilterDialog() {
+		if (defaultPluginsBtn.getSelection()) {
+			
+		}
+		
+		if (newPluginsBtn.getSelection()) {
+			
+		}
+		
+		if (libBtn.getSelection()) {
+			
+		}
+		
+		if (configBtn.getSelection()) {
+			
+		}
 	}
 	
 }

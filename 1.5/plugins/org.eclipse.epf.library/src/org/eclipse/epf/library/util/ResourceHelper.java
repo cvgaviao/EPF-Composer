@@ -866,7 +866,7 @@ public class ResourceHelper {
 			Matcher m = ResourceHelper.p_url_decoder.matcher(content);
 			while (m.find()) {
 				String url = m.group(3);
-				if (NetUtil.isRmcRawUrl(url)) {
+				if (NetUtil.isRawUrl(url)) {
 					url = restore(url); 
 				} else {
 					url = URLDecoder.decode(url, "UTF-8"); //$NON-NLS-1$
@@ -886,7 +886,7 @@ public class ResourceHelper {
 	}
 	
 	private static String restore(String url) {
-		int index = url.indexOf(NetUtil.RAW_RMC_RAW);
+		int index = url.indexOf(NetUtil.RAW_URL_RAW);
 		
 		return url.substring(0, index);		
 	}
