@@ -357,6 +357,9 @@ public class AbstractSection extends AbstractPropertySection implements
 				if (scopeType == ProcessScopeUtil.ScopeType_Library) {
 					return ProcessScopeUtil.getInstance().getLibraryScope();
 				}
+				if (scopeType == ProcessScopeUtil.ScopeType_Plugins) {
+					return ProcessScopeUtil.getInstance().getPluginScope();
+				}
 			}
 		}
 

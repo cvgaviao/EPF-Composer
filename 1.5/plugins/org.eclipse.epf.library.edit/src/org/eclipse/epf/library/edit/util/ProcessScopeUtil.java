@@ -18,11 +18,14 @@ public class ProcessScopeUtil {
 	private static ProcessScopeUtil instance = new ProcessScopeUtil();
 	
 	private Scope libraryScope = ScopeFactory.getInstance().newLibraryScope();
+	private Scope pluginScope = ScopeFactory.getInstance().newProcessScope();
+
 	private Set<Scope> scopeInEditdSet = new HashSet<Scope>();
 
 	public static final int ScopeType_Config = 0;
 	public static final int ScopeType_Process = 1;
 	public static final int ScopeType_Library = 2;
+	public static final int ScopeType_Plugins = 3;
 	
 	private int scopeType = ScopeType_Config;
 	
@@ -131,6 +134,10 @@ public class ProcessScopeUtil {
 	
 	public Scope getLibraryScope() {
 		return libraryScope;
+	}
+	
+	public Scope getPluginScope() {
+		return pluginScope;
 	}
 	
 	public void beginProcessEdit(Scope scope) {
