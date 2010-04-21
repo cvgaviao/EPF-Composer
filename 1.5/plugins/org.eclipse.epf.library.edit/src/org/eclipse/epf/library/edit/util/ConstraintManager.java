@@ -118,12 +118,62 @@ public final class ConstraintManager {
 		}
 		if (wpStatesHolder ==null) {
 			wpStatesHolder = UmaFactory.eINSTANCE.createConstraint();
-			wpStatesHolder.setName(ref.getName());
+			wpStatesHolder.setName(TASKDESCRIPTOR_WP_STATES);
 			wpStatesHolder.setBody(wpd.getGuid());
 			td.getOwnedRules().add(wpStatesHolder);
 		}
 		
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		propUtil.addReferenceInfo(wpStatesHolder, state, MethodElementPropUtil.CONSTRAINT_WPStates, ref.getName());
+		
 	}
 	
+	public static void removeWpState(TaskDescriptor td,
+			WorkProductDescriptor wpd, Constraint state, EReference ref) {
+		if (td == null || wpd == null || state == null || ref == null) {
+			return;
+		}
+		
+		//Find the wp states holder constraint object for wpd  
+		Constraint wpStatesHolder = null;
+		for (Constraint constraint : td.getOwnedRules()) {
+			if (constraint.getName().equals(TASKDESCRIPTOR_WP_STATES)
+					&& constraint.getBody().equals(wpd.getGuid())) {
+				wpStatesHolder = constraint;
+				break;
+			}
+		}
+		if (wpStatesHolder ==null) {
+			return;
+		}
+		
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		propUtil.removeReferenceInfo(wpStatesHolder, state, MethodElementPropUtil.CONSTRAINT_WPStates, ref.getName());
+	
+	}
+	
+	public static List<Constraint> getWpStates(TaskDescriptor td,
+			WorkProductDescriptor wpd, EReference ref) {
+
+		Constraint wpStatesHolder = null;
+		for (Constraint constraint : td.getOwnedRules()) {
+			if (constraint.getName().equals(TASKDESCRIPTOR_WP_STATES)
+					&& constraint.getBody().equals(wpd.getGuid())) {
+				wpStatesHolder = constraint;
+				break;
+			}
+		}
+
+		if (wpStatesHolder == null) {
+			return new ArrayList<Constraint>();
+		}
+
+		MethodElementPropUtil propUtil = MethodElementPropUtil
+				.getMethodElementPropUtil();
+
+		return (List<Constraint>) propUtil.extractElements(wpStatesHolder,
+				MethodElementPropUtil.CONSTRAINT_WPStates, ref.getName());
+
+	}
 	
 }

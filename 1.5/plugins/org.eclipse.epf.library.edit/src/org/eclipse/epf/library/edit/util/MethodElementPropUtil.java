@@ -1,9 +1,11 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
-import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
@@ -12,6 +14,8 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 public class MethodElementPropUtil {
 	
 	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
+	
+	public static final String CONSTRAINT_WPStates = "constraint_wpStates";	
 
 	private static MethodElementPropUtil methodElementPropUtil = new MethodElementPropUtil();
 	public static MethodElementPropUtil getMethodElementPropUtil() {
@@ -95,7 +99,7 @@ public class MethodElementPropUtil {
 		return new MethodElementExt(element);
 	}
 	
-	protected void addReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
+	public void addReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
 		String oldValue = getStringValue(referencing, propName);
 		String newValue = referenced.getGuid().concat(infoSeperator).concat(refName);
 
@@ -118,7 +122,7 @@ public class MethodElementPropUtil {
 		setStringValue(referencing, propName, newValue);
 	}
 	
-	protected void removeReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
+	public void removeReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
 		String oldValue = getStringValue(referencing, propName);
 		if (oldValue == null || oldValue.length() == 0) {
 			return;
@@ -153,5 +157,34 @@ public class MethodElementPropUtil {
 
 	}
 	
-	
+	public List<? extends MethodElement> extractElements(MethodElement propertyOwner, String propName, String refName) {
+		List<MethodElement> elements = new ArrayList<MethodElement>();
+		
+		String value = getStringValue(propertyOwner, propName);
+		if (value == null || value.length() == 0) {
+			return elements;
+		}
+		
+		String[] infos = value.split(infoSeperator);
+		if (infos == null || infos.length == 0) {
+			return elements;
+		}
+		
+
+		int sz = infos.length / 2; 		
+		for (int i = 0; i < sz; i++) {
+			int i1 = i*2;
+			int i2 = i1 + 1;
+			String iGuid = infos[i1];
+			String iRefName = infos[i2];			
+			if (refName.equals(iRefName)) {
+				MethodElement element = LibraryEditUtil.getInstance().getMethodElement(iGuid);
+				if (element != null) {
+					elements.add(element);
+				}
+			} 
+		}		
+
+		return elements;
+	}
 }
