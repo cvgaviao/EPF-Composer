@@ -15,6 +15,7 @@ import java.util.Iterator;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.WorkProduct;
 
 
 /**
@@ -22,6 +23,7 @@ import org.eclipse.epf.uma.UmaFactory;
  * implementation-specific data
  * 
  * @author Phong Nguyen Le - Dec 1, 2005
+ * @author Weiping Lu, Aripl 20, 2010
  * @since 1.0
  */
 public final class ConstraintManager {
@@ -29,6 +31,8 @@ public final class ConstraintManager {
 	public static final String ACITIVY_DIAGRAM = "diagram"; //$NON-NLS-1$
 
 	public static final String PROCESS_SUPPRESSION = ""; //$NON-NLS-1$
+	
+	public static final String WORKPRODUCT_STATE = "state"; //$NON-NLS-1$
 
 	public static final Constraint getConstraint(MethodElement e,
 			String constraintName, boolean create) {
@@ -48,6 +52,30 @@ public final class ConstraintManager {
 			constraint.setName(constraintName);
 			e.getOwnedRules().add(constraint);
 		}
+		return constraint;
+	}
+	
+	public static final Constraint getWorkProductState(WorkProduct wp,
+			String stateName, boolean create) {
+		if (wp == null || stateName == null) {
+			return null;
+		}
+
+		for (Iterator iter = wp.getOwnedRules().iterator(); iter.hasNext();) {
+			Constraint constraint = (Constraint) iter.next();
+			if (constraint.getName().equals(WORKPRODUCT_STATE)
+					&& constraint.getBody().equals(stateName)) {
+				return constraint;
+			}
+		}
+
+		Constraint constraint = null;
+		if (create) {
+			constraint = UmaFactory.eINSTANCE.createConstraint();
+			constraint.setName(WORKPRODUCT_STATE);
+			wp.getOwnedRules().add(constraint);
+		}
+
 		return constraint;
 	}
 }
