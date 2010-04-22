@@ -29,6 +29,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.filters.DescriptorConfigurationFilter;
 import org.eclipse.epf.authoring.ui.filters.ExProcessAuthoringConfigurator;
+import org.eclipse.epf.authoring.ui.properties.AbstractSection;
 import org.eclipse.epf.authoring.ui.util.AuthoringAccessibleListener;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationFilter;
@@ -119,14 +120,16 @@ public class ItemsFilterDialog extends Dialog implements
 	private String viewerLabel = null;
 	
 	private ProcessScopeUtil processUtil = ProcessScopeUtil.getInstance();
+
+	private Button referencedPluginsBtn, viewBtn;
+	
+	private Button selectedPluginsBtn, editBtn;
 	
 	private Button libBtn;
 	
 	private Button configBtn;
 	
-	private Button defaultPluginsBtn, viewBtn;
-	
-	private Button newPluginsBtn, editBtn;
+	private AbstractSection section;
 	
 	/*
 	 * Treeviewer for ContentElements to display.
@@ -482,6 +485,14 @@ public class ItemsFilterDialog extends Dialog implements
 
 		// Return results.
 		addListener();
+		
+		//initialize for process scope
+		if (supportProcessScope(contentElement)) {
+			referencedPluginsBtn.setSelection(true);
+			updateBtnStatus();
+			updateFilterDialog();
+		}
+		
 		return composite;
 	}
 
@@ -1000,13 +1011,13 @@ public class ItemsFilterDialog extends Dialog implements
 			}
 		});
 		if (supportProcessScope(contentElement)) {
-			defaultPluginsBtn.addSelectionListener(new SelectionAdapter() {
+			referencedPluginsBtn.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					updateBtnStatus();
 					updateFilterDialog();
 				}
 			});
-			newPluginsBtn.addSelectionListener(new SelectionAdapter() {
+			selectedPluginsBtn.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					updateBtnStatus();
 					updateFilterDialog();
@@ -1209,18 +1220,17 @@ public class ItemsFilterDialog extends Dialog implements
 		scopeCompo.setLayoutData(new GridData(GridData.FILL_BOTH));
 		scopeCompo.setLayout(new GridLayout(1, false));
 
-		defaultPluginsBtn = new Button(scopeCompo, SWT.RADIO);
-		defaultPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_defaultPluginsBtn);
+		referencedPluginsBtn = new Button(scopeCompo, SWT.RADIO);
+		referencedPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_referencedPluginsBtn);
 		
-		newPluginsBtn = new Button(scopeCompo, SWT.RADIO);
-		newPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_newPluginsBtn);
+		selectedPluginsBtn = new Button(scopeCompo, SWT.RADIO);
+		selectedPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_selectedPluginsBtn);
 		
 		libBtn = new Button(scopeCompo, SWT.RADIO);
 		libBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_libBtn);
 
 		configBtn = new Button(scopeCompo, SWT.RADIO);
 		configBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_configBtn);
-		configBtn.setSelection(true);
 		
 		Composite btnCompo = new Composite(scopeGrp, SWT.NONE);
 		btnCompo.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -1264,13 +1274,13 @@ public class ItemsFilterDialog extends Dialog implements
 	}
 	
 	private void updateBtnStatus() {
-		if (defaultPluginsBtn.getSelection()) {
+		if (referencedPluginsBtn.getSelection()) {
 			viewBtn.setEnabled(true);
 		} else {
 			viewBtn.setEnabled(false);
 		}
 		
-		if (newPluginsBtn.getSelection()) {
+		if (selectedPluginsBtn.getSelection()) {
 			editBtn.setEnabled(true);
 		} else {
 			editBtn.setEnabled(false);
@@ -1278,21 +1288,38 @@ public class ItemsFilterDialog extends Dialog implements
 	}
 	
 	private void updateFilterDialog() {
-		if (defaultPluginsBtn.getSelection()) {
-			
+		if (referencedPluginsBtn.getSelection()) {
+			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Process);				
 		}
 		
-		if (newPluginsBtn.getSelection()) {
-			
+		if (selectedPluginsBtn.getSelection()) {
+			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Plugins);
 		}
 		
 		if (libBtn.getSelection()) {
-			
+			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Library);
 		}
 		
 		if (configBtn.getSelection()) {
-			
+			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Config);
 		}
+		
+		updateFilter();
+		
+		initProviderForTabs();
+		refreshTreeViewer();
+	}
+	
+	public void setSection(AbstractSection section) {
+		this.section = section;
+	}
+	
+	private void updateFilter() {
+		if (section != null) {
+			if (filter instanceof DescriptorConfigurationFilter) {
+				((DescriptorConfigurationFilter)filter).setMethodConfiguration(section.getConfiguration());
+			}
+		}	
 	}
 	
 }

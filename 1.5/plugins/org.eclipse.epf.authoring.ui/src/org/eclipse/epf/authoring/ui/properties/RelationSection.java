@@ -548,6 +548,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setSection(getSection());
 						fd.open();
 						addItems1(fd.getSelectedItems());
 						tableViewer1.refresh();
@@ -675,6 +676,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setSection(getSection());
 						fd.open();
 						addItems2(fd.getSelectedItems());
 						tableViewer2.refresh();
@@ -781,6 +783,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setSection(getSection());
 						fd.open();
 						addItems3(fd.getSelectedItems());
 						tableViewer3.refresh();
@@ -897,6 +900,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setSection(getSection());
 						fd.open();
 						addItems4(fd.getSelectedItems());
 						tableViewer4.refresh();
@@ -1054,7 +1058,7 @@ public class RelationSection extends AbstractSection {
 	protected void syncFreeUpdateBtnStatus4(IStructuredSelection selection) {
 		
 	}
-			
+				
 	protected boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
 	}

@@ -73,7 +73,11 @@ public class DescriptorConfigurationFilter extends ConfigurationFilter {
 	public boolean accept(Object obj) {
 
 		if (obj instanceof MethodConfiguration) {
-			return methodConfiguration.equals(obj);
+			if (methodConfiguration != null) {
+				return methodConfiguration.equals(obj);
+			} else {
+				return false;
+			}
 		}
 
 		if (!super.accept(obj))

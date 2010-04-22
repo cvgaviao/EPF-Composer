@@ -337,7 +337,7 @@ public class AbstractSection extends AbstractPropertySection implements
 	 * @return
 	 * 			current method configuration
 	 */
-	protected MethodConfiguration getConfiguration() {
+	public MethodConfiguration getConfiguration() {
 		if (getEditor() != null) {
 			Scope scope = ProcessScopeUtil.getInstance().getScope(
 					getEditor().getSelectedProcess());
@@ -346,9 +346,9 @@ public class AbstractSection extends AbstractPropertySection implements
 				if (scopeType == ProcessScopeUtil.ScopeType_Config) {
 					MethodConfiguration config = LibraryService.getInstance()
 					.getCurrentMethodConfiguration();
-					if (config == null) {
-						return scope;
-					}
+//					if (config == null) {
+//						return scope;
+//					}
 					return config;
 				} 
 				if (scopeType == ProcessScopeUtil.ScopeType_Process) {
@@ -395,4 +395,9 @@ public class AbstractSection extends AbstractPropertySection implements
 	public String getNamePrefix() {
 		return "ProcessElement: "; //$NON-NLS-1$
 	}
+	
+	protected AbstractSection getSection() {
+		return this;
+	}
+	
 }

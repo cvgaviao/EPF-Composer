@@ -1348,9 +1348,9 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String FilterDialog_Process_Scope_Grp;
 	
-	public static String FilterDialog_Process_Scope_Grp_defaultPluginsBtn;
+	public static String FilterDialog_Process_Scope_Grp_referencedPluginsBtn;
 	
-	public static String FilterDialog_Process_Scope_Grp_newPluginsBtn;
+	public static String FilterDialog_Process_Scope_Grp_selectedPluginsBtn;
 	
 	public static String FilterDialog_Process_Scope_Grp_libBtn;
 	

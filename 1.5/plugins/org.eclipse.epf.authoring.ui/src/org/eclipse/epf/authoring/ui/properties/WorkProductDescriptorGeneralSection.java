@@ -413,6 +413,7 @@ public class WorkProductDescriptorGeneralSection extends
 						existingElements);
 				fd.setBlockOnOpen(true);
 				fd.setTitle(FilterConstants.WORKPRODUCTS);
+				fd.setSection(getSection());
 				fd.open();
 				addItems(fd.getSelectedItems());
 				viewer_1.refresh();
