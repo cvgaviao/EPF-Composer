@@ -398,6 +398,17 @@ public class SynFreeProcessConverter {
 				if (!list.isEmpty()) {
 					elementGuidanceSet.addAll((List) elementValue);
 				}
+				
+				Object rawDescripValue = des.eGet(descripRef);
+				if (rawDescripValue instanceof List) {
+					List rawList = (List) rawDescripValue;
+					Set<Guidance> rewDescripGuidanceSet = new HashSet<Guidance>(rawList);
+					for (Guidance g : (List<Guidance>) list) {
+						if (! rewDescripGuidanceSet.contains(g)) {
+							rawList.add(g);
+						}
+					}
+				}
 			}
 			if (descripValue instanceof List) {
 				List list = (List) descripValue;
@@ -405,12 +416,13 @@ public class SynFreeProcessConverter {
 					descripGuidanceSet.addAll((List) descripValue);
 				}
 			}
+			
 		}
-		for (Guidance g : elementGuidanceSet) {
-			if (!descripGuidanceSet.contains(g)) {
-				des.getGuidanceExclude().add(g);
-			}
-		}
+//		for (Guidance g : elementGuidanceSet) {
+//			if (!descripGuidanceSet.contains(g)) {
+//				des.getGuidanceExclude().add(g);
+//			}
+//		}
 		for (Guidance g : descripGuidanceSet) {
 			if (!elementGuidanceSet.contains(g)) {
 				des.getGuidanceAdditional().add(g);
