@@ -15,7 +15,7 @@ public class MethodElementPropUtil {
 	
 	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
 	
-	public static final String CONSTRAINT_WPStates = "constraint_wpStates";	
+	public static final String CONSTRAINT_WPStates = "constraint_wpStates";		//$NON-NLS-1$
 
 	private static MethodElementPropUtil methodElementPropUtil = new MethodElementPropUtil();
 	public static MethodElementPropUtil getMethodElementPropUtil() {
@@ -99,9 +99,9 @@ public class MethodElementPropUtil {
 		return new MethodElementExt(element);
 	}
 	
-	public void addReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
-		String oldValue = getStringValue(referencing, propName);
-		String newValue = referenced.getGuid().concat(infoSeperator).concat(refName);
+	public void addReferenceInfo(MethodElement owner, MethodElement reference, String propName, String refName) {
+		String oldValue = getStringValue(owner, propName);
+		String newValue = reference.getGuid().concat(infoSeperator).concat(refName);
 
 		if (oldValue != null && oldValue.length() > 0) {			
 			String[] infos = oldValue.split(infoSeperator); 
@@ -112,18 +112,18 @@ public class MethodElementPropUtil {
 				int i2 = i1 + 1;
 				String iGuid = infos[i1];
 				String iFeature = infos[i2];
-				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
+				if (iGuid.equals(reference.getGuid()) && iFeature.equals(refName)) {
 					return;
 				} 
 			}
 			
 			newValue = oldValue.concat(infoSeperator).concat(newValue);
 		}				
-		setStringValue(referencing, propName, newValue);
+		setStringValue(owner, propName, newValue);
 	}
 	
-	public void removeReferenceInfo(MethodElement referencing, MethodElement referenced, String propName, String refName) {
-		String oldValue = getStringValue(referencing, propName);
+	public void removeReferenceInfo(MethodElement owner, MethodElement reference, String propName, String refName) {
+		String oldValue = getStringValue(owner, propName);
 		if (oldValue == null || oldValue.length() == 0) {
 			return;
 		}
@@ -139,7 +139,7 @@ public class MethodElementPropUtil {
 				int i2 = i1 + 1;
 				String iGuid = infos[i1];
 				String iFeature = infos[i2];
-				if (iGuid.equals(referenced.getGuid()) && iFeature.equals(refName)) {
+				if (iGuid.equals(reference.getGuid()) && iFeature.equals(refName)) {
 					removed = true;		
 				} else {
 					if (newValue.length() > 0) {
@@ -152,7 +152,7 @@ public class MethodElementPropUtil {
 		}
 		
 		if (removed) {
-			setStringValue(referencing, propName, newValue);
+			setStringValue(owner, propName, newValue);
 		}
 
 	}
@@ -187,4 +187,5 @@ public class MethodElementPropUtil {
 
 		return elements;
 	}
+
 }

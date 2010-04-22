@@ -28,12 +28,12 @@ public class TaskDescriptorPropUtil extends DescriptorPropUtil {
 	
 	public void addWpState(TaskDescriptor td, WorkProductDescriptor wpd,
 			Constraint state, EReference ref) {
-		ConstraintManager.addWpState(td, wpd, state, ref);
+		ConstraintManager.addWpState(td, wpd, state, ref, getActionManager());
 	}
 
 	public void removeWpState(TaskDescriptor td,
 			WorkProductDescriptor wpd, Constraint state, EReference ref) {
-		ConstraintManager.removeWpState(td, wpd, state, ref);
+		ConstraintManager.removeWpState(td, wpd, state, ref, getActionManager());
 	}
 
 	public List<Constraint> getWpStates(TaskDescriptor td,

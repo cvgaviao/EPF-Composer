@@ -42,11 +42,11 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 	}
 	
 	public Constraint getState(WorkProduct wp, String stateName, boolean create) {		
-		return ConstraintManager.getWorkProductState(wp, stateName, create);
+		return ConstraintManager.getWorkProductState(wp, stateName, create, getActionManager());
 	}
 	
 	public String getStateName(Constraint state) {
-		if (state != null && state.getName().equals(ConstraintManager.WORKPRODUCT_STATE)) {
+		if (state != null && state.getName().equals(ConstraintManager.WORKPRODUCT_State)) {
 			return state.getBody();
 		}
 		

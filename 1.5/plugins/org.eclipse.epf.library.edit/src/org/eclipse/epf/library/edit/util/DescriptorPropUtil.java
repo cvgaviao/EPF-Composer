@@ -206,6 +206,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			addRefInfo(usedD, usingD, DESCRIPTOR_LocalUsingInfo, feature.getName());
+			//addReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
@@ -214,6 +215,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public void removeLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
 		try {
 			removeRefInfo(usedD, usingD, DESCRIPTOR_LocalUsingInfo, feature.getName());
+			//removeReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
