@@ -174,7 +174,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	private boolean localUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
-		String value = getStringValue(usedD, DESCRIPTOR_LocalUsingInfo);
+		String value = getStringValue(usingD, DESCRIPTOR_LocalUsingInfo);
 		if (value == null || value.length() == 0) {
 			return false;
 		}
@@ -190,7 +190,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			int i2 = i1 + 1;
 			String iGuid = infos[i1];
 			String iFeature = infos[i2];
-			if (iGuid.equals(usingD.getGuid()) && iFeature.endsWith(feature.getName())) {
+			if (iGuid.equals(usedD.getGuid()) && iFeature.equals(feature.getName())) {
 				return true;
 			} 
 		}		
@@ -205,8 +205,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 						", usedD: " + usedD.getName() + ", feature: " + feature.getName());
 				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
-			addRefInfo(usedD, usingD, DESCRIPTOR_LocalUsingInfo, feature.getName());
-			//addReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
+			addReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
@@ -214,8 +213,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	public void removeLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
 		try {
-			removeRefInfo(usedD, usingD, DESCRIPTOR_LocalUsingInfo, feature.getName());
-			//removeReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
+			removeReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
@@ -375,7 +373,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public void addExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
 		String refName = feature.getName() + (positive ? plus : minus);
 		try {
-			addRefInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
+			addReferenceInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
@@ -413,7 +411,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			int i2 = i1 + 1;
 			String iGuid = infos[i1];
 			String iFeature = infos[i2];
-			if (iFeature.endsWith(refName)) {
+			if (iFeature.equals(refName)) {
 				MethodElement element = LibraryEditUtil.getInstance().getMethodElement(iGuid);
 				if (element != null) {
 					deltaList.add(element);
@@ -427,19 +425,19 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public void removeExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
 		String refName = feature.getName() + (positive ? plus : minus);
 		try {
-			removeRefInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
+			removeReferenceInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
 	}
 	
-	private void addRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
-		addReferenceInfo(descriptor, referenced, propName, refName);
-	}
-		
-	private void removeRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
-		removeReferenceInfo(descriptor, referenced, propName, refName);
-	}
+//	private void addRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
+//		addReferenceInfo(descriptor, referenced, propName, refName);
+//	}
+//		
+//	private void removeRefInfo(Descriptor descriptor, MethodElement referenced, String propName, String refName) {
+//		removeReferenceInfo(descriptor, referenced, propName, refName);
+//	}
 	
 	public List<? extends Descriptor> getCustomizingChildren(Descriptor des) {
 		if (des == null) {
