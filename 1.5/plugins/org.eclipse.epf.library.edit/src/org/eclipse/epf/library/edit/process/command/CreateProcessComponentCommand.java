@@ -146,7 +146,7 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 		List configs = lib.getPredefinedConfigurations();
 		List methodConfigs = new ArrayList();
 		
-		Scope scope = ScopeFactory.getInstance().newProcessScope();
+		Scope scope = ScopeFactory.getInstance().newProcessScope(null);
 		methodConfigs.add(scope);
 		
 		for (Iterator iter = configs.iterator(); iter.hasNext();) {

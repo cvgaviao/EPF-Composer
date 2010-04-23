@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.uma.ScopeFactory;
 import org.eclipse.epf.uma.ContentElement;
@@ -20,7 +21,7 @@ public class ProcessScopeUtil {
 	private static ProcessScopeUtil instance = new ProcessScopeUtil();
 	
 	private Scope libraryScope = ScopeFactory.getInstance().newLibraryScope();
-	private Scope pluginScope = ScopeFactory.getInstance().newProcessScope();
+	private Scope pluginScope = ScopeFactory.getInstance().newProcessScope(LibraryEditResources.scope_PluginsName);
 
 	private Set<Scope> scopeInEditdSet = new HashSet<Scope>();
 
@@ -60,7 +61,7 @@ public class ProcessScopeUtil {
 			return scope;
 		}
 			
-		scope =	ScopeFactory.getInstance().newProcessScope();
+		scope =	ScopeFactory.getInstance().newProcessScope(null);
 
 		addReferenceToScope(scope, proc, new HashSet<MethodElement>());
 		proc.setDefaultContext(scope);
@@ -151,8 +152,9 @@ public class ProcessScopeUtil {
 			if (!same) {
 				oldPlugins.clear();
 				oldPlugins.addAll(newPlugins);
-			}
+			}			
 		}
+		
 		return libraryScope;
 	}
 	
@@ -162,10 +164,14 @@ public class ProcessScopeUtil {
 	
 	public void beginProcessEdit(Scope scope) {
 		scopeInEditdSet.add(scope);
+		scopeInEditdSet.add(libraryScope);
+		scopeInEditdSet.add(pluginScope);
 	}
 	
 	public void endProcesEdit(Scope scope) {
 		scopeInEditdSet.remove(scope);
+		scopeInEditdSet.remove(libraryScope);
+		scopeInEditdSet.remove(pluginScope);
 	}
 
 	public Set<Scope> getScopeInEditdSet() {

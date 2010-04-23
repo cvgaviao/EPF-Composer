@@ -2,6 +2,7 @@ package org.eclipse.epf.library.edit.uma;
 
 import org.eclipse.epf.library.edit.uma.impl.LibraryScopeImpl;
 import org.eclipse.epf.library.edit.uma.impl.ScopeImpl;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.uma.Process;
 
 public class ScopeFactory {
@@ -14,12 +15,21 @@ public class ScopeFactory {
 	private ScopeFactory() {		
 	}
 	
-	public Scope newProcessScope() {
-		return new ScopeImpl();
+	public Scope newProcessScope(String name) {
+		Scope scope = new ScopeImpl(); 
+		
+		if (name != null) {
+			scope.setName(name);
+		}
+		
+		return scope;
 	}
 	
 	public Scope newLibraryScope() {
-		return new LibraryScopeImpl();
+		Scope libScope = new LibraryScopeImpl();
+		libScope.setName(LibraryEditUtil.getInstance().getCurrentMethodLibrary().getName());
+		
+		return libScope;
 	}
 	
 }

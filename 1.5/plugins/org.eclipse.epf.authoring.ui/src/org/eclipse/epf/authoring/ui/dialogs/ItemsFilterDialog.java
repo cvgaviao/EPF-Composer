@@ -131,6 +131,8 @@ public class ItemsFilterDialog extends Dialog implements
 	
 	private AbstractSection section;
 	
+	private Process configFreeProcess;
+	
 	/*
 	 * Treeviewer for ContentElements to display.
 	 */
@@ -1037,12 +1039,12 @@ public class ItemsFilterDialog extends Dialog implements
 			});
 			viewBtn.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-				
+					showPluginListDialog(true);
 				}
 			});
 			editBtn.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
-				
+					showPluginListDialog(false);
 				}
 			});
 		}
@@ -1257,6 +1259,9 @@ public class ItemsFilterDialog extends Dialog implements
 			} else if (inputElement instanceof BreakdownElement) {
 				Process process = getProcess((BreakdownElement)inputElement);
 				result = processUtil.isConfigFree(process);
+				if (result) {
+					configFreeProcess = process;
+				}
 			}			
 		}	
 		
@@ -1320,6 +1325,19 @@ public class ItemsFilterDialog extends Dialog implements
 				((DescriptorConfigurationFilter)filter).setMethodConfiguration(section.getConfiguration());
 			}
 		}	
+	}
+	
+	private void showPluginListDialog(boolean readOnly) {
+		List methodPlugins = processUtil.getScope(configFreeProcess).getMethodPluginSelection();
+		PluginListDialog dialog = new PluginListDialog(this.getShell(), readOnly, methodPlugins);
+		dialog.open();
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 }
