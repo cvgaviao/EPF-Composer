@@ -334,7 +334,7 @@ public class RealizationManager implements IRealizationManager {
 				TaskDescriptor td = (TaskDescriptor) be;
 				Descriptor greenParent = propUtil.getGreenParentDescriptor(td);
 				if (greenParent != null) {
-					CustomizeDescriptorCommand.updateFromGreenParent(greenParent, td);
+					CustomizeDescriptorCommand.updateFromGreenParent(greenParent, td, false);
 				}
 				
 				collectAllReferences(td, tdReferencedSet, seenSet);

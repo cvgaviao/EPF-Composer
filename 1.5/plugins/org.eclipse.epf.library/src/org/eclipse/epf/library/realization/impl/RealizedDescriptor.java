@@ -78,10 +78,17 @@ public class RealizedDescriptor extends RealizedElement implements
 			if (propUtil.isValueReplaced(feature, getDescriptor())) {
 				return value;
 			}
-			
-			Object linkedValue = ConfigurationHelper.calcAttributeFeatureValue(
-					getLinkedElement().getPresentation(), elementFeature, getConfig());
-			if (getDescriptor().getPresentation() != null && linkedValue != null && !linkedValue.equals(value)) {
+						
+			Descriptor greenParent = propUtil.getGreenParentDescriptor(getDescriptor());			
+			Object linkedValue;
+			if (greenParent == null) {
+				linkedValue = ConfigurationHelper.calcAttributeFeatureValue(
+						getLinkedElement().getPresentation(), elementFeature, getConfig());
+			} else {
+				linkedValue = greenParent.eGet(feature);
+			}
+
+			if (linkedValue == null && value != null ||  linkedValue != null && !linkedValue.equals(value)) {
 				getDescriptor().getPresentation().eSet(feature, linkedValue);
 			}
 
@@ -112,8 +119,15 @@ public class RealizedDescriptor extends RealizedElement implements
 				return value;
 			}
 			
-			Object linkedValue = ConfigurationHelper.calcAttributeFeatureValue(getLinkedElement(), feature, getConfig());
-			if (linkedValue != null && !linkedValue.equals(value)) {
+			Descriptor greenParent = propUtil.getGreenParentDescriptor(getDescriptor());
+			
+			Object linkedValue;
+			if (greenParent == null) {
+				linkedValue = ConfigurationHelper.calcAttributeFeatureValue(getLinkedElement(), feature, getConfig());
+			} else {
+				linkedValue = greenParent.eGet(feature);
+			}
+			if (linkedValue == null && value != null ||  linkedValue != null && !linkedValue.equals(value)) {
 				getDescriptor().eSet(feature, linkedValue);
 			}
 			

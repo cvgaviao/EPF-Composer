@@ -86,11 +86,17 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		
 		Descriptor des = UmaFactory.eINSTANCE.createTaskDescriptor();
 		
-		updateFromGreenParent(greenParent, des);		
+		updateFromGreenParent(greenParent, des, true);		
 		parentAct.getBreakdownElements().add(des);		
 	}
 
-	private static boolean isAttToCopy(EAttribute attribute) {
+	private static boolean isAttToCopy(EAttribute attribute, boolean newChild) {
+		//For an old child, realization manager's process update takes care of synchronized attributes,
+		//and any other attributes left as un-synchronized
+		if (!newChild) {
+			return false;
+		}
+		
 		if (!attribute.isChangeable()) {
 			return false;	
 		}
@@ -103,11 +109,18 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		if (attribute == UmaPackage.eINSTANCE.getNamedElement_Name()) {
 			return false;
 		}
+		
 		return true;
 	}
 	
 
-	private static boolean isRefToCopy(EReference ref) {
+	private static boolean isRefToCopy(EReference ref, boolean newChild) {
+		//For now, no need to copy any references for an old child.
+		//This may change if requirement changes in future
+		if (!newChild) {
+			return false;
+		}
+		
 		if (!ref.isChangeable()) {
 			return false;	
 		}
@@ -120,18 +133,29 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		if (ref == UmaPackage.eINSTANCE.getBreakdownElement_SuperActivities()) {
 			return false;
 		}
+		if (ref == UmaPackage.eINSTANCE.getBreakdownElement_SuperActivities()) {
+			return false;
+		}
+		if (ref == UmaPackage.eINSTANCE.getBreakdownElement_PlanningData()) {
+			return false;
+		}
+
 		return true;
 	}
 	
-	private static void copyAttributes(MethodElement source, MethodElement target) {
+	private static void copyAttributes(MethodElement source, MethodElement target, boolean newChild) {
 		if (source == null || target == null || source.eClass() != target.eClass()) {
 			return;
 		}				
+		if (debug) {
+			System.out.println("\nLD> source: " + source); //$NON-NLS-1$
+		}
+		
 		Collection<EAttribute> attributes = source.eClass().getEAllAttributes();		
 		for (EAttribute attribute : attributes) {
-			if (isAttToCopy(attribute)) {
+			if (isAttToCopy(attribute, newChild)) {
 				if (debug) {
-					System.out.println("\nLD> attribute: " + attribute); //$NON-NLS-1$
+					System.out.println("LD> attribute: " + attribute.getName() + ", type : " + attribute.getEType()); //$NON-NLS-1$
 				}
 				
 				Object value = source.eGet(attribute);
@@ -142,7 +166,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		}
 	}
 	
-	private static void copyReferences(MethodElement source, MethodElement target) {
+	private static void copyReferences(MethodElement source, MethodElement target, boolean newChild) {
 		if (source == null || target == null || source.eClass() != target.eClass()) {
 			return;
 		}	
@@ -159,7 +183,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 				}				
 			}			
 			
-			if ( ! isRefToCopy(reference)) {
+			if ( ! isRefToCopy(reference, newChild)) {
 				continue;
 			}
 			
@@ -169,13 +193,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 			}
 			
 			if (reference.isContainment()) {
-				if (reference == UmaPackage.eINSTANCE
-						.getBreakdownElement_PlanningData()
-						&& value instanceof PlanningData) {
-					PlanningData srcData = (PlanningData) value;
-					PlanningData tgtData = (PlanningData) EcoreUtil.copy(srcData);					
-					target.eSet(reference, tgtData);
-				}
+
 			} else if (reference.isMany()) {
 				List valueList = (List) value;
 				if (! valueList.isEmpty()) {
@@ -189,10 +207,17 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		}
 	}
 	
-	public static void updateFromGreenParent(Descriptor greenParent, Descriptor child) {
-		child.setName(greenParent.getName());
-		copyAttributes(greenParent, child);
-		copyAttributes(greenParent.getPresentation(), child.getPresentation());
+	public static void updateFromGreenParent(Descriptor greenParent, Descriptor child, boolean newChild) {
+		//for now do nothing for an old child
+		if (!newChild) {	
+			return;
+		}
+		
+		if (newChild) { 
+			child.setName(greenParent.getName());
+		}
+		copyAttributes(greenParent, child, newChild);
+		copyAttributes(greenParent.getPresentation(), child.getPresentation(), newChild);
 		
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		if (debug) {
@@ -202,8 +227,8 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 			propUtil.setPresentationNameRepalce(child, true);
 		}
 		
-		copyReferences(greenParent, child);
-		copyReferences(greenParent.getPresentation(), child.getPresentation());	
+		copyReferences(greenParent, child, newChild);
+		copyReferences(greenParent.getPresentation(), child.getPresentation(), newChild);	
 		
 		propUtil.setGreenParent(child, greenParent.getGuid());
 		propUtil.addToCustomizingChildren(greenParent, child);
