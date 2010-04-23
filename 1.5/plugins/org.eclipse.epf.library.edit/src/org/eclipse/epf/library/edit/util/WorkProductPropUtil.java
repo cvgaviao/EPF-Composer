@@ -27,17 +27,17 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 	}
 	
 	public Set<Constraint> getAllStates(WorkProduct wp) {
-		Set<WorkProduct> wpSet = new HashSet<WorkProduct>();
-		wpSet.add(wp);
-		//To collect all variability related wps into wps
-		
+		Set<WorkProduct> wpSet = (Set<WorkProduct>) LibraryEditUtil.getInstance()
+				.collectVariabilityRelatives(wp);
+
 		Set<Constraint> stateSet = new HashSet<Constraint>();
 
 		for (WorkProduct w : wpSet) {
-			List<Constraint> stateList = ConstraintManager.getWorkProductStates(wp);
+			List<Constraint> stateList = ConstraintManager
+					.getWorkProductStates(wp);
 			stateSet.addAll(stateList);
 		}
-		
+
 		return stateSet;
 	}
 	

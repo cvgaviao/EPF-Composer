@@ -28,9 +28,11 @@ import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.AssociationHelper;
 
 public class LibraryEditUtil {
 	
@@ -306,6 +308,29 @@ public class LibraryEditUtil {
 		}
 		MultiResourceEObject mreferenced = (MultiResourceEObject) referenced;
 		mreferenced.oppositeRemove(oppositeFeature, referencing);
+	}
+	
+	public Set<? extends VariabilityElement> collectVariabilityRelatives(VariabilityElement element) {
+		Set<VariabilityElement> results = new HashSet<VariabilityElement>();
+		collectVariabilityRelatives(element, results);
+		return results;
+	}
+	
+	private void collectVariabilityRelatives(VariabilityElement element,
+			Set<VariabilityElement> results) {
+		if (element == null || results.contains(element)) {
+			return;
+		}
+		results.add(element);
+		
+		VariabilityElement base = element.getVariabilityBasedOnElement();
+		if (base != null) {
+			collectVariabilityRelatives(base, results);
+		}
+		for (VariabilityElement v : (List<VariabilityElement>) AssociationHelper
+				.getImmediateVarieties(element)) {
+			collectVariabilityRelatives(v, results);
+		}
 	}
 	
 }
