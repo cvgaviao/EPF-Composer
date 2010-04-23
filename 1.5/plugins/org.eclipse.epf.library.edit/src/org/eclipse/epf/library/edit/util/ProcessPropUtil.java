@@ -1,6 +1,5 @@
 package org.eclipse.epf.library.edit.util;
 
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.uma.Process;
 
 

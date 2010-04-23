@@ -3,9 +3,9 @@ package org.eclipse.epf.library.edit.uma.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 public class ScopeImpl extends ScopeBase {

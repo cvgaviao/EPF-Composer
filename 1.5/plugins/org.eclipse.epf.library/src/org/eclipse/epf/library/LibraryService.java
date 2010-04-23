@@ -18,15 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
-import org.eclipse.epf.library.edit.uma.Scope;
-import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
-import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.util.Scope;
 
 /**
  * The default Library Service implementation.

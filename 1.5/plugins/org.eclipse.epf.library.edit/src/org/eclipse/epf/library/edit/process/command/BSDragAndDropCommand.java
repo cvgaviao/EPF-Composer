@@ -28,7 +28,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.command.ResourceAwareCompoundCommand;
 import org.eclipse.epf.library.edit.command.ResourceAwareDragAndDropCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -37,6 +36,7 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.util.Scope;
 
 
 /**

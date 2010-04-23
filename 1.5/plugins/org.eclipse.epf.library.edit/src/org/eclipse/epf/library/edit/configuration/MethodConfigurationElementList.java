@@ -16,11 +16,11 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.epf.library.edit.IFilter;
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**

@@ -37,7 +37,6 @@ import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
 import org.eclipse.epf.library.edit.command.UserInput;
 import org.eclipse.epf.library.edit.navigator.ProcessPackageItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.uma.ScopeFactory;
 import org.eclipse.epf.library.edit.util.AdapterFactoryItemLabelProvider;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
@@ -64,6 +63,7 @@ import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.ContentDescriptionFactory;
 import org.eclipse.epf.uma.util.MessageException;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 

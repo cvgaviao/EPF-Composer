@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.PresentationContext;
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.CustomCategory;
@@ -38,6 +37,7 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.Scope;
 
 /**
  * Realizes the element based on the configuration and realize options.

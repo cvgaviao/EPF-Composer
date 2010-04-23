@@ -3,7 +3,7 @@ package org.eclipse.epf.library.edit.uma;
 import org.eclipse.epf.library.edit.uma.impl.LibraryScopeImpl;
 import org.eclipse.epf.library.edit.uma.impl.ScopeImpl;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
-import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.util.Scope;
 
 public class ScopeFactory {
 

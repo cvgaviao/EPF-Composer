@@ -21,7 +21,6 @@ import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.VariabilityInfo;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.Log;
 import org.eclipse.epf.uma.Discipline;
@@ -37,6 +36,7 @@ import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.Scope;
 
 /**
  * A method configuration filter to allow filtering element 

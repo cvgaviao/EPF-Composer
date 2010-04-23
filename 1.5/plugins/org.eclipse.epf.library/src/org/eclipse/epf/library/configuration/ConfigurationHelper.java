@@ -29,7 +29,6 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ConfigHelperDelegate;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
-import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.SectionList;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -61,6 +60,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.Scope;
 
 
 /**
