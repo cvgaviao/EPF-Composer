@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodLibrary;
 
 public interface ILibraryEditUtilProvider {
 
@@ -16,7 +17,9 @@ public interface ILibraryEditUtilProvider {
 
 	boolean isDynamic(Object obj, Descriptor desc, EReference ref);
 	
-	public boolean isGuidanceDynamic(Object obj, Descriptor desc,
+	boolean isGuidanceDynamic(Object obj, Descriptor desc,
 			MethodConfiguration config);
 
+	MethodLibrary getCurrentMethodLibrary();
+	
 }

@@ -97,4 +97,8 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 		return false;
 	}
 	
+	public MethodLibrary getCurrentMethodLibrary() {
+		return LibraryService.getInstance().getCurrentMethodLibrary();
+	}
+	
 }

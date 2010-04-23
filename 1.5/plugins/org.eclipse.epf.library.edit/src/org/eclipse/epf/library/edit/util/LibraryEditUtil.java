@@ -139,6 +139,10 @@ public class LibraryEditUtil {
 		return getProvider().isDynamic(obj, desc, ref);
 	}
 	
+	public MethodLibrary getCurrentMethodLibrary() {
+		return getProvider().getCurrentMethodLibrary();
+	}
+	
 	public boolean isGuidanceDynamic(Object obj, Descriptor desc,
 			MethodConfiguration config) {
 		return getProvider().isGuidanceDynamic(obj, desc, config);

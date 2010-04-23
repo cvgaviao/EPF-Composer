@@ -10,6 +10,8 @@ import org.eclipse.epf.library.edit.uma.Scope;
 import org.eclipse.epf.library.edit.uma.ScopeFactory;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessElement;
 
@@ -33,7 +35,7 @@ public class ProcessScopeUtil {
 		return instance;
 	}	
 	
-	public ProcessScopeUtil() {		
+	public ProcessScopeUtil() {	
 	}	
 	
 	public void setElemementSelectionScopeType(int type) {	
@@ -133,6 +135,24 @@ public class ProcessScopeUtil {
 	}
 	
 	public Scope getLibraryScope() {
+		MethodLibrary lib = LibraryEditUtil.getInstance().getCurrentMethodLibrary();
+		if (lib != null) {
+			List<MethodPlugin> newPlugins = lib.getMethodPlugins();
+			List<MethodPlugin> oldPlugins = libraryScope.getMethodPluginSelection();
+			boolean same = newPlugins.size() == oldPlugins.size();
+			if (same) {
+				for (int i = 0; i < newPlugins.size(); i++) {
+					if (newPlugins.get(i) != oldPlugins.get(i)) {
+						same = false;
+						break;
+					}
+				}
+			}
+			if (!same) {
+				oldPlugins.clear();
+				oldPlugins.addAll(newPlugins);
+			}
+		}
 		return libraryScope;
 	}
 	
