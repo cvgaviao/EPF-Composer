@@ -1,9 +1,8 @@
 package org.eclipse.epf.uma.util;
 
-import java.util.Set;
-
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 
 
 /**
@@ -14,6 +13,10 @@ public interface Scope extends MethodConfiguration {
 
 	boolean inScope(MethodElement element);
 	void addToScope(MethodElement element);
+	
+	void addPlugin(MethodPlugin plugin);
+	void removePlugin(MethodPlugin plugin);
+	
 	void clearAll();
 		
 	boolean debug = false;

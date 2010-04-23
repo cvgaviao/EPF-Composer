@@ -50,6 +50,10 @@ public abstract class ScopeBase extends MethodConfigurationImpl implements Scope
 
 	public abstract boolean inScope(MethodElement element);
 	
+	public abstract void addPlugin(MethodPlugin plugin);
+	
+	public abstract void removePlugin(MethodPlugin plugin);
+		
 	public void clearAll() {		
 		Scope scope = null;
 	}

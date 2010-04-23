@@ -2,7 +2,7 @@ package org.eclipse.epf.library.edit.uma.impl;
 
 import org.eclipse.epf.uma.MethodElement;
 
-public class LibraryScopeImpl extends ScopeBase {
+public class LibraryScopeImpl extends ScopeImpl {
 
 	public LibraryScopeImpl() {		
 	}
@@ -11,7 +11,6 @@ public class LibraryScopeImpl extends ScopeBase {
 		return true;
 	}
 	
-	public void addToScope(MethodElement element) {
-		
+	public void addToScope(MethodElement element) {		
 	}
 }

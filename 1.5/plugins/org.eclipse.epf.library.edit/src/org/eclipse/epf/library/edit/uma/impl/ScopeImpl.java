@@ -28,13 +28,26 @@ public class ScopeImpl extends ScopeBase {
 		if (! plugins.contains(plugin)) {
 			plugins.add(plugin);
 			getMethodPluginSelection().add(plugin);
-		}		if (Scope.debug) {
+		}		
+		if (Scope.debug) {
 			System.out.println("LD> addToScope: " + element);//$NON-NLS-1$
 			System.out.println("LD> this: " + super.toString());//$NON-NLS-1$	
 			System.out.println("LD> plugins: \n" + this);//$NON-NLS-1$	
 
 			
 		}
+	}
+	
+	public void addPlugin(MethodPlugin plugin) {
+		if (! plugins.contains(plugin)) {
+			plugins.add(plugin);
+			getMethodPluginSelection().add(plugin);
+		}		
+	}
+	
+	public void removePlugin(MethodPlugin plugin) {
+		plugins.remove(plugin);
+		getMethodPluginSelection().remove(plugin);
 	}
 	
 	public void clearAll() {
