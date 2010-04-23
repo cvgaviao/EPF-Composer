@@ -39,6 +39,7 @@ public class ScopeImpl extends ScopeBase {
 	
 	public void clearAll() {
 		plugins.clear();
+		getMethodPluginSelection().clear();
 	}
 	
 	public String toString() {
