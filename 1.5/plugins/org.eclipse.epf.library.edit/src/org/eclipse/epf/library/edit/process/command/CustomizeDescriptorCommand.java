@@ -180,7 +180,11 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 			if (debug) {				
 				if (reference.isContainment()) {
 					System.out.println("LD> reference: " + reference.getName() + ", type : " + reference.getEType()); //$NON-NLS-1$
-				}				
+				}
+				if (reference == UmaPackage.eINSTANCE.getBreakdownElement_PlanningData()) {		
+					Object value = source.eGet(reference);
+					System.out.println("LD> planningData: " + value);
+				}
 			}			
 			
 			if ( ! isRefToCopy(reference, newChild)) {
