@@ -85,7 +85,7 @@ public class RealizedDescriptor extends RealizedElement implements
 				linkedValue = ConfigurationHelper.calcAttributeFeatureValue(
 						getLinkedElement().getPresentation(), elementFeature, getConfig());
 			} else {
-				linkedValue = greenParent.eGet(feature);
+				linkedValue = greenParent.getPresentation().eGet(feature);
 			}
 
 			if (linkedValue == null && value != null ||  linkedValue != null && !linkedValue.equals(value)) {
