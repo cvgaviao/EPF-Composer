@@ -158,6 +158,14 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public boolean localUse(Descriptor usedD, Descriptor usingD, EReference feature) {
 		try {
 			boolean be = localUse_(usedD, usingD, feature);
+			if (!be) {
+				Descriptor greenParent = getGreenParentDescriptor(usingD);
+				if (greenParent != null) {
+					if (! localUse_(usedD, usingD, feature, minus)) {	//if no toggled off in child
+						be = localUse_(usedD, greenParent, feature);
+					}
+				}
+			}
 			if (localDebug) {
 				System.out.println("LD> localUse: " + be + 		
 						", usingD: " + usingD.getName() +
@@ -174,6 +182,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	private boolean localUse_(Descriptor usedD, Descriptor usingD, EReference feature) {
+		return localUse_(usedD, usingD, feature, ""); //$NON-NLS-1$
+	}
+	
+	private boolean localUse_(Descriptor usedD, Descriptor usingD, EReference feature, String featureSuffix) {
 		String value = getStringValue(usingD, DESCRIPTOR_LocalUsingInfo);
 		if (value == null || value.length() == 0) {
 			return false;
@@ -190,7 +202,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			int i2 = i1 + 1;
 			String iGuid = infos[i1];
 			String iFeature = infos[i2];
-			if (iGuid.equals(usedD.getGuid()) && iFeature.equals(feature.getName())) {
+			if (iGuid.equals(usedD.getGuid()) && iFeature.equals(feature.getName()+ featureSuffix)) {
 				return true;
 			} 
 		}		
@@ -199,21 +211,29 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public void addLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		addLocalUse(usedD, usingD, feature, "");	//$NON-NLS-1$
+	}
+	
+	private void addLocalUse(Descriptor usedD, Descriptor usingD, EReference feature, String featureSuffix) {
 		try {
 			if (localDebug) {
 				System.out.println("LD> addLocalUse, usingD: " + usingD.getName() +
-						", usedD: " + usedD.getName() + ", feature: " + feature.getName());
+						", usedD: " + usedD.getName() + ", feature: " + feature.getName() + featureSuffix);
 				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
-			addReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
+			addReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName() + featureSuffix);
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
 	}
 	
 	public void removeLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		removeLocalUse(usedD, usingD, feature, "");	//$NON-NLS-1$
+	}
+	
+	private void removeLocalUse(Descriptor usedD, Descriptor usingD, EReference feature, String featureSuffix) {
 		try {
-			removeReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName());
+			removeReferenceInfo(usingD, usedD, DESCRIPTOR_LocalUsingInfo, feature.getName() + featureSuffix);
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
