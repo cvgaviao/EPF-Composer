@@ -572,9 +572,13 @@ public class LibraryService implements ILibraryService {
 	 */
 	public synchronized IConfigurationManager getConfigurationManager(
 			MethodConfiguration config) {
-		if (config == null || config instanceof Scope) {
+		if (config == null) {
 			throw new IllegalArgumentException();
 		}
+		if (config instanceof Scope) {	//Don't cache it
+			new ConfigurationManager(config);
+		}
+		
 		IConfigurationManager manager = (IConfigurationManager) configManagers
 				.get(config);
 		if (manager == null) {

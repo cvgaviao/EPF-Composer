@@ -40,6 +40,7 @@ import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.ModelStructure;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -60,7 +61,9 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ecore.IModelObject;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -463,6 +466,39 @@ public class ExportXMLService {
 	}
 
 	private void iteratEDataObject(MethodElement srcObj) {
+		Scope scope = null;	
+		Process proc = null;
+		try {
+			if (srcObj instanceof Process) {
+				proc = (Process) srcObj;
+				scope = ProcessScopeUtil.getInstance().getScope(proc);
+				if (scope != null) {
+					setScope(proc, null);
+				}
+			}
+			iteratEDataObject_(srcObj);
+		} finally {
+			if (scope != null && proc != null) {
+				setScope(proc, scope);
+			}
+		}
+	}
+	
+	private void setScope(Process proc, Scope scope) {
+		boolean oldDeliver = proc.eDeliver();
+		try {
+			proc.eSetDeliver(false);
+			proc.setDefaultContext(scope);
+			proc.getValidContext().clear();
+			if (scope != null) {
+				proc.getValidContext().add(scope);
+			}
+		} finally {
+			proc.eSetDeliver(oldDeliver);
+		}
+	}
+	
+	private void iteratEDataObject_(MethodElement srcObj) {
 		diagramHandler.registerElement(srcObj, true);
 		
 		if (srcObj instanceof MethodPlugin) {
