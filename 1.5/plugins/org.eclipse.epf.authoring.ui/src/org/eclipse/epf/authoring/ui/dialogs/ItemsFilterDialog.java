@@ -42,6 +42,7 @@ import org.eclipse.epf.library.edit.itemsfilter.IProcessFilter;
 import org.eclipse.epf.library.edit.navigator.MethodPluginItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -56,6 +57,7 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogSettings;
@@ -132,6 +134,12 @@ public class ItemsFilterDialog extends Dialog implements
 	private AbstractSection section;
 	
 	private Process configFreeProcess;
+	
+	private List selectedMethodPlugins = new ArrayList();
+	
+	private String PLUGIN_LIST_SECTION = ".Plugin_List_Section"; //$NON-NLS-1$
+	
+	private String PLUGIN_LIST_KEY = "Plugin_List_Key"; //$NON-NLS-1$
 	
 	/*
 	 * Treeviewer for ContentElements to display.
@@ -1299,6 +1307,12 @@ public class ItemsFilterDialog extends Dialog implements
 		
 		if (selectedPluginsBtn.getSelection()) {
 			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Plugins);
+			restoreDialogSettingsForPluginList();
+			Scope pluginScope = processUtil.getPluginScope();
+			pluginScope.clearAll();
+			for (Object plugin : selectedMethodPlugins) {
+				pluginScope.addPlugin((MethodPlugin)plugin);
+			}			
 		}
 		
 		if (libBtn.getSelection()) {
@@ -1328,16 +1342,70 @@ public class ItemsFilterDialog extends Dialog implements
 	}
 	
 	private void showPluginListDialog(boolean readOnly) {
-		List methodPlugins = processUtil.getScope(configFreeProcess).getMethodPluginSelection();
-		PluginListDialog dialog = new PluginListDialog(this.getShell(), readOnly, methodPlugins);
-		dialog.open();
+		List referencedMethodPlugins = processUtil.getScope(configFreeProcess).getMethodPluginSelection();
+		PluginListDialog dialog = null;
 		
+		if (readOnly) {
+			dialog = new PluginListDialog(this.getShell(), true, referencedMethodPlugins);
+			dialog.open();
+		} else {
+			dialog = new PluginListDialog(this.getShell(), false, selectedMethodPlugins);
+			if (dialog.open() == Dialog.OK) {
+				List plugins = dialog.getResults();
+				Scope pluginScope = processUtil.getPluginScope();
+				pluginScope.clearAll();
+				selectedMethodPlugins.clear();
+				for (Object obj : plugins) {
+					if (obj instanceof MethodPlugin) {
+						pluginScope.addPlugin((MethodPlugin)obj);
+						selectedMethodPlugins.add(obj);
+					}
+				}				
+				refreshTreeViewer();
+				saveDialogSettingsForPluginList();
+			}
+		}
+	}
+	
+	private IDialogSettings getDialogSettingsForPluginList() {
+		IDialogSettings dialogSettings = AuthoringUIPlugin.getDefault().getDialogSettings();
+		String processName = configFreeProcess.getName();
+		IDialogSettings section = dialogSettings.getSection(processName + PLUGIN_LIST_SECTION);
+		if (section == null) {
+			section = dialogSettings.addNewSection(processName + PLUGIN_LIST_SECTION);
+		}
 		
+		return section;
+	}
+	
+	private void saveDialogSettingsForPluginList() {
+		IDialogSettings settings = getDialogSettingsForPluginList();
+		String[] pluginName = new String[selectedMethodPlugins.size()];
 		
+		for (int i = 0; i < selectedMethodPlugins.size(); i++) {
+			pluginName[i] = ((MethodPlugin)selectedMethodPlugins.get(i)).getName();			
+		}
 		
-		
-		
-		
+		settings.put(PLUGIN_LIST_KEY, pluginName);
+	}
+	
+	private void restoreDialogSettingsForPluginList() {
+		IDialogSettings settings = getDialogSettingsForPluginList();
+		String[] pluginName = settings.getArray(PLUGIN_LIST_KEY);
+		List allMethodPluginsInLibrary = LibraryEditUtil.getInstance().getCurrentMethodLibrary().getMethodPlugins();
+		selectedMethodPlugins.clear();
+	
+		if (pluginName != null) {
+			for (Object plugin : allMethodPluginsInLibrary) {
+				String tempName = ((MethodPlugin)plugin).getName();
+				for (String name : pluginName) {
+					if (tempName.equals(name)) {
+						selectedMethodPlugins.add(plugin);
+						break;
+					}
+				}
+			}		
+		}
 	}
 	
 }

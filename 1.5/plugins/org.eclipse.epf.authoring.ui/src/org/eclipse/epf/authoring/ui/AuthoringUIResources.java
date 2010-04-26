@@ -1365,6 +1365,10 @@ public final class AuthoringUIResources extends NLS {
 	public static String PluginListDialog_button_add;
 	
 	public static String PluginListDialog_button_remove;
+	
+	public static String PluginListDialog_addDialogMsg;
+	
+	public static String PluginListDialog_addDialogTitle;
 
 	public static String ConfigurationPage_TreeTitleLabel;
 
