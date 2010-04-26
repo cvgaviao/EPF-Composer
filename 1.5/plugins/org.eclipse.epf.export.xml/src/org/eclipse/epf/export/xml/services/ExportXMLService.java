@@ -792,6 +792,7 @@ public class ExportXMLService {
 		for (EReference ref : refList) {
 			handleExtraRef(srcDes, tgtDes, ref);		
 		}		
+		handleExtraRef(srcDes, tgtDes, org.eclipse.epf.uma.UmaPackage.eINSTANCE.getDescriptor_GuidanceExclude());	
 		handleExtraRef(srcDes, tgtDes, org.eclipse.epf.uma.UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional());	
 	}
 	
