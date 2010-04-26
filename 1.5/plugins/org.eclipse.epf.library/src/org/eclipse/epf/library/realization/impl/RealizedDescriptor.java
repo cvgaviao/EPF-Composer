@@ -176,7 +176,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();		
 		
-		Set<MethodElement> excludeElements = this.getExcludeRefSet(getDescriptor(), dFeature, realizer);
+		Set<MethodElement> excludeElements = this.getExcludeOrAddtionalRefSet(getDescriptor(), dFeature, realizer);
 		
 		Set<MethodElement> elementSet = new LinkedHashSet<MethodElement>();
 		if (elementList != null) {
@@ -281,7 +281,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 	}
 	
-	private Set<MethodElement> getExcludeRefSet(Descriptor des,
+	private Set<MethodElement> getExcludeOrAddtionalRefSet(Descriptor des,
 			EReference ref, ElementRealizer realizer) {
 		Set<MethodElement> set = new LinkedHashSet<MethodElement>();
 		if (des == null) {
@@ -290,7 +290,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		try {
 			EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(
 					ref);
-			Set<MethodElement> rawSet = getRawExcludeRefSet(des, ref, eRef,
+			Set<MethodElement> rawSet = getRawExcludeOrAddtionalRefSet(des, ref, eRef,
 					realizer.getConfiguration(), true);
 			for (MethodElement elem : rawSet) {
 				MethodElement realized = ConfigurationHelper.getCalculatedElement(elem, realizer);
@@ -305,21 +305,21 @@ public class RealizedDescriptor extends RealizedElement implements
 		return set;
 	}	
 
-	private Set<MethodElement> getRawExcludeRefSet(Descriptor des,
+	private Set<MethodElement> getRawExcludeOrAddtionalRefSet(Descriptor des,
 			EReference ref, EReference eRef, MethodConfiguration config, boolean topLevelCall) {
 		List<MethodElement> list;
 		Set<MethodElement> refSet = new LinkedHashSet<MethodElement>();
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		Descriptor greenParent = propUtil.getGreenParentDescriptor(des);
 		if (greenParent != null && ConfigurationHelper.inConfig(greenParent, config)) {
-			Set<MethodElement> parentSet = getRawExcludeRefSet(greenParent,
+			Set<MethodElement> parentSet = getRawExcludeOrAddtionalRefSet(greenParent,
 					ref, eRef, config, false);
 			refSet.addAll(parentSet);
-			list = propUtil.getExcludeRefDeltaList(des, ref, false);
+			list = propUtil.getGreenRefDeltaList(des, ref, false);
 			if (list != null && !list.isEmpty()) {
 				refSet.removeAll(list);
 			}
-			list = propUtil.getExcludeRefDeltaList(des, ref, true);
+			list = propUtil.getGreenRefDeltaList(des, ref, true);
 			if (list != null && !list.isEmpty()) {
 				refSet.addAll(list);
 			}

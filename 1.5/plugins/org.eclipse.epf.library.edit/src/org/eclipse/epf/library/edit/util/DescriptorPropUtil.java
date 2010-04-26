@@ -399,7 +399,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 	}
 	
-	public List<MethodElement> getExcludeRefDeltaList(Descriptor des,			
+	public List<MethodElement> getGreenRefDeltaList(Descriptor des,			
 			EReference feature, boolean positive) {
 		
 		String refName = feature.getName() + (positive ? plus : minus);
