@@ -30,7 +30,7 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 	private Process proc;
 	private BreakdownElementWrapperItemProvider wrapper;
 	private Descriptor greenParent;
-	private static boolean debug = true;
+	private static boolean debug = false;
 
 	public CustomizeDescriptorCommand(BreakdownElementWrapperItemProvider wrapper) {
 		this.wrapper = wrapper;
