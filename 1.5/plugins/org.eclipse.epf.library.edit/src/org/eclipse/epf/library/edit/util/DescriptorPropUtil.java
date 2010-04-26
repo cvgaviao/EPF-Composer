@@ -44,7 +44,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 					//$NON-NLS-1$
 	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";					//$NON-NLS-1$
 	public static final String DESCRIPTOR_GreenParent = "descriptor_greenParent";						//$NON-NLS-1$
-	public static final String DESCRIPTOR_ExcludeRefDelta = "descriptor_excludeRefDelta";	
+	public static final String DESCRIPTOR_GreenRefDelta = "descriptor_greenRefDelta";	
 	
 	private static int nameReplace = 				1;		//0000000000000001
 	private static int presentatioNameReplace = 	2;		//0000000000000010
@@ -390,10 +390,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	//positive = true:  feature name appended with "+" -> extra exclude added
 	//positive = false: feature name appended with "-" -> toggle off parent's exclude
-	public void addExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
+	public void addGreenRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
 		String refName = feature.getName() + (positive ? plus : minus);
 		try {
-			addReferenceInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
+			addReferenceInfo(des, referenced, DESCRIPTOR_GreenRefDelta, refName);
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
@@ -404,7 +404,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		
 		String refName = feature.getName() + (positive ? plus : minus);
 		try {
-			return getExcludeRefDeltaList_(des, refName);			
+			return getGreenRefDeltaList_(des, refName);			
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
@@ -412,8 +412,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return null;
 	}
 	
-	private List<MethodElement> getExcludeRefDeltaList_(Descriptor des, String refName) { 		
-		String value = getStringValue(des, DESCRIPTOR_ExcludeRefDelta);
+	private List<MethodElement> getGreenRefDeltaList_(Descriptor des, String refName) { 		
+		String value = getStringValue(des, DESCRIPTOR_GreenRefDelta);
 		
 		if (value == null || value.length() == 0) {
 			return null;
@@ -442,10 +442,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return deltaList;		
 	}
 	
-	public void removeExcludeRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
+	public void removeGreenRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
 		String refName = feature.getName() + (positive ? plus : minus);
 		try {
-			removeReferenceInfo(des, referenced, DESCRIPTOR_ExcludeRefDelta, refName);
+			removeReferenceInfo(des, referenced, DESCRIPTOR_GreenRefDelta, refName);
 		} catch (Throwable e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
