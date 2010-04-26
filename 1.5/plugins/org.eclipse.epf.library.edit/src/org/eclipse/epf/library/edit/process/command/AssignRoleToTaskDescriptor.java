@@ -197,7 +197,7 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 					for (Role role : (List<Role>) roles) {
 						propUtil.removeGreenRefDelta(taskDesc, role, ref, true);
 						if (parentExecludeList != null && parentExecludeList.contains(role)) {
-							propUtil.addGreenRefDelta(taskDesc, role, ref,
+							propUtil.addGreenRefDelta(taskDesc, role, eRef,
 									false);
 						}
 					}

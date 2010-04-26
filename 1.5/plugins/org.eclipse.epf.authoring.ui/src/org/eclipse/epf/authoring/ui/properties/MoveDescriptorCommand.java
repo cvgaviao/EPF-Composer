@@ -66,7 +66,7 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 					.eGet(eRef);
 			for (MethodElement elem : (List<MethodElement>) methodElements) {
 				if (parentExecludeList != null && ! parentExecludeList.contains(elem)) {
-					propUtil.addGreenRefDelta(desc, elem, ref, true);
+					propUtil.addGreenRefDelta(desc, elem, eRef, true);
 				}
 				propUtil.removeGreenRefDelta(desc, elem, ref, false);
 			}

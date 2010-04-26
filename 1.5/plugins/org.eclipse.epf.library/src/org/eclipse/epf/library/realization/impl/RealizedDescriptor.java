@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.realization.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -176,12 +177,15 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();		
 		
-		Set<MethodElement> excludeElements = this.getExcludeOrAddtionalRefSet(getDescriptor(), dFeature, realizer);
-		
+		EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(
+				dFeature);
+		Set<MethodElement> excludeElements = this.getExcludeOrAddtionalRefSet(
+				getDescriptor(), eRef, realizer);
+
 		Set<MethodElement> elementSet = new LinkedHashSet<MethodElement>();
 		if (elementList != null) {
 			for (MethodElement elem : elementList) {
-				if (! excludeElements.contains(elem)) {
+				if (!excludeElements.contains(elem)) {
 					elementSet.add(elem);
 				}
 			}
@@ -282,15 +286,13 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	private Set<MethodElement> getExcludeOrAddtionalRefSet(Descriptor des,
-			EReference ref, ElementRealizer realizer) {
+			EReference eRef, ElementRealizer realizer) {
 		Set<MethodElement> set = new LinkedHashSet<MethodElement>();
 		if (des == null) {
 			return set;
 		}
 		try {
-			EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(
-					ref);
-			Set<MethodElement> rawSet = getRawExcludeOrAddtionalRefSet(des, ref, eRef,
+			Set<MethodElement> rawSet = getRawExcludeOrAddtionalRefSet(des, eRef,
 					realizer.getConfiguration(), true);
 			for (MethodElement elem : rawSet) {
 				MethodElement realized = ConfigurationHelper.getCalculatedElement(elem, realizer);
@@ -305,21 +307,19 @@ public class RealizedDescriptor extends RealizedElement implements
 		return set;
 	}	
 
-	private Set<MethodElement> getRawExcludeOrAddtionalRefSet(Descriptor des,
-			EReference ref, EReference eRef, MethodConfiguration config, boolean topLevelCall) {
+	private Set<MethodElement> getRawExcludeOrAddtionalRefSet(Descriptor des, EReference eRef, MethodConfiguration config, boolean topLevelCall) {
 		List<MethodElement> list;
 		Set<MethodElement> refSet = new LinkedHashSet<MethodElement>();
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		Descriptor greenParent = propUtil.getGreenParentDescriptor(des);
 		if (greenParent != null && ConfigurationHelper.inConfig(greenParent, config)) {
-			Set<MethodElement> parentSet = getRawExcludeOrAddtionalRefSet(greenParent,
-					ref, eRef, config, false);
+			Set<MethodElement> parentSet = getRawExcludeOrAddtionalRefSet(greenParent, eRef, config, false);
 			refSet.addAll(parentSet);
-			list = propUtil.getGreenRefDeltaList(des, ref, false);
+			list = propUtil.getGreenRefDeltaList(des, eRef, false);
 			if (list != null && !list.isEmpty()) {
 				refSet.removeAll(list);
 			}
-			list = propUtil.getGreenRefDeltaList(des, ref, true);
+			list = propUtil.getGreenRefDeltaList(des, eRef, true);
 			if (list != null && !list.isEmpty()) {
 				refSet.addAll(list);
 			}
@@ -347,13 +347,16 @@ public class RealizedDescriptor extends RealizedElement implements
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(getConfig());
 
-		List<Guidance> excludeList = ConfigurationHelper.calc0nFeatureValue(
+//		List<Guidance> excludeList = ConfigurationHelper.calc0nFeatureValue(
+//				getDescriptor(), up.getDescriptor_GuidanceExclude(), realizer);
+
+		Set<MethodElement> excludeList = getExcludeOrAddtionalRefSet(
 				getDescriptor(), up.getDescriptor_GuidanceExclude(), realizer);
 
-		List<Guidance> addtionList = ConfigurationHelper.calc0nFeatureValue(
+		Set<MethodElement> addtionList = getExcludeOrAddtionalRefSet(
 				getDescriptor(), up.getDescriptor_GuidanceAdditional(),
 				realizer);
-
+			
 		for (Map.Entry<EReference, EReference> entry : refMap.entrySet()) {
 			List<Guidance> subList = calculateGuidances(entry.getKey(), entry
 					.getValue(), excludeList, addtionList);
@@ -364,7 +367,7 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	private List<Guidance> calculateGuidances(EReference eRef, EReference dRef,
-			List<Guidance> excludeList, List<Guidance> addtionList) {
+			Collection<MethodElement> excludeList, Collection<MethodElement> addtionList) {
 		
 //		System.out.println("LD> eRef: " + eRef);
 //		System.out.println("LD> dRef: " + dRef);
@@ -386,7 +389,8 @@ public class RealizedDescriptor extends RealizedElement implements
 		
 		Set<Guidance> resultGuidanceSet = new LinkedHashSet<Guidance>();
 		if (addtionList != null) {
-			for (Guidance g : addtionList) {
+			for (MethodElement me : addtionList) {
+				Guidance g = (Guidance) me;
 				if (eRef.getEType().isInstance(g)) {
 					resultGuidanceSet.add(g);
 				}
