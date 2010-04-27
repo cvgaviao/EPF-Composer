@@ -1369,10 +1369,10 @@ public class ItemsFilterDialog extends Dialog implements
 	
 	private IDialogSettings getDialogSettingsForPluginList() {
 		IDialogSettings dialogSettings = AuthoringUIPlugin.getDefault().getDialogSettings();
-		String processName = configFreeProcess.getName();
-		IDialogSettings section = dialogSettings.getSection(processName + PLUGIN_LIST_SECTION);
+		String processId = configFreeProcess.getGuid();
+		IDialogSettings section = dialogSettings.getSection(processId + PLUGIN_LIST_SECTION);
 		if (section == null) {
-			section = dialogSettings.addNewSection(processName + PLUGIN_LIST_SECTION);
+			section = dialogSettings.addNewSection(processId + PLUGIN_LIST_SECTION);
 		}
 		
 		return section;
@@ -1380,26 +1380,26 @@ public class ItemsFilterDialog extends Dialog implements
 	
 	private void saveDialogSettingsForPluginList() {
 		IDialogSettings settings = getDialogSettingsForPluginList();
-		String[] pluginName = new String[selectedMethodPlugins.size()];
+		String[] pluginId = new String[selectedMethodPlugins.size()];
 		
 		for (int i = 0; i < selectedMethodPlugins.size(); i++) {
-			pluginName[i] = ((MethodPlugin)selectedMethodPlugins.get(i)).getName();			
+			pluginId[i] = ((MethodPlugin)selectedMethodPlugins.get(i)).getGuid();			
 		}
 		
-		settings.put(PLUGIN_LIST_KEY, pluginName);
+		settings.put(PLUGIN_LIST_KEY, pluginId);
 	}
 	
 	private void restoreDialogSettingsForPluginList() {
 		IDialogSettings settings = getDialogSettingsForPluginList();
-		String[] pluginName = settings.getArray(PLUGIN_LIST_KEY);
+		String[] pluginId = settings.getArray(PLUGIN_LIST_KEY);
 		List allMethodPluginsInLibrary = LibraryEditUtil.getInstance().getCurrentMethodLibrary().getMethodPlugins();
 		selectedMethodPlugins.clear();
 	
-		if (pluginName != null) {
+		if (pluginId != null) {
 			for (Object plugin : allMethodPluginsInLibrary) {
-				String tempName = ((MethodPlugin)plugin).getName();
-				for (String name : pluginName) {
-					if (tempName.equals(name)) {
+				String tempId = ((MethodPlugin)plugin).getGuid();
+				for (String id : pluginId) {
+					if (tempId.equals(id)) {
 						selectedMethodPlugins.add(plugin);
 						break;
 					}

@@ -93,5 +93,5 @@
 			pattern="org\.eclipse\.ui\.externaltools/org\.eclipse\.ui\.externaltools\.ExternalToolMenuDelegate.*">
  		</activityPatternBinding>
 	</extension>
-	
+
 </plugin>

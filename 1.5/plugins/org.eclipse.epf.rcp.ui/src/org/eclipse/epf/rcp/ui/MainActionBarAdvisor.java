@@ -153,6 +153,8 @@ public class MainActionBarAdvisor extends ActionBarAdvisor {
 	protected IWorkbenchAction lockToolBarAction;
 
 	protected IWorkbenchAction editActionSetAction;
+	
+	protected IWorkbenchAction installAction;
 
 	protected MenuManager mainHelpMenu;
 
@@ -340,6 +342,9 @@ public class MainActionBarAdvisor extends ActionBarAdvisor {
 
 		aboutAction = ActionFactory.ABOUT.create(window);
 		register(aboutAction);
+		
+		installAction = UIActionFactory.UI_INSTALL.create(window);
+		register(installAction);
 
 		// FIXME! Filter out Project... from the drop-down menu.
 		newWizardDropDownAction = IDEActionFactory.NEW_WIZARD_DROP_DOWN
@@ -566,6 +571,7 @@ public class MainActionBarAdvisor extends ActionBarAdvisor {
 		helpMmenu.add(new GroupMarker("group.tools")); //$NON-NLS-1$
 
 		helpMmenu.add(new Separator());
+		helpMmenu.add(installAction);
 		helpMmenu.add(new GroupMarker("group.updates")); //$NON-NLS-1$
 
 		// Menu items for internal tool

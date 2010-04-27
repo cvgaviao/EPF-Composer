@@ -98,5 +98,16 @@ public abstract class UIActionFactory extends ActionFactory {
 			return action;
 		}
 	};
+	
+	public static final ActionFactory UI_INSTALL = new ActionFactory("Install.Software") { //$NON-NLS-1$
+		public IWorkbenchAction create(IWorkbenchWindow window) {
+			if (window == null) {
+				throw new IllegalArgumentException();
+			}
+			IWorkbenchAction action = new UIInstallAction(window);
+			action.setId(getId());
+			return action;
+		} 		
+	};
 
 }
