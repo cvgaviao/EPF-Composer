@@ -26,9 +26,7 @@ public class ScopeFactory {
 	}
 	
 	public Scope newLibraryScope() {
-		Scope libScope = new LibraryScopeImpl();
-		libScope.setName(LibraryEditUtil.getInstance().getCurrentMethodLibrary().getName());
-		
+		Scope libScope = new LibraryScopeImpl();		
 		return libScope;
 	}
 	
