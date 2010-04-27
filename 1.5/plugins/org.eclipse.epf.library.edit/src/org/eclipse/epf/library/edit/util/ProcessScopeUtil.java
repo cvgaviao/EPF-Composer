@@ -152,7 +152,8 @@ public class ProcessScopeUtil {
 			if (!same) {
 				oldPlugins.clear();
 				oldPlugins.addAll(newPlugins);
-			}			
+			}
+			libraryScope.setName(lib.getName());
 		}
 		
 		return libraryScope;
