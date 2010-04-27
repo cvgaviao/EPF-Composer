@@ -43,6 +43,7 @@ import org.eclipse.epf.diagram.model.DiagramResources;
 import org.eclipse.epf.diagram.model.LinkedObject;
 import org.eclipse.epf.diagram.model.NamedNode;
 import org.eclipse.epf.diagram.model.Node;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -276,8 +277,23 @@ public final class BridgeHelper {
 	public static ActivityNode findNode(Activity container, Object object) {
 		for (Iterator iter = container.getNodes().iterator(); iter.hasNext();) {
 			ActivityNode node = (ActivityNode) iter.next();
-			if (object == BridgeHelper.getMethodElement(node)) {
+			MethodElement element = BridgeHelper.getMethodElement(node);
+			if (object == element) {
 				return node;
+			}
+			if (object instanceof TaskDescriptor) {
+				DescriptorPropUtil propUtil = DescriptorPropUtil
+						.getDesciptorPropUtil();
+				TaskDescriptor greenParent = (TaskDescriptor) propUtil
+						.getGreenParentDescriptor((TaskDescriptor) object);
+				
+				while(greenParent != null) {
+					if (greenParent == element) {
+						return node;
+					}
+					greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(greenParent);
+				}
+
 			}
 		}
 		return null;
