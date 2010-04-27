@@ -48,6 +48,7 @@ import org.eclipse.epf.library.edit.command.UserInput;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.edit.util.Messenger;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.AbstractStringValidator;
@@ -70,6 +71,7 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -149,6 +151,13 @@ public final class UserInteractionHelper {
 		if (!(e instanceof MethodElement))
 			return 0;
 
+		Scope scope = ProcessScopeUtil.getInstance().getScope(proc);
+		if (scope != null) {
+			ProcessScopeUtil.getInstance().addReferenceToScope(
+					scope, (MethodElement) e, new HashSet<MethodElement>());
+			return 1;
+		}
+		
 		if (configurator == null)
 			configurator = Providers.getConfiguratorFactory()
 					.createConfigurator(proc.getDefaultContext());
