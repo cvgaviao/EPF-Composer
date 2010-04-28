@@ -174,7 +174,11 @@ public class TaskDescriptorItemProvider extends
 	 * @see com.ibm.library.edit.process.BreakdownElementItemProvider#notifyChanged(org.eclipse.emf.common.notify.Notification)
 	 */
 	public void notifyChanged(Notification notification) {
-		updateChildren(notification);
+		try {
+			updateChildren(notification);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		switch (notification.getFeatureID(TaskDescriptor.class)) {
 		case UmaPackage.TASK_DESCRIPTOR__PERFORMED_PRIMARILY_BY:
@@ -187,7 +191,11 @@ public class TaskDescriptorItemProvider extends
 			refreshChildren(notification);
 		}
 
-		super.notifyChanged(notification);
+		try {
+			super.notifyChanged(notification);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	static void refreshChildren(ItemProviderAdapter ipa, Notification notification) {		
