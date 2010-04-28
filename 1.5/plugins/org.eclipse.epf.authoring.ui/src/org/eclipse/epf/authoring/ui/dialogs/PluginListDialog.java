@@ -17,6 +17,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -141,12 +142,15 @@ public class PluginListDialog extends Dialog {
 	}
 	
 	protected List getInputToAddDialog() {
-		List elements = new ArrayList();		
-		List allMethodPluginsInLibrary = LibraryEditUtil.getInstance().getCurrentMethodLibrary().getMethodPlugins();
+		List elements = new ArrayList();	
 		
-		for (Object element: allMethodPluginsInLibrary) {
-			if (!changedMethodPlugins.contains(element)) {
-				elements.add(element);
+		MethodLibrary lib = LibraryEditUtil.getInstance().getCurrentMethodLibrary();		
+		if (lib != null) {
+			List allMethodPluginsInLibrary = lib.getMethodPlugins();			
+			for (Object element: allMethodPluginsInLibrary) {
+				if (!changedMethodPlugins.contains(element)) {
+					elements.add(element);
+				}
 			}
 		}
 		

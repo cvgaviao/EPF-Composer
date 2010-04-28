@@ -51,6 +51,7 @@ import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.NamedElement;
 import org.eclipse.epf.uma.Process;
@@ -1392,19 +1393,21 @@ public class ItemsFilterDialog extends Dialog implements
 	private void restoreDialogSettingsForPluginList() {
 		IDialogSettings settings = getDialogSettingsForPluginList();
 		String[] pluginId = settings.getArray(PLUGIN_LIST_KEY);
-		List allMethodPluginsInLibrary = LibraryEditUtil.getInstance().getCurrentMethodLibrary().getMethodPlugins();
-		selectedMethodPlugins.clear();
-	
-		if (pluginId != null) {
-			for (Object plugin : allMethodPluginsInLibrary) {
-				String tempId = ((MethodPlugin)plugin).getGuid();
-				for (String id : pluginId) {
-					if (tempId.equals(id)) {
-						selectedMethodPlugins.add(plugin);
-						break;
+		MethodLibrary lib = LibraryEditUtil.getInstance().getCurrentMethodLibrary();
+		if (lib != null) {
+			List allMethodPluginsInLibrary = lib.getMethodPlugins();		
+			if (pluginId != null) {
+				selectedMethodPlugins.clear();
+				for (Object plugin : allMethodPluginsInLibrary) {
+					String tempId = ((MethodPlugin)plugin).getGuid();
+					for (String id : pluginId) {
+						if (tempId.equals(id)) {
+							selectedMethodPlugins.add(plugin);
+							break;
+						}
 					}
-				}
-			}		
+				}		
+			}
 		}
 	}
 	
