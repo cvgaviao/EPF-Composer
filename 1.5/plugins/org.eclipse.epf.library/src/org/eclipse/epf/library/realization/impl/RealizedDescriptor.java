@@ -189,16 +189,27 @@ public class RealizedDescriptor extends RealizedElement implements
 					elementSet.add(elem);
 				}
 			}
-		}		
+		}
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		Set<Descriptor> localUsedDescriptors = propUtil.getLocalUsedDescriptors(getDescriptor(), dFeature);
+		if (! localUsedDescriptors.isEmpty()) {
+			for (Descriptor des : localUsedDescriptors) {
+				MethodElement localUseElement = getLinkedElement(des);
+				if (localUseElement != null) {
+					localUseElement = ConfigurationHelper.getCalculatedElement(localUseElement, getConfig());
+					if (localUseElement != null && !excludeElements.contains(localUseElement)) {
+						elementSet.add(localUseElement);
+					}
+				}
+			}
+		}
 		
 		List<Descriptor> descriptorList = ConfigurationHelper.calc0nFeatureValue(
 				getDescriptor(), dFeature, realizer);
 
 		for (Descriptor des : descriptorList) {
 			MethodElement me = getLinkedElement(des);
-			if (me == null
-					|| DescriptorPropUtil.getDesciptorPropUtil().localUse(des,
-							getDescriptor(), dFeature)) {
+			if (me == null || propUtil.localUse(des, getDescriptor(), dFeature)) {
 				resultDescriptorList.add(des);
 
 			} else if (elementSet.contains(me)) {

@@ -164,7 +164,7 @@ public class RealizationManager implements IRealizationManager {
 		Descriptor descriptor = getDescriptor_(referencingDes, parentAct, element, feature);
 		if (feature == IRealizedDescriptor.ArtifactDescriptor_ContainedArtifacts) {
 			return descriptor;
-		}
+		}		
 		
 		boolean oldDeliver = referencingDes.eDeliver();
 		referencingDes.eSetDeliver(false);
@@ -325,6 +325,7 @@ public class RealizationManager implements IRealizationManager {
 		Set<Descriptor> seenSet = new HashSet<Descriptor>();
 		List<Descriptor> rdwpdList = new ArrayList<Descriptor>();
 		List<BreakdownElement> beList =  act.getBreakdownElements();
+		Set<Descriptor> localUseSet = new HashSet<Descriptor>(); 
 		for (int i = 0; i < beList.size(); i++) {
 			BreakdownElement be = beList.get(i);
 			if (be instanceof Activity) {
@@ -347,12 +348,16 @@ public class RealizationManager implements IRealizationManager {
 				WorkProductDescriptor wpd = (WorkProductDescriptor) be;
 				rdwpdList.add(wpd);
 			}
+			
+			if (be instanceof Descriptor) {
+				localUseSet.addAll(propUtil.getLocalUsedDescriptors((Descriptor) be));
+			}
 		}
 		
 		for (Descriptor des : rdwpdList) {
 			collectAllReferences(des, null, seenSet);
 			
-			if (des instanceof TaskDescriptor || !propUtil.isCreatedByReference(des)) {
+			if (des instanceof TaskDescriptor || localUseSet.contains(des)) {
 				continue;
 			}
 			if (!tdReferencedSet.contains(des)) {

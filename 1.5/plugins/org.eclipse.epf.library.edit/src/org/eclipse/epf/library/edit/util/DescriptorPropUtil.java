@@ -1,7 +1,9 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -151,6 +153,53 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	public void setKeyConsiderRepalce(Descriptor d, boolean value) {
 		setCustomization(d, keyConsiderReplace, value);
+	}
+	
+	public Set<Descriptor> getLocalUsedDescriptors(Descriptor usingD) {
+		return getLocalUsedDescriptors(usingD, null);
+	}
+	
+	// if feature == null, get all
+	public Set<Descriptor> getLocalUsedDescriptors(Descriptor usingD,
+			EReference feature) {
+		Set<Descriptor> descriptors = getLocalUsedDescriptors(usingD, feature,
+				""); //$NON-NLS-1$
+		if (localDebug) {
+			System.out
+					.println("LD> getLocalUsedDescriptors, feature: " + feature + "\nl" + descriptors); //$NON-NLS-1$  //$NON-NLS-2$ 
+		}
+		return descriptors;
+	}
+	
+	private Set<Descriptor> getLocalUsedDescriptors(Descriptor usingD,
+			EReference feature, String featureSuffix) {
+		Set<Descriptor> descriptors = new HashSet<Descriptor>();
+
+		String value = getStringValue(usingD, DESCRIPTOR_LocalUsingInfo);
+		if (value == null || value.length() == 0) {
+			return descriptors;
+		}
+
+		String[] infos = value.split(infoSeperator);
+		if (infos == null || infos.length == 0) {
+			return descriptors;
+		}
+
+		int sz = infos.length / 2;
+		for (int i = 0; i < sz; i++) {
+			int i1 = i * 2;
+			int i2 = i1 + 1;
+			String iGuid = infos[i1];
+			String iFeature = infos[i2];
+			MethodElement element = LibraryEditUtil.getInstance()
+					.getMethodElement(iGuid);
+			if (element instanceof Descriptor) {
+				if (feature == null || iFeature.equals(feature.getName() + featureSuffix)) {
+					descriptors.add((Descriptor) element);
+				}
+			}
+		}
+		return descriptors;
 	}
 	
 	//Test if usedD is locally used by usingD through relationship specified by the
