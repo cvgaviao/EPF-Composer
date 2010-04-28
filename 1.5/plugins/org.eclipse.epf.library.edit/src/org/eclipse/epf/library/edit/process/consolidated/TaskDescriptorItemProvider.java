@@ -255,6 +255,7 @@ public class TaskDescriptorItemProvider extends
 	}
 
 	public Collection getChildren(Object obj) {
+		childrenStoreMap = null;
 		Collection children = super.getChildren(obj);
 		List newChildren = new ArrayList();
 		List primaryPerformers = new ArrayList();
