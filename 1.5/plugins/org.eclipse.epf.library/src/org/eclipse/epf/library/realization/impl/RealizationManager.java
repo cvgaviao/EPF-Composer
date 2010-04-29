@@ -266,10 +266,10 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	public void updateProcessModel(Process proc) {	
-		updateProcessModel(proc, true);
+		updateProcessModel(proc, true, new HashSet<Activity>());
 	}
 
-	private void updateProcessModel(Process proc, boolean setCacheFlag) {	
+	private void updateProcessModel(Process proc, boolean setCacheFlag, Set<Activity> updatedActSet) {	
 		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
@@ -279,7 +279,7 @@ public class RealizationManager implements IRealizationManager {
 //			SynFreeProcessConverter converter = new SynFreeProcessConverter(getConfig());
 //			converter.convertProcess(proc, false);
 //		}
-		updateModelImpl(proc, setCacheFlag);
+		updateModelImpl(proc, setCacheFlag, updatedActSet);
 		if (timing && localTiming) {
 			time = System.currentTimeMillis() - time;
 			System.out.println("LD> updateModel: " + time); //$NON-NLS-1$
@@ -287,10 +287,10 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	public void updateActivityModel(Activity act) {
-		updateModelImpl(act, true);
+		updateModelImpl(act, true, new HashSet<Activity>());
 	}
 
-	private void updateModelImpl(Activity act, boolean setCacheFlag) {
+	private void updateModelImpl(Activity act, boolean setCacheFlag, Set<Activity> updatedActSet) {
 		if (setCacheFlag) {
 			clearCacheData();
 			setCaching(true);
@@ -298,7 +298,7 @@ public class RealizationManager implements IRealizationManager {
 		
 //		System.out.println("LD> Begin: updateModelImpl"); //$NON-NLS-1$
 //		Thread.dumpStack();
-		updateModelImpl(act);
+		updateModelImpl(act, updatedActSet);
 //		System.out.println("LD> End: updateModelImpl"); //$NON-NLS-1$
 		
 		if (setCacheFlag) {
@@ -307,7 +307,16 @@ public class RealizationManager implements IRealizationManager {
 		}
 	}
 	
-	private void updateModelImpl(Activity act) {
+	private void updateModelImpl(Activity act, Set<Activity> updatedActSet) {
+		if (updatedActSet.contains(act)) {
+			return;
+		}
+		updatedActSet.add(act);
+		Activity baseAct = (Activity) act.getVariabilityBasedOnElement();
+		if (baseAct != null) {
+			updateModelImpl(baseAct, updatedActSet);
+		}
+		
 		if (config == null) {
 			Process proc = ProcessUtil.getProcess(act);
 			Scope scope = ProcessScopeUtil.getInstance().getScope(proc);
@@ -329,7 +338,7 @@ public class RealizationManager implements IRealizationManager {
 		for (int i = 0; i < beList.size(); i++) {
 			BreakdownElement be = beList.get(i);
 			if (be instanceof Activity) {
-				updateModelImpl((Activity) be);
+				updateModelImpl((Activity) be, updatedActSet);
 				
 			} else if (be instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) be;
@@ -400,11 +409,12 @@ public class RealizationManager implements IRealizationManager {
 			localTiming = false;
 		}
 
+		Set<Activity> updatedActSet = new HashSet<Activity>();
 		clearCacheData();
 		setCaching(true);
 		for (Process proc : LibraryEditUtil.getInstance().collectProcessesFromConfig(
 				getConfig())) {
-			updateProcessModel(proc, false);
+			updateProcessModel(proc, false, updatedActSet);
 		}
 		clearCacheData();
 		setCaching(false);
