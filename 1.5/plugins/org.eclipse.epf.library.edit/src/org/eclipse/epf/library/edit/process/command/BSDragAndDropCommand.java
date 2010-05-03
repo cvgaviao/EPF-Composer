@@ -116,7 +116,7 @@ public abstract class BSDragAndDropCommand extends ResourceAwareDragAndDropComma
 				// since introduction of deep-copy. Deep copy can always be applied regardless of source and target
 				// processes.
 				//
-				actList.add(obj);
+				actList.add(e);
 			}
 		}
 
