@@ -265,21 +265,64 @@ public class RealizationManager implements IRealizationManager {
 
 	}
 	
-	public void updateProcessModel(Process proc) {	
-		updateProcessModel(proc, true, new HashSet<Activity>());
+	public void updateProcessModel(Process proc) {
+		clearCacheData();
+		setCaching(true);
+		updateProcessModel(proc, new HashSet<Activity>());
+		clearCacheData();
+		setCaching(false);
+	}
+	
+	public void elementUpdateProcessModel(Process proc,
+			Set<MethodElement> changedElementSet) {
+
+		Set<Activity> actCollectedSet = new HashSet<Activity>();
+		collectActivitiesToUpdate(proc, actCollectedSet,
+				new HashSet<Activity>(), changedElementSet);
+		Set<Activity> updatedActSet = new HashSet<Activity>();
+		clearCacheData();
+		setCaching(true);
+		for (Activity act : actCollectedSet) {
+			this.updateModelImpl(act, updatedActSet, false);
+		}
+		clearCacheData();
+		setCaching(false);		
+	}
+	
+	private void collectActivitiesToUpdate(Activity act,
+			Set<Activity> actCollectedSet, Set<Activity> actProcessedSet,
+			Set<MethodElement> changedElementSet) {
+		if (actProcessedSet.contains(act)) { // extra precaution to prevent infinite loop
+			return;
+		}
+		actProcessedSet.add(act);
+		
+		Activity baseAct = (Activity) act.getVariabilityBasedOnElement();
+		if (baseAct != null) {
+			collectActivitiesToUpdate(baseAct, actCollectedSet, actProcessedSet, changedElementSet);
+		}
+
+		List<BreakdownElement> beList = act.getBreakdownElements();
+		for (int i = 0; i < beList.size(); i++) {
+			BreakdownElement be = beList.get(i);
+			if (be instanceof Descriptor) {
+				MethodElement element = getLinkedElement((Descriptor) be);
+				if (changedElementSet.contains(element)) {
+					actCollectedSet.add(act);
+				}
+			} else if (be instanceof Activity) {
+				collectActivitiesToUpdate((Activity) be, actCollectedSet,
+						actProcessedSet, changedElementSet);
+			}
+		}
 	}
 
-	private void updateProcessModel(Process proc, boolean setCacheFlag, Set<Activity> updatedActSet) {	
+	private void updateProcessModel(Process proc, Set<Activity> updatedActSet) {	
 		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
 		}
-//		ProcessPropUtil propUtil = ProcessPropUtil.getProcessPropUtil();
-//		if (! propUtil.isSynFree(proc)) {
-//			SynFreeProcessConverter converter = new SynFreeProcessConverter(getConfig());
-//			converter.convertProcess(proc, false);
-//		}
-		updateModelImpl(proc, setCacheFlag, updatedActSet);
+		updateModelImpl(proc, updatedActSet, true);
 		if (timing && localTiming) {
 			time = System.currentTimeMillis() - time;
 			System.out.println("LD> updateModel: " + time); //$NON-NLS-1$
@@ -287,34 +330,21 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	public void updateActivityModel(Activity act) {
-		updateModelImpl(act, true, new HashSet<Activity>());
-	}
-
-	private void updateModelImpl(Activity act, boolean setCacheFlag, Set<Activity> updatedActSet) {
-		if (setCacheFlag) {
-			clearCacheData();
-			setCaching(true);
-		}
-		
-//		System.out.println("LD> Begin: updateModelImpl"); //$NON-NLS-1$
-//		Thread.dumpStack();
-		updateModelImpl(act, updatedActSet);
-//		System.out.println("LD> End: updateModelImpl"); //$NON-NLS-1$
-		
-		if (setCacheFlag) {
-			clearCacheData();
-			setCaching(false);
-		}
+		clearCacheData();
+		setCaching(true);
+		updateModelImpl(act, new HashSet<Activity>(), false);
+		clearCacheData();
+		setCaching(false);
 	}
 	
-	private void updateModelImpl(Activity act, Set<Activity> updatedActSet) {
+	private void updateModelImpl(Activity act, Set<Activity> updatedActSet, boolean recursive) {
 		if (updatedActSet.contains(act)) {
 			return;
 		}
 		updatedActSet.add(act);
 		Activity baseAct = (Activity) act.getVariabilityBasedOnElement();
 		if (baseAct != null) {
-			updateModelImpl(baseAct, updatedActSet);
+			updateModelImpl(baseAct, updatedActSet, recursive);
 		}
 		
 		if (config == null) {
@@ -338,7 +368,9 @@ public class RealizationManager implements IRealizationManager {
 		for (int i = 0; i < beList.size(); i++) {
 			BreakdownElement be = beList.get(i);
 			if (be instanceof Activity) {
-				updateModelImpl((Activity) be, updatedActSet);
+				if (recursive) {
+					updateModelImpl((Activity) be, updatedActSet, recursive);
+				}
 				
 			} else if (be instanceof TaskDescriptor) {
 				TaskDescriptor td = (TaskDescriptor) be;
@@ -414,7 +446,7 @@ public class RealizationManager implements IRealizationManager {
 		setCaching(true);
 		for (Process proc : LibraryEditUtil.getInstance().collectProcessesFromConfig(
 				getConfig())) {
-			updateProcessModel(proc, false, updatedActSet);
+			updateProcessModel(proc, updatedActSet);
 		}
 		clearCacheData();
 		setCaching(false);

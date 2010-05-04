@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.Command;
@@ -100,6 +101,7 @@ import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -506,14 +508,19 @@ public class ProcessEditor extends MethodElementEditor implements
 
 			if (ProcessUtil.isSynFree()) {
 				if (collection != null && !collection.isEmpty()) {
-					for (Object obj : collection) {					
+					for (Object obj : collection) {
+						if (obj instanceof ContentDescription) {
+							obj = ((ContentDescription) obj).eContainer();
+						}
 						if (obj instanceof Task || obj instanceof Role
 								|| obj instanceof WorkProduct) {
-							updateProcessModel();
-							refreshAll();
-							break;
+							if (changedElementSet == null) {
+								changedElementSet = new HashSet<MethodElement>();
+							}
+							changedElementSet.add((MethodElement) obj);
 						}
 					}
+					updateAndRefreshProcessModel();
 				}
 			}
 			
@@ -982,7 +989,7 @@ public class ProcessEditor extends MethodElementEditor implements
 		if (getSelectedProcess() != null) {
 			Scope scope = ProcessScopeUtil.getInstance().getScope(getSelectedProcess());
 			if (scope != null) {
-				ProcessScopeUtil.getInstance().endProcesEdit(scope);
+				ProcessScopeUtil.getInstance().endProcessEdit(scope);
 			}
 		}
 		
@@ -2572,5 +2579,30 @@ public class ProcessEditor extends MethodElementEditor implements
 	public Process getSelectedProcess() {
 		return selectedProcess;
 	}
+	
+	private Set<MethodElement> changedElementSet;
+	public void updateAndRefreshProcessModel() {
+		if (changedElementSet == null) {
+			return;
+		}
+		//System.out.println("LD> getSite().getPage().getActiveEditor(): " + getSite().getPage().getActiveEditor());
+		
+		if (getSite().getPage().getActiveEditor() != this) {
+			return;
+		}
+		//System.out.println("LD> updateAndRefreshProcessModel: " + getSelectedProcess());
+		
+		Set<MethodElement> elementSet = changedElementSet;
+		changedElementSet = null;
+		
+		Process proc = getSelectedProcess();
+		IRealizationManager mgr = getConfiguratorInstance()
+				.getRealizationManager();
+		if (proc != null && mgr != null)
+			mgr.elementUpdateProcessModel(proc, elementSet);
+		
+		refreshAll();
+	}
+	
 	
 }

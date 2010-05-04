@@ -2087,6 +2087,15 @@ public class ProcessEditorActionBarContributor extends
 		deepCopyActivityAction.setEnabled(enabled);
 	}
 
+	@Override
+	public void setActiveEditor(IEditorPart part) {
+		super.setActiveEditor(part);
+		IEditorPart editor = getActiveEditor();
+		if (editor instanceof ProcessEditor) {
+			((ProcessEditor) editor).updateAndRefreshProcessModel();
+		}
+	}
+	
 	protected Collection generateCreateChildActions(Collection descriptors,
 			ISelection selection) {
 		if (locked) {

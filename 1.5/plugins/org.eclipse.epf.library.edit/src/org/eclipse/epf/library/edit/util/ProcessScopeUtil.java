@@ -169,7 +169,7 @@ public class ProcessScopeUtil {
 		scopeInEditdSet.add(pluginScope);
 	}
 	
-	public void endProcesEdit(Scope scope) {
+	public void endProcessEdit(Scope scope) {
 		scopeInEditdSet.remove(scope);
 		scopeInEditdSet.remove(libraryScope);
 		scopeInEditdSet.remove(pluginScope);
