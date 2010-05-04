@@ -131,6 +131,12 @@ public class SynFreeProcessConverter {
 		MethodPluginPropUtil propUtil = MethodPluginPropUtil
 				.getMethodPluginPropUtil();
 		propUtil.setSynFree(plugin, true);
+		if (resouresToSave != null) {
+			Resource res = plugin.eResource();
+			if (res != null) {
+				resouresToSave.add(res);
+			}
+		}
 		if (toSave) {
 			save();
 		}
@@ -165,7 +171,12 @@ public class SynFreeProcessConverter {
 			convert(proc, des);
 		}
 		ProcessPropUtil.getProcessPropUtil().setSynFree(proc, true);
-
+		if (resouresToSave != null) {
+			Resource res = proc.eResource();
+			if (res != null) {
+				resouresToSave.add(res);
+			}
+		}
 		if (toSave) {
 			save();
 		}
