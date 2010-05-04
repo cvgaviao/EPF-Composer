@@ -498,6 +498,9 @@ public class ProcessEditor extends MethodElementEditor implements
 								.setMethodConfiguration(config);
 					}
 				}
+				
+				synUpdate(collection);
+				
 				break;
 			}
 				// handled by libSvcListener
@@ -507,42 +510,45 @@ public class ProcessEditor extends MethodElementEditor implements
 				// }
 
 			}
-
-			if (ProcessUtil.isSynFree()) {
-				if (collection != null && !collection.isEmpty()) {
-					for (Object obj : collection) {
-						if (obj instanceof ContentDescription) {
-							obj = ((ContentDescription) obj).eContainer();
-						}
-						if (obj instanceof Task || obj instanceof Role
-								|| obj instanceof WorkProduct) {
-							if (changedElementSet == null) {
-								changedElementSet = new HashSet<MethodElement>();
-							}
-							changedElementSet.add((MethodElement) obj);
-						} else if (obj instanceof TaskDescriptor) {
-							DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-							Set<MethodElement> greenDescendents = new HashSet<MethodElement>();
-							propUtil.collectCustomizingDescendants((TaskDescriptor) obj, greenDescendents);
-							if (! greenDescendents.isEmpty()) {
-								if (changedElementSet == null) {
-									changedElementSet = new HashSet<MethodElement>();
-								}
-								changedElementSet.addAll(greenDescendents);
-							}
-						}
-					}
-					updateAndRefreshProcessModel();
-				}
-			}
 			
 		}
 
-	};
+		private void synUpdate(Collection collection) {
+			if (ProcessUtil.isSynFree()) {
+				return;
+			}
+			if (collection == null || collection.isEmpty()) {
+				return;
+			}
+			
+			for (Object obj : collection) {
+				if (obj instanceof ContentDescription) {
+					obj = ((ContentDescription) obj).eContainer();
+				}
+				if (obj instanceof Task || obj instanceof Role
+						|| obj instanceof WorkProduct) {
+					if (changedElementSet == null) {
+						changedElementSet = new HashSet<MethodElement>();
+					}
+					changedElementSet.add((MethodElement) obj);
+				} else if (obj instanceof TaskDescriptor) {
+					DescriptorPropUtil propUtil = DescriptorPropUtil
+							.getDesciptorPropUtil();
+					Set<MethodElement> greenDescendents = new HashSet<MethodElement>();
+					propUtil.collectCustomizingDescendants(
+							(TaskDescriptor) obj, greenDescendents);
+					if (!greenDescendents.isEmpty()) {
+						if (changedElementSet == null) {
+							changedElementSet = new HashSet<MethodElement>();
+						}
+						changedElementSet.addAll(greenDescendents);
+					}
+				}
+			}
+			updateAndRefreshProcessModel();
+		}					
 
-	private void addToChangedElementSet(MethodElement element) {
-		
-	}
+	};
 	
 	protected ILibraryServiceListener libSvcListener = new ILibraryServiceListener() {
 
@@ -2597,7 +2603,7 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 	
 	private Set<MethodElement> changedElementSet;
-	public void updateAndRefreshProcessModel() {
+	public synchronized void updateAndRefreshProcessModel() {
 		if (changedElementSet == null) {
 			return;
 		}
@@ -2620,5 +2626,13 @@ public class ProcessEditor extends MethodElementEditor implements
 		refreshAll();
 	}
 	
+	public void updateOnLinkedElementChange(Descriptor des) {
+		if (changedElementSet == null) {
+			changedElementSet = new HashSet<MethodElement>();
+		}
+		changedElementSet.add(des);
+		
+		updateAndRefreshProcessModel();
+	}
 	
 }

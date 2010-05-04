@@ -21,6 +21,7 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.LinkMethodElementCommand;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.CompositeRole;
 import org.eclipse.epf.uma.Role;
@@ -133,6 +134,9 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 
 				// update method element control
 				ctrl_method_element.setText(getMethodElementName(element));
+				if (ProcessUtil.isSynFree()) {
+					getEditor().updateOnLinkedElementChange(element);
+				}
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e1) {
@@ -228,6 +232,11 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 			}
 		}
 
+		if (ProcessUtil.isSynFree()) {
+			if (element.getRole() != null) {
+				linkButton.setEnabled(false);
+			}
+		}	
 	}
 
 

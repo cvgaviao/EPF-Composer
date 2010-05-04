@@ -309,14 +309,11 @@ public class RealizationManager implements IRealizationManager {
 				MethodElement element = getLinkedElement((Descriptor) be);
 				if (changedElementSet.contains(element)) {
 					actCollectedSet.add(act);
-				} else if (be instanceof TaskDescriptor) {
-					DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-					TaskDescriptor td = (TaskDescriptor) be;
-					if (propUtil.getGreenParentDescriptor(td) != null) {
-						if (changedElementSet.contains(td)) {
-							actCollectedSet.add(act);
-						}
-					}					
+
+				} else if (be instanceof Descriptor) {
+					if (changedElementSet.contains(be)) {
+						actCollectedSet.add(act);
+					}
 				}
 			} else if (be instanceof Activity) {
 				collectActivitiesToUpdate((Activity) be, actCollectedSet,

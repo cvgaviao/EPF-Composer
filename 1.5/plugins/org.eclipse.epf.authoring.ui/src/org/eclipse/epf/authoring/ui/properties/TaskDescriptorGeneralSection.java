@@ -21,6 +21,7 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.LinkMethodElementCommand;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -193,6 +194,9 @@ public class TaskDescriptorGeneralSection extends
 
 				// update method element control
 				ctrl_method_element.setText(getMethodElementName(element));
+				if (ProcessUtil.isSynFree()) {
+					getEditor().updateOnLinkedElementChange(element);
+				}
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e1) {
@@ -223,6 +227,11 @@ public class TaskDescriptorGeneralSection extends
 		synchronizedButton.setEnabled(editable);
 		linkButton.setEnabled(editable);
 		clearButton.setEnabled(editable);
+		if (ProcessUtil.isSynFree()) {
+			if (element.getTask() != null) {
+				linkButton.setEnabled(false);
+			}
+		}	
 	}
 
 	

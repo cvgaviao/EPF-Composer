@@ -269,7 +269,7 @@ public class WorkProductDescriptorGeneralSection extends
 		// CREATE DELIVERABLE SECTION
 		createDeliverableSection(composite);
 		toggleSection();
-
+	
 	}
 
 	private String getMethodElementName(WorkProductDescriptor element) {
@@ -536,6 +536,9 @@ public class WorkProductDescriptorGeneralSection extends
 
 				// update method element control
 				ctrl_method_element.setText(getMethodElementName(element));
+				if (ProcessUtil.isSynFree()) {
+					getEditor().updateOnLinkedElementChange(element);
+				}
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e1) {
@@ -588,6 +591,12 @@ public class WorkProductDescriptorGeneralSection extends
 			ctrl_add_proc_1.setEnabled(editable);
 		if (ctrl_remove_1 != null)
 			ctrl_remove_1.setEnabled(editable);
+		
+		if (ProcessUtil.isSynFree()) {
+			if (element.getWorkProduct() != null) {
+				linkButton.setEnabled(false);
+			}
+		}	
 	}
 
 
