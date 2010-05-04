@@ -86,6 +86,7 @@ import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.EditingDomainComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
@@ -113,6 +114,7 @@ import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkProduct;
@@ -518,6 +520,16 @@ public class ProcessEditor extends MethodElementEditor implements
 								changedElementSet = new HashSet<MethodElement>();
 							}
 							changedElementSet.add((MethodElement) obj);
+						} else if (obj instanceof TaskDescriptor) {
+							DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+							Set<MethodElement> greenDescendents = new HashSet<MethodElement>();
+							propUtil.collectCustomizingDescendants((TaskDescriptor) obj, greenDescendents);
+							if (! greenDescendents.isEmpty()) {
+								if (changedElementSet == null) {
+									changedElementSet = new HashSet<MethodElement>();
+								}
+								changedElementSet.addAll(greenDescendents);
+							}
 						}
 					}
 					updateAndRefreshProcessModel();
@@ -528,6 +540,10 @@ public class ProcessEditor extends MethodElementEditor implements
 
 	};
 
+	private void addToChangedElementSet(MethodElement element) {
+		
+	}
+	
 	protected ILibraryServiceListener libSvcListener = new ILibraryServiceListener() {
 
 		public void configurationSet(MethodConfiguration config) {

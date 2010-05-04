@@ -434,7 +434,11 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		if (guid == null) {
 			return null;
 		}
-		return (Descriptor) LibraryEditUtil.getInstance().getMethodElement(guid);
+		Descriptor parent = (Descriptor) LibraryEditUtil.getInstance().getMethodElement(guid);
+		if (parent != null) {
+			addToCustomizingChildren(parent, des);
+		}
+		return parent;
 	}	
 	
 	//positive = true:  feature name appended with "+" -> extra exclude added
@@ -515,6 +519,19 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		DescriptorExt ext = (DescriptorExt) getExtendObject(des, false);
 
 		return ext == null ? null : ext.getCustomizingChildren();
+	}
+	
+	public void collectCustomizingDescendants(Descriptor des, Set<MethodElement> descendants) {
+		List<? extends Descriptor> children = getCustomizingChildren(des);
+		if (children == null || children.isEmpty()) {
+			return;
+		}
+		for (Descriptor cdes : children) {
+			if (! descendants.contains(cdes)) {
+				descendants.add(cdes);
+				collectCustomizingDescendants(cdes, descendants);
+			}		
+		}
 	}
 	
 	public void addToCustomizingChildren(Descriptor parent, Descriptor child) {

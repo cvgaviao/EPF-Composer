@@ -305,10 +305,18 @@ public class RealizationManager implements IRealizationManager {
 		List<BreakdownElement> beList = act.getBreakdownElements();
 		for (int i = 0; i < beList.size(); i++) {
 			BreakdownElement be = beList.get(i);
-			if (be instanceof Descriptor) {
+			if (be instanceof Descriptor && !actCollectedSet.contains(act)) {
 				MethodElement element = getLinkedElement((Descriptor) be);
 				if (changedElementSet.contains(element)) {
 					actCollectedSet.add(act);
+				} else if (be instanceof TaskDescriptor) {
+					DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+					TaskDescriptor td = (TaskDescriptor) be;
+					if (propUtil.getGreenParentDescriptor(td) != null) {
+						if (changedElementSet.contains(td)) {
+							actCollectedSet.add(act);
+						}
+					}					
 				}
 			} else if (be instanceof Activity) {
 				collectActivitiesToUpdate((Activity) be, actCollectedSet,
@@ -341,6 +349,8 @@ public class RealizationManager implements IRealizationManager {
 		if (updatedActSet.contains(act)) {
 			return;
 		}
+		//System.out.println("LD> updateModelImpl, act: " + act);
+		
 		updatedActSet.add(act);
 		Activity baseAct = (Activity) act.getVariabilityBasedOnElement();
 		if (baseAct != null) {
