@@ -10,14 +10,17 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.preferences;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.ColumnDescriptor;
+import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
 import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.ui.PreferenceStoreWrapper;
@@ -30,6 +33,8 @@ import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
 import org.eclipse.epf.library.util.SynFreeProcessConverter;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -686,12 +691,41 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 		if (toConvertToSynFree) {
 			synFreeButton.setEnabled(false);
 			toConvertToSynFree = false;
-			
-			MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
-			LibraryBackupUtil.promptBackupCurrentLibrary(Display.getCurrent().getActiveShell(), LibraryService.getInstance());
-//			LibraryUtil.markLibrarySynFree(lib, true);
-			SynFreeProcessConverter converter = new SynFreeProcessConverter();
-			converter.convertLibrary(lib);
+
+			final MethodLibrary lib = LibraryService.getInstance()
+					.getCurrentMethodLibrary();
+			LibraryBackupUtil.promptBackupCurrentLibrary(Display.getCurrent()
+					.getActiveShell(), LibraryService.getInstance());
+
+			EditorChooser.getInstance().closeAllMethodEditorsWithSaving();
+
+			IRunnableWithProgress op = new IRunnableWithProgress() {
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException {
+					try {
+						monitor
+								.beginTask(
+										AuthoringUIResources.ProcessEditorPreferencePage_conversionProgressText,
+										IProgressMonitor.UNKNOWN);
+
+						SynFreeProcessConverter converter = new SynFreeProcessConverter();
+						converter.convertLibrary(lib);
+
+					} catch (Exception e) {
+						throw new InvocationTargetException(e);
+					} finally {
+						monitor.done();
+					}
+				}
+			};
+
+			try {
+				new ProgressMonitorDialog(Display.getCurrent().getActiveShell())
+						.run(true, false, op);
+			} catch (Exception e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
+
 		}
 		
 		return true;
