@@ -514,7 +514,7 @@ public class ProcessEditor extends MethodElementEditor implements
 		}
 
 		private void synUpdate(Collection collection) {
-			if (ProcessUtil.isSynFree()) {
+			if (! ProcessUtil.isSynFree()) {
 				return;
 			}
 			if (collection == null || collection.isEmpty()) {
