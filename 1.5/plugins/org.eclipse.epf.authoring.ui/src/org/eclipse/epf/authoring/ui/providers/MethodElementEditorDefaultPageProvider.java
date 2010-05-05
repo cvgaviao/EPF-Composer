@@ -47,6 +47,7 @@ import org.eclipse.epf.authoring.ui.forms.ToolToolMentorsPage;
 import org.eclipse.epf.authoring.ui.forms.WorkProductCategoriesPage;
 import org.eclipse.epf.authoring.ui.forms.WorkProductDeliverablePartsPage;
 import org.eclipse.epf.authoring.ui.forms.WorkProductDescriptionPage;
+import org.eclipse.epf.authoring.ui.forms.WorkProductStatesPage;
 import org.eclipse.epf.authoring.ui.forms.WorkProductTypeDescriptionPage;
 import org.eclipse.epf.authoring.ui.forms.WorkProductTypeWorkProductsPage;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -99,6 +100,7 @@ public class MethodElementEditorDefaultPageProvider implements
 			}
 			pageMap.put(new ContentElementGuidancePage(editor), null);
 			pageMap.put(new WorkProductCategoriesPage(editor), null);
+			pageMap.put(new WorkProductStatesPage(editor), null);
 		} else if (input instanceof Guidance) {
 			if (TngUtil.isAllowedAttachments((Guidance)input)) {
 				pageMap.put(new GuidanceWithAttachmentsDescriptionPage(editor), null);

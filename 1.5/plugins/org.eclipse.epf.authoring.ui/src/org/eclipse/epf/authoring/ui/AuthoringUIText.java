@@ -52,6 +52,8 @@ public class AuthoringUIText {
 	public static final String TOOL_MENTORS_PAGE_TITLE = AuthoringUIResources.toolMentorsPage_title; 
 
 	public static final String WORK_PRODUCTS_PAGE_TITLE = AuthoringUIResources.workProductsPage_title; 
+	
+	public static final String WORK_PRODUCT_STATES_PAGE_TITLE = AuthoringUIResources.workProductStatesPage_title;
 
 	/**
 	 * Editor section names and description.
@@ -107,6 +109,11 @@ public class AuthoringUIText {
 	public static final String SLOT_SECTION_NAME = AuthoringUIResources.slotSection_name;
 
 	public static final String SLOT_SECTION_DESC = AuthoringUIResources.slotSection_desc;
+	
+	public static final String STATES_SECTION_NAME = AuthoringUIResources.statesSection_name;
+	
+	public static final String STATES_SECTION_DESC = AuthoringUIResources.statesSection_desc;
+	
 	/**
 	 * UI and element attribute labels.
 	 */
@@ -203,6 +210,12 @@ public class AuthoringUIText {
 	public static final String VARIABILITY_TYPE_TEXT = AuthoringUIResources.variabilityType_text; 
 
 	public static final String VERSION_TEXT = AuthoringUIResources.version_text; 
+	
+	public static final String STATES_TEXT = AuthoringUIResources.states_text;
+	
+	public static final String STATES_NAME_TEXT = AuthoringUIResources.states_name_text;
+	
+	public static final String STATES_DEFAULT_NAME_TEXT = AuthoringUIResources.states_default_name_text;
 
 	/**
 	 * Button labels.

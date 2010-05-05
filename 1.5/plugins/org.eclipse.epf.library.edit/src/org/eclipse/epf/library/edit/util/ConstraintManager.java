@@ -101,7 +101,7 @@ public final class ConstraintManager {
 					.getNamedElement_Name(), name, -1);
 			actionManager.doAction(IActionManager.SET, constraint, up
 					.getConstraint_Body(), body, -1);
-			actionManager.doAction(IActionManager.ADD, constraint, up
+			actionManager.doAction(IActionManager.ADD, owner, up
 					.getMethodElement_OwnedRules(), constraint, -1);
 		}
 		return constraint;

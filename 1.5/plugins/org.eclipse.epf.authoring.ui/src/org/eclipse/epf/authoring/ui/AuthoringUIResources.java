@@ -94,6 +94,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String toolMentorsPage_title;
 
 	public static String workProductsPage_title;
+	
+	public static String workProductStatesPage_title;
 
 	public static String checkItemsSection_name;
 
@@ -2121,6 +2123,16 @@ public final class AuthoringUIResources extends NLS {
 	public static String add_TasksperRow;
 	
 	public static String invalidTaskperRow_msg;
+	
+	public static String statesSection_name;
+	
+	public static String statesSection_desc;
+	
+	public static String states_text;
+	
+	public static String states_name_text;
+	
+	public static String states_default_name_text;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);
