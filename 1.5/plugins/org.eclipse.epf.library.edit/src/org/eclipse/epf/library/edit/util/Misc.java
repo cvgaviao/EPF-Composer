@@ -13,6 +13,7 @@ package org.eclipse.epf.library.edit.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.uma.ContentPackage;
@@ -166,7 +167,24 @@ public final class Misc {
 		}
 	}
 
-	public static boolean isBaseOf(MethodPlugin base, MethodPlugin plugin) {
+	public static boolean isBaseOf(MethodPlugin base, MethodPlugin plugin,
+			Map<String, Boolean> resultCacheMap) {
+		if (resultCacheMap == null) {
+			return isBaseOf_(base, plugin, resultCacheMap);
+		}
+		String key = base.getGuid() + plugin.getGuid();
+		Boolean value = resultCacheMap.get(key);
+		if (value != null) {
+			return value.booleanValue();
+		}
+		
+		boolean b = isBaseOf_(base, plugin, resultCacheMap);
+		resultCacheMap.put(key, Boolean.valueOf(b));
+		return b;
+	}
+	
+	private static boolean isBaseOf_(MethodPlugin base, MethodPlugin plugin,
+			Map<String, Boolean> resultCacheMap) {
 		if (plugin == null) {
 			System.out.println();
 		}
@@ -177,7 +195,7 @@ public final class Misc {
 				return true;
 		}
 		for (int i = 0; i < size; i++) {
-			if (isBaseOf(base, (MethodPlugin) bases.get(i)))
+			if (isBaseOf(base, (MethodPlugin) bases.get(i), resultCacheMap))
 				return true;
 		}
 		return false;

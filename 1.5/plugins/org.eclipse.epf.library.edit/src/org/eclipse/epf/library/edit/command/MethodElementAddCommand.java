@@ -322,6 +322,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 	 */
 	public static Collection<Reference> getIllegalOutgoingReferences(
 			MethodPlugin ownerPlugin, EObject e, Collection<Reference> illegalReferences) {
+		Map<String, Boolean> map = new HashMap<String, Boolean>(); 
 		if (illegalReferences == null) {
 			illegalReferences = new ArrayList<Reference>();
 		}
@@ -332,7 +333,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			if (!feature.isDerived()) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(eObject);
 				if (plugin != null && plugin != ownerPlugin
-						&& !Misc.isBaseOf(plugin, ownerPlugin)) {
+						&& !Misc.isBaseOf(plugin, ownerPlugin, map)) {
 					// illegal reference to be removed
 					//
 					illegalReferences
@@ -386,6 +387,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 	public static boolean hasIllegalReference(MethodPlugin ownerPlugin,
 			EObject e, Collection moveList) {
+		Map<String, Boolean> map = new HashMap<String, Boolean>(); 
 		for (EContentsEList.FeatureIterator featureIterator = (EContentsEList.FeatureIterator) e
 				.eCrossReferences().iterator(); hasNext(featureIterator);) {
 			EObject eObject = (EObject) featureIterator.next();
@@ -395,7 +397,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			if (!moveList.contains(eObject)) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(eObject);
 				if (plugin != null && plugin != ownerPlugin
-						&& !Misc.isBaseOf(plugin, ownerPlugin)) {
+						&& !Misc.isBaseOf(plugin, ownerPlugin, map)) {
 					return true;
 				}
 			}
@@ -413,6 +415,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 	 */
 	public static boolean isReferencedIllegally(MethodPlugin ownerPlugin,
 			MethodElement e, Collection moveList) {
+		Map<String, Boolean> map = new HashMap<String, Boolean>(); 
 		Collection references = AssociationHelper.getReferences(e);
 		for (Iterator iter = references.iterator(); iter.hasNext();) {
 			MethodElement element = (MethodElement) iter.next();
@@ -424,7 +427,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			if (!moveList.contains(element)) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 				if (plugin != null && plugin != ownerPlugin
-						&& !Misc.isBaseOf(ownerPlugin, plugin)) {
+						&& !Misc.isBaseOf(ownerPlugin, plugin, map)) {
 					return true;
 				}
 			}
@@ -441,6 +444,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 	public static Collection removeIllegalReferencesTo(
 			MethodPlugin ownerPlugin, MethodElement e, Collection moveList) {
+		Map<String, Boolean> map = new HashMap<String, Boolean>(); 
 		ArrayList affectedReferencers = new ArrayList();
 		Collection references = AssociationHelper.getReferences(e);
 		for (Iterator iter = references.iterator(); iter.hasNext();) {
@@ -448,7 +452,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			if (!moveList.contains(element)) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
 				if (plugin != null && plugin != ownerPlugin
-						&& !Misc.isBaseOf(ownerPlugin, plugin)) {
+						&& !Misc.isBaseOf(ownerPlugin, plugin, map)) {
 					checkModify(element);
 					removeReferences(element, e);
 					affectedReferencers.add(element);
@@ -1451,7 +1455,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 									if (plugin != null
 											&& plugin != targetPlugin
 											&& !Misc.isBaseOf(targetPlugin,
-													plugin)) {
+													plugin, new HashMap<String, Boolean>())) {
 										Collection xRefs = getXReferences(
 												element, e, null);
 										for (Iterator iter1 = xRefs.iterator(); iter1

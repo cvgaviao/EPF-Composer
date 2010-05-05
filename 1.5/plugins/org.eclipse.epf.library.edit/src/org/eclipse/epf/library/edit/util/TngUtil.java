@@ -11,7 +11,6 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
@@ -978,11 +977,12 @@ public final class TngUtil {
 	public static void addExtendedChildren(ContentCategory baseCategory,
 			MethodConfiguration methodConf, Collection children,
 			String[] categoryPkgPath) {
+		Map<String, Boolean> map = new HashMap<String, Boolean>(); 
 		MethodPlugin basePlugin = UmaUtil.getMethodPlugin(baseCategory);
 		for (Iterator iter = methodConf.getMethodPluginSelection().iterator(); iter
 				.hasNext();) {
 			MethodPlugin plugin = (MethodPlugin) iter.next();
-			if (Misc.isBaseOf(basePlugin, plugin)) {
+			if (Misc.isBaseOf(basePlugin, plugin, map)) {
 				ContentPackage categoryPkg = UmaUtil.findContentPackage(plugin,
 						categoryPkgPath);
 				if (categoryPkg != null
@@ -1412,7 +1412,7 @@ public final class TngUtil {
 		MethodPlugin sourcePlugin = UmaUtil.getMethodPlugin(source);
 		if (sourcePlugin == targetPlugin)
 			return true;
-		return Misc.isBaseOf(targetPlugin, sourcePlugin);
+		return Misc.isBaseOf(targetPlugin, sourcePlugin, new HashMap<String, Boolean>());
 	}
 
 	public static OrderInfo getOrderInfo(MethodElement e, String orderInfoName) {

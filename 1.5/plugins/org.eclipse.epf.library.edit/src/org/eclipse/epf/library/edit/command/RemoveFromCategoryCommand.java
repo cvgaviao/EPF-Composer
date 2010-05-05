@@ -12,6 +12,7 @@ package org.eclipse.epf.library.edit.command;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.common.command.AbstractCommand;
@@ -76,7 +77,7 @@ public class RemoveFromCategoryCommand extends AbstractCommand implements
 		MethodPlugin elementPlugin = UmaUtil.getMethodPlugin(element);
 
 		if (categoryPlugin != elementPlugin
-				&& Misc.isBaseOf(categoryPlugin, elementPlugin)) {
+				&& Misc.isBaseOf(categoryPlugin, elementPlugin, new HashMap<String, Boolean>())) {
 			usedCategory = TngUtil.findContributor(UmaUtil.findContentPackage(
 					elementPlugin, contentPkgPath), category);
 		} else {

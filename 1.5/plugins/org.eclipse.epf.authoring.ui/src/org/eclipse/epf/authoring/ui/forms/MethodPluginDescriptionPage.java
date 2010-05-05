@@ -13,8 +13,10 @@ package org.eclipse.epf.authoring.ui.forms;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -575,9 +577,9 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	 * @param plugins
 	 * @return
 	 */
-	protected static boolean isOneOrBaseOf(MethodPlugin base, Collection<MethodPlugin> plugins) {
+	protected static boolean isOneOrBaseOf(MethodPlugin base, Collection<MethodPlugin> plugins, Map<String, Boolean> map) {
 		for (MethodPlugin plugin : plugins) {
-			if(base == plugin || Misc.isBaseOf(base, plugin)) {
+			if(base == plugin || Misc.isBaseOf(base, plugin, map)) {
 				return true;
 			}
 		}
@@ -587,6 +589,9 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	protected boolean removeAllReferences(MethodPlugin unCheckedPlugin) {
 		ArrayList<MethodPlugin> removedBases = new ArrayList<MethodPlugin>();
 		removedBases.add(unCheckedPlugin);
+		
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		
 		for (Iterator<MethodPlugin> iter = new AbstractTreeIterator<MethodPlugin>(unCheckedPlugin, false) {
 		
 			private static final long serialVersionUID = 1L;
@@ -604,7 +609,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 			MethodPlugin base = iter.next();
 			ArrayList<MethodPlugin> plugins = new ArrayList<MethodPlugin>(plugin.getBases());
 			plugins.remove(unCheckedPlugin);
-			if(!isOneOrBaseOf(base, plugins)) {
+			if(!isOneOrBaseOf(base, plugins, map)) {
 				removedBases.add(base);
 			}
 		}
@@ -617,7 +622,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 				.getMethodPlugins();
 		for (Iterator<?> iterator = plugins.iterator(); iterator.hasNext();) {
 			MethodPlugin mp = (MethodPlugin) iterator.next();
-			if(mp != plugin && Misc.isBaseOf(plugin, mp)) {				
+			if(mp != plugin && Misc.isBaseOf(plugin, mp, map)) {				
 				affectedPlugins.add(mp);
 			}
 		}
@@ -630,7 +635,7 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 			for (MethodPlugin mp : affectedPlugins) {
 				ArrayList<MethodPlugin> bases = new ArrayList<MethodPlugin>(mp.getBases());
 				bases.remove(base);
-				if(!isOneOrBaseOf(base, bases) && UmaUtil.hasReference(mp, base)) {
+				if(!isOneOrBaseOf(base, bases, map) && UmaUtil.hasReference(mp, base)) {
 					commands.add(new RemoveReferencesCommand(mp, base));
 				}
 			}

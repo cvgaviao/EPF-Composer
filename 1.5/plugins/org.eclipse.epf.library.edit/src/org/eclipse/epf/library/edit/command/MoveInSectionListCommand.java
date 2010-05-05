@@ -12,6 +12,7 @@ package org.eclipse.epf.library.edit.command;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -117,7 +118,7 @@ public class MoveInSectionListCommand extends AbstractCommand implements
 				.getMethodPlugin((MethodElement) elementsList.get(0));
 
 		if (taskPlugin != elementPlugin
-				&& Misc.isBaseOf(taskPlugin, elementPlugin)) {
+				&& Misc.isBaseOf(taskPlugin, elementPlugin, new HashMap<String, Boolean>())) {
 			for (Iterator iter = TngUtil.getContributors(contentElement); iter
 					.hasNext();) {
 				VariabilityElement ve = (VariabilityElement) iter.next();

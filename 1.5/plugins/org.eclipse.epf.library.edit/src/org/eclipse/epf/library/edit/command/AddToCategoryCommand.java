@@ -12,6 +12,7 @@ package org.eclipse.epf.library.edit.command;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -104,7 +105,8 @@ public class AddToCategoryCommand extends AbstractCommand implements
 		MethodPlugin elementPlugin = UmaUtil.getMethodPlugin(element);
 		MethodPlugin categoryPlugin = UmaUtil.getMethodPlugin(category);
 		if (categoryPlugin != elementPlugin
-				&& Misc.isBaseOf(categoryPlugin, elementPlugin)) {
+				&& Misc.isBaseOf(categoryPlugin, elementPlugin,
+						new HashMap<String, Boolean>())) {
 			if (category.getVariabilityBasedOnElement() != null) {
 				throw new IllegalArgumentException(
 						"Could not add element to an extended category that is in a different plug-in: " + category); //$NON-NLS-1$
