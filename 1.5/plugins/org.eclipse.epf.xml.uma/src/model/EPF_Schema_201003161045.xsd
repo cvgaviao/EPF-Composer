@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EPF UMA XML Data Interchange Schema -->
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uma="http://www.eclipse.org/epf/uma/1.0.5" targetNamespace="http://www.eclipse.org/epf/uma/1.0.5">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:uma="http://www.eclipse.org/epf/uma/1.0.6" targetNamespace="http://www.eclipse.org/epf/uma/1.0.6">
 	<xsd:simpleType name="WorkOrderType">
 		<xsd:annotation>
 			<xsd:documentation>Represents a relationship between two Breakdown Element in which one Breakdown Element depends on the start or finish of another Breakdown Element in order to begin or end. This enumeration defines the different types of Work Order relationships available in UMA and is used to provide values for Work Order's linkType attribute.</xsd:documentation>

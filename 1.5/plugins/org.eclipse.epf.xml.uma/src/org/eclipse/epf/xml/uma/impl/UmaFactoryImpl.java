@@ -122,7 +122,7 @@ public class UmaFactoryImpl extends EFactoryImpl implements UmaFactory {
 	 */
 	public static UmaFactory init() {
 		try {
-			UmaFactory theUmaFactory = (UmaFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/epf/uma/1.0.5"); 
+			UmaFactory theUmaFactory = (UmaFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/epf/uma/1.0.6"); 
 			if (theUmaFactory != null) {
 				return theUmaFactory;
 			}

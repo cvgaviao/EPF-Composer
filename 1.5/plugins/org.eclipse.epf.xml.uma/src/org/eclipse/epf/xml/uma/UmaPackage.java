@@ -47,7 +47,7 @@ public interface UmaPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/epf/uma/1.0.5";
+	String eNS_URI = "http://www.eclipse.org/epf/uma/1.0.6";
 
 	/**
 	 * The package namespace name.
