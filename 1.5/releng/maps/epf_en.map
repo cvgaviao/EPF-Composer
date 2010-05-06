@@ -57,4 +57,4 @@ plugin@org.eclipse.epf.uma=v20100506-1022,:pserver:anonymous@dev.eclipse.org:/cv
 plugin@org.eclipse.epf.uma.ecore=v20100417-1123,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.uma.ecore
 plugin@org.eclipse.epf.uma.edit=v20091112-1807,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.uma.edit
 plugin@org.eclipse.epf.validation=v20090827-1350,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.validation
-plugin@org.eclipse.epf.xml.uma=v20100316-1127,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.xml.uma
+plugin@org.eclipse.epf.xml.uma=v20100506,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.xml.uma
