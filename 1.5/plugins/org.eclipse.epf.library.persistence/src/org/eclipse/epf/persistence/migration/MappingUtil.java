@@ -16,9 +16,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -29,8 +26,6 @@ import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.osgi.framework.Bundle;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * Utility class with static convenience methods to perform library upgrade from
@@ -124,34 +119,7 @@ public final class MappingUtil {
 	}
 
 	public synchronized static final boolean conversionRequired(String libPath,
-			VersionUtil.VersionCheckInfo info) {
-		
-		boolean temporaryCode = true;	//Temporarily set true before EPF1.5.1 release, to make it easy for dev and testing. 
-										//The following block of code should be removed when all the versions
-										//are set to the latest values for the release.
-		if (temporaryCode) {
-			String currentNsURI = PersistenceUtil.getUMANsURI();
-			String libNsURI = PersistenceUtil.getUMANsURI(libPath);
-			libNsURI = getAdjustedLibNsURI(libNsURI, info);
-
-			String epfVersion = null;
-			try {
-				DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-						.newDocumentBuilder();
-				Document doc = builder.parse(new File(libPath));
-				Element root = doc.getDocumentElement();
-				epfVersion = root.getAttribute("epf:version"); //$NON-NLS-1$
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-			if ("1.5.1".equals(epfVersion)) {		//$NON-NLS-1$
-				return false;
-			}
-			
-			boolean ret = getMigrator(libNsURI) != null;
-			return ret;
-		}
-		
+			VersionUtil.VersionCheckInfo info) {					
 		String currentNsURI = PersistenceUtil.getUMANsURI();
 		String libNsURI = PersistenceUtil.getUMANsURI(libPath);
 		libNsURI = getAdjustedLibNsURI(libNsURI, info);
