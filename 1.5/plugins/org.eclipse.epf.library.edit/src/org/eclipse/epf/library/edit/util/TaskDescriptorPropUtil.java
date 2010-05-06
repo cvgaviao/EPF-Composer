@@ -43,7 +43,7 @@ public class TaskDescriptorPropUtil extends DescriptorPropUtil {
 	}
 	
 	public List<Constraint> getWpInputStates(TaskDescriptor td,
-			WorkProductDescriptor wpd, EReference ref) {
+			WorkProductDescriptor wpd) {
 		UmaPackage up = UmaPackage.eINSTANCE;
 		List<Constraint> list;		
 		list = ConstraintManager.getWpStates(td, wpd, up
@@ -66,7 +66,7 @@ public class TaskDescriptorPropUtil extends DescriptorPropUtil {
 	}
 	
 	public List<Constraint> getWpOutputStates(TaskDescriptor td,
-			WorkProductDescriptor wpd, EReference ref) {
+			WorkProductDescriptor wpd) {
 		UmaPackage up = UmaPackage.eINSTANCE;
 
 		List<Constraint> list;
