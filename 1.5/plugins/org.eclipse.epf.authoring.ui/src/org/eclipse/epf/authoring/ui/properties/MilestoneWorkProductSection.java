@@ -38,6 +38,7 @@ import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
@@ -90,8 +91,13 @@ public class MilestoneWorkProductSection extends RelationSection {
 		};
 		tableViewer1.setContentProvider(contentProvider);
 	}
-
 	
+	protected void initLabelProvider1() {
+		ILabelProvider provider = new AdapterFactoryLabelProvider(
+				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
+		
+		tableViewer1.setLabelProvider(provider);		
+	}
 
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#init()
@@ -102,8 +108,8 @@ public class MilestoneWorkProductSection extends RelationSection {
 		}
 		super.init();
 
-		labelProvider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
+//		labelProvider = new AdapterFactoryLabelProvider(
+//				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
 
 		int numOfTables = 1;
 		
@@ -309,4 +315,10 @@ public class MilestoneWorkProductSection extends RelationSection {
 					items, -1);
 		}
 	}
+	
+	protected boolean isSyncFree() {
+		//Won't handle sync-free in milestone workproduct relationship
+		return false;
+	}
+	
 }

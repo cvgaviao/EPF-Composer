@@ -112,16 +112,24 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	}
 	
 	protected void initLabelProvider1() {
-		ILabelProvider provider = new SyncFreeLabelProvider(
+		ILabelProvider provider = null; 
+		
+		if (isSyncFree()) {
+			provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory(),
 				(Descriptor)element,
 				UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor(), getConfiguration());
+		} else {
+			provider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
+		}
 		
 		tableViewer1.setLabelProvider(provider);
 	}
 	
 	protected void initLabelProvider2() {
-		ILabelProvider provider = new AdapterFactoryLabelProvider(TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
+		ILabelProvider provider = new AdapterFactoryLabelProvider(
+				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
 		
 		tableViewer2.setLabelProvider(provider);
 	}
@@ -132,8 +140,8 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 	protected void init() {
 		super.init();
 
-		labelProvider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
+//		labelProvider = new AdapterFactoryLabelProvider(
+//				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
 
 		int numOfTables = 2;
 		

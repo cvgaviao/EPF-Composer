@@ -165,6 +165,9 @@ public final class PropertiesResources extends NLS {
 	public static String Process_AddFromProcess;
 	public static String Process_Rename_Message;
 	public static String Process_Remove;
+	public static String Process_AssignState;
+	public static String Process_SelectStateDialog_Message;
+	public static String Process_SelectStateDialog_Title;
 	public static String Process_Up;
 	public static String Process_Down;
 	public static String Process_MultipleSelection;

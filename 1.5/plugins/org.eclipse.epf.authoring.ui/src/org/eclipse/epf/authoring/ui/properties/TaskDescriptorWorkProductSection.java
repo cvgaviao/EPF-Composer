@@ -12,6 +12,7 @@ package org.eclipse.epf.authoring.ui.properties;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EReference;
@@ -30,7 +31,10 @@ import org.eclipse.epf.library.edit.process.command.AssignWPToTaskDescriptor;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.TaskDescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.WorkProductPropUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
@@ -38,9 +42,17 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 
@@ -53,6 +65,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
  */
 public class TaskDescriptorWorkProductSection extends RelationSection {
 	private IFilter filter = null;
+	private Button ctrl_state_1;
 
 	/**
 	 * Get process work product filter
@@ -159,19 +172,53 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	}
 	
 	protected void initLabelProvider1() {
-		ILabelProvider provider = new SyncFreeLabelProvider(
+		ILabelProvider provider = null;
+		
+		if (isSyncFree()) {
+			provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 				(Descriptor)element,
-				UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput(), getConfiguration());
+				UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput(), getConfiguration()) {
+				public String getColumnText(Object obj, int columnIndex) {
+					String label = super.getColumnText(obj, columnIndex);
+					if (obj instanceof WorkProductDescriptor) {					
+						label = getLabelForWpd((WorkProductDescriptor)obj, label,
+								UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput());
+					}
+					
+					return label;
+				}
+			};
+		} else {
+			provider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory()) {
+				public String getColumnText(Object obj, int columnIndex) {
+					String label = super.getColumnText(obj, columnIndex);
+					if (obj instanceof WorkProductDescriptor) {					
+						label = getLabelForWpd((WorkProductDescriptor)obj, label,
+								UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput());
+					}
+					
+					return label;
+				}
+			};
+		}
 		
 		tableViewer1.setLabelProvider(provider);
 	}
 	
 	protected void initLabelProvider2() {
-		ILabelProvider provider = new SyncFreeLabelProvider(
+		ILabelProvider provider = null; 
+		
+		if (isSyncFree()) {
+			provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 				(Descriptor)element,
 				UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput(), getConfiguration());
+		} else {
+			provider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
+		}
 		
 		tableViewer2.setLabelProvider(provider);		
 	}
@@ -184,10 +231,17 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	}
 	
 	protected void initLabelProvider4() {
-		ILabelProvider provider = new SyncFreeLabelProvider(
+		ILabelProvider provider = null; 
+			
+		if (isSyncFree()) {
+			provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 				(Descriptor)element,
 				UmaPackage.eINSTANCE.getTaskDescriptor_Output(), getConfiguration());
+		} else {
+			provider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
+		}
 		
 		tableViewer4.setLabelProvider(provider);
 	}
@@ -198,8 +252,8 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	protected void init() {
 		super.init();
 
-		labelProvider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
+//		labelProvider = new AdapterFactoryLabelProvider(
+//				TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory());
 
 		int numOfTables = 4;
 		setTabData(PropertiesResources.TaskDescriptor_WorkProducts_SectionTitle,
@@ -214,8 +268,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		setTableData(numOfTables, changesAllowed);
 
 	}
-
-
+	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.RelationSection#refresh()
 	 */
@@ -792,6 +845,118 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				ctrl_remove_4.setEnabled(true);
 			}
 		}		
+	}
+	
+	private String getLabelForWpd(WorkProductDescriptor wpd, String orginalLabel, EReference ref) {
+		List<Constraint> states = TaskDescriptorPropUtil.getTaskDescriptorPropUtil(actionMgr).getWpStates(
+				(TaskDescriptor)element, wpd, ref);
+		if (states.size() > 0) {
+			String stateName = states.get(0).getBody();
+			return orginalLabel + " [" + stateName + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		
+		return orginalLabel;
+	}
+	
+	protected void createAddtionalButton1(Composite parent) {		
+		ctrl_state_1 = FormUI.createButton(toolkit, parent, PropertiesResources.Process_AssignState);
+		ctrl_state_1.setEnabled(false);
+		
+		final EReference ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
+		
+		ctrl_state_1.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				assignState(tableViewer1, ref);
+			}
+		});		
+		
+		tableViewer1.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
+				if (selection.size() == 1) {
+					if (isSyncFree()) {
+						Object obj = selection.getFirstElement();
+						if (propUtil.isDynamicAndExclude(obj, (Descriptor)element, ref, getConfiguration())) {
+							ctrl_state_1.setEnabled(false);
+						} else {
+							ctrl_state_1.setEnabled(true);
+						}
+					} else {
+						ctrl_state_1.setEnabled(true);
+					}
+				} else {
+					ctrl_state_1.setEnabled(false);
+				}
+			}
+		});
+	}
+	
+	private void assignState(TableViewer viewer, EReference ref) {
+		IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+		
+		if (selection.size() == 1) {
+			if (selection.getFirstElement() instanceof WorkProductDescriptor) {
+				WorkProductDescriptor wpd = (WorkProductDescriptor)selection.getFirstElement();
+				
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+						viewer.getTable().getShell(),
+						getLabelProviderForStateSelectionDialog());
+				dialog.setElements(getInputForStateSelectionDialog(wpd, ref).toArray());
+				dialog.setMultipleSelection(false);
+				dialog.setMessage(PropertiesResources.Process_SelectStateDialog_Message);
+				dialog.setTitle(PropertiesResources.Process_SelectStateDialog_Title);
+				dialog.setImage(null);
+				if (dialog.open() == Dialog.CANCEL) {
+					return;
+				}
+				
+				Object[] objs = dialog.getResult();
+				Constraint newState = (Constraint)objs[0];
+				
+				//clean up old state first to guarantee only one state assign to wpd
+				List<Constraint> oldStates = TaskDescriptorPropUtil.getTaskDescriptorPropUtil(actionMgr).getWpStates(
+						(TaskDescriptor)element, wpd, ref);
+				for(Constraint oldState : oldStates) {
+					TaskDescriptorPropUtil.getTaskDescriptorPropUtil(actionMgr).removeWpState(
+						(TaskDescriptor)element, wpd, oldState, ref);
+				}
+				
+				//add the new state
+				TaskDescriptorPropUtil.getTaskDescriptorPropUtil(actionMgr).addWpState(
+						(TaskDescriptor)element, wpd, newState, ref);
+				
+				viewer.refresh();
+			}
+		}
+	}
+	
+	private ILabelProvider getLabelProviderForStateSelectionDialog() {
+		ILabelProvider provider = new AdapterFactoryLabelProvider(
+				TngAdapterFactory.INSTANCE.createLibraryComposedAdapterFactory()) {
+			public String getText(Object element) {
+				if (element instanceof Constraint) {
+					return ((Constraint)element).getBody();
+				}				
+				return super.getText(element);
+			}
+		};
+		
+		return provider;
+	}
+	
+	private List getInputForStateSelectionDialog(WorkProductDescriptor wpd, EReference ref) {
+		List elements = new ArrayList();				
+		
+		List<Constraint> oldStates = TaskDescriptorPropUtil.getTaskDescriptorPropUtil(actionMgr).getWpStates(
+				(TaskDescriptor)element, wpd, ref);
+		WorkProduct wp = (WorkProduct) propUtil.getLinkedElement(wpd);
+		if (wp != null) {
+			Set<Constraint> states = WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getAllStates(wp);
+			states.removeAll(oldStates);
+			elements.addAll(states);
+		}
+		
+		return elements;
 	}
 	
 }

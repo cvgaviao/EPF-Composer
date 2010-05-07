@@ -135,26 +135,38 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	}
 	
 	protected void initLabelProvider1() {
-		ILabelProvider provider = new SyncFreeLabelProvider(
+		ILabelProvider provider = null; 
+			
+		if (isSyncFree()) {
+			provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory(),
 				(Descriptor)element,
 				UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy(), getConfiguration());
+		} else {
+			provider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory());
+		}
 		
 		tableViewer1.setLabelProvider(provider);
 	}
 	
 	protected void initLabelProvider2() {
-		ILabelProvider provider = new SyncFreeLabelProvider(
+		ILabelProvider provider = null;
+		
+		if (isSyncFree()) {
+			provider = new SyncFreeLabelProvider(
 				TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory(),
 				(Descriptor)element,
 				UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy(), getConfiguration());
+		} else {
+			provider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory());
+		}
 		
 		tableViewer2.setLabelProvider(provider);
 	}
 	
 	protected void initLabelProvider3() {
-		//for assisted by, it hasn't any relationship with sync free, 
-		//so still use the old labelprovider
 		ILabelProvider provider = new AdapterFactoryLabelProvider(
 				TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory());
 		
@@ -167,8 +179,8 @@ public class TaskDescriptorRoleSection extends RelationSection {
 	protected void init() {
 		super.init();
 
-		labelProvider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory());
+//		labelProvider = new AdapterFactoryLabelProvider(
+//				TngAdapterFactory.INSTANCE.getOBS_ComposedAdapterFactory());
 
 		int numOfTables = 3;
 		

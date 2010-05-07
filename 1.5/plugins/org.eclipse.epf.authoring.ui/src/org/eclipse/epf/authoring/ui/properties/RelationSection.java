@@ -21,7 +21,6 @@ import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -51,7 +50,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
  * 
  */
 public class RelationSection extends AbstractSection {
-	protected ILabelProvider labelProvider = null;
+//	protected ILabelProvider labelProvider = null;
 
 	protected IStructuredContentProvider contentProvider = null;
 
@@ -61,7 +60,7 @@ public class RelationSection extends AbstractSection {
 	// action manager
 	protected IActionManager actionMgr;
 
-	private FormToolkit toolkit;
+	protected FormToolkit toolkit;
 
 	protected Button ctrl_add_1, ctrl_add_2, ctrl_add_3, ctrl_add_4;
 
@@ -250,9 +249,9 @@ public class RelationSection extends AbstractSection {
 	 */
 	public void dispose() {
 		super.dispose();
-		if (labelProvider != null) {
-			labelProvider.dispose();
-		}
+//		if (labelProvider != null) {
+//			labelProvider.dispose();
+//		}
 		if (contentProvider != null) {
 			contentProvider.dispose();
 		}
@@ -341,11 +340,7 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_1 = FormUI.createTable(toolkit, pane1, tableHeight);
 			tableViewer1 = new TableViewer(ctrl_table_1);
 			initContentProvider1();
-			if (isSyncFree()) {
-				initLabelProvider1();
-			} else {			
-				tableViewer1.setLabelProvider(labelProvider);
-			}
+			initLabelProvider1();			
 			tableViewer1.setInput(element);
 
 			// create buttons for table1
@@ -361,6 +356,8 @@ public class RelationSection extends AbstractSection {
 				ctrl_remove_1 = FormUI.createButton(toolkit, pane2,
 						PropertiesResources.Process_Remove); 
 				ctrl_remove_1.setEnabled(false);
+				
+				createAddtionalButton1(pane2);
 			}
 			toolkit.paintBordersFor(pane1);
 		}
@@ -375,11 +372,7 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_2 = FormUI.createTable(toolkit, pane3, tableHeight);
 			tableViewer2 = new TableViewer(ctrl_table_2);
 			initContentProvider2();
-			if (isSyncFree()) {
-				initLabelProvider2();
-			} else {
-				tableViewer2.setLabelProvider(labelProvider);
-			}
+			initLabelProvider2();
 			tableViewer2.setInput(element);
 
 			// create buttons for table2
@@ -409,11 +402,7 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_3 = FormUI.createTable(toolkit, pane5, tableHeight);
 			tableViewer3 = new TableViewer(ctrl_table_3);
 			initContentProvider3();
-			if (isSyncFree()) {
-				initLabelProvider3();
-			} else {
-				tableViewer3.setLabelProvider(labelProvider);
-			}
+			initLabelProvider3();
 			tableViewer3.setInput(element);
 
 			// create buttons for table2
@@ -441,11 +430,7 @@ public class RelationSection extends AbstractSection {
 			ctrl_table_4 = FormUI.createTable(toolkit, pane7, tableHeight);
 			tableViewer4 = new TableViewer(ctrl_table_4);
 			initContentProvider4();
-			if (isSyncFree()) {
-				initLabelProvider4();
-			} else {
-				tableViewer4.setLabelProvider(labelProvider);
-			}
+			initLabelProvider4();
 			tableViewer4.setInput(element);
 
 			// create buttons for table4
@@ -1056,6 +1041,10 @@ public class RelationSection extends AbstractSection {
 	}
 	
 	protected void syncFreeUpdateBtnStatus4(IStructuredSelection selection) {
+		
+	}
+	
+	protected void createAddtionalButton1(Composite parent) {
 		
 	}
 				
