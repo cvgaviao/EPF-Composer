@@ -11,8 +11,10 @@
 package org.eclipse.epf.library.edit.process.command;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.EList;
@@ -44,6 +46,8 @@ public class MoveDownCommand extends AbstractCommand implements
 	private Collection eClasses;
 	
 	private boolean adjacent = false;
+	
+	private Map<WorkBreakdownElement, WorkBreakdownElement> globalPresentedAfterMap = new HashMap<WorkBreakdownElement, WorkBreakdownElement>();
 
 	/**
 	 * 
@@ -70,7 +74,7 @@ public class MoveDownCommand extends AbstractCommand implements
 	public void execute() {
 		if (elementObj instanceof WorkBreakdownElement) {
 			boolean completelyDone = MoveUpCommand.handleWbeGlobalMove(activity,
-					(WorkBreakdownElement) elementObj, false);
+					(WorkBreakdownElement) elementObj, false, globalPresentedAfterMap);
 			if (completelyDone) {
 				return;
 			}

@@ -91,6 +91,7 @@ import org.eclipse.epf.library.edit.process.command.LocallyReplaceAndDeepCopyCom
 import org.eclipse.epf.library.edit.process.command.ReplaceActivityCommand;
 import org.eclipse.epf.library.edit.ui.IActionTypeProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.DiagramOptions;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.IDiagramManager;
@@ -1868,8 +1869,16 @@ public class ProcessEditorActionBarContributor extends
 			menuManager.insertBefore(
 					"fixed-additions", updateSuppressionFromBaseAction); //$NON-NLS-1$
 		}
+		
+		boolean toAdd = true;
+		if (selectedBreakdownElement instanceof TaskDescriptor) {
+			if (DescriptorPropUtil.getDesciptorPropUtil().getGreenParent(
+					(TaskDescriptor) selectedBreakdownElement) != null) {
+				toAdd = false;
+			}
+		}
 
-		if ((selectedBreakdownElement != null) && (bsItemProvider != null)) {
+		if (toAdd && (selectedBreakdownElement != null) && (bsItemProvider != null)) {
 			menuManager.insertBefore("fixed-additions", moveUpAction); //$NON-NLS-1$
 			menuManager.insertBefore("fixed-additions", moveDownAction); //$NON-NLS-1$
 		}

@@ -11,8 +11,10 @@
 package org.eclipse.epf.library.edit.process.command;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.command.AbstractCommand;
@@ -52,6 +54,8 @@ public class MoveUpCommand extends AbstractCommand implements
 	private Collection eClasses;
 	
 	private boolean adjacent = false;
+	
+	private Map<WorkBreakdownElement, WorkBreakdownElement> globalPresentedAfterMap = new HashMap<WorkBreakdownElement, WorkBreakdownElement>();
 
 	/**
 	 * 
@@ -78,7 +82,7 @@ public class MoveUpCommand extends AbstractCommand implements
 	public void execute() {
 		if (elementObj instanceof WorkBreakdownElement) {
 			boolean completelyDone = handleWbeGlobalMove(activity,
-					(WorkBreakdownElement) elementObj, true);
+					(WorkBreakdownElement) elementObj, true, globalPresentedAfterMap);
 			if (completelyDone) {
 				return;
 			}
@@ -130,7 +134,14 @@ public class MoveUpCommand extends AbstractCommand implements
 
 	//return true if move is completely done - no need to do local move
 	//return false if move is partially done - still need to do local move
-	public static boolean handleWbeGlobalMove(Activity act, WorkBreakdownElement wbe, boolean up) {
+	public static boolean handleWbeGlobalMove(Activity act, WorkBreakdownElement wbe, boolean up,
+			Map<WorkBreakdownElement, WorkBreakdownElement> globalPresentedAfterMap ) {
+		if (wbe instanceof TaskDescriptor
+				&& DescriptorPropUtil.getDesciptorPropUtil().getGreenParent(
+						(TaskDescriptor) wbe) != null) {
+			return true;	//don't move for green customizing child
+		}	
+		
 		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
 				.getWBS_ComposedAdapterFactory();
 		ItemProviderAdapter adapter = (ItemProviderAdapter) aFactory.adapt(
@@ -155,8 +166,15 @@ public class MoveUpCommand extends AbstractCommand implements
 						continue;
 					}
 				}
-				localSet.add((WorkBreakdownElement) be);
+				WorkBreakdownElement w = (WorkBreakdownElement) be;
+				
+				localSet.add(w);
+				globalPresentedAfterMap.put(w, propUtil.getGlobalPresentedAfter(w));
 			}
+		}
+		
+		if (localSet.isEmpty()) {
+			return false;
 		}
 			
 		WorkBreakdownElement globalPresentedAfter = act;
@@ -246,6 +264,14 @@ public class MoveUpCommand extends AbstractCommand implements
 			BreakdownElement e = (BreakdownElement) elementObj;
 			e.setPresentedAfter(prev.getPresentedAfter());
 			prev.setPresentedAfter(e);
+		}
+		
+		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();
+		if (!globalPresentedAfterMap.isEmpty()) {
+			for (Map.Entry<WorkBreakdownElement, WorkBreakdownElement> entry : globalPresentedAfterMap
+					.entrySet()) {
+				propUtil.setGlobalPresentedAfter(entry.getKey(), entry.getValue());
+			}
 		}
 	}
 
