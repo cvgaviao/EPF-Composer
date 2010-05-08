@@ -22,10 +22,12 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.util.WbePropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 
 
@@ -129,13 +131,6 @@ public class MoveUpCommand extends AbstractCommand implements
 	//return true if move is completely done - no need to do local move
 	//return false if move is partially done - still need to do local move
 	public static boolean handleWbeGlobalMove(Activity act, WorkBreakdownElement wbe, boolean up) {
-		System.out.println("LD> handleWbeGlobalMove: begin");
-		boolean b = handleWbeGlobalMove_(act, wbe, up);
-		System.out.println("LD> handleWbeGlobalMove: end = " + b);
-		
-		return b;
-	}
-	public static boolean handleWbeGlobalMove_(Activity act, WorkBreakdownElement wbe, boolean up) {
 		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
 				.getWBS_ComposedAdapterFactory();
 		ItemProviderAdapter adapter = (ItemProviderAdapter) aFactory.adapt(
@@ -146,13 +141,24 @@ public class MoveUpCommand extends AbstractCommand implements
 			return false;
 		}
 		
+		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();
 		
 		boolean completelyDone = false;
 		List<?> childList = (List<?>) children;
-		Set<BreakdownElement> localSet = new HashSet<BreakdownElement>(act
-				.getBreakdownElements());
 		
-		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();		
+		Set<BreakdownElement> localSet = new HashSet<BreakdownElement>();		
+		for (BreakdownElement be : act.getBreakdownElements()) {
+			if (be instanceof WorkBreakdownElement) {
+				if (be instanceof TaskDescriptor) {
+					if (DescriptorPropUtil.getDesciptorPropUtil()
+							.getGreenParent((TaskDescriptor) be) != null) {
+						continue;
+					}
+				}
+				localSet.add((WorkBreakdownElement) be);
+			}
+		}
+			
 		WorkBreakdownElement globalPresentedAfter = act;
 		for (int i = 0; i < childList.size(); i++) {
 			Object child = childList.get(i);
@@ -208,7 +214,7 @@ public class MoveUpCommand extends AbstractCommand implements
 					
 					Object newNextItem = i + 2 < childList.size() ? childList
 							.get(i + 2) : null;
-					if (newNextItem instanceof WorkBreakdownElement) {
+					if (localSet.contains(newNextItem)) {
 						propUtil.setGlobalPresentedAfter((WorkBreakdownElement) newNextItem, wbe);
 					}
 

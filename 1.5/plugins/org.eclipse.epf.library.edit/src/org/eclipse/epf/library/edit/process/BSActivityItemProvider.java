@@ -652,12 +652,17 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 			newPrevNode.nextNode = node;
 			orderModified = true;
 		}
+		
 		if (orderModified) {
+			List oldChildList = childList;
 			childList = new ArrayList();			
 			LinkedChildListNode node = linkedChildList.head.nextNode;
 			while (node != null) {
 				childList.add(node.thisItem);
 				node = node.nextNode;
+			}
+			if (oldChildList.size() != childList.size()) {		//Should never happen, but in case
+				childList = oldChildList;
 			}
 		}
 	
