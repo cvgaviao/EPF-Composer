@@ -586,20 +586,25 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 			return children;
 		}
 		
-		
-		System.out.println("LD> handleGlobalOrdering 1, this: " + this);
 		List childList = handleGlobalOrdering(activity, (List) children);
-		System.out.println("LD> handleGlobalOrdering 2, this: " + this);
-		System.out.println("");
+//		System.out.println("");
 		
 		return childList;
 	}
 
 	private List handleGlobalOrdering(Activity activity, List childList) {
 
-		System.out.println("LD> activity: " + activity);
-
 		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();
+//		Set localSet = new HashSet(activity.getBreakdownElements());
+//		System.out.println("LD> orignail: ");
+//		for (int i = 0; i < childList.size(); i++) {
+//			Object item = TngUtil.unwrap(childList.get(i));
+//			System.out.println("LD> " + i + ": " + item);
+//			if (localSet.contains(item)) {
+//				System.out.println("LD> globalPrev: " + propUtil.getGlobalPresentedAfter((WorkBreakdownElement) item));
+//			}
+//			System.out.println("");
+//		}
 		
 		WorkBreakdownElement globalPresentedAfter = null;
 		LinkedChildList linkedChildList = null;
@@ -655,6 +660,16 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 				node = node.nextNode;
 			}
 		}
+	
+//		System.out.println("LD> result: ");
+//		for (int i = 0; i < childList.size(); i++) {
+//			Object item = TngUtil.unwrap(childList.get(i));
+//			System.out.println("LD> " + i + ": " + item);
+//			if (localSet.contains(item)) {
+//				System.out.println("LD> globalPrev: " + propUtil.getGlobalPresentedAfter((WorkBreakdownElement) item));
+//			}
+//			System.out.println("");
+//		}
 		
 		return childList;
 	}

@@ -68,6 +68,14 @@ public class MoveDownCommand extends AbstractCommand implements
 	 * @see org.eclipse.emf.common.command.Command#execute()
 	 */
 	public void execute() {
+		if (elementObj instanceof WorkBreakdownElement) {
+			boolean completelyDone = MoveUpCommand.handleWbeGlobalMove(activity,
+					(WorkBreakdownElement) elementObj, false);
+			if (completelyDone) {
+				return;
+			}
+		}
+		
 		List allElements = activity.getBreakdownElements();
 
 		for (int i = 0; i < allElements.size(); i++) {
@@ -114,10 +122,7 @@ public class MoveDownCommand extends AbstractCommand implements
 		}
 		((EList) activity.getBreakdownElements()).move(transferLocation,
 				elementLocation);
-		
-		if (elementObj instanceof WorkBreakdownElement) {
-			MoveUpCommand.handleWbeGlobalMove(activity, (WorkBreakdownElement) elementObj, false);
-		}	
+	
 	}
 
 	public void undo() {

@@ -34,8 +34,9 @@ public class WbePropUtil extends MethodElementPropUtil {
 
 	public void setGlobalPresentedAfter(WorkBreakdownElement wbe,
 			WorkBreakdownElement globalPresentedAfter) {
-		setStringValue(wbe, WBE_GlobalPresentedAfter, globalPresentedAfter
-				.getGuid());
+		setStringValue(wbe, WBE_GlobalPresentedAfter,
+				globalPresentedAfter == null ? null : globalPresentedAfter
+						.getGuid());
 	}
 	
 }

@@ -74,6 +74,14 @@ public class MoveUpCommand extends AbstractCommand implements
 	 * @see org.eclipse.emf.common.command.Command#execute()
 	 */
 	public void execute() {
+		if (elementObj instanceof WorkBreakdownElement) {
+			boolean completelyDone = handleWbeGlobalMove(activity,
+					(WorkBreakdownElement) elementObj, true);
+			if (completelyDone) {
+				return;
+			}
+		}	
+		
 		List allElements = activity.getBreakdownElements();
 
 		for (int i = 0; i < allElements.size(); i++) {
@@ -115,13 +123,19 @@ public class MoveUpCommand extends AbstractCommand implements
 		}
 		((EList) activity.getBreakdownElements()).move(transferLocation,
 				elementLocation);
-		
-		if (elementObj instanceof WorkBreakdownElement) {
-			handleWbeGlobalMove(activity, (WorkBreakdownElement) elementObj, true);
-		}		
+			
 	}
 
-	public static void handleWbeGlobalMove(Activity act, WorkBreakdownElement wbe, boolean up) {
+	//return true if move is completely done - no need to do local move
+	//return false if move is partially done - still need to do local move
+	public static boolean handleWbeGlobalMove(Activity act, WorkBreakdownElement wbe, boolean up) {
+		System.out.println("LD> handleWbeGlobalMove: begin");
+		boolean b = handleWbeGlobalMove_(act, wbe, up);
+		System.out.println("LD> handleWbeGlobalMove: end = " + b);
+		
+		return b;
+	}
+	public static boolean handleWbeGlobalMove_(Activity act, WorkBreakdownElement wbe, boolean up) {
 		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
 				.getWBS_ComposedAdapterFactory();
 		ItemProviderAdapter adapter = (ItemProviderAdapter) aFactory.adapt(
@@ -129,42 +143,91 @@ public class MoveUpCommand extends AbstractCommand implements
 		
 		Collection<?> children = adapter.getChildren(act);
 		if (! (children instanceof List)) {
-			return;
+			return false;
 		}
 		
-		List<?> childList = (List<?>) children;
 		
+		boolean completelyDone = false;
+		List<?> childList = (List<?>) children;
+		Set<BreakdownElement> localSet = new HashSet<BreakdownElement>(act
+				.getBreakdownElements());
+		
+		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();		
 		WorkBreakdownElement globalPresentedAfter = act;
 		for (int i = 0; i < childList.size(); i++) {
 			Object child = childList.get(i);
 			if (child == wbe) {
-				Object prev = null;
+				Object newPrev = null;
 				if (up) {
-					if (i - 2 >= 0) {
-						prev = TngUtil.unwrap(childList.get(i - 2));			
+					if (i == 0) {
+						break;
 					}
+
+					newPrev = i == 1 ? act : TngUtil.unwrap(childList.get(i - 2));
+					Object prevItem = childList.get(i - 1);		
+					Object nextItem = i + 1 < childList.size() ? childList
+							.get(i + 1) : null;
+					if (localSet.contains(prevItem)) {
+						propUtil.setGlobalPresentedAfter(
+								(WorkBreakdownElement) prevItem, wbe);
+					} else {
+						completelyDone = true;
+					}
+					if (nextItem != null && localSet.contains(nextItem)) {
+						WorkBreakdownElement nextWbe = (WorkBreakdownElement) nextItem;
+						prevItem = TngUtil.unwrap(prevItem);
+						if (prevItem instanceof WorkBreakdownElement) {
+							propUtil.setGlobalPresentedAfter(nextWbe,
+									(WorkBreakdownElement) prevItem);
+						} else {
+							propUtil.setGlobalPresentedAfter(nextWbe, null);
+						}
+					}
+				
 				} else {
-					if (i + 1 < childList.size()) {
-						prev = TngUtil.unwrap(childList.get(i + 1));	
+					if (i == childList.size() - 1) {
+						break;
 					}
+					
+					Object prevItem = i - 1 >= 0 ? childList.get(i - 1) : act;
+					newPrev = childList.get(i + 1);
+					if (localSet.contains(newPrev)) {
+						prevItem = TngUtil.unwrap(prevItem);
+						if (prevItem instanceof WorkBreakdownElement) {
+							propUtil.setGlobalPresentedAfter(
+									(WorkBreakdownElement) newPrev,
+									(WorkBreakdownElement) prevItem);
+						} else {
+							propUtil.setGlobalPresentedAfter(
+									(WorkBreakdownElement) newPrev, null);
+						}
+					} else {
+						completelyDone = true;
+						newPrev = TngUtil.unwrap(newPrev);
+					}
+					
+					Object newNextItem = i + 2 < childList.size() ? childList
+							.get(i + 2) : null;
+					if (newNextItem instanceof WorkBreakdownElement) {
+						propUtil.setGlobalPresentedAfter((WorkBreakdownElement) newNextItem, wbe);
+					}
+
 				}
 				
-				if (prev instanceof WorkBreakdownElement) {
-					globalPresentedAfter = (WorkBreakdownElement) prev;
+				if (newPrev instanceof WorkBreakdownElement) {
+					globalPresentedAfter = (WorkBreakdownElement) newPrev;
 				}
 				
 				break;
 			}
-		}
-		
-		Set<BreakdownElement> locals = new HashSet<BreakdownElement>(act.getBreakdownElements());
-		
-		if (locals.contains(globalPresentedAfter)) {
-			return;
-		}
-		
-		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();		
+		}	
 		propUtil.setGlobalPresentedAfter(wbe, globalPresentedAfter);
+
+		if (! act.getBreakdownElements().isEmpty()) {
+			((EList) act.getBreakdownElements()).move(0, 0);	//hmm ... cause notifying UI refresh
+		}
+		
+		return completelyDone;
 	}
 
 	public void undo() {
