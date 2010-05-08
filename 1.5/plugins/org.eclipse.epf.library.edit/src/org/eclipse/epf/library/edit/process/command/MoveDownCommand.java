@@ -20,6 +20,7 @@ import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.WorkBreakdownElement;
 
 
 /**
@@ -77,7 +78,10 @@ public class MoveDownCommand extends AbstractCommand implements
 			}
 		}
 
-		for (int i = elementLocation + 1; i <= allElements.size(); i++) {
+		if (allElements.size() > 0) {
+			transferLocation = allElements.size() - 1;
+		}
+		for (int i = elementLocation + 1; i < allElements.size(); i++) {
 			Object obj = allElements.get(i);
 			if (TngUtil.isEClassInstanceOf(eClasses, obj)) {
 				transferLocation = i;
@@ -110,6 +114,10 @@ public class MoveDownCommand extends AbstractCommand implements
 		}
 		((EList) activity.getBreakdownElements()).move(transferLocation,
 				elementLocation);
+		
+		if (elementObj instanceof WorkBreakdownElement) {
+			MoveUpCommand.handleWbeGlobalMove(activity, (WorkBreakdownElement) elementObj, false);
+		}	
 	}
 
 	public void undo() {

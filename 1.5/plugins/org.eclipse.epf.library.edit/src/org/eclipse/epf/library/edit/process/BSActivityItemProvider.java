@@ -55,6 +55,7 @@ import org.eclipse.epf.library.edit.util.GraphicalData;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.util.WbePropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -573,6 +574,141 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 	 * @see org.eclipse.emf.edit.provider.ItemProviderAdapter#getChildren(java.lang.Object)
 	 */
 	public Collection getChildren(Object object) {
+		Collection children = getChildren_(object);
+		if (!(children instanceof List)) {
+			return children;
+		}
+
+		Activity activity = (Activity) object;
+		VariabilityType extendType = activity.getVariabilityType();
+		if (extendType != VariabilityType.LOCAL_CONTRIBUTION
+				&& extendType != VariabilityType.EXTENDS) {
+			return children;
+		}
+		
+		
+		System.out.println("LD> handleGlobalOrdering 1, this: " + this);
+		List childList = handleGlobalOrdering(activity, (List) children);
+		System.out.println("LD> handleGlobalOrdering 2, this: " + this);
+		System.out.println("");
+		
+		return childList;
+	}
+
+	private List handleGlobalOrdering(Activity activity, List childList) {
+
+		System.out.println("LD> activity: " + activity);
+
+		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();
+		
+		WorkBreakdownElement globalPresentedAfter = null;
+		LinkedChildList linkedChildList = null;
+		Map<WorkBreakdownElement, LinkedChildListNode> map = null;
+		
+		List<LinkedChildListNode> toMoveList = new ArrayList<LinkedChildListNode>();
+		for (int i = 0; i < childList.size(); i++) {
+			Object item = childList.get(i);
+			if (item instanceof WorkBreakdownElement) {
+				WorkBreakdownElement wbe = (WorkBreakdownElement) item;
+				globalPresentedAfter = propUtil.getGlobalPresentedAfter(wbe);
+				if (globalPresentedAfter != null) {
+					if (linkedChildList == null) {
+						map = new HashMap<WorkBreakdownElement, LinkedChildListNode>();
+						linkedChildList = getLinkedChildList(activity, childList, i, map);
+					}
+				}
+			}
+			if (linkedChildList != null) {
+				addItemToLinkedChildList(map, linkedChildList, item, globalPresentedAfter);
+				if (globalPresentedAfter != null) {
+					toMoveList.add(linkedChildList.last);
+				}
+			}
+		}
+		boolean orderModified = false;
+		for (LinkedChildListNode node : toMoveList) {
+			WorkBreakdownElement key = node.globalPresentedAfter;
+			LinkedChildListNode newPrevNode = key == activity ? linkedChildList.head
+					: map.get(key);
+			if (newPrevNode == null || node.prevNode == newPrevNode) {
+				continue;
+			}
+			node.prevNode.nextNode = node.nextNode;
+			if (node.nextNode != null) {
+				node.nextNode.prevNode = node.prevNode;
+			}
+
+			node.prevNode = newPrevNode;
+			node.nextNode = newPrevNode.nextNode;
+
+			if (newPrevNode.nextNode != null) {
+				newPrevNode.nextNode.prevNode = node;
+			}
+			newPrevNode.nextNode = node;
+			orderModified = true;
+		}
+		if (orderModified) {
+			childList = new ArrayList();			
+			LinkedChildListNode node = linkedChildList.head.nextNode;
+			while (node != null) {
+				childList.add(node.thisItem);
+				node = node.nextNode;
+			}
+		}
+		
+		return childList;
+	}
+
+	private LinkedChildList getLinkedChildList(Activity activity,
+			List childList, int index,
+			Map<WorkBreakdownElement, LinkedChildListNode> map) {
+		
+		LinkedChildList linkedChildList;
+		linkedChildList = new LinkedChildList(activity);
+
+		for (int i = 0; i < index; i++) {
+			Object item = childList.get(i);
+			addItemToLinkedChildList(map, linkedChildList, item, null);
+		}
+
+		return linkedChildList;
+	}
+
+	private void addItemToLinkedChildList(Map<WorkBreakdownElement, LinkedChildListNode> map,
+			LinkedChildList linkedChildList, Object item, WorkBreakdownElement globalPresentedAfter) {
+		LinkedChildListNode node = new LinkedChildListNode(item, globalPresentedAfter);
+		node.prevNode = linkedChildList.last;
+		linkedChildList.last.nextNode = node;
+		linkedChildList.last = node;
+		if (! (item instanceof WorkBreakdownElement)) {
+			item = TngUtil.unwrap(item);
+		}
+		if (item instanceof WorkBreakdownElement) {
+			map.put((WorkBreakdownElement) item, node);
+		}
+	}
+	
+	static class LinkedChildList {
+		LinkedChildListNode head;
+		LinkedChildListNode last;
+		public LinkedChildList(Activity act) {
+			head = new LinkedChildListNode(act, null);
+			last = head;
+		}
+	}
+	
+	static class LinkedChildListNode {
+		LinkedChildListNode prevNode;
+		LinkedChildListNode nextNode;
+		Object thisItem;
+		WorkBreakdownElement globalPresentedAfter;
+		LinkedChildListNode(Object item, WorkBreakdownElement globalPresentedAfter) {
+			thisItem = item;
+			this.globalPresentedAfter = globalPresentedAfter;
+		}
+	}
+	
+	private Collection getChildren_(Object object) {
 		Activity activity = (Activity) object;
 		if(configurator != null) {
 			

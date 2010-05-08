@@ -13,13 +13,20 @@ package org.eclipse.epf.library.edit.process.command;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.command.AbstractCommand;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.util.WbePropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.WorkBreakdownElement;
 
 
 /**
@@ -108,6 +115,56 @@ public class MoveUpCommand extends AbstractCommand implements
 		}
 		((EList) activity.getBreakdownElements()).move(transferLocation,
 				elementLocation);
+		
+		if (elementObj instanceof WorkBreakdownElement) {
+			handleWbeGlobalMove(activity, (WorkBreakdownElement) elementObj, true);
+		}		
+	}
+
+	public static void handleWbeGlobalMove(Activity act, WorkBreakdownElement wbe, boolean up) {
+		AdapterFactory aFactory = TngAdapterFactory.INSTANCE
+				.getWBS_ComposedAdapterFactory();
+		ItemProviderAdapter adapter = (ItemProviderAdapter) aFactory.adapt(
+				act, ITreeItemContentProvider.class);
+		
+		Collection<?> children = adapter.getChildren(act);
+		if (! (children instanceof List)) {
+			return;
+		}
+		
+		List<?> childList = (List<?>) children;
+		
+		WorkBreakdownElement globalPresentedAfter = act;
+		for (int i = 0; i < childList.size(); i++) {
+			Object child = childList.get(i);
+			if (child == wbe) {
+				Object prev = null;
+				if (up) {
+					if (i - 2 >= 0) {
+						prev = TngUtil.unwrap(childList.get(i - 2));			
+					}
+				} else {
+					if (i + 1 < childList.size()) {
+						prev = TngUtil.unwrap(childList.get(i + 1));	
+					}
+				}
+				
+				if (prev instanceof WorkBreakdownElement) {
+					globalPresentedAfter = (WorkBreakdownElement) prev;
+				}
+				
+				break;
+			}
+		}
+		
+		Set<BreakdownElement> locals = new HashSet<BreakdownElement>(act.getBreakdownElements());
+		
+		if (locals.contains(globalPresentedAfter)) {
+			return;
+		}
+		
+		WbePropUtil propUtil = WbePropUtil.getWbePropUtil();		
+		propUtil.setGlobalPresentedAfter(wbe, globalPresentedAfter);
 	}
 
 	public void undo() {
