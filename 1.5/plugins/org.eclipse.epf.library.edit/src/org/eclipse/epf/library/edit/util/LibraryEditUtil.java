@@ -195,6 +195,54 @@ public class LibraryEditUtil {
 		return null;
 	}
 	
+	
+	public EReference getLinkedElementFeature(EReference descriptorRef) {
+		if (descriptorRef == up.getTaskDescriptor_PerformedPrimarilyBy()) {
+			return up.getTask_PerformedBy();
+		}
+		
+		if (descriptorRef == up.getTaskDescriptor_AdditionallyPerformedBy()) {
+			return up.getTask_AdditionallyPerformedBy();				
+		}
+		
+		if (descriptorRef == up.getTaskDescriptor_MandatoryInput()) {
+			return up.getTask_MandatoryInput();
+		}
+		
+		if (descriptorRef == up.getTaskDescriptor_OptionalInput()) {
+			return up.getTask_OptionalInput();
+		}
+		
+		if (descriptorRef == up.getTaskDescriptor_Output()) {
+			return up.getTask_Output();
+		}
+		
+		if (descriptorRef == up.getTaskDescriptor_SelectedSteps()) {
+			return up.getTask_Steps();
+		}
+		
+		if (descriptorRef == up.getRoleDescriptor_ResponsibleFor()) {
+			return up.getRole_ResponsibleFor();
+		}
+		
+		if (descriptorRef == up.getWorkProductDescriptor_DeliverableParts()) {
+			return up.getDeliverable_DeliveredWorkProducts();
+		}
+		
+		//To do: guidances need to be handled differently
+//		if (descriptorRef == up.getBreakdownElement_Checklists() || descriptorRef == up.getBreakdownElement_Concepts()
+//				|| descriptorRef == up.getBreakdownElement_Examples() || descriptorRef == up.getBreakdownElement_SupportingMaterials()
+//				|| descriptorRef == up.getBreakdownElement_Guidelines() || descriptorRef == up.getBreakdownElement_ReusableAssets()
+//				|| descriptorRef == up.getBreakdownElement_Templates() || descriptorRef == up.getBreakdownElement_Reports()
+//				|| descriptorRef == up.getBreakdownElement_Toolmentor() || descriptorRef == up.getBreakdownElement_Estimationconsiderations()) {
+//			return up.getDescriptor_GuidanceExclude();
+//		}
+		
+		//...		
+		return null;
+	}
+	
+	
 	public boolean isJunitTest() {
 		return junitTest;
 	}
