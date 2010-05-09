@@ -6,15 +6,21 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ILibraryEditUtilProvider;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.Role;
+import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 
 public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
@@ -62,7 +68,25 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	public boolean isDynamic(Object obj, Descriptor desc, EReference ref) {
 		if (ProcessUtil.isSynFree()) {
 			if (!(obj instanceof Descriptor)) {// Excluded elements are not descriptors
-				return true;
+				boolean isLinkedType = 	obj instanceof Task ||
+										obj instanceof Role ||
+										obj instanceof WorkProduct;
+				if (!isLinkedType) {
+					return false;
+				}
+				
+				//Temporary only: need to add config as argument of the method
+				MethodConfiguration config = LibraryService.getInstance().getCurrentMethodConfiguration();
+				
+				ElementRealizer realizer = DefaultElementRealizer
+				.newElementRealizer(config);
+				
+				MethodElement element = ProcessUtil.getAssociatedElement(desc);
+				EReference elemRef = LibraryEditUtil.getInstance().getLinkedElementFeature(ref);
+				List<MethodElement> elementList = ConfigurationHelper.calc0nFeatureValue(element,
+						elemRef, realizer);
+								
+				return elementList == null ? false : elementList.contains(obj);
 			}
 			
 			Descriptor des = (Descriptor)obj;			
