@@ -214,8 +214,6 @@ public class AuthoringUIText {
 	public static final String STATES_TEXT = AuthoringUIResources.states_text;
 	
 	public static final String STATES_NAME_TEXT = AuthoringUIResources.states_name_text;
-	
-	public static final String STATES_DEFAULT_NAME_TEXT = AuthoringUIResources.states_default_name_text;
 
 	/**
 	 * Button labels.
@@ -259,4 +257,8 @@ public class AuthoringUIText {
 	public static final String PROMPT_BUTTON_TEXT = MessageDialogWithToggle.PROMPT;
 
 	public static final String PUBLISH_CATEGORIES_TEXT = AuthoringUIResources.publish_categories_text;
+	
+	public static final String STATES_ADD_TEXT = AuthoringUIResources.states_add_text;
+	
+	public static final String STATES_DELETE_TEXT = AuthoringUIResources.states_delete_text;
 }

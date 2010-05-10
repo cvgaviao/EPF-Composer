@@ -2134,7 +2134,9 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String states_name_text;
 	
-	public static String states_default_name_text;
+	public static String states_add_text;
+	
+	public static String states_delete_text;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);

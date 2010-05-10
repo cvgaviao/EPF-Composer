@@ -31,6 +31,8 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -62,14 +64,14 @@ public class WorkProductStatesPage extends BaseFormPage {
 	
 	private Section statesSection;
 	private Composite statesComposite;
+	private Text ctrl_name;
+	private Button ctrl_add;
 	private Table ctrl_states;
 	private TableViewer statesTableViewer;
 	private IStructuredContentProvider statesViewerContentProvider;
 	private ITableLabelProvider statesViewerLabelProvider;
-	private Button ctrl_add, ctrl_delete;
-	private Text ctrl_name;
-	private Constraint currentState;
-	
+	private Button ctrl_delete;
+
 	public WorkProductStatesPage(FormEditor editor) {
 		super(editor, FORM_PAGE_ID, AuthoringUIText.WORK_PRODUCT_STATES_PAGE_TITLE);
 	}
@@ -93,11 +95,10 @@ public class WorkProductStatesPage extends BaseFormPage {
 
 		statesComposite = toolkit.createComposite(statesSection);
 		statesComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		statesComposite.setLayout(new GridLayout(4, false));
+		statesComposite.setLayout(new GridLayout());
 		statesSection.setClient(statesComposite);
 		
-		createStatesArea(statesComposite);
-		
+		createStatesArea(statesComposite);		
 		toolkit.paintBordersFor(statesComposite);
 		
 		addListeners();
@@ -106,25 +107,46 @@ public class WorkProductStatesPage extends BaseFormPage {
 	}
 	
 	protected void createStatesArea(Composite parent) {
-		Composite pane1 = toolkit.createComposite(parent);
+		Composite nameComposite = toolkit.createComposite(parent);
+		nameComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		nameComposite.setLayout(new GridLayout(3, false));		
+		toolkit.createLabel(nameComposite, AuthoringUIText.STATES_NAME_TEXT);		
+		ctrl_name = toolkit.createText(nameComposite, null, SWT.SINGLE);
 		{
-			GridData gridData = new GridData(GridData.FILL_BOTH);
+			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+			gridData.widthHint = 300;
+			ctrl_name.setLayoutData(gridData);
+		}
+		ctrl_add = toolkit.createButton(nameComposite, AuthoringUIText.STATES_ADD_TEXT, SWT.NONE);
+		{
+			GridData gridData = new GridData();
+			gridData.widthHint = 70;
+			ctrl_add.setLayoutData(gridData);
+			
+		}
+
+		Composite listComposite = toolkit.createComposite(parent);
+		listComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		listComposite.setLayout(new GridLayout(4, false));
+		Label state = toolkit.createLabel(listComposite, AuthoringUIText.STATES_TEXT);
+		{
+			GridData gridData = new GridData();
+			gridData.horizontalSpan = 4;
+			state.setLayoutData(gridData);
+		}
+		ctrl_states = toolkit.createTable(listComposite, SWT.MULTI);
+		{
+			GridData gridData = new GridData(GridData.FILL_VERTICAL);
 			gridData.horizontalSpan = 3;
-			pane1.setLayoutData(gridData);
-			pane1.setLayout(new GridLayout());
-		}
-		
-		Label l_name = toolkit.createLabel(pane1, AuthoringUIText.STATES_TEXT);
-		{
-			GridData gridData = new GridData(GridData.BEGINNING);
-			l_name.setLayoutData(gridData);
-		}
-		
-		ctrl_states = toolkit.createTable(pane1, SWT.MULTI);
-		{
-			GridData gridData = new GridData(GridData.FILL_BOTH);
+			gridData.widthHint = 500;
 			gridData.heightHint = 150;
 			ctrl_states.setLayoutData(gridData);
+		}
+		ctrl_delete = toolkit.createButton(listComposite, AuthoringUIText.STATES_DELETE_TEXT, SWT.NONE);
+		{
+			GridData gridData = new GridData();
+			gridData.widthHint = 70;
+			ctrl_delete.setLayoutData(gridData);
 		}
 
 		initProviders();
@@ -143,30 +165,9 @@ public class WorkProductStatesPage extends BaseFormPage {
 				return 0;
 			}
 		});
-
-		Composite pane2 = toolkit.createComposite(parent);
-		pane2.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_CENTER	| GridData.HORIZONTAL_ALIGN_CENTER));
-		pane2.setLayout(new GridLayout());
 		
-		ctrl_add = toolkit.createButton(pane2, AuthoringUIText.ADD_BUTTON_TEXT, SWT.NONE);
-		ctrl_add.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
-		ctrl_delete = toolkit.createButton(pane2, AuthoringUIText.DELETE_BUTTON_TEXT, SWT.NONE);
-		ctrl_delete.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
-		Label nameLabel = toolkit.createLabel(parent, AuthoringUIText.STATES_NAME_TEXT);
-		{
-			GridData gridData = new GridData(GridData.BEGINNING);
-			gridData.horizontalSpan = 4;
-			nameLabel.setLayoutData(gridData);
-		}
-		
-		ctrl_name = toolkit.createText(parent, "", SWT.SINGLE); //$NON-NLS-1$
-		{
-			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-			gridData.horizontalSpan = 4;
-			ctrl_name.setLayoutData(gridData);
-		}		
+		toolkit.paintBordersFor(nameComposite);
+		toolkit.paintBordersFor(listComposite);
 	}
 	
 	private void initProviders() {
@@ -198,8 +199,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 	private void addListeners() {
 		ctrl_add.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				String stateName = getNextAvailableStateName();
-				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getState(workProduct, stateName, true);
+				createState();
 				updateControls();
 			}
 		});
@@ -207,59 +207,44 @@ public class WorkProductStatesPage extends BaseFormPage {
 		ctrl_delete.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
-				UmaPackage up = UmaPackage.eINSTANCE;
-				actionMgr.doAction(IActionManager.REMOVE_MANY, workProduct, up
-						.getMethodElement_OwnedRules(), selection.toList(), -1);
-				currentState = null;
-				ctrl_name.setText(""); //$NON-NLS-1$
-				updateControls();
-			}
-		});
-		
-		statesTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
-				IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
-				if (selection.size() == 1) {
-					currentState = (Constraint)selection.getFirstElement();
-					ctrl_name.setText(currentState.getBody());
+
+				if (selection.size() > 0) {
+					actionMgr.doAction(IActionManager.REMOVE_MANY, workProduct, UmaPackage.eINSTANCE
+							.getMethodElement_OwnedRules(), selection.toList(), -1);
 				}
 				updateControls();
-			}			
+			}
 		});
 		
 		ctrl_name.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				String newName = ctrl_name.getText();
-				UmaPackage up = UmaPackage.eINSTANCE;
-				actionMgr.doAction(IActionManager.SET, currentState, up
-						.getConstraint_Body(), newName, -1);
+				updateControls();
+			}			
+		});
+		
+		ctrl_name.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == SWT.CR) {
+					createState();
+					updateControls();
+				}				
+			}			
+		});
+		
+		statesTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
 				updateControls();
 			}			
 		});
 	}
 	
-	private String getNextAvailableStateName() {
-		Set<Constraint> states = WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getAllStates(workProduct);
-		String baseName = AuthoringUIText.STATES_DEFAULT_NAME_TEXT;
-		int flag = 1;
+	private void createState() {
+		String stateName = ctrl_name.getText();
 		
-		String name = baseName + " " + flag; //$NON-NLS-1$
-		while(isNameTaken(states, name)) {
-			flag++;
-			name = baseName + " " + flag; //$NON-NLS-1$
+		if ((stateName != null) && (stateName.length() > 0)) {
+			WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getState(workProduct, stateName, true);
+			ctrl_name.setText(""); //$NON-NLS-1$
 		}
-
-		return name;
-	}
-	
-	private boolean isNameTaken(Set<Constraint> states, String name) {
-		for (Constraint state : states) {
-			if (state.getBody().equals(name)) {
-				return true;
-			}
-		}
-		
-		return false;
 	}
 	
 	private void loadData() {
@@ -267,18 +252,18 @@ public class WorkProductStatesPage extends BaseFormPage {
 	}
 	
 	private void updateControls() {
-		IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
+		String stateName = ctrl_name.getText();
+		if ((stateName != null) && (stateName.length() > 0)) {
+			ctrl_add.setEnabled(true);
+		} else {
+			ctrl_add.setEnabled(false);
+		}
 		
+		IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();		
 		if (selection.size() > 0) {
 			ctrl_delete.setEnabled(true);
 		} else {
 			ctrl_delete.setEnabled(false);
-		}
-		
-		if (currentState != null) {
-			ctrl_name.setEditable(true);
-		} else {
-			ctrl_name.setEditable(false);
 		}
 	}
 
