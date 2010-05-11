@@ -387,6 +387,8 @@ public class RelationSection extends AbstractSection {
 				ctrl_remove_2 = FormUI.createButton(toolkit, pane4,
 						PropertiesResources.Process_Remove); 
 				ctrl_remove_2.setEnabled(false);
+				
+				createAddtionalButton2(pane4);
 			}
 			toolkit.paintBordersFor(pane3);
 		}
@@ -417,6 +419,8 @@ public class RelationSection extends AbstractSection {
 				ctrl_remove_3 = FormUI.createButton(toolkit, pane6,
 						PropertiesResources.Process_Remove); 
 				ctrl_remove_3.setEnabled(false);
+				
+				createAddtionalButton3(pane6);
 			}
 			toolkit.paintBordersFor(pane5);
 		}
@@ -445,6 +449,8 @@ public class RelationSection extends AbstractSection {
 				ctrl_remove_4 = FormUI.createButton(toolkit, pane8,
 						PropertiesResources.Process_Remove); 
 				ctrl_remove_4.setEnabled(false);
+				
+				createAddtionalButton4(pane8);
 			}
 			toolkit.paintBordersFor(pane8);
 
@@ -1045,6 +1051,18 @@ public class RelationSection extends AbstractSection {
 	}
 	
 	protected void createAddtionalButton1(Composite parent) {
+		
+	}
+	
+	protected void createAddtionalButton2(Composite parent) {
+		
+	}
+	
+	protected void createAddtionalButton3(Composite parent) {
+		
+	}
+	
+	protected void createAddtionalButton4(Composite parent) {
 		
 	}
 				
