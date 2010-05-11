@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -41,10 +41,10 @@ public final class ConstraintManager {
 	public static final String PROCESS_SUPPRESSION = ""; //$NON-NLS-1$
 	
 	//Owner: work-product, body: state name
-	public static final String WORKPRODUCT_State = "state"; //$NON-NLS-1$
+	public static final String Workproduct_State = "state"; //$NON-NLS-1$
 	
-	//Owner: task-descriptor, body: guid of work-product descriptor
-	public static final String TASKDESCRIPTOR_WpStates = "wpStates"; //$NON-NLS-1$	
+	//Owner: wbe, body: guid of work-product descriptor
+	public static final String Wbe_WpStates = "wpStates"; //$NON-NLS-1$	
 
 	public static final Constraint getConstraint(MethodElement e,
 			String constraintName, boolean create) {
@@ -75,14 +75,14 @@ public final class ConstraintManager {
 
 		for (Iterator iter = wp.getOwnedRules().iterator(); iter.hasNext();) {
 			Constraint constraint = (Constraint) iter.next();
-			if (constraint.getName().equals(WORKPRODUCT_State)
+			if (constraint.getName().equals(Workproduct_State)
 					&& constraint.getBody().equals(stateName)) {
 				return constraint;
 			}
 		}
 
 		if (create) {
-			return createConstraint(wp, WORKPRODUCT_State, stateName, actionManager);
+			return createConstraint(wp, Workproduct_State, stateName, actionManager);
 		}
 
 		return null;
@@ -112,7 +112,7 @@ public final class ConstraintManager {
 
 		if (wp != null) {
 			for (Constraint constraint : wp.getOwnedRules()) {
-				if (constraint.getName().equals(WORKPRODUCT_State)) {
+				if (constraint.getName().equals(Workproduct_State)) {
 					states.add(constraint);
 				}
 			}
@@ -121,23 +121,23 @@ public final class ConstraintManager {
 		return states;
 	}
 
-	public static void addWpState(TaskDescriptor td, WorkProductDescriptor wpd,
+	public static void addWpState(WorkBreakdownElement wbe, WorkProductDescriptor wpd,
 			Constraint state, EReference ref, IActionManager actionManager) {
-		if (td == null || wpd == null || state == null || ref == null) {
+		if (wbe == null || wpd == null || state == null || ref == null) {
 			return;
 		}
 
 		// Find the wp states holder constraint object for wpd
 		Constraint wpStatesHolder = null;
-		for (Constraint constraint : td.getOwnedRules()) {
-			if (constraint.getName().equals(TASKDESCRIPTOR_WpStates)
+		for (Constraint constraint : wbe.getOwnedRules()) {
+			if (constraint.getName().equals(Wbe_WpStates)
 					&& constraint.getBody().equals(wpd.getGuid())) {
 				wpStatesHolder = constraint;
 				break;
 			}
 		}
 		if (wpStatesHolder == null) {
-			wpStatesHolder = createConstraint(td, TASKDESCRIPTOR_WpStates, wpd
+			wpStatesHolder = createConstraint(wbe, Wbe_WpStates, wpd
 					.getGuid(), actionManager);
 		}
 
@@ -147,17 +147,17 @@ public final class ConstraintManager {
 
 	}
 
-	public static void removeWpState(TaskDescriptor td,
+	public static void removeWpState(WorkBreakdownElement wbe,
 			WorkProductDescriptor wpd, Constraint state, EReference ref,
 			IActionManager actionManager) {
-		if (td == null || wpd == null || state == null || ref == null) {
+		if (wbe == null || wpd == null || state == null || ref == null) {
 			return;
 		}
 
 		// Find the wp states holder constraint object for wpd
 		Constraint wpStatesHolder = null;
-		for (Constraint constraint : td.getOwnedRules()) {
-			if (constraint.getName().equals(TASKDESCRIPTOR_WpStates)
+		for (Constraint constraint : wbe.getOwnedRules()) {
+			if (constraint.getName().equals(Wbe_WpStates)
 					&& constraint.getBody().equals(wpd.getGuid())) {
 				wpStatesHolder = constraint;
 				break;
@@ -173,12 +173,12 @@ public final class ConstraintManager {
 
 	}
 
-	public static List<Constraint> getWpStates(TaskDescriptor td,
+	public static List<Constraint> getWpStates(WorkBreakdownElement wbe,
 			WorkProductDescriptor wpd, EReference ref) {
 
 		Constraint wpStatesHolder = null;
-		for (Constraint constraint : td.getOwnedRules()) {
-			if (constraint.getName().equals(TASKDESCRIPTOR_WpStates)
+		for (Constraint constraint : wbe.getOwnedRules()) {
+			if (constraint.getName().equals(Wbe_WpStates)
 					&& constraint.getBody().equals(wpd.getGuid())) {
 				wpStatesHolder = constraint;
 				break;

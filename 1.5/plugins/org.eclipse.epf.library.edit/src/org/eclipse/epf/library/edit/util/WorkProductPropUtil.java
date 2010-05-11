@@ -46,7 +46,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 	}
 	
 	public String getStateName(Constraint state) {
-		if (state != null && state.getName().equals(ConstraintManager.WORKPRODUCT_State)) {
+		if (state != null && state.getName().equals(ConstraintManager.Workproduct_State)) {
 			return state.getBody();
 		}
 		
