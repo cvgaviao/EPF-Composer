@@ -98,7 +98,7 @@ public final class ConstraintManager {
 		}
 		
 		if (create) {
-			return createConstraint(wp, Plugin_wpState, stateName, actionManager);
+			return createConstraint(plugin, Plugin_wpState, stateName, actionManager);
 		}
 
 		return null;
