@@ -31,6 +31,11 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		super(actionManager);
 	}
 	
+	/**
+	 * Get all the states assigned to the given work-product "wp" and all its variability relatives
+	 * @param wp
+	 * @return a set of all states
+	 */
 	public Set<Constraint> getAllStates(WorkProduct wp) {
 		Set<WorkProduct> wpSet = (Set<WorkProduct>) LibraryEditUtil.getInstance()
 				.collectVariabilityRelatives(wp);
@@ -45,10 +50,27 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		return stateSet;
 	}
 	
+	/**
+	 * Find the state under the plug-in containing the work-product "wp" with the given name "stateName".
+	 * If such state cannot be found, return null if "create" is false, otherwise create a new state
+	 * under the plug-in and return it.
+	 * 
+	 * Note that this API does not assign the state to the wp.
+	 * 
+	 * @param wp
+	 * @param stateName
+	 * @param create
+	 * @return the state
+	 */
 	public Constraint getState(WorkProduct wp, String stateName, boolean create) {		
 		return ConstraintManager.getWorkProductState(wp, stateName, create, getActionManager());
 	}
 	
+	/**
+	 * Get the name of the given state
+	 * @param state
+	 * @return the name
+	 */
 	public String getStateName(Constraint state) {
 		if (state != null && state.getName().equals(ConstraintManager.Plugin_wpState)) {
 			return state.getBody();
@@ -57,6 +79,12 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		return null;
 	}
 	
+	/**
+	 * Get all the states assigned to the given work-product "wp".
+	 * 
+	 * @param wp
+	 * @return the states
+	 */
 	public List<Constraint> getWorkProductStates(WorkProduct wp) {
 		List<Constraint> list = new ArrayList<Constraint>();
 		
@@ -81,6 +109,14 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		return list;
 	}
 	
+	/**
+	 * Assign to the work-product "wp" a state with a name given by "stateName".
+	 * If such a state has been assigned before, do nothing and return.
+	 * If such state is already in the "wp"s plug-in, get it and assign to "wp".
+	 * If such state is not in the "wp"s plug-in, create it and assign to "wp".
+	 * @param wp
+	 * @param stateName
+	 */
 	public void addWorkProductState(WorkProduct wp, String stateName) {
 		String oldValue = getStringValue(wp, WORKPRODUCT_States);
 		
@@ -112,6 +148,12 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		
 	}
 	
+	/**
+	 * Un-assign from "wp" the state with name given by "stateName".
+	 * Do nothing if such state is not assigned to "wp".
+	 * @param wp
+	 * @param stateName
+	 */
 	public void removeWorkProductState(WorkProduct wp, String stateName) {
 		String oldValue = getStringValue(wp, WORKPRODUCT_States);
 
