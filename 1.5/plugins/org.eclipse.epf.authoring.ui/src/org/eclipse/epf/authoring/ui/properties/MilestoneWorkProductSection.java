@@ -12,8 +12,10 @@ package org.eclipse.epf.authoring.ui.properties;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -30,16 +32,30 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.WorkProductDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.command.AssignWPToMilestone;
 import org.eclipse.epf.library.edit.process.command.IActionTypeConstants;
+import org.eclipse.epf.library.edit.util.MilestonePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.util.WorkProductPropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 
@@ -52,8 +68,9 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
  */
 public class MilestoneWorkProductSection extends RelationSection {
 	private IFilter filter = null;
-
 	private Milestone milestone;
+	private Button ctrl_state_1;
+	
 	/**
 	 * Get process work product filter
 	 */
@@ -94,7 +111,17 @@ public class MilestoneWorkProductSection extends RelationSection {
 	
 	protected void initLabelProvider1() {
 		ILabelProvider provider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory());
+				TngAdapterFactory.INSTANCE.getWBS_ComposedAdapterFactory()) {
+			public String getColumnText(Object obj, int columnIndex) {
+				String label = super.getColumnText(obj, columnIndex);
+				if (obj instanceof WorkProductDescriptor) {					
+					label = getLabelForWpd((WorkProductDescriptor)obj,
+							label, UmaPackage.eINSTANCE.getMilestone_RequiredResults());
+				}
+				
+				return label;
+			}
+		};
 		
 		tableViewer1.setLabelProvider(provider);		
 	}
@@ -319,6 +346,122 @@ public class MilestoneWorkProductSection extends RelationSection {
 	protected boolean isSyncFree() {
 		//Won't handle sync-free in milestone workproduct relationship
 		return false;
+	}
+	
+	private String getLabelForWpd(WorkProductDescriptor wpd, String orginalLabel, EReference ref) {
+		List<Constraint> states = MilestonePropUtil.getMilestonePropUtil(actionMgr).getWpStates(
+				(Milestone)element, wpd, ref);
+		if (states.size() > 0) {
+			String stateName = states.get(0).getBody();
+			return orginalLabel + " [" + stateName + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		
+		return orginalLabel;
+	}
+	
+	protected void createAddtionalButton1(Composite parent) {		
+		ctrl_state_1 = FormUI.createButton(toolkit, parent, PropertiesResources.Process_AssignState);
+		ctrl_state_1.setEnabled(false);
+		
+		final EReference ref = UmaPackage.eINSTANCE.getMilestone_RequiredResults();
+		
+		ctrl_state_1.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				assignState(tableViewer1, ref);
+			}
+		});		
+		
+		tableViewer1.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
+				if (selection.size() == 1) {
+					ctrl_state_1.setEnabled(true);
+				} else {
+					ctrl_state_1.setEnabled(false);
+				}
+			}
+		});
+	}
+	
+	private void assignState(TableViewer viewer, EReference ref) {
+		IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+		
+		if (selection.size() == 1) {
+			if (selection.getFirstElement() instanceof WorkProductDescriptor) {
+				WorkProductDescriptor wpd = (WorkProductDescriptor)selection.getFirstElement();
+				
+				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+						viewer.getTable().getShell(),
+						getLabelProviderForStateSelectionDialog());
+				dialog.setElements(getInputForStateSelectionDialog(wpd, ref).toArray());
+				dialog.setMultipleSelection(false);
+				dialog.setMessage(PropertiesResources.Process_SelectStateDialog_Message);
+				dialog.setTitle(PropertiesResources.Process_SelectStateDialog_Title);
+				dialog.setImage(null);
+				if (dialog.open() == Dialog.CANCEL) {
+					return;
+				}
+				
+				Object[] objs = dialog.getResult();
+				Constraint newState = (Constraint)objs[0];
+				
+				//clean up old state first to guarantee only one state assign to wpd
+				List<Constraint> oldStates = MilestonePropUtil.getMilestonePropUtil(actionMgr).getWpStates(
+						(Milestone)element, wpd, ref);
+				for(Constraint oldState : oldStates) {
+					MilestonePropUtil.getMilestonePropUtil(actionMgr).removeWpState(
+							(Milestone)element, wpd, oldState, ref);
+				}
+				
+				//add the new state
+				if (!newState.getName().equals(TaskDescriptorWorkProductSection.UNASSIGN_STATE_NAME)) {
+					MilestonePropUtil.getMilestonePropUtil(actionMgr).addWpState(
+							(Milestone)element, wpd, newState, ref);
+				}
+				
+				viewer.refresh();
+			}
+		}
+	}
+	
+	private ILabelProvider getLabelProviderForStateSelectionDialog() {
+		ILabelProvider provider = new AdapterFactoryLabelProvider(
+				TngAdapterFactory.INSTANCE.createLibraryComposedAdapterFactory()) {
+			public String getText(Object element) {
+				if (element instanceof Constraint) {
+					return ((Constraint)element).getBody();
+				}				
+				return super.getText(element);
+			}
+		};
+		
+		return provider;
+	}
+	
+	private List getInputForStateSelectionDialog(WorkProductDescriptor wpd, EReference ref) {
+		List elements = new ArrayList();				
+		
+		List<Constraint> oldStates = MilestonePropUtil.getMilestonePropUtil(actionMgr).getWpStates(
+				(Milestone)element, wpd, ref);
+		WorkProduct wp = (WorkProduct) propUtil.getLinkedElement(wpd);
+		if (wp != null) {
+			Set<Constraint> states = WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getAllStates(wp);
+			states.removeAll(oldStates);
+			elements.addAll(states);
+		}
+		
+		// A special state for unassign state from wpd
+		elements.add(createUnassignState());
+		
+		return elements;
+	}
+	
+	private Constraint createUnassignState() {
+		Constraint constraint = UmaFactory.eINSTANCE.createConstraint();	
+		constraint.setName(TaskDescriptorWorkProductSection.UNASSIGN_STATE_NAME);
+		constraint.setBody(TaskDescriptorWorkProductSection.UNASSIGN_STATE_BODY);
+	
+		return constraint;
 	}
 	
 }
