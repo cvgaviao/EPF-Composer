@@ -189,6 +189,7 @@ public class TaskDescriptorGeneralSection extends
 				fd.setBlockOnOpen(true);
 				fd.setViewerSelectionSingle(true);
 				fd.setTitle(FilterConstants.TASKS);
+				fd.setSection(getSection());
 				fd.open();
 				setMethodElement(fd.getSelectedItems());
 

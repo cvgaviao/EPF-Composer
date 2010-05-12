@@ -531,6 +531,7 @@ public class WorkProductDescriptorGeneralSection extends
 				fd.setBlockOnOpen(true);
 				fd.setViewerSelectionSingle(true);
 				fd.setTitle(tabName);
+				fd.setSection(getSection());
 				fd.open();
 				setMethodElement(fd.getSelectedItems());
 

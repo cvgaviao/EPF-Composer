@@ -129,6 +129,7 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 				fd.setBlockOnOpen(true);
 				fd.setViewerSelectionSingle(true);
 				fd.setTitle(FilterConstants.ROLES);
+				fd.setSection(getSection());
 				fd.open();
 				setMethodElement(fd.getSelectedItems());
 
