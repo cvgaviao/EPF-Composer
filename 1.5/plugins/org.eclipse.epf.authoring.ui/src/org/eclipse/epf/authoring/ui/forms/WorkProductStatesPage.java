@@ -9,7 +9,7 @@
 
 package org.eclipse.epf.authoring.ui.forms;
 
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -20,7 +20,6 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.WorkProductPropUtil;
 import org.eclipse.epf.uma.Constraint;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -176,7 +175,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 			public Object[] getElements(Object object) {
 				if (object instanceof WorkProduct) {
 					WorkProduct wp = (WorkProduct)object;
-					Set<Constraint> states = WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getAllStates(wp);
+					List<Constraint> states = WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getWorkProductStates(wp);
 					return states.toArray();
 				}
 				
@@ -206,12 +205,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 		
 		ctrl_delete.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
-
-				if (selection.size() > 0) {
-					actionMgr.doAction(IActionManager.REMOVE_MANY, workProduct, UmaPackage.eINSTANCE
-							.getMethodElement_OwnedRules(), selection.toList(), -1);
-				}
+				deleteState();
 				updateControls();
 			}
 		});
@@ -242,8 +236,20 @@ public class WorkProductStatesPage extends BaseFormPage {
 		String stateName = ctrl_name.getText();
 		
 		if ((stateName != null) && (stateName.length() > 0)) {
-			WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getState(workProduct, stateName, true);
+			WorkProductPropUtil.getWorkProductPropUtil(actionMgr).addWorkProductState(
+					workProduct, stateName);
 			ctrl_name.setText(""); //$NON-NLS-1$
+		}
+	}
+	
+	private void deleteState() {
+		IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
+		
+		for (Object obj : selection.toArray()) {
+			if (obj instanceof Constraint) {
+				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).removeWorkProductState(
+						workProduct, ((Constraint)obj).getBody());
+			}
 		}
 	}
 	
@@ -265,6 +271,8 @@ public class WorkProductStatesPage extends BaseFormPage {
 		} else {
 			ctrl_delete.setEnabled(false);
 		}
+		
+		statesTableViewer.refresh();
 	}
 
 }
