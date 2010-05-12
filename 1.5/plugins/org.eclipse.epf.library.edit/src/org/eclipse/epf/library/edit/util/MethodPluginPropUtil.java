@@ -43,6 +43,11 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 		setBooleanValue(d, PLUGIN_SynFree, value);
 	}
 	
+	/**
+	 * Get all states created under the given "plugin".
+	 * @param plugin
+	 * @return the states
+	 */
 	public List<Constraint> getWorkProductStatesInPlugin(MethodPlugin plugin) {
 		List<Constraint> list = new ArrayList<Constraint>();
 		
@@ -56,6 +61,13 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 		return list;
 	}
 	
+	/**
+	 * Remove from the "plugin" a state with the given name "stateName".
+	 * 
+	 * @param plugin
+	 * @param stateName
+	 * @return
+	 */
 	public Constraint removeWorkProductState(MethodPlugin plugin,
 			String stateName) {
 		for (Iterator iter = plugin.getOwnedRules().iterator(); iter.hasNext();) {
@@ -75,6 +87,15 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 		return null;
 	}
 	
+	/**
+	 * Get all states under the given "activePlugin"s library.
+	 * If many states have a same name, only one of them will be returned in the list.
+	 * If one of these same name states is in the "activePlugin", the method will make sure
+	 * it is the one which gets returned in the list.
+	 * 
+	 * @param activePlugin
+	 * @return
+	 */
 	public List<Constraint> getWorkProductStatesInLibrary(MethodPlugin activePlugin) {
 		List<Constraint> resultList = getWorkProductStatesInPlugin(activePlugin);
 		Set<String> names = new HashSet<String>();
