@@ -18,11 +18,13 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 
 /**
@@ -41,7 +43,7 @@ public final class ConstraintManager {
 	public static final String PROCESS_SUPPRESSION = ""; //$NON-NLS-1$
 	
 	//Owner: work-product, body: state name
-	public static final String Workproduct_State = "state"; //$NON-NLS-1$
+	public static final String Plugin_wpState = "wpState"; //$NON-NLS-1$
 	
 	//Owner: wbe, body: guid of work-product descriptor
 	public static final String Wbe_WpStates = "wpStates"; //$NON-NLS-1$	
@@ -72,17 +74,31 @@ public final class ConstraintManager {
 		if (wp == null || stateName == null || stateName.trim().length() == 0) {
 			return null;
 		}
-
-		for (Iterator iter = wp.getOwnedRules().iterator(); iter.hasNext();) {
-			Constraint constraint = (Constraint) iter.next();
-			if (constraint.getName().equals(Workproduct_State)
-					&& constraint.getBody().equals(stateName)) {
-				return constraint;
+		
+		WorkProductPropUtil propUtil = WorkProductPropUtil.getWorkProductPropUtil();
+		List<Constraint> states = propUtil.getWorkProductStates(wp);
+		for (Constraint state : states) {
+			if (state.getBody().equals(stateName)) {
+				return state;
 			}
+		}		
+		
+		MethodPlugin plugin = UmaUtil.getMethodPlugin(wp);
+		if (plugin == null) {
+			return null;
 		}
 
+		
+		MethodPluginPropUtil pluginPropUtil = MethodPluginPropUtil.getMethodPluginPropUtil(actionManager);
+
+		for (Constraint state : pluginPropUtil.getWorkProductStatesInPlugin(plugin)) {
+			if (state.getBody().equals(stateName)) {
+				return state;
+			}
+		}
+		
 		if (create) {
-			return createConstraint(wp, Workproduct_State, stateName, actionManager);
+			return createConstraint(wp, Plugin_wpState, stateName, actionManager);
 		}
 
 		return null;
@@ -105,20 +121,6 @@ public final class ConstraintManager {
 					.getMethodElement_OwnedRules(), constraint, -1);
 		}
 		return constraint;
-	}
-
-	public static final List<Constraint> getWorkProductStates(WorkProduct wp) {
-		List<Constraint> states = new ArrayList<Constraint>();
-
-		if (wp != null) {
-			for (Constraint constraint : wp.getOwnedRules()) {
-				if (constraint.getName().equals(Workproduct_State)) {
-					states.add(constraint);
-				}
-			}
-		}
-
-		return states;
 	}
 
 	public static void addWpState(WorkBreakdownElement wbe, WorkProductDescriptor wpd,
