@@ -2130,14 +2130,20 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String statesSection_desc;
 	
-	public static String states_text;
-	
 	public static String states_name_text;
 	
 	public static String states_add_text;
 	
 	public static String states_delete_text;
-
+	
+	public static String states_assign_text;
+	
+	public static String states_remove_text;
+	
+	public static String states_wp_state_text;
+	
+	public static String states_global_state_text;
+	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);
 	}

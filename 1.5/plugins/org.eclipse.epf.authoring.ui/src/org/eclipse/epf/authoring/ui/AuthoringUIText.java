@@ -211,9 +211,11 @@ public class AuthoringUIText {
 
 	public static final String VERSION_TEXT = AuthoringUIResources.version_text; 
 	
-	public static final String STATES_TEXT = AuthoringUIResources.states_text;
-	
 	public static final String STATES_NAME_TEXT = AuthoringUIResources.states_name_text;
+	
+	public static final String STATES_WP_STATE_TEXT = AuthoringUIResources.states_wp_state_text;
+	
+	public static final String STATES_GLOBAL_STATE_TEXT = AuthoringUIResources.states_global_state_text;
 
 	/**
 	 * Button labels.
@@ -261,4 +263,9 @@ public class AuthoringUIText {
 	public static final String STATES_ADD_TEXT = AuthoringUIResources.states_add_text;
 	
 	public static final String STATES_DELETE_TEXT = AuthoringUIResources.states_delete_text;
+	
+	public static final String STATES_ASSIGN_TEXT = AuthoringUIResources.states_assign_text;
+	
+	public static final String STATES_REMOVE_TEXT= AuthoringUIResources.states_remove_text;
+	
 }

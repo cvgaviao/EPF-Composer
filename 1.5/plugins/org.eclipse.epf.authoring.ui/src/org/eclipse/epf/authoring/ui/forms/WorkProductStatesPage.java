@@ -19,9 +19,12 @@ import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.util.UIHelper;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.WorkProductPropUtil;
 import org.eclipse.epf.uma.Constraint;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -41,7 +44,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
@@ -64,12 +66,22 @@ public class WorkProductStatesPage extends BaseFormPage {
 	
 	private Section statesSection;
 	private Composite statesComposite;
+	
 	private Text ctrl_name;
 	private Button ctrl_add;
-	private Table ctrl_states;
-	private TableViewer statesTableViewer;
-	private IStructuredContentProvider statesViewerContentProvider;
-	private ITableLabelProvider statesViewerLabelProvider;
+	
+	private Table ctrl_wp_states;
+	private TableViewer wpStatesViewer;
+	private IStructuredContentProvider wpStatesViewerContentProvider;
+	private ITableLabelProvider wpStatesViewerLabelProvider;
+	
+	private Button ctrl_assign, ctrl_remove;
+	
+	private Table ctrl_global_states;
+	private TableViewer globalStatesViewer;
+	private IStructuredContentProvider globalStatesViewerContentProvider;
+	private ITableLabelProvider globalStatesViewerLabelProvider;
+	
 	private Button ctrl_delete;
 
 	public WorkProductStatesPage(FormEditor editor) {
@@ -95,7 +107,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 
 		statesComposite = toolkit.createComposite(statesSection);
 		statesComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		statesComposite.setLayout(new GridLayout());
+		statesComposite.setLayout(new GridLayout(4, false));
 		statesSection.setClient(statesComposite);
 		
 		createStatesArea(statesComposite);		
@@ -107,54 +119,101 @@ public class WorkProductStatesPage extends BaseFormPage {
 	}
 	
 	protected void createStatesArea(Composite parent) {
+		toolkit.createLabel(parent, null);
+		toolkit.createLabel(parent, null);
 		Composite nameComposite = toolkit.createComposite(parent);
-		nameComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		{
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+			gridData.horizontalSpan = 2;
+			nameComposite.setLayoutData(gridData);
+		}
 		nameComposite.setLayout(new GridLayout(3, false));		
 		toolkit.createLabel(nameComposite, AuthoringUIText.STATES_NAME_TEXT);		
 		ctrl_name = toolkit.createText(nameComposite, null, SWT.SINGLE);
-		{
-			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-			gridData.widthHint = 300;
-			ctrl_name.setLayoutData(gridData);
-		}
+		ctrl_name.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		ctrl_add = toolkit.createButton(nameComposite, AuthoringUIText.STATES_ADD_TEXT, SWT.NONE);
 		{
 			GridData gridData = new GridData();
-			gridData.widthHint = 70;
+			gridData.widthHint = 80;
 			ctrl_add.setLayoutData(gridData);
-			
 		}
-
-		Composite listComposite = toolkit.createComposite(parent);
-		listComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		listComposite.setLayout(new GridLayout(4, false));
-		Label state = toolkit.createLabel(listComposite, AuthoringUIText.STATES_TEXT);
+		
+		Composite wpStateComposite = toolkit.createComposite(parent);
+		wpStateComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		wpStateComposite.setLayout(new GridLayout());
+		toolkit.createLabel(wpStateComposite, AuthoringUIText.STATES_WP_STATE_TEXT);
+		ctrl_wp_states = toolkit.createTable(wpStateComposite, SWT.MULTI);
 		{
-			GridData gridData = new GridData();
-			gridData.horizontalSpan = 4;
-			state.setLayoutData(gridData);
-		}
-		ctrl_states = toolkit.createTable(listComposite, SWT.MULTI);
-		{
-			GridData gridData = new GridData(GridData.FILL_VERTICAL);
-			gridData.horizontalSpan = 3;
-			gridData.widthHint = 500;
+			GridData gridData = new GridData(GridData.FILL_BOTH);
+			gridData.widthHint = 300;
 			gridData.heightHint = 150;
-			ctrl_states.setLayoutData(gridData);
+			ctrl_wp_states.setLayoutData(gridData);
+		}		
+		
+		Composite btnComposite1 = toolkit.createComposite(parent);
+		btnComposite1.setLayoutData(new GridData(GridData.FILL_BOTH));
+		btnComposite1.setLayout(new GridLayout());
+		toolkit.createLabel(btnComposite1, null);
+		toolkit.createLabel(btnComposite1, null);
+		toolkit.createLabel(btnComposite1, null);
+		toolkit.createLabel(btnComposite1, null);
+		ctrl_assign = toolkit.createButton(btnComposite1, AuthoringUIText.STATES_ASSIGN_TEXT, SWT.NONE);
+		{
+			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER |GridData.GRAB_HORIZONTAL);
+			gridData.widthHint = 80;
+			ctrl_assign.setLayoutData(gridData);
 		}
-		ctrl_delete = toolkit.createButton(listComposite, AuthoringUIText.STATES_DELETE_TEXT, SWT.NONE);
+		ctrl_remove = toolkit.createButton(btnComposite1, AuthoringUIText.STATES_REMOVE_TEXT, SWT.NONE);
+		{
+			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER |GridData.GRAB_HORIZONTAL);
+			gridData.widthHint = 80;
+			ctrl_remove.setLayoutData(gridData);
+		}
+		
+		Composite globalStateComposite = toolkit.createComposite(parent);
+		globalStateComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		globalStateComposite.setLayout(new GridLayout());
+		toolkit.createLabel(globalStateComposite, AuthoringUIText.STATES_GLOBAL_STATE_TEXT);
+		ctrl_global_states = toolkit.createTable(globalStateComposite, SWT.MULTI);
+		{
+			GridData gridData = new GridData(GridData.FILL_BOTH);
+			gridData.widthHint = 300;
+			gridData.heightHint = 150;
+			ctrl_global_states.setLayoutData(gridData);
+		}
+		
+		Composite btnComposite2 = toolkit.createComposite(parent);
+		btnComposite2.setLayoutData(new GridData(GridData.FILL_BOTH));
+		btnComposite2.setLayout(new GridLayout());
+		toolkit.createLabel(btnComposite2, null);
+		ctrl_delete = toolkit.createButton(btnComposite2, AuthoringUIText.STATES_DELETE_TEXT, SWT.NONE);
 		{
 			GridData gridData = new GridData();
-			gridData.widthHint = 70;
+			gridData.widthHint = 80;
 			ctrl_delete.setLayoutData(gridData);
 		}
 
 		initProviders();
 		
-		statesTableViewer = new TableViewer(ctrl_states);
-		statesTableViewer.setContentProvider(statesViewerContentProvider);
-		statesTableViewer.setLabelProvider(statesViewerLabelProvider);
-		statesTableViewer.setComparator(new ViewerComparator() {
+		wpStatesViewer = new TableViewer(ctrl_wp_states);
+		wpStatesViewer.setContentProvider(wpStatesViewerContentProvider);
+		wpStatesViewer.setLabelProvider(wpStatesViewerLabelProvider);
+		wpStatesViewer.setComparator(new ViewerComparator() {
+			public int compare(Viewer viewer, Object e1, Object e2) {
+				if ((e1 instanceof Constraint) && (e2 instanceof Constraint)) {
+					String name1 = ((Constraint)e1).getBody();
+					String name2 = ((Constraint)e2).getBody();					
+					return getComparator().compare(name1, name2);
+				}
+				
+				return 0;
+			}
+		});
+		
+		globalStatesViewer = new TableViewer(ctrl_global_states);
+		globalStatesViewer.setContentProvider(globalStatesViewerContentProvider);
+		globalStatesViewer.setLabelProvider(globalStatesViewerLabelProvider);
+		globalStatesViewer.setComparator(new ViewerComparator() {
 			public int compare(Viewer viewer, Object e1, Object e2) {
 				if ((e1 instanceof Constraint) && (e2 instanceof Constraint)) {
 					String name1 = ((Constraint)e1).getBody();
@@ -167,11 +226,14 @@ public class WorkProductStatesPage extends BaseFormPage {
 		});
 		
 		toolkit.paintBordersFor(nameComposite);
-		toolkit.paintBordersFor(listComposite);
+		toolkit.paintBordersFor(wpStateComposite);
+		toolkit.paintBordersFor(btnComposite1);
+		toolkit.paintBordersFor(globalStateComposite);
+		toolkit.paintBordersFor(btnComposite2);
 	}
 	
 	private void initProviders() {
-		statesViewerContentProvider = new AdapterFactoryContentProvider(
+		wpStatesViewerContentProvider = new AdapterFactoryContentProvider(
 				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
 				if (object instanceof WorkProduct) {
@@ -184,7 +246,32 @@ public class WorkProductStatesPage extends BaseFormPage {
 			}
 		};
 
-		statesViewerLabelProvider = new AdapterFactoryLabelProvider(
+		wpStatesViewerLabelProvider = new AdapterFactoryLabelProvider(
+				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory()) {
+			public String getColumnText(Object element, int columnIndex) {
+				if (element instanceof Constraint) {
+					return ((Constraint)element).getBody();
+				}
+				
+				return null;
+			}
+		};
+		
+		globalStatesViewerContentProvider = new AdapterFactoryContentProvider(
+				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory()) {
+			public Object[] getElements(Object object) {
+				if (object instanceof WorkProduct) {
+					MethodPlugin plugin = UmaUtil.getMethodPlugin((WorkProduct)object);
+					List<Constraint> globalStates = MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr)
+							.getWorkProductStatesInLibrary(plugin);
+					return globalStates.toArray();
+				}
+				
+				return new Object[0];
+			}
+		};
+
+		globalStatesViewerLabelProvider = new AdapterFactoryLabelProvider(
 				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory()) {
 			public String getColumnText(Object element, int columnIndex) {
 				if (element instanceof Constraint) {
@@ -197,20 +284,6 @@ public class WorkProductStatesPage extends BaseFormPage {
 	}
 	
 	private void addListeners() {
-		ctrl_add.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				createState();
-				updateControls();
-			}
-		});
-		
-		ctrl_delete.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				deleteState();
-				updateControls();
-			}
-		});
-		
 		ctrl_name.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
 				updateControls();
@@ -226,36 +299,79 @@ public class WorkProductStatesPage extends BaseFormPage {
 			}			
 		});
 		
-		statesTableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+		ctrl_add.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				createState();
+				updateControls();
+			}
+		});
+		
+		wpStatesViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				updateControls();
 			}			
 		});
+		
+		ctrl_assign.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				assignState();
+				updateControls();
+			}
+		});
+		
+		ctrl_remove.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				removeState();
+				updateControls();
+			}
+		});
+		
+		globalStatesViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent event) {
+				updateControls();
+			}			
+		});
+		
+		ctrl_delete.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				deleteState();
+				updateControls();
+			}
+		});		
 	}
 	
 	private void createState() {
-		String stateName = ctrl_name.getText();
-		
-		if ((stateName != null) && (stateName.length() > 0)) {
-			WorkProductPropUtil.getWorkProductPropUtil(actionMgr).addWorkProductState(
-					workProduct, stateName);
-			ctrl_name.setText(""); //$NON-NLS-1$
-		}
+//		String stateName = ctrl_name.getText();
+//		
+//		if ((stateName != null) && (stateName.length() > 0)) {
+//			WorkProductPropUtil.getWorkProductPropUtil(actionMgr).addWorkProductState(
+//					workProduct, stateName);
+//			ctrl_name.setText(""); //$NON-NLS-1$
+//		}
 	}
 	
 	private void deleteState() {
-		IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
+//		IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
+//		
+//		for (Object obj : selection.toArray()) {
+//			if (obj instanceof Constraint) {
+//				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).removeWorkProductState(
+//						workProduct, ((Constraint)obj).getBody());
+//			}
+//		}
+	}
+	
+	private void assignState() {
 		
-		for (Object obj : selection.toArray()) {
-			if (obj instanceof Constraint) {
-				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).removeWorkProductState(
-						workProduct, ((Constraint)obj).getBody());
-			}
-		}
+	}
+	
+	private void removeState() {
+		
 	}
 	
 	private void loadData() {
-		statesTableViewer.setInput(workProduct);
+		wpStatesViewer.setInput(workProduct);
+		globalStatesViewer.setInput(workProduct);
 	}
 	
 	private void updateControls() {
@@ -266,14 +382,24 @@ public class WorkProductStatesPage extends BaseFormPage {
 			ctrl_add.setEnabled(false);
 		}
 		
-		IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();		
-		if (selection.size() > 0) {
+		IStructuredSelection globalSelection = (IStructuredSelection)globalStatesViewer.getSelection();
+		if (globalSelection.size() > 0) {
+			ctrl_assign.setEnabled(true);
 			ctrl_delete.setEnabled(true);
 		} else {
+			ctrl_assign.setEnabled(false);
 			ctrl_delete.setEnabled(false);
 		}
 		
-		statesTableViewer.refresh();
+		IStructuredSelection wpSelection = (IStructuredSelection)wpStatesViewer.getSelection();		
+		if (wpSelection.size() > 0) {
+			ctrl_remove.setEnabled(true);
+		} else {
+			ctrl_remove.setEnabled(false);
+		}
+		
+		wpStatesViewer.refresh();
+		globalStatesViewer.refresh();
 	}
 
 }
