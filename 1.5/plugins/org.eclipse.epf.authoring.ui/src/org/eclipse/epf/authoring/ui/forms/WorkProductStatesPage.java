@@ -10,6 +10,7 @@
 package org.eclipse.epf.authoring.ui.forms;
 
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -175,7 +176,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 			public Object[] getElements(Object object) {
 				if (object instanceof WorkProduct) {
 					WorkProduct wp = (WorkProduct)object;
-					List<Constraint> states = WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getWorkProductStates(wp);
+					Set<Constraint> states = WorkProductPropUtil.getWorkProductPropUtil(actionMgr).getAllStates(wp);
 					return states.toArray();
 				}
 				
