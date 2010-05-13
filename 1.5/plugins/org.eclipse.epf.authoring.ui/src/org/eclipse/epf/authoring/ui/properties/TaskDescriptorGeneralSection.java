@@ -232,9 +232,9 @@ public class TaskDescriptorGeneralSection extends
 			if (element.getTask() != null) {
 				linkButton.setEnabled(false);
 			}
+			clearButton.setEnabled(false);
 		}	
 	}
-
 	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.properties.WorkBreakdownElementGeneralSection#refresh()

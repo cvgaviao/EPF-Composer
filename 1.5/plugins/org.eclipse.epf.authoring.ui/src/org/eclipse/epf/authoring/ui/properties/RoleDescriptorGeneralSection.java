@@ -237,6 +237,7 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 			if (element.getRole() != null) {
 				linkButton.setEnabled(false);
 			}
+			clearButton.setEnabled(false);
 		}	
 	}
 

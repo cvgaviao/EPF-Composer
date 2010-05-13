@@ -597,6 +597,7 @@ public class WorkProductDescriptorGeneralSection extends
 			if (element.getWorkProduct() != null) {
 				linkButton.setEnabled(false);
 			}
+			clearButton.setEnabled(false);
 		}	
 	}
 
