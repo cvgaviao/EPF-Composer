@@ -89,6 +89,11 @@ public final class ConstraintManager {
 		}
 
 		
+		return getWorkProductState(plugin, stateName, create, actionManager);
+	}
+
+	public static Constraint getWorkProductState(MethodPlugin plugin, String stateName, boolean create,
+			IActionManager actionManager) {
 		MethodPluginPropUtil pluginPropUtil = MethodPluginPropUtil.getMethodPluginPropUtil(actionManager);
 
 		for (Constraint state : pluginPropUtil.getWorkProductStatesInPlugin(plugin)) {

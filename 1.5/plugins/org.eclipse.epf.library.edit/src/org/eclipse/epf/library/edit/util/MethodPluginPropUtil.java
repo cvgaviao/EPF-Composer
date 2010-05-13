@@ -11,6 +11,7 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 
@@ -41,6 +42,20 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 	
 	public void setSynFree(MethodPlugin d, boolean value) {
 		setBooleanValue(d, PLUGIN_SynFree, value);
+	}
+	
+	/**
+	 * Find the state under the plug-in with the given name "stateName".
+	 * If such state cannot be found, return null if "create" is false, otherwise create a new state
+	 * under the plug-in and return it.
+	 * 
+	 * @param plugin
+	 * @param stateName
+	 * @param create
+	 * @return the state
+	 */
+	private Constraint getWorkProductState(MethodPlugin plugin, String stateName, boolean create) {		
+		return ConstraintManager.getWorkProductState(plugin, stateName, create, getActionManager());
 	}
 	
 	/**
