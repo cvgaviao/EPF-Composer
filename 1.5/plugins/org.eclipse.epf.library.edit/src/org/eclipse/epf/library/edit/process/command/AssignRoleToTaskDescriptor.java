@@ -203,13 +203,15 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 					}
 				}
 							
-				for (RoleDescriptor rd : (List<RoleDescriptor>) newRoleDescList) {
-					propUtil.setCreatedByReference(rd, true);
-				}
 			} else {
 				propUtil.addLocalUsingInfo(existingRoleDescList, taskDesc, getFeature(action));
 				propUtil.addLocalUsingInfo(newRoleDescList, taskDesc, getFeature(action));		
 			}
+			
+			for (RoleDescriptor rd : (List<RoleDescriptor>) newRoleDescList) {
+				propUtil.setCreatedByReference(rd, true);
+			}
+			
 		}
 
 		activity.getBreakdownElements().addAll(newRoleDescList);

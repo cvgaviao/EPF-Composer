@@ -165,12 +165,14 @@ public class AssignWPToRoleDescriptor extends AddMethodElementCommand {
 				if (excludedList != null) {
 					excludedList.removeAll(workProducts);
 				}
-				for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
-					propUtil.setCreatedByReference(rd, true);
-				}
+
 			} else {
 				propUtil.addLocalUsingInfo(existingWPDescList, roleDesc, getFeature(action));
 				propUtil.addLocalUsingInfo(newWPDescList, roleDesc, getFeature(action));
+			}
+			
+			for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
+				propUtil.setCreatedByReference(rd, true);
 			}
 		}
 

@@ -228,12 +228,14 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 				if (excludedList != null) {
 					excludedList.removeAll(workProducts);
 				}
-				for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
-					propUtil.setCreatedByReference(rd, true);
-				}
+
 			} else {
 				propUtil.addLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
 				propUtil.addLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
+			}
+			
+			for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
+				propUtil.setCreatedByReference(rd, true);
 			}
 		}
 

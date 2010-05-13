@@ -175,14 +175,15 @@ public class AssignWPToDeliverable extends AddMethodElementCommand {
 				if (excludedList != null) {
 					excludedList.removeAll(workProducts);
 				}
-				for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
-					propUtil.setCreatedByReference(rd, true);
-				}
+
 			} else {
 				propUtil.addLocalUsingInfo(existingWPDescList, wpDesc,
 						UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
 				propUtil.addLocalUsingInfo(newWPDescList, wpDesc,
 						UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
+			}
+			for (WorkProductDescriptor rd : (List<WorkProductDescriptor>) newWPDescList) {
+				propUtil.setCreatedByReference(rd, true);
 			}
 		}
 

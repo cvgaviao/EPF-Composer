@@ -405,7 +405,8 @@ public class RealizationManager implements IRealizationManager {
 		for (Descriptor des : rdwpdList) {
 			collectAllReferences(des, null, seenSet);
 			
-			if (des instanceof TaskDescriptor || localUseSet.contains(des)) {
+			if (des instanceof TaskDescriptor || localUseSet.contains(des) ||
+					! propUtil.isCreatedByReference(des)) {
 				continue;
 			}
 			if (!tdReferencedSet.contains(des)) {
