@@ -197,6 +197,11 @@ public class RealizationManager implements IRealizationManager {
 			return (Descriptor) foundDes;
 		}
 		
+		foundDes = ProcessCommandUtil.getInheritedDescriptor(element, parentAct, getConfig());
+		if (foundDes instanceof Descriptor) {
+			return (Descriptor) foundDes;
+		}
+		
 		Descriptor descriptor = null;
 		if (element instanceof Role) {
 			RoleDescriptor rd = UmaFactory.eINSTANCE.createRoleDescriptor();

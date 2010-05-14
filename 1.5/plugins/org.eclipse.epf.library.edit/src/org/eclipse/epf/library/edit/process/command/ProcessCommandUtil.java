@@ -876,10 +876,10 @@ public final class ProcessCommandUtil {
 	 * @param activity
 	 * @return descriptor of the object, null if not exists
 	 */
-	public static Object getInheritedDescriptor(Object obj, Activity activity, MethodConfiguration config) {
-		if (ProcessUtil.isSynFree()) {
-			return null;
-		}
+	public static Object getInheritedDescriptor(Object obj, Activity activity, MethodConfiguration config) {	
+//		if (ProcessUtil.isSynFree()) {
+//			return null;
+//		}
 		for (VariabilityType variabilityType = activity.getVariabilityType();
 			variabilityType == VariabilityType.EXTENDS || variabilityType == VariabilityType.LOCAL_CONTRIBUTION;
 			variabilityType = activity.getVariabilityType()) {
