@@ -11,6 +11,7 @@
 package org.eclipse.epf.authoring.ui.properties;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.UmaPackage;
@@ -85,6 +86,10 @@ public class DescriptorGeneralSection extends BreakdownElementGeneralSection {
 	protected void updateControls() {
 		super.updateControls();
 		synchronizedButton.setEnabled(editable);
+		if (ProcessUtil.isSynFree()) {
+			synchronizedButton.setVisible(false);
+			synchronizedButton.setEnabled(false);
+		}
 	}
 
 

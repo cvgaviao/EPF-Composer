@@ -1914,11 +1914,11 @@ public class ProcessEditorActionBarContributor extends
 					reuseSubMenu);
 		}
 
-		if (autoSynchronize.isEnabled()) {
+		if (autoSynchronize.isEnabled() && ! ProcessUtil.isSynFree()) {
 			menuManager.insertBefore(IWorkbenchActionConstants.MB_ADDITIONS,
 					autoSynchronize);
 		}
-		if (manualSynchronizeAction.isEnabled()) {
+		if (manualSynchronizeAction.isEnabled() && ! ProcessUtil.isSynFree()) {
 			menuManager.insertBefore(IWorkbenchActionConstants.MB_ADDITIONS,
 					manualSynchronizeAction);
 		}
