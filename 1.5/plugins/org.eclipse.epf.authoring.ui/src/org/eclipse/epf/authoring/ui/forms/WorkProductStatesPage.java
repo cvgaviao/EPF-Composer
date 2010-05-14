@@ -67,6 +67,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 	private static final String FORM_PAGE_ID = "workProductStatesPage"; //$NON-NLS-1$
 	
 	private WorkProduct workProduct;
+	private MethodPlugin activePlugin;
 	private IActionManager actionMgr;
 	
 	private Section statesSection;
@@ -96,6 +97,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		workProduct = (WorkProduct) contentElement;
+		activePlugin = UmaUtil.getMethodPlugin(workProduct);
 		actionMgr = ((MethodElementEditor) getEditor()).getActionManager();
 	}
 	
@@ -221,9 +223,17 @@ public class WorkProductStatesPage extends BaseFormPage {
 		globalStatesViewer.setComparator(new ViewerComparator() {
 			public int compare(Viewer viewer, Object e1, Object e2) {
 				if ((e1 instanceof Constraint) && (e2 instanceof Constraint)) {
-					String name1 = ((Constraint)e1).getBody();
-					String name2 = ((Constraint)e2).getBody();					
-					return getComparator().compare(name1, name2);
+					Constraint state1 = (Constraint)e1;
+					Constraint state2 = (Constraint)e2;
+					if ((isLocalState(state1)) && (!isLocalState(state2))) {
+						return -1;
+					} else if ((!isLocalState(state1)) && (isLocalState(state2))) {
+						return 1;
+					} else {
+						String name1 = state1.getBody();
+						String name2 = state2.getBody();					
+						return getComparator().compare(name1, name2);
+					}					
 				}
 				
 				return 0;
@@ -266,9 +276,8 @@ public class WorkProductStatesPage extends BaseFormPage {
 				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
 				if (object instanceof WorkProduct) {
-					MethodPlugin plugin = UmaUtil.getMethodPlugin((WorkProduct)object);
 					List<Constraint> globalStates = MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr)
-							.getWorkProductStatesInLibrary(plugin);
+							.getWorkProductStatesInLibrary(activePlugin);
 					return globalStates.toArray();
 				}
 				
@@ -340,22 +349,22 @@ public class WorkProductStatesPage extends BaseFormPage {
 	private void createState() {
 		String stateName = ctrl_name.getText();
 		
-		if ((stateName != null) && (stateName.length() > 0)) {
-			MethodPlugin plugin = UmaUtil.getMethodPlugin(workProduct);			
-			MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).getWorkProductState(plugin, stateName, true);
+		if ((stateName != null) && (stateName.length() > 0)) {			
+			MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).getWorkProductState(
+					activePlugin, stateName, true);
 			ctrl_name.setText(""); //$NON-NLS-1$
 		}
 	}
 	
 	private void deleteState() {
-//		IStructuredSelection selection = (IStructuredSelection)statesTableViewer.getSelection();
-//		
-//		for (Object obj : selection.toArray()) {
-//			if (obj instanceof Constraint) {
-//				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).removeWorkProductState(
-//						workProduct, ((Constraint)obj).getBody());
-//			}
-//		}
+		IStructuredSelection selection = (IStructuredSelection)globalStatesViewer.getSelection();
+		
+		for (Object obj : selection.toList()) {
+			if (obj instanceof Constraint) {
+				MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).removeWorkProductState(
+						activePlugin, ((Constraint)obj).getBody());
+			}
+		}
 	}
 	
 	private void assignState() {
@@ -381,10 +390,13 @@ public class WorkProductStatesPage extends BaseFormPage {
 		
 		IStructuredSelection globalSelection = (IStructuredSelection)globalStatesViewer.getSelection();
 		if (globalSelection.size() > 0) {
-			ctrl_assign.setEnabled(true);
+			ctrl_assign.setEnabled(true);			
+		} else {
+			ctrl_assign.setEnabled(false);			
+		}		
+		if (canDelete(globalSelection)) {
 			ctrl_delete.setEnabled(true);
 		} else {
-			ctrl_assign.setEnabled(false);
 			ctrl_delete.setEnabled(false);
 		}
 		
@@ -398,6 +410,28 @@ public class WorkProductStatesPage extends BaseFormPage {
 		wpStatesViewer.refresh();
 		globalStatesViewer.refresh();
 	}
+	
+	private boolean canDelete(IStructuredSelection selection) {
+		if (selection.size() > 0) {
+			for (Object obj : selection.toList()) {
+				if (obj instanceof Constraint) {
+					if (!isLocalState((Constraint)obj)) {
+						return false;
+					}
+				}				
+			}			
+			return true;		
+		}		
+		
+		return false;
+	}
+	
+    private boolean isLocalState(Constraint state) {
+    	List<Constraint> allLocalStates = MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr)
+    			.getWorkProductStatesInPlugin(activePlugin);
+    	
+    	return allLocalStates.contains(state);		    	
+    }
 	
 	public class GlobalStatesLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
 		private FontRegistry registry = new FontRegistry();
@@ -420,20 +454,12 @@ public class WorkProductStatesPage extends BaseFormPage {
 	    		systemFont = Display.getCurrent().getSystemFont();
 	    	}
 	    	
-	    	if ((element instanceof Constraint) && (isLocalStates((Constraint)element))) {
+	    	if ((element instanceof Constraint) && (isLocalState((Constraint)element))) {
 	    		return registry.getBold(systemFont.getFontData()[0].getName());
 	    	}
 
 	    	return systemFont;
 	    }	
-	    
-	    private boolean isLocalStates(Constraint state) {
-	    	MethodPlugin plugin = UmaUtil.getMethodPlugin(workProduct);
-	    	List<Constraint> allLocalStates = MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr)
-	    			.getWorkProductStatesInPlugin(plugin);
-	    	
-	    	return allLocalStates.contains(state);		    	
-	    }
 	}
 
 }

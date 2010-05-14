@@ -87,7 +87,7 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 			String stateName) {
 		for (Iterator iter = plugin.getOwnedRules().iterator(); iter.hasNext();) {
 			Constraint state = (Constraint) iter.next();
-			if (state.getName().equals(ConstraintManager.Plugin_wpState)) {
+			if (state.getName().equals(ConstraintManager.Plugin_wpState) && state.getBody().equals(stateName)) {
 
 				if (getActionManager() == null) {
 					plugin.getOwnedRules().remove(state);
