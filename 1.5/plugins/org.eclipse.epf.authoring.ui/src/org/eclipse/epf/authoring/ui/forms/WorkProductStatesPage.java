@@ -327,7 +327,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 		
 		ctrl_unassign.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				removeState();
+				unassignState();
 				updateControls();
 			}
 		});
@@ -368,11 +368,25 @@ public class WorkProductStatesPage extends BaseFormPage {
 	}
 	
 	private void assignState() {
+		IStructuredSelection selection = (IStructuredSelection)globalStatesViewer.getSelection();
 		
+		for (Object obj : selection.toList()) {
+			if (obj instanceof Constraint) {
+				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).addWorkProductState(
+						workProduct, ((Constraint)obj).getBody());				
+			}
+		}		
 	}
 	
-	private void removeState() {
+	private void unassignState() {
+		IStructuredSelection selection = (IStructuredSelection)wpStatesViewer.getSelection();
 		
+		for (Object obj : selection.toList()) {
+			if (obj instanceof Constraint) {
+				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).removeWorkProductState(
+						workProduct, ((Constraint)obj).getBody());				
+			}
+		}		
 	}
 	
 	private void loadData() {
