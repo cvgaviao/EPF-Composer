@@ -216,6 +216,8 @@ public class AuthoringUIText {
 	public static final String STATES_WP_STATE_TEXT = AuthoringUIResources.states_wp_state_text;
 	
 	public static final String STATES_GLOBAL_STATE_TEXT = AuthoringUIResources.states_global_state_text;
+	
+	public static final String STATES_GLOBAL_NOTES_TEXT = AuthoringUIResources.states_global_notes_text;
 
 	/**
 	 * Button labels.

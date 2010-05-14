@@ -126,6 +126,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 	}
 	
 	protected void createStatesArea(Composite parent) {
+		//the first row
 		toolkit.createLabel(parent, null);
 		toolkit.createLabel(parent, null);
 		Composite nameComposite = toolkit.createComposite(parent);
@@ -145,6 +146,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 			ctrl_add.setLayoutData(gridData);
 		}
 		
+		//the second row
 		Composite wpStateComposite = toolkit.createComposite(parent);
 		wpStateComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		wpStateComposite.setLayout(new GridLayout());
@@ -199,6 +201,11 @@ public class WorkProductStatesPage extends BaseFormPage {
 			gridData.widthHint = 80;
 			ctrl_delete.setLayoutData(gridData);
 		}
+		
+		//the third row
+		toolkit.createLabel(parent, null);
+		toolkit.createLabel(parent, null);
+		toolkit.createLabel(parent, AuthoringUIText.STATES_GLOBAL_NOTES_TEXT);
 
 		initProviders();
 		

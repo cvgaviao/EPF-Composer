@@ -2144,6 +2144,8 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String states_global_state_text;
 	
+	public static String states_global_notes_text;
+	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);
 	}
