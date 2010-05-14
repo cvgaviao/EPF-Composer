@@ -1182,6 +1182,7 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 								list.remove(index);
 								removedReferences.add(new Reference(referencer,
 										feature, referenced, index));
+								removeReferenceFollowUp(referencer, referenced, feature);
 							} else {
 								if (TngUtil.DEBUG) {
 									System.out
@@ -1409,5 +1410,8 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 		return executed;
 	}
 	
+	protected void removeReferenceFollowUp(EObject referencer,
+			EObject referenced, EStructuralFeature feature) {
+	}
 	
 }

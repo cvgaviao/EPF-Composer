@@ -14,17 +14,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.epf.library.edit.command.DeleteMethodElementCommand;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
+import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
@@ -264,5 +271,41 @@ public class ProcessElementDeleteCommand extends
 		}
 		
 		super.dispose();
+	}
+	
+	@Override
+	protected void removeReferenceFollowUp(EObject referencer,
+			EObject referenced, EStructuralFeature feature) {
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
+		if (! (referencer instanceof Descriptor)) {
+			return;
+		}
+		if (! (referenced instanceof Descriptor)) {
+			return;
+		}
+		if (! (feature instanceof EReference)) {
+			return;
+		}
+		
+		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		EReference ref = (EReference) feature;		
+		EReference eref = LibraryEditUtil.getInstance().getExcludeFeature(ref);
+		if (eref == null) {
+			return;
+		}
+		MethodElement element = ProcessUtil.getAssociatedElement((Descriptor) referenced);
+		boolean localUse = propUtil.localUse((Descriptor) referenced, (Descriptor) referencer, ref);
+		if (localUse) {
+			propUtil.removeLocalUse((Descriptor) referenced, (Descriptor) referencer, ref);	
+			
+		} else if (element != null) {
+			List excludeList = (List) referencer.eGet(eref);
+			excludeList.add(element);
+			
+		}
+	
 	}
 }
