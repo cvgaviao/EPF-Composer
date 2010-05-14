@@ -54,7 +54,7 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 	 * @param create
 	 * @return the state
 	 */
-	private Constraint getWorkProductState(MethodPlugin plugin, String stateName, boolean create) {		
+	public Constraint getWorkProductState(MethodPlugin plugin, String stateName, boolean create) {		
 		return ConstraintManager.getWorkProductState(plugin, stateName, create, getActionManager());
 	}
 	
@@ -120,7 +120,7 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 		MethodLibrary lib = UmaUtil.getMethodLibrary(activePlugin);
 		for (MethodPlugin plugin : lib.getMethodPlugins()) {
 			List<Constraint> list = getWorkProductStatesInPlugin(plugin);
-			for (Constraint state : resultList) {
+			for (Constraint state : list) {
 				if (! names.contains(state.getBody())) {
 					names.add(state.getBody());
 					resultList.add(state);

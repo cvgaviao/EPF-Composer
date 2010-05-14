@@ -266,6 +266,6 @@ public class AuthoringUIText {
 	
 	public static final String STATES_ASSIGN_TEXT = AuthoringUIResources.states_assign_text;
 	
-	public static final String STATES_REMOVE_TEXT= AuthoringUIResources.states_remove_text;
+	public static final String STATES_UNASSIGN_TEXT= AuthoringUIResources.states_unassign_text;
 	
 }

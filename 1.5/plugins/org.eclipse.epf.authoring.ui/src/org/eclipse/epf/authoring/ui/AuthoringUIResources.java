@@ -2138,7 +2138,7 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String states_assign_text;
 	
-	public static String states_remove_text;
+	public static String states_unassign_text;
 	
 	public static String states_wp_state_text;
 	

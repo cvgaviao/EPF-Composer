@@ -12,6 +12,7 @@ package org.eclipse.epf.authoring.ui.forms;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
@@ -25,9 +26,11 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
@@ -40,10 +43,12 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
@@ -75,7 +80,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 	private IStructuredContentProvider wpStatesViewerContentProvider;
 	private ITableLabelProvider wpStatesViewerLabelProvider;
 	
-	private Button ctrl_assign, ctrl_remove;
+	private Button ctrl_assign, ctrl_unassign;
 	
 	private Table ctrl_global_states;
 	private TableViewer globalStatesViewer;
@@ -163,11 +168,11 @@ public class WorkProductStatesPage extends BaseFormPage {
 			gridData.widthHint = 80;
 			ctrl_assign.setLayoutData(gridData);
 		}
-		ctrl_remove = toolkit.createButton(btnComposite1, AuthoringUIText.STATES_REMOVE_TEXT, SWT.NONE);
+		ctrl_unassign = toolkit.createButton(btnComposite1, AuthoringUIText.STATES_UNASSIGN_TEXT, SWT.NONE);
 		{
 			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER |GridData.GRAB_HORIZONTAL);
 			gridData.widthHint = 80;
-			ctrl_remove.setLayoutData(gridData);
+			ctrl_unassign.setLayoutData(gridData);
 		}
 		
 		Composite globalStateComposite = toolkit.createComposite(parent);
@@ -271,16 +276,8 @@ public class WorkProductStatesPage extends BaseFormPage {
 			}
 		};
 
-		globalStatesViewerLabelProvider = new AdapterFactoryLabelProvider(
-				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory()) {
-			public String getColumnText(Object element, int columnIndex) {
-				if (element instanceof Constraint) {
-					return ((Constraint)element).getBody();
-				}
-				
-				return null;
-			}
-		};
+		globalStatesViewerLabelProvider = new GlobalStatesLabelProvider(
+				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory());
 	}
 	
 	private void addListeners() {
@@ -319,7 +316,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 			}
 		});
 		
-		ctrl_remove.addSelectionListener(new SelectionAdapter() {
+		ctrl_unassign.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				removeState();
 				updateControls();
@@ -341,13 +338,13 @@ public class WorkProductStatesPage extends BaseFormPage {
 	}
 	
 	private void createState() {
-//		String stateName = ctrl_name.getText();
-//		
-//		if ((stateName != null) && (stateName.length() > 0)) {
-//			WorkProductPropUtil.getWorkProductPropUtil(actionMgr).addWorkProductState(
-//					workProduct, stateName);
-//			ctrl_name.setText(""); //$NON-NLS-1$
-//		}
+		String stateName = ctrl_name.getText();
+		
+		if ((stateName != null) && (stateName.length() > 0)) {
+			MethodPlugin plugin = UmaUtil.getMethodPlugin(workProduct);			
+			MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).getWorkProductState(plugin, stateName, true);
+			ctrl_name.setText(""); //$NON-NLS-1$
+		}
 	}
 	
 	private void deleteState() {
@@ -393,13 +390,50 @@ public class WorkProductStatesPage extends BaseFormPage {
 		
 		IStructuredSelection wpSelection = (IStructuredSelection)wpStatesViewer.getSelection();		
 		if (wpSelection.size() > 0) {
-			ctrl_remove.setEnabled(true);
+			ctrl_unassign.setEnabled(true);
 		} else {
-			ctrl_remove.setEnabled(false);
+			ctrl_unassign.setEnabled(false);
 		}
 		
 		wpStatesViewer.refresh();
 		globalStatesViewer.refresh();
+	}
+	
+	public class GlobalStatesLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
+		private FontRegistry registry = new FontRegistry();
+		private Font systemFont;
+		
+		public GlobalStatesLabelProvider(AdapterFactory adapterFactory) {
+			super(adapterFactory);
+		}
+		
+		public String getColumnText(Object element, int columnIndex) {
+			if (element instanceof Constraint) {
+				return ((Constraint)element).getBody();
+			}
+			
+			return null;
+		}
+		
+	    public Font getFont(Object element, int columnIndex) {
+	    	if (systemFont == null) {
+	    		systemFont = Display.getCurrent().getSystemFont();
+	    	}
+	    	
+	    	if ((element instanceof Constraint) && (isLocalStates((Constraint)element))) {
+	    		return registry.getBold(systemFont.getFontData()[0].getName());
+	    	}
+
+	    	return systemFont;
+	    }	
+	    
+	    private boolean isLocalStates(Constraint state) {
+	    	MethodPlugin plugin = UmaUtil.getMethodPlugin(workProduct);
+	    	List<Constraint> allLocalStates = MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr)
+	    			.getWorkProductStatesInPlugin(plugin);
+	    	
+	    	return allLocalStates.contains(state);		    	
+	    }
 	}
 
 }
