@@ -188,7 +188,10 @@ public class ExportXMLService {
 							org.eclipse.epf.uma.Process proc = (org.eclipse.epf.uma.Process) value.element;
 							MethodConfiguration config = proc.getDefaultContext();
 							if (config == null) {
-								continue;
+								config = ProcessScopeUtil.getInstance().loadScope(proc);
+								if (config == null) {
+									continue;
+								}
 							}
 							diagramService.setConfig(config);
 							IConfigurationManager mgr = LibraryService.getInstance().getConfigurationManager(config);

@@ -25,6 +25,7 @@ import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.realization.RealizationManagerFactory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.util.Scope;
 
 /**
  * Manages a method configuration.
@@ -83,7 +84,11 @@ public class ConfigurationManager implements IConfigurationManager {
 		configProps = new ConfigurationProperties(config);
 		MethodElementPropertyMgr.getInstance().register(config, configProps);
 
-		library = LibraryServiceUtil.getMethodLibrary(config);
+		if (config instanceof Scope) {
+			library = LibraryService.getInstance().getCurrentMethodLibrary();
+		} else {
+			library = LibraryServiceUtil.getMethodLibrary(config);
+		}
 
 		libraryManager = LibraryService.getInstance()
 				.getLibraryManager(library);
