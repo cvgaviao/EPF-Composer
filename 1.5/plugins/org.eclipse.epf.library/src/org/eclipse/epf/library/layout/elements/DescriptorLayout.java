@@ -219,4 +219,22 @@ public abstract class DescriptorLayout extends AbstractProcessElementLayout {
 		return super.getElementForElementPath();
 	}
 
+	@Override
+	protected boolean isExcludeFeature(EStructuralFeature feature) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+
+		boolean b = feature == up
+				.getTaskDescriptor_PerformedPrimarilyByExcluded()
+				|| feature == up
+						.getTaskDescriptor_AdditionallyPerformedByExclude()
+				|| feature == up.getTaskDescriptor_MandatoryInputExclude()
+				|| feature == up.getTaskDescriptor_OptionalInputExclude()
+				|| feature == up.getTaskDescriptor_OutputExclude()
+				|| feature == up.getRoleDescriptor_ResponsibleForExclude()
+				|| feature == up.getDescriptor_GuidanceAdditional()
+				|| feature == up.getDescriptor_GuidanceExclude();
+
+		return b;
+	}
+
 }

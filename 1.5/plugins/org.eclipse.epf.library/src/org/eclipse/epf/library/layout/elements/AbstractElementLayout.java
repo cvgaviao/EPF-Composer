@@ -723,6 +723,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	 */
 	public void loadFeature(EStructuralFeature feature, XmlElement elementXml,
 			boolean includeReferences) {
+		if (isExcludeFeature(feature)) {
+			return;
+		}
 		getFeatureValue(feature,  elementXml, includeReferences);
 	}
 	
@@ -869,6 +872,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			loadFeature(ofeature, elementXml, includeReferences);
 		}
 		//elementXml.setAttribute("ShowFullMethodContent", (layoutManager.getValidator().showExtraInfoForDescriptors()) ? "true" : "false");
+	}
+	
+	protected boolean isExcludeFeature(EStructuralFeature feature) {
+		return false;
 	}
 
 	/**
