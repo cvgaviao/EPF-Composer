@@ -296,7 +296,7 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 	}
 	
-	private Set<MethodElement> getExcludeOrAddtionalRefSet(Descriptor des,
+	protected Set<MethodElement> getExcludeOrAddtionalRefSet(Descriptor des,
 			EReference eRef, ElementRealizer realizer) {
 		Set<MethodElement> set = new LinkedHashSet<MethodElement>();
 		if (des == null) {

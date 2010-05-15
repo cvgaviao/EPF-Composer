@@ -149,14 +149,13 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 				elementFeature, realizer);
 		if (elementStepList == null) {
 			elementStepList = new ArrayList<Section>();
-		}
-		
-		List<Section> excludeList = null;		
+		}		
+
 		if (!elementStepList.isEmpty()) {
-			excludeList = ConfigurationHelper.calc0nFeatureValue(getDescriptor(),
-						dFeatureExclude, realizer);
-			if (excludeList != null && ! excludeList.isEmpty()) {
-				elementStepList.removeAll(excludeList);
+			Set<MethodElement> excludeElements = getExcludeOrAddtionalRefSet(
+					getDescriptor(), up.getTaskDescriptor_SelectedStepsExclude(), realizer);
+			if (excludeElements != null && ! excludeElements.isEmpty()) {
+				elementStepList.removeAll(excludeElements);
 			}
 		} 		
 		boolean same = true;
