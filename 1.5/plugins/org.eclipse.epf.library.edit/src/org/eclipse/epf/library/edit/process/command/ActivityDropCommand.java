@@ -545,7 +545,13 @@ public class ActivityDropCommand extends BSDropCommand {
 							int size = addedObjects.size();
 							ProcessUtil.addToDefaultConfiguration(targetProcess, me, addedObjects);
 							if(!defaultConfigChanged && (size != addedObjects.size())) {
-								getModifiedResources().add(targetProcess.getDefaultContext().eResource());
+								if (targetProcess.getDefaultContext() != null
+										&& targetProcess.getDefaultContext()
+												.eResource() != null) {
+									getModifiedResources().add(
+											targetProcess.getDefaultContext()
+													.eResource());
+								}
 								defaultConfigChanged = true;
 							}
 						}
