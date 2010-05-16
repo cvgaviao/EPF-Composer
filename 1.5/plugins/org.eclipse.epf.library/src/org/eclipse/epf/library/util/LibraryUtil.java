@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
@@ -47,7 +48,6 @@ import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
-import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -73,6 +73,7 @@ import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.swt.widgets.Display;
 
@@ -628,7 +629,7 @@ public class LibraryUtil {
 	 */
 	public static List<MethodConfiguration> getAssociatedConfigurations(MethodPlugin plugin) {
 		// get the configs that references this method plugin
-		List<MethodConfiguration> allConfigs = new ArrayList<MethodConfiguration>();
+		Set<MethodConfiguration> allConfigs = new HashSet<MethodConfiguration>();
 /*		List configs = (List) ((MultiResourceEObject) plugin)
 				.getOppositeFeatureValue(AssociationHelper.MethodPlugin_MethodConfigurations);
 		addUniqueItems(configs, allConfigs);
@@ -645,18 +646,27 @@ public class LibraryUtil {
 */
 		// get the congigurations that referenced by the processes in this
 		// plugin
+		MethodLibrary lib = UmaUtil.getMethodLibrary(plugin);		
+		
 		List procs = TngUtil.getAllProcesses(plugin);
 		for (Iterator it = procs.iterator(); it.hasNext();) {
 			org.eclipse.epf.uma.Process p = (org.eclipse.epf.uma.Process) it
 					.next();
 			MethodConfiguration c = p.getDefaultContext();
-			if ((c != null) && !allConfigs.contains(c)) {
+			if ((c != null && !(c instanceof Scope))) {
 				allConfigs.add(c);
+				allConfigs.addAll(p.getValidContext());
+			} else if (lib != null) {
+				for (MethodConfiguration config : lib.getPredefinedConfigurations()) {
+					if (ConfigurationHelper.inConfig(p, config)) {
+						allConfigs.add(config);
+					}
+				}
 			}
-			addUniqueItems(p.getValidContext(), allConfigs);
+//			addUniqueItems(p.getValidContext(), allConfigs);
 		}
 
-		return allConfigs;
+		return new ArrayList<MethodConfiguration>(allConfigs);
 	}
 
 	private static void addUniqueItems(List from, List to) {
