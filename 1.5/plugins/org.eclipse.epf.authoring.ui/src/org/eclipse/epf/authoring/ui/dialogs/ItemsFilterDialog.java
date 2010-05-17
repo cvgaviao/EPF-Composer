@@ -86,7 +86,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -123,14 +122,19 @@ public class ItemsFilterDialog extends Dialog implements
 	private String viewerLabel = null;
 	
 	private ProcessScopeUtil processUtil = ProcessScopeUtil.getInstance();
+	
+	private Combo selectCombo;
+	
+	private final String[] selectComboItems = {
+			AuthoringUIResources.FilterDialog_Process_Scope_Grp_referencedPluginsBtn,
+			AuthoringUIResources.FilterDialog_Process_Scope_Grp_selectedPluginsBtn,
+			AuthoringUIResources.FilterDialog_Process_Scope_Grp_libBtn,
+			AuthoringUIResources.FilterDialog_Process_Scope_Grp_configBtn
+			};
 
-	private Button referencedPluginsBtn, viewBtn;
+	private Button viewBtn;
 	
-	private Button selectedPluginsBtn, editBtn;
-	
-	private Button libBtn;
-	
-	private Button configBtn;
+	private Button editBtn;
 	
 	private AbstractSection section;
 	
@@ -406,7 +410,12 @@ public class ItemsFilterDialog extends Dialog implements
 			}
 		}
 		filterType.select(0);
-
+		
+		//for config free process
+		if (supportProcessScope(contentElement)) {
+			createSelectionScope(composite);
+		}
+		
 		Label ctrl_patternLabel = new Label(composite, SWT.NONE);
 		{
 			ctrl_patternLabel.setText(AuthoringUIResources.FilterDialog_Pattern_text); 
@@ -433,16 +442,11 @@ public class ItemsFilterDialog extends Dialog implements
 			ctrl_patternLabel1.setLayoutData(gD);
 		}
 		
-		//for config free process
-		if (supportProcessScope(contentElement)) {
-			createProcessScopeGroup(composite);
-		}
-		
 		Composite buttonsComposite = new Composite(composite, SWT.NONE);		
 		
 		GridData gd2 = new GridData(GridData.FILL_HORIZONTAL
 			| GridData.HORIZONTAL_ALIGN_END);
-		gd2.horizontalSpan = 2;
+		gd2.horizontalSpan = 3;
 		buttonsComposite.setLayoutData(gd2);
 		GridLayout buttonsLayout = new GridLayout();
 		buttonsLayout.numColumns = 2;
@@ -458,10 +462,10 @@ public class ItemsFilterDialog extends Dialog implements
 		expandButton.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
 						AuthoringUIResources.FilterDialog_ExpandAll));		
 
-		gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING
-				| GridData.GRAB_HORIZONTAL);
+//		gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING
+//				| GridData.GRAB_HORIZONTAL);
 
-		expandButton.setLayoutData(gd2);
+//		expandButton.setLayoutData(gd2);
 
 		collapseButton = new Button(buttonsComposite, SWT.PUSH);
 		collapseButton.setImage(AuthoringUIPlugin.getDefault().getSharedImage(
@@ -471,9 +475,9 @@ public class ItemsFilterDialog extends Dialog implements
 		collapseButton.getAccessible().addAccessibleListener(new AuthoringAccessibleListener(
 				AuthoringUIResources.FilterDialog_CollapseAll));
 		
-		gd2 = new GridData(GridData.HORIZONTAL_ALIGN_END);
+//		gd2 = new GridData(GridData.HORIZONTAL_ALIGN_END);
 
-		collapseButton.setLayoutData(gd2);
+//		collapseButton.setLayoutData(gd2);
 		
 		createLine(composite, 3);
 		createViewerLabel(composite);
@@ -499,7 +503,7 @@ public class ItemsFilterDialog extends Dialog implements
 		
 		//initialize for process scope
 		if (supportProcessScope(contentElement)) {
-			referencedPluginsBtn.setSelection(true);
+			selectCombo.select(0);
 			updateBtnStatus();
 			updateFilterDialog();
 		}
@@ -1021,36 +1025,21 @@ public class ItemsFilterDialog extends Dialog implements
 				expandOrCollapse(false);
 			}
 		});
-		if (supportProcessScope(contentElement)) {
-			referencedPluginsBtn.addSelectionListener(new SelectionAdapter() {
+		
+		if (supportProcessScope(contentElement)) {			
+			selectCombo.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					updateBtnStatus();
 					updateFilterDialog();
 				}
 			});
-			selectedPluginsBtn.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent e) {
-					updateBtnStatus();
-					updateFilterDialog();
-				}
-			});
-			libBtn.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent e) {
-					updateBtnStatus();
-					updateFilterDialog();
-				}
-			});
-			configBtn.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent e) {
-					updateBtnStatus();
-					updateFilterDialog();
-				}
-			});
+						
 			viewBtn.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					showPluginListDialog(true);
 				}
 			});
+			
 			editBtn.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					showPluginListDialog(false);
@@ -1218,46 +1207,33 @@ public class ItemsFilterDialog extends Dialog implements
 		}
 	}
 	
-	private void createProcessScopeGroup(Composite parent) {
-		Group scopeGrp = new Group(parent, SWT.NONE);		
-		GridData gd = new GridData(GridData.FILL_VERTICAL);
-		gd.horizontalSpan = 3;
-		gd.widthHint = 300;
-		scopeGrp.setLayoutData(gd);
-		scopeGrp.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp);
-		scopeGrp.setLayout(new GridLayout(2, false));
+	private void createSelectionScope(Composite parent) {
+		Label selectLabel = new Label(parent, SWT.NONE);
+		selectLabel.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp);
 		
-		Composite scopeCompo = new Composite(scopeGrp, SWT.NONE);
-		scopeCompo.setLayoutData(new GridData(GridData.FILL_BOTH));
-		scopeCompo.setLayout(new GridLayout(1, false));
-
-		referencedPluginsBtn = new Button(scopeCompo, SWT.RADIO);
-		referencedPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_referencedPluginsBtn);
+		selectCombo = new Combo(parent, SWT.READ_ONLY);
+		{
+			GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+			gd.widthHint = 200;
+			selectCombo.setLayoutData(gd);
+		}
+		selectCombo.setItems(selectComboItems);
 		
-		selectedPluginsBtn = new Button(scopeCompo, SWT.RADIO);
-		selectedPluginsBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_selectedPluginsBtn);
+		Composite btnComposite = new Composite(parent, SWT.NONE);	
+		btnComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		btnComposite.setLayout(new GridLayout(2, true));
 		
-		libBtn = new Button(scopeCompo, SWT.RADIO);
-		libBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_libBtn);
-
-		configBtn = new Button(scopeCompo, SWT.RADIO);
-		configBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_configBtn);
-		
-		Composite btnCompo = new Composite(scopeGrp, SWT.NONE);
-		btnCompo.setLayoutData(new GridData(GridData.FILL_BOTH));
-		btnCompo.setLayout(new GridLayout(1, false));
-		
-		viewBtn = new Button(btnCompo, SWT.PUSH); 
-		viewBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_viewBtn);
+		viewBtn = new Button(btnComposite, SWT.PUSH); 
 		viewBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		viewBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_viewBtn);
 		viewBtn.setEnabled(false);
 
-		editBtn = new Button(btnCompo, SWT.PUSH);
-		editBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_editBtn);
+		editBtn = new Button(btnComposite, SWT.PUSH);
 		editBtn.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		editBtn.setText(AuthoringUIResources.FilterDialog_Process_Scope_Grp_editBtn);
 		editBtn.setEnabled(false);
 	}
-	
+		
 	private boolean supportProcessScope(Object inputElement) {
 		boolean result = false;
 		
@@ -1288,13 +1264,15 @@ public class ItemsFilterDialog extends Dialog implements
 	}
 	
 	private void updateBtnStatus() {
-		if (referencedPluginsBtn.getSelection()) {
+		int index = selectCombo.getSelectionIndex();
+		
+		if (index == 0) {
 			viewBtn.setEnabled(true);
 		} else {
 			viewBtn.setEnabled(false);
 		}
 		
-		if (selectedPluginsBtn.getSelection()) {
+		if (index == 1) {
 			editBtn.setEnabled(true);
 		} else {
 			editBtn.setEnabled(false);
@@ -1302,11 +1280,13 @@ public class ItemsFilterDialog extends Dialog implements
 	}
 	
 	private void updateFilterDialog() {
-		if (referencedPluginsBtn.getSelection()) {
+		int index = selectCombo.getSelectionIndex();
+		
+		if (index == 0) {
 			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Process);				
 		}
 		
-		if (selectedPluginsBtn.getSelection()) {
+		if (index == 1) {
 			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Plugins);
 			restoreDialogSettingsForPluginList();
 			Scope pluginScope = processUtil.getPluginScope();
@@ -1316,11 +1296,11 @@ public class ItemsFilterDialog extends Dialog implements
 			}			
 		}
 		
-		if (libBtn.getSelection()) {
+		if (index == 2) {
 			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Library);
 		}
 		
-		if (configBtn.getSelection()) {
+		if (index == 3) {
 			processUtil.setElemementSelectionScopeType(ProcessScopeUtil.ScopeType_Config);
 		}
 		
