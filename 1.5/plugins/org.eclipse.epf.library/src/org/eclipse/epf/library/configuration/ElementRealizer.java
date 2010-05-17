@@ -176,7 +176,21 @@ public abstract class ElementRealizer {
 	 * @param element MethodElement
 	 * @return MethodElement
 	 */
+	
 	public MethodElement realize(MethodElement element) {
+		MethodElement result = realize_(element);
+		if (result == null && element instanceof VariabilityElement) {
+			VariabilityElement ve = (VariabilityElement) element;
+			if (ve.getVariabilityType() == VariabilityType.REPLACES) {
+				if (ve.getVariabilityBasedOnElement() != null) {
+					return realize(ve.getVariabilityBasedOnElement());
+				}
+			}
+		}		
+		return result;
+	}
+	
+	private MethodElement realize_(MethodElement element) {
 		if (getConfiguration() instanceof Scope) {			
 			if (element instanceof VariabilityElement) {
 				VariabilityElement ve = (VariabilityElement) element;
