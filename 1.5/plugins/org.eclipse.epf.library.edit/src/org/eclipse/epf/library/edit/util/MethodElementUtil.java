@@ -62,7 +62,8 @@ public class MethodElementUtil {
 
 			// get all base models
 			//
-			Misc.getAllBase(model, allModels);
+			//Misc.getAllBase(model, allModels);
+			allModels.addAll(Misc.getAllBase1(model));
 
 			allModels.add(model);
 

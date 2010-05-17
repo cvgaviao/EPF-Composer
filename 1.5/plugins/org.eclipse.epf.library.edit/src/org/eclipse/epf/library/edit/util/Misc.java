@@ -12,6 +12,7 @@ package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -141,7 +142,21 @@ public final class Misc {
 		}
 		return path.toString();
 	}
-
+	
+	private static Map<MethodPlugin, List> map = new HashMap<MethodPlugin, List>();
+	public static void clearCachedMap() {
+		map.clear();
+	}
+	public static List getAllBase1(MethodPlugin plugin) {
+		List list = map.get(plugin);
+		if (list == null) {
+			list = new ArrayList();
+			getAllBase(plugin, list);
+			map.put(plugin, list);
+		}
+		return list;
+	}
+	
 	/**
 	 * Gets all base plugins of the given plugin
 	 * 
