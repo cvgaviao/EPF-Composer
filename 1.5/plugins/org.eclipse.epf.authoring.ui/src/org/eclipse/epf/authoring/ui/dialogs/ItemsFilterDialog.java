@@ -100,7 +100,7 @@ import org.eclipse.ui.PlatformUI;
  * @author Lokanath Jagga
  * @author Shashidhar Kannoori
  */
-public class ItemsFilterDialog extends Dialog implements
+public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 		ISelectionChangedListener, IDoubleClickListener {
 
 	protected Button okButton, cancelButton;
