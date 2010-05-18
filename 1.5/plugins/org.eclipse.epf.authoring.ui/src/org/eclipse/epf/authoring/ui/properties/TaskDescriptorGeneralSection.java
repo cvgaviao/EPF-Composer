@@ -233,6 +233,8 @@ public class TaskDescriptorGeneralSection extends
 				linkButton.setEnabled(false);
 			}
 			clearButton.setEnabled(false);
+			synchronizedButton.setVisible(false);
+			synchronizedButton.setEnabled(false);
 		}	
 	}
 	
