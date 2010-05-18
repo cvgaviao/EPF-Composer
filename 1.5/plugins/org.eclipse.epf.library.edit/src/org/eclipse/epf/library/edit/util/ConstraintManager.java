@@ -11,8 +11,10 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -183,6 +185,11 @@ public final class ConstraintManager {
 	public static List<Constraint> getWpStates(WorkBreakdownElement wbe,
 			WorkProductDescriptor wpd, EReference ref) {
 
+		WorkProduct wp = wpd.getWorkProduct();
+		if (wp == null) {
+			return new ArrayList<Constraint>();
+		}
+
 		Constraint wpStatesHolder = null;
 		for (Constraint constraint : wbe.getOwnedRules()) {
 			if (constraint.getName().equals(Wbe_WpStates)
@@ -200,7 +207,8 @@ public final class ConstraintManager {
 				.getMethodElementPropUtil();
 
 		return (List<Constraint>) propUtil.extractElements(wpStatesHolder,
-				MethodElementPropUtil.CONSTRAINT_WPStates, ref.getName());
+				MethodElementPropUtil.CONSTRAINT_WPStates, ref.getName(),
+				WorkProductPropUtil.getWorkProductPropUtil().getAllStates(wp));
 
 	}
 

@@ -8,7 +8,9 @@ import java.util.Set;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class WorkProductPropUtil extends MethodElementPropUtil {
 
@@ -96,14 +98,39 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		if (guidList == null || guidList.length == 0) {
 			return list;
 		}
+		
+		MethodPlugin plugin = UmaUtil.getMethodPlugin(wp);
+		if (plugin == null) {
+			return list;
+		}
+		Set<Constraint> statesInPlugin = new HashSet<Constraint>();
+		List<Constraint> stateListInPlugin = MethodPluginPropUtil.getMethodPluginPropUtil().getWorkProductStatesInPlugin(plugin);
+		if (stateListInPlugin.isEmpty()) {
+			return list;
+		}
+		statesInPlugin.addAll(stateListInPlugin);
+		
+		boolean modified = false;
+		String newValue = ""; 			//$NON-NLS-1$
 		for (String guid : guidList) {
 			MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
-			if (element instanceof Constraint) {
+			if (element instanceof Constraint && statesInPlugin.contains(element)) {
 				Constraint c = (Constraint) element;
 				if (c.getName().equals(ConstraintManager.Plugin_wpState)) {
 					list.add(c);
 				}
+				if (newValue.length() > 0) {
+					newValue = newValue.concat(infoSeperator);
+				}
+				newValue = newValue.concat(c.getGuid());
+			} else {
+				modified = true;
 			}
+		}
+		
+		
+		if (modified) {
+			setStringValue(wp, WORKPRODUCT_States, newValue);
 		}
 				
 		return list;

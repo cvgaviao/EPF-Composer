@@ -2,6 +2,7 @@ package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
@@ -157,7 +158,8 @@ public class MethodElementPropUtil {
 
 	}
 	
-	public List<? extends MethodElement> extractElements(MethodElement propertyOwner, String propName, String refName) {
+	public List<? extends MethodElement> extractElements(MethodElement propertyOwner, String propName, String refName,
+			Set<? extends MethodElement> validSet) {
 		List<MethodElement> elements = new ArrayList<MethodElement>();
 		
 		String value = getStringValue(propertyOwner, propName);
@@ -170,7 +172,8 @@ public class MethodElementPropUtil {
 			return elements;
 		}
 		
-
+		boolean modified = false;
+		String newValue = ""; //$NON-NLS-1$
 		int sz = infos.length / 2; 		
 		for (int i = 0; i < sz; i++) {
 			int i1 = i*2;
@@ -179,12 +182,26 @@ public class MethodElementPropUtil {
 			String iRefName = infos[i2];			
 			if (refName.equals(iRefName)) {
 				MethodElement element = LibraryEditUtil.getInstance().getMethodElement(iGuid);
-				if (element != null) {
+				if (element != null && validSet.contains(element)) {
 					elements.add(element);
+					if (newValue.length() > 0) {
+						newValue = newValue.concat(infoSeperator);
+					}
+					newValue = newValue.concat(iGuid.concat(infoSeperator).concat(iRefName));
+				} else {
+					modified = true;
 				}
-			} 
+			} else {
+				if (newValue.length() > 0) {
+					newValue = newValue.concat(infoSeperator);
+				}
+				newValue = newValue.concat(iGuid.concat(infoSeperator).concat(iRefName));
+			}
 		}		
-
+		if (modified) {
+			setStringValue(propertyOwner, propName, newValue);
+		}
+		
 		return elements;
 	}
 
