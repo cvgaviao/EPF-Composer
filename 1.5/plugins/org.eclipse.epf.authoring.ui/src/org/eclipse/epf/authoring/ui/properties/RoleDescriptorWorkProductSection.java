@@ -86,7 +86,7 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(td.getResponsibleFor());
 				
-				if (ProcessUtil.isSynFree()
+				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
 					elements.addAll(td.getResponsibleForExclude());
@@ -229,7 +229,7 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements1());
 		
 		RoleDescriptor rd = (RoleDescriptor) element;
-		if (ProcessUtil.isSynFree()
+		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(rd)) {
 			list.addAll(rd.getResponsibleForExclude());

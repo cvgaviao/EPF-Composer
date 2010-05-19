@@ -104,7 +104,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(td.getMandatoryInput());
 				
-				if (ProcessUtil.isSynFree()
+				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
 					elements.addAll(td.getMandatoryInputExclude());
@@ -126,7 +126,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(td.getOptionalInput());
 				
-				if (ProcessUtil.isSynFree()
+				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
 					elements.addAll(td.getOptionalInputExclude());
@@ -162,7 +162,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(td.getOutput());
 				
-				if (ProcessUtil.isSynFree()
+				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
 					elements.addAll(td.getOutputExclude());
@@ -456,7 +456,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements1());
 		
 		TaskDescriptor td = (TaskDescriptor) element;
-		if (ProcessUtil.isSynFree()
+		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
 			list.addAll(td.getMandatoryInputExclude());
@@ -475,7 +475,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements2());
 		
 		TaskDescriptor td = (TaskDescriptor) element;
-		if (ProcessUtil.isSynFree()
+		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
 			list.addAll(td.getOptionalInputExclude());
@@ -501,7 +501,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements4());
 		
 		TaskDescriptor td = (TaskDescriptor) element;
-		if (ProcessUtil.isSynFree()
+		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
 			list.addAll(td.getOutputExclude());

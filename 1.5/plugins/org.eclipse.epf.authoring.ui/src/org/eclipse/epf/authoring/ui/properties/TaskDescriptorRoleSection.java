@@ -87,7 +87,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(td.getPerformedPrimarilyBy());
 				
-				if (ProcessUtil.isSynFree()
+				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
 					elements.addAll(td.getPerformedPrimarilyByExcluded());
@@ -109,7 +109,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(td.getAdditionallyPerformedBy());
 				
-				if (ProcessUtil.isSynFree()
+				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
 					elements.addAll(td.getAdditionallyPerformedByExclude());
@@ -434,7 +434,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements1());
 		
 		TaskDescriptor td = (TaskDescriptor) element;
-		if (ProcessUtil.isSynFree()
+		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
 			list.addAll(td.getPerformedPrimarilyByExcluded());
@@ -453,7 +453,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		List<MethodElement> list = ProcessUtil.getAssociatedElementList(getExistingElements2());
 		
 		TaskDescriptor td = (TaskDescriptor) element;
-		if (ProcessUtil.isSynFree()
+		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
 			list.addAll(td.getAdditionallyPerformedByExclude());
