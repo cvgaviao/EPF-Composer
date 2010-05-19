@@ -571,9 +571,13 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 		//
 		for(Object object : view.getTargetEdges()) {
 			View connectedView = ((Edge) object).getSource();
+//			if(connectedView != null && connectedView.isVisible() && 
+//					connectedView.getElement() instanceof ActivityNode &&
+//					BridgeHelper.getMethodElement(connectedView) instanceof WorkBreakdownElement) {
+//				return true;
+//			}
 			if(connectedView != null && connectedView.isVisible() && 
-					connectedView.getElement() instanceof ActivityNode &&
-					BridgeHelper.getMethodElement(connectedView) instanceof WorkBreakdownElement) {
+					connectedView.getElement() instanceof ActivityNode ) {
 				return true;
 			}
 		}
@@ -582,9 +586,13 @@ public class ActivityDiagramAdapter extends DiagramAdapter {
 		//
 		for(Object object : view.getSourceEdges()) {
 			View connectedView = ((Edge) object).getTarget();
+//			if(connectedView != null && connectedView.isVisible() && 
+//					connectedView.getElement() instanceof ActivityNode &&
+//					BridgeHelper.getMethodElement(connectedView) instanceof WorkBreakdownElement) {
+//				return true;
+//			}
 			if(connectedView != null && connectedView.isVisible() && 
-					connectedView.getElement() instanceof ActivityNode &&
-					BridgeHelper.getMethodElement(connectedView) instanceof WorkBreakdownElement) {
+					connectedView.getElement() instanceof ActivityNode) {
 				return true;
 			}
 		}
