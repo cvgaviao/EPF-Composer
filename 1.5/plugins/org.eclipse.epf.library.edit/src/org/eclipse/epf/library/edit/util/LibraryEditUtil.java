@@ -195,7 +195,6 @@ public class LibraryEditUtil {
 		return null;
 	}
 	
-	
 	public EReference getLinkedElementFeature(EReference descriptorRef) {
 		if (descriptorRef == up.getTaskDescriptor_PerformedPrimarilyBy()) {
 			return up.getTask_PerformedBy();

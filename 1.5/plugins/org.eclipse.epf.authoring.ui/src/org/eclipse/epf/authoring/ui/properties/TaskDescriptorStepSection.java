@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.providers.VariabilityElementLabelProvider;
@@ -22,22 +24,27 @@ import org.eclipse.epf.library.edit.IConfigurationApplicator;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -60,11 +67,6 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
  * 
  */
 public class TaskDescriptorStepSection extends AbstractSection {
-
-	protected ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-			TngAdapterFactory.INSTANCE
-					.getNavigatorView_ComposedAdapterFactory());
-
 	private TaskDescriptor element;
 
 	private IActionManager actionMgr;
@@ -123,10 +125,18 @@ public class TaskDescriptorStepSection extends AbstractSection {
 		try {
 			if (getElement() instanceof TaskDescriptor) {
 				element = (TaskDescriptor) getElement();
-				viewer.refresh();
-
+			
 				// hide/refresh controls
 				updateControls();
+				
+				if (isSyncFree()) {
+					syncFreeUpdateControls();
+				}
+				
+				initContentProvider();
+				initLabelProvider();
+				
+				viewer.refresh();
 			}
 		} catch (Exception ex) {
 			logger.logError("Error refreshing TaskDescriptor step section" + element, ex);  //$NON-NLS-1$
@@ -138,10 +148,6 @@ public class TaskDescriptorStepSection extends AbstractSection {
 	 */
 	public void dispose() {
 		super.dispose();
-
-		if (labelProvider != null) {
-			labelProvider.dispose();
-		}
 	}
 
 	/**
@@ -173,7 +179,7 @@ public class TaskDescriptorStepSection extends AbstractSection {
 
 		}
 	}
-
+		
 	/**
 	 * Create Step section on the given composite
 	 * @param composite
@@ -198,17 +204,8 @@ public class TaskDescriptorStepSection extends AbstractSection {
 
 		ctrl_selected = FormUI.createTable(toolkit, pane1);
 		viewer = new TableViewer(ctrl_selected);
-
-		IStructuredContentProvider contentProvider = new AdapterFactoryContentProvider(
-				TngAdapterFactory.INSTANCE
-						.getNavigatorView_ComposedAdapterFactory()) {
-			public Object[] getElements(Object object) {
-				return element.getSelectedSteps().toArray();
-			}
-		};
-
-		viewer.setContentProvider(contentProvider);
-		viewer.setLabelProvider(labelProvider);
+		initContentProvider();
+		initLabelProvider();
 		viewer.setInput(element);
 
 		// create button composite
@@ -242,7 +239,6 @@ public class TaskDescriptorStepSection extends AbstractSection {
 		//		
 		toolkit.paintBordersFor(stepComposite);
 		toolkit.paintBordersFor(pane1);
-
 	}
 
 	/**
@@ -258,6 +254,10 @@ public class TaskDescriptorStepSection extends AbstractSection {
 					ctrl_remove.setEnabled(editable);
 					ctrl_up.setEnabled(editable);
 					ctrl_down.setEnabled(editable);
+				}
+				
+				if (isSyncFree()) {
+					syncFreeUpdateControls();
 				}
 			}
 		});
@@ -296,11 +296,24 @@ public class TaskDescriptorStepSection extends AbstractSection {
 					// ctrl_brief_desc.setText(PropertiesResources.getString("Process.MultipleSelection")
 					// + " - " + selection.size());
 				}
+				
+				if (isSyncFree()) {
+					syncFreeUpdateControls();
+				}
 			}
 		});
 
 		ctrl_add.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				if (isSyncFree()) {
+					IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();					
+					addSteps(selection.toArray());			
+					viewer.refresh();
+					syncFreeUpdateControls();
+					
+					return;
+				}
+				
 				IStructuredContentProvider stepContentProvider = new AdapterFactoryContentProvider(
 						TngAdapterFactory.INSTANCE
 								.getNavigatorView_ComposedAdapterFactory()) {
@@ -380,6 +393,10 @@ public class TaskDescriptorStepSection extends AbstractSection {
 					ctrl_add.setEnabled(true);
 				else 
 					ctrl_add.setEnabled(false);
+				
+				if (isSyncFree()) {
+					syncFreeUpdateControls();
+				}
 			}
 		});
 
@@ -550,6 +567,143 @@ public class TaskDescriptorStepSection extends AbstractSection {
 	
 	private boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
+	}
+	
+	private void initContentProvider() {
+		IStructuredContentProvider contentProvider = new AdapterFactoryContentProvider(
+				TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory()) {
+			public Object[] getElements(Object object) {
+				List elements = new ArrayList();				
+				elements.addAll(element.getSelectedSteps());
+				
+				if (isSyncFree() && !DescriptorPropUtil.getDesciptorPropUtil().isNoAutoSyn(element)) {
+					//This is a work around on UI for data layer under sync free
+					elements = syncFreeReOrder(elements);
+					
+					elements.addAll(element.getSelectedStepsExclude());
+				}
+				
+				return elements.toArray();
+			}
+		};
+		
+		viewer.setContentProvider(contentProvider);
+	}
+	
+	private List syncFreeReOrder(List steps) {
+		List result = new ArrayList();
+		List originalSteps = element.getTask().getSteps();
+		
+		for (Object obj : originalSteps) {
+			if (steps.contains(obj)) {
+				result.add(obj);
+			}
+		}
+		
+		return result;
+	}
+	
+	private void initLabelProvider() {
+		ILabelProvider labelProvider = null;
+		
+		if (isSyncFree()) {
+			labelProvider = new StepsSyncFreeLabelProvider(
+					TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory(),
+					element,
+					UmaPackage.eINSTANCE.getTaskDescriptor_SelectedSteps(),
+					getConfiguration()
+					);			
+		} else {
+			labelProvider = new AdapterFactoryLabelProvider(
+					TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory());
+		}
+		
+		viewer.setLabelProvider(labelProvider);
+	}
+	
+	private void syncFreeUpdateControls() {
+		ctrl_up.setEnabled(false);
+		ctrl_down.setEnabled(false);
+		
+		IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+		if ((selection.size() > 0) && (editable)) {
+			if (isAllDynamic(selection)) {
+				ctrl_add.setEnabled(false);
+				ctrl_remove.setEnabled(true);
+			} else if (isAllExcluded(selection)) {
+				ctrl_add.setEnabled(true);
+				ctrl_remove.setEnabled(false);
+			} else {
+				ctrl_add.setEnabled(false);
+				ctrl_remove.setEnabled(false);
+			}			
+		} else {
+			ctrl_add.setEnabled(false);
+			ctrl_remove.setEnabled(false);
+		}
+	}
+	
+	private boolean isAllDynamic(IStructuredSelection selection) {
+		List<org.eclipse.epf.uma.Section> allDynamic = element.getSelectedSteps();
+		
+		for (Object obj : selection.toArray()) {
+			if (obj instanceof org.eclipse.epf.uma.Section) {
+				if (!allDynamic.contains((org.eclipse.epf.uma.Section)obj)) {
+					return false;
+				}				
+			}
+		}
+		
+		return true;	
+	}
+	
+	private boolean isAllExcluded(IStructuredSelection selection) {
+		List<org.eclipse.epf.uma.Section> allExcluded = element.getSelectedStepsExclude();
+		
+		for (Object obj : selection.toArray()) {
+			if (obj instanceof org.eclipse.epf.uma.Section) {
+				if (!allExcluded.contains((org.eclipse.epf.uma.Section)obj)) {
+					return false;
+				}				
+			}
+		}
+		
+		return true;
+	}
+	
+	public class StepsSyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
+		private FontRegistry registry = new FontRegistry();
+		private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		
+		private Font systemFont;
+		private Descriptor desc;
+		private EReference ref;
+		private MethodConfiguration config;
+
+		public StepsSyncFreeLabelProvider(AdapterFactory adapterFactory, Descriptor desc, EReference ref, MethodConfiguration config) {
+			super(adapterFactory);
+			this.desc = desc;
+			this.ref = ref;		
+			this.config = config;
+		}
+	    
+	    public Font getFont(Object obj, int columnIndex) {
+	    	if (systemFont == null) {
+	    		systemFont = Display.getCurrent().getSystemFont();
+	    	}
+	    	
+    		return registry.getBold(systemFont.getFontData()[0].getName());
+	    }	    	
+	    
+	    public String getColumnText(Object obj, int columnIndex) {
+	    	String original = super.getColumnText(obj, columnIndex);
+	    	
+	    	if (propUtil.isDynamicAndExclude(obj, desc, ref, config)) {
+	    		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
+	    	}
+	    	
+	    	return original;	    	
+	    }
 	}
 	
 }
