@@ -201,7 +201,10 @@ public abstract class ElementRealizer {
 					}
 					ve = base;
 				}
-				return ve;
+				element = ve;
+			}
+			if (element == null || !inConfig(element)) {
+				return null;
 			}
 			return element;
 		}
