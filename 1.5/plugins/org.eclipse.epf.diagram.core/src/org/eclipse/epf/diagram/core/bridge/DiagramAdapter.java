@@ -39,12 +39,14 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
@@ -52,7 +54,6 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.ControlNode;
 import org.eclipse.uml2.uml.UMLPackage;
 
 /**
@@ -114,6 +115,13 @@ public class DiagramAdapter extends NodeAdapter {
 			case UmaPackage.ACTIVITY__BREAKDOWN_ELEMENTS:
 				switch (msg.getEventType()) {
 				case Notification.ADD:
+					if (msg.getNewValue() instanceof TaskDescriptor) {
+						TaskDescriptor td = (TaskDescriptor) msg.getNewValue();
+						if (DescriptorPropUtil.getDesciptorPropUtil()
+								.getGreenParentDescriptor(td) != null) {
+							break;
+						}
+					}
 					ActivityNode node = (ActivityNode) addNode(msg
 							.getNewValue());
 					if (node != null) {
