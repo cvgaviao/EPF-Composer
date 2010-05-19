@@ -592,12 +592,17 @@ public class TaskDescriptorStepSection extends AbstractSection {
 	
 	private List syncFreeReOrder(List steps) {
 		List result = new ArrayList();
-		List originalSteps = element.getTask().getSteps();
 		
-		for (Object obj : originalSteps) {
-			if (steps.contains(obj)) {
-				result.add(obj);
+		if (element.getTask() != null) {
+			List originalSteps = element.getTask().getSteps();
+			
+			for (Object obj : originalSteps) {
+				if (steps.contains(obj)) {
+					result.add(obj);
+				}
 			}
+		} else {
+			result = steps;
 		}
 		
 		return result;
