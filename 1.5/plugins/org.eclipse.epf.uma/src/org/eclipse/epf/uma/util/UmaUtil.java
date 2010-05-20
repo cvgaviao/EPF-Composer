@@ -854,5 +854,21 @@ public class UmaUtil {
 		}
 		p.setSynFreeProcess(proc, value);
 	}
+	
+	public static boolean isInLibrary(MethodElement element) {
+		if (element == null) {
+			return false;
+		}
+		EObject cont = element.eContainer();
+		while (cont instanceof MethodElement) {
+			if (cont instanceof MethodLibrary) {
+				return true;
+			}
+			cont = cont.eContainer();
+		}
+		
+		return false;
+	}
+	
 
 }
