@@ -31,6 +31,7 @@ import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
@@ -359,7 +360,11 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	
 	//Return green parent guid
 	public String getGreenParent(Descriptor d) {
-		return getStringValue(d, this.DESCRIPTOR_GreenParent);
+		String guid = getStringValue(d, this.DESCRIPTOR_GreenParent);
+		if (guid == null || guid.trim().length() == 0) {
+			return null;
+		}
+		return guid;
 	}
 	
 	public void setGreenParent(Descriptor d, String value) {
@@ -435,9 +440,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			return null;
 		}
 		Descriptor parent = (Descriptor) LibraryEditUtil.getInstance().getMethodElement(guid);
-		if (parent != null) {
-			addToCustomizingChildren(parent, des);
+		if (! UmaUtil.isInLibrary(parent)) {
+			return null;
 		}
+		addToCustomizingChildren(parent, des);
 		return parent;
 	}	
 	
