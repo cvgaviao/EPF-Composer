@@ -250,22 +250,29 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 			return false;
 		}
 		if (XMILibraryUtil.isMethodLibraryUpgradeRequired(path, libXmi, info)) {
-			if (!CommandLineRunUtil.getInstance().isNeedToRun() 
-					&& isUpgradeLibrary(callerInfo)
-					&& !LibraryUIPlugin
-							.getDefault()
-							.getMsgDialog()
-							.displayConfirmation(
-									LibraryUIResources.openLibraryWizard_title,
-									LibraryUIResources.upgradeLibraryDialog_text)) {
-				return false;
+//			if (!CommandLineRunUtil.getInstance().isNeedToRun() 
+//					&& isUpgradeLibrary(callerInfo)
+//					&& !LibraryUIPlugin
+//							.getDefault()
+//							.getMsgDialog()
+//							.displayConfirmation(
+//									LibraryUIResources.openLibraryWizard_title,
+//									LibraryUIResources.upgradeLibraryDialog_text)) {
+			int confirmationIx = 0;
+			if (!CommandLineRunUtil.getInstance().isNeedToRun()
+					&& isUpgradeLibrary(callerInfo)) {
+				confirmationIx = LibraryUIPlugin.getDefault().getMsgDialog()
+						.displayConfirmationWithCheckBox(
+								LibraryUIResources.openLibraryWizard_title,
+								LibraryUIResources.upgradeLibraryDialog_text,
+								LibraryUIResources.convertToSynProcessLib_msg);
+				if (confirmationIx == 0) {
+					return false;
+				}
 			}
 			
 			if (! LibraryEditUtil.getInstance().isJunitTest()) {
-				boolean b = LibraryUIPlugin.getDefault().getMsgDialog()
-						.displayPrompt(LibraryUIResources.openLibraryWizard_title,
-								LibraryUIResources.convertToSynProcessLib_msg);
-				callerInfo.setConverToSynFree(b);
+				callerInfo.setConverToSynFree(confirmationIx == 1);
 			}
 			
 			if (!isUpgradeLibrary(callerInfo)) {

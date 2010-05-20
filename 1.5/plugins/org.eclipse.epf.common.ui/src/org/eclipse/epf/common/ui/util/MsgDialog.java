@@ -549,6 +549,11 @@ public class MsgDialog {
 	 *            The message to display.
 	 */
 	public boolean displayConfirmation(String title, String msg) {
+		return displayConfirmationWithCheckBox(title, msg, null) > 0;
+	}
+	
+	//return: 0 = cancel, 1 = ok with check-box checked, 2 = ok with check box unchecked 
+	public int displayConfirmationWithCheckBox(String title, String msg, String checkBoxLabel) {
 		if (msg == null) {
 			msg = ""; //$NON-NLS-1$
 		}
@@ -560,13 +565,17 @@ public class MsgDialog {
 		}
 
 		Shell shell = getShell();
-		boolean result = WrappedMessageDialog.openConfirm(shell, title, msg);
 
 		if (shellImage != null) {
 			WrappedMessageDialog.setDefaultImage(oldImage);
 		}
 
-		return result;
+		if (checkBoxLabel == null) {
+			boolean b = WrappedMessageDialog.openConfirm(shell, title, msg);
+			return b ? 1 : 0;
+		}
+
+		return WrappedMessageDialog.openConfirmWithCheckBox(shell, title, msg, checkBoxLabel);
 	}
 
 	public int displayConfirmation(String title, String msg, IStatus status) {
