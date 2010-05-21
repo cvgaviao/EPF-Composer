@@ -186,7 +186,7 @@ public class WorkProductDescriptorGeneralSection extends
 						newList.add(wpDesc);
 				}
 				
-				if (ProcessUtil.isSynFree()
+				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(element)) {
 					newList.addAll(element.getDeliverablePartsExclude());
@@ -399,12 +399,9 @@ public class WorkProductDescriptorGeneralSection extends
 				// also block it's parent work products, if any
 				existingElements.addAll((Collection) getParentWorkProducts((WorkProductDescriptor) element));
 				
-				if (isSyncFree()) {
-					if (ProcessUtil.isSynFree()
-							&& ! DescriptorPropUtil.getDesciptorPropUtil()
-									.isNoAutoSyn(element)) {
+				if (isSyncFree()
+						&& ! DescriptorPropUtil.getDesciptorPropUtil().isNoAutoSyn(element)) {
 						existingElements.addAll(element.getDeliverablePartsExclude());
-					}
 				}				
 
 				ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
@@ -537,7 +534,7 @@ public class WorkProductDescriptorGeneralSection extends
 
 				// update method element control
 				ctrl_method_element.setText(getMethodElementName(element));
-				if (ProcessUtil.isSynFree()) {
+				if (isSyncFreeForAllWorkproduct()) {
 					getEditor().updateOnLinkedElementChange(element);
 				}
 			}
@@ -593,7 +590,7 @@ public class WorkProductDescriptorGeneralSection extends
 		if (ctrl_remove_1 != null)
 			ctrl_remove_1.setEnabled(editable);
 		
-		if (ProcessUtil.isSynFree()) {
+		if (isSyncFreeForAllWorkproduct()) {
 			if (element.getWorkProduct() != null) {
 				linkButton.setEnabled(false);
 			}
@@ -963,6 +960,10 @@ public class WorkProductDescriptorGeneralSection extends
 	}
 	
 	private boolean isSyncFree() {
+		return (element.getWorkProduct() instanceof Deliverable) && ProcessUtil.isSynFree();
+	}
+	
+	private boolean isSyncFreeForAllWorkproduct() {
 		return ProcessUtil.isSynFree();
 	}
 	

@@ -1067,7 +1067,7 @@ public class RelationSection extends AbstractSection {
 	}
 				
 	protected boolean isSyncFree() {
-		return ProcessUtil.isSynFree();
+		return propUtil.isDescriptor(element) && ProcessUtil.isSynFree();
 	}
 	
 }

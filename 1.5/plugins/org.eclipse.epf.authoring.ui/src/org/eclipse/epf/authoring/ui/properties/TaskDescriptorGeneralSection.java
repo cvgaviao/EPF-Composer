@@ -195,7 +195,7 @@ public class TaskDescriptorGeneralSection extends
 
 				// update method element control
 				ctrl_method_element.setText(getMethodElementName(element));
-				if (ProcessUtil.isSynFree()) {
+				if (isSyncFree()) {
 					getEditor().updateOnLinkedElementChange(element);
 				}
 			}
@@ -228,7 +228,7 @@ public class TaskDescriptorGeneralSection extends
 		synchronizedButton.setEnabled(editable);
 		linkButton.setEnabled(editable);
 		clearButton.setEnabled(editable);
-		if (ProcessUtil.isSynFree()) {
+		if (isSyncFree()) {
 			if (element.getTask() != null) {
 				linkButton.setEnabled(false);
 			}
@@ -264,4 +264,9 @@ public class TaskDescriptorGeneralSection extends
 	public String getNamePrefix() {
 		return LibraryUIText.TEXT_TASK_DESCRIPTOR + ": "; //$NON-NLS-1$
 	}
+	
+	private boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
 }

@@ -1239,7 +1239,7 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 		
 		if (inputElement != null) {
 			if (inputElement instanceof Process) {
-				//Won't display process scope selection if invoke filter dialog
+				//Won't display selection scope if invoke filter dialog
 				//from "Add from process" button in properties view editor
 			} else if (inputElement instanceof BreakdownElement) {
 				Process process = getProcess((BreakdownElement)inputElement);

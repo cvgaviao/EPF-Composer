@@ -566,7 +566,7 @@ public class TaskDescriptorStepSection extends AbstractSection {
 	}
 	
 	private boolean isSyncFree() {
-		return ProcessUtil.isSynFree();
+		return (element instanceof TaskDescriptor) && ProcessUtil.isSynFree();
 	}
 	
 	private void initContentProvider() {

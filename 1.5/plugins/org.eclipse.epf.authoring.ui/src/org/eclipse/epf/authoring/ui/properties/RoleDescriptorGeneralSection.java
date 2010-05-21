@@ -135,7 +135,7 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 
 				// update method element control
 				ctrl_method_element.setText(getMethodElementName(element));
-				if (ProcessUtil.isSynFree()) {
+				if (isSyncFree()) {
 					getEditor().updateOnLinkedElementChange(element);
 				}
 			}
@@ -233,7 +233,7 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 			}
 		}
 
-		if (ProcessUtil.isSynFree()) {
+		if (isSyncFree()) {
 			if (element.getRole() != null) {
 				linkButton.setEnabled(false);
 			}
@@ -272,4 +272,9 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 		}
 		return LibraryUIText.TEXT_ROLE_DESCRIPTOR + ": "; //$NON-NLS-1$
 	}
+	
+	private boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
 }

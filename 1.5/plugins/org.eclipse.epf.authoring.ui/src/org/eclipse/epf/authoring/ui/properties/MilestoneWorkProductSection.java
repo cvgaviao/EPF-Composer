@@ -343,11 +343,6 @@ public class MilestoneWorkProductSection extends RelationSection {
 		}
 	}
 	
-	protected boolean isSyncFree() {
-		//Won't handle sync-free in milestone workproduct relationship
-		return false;
-	}
-	
 	private String getLabelForWpd(WorkProductDescriptor wpd, String orginalLabel, EReference ref) {
 		List<Constraint> states = MilestonePropUtil.getMilestonePropUtil(actionMgr).getWpStates(
 				(Milestone)element, wpd, ref);

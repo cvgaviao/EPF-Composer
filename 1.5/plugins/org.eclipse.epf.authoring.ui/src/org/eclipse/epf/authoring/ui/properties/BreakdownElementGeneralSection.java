@@ -91,6 +91,8 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	
 	protected Button nameRestoreBtn, presentationNameRestoreBtn;
 	
+	protected Composite buttonComposite_1, buttonComposite_2;
+	
 	private DescriptorPropUtil descriptorPropUtil;
 	
 	private ModifyListener syncFreeNameModifyListener, syncFreePresentationNameModifyListener;
@@ -579,8 +581,8 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 		FormUI.createLabel(toolkit, generalComposite, PropertiesResources.Process_name);
 		if (isSyncFree()) {
 			nameText = FormUI.createText(toolkit, generalComposite, SWT.DEFAULT, 1);
-			Composite buttonComposite = FormUI.createComposite(toolkit, generalComposite, SWT.NONE, 2, true);
-			nameRestoreBtn = FormUI.createButton(toolkit, buttonComposite, PropertiesResources.Process_name_restore);
+			buttonComposite_1 = FormUI.createComposite(toolkit, generalComposite, SWT.NONE, 2, true);
+			nameRestoreBtn = FormUI.createButton(toolkit, buttonComposite_1, PropertiesResources.Process_name_restore);
 			nameRestoreBtn.setEnabled(false);
 			updateNameRestoreBtn();
 		} else {		 
@@ -591,8 +593,8 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 		FormUI.createLabel(toolkit, generalComposite, PropertiesResources.Activity_presentationName);
 		if (isSyncFree()) {
 			presentationNameText = FormUI.createText(toolkit, generalComposite, SWT.DEFAULT, 1);
-			Composite buttonComposite = FormUI.createComposite(toolkit, generalComposite, SWT.NONE, 2, true);
-			presentationNameRestoreBtn = FormUI.createButton(toolkit, buttonComposite,
+			buttonComposite_2 = FormUI.createComposite(toolkit, generalComposite, SWT.NONE, 2, true);
+			presentationNameRestoreBtn = FormUI.createButton(toolkit, buttonComposite_2,
 					PropertiesResources.Process_PresentationName_restore);
 			presentationNameRestoreBtn.setEnabled(false);
 			updatePresentationNameRestoreBtn();
@@ -627,7 +629,11 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 
 		toolkit.paintBordersFor(generalComposite);
 		toolkit.paintBordersFor(checkBoxComposite);
-
+		
+		if (isSyncFree()) {
+			toolkit.paintBordersFor(buttonComposite_1);
+			toolkit.paintBordersFor(buttonComposite_2);
+		}
 	}
 	
 	private boolean isSyncFree() {
