@@ -407,6 +407,7 @@ public class RealizationManager implements IRealizationManager {
 			}
 		}
 		
+		Set<Descriptor> toRemovedSet = new HashSet<Descriptor>();
 		for (Descriptor des : rdwpdList) {
 			collectAllReferences(des, null, seenSet);
 			
@@ -415,6 +416,12 @@ public class RealizationManager implements IRealizationManager {
 				continue;
 			}
 			if (!tdReferencedSet.contains(des)) {
+//				act.getBreakdownElements().remove(des);
+				toRemovedSet.add(des);
+			}
+		}
+		for (Descriptor des : toRemovedSet) {
+			if (! ProcessUtil.checkDescriptorReferences(toRemovedSet, des)) {
 				act.getBreakdownElements().remove(des);
 			}
 		}

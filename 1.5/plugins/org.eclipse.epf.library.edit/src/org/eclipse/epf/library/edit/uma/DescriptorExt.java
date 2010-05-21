@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 import org.eclipse.epf.uma.Descriptor;
-import org.eclipse.epf.uma.MethodElement;
 
 public class DescriptorExt extends MethodElementExt {
 
@@ -31,8 +31,21 @@ public class DescriptorExt extends MethodElementExt {
 	
 	public List<? extends Descriptor> getCustomizingChildren() {		
 		List<Descriptor> children = new ArrayList<Descriptor>();
+		List<Descriptor> toRemoveList = null;
 		if (customizingChildSet != null && !customizingChildSet.isEmpty()) {
-			children.addAll(customizingChildSet);
+			for (Descriptor des : customizingChildSet) {
+				if (UmaUtil.isInLibrary(des)) {
+					children.add(des);
+				} else {
+					if (toRemoveList == null) {
+						toRemoveList = new ArrayList<Descriptor>(); 
+					}
+					toRemoveList.add(des);
+				}
+			}
+			if (toRemoveList != null) {
+				customizingChildSet.removeAll(toRemoveList);
+			}
 		}
 		return children;
 	}

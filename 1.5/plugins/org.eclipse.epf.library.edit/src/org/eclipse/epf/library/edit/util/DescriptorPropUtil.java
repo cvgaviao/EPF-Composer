@@ -441,6 +441,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 		Descriptor parent = (Descriptor) LibraryEditUtil.getInstance().getMethodElement(guid);
 		if (! UmaUtil.isInLibrary(parent)) {
+			setGreenParent(des, "");		//$NON-NLS-1$
 			return null;
 		}
 		addToCustomizingChildren(parent, des);
