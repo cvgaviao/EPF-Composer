@@ -3,6 +3,7 @@ package org.eclipse.epf.library.edit.util;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
@@ -488,6 +489,32 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 		
 		return null;
+	}
+	
+	public void replaceLocalUseGuidStrings(Descriptor des, Map<String, String> replacedToReplacerMap) {
+		replaceGuidStrings(des, DESCRIPTOR_LocalUsingInfo, replacedToReplacerMap);
+	}
+	
+	private void replaceGuidStrings(Descriptor des, String propName, Map<String, String> replacedToReplacerMap) {
+		String value = getStringValue(des, propName);
+		if (value == null || value.length() == 0) {
+			return ;
+		}
+
+		String[] infos = value.split(infoSeperator);
+		if (infos == null || infos.length == 0) {
+			return;
+		}
+
+		int sz = infos.length / 2;
+		for (int i = 0; i < sz; i++) {
+			String oldGuid = infos[i * 2];
+			String newGuid = replacedToReplacerMap.remove(oldGuid);
+			if (newGuid != null) {
+				value = value.replaceAll(oldGuid, newGuid);
+			}
+		}		
+		setStringValue(des, propName, value);
 	}
 	
 	private List<MethodElement> getGreenRefDeltaList_(Descriptor des, String refName) { 		

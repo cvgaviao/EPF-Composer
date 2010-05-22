@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -40,16 +41,17 @@ import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDeepCopyCommand;
 import org.eclipse.epf.library.edit.process.command.CopyHelper;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.epf.uma.util.UmaUtil;
-
 
 /**
  * Used to extend/copy activities
@@ -189,6 +191,7 @@ public class ActivityHandler {
 					new BasicCommandStack());
 			if(!procPackages.isEmpty()) {
 				activities.addAll(copy(procPackages));
+				fixGuidReferences(copyHelper);
 			}
 			if(!activitiesToDeepCopy.isEmpty()) {
 					if (monitor == null) {
@@ -239,6 +242,7 @@ public class ActivityHandler {
 					} finally {
 						cmd.dispose();
 					}
+					fixGuidReferences(deepCopyHelper);
 				}
 
 				activities.addAll(deepCopies);
@@ -246,6 +250,34 @@ public class ActivityHandler {
 		}
 
 		return activities;
+	}
+	
+	private void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap) {
+		if (true) {	//The method is not ready, by-pass for now
+			return;
+		}
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
+		Set<Descriptor> cpyDesSet = new HashSet<Descriptor>();
+		Map<String, String> srcGuidToCpyGuidMap = new HashMap<String, String>();
+
+		for (Map.Entry entry : objectToCopyMap.entrySet()) {
+			Object src = entry.getKey();
+			Object cpy = entry.getValue();
+			if (src instanceof TaskDescriptor && cpy instanceof TaskDescriptor) {
+				Descriptor srcDes = (Descriptor) src;
+				Descriptor cpyDes = (Descriptor) cpy;
+				cpyDesSet.add(cpyDes);
+				srcGuidToCpyGuidMap.put(srcDes.getGuid(), cpyDes.getGuid());
+			}
+		}
+		
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		for (Descriptor cpy : cpyDesSet) {
+			propUtil.replaceLocalUseGuidStrings(cpy, srcGuidToCpyGuidMap);
+		}
+		
 	}
 	
 	private void updatePredecessors(List workBreakdownElements) {
