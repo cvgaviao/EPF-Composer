@@ -186,6 +186,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			return descriptors;
 		}
 
+		boolean modified = false;
+		String newValue = ""; //$NON-NLS-1$
 		int sz = infos.length / 2;
 		for (int i = 0; i < sz; i++) {
 			int i1 = i * 2;
@@ -194,13 +196,29 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			String iFeature = infos[i2];
 			MethodElement element = LibraryEditUtil.getInstance()
 					.getMethodElement(iGuid);
-			if (element instanceof Descriptor) {
+
+			if (element instanceof Descriptor && UmaUtil.isInLibrary(element)) {
 				if (feature == null || iFeature.equals(feature.getName() + featureSuffix)) {
 					descriptors.add((Descriptor) element);
 				}
+				newValue = incNewValue(newValue, iGuid, iFeature);
+			} else {
+				modified = true;
 			}
 		}
+		
+		if (modified) {
+			setStringValue(usingD, DESCRIPTOR_LocalUsingInfo, newValue);
+		}
 		return descriptors;
+	}
+	
+	private String incNewValue(String newValue, String iGuid, String iFeature) {
+		if (newValue.length() > 0) {
+			newValue = newValue.concat(infoSeperator);
+		}
+		newValue = newValue.concat(iGuid.concat(infoSeperator).concat(iFeature));
+		return newValue;
 	}
 	
 	//Test if usedD is locally used by usingD through relationship specified by the
@@ -245,7 +263,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		if (infos == null || infos.length == 0) {
 			return false;
 		}
-		
+				
 		int sz = infos.length / 2; 		
 		for (int i = 0; i < sz; i++) {
 			int i1 = i*2;
@@ -484,6 +502,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			return null;
 		}
 		
+		boolean modified = false;
+		String newValue = ""; //$NON-NLS-1$
 		List<MethodElement> deltaList = new ArrayList<MethodElement>();
 		int sz = infos.length / 2; 		
 		for (int i = 0; i < sz; i++) {
@@ -493,11 +513,20 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			String iFeature = infos[i2];
 			if (iFeature.equals(refName)) {
 				MethodElement element = LibraryEditUtil.getInstance().getMethodElement(iGuid);
-				if (element != null) {
+				if (element != null && UmaUtil.isInLibrary(element)) {
 					deltaList.add(element);
+					newValue =  incNewValue(newValue, iGuid, iFeature);
+				} else {
+					modified = true;
 				}
-			} 
+			} else {
+				newValue =  incNewValue(newValue, iGuid, iFeature);
+			}
 		}		
+		
+		if (modified) {
+			setStringValue(des, DESCRIPTOR_GreenRefDelta, newValue);
+		}
 		
 		return deltaList;		
 	}
