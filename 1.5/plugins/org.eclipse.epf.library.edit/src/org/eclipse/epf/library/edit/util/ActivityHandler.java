@@ -268,14 +268,23 @@ public class ActivityHandler {
 			if (src instanceof TaskDescriptor && cpy instanceof TaskDescriptor) {
 				Descriptor srcDes = (Descriptor) src;
 				Descriptor cpyDes = (Descriptor) cpy;
-				cpyDesSet.add(cpyDes);
-				srcGuidToCpyGuidMap.put(srcDes.getGuid(), cpyDes.getGuid());
+				if (srcDes != cpyDes) {
+					cpyDesSet.add(cpyDes);
+					srcGuidToCpyGuidMap.put(srcDes.getGuid(), cpyDes.getGuid());
+				}
 			}
 		}
 		
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		for (Descriptor cpy : cpyDesSet) {
 			propUtil.replaceLocalUseGuidStrings(cpy, srcGuidToCpyGuidMap);
+			String oldGreenParent = propUtil.getGreenParent(cpy);
+			if (oldGreenParent != null) {
+				String newGreenParent = srcGuidToCpyGuidMap.get(oldGreenParent);
+				if (newGreenParent != null && ! newGreenParent.equals(oldGreenParent)) {
+					propUtil.setGreenParent(cpy, newGreenParent);
+				}
+			}
 		}
 		
 	}
