@@ -164,6 +164,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	// if feature == null, get all
 	public Set<Descriptor> getLocalUsedDescriptors(Descriptor usingD,
 			EReference feature) {
+		//wlu: To do: Need to handle greenParent here !!!
+		
 		Set<Descriptor> descriptors = getLocalUsedDescriptors(usingD, feature,
 				""); //$NON-NLS-1$
 		if (localDebug) {

@@ -253,9 +253,6 @@ public class ActivityHandler {
 	}
 	
 	private void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap) {
-		if (true) {	//The method is not ready, by-pass for now
-			return;
-		}
 		if (! ProcessUtil.isSynFree()) {
 			return;
 		}
@@ -265,12 +262,14 @@ public class ActivityHandler {
 		for (Map.Entry entry : objectToCopyMap.entrySet()) {
 			Object src = entry.getKey();
 			Object cpy = entry.getValue();
-			if (src instanceof TaskDescriptor && cpy instanceof TaskDescriptor) {
+			if (src instanceof Descriptor && cpy instanceof Descriptor) {
 				Descriptor srcDes = (Descriptor) src;
 				Descriptor cpyDes = (Descriptor) cpy;
 				if (srcDes != cpyDes) {
-					cpyDesSet.add(cpyDes);
 					srcGuidToCpyGuidMap.put(srcDes.getGuid(), cpyDes.getGuid());
+					if (cpy instanceof TaskDescriptor) {
+						cpyDesSet.add(cpyDes);
+					}
 				}
 			}
 		}
