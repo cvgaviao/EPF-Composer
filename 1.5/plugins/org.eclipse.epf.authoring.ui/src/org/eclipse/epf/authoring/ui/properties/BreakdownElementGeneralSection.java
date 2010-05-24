@@ -522,9 +522,15 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 				public void widgetSelected(SelectionEvent e) {
 					descriptorPropUtil.setNameRepalce((Descriptor)element, false);
 					isNameReplace = false;
-					updateNameRestoreBtn();			
-					MethodElement reference = getReferenceMethodElement(element);
-					element.setName(reference.getName());					
+					updateNameRestoreBtn();
+					
+					Descriptor greenParent = descriptorPropUtil.getGreenParentDescriptor((Descriptor)element);
+					if (greenParent != null) {
+						element.setName(greenParent.getName());
+					} else {					
+						MethodElement reference = getReferenceMethodElement(element);
+						element.setName(reference.getName());
+					}
 				}
 			});
 		}
@@ -534,9 +540,15 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 				public void widgetSelected(SelectionEvent e) {
 					descriptorPropUtil.setPresentationNameRepalce((Descriptor)element, false);
 					isPresentationNameReplace = false;
-					updatePresentationNameRestoreBtn();			
-					MethodElement reference = getReferenceMethodElement(element);
-					element.setPresentationName(reference.getPresentationName());
+					updatePresentationNameRestoreBtn();
+					
+					Descriptor greenParent = descriptorPropUtil.getGreenParentDescriptor((Descriptor)element);
+					if (greenParent != null) {
+						element.setPresentationName(greenParent.getPresentationName());
+					} else {
+						MethodElement reference = getReferenceMethodElement(element);
+						element.setPresentationName(reference.getPresentationName());
+					}
 				}
 			});
 		}		
@@ -642,13 +654,15 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	
 	private void updateNameRestoreBtn() {
 		if (getReferenceMethodElement(element) != null) {
-			nameRestoreBtn.setEnabled(descriptorPropUtil.isNameRepalce((Descriptor)element));
+			nameRestoreBtn.setEnabled(
+					descriptorPropUtil.isNameRepalce((Descriptor)element) && editable);
 		}
 	}
 	
 	private void updatePresentationNameRestoreBtn() {
 		if (getReferenceMethodElement(element) != null) {
-			presentationNameRestoreBtn.setEnabled(descriptorPropUtil.isPresentationNameRepalce((Descriptor)element));
+			presentationNameRestoreBtn.setEnabled(
+					descriptorPropUtil.isPresentationNameRepalce((Descriptor)element) && editable);
 		}
 	}
 	

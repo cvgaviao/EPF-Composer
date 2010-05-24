@@ -369,7 +369,7 @@ public class MilestoneWorkProductSection extends RelationSection {
 		tableViewer1.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
-				if (selection.size() == 1) {
+				if ((selection.size() == 1) && (editable)) {
 					ctrl_state_1.setEnabled(true);
 				} else {
 					ctrl_state_1.setEnabled(false);

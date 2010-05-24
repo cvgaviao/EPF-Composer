@@ -862,7 +862,8 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		tableViewer1.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) tableViewer1.getSelection();
-				if (selection.size() == 1) {
+				//need check the editable variable to support green parent scenario
+				if ((selection.size() == 1) && (editable)) {
 					if (isSyncFree()) {
 						Object obj = selection.getFirstElement();
 						if (propUtil.isDynamicAndExclude(obj, (Descriptor)element, ref, getConfiguration())) {
@@ -895,7 +896,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		tableViewer2.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) tableViewer2.getSelection();
-				if (selection.size() == 1) {
+				if ((selection.size() == 1) && (editable)) {
 					if (isSyncFree()) {
 						Object obj = selection.getFirstElement();
 						if (propUtil.isDynamicAndExclude(obj, (Descriptor)element, ref, getConfiguration())) {
@@ -928,7 +929,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		tableViewer3.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) tableViewer3.getSelection();
-				if (selection.size() == 1) {
+				if ((selection.size() == 1) && (editable)) {
 					if (isSyncFree()) {
 						Object obj = selection.getFirstElement();
 						if (propUtil.isDynamicAndExclude(obj, (Descriptor)element, ref, getConfiguration())) {
@@ -961,7 +962,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		tableViewer4.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) tableViewer4.getSelection();
-				if (selection.size() == 1) {
+				if ((selection.size() == 1) && (editable)) {
 					if (isSyncFree()) {
 						Object obj = selection.getFirstElement();
 						if (propUtil.isDynamicAndExclude(obj, (Descriptor)element, ref, getConfiguration())) {
