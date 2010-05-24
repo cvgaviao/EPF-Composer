@@ -164,10 +164,16 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	// if feature == null, get all
 	public Set<Descriptor> getLocalUsedDescriptors(Descriptor usingD,
 			EReference feature) {
-		//wlu: To do: Need to handle greenParent here !!!
-		
 		Set<Descriptor> descriptors = getLocalUsedDescriptors(usingD, feature,
 				""); //$NON-NLS-1$
+
+		Descriptor greenParent = getGreenParentDescriptor(usingD);
+		if (greenParent != null) {
+			Set<Descriptor> descriptorsFromParent = getLocalUsedDescriptors(
+					greenParent, feature, ""); //$NON-NLS-1$
+			descriptors.addAll(descriptorsFromParent);
+		}
+
 		if (localDebug) {
 			System.out
 					.println("LD> getLocalUsedDescriptors, feature: " + feature + "\nl" + descriptors); //$NON-NLS-1$  //$NON-NLS-2$ 
