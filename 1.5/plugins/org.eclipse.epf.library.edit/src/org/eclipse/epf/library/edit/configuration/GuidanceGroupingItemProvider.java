@@ -88,7 +88,7 @@ public class GuidanceGroupingItemProvider extends ItemProviderAdapter implements
 		}
 	};
 
-	private static final IFilter practiceFilter = new IFilter() {
+	public static final IFilter practiceFilter = new IFilter() {
 		public boolean accept(Object obj) {
 			return obj instanceof Practice;
 		}
