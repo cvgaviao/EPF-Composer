@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -33,8 +34,10 @@ import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
+import org.eclipse.epf.uma.UmaPackage;
 
 /**
  * Command to add guidance to breakdown element/activity
@@ -130,7 +133,24 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 			
 			if (propUtil.isDescriptor(brElement) && ProcessUtil.isSynFree()) {
 				if (calledForExculded) {
-					((Descriptor)brElement).getGuidanceExclude().removeAll(guidances);					
+					((Descriptor)brElement).getGuidanceExclude().removeAll(guidances);
+					
+					if (brElement instanceof TaskDescriptor) {
+						TaskDescriptor greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(
+								(TaskDescriptor)brElement);						 
+						if (greenParent != null) {
+							EReference ref = null;
+							EReference eRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceExclude();
+							List<Guidance> parentExecludeList = (List<Guidance>) greenParent.eGet(eRef);
+							for (Guidance guidance : (List<Guidance>) guidances) {
+								ref = propUtil.getGuidanceEReference(guidance);								
+								propUtil.addGreenRefDelta((TaskDescriptor)brElement, guidance, ref, true);
+								if (parentExecludeList != null && parentExecludeList.contains(guidance)) {
+									propUtil.removeGreenRefDelta((TaskDescriptor)brElement, guidance, eRef, false);
+								}
+							}
+						}						
+					}					
 				} else {
 					((Descriptor)brElement).getGuidanceAdditional().addAll(guidances);
 				}
@@ -187,7 +207,24 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 			
 			if (propUtil.isDescriptor(brElement) && ProcessUtil.isSynFree()) {
 				if (calledForExculded) {
-					((Descriptor)brElement).getGuidanceExclude().addAll(guidances);					
+					((Descriptor)brElement).getGuidanceExclude().addAll(guidances);
+					
+					if (brElement instanceof TaskDescriptor) {
+						TaskDescriptor greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(
+								(TaskDescriptor)brElement);						 
+						if (greenParent != null) {
+							EReference ref = null;
+							EReference eRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceExclude();
+							List<Guidance> parentExecludeList = (List<Guidance>) greenParent.eGet(eRef);
+							for (Guidance guidance : (List<Guidance>) guidances) {
+								ref = propUtil.getGuidanceEReference(guidance);								
+								propUtil.removeGreenRefDelta((TaskDescriptor)brElement, guidance, ref, true);
+								if (parentExecludeList != null && parentExecludeList.contains(guidance)) {
+									propUtil.addGreenRefDelta((TaskDescriptor)brElement, guidance, eRef, false);
+								}
+							}
+						}						
+					}		
 				} else {
 					((Descriptor)brElement).getGuidanceAdditional().removeAll(guidances);
 				}

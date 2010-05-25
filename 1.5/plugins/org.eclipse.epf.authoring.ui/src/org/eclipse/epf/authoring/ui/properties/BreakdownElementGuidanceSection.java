@@ -31,6 +31,7 @@ import org.eclipse.epf.library.edit.itemsfilter.FilterInitializer;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
@@ -45,6 +46,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
@@ -509,6 +511,20 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 						actionMgr.doAction(IActionManager.ADD, element,
 								UmaPackage.eINSTANCE.getDescriptor_GuidanceExclude(),
 								item, -1);
+						
+						//for Green parent
+						Descriptor parent = propUtil.getGreenParentDescriptor((Descriptor)element);
+						if ((parent != null) && (parent instanceof TaskDescriptor)) {
+							TaskDescriptor greenParent = (TaskDescriptor)parent;
+							EReference ref = propUtil.getGuidanceEReference(item);
+							EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
+							List<MethodElement> parentExecludeList = (List<MethodElement>) greenParent.eGet(eRef);
+							
+							propUtil.removeGreenRefDelta((Descriptor) element, item, ref, false);
+							if (parentExecludeList != null && !parentExecludeList.contains(item)) {
+								propUtil.addGreenRefDelta((Descriptor) element, item, eRef, true);
+							}
+						}
 					}				
 				}
 			}

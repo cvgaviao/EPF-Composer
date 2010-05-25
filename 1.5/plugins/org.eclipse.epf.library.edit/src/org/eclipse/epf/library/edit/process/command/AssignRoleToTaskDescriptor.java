@@ -187,22 +187,17 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 					excludedList.removeAll(roles);
 				}
 				
-				TaskDescriptor greenParent = (TaskDescriptor) propUtil
-						.getGreenParentDescriptor(taskDesc);
+				TaskDescriptor greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(taskDesc);
 				if (greenParent != null) {
-					EReference eRef = LibraryEditUtil.getInstance()
-							.getExcludeFeature(ref);
-					List<Role> parentExecludeList = (List<Role>) greenParent
-							.eGet(eRef);
+					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
+					List<Role> parentExecludeList = (List<Role>) greenParent.eGet(eRef);
 					for (Role role : (List<Role>) roles) {
 						propUtil.removeGreenRefDelta(taskDesc, role, ref, true);
 						if (parentExecludeList != null && parentExecludeList.contains(role)) {
-							propUtil.addGreenRefDelta(taskDesc, role, eRef,
-									false);
+							propUtil.addGreenRefDelta(taskDesc, role, eRef, false);
 						}
 					}
-				}
-							
+				}							
 			} else {
 				propUtil.addLocalUsingInfo(existingRoleDescList, taskDesc, getFeature(action));
 				propUtil.addLocalUsingInfo(newRoleDescList, taskDesc, getFeature(action));		
@@ -269,13 +264,28 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 		if (ProcessUtil.isSynFree()) {
 			if (calledForExculded) {
 				List excludedList = null;
+				EReference ref = null;
 				if (action == IActionTypeConstants.ADD_PRIMARY_PERFORMER) {
 					excludedList = taskDesc.getPerformedPrimarilyByExcluded();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy();
 				} else if (action == IActionTypeConstants.ADD_ADDITIONAL_PERFORMER) {
 					excludedList = taskDesc.getAdditionallyPerformedByExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy();
 				}
 				if (excludedList != null) {
 					excludedList.addAll(roles);
+				}
+				
+				TaskDescriptor greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(taskDesc);
+				if (greenParent != null) {
+					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
+					List<Role> parentExecludeList = (List<Role>) greenParent.eGet(eRef);
+					for (Role role : (List<Role>) roles) {
+						propUtil.addGreenRefDelta(taskDesc, role, ref, true);
+						if (parentExecludeList != null && parentExecludeList.contains(role)) {
+							propUtil.removeGreenRefDelta(taskDesc, role, eRef, false);
+						}
+					}
 				}
 			} else {
 				propUtil.removeLocalUsingInfo(existingRoleDescList, taskDesc, getFeature(action));

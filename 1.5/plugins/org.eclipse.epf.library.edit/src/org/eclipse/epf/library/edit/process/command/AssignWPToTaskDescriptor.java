@@ -27,6 +27,7 @@ import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -218,17 +219,32 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 		if (ProcessUtil.isSynFree()) {
 			if (calledForExculded) {
 				List excludedList = null;
+				EReference ref = null;
 				if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
 					excludedList = taskDesc.getMandatoryInputExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
 				} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
 					excludedList = taskDesc.getOptionalInputExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
 				} else if (action == IActionTypeConstants.ADD_OUTPUT) {
 					excludedList = taskDesc.getOutputExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
 				}
 				if (excludedList != null) {
 					excludedList.removeAll(workProducts);
 				}
-
+				
+				TaskDescriptor greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(taskDesc);
+				if (greenParent != null) {
+					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
+					List<WorkProduct> parentExecludeList = (List<WorkProduct>) greenParent.eGet(eRef);
+					for (WorkProduct wp : (List<WorkProduct>) workProducts) {
+						propUtil.removeGreenRefDelta(taskDesc, wp, ref, true);
+						if (parentExecludeList != null && parentExecludeList.contains(wp)) {
+							propUtil.addGreenRefDelta(taskDesc, wp, eRef, false);
+						}
+					}
+				}
 			} else {
 				propUtil.addLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
 				propUtil.addLocalUsingInfo(newWPDescList, taskDesc, getFeature(action));
@@ -301,15 +317,31 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 		if (ProcessUtil.isSynFree()) {
 			if (calledForExculded) {
 				List excludedList = null;
+				EReference ref = null;
 				if (action == IActionTypeConstants.ADD_MANDATORY_INPUT) {
 					excludedList = taskDesc.getMandatoryInputExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
 				} else if (action == IActionTypeConstants.ADD_OPTIONAL_INPUT) {
 					excludedList = taskDesc.getOptionalInputExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInput();
 				} else if (action == IActionTypeConstants.ADD_OUTPUT) {
 					excludedList = taskDesc.getOutputExclude();
+					ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
 				}
 				if (excludedList != null) {
 					excludedList.addAll(workProducts);
+				}
+				
+				TaskDescriptor greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(taskDesc);
+				if (greenParent != null) {
+					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
+					List<WorkProduct> parentExecludeList = (List<WorkProduct>) greenParent.eGet(eRef);
+					for (WorkProduct wp : (List<WorkProduct>) workProducts) {
+						propUtil.addGreenRefDelta(taskDesc, wp, ref, true);
+						if (parentExecludeList != null && parentExecludeList.contains(wp)) {
+							propUtil.removeGreenRefDelta(taskDesc, wp, eRef, false);
+						}
+					}
 				}
 			} else {
 				propUtil.removeLocalUsingInfo(existingWPDescList, taskDesc, getFeature(action));
