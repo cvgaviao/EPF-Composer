@@ -1606,6 +1606,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String WPCompartmentFigure_0;
 
 	public static String promptfor_publish_unopen_activitydd_text;
+	
+	public static String use_state_on_workproduct_text;
 
 	public static String prompt_for_publish_extend_activity_diagram;
 

@@ -14,6 +14,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.diagram.model.util.DiagramModelPreference;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.publishing.ui.PublishingUIPlugin;
@@ -56,6 +57,8 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 	private Button ctrl_publish_ad_for_activity_extension;
 
 	private Text tasksPerRowText;
+	
+	private Button ctrl_use_state_on_workproduct;
 
 	public ActivityDiagramPreferencePage() {
 		super();
@@ -87,6 +90,11 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 		createLabel(activityDetailDiagramGroup,
 				AuthoringUIResources.add_TasksperRow);
 		tasksPerRowText = createEditableText(activityDetailDiagramGroup, ""); //$NON-NLS-1$
+		
+		ctrl_use_state_on_workproduct = createCheckbox(
+				activityDetailDiagramGroup,
+				AuthoringUIResources.use_state_on_workproduct_text,
+				2);
 
 		initializeValues();
 
@@ -142,6 +150,8 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 		LibraryUIPreferences
 				.setPublishADForActivityExtension(ctrl_publish_ad_for_activity_extension
 						.getSelection());
+		
+		DiagramModelPreference.setUseStateOnWorkproduct(ctrl_use_state_on_workproduct.getSelection());
 	}
 
 	private void initializeDefaults() {
@@ -151,6 +161,8 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 
 		tasksPerRowText.setText(String.valueOf(AuthoringUIPreferences
 				.getDefaultADDTasksPerRow()));
+		
+		ctrl_use_state_on_workproduct.setSelection(false);
 	}
 
 	/**
@@ -165,6 +177,8 @@ public class ActivityDiagramPreferencePage extends BasePreferencePage implements
 
 		tasksPerRowText.setText(String.valueOf(AuthoringUIPreferences
 				.getADD_TasksPerRow()));
+		
+		ctrl_use_state_on_workproduct.setSelection(DiagramModelPreference.getUseStateOnWorkproduct());
 	}
 
 	/*

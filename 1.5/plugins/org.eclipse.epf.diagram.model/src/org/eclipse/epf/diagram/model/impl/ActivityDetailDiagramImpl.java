@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.edit.provider.AdapterFactoryTreeIterator;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -34,6 +35,7 @@ import org.eclipse.epf.diagram.model.RoleTaskComposite;
 import org.eclipse.epf.diagram.model.TaskNode;
 import org.eclipse.epf.diagram.model.WorkProductComposite;
 import org.eclipse.epf.diagram.model.WorkProductDescriptorNode;
+import org.eclipse.epf.diagram.model.util.DiagramModelPreference;
 import org.eclipse.epf.diagram.model.util.GraphicalDataHelper;
 import org.eclipse.epf.diagram.model.util.IActivityDetailDiagramChangeListener;
 import org.eclipse.epf.diagram.model.util.IAdapterFactoryFilter;
@@ -44,14 +46,17 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.TaskDescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.AssociationHelper;
@@ -1037,6 +1042,12 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 	}
 	
 	private void setState(int type, Node node) {
+		TaskDescriptor td = null;
+		
+		if (node instanceof WorkProductComposite) {
+			td = (TaskDescriptor)((WorkProductComposite)node).getLinkedElement();
+		}
+		
 		if (node instanceof NodeContainer) {
 			for (Node element : ((NodeContainer)node).getNodes()) {
 				if (element instanceof WorkProductDescriptorNode) {
@@ -1044,10 +1055,29 @@ public class ActivityDetailDiagramImpl extends DiagramImpl implements
 					MethodElement methodElement = wpNode.getLinkedElement();
 					if (methodElement instanceof WorkProductDescriptor){
 						String stateText = null;
-						if (type == WorkProductComposite.INPUTS)
-							stateText = ((WorkProductDescriptor) methodElement).getActivityEntryState();
-						else if (type == WorkProductComposite.OUTPUTS)
-							stateText = ((WorkProductDescriptor) methodElement).getActivityExitState();
+
+						boolean useNewWorkproductState = DiagramModelPreference.getUseStateOnWorkproduct();
+						if (useNewWorkproductState) {
+							WorkProductDescriptor wpd = (WorkProductDescriptor)methodElement;
+							EReference ref = null;
+							
+							if (type == WorkProductComposite.INPUTS) {
+								ref = UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInput();
+							} else if (type == WorkProductComposite.OUTPUTS) {
+								ref = UmaPackage.eINSTANCE.getTaskDescriptor_Output();
+							}
+							
+							List<Constraint> states = TaskDescriptorPropUtil.getTaskDescriptorPropUtil().getWpStates(td, wpd, ref);
+							if (states.size() > 0) {
+								stateText = states.get(0).getBody();
+							}							
+						} else {
+							if (type == WorkProductComposite.INPUTS)
+								stateText = ((WorkProductDescriptor) methodElement).getActivityEntryState();
+							else if (type == WorkProductComposite.OUTPUTS)
+								stateText = ((WorkProductDescriptor) methodElement).getActivityExitState();							
+						}
+						
 						wpNode.setState(stateText);
 					}					
 				}
