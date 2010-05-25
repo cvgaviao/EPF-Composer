@@ -439,8 +439,8 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 					Object unwrapped = TngUtil.unwrap(child);
 					if (unwrapped instanceof Descriptor) {
 						Descriptor des = (Descriptor) unwrapped;
-						String greenParent = propUtil.getGreenParent(des);
-						if (greenParent != null && greenParent.length() > 0) {
+						Descriptor greenParent = propUtil.getGreenParentDescriptor(des);
+						if (greenParent != null) {
 							continue;
 						}
 					}
