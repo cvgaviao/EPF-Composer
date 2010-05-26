@@ -79,13 +79,13 @@ public class SynFreeProcessConverter {
 
 	public void convertLibrary(MethodLibrary lib, boolean toSave) {
 		if (debug) {
-			System.out.println("LD> Begin convertLibrary: " + lib);
-			System.out.println("");
+			System.out.println("LD> Begin convertLibrary: " + lib); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
 		}
 		convertLibrary_(lib, toSave);
 		if (debug) {
-			System.out.println("LD> End convertLibrary: " + lib);
-			System.out.println("");
+			System.out.println("LD> End convertLibrary: " + lib); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
 		}
 	}
 
@@ -116,8 +116,8 @@ public class SynFreeProcessConverter {
 			return;
 		}
 		if (debug) {
-			System.out.println("LD> convertPlugin: " + plugin);
-			System.out.println("");
+			System.out.println("LD> convertPlugin: " + plugin); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
 		}
 		if (toSave) {
 			resouresToSave = new HashSet<Resource>();
@@ -153,8 +153,8 @@ public class SynFreeProcessConverter {
 			return;
 		}
 		if (debug) {
-			System.out.println("LD> convertProcess: " + proc);
-			System.out.println("");
+			System.out.println("LD> convertProcess: " + proc); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
 		}
 
 		MethodConfiguration c = getConfig(proc);
@@ -202,7 +202,7 @@ public class SynFreeProcessConverter {
 			return;
 		}
 		if (debug) {
-			System.out.println("LD> convert: " + des);
+			System.out.println("LD> convert: " + des); //$NON-NLS-1$
 		}
 
 		if (des instanceof TaskDescriptor) {
@@ -225,6 +225,31 @@ public class SynFreeProcessConverter {
 		}
 	}
 
+	public static boolean equalsIgnoreSuffixNumber(String eString, String dString) {
+		if (eString == null) {
+			return dString == null;
+		}
+		if (dString == null) {
+			return false;
+		}
+		if (dString.equals(eString)) {
+			return true;
+		}
+		
+		if (dString.startsWith(eString + "_")) { //$NON-NLS-1$
+			int ix = eString.length() + 1;
+			String str = dString.substring(ix);
+			try {
+				int n = Integer.parseInt(str);
+				return n >= 0;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		
+		return false;
+	}
+	
 	private void convertTextAttributes(Process proc, Descriptor des) {
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		ContentElement element = (ContentElement) propUtil.getLinkedElement(des);
@@ -234,15 +259,17 @@ public class SynFreeProcessConverter {
 
 		if (propUtil.hasNoValue(des.getName())) {
 			des.setName(element.getName());
-		} else if (!des.getName().equals(element.getName())) {
+//		} else if (!des.getName().equals(element.getName())) {
+		} else if (! equalsIgnoreSuffixNumber(element.getName(), des.getName())) {			
 			propUtil.setNameRepalce(des, true);
 		}
 
 		String elementStrValue = ConfigurationHelper.getPresentationName(element, getConfig(proc));
 		if (propUtil.hasNoValue(des.getPresentationName())) {
 			des.setPresentationName(element.getPresentationName());
-		} else if (!des.getPresentationName().equals(
-				element.getPresentationName())) {
+//		} else if (!des.getPresentationName().equals(
+//				element.getPresentationName())) {
+		} else if (! equalsIgnoreSuffixNumber(element.getPresentationName(), des.getPresentationName())) {	
 			propUtil.setPresentationNameRepalce(des, true);
 		}
 
