@@ -628,6 +628,33 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return LibraryEditUtil.getInstance().isGuidanceDynamic(obj, desc, config);
 	}
 	
+    public boolean isFromGreenParentLocalList(Object obj, Descriptor desc, EReference ref) {
+    	if (!isDynamic(obj, desc, ref)) {
+    		Descriptor greenParent = getGreenParentDescriptor(desc);
+    		if (greenParent != null) {
+    			if (localUse((Descriptor)obj, greenParent, ref)) {
+    				return true;
+    			}    			
+    		}    		
+    	}
+    	
+    	return false;
+    }
+    
+    public boolean isGuidanceFromGreenParentLocalList(Object obj, Descriptor desc,
+    		MethodConfiguration config) {
+    	if (!isGuidanceDynamic(obj, desc, config)) {
+    		Descriptor greenParent = getGreenParentDescriptor(desc);
+    		if (greenParent != null) {
+    			if (!isGuidanceDynamic(obj, greenParent, config)) {
+    				return true;
+    			}    			
+    		}    		
+    	}
+    	
+    	return false;
+    }
+    
 	public boolean isDescriptor(BreakdownElement element) {
 		if ((element instanceof TaskDescriptor) || (element instanceof RoleDescriptor)
 				|| (element instanceof WorkProductDescriptor)) {

@@ -32,7 +32,6 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -677,10 +676,9 @@ public class TaskDescriptorStepSection extends AbstractSection {
 	}
 	
 	public class StepsSyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
-		private FontRegistry registry = new FontRegistry();
-		private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();		
+		private Font systemFont = Display.getCurrent().getSystemFont();;
 		
-		private Font systemFont;
 		private Descriptor desc;
 		private EReference ref;
 		private MethodConfiguration config;
@@ -693,18 +691,14 @@ public class TaskDescriptorStepSection extends AbstractSection {
 		}
 	    
 	    public Font getFont(Object obj, int columnIndex) {
-	    	if (systemFont == null) {
-	    		systemFont = Display.getCurrent().getSystemFont();
-	    	}
-	    	
-    		return registry.getBold(systemFont.getFontData()[0].getName());
+	    	return systemFont;
 	    }	    	
 	    
 	    public String getColumnText(Object obj, int columnIndex) {
 	    	String original = super.getColumnText(obj, columnIndex);
 	    	
 	    	if (propUtil.isDynamicAndExclude(obj, desc, ref, config)) {
-	    		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
+	    		return "--<" + original + ">";	    		 //$NON-NLS-1$ //$NON-NLS-2$
 	    	}
 	    	
 	    	return original;	    	

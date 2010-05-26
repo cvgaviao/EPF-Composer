@@ -51,7 +51,6 @@ import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.UmaUtil;
-import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -59,11 +58,13 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -644,11 +645,12 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		}		
 	}
 	
-	class GuidanceSyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
-		private FontRegistry registry = new FontRegistry();
+	public class GuidanceSyncFreeLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
 		private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+		private Font systemFont = Display.getCurrent().getSystemFont();
+		private	Font boldFont = null;
+		private Font boldAndItalicFont = null;
 		
-		private Font systemFont;
 		private Descriptor desc;
 		private MethodConfiguration config;
 
@@ -656,17 +658,19 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 			super(adapterFactory);
 			this.desc = desc;		
 			this.config = config;
+			boldFont = createFont(SWT.BOLD);
+			boldAndItalicFont = createFont(SWT.BOLD | SWT.ITALIC);
 		}
 	    
 	    public Font getFont(Object obj, int columnIndex) {
-	    	if (systemFont == null) {
-	    		systemFont = Display.getCurrent().getSystemFont();
+			if (propUtil.isGuidanceFromGreenParentLocalList(obj, desc, config)) {
+				return boldAndItalicFont;
+			}
+			
+		 	if (!propUtil.isGuidanceDynamic(obj, desc, config)) {
+		 		return boldFont;
 	    	}
-	    	
-	    	if (propUtil.isGuidanceDynamic(obj, desc, config)) {
-	    		return registry.getBold(systemFont.getFontData()[0].getName());    		
-	    	}
-	    	
+			
 	    	return systemFont;
 	    }	    	
 	    
@@ -676,12 +680,32 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	    	EReference ref = propUtil.getGuidanceEReference((Guidance)obj);
 	    	
 	    	if (propUtil.isDynamicAndExclude(obj, desc, ref, config)) {
-	    		return "<<<" + original + ">>>";	    		 //$NON-NLS-1$ //$NON-NLS-2$
+	    		return "--<" + original + ">";	    		 //$NON-NLS-1$ //$NON-NLS-2$
 	    	}
 	    	
 	    	return original;	    	
 	    }
 	    
+	    public void dispose() {
+	    	super.dispose();
+	    	
+	    	if (boldFont != null) {
+	    		boldFont.dispose();
+	    	}
+	    	
+	    	if (boldAndItalicFont != null) {
+	    		boldAndItalicFont.dispose();
+	    	}
+	    }
+	    
+	    private Font createFont(int style) {
+			FontData[] fontdata = systemFont.getFontData();
+			for (FontData data : fontdata) {
+				data.setStyle(style);
+			}
+			
+			return new Font(Display.getCurrent(), fontdata);    	
+	    }	    
 	}
 	
 }
