@@ -521,7 +521,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
 							List<MethodElement> parentExecludeList = (List<MethodElement>) greenParent.eGet(eRef);
 							
-							propUtil.removeGreenRefDelta((Descriptor) element, item, ref, false);
+							propUtil.removeGreenRefDelta((Descriptor) element, item, eRef, false);
 							if (parentExecludeList != null && !parentExecludeList.contains(item)) {
 								propUtil.addGreenRefDelta((Descriptor) element, item, eRef, true);
 							}
