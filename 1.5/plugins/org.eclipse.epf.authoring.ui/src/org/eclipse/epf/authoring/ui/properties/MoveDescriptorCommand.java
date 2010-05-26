@@ -61,7 +61,7 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 			EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
 			List<MethodElement> parentExecludeList = (List<MethodElement>) greenParent.eGet(eRef);
 			for (MethodElement elem : (List<MethodElement>) methodElements) {
-				propUtil.removeGreenRefDelta(desc, elem, ref, false);
+				propUtil.removeGreenRefDelta(desc, elem, eRef, false);
 				if (parentExecludeList != null && ! parentExecludeList.contains(elem)) {
 					propUtil.addGreenRefDelta(desc, elem, eRef, true);
 				}				
@@ -85,7 +85,7 @@ public class MoveDescriptorCommand extends RemoveDescriptorCommand {
 			EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
 			List<MethodElement> parentExecludeList = (List<MethodElement>) greenParent.eGet(eRef);
 			for (MethodElement elem : (List<MethodElement>) methodElements) {
-				propUtil.addGreenRefDelta(desc, elem, ref, false);
+				propUtil.addGreenRefDelta(desc, elem, eRef, false);
 				if (parentExecludeList != null && ! parentExecludeList.contains(elem)) {
 					propUtil.removeGreenRefDelta(desc, elem, eRef, true);
 				}				

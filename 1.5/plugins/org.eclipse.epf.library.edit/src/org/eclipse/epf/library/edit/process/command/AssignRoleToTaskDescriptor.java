@@ -192,7 +192,7 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
 					List<Role> parentExecludeList = (List<Role>) greenParent.eGet(eRef);
 					for (Role role : (List<Role>) roles) {
-						propUtil.removeGreenRefDelta(taskDesc, role, ref, true);
+						propUtil.removeGreenRefDelta(taskDesc, role, eRef, true);
 						if (parentExecludeList != null && parentExecludeList.contains(role)) {
 							propUtil.addGreenRefDelta(taskDesc, role, eRef, false);
 						}
@@ -281,7 +281,7 @@ public class AssignRoleToTaskDescriptor extends AddMethodElementCommand {
 					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
 					List<Role> parentExecludeList = (List<Role>) greenParent.eGet(eRef);
 					for (Role role : (List<Role>) roles) {
-						propUtil.addGreenRefDelta(taskDesc, role, ref, true);
+						propUtil.addGreenRefDelta(taskDesc, role, eRef, true);
 						if (parentExecludeList != null && parentExecludeList.contains(role)) {
 							propUtil.removeGreenRefDelta(taskDesc, role, eRef, false);
 						}

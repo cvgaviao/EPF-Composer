@@ -239,7 +239,7 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
 					List<WorkProduct> parentExecludeList = (List<WorkProduct>) greenParent.eGet(eRef);
 					for (WorkProduct wp : (List<WorkProduct>) workProducts) {
-						propUtil.removeGreenRefDelta(taskDesc, wp, ref, true);
+						propUtil.removeGreenRefDelta(taskDesc, wp, eRef, true);
 						if (parentExecludeList != null && parentExecludeList.contains(wp)) {
 							propUtil.addGreenRefDelta(taskDesc, wp, eRef, false);
 						}
@@ -337,7 +337,7 @@ public class AssignWPToTaskDescriptor extends AddMethodElementCommand {
 					EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(ref);
 					List<WorkProduct> parentExecludeList = (List<WorkProduct>) greenParent.eGet(eRef);
 					for (WorkProduct wp : (List<WorkProduct>) workProducts) {
-						propUtil.addGreenRefDelta(taskDesc, wp, ref, true);
+						propUtil.addGreenRefDelta(taskDesc, wp, eRef, true);
 						if (parentExecludeList != null && parentExecludeList.contains(wp)) {
 							propUtil.removeGreenRefDelta(taskDesc, wp, eRef, false);
 						}
