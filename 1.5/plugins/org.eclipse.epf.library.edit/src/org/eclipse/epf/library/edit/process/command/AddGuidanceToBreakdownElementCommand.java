@@ -144,9 +144,9 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 							List<Guidance> parentExecludeList = (List<Guidance>) greenParent.eGet(eRef);
 							for (Guidance guidance : (List<Guidance>) guidances) {
 								ref = propUtil.getGuidanceEReference(guidance);								
-								propUtil.addGreenRefDelta((TaskDescriptor)brElement, guidance, ref, true);
+								propUtil.removeGreenRefDelta((TaskDescriptor)brElement, guidance, eRef, true);
 								if (parentExecludeList != null && parentExecludeList.contains(guidance)) {
-									propUtil.removeGreenRefDelta((TaskDescriptor)brElement, guidance, eRef, false);
+									propUtil.addGreenRefDelta((TaskDescriptor)brElement, guidance, eRef, false);
 								}
 							}
 						}						
@@ -218,7 +218,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 							List<Guidance> parentExecludeList = (List<Guidance>) greenParent.eGet(eRef);
 							for (Guidance guidance : (List<Guidance>) guidances) {
 								ref = propUtil.getGuidanceEReference(guidance);								
-								propUtil.removeGreenRefDelta((TaskDescriptor)brElement, guidance, ref, true);
+								propUtil.removeGreenRefDelta((TaskDescriptor)brElement, guidance, eRef, true);
 								if (parentExecludeList != null && parentExecludeList.contains(guidance)) {
 									propUtil.addGreenRefDelta((TaskDescriptor)brElement, guidance, eRef, false);
 								}
