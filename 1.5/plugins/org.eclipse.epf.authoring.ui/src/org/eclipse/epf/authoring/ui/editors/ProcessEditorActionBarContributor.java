@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -68,6 +69,7 @@ import org.eclipse.epf.diagram.ad.ADImages;
 import org.eclipse.epf.diagram.add.ADDImages;
 import org.eclipse.epf.diagram.core.part.DiagramEditorInput;
 import org.eclipse.epf.diagram.core.part.util.DiagramEditorUtil;
+import org.eclipse.epf.diagram.core.services.DiagramHelper;
 import org.eclipse.epf.diagram.core.services.DiagramManager;
 import org.eclipse.epf.diagram.model.util.GraphicalDataHelper;
 import org.eclipse.epf.diagram.model.util.GraphicalDataManager;
@@ -275,6 +277,35 @@ public class ProcessEditorActionBarContributor extends
 			}
 		}
 	};
+	
+	private class DeleteDiagramAction extends Action {
+		private int diagramType;
+		
+		public DeleteDiagramAction(String text, int diagramType) {
+			super(text);
+			this.diagramType = diagramType;
+		}
+		
+		public void run() {
+			DiagramManager mgr = DiagramManager.getInstance(getProcess(), this);
+		
+			try {
+				List<org.eclipse.gmf.runtime.notation.Diagram> diagrams = mgr.getDiagrams(selectedActivity, diagramType);
+				if (diagrams.size() > 0) {
+					DiagramHelper.deleteDiagram(diagrams.get(0), true);
+				}			
+			} catch (Exception e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}			
+		}		
+	}
+	
+	private IAction deleteActivityDiagram = new DeleteDiagramAction("Delete Activity Diagram",
+			IDiagramManager.ACTIVITY_DIAGRAM);
+	private IAction deleteActivityDetailDiagram = new DeleteDiagramAction("Delete Activity Detail Diagram",
+			IDiagramManager.ACTIVITY_DETAIL_DIAGRAM);	
+	private IAction deleteWPDiagram = new DeleteDiagramAction("Delete Work Product Dependency Diagram",
+			IDiagramManager.WORK_PRODUCT_DEPENDENCY_DIAGRAM);
 	
 	private class OpenDiagramEditorAction extends Action {
 
@@ -1952,11 +1983,13 @@ public class ProcessEditorActionBarContributor extends
 					AuthoringUIResources.ProcessEditor_Action_Diagrams); 
 			if (selectedActivity != null) {
 				newDiagramSubMenu.add(newActivityDiagramEditor);
+				newDiagramSubMenu.add(deleteActivityDiagram);
 				newDiagramSubMenu.add(newActivityDetailDiagramEditor);
+				newDiagramSubMenu.add(deleteActivityDetailDiagram);
 				newDiagramSubMenu.add(newWPDiagramEditor);
+				newDiagramSubMenu.add(deleteWPDiagram);
 				newDiagramSubMenu.add(newSuppressDiagramAction);
 				newDiagramSubMenu.add(newAssignUserDiagram);
-
 			}
 
 			if (selectedActivity == getProcess()) {
