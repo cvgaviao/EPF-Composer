@@ -175,37 +175,4 @@ public class TaskDescriptorLayout extends DescriptorLayout {
 		}
 	}
 	
-	protected void modifyChildDisplayName(Object feature,
-			XmlElement childXmlElement, MethodElement childElement) {
-		if (! (element instanceof TaskDescriptor)) {
-			return;
-		}
-		
-		if (! (childElement instanceof WorkProductDescriptor)) {
-			return;
-		}
-		if (! (feature instanceof EReference)) {
-			return;
-		}
-		EReference ref = (EReference) feature;
-		if (! ref.isMany()) {
-			return;
-		}
-		WorkProductDescriptor wpd = (WorkProductDescriptor) childElement;
-		String displayName = childXmlElement.getAttribute("DisplayName"); //$NON-NLS-1$)
-		if (displayName == null) {
-			return;
-		}
-		
-		TaskDescriptor td = (TaskDescriptor) element;
-		
-		List<Constraint> states = TaskDescriptorPropUtil.getTaskDescriptorPropUtil().getWpStates(
-				td, wpd, ref);
-		if (states.size() > 0) {
-			String stateName = states.get(0).getBody();
-			String newDisplayName = displayName + " [" + stateName + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-			childXmlElement.setAttribute("DisplayName", newDisplayName); //$NON-NLS-1$
-		}		
-	}
-	
 }
