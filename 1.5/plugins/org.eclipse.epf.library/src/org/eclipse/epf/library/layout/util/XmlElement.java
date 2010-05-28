@@ -95,6 +95,11 @@ public class XmlElement implements IXmlElement {
 		return this;
 	}
 
+	public String getAttribute(String name) {
+		Object value = attributes.get(name);
+		return value instanceof String ? (String) value : null;
+	}
+	
 	/**
 	 * set the value of the element
 	 * @param value

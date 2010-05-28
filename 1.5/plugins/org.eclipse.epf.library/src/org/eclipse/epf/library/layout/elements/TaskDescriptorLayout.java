@@ -17,16 +17,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.Suppression;
+import org.eclipse.epf.library.edit.util.TaskDescriptorPropUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -170,4 +174,38 @@ public class TaskDescriptorLayout extends DescriptorLayout {
 			return super.isSuppressed(sup, feature, element);
 		}
 	}
+	
+	protected void modifyChildDisplayName(Object feature,
+			XmlElement childXmlElement, MethodElement childElement) {
+		if (! (element instanceof TaskDescriptor)) {
+			return;
+		}
+		
+		if (! (childElement instanceof WorkProductDescriptor)) {
+			return;
+		}
+		if (! (feature instanceof EReference)) {
+			return;
+		}
+		EReference ref = (EReference) feature;
+		if (! ref.isMany()) {
+			return;
+		}
+		WorkProductDescriptor wpd = (WorkProductDescriptor) childElement;
+		String displayName = childXmlElement.getAttribute("DisplayName"); //$NON-NLS-1$)
+		if (displayName == null) {
+			return;
+		}
+		
+		TaskDescriptor td = (TaskDescriptor) element;
+		
+		List<Constraint> states = TaskDescriptorPropUtil.getTaskDescriptorPropUtil().getWpStates(
+				td, wpd, ref);
+		if (states.size() > 0) {
+			String stateName = states.get(0).getBody();
+			String newDisplayName = displayName + " [" + stateName + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+			childXmlElement.setAttribute("DisplayName", newDisplayName); //$NON-NLS-1$
+		}		
+	}
+	
 }

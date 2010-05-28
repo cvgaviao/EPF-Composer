@@ -499,6 +499,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 							XmlElement childXmlElement = l.getXmlElement(ConfigurationHelper
 									.isDescriptionElement(me) ? true
 									: includeReferences);
+							modifyChildDisplayName(feature, childXmlElement, me);
 							parent.addChild(childXmlElement);
 							processGrandChild(feature, me, l, childXmlElement);
 						}
@@ -508,6 +509,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 			}
 		}
+	}
+	
+	protected void modifyChildDisplayName(Object feature,
+			XmlElement childXmlElement, MethodElement childElement) {
 	}
 	
 	protected void processNonMethodElementInProcessChild(
