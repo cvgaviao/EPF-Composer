@@ -13,13 +13,15 @@ package org.eclipse.epf.library.layout.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
-import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.MilestonePropUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
+import org.eclipse.epf.library.edit.util.TaskDescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
@@ -27,8 +29,12 @@ import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 
 import com.ibm.icu.util.StringTokenizer;
 
@@ -371,6 +377,44 @@ public abstract class AbstractProcessElementLayout extends
 		}
 		
 		return null;
+	}
+	
+	@Override
+	protected void modifyChildDisplayName(Object feature,
+			XmlElement childXmlElement, MethodElement childElement) {
+		if (! (element instanceof TaskDescriptor) && !(element instanceof Milestone)) {
+			return;
+		}
+		
+		if (! (childElement instanceof WorkProductDescriptor)) {
+			return;
+		}
+		if (! (feature instanceof EReference)) {
+			return;
+		}
+		EReference ref = (EReference) feature;
+		if (! ref.isMany()) {
+			return;
+		}
+		WorkProductDescriptor wpd = (WorkProductDescriptor) childElement;
+		String displayName = childXmlElement.getAttribute("DisplayName"); //$NON-NLS-1$)
+		if (displayName == null) {
+			return;
+		}
+		
+		List<Constraint> states = null;
+		if (element instanceof TaskDescriptor) {
+			states = TaskDescriptorPropUtil.getTaskDescriptorPropUtil().getWpStates(
+				(TaskDescriptor) element, wpd, ref);
+		} else if (element instanceof Milestone) {
+			states = MilestonePropUtil.getMilestonePropUtil().getWpStates(
+					(Milestone) element, wpd, ref);
+		}
+		if (states != null && states.size() > 0) {
+			String stateName = states.get(0).getBody();
+			String newDisplayName = displayName + " [" + stateName + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+			childXmlElement.setAttribute("DisplayName", newDisplayName); //$NON-NLS-1$
+		}		
 	}
 	
 }
