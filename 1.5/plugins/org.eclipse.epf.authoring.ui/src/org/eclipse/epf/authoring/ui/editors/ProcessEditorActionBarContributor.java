@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -67,6 +66,8 @@ import org.eclipse.epf.authoring.ui.views.ProcessViewer;
 import org.eclipse.epf.authoring.ui.views.ViewHelper;
 import org.eclipse.epf.diagram.ad.ADImages;
 import org.eclipse.epf.diagram.add.ADDImages;
+import org.eclipse.epf.diagram.core.DiagramCorePlugin;
+import org.eclipse.epf.diagram.core.DiagramCoreResources;
 import org.eclipse.epf.diagram.core.part.DiagramEditorInput;
 import org.eclipse.epf.diagram.core.part.util.DiagramEditorUtil;
 import org.eclipse.epf.diagram.core.services.DiagramHelper;
@@ -139,6 +140,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
@@ -280,10 +282,12 @@ public class ProcessEditorActionBarContributor extends
 	
 	private class DeleteDiagramAction extends Action {
 		private int diagramType;
+		private final String DELETE_ICON_PATH = "elcl16/delete_diagram.gif"; //$NON-NLS-1$
 		
 		public DeleteDiagramAction(String text, int diagramType) {
 			super(text);
 			this.diagramType = diagramType;
+			setImageDescriptor(DiagramCorePlugin.getDefault().getImageDescriptor(DELETE_ICON_PATH));
 		}
 		
 		public void run() {
@@ -292,19 +296,47 @@ public class ProcessEditorActionBarContributor extends
 			try {
 				List<org.eclipse.gmf.runtime.notation.Diagram> diagrams = mgr.getDiagrams(selectedActivity, diagramType);
 				if (diagrams.size() > 0) {
-					DiagramHelper.deleteDiagram(diagrams.get(0), true);
+					String msg = NLS.bind(DiagramCoreResources.DeleteDiagram_prompt_new, getDiagramName(diagramType));					
+					boolean result = DiagramCorePlugin.getDefault().getMsgDialog().displayPrompt(
+							DiagramCoreResources.DeleteDiagram_text, msg);
+					if (result) {	
+						IEditorPart[] editors = getPage().getEditors();
+						for (IEditorPart editor: editors) {
+							if (editor instanceof org.eclipse.epf.diagram.core.part.AbstractDiagramEditor) {
+								getPage().closeEditor(editor, false);
+							}
+						}						
+						
+						DiagramHelper.deleteDiagram(diagrams.get(0), true);
+					}
 				}			
 			} catch (Exception e) {
 				AuthoringUIPlugin.getDefault().getLogger().logError(e);
 			}			
-		}		
+		}
+		
+		private String getDiagramName(int type) {
+			switch(type) {
+			case IDiagramManager.ACTIVITY_DIAGRAM:
+				return DiagramCoreResources.DeleteDiagram_AD;
+			case IDiagramManager.ACTIVITY_DETAIL_DIAGRAM:
+				return DiagramCoreResources.DeleteDiagram_ADD;
+			case IDiagramManager.WORK_PRODUCT_DEPENDENCY_DIAGRAM:
+				return DiagramCoreResources.DeleteDiagram_WPDD;
+			default:
+				return null;
+			}
+		}
 	}
 	
-	private IAction deleteActivityDiagram = new DeleteDiagramAction("Delete Activity Diagram",
+	private IAction deleteActivityDiagram = new DeleteDiagramAction(
+			AuthoringUIResources.ProcessEditor_Action_delete_AD_text,
 			IDiagramManager.ACTIVITY_DIAGRAM);
-	private IAction deleteActivityDetailDiagram = new DeleteDiagramAction("Delete Activity Detail Diagram",
+	private IAction deleteActivityDetailDiagram = new DeleteDiagramAction(
+			AuthoringUIResources.ProcessEditor_Action_delete_ADD_text,
 			IDiagramManager.ACTIVITY_DETAIL_DIAGRAM);	
-	private IAction deleteWPDiagram = new DeleteDiagramAction("Delete Work Product Dependency Diagram",
+	private IAction deleteWPDiagram = new DeleteDiagramAction(
+			AuthoringUIResources.ProcessEditor_Action_delete_WPDD_text,
 			IDiagramManager.WORK_PRODUCT_DEPENDENCY_DIAGRAM);
 	
 	private class OpenDiagramEditorAction extends Action {
@@ -1982,12 +2014,14 @@ public class ProcessEditorActionBarContributor extends
 			MenuManager newDiagramSubMenu = new MenuManager(
 					AuthoringUIResources.ProcessEditor_Action_Diagrams); 
 			if (selectedActivity != null) {
-				newDiagramSubMenu.add(newActivityDiagramEditor);
-				newDiagramSubMenu.add(deleteActivityDiagram);
+				newDiagramSubMenu.add(newActivityDiagramEditor);				
 				newDiagramSubMenu.add(newActivityDetailDiagramEditor);
-				newDiagramSubMenu.add(deleteActivityDetailDiagram);
 				newDiagramSubMenu.add(newWPDiagramEditor);
+				newDiagramSubMenu.add(new Separator());
+				newDiagramSubMenu.add(deleteActivityDiagram);
+				newDiagramSubMenu.add(deleteActivityDetailDiagram);				
 				newDiagramSubMenu.add(deleteWPDiagram);
+				newDiagramSubMenu.add(new Separator());
 				newDiagramSubMenu.add(newSuppressDiagramAction);
 				newDiagramSubMenu.add(newAssignUserDiagram);
 			}

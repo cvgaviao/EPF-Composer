@@ -113,6 +113,10 @@ public class DiagramCoreResources extends NLS {
 	public static String diagram_saveError;
 	public static String DeleteDiagram_text;
 	public static String DeleteDiagram_prompt;
+	public static String DeleteDiagram_AD;
+	public static String DeleteDiagram_ADD;
+	public static String DeleteDiagram_WPDD;
+	public static String DeleteDiagram_prompt_new;
 	public static String align_bend_point_text;
 	public static String ConfigurationEditorInput_configeditor0;
 	public static String diagram_node_property_value_problem_msg;
