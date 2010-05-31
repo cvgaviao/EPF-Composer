@@ -70,6 +70,7 @@ public class DeleteConfigCommandListener implements
 		PublishingUIPreferences.removeConfigPrefInitialized(configId);
 		PublishingUIPreferences.removeConvertBrokenLinks(configId);
 		PublishingUIPreferences.removeExtraDescriptorInfo(configId);
+		PublishingUIPreferences.removeShowLinkedElementForDescriptor(configId);
 		PublishingUIPreferences.removeFeedbackURL(configId);
 		PublishingUIPreferences.removeIncludeGlossary(configId);
 		PublishingUIPreferences.removeIncludeIndex(configId);

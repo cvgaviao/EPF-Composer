@@ -102,6 +102,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	protected Button publishLightWeightTreeCheckbox;
 
 	protected Button extraDescriptorInfoCtr;
+	
+	protected Button showLinkedPageForDescriptorCtr;
 
 	protected Button showRelatedDescriptors;
 	
@@ -324,6 +326,9 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 
 		extraDescriptorInfoCtr = createCheckbox(layoutGroup,
 				PublishingUIResources.publishExtraDescriptorInfoLabel_text);
+		
+		showLinkedPageForDescriptorCtr = createCheckbox(layoutGroup,
+				PublishingUIResources.showLinkedPageForDescriptorLabel_text);
 
 		showRelatedDescriptors = createCheckbox(layoutGroup,
 				PublishingUIResources.showRelatedDescriptors_text);		
@@ -406,6 +411,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				.getLightWeightTree(configId));
 		extraDescriptorInfoCtr.setSelection(PublishingUIPreferences
 				.getExtraDescriptorInfo(configId));
+		showLinkedPageForDescriptorCtr.setSelection(PublishingUIPreferences
+				.getShowLinkedElementForDescriptor(configId));
 		showRelatedDescriptors.setSelection(PublishingUIPreferences
 				.getShowRelatedDescriptors(configId));
 		showRelatedLinks.setSelection(PublishingUIPreferences
@@ -571,6 +578,7 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 		options.setConvertBrokenLinks(getConvertBrokenLinksSelection());
 		options.setPublishLightWeightTree(getPublishLightWeightTreeSelection());
 		options.setShowMethodContentInDescriptors(getShowExtraDescriptorInfoSelection());
+		options.setShowLinkedPageForDescriptor(getShowLinkedPageForDescriptorSelection());
 		options.setShowRelatedDescriptors(showRelatedDescriptors.getSelection());
 		options.setShowRelatedDescriptorsOption(showRelatedDescriptorsOption.getSelection());		
 		options.setShowRelatedLinks(showRelatedLinks.getSelection());
@@ -667,6 +675,10 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 	 */
 	protected boolean getShowExtraDescriptorInfoSelection() {
 		return extraDescriptorInfoCtr.getSelection();
+	}
+	
+	protected boolean getShowLinkedPageForDescriptorSelection() {
+		return showLinkedPageForDescriptorCtr.getSelection();
 	}
 
 	/**
@@ -776,6 +788,8 @@ public class SelectPublishingOptionsPage extends BaseWizardPage {
 				getPublishLightWeightTreeSelection());
 		PublishingUIPreferences.setExtraDescriptorInfo(configId,
 				getShowExtraDescriptorInfoSelection());
+		PublishingUIPreferences.setShowLinkedElementForDescriptor(configId,
+				getShowLinkedPageForDescriptorSelection());
 		PublishingUIPreferences.setShowRelatedDescriptors(configId,
 				getShowRelatedDescriptorsSelection());
 		PublishingUIPreferences.setShowRelatedDescriptorsOption(configId,

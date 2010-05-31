@@ -47,6 +47,8 @@ public class PublishOptions {
 
 	// Show method content in the descriptor pages option.
 	protected boolean showMethodContentInDescriptors;
+	
+	protected boolean showLinkedPageForDescriptor;
 
 	// Show related descriptors in the task, role, and work product pages
 	// option.
@@ -235,6 +237,14 @@ public class PublishOptions {
 	public void setShowMethodContentInDescriptors(
 			boolean showMethodContentInDescriptors) {
 		this.showMethodContentInDescriptors = showMethodContentInDescriptors;
+	}
+	
+	public boolean isShowLinkedPageForDescriptor() {
+		return showLinkedPageForDescriptor;
+	}
+	
+	public void setShowLinkedPageForDescriptor(boolean showLinkedPageForDescriptor) {
+		this.showLinkedPageForDescriptor = showLinkedPageForDescriptor;
 	}
 
 	/**

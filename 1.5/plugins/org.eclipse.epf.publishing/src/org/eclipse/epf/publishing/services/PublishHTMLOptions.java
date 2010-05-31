@@ -86,6 +86,7 @@ public class PublishHTMLOptions extends PublishOptions {
 		this.showRelatedLinks = options.isShowRelatedLinks();
 		this.showMethodContentInDescriptors = options
 				.isShowMethodContentInDescriptors();
+		this.showLinkedPageForDescriptor = options.isShowLinkedPageForDescriptor();
 		this.showRelatedDescriptors = options.isShowRelatedDescriptors();
 		this.showRelatedDescriptorsOption = options.isShowRelatedDescriptorsOption();
 		this.showDescriptorsInNavigationTree = options

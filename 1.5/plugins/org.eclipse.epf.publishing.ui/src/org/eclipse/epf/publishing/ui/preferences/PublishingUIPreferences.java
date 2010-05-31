@@ -1319,7 +1319,26 @@ public class PublishingUIPreferences {
 		prefStore.setValue(
 				getConfigPrefPrefix(configId) + DEFAULT_ACTIVITY_TAB, tabName);
 	}
-
+	
+	public static void setShowLinkedElementForDescriptor(String configId, boolean value) {
+		prefStore.setValue(getConfigPrefPrefix(configId)
+				+ SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR, value);
+	}
+	
+	public static boolean getShowLinkedElementForDescriptor(String configId) {
+		if (getConfigPrefInitialized(configId)) {
+			return prefStore.getBoolean(getConfigPrefPrefix(configId)
+					+ SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR);
+		} else {
+			return prefStore.getBoolean(SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR);
+		}
+	}
+	
+	public static void removeShowLinkedElementForDescriptor(String configId) {
+		prefStore.setToDefault(getConfigPrefPrefix(configId)
+				+ SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR);
+	}
+	
 	/**
 	 * Saves all the preferences.
 	 */
