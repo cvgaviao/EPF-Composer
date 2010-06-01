@@ -2664,5 +2664,35 @@ public class ProcessEditorActionBarContributor extends
 				}
 			}
 		}
+		
+		//for the diagram delete menus
+		updateDiagramDeleteMenu();
+	}
+	
+	private void updateDiagramDeleteMenu() {
+		deleteActivityDiagram.setEnabled(false);
+		deleteActivityDetailDiagram.setEnabled(false);				
+		deleteWPDiagram.setEnabled(false);
+
+		DiagramManager mgr = DiagramManager.getInstance(getProcess(), this);		
+		try {
+			List<org.eclipse.gmf.runtime.notation.Diagram> diagrams = mgr.getDiagrams(selectedActivity,
+					IDiagramManager.ACTIVITY_DIAGRAM);
+			if (diagrams.size() > 0) {
+				deleteActivityDiagram.setEnabled(true);
+			}
+			
+			diagrams = mgr.getDiagrams(selectedActivity, IDiagramManager.ACTIVITY_DETAIL_DIAGRAM);
+			if (diagrams.size() > 0) {
+				deleteActivityDetailDiagram.setEnabled(true);
+			}
+			
+			diagrams = mgr.getDiagrams(selectedActivity, IDiagramManager.WORK_PRODUCT_DEPENDENCY_DIAGRAM);
+			if (diagrams.size() > 0) {
+				deleteWPDiagram.setEnabled(true);
+			}			
+		} catch (Exception e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		}		
 	}
 }
