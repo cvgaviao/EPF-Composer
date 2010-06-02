@@ -537,5 +537,4 @@ public class SynFreeProcessConverter {
 	
 		throw new UnsupportedOperationException();
 	}
-	
 }
