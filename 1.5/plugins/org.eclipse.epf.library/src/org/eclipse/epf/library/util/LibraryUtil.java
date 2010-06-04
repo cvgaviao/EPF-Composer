@@ -26,6 +26,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -35,15 +36,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.configuration.ConfigurationFilter;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.configuration.GuidanceGroupingItemProvider;
+import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
@@ -68,6 +74,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.MethodUnit;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.UmaPackage;
@@ -1099,4 +1106,47 @@ public class LibraryUtil {
 		
 		return true;
 	}
+	
+	public static List<Practice> getPractices(MethodConfiguration config) {
+		List<Practice> practiceList = new ArrayList<Practice>();
+		Set<Practice> practiceSet = new HashSet<Practice>();
+		
+		IFilter filter = new ConfigurationFilter(config);
+		AdapterFactory adapterFactory = TngAdapterFactory.INSTANCE.getConfigurationView_AdapterFactory(filter);
+		ITreeItemContentProvider adapter = (ITreeItemContentProvider) adapterFactory.adapt(config, ITreeItemContentProvider.class);
+		GuidanceGroupingItemProvider guidanceGroupingItemProvider = null;
+		for (Object child : adapter.getChildren(config)) {
+			if(child instanceof GuidanceGroupingItemProvider) {
+				guidanceGroupingItemProvider = (GuidanceGroupingItemProvider) child;
+				break;
+			}
+		}
+		
+		if(guidanceGroupingItemProvider != null) {
+			GuidanceItemProvider practicesItemProvider = null;
+			Collection<?> children = guidanceGroupingItemProvider.getChildren(guidanceGroupingItemProvider);
+			for (Object child : children) {
+				if(child instanceof GuidanceItemProvider) {
+					GuidanceItemProvider ip = (GuidanceItemProvider) child;
+					if(ip.getGuidanceFilter() == GuidanceGroupingItemProvider.practiceFilter) {
+						practicesItemProvider = ip;
+						break;
+					}
+				}
+			}
+			if(practicesItemProvider != null) {
+				children = practicesItemProvider.getChildren(practicesItemProvider);
+				for (Object child : children) {
+					if(child instanceof Practice && ! practiceSet.contains(child)) {
+						Practice p = (Practice) child;
+						practiceList.add(p);
+						practiceSet.add(p);
+					}
+				}
+			}
+		}
+		
+		return practiceList;
+	}	
+	
 }
