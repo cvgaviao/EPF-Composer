@@ -1109,6 +1109,10 @@ public class LibraryUtil {
 	
 	public static List<Practice> getPractices(MethodConfiguration config) {
 		List<Practice> practiceList = new ArrayList<Practice>();
+		if (config == null) {
+			return practiceList;
+		}
+				
 		Set<Practice> practiceSet = new HashSet<Practice>();
 		
 		IFilter filter = new ConfigurationFilter(config);
