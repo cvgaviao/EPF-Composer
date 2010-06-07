@@ -208,7 +208,7 @@ public abstract class DescriptorLayout extends AbstractProcessElementLayout {
 	@Override
 	protected MethodElement getElementForElementPath() {
 		// This method gets called before "linkedElement" is assigned a value
-		if (BrowsingLayoutSettings.INSTANCE.isShowLinkedPageForDescriptor()
+		if (layoutManager.getValidator().showLinkedPageForDescriptor()
 				&& element instanceof Descriptor) {
 			MethodElement linkedContentElement = ProcessUtil
 					.getAssociatedElement((Descriptor) element);

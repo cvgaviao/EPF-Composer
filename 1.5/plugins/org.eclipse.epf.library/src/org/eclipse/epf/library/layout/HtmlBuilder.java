@@ -400,8 +400,8 @@ public class HtmlBuilder {
 		try {
 			StringWriter sw = new StringWriter();
 			
-			if (BrowsingLayoutSettings.INSTANCE
-					.isShowLinkedPageForDescriptor()
+			if (getValidator()
+					.showLinkedPageForDescriptor()
 					&& layout instanceof DescriptorLayout) {
 
 				DescriptorLayout dLayout = (DescriptorLayout) layout;

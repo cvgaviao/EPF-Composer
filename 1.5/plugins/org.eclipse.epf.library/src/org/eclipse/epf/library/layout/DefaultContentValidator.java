@@ -232,5 +232,9 @@ public class DefaultContentValidator implements IContentValidator {
 	public String getDefaultActivityTab() {
 		return null;  // use the default
 	}
+	
+	public boolean showLinkedPageForDescriptor() {
+		return BrowsingLayoutSettings.INSTANCE.isShowLinkedPageForDescriptor();
+	}
 }
 

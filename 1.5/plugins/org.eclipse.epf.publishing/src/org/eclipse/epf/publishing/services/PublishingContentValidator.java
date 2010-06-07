@@ -731,4 +731,10 @@ public class PublishingContentValidator extends DefaultContentValidator {
 	public String getDefaultActivityTab() {
 		return options.getDefaultActivityTab();
 	}
+	
+	@Override
+	public boolean showLinkedPageForDescriptor() {
+		return options.isShowLinkedPageForDescriptor();
+	}
+	
 }

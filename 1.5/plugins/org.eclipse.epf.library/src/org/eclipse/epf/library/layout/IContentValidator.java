@@ -180,4 +180,10 @@ public interface IContentValidator  {
 	 * @return String
 	 */
 	public String getDefaultActivityTab();
+	
+	/**
+	 * show lined element page for a descriptor if true
+	 */
+	public boolean showLinkedPageForDescriptor();
+	
 }
