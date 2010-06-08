@@ -168,10 +168,15 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 				""); //$NON-NLS-1$
 
 		Descriptor greenParent = getGreenParentDescriptor(usingD);
-		if (greenParent != null) {
+		if (greenParent != null && feature != null) {
 			Set<Descriptor> descriptorsFromParent = getLocalUsedDescriptors(
 					greenParent, feature, ""); //$NON-NLS-1$
-			descriptors.addAll(descriptorsFromParent);
+			for (Descriptor usedD : descriptorsFromParent) {
+				if (! localUse_(usedD, usingD, feature, minus)) {
+					descriptors.add(usedD);
+				}
+			}
+//			descriptors.addAll(descriptorsFromParent);
 		}
 
 		if (localDebug) {
@@ -285,9 +290,22 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}		
 		return false;
 		
+	}	
+	
+	private void toggleOffGParentLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		addLocalUse(usedD, usingD, feature, minus);	//$NON-NLS-1$
+	}
+	
+	private void untoggleOffGParentLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		removeLocalUse(usedD, usingD, feature, minus);	//$NON-NLS-1$
 	}
 	
 	public void addLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		Descriptor greenParent = getGreenParentDescriptor(usingD);
+		if (greenParent != null && localUse(usedD, greenParent, feature)) {
+			removeLocalUse(usedD, usingD, feature, minus);	//$NON-NLS-1$
+			return;
+		}
 		addLocalUse(usedD, usingD, feature, "");	//$NON-NLS-1$
 	}
 	
@@ -305,6 +323,11 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	public void removeLocalUse(Descriptor usedD, Descriptor usingD, EReference feature) {
+		Descriptor greenParent = getGreenParentDescriptor(usingD);
+		if (greenParent != null && localUse(usedD, greenParent, feature)) {
+			addLocalUse(usedD, usingD, feature, minus);	//$NON-NLS-1$
+			return;
+		}
 		removeLocalUse(usedD, usingD, feature, "");	//$NON-NLS-1$
 	}
 	
