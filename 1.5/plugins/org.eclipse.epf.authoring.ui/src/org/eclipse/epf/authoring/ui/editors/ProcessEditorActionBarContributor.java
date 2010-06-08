@@ -2011,10 +2011,14 @@ public class ProcessEditorActionBarContributor extends
 			// }
 			// menuManager.appendToGroup("open", diagramSubMenu); //$NON-NLS-1$
 
+			if (selectedActivity != null) {
+				menuManager.appendToGroup("open", newActivityDiagramEditor); //$NON-NLS-1$
+			}
+			
 			MenuManager newDiagramSubMenu = new MenuManager(
 					AuthoringUIResources.ProcessEditor_Action_Diagrams); 
 			if (selectedActivity != null) {
-				newDiagramSubMenu.add(newActivityDiagramEditor);				
+				//newDiagramSubMenu.add(newActivityDiagramEditor);				
 				newDiagramSubMenu.add(newActivityDetailDiagramEditor);
 				newDiagramSubMenu.add(newWPDiagramEditor);
 				newDiagramSubMenu.add(new Separator());
