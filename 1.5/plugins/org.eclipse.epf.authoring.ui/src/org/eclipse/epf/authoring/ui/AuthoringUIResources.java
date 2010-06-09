@@ -1360,8 +1360,6 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String FilterDialog_Process_Scope_Grp_viewBtn;
 	
-	public static String FilterDialog_Process_Scope_Grp_editBtn;
-	
 	public static String PluginListDialog_title;
 	
 	public static String PluginListDialog_button_add;
