@@ -333,7 +333,12 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 				processViewer.setInput(config);
 				processViewer.expandAll();
 				initControls();
-			}			
+			} else {
+				//For config free process publishing
+				processViewer.setInput(null);
+				processViewer.expandAll();
+				initControls();
+			}
 		}
 	}
 
