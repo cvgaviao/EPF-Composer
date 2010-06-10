@@ -141,6 +141,9 @@ public class WorkProductDescriptorGeneralSection extends
 		String sectionDesc = PropertiesResources.WPDescriptor_DeliverablePart_SectionDescription; 
 		String tableTitle = PropertiesResources.WPDescriptor_DeliverablePart_Table1; 
 
+		if(isSyncFreeForSectionDesc()) {
+			sectionDesc = sectionDesc + PropertiesResources.Process_SyncFree_FontStyle;
+		}
 		Section section = FormUI.createSection(toolkit, composite,
 				sectionTitle, sectionDesc);
 
@@ -961,6 +964,10 @@ public class WorkProductDescriptorGeneralSection extends
 	
 	private boolean isSyncFree() {
 		return (element.getWorkProduct() instanceof Deliverable) && ProcessUtil.isSynFree();
+	}
+	
+	private boolean isSyncFreeForSectionDesc() {
+		return ProcessUtil.isSynFree();
 	}
 	
 	private boolean isSyncFreeForAllWorkproduct() {

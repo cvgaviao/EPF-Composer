@@ -253,6 +253,9 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 			sectionDesc = PropertiesResources.Activity_GeneralGuidanceDescription; 
 			tableTitle = PropertiesResources.Activity_Selected_GeneralGuidance; 
 
+			if (isSyncFree()) {
+				sectionDesc = sectionDesc + PropertiesResources.Process_SyncFree_FontStyle;
+			}
 			Section section = FormUI.createSection(toolkit, composite,
 					sectionTitle, sectionDesc);
 

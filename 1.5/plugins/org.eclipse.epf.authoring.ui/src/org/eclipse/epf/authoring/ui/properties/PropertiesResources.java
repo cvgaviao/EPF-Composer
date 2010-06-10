@@ -203,6 +203,8 @@ public final class PropertiesResources extends NLS {
 	
 	public static String true_text;
 	public static String false_text;
+	
+	public static String Process_SyncFree_FontStyle;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, PropertiesResources.class);

@@ -323,6 +323,9 @@ public class RelationSection extends AbstractSection {
 		int tableHeight = 80;
 
 		// create section
+		if (isSyncFree()) {
+			desc = desc + PropertiesResources.Process_SyncFree_FontStyle; 
+		}		
 		Section aSection = FormUI.createSection(toolkit, composite,
 				title, desc);
 
