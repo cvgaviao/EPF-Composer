@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.views.ProcessTreeContentProvider;
 import org.eclipse.epf.library.ui.views.ProcessTreeLabelProvider;
@@ -172,7 +173,7 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 				| GridData.GRAB_HORIZONTAL);
 		gridData.heightHint = 300;
 		processViewer.getTree().setLayoutData(gridData);
-		processViewer.setContentProvider(new ProcessViewerContentProvider());
+//		processViewer.setContentProvider(new ProcessViewerContentProvider());
 		processViewer.setLabelProvider(new ProcessTreeLabelProvider());
 
 		includeBaseProcessesCheckbox = createCheckbox(processComposite,
@@ -190,12 +191,15 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 	 */
 	protected void initControls() {
 		String configId = config != null ? config.getGuid() : ""; //$NON-NLS-1$
-		boolean publishConfig = PublishingUIPreferences.getPublishEntireConfig(configId);
-		publishConfigRadioButton.setSelection(publishConfig);
-		publishProcessesRadioButton.setSelection(!publishConfig);
-		processViewer.getControl().setEnabled(!publishConfig);
 		
-		if (!publishConfig) {
+		if ((config != null) && ConfigFreeProcessPublishUtil.getInstance().isSameMethodConfiguration(config)) {
+			//For config free process publish
+			processViewer.setContentProvider(new ProcessViewerOfConfigFreeContentProvider());
+			publishConfigRadioButton.setEnabled(false);
+			publishConfigRadioButton.setSelection(false);
+			publishProcessesRadioButton.setSelection(true);
+			processViewer.getControl().setEnabled(true);
+			
 			List<String> processIds = PublishingUIPreferences.getProcesses(configId);
 			List<Process> processes = new ArrayList<Process>();
 			if (processIds != null) {
@@ -207,12 +211,38 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 				}
 			}
 			processViewer.setCheckedElements(processes.toArray());
+			
+			boolean includeBaseProcess = PublishingUIPreferences.getIncludeBaseProcesses(configId);
+			includeBaseProcessesCheckbox.setSelection(includeBaseProcess);
+			
+			updateCheckedStates();
+		} else {		
+			processViewer.setContentProvider(new ProcessViewerContentProvider());
+			boolean publishConfig = PublishingUIPreferences.getPublishEntireConfig(configId);
+			publishConfigRadioButton.setEnabled(true);
+			publishConfigRadioButton.setSelection(publishConfig);
+			publishProcessesRadioButton.setSelection(!publishConfig);
+			processViewer.getControl().setEnabled(!publishConfig);
+			
+			if (!publishConfig) {
+				List<String> processIds = PublishingUIPreferences.getProcesses(configId);
+				List<Process> processes = new ArrayList<Process>();
+				if (processIds != null) {
+					for (String guid : processIds) {
+						MethodElement e = LibraryService.getInstance().getCurrentLibraryManager().getMethodElement(guid);
+						if (e instanceof Process) {
+							processes.add((Process) e);
+						}
+					}
+				}
+				processViewer.setCheckedElements(processes.toArray());
+			}
+			
+			boolean includeBaseProcess = PublishingUIPreferences.getIncludeBaseProcesses(configId);
+			includeBaseProcessesCheckbox.setSelection(includeBaseProcess);
+			
+			updateCheckedStates();
 		}
-		
-		boolean includeBaseProcess = PublishingUIPreferences.getIncludeBaseProcesses(configId);
-		includeBaseProcessesCheckbox.setSelection(includeBaseProcess);
-		
-		updateCheckedStates();
 	}
 
 	/**
@@ -330,14 +360,15 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 			config = LibraryServiceUtil.getMethodConfiguration(LibraryService
 					.getInstance().getCurrentMethodLibrary(), configName);
 			if (config != null) {
-				processViewer.setInput(config);
-				processViewer.expandAll();
+				processViewer.setInput(config);				
 				initControls();
+				processViewer.expandAll();
 			} else {
 				//For config free process publishing
-				processViewer.setInput(null);
-				processViewer.expandAll();
+				config = ConfigFreeProcessPublishUtil.getInstance().getMethodConfigurationForConfigFreeProcess();
+				processViewer.setInput(LibraryService.getInstance().getCurrentMethodLibrary());
 				initControls();
+				processViewer.expandAll();
 			}
 		}
 	}
@@ -405,6 +436,28 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 				PublishingUIPreferences.setProcesses(configId, processIds);
 			}			
 			PublishingUIPreferences.setIncludeBaseProcesses(configId, includeBaseProcessesCheckbox.getSelection());
+		}
+	}
+	
+	protected class ProcessViewerOfConfigFreeContentProvider extends ProcessTreeContentProvider {
+		public Object[] getChildren(Object parentElement) {
+			if (parentElement instanceof ProcessTreeUIFolder) {
+				List<Process> processes = new ArrayList<Process>();
+				Object[] children = super.getChildren(parentElement);
+				
+				for (Object obj : children) {
+					if (obj instanceof Process) {
+						Process process = (Process)obj;
+						if (ProcessScopeUtil.getInstance().isConfigFree(process)) {
+							processes.add(process);
+						}
+					}
+				}
+				
+				return processes.toArray();
+			}
+			
+			return super.getChildren(parentElement);
 		}
 	}
 

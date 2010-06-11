@@ -23,7 +23,6 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
-import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.ui.LibraryUIResources;
@@ -32,7 +31,6 @@ import org.eclipse.epf.publishing.ui.PublishingUIResources;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -77,6 +75,8 @@ public class SelectConfigPage extends BaseWizardPage {
 	protected String selectedConfigName;
 	
 	private MethodConfiguration selectedConfig;
+	
+	private boolean enableConfigFree = true;
 
 	/**
 	 * 
@@ -158,7 +158,7 @@ public class SelectConfigPage extends BaseWizardPage {
 	/**
 	 * Initializes the wizard page controls with data.
 	 */
-	protected void initControls() {
+	public void initControls() {
 		// configViewer.setLabelProvider(new ConfigurationTableLabelProvider());
 		configViewer.setLabelProvider(labelProvider);
 		configViewer.setContentProvider(new ArrayContentProvider());
@@ -169,8 +169,12 @@ public class SelectConfigPage extends BaseWizardPage {
 		configsList.addAll(Arrays.asList(configs));
 		Collections.sort(configsList, Comparators.DEFAULT_COMPARATOR);
 		
-		//For config free process publishing
-		configsList.add(0, createMethodConfigurationForConfigFreeProcess());
+		//For config free process publish
+		if (getEnableConfigFree()) {
+			MethodConfiguration mockConfig = ConfigFreeProcessPublishUtil.getInstance()
+				.getMethodConfigurationForConfigFreeProcess();
+			configsList.add(mockConfig);
+		}
 		
 		configViewer.setInput(configsList.toArray());
 		// configViewer.setInput(configs);
@@ -226,8 +230,9 @@ public class SelectConfigPage extends BaseWizardPage {
 					
 			processViews = null;
 			if (config != null) {
-				//For config free process publishing
-				if (config.getName().equals(LibraryEditResources.scope_defualtName)) {
+				//For config free process publish
+				//Data layer will add view for config free process during publishing
+				if (ConfigFreeProcessPublishUtil.getInstance().isSameMethodConfiguration(config)) {
 					return true;
 				}
 				
@@ -329,18 +334,13 @@ public class SelectConfigPage extends BaseWizardPage {
 	private void setSelectedConfig(MethodConfiguration selectedConfig) {
 		this.selectedConfig = selectedConfig;
 	}
-
-	/* For config free process publishing.
-	 * 
-	 * When create config free process, each process will create a hide method configuration with itself(process scope),
-	 * so we can't use the method configuration associate with process, here we create a mock method configuration, but
-	 * it may cause persistent issue.
-	 */
-	private MethodConfiguration createMethodConfigurationForConfigFreeProcess() {
-		MethodConfiguration configForConfigFreeProcess = UmaFactory.eINSTANCE.createMethodConfiguration();
-		configForConfigFreeProcess.setName(LibraryEditResources.scope_defualtName);
-		
-		return configForConfigFreeProcess;
+	
+	public void setEnableConfigFree(boolean enable) {
+		enableConfigFree = enable;
 	}
-
+	
+	public boolean getEnableConfigFree() {
+		return enableConfigFree;
+	}
+	
 }
