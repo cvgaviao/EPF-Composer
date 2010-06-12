@@ -540,6 +540,27 @@ public class FileUtil {
 
 		return ret;
 	}
+	
+	public static boolean deleteTree(File file) {
+		boolean ret = true;
+
+		if (file.isDirectory()) {
+			File[] files = file.listFiles();
+			if (files != null) {
+				for (File f : files) {
+					if (!deleteTree(f)) {
+						ret = false;
+					}
+				}
+			}
+		}
+
+		if (!file.delete()) {
+			ret = false;
+		}
+
+		return ret;
+	}
 
 	/**
 	 * Recursively delete all sub-directories and files in a directory except
