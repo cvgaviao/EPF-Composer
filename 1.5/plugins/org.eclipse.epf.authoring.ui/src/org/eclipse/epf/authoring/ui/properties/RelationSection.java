@@ -324,7 +324,7 @@ public class RelationSection extends AbstractSection {
 
 		// create section
 		if (isSyncFree()) {
-			desc = desc + PropertiesResources.Process_SyncFree_FontStyle; 
+			desc = desc + " " + PropertiesResources.Process_SyncFree_FontStyle;  //$NON-NLS-1$
 		}		
 		Section aSection = FormUI.createSection(toolkit, composite,
 				title, desc);

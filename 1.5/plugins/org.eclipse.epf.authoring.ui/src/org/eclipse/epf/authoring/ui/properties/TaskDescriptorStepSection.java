@@ -186,10 +186,6 @@ public class TaskDescriptorStepSection extends AbstractSection {
 	private void createStepSection(Composite composite) {
 		// create step section
 		String sectionDesc = PropertiesResources.TaskDescriptor_stepInformationDescription; 
-
-		if (isSyncFree()) {
-			sectionDesc = sectionDesc + PropertiesResources.Process_SyncFree_FontStyle;
-		}
 		Section stepSection = FormUI
 				.createSection(
 						toolkit,

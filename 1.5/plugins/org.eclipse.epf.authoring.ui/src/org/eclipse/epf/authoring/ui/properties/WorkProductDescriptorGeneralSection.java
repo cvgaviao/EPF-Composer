@@ -142,7 +142,7 @@ public class WorkProductDescriptorGeneralSection extends
 		String tableTitle = PropertiesResources.WPDescriptor_DeliverablePart_Table1; 
 
 		if(isSyncFreeForSectionDesc()) {
-			sectionDesc = sectionDesc + PropertiesResources.Process_SyncFree_FontStyle;
+			sectionDesc = sectionDesc + " " + PropertiesResources.Process_SyncFree_FontStyle; //$NON-NLS-1$
 		}
 		Section section = FormUI.createSection(toolkit, composite,
 				sectionTitle, sectionDesc);
