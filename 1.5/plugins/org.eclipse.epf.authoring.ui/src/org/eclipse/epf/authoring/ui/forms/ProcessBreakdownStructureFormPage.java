@@ -49,6 +49,7 @@ import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
@@ -215,6 +216,12 @@ public class ProcessBreakdownStructureFormPage extends ProcessFormPage
 		public Font getFont(Object element) {
 			if (isExternal(element)) {
 				return italicFont;
+			}
+			if (element instanceof TaskDescriptor) {
+				TaskDescriptor td = (TaskDescriptor) element;
+				if (DescriptorPropUtil.getDesciptorPropUtil().getGreenParentDescriptor(td) != null) {
+					return italicFont;
+				}
 			}
 			return regularFont;
 		}
