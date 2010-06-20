@@ -1577,6 +1577,31 @@ public class ConfigurationHelper {
 			}
 			return value;
 		}
+
+		//Inherent externalId for a extends and extends-replaces variability element
+		if (ownerElement instanceof DescribableElement
+				&& ownerElement instanceof VariabilityElement
+				&& element instanceof ContentDescription
+				&& feature == UmaPackage.eINSTANCE
+						.getContentDescription_ExternalId()) {
+			VariabilityElement va = (VariabilityElement) ownerElement;
+			ContentDescription presentation = (ContentDescription) element;
+			while (presentation != null) {
+				String extenalId = presentation.getExternalId();
+				if (extenalId != null && extenalId.trim().length() > 0) {
+					return extenalId;
+				}
+				presentation = null;
+				if (va.getVariabilityType() == VariabilityType.EXTENDS
+						|| va.getVariabilityType() == VariabilityType.EXTENDS_REPLACES) {
+					va = va.getVariabilityBasedOnElement();
+					if (va != null) {
+						presentation = ((DescribableElement) va)
+								.getPresentation();
+					}
+				}
+			}
+		}
 		
 		if (isMergableAttribute(feature)) {
 			// merge the attribute values
