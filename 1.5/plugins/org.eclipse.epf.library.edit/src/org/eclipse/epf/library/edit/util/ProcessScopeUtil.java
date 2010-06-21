@@ -180,8 +180,7 @@ public class ProcessScopeUtil {
 	}
 	
 	public boolean isConfigFree(Process process) {
-		boolean result = getScope(process) != null;
-		
+		boolean result = getScope(process) != null || process.getDefaultContext() == null;		
 		return result;
 	}
 	
