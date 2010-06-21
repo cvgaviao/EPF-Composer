@@ -139,6 +139,8 @@ public class MethodRichText extends RichText implements IMethodRichText {
 		}
 		if (this.methodElement instanceof DescribableElement) { 
 			this.contentDescription = ((DescribableElement)this.methodElement).getPresentation();
+		} else if (this.methodElement instanceof ContentDescription) {
+			this.contentDescription = (ContentDescription)(this.methodElement);
 		}
 	}
 

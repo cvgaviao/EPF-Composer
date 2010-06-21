@@ -1634,5 +1634,9 @@ public class RichText implements IRichText {
 		initialText = text == null ? "" : text; //$NON-NLS-1$
 		modified = false;
 	}
+	
+	public boolean hasError() {
+		return htmlFormatter.getLastErrorStr() != null;
+	}
 
 }
