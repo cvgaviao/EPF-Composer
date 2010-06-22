@@ -518,6 +518,24 @@ public class TaskDescriptorStepSection extends AbstractSection {
 					actionMgr.doAction(IActionManager.REMOVE, element,
 							UmaPackage.eINSTANCE.getTaskDescriptor_SelectedStepsExclude(),
 							item, -1);
+					
+					DescriptorPropUtil propUtil = DescriptorPropUtil
+							.getDesciptorPropUtil(actionMgr);
+					TaskDescriptor greenParent = (TaskDescriptor) propUtil
+							.getGreenParentDescriptor(element);
+					if (greenParent != null) {
+						EReference eRef = UmaPackage.eINSTANCE
+								.getTaskDescriptor_SelectedStepsExclude();
+						List<org.eclipse.epf.uma.Section> parentExecludeList = greenParent
+								.getSelectedStepsExclude();
+						propUtil.removeGreenRefDelta(element, item, eRef, true);
+						if (parentExecludeList != null
+								&& parentExecludeList.contains(item)) {
+							propUtil.addGreenRefDelta(element, item, eRef,
+									false);
+						}
+
+					}
 				}
 			}
 		}
@@ -541,6 +559,24 @@ public class TaskDescriptorStepSection extends AbstractSection {
 					actionMgr.doAction(IActionManager.ADD, element,
 							UmaPackage.eINSTANCE.getTaskDescriptor_SelectedStepsExclude(),
 							item, -1);
+					
+					DescriptorPropUtil propUtil = DescriptorPropUtil
+							.getDesciptorPropUtil(actionMgr);
+					TaskDescriptor greenParent = (TaskDescriptor) propUtil
+							.getGreenParentDescriptor(element);
+					if (greenParent != null) {
+						EReference eRef = UmaPackage.eINSTANCE
+								.getTaskDescriptor_SelectedStepsExclude();
+						List<org.eclipse.epf.uma.Section> parentExecludeList = greenParent
+								.getSelectedStepsExclude();
+						propUtil.removeGreenRefDelta(element, item, eRef, false);
+						if (parentExecludeList == null
+								|| ! parentExecludeList.contains(item)) {
+							propUtil.addGreenRefDelta(element, item, eRef,
+									true);
+						}
+
+					}
 				}
 			}
 		}
