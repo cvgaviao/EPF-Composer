@@ -21,6 +21,8 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.edit.ui.UIHelper;
+import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.library.util.LibraryUtil.ConfigAndPlugin;
 import org.eclipse.epf.publishing.services.PublishHTMLOptions;
 import org.eclipse.epf.publishing.services.PublishManager;
 import org.eclipse.epf.publishing.services.PublishOptions;
@@ -29,6 +31,7 @@ import org.eclipse.epf.publishing.ui.PublishingUIResources;
 import org.eclipse.epf.publishing.ui.preferences.PublishingUIPreferences;
 import org.eclipse.epf.ui.wizards.BaseWizard;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -206,9 +209,20 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 	 */
 	public boolean publishConfig(MethodConfiguration config, PublishOptions options,
 			PublishManager publisher) {
+		
+		ConfigAndPlugin tempConfigAndPlugin = null;
 		try {
 			if (checkAndCreateDir(options)) {
-				publisher.init(options.getPublishDir(), config, options);
+				MethodConfiguration realConfig = config;
+				if (UmaUtil.getMethodLibrary(config) == null && 		//config passed is a mock config
+					options.isPublishProcess()) {
+					tempConfigAndPlugin = LibraryUtil.addTempConfigAndPluginToCurrentLibrary(options.getProcesses());
+					if (tempConfigAndPlugin != null && tempConfigAndPlugin.config != null) {
+						realConfig = tempConfigAndPlugin.config;					
+					}
+				}
+												
+				publisher.init(options.getPublishDir(), realConfig, options);
 				PublishingOperation operation = new PublishingOperation(
 						publisher);
 
@@ -229,6 +243,7 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 					PublishingUIResources.publishConfigError_msg,
 					PublishingUIResources.publishConfigError_reason, e);
 		} finally {
+			LibraryUtil.removeTempConfigAndPluginFromCurrentLibrary(tempConfigAndPlugin);			
 			if (selectPublishingOptionsPage != null) {
 				selectPublishingOptionsPage.savePreferences();
 			}

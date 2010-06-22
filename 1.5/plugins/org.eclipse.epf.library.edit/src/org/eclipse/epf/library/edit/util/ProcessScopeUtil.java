@@ -51,7 +51,7 @@ public class ProcessScopeUtil {
 		if (proc == null) {
 			return null;
 		}
-		if (proc.getDefaultContext() != null && !(proc.getDefaultContext() instanceof Scope)) {
+		if (! isConfigFree(proc)) {
 			return null;
 		}
 		
@@ -180,8 +180,19 @@ public class ProcessScopeUtil {
 	}
 	
 	public boolean isConfigFree(Process process) {
-		boolean result = getScope(process) != null || process.getDefaultContext() == null;		
-		return result;
+		if (getScope(process) != null) {
+			return true;
+		}
+	
+		if (process.getDefaultContext() == null && process
+						.getValidContext().isEmpty()) {
+			return true;
+		}
+		if (! process.getValidContext().isEmpty()) {
+			return process.getValidContext().get(0) instanceof Scope;
+		}
+				
+		return false;
 	}
 	
 }

@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Adapter;
@@ -870,5 +871,22 @@ public class UmaUtil {
 		return false;
 	}
 	
+	public static Set<MethodPackage> getDecendentPackages(MethodPackage pkg) {		
+		Set<MethodPackage> set = new HashSet<MethodPackage>();
+		for (MethodPackage childPkg : pkg.getChildPackages()) {
+			set.add(childPkg);
+			set.addAll(getDecendentPackages(childPkg));
+		}
+		return set;
+	}
+	
+	public static Set<MethodPackage> getAllMethodPackages(MethodPlugin plugin) {
+		Set<MethodPackage> set = new HashSet<MethodPackage>();
+		for (MethodPackage pkg : plugin.getMethodPackages()) {
+			set.add(pkg);
+			set.addAll(getDecendentPackages(pkg));
+		}
+		return set;
+	}
 
 }

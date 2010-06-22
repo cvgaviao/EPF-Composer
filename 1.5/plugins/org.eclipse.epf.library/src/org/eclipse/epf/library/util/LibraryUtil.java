@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
@@ -45,6 +46,7 @@ import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationFilter;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -54,6 +56,8 @@ import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
+import org.eclipse.epf.library.edit.util.ModelStructure;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -65,8 +69,10 @@ import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DescribableElement;
+import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
@@ -75,9 +81,14 @@ import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.MethodUnit;
 import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.util.Scope;
@@ -1151,6 +1162,149 @@ public class LibraryUtil {
 		}
 		
 		return practiceList;
-	}	
+	}
+	
+	private static CustomCategory createCustomCategory(MethodPlugin plugin, CustomCategory parent, String name) {
+		ContentPackage pkg = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
+		CustomCategory cc = UmaFactory.eINSTANCE.createCustomCategory();
+
+		pkg.getContentElements().add(cc);
+		if ( parent != null ) {
+			((CustomCategory)parent).getCategorizedElements().add(cc);
+		}
+		else {
+			TngUtil.getRootCustomCategory(plugin).getCategorizedElements().add(cc);
+		}
+		cc.setName(name);
+		cc.setPresentationName(name);
+		cc.setGuid(EcoreUtil.generateUUID());
+		
+		return cc;
+	}
+	
+	public static class ConfigAndPlugin {
+		public MethodConfiguration config;
+		public MethodPlugin plugin;
+	}
+	
+	public static ConfigAndPlugin addTempConfigAndPluginToCurrentLibrary(List<Process> configFreeProcesses) {
+		if (configFreeProcesses == null || configFreeProcesses.isEmpty()) {
+			return null;
+		}
+		MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
+		if (lib == null) {
+			return null;
+		}
+		ConfigAndPlugin tempConfigAndPlugin = new ConfigAndPlugin();	
+		MethodConfiguration tempConfig = UmaFactory.eINSTANCE.createMethodConfiguration();
+		MethodPlugin tempPlugin = null;
+		CustomCategory defaultView = null;
+		
+		try {
+			tempPlugin = LibraryServiceUtil.createMethodPlugin("viewPlugin", null, null, null); //$NON-NLS-1$
+			tempConfigAndPlugin.plugin = tempPlugin;
+			defaultView = createCustomCategory(tempPlugin, null, LibraryResources.configFreeProcessView_title);		
+			tempConfig.getMethodPluginSelection().add(tempPlugin);
+			tempConfig.getMethodPackageSelection().addAll(UmaUtil.getAllMethodPackages(tempPlugin));
+			tempConfig.getProcessViews().add(defaultView);
+			tempConfig.setDefaultView(defaultView);
+			
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+			return null;
+		}
+
+		Set<Task> taskSet = new HashSet<Task>();
+		Set<Role> roleSet = new HashSet<Role>();
+		Set<WorkProduct> wpSet = new HashSet<WorkProduct>();
+		Set<Guidance> guidanceSet = new HashSet<Guidance>();
+		
+		Set<MethodPlugin> addedPlugins = new HashSet<MethodPlugin>();
+		for (Process proc : configFreeProcesses) {
+			Scope scope = ProcessScopeUtil.getInstance().loadScope(proc);
+			if (scope == null) {
+				continue;
+			}
+			for (MethodPlugin plugin : scope.getMethodPluginSelection()) {
+				if (addedPlugins.contains(plugin)) {
+					continue;
+				}				
+				addedPlugins.add(plugin);
+				tempConfig.getMethodPluginSelection().add(plugin);
+				tempConfig.getMethodPackageSelection().addAll(UmaUtil.getAllMethodPackages(plugin));
+				for (TreeIterator it = plugin.eAllContents(); it.hasNext();) {
+					Object obj = it.next();
+					if (obj instanceof Task) {
+						taskSet.add((Task) obj);
+					} else if (obj instanceof Role) {
+						roleSet.add((Role) obj);
+					} else if (obj instanceof WorkProduct) {
+						wpSet.add((WorkProduct) obj);
+					} else if (obj instanceof Guidance) {
+						guidanceSet.add((Guidance) obj);
+					}
+				}				
+			}
+		}
+		
+		createSubGroup(tempPlugin, defaultView, taskSet,  LibraryEditPlugin.INSTANCE.getString("_UI_Tasks_group"));//$NON-NLS-1$
+		createSubGroup(tempPlugin, defaultView, roleSet, LibraryEditPlugin.INSTANCE.getString("_UI_Roles_group"));//$NON-NLS-1$
+		createSubGroup(tempPlugin, defaultView, wpSet, LibraryEditPlugin.INSTANCE.getString("_UI_WorkProducts_group"));//$NON-NLS-1$
+		createSubGroup(tempPlugin, defaultView, guidanceSet, LibraryEditPlugin.INSTANCE.getString("_UI_Guidances_group"));//$NON-NLS-1$
+		createSubGroup(tempPlugin, defaultView, configFreeProcesses, LibraryEditPlugin.INSTANCE.getString("_UI_Processes_group"));//$NON-NLS-1$
+				
+		boolean oldDeliver = lib.eDeliver();
+		lib.eSetDeliver(false);
+		try {
+			lib.getPredefinedConfigurations().add(tempConfig);
+		} finally {
+			if (oldDeliver) {
+				lib.eSetDeliver(oldDeliver);
+			}
+		}
+		
+		LibraryService.getInstance().getConfigurationManager(tempConfig);
+		
+		tempConfigAndPlugin.config = tempConfig;
+		tempConfigAndPlugin.plugin = null;
+		
+		return tempConfigAndPlugin;
+	}
+
+	private static void createSubGroup(MethodPlugin tempPlugin, CustomCategory defaultView,
+			Collection<? extends DescribableElement> elements, String name) {
+		if (elements != null && ! elements.isEmpty()) {
+			CustomCategory cc = createCustomCategory(tempPlugin, defaultView, name);
+			cc.getCategorizedElements().addAll(elements);
+		}
+	}
+	
+	public static void removeTempConfigAndPluginFromCurrentLibrary(
+			ConfigAndPlugin tempConfigAndPlugin) {
+		if (tempConfigAndPlugin == null) {
+			return;
+		}
+		MethodConfiguration tempConfig = tempConfigAndPlugin.config;
+		MethodPlugin tempPlugin = tempConfigAndPlugin.plugin;
+		if (tempConfig == null && tempPlugin == null) {
+			return;
+		}
+		
+		MethodLibrary lib = LibraryService.getInstance()
+				.getCurrentMethodLibrary();
+		if (lib != null) {
+			boolean oldDeliver = lib.eDeliver();
+			lib.eSetDeliver(false);
+			try {
+				lib.getPredefinedConfigurations().remove(tempConfig);
+				lib.getMethodPlugins().remove(tempPlugin);
+			} finally {
+				if (oldDeliver) {
+					lib.eSetDeliver(oldDeliver);
+				}
+			}
+		}
+		LibraryService.getInstance().removeConfigurationManager(tempConfig);
+	}
 	
 }

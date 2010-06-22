@@ -118,6 +118,7 @@ public final class LibraryResources extends NLS {
 	
 	public static String WorkProductSlot_text;
 	public static String references_unresolved_base_txt;
+	public static String configFreeProcessView_title;
 	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, LibraryResources.class);
