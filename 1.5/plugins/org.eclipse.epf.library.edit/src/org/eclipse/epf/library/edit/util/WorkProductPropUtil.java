@@ -45,7 +45,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		Set<Constraint> stateSet = new HashSet<Constraint>();
 
 		for (WorkProduct w : wpSet) {
-			List<Constraint> stateList = getWorkProductStates(wp);
+			List<Constraint> stateList = getWorkProductStates(w);
 			stateSet.addAll(stateList);
 		}
 
