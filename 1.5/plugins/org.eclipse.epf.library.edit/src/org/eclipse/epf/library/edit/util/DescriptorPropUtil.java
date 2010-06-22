@@ -498,8 +498,8 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return parent;
 	}	
 	
-	//positive = true:  feature name appended with "+" -> extra exclude added
-	//positive = false: feature name appended with "-" -> toggle off parent's exclude
+	//positive = true:  feature name appended with "+" -> extra exclude (or additional guidance) added
+	//positive = false: feature name appended with "-" -> toggle off parent's exclude (or additional guidance)
 	public void addGreenRefDelta(Descriptor des, MethodElement referenced, EReference feature, boolean positive) {
 		String refName = feature.getName() + (positive ? plus : minus);
 		try {

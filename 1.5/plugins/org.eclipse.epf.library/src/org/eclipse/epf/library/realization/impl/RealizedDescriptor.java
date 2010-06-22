@@ -323,6 +323,10 @@ public class RealizedDescriptor extends RealizedElement implements
 		Set<MethodElement> refSet = new LinkedHashSet<MethodElement>();
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		Descriptor greenParent = propUtil.getGreenParentDescriptor(des);
+		
+		//An "exclude" or "additional guidance" list of customized descriptor is always
+		//calculated in the following block - its eGet value is never used as the realized
+		//value.
 		if (greenParent != null && ConfigurationHelper.inConfig(greenParent, config)) {
 			Set<MethodElement> parentSet = getRawExcludeOrAddtionalRefSet(greenParent, eRef, config, false);
 			refSet.addAll(parentSet);

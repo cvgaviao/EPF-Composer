@@ -151,8 +151,21 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 							}
 						}						
 					}					
-				} else {
-					((Descriptor)brElement).getGuidanceAdditional().addAll(guidances);
+				} else if (ProcessUtil.isSynFree()) {
+					Descriptor des = (Descriptor) brElement;
+					des.getGuidanceAdditional().addAll(guidances);
+					Descriptor greenParent = propUtil.getGreenParentDescriptor(des);
+					if (greenParent != null) {
+						EReference aRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional();
+						List<Guidance> parentAdditionalList = (List<Guidance>) greenParent.eGet(aRef);
+						for (Guidance guidance : (List<Guidance>) guidances) {
+							propUtil.removeGreenRefDelta(des, guidance, aRef, false);
+							if (parentAdditionalList == null
+									|| ! parentAdditionalList.contains(guidance)) {
+								propUtil.addGreenRefDelta(des, guidance, aRef, true);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -225,8 +238,21 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 							}
 						}						
 					}		
-				} else {
-					((Descriptor)brElement).getGuidanceAdditional().removeAll(guidances);
+				} else if (ProcessUtil.isSynFree()) {
+					Descriptor des = (Descriptor) brElement;
+					des.getGuidanceAdditional().removeAll(guidances);
+					Descriptor greenParent = propUtil.getGreenParentDescriptor(des);
+					if (greenParent != null) {
+						EReference aRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional();
+						List<Guidance> parentAdditionalList = (List<Guidance>) greenParent.eGet(aRef);
+						for (Guidance guidance : (List<Guidance>) guidances) {
+							propUtil.removeGreenRefDelta(des, guidance, aRef, true);
+							if (parentAdditionalList != null
+									&& parentAdditionalList.contains(guidance)) {
+								propUtil.addGreenRefDelta(des, guidance, aRef, false);
+							}
+						}
+					}
 				}
 			}
 		}

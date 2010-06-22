@@ -102,7 +102,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 
 	private IFilter generalGuidanceFilter = null;
 
-	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
+	private DescriptorPropUtil propUtil;
 
 	/**
 	 * Get General guidance filter
@@ -189,6 +189,8 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 
 		// get action manager
 		actionMgr = EPFPropertySheetPage.getActionManager();
+		
+		propUtil = DescriptorPropUtil.getDesciptorPropUtil(actionMgr);
 	}
 
 
@@ -511,6 +513,18 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 						actionMgr.doAction(IActionManager.REMOVE, element,
 								UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional(),
 								item, -1);
+						if (element instanceof TaskDescriptor) {
+							TaskDescriptor td = (TaskDescriptor) element;
+							TaskDescriptor greenParent = (TaskDescriptor) propUtil.getGreenParentDescriptor(td);
+							if (greenParent != null) {
+								EReference aRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional();
+								List<Guidance> parentAdditionalList = (List<Guidance>) greenParent.eGet(aRef);
+								propUtil.removeGreenRefDelta(td, item, aRef, true);
+								if (parentAdditionalList != null && parentAdditionalList.contains(item)) {
+									propUtil.addGreenRefDelta(td, item, aRef, false);
+								}
+							}
+						}
 					} else {
 						actionMgr.doAction(IActionManager.ADD, element,
 								UmaPackage.eINSTANCE.getDescriptor_GuidanceExclude(),
