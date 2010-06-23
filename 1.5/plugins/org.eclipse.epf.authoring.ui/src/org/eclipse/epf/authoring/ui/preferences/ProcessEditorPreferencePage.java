@@ -692,12 +692,11 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 			synFreeButton.setEnabled(false);
 			toConvertToSynFree = false;
 
+			EditorChooser.getInstance().closeAllMethodEditorsWithSaving();
 			final MethodLibrary lib = LibraryService.getInstance()
 					.getCurrentMethodLibrary();
 			LibraryBackupUtil.promptBackupCurrentLibrary(Display.getCurrent()
 					.getActiveShell(), LibraryService.getInstance());
-
-			EditorChooser.getInstance().closeAllMethodEditorsWithSaving();
 
 			IRunnableWithProgress op = new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor)
