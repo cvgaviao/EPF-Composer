@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -324,6 +325,17 @@ public class ActivityDropCommand extends BSDropCommand {
 			}
 		} finally {			
 			originalToCopyMap = activityHandler.cloneOrignaltoCopyMap();
+			Set<Object> excludedKeySet =  new HashSet<Object>();
+			
+			for (Object key : originalToCopyMap.keySet()) {
+				if (! (key instanceof MethodElement)) {
+					excludedKeySet.add(key);
+				}
+			}
+			for (Object key : excludedKeySet) {
+				originalToCopyMap.remove(key);
+			}
+			
 			activityHandler.dispose();
 		}
 		
