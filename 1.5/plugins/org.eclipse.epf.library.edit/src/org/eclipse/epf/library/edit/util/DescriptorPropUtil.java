@@ -72,8 +72,6 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
 	//Test if the descriptor is not to be automatically synchronized
-	//Specifically, if the linked element of a descriptor is selected from UI by user,
-	//then we don't want to automatically synchronize it.
 	public boolean isNoAutoSyn(Descriptor d) {
 		if (getLinkedElement(d) == null) {
 			return false;

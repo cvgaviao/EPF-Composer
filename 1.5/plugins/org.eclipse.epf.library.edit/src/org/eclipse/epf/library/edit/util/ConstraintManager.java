@@ -211,5 +211,16 @@ public final class ConstraintManager {
 				WorkProductPropUtil.getWorkProductPropUtil().getAllStates(wp));
 
 	}
+	
+	public static List<Constraint> getWpStates(WorkBreakdownElement wbe) {
+		List<Constraint> list = new ArrayList<Constraint>();		
+		for (Constraint constraint : wbe.getOwnedRules()) {
+			if (constraint.getName().equals(Wbe_WpStates)) {
+				list.add(constraint);
+			}
+		}
+		
+		return list;
+	}
 
 }

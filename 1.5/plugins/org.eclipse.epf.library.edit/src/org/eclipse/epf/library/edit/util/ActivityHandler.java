@@ -41,8 +41,11 @@ import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDeepCopyCommand;
 import org.eclipse.epf.library.edit.process.command.CopyHelper;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -256,32 +259,48 @@ public class ActivityHandler {
 		if (! ProcessUtil.isSynFree()) {
 			return;
 		}
-		Set<Descriptor> cpyDesSet = new HashSet<Descriptor>();
+		Set<MethodElement> cpySet = new HashSet<MethodElement>();
 		Map<String, String> srcGuidToCpyGuidMap = new HashMap<String, String>();
 
 		for (Map.Entry entry : objectToCopyMap.entrySet()) {
 			Object src = entry.getKey();
 			Object cpy = entry.getValue();
+			if (src == cpy) {
+				continue;
+			}
 			if (src instanceof Descriptor && cpy instanceof Descriptor) {
 				Descriptor srcDes = (Descriptor) src;
 				Descriptor cpyDes = (Descriptor) cpy;
-				if (srcDes != cpyDes) {
-					srcGuidToCpyGuidMap.put(srcDes.getGuid(), cpyDes.getGuid());
-					if (cpy instanceof TaskDescriptor) {
-						cpyDesSet.add(cpyDes);
-					}
+				srcGuidToCpyGuidMap.put(srcDes.getGuid(), cpyDes.getGuid());
+				if (cpy instanceof TaskDescriptor) {
+					cpySet.add(cpyDes);
 				}
+			} else if (src instanceof Milestone && cpy instanceof Milestone) {
+				cpySet.add((Milestone) cpy);
 			}
 		}
 		
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
-		for (Descriptor cpy : cpyDesSet) {
-			propUtil.replaceLocalUseGuidStrings(cpy, srcGuidToCpyGuidMap);
-			String oldGreenParent = propUtil.getGreenParent(cpy);
-			if (oldGreenParent != null) {
-				String newGreenParent = srcGuidToCpyGuidMap.get(oldGreenParent);
-				if (newGreenParent != null && ! newGreenParent.equals(oldGreenParent)) {
-					propUtil.setGreenParent(cpy, newGreenParent);
+		for (MethodElement cpy : cpySet) {
+			if (cpy instanceof TaskDescriptor) {
+				TaskDescriptor cpyDes = (TaskDescriptor) cpy;
+				propUtil.replaceLocalUseGuidStrings(cpyDes, srcGuidToCpyGuidMap);
+				String oldGreenParent = propUtil.getGreenParent(cpyDes);
+				if (oldGreenParent != null) {
+					String newGreenParent = srcGuidToCpyGuidMap.get(oldGreenParent);
+					if (newGreenParent != null && ! newGreenParent.equals(oldGreenParent)) {
+						propUtil.setGreenParent(cpyDes, newGreenParent);
+					}
+				}
+			}
+			if (cpy instanceof TaskDescriptor || cpy instanceof Milestone) {
+				WorkBreakdownElement wbe = (WorkBreakdownElement) cpy;
+				for (Constraint c : ConstraintManager.getWpStates(wbe)) {
+					String oldWpdGuid = c.getBody();
+					String newWpdGuid = srcGuidToCpyGuidMap.get(oldWpdGuid);
+					if (newWpdGuid != null && ! newWpdGuid.equals(oldWpdGuid)) {
+						c.setBody(newWpdGuid);
+					}
 				}
 			}
 		}
