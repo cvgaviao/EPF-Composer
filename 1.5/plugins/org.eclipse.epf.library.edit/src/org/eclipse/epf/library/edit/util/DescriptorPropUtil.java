@@ -44,7 +44,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 
 	//Method property name strings
 	public static final String DESCRIPTOR_NoAutoSyn = "descriptor_noAutoSyn"; 							//$NON-NLS-1$	
-	public static final String DESCRIPTOR_CreatedByReference = "descriptor_createdByReferebce"; 		//$NON-NLS-1$
+	public static final String DESCRIPTOR_CreatedByReference = "descriptor_createdByReference"; 		//$NON-NLS-1$
 	public static final String DESCRIPTOR_Customization = "descriptor_customization"; 					//$NON-NLS-1$
 	public static final String DESCRIPTOR_LocalUsingInfo = "descriptor_localUsingInfo";					//$NON-NLS-1$
 	public static final String DESCRIPTOR_GreenParent = "descriptor_greenParent";						//$NON-NLS-1$
