@@ -33,6 +33,7 @@ import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.command.BatchCommand;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -607,7 +608,7 @@ public final class ProcessCommandUtil {
 		// taskDesc = createTaskDescriptor(task);
 	
 		if (taskDesc == null) {
-			taskDesc = ProcessCommandUtil.createTaskDescriptor(task);
+			taskDesc = ProcessCommandUtil.createTaskDescriptor(task, config);
 			isNewTaskDescriptor = true;
 		} else {
 			if (descriptorsToRefresh != null && taskDesc.getIsSynchronizedWithSource().booleanValue()) {
@@ -778,13 +779,17 @@ public final class ProcessCommandUtil {
 		return null;
 	}
 
-	private static TaskDescriptor createTaskDescriptor(Task task) {
+	private static TaskDescriptor createTaskDescriptor(Task task, MethodConfiguration config) {
 		TaskDescriptor taskDesc = UmaFactory.eINSTANCE.createTaskDescriptor();
 		taskDesc.setTask(task);
 		taskDesc.setName(task.getName());
-		taskDesc.setPresentationName(StrUtil
-				.isBlank(task.getPresentationName()) ? task.getName() : task
-				.getPresentationName());
+//		taskDesc.setPresentationName(StrUtil
+//				.isBlank(task.getPresentationName()) ? task.getName() : task
+//				.getPresentationName());
+		
+		String pName = LibraryEditUtil.getInstance().getPresentationName(task, config);
+		taskDesc.setPresentationName(pName);
+			
 		// taskDesc.setBriefDescription(task.getBriefDescription());
 		return taskDesc;
 	}

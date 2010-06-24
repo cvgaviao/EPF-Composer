@@ -22,4 +22,7 @@ public interface ILibraryEditUtilProvider {
 
 	MethodLibrary getCurrentMethodLibrary();
 	
+	String getPresentationName(MethodElement element,
+			MethodConfiguration config);
+	
 }

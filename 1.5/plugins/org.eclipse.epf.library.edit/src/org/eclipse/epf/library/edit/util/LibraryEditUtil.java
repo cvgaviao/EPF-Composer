@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
@@ -130,6 +131,20 @@ public class LibraryEditUtil {
 	public MethodElement getMethodElement(String guid) {
 		ILibraryEditUtilProvider p = getProvider();				
 		return p == null ? null : p.getMethodElement(guid);
+	}
+	
+	
+	public String getPresentationName(MethodElement element,
+			MethodConfiguration config) {
+		String pName = element.getPresentationName();
+		if (! StrUtil.isBlank(pName)) {
+			return pName;
+		}		
+		ILibraryEditUtilProvider p = getProvider();
+		if (p == null) {
+			return pName;
+		}
+		return p.getPresentationName(element, config);
 	}
 	
 	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
