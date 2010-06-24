@@ -211,6 +211,9 @@ public class RealizedDescriptor extends RealizedElement implements
 			MethodElement me = getLinkedElement(des);
 			if (me == null || propUtil.localUse(des, getDescriptor(), dFeature)) {
 				resultDescriptorList.add(des);
+				if (me != null) {
+					elementSet.remove(me);
+				}
 
 			} else if (elementSet.contains(me)) {
 				resultDescriptorList.add(des);
