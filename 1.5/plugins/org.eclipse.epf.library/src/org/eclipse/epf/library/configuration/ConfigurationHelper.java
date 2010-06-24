@@ -717,7 +717,7 @@ public class ConfigurationHelper {
 
 		values.add(ve, value);
 
-		if (config == null) {
+		if (config == null || config instanceof Scope) {
 			return;
 		}
 
