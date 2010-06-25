@@ -1374,6 +1374,9 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 
 	private void updateProcessModel() {
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
 		Process proc = getSelectedProcess();
 		IRealizationManager mgr = getConfiguratorInstance()
 				.getRealizationManager();
@@ -2627,6 +2630,9 @@ public class ProcessEditor extends MethodElementEditor implements
 	}
 	
 	public void updateOnLinkedElementChange(Descriptor des) {
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
 		if (changedElementSet == null) {
 			changedElementSet = new HashSet<MethodElement>();
 		}

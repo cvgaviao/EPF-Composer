@@ -22,6 +22,7 @@ import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -290,6 +291,9 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	public void updateStringValues() {
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
 		for (EStructuralFeature feature : featureSet) {
 			getFeatureValue(feature);
 		}
@@ -302,6 +306,9 @@ public class RealizedDescriptor extends RealizedElement implements
 	protected Set<MethodElement> getExcludeOrAddtionalRefSet(Descriptor des,
 			EReference eRef, ElementRealizer realizer) {
 		Set<MethodElement> set = new LinkedHashSet<MethodElement>();
+		if (! ProcessUtil.isSynFree()) {
+			return set;
+		}
 		if (des == null) {
 			return set;
 		}

@@ -2170,6 +2170,9 @@ public class ProcessEditorActionBarContributor extends
 	@Override
 	public void setActiveEditor(IEditorPart part) {
 		super.setActiveEditor(part);
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
 		IEditorPart editor = getActiveEditor();
 		if (editor instanceof ProcessEditor) {
 			((ProcessEditor) editor).updateAndRefreshProcessModel();

@@ -441,7 +441,7 @@ public class ConfigHelperDelegate {
 	}
 	
 	public IRealizationManager getRealizationManager(MethodConfiguration config) {
-		if (config == null || config instanceof Scope || ! ProcessUtil.isSynFree()) {
+		if (config == null || config instanceof Scope) {
 			return null;
 		}
 		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);

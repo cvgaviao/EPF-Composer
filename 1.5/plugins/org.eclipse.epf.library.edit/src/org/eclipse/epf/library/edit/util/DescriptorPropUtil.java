@@ -162,6 +162,9 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	// if feature == null, get all
 	public Set<Descriptor> getLocalUsedDescriptors(Descriptor usingD,
 			EReference feature) {
+		if (! ProcessUtil.isSynFree()) {
+			return new HashSet<Descriptor>();
+		}
 		Set<Descriptor> descriptors = getLocalUsedDescriptors(usingD, feature,
 				""); //$NON-NLS-1$
 

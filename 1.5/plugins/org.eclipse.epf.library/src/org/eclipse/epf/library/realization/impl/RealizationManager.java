@@ -327,7 +327,12 @@ public class RealizationManager implements IRealizationManager {
 		}
 	}
 
-	private void updateProcessModel(Process proc, Set<Activity> updatedActSet) {	
+	private void updateProcessModel(Process proc, Set<Activity> updatedActSet) {
+		if (! ProcessUtil.isSynFree()) {
+			if (! ProcessScopeUtil.getInstance().isConfigFree(proc)) {
+				return;
+			}
+		}
 		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
@@ -358,7 +363,13 @@ public class RealizationManager implements IRealizationManager {
 		if (baseAct != null) {
 			updateModelImpl(baseAct, updatedActSet, recursive);
 		}
-		
+		if (! ProcessUtil.isSynFree()) {
+			Process proc = ProcessUtil.getProcess(act);
+			if (proc == null || ! ProcessScopeUtil.getInstance().isConfigFree(proc)) {
+				return;
+			}
+		}
+				
 		if (config == null) {
 			Process proc = ProcessUtil.getProcess(act);
 			Scope scope = ProcessScopeUtil.getInstance().getScope(proc);
