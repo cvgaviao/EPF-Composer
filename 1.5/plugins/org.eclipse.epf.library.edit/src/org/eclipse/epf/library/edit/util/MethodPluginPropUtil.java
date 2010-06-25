@@ -113,22 +113,27 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 	 */
 	public List<Constraint> getWorkProductStatesInLibrary(MethodPlugin activePlugin) {
 		List<Constraint> resultList = getWorkProductStatesInPlugin(activePlugin);
-		Set<String> names = new HashSet<String>();
+		Set<String> stateIDs = new HashSet<String>();
 		for (Constraint state : resultList) {
-			names.add(state.getBody());
+			stateIDs.add(getStateId(state));
 		}
 		MethodLibrary lib = UmaUtil.getMethodLibrary(activePlugin);
 		for (MethodPlugin plugin : lib.getMethodPlugins()) {
 			List<Constraint> list = getWorkProductStatesInPlugin(plugin);
 			for (Constraint state : list) {
-				if (! names.contains(state.getBody())) {
-					names.add(state.getBody());
+				String id = getStateId(state);
+				if (! stateIDs.contains(id)) {
+					stateIDs.add(id);
 					resultList.add(state);
 				}
 			}
 		}
 		
 		return resultList;
+	}
+	
+	private String getStateId(Constraint state) {
+		return state.getBody() + ", " + state.getBriefDescription();  //$NON-NLS-1$
 	}
 	
 }
