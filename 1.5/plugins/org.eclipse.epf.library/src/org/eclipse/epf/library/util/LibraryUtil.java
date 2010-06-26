@@ -1196,16 +1196,19 @@ public class LibraryUtil {
 		if (lib == null) {
 			return null;
 		}
+		MethodElementPropUtil proppUtil = MethodElementPropUtil.getMethodElementPropUtil();
 		ConfigAndPlugin tempConfigAndPlugin = new ConfigAndPlugin();	
 		MethodConfiguration tempConfig = UmaFactory.eINSTANCE.createMethodConfiguration();
 		MethodPlugin tempPlugin = null;
 		CustomCategory defaultView = null;
-		
+		proppUtil.setTransientElement(tempConfig, true);
+
 		try {
 			tempPlugin = LibraryServiceUtil.createMethodPlugin("viewPlugin", null, null, null); //$NON-NLS-1$
+			proppUtil.setTransientElement(tempPlugin, true);
 			tempConfigAndPlugin.plugin = tempPlugin;
 			defaultView = createCustomCategory(tempPlugin, null, LibraryResources.configFreeProcessView_title);
-			MethodElementPropUtil.getMethodElementPropUtil().setTransientElement(defaultView, true);
+			proppUtil.setTransientElement(defaultView, true);
 			tempConfig.getMethodPluginSelection().add(tempPlugin);
 			tempConfig.getMethodPackageSelection().addAll(UmaUtil.getAllMethodPackages(tempPlugin));
 			tempConfig.getProcessViews().add(defaultView);
