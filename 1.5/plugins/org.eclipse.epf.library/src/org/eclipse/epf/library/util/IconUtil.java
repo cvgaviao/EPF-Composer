@@ -121,7 +121,7 @@ public class IconUtil {
 
 	public static final String ICON_WorkProductType = "full/obj16/WorkProductType"; //$NON-NLS-1$
 
-	public static final String ICON_Guidances = "full/obj16/GuidanceFolder"; //$NON-NLS-1$
+	public static final String ICON_Guidance = "full/obj16/Guidance"; //$NON-NLS-1$
 
 	public static final String ICON_Processes = "full/obj16/Process"; //$NON-NLS-1$
 	
@@ -178,7 +178,7 @@ public class IconUtil {
 		nodeIconUrlMap.put("taskdescriptor", ICON_Task); //$NON-NLS-1$
 		nodeIconUrlMap.put("workproductdescriptor", ICON_WorkProduct); //$NON-NLS-1$
 
-		nodeIconUrlMap.put("guidances", ICON_Guidances); //$NON-NLS-1$
+		nodeIconUrlMap.put("guidances", ICON_Guidance); //$NON-NLS-1$
 		nodeIconUrlMap.put("processes", ICON_Processes); //$NON-NLS-1$
 		
 		try {

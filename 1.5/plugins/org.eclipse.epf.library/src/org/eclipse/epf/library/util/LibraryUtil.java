@@ -1204,7 +1204,8 @@ public class LibraryUtil {
 		try {
 			tempPlugin = LibraryServiceUtil.createMethodPlugin("viewPlugin", null, null, null); //$NON-NLS-1$
 			tempConfigAndPlugin.plugin = tempPlugin;
-			defaultView = createCustomCategory(tempPlugin, null, LibraryResources.configFreeProcessView_title);		
+			defaultView = createCustomCategory(tempPlugin, null, LibraryResources.configFreeProcessView_title);
+			MethodElementPropUtil.getMethodElementPropUtil().setTransientElement(defaultView, true);
 			tempConfig.getMethodPluginSelection().add(tempPlugin);
 			tempConfig.getMethodPackageSelection().addAll(UmaUtil.getAllMethodPackages(tempPlugin));
 			tempConfig.getProcessViews().add(defaultView);
@@ -1278,6 +1279,7 @@ public class LibraryUtil {
 		if (elements != null && ! elements.isEmpty()) {
 			CustomCategory cc = createCustomCategory(tempPlugin, defaultView, name);
 			propUtil.setTransientElement(cc, true);
+			cc.setBriefDescription(LibraryResources.systemCreatedCustomCategory_brief);
 			cc.getCategorizedElements().addAll(elements);
 		}
 	}

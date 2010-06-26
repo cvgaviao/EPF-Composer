@@ -27,12 +27,14 @@ import org.eclipse.epf.common.xml.XSLTProcessor;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.layout.util.XmlHelper;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.publish.layout.LayoutPlugin;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -307,8 +309,16 @@ public class LinkInfo {
 					}
 				}
 			} else {
-				isMissingReference = true;
-				validator.logMissingReference(ownerElement, guid, linkedText);
+				boolean toLog = true;
+				if (ownerElement instanceof CustomCategory) {
+					if (MethodElementPropUtil.getMethodElementPropUtil().isTransientElement(ownerElement)) {
+						toLog = false;
+					}
+				}
+				if (toLog) {
+					isMissingReference = true;
+					validator.logMissingReference(ownerElement, guid, linkedText);
+				}
 			}
 
 			if (e != null) {

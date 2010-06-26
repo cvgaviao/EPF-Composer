@@ -35,6 +35,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.ElementPropertyProviderManager;
@@ -1067,8 +1068,25 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	}
 
 	public String getDefaultShapeiconUrl() {
-		return LayoutResources.getDefaultShapeiconUrl(element.getType()
-				.getName().toLowerCase());
+		String type = element.getType().getName().toLowerCase();
+		if (element instanceof CustomCategory) {
+			CustomCategory cc = (CustomCategory) element;
+			if (MethodElementPropUtil.getMethodElementPropUtil().isTransientElement(cc)) {
+				if (cc.getName().equals("Roles")) {//$NON-NLS-1$
+					type = "roleset";//$NON-NLS-1$
+				} else if (cc.getName().equals("Tasks")) {//$NON-NLS-1$
+					type = "discipline";//$NON-NLS-1$
+				} else if (cc.getName().equals("Work Products")) {//$NON-NLS-1$
+					type = "domain";//$NON-NLS-1$
+				} else if (cc.getName().equals("Guidance")) {//$NON-NLS-1$
+					type = "guidances";//$NON-NLS-1$
+				} else if (cc.getName().equals("Processes")) {//$NON-NLS-1$
+					type = "processes";//$NON-NLS-1$
+				}
+			}
+		}
+		
+		return LayoutResources.getDefaultShapeiconUrl(type);
 	}
 
 	/**
