@@ -53,6 +53,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.configuration.GuidanceGroupingItemProvider;
 import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
@@ -1273,8 +1274,10 @@ public class LibraryUtil {
 
 	private static void createSubGroup(MethodPlugin tempPlugin, CustomCategory defaultView,
 			Collection<? extends DescribableElement> elements, String name) {
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
 		if (elements != null && ! elements.isEmpty()) {
 			CustomCategory cc = createCustomCategory(tempPlugin, defaultView, name);
+			propUtil.setTransientElement(cc, true);
 			cc.getCategorizedElements().addAll(elements);
 		}
 	}

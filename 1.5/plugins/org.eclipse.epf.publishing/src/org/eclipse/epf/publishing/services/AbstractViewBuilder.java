@@ -23,6 +23,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.Bookmark;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -32,6 +33,7 @@ import org.eclipse.epf.library.util.IconUtil;
 import org.eclipse.epf.publishing.PublishingPlugin;
 import org.eclipse.epf.publishing.PublishingResources;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -355,6 +357,24 @@ public abstract class AbstractViewBuilder {
 			if (obj instanceof MethodElement) {
 				String type = ((MethodElement) obj).getType().getName()
 						.toLowerCase();
+				if (obj instanceof CustomCategory) {
+					CustomCategory cc = (CustomCategory) obj;
+					MethodElementPropUtil propUtil = MethodElementPropUtil
+							.getMethodElementPropUtil();
+					if (propUtil.isTransientElement(cc)) {
+						if (cc.getName().equals("Roles")) {//$NON-NLS-1$
+							type = "roleset";//$NON-NLS-1$
+						} else if (cc.getName().equals("Tasks")) {//$NON-NLS-1$
+							type = "discipline";//$NON-NLS-1$
+						} else if (cc.getName().equals("Work Products")) {//$NON-NLS-1$
+							type = "domain";//$NON-NLS-1$
+						} else if (cc.getName().equals("Guidance")) {//$NON-NLS-1$
+							type = "guidances";//$NON-NLS-1$
+						} else if (cc.getName().equals("Processes")) {//$NON-NLS-1$
+							type = "processes";//$NON-NLS-1$
+						}
+					}
+				}
 				iconFile = IconUtil.getNodeIconFile(type);
 			} else if (obj instanceof PracticeSubgroupItemProvider) {
 				iconFile = IconUtil.getNodeIconFile((PracticeSubgroupItemProvider) obj);

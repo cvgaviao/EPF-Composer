@@ -205,4 +205,18 @@ public class MethodElementPropUtil {
 		return elements;
 	}
 
+	public boolean isTransientElement(MethodElement element) {
+		MethodElementExt extObj = getExtendObject(element, false);
+		return extObj == null ? false : extObj.isTransientElement();
+	}
+
+	public void setTransientElement(MethodElement element,
+			boolean transientElement) {
+		if (!transientElement && getExtendObject(element, false) == null) {
+			return;
+		}
+		MethodElementExt extObj = getExtendObject(element, true);
+		extObj.setTransientElement(transientElement);
+
+	}
 }
