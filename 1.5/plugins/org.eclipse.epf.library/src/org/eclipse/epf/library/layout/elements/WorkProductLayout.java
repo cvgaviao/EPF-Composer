@@ -17,8 +17,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.edit.util.WorkProductPropUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.FulfillableElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
@@ -44,6 +46,31 @@ public class WorkProductLayout extends AbstractElementLayout {
 		super.__init(layoutManager, element);
 	}
 
+	@Override
+	protected XmlElement getXmlElement() {
+		XmlElement elementXml = super.getXmlElement();
+		
+		WorkProduct wp = (WorkProduct) getElement();
+		WorkProductPropUtil propUtil = WorkProductPropUtil.getWorkProductPropUtil();
+		List<Constraint> states = propUtil.getWorkProductStates(wp);
+		addStatesAttValue(elementXml, states);
+		return elementXml;
+	}
+
+	private void addStatesAttValue(XmlElement elementXml, List<Constraint> states) {
+		if (states == null || states.isEmpty()) {
+			return;
+		}
+		String str = ""; //$NON-NLS-1$
+		for (Constraint state : states) {
+			if (str.length() > 0) {
+				str += ", ";
+			}
+			str += state.getBody();
+		}
+		elementXml.setAttribute("States", str); //$NON-NLS-1$
+	}
+	
 	/**
 	 * @see org.eclipse.epf.library.layout.IElementLayout#getXmlElement(boolean)
 	 */
