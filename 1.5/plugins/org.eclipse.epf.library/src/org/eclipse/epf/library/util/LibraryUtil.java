@@ -1199,6 +1199,7 @@ public class LibraryUtil {
 		MethodElementPropUtil proppUtil = MethodElementPropUtil.getMethodElementPropUtil();
 		ConfigAndPlugin tempConfigAndPlugin = new ConfigAndPlugin();	
 		MethodConfiguration tempConfig = UmaFactory.eINSTANCE.createMethodConfiguration();
+		tempConfig.setName("Generated_Configuration");		//$NON-NLS-1$
 		MethodPlugin tempPlugin = null;
 		CustomCategory defaultView = null;
 		proppUtil.setTransientElement(tempConfig, true);
