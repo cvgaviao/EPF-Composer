@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.VariabilityInfo;
@@ -421,7 +422,8 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	 * @return an IRealizationManager instance
 	 */
 	public IRealizationManager getRealizationManager() {
-		return null;
+		MethodConfiguration c = LibraryService.getInstance().getCurrentMethodConfiguration();
+		return ConfigurationHelper.getDelegate().getRealizationManager(c);
 	}
 	
 }

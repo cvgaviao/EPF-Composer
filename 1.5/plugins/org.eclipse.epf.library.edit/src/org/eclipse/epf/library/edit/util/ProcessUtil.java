@@ -3327,6 +3327,21 @@ public final class ProcessUtil {
 			MethodConfiguration deepCopyConfig, 
 			ProcessPackage targetPackage,
 			CopyHelper copyHelper,
+			IConfigurator configurator) {
+		
+		Process proc = deepCopy_(monitor, process, newProcessName,
+				deepCopyConfig, targetPackage, copyHelper, configurator);
+		
+		return proc;
+	}
+	
+	private static  Process deepCopy_(
+			IProgressMonitor monitor, 
+			org.eclipse.epf.uma.Process process, 
+			String newProcessName,
+			MethodConfiguration deepCopyConfig, 
+			ProcessPackage targetPackage,
+			CopyHelper copyHelper,
 			IConfigurator configurator) {		
 		// if the targetPackage is null, use the same package of the source process
 		if ( targetPackage == null ) {

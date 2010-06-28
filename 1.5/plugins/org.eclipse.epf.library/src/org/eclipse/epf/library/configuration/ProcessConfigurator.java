@@ -110,12 +110,4 @@ public class ProcessConfigurator extends ConfigurationFilter {
 		return super.accept(e);
 	}
 	
-	/**
-	 * @return an IRealizationManager instance
-	 */
-	public IRealizationManager getRealizationManager() {
-		MethodConfiguration c = LibraryService.getInstance().getCurrentMethodConfiguration();
-		return ConfigurationHelper.getDelegate().getRealizationManager(c);
-	}
-	
 }
