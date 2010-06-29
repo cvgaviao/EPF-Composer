@@ -3327,13 +3327,15 @@ public final class ProcessUtil {
 			MethodConfiguration deepCopyConfig, 
 			ProcessPackage targetPackage,
 			CopyHelper copyHelper,
-			IConfigurator configurator) {
+			IConfigurator configurator, boolean handleAutoSyn) {
 		
-		IRealizationManager mgr = configurator.getRealizationManager();
-		mgr.updateProcessModel(process);
+		if (handleAutoSyn) {
+			IRealizationManager mgr = configurator.getRealizationManager();
+			mgr.updateProcessModel(process);
+		}
 		
 		Process proc = deepCopy_(monitor, process, newProcessName,
-				deepCopyConfig, targetPackage, copyHelper, configurator);
+				deepCopyConfig, targetPackage, copyHelper, configurator, handleAutoSyn);
 		
 		return proc;
 	}
@@ -3345,7 +3347,7 @@ public final class ProcessUtil {
 			MethodConfiguration deepCopyConfig, 
 			ProcessPackage targetPackage,
 			CopyHelper copyHelper,
-			IConfigurator configurator) {		
+			IConfigurator configurator, boolean handleAutoSyn) {		
 		// if the targetPackage is null, use the same package of the source process
 		if ( targetPackage == null ) {
 			targetPackage = (ProcessPackage)process.eContainer().eContainer();
@@ -3373,6 +3375,9 @@ public final class ProcessUtil {
 		}
 		finally {
 			cmd.dispose();
+		}
+		if (handleAutoSyn) {
+			ActivityHandler.fixGuidReferences(copyHelper);
 		}
 		
 		return newProcess;

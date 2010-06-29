@@ -255,7 +255,7 @@ public class ActivityHandler {
 		return activities;
 	}
 	
-	private void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap) {
+	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap) {
 		if (! ProcessUtil.isSynFree()) {
 			return;
 		}
