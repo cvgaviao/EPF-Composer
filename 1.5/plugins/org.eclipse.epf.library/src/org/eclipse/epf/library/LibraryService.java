@@ -25,6 +25,7 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.util.Scope;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
  * The default Library Service implementation.
@@ -575,8 +576,8 @@ public class LibraryService implements ILibraryService {
 		if (config == null) {
 			throw new IllegalArgumentException();
 		}
-		if (config instanceof Scope) {	//Don't cache it
-			new ConfigurationManager(config);
+		if (config instanceof Scope || UmaUtil.getMethodLibrary(config) == null) {	//Don't cache it
+			return new ConfigurationManager(config);
 		}
 		
 		IConfigurationManager manager = (IConfigurationManager) configManagers

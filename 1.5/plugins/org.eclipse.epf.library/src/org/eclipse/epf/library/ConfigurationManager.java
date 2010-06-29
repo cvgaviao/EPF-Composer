@@ -88,6 +88,9 @@ public class ConfigurationManager implements IConfigurationManager {
 			library = LibraryService.getInstance().getCurrentMethodLibrary();
 		} else {
 			library = LibraryServiceUtil.getMethodLibrary(config);
+			if (library == null) {
+				library = LibraryService.getInstance().getCurrentMethodLibrary();
+			}
 		}
 
 		libraryManager = LibraryService.getInstance()

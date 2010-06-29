@@ -102,6 +102,7 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 import com.ibm.icu.text.MessageFormat;
@@ -3330,6 +3331,16 @@ public final class ProcessUtil {
 			IConfigurator configurator, boolean handleAutoSyn) {
 		
 		if (handleAutoSyn) {
+			if (deepCopyConfig instanceof Scope) {
+				MethodConfiguration tempConfig = UmaFactory.eINSTANCE.createMethodConfiguration();
+				for (MethodPlugin plugin : deepCopyConfig.getMethodPluginSelection()) {
+					tempConfig.getMethodPluginSelection().add(plugin);
+					tempConfig.getMethodPackageSelection().addAll(UmaUtil.getAllMethodPackages(plugin));
+				}
+				deepCopyConfig = tempConfig;
+				configurator.setMethodConfiguration(deepCopyConfig);
+			}
+						
 			IRealizationManager mgr = LibraryEditUtil.getInstance()
 					.getRealizationManager(deepCopyConfig);
 			mgr.updateProcessModel(process);
