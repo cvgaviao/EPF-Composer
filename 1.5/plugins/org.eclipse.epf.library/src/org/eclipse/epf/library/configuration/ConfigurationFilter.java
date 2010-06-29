@@ -422,7 +422,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	 * @return an IRealizationManager instance
 	 */
 	public IRealizationManager getRealizationManager() {
-		MethodConfiguration c = LibraryService.getInstance().getCurrentMethodConfiguration();
+		MethodConfiguration c = getMethodConfiguration();
 		return ConfigurationHelper.getDelegate().getRealizationManager(c);
 	}
 	
