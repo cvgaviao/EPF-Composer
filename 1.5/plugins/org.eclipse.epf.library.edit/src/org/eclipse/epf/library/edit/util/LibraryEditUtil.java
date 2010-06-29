@@ -395,4 +395,9 @@ public class LibraryEditUtil {
 		}
 	}
 	
+	public IRealizationManager getRealizationManager(MethodConfiguration config) {
+		ILibraryEditUtilProvider p = getProvider();				
+		return p == null ? null : p.getRealizationManager(config);
+	}
+	
 }

@@ -3330,7 +3330,8 @@ public final class ProcessUtil {
 			IConfigurator configurator, boolean handleAutoSyn) {
 		
 		if (handleAutoSyn) {
-			IRealizationManager mgr = configurator.getRealizationManager();
+			IRealizationManager mgr = LibraryEditUtil.getInstance()
+					.getRealizationManager(deepCopyConfig);
 			mgr.updateProcessModel(process);
 		}
 		

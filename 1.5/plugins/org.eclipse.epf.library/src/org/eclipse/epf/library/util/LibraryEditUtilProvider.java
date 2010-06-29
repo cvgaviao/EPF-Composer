@@ -9,6 +9,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ILibraryEditUtilProvider;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
@@ -129,6 +130,10 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	public String getPresentationName(MethodElement element,
 			MethodConfiguration config) {
 		return ConfigurationHelper.getPresentationName(element, config);
+	}
+	
+	public IRealizationManager getRealizationManager(MethodConfiguration config) {
+		return ConfigurationHelper.getDelegate().getRealizationManager(config);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.edit.util;
 
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -24,5 +25,7 @@ public interface ILibraryEditUtilProvider {
 	
 	String getPresentationName(MethodElement element,
 			MethodConfiguration config);
+	
+	IRealizationManager getRealizationManager(MethodConfiguration config);
 	
 }
