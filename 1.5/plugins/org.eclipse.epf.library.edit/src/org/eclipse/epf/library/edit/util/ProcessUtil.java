@@ -3329,6 +3329,9 @@ public final class ProcessUtil {
 			CopyHelper copyHelper,
 			IConfigurator configurator) {
 		
+		IRealizationManager mgr = configurator.getRealizationManager();
+		mgr.updateProcessModel(process);
+		
 		Process proc = deepCopy_(monitor, process, newProcessName,
 				deepCopyConfig, targetPackage, copyHelper, configurator);
 		
