@@ -723,4 +723,12 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		return super.createExtendObject(element);
 	}
 	
+	public void clearAllAutoSynProps(Descriptor des) {		
+		removeProperty(des, DESCRIPTOR_Customization);
+		removeProperty(des, DESCRIPTOR_LocalUsingInfo);
+		removeProperty(des, DESCRIPTOR_GreenParent);
+		removeProperty(des, DESCRIPTOR_GreenRefDelta);		
+	}
+	
+	
 }

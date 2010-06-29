@@ -85,7 +85,11 @@ public class MethodElementPropUtil {
 			getActionManager().execute(cmd);
 		}
 	}
-		
+	
+	protected void removeProperty(MethodElement e, String propName) {
+		MethodElementPropertyHelper.removeProperty(e, propName);
+	}
+	
 	public MethodElementExt getExtendObject(MethodElement element, boolean create) {
 		MultiResourceEObject mobj = (MultiResourceEObject) element;		
 		ExtendObject obj = mobj.getExtendObject();

@@ -47,6 +47,7 @@ public class LibraryEditUtil {
 	private static Map<EReference, EReference> roleGuidanceRefMap;
 	private static Map<EReference, EReference> workproductGuidanceRefMap;
 	private static UmaPackage up = UmaPackage.eINSTANCE;
+	private static Set<EReference> autoSynReferences;
 
 	public static LibraryEditUtil getInstance() {
 		return instance;
@@ -398,6 +399,45 @@ public class LibraryEditUtil {
 	public IRealizationManager getRealizationManager(MethodConfiguration config) {
 		ILibraryEditUtilProvider p = getProvider();				
 		return p == null ? null : p.getRealizationManager(config);
+	}
+	
+	public void removeAutoSynReferences(Process proc) {
+		Set<Descriptor> desSet = LibraryEditUtil.getInstance().collectDescriptors(proc);
+		for (Descriptor des : desSet) {
+			removeAutoSynReferences(des);
+		}
+	}
+		
+	private void removeAutoSynReferences(Descriptor des) {
+		if (autoSynReferences == null) {
+			autoSynReferences = new HashSet<EReference>();
+			autoSynReferences.add(up.getTaskDescriptor_PerformedPrimarilyByExcluded());
+			autoSynReferences.add(up.getTaskDescriptor_AdditionallyPerformedByExclude());
+			autoSynReferences.add(up.getTaskDescriptor_MandatoryInputExclude());
+			autoSynReferences.add(up.getTaskDescriptor_OptionalInputExclude());
+			autoSynReferences.add(up.getTaskDescriptor_OutputExclude());
+			autoSynReferences.add(up.getRoleDescriptor_ResponsibleForExclude());
+			autoSynReferences.add(up.getWorkProductDescriptor_DeliverablePartsExclude());
+			autoSynReferences.add(up.getDescriptor_GuidanceExclude());
+		}
+		
+		boolean oldDeliver = des.eDeliver();
+		try {
+			des.eSetDeliver(false);		
+			for (EReference ref : des.eClass().getEAllReferences()) {
+				if(autoSynReferences.contains(ref)) {
+					List list = (List) des.eGet(ref);
+					if (list != null && !list.isEmpty()) {
+						list.clear();
+					}
+				}
+			}
+			DescriptorPropUtil.getDesciptorPropUtil().clearAllAutoSynProps(des);
+		} finally {
+			des.eSetDeliver(oldDeliver);
+		}
+		
+		
 	}
 	
 }
