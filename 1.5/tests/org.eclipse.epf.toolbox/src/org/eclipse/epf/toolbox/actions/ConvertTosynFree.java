@@ -1,7 +1,6 @@
 package org.eclipse.epf.toolbox.actions;
 
 import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.util.SynFreeProcessConverter;
 import org.eclipse.epf.toolbox.ToolboxPlugin;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.jface.action.IAction;
@@ -29,8 +28,8 @@ public class ConvertTosynFree implements IWorkbenchWindowActionDelegate {
 			System.out.println("LD> Begin: ConvertTosynFree.run()");
 		}
 		MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();		
-		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
-		converter.convertLibrary(lib);
+//		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
+//		converter.convertLibrary(lib);
 		
 		if (debug) {
 			System.out.println("LD> End: ConvertTosynFree.run()");
