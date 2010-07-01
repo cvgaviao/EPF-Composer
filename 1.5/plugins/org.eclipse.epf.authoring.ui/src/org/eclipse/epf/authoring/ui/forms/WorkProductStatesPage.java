@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
+import org.eclipse.epf.authoring.ui.dialogs.ManageStateDialog;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.util.UIHelper;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
@@ -49,6 +50,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
@@ -66,6 +68,9 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
 public class WorkProductStatesPage extends BaseFormPage {
 	private static final String FORM_PAGE_ID = "workProductStatesPage"; //$NON-NLS-1$
 	
+	private WorkProductStatesPage page;
+	
+	private Shell shell;
 	private WorkProduct workProduct;
 	private MethodPlugin activePlugin;
 	private IActionManager actionMgr;
@@ -88,14 +93,17 @@ public class WorkProductStatesPage extends BaseFormPage {
 	private IStructuredContentProvider globalStatesViewerContentProvider;
 	private ITableLabelProvider globalStatesViewerLabelProvider;
 	
-	private Button ctrl_delete;
+	private Button ctrl_delete, ctrl_manage_state;
 
 	public WorkProductStatesPage(FormEditor editor) {
 		super(editor, FORM_PAGE_ID, AuthoringUIText.WORK_PRODUCT_STATES_PAGE_TITLE);
+		
+		page = this;
 	}
 	
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
+		shell = site.getShell();
 		workProduct = (WorkProduct) contentElement;
 		activePlugin = UmaUtil.getMethodPlugin(workProduct);
 		actionMgr = ((MethodElementEditor) getEditor()).getActionManager();
@@ -195,6 +203,12 @@ public class WorkProductStatesPage extends BaseFormPage {
 		btnComposite2.setLayoutData(new GridData(GridData.FILL_BOTH));
 		btnComposite2.setLayout(new GridLayout());
 		toolkit.createLabel(btnComposite2, null);
+		ctrl_manage_state = toolkit.createButton(btnComposite2, AuthoringUIText.STATES_MANAGE_TEXT, SWT.NONE);
+		{
+			GridData gridData = new GridData();
+			gridData.widthHint = 100;
+			ctrl_manage_state.setLayoutData(gridData);
+		}		
 		ctrl_delete = toolkit.createButton(btnComposite2, AuthoringUIText.STATES_DELETE_TEXT, SWT.NONE);
 		{
 			GridData gridData = new GridData();
@@ -345,6 +359,14 @@ public class WorkProductStatesPage extends BaseFormPage {
 			}			
 		});
 		
+		ctrl_manage_state.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				ManageStateDialog dialog = new ManageStateDialog(shell, activePlugin,
+						actionMgr, page);
+				dialog.open();
+			}
+		});
+		
 		ctrl_delete.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				deleteState();
@@ -401,7 +423,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 		globalStatesViewer.setInput(workProduct);
 	}
 	
-	private void updateControls() {
+	public void updateControls() {
 		String stateName = ctrl_name.getText();
 		if ((stateName != null) && (stateName.length() > 0)) {
 			ctrl_add.setEnabled(true);

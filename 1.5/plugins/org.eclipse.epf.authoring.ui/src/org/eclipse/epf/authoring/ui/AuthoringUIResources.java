@@ -2136,6 +2136,28 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String states_delete_text;
 	
+	public static String states_manage_text;
+	
+	public static String ManageStateDialog_title;
+	
+	public static String ManageStateDialog_label_state;
+	
+	public static String ManageStateDialog_label_des;
+	
+	public static String ManageStateDialog_addBtn_label;
+	
+	public static String ManageStateDialog_deleteBtn_label;
+	
+	public static String ManageStateDialog_modifyBtn_label;
+	
+	public static String ManageStateDialog_closeBtn_label;
+	
+	public static String StateEditDialog_title;
+	
+	public static String StateEditDialog_label_name;
+	
+	public static String StateEditDialog_label_des;
+	
 	public static String states_assign_text;
 	
 	public static String states_unassign_text;
