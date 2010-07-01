@@ -45,9 +45,10 @@ public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 	}
 
 	public void run(IAction action) {
+		long t0 = System.currentTimeMillis();
 		if (debug) {
 			System.out.println("");
-			System.out.println("LD> Begin: ConvertTosynFree.run()");
+			System.out.println("LD> Begin: DiagramDoctor.run()");
 		}
 		log("LD> Begin: DiagramDoctor.run()");
 		MethodLibrary lib = LibraryService.getInstance()
@@ -71,7 +72,11 @@ public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 		}
 
 		if (debug) {
-			System.out.println("LD> End: ConvertTosynFree.run()");
+			long t1 = System.currentTimeMillis();
+			double d = (t1 - t0)/1000.0;
+			int t = (int) d;
+			
+			System.out.println("LD> End: DiagramDoctor.run(), time (sec): " + t);
 		}
 		log("LD> End: DiagramDoctor.run()");
 	}
