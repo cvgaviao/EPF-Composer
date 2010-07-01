@@ -13,22 +13,22 @@
          <extension
                point="org.eclipse.ui.actionSets">
             <actionSet
-                  description="Convert all processes to syn-free"
-                  id="org.eclipse.epf.toolbox.actionSet.ConvertToSynFree"
-                  label="ConvertToSynFreeActionSetName">
+                  description="Clean up diagram data"
+                  id="org.eclipse.epf.toolbox.actionSet.DiagramDoctor"
+                  label="Diagram Doctor">
                <menu
                      id="epfToolboxMenu"
                      label="Epf Tools">
                   <separator
-                        name="ConvertTosynFreetGroup">
+                        name="DiagramDoctorGroup">
                   </separator>
                </menu>
                <action
-                     class="org.eclipse.epf.toolbox.actions.ConvertTosynFree"
-                     id="ogr.eclipse.epf.toolbox.actions.ConvertToSynFreeAction"
-                     label="Conver to syn-free "
-                     menubarPath="epfToolboxMenu/ConvertTosynFreetGroup"
-                     tooltip="Conver to syn-free ">
+                     class="org.eclipse.epf.toolbox.actions.DiagramDoctor"
+                     id="ogr.eclipse.epf.toolbox.actions.DiagramDoctorAction"
+                     label="Clean up provcess diagrams"
+                     menubarPath="epfToolboxMenu/DiagramDoctorGroup"
+                     tooltip="Clean up process diagrams">
                </action>
             </actionSet>
          </extension>

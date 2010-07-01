@@ -7,6 +7,8 @@ import java.util.Set;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.toolbox.ToolboxPlugin;
+import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Descriptor;
@@ -33,6 +35,24 @@ public class LibUtil {
 		return descriptors;
 	}
 
+	public static Set<Activity> collectActivities(Process proc) {
+		Set<Activity> activities = new HashSet<Activity>();
+		collectActivities(proc, activities);
+		return activities;
+	}
+	
+	private static void collectActivities(Activity act, Set<Activity> activities) {
+		if (act == null) {
+			return;
+		}
+		activities.add(act);
+		for (BreakdownElement be : act.getBreakdownElements()) {
+			if (be instanceof Activity) {
+				collectActivities((Activity) be, activities);
+			}
+		}
+	}
+	
 	public static Set<Process> collectProcesses(MethodLibrary lib) {
 		Set<Process> processes = new HashSet<Process>();
 		if (lib == null) {

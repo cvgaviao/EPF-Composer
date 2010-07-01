@@ -26,10 +26,10 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class ConvertTosynFree implements IWorkbenchWindowActionDelegate {
+public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 
 	private static boolean debug = ToolboxPlugin.getDefault().isDebugging();
-	
+
 	public void dispose() {
 		// TODO Auto-generated method stub
 
@@ -40,68 +40,83 @@ public class ConvertTosynFree implements IWorkbenchWindowActionDelegate {
 
 	}
 
+	private void log(String line) {
+		ToolboxPlugin.getDefault().getLogger().logInfo(line);
+	}
+
 	public void run(IAction action) {
 		if (debug) {
 			System.out.println("");
 			System.out.println("LD> Begin: ConvertTosynFree.run()");
 		}
-		MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
-		
-//		Converstion test		
-//		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
-//		converter.convertLibrary(lib);
-		
-//		Diagram clean-up test
+		log("LD> Begin: DiagramDoctor.run()");
+		MethodLibrary lib = LibraryService.getInstance()
+				.getCurrentMethodLibrary();
+
+		//		Converstion test		
+		//		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
+		//		converter.convertLibrary(lib);
+
+		//		Diagram clean-up test
 		Set<Process> processes = LibUtil.collectProcesses(lib);
 		for (Process proc : processes) {
 			System.out.println("LD> proc: " + proc);
 			DiagramManager mgr = DiagramManager.getInstance(proc, this);
-			
-			for (Activity act : LibUtil.collectActivities(proc)) {
 
-				if (act.getName().equals("fi_Provide Input to RFQ")) {
-					System.out.println("LD> act: " + act);
-					try {
-						List<Diagram> diagrams = mgr.getDiagrams(act,
-								IDiagramManager.ACTIVITY_DIAGRAM);
-						Resource resource = null;
-						boolean toDelete = false;
-						for (Diagram diagram : diagrams) {
-							if (toDelete) {
-								DiagramHelper.deleteDiagram(diagram, false);
-							} else {
-								resource = diagram.eResource();
-								toDelete = true;
-							}
-						}
-						
-						FailSafeMethodLibraryPersister persister = Services
-								.getLibraryPersister(
-										Services.XMI_PERSISTENCE_TYPE)
-								.getFailSafePersister();
-						try {
-							persister.save(resource);
-							persister.commit();
-						} catch (Exception e) {
-							CommonPlugin.getDefault().getLogger().logError(e);
-							persister.rollback();
-							throw new CoreException(new Status(IStatus.ERROR,
-									DiagramCorePlugin.PLUGIN_ID, 1, e
-											.getLocalizedMessage(), null));
-						}
-						
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					break;
-				}
+			for (Activity act : LibUtil.collectActivities(proc)) {
+				cleanupDiagrams(mgr, act);
 			}
+
 			System.out.println("");
 		}
-		
+
 		if (debug) {
 			System.out.println("LD> End: ConvertTosynFree.run()");
+		}
+		log("LD> End: DiagramDoctor.run()");
+	}
+
+	private void cleanupDiagrams(DiagramManager mgr, Activity act) {
+		try {
+			List<Diagram> diagrams = mgr.getDiagrams(act,
+					IDiagramManager.ACTIVITY_DIAGRAM);
+			Resource resource = null;
+			boolean toDelete = false;
+			int count = 0;
+			for (Diagram diagram : diagrams) {
+				if (toDelete) {
+					DiagramHelper.deleteDiagram(diagram, false);
+					count++;
+				} else {
+					resource = diagram.eResource();
+					toDelete = true;
+				}
+			}
+
+			FailSafeMethodLibraryPersister persister = Services
+					.getLibraryPersister(Services.XMI_PERSISTENCE_TYPE)
+					.getFailSafePersister();
+			try {
+				persister.save(resource);
+				persister.commit();
+			} catch (Exception e) {
+				CommonPlugin.getDefault().getLogger().logError(e);
+				persister.rollback();
+				throw new CoreException(new Status(IStatus.ERROR,
+						DiagramCorePlugin.PLUGIN_ID, 1, e
+								.getLocalizedMessage(), null));
+			}
+			if (count > 0) {
+				if (debug) {
+					System.out.println("LD> activity: " + act);
+					System.out.println("LD> Removed data count: " + count);
+				}
+				log("LD> activity: " + act);
+				log("LD> Removed data count: " + count);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log(e.getMessage());
 		}
 	}
 
