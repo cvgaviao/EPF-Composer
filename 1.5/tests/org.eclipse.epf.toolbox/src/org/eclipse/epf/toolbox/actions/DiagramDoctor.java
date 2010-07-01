@@ -28,7 +28,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 
-	private static boolean debug = ToolboxPlugin.getDefault().isDebugging();
+	private static boolean debug = true;//ToolboxPlugin.getDefault().isDebugging();
 
 	public void dispose() {
 		// TODO Auto-generated method stub
