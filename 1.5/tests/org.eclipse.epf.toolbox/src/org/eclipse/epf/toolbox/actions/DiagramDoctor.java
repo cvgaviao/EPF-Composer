@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -22,9 +23,13 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 
@@ -45,6 +50,33 @@ public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 	}
 
 	public void run(IAction action) {
+		final IAction a = action;
+		WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
+			public void execute(IProgressMonitor monitor) {
+				monitor.beginTask("Clean up process diagram duplicate data ... ",
+						10);
+				monitor.worked(3);
+				monitor.setTaskName("Clean up process diagram duplicate data ...");
+				try {
+					run_(a);
+				} finally {
+					monitor.done();
+				}
+			}
+		};
+
+		try {
+			// Run the operation and display the progress.
+			ProgressMonitorDialog pmDialog = new ProgressMonitorDialog(Display
+					.getCurrent().getActiveShell());
+			pmDialog.run(true, false, operation);
+		} catch (Exception e) {
+			ToolboxPlugin.getDefault().getLogger().logError(e);
+		}
+		
+	}
+
+	private void run_(IAction action) {
 		long t0 = System.currentTimeMillis();
 		if (debug) {
 			System.out.println("");
@@ -54,29 +86,32 @@ public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 		MethodLibrary lib = LibraryService.getInstance()
 				.getCurrentMethodLibrary();
 
-		//		Converstion test		
-		//		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
-		//		converter.convertLibrary(lib);
-
-		//		Diagram clean-up test
 		Set<Process> processes = LibUtil.collectProcesses(lib);
 		for (Process proc : processes) {
-			System.out.println("LD> proc: " + proc);
-			DiagramManager mgr = DiagramManager.getInstance(proc, this);
+			DiagramManager mgr = null;
+			try {
+				System.out.println("LD> proc: " + proc);
+				mgr = DiagramManager.getInstance(proc, this);
 
-			for (Activity act : LibUtil.collectActivities(proc)) {
-				cleanupDiagrams(mgr, act);
+				for (Activity act : LibUtil.collectActivities(proc)) {
+					cleanupDiagrams(mgr, act);
+				}
+
+				System.out.println("");
+			} finally {
+				if (mgr != null) {
+					mgr.removeConsumer(this);
+				}
 			}
-
-			System.out.println("");
 		}
 
 		if (debug) {
 			long t1 = System.currentTimeMillis();
-			double d = (t1 - t0)/1000.0;
+			double d = (t1 - t0) / 1000.0;
 			int t = (int) d;
-			
-			System.out.println("LD> End: DiagramDoctor.run(), time (sec): " + t);
+
+			System.out
+					.println("LD> End: DiagramDoctor.run(), time (sec): " + t);
 		}
 		log("LD> End: DiagramDoctor.run()");
 	}
@@ -86,13 +121,17 @@ public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 			List<Diagram> diagrams = mgr.getDiagrams(act,
 					IDiagramManager.ACTIVITY_DIAGRAM);
 			Resource resource = null;
+			Diagram diagram0 = null;
 			boolean toDelete = false;
 			int count = 0;
 			for (Diagram diagram : diagrams) {
 				if (toDelete) {
-					DiagramHelper.deleteDiagram(diagram, false);
-					count++;
+					if (diagram != diagram0) {
+						DiagramHelper.deleteDiagram(diagram, false);
+						count++;
+					}
 				} else {
+					diagram0 = diagram;
 					resource = diagram.eResource();
 					toDelete = true;
 				}
