@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * 
  * @author achen
+ * @since 7.5.1
  *
  */
 public class StateEditDialog extends Dialog {
@@ -69,11 +70,7 @@ public class StateEditDialog extends Dialog {
 			des.setLayoutData(gd);
 		}
 		
-		if (!create) {
-			name.setText(stateName);
-			des.setText(stateDes);
-		}
-		
+		loadData();
 		addListeners();
 		
 		return composite;
@@ -91,6 +88,13 @@ public class StateEditDialog extends Dialog {
 		stateDes = des.getText();
 		
 		super.okPressed();
+	}
+	
+	private void loadData() {
+		if (!create) {
+			name.setText(stateName);
+			des.setText(stateDes);
+		}
 	}
 	
 	private void updateControls() {

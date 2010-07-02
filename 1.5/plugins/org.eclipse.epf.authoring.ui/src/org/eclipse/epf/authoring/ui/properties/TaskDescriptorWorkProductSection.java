@@ -49,10 +49,17 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
@@ -69,6 +76,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 	private Button ctrl_state_1, ctrl_state_2, ctrl_state_3, ctrl_state_4;
 	public static final String UNASSIGN_STATE_NAME = "UnassignState"; //$NON-NLS-1$
 	public static final String UNASSIGN_STATE_BODY = PropertiesResources.Process_UnassignState_Body_Text;
+	public static final String UNASSIGN_STATE_DESCRIPTION = PropertiesResources.Process_UnassignState_Description;
 
 	/**
 	 * Get process work product filter
@@ -987,7 +995,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 			if (selection.getFirstElement() instanceof WorkProductDescriptor) {
 				WorkProductDescriptor wpd = (WorkProductDescriptor)selection.getFirstElement();
 				
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+				ElementListSelectionDialog dialog = new StateSelectionDialog(
 						viewer.getTable().getShell(),
 						getLabelProviderForStateSelectionDialog());
 				dialog.setElements(getInputForStateSelectionDialog(wpd, ref).toArray());
@@ -1057,8 +1065,47 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		Constraint constraint = UmaFactory.eINSTANCE.createConstraint();	
 		constraint.setName(UNASSIGN_STATE_NAME);
 		constraint.setBody(UNASSIGN_STATE_BODY);
+		constraint.setBriefDescription(UNASSIGN_STATE_DESCRIPTION);
 	
 		return constraint;
+	}
+	
+	private class StateSelectionDialog extends ElementListSelectionDialog {
+		private Text des;
+		
+		public StateSelectionDialog(Shell shell, ILabelProvider provider) {
+			super(shell, provider);
+		}
+		
+		protected Control createDialogArea(Composite parent) {
+			Control con = super.createDialogArea(parent);
+			
+			Label desLabel = new Label((Composite)con, SWT.NULL);
+			desLabel.setText(PropertiesResources.Process_SelectStateDialog_Label_Description);
+			des = new Text((Composite)con, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
+			{
+				GridData gd = new GridData(GridData.FILL_BOTH);
+				gd.heightHint = 100;
+				des.setLayoutData(gd);
+			}
+			des.setEditable(false);
+			des.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+			
+			addStateListeners();
+			
+			return con;
+		}
+		
+		private void addStateListeners() {
+			fFilteredList.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					Object[] objs = getSelectedElements();
+					if ((objs.length > 0) && (objs[0] instanceof Constraint)) {
+						des.setText(((Constraint)objs[0]).getBriefDescription());
+					}
+				}				
+			});
+		}
 	}
 	
 }

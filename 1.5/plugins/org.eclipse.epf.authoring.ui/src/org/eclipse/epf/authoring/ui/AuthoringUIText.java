@@ -218,6 +218,8 @@ public class AuthoringUIText {
 	public static final String STATES_GLOBAL_STATE_TEXT = AuthoringUIResources.states_global_state_text;
 	
 	public static final String STATES_GLOBAL_NOTES_TEXT = AuthoringUIResources.states_global_notes_text;
+	
+	public static final String STATES_DES_TEXT = AuthoringUIResources.states_des_text;
 
 	/**
 	 * Button labels.

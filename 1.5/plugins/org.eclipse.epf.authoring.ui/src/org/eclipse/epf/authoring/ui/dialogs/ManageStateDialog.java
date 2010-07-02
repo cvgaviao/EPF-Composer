@@ -32,6 +32,8 @@ import org.eclipse.jface.viewers.ITableFontProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -49,6 +51,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * 
  * @author achen
+ * @since 7.5.1
  *
  */
 public class ManageStateDialog extends Dialog {
@@ -102,6 +105,7 @@ public class ManageStateDialog extends Dialog {
 		initProviders();
 		statesViewer.setContentProvider(statesViewerContentProvider);
 		statesViewer.setLabelProvider(statesViewerLabelProvider);
+		statesViewer.setComparator(new StateViewerComparator());
 		statesViewer.setInput(new Object());
 		Label desLabel = new Label(viewComp, SWT.NULL);
 		desLabel.setText(AuthoringUIResources.ManageStateDialog_label_des);
@@ -112,6 +116,7 @@ public class ManageStateDialog extends Dialog {
 			des.setLayoutData(gd);
 		}
 		des.setEditable(false);
+		des.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 				
 		Composite btnComp = new Composite(composite, SWT.NONE);
 		btnComp.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -171,8 +176,9 @@ public class ManageStateDialog extends Dialog {
 						actionMgr.doAction(IActionManager.SET, state,
 								up.getMethodElement_BriefDescription(), dialog.getStateDes(), -1);						
 					}					
-					updateControls();
 				}
+				
+				updateControls();
 			}
 		});
 		
@@ -184,6 +190,7 @@ public class ManageStateDialog extends Dialog {
 					MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).removeWorkProductState(
 							activePlugin, state.getBody());
 				}
+				
 				updateControls();
 			}
 		});
@@ -193,27 +200,26 @@ public class ManageStateDialog extends Dialog {
 				IStructuredSelection selection = (IStructuredSelection)statesViewer.getSelection();
 				if (selection.size() > 0) {
 					Constraint state = (Constraint)selection.getFirstElement();
-					StateEditDialog dialog = new StateEditDialog(shell, false, state.getBody(), state.getBriefDescription());
+					String oldStateName = state.getBody();
+					String oldStateDes = state.getBriefDescription();
+					
+					StateEditDialog dialog = new StateEditDialog(shell, false, oldStateName, oldStateDes);
 					if (dialog.open() == Dialog.OK) {
 						UmaPackage up = UmaPackage.eINSTANCE;
-						if (state.getBody().equals(dialog.getStateName())) {
-							//only update the description
+						String newStateName = dialog.getStateName();
+						String newStateDes = dialog.getStateDes();
+						if (!newStateName.equals(oldStateName)) {
 							actionMgr.doAction(IActionManager.SET, state,
-									up.getMethodElement_BriefDescription(), dialog.getStateDes(), -1);							
-						} else {
-							//need delete the old one and create a new state
-							MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).removeWorkProductState(
-									activePlugin, state.getBody());
-							Constraint newState = MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).getWorkProductState(									
-									activePlugin, dialog.getStateName(), true);
-							if (newState != null) {
-								actionMgr.doAction(IActionManager.SET, newState,
-										up.getMethodElement_BriefDescription(), dialog.getStateDes(), -1);						
-							}							
+									up.getNamedElement_Name(), newStateName, -1);
 						}
-					}
-					updateControls();
+						if (!newStateDes.equals(oldStateDes)) {
+							actionMgr.doAction(IActionManager.SET, state,
+									up.getMethodElement_BriefDescription(), newStateDes, -1);
+						}
+					}				
 				}
+				
+				updateControls();
 			}
 		});
 		
@@ -238,11 +244,13 @@ public class ManageStateDialog extends Dialog {
 		}
 
 		statesViewer.refresh();
+		
+		//Since we change model in the dialog, so also need update UI of the WP state page
 		page.updateControls();
 	}
 	
 	//All states here are in host plug-in, so show as boldface
-	public class StatesLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
+	private class StatesLabelProvider extends AdapterFactoryLabelProvider implements ITableFontProvider {
 		private FontRegistry registry = new FontRegistry();
 		private Font systemFont;
 		
@@ -269,6 +277,18 @@ public class ManageStateDialog extends Dialog {
 
 	    	return systemFont;
 	    }	
+	}
+	
+	public class StateViewerComparator extends ViewerComparator {
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			if ((e1 instanceof Constraint) && (e2 instanceof Constraint)) {
+				String name1 = ((Constraint)e1).getBody();
+				String name2 = ((Constraint)e2).getBody();					
+				return getComparator().compare(name1, name2);
+			}
+			
+			return 0;
+		}
 	}
 
 }

@@ -2168,6 +2168,8 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String states_global_notes_text;
 	
+	public static String states_des_text;
+	
 	public static String ProcessEditor_Action_delete_AD_text;
 	
 	public static String ProcessEditor_Action_delete_ADD_text;
