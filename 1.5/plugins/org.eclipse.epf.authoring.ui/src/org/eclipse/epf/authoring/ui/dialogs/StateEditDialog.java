@@ -15,6 +15,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -116,6 +118,15 @@ public class StateEditDialog extends Dialog {
 				updateControls();				
 			}			
 		});
+		
+		//Won't allow comma in state name
+		name.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e) {
+				if (e.character == ',') {
+					e.doit = false;
+				}				
+			}			
+		});		
 	}
 	
 	public String getStateName() {
