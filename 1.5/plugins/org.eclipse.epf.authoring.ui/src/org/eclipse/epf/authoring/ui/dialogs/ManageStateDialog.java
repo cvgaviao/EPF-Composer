@@ -210,7 +210,7 @@ public class ManageStateDialog extends Dialog {
 						String newStateDes = dialog.getStateDes();
 						if (!newStateName.equals(oldStateName)) {
 							actionMgr.doAction(IActionManager.SET, state,
-									up.getNamedElement_Name(), newStateName, -1);
+									up.getConstraint_Body(), newStateName, -1);
 						}
 						if (!newStateDes.equals(oldStateDes)) {
 							actionMgr.doAction(IActionManager.SET, state,
