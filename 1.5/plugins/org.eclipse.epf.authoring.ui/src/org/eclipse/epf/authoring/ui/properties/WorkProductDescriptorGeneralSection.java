@@ -141,7 +141,7 @@ public class WorkProductDescriptorGeneralSection extends
 		String sectionDesc = PropertiesResources.WPDescriptor_DeliverablePart_SectionDescription; 
 		String tableTitle = PropertiesResources.WPDescriptor_DeliverablePart_Table1; 
 
-		if(isSyncFreeForSectionDesc()) {
+		if(isSyncFree()) {
 			sectionDesc = sectionDesc + " " + PropertiesResources.Process_SyncFree_FontStyle; //$NON-NLS-1$
 		}
 		Section section = FormUI.createSection(toolkit, composite,
@@ -189,7 +189,7 @@ public class WorkProductDescriptorGeneralSection extends
 						newList.add(wpDesc);
 				}
 				
-				if (isSyncFree()
+				if (isSyncFreeForDeliverable()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(element)) {
 					newList.addAll(element.getDeliverablePartsExclude());
@@ -204,7 +204,7 @@ public class WorkProductDescriptorGeneralSection extends
 	
 	protected void initLabelProvider() {
 		ILabelProvider labelProvider = null;		
-		if (isSyncFree()) {
+		if (isSyncFreeForDeliverable()) {
 			labelProvider = new SyncFreeLabelProvider(
 					TngAdapterFactory.INSTANCE.getPBS_ComposedAdapterFactory(),
 					(Descriptor)element,
@@ -372,7 +372,7 @@ public class WorkProductDescriptorGeneralSection extends
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection)viewer_1.getSelection();
 				if ((selection.size() > 0) & editable) {
-					if (isSyncFree()) {
+					if (isSyncFreeForDeliverable()) {
 						syncFreeUpdateBtnStatus(selection);
 					} else {
 						ctrl_remove_1.setEnabled(true);
@@ -383,7 +383,7 @@ public class WorkProductDescriptorGeneralSection extends
 		
 		ctrl_add_1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				if (isSyncFree()) {
+				if (isSyncFreeForDeliverable()) {
 					IStructuredSelection selection = (IStructuredSelection) viewer_1.getSelection();
 					if (syncFreeAdd(selection)) { 
 						viewer_1.refresh();
@@ -402,7 +402,7 @@ public class WorkProductDescriptorGeneralSection extends
 				// also block it's parent work products, if any
 				existingElements.addAll((Collection) getParentWorkProducts((WorkProductDescriptor) element));
 				
-				if (isSyncFree()
+				if (isSyncFreeForDeliverable()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil().isNoAutoSyn(element)) {
 						existingElements.addAll(element.getDeliverablePartsExclude());
 				}				
@@ -450,7 +450,7 @@ public class WorkProductDescriptorGeneralSection extends
 
 		ctrl_remove_1.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				if (isSyncFree()) {
+				if (isSyncFreeForDeliverable()) {
 					IStructuredSelection selection = (IStructuredSelection) viewer_1.getSelection();
 					if (syncFreeRemove(selection)) {
 						viewer_1.refresh();
@@ -537,7 +537,7 @@ public class WorkProductDescriptorGeneralSection extends
 
 				// update method element control
 				ctrl_method_element.setText(getMethodElementName(element));
-				if (isSyncFreeForAllWorkproduct()) {
+				if (isSyncFree()) {
 					getEditor().updateOnLinkedElementChange(element);
 				}
 			}
@@ -593,7 +593,7 @@ public class WorkProductDescriptorGeneralSection extends
 		if (ctrl_remove_1 != null)
 			ctrl_remove_1.setEnabled(editable);
 		
-		if (isSyncFreeForAllWorkproduct()) {
+		if (isSyncFree()) {
 			if (element.getWorkProduct() != null) {
 				linkButton.setEnabled(false);
 			}
@@ -737,7 +737,7 @@ public class WorkProductDescriptorGeneralSection extends
 										UmaPackage.eINSTANCE
 												.getWorkProductDescriptor_DeliverableParts(),
 										obj, -1);
-						if (isSyncFree()) {
+						if (isSyncFreeForDeliverable()) {
 							propUtil.addLocalUse((Descriptor)obj, element,
 									UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());								
 						}						
@@ -772,7 +772,7 @@ public class WorkProductDescriptorGeneralSection extends
 											.getWorkProductDescriptor_DeliverableParts(),
 									(WorkProductDescriptor) obj, -1);
 					
-					if (isSyncFree()) {
+					if (isSyncFreeForDeliverable()) {
 						propUtil.removeLocalUse((Descriptor)obj, element,
 								UmaPackage.eINSTANCE.getWorkProductDescriptor_DeliverableParts());
 					}
@@ -962,15 +962,12 @@ public class WorkProductDescriptorGeneralSection extends
 		return false;
 	}
 	
-	private boolean isSyncFree() {
-		return (element.getWorkProduct() instanceof Deliverable) && ProcessUtil.isSynFree();
+	//Use this method to handle Deliverable under sync-free condition
+	private boolean isSyncFreeForDeliverable() {
+		return (element.getWorkProduct() instanceof Deliverable) && isSyncFree();
 	}
 	
-	private boolean isSyncFreeForSectionDesc() {
-		return ProcessUtil.isSynFree();
-	}
-	
-	private boolean isSyncFreeForAllWorkproduct() {
+	protected boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
 	}
 	

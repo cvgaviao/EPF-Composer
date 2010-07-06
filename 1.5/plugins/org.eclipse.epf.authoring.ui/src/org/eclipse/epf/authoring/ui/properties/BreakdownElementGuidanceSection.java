@@ -594,7 +594,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		return str;
 	}
 	
-	private boolean isSyncFree() {
+	protected boolean isSyncFree() {
 		return propUtil.isDescriptor(element) && ProcessUtil.isSynFree();
 	}
 	

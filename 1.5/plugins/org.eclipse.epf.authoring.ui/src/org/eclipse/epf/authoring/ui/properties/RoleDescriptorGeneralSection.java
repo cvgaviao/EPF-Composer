@@ -273,7 +273,7 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 		return LibraryUIText.TEXT_ROLE_DESCRIPTOR + ": "; //$NON-NLS-1$
 	}
 	
-	private boolean isSyncFree() {
+	protected boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
 	}
 	

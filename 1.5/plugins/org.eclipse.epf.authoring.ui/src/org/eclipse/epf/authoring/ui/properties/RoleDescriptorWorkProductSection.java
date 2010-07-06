@@ -378,4 +378,8 @@ public class RoleDescriptorWorkProductSection extends RelationSection {
 		}		
 	}
 	
+	protected boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
 }

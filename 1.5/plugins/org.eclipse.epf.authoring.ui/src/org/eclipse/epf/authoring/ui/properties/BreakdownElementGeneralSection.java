@@ -125,8 +125,6 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	private ILabelProvider labelProvider;
 
 	final boolean ignoreSuppressed = true;
-	
-	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 
 	protected Listener nameDeactivateListener = new Listener() {
 		public void handleEvent(Event e) {
@@ -646,10 +644,6 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 			toolkit.paintBordersFor(buttonComposite_1);
 			toolkit.paintBordersFor(buttonComposite_2);
 		}
-	}
-	
-	private boolean isSyncFree() {
-		return propUtil.isDescriptor(element) && ProcessUtil.isSynFree();
 	}
 	
 	private void updateNameRestoreBtn() {

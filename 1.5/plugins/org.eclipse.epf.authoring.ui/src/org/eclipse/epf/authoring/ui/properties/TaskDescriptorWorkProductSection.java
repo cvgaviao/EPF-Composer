@@ -844,6 +844,10 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		}		
 	}
 	
+	protected boolean isSyncFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
 	private String getLabelForWpd(WorkProductDescriptor wpd, String orginalLabel, EReference ref) {
 		List<Constraint> states = TaskDescriptorPropUtil.getTaskDescriptorPropUtil(actionMgr).getWpStates(
 				(TaskDescriptor)element, wpd, ref);
@@ -1061,7 +1065,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		return elements;
 	}
 		
-	private Constraint createUnassignState() {
+	public static Constraint createUnassignState() {
 		Constraint constraint = UmaFactory.eINSTANCE.createConstraint();	
 		constraint.setName(UNASSIGN_STATE_NAME);
 		constraint.setBody(UNASSIGN_STATE_BODY);
@@ -1070,7 +1074,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		return constraint;
 	}
 	
-	private class StateSelectionDialog extends ElementListSelectionDialog {
+	public static class StateSelectionDialog extends ElementListSelectionDialog {
 		private Text des;
 		
 		public StateSelectionDialog(Shell shell, ILabelProvider provider) {

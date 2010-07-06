@@ -175,7 +175,7 @@ public class DescriptorDocumentSection extends BreakdownElementDocumentSection {
 		}
 	}
 	
-	private boolean isSyncFree() {
+	protected boolean isSyncFree() {
 		return propUtil.isDescriptor(element) && ProcessUtil.isSynFree();
 	}
 	

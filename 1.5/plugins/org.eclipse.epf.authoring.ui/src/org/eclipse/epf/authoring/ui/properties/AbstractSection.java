@@ -400,4 +400,8 @@ public class AbstractSection extends AbstractPropertySection implements
 		return this;
 	}
 	
+	protected boolean isSyncFree() {
+		return false;
+	}
+	
 }

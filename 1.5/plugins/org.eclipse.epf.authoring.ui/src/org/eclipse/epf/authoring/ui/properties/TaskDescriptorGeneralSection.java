@@ -265,7 +265,7 @@ public class TaskDescriptorGeneralSection extends
 		return LibraryUIText.TEXT_TASK_DESCRIPTOR + ": "; //$NON-NLS-1$
 	}
 	
-	private boolean isSyncFree() {
+	protected boolean isSyncFree() {
 		return ProcessUtil.isSynFree();
 	}
 	

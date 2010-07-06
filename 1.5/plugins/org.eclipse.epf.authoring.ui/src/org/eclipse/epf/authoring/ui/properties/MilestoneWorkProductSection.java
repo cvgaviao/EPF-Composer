@@ -385,7 +385,7 @@ public class MilestoneWorkProductSection extends RelationSection {
 			if (selection.getFirstElement() instanceof WorkProductDescriptor) {
 				WorkProductDescriptor wpd = (WorkProductDescriptor)selection.getFirstElement();
 				
-				ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+				ElementListSelectionDialog dialog = new TaskDescriptorWorkProductSection.StateSelectionDialog(
 						viewer.getTable().getShell(),
 						getLabelProviderForStateSelectionDialog());
 				dialog.setElements(getInputForStateSelectionDialog(wpd, ref).toArray());
@@ -446,17 +446,9 @@ public class MilestoneWorkProductSection extends RelationSection {
 		}
 		
 		// A special state for unassign state from wpd
-		elements.add(createUnassignState());
+		elements.add(TaskDescriptorWorkProductSection.createUnassignState());
 		
 		return elements;
-	}
-	
-	private Constraint createUnassignState() {
-		Constraint constraint = UmaFactory.eINSTANCE.createConstraint();	
-		constraint.setName(TaskDescriptorWorkProductSection.UNASSIGN_STATE_NAME);
-		constraint.setBody(TaskDescriptorWorkProductSection.UNASSIGN_STATE_BODY);
-	
-		return constraint;
 	}
 	
 }

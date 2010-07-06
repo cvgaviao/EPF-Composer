@@ -1068,9 +1068,5 @@ public class RelationSection extends AbstractSection {
 	protected void createAddtionalButton4(Composite parent) {
 		
 	}
-				
-	protected boolean isSyncFree() {
-		return propUtil.isDescriptor(element) && ProcessUtil.isSynFree();
-	}
 	
 }
