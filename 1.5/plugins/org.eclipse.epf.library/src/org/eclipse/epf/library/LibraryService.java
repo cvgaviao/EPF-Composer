@@ -576,9 +576,9 @@ public class LibraryService implements ILibraryService {
 		if (config == null) {
 			throw new IllegalArgumentException();
 		}
-		if (config instanceof Scope || UmaUtil.getMethodLibrary(config) == null) {	//Don't cache it
-			return new ConfigurationManager(config);
-		}
+//		if (config instanceof Scope || UmaUtil.getMethodLibrary(config) == null) {	//Don't cache it
+//			return new ConfigurationManager(config);
+//		}
 		
 		IConfigurationManager manager = (IConfigurationManager) configManagers
 				.get(config);
@@ -611,6 +611,17 @@ public class LibraryService implements ILibraryService {
 		for (int i = 0; i < configs.length; i++) {
 			removeConfigurationManager(configs[i]);
 		}
+		
+		//Remove the rest
+		if (configManagers != null && !configManagers.isEmpty()) {
+			for (IConfigurationManager mgr : configManagers.values()) {
+				if (mgr != null) {
+					mgr.dispose();
+				}
+			}
+			configManagers.clear();
+		}
+		
 	}
 
 	/**
