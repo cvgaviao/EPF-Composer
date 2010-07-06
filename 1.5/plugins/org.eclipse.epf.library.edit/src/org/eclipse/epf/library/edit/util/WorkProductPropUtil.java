@@ -144,12 +144,15 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 	 * @param wp
 	 * @param stateName
 	 */
-	public void addWorkProductState(WorkProduct wp, String stateName) {
+	public void addWorkProductState(WorkProduct wp, Constraint srcState) {
+		String stateName = srcState.getBody();
+		
 		String oldValue = getStringValue(wp, WORKPRODUCT_States);
 		
 		//No old state
 		if (oldValue == null || oldValue.trim().length() == 0) {
 			Constraint state = getState(wp, stateName, true);
+			copyDescription(srcState, state);
 			setStringValue(wp, WORKPRODUCT_States, state.getGuid());
 			return;
 		}
@@ -170,9 +173,17 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		
 		//Append the new state
 		Constraint state = getState(wp, stateName, true);
+		copyDescription(srcState, state);
 		String newValue = oldValue.concat(infoSeperator).concat(state.getGuid());
 		setStringValue(wp, WORKPRODUCT_States, newValue);
 		
+	}
+
+	private void copyDescription(Constraint srcState, Constraint tgtState) {
+		if (tgtState == srcState) {
+			return;			
+		}
+		tgtState.setBriefDescription(srcState.getBriefDescription());
 	}
 	
 	/**

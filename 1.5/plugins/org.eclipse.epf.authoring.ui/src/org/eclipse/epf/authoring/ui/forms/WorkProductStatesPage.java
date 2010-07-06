@@ -316,7 +316,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 		for (Object obj : selection.toList()) {
 			if (obj instanceof Constraint) {
 				WorkProductPropUtil.getWorkProductPropUtil(actionMgr).addWorkProductState(
-						workProduct, ((Constraint)obj).getBody());				
+						workProduct, (Constraint)obj);				
 			}
 		}		
 	}
