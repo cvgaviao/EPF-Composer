@@ -848,7 +848,7 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		return ProcessUtil.isSynFree();
 	}
 	
-	private String getLabelForWpd(WorkProductDescriptor wpd, String orginalLabel, EReference ref) {
+	public String getLabelForWpd(WorkProductDescriptor wpd, String orginalLabel, EReference ref) {
 		List<Constraint> states = TaskDescriptorPropUtil.getTaskDescriptorPropUtil(actionMgr).getWpStates(
 				(TaskDescriptor)element, wpd, ref);
 		if (states.size() > 0) {
