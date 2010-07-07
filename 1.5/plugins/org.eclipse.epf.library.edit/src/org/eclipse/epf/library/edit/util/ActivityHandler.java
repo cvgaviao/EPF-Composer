@@ -41,6 +41,7 @@ import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDeepCopyCommand;
 import org.eclipse.epf.library.edit.process.command.CopyHelper;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -194,7 +195,7 @@ public class ActivityHandler {
 					new BasicCommandStack());
 			if(!procPackages.isEmpty()) {
 				activities.addAll(copy(procPackages));
-				fixGuidReferences(copyHelper);
+				fixGuidReferences(copyHelper, false);
 			}
 			if(!activitiesToDeepCopy.isEmpty()) {
 					if (monitor == null) {
@@ -256,6 +257,11 @@ public class ActivityHandler {
 	}
 	
 	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap) {
+		fixGuidReferences(objectToCopyMap, true);
+	}
+	
+	private static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap,
+			boolean deepCopy) {
 		if (! ProcessUtil.isSynFree()) {
 			return;
 		}
@@ -289,7 +295,20 @@ public class ActivityHandler {
 				if (oldGreenParent != null) {
 					String newGreenParent = srcGuidToCpyGuidMap.get(oldGreenParent);
 					if (newGreenParent != null && ! newGreenParent.equals(oldGreenParent)) {
-						propUtil.setGreenParent(cpyDes, newGreenParent);
+						if (deepCopy) {
+							propUtil.setGreenParent(cpyDes, null);
+							Activity parentAct = cpyDes.getSuperActivities();
+							if (parentAct != null) {
+								for (BreakdownElement be : parentAct.getBreakdownElements()) {
+									if (be.getGuid().equals(newGreenParent)) {
+										parentAct.getBreakdownElements().remove(be);
+										break;
+									}									
+								}
+							}
+						} else {
+							propUtil.setGreenParent(cpyDes, newGreenParent);
+						}
 					}
 				}
 			}
