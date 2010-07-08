@@ -456,6 +456,6 @@ public class ConfigHelperDelegate {
 	//Check to see if a process can be converted to a config-free process
 	//To be overridden by sub-class	
 	public boolean canBeConfigFree(Process proc) {
-		return true;
+		return ProcessUtil.isSynFree();
 	}
 }
