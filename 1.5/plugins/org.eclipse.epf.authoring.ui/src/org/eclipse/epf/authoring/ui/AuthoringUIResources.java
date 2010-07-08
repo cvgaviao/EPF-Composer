@@ -2152,6 +2152,10 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String ManageStateDialog_closeBtn_label;
 	
+	public static String ManageStateDialog_warn_msg;
+	
+	public static String ManageStateDialog_warn_title;
+	
 	public static String StateEditDialog_title;
 	
 	public static String StateEditDialog_label_name;

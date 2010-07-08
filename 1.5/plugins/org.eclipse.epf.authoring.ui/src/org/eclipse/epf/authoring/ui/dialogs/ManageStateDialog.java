@@ -24,6 +24,7 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -187,6 +188,9 @@ public class ManageStateDialog extends Dialog {
 				IStructuredSelection selection = (IStructuredSelection)statesViewer.getSelection();
 				if (selection.size() > 0) {
 					Constraint state = (Constraint)selection.getFirstElement();
+					if (!getConfirm(state)) {
+						return;
+					}
 					MethodPluginPropUtil.getMethodPluginPropUtil(actionMgr).removeWorkProductState(
 							activePlugin, state.getBody());
 				}
@@ -200,6 +204,9 @@ public class ManageStateDialog extends Dialog {
 				IStructuredSelection selection = (IStructuredSelection)statesViewer.getSelection();
 				if (selection.size() > 0) {
 					Constraint state = (Constraint)selection.getFirstElement();
+					if (!getConfirm(state)) {
+						return;
+					}
 					String oldStateName = state.getBody();
 					String oldStateDes = state.getBriefDescription();
 					
@@ -228,6 +235,20 @@ public class ManageStateDialog extends Dialog {
 				buttonPressed(IDialogConstants.CANCEL_ID);
 			}
 		});
+	}
+	
+	private boolean getConfirm(Constraint state) {
+		boolean result = false;
+		
+		//TODO: call a data layer API to get the usage status of state
+		String msg = AuthoringUIResources.bind(AuthoringUIResources.ManageStateDialog_warn_msg,
+				new Object[]{state.getBody(), "Alex_plugin"});
+		
+		if (MessageDialog.openConfirm(shell, AuthoringUIResources.ManageStateDialog_warn_title, msg)) {
+			result = true;
+		}
+		
+		return result;
 	}
 	
 	private void updateControls() {
