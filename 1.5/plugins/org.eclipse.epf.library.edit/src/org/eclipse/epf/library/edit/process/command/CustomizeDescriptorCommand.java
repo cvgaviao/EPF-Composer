@@ -11,17 +11,19 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
+import org.eclipse.epf.library.edit.util.ConstraintManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.PlanningData;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 
 public class CustomizeDescriptorCommand extends AbstractCommand implements
@@ -232,11 +234,33 @@ public class CustomizeDescriptorCommand extends AbstractCommand implements
 		}
 		
 		copyReferences(greenParent, child, newChild);
+		copyWpStates(greenParent, child, newChild);
 		copyReferences(greenParent.getPresentation(), child.getPresentation(), newChild);	
+		
 		
 		propUtil.setGreenParent(child, greenParent.getGuid());
 		propUtil.addToCustomizingChildren(greenParent, child);
 	}	
+	
+	
+	private static void copyWpStates(MethodElement source, MethodElement target, boolean newChild) {
+		if (! newChild) {
+			return;
+		}
+		if (source == null || target == null || source.eClass() != target.eClass()) {
+			return;
+		}	
+		
+		if (source instanceof TaskDescriptor) {
+			TaskDescriptor srcTd = (TaskDescriptor) source;
+			TaskDescriptor tgtTd = (TaskDescriptor) target;
+			for (Constraint c : ConstraintManager.getWpStates(srcTd)) {
+				Constraint copiedState = (Constraint) EcoreUtil.copy(c);
+				copiedState.setGuid(UmaUtil.generateGUID());
+				tgtTd.getOwnedRules().add(copiedState);
+			}
+		}
+	}
 	
 	/*
 	 * (non-Javadoc)
