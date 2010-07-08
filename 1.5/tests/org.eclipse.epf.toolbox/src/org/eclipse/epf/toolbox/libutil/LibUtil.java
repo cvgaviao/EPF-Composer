@@ -93,6 +93,10 @@ public class LibUtil {
 		}
 	}
 
+	public static void trace(String line) {
+		ToolboxPlugin.getDefault().getLogger().logInfo(line);
+		System.out.println(line);
+	}
 	
 	
 }
