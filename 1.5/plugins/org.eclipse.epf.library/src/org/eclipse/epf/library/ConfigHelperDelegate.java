@@ -51,6 +51,7 @@ import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.Scope;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
@@ -452,4 +453,9 @@ public class ConfigHelperDelegate {
 		loadForBrowsingNeeded = true;
 	}
 	
+	//Check to see if a process can be converted to a config-free process
+	//To be overridden by sub-class	
+	public boolean canBeConfigFree(Process proc) {
+		return true;
+	}
 }
