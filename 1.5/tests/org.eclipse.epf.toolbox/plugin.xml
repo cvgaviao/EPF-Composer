@@ -20,15 +20,22 @@
                      id="epfToolboxMenu"
                      label="Library-tools">
                   <separator
-                        name="DiagramDoctorGroup">
+                        name="LibraryToolsGroup">
                   </separator>
                </menu>
                <action
                      class="org.eclipse.epf.toolbox.actions.DiagramDoctor"
                      id="ogr.eclipse.epf.toolbox.actions.DiagramDoctorAction"
                      label="Clean up process diagram duplicate data"
-                     menubarPath="epfToolboxMenu/DiagramDoctorGroup"
+                     menubarPath="epfToolboxMenu/LibraryToolsGroup"
                      tooltip="Clean up process diagram duplicate data">
+               </action>
+               <action
+                     class="org.eclipse.epf.toolbox.actions.ConvertToConfigFree"
+                     id="ogr.eclipse.epf.toolbox.actions.ConvertToConfigFreeAction"
+                     label="Convert all processes to configuration-free"
+                     menubarPath="epfToolboxMenu/LibraryToolsGroup"
+                     tooltip="Convert all processes to configuration-free">
                </action>
             </actionSet>
          </extension>

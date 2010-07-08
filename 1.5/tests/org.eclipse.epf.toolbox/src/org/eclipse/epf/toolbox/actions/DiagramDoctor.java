@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.common.CommonPlugin;
 import org.eclipse.epf.diagram.core.DiagramCorePlugin;
 import org.eclipse.epf.diagram.core.services.DiagramHelper;
@@ -85,7 +86,11 @@ public class DiagramDoctor implements IWorkbenchWindowActionDelegate {
 		log("LD> Begin: DiagramDoctor.run()");
 		MethodLibrary lib = LibraryService.getInstance()
 				.getCurrentMethodLibrary();
+		if (lib == null) {
+			return;
+		}
 
+		EditorChooser.getInstance().closeAllMethodEditorsWithSaving();
 		Set<Process> processes = LibUtil.collectProcesses(lib);
 		for (Process proc : processes) {
 			DiagramManager mgr = null;
