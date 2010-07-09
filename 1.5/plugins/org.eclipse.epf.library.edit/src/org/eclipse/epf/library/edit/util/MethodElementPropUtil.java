@@ -1,14 +1,18 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 
@@ -101,7 +105,18 @@ public class MethodElementPropUtil {
 	}
 	
 	protected MethodElementExt createExtendObject(MethodElement element) {
+		if (isWorkProductState(element)) {
+			return new WorkProductStateExt((Constraint) element);
+		}
 		return new MethodElementExt(element);
+	}
+	
+	public boolean isWorkProductState(MethodElement element) {
+		if (!(element instanceof Constraint)) {
+			return false;
+		}
+		Constraint c = (Constraint) element;
+		return ConstraintManager.Plugin_wpState.equals(c.getName());
 	}
 	
 	public void addReferenceInfo(MethodElement owner, MethodElement reference, String propName, String refName) {
@@ -223,4 +238,33 @@ public class MethodElementPropUtil {
 		extObj.setTransientElement(transientElement);
 
 	}
+	
+	//-> For work product state objects
+	public void addToAssignedToWps(WorkProduct wp, Constraint state) {
+		if (! isWorkProductState(state)) {
+			return;
+		}
+		MethodElementExt extObj = getExtendObject(state, true);
+		if (! (extObj instanceof WorkProductStateExt)) {
+			return;
+		}
+		((WorkProductStateExt) extObj).addToAssignedToWps(wp);
+	}
+	
+	public void removeFromAssignedToWps(WorkProduct wp, Constraint state) {
+		MethodElementExt extObj = getExtendObject(state, false);
+		if (! (extObj instanceof WorkProductStateExt)) {
+			return;
+		}
+		((WorkProductStateExt) extObj).removeFromAssignedToWps(wp);
+	}
+	
+	public List<WorkProduct> getAssignedToWorkProdcuts(Constraint state) {
+		MethodElementExt extObj = getExtendObject(state, false);
+		if (! (extObj instanceof WorkProductStateExt)) {
+			return Collections.EMPTY_LIST;
+		}
+		return ((WorkProductStateExt) extObj).getAssignedToWorkProdcuts();
+	}
+	//<- For work product state objects
 }
