@@ -55,7 +55,7 @@ public class MethodElementExt extends ExtendObject {
 			assignedToWps.remove(wp);
 		}
 		
-		public List<WorkProduct> getAssignedToWorkProdcuts() {
+		public List<WorkProduct> getAssignedToWorkProducts() {
 			List<WorkProduct> list = new ArrayList<WorkProduct>();
 			List<WorkProduct> list1 = new ArrayList<WorkProduct>();
 			if (assignedToWps == null) {

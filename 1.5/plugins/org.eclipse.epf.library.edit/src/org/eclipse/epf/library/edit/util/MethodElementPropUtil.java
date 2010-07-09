@@ -259,12 +259,12 @@ public class MethodElementPropUtil {
 		((WorkProductStateExt) extObj).removeFromAssignedToWps(wp);
 	}
 	
-	public List<WorkProduct> getAssignedToWorkProdcuts(Constraint state) {
+	public List<WorkProduct> getAssignedToWorkProducts(Constraint state) {
 		MethodElementExt extObj = getExtendObject(state, false);
 		if (! (extObj instanceof WorkProductStateExt)) {
 			return Collections.EMPTY_LIST;
 		}
-		return ((WorkProductStateExt) extObj).getAssignedToWorkProdcuts();
+		return ((WorkProductStateExt) extObj).getAssignedToWorkProducts();
 	}
 	//<- For work product state objects
 }
