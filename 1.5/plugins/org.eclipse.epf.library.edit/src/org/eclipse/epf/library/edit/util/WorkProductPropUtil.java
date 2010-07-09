@@ -145,6 +145,11 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 	 * @param stateName
 	 */
 	public void addWorkProductState(WorkProduct wp, Constraint srcState) {
+		Constraint tgtState = addWorkProductState_(wp, srcState);
+		MethodElementPropUtil.getMethodElementPropUtil().addToAssignedToWps(wp, tgtState);
+	}
+	
+	private Constraint addWorkProductState_(WorkProduct wp, Constraint srcState) {
 		String stateName = srcState.getBody();
 		
 		String oldValue = getStringValue(wp, WORKPRODUCT_States);
@@ -154,7 +159,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 			Constraint state = getState(wp, stateName, true);
 			copyDescription(srcState, state);
 			setStringValue(wp, WORKPRODUCT_States, state.getGuid());
-			return;
+			return state;
 		}
 		
 		//Find if a state with the same name exists
@@ -166,7 +171,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 				Constraint c = (Constraint) element;
 				if (c.getName().equals(ConstraintManager.Plugin_wpState)
 						&& c.getBody().equals(stateName)) {
-					return;
+					return c;
 				}
 			}
 		}
@@ -176,7 +181,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		copyDescription(srcState, state);
 		String newValue = oldValue.concat(infoSeperator).concat(state.getGuid());
 		setStringValue(wp, WORKPRODUCT_States, newValue);
-		
+		return state;
 	}
 
 	private void copyDescription(Constraint srcState, Constraint tgtState) {
@@ -193,12 +198,20 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 	 * @param stateName
 	 */
 	public void removeWorkProductState(WorkProduct wp, String stateName) {
+		Constraint state = removeWorkProductState_(wp, stateName);
+		if (state != null) {
+			MethodElementPropUtil.getMethodElementPropUtil().removeFromAssignedToWps(wp, state);
+		}
+		
+	}
+	private Constraint removeWorkProductState_(WorkProduct wp, String stateName) {
 		String oldValue = getStringValue(wp, WORKPRODUCT_States);
 
 		if (oldValue == null || oldValue.trim().length() == 0) {
-			return;
+			return null;
 		}
 
+		Constraint state = null;		
 		boolean modified = false;
 		String newValue = ""; 			//$NON-NLS-1$
 		String[] guidList = oldValue.split(infoSeperator);
@@ -209,6 +222,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 				Constraint c = (Constraint) element;
 				if (c.getName().equals(ConstraintManager.Plugin_wpState)) {
 					if (c.getBody().equals(stateName)) {
+						state = c;
 						modified = true;
 					} else {
 						if (newValue.length() > 0) {
@@ -224,6 +238,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 			setStringValue(wp, WORKPRODUCT_States, newValue);
 		}
 		
+		return state;
 	}
 	
 	
