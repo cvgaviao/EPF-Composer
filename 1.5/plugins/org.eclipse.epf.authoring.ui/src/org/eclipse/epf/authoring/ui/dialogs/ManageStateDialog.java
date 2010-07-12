@@ -18,10 +18,12 @@ import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.forms.WorkProductStatesPage;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -237,18 +239,27 @@ public class ManageStateDialog extends Dialog {
 		});
 	}
 	
-	private boolean getConfirm(Constraint state) {
-		boolean result = false;
+	private boolean getConfirm(Constraint state) {		
+		List<WorkProduct> wps = MethodElementPropUtil.getMethodElementPropUtil().getAssignedToWorkProducts(state);
 		
-		//TODO: call a data layer API to get the usage status of state
-		String msg = AuthoringUIResources.bind(AuthoringUIResources.ManageStateDialog_warn_msg,
-				new Object[]{state.getBody(), "Alex_plugin"});
-		
-		if (MessageDialog.openConfirm(shell, AuthoringUIResources.ManageStateDialog_warn_title, msg)) {
-			result = true;
+		if (wps.size() == 0) {
+			return true;
+		} else {
+			StringBuffer names = new StringBuffer();
+			for (WorkProduct wp : wps) {
+				names.append(wp.getName());
+				names.append(","); //$NON-NLS-1$
+			}			
+			String namesList = names.substring(0, names.length() -1);			
+			String msg = AuthoringUIResources.bind(AuthoringUIResources.ManageStateDialog_warn_msg,
+					new Object[]{state.getBody(), namesList});
+			
+			if (MessageDialog.openConfirm(shell, AuthoringUIResources.ManageStateDialog_warn_title, msg)) {
+				return true;
+			}			
 		}
 		
-		return result;
+		return false;		
 	}
 	
 	private void updateControls() {
