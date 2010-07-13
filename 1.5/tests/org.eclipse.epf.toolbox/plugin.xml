@@ -23,6 +23,8 @@
                         name="LibraryToolsGroup">
                   </separator>
                </menu>
+               
+<!-- Utlity used for clean up duplicate AD diagram data    
                <action
                      class="org.eclipse.epf.toolbox.actions.DiagramDoctor"
                      id="ogr.eclipse.epf.toolbox.actions.DiagramDoctorAction"
@@ -30,6 +32,8 @@
                      menubarPath="epfToolboxMenu/LibraryToolsGroup"
                      tooltip="Clean up process diagram duplicate data">
                </action>
+-->
+               
                <action
                      class="org.eclipse.epf.toolbox.actions.ConvertToConfigFree"
                      id="ogr.eclipse.epf.toolbox.actions.ConvertToConfigFreeAction"
