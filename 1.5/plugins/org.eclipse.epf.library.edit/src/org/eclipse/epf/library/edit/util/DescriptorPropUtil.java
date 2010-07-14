@@ -539,9 +539,14 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}
 
 		int sz = infos.length / 2;
+		Set<String> replacedSet = new HashSet<String>();
 		for (int i = 0; i < sz; i++) {
 			String oldGuid = infos[i * 2];
-			String newGuid = replacedToReplacerMap.remove(oldGuid);
+			String newGuid = null;
+			if (! replacedSet.contains(oldGuid)) {
+				newGuid = replacedToReplacerMap.get(oldGuid);
+				replacedSet.add(oldGuid);
+			}
 			if (newGuid != null) {
 				value = value.replaceAll(oldGuid, newGuid);
 			}
