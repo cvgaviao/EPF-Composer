@@ -1380,6 +1380,9 @@ public class ProcessEditor extends MethodElementEditor implements
 		Process proc = getSelectedProcess();
 		IRealizationManager mgr = getConfiguratorInstance()
 				.getRealizationManager();
+		if (mgr == null) {
+			mgr = LibraryEditUtil.getInstance().getRealizationManager(proc.getDefaultContext());
+		}
 		if (proc != null && mgr != null)
 			mgr.updateProcessModel(proc);
 	}
@@ -2623,6 +2626,9 @@ public class ProcessEditor extends MethodElementEditor implements
 		Process proc = getSelectedProcess();
 		IRealizationManager mgr = getConfiguratorInstance()
 				.getRealizationManager();
+		if (mgr == null) {
+			mgr = LibraryEditUtil.getInstance().getRealizationManager(proc.getDefaultContext());
+		}
 		if (proc != null && mgr != null)
 			mgr.elementUpdateProcessModel(proc, elementSet);
 		
