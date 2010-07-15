@@ -62,6 +62,16 @@ public class MethodConfigurationItemProvider extends
 	// changed to protected, extended class can play with children variable.
 	protected ArrayList children;
 
+	private static boolean finalOnGetChildrenCall = false; 
+	
+	public static boolean isFinalOnGetChildrenCall() {
+		return finalOnGetChildrenCall;
+	}
+
+	public static void setFinalOnGetChildrenCall(boolean b) {
+		finalOnGetChildrenCall = b;
+	}
+
 	private IFilter disciplinesFilter = new IFilter() {
 
 		public boolean accept(Object obj) {
