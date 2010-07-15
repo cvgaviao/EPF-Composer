@@ -6,11 +6,43 @@ public class RenameFiles {
 
 	//Given strings
 		
-	private static final String lang = "_ar";
-	private static final String pkg = ".nlBidi";
-	private static final String fpkg = ".nlsBidi";
-	private static final String rootPath = "E:/Root/a_Rmc7.5.0.1/Tvt/Returns/1stReturns/renamed/ARA/RmcTool";
+	private static String lang = "_ar";
+	private static String pkg = ".nlBidi";
+	private static String fpkg = ".nlsBidi";
+	private static String rootPath = "E:/Root/a_Rmc7.5.0.1/Tvt/Returns/1stReturns/renamed/ARA/RmcTool";
 
+	private final static boolean runAll = true;	
+	private static String rootPathPrefix = "E:\\Root\\a_Rmc7.5.1\\TVT\\Returns\\2nd-Return\\Renamed\\";
+	private static String lastFoler = "RmcTool";
+	private static String langFolerList[] = {"DEU", "ESP", "FRA", "ITA", "JPN", "KOR", "PTB", "CHS", "CHT", "PLK", "RUS", "DAN", "ARA"};
+	
+	private static String langList[] = {"_de", "_es", "_fr", "_it", "_ja", "_ko", "_pt_BR", "_zh", "_zh_TW", "_pl", "_ru", "_da", "_ar"};
+	private static String[] pkgList = null;
+	private static String[] fpkgList = null;
+	private static String[] rootPathList = null; 
+	
+	static {
+		int sz = 13;
+		pkgList = new String[sz];
+		fpkgList = new String[sz];
+		rootPathList =  new String[sz];
+		for (int i = 0; i < sz; i ++) {
+			if (i < 9) {
+				pkgList[i] = ".nl1";
+				fpkgList[i] = ".nls1";
+			} else if (i < 11) {
+				pkgList[i] = ".nl2";
+				fpkgList[i] = ".nls2";
+			} else if (i < 12) {
+				pkgList[i] = ".nl2a";
+				fpkgList[i] = ".nls2a";
+			} else {
+				pkgList[i] = ".nlBidi";
+				fpkgList[i] = ".nlsBidi";	
+			}
+			rootPathList[i] = rootPathPrefix + langFolerList[i] + "\\" + lastFoler;
+		}
+	}
 	
 	private static final String[] props = {
 		".properties",
@@ -109,7 +141,18 @@ public class RenameFiles {
 	
 	
 	public static void main(String[] args) {
-		instance.execute();
+		if (runAll) {
+			for (int i = 0; i < langList.length; i++) {
+				lang = langList[i];
+				pkg =  pkgList[i];
+				fpkg = fpkgList[i];
+				rootPath = rootPathList[i];
+				instance = new RenameFiles(rootPath);
+				instance.execute();
+			}
+		} else {
+			instance.execute();
+		}
 	}	
 
 }
