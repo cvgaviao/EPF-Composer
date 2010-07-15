@@ -52,6 +52,7 @@ import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.configuration.GuidanceGroupingItemProvider;
 import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
+import org.eclipse.epf.library.edit.configuration.MethodConfigurationItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
@@ -1120,6 +1121,18 @@ public class LibraryUtil {
 	}
 	
 	public static List<Practice> getPractices(MethodConfiguration config) {
+		boolean oldValue = MethodConfigurationItemProvider.isFinalOnGetChildrenCall();
+		MethodConfigurationItemProvider.setFinalOnGetChildrenCall(true);
+		List<Practice> list = null;
+		try { 
+			list = getPractices_(config);
+		} finally {
+			MethodConfigurationItemProvider.setFinalOnGetChildrenCall(oldValue);
+		}		
+		return list;
+	}
+	
+	private static List<Practice> getPractices_(MethodConfiguration config) {
 		List<Practice> practiceList = new ArrayList<Practice>();
 		if (config == null) {
 			return practiceList;
