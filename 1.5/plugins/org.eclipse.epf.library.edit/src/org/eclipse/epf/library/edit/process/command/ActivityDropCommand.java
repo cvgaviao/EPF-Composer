@@ -325,15 +325,17 @@ public class ActivityDropCommand extends BSDropCommand {
 			}
 		} finally {			
 			originalToCopyMap = activityHandler.cloneOrignaltoCopyMap();
-			Set<Object> excludedKeySet =  new HashSet<Object>();
-			
-			for (Object key : originalToCopyMap.keySet()) {
-				if (! (key instanceof MethodElement)) {
-					excludedKeySet.add(key);
+			if (originalToCopyMap != null && !originalToCopyMap.isEmpty()) {
+				Set<Object> excludedKeySet =  new HashSet<Object>();
+				
+				for (Object key : originalToCopyMap.keySet()) {
+					if (! (key instanceof MethodElement)) {
+						excludedKeySet.add(key);
+					}
 				}
-			}
-			for (Object key : excludedKeySet) {
-				originalToCopyMap.remove(key);
+				for (Object key : excludedKeySet) {
+					originalToCopyMap.remove(key);
+				}
 			}
 			
 			activityHandler.dispose();
