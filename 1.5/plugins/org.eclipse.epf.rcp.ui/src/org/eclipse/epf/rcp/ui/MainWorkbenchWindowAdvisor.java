@@ -29,6 +29,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.internal.ActionSetContributionItem;
 import org.eclipse.ui.internal.PluginActionContributionItem;
 import org.eclipse.ui.intro.IIntroPart;
+import org.eclipse.ui.menus.CommandContributionItem;
 
 /**
  * The application specific workbench window advisor.
@@ -130,29 +131,14 @@ public class MainWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 				fileMmenu.remove(items[i]);
 		}
 
-		// this is a hack to change the Help | Software Updates | Manage
-		// Configurations to Manage Software Configuration...
 		MenuManager helpMmenu = mainActionBar.getHelpMenuManager();
 		items = helpMmenu.getItems();
 		for (int i = 0; i < items.length; i++) {
-			if (items[i] instanceof ActionSetContributionItem) {
-				ActionSetContributionItem element = (ActionSetContributionItem) items[i];
+			if (items[i] instanceof MenuManager) {
+				MenuManager element = (MenuManager) items[i];
 				if (element.getId().equals("org.eclipse.update.ui.updateMenu")) { //$NON-NLS-1$
-					IContributionItem contribMenuMgr = element.getInnerItem();
-					IContributionItem[] subMenuItems = ((MenuManager) contribMenuMgr)
-							.getItems();
-					for (int j = 0; j < subMenuItems.length; j++) {
-						IContributionItem innerItem = ((ActionSetContributionItem) subMenuItems[j])
-								.getInnerItem();
-						if (innerItem instanceof PluginActionContributionItem
-								&& innerItem.getId().equals(
-										"org.eclipse.update.ui.configManager")) { //$NON-NLS-1$
-							IAction action = ((PluginActionContributionItem) innerItem)
-									.getAction();
-							action
-									.setText(RCPUIResources.menu_help_software_updates_manage_software_config_text); 
-						}
-					}
+					//hide the update menu
+					element.setVisible(false);
 				}
 			}
 		}
