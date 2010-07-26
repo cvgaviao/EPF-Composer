@@ -26,6 +26,7 @@ import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.intro.IIntroPart;
+import org.eclipse.ui.menus.CommandContributionItem;
 
 /**
  * The application specific workbench window advisor.
@@ -130,13 +131,22 @@ public class MainWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		MenuManager helpMmenu = mainActionBar.getHelpMenuManager();
 		items = helpMmenu.getItems();
 		for (int i = 0; i < items.length; i++) {
+			//hide the classic update menu
 			if (items[i] instanceof MenuManager) {
-				MenuManager element = (MenuManager) items[i];
-				if (element.getId().equals("org.eclipse.update.ui.updateMenu")) { //$NON-NLS-1$
-					//hide the update menu
-					element.setVisible(false);
+				MenuManager item = (MenuManager) items[i];
+				if (item.getId().equals("org.eclipse.update.ui.updateMenu")) { //$NON-NLS-1$
+					item.setVisible(false);
 				}
 			}
+			
+			//hide the p2 update menu
+			if (items[i] instanceof CommandContributionItem) {
+				CommandContributionItem item = (CommandContributionItem) items[i];
+				if (item.getId().equals("org.eclipse.equinox.p2.ui.sdk.update") //$NON-NLS-1$
+						|| item.getId().equals("org.eclipse.equinox.p2.ui.sdk.install")) { //$NON-NLS-1$
+					item.setVisible(false);
+				}				
+			}			
 		}
 		
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(perspectiveListener);
