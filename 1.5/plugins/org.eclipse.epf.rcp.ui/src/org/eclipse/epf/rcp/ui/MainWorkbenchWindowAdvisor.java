@@ -11,7 +11,6 @@
 package org.eclipse.epf.rcp.ui;
 
 import org.eclipse.epf.library.ui.LibraryUIManager;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -26,10 +25,7 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
-import org.eclipse.ui.internal.ActionSetContributionItem;
-import org.eclipse.ui.internal.PluginActionContributionItem;
 import org.eclipse.ui.intro.IIntroPart;
-import org.eclipse.ui.menus.CommandContributionItem;
 
 /**
  * The application specific workbench window advisor.
