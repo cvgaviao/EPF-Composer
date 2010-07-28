@@ -153,14 +153,12 @@ public class WorkProductStatesPage extends BaseFormPage {
 		toolkit.createLabel(btnComposite1, null);
 		ctrl_assign = toolkit.createButton(btnComposite1, AuthoringUIText.STATES_ASSIGN_TEXT, SWT.NONE);
 		{
-			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER |GridData.GRAB_HORIZONTAL);
-			gridData.widthHint = 80;
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 			ctrl_assign.setLayoutData(gridData);
 		}
 		ctrl_unassign = toolkit.createButton(btnComposite1, AuthoringUIText.STATES_UNASSIGN_TEXT, SWT.NONE);
 		{
-			GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_CENTER |GridData.GRAB_HORIZONTAL);
-			gridData.widthHint = 80;
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 			ctrl_unassign.setLayoutData(gridData);
 		}
 		
@@ -182,8 +180,7 @@ public class WorkProductStatesPage extends BaseFormPage {
 		toolkit.createLabel(btnComposite2, null);
 		ctrl_manage_state = toolkit.createButton(btnComposite2, AuthoringUIText.STATES_MANAGE_TEXT, SWT.NONE);
 		{
-			GridData gridData = new GridData();
-			gridData.widthHint = 100;
+			GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 			ctrl_manage_state.setLayoutData(gridData);
 		}		
 		toolkit.createLabel(btnComposite2, null);
