@@ -26,6 +26,7 @@ import org.eclipse.epf.library.ui.LibraryUIImages;
 import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
 import org.eclipse.epf.services.IFileManager;
 import org.eclipse.epf.services.Services;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
@@ -135,9 +136,13 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 			}
 		} else if (!ProcessUtil.isSynFree() && service.isSynFreeLib()) {
 			String message = ImportResources.ImportSynLibToNoSynLib_Error;
-			ImportPlugin.getDefault().getMsgDialog()
-					.displayError(
-							ImportResources.importConfigWizard_title, message);
+//			ImportPlugin.getDefault().getMsgDialog()
+//					.displayError(
+//							ImportResources.importConfigWizard_title, message);
+			
+			//Use the standard MessageDialog to avoid double-byte character display problem
+			MessageDialog.openError(this.getShell(), ImportResources.importConfigWizard_title, message);			
+			
 			return false;
 		}
 		
