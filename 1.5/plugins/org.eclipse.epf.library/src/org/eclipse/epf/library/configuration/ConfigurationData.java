@@ -609,7 +609,9 @@ public class ConfigurationData {
 	
 	public void dispose() {
 		config.eAdapters().remove(configListener);
-		libraryManager.removeListener(libListener);		
+		if (libraryManager != null) {
+			libraryManager.removeListener(libListener);
+		}
 	}
 
 	protected boolean isNeedUpdateChanges() {
