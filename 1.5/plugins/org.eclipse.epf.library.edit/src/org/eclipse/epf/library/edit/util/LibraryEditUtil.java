@@ -440,4 +440,9 @@ public class LibraryEditUtil {
 		
 	}
 	
+	public MethodElement getCalcualtedElement(MethodElement element, MethodConfiguration config) {
+		ILibraryEditUtilProvider p = getProvider();				
+		return p == null ? element : p.getCalculatedElement(element, config);
+	}
+	
 }

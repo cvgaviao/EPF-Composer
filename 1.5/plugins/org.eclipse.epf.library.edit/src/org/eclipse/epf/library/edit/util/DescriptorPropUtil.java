@@ -36,6 +36,7 @@ import org.eclipse.epf.uma.util.UmaUtil;
 
 public class DescriptorPropUtil extends MethodElementPropUtil {
 	
+	public static boolean useLinkedElementInDiagram = false; 
 	
 	private static boolean localDebug = false;
 	

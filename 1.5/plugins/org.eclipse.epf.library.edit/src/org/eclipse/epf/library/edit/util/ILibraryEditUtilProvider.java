@@ -27,5 +27,7 @@ public interface ILibraryEditUtilProvider {
 			MethodConfiguration config);
 	
 	IRealizationManager getRealizationManager(MethodConfiguration config);
+
+	MethodElement getCalculatedElement(MethodElement element, MethodConfiguration config);
 	
 }

@@ -38,6 +38,7 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.ComposedWPDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.Comparators;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -591,9 +592,17 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			boolean publishingmode = LibraryUtil.PUBLISH_MODE;
 			LibraryUtil.PUBLISH_MODE = true;
 
-			diagram = diagramService.saveDiagram(wrapper,
+			boolean oldValue = DescriptorPropUtil.useLinkedElementInDiagram;
+			try {
+				DescriptorPropUtil.useLinkedElementInDiagram = layoutManager.getValidator().showLinkedPageForDescriptor();				
+				diagram = diagramService.saveDiagram(wrapper,
 					imgFile,
 					diagramType, filter, sup);
+			} finally {
+				if (DescriptorPropUtil.useLinkedElementInDiagram != oldValue) {
+					DescriptorPropUtil.useLinkedElementInDiagram = oldValue;
+				}
+			}
 			
 			// set back to 
 			LibraryUtil.PUBLISH_MODE = publishingmode;

@@ -3,7 +3,6 @@ package org.eclipse.epf.library.util;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
@@ -134,6 +133,10 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	
 	public IRealizationManager getRealizationManager(MethodConfiguration config) {
 		return ConfigurationHelper.getDelegate().getRealizationManager(config);
+	}
+	
+	public MethodElement getCalculatedElement(MethodElement element, MethodConfiguration config) {
+		return  ConfigurationHelper.getCalculatedElement(element, config);
 	}
 	
 }

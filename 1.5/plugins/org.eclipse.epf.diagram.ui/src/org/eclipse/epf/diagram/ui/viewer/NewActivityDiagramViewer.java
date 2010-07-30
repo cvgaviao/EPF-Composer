@@ -174,6 +174,8 @@ public class NewActivityDiagramViewer extends AbstractDiagramGraphicalViewerEx {
 					if (f instanceof WrapLabel) {
 						altTag = ((WrapLabel) f).getText();
 					}
+					
+					e = getElementForAddArea((MethodElement) e);
 					diagramInfo.addArea((MethodElement) e, bounds.x,
 						bounds.y, bounds.width, bounds.height, altTag, suppressed);
 
