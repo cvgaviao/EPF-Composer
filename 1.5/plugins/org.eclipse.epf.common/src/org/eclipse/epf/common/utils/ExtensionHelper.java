@@ -22,6 +22,8 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.common.CommonPlugin;
+import org.eclipse.epf.common.IHTMLFormatter;
+import org.eclipse.epf.common.IHTMLParser;
 import org.osgi.framework.Bundle;
 
 /**
@@ -86,7 +88,80 @@ public class ExtensionHelper {
 		}
 		return ext;
 	}
-
+	
+	/**
+	 * This is a special method to handle JTidy extensions
+	 * @param flag: should be "EPF" if calling from epf code base
+	 * 
+	 */
+	public static Object createExtensionForJTidy(String namespace, String extensionPointName, String flag) {
+		List<IHTMLFormatter> formaters = new ArrayList<IHTMLFormatter>();
+		List<IHTMLParser> parsers = new ArrayList<IHTMLParser>();
+		
+		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(namespace, extensionPointName);
+		if (extensionPoint != null) {
+			IExtension[] extensions = extensionPoint.getExtensions();
+			for (int i = 0; i < extensions.length; i++) {
+				IExtension extension = extensions[i];
+				String pluginId = extension.getNamespaceIdentifier();
+				Bundle bundle = Platform.getBundle(pluginId);
+				IConfigurationElement[] configElements = extension.getConfigurationElements();
+				for (int j = 0; j < configElements.length; j++) {
+					IConfigurationElement configElement = configElements[j];
+					try {
+						String className = configElement.getAttribute("class"); //$NON-NLS-1$
+						if(className != null) {
+							Object obj = bundle.loadClass(className).newInstance();
+							if (extensionPointName.equals("htmlFormatter")) { //$NON-NLS-1$
+								formaters.add((IHTMLFormatter)obj);
+							} else if (extensionPointName.equals("htmlParser")) { //$NON-NLS-1$
+								parsers.add((IHTMLParser)obj);
+							}							
+						}
+					} catch (Exception e) {
+						CommonPlugin.getDefault().getLogger().logError(e);
+					}
+				}
+			}
+			
+			if (formaters.size() != 0) { 
+				if (flag.equals("EPF")) { //$NON-NLS-1$
+					return selectExtension(formaters, true);
+				} else {
+					return selectExtension(formaters, false);
+				}				
+			} else if (parsers.size() != 0) {
+				if (flag.equals("EPF")) { //$NON-NLS-1$
+					return selectExtension(parsers, true);
+				} else {
+					return selectExtension(parsers, false);
+				}				
+			}
+		}
+		
+		return null;
+	}
+	
+	private static Object selectExtension(List objs, boolean epf) {
+		for (Object obj : objs) {
+			String name = obj.getClass().getName();
+			if (epf) {				
+				if (name.equals("org.eclipse.epf.common.html.DefaultHTMLFormatter") //$NON-NLS-1$
+						|| name.equals("org.eclipse.epf.common.html.DefaultHTMLParser")) { //$NON-NLS-1$
+					return obj;
+				}
+			} else {
+				if (!(name.equals("org.eclipse.epf.common.html.DefaultHTMLFormatter") //$NON-NLS-1$
+						|| name.equals("org.eclipse.epf.common.html.DefaultHTMLParser"))) { //$NON-NLS-1$
+					return obj;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public static IMarkerAttributeContributer getMarkerAttributeContributer() {
 		IMarkerAttributeContributer ret = (IMarkerAttributeContributer) getExtension(
 				CommonPlugin.getDefault().getId(), "markerAttributeContributer");//$NON-NLS-1$

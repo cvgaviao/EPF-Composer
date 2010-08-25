@@ -59,7 +59,8 @@ public class TidyAction extends RichTextAction {
 		setImageDescriptor(RichTextImages.IMG_DESC_TIDY);
 		setDisabledImageDescriptor(RichTextImages.DISABLED_IMG_DESC_TIDY);
 //		htmlFormatter = new HTMLFormatter();
-		htmlFormatter = (IHTMLFormatter) ExtensionHelper.getExtension(CommonPlugin.getDefault().getId(),"htmlFormatter");
+		htmlFormatter = (IHTMLFormatter) ExtensionHelper.createExtensionForJTidy(
+				CommonPlugin.getDefault().getId(), "htmlFormatter", "EPF");  //$NON-NLS-1$//$NON-NLS-2$
 	}
 	
 	@Override

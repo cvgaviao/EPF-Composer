@@ -87,7 +87,8 @@ public class MigrationUtil {
 			// get all string type attributes
 
 //			HTMLFormatter formater = new HTMLFormatter();
-			IHTMLFormatter formater = (IHTMLFormatter) ExtensionHelper.getExtension(CommonPlugin.getDefault().getId(),"htmlFormatter");
+			IHTMLFormatter formater = (IHTMLFormatter) ExtensionHelper.createExtensionForJTidy(
+					CommonPlugin.getDefault().getId(), "htmlFormatter", "EPF");  //$NON-NLS-1$//$NON-NLS-2$
 			
 			if (ResourceHelper.getDefaultResourceMgr() == null) {
 				ResourceHelper.setDefaultResourceMgr(new XMILibraryResourceManager());

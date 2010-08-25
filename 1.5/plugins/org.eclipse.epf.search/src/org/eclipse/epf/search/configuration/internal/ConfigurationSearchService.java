@@ -237,7 +237,8 @@ public class ConfigurationSearchService {
 						new TextAnalyzer(), true);
 				writer.maxFieldLength = 1000000;
 //				parser = new HTMLParser();
-				parser = (IHTMLParser) ExtensionHelper.getExtension(CommonPlugin.getDefault().getId(),"htmlParser");
+				parser = (IHTMLParser) ExtensionHelper.createExtensionForJTidy(
+						CommonPlugin.getDefault().getId(), "htmlParser", "EPF");  //$NON-NLS-1$//$NON-NLS-2$
 				indexDocs(new File(docDir), writer, pm);
 				writer.optimize();
 				writer.close();
