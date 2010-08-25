@@ -317,7 +317,7 @@ public class RichText implements IRichText {
 
 //			htmlFormatter = new HTMLFormatter();
 			htmlFormatter = (IHTMLFormatter) ExtensionHelper.createExtensionForJTidy(
-					CommonPlugin.getDefault().getId(), "htmlFormatter", "EPF");
+					CommonPlugin.getDefault().getId(), "htmlFormatter"); //$NON-NLS-1$
 			if (debug) {
 				printDebugMessage("init", "instantiated HTMLFormatter"); //$NON-NLS-1$ //$NON-NLS-2$
 			}

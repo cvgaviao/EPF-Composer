@@ -88,7 +88,7 @@ public class MigrationUtil {
 
 //			HTMLFormatter formater = new HTMLFormatter();
 			IHTMLFormatter formater = (IHTMLFormatter) ExtensionHelper.createExtensionForJTidy(
-					CommonPlugin.getDefault().getId(), "htmlFormatter", "EPF");  //$NON-NLS-1$//$NON-NLS-2$
+					CommonPlugin.getDefault().getId(), "htmlFormatter");  //$NON-NLS-1$
 			
 			if (ResourceHelper.getDefaultResourceMgr() == null) {
 				ResourceHelper.setDefaultResourceMgr(new XMILibraryResourceManager());
