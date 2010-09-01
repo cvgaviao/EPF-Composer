@@ -28,11 +28,13 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -499,11 +501,67 @@ public class LibraryUtil {
 		}
 	}
 	
-	public static void loadAllPlugins(MethodConfiguration config) {
-		List<MethodPlugin> pluigns = config.getMethodPluginSelection();
+	public static void loadAllSkipContents(MethodLibrary lib) {
+		List<MethodPlugin> pluigns = lib.getMethodPlugins();
+		Set<MethodElement> processed = new HashSet<MethodElement>();
 		for (MethodPlugin plugin: pluigns) {
-			loadAllContained(plugin);
+			loadImmidiateChildren(plugin, true, processed);
 		}
+	}
+	
+	public static void loadAllPlugins(MethodConfiguration config) {
+		boolean skipContent = true;
+		List<MethodPlugin> pluigns = config.getMethodPluginSelection();
+		Set<MethodElement> processed = new HashSet<MethodElement>();
+		for (MethodPlugin plugin: pluigns) {
+			if (skipContent) {
+				loadImmidiateChildren(plugin, true, processed);
+			} else {
+				loadAllContained(plugin);
+			}
+		}
+	}
+	
+	private static void loadImmidiateChildren(MethodElement me,
+			boolean skipContent, Set<MethodElement> processed) {
+		if (processed.contains(me)) {
+			return;
+		}
+		processed.add(me);
+		EList<EReference> refList = me.eClass().getEAllReferences();
+		if (refList == null || refList.isEmpty()) {
+			return;
+		}
+		for (EReference ref : refList) {
+			if (skipContent && isContentRef(ref)) {
+				continue;
+			}
+			Object obj = me.eGet(ref);
+			if (obj instanceof MethodElement) {
+				loadImmidiateChildren((MethodElement) obj, skipContent, processed);
+				
+			} else if (obj instanceof List) {
+				List list = (List) obj;
+				for (Object itemObj : list) {
+					if (itemObj instanceof MethodElement) {
+						loadImmidiateChildren((MethodElement) itemObj, skipContent, processed);
+					}
+				}
+			}
+		}
+	}
+	
+	private static boolean isContentRef(EReference ref) {
+		if (ref == UmaPackage.eINSTANCE.getDescribableElement_Presentation()) {
+			return true;
+		}
+		if (ref == UmaPackage.eINSTANCE.getTask_Steps()) {
+			return true;
+		}
+		if (ref == UmaPackage.eINSTANCE.getTaskDescriptor_SelectedSteps()) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**

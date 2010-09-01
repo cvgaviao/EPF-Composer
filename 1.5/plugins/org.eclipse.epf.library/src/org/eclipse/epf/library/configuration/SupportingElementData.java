@@ -35,6 +35,7 @@ import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
@@ -174,6 +175,19 @@ public class SupportingElementData extends ConfigDataBase {
 			EReference feature = (EReference) f;
 			if (feature.isContainer() || feature.isContainment()) {
 				continue;
+			}
+			
+						
+			if (element instanceof Task) {
+				if (feature == UmaPackage.eINSTANCE.getTask_Steps()) {
+					continue;
+				}
+			}
+			
+			if (element instanceof TaskDescriptor) {
+				if (feature == UmaPackage.eINSTANCE.getTaskDescriptor_SelectedSteps()) {
+					continue;
+				}
 			}
 			
 			if (feature == UmaPackage.eINSTANCE.getRole_Modifies()) {

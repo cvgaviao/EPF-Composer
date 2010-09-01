@@ -71,7 +71,7 @@ public class ConfigHelperDelegate {
 	private boolean authoringPerspective = false;
 	private MethodConfiguration config;
 	private boolean loadForBrowsingNeeded = true;
-	
+
 	public ConfigHelperDelegate() {
 		LibraryService.getInstance().addListener(libServiceListener);		
 		IRealizationManager mgr = RealizationManagerFactory.getInstance().newRealizationManager(null);
@@ -416,7 +416,7 @@ public class ConfigHelperDelegate {
 
 	};
 	
-	private void loadForBrowsing(Object raw_element) {
+	protected void loadForBrowsing(Object raw_element) {
 		if (!loadForBrowsingNeeded) {
 			return;
 		}
@@ -457,5 +457,13 @@ public class ConfigHelperDelegate {
 	//To be overridden by sub-class	
 	public boolean canBeConfigFree(Process proc) {
 		return true;
+	}
+	
+	protected boolean isLoadForBrowsingNeeded() {
+		return loadForBrowsingNeeded;
+	}
+
+	protected void setLoadForBrowsingNeeded(boolean loadForBrowsingNeeded) {
+		this.loadForBrowsingNeeded = loadForBrowsingNeeded;
 	}
 }

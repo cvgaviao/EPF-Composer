@@ -25,13 +25,14 @@ import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
-import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
@@ -291,6 +292,18 @@ public class DependencyManager {
 				continue;
 			}
 						
+			if (element instanceof Task) {
+				if (feature == UmaPackage.eINSTANCE.getTask_Steps()) {
+					continue;
+				}
+			}
+			
+			if (element instanceof TaskDescriptor) {
+				if (feature == UmaPackage.eINSTANCE.getTaskDescriptor_SelectedSteps()) {
+					continue;
+				}
+			}
+			
 			Object value = element.eGet(feature);
 			if ( value == null ) {
 				continue;
