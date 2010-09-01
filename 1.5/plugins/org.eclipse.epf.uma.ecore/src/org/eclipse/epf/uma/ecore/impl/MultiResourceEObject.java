@@ -25,6 +25,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -615,15 +616,34 @@ public class MultiResourceEObject extends EObjectImpl implements
 		return proxy;
 	}
 
+	private Map<InternalEObject, EObject> proxyMap = new HashMap<InternalEObject, EObject>();
 	/**
 	 * @see org.eclipse.emf.ecore.InternalEObject#eResolveProxy(org.eclipse.emf.ecore.InternalEObject)
 	 */
 	public EObject eResolveProxy(InternalEObject proxy) {
+		EObject cachedEObejct = proxyMap.get(proxy);
+		if (cachedEObejct != null) {
+			return cachedEObejct;
+		}
+		EObject ret = null;
+		try {		
+			ret = eResolveProxy_(proxy);
+		} finally {
+			proxyMap.remove(proxy);
+		}
+		
+		return ret;
+	}
+	
+	private EObject eResolveProxy_(InternalEObject proxy) {
 		EObject container = proxy.eContainer();
 		int featureID = proxy.eContainerFeatureID();
 		EObject result = null;
 
 		result = resolveProxy(proxy);
+		if (result != null) {
+			proxyMap.put(proxy, result);
+		}
 
 		if (result != null && result instanceof MultiResourceEObject) {
 			if (proxy.eIsProxy() && result == proxy) {
@@ -972,4 +992,48 @@ public class MultiResourceEObject extends EObjectImpl implements
 	public static abstract class ExtendObject {
 		
 	}
+	
+	//-2: unknown
+	//-1: no debug
+	//0: 		all
+	//1: (0000,0000,0000,0001)
+	//2: (0000,0000,0000,0010)
+	private static int epfDebugIx = -2;
+	private static int getEpfDebugIx() {
+		if (epfDebugIx == -2) {
+			epfDebugIx = -1;
+			String[] appArgs = Platform.getApplicationArgs();
+			if (appArgs == null) {
+				return epfDebugIx;
+			}
+			epfDebugIx = 0;
+			try {
+				for (int i = 0; i < appArgs.length; i++) {
+					String str = appArgs[i].toLowerCase();
+					if (str.startsWith("-epfdebug")) {
+						epfDebugIx = Integer.parseInt(str.substring(9));
+						break;
+					}
+				}
+			} catch (Throwable e) {
+			}
+		}
+
+		return epfDebugIx;
+	}
+	
+	public static boolean epfDebug(int debugIndex) {
+		int ix = getEpfDebugIx();
+		if (ix < 0) {
+			return false;
+		}
+		if (ix == 0) {
+			return true;
+		}
+		if ((ix & debugIndex) > 0) {
+			return true;
+		}		
+		return false;
+	}
+	
 }

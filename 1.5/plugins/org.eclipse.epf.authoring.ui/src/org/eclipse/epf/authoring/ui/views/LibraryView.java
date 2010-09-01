@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,6 +33,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -80,7 +80,6 @@ import org.eclipse.epf.authoring.ui.dialogs.VariabilitySelection;
 import org.eclipse.epf.authoring.ui.dnd.LibraryViewerDragAdapter;
 import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.editors.IEditorKeeper;
-import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditorInput;
 import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
 import org.eclipse.epf.authoring.ui.preferences.ApplicationPreferenceConstants;
@@ -116,12 +115,8 @@ import org.eclipse.epf.library.util.ImportExportUtil;
 import org.eclipse.epf.library.xmi.XMILibraryManager;
 import org.eclipse.epf.library.xmi.XMILibraryUtil;
 import org.eclipse.epf.persistence.FileManager;
-import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
-import org.eclipse.epf.persistence.refresh.IRefreshEvent;
 import org.eclipse.epf.persistence.refresh.IRefreshHandler;
-import org.eclipse.epf.persistence.refresh.IRefreshListener;
 import org.eclipse.epf.persistence.refresh.RefreshJob;
-import org.eclipse.epf.persistence.util.LibrarySchedulingRule;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -141,7 +136,6 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.NamedElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
-import org.eclipse.epf.uma.ProcessElement;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.RoleSet;
@@ -149,6 +143,7 @@ import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.epf.uma.provider.MethodPluginItemProvider;
 import org.eclipse.epf.uma.util.AssociationHelper;
@@ -181,6 +176,7 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceListener;
@@ -191,15 +187,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -221,8 +214,7 @@ import org.eclipse.ui.views.navigator.ResourceNavigator;
  * @author Weiping Lu
  * @since 1.0
  */
-public class LibraryView extends AbstractBaseView implements IRefreshHandler,
-		IShowInTarget {
+public class LibraryView extends AbstractBaseView implements IShowInTarget, IRefreshHandler {
 
 	/**
 	 * The view ID.
@@ -344,7 +336,8 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 											return false;
 										}
 									}
-								} else if ((delta.getFlags() & IResourceDelta.OPEN) != 0) {
+								//} else if ((delta.getFlags() & IResourceDelta.OPEN) != 0) {
+								} else if ((delta.getFlags() & IResourceDelta.OPEN) != 0 && !ResourcesPlugin.getWorkspace().isTreeLocked()) {
 									// project's open state was changed
 									IProject project = (IProject) delta.getResource();
 									if (project.isOpen() && project.hasNature(MethodLibraryProjectNature.NATURE_ID) &&
@@ -375,30 +368,34 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		}
 
 	};
-
-	private IRefreshListener refreshListener = new IRefreshListener() {
-
-		public void notifyRefreshed(IRefreshEvent event) {
-			if (event.getRefreshedObjects() != null
-					&& !event.getRefreshedObjects().isEmpty()) {
-				Control ctrl = getViewer().getControl();
-				if (ctrl == null || ctrl.isDisposed())
-					return;
-
-				if (ctrl.getDisplay().getThread() == Thread.currentThread()) {
-					doRefresh(getSite().getShell());
-				} else {
-					ctrl.getDisplay().syncExec(new Runnable() {
-
-						public void run() {
-							doRefresh(null);
-						}
-
-					});
+	
+	private RefreshHandler refreshHandler = new RefreshHandler(this) {
+		
+		@Override
+		public synchronized void doRefresh(
+				Collection<Resource> removedResources,
+				Collection<Resource> changedResources,
+				Collection<IResource> addedWorkspaceResources,
+				boolean refreshViews, IProgressMonitor monitor) {
+			if (!refreshViews) {
+				for (Iterator<Resource> iter = changedResources.iterator(); iter.hasNext();) {
+					Resource resource = (Resource) iter.next();
+					if (resource instanceof ILibraryResource
+							&& ((ILibraryResource) resource).getLoadStamp() > lastRefreshTimeStamp) {
+						refreshViews = true;
+						break;
+					}
 				}
 			}
+			
+			super.doRefresh(removedResources, changedResources, addedWorkspaceResources,
+					refreshViews, monitor);
 		}
-
+		
+		@Override
+		protected void refreshViews() {
+			LibraryView.this.refreshViews();
+		}
 	};
 
 	private IPropertyListener propertyListener = new IPropertyListener() {
@@ -435,7 +432,7 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				AuthoringUIHelpContexts.LIBRARY_NAVIGATOR_VIEW_CONTEXT);
 
-		RefreshJob.getInstance().setRefreshHandler(this);
+		RefreshJob.getInstance().setRefreshHandler(refreshHandler);
 	}
 	
 	private void makeActions() {
@@ -1290,81 +1287,73 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		 */
 		protected void refreshViewer(final Viewer viewer) {
 			if (viewer == LibraryView.this.getViewer()) {
-				IRunnableWithProgress runnable = new IRunnableWithProgress() {
+				ILibraryManager manager = (ILibraryManager) LibraryService
+						.getInstance().getCurrentLibraryManager();
+				if (manager != null) {
+					ResourceSet resourceSet = manager.getEditingDomain()
+							.getResourceSet();
+					if (resourceSet instanceof ILibraryResourceSet) {
+						final ILibraryResourceSet libResourceSet = (ILibraryResourceSet) resourceSet;
+						if(libResourceSet.getPersistenceType().equals(Services.XMI_PERSISTENCE_TYPE)) {
+							IRunnableWithProgress runnable = new IRunnableWithProgress() {
 
-					public void run(IProgressMonitor monitor)
-							throws InvocationTargetException,
-							InterruptedException {
-						monitor.beginTask("", 3); //$NON-NLS-1$
-						monitor
-								.subTask(AuthoringUIResources._UI_RefreshViewer_menu_item);
-						monitor.worked(1);
-						try {
-							// Refresh all loaded resources and load newly added resources
-							//
-							ILibraryManager manager = (ILibraryManager) LibraryService
-									.getInstance().getCurrentLibraryManager();
-							if (manager != null) {
-								ResourceSet resourceSet = manager
-										.getEditingDomain().getResourceSet();
-								ILibraryResourceSet libResourceSet;
-								if (resourceSet instanceof ILibraryResourceSet
-										&& (libResourceSet = (ILibraryResourceSet) resourceSet)
-												.getPersistenceType()
-												.equals(
-														Services.XMI_PERSISTENCE_TYPE)) {
-									
-									libResourceSet.loadNewResources();
-									
-									List removedResources = new ArrayList();
-									List changedResources = new ArrayList();
-									for (Iterator iter = new ArrayList(
-											resourceSet.getResources())
-											.iterator(); iter.hasNext();) {
-										Resource resource = (Resource) iter
-												.next();
-										String loc = resource.getURI()
-												.toFileString();
-										IResource wsRes = FileManager
-												.getResourceForLocation(loc);
-										if (wsRes == null) {
-											removedResources.add(resource);
-										} else if (!wsRes
-												.isSynchronized(IResource.DEPTH_ZERO)) {
-											changedResources.add(resource);
+								public void run(IProgressMonitor monitor)
+										throws InvocationTargetException,
+										InterruptedException {
+									List<Resource> resources = new ArrayList<Resource>(libResourceSet.getResources());
+									int totalWorks = resources.size() + 3;
+									monitor.beginTask(AuthoringUIResources._UI_RefreshViewer_menu_item, totalWorks); //$NON-NLS-1$
+									try {
+										// Refresh all loaded resources and load newly added resources
+										//
+										monitor.subTask("Loading new resources...");
+										monitor.worked(1);
+										libResourceSet.loadNewResources();
+
+										List<Resource> removedResources = new ArrayList<Resource>();
+										List<Resource> changedResources = new ArrayList<Resource>();
+										for (Resource resource : resources) {
+											String loc = resource.getURI().toFileString();
+											monitor.subTask(NLS.bind("Checking resource ''{0}''...", loc));
+											monitor.worked(1);
+											IResource wsRes = FileManager.getResourceForLocation(loc);
+											if (wsRes == null) {
+												removedResources.add(resource);
+											} else if (!wsRes.isSynchronized(IResource.DEPTH_ZERO)) {
+												changedResources.add(resource);
+											}
 										}
+										monitor.subTask("Refreshing UI...");
+										monitor.worked(2);
+										if (removedResources.isEmpty()
+												&& changedResources.isEmpty()) {
+											viewer.refresh();
+										} else {
+											refreshHandler.doRefresh(removedResources,
+													changedResources, null, false, new NullProgressMonitor());
+										}
+									} finally {
+										monitor.done();
 									}
-									monitor.worked(2);
-									if (removedResources.isEmpty()
-											&& changedResources.isEmpty()) {
-										viewer.refresh();
-									} else {
-										doRefresh(removedResources,
-												changedResources, null, false);
-									}
-								} else {
-									viewer.refresh();
 								}
+
+							};
+							IRunnableContext context = new ProgressMonitorDialog(getSite()
+									.getShell());
+							try {
+								getSite().getWorkbenchWindow().getWorkbench()
+										.getProgressService().runInUI(context, runnable,
+												null);
+							} catch (Exception e) {
+								AuthoringUIPlugin.getDefault().getLogger().logError(e);
+								String title = AuthoringUIResources.ProcessEditor_refreshErrorTitle;
+								AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
+										title, e.toString(), e);
 							}
-						} finally {
-							monitor.done();
+							return;
 						}
 					}
-
-				};
-				IRunnableContext context = new ProgressMonitorDialog(getSite()
-						.getShell());
-				try {
-					getSite().getWorkbenchWindow().getWorkbench()
-							.getProgressService().runInUI(context, runnable,
-									null);
-				} catch (Exception e) {
-					AuthoringUIPlugin.getDefault().getLogger().logError(e);
-					String title = AuthoringUIResources.ProcessEditor_refreshErrorTitle;
-					AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
-							title, e.toString(), e);
 				}
-				return;
 			}
 			super.refreshViewer(viewer);
 		}
@@ -1761,399 +1750,6 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.epf.persistence.util.IRefreshHandler#refresh(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	public void refresh(final IProgressMonitor monitor) {
-		Control ctrl = getViewer().getControl();
-		if (ctrl == null || ctrl.isDisposed())
-			return;
-
-		if (ctrl.getDisplay().getThread() == Thread.currentThread()) {
-			doRefresh(getSite().getShell());
-		} else {
-			ctrl.getDisplay().syncExec(new Runnable() {
-
-				public void run() {
-					doRefresh(null);
-				}
-
-			});
-		}
-
-	}
-
-	private void blockingRefresh(final ArrayList removedResources,
-			final ArrayList changedResources,
-			final Collection addedWorkspaceResources,
-			final boolean refreshViews, Shell shell) {
-		final IRunnableWithProgress runnable = new IRunnableWithProgress() {
-
-			public void run(IProgressMonitor monitor)
-					throws InvocationTargetException, InterruptedException {
-				monitor.beginTask("", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-				monitor
-						.subTask(AuthoringUIResources._UI_RefreshViewer_menu_item);
-				monitor.worked(1);
-				try {
-					// monitor.worked(1);
-					doRefresh(removedResources, changedResources,
-							addedWorkspaceResources, refreshViews);
-				} finally {
-					monitor.done();
-				}
-			}
-
-		};
-
-		IRunnableContext context = new ProgressMonitorDialog(shell);
-		try {
-			getSite().getWorkbenchWindow().getWorkbench().getProgressService()
-					.runInUI(
-							context,
-							runnable,
-							new LibrarySchedulingRule(LibraryService
-									.getInstance().getCurrentMethodLibrary()));
-		} catch (Exception e) {
-			AuthoringUIPlugin.getDefault().getLogger().logError(e);
-			String title = AuthoringUIResources.ProcessEditor_refreshErrorTitle;
-			AuthoringUIPlugin.getDefault().getMsgDialog().displayError(title,
-					e.toString(), e);
-		}
-	}
-
-	/**
-	 * Must be synchronized to avoid stepping on each other in reloading
-	 * resources/refreshing UI
-	 * 
-	 * @param removedResources
-	 * @param changedResources
-	 * @param addedWorkspaceResources
-	 *            collection of IResource objects that are just newly added to
-	 *            the library
-	 * @param refreshViews
-	 */
-	private synchronized void doRefresh(Collection removedResources,
-			Collection changedResources, Collection addedWorkspaceResources,
-			boolean refreshViews) {
-		HashSet editorsToRefresh = new HashSet();
-		if (!removedResources.isEmpty()) {
-			handleRemovedResources(removedResources, editorsToRefresh);
-			refreshViews = true;
-		}
-		if (!changedResources.isEmpty()) {
-			handleChangedResources(changedResources, editorsToRefresh,
-					refreshViews);
-		} else {
-			if (refreshViews) {
-				refreshViews();
-			}
-
-			if (!editorsToRefresh.isEmpty()) {
-				// refresh the editors that handleRemovedResources requested
-				//
-				for (Iterator iter = editorsToRefresh.iterator(); iter
-						.hasNext();) {
-					Object editor = iter.next();
-					if (editor instanceof MethodElementEditor) {
-						((MethodElementEditor) editor).refresh();
-					}
-				}
-			}
-		}
-		if (addedWorkspaceResources != null
-				&& !addedWorkspaceResources.isEmpty()) {
-			ILibraryManager mgr = LibraryService.getInstance()
-					.getCurrentLibraryManager();
-			if (mgr != null) {
-				ResourceSet resourceSet = mgr.getEditingDomain()
-						.getResourceSet();
-				if (resourceSet instanceof MultiFileResourceSetImpl) {
-					((MultiFileResourceSetImpl) resourceSet)
-							.loadNewResources(addedWorkspaceResources);
-					((MultiFileResourceSetImpl) resourceSet).getUnresolvedProxyMarkerManager().validateAllMarkers();
-				}
-			}
-		}
-	}
-
-	private boolean isViewObject(Object o) {
-		return o instanceof MethodElement
-				&& !(o instanceof ContentDescription
-						|| o instanceof ProcessElement || (o instanceof ProcessPackage && UmaUtil
-						.getProcessComponent((MethodElement) o) == null));
-	}
-
-	private void doRefresh(IRefreshEvent event, Shell shell) {
-		if (DEBUG) {
-			System.out
-					.println("Refreshed objects: " + event.getRefreshedObjects()); //$NON-NLS-1$
-		}
-		boolean refresh = false;
-		for (Iterator iter = event.getRefreshedObjects().iterator(); iter
-				.hasNext();) {
-			Object e = iter.next();
-			if (isViewObject(e)) {
-				refresh = true;
-				break;
-			}
-		}
-		if (refresh) {
-			refreshViews();
-		}
-	}
-
-	/**
-	 * Refreshes the Library View
-	 * 
-	 * @param shell
-	 */
-	private void doRefresh(Shell shell) {
-		final boolean refreshViews = !RefreshJob.getInstance()
-				.getReloadedBeforeRefreshResources().isEmpty()
-				|| !RefreshJob.getInstance().getAddedResources().isEmpty();
-		ArrayList removedResources = new ArrayList(RefreshJob.getInstance()
-				.getRemovedResources());
-		ArrayList changedResources = new ArrayList(RefreshJob.getInstance()
-				.getChangedResources());
-		ArrayList addedWsResources = new ArrayList(RefreshJob.getInstance()
-				.getAddedWorkspaceResources());
-
-		if (!removedResources.isEmpty() || !changedResources.isEmpty()
-				|| !addedWsResources.isEmpty() || refreshViews) {
-			blockingRefresh(removedResources, changedResources,
-					addedWsResources, refreshViews, shell);
-		}
-
-		if (!removedResources.isEmpty()) {
-			RefreshJob.getInstance().getRemovedResources().removeAll(
-					removedResources);
-		}
-		if (!changedResources.isEmpty()) {
-			RefreshJob.getInstance().getChangedResources().removeAll(
-					changedResources);
-		}
-		if (!addedWsResources.isEmpty()) {
-			RefreshJob.getInstance().getAddedWorkspaceResources().removeAll(
-					addedWsResources);
-		}
-		if (refreshViews) {
-			RefreshJob.getInstance().getReloadedBeforeRefreshResources()
-					.clear();
-			RefreshJob.getInstance().getAddedResources().clear();
-		}
-	}
-
-	/**
-	 * @param removedResources2
-	 */
-	private Collection handleRemovedResources(Collection removedResources,
-			Collection editorsToRefresh) {
-		IWorkbenchPage workbenchPage = getSite().getPage();
-		IEditorReference[] editorReferences = workbenchPage
-				.getEditorReferences();
-		ArrayList dirtyEditorsWithConflict = new ArrayList();
-		ArrayList removedResourceList = new ArrayList(removedResources);
-		if (editorsToRefresh == null) {
-			editorsToRefresh = new ArrayList();
-		}
-		// find all editor with dirty conflict
-		//
-		for (int i = 0; i < editorReferences.length; i++) {
-			IEditorReference reference = editorReferences[i];
-			IEditorPart editor = reference.getEditor(true);
-			if (editor instanceof MethodElementEditor && editor.isDirty()) {
-				MethodElementEditorInput input = (MethodElementEditorInput) editor
-						.getEditorInput();
-				Resource resource = input.getMethodElement() != null ? input
-						.getMethodElement().eResource() : null;
-				if (!removedResources.contains(resource)) {
-					Collection usedResources = ((MethodElementEditor) editor)
-							.getUsedResources();
-					check_resource: for (int j = 0; j < removedResourceList
-							.size(); j++) {
-						resource = (Resource) removedResourceList.get(j);
-						if (usedResources.contains(resource)) {
-							dirtyEditorsWithConflict.add(editor);
-							break check_resource;
-						}
-					}
-				} else {
-					editorsToRefresh.add(editor);
-				}
-			}
-		}
-
-		if (!dirtyEditorsWithConflict.isEmpty()) {
-			Object[] selected = selectDirtyEditors(dirtyEditorsWithConflict);
-			for (int i = 0; i < selected.length; i++) {
-				editorsToRefresh.add(selected[i]);
-			}
-		}
-
-		// Unload the removed resources.
-		PersistenceUtil.unload(removedResources);
-
-		for (int i = 0; i < editorReferences.length; i++) {
-			IEditorReference reference = editorReferences[i];
-			IEditorPart editor = reference.getEditor(true);
-			if (editor instanceof MethodElementEditor && !editor.isDirty()) {
-				Collection usedResources = ((MethodElementEditor) editor)
-						.getUsedResources();
-				check_resource: for (int j = 0; j < removedResourceList.size(); j++) {
-					Resource resource = (Resource) removedResourceList.get(j);
-					if (usedResources.contains(resource)) {
-						editorsToRefresh.add(editor);
-						break check_resource;
-					}
-				}
-			}
-		}
-
-		return removedResources;
-	}
-
-	/**
-	 * 
-	 * @param changedResources
-	 * @return resources that have been reloaded
-	 */
-	private Collection handleChangedResources(Collection changedResources,
-			Collection editorsToRefresh, boolean forceRefreshViews) {
-		if (!forceRefreshViews) {
-			for (Iterator iter = changedResources.iterator(); iter.hasNext();) {
-				Resource resource = (Resource) iter.next();
-				if (resource instanceof ILibraryResource
-						&& ((ILibraryResource) resource).getLoadStamp() > lastRefreshTimeStamp) {
-					forceRefreshViews = true;
-					break;
-				}
-			}
-		}
-		return handleChangedResources(changedResources, null,
-				forceRefreshViews, editorsToRefresh);
-	}
-
-	/**
-	 * updates Library View when resources change
-	 * 
-	 * @param changedResources
-	 * @param editorsNotToRefresh
-	 * @param forceRefreshViews
-	 * @param editorsToRefresh
-	 * @return List of changed resources
-	 */
-	public Collection handleChangedResources(Collection changedResources,
-			Collection editorsNotToRefresh, boolean forceRefreshViews,
-			Collection editorsToRefresh) {
-		Control ctrl = getViewer().getControl();
-		if (ctrl == null || ctrl.isDisposed())
-			return Collections.EMPTY_LIST;
-
-		IWorkbenchPage workbenchPage = getSite().getPage();
-		IEditorReference[] editorReferences = workbenchPage
-				.getEditorReferences();
-		ArrayList<IEditorPart> dirtyEditorsWithConflict = new ArrayList<IEditorPart>();
-		ArrayList<Resource> changedResourceList = new ArrayList<Resource>(changedResources);
-		// find all editor with dirty conflict
-		//
-		for (int i = 0; i < editorReferences.length; i++) {
-			IEditorReference reference = editorReferences[i];
-			IEditorPart editor = reference.getEditor(true);
-			if (editor instanceof MethodElementEditor && editor.isDirty()) {
-				Collection<Resource> usedResources = ((MethodElementEditor) editor)
-						.getUsedResources();
-				check_resource: for (int j = 0; j < changedResourceList.size(); j++) {
-					Resource resource = (Resource) changedResourceList.get(j);
-					if (usedResources.contains(resource)) {
-						dirtyEditorsWithConflict.add(editor);
-						break check_resource;
-					}
-				}
-			}
-		}
-		final ArrayList editorListToRefresh = new ArrayList();
-		if (editorsToRefresh != null) {
-			editorListToRefresh.addAll(editorsToRefresh);
-		}
-		if (!dirtyEditorsWithConflict.isEmpty()) {
-			Object[] result = selectDirtyEditors(dirtyEditorsWithConflict);
-			if(result != null) {
-				for (int i = 0; i < result.length; i++) {
-					Object editor = result[i];
-					if ((editorsNotToRefresh == null || !editorsNotToRefresh
-							.contains(editor))
-							&& (editorsToRefresh == null || !editorsToRefresh
-									.contains(editor))) {
-						editorListToRefresh.add(editor);
-						dirtyEditorsWithConflict.remove(editor);
-					}
-				}
-			}
-			// remove all resources used by dirty editors with conflict from the
-			// collection of changed resources after updating cached modification stamp
-			// so they will not be prompted to reload again until the next external change
-			//
-			for (int i = 0; i < dirtyEditorsWithConflict.size(); i++) {
-				MethodElementEditor editor = (MethodElementEditor) dirtyEditorsWithConflict
-						.get(i);				
-				Collection<Resource> usedResources = editor.getUsedResources();
-				usedResources.retainAll(changedResourceList);
-				editor.updateResourceInfos(usedResources);
-				editor.ovewriteResources(usedResources);
-				changedResourceList.removeAll(usedResources);
-			}
-		}
-
-		boolean refreshViews = false;
-		if (!changedResourceList.isEmpty()) {
-			for (int i = 0; i < editorReferences.length; i++) {
-				IEditorReference reference = editorReferences[i];
-				IEditorPart editor = reference.getEditor(true);
-				if (editor instanceof MethodElementEditor && !editor.isDirty()) {
-					Collection<Resource> usedResources = ((MethodElementEditor) editor)
-							.getUsedResources();
-					check_resource: for (int j = 0; j < changedResourceList
-							.size(); j++) {
-						Resource resource = (Resource) changedResourceList
-								.get(j);
-						if (usedResources.contains(resource)) {
-							editorListToRefresh.add(editor);
-							break check_resource;
-						}
-					}
-				}
-			}
-
-			// Reload the selected changed resources.
-			ILibraryManager manager = (ILibraryManager) LibraryService
-					.getInstance().getCurrentLibraryManager();
-			if (manager != null) {
-				Collection<Resource> reloadedResources = manager
-						.reloadResources(changedResourceList);
-
-				refreshViews = !reloadedResources.isEmpty();
-			}
-		}
-		if (forceRefreshViews || refreshViews) {
-			refreshViews();
-		}
-		if (!editorListToRefresh.isEmpty()) {
-			for (int i = 0; i < editorListToRefresh.size(); i++) {
-				MethodElementEditor editor = (MethodElementEditor) editorListToRefresh
-						.get(i);
-				try {
-					editor.refresh();
-				} catch (Exception e) {
-					AuthoringUIPlugin.getDefault().getLogger().logError(e);
-				}
-			}
-		}
-		return changedResourceList;
-	}
-
 	/**
 	 * Refreshes Library and Configuration views if necessary
 	 * 
@@ -2177,8 +1773,10 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 						try {
 							setSelectionToViewer(o);
 						} catch (Exception e) {
-							AuthoringUIPlugin.getDefault().getLogger()
-									.logError(e);
+							if (MultiResourceEObject.epfDebug(1)) {
+								AuthoringUIPlugin.getDefault().getLogger()
+										.logError(e);
+							}
 						}
 					} else {
 						ViewHelper.restoreSelection(getViewer(), selection);
@@ -2310,5 +1908,9 @@ public class LibraryView extends AbstractBaseView implements IRefreshHandler,
 	@Override
 	public void setContentDescription(String description) {
 		super.setContentDescription(description);
+	}
+
+	public void refresh(IProgressMonitor monitor) {
+		refreshHandler.refresh(monitor);
 	}
 }

@@ -106,6 +106,15 @@ public class MarkerResolutionGenerator implements IMarkerResolutionGenerator {
 			if(refInfo == null) {
 				return;
 			}
+			UnresolvedProxyMarkerManager mgr = null;
+			Resource resource = refInfo.owner.eResource();
+			ResourceSet resourceSet = resource.getResourceSet();
+			if(resourceSet instanceof MultiFileResourceSetImpl) {
+				mgr = ((MultiFileResourceSetImpl)resourceSet).getMarkerMananger();
+				mgr.setIgnoreNewException(true);
+			}
+
+			try {
 			if(refInfo.reference.isMany()) {
 				((List<?>)refInfo.owner.eGet(refInfo.reference)).remove(refInfo.index);
 			}
@@ -113,7 +122,7 @@ public class MarkerResolutionGenerator implements IMarkerResolutionGenerator {
 				refInfo.owner.eSet(refInfo.reference, null);
 			}
 			boolean validate = false;
-			Resource resource = refInfo.owner.eResource();
+//			Resource resource = refInfo.owner.eResource();
 			ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 					.getPersisterFor(resource).getFailSafePersister();
 			try {
@@ -126,9 +135,17 @@ public class MarkerResolutionGenerator implements IMarkerResolutionGenerator {
 				persister.rollback();
 			}
 			if(validate) { 				
-				ResourceSet resourceSet = resource.getResourceSet();
-				if(resourceSet instanceof MultiFileResourceSetImpl) {
-					((MultiFileResourceSetImpl)resourceSet).getMarkerMananger().doValidateMarkers(resource);
+//				ResourceSet resourceSet = resource.getResourceSet();
+//				if(resourceSet instanceof MultiFileResourceSetImpl) {
+//					((MultiFileResourceSetImpl)resourceSet).getMarkerMananger().doValidateMarkers(resource);
+//				}
+				if (mgr != null) {
+					mgr.removeMarker(marker);					
+				}
+			}
+			} finally {
+				if (mgr != null) {
+					mgr.setIgnoreNewException(false);
 				}
 			}
 		}

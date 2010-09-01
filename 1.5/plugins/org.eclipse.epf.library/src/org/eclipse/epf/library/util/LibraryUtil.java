@@ -479,10 +479,19 @@ public class LibraryUtil {
 	 * @param lib MethodLibrary
 	 */
 	public static Collection<Resource> loadAll(MethodLibrary lib) {
+		return loadAll(lib, null);
+	}
+	
+	public static Collection<Resource> loadAll(MethodLibrary lib, MethodConfiguration config) {
+
 
 		Collection<Resource> loadedres = getLoadedResources(lib, null);
 		
-		loadAllContained(lib);
+		if (config == null) {
+			loadAllContained(lib);
+		} else {
+			loadAllPlugins(config);
+		}
 		
 		return getLoadedResources(lib, loadedres);
 	}

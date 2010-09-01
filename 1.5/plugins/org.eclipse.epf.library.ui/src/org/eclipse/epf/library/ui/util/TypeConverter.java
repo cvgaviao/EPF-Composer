@@ -401,7 +401,7 @@ public class TypeConverter {
 				}
 				
 				if (level == 0) {
-					LibraryUtil.loadAll(LibraryService.getInstance().getCurrentMethodLibrary());
+					LibraryUtil.loadAllSkipContents(LibraryService.getInstance().getCurrentMethodLibrary());
 				}
 				
 				Map referencerToFeatureListMap = AssociationHelper.getReferenceMap(me);

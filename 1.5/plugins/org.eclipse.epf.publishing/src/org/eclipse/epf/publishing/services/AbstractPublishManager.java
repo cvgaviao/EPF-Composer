@@ -191,7 +191,7 @@ public abstract class AbstractPublishManager {
 			startTime = System.currentTimeMillis();
 		}
 		
-		Collection<Resource> changedResources = LibraryUtil.loadAll((MethodLibrary) config.eContainer());
+		Collection<Resource> changedResources = LibraryUtil.loadAll((MethodLibrary) config.eContainer(), config);
 		if (profiling) {
 			DebugTrace.print(this, "loadLibrary", "LibraryUtil.loadAll: " //$NON-NLS-1$  //$NON-NLS-2$
 							+ (System.currentTimeMillis() - startTime)

@@ -208,9 +208,11 @@ public class PersistenceUtil {
 	public static Resource getResource(String path, ResourceSet resourceSet) {
 		File file = new File(path);
 		for (Resource resource : new ArrayList<Resource>(resourceSet.getResources())) {
-			URI finalURI = MultiFileSaveUtil.getFinalURI(resource);
-			if(finalURI.isFile() && file.equals(new File(finalURI.toFileString()))) {
-				return resource;
+			if(resource != null) {
+				URI finalURI = MultiFileSaveUtil.getFinalURI(resource);
+				if(finalURI.isFile() && file.equals(new File(finalURI.toFileString()))) {
+					return resource;
+				}
 			}
 		}
 		return null;

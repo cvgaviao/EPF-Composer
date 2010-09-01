@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.UniqueEList;
@@ -69,7 +70,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxyResolutionListener {
 
-	private static final long DELAY = 0;
+	private static final long DELAY = 200;
 	
 	public static final String MARKER_ID = PersistencePlugin.getDefault().getId() + ".unresolvedProxyMarker"; //$NON-NLS-1$
 	public static final String PROXY_URI = "proxyURI"; //$NON-NLS-1$
@@ -99,9 +100,11 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	private boolean enabled = true;
 	private List<Resource> resourcesToValidateMarkers;
 	private boolean autoScheduled = true;
+	public boolean ignoreNewException = false;
 
 	public UnresolvedProxyMarkerManager(ResourceSet resourceSet) {
 		super(PersistenceResources.unresolvedProxyLoggerJob_name);		
+		setPriority(Job.BUILD);
 		this.resourceSet = resourceSet;
 //		unresolvedResourceGUIDToMarkersMap = new HashMap();
 		uriToExceptionsMap = new HashMap<URI, Set<ResolveException>>();
@@ -110,13 +113,8 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		elementGUIToMarkersMap = new HashMap<String, Collection<ValidObject>>();
 		resourcesToValidateMarkers = new UniqueEList<Resource>();
 	}
-
-	public IMarker findMarker(IFile file, String proxyURI, int start, int end) throws CoreException {
+	private IMarker findMarker(IFile file, String proxyURI, String ownerGUID, int start, int end) throws CoreException {
 		IMarker[] markers = file.findMarkers(MARKER_ID, false, IResource.DEPTH_ZERO);
-		return findMarker(markers, proxyURI, start, end);
-	}
-	
-	private IMarker findMarker(IMarker[] markers, String proxyURI, int start, int end) throws CoreException {
 		for (int i = 0; i < markers.length; i++) {
 			IMarker marker = markers[i];
 			if(proxyURI.equals(marker.getAttribute(PROXY_URI))
@@ -327,9 +325,8 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			
 			try {
 				file.refreshLocal(IResource.DEPTH_ZERO, null);
-				IMarker marker = findMarker(file, proxyURI.toString(), 0, 0);
+				IMarker marker = findMarker(file, proxyURI.toString(), ownerGUID, 0, 0);
 				if (marker != null) {
-					marker.setAttribute(OWNER_GUID, ownerGUID);
 					return;
 				}
 				createMarker(re, proxyURI, errMsg, ownerGUID, file,
@@ -526,51 +523,56 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	 */
 	public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 //		System.out.println("UnresolvedProxyMarkerManager.runInWorkspace(): begin");
+		monitor.beginTask("Process unsolved references", IProgressMonitor.UNKNOWN);
 		try {
-		if(!enabled) return Status.OK_STATUS;
+			if(!enabled) return Status.OK_STATUS;
 
-		try {
-			// add markers
-			//
-			ResolveException re;
-			while(!monitor.isCanceled() && (re = nextException()) != null) {
-				try {
-					addMarker(re, monitor);
+			try {
+				// add markers
+				//
+				monitor.subTask("Creating problem markers...");
+				ResolveException re;
+				while(!monitor.isCanceled() && (re = nextException()) != null) {
+					try {
+						addMarker(re, monitor);
+					}
+					catch(Exception e) {
+						PersistencePlugin.getDefault().getLogger().logError(e);
+					}	
+					yield();
 				}
-				catch(Exception e) {
-					PersistencePlugin.getDefault().getLogger().logError(e);
-				}	
+
+				if(monitor.isCanceled()) {
+					throw new OperationCanceledException();
+				}
+
+				// remove invalid markers
+				//
+				monitor.subTask("Removing invalid markers...");
+				removeMarkers(monitor);
 				yield();
+
+				// validate resource markers
+				//
+				Resource resource;
+				while(!monitor.isCanceled() && (resource = nextResourceToValidateMarkers()) != null) {
+					monitor.subTask(NLS.bind("Validating ''{0}''...", FileManager.toFileString(resource.getURI())));
+					doValidateMarkers(resource);
+					yield();
+				}
 			}
-			
-			if(monitor.isCanceled()) {
-				throw new OperationCanceledException();
+			catch(Exception e) {
+				if(e instanceof OperationCanceledException) {
+					return Status.CANCEL_STATUS;
+				}
+				PersistencePlugin.getDefault().getLogger().logError(e);
 			}
-			
-			// remove invalid markers
-			//
-			removeMarkers(monitor);
-			yield();
-			
-			// validate resource markers
-			//
-			Resource resource;
-			while(!monitor.isCanceled() && (resource = nextResourceToValidateMarkers()) != null) {
-				doValidateMarkers(resource);
-				yield();
-			}
-		}
-		catch(Exception e) {
-			if(e instanceof OperationCanceledException) {
-				throw (OperationCanceledException) e;
-			}
-			PersistencePlugin.getDefault().getLogger().logError(e);
-		}
-		
-		return Status.OK_STATUS;
+
+			return Status.OK_STATUS;
 		}
 		finally {
 //			System.out.println("UnresolvedProxyMarkerManager.runInWorkspace(): end");
+			monitor.done();
 		}
 	}
 	
@@ -693,6 +695,9 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 	 */
 	public void notifyException(Exception e) {
 		if(!enabled) return;
+		if (isIgnoreNewException()) {
+			return;
+		}
 		
 		if(e instanceof ResolveException) {
 			ResolveException re = (ResolveException) e;
@@ -703,7 +708,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 //			}
 			
 			if(addException(re) && autoScheduled) {			
-				schedule(DELAY);
+				start();
 			}
 		}
 	}
@@ -716,19 +721,18 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		return autoScheduled;
 	}
 	
+	@Override
+	public boolean shouldSchedule() {
+		return !exceptions.isEmpty() || !elementGUIToMarkersMap.isEmpty() || !resourceGUIDToMarkersMap.isEmpty();
+	}
+	
 	/**
 	 * Schedules this job if exceptions are available to log
 	 */
 	public boolean start() {
 		if(!enabled) return false;
-		
-		synchronized (exceptions) {
-			if(!exceptions.isEmpty()) {
-				schedule(DELAY);
-				return true;
-			}
-			return false;
-		}
+		schedule(DELAY);
+		return true;
 	}
 	
 	/* (non-Javadoc)
@@ -751,7 +755,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			// invalidate all markers for this URI
 			//
 			if(invalidateMarkers(uri)) {
-				schedule(DELAY);
+				start();
 			}						
 		}		
 	}
@@ -873,7 +877,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			newlyAdded = resourcesToValidateMarkers.add(resource);
 		}
 		if(newlyAdded) {
-			schedule(DELAY);
+			start();
 		}
 	}
 
@@ -902,7 +906,7 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 									String location = (String)marker.getAttribute(IMarker.LOCATION);
 									URI uri = URI.createFileURI(location);
 									Resource resource = resourceSet.getResource(uri, true);
-									newlyAdded = resourcesToValidateMarkers.add(resource) | newlyAdded;
+									newlyAdded = resourcesToValidateMarkers.add(resource) || newlyAdded;
 								} else {
 									vo.valid = false;
 									invalid = true;
@@ -917,11 +921,11 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 			}
 		}
 		if(newlyAdded) {
-			schedule(DELAY);
+			start();
 		} else if(invalid) {
 			removeMarkers(new NullProgressMonitor());
 		}
-	}
+	}	
 	
 	public void doValidateMarkers(Resource resource) {
 		try {
@@ -971,6 +975,14 @@ public class UnresolvedProxyMarkerManager extends WorkspaceJob implements IProxy
 		catch(Exception e) {
 			PersistencePlugin.getDefault().getLogger().logError(e);		
 		}
+	}
+
+	public boolean isIgnoreNewException() {
+		return ignoreNewException;
+	}
+
+	public void setIgnoreNewException(boolean ignoreNewException) {
+		this.ignoreNewException = ignoreNewException;
 	}
 
 }

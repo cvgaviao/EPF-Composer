@@ -45,6 +45,7 @@ import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 
 /**
  * Background job that keeps notifying refresh handlers about changes in
@@ -206,7 +207,10 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 		return null;
 	}
 
-	private void scheduleRefresh() {		
+	private void scheduleRefresh() {	
+		if (isSuspendRefresh()) {
+			return;
+		}
 		if (getState() == Job.NONE) {
 			MethodLibrary lib = getMethodLibrary();
 			if(lib != null) {
@@ -343,7 +347,7 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 				private ArrayList<IResource> addedWorkspaceResources = new ArrayList<IResource>();
 				
 				public boolean visit(IResourceDelta delta) throws CoreException {
-					Resource resource;
+					Resource resource = null;
 //					System.out.println("type=" + delta.getResource().getType());
 //					System.out.println("kind=" + delta.getKind());
 //					System.out.println(delta.getFlags() != IResourceDelta.MARKERS);
@@ -355,7 +359,13 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 						case IResourceDelta.ADDED:
 							// handle added resource
 							//
-							resource = getResource(delta.getResource());
+							try {
+								resource = getResource(delta.getResource());
+							} catch (Exception e) {
+								if (MultiResourceEObject.epfDebug(1)) {
+									CommonPlugin.INSTANCE.log(e);
+								}
+							}
 							if (resource != null) {
 								if (!resource.isLoaded()) {
 									// the resource was created but not
@@ -458,5 +468,20 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 	}
 
 	private static RefreshJob instance = new RefreshJob();
+	
+	private boolean suspendRefresh = false;
+	public boolean isSuspendRefresh() {
+		return suspendRefresh;
+	}
 
+	public void setSuspendRefresh(boolean suspendRefresh) {
+		this.suspendRefresh = suspendRefresh;
+	}
+	
+	public void resumeRefresh() {
+		if (shouldRefresh()) {
+			scheduleRefresh();
+		}
+	}
+	
 }

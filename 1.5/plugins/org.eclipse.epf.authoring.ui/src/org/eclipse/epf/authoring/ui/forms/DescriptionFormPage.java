@@ -3089,10 +3089,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (columnProvider != null) {
 			columnProvider.dispose();
 		}
-		for (int i = 0; i < sectionProviders.size(); i++) {
-			Object provider = sectionProviders.get(i);
-			if (provider != null && provider instanceof ISectionProvider) {
-				((ISectionProvider) provider).dispose();
+		if (sectionProviders != null) {
+			for (int i = 0; i < sectionProviders.size(); i++) {
+				Object provider = sectionProviders.get(i);
+				if (provider != null && provider instanceof ISectionProvider) {
+					((ISectionProvider) provider).dispose();
+				}
 			}
 		}
 		super.dispose();

@@ -108,6 +108,7 @@ import com.ibm.icu.util.Calendar;
  */
 public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		IProxyResolutionListener, IUmaResourceSet, ILibraryResourceSet {
+	public static final String SKIP_RETRY_PROXY_RESOLUTION = "SKIP_RETRY_PROXY_RESOLUTION"; //$NON-NLS-1$
 
 	private static final String[] DEFAULT_DELIVERY_PROCESS_PATH = { "DeliveryProcesses" }; //$NON-NLS-1$
 
@@ -260,6 +261,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 	public MultiFileResourceSetImpl() {
 		super();
+		setURIResourceMap(new HashMap<URI, Resource>());
 		markerMananger = new UnresolvedProxyMarkerManager(this);
 	}
 
@@ -447,6 +449,30 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			}			
 		}
 	}
+	
+	private Set<URI> errorUriSet;
+	private void handleLoadResourceException(URI uri, RuntimeException e) {
+		if (errorUriSet == null) {
+			errorUriSet = new HashSet<URI>();
+		}
+		if (errorUriSet.contains(uri)) {
+			return;
+		}
+		errorUriSet.add(uri);
+		String msg = null;
+		if (e.getMessage() != null) {
+			msg = NLS.bind(
+					PersistenceResources.loadResourceErrorWithReason_msg,
+					(new Object[] { uri, e.getMessage() }));
+		}
+		else {
+			msg = NLS.bind(PersistenceResources.loadResourceError_msg, uri);
+			PersistencePlugin.getDefault().getLogger().logError(e);
+		}
+		handleException(msg);
+		throw e;
+
+	}
 
 	/**
 	 * @see org.eclipse.emf.ecore.resource.impl.ResourceSetImpl#getResource(org.eclipse.emf.common.util.URI,
@@ -459,15 +485,29 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		try {
 			res = super.getResource(uri, loadOnDemand);
 		} catch (RuntimeException e) {
-			String msg = null;
-			if (e.getMessage() != null)
-				msg = NLS.bind(
-						PersistenceResources.loadResourceErrorWithReason_msg,
-						(new Object[] { uri, e.getMessage() }));
-			else
-				msg = NLS.bind(PersistenceResources.loadResourceError_msg, uri);
-			handleException(msg);
-			throw e;
+			// Somehow the resource list of the resource set has null value that
+			// will cause NullPointerException in the following call. Remove the null resource and retry here.
+			// TODO: need to find out the cause of this and fix it.
+			if(e instanceof NullPointerException) {
+				boolean hasNull = false;
+				for (Iterator<Resource> iterator = getResources().iterator(); iterator
+						.hasNext();) {
+					Resource resource = iterator.next();
+					if(resource == null) {
+						iterator.remove();
+						hasNull = true;
+					}
+				}
+				if(hasNull) {
+					try {
+						return super.getResource(uri, loadOnDemand);
+					} catch(RuntimeException re) {
+						handleLoadResourceException(uri, re);
+					}
+				}
+			}
+			
+			handleLoadResourceException(uri, e);
 		}
 		return res;
 	}
@@ -821,6 +861,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		if (uriConverter instanceof MultiFileURIConverter) {
 			((MultiFileURIConverter) uriConverter).dispose();
 		}
+		errorUriSet = null;
 		uriConverter = null;
 		boolean notify = eDeliver();
 		boolean reportError = REPORT_ERROR;
@@ -867,6 +908,11 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 		if (URIToTempURIMap != null) {
 			URIToTempURIMap.clear();
+		}
+		
+		Map<URI, Resource> map = getURIResourceMap();
+		if (map != null) {
+			map.clear();
 		}
 
 		MultiFileXMIResourceImpl.clearDetachedEObjectToIDMap();
@@ -1167,13 +1213,12 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		return result;
 	}
 	
-	  /*
-	   * Javadoc copied from interface.
-	   */
-	  public Resource createResource(URI uri, String contentType)
-	  {
-		  return createResource(uri);
-	  }
+	/*
+	 * Javadoc copied from interface.
+	 */
+	public Resource createResource(URI uri, String contentType) {
+		return createResource(uri);
+	}
 	
 	protected Resource doCreateResource(URI uri) {
 		return new MultiFileXMIResourceImpl(uri);

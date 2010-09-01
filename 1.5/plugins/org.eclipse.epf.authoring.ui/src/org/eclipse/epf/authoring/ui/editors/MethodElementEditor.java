@@ -54,6 +54,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
@@ -465,7 +466,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 	private boolean disposed;
 
-	protected HashMap<Resource, ResourceInfo> resourceInfoMap;
+	protected HashMap<Resource, ResourceInfo> resourceInfoMap = new HashMap<Resource, ResourceInfo>();
 
 	private IFile elementFile;
 	
@@ -735,7 +736,9 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		return elementObj;
 	}
 	
+	private boolean updateResourceInfosCalled = false;
 	public void updateResourceInfos(Collection<Resource> resources) {
+		updateResourceInfosCalled = true;
 		if(resourceInfoMap == null) {
 			resourceInfoMap = new HashMap<Resource, ResourceInfo>();
 		}
@@ -834,8 +837,15 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 	
 	private boolean isOutOfSync(Resource resource) {
 		ResourceInfo info = resourceInfoMap.get(resource);
+		if (!updateResourceInfosCalled && info == null) {
+			IFile file = WorkspaceSynchronizer.getFile(resource);
+			if(file != null) {
+				return file.isSynchronized(IResource.DEPTH_ZERO);
+			}
+		}
+		
 		long stamp = ISynchronizationHelper.INSTANCE.getModificationStamp(resource);
-		if(stamp != IResource.NULL_STAMP) {
+		if(stamp != IResource.NULL_STAMP ) {
 			if(info == null || info.modificationStamp != stamp) {
 				if(ISynchronizationHelper.INSTANCE.isSynchronized(resource)) {
 					// refresh the cached stamp
@@ -875,6 +885,13 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		}
 		return false;
 	}
+	
+	private boolean promptReloadFiles(Collection<Resource> usedResources) {
+		if(checkFileChanged(usedResources)) {
+			return promptReloadFiles();
+		}
+		return false;
+	}
 
 	protected boolean promptReloadFiles() {
 		String title = AuthoringUIResources.editor_error_activated_outofsync_title;
@@ -884,7 +901,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 	}
 	
 	private boolean handleFileChanged(final Collection<Resource> usedResources) {
-		boolean ret = promptReloadFiles();
+		boolean ret = promptReloadFiles(usedResources);
 		if (ret) {
 			IRunnableWithProgress runnable = new IRunnableWithProgress() {
 
@@ -1926,9 +1943,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 		if (checkFileChangedRequired) {
 			Collection<Resource> usedResources = getUsedResources();
-			if (checkFileChanged(usedResources)) {
-				handleFileChanged(usedResources);
-			}
+			handleFileChanged(usedResources);
 		}
 	}
 

@@ -12,14 +12,17 @@ package org.eclipse.epf.authoring.ui.views;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URLDecoder;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.util.ResourceHelper;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationAdapter;
@@ -34,6 +37,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -308,37 +312,61 @@ public class ElementHTMLViewer {
 	/**
 	 * Displays the HTML representation for a Method element.
 	 */
-	public void showElementContent(Object raw_element) {
-
-		startWait();
-
+	public void showElementContent(final Object raw_element) {
+		final String[] fileUrlHolder = new String[1];
 		try {
-			String file_url = generateHtml(raw_element, getHtmlBuilder());
-		
+			PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
+
+				public void run(IProgressMonitor monitor)
+				throws InvocationTargetException, InterruptedException {
+					try {
+						monitor.beginTask("Generating HTML...", IProgressMonitor.UNKNOWN);
+						fileUrlHolder[0] = generateHtml(raw_element, getHtmlBuilder());
+					} finally {
+						monitor.done();
+					}
+
+				}
+
+			});
+		} catch (InvocationTargetException e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		} catch (InterruptedException e1) {
+			return;
+		}
+		if(fileUrlHolder[0] != null) {
 			// Set the current location to avoid re-generating the HTML file in
 			// respond to a location change.
-			currentLocation = file_url;
-			browser.setUrl(file_url);
-		} catch (RuntimeException e) {
-			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			currentLocation = fileUrlHolder[0];
+			browser.setUrl(currentLocation);
 		}
-
-		endWait();
 	}
 
 	private String generateHtml(Object raw_element, HtmlBuilder htmlBuilder) {
 		return ConfigurationHelper.getDelegate().generateHtml(raw_element, htmlBuilder);
 	}
 
-	private void generateHtml(String url) {
-		startWait();
+	private void generateHtml(final String url) {
 		try {
-			getHtmlBuilder().generateHtml(url);
-		} catch (RuntimeException e) {
-			AuthoringUIPlugin.getDefault().getLogger().logError(e);
-		}
+			PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
 
-		endWait();
+				public void run(IProgressMonitor monitor)
+				throws InvocationTargetException, InterruptedException {
+					try {
+						monitor.beginTask("Generating HTML...", IProgressMonitor.UNKNOWN);
+						getHtmlBuilder().generateHtml(url);
+					} finally {
+						monitor.done();
+					}
+
+				}
+
+			});
+		} catch (InvocationTargetException e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		} catch (InterruptedException e1) {
+			return;
+		}
 	}
 
 	/**

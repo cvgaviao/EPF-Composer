@@ -10,10 +10,12 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.ui.util;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -28,6 +30,7 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.command.DeleteMethodElementCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.internal.ContentElementNameValidator;
@@ -47,8 +50,8 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListDialog;
 
 /**
@@ -89,152 +92,228 @@ public class ConvertGuidanceType {
 		return convertGuidance(oldGuidance, shell, command, null);
 	}
 		
-	public static Guidance convertGuidance(Guidance oldGuidance, Shell shell,
+	public static Guidance convertGuidance(final Guidance oldGuidance, Shell shell,
 				DeleteMethodElementCommand command, EClass newType) {
 		if (newType == null) {
-		if (shell == null)
-			shell = Display.getCurrent().getActiveShell();
-		ListDialog dlg = new ListDialog(shell);
-		dlg.setHeightInChars(5);
-		dlg.setContentProvider(new ArrayContentProvider());
-		dlg.setLabelProvider(new LabelProvider() {
-			public String getText(Object element) {
-				switch (((Integer) element).intValue()) {
-				// TODO: refactor these strings (and this whole dialog) into
-				// library.ui
-				case UmaPackage.CONCEPT:
-					return LibraryResources.concept_text; 
-				case UmaPackage.CHECKLIST:
-					return LibraryResources.checklist_text; 
-				case UmaPackage.EXAMPLE:
-					return LibraryResources.example_text; 
-				case UmaPackage.GUIDELINE:
-					return LibraryResources.guideline_text; 
-				case UmaPackage.ESTIMATION_CONSIDERATIONS:
-					return LibraryResources.estimationConsiderations_text;
-				case UmaPackage.REPORT:
-					return LibraryResources.report_text; 
-				case UmaPackage.TEMPLATE:
-					return LibraryResources.template_text; 
-				case UmaPackage.SUPPORTING_MATERIAL:
-					return LibraryResources.supportingMaterial_text;
-				case UmaPackage.TOOL_MENTOR:
-					return LibraryResources.toolMentor_text;
-				case UmaPackage.WHITEPAPER:
-					return LibraryResources.whitepaper_text;
-				case UmaPackage.TERM_DEFINITION:
-					return LibraryResources.termDefinition_text;
-				case UmaPackage.PRACTICE:
-					return LibraryResources.practice_text; 
-				case UmaPackage.REUSABLE_ASSET:
-					return LibraryResources.reusableAsset_text;
-				default:
-					return LibraryResources.unknownGuidance_text;
-				}
-
+			if (shell == null) {
+				shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
 			}
-		});
-		List newGuidanceTypeList = getValidNewGuidanceTypes(oldGuidance);
-		if (newGuidanceTypeList == null) {
-			LibraryUIPlugin
-					.getDefault()
-					.getMsgDialog()
-					.displayError(
-							LibraryResources.convertGuidanceError_title,
-							LibraryResources.unsupportedGuidanceTypeError_msg,
-							NLS.bind(LibraryResources.unsupportedGuidanceTypeError_reason, StrUtil.toLower(TngUtil.getTypeText(oldGuidance)))); 
-			return null;
-		}
-		dlg.setInput(newGuidanceTypeList);
-		dlg.setTitle(LibraryResources.convertGuidanceDialog_title);
-		dlg.setMessage(LibraryResources.convertGuidanceDialog_text);
-		if (dlg.open() == Dialog.CANCEL)
-			return null;
+			ListDialog dlg = new ListDialog(shell);
+			dlg.setHeightInChars(5);
+			dlg.setContentProvider(new ArrayContentProvider());
+			dlg.setLabelProvider(new LabelProvider() {
+				public String getText(Object element) {
+					switch (((Integer) element).intValue()) {
+					// TODO: refactor these strings (and this whole dialog) into
+					// library.ui
+					case UmaPackage.CONCEPT:
+						return LibraryResources.concept_text; 
+					case UmaPackage.CHECKLIST:
+						return LibraryResources.checklist_text; 
+					case UmaPackage.EXAMPLE:
+						return LibraryResources.example_text; 
+					case UmaPackage.GUIDELINE:
+						return LibraryResources.guideline_text; 
+					case UmaPackage.ESTIMATION_CONSIDERATIONS:
+						return LibraryResources.estimationConsiderations_text;
+					case UmaPackage.REPORT:
+						return LibraryResources.report_text; 
+					case UmaPackage.TEMPLATE:
+						return LibraryResources.template_text; 
+					case UmaPackage.SUPPORTING_MATERIAL:
+						return LibraryResources.supportingMaterial_text;
+					case UmaPackage.TOOL_MENTOR:
+						return LibraryResources.toolMentor_text;
+					case UmaPackage.WHITEPAPER:
+						return LibraryResources.whitepaper_text;
+					case UmaPackage.TERM_DEFINITION:
+						return LibraryResources.termDefinition_text;
+					case UmaPackage.PRACTICE:
+						return LibraryResources.practice_text; 
+					case UmaPackage.REUSABLE_ASSET:
+						return LibraryResources.reusableAsset_text;
+					default:
+						return LibraryResources.unknownGuidance_text;
+					}
 
-		Object[] selectionResult = dlg.getResult();
-		if (selectionResult == null)
-			return null;
-		int chosenGuidance = ((Integer) selectionResult[0]).intValue();
-		
-//		Guidance newGuidance = doConvert(oldGuidance, chosenGuidance, command);
-		
-		newType = getGuidanceType(chosenGuidance);
+				}
+			});
+			List newGuidanceTypeList = getValidNewGuidanceTypes(oldGuidance);
+			if (newGuidanceTypeList == null) {
+				LibraryUIPlugin
+				.getDefault()
+				.getMsgDialog()
+				.displayError(
+						LibraryResources.convertGuidanceError_title,
+						LibraryResources.unsupportedGuidanceTypeError_msg,
+						NLS.bind(LibraryResources.unsupportedGuidanceTypeError_reason, StrUtil.toLower(TngUtil.getTypeText(oldGuidance)))); 
+				return null;
+			}
+			dlg.setInput(newGuidanceTypeList);
+			dlg.setTitle(LibraryResources.convertGuidanceDialog_title);
+			dlg.setMessage(LibraryResources.convertGuidanceDialog_text);
+			if (dlg.open() == Dialog.CANCEL)
+				return null;
+
+			Object[] selectionResult = dlg.getResult();
+			if (selectionResult == null)
+				return null;
+			int chosenGuidance = ((Integer) selectionResult[0]).intValue();
+
+//			Guidance newGuidance = doConvert(oldGuidance, chosenGuidance, command);
+
+			newType = getGuidanceType(chosenGuidance);
 		}
 		
 		if(newType == null) {
 			return null;
 		}
-		TypeConverter.TypeConversionCommand cmd = TypeConverter.createTypeConversionCommand(oldGuidance, newType, null, null, true, true);
+		final EClass finalNewType = newType;
+		final TypeConverter.TypeConversionCommand[] cmdHolder = new TypeConverter.TypeConversionCommand[1];
 		try {
-			if(!cmd.getIllegalReferencers().isEmpty()) {
-				// type conversion will remove some illegal references
-				// confirm with user before continue
-				//
-				MultiStatus multiStatus = new MultiStatus(
-						LibraryEditPlugin.INSTANCE.getSymbolicName(), 0, "", null); //$NON-NLS-1$
-				for (Iterator iter = cmd.getIllegalReferencers().iterator(); iter.hasNext();) {
-					MethodElement e = (MethodElement) iter.next();
-					// don't show predefined element
-					//
-					if(!TngUtil.isPredefined(e)) {
-						String msg = NLS.bind(LibraryEditResources.elementType_text, e.eClass().getName(), TngUtil.getLabelWithPath(e)); 
-						IStatus status = new Status(IStatus.INFO,
-								LibraryEditPlugin.INSTANCE.getSymbolicName(), 0, msg,
-								null);
-						multiStatus.add(status);
+			final MultiStatus multiStatus = new MultiStatus(
+					LibraryEditPlugin.INSTANCE.getSymbolicName(), 0, "", null); //$NON-NLS-1$
+			UserInteractionHelper.getUIHelper().runWithProgress(new IRunnableWithProgress() {
+
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException, InterruptedException {
+					TypeConverter.TypeConversionCommand cmd = TypeConverter.createTypeConversionCommand(oldGuidance, finalNewType, null, null, true, true);
+					cmdHolder[0] = cmd;
+					if(!cmd.getIllegalReferencers().isEmpty()) {
+						// type conversion will remove some illegal references
+						// confirm with user before continue
+						//
+						for (Iterator iter = cmd.getIllegalReferencers().iterator(); iter.hasNext();) {
+							MethodElement e = (MethodElement) iter.next();
+							// don't show predefined element
+							//
+							if(!TngUtil.isPredefined(e)) {
+								String msg = NLS.bind(LibraryEditResources.elementType_text, e.eClass().getName(), TngUtil.getLabelWithPath(e)); 
+								IStatus status = new Status(IStatus.INFO,
+										LibraryEditPlugin.INSTANCE.getSymbolicName(), 0, msg,
+										null);
+								multiStatus.add(status);
+							}
+						}
 					}
 				}
-				if (multiStatus.getChildren().length > 0 &&
-						LibraryUIPlugin
-						.getDefault()
-						.getMsgDialog()
-						.displayConfirmation(
-								LibraryResources.convertGuidanceDialog_title,
-								LibraryEditResources.confirm_remove_references_text,
-								multiStatus) == Dialog.CANCEL) {
-					return null;
-				}
+				
+			}, false, "Looking for invalid references...");
+			if (multiStatus.getChildren().length > 0 &&
+					LibraryUIPlugin
+					.getDefault()
+					.getMsgDialog()
+					.displayConfirmation(
+							LibraryResources.convertGuidanceDialog_title,
+							LibraryEditResources.confirm_remove_references_text,
+							multiStatus) == Dialog.CANCEL) {
+				return null;
 			}
-
+			final TypeConverter.TypeConversionCommand cmd = cmdHolder[0];
+			if(cmd == null) {
+				return null;
+			}
 			IStatus status = UserInteractionHelper.checkModify(cmd.getModifiedResources(), shell);
 			if(!status.isOK()) {
 				LibraryUIPlugin.getDefault().getMsgDialog().display(LibraryResources.convertGuidanceDialog_title, status);
 				return null;
 			}
-			cmd.execute();
-			Guidance newGuidance = (Guidance) cmd.getResult().iterator().next();
+			UserInteractionHelper.getUIHelper().runWithProgress(new IRunnableWithProgress() {
 
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException, InterruptedException {
+					cmd.execute();
+				}
+				
+			}, false, "Performing type change...");
+			final Guidance newGuidance = (Guidance) cmd.getResult().iterator().next();
+			final Exception[] exceptionHolder = new Exception[1];
+			Exception busyCursorWhileException = null;
 			// save modified resources
 			//
-			ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil.getCurrentPersister().getFailSafePersister();
 			try {
-				for (Iterator iter = cmd.getModifiedResources().iterator(); iter.hasNext();) {
-					Resource resource = (Resource) iter.next();
-					resource.setModified(true);
-					persister.save(resource);
-				}
-				persister.commit();
-				
-				if(ContentDescriptionFactory.hasPresentation(newGuidance)) {
-					persister.adjustLocation(newGuidance.getPresentation().eResource());
-				}				
+				PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new org.eclipse.jface.operation.IRunnableWithProgress() {
 
-				cmd.copyResources();
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException {
+						monitor.beginTask("Saving changes", IProgressMonitor.UNKNOWN);
+						ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil.getCurrentPersister().getFailSafePersister();
+						try {
+							for (Iterator iter = cmd.getModifiedResources().iterator(); iter.hasNext();) {
+								Resource resource = (Resource) iter.next();
+								resource.setModified(true);
+								monitor.subTask("Saving " + resource.getURI().toFileString());
+								persister.save(resource);
+							}
+							monitor.subTask("Commiting saves");
+							persister.commit();
+							
+							if(ContentDescriptionFactory.hasPresentation(newGuidance)) {
+								Resource resource = newGuidance.getPresentation().eResource();
+								monitor.subTask("Moving " + resource.getURI().toFileString() + " to right location");
+								persister.adjustLocation(resource);
+							}				
+							monitor.subTask("Copying resources");
+							cmd.copyResources();
 
-			} catch (Exception e) {
-				persister.rollback();
+						} catch (Exception e) {
+							persister.rollback();
+							exceptionHolder[0] = e;
+						}
+					}
+					
+				});
+			} catch (InvocationTargetException e) {
+				busyCursorWhileException = e;
+			} catch (InterruptedException e) {
+				busyCursorWhileException = e;
+			}
+//			UserInteractionHelper.getUIHelper().runWithProgress(new IRunnableWithProgress() {
+//
+//				public void run(IProgressMonitor monitor)
+//						throws InvocationTargetException, InterruptedException {
+//					monitor.beginTask("Saving changes", IProgressMonitor.UNKNOWN);
+//					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil.getCurrentPersister().getFailSafePersister();
+//					try {
+//						for (Iterator iter = cmd.getModifiedResources().iterator(); iter.hasNext();) {
+//							Resource resource = (Resource) iter.next();
+//							resource.setModified(true);
+//							monitor.subTask("Saving " + resource.getURI().toFileString());
+//							persister.save(resource);
+//						}
+//						monitor.subTask("Commiting saves");
+//						persister.commit();
+//						
+//						if(ContentDescriptionFactory.hasPresentation(newGuidance)) {
+//							Resource resource = newGuidance.getPresentation().eResource();
+//							monitor.subTask("Moving " + resource.getURI().toFileString() + " to right location");
+//							persister.adjustLocation(resource);
+//						}				
+//						monitor.subTask("Copying resources");
+//						cmd.copyResources();
+//
+//					} catch (Exception e) {
+//						persister.rollback();
+//						exceptionHolder[0] = e;
+//					}
+//				}
+//				
+//			}, false, "Saving changes...");
+			Exception exception = busyCursorWhileException != null ? busyCursorWhileException : exceptionHolder[0];
+			if(exception != null) {
 				LibraryUIPlugin.getDefault().getMsgDialog().displayError(
 						LibraryResources.convertGuidanceError_title,
 						NLS.bind(LibraryResources.saveConvertedGuidanceError_msg,
 								newGuidance.getName()),
-								LibraryResources.error_reason, e);
-			}
+								LibraryResources.error_reason, exception);
 
+			}
+			
 			return newGuidance;
 		}
 		finally {
-			if(cmd != null) {
-				try { cmd.dispose(); } catch(Exception e) {}
+			if(cmdHolder[0] != null) {
+				try { cmdHolder[0].dispose(); } catch(Exception e) {}
 			}
 		}
 	}
