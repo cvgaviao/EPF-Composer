@@ -23,6 +23,7 @@
 	<xsl:include href="mapping.xsl"/>	
 	<xsl:include href="overview.xsl"/>
 	<xsl:include href="guidance_helper.xsl"/>
+	<xsl:include href="main_description.xsl"/>
 	<xsl:include href="escape.xsl"/>	
 
 	<xsl:template match="/Element">
@@ -110,6 +111,9 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+							<xsl:call-template name="mainDescriptionSection">
+								<xsl:with-param name="description" select="$contentDescription"/>
+							</xsl:call-template>
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$contentDescription"/>
 							</xsl:call-template>
@@ -166,22 +170,13 @@
 	</xsl:template>
 
 	<xsl:template name="descriptionSection">
-		<xsl:param name="description"/>
-		<xsl:variable name="mainDescription" select="$description/attribute[@name='mainDescription']"/>		
+		<xsl:param name="description"/>	
 		<xsl:variable name="attachments" select="$description/attribute[@name='attachments']"/>				
 
-		<xsl:if test="$mainDescription != '' or $attachments != ''">
+		<xsl:if test="$attachments != ''">
 			<div class="sectionHeading"><xsl:value-of select="$descriptionText"/></div>
 			<div class="sectionContent">			
-				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
-					<xsl:if test="$mainDescription != ''">
-						<tr valign="top">
-							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$mainDescriptionText"/></th>
-							<td class="sectionTableCell">
-								<xsl:value-of disable-output-escaping="yes" select="$mainDescription"/>
-							</td>
-						</tr>
-					</xsl:if>				
+				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">		
 					<xsl:if test="$attachments != ''">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$attachedFilesText"/></th>
