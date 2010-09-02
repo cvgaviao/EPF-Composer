@@ -84,7 +84,6 @@ public class StandAloneThreadTest extends TestCase {
 			this.config = config;
 		}
 		
-		@Override
 		public void run() {
 			System.out.println("LD> plugin: " + plugin.getName() + ", " + 	Thread.currentThread());
 			System.out.println("");
