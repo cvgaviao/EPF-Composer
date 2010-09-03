@@ -291,7 +291,9 @@ public class LibraryUIManager {
 	 */
 	private void openLibrary(final URI uri, final Runnable successRunnable, final Runnable nextRunnable) {
 		if(uri == null) {
-			nextRunnable.run();
+			if (nextRunnable != null) {
+				nextRunnable.run();
+			}
 			return;
 		}
 		
@@ -362,7 +364,7 @@ public class LibraryUIManager {
 						postOpenLibrary(errors, (String) args.get(XMILibraryManager.ARG_LIBRARY_PATH));
 						if(errors.isEmpty()) {
 							successRunnable.run();
-						} else {
+						} else if (nextRunnable != null) {
 							nextRunnable.run();
 						}
 						return Status.OK_STATUS;
@@ -930,11 +932,12 @@ public class LibraryUIManager {
 						
 						final URI defautlLibUrl = defaultLibraryURI_NL != null ? defaultLibraryURI_NL : defaultLibraryURI;
 						if (defautlLibUrl != null) {
-							openLibrary(defautlLibUrl, successRunnable, new Runnable() {
-								public void run() {
-									openLibrary(defautlLibUrl, successRunnable, null);
-								}
-							});
+//							openLibrary(defautlLibUrl, successRunnable, new Runnable() {
+//								public void run() {
+//									openLibrary(defautlLibUrl, successRunnable, null);
+//								}
+//							});
+							openLibrary(defautlLibUrl, successRunnable, null);
 						}
 						
 					}
