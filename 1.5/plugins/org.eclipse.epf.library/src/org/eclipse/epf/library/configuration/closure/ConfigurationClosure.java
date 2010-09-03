@@ -45,8 +45,10 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr.ChangeEvent;
+import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.util.LibraryProblemMonitor;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -193,6 +195,18 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			}
 			return;
 		}
+		ILibraryResourceSet libResourceSet = null;
+		Resource resource = config.eResource();
+		if(resource != null && resource.getResourceSet() instanceof ILibraryResourceSet) {
+			libResourceSet = (ILibraryResourceSet) resource.getResourceSet();
+		}
+		Object oldValue = null;
+		Map<Object, Object> loadOptions = null;
+		if(libResourceSet != null) {
+			loadOptions = libResourceSet.getLoadOptions();;
+			oldValue = loadOptions.get(MultiFileResourceSetImpl.SKIP_RETRY_PROXY_RESOLUTION);
+			loadOptions.put(MultiFileResourceSetImpl.SKIP_RETRY_PROXY_RESOLUTION, Boolean.TRUE);
+		}
 		try {
 			if (ConfigDataBase.localDebug) {
 				System.out.println("LD> checkError_ ->");//$NON-NLS-1$
@@ -205,6 +219,13 @@ public class ConfigurationClosure implements IConfigurationClosure {
 				System.out.println("LD> checkError_ <-");//$NON-NLS-1$
 			}
 			setRunningCheckError(false);
+			if(loadOptions != null) {
+				if(oldValue == null) {
+					loadOptions.remove(MultiFileResourceSetImpl.SKIP_RETRY_PROXY_RESOLUTION);
+				} else {
+					loadOptions.put(MultiFileResourceSetImpl.SKIP_RETRY_PROXY_RESOLUTION, oldValue);
+				}
+			}
 		}	
 	}
 	
@@ -568,7 +589,11 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		if (getConfigurationManager().getSupportingElementData() != null) {
 			getConfigurationManager().getSupportingElementData().beginUpdateSupportingElements();
 		}
+		
+		replacerMap.clear();
 		processChangedNodes_(changedNodes);
+		replacerMap.clear();
+		
 /*		if (isAbortCheckError()) {
 			return;
 		}*/
@@ -670,6 +695,23 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		
 	}
 	
+	private Map<VariabilityElement, VariabilityElement> replacerMap = new HashMap<VariabilityElement, VariabilityElement>();
+	private VariabilityElement getReplacer(VariabilityElement e) {
+		VariabilityElement r = replacerMap.get(e);
+		if (r == e) {
+			return null;
+		}
+		if (r == null) {
+			r = ConfigurationHelper.getReplacer((VariabilityElement)e, config);
+			if (r == null) {
+				replacerMap.put(e, e);
+			} else {
+				replacerMap.put(e, r);
+			}
+		}
+		return r;
+	}
+	
 	private void checkReference(ElementReference ref) {
 		MethodElement e = ref.getElement();
 		MethodElement e_ref = ref.getRefElement();
@@ -687,7 +729,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 		// Bug 207609 - Replaced elements are not considered for configuration error "missing mandatory input"
 		// if the element is replaced, ignore the reference
 		if ( e instanceof VariabilityElement ) {
-			VariabilityElement replacer = ConfigurationHelper.getReplacer((VariabilityElement)e, config);
+			VariabilityElement replacer = getReplacer((VariabilityElement)e);
 			if ( replacer != null ) {
 				return;
 			}
@@ -1241,6 +1283,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	 * Disposes resources allocated by this closure.
 	 */
 	public void dispose() {
+		replacerMap = null;
 		
 		clearErrorMarks();
 		
