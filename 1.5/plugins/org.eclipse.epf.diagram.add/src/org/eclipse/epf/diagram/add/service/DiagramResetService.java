@@ -462,9 +462,14 @@ public class DiagramResetService {
 							NotationPackage.eINSTANCE.getSize_Width(), new Integer(
 									width));
 					nodeFigure.setPreferredSize(new Dimension(width, nodeFigure.getPreferredSize().height));
+					if (childFigure.getPreferredSize().height > nodeFigure.getPreferredSize().height) 
+						nodeFigure.setPreferredSize(new Dimension(width, childFigure.getPreferredSize().height));
 					childFigure.setPreferredSize(new Dimension(width, childFigure.getPreferredSize().height));
 					labelFigure.setPreferredSize(new Dimension(width, labelFigure.getPreferredSize().height));
+					
 					nodeFigure.setSize(new Dimension(width, nodeFigure.getPreferredSize().height));
+					if (childFigure.getPreferredSize().height > nodeFigure.getPreferredSize().height) 
+						nodeFigure.setPreferredSize(new Dimension(width, childFigure.getPreferredSize().height));
 					childFigure.setSize(new Dimension(width, childFigure.getPreferredSize().height));
 					labelFigure.setSize(new Dimension(width, labelFigure.getPreferredSize().height));
 
