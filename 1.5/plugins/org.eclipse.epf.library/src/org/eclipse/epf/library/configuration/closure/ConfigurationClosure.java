@@ -365,9 +365,16 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	}
 
 	private void clearErrorMarks() {
+		clearErrorMarks(true);
+	}
+
+	private void clearErrorMarks(boolean checkAbort) {
 		// Re-build the selections to auto add the process packages.
 
 		for (Iterator<ElementError> it = errors.iterator(); it.hasNext(); ) {
+			if (checkAbort && isAbortCheckError()) {
+				return;
+			}
 			ElementError error = it.next();
 			notifyError(error, ClosureListener.ERROR_REMOVED);
 		}	
@@ -376,6 +383,9 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	public void refreshErrormarks() {
 		clearErrorMarks();
 		for (Iterator<ElementError> it = errors.iterator(); it.hasNext(); ) {
+			if (isAbortCheckError()) {
+				return;
+			}
 			ElementError error = it.next();
 			notifyError(error, ClosureListener.ERROR_ADDED);
 		}	
@@ -1285,7 +1295,7 @@ public class ConfigurationClosure implements IConfigurationClosure {
 	public void dispose() {
 		replacerMap = null;
 		
-		clearErrorMarks();
+		clearErrorMarks(false);
 		
 		if (configManager != null) {
 			ConfigurationProperties props = configManager.getConfigurationProperties();

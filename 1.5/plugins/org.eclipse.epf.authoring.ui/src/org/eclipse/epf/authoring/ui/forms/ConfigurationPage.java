@@ -895,6 +895,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
+			closure.setAbortCheckError(false);
+			
 			// save the previous invalid elements
 			final List<Object> invalid = closure.getInvalidElements();
 			closure.checkError();
@@ -930,19 +932,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		if (closure.isAbortCheckError()) {
 			return;
 		}
-		
-		if (showErrorJob.getState() == Job.RUNNING) {
-			closure.setAbortCheckError(true);
-		}
-
-		if (! showErrorJob.cancel()) {
-			try {
-				showErrorJob.join();
-			} catch (Exception e) {							
-			}
-		}
-		
-		closure.setAbortCheckError(false);
+		closure.setAbortCheckError(true);
+		showErrorJob.cancel();
 		showErrorJob.schedule();
 	}
 	
