@@ -31,6 +31,8 @@ import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
@@ -163,7 +165,8 @@ public class DependencyManager {
 
 		try {
 			PackageDependency dependency = buildDependencyFor(element);
-
+			boolean isProcess = element instanceof ProcessComponent;
+			
 			EList elements = element.eContents();
 			if (elements != null) {
 				for (Iterator it = elements.iterator(); it.hasNext();) {
@@ -175,6 +178,16 @@ public class DependencyManager {
 					if (methodElement != null
 							&& !LibraryUtil.selectable(methodElement)) {
 						buildDependencyFor(methodElement);
+					} else if (isProcess && methodElement instanceof ProcessPackage) {
+						for (Iterator itt = methodElement.eAllContents(); itt.hasNext();) {
+							Object objj = itt.next();
+							if (objj instanceof MethodElement) {
+								MethodElement m = (MethodElement) objj;
+								if (!LibraryUtil.selectable(m)) {
+									buildDependencyFor(m);
+								}
+							}
+						}
 					}
 				}
 			}
