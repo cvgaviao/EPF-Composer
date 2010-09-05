@@ -10,10 +10,18 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.dnd;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.edit.command.DragAndDropCommand;
 import org.eclipse.emf.edit.command.DragAndDropFeedback;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.dnd.DND;
@@ -161,7 +169,8 @@ public class EditingDomainTableTreeViewerDropAdapter extends
 
 		// Determine if we can create a valid command at the current location.
 		boolean valid = false;
-
+		modifiySource(target);
+		
 		// If we don't have a previous cached command...
 		if (command == null) {
 			// We'll need to keep track of the information we use to create the
@@ -212,6 +221,41 @@ public class EditingDomainTableTreeViewerDropAdapter extends
 			// deal.
 			event.detail = DND.DROP_NONE;
 		}
+	}
+	
+	private void modifiySource(Object target) {
+		if (source == null || source.isEmpty()) {
+			return;
+		}
+		if (!(target instanceof Activity)) {
+			return;
+		}
+		Process proc = ProcessUtil.getProcess((Activity) target);
+		if (! ProcessScopeUtil.getInstance().isConfigFree(proc)) {
+			return;
+		}
+
+		boolean toModify = false; 
+		for (Object obj : source) {
+			if (obj instanceof ProcessComponent) {
+				toModify = true;
+				break;
+			}
+		}
+		if (!toModify) {
+			return;
+		}
+		List<Object> list = new ArrayList<Object>();
+		for (Object obj : source) {
+			if (obj instanceof ProcessComponent) {
+				Object process = ((ProcessComponent) obj).getProcess();
+				if (process != null) {
+					obj = process;
+				}
+			}
+			list.add(obj);
+		}
+		source = list;
 	}
 
 }
