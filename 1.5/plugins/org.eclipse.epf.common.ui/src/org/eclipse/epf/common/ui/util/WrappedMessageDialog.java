@@ -110,6 +110,9 @@ public class WrappedMessageDialog extends MessageDialog {
 
 			checkBox = new Button(composite, SWT.CHECK);
 			checkBox.setText(checkBoxLabel);
+			GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+			gd.horizontalSpan = 3;
+			checkBox.setLayoutData(gd);
 			
 			return rComposite;
 		}
