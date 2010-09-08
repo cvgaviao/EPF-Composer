@@ -9,6 +9,7 @@ import java.util.Set;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -77,6 +78,21 @@ public class MethodElementExt extends ExtendObject {
 			return list;
 		}
 		
+	}
+
+	public static class MethodPluginExt extends MethodElementExt {
+		
+		private boolean wpStatesLoaded = false;
+		public MethodPluginExt(MethodPlugin plugin) {
+			super(plugin);
+		}	
+		
+		public boolean isWpStatesLoaded() {
+			return wpStatesLoaded;
+		}
+		public void setWpStatesLoaded(boolean wpStatesLoaded) {
+			this.wpStatesLoaded = wpStatesLoaded;
+		}
 	}
 	
 }

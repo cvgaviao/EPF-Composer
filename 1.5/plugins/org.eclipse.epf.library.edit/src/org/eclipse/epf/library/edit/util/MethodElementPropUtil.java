@@ -12,9 +12,11 @@ import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class MethodElementPropUtil {
 	
@@ -260,6 +262,11 @@ public class MethodElementPropUtil {
 	}
 	
 	public List<WorkProduct> getAssignedToWorkProducts(Constraint state) {
+		MethodPlugin plugin = UmaUtil.getMethodPlugin(state);
+		if (plugin != null) {
+			MethodPluginPropUtil.getMethodPluginPropUtil().loadWpStates(plugin);
+		}	
+		
 		MethodElementExt extObj = getExtendObject(state, false);
 		if (! (extObj instanceof WorkProductStateExt)) {
 			return Collections.EMPTY_LIST;

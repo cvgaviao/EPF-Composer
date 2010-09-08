@@ -118,6 +118,7 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 				Constraint c = (Constraint) element;
 				if (c.getName().equals(ConstraintManager.Plugin_wpState)) {
 					list.add(c);
+					MethodElementPropUtil.getMethodElementPropUtil().addToAssignedToWps(wp, c);
 				}
 				if (newValue.length() > 0) {
 					newValue = newValue.concat(infoSeperator);

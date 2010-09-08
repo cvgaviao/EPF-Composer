@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.uma.MethodElementExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt.MethodPluginExt;
 import org.eclipse.epf.uma.Constraint;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
@@ -134,6 +137,35 @@ public class MethodPluginPropUtil extends MethodElementPropUtil {
 	
 	private String getStateId(Constraint state) {
 		return state.getBody() + ", " + state.getBriefDescription();  //$NON-NLS-1$
+	}
+	
+	protected MethodElementExt createExtendObject(MethodElement element) {
+		if (element instanceof MethodPlugin) {
+			return new MethodPluginExt((MethodPlugin) element);
+		}
+		return super.createExtendObject(element);
+	}
+	
+	private boolean isWpStatesLoaded(MethodPlugin plugin) {
+		MethodPluginExt ext = (MethodPluginExt) getExtendObject(plugin, true);
+		return ext.isWpStatesLoaded();
+	}
+	
+	private void setWpStatesLoaded(MethodPlugin plugin, boolean wpStatesLoaded) {
+		MethodPluginExt ext = (MethodPluginExt) getExtendObject(plugin, true);
+		ext.setWpStatesLoaded(wpStatesLoaded);
+	}
+	
+	public void loadWpStates(MethodPlugin plugin) {
+		if (isWpStatesLoaded(plugin)) {
+			return;
+		}
+		WorkProductPropUtil wpPropUtil = WorkProductPropUtil.getWorkProductPropUtil();
+		
+		for (WorkProduct wp : LibraryEditUtil.getInstance().getAllWorkProducts(plugin)) {
+			wpPropUtil.getWorkProductStates(wp);
+		}
+		setWpStatesLoaded(plugin, true);
 	}
 	
 }
