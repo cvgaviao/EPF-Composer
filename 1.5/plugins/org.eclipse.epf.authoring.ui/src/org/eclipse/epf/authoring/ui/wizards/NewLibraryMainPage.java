@@ -94,9 +94,9 @@ public class NewLibraryMainPage extends BaseWizardPage {
 		dummyButton = new Button(composite, SWT.CHECK);
 		dummyButton.setVisible(false);
 		
-		synFreeButton = new Button(composite, SWT.CHECK);		
-		synFreeButton
-				.setText(AuthoringUIResources.ProcessEditorPreferencePage_synchronizationFree);
+		
+		synFreeButton = createCheckbox(composite, 
+				AuthoringUIResources.ProcessEditorPreferencePage_synchronizationFree, 3);
 		synFreeButton.setSelection(true);
 
 		Map types = LibraryManagerFactory.getInstance().getLibraryTypes();
