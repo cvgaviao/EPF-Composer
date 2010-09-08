@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -22,14 +23,17 @@ import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
@@ -444,5 +448,84 @@ public class LibraryEditUtil {
 		ILibraryEditUtilProvider p = getProvider();				
 		return p == null ? element : p.getCalculatedElement(element, config);
 	}
+	
+	public class CollectElementFilter {
+		public boolean accept(MethodElement element) {
+			return true;
+		}
+		
+		public boolean skipChildren(MethodElement element) {
+			if (element instanceof MethodPlugin) {
+				return false;
+			}
+			if (element instanceof MethodPackage) {
+				return false;
+			}
+			
+			return true;
+		}
+		
+	}
+	
+	private void collectElements(MethodElement element,
+			CollectElementFilter filter, Set<MethodElement> collected,
+			Set<MethodElement> processed) {
+		if (processed.contains(element)) {
+			return;
+		}
+		processed.add(element);
+
+		if (filter.accept(element)) {
+			collected.add(element);
+		}
+		if (filter.skipChildren(element)) {
+			return;
+		}
+
+		EList<EReference> refList = element.eClass().getEAllContainments();
+		if (refList == null || refList.isEmpty()) {
+			return;
+		}
+		for (EReference ref : refList) {
+			Object obj = element.eGet(ref);
+			if (obj instanceof MethodElement) {
+				collectElements((MethodElement) obj, filter, collected,
+						processed);
+
+			} else if (obj instanceof List) {
+				List list = (List) obj;
+				for (Object itemObj : list) {
+					if (itemObj instanceof MethodElement) {
+						collectElements((MethodElement) itemObj, filter,
+								collected, processed);
+					}
+				}
+			}
+		}
+	}
+		
+	public Set<? extends MethodElement> getElementsUnder(MethodElement topElement, CollectElementFilter filter) {
+		Set<MethodElement> set = new HashSet<MethodElement>();
+		collectElements(topElement, filter, set, new HashSet<MethodElement>());
+		return set;
+	}
+	
+	public Set<WorkProduct> getAllWorkProducts(MethodElement topElement) {
+		CollectElementFilter filter = new CollectElementFilter() {
+			public boolean accept(MethodElement element) {
+				return element instanceof WorkProduct;
+			}
+			
+			public boolean skipChildren(MethodElement element) {
+				if (element instanceof ProcessPackage) {
+					return true;
+				}
+				
+				return super.skipChildren(element);
+			}
+		};
+		return (Set<WorkProduct> ) getElementsUnder(topElement, filter);
+	}
+	
 	
 }
