@@ -133,7 +133,7 @@ public class RoleLayout extends AbstractElementLayout {
 	 * @param name
 	 * @param value
 	 */
-	protected void notifyFeatureValue(String name, Object value) {
+	public void notifyFeatureValue(String name, Object value) {
 		referenceMap.put(name, value);
 	}
 
