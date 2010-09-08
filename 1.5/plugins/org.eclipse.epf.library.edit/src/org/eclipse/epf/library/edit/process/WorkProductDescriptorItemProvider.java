@@ -167,7 +167,7 @@ implements ICachedChildrenItemProvider
 			for (Iterator iter = wpDesc.getDeliverableParts().iterator(); iter
 			.hasNext();) {
 				WorkProductDescriptor desc = (WorkProductDescriptor) iter.next();
-				if (desc.getSuperActivities() == null) {
+				if (desc.getSuperActivities() == null || ProcessUtil.isSynFree()) {
 					children.add(desc);
 				}
 			}
