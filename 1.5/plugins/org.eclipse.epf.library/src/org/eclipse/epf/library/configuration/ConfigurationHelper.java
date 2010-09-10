@@ -571,7 +571,7 @@ public class ConfigurationHelper {
 				me = (DescribableElement)ConfigurationHelper.calc01FeatureValue(me, f, r);
 				if ( me == null ) {
 					break;
-				} else if (oldMe == me) {
+				} else if (oldMe == me || seens.contains(me)) {
 					me = oldMe.getVariabilityBasedOnElement();
 					if (me == null) {
 						break;
@@ -581,6 +581,7 @@ public class ConfigurationHelper {
 				if (seens.contains(me)) {	//to prevent loop in case such as											
 					break;					//both extend-replacer and base have empty pres name
 				}
+				seens.add(oldMe);
 				seens.add(me);
 			} while ( StrUtil.isBlank(name) );
 		}
