@@ -79,6 +79,9 @@ public class OpenLibraryAction implements IWorkbenchWindowActionDelegate {
 			case SWT.CANCEL:
 				return;
 			}
+		} else if (list.length > 0 ){
+			PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+			.getActivePage().closeAllEditors(false);
 		}
 
 		OpenLibraryWizard wizard = new OpenLibraryWizard();
