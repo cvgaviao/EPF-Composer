@@ -125,7 +125,7 @@ public class RealizedDescriptor extends RealizedElement implements
 			
 			Object linkedValue;
 			if (greenParent == null) {
-				linkedValue = ConfigurationHelper.calcAttributeFeatureValue(getLinkedElement(), feature, getConfig());
+				linkedValue = calcAttributeFeatureValue(getLinkedElement(), feature, getConfig());
 			} else {
 				linkedValue = greenParent.eGet(feature);
 			}
@@ -137,6 +137,15 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 
 		return super.getFeatureValue(feature);
+	}
+	
+	private Object calcAttributeFeatureValue(MethodElement linkedElement,
+			EStructuralFeature feature, MethodConfiguration config) {
+		if (feature == UmaPackage.eINSTANCE.getMethodElement_PresentationName()) {
+			return ConfigurationHelper.getPresentationName(linkedElement, config);
+		}
+		return ConfigurationHelper.calcAttributeFeatureValue(
+				getLinkedElement(), feature, getConfig());
 	}
 	
 	public Object getOFeatureValue(OppositeFeature ofeature) {
