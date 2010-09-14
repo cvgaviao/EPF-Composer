@@ -174,10 +174,12 @@ ProcessElementPage.prototype.fixDescriptorLinks = function()
 
 		var guid = element.getAttribute("guid");
 		var url = element.getAttribute("href");
+		var innerText = element.innerHTML;
 
 		if ( guid != null && guid != "" ) {
 			url = this.getDescriptorItemUrl(url, guid);
 			element.setAttribute("href", url);
+			element.innerHTML = innerText;
 		}
 	}
 };
