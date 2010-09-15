@@ -840,7 +840,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		if (!updateResourceInfosCalled && info == null) {
 			IFile file = WorkspaceSynchronizer.getFile(resource);
 			if(file != null) {
-				return file.isSynchronized(IResource.DEPTH_ZERO);
+				return !file.isSynchronized(IResource.DEPTH_ZERO);
 			}
 		}
 		
