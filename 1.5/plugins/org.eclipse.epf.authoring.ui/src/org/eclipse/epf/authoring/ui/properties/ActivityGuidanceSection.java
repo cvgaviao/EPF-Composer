@@ -170,10 +170,11 @@ public class ActivityGuidanceSection extends AbstractSection {
 							|| (obj instanceof Guideline)
 							|| (obj instanceof ReusableAsset)
 							|| (obj instanceof SupportingMaterial)
-							|| (obj instanceof Template)
+					//		|| (obj instanceof Template)
 							|| (obj instanceof Report)
-							|| (obj instanceof ToolMentor)
-							|| (obj instanceof EstimationConsiderations))
+					//		|| (obj instanceof ToolMentor)
+					//		|| (obj instanceof EstimationConsiderations)
+							)
 						return true;
 
 					return false;
