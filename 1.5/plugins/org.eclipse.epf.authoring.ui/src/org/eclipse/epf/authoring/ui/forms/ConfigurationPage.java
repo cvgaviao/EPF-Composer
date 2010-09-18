@@ -1164,6 +1164,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			adapterFactory.dispose();
 			adapterFactory = null;
 		}
+		
+		markerHelper.removeAllMarkers(config);
 	}
 	
 	public void gotoMarker(IMarker marker) {

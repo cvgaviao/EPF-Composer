@@ -13,6 +13,7 @@ package org.eclipse.epf.authoring.ui.util;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -69,6 +70,7 @@ public class ConfigurationMarkerHelper {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
+		private Map<MethodConfiguration, Map<String, IMarker>> configMakerMap;
 
 		public ContainerMap() {
 			super();
@@ -89,7 +91,8 @@ public class ConfigurationMarkerHelper {
 		}
 		
 		private void initMap() {
-			clear();
+			clear();			
+			configMakerMap =  new HashMap<MethodConfiguration, Map<String, IMarker>>();
 			
 			// fill this set with containers of marked objects
 			//
@@ -149,6 +152,10 @@ public class ConfigurationMarkerHelper {
 			for(EObject container = e.eContainer(); container != null; container = container.eContainer()) {
 				decrement(container);
 			}
+		}
+		
+		public Map<MethodConfiguration, Map<String, IMarker>> getConfigMakerMap() {
+			return configMakerMap;
 		}
 	}
 	
@@ -214,6 +221,7 @@ public class ConfigurationMarkerHelper {
 	    	if (marker != null) {
 	    		marker.delete();
 	    		containersOfMarkedObjects.unmarkContainers(config);
+	    		unregisterMarker(config, error.getId());
 	    	}
 		} catch (CoreException e) {
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
@@ -236,6 +244,7 @@ public class ConfigurationMarkerHelper {
 	    		marker.setAttribute(IDE.EDITOR_ID_ATTR, "org.eclipse.epf.authoring.ui.editors.ConfigurationEditor"); //$NON-NLS-1$
 	    		adjustMarker(marker, config, error);
 	    		containersOfMarkedObjects.markContainers(config);
+	    		registerNewMarker(config, error.getId(), marker);
 	    		return marker;
 	    	}
 		} catch (CoreException e) {
@@ -309,22 +318,25 @@ public class ConfigurationMarkerHelper {
     	if (config == null || error == null) {
     		return null;
     	}
-    	try {
-	    	IResource resource = getIResource(config);                                                     
-	        if (resource != null) {                                                     
-				IMarker[] markers = resource.findMarkers(getMarkerID(), false, IResource.DEPTH_ZERO);
-				for (int i = 0; i < markers.length; i++) {
-					IMarker marker = markers[i];
-					String markerErrorId = (String) marker.getAttribute(ATTR_ERROR_ID);
-					if (error.getId().equals(markerErrorId)) {
-						return marker;
-					}
-				}
-	        }
-		} catch (CoreException e) {
-			AuthoringUIPlugin.getDefault().getLogger().logError(e);
-		}
-		return null;
+    	
+   		return findMarker(config, error.getId());
+    	    	
+//    	try {
+//	    	IResource resource = getIResource(config);                                                     
+//	        if (resource != null) {                                                     
+//				IMarker[] markers = resource.findMarkers(getMarkerID(), false, IResource.DEPTH_ZERO);
+//				for (int i = 0; i < markers.length; i++) {
+//					IMarker marker = markers[i];
+//					String markerErrorId = (String) marker.getAttribute(ATTR_ERROR_ID);
+//					if (error.getId().equals(markerErrorId)) {
+//						return marker;
+//					}
+//				}
+//	        }
+//		} catch (CoreException e) {
+//			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+//		}
+//		return null;
     }
     
     private String getMessage(IConfigurationError error) {
@@ -391,4 +403,43 @@ public class ConfigurationMarkerHelper {
 		return null;
 	}
 
+	private void registerNewMarker(MethodConfiguration config, String id, IMarker marker) {
+		Map<String, IMarker> map = containersOfMarkedObjects.getConfigMakerMap().get(config);
+		if (map == null) {
+			map = new HashMap<String, IMarker>(); 
+			containersOfMarkedObjects.getConfigMakerMap().put(config, map);
+		}
+		map.put(id, marker);
+	}
+	
+	private void unregisterMarker(MethodConfiguration config, String id) {
+		Map<String, IMarker> map = containersOfMarkedObjects.getConfigMakerMap().get(config);
+		if (map == null) {
+			return;
+		}
+		map.remove(id);
+	}
+	
+	private IMarker findMarker(MethodConfiguration config, String id) {
+		Map<String, IMarker> map = containersOfMarkedObjects.getConfigMakerMap().get(config);
+		if (map == null) {
+			return null;
+		}		
+		return map.get(id);
+	}
+	
+	public void removeAllMarkers(MethodConfiguration config) {
+		Map<String, IMarker> map = containersOfMarkedObjects.getConfigMakerMap().remove(config);
+		if (map == null) {
+			return;
+		}
+		for (IMarker marker : map.values()) {
+			try {
+				marker.delete();
+			} catch (CoreException e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+	}
+	
 }
