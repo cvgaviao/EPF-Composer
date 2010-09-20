@@ -230,6 +230,7 @@ public class TransientGroupItemProvider extends ItemProviderAdapter implements
 			EStructuralFeature feature = (EStructuralFeature) i.next();
 			if (feature.isMany()) {
 				List children = (List) eObject.eGet(feature);
+				children = new ArrayList(children);
 				int index = 0;
 				for (Iterator ci = children.iterator(); ci.hasNext(); index++) {
 					Object child = ci.next();
