@@ -122,6 +122,7 @@ public class ContentPackageItemProvider extends
 				EStructuralFeature feature = (EStructuralFeature) i.next();
 				if (feature.isMany()) {
 					List children = (List) eObject.eGet(feature);
+					children = new ArrayList(children);		
 					List contentPkgs = new ArrayList();
 					int index = 0;
 					for (Iterator ci = children.iterator(); ci.hasNext(); index++) {
