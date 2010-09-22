@@ -2351,6 +2351,25 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		//			
 		// }
 	}
+	
+	private ArrayList copyCollectionToList(Collection c) {
+		int max = 5;
+		for (int i = 0; i < max; i++) {	//Try up to max times for any concurrent exception
+			try {
+				return new ArrayList(c);				
+			} catch (Exception e) {
+				if (i == max - 1) {
+					CommonPlugin.INSTANCE.log(e);
+				} else {
+					try {
+						Thread.sleep(1000);
+					} catch (Exception ee) {						
+					}
+				}
+			}
+		}
+		return new ArrayList();
+	}
 
 	// /**
 	// * @return Returns the exceptions.
@@ -2364,7 +2383,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		if (max < 0) {
 			return;
 		}
-		ArrayList elements = new ArrayList(getGuidToMethodElementMap().values());
+		ArrayList elements = copyCollectionToList(getGuidToMethodElementMap().values());
 		HashSet loadedElements = new HashSet();
 		while (!elements.isEmpty()) {
 			for (Iterator iter = elements.iterator(); iter.hasNext();) {
@@ -2395,7 +2414,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			// gets the newly loaded elements to load their opposite features
 			//
 			loadedElements.addAll(elements);
-			elements = new ArrayList(getGuidToMethodElementMap().values());
+			elements = copyCollectionToList(getGuidToMethodElementMap().values());
 			elements.removeAll(loadedElements);
 		}
 	}
@@ -2405,7 +2424,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		if (max < 0) {
 			return;
 		}
-		ArrayList elements = new ArrayList(getGuidToMethodElementMap().values());
+		ArrayList elements = copyCollectionToList(getGuidToMethodElementMap().values());
 		HashSet loadedElements = new HashSet();
 		while (!elements.isEmpty()) {
 			for (Iterator iter = elements.iterator(); iter.hasNext();) {
@@ -2481,7 +2500,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			// gets the newly loaded elements to load their opposite features
 			//
 			loadedElements.addAll(elements);
-			elements = new ArrayList(getGuidToMethodElementMap().values());
+			elements = copyCollectionToList(getGuidToMethodElementMap().values());
 			elements.removeAll(loadedElements);
 		}
 	}
