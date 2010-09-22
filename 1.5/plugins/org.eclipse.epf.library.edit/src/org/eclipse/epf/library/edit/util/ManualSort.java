@@ -24,6 +24,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.util.model.OrderInfo;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.VariabilityType;
 
@@ -37,13 +38,16 @@ public class ManualSort {
 	}
 	
 	public List<Object> sort(ContentCategory cc, List<Object> elementList,
-			EStructuralFeature feature) {
+			EStructuralFeature feature, MethodConfiguration config) {
 		
 		List<OrderInfo> orderInfoList = new ArrayList<OrderInfo>();
 		for (Iterator iter = TngUtil.getContributors(cc); iter.hasNext();) {
 			Object obj = iter.next();
 			if (obj instanceof ContentCategory) {
 				ContentCategory contributor = (ContentCategory) obj;
+				if (config != null && !LibraryEditUtil.getInstance().inConfig(contributor, config)) {
+					continue;
+				}
 				OrderInfo orderInfo = TngUtil.getOrderInfo(contributor, ContentElementOrderList.ORDER_INFO_NAME);
 				if (orderInfo != null) {
 					orderInfoList.add(orderInfo);

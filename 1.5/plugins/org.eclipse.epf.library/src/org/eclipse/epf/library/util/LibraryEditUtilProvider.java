@@ -139,4 +139,8 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 		return  ConfigurationHelper.getCalculatedElement(element, config);
 	}
 	
+	public boolean inConfig(MethodElement element, MethodConfiguration config) {
+		return  ConfigurationHelper.inConfig(element, config);
+	}
+	
 }

@@ -449,6 +449,11 @@ public class LibraryEditUtil {
 		return p == null ? element : p.getCalculatedElement(element, config);
 	}
 	
+	public boolean inConfig(MethodElement element, MethodConfiguration config) {
+		ILibraryEditUtilProvider p = getProvider();				
+		return p == null ? false : p.inConfig(element, config);
+	}
+	
 	public class CollectElementFilter {
 		public boolean accept(MethodElement element) {
 			return true;

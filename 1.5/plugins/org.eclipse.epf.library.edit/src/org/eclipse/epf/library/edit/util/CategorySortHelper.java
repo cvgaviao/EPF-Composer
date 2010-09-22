@@ -29,6 +29,7 @@ import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.Domain;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.RoleSet;
@@ -142,7 +143,18 @@ public class CategorySortHelper {
 	 * @return
 	 */
 	public static List<Object> sortCategoryElements(MethodElement element, Object[] elements) {
-		return sortCategoryElements(element, elements, false, null);
+		return sortCategoryElements(element, elements, false, null, null);
+	}
+	
+	/**
+	 * Returns a sorted category element list based on the category's sort type
+	 * Respects the Name/PresName toggle
+	 * @param element 
+	 * @param elements array to sort
+	 * @return
+	 */
+	public static List<Object> sortCategoryElements(MethodElement element, Object[] elements, MethodConfiguration config) {
+		return sortCategoryElements(element, elements, false, null, config);
 	}
 
 	/**
@@ -153,7 +165,7 @@ public class CategorySortHelper {
 	 * @return
 	 */
 	public static List<Object> sortCategoryElements(MethodElement element, Object[] elements, 
-			boolean forcePresNameSort, EStructuralFeature feature) {
+			boolean forcePresNameSort, EStructuralFeature feature, MethodConfiguration config) {
 		/*
 		 * TODO: can't use generics here because EMF doesn't use them yet - the elements param
 		 * usually comes from ContentElementsOrderList class which extends EMF's BasicEList and so
@@ -163,7 +175,7 @@ public class CategorySortHelper {
 		String sortType = getCategorySortValue(element);
 		if (V_CATEGORY_ELEMENTS__SORT_TYPE_MANUAL.equals(sortType)) {
 			if (element instanceof ContentCategory) {
-				return findManualSortOrderInContributors((ContentCategory)element, returnList, feature);
+				return findManualSortOrderInContributors((ContentCategory)element, returnList, feature, config);
 			}
 			return returnList;
 		} else if (V_CATEGORY_ELEMENTS__SORT_TYPE_ALPHA.equals(sortType)) {
@@ -186,7 +198,7 @@ public class CategorySortHelper {
 	}
 	
 	private static List<Object> findManualSortOrderInContributors(ContentCategory cc, List<Object> elementList,
-			EStructuralFeature feature) {
+			EStructuralFeature feature, MethodConfiguration config) {
 		if (feature == null) {
 			return elementList;
 		}
@@ -196,7 +208,7 @@ public class CategorySortHelper {
 		}
 		
 		ManualSort manualSort = new ManualSort();
-		return manualSort.sort(cc, elementList, feature);
+		return manualSort.sort(cc, elementList, feature, config);
 	}
 	
 	//Keep this old code for reference

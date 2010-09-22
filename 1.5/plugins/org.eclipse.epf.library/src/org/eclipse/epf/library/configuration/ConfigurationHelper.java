@@ -1464,7 +1464,7 @@ public class ConfigurationHelper {
 		
 		List returnList = realizer.realize(element, feature, values);
 		if (CategorySortHelper.needToSort(element, feature)) {
-			returnList = CategorySortHelper.sortCategoryElements(element, returnList.toArray(), true, feature);
+			returnList = CategorySortHelper.sortCategoryElements(element, returnList.toArray(), true, feature, config);
 		}
 
 		// the following part might not be general to all cases
