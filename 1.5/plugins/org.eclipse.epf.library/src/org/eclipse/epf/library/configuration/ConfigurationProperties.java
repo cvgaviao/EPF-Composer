@@ -63,7 +63,11 @@ public class ConfigurationProperties extends MethodElementProperties {
 	}
 	
 	public boolean isNoUpdateOnClick() {
-		return getBooleanValue(MethodElementPropertyHelper.CONFIG_NO_UPDATE_ON_CLICK);
+		boolean b = getBooleanValue(MethodElementPropertyHelper.CONFIG_NO_UPDATE_ON_CLICK);
+		if (!b && !isUpdateOnClick()) {
+			return true;
+		}
+		return b;
 	}
 		
 }
