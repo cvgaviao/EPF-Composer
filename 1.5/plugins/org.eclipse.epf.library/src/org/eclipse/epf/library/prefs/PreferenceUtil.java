@@ -78,7 +78,7 @@ public class PreferenceUtil {
 
 	}
 	
-	private static String getLabel(String key) {
+	public static String getLabel(String key) {
 		String label = xslParams.getProperty(key);
 		if ( label == null ) {
 			System.out.println("Can't find property entry for " + key); //$NON-NLS-1$

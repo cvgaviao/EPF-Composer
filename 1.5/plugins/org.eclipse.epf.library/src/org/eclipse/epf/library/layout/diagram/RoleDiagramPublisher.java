@@ -42,6 +42,7 @@ import org.eclipse.epf.library.diagram.providers.DiagramIconProviderManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.elements.RoleLayout;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
+import org.eclipse.epf.library.prefs.PreferenceUtil;
 import org.eclipse.epf.publish.layout.LayoutPlugin;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Role;
@@ -625,10 +626,13 @@ public class RoleDiagramPublisher {
 	}
 	
 	private String getLabel(String key) {
-		String label = xslParams.getProperty(key);
-		if ( label == null ) {
-			System.out.println("Can't find property entry for " + key); //$NON-NLS-1$
-			label = key;
+		String label = PreferenceUtil.getLabel(key);
+		if (label == null) {
+			label = xslParams.getProperty(key);
+			if ( label == null ) {
+				System.out.println("Can't find property entry for " + key); //$NON-NLS-1$
+				label = key;
+			}
 		}
 		return label;
 	}
