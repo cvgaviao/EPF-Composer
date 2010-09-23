@@ -928,8 +928,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 	}
 	
-	protected void showErrors() {
-		if (closure.isAbortCheckError()) {
+	public void showErrors() {
+		if (closure != null || closure.isAbortCheckError()) {
 			return;
 		}
 		closure.setAbortCheckError(true);

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.forms.ConfigurationPage;
@@ -184,4 +185,10 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
     public void doQuickFix(IMarker marker) {
     	configPage.doQuickFix(marker);
     }
+    
+	public void doSave(IProgressMonitor monitor) {
+    	super.doSave(monitor);
+    	configPage.showErrors();
+    }
+    
 }
