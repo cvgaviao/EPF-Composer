@@ -1127,10 +1127,10 @@ public class RichText implements IRichText {
 							if (Platform.getOS().equals("win32")) { //$NON-NLS-1$ 
 								// Workaround the drag and drop issue with DBCS
 								// characters.
-								if (modified) {
-									setText(getText());
-									modified = true;
-								}
+//								if (modified) {
+//									setText(getText());
+//									modified = true;
+//								}
 							}
 							checkModify();
 							break;
