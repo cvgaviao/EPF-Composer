@@ -48,6 +48,7 @@ import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
+import org.eclipse.epf.persistence.UnnormalizedURIException;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Iteration;
@@ -460,8 +461,11 @@ public final class BridgeHelper {
                 } 
             } 
         } catch (Exception e) { 
-                DiagramCorePlugin.getDefault().getLogger().logError(e); 
-                return null; 
+        	if (!(e instanceof UnnormalizedURIException)) {
+                DiagramCorePlugin.getDefault().getLogger().logError(e);
+        	}
+        	
+        	return null; 
         } 
         
         return null; 
