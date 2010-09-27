@@ -3132,7 +3132,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 */
 	public void refreshName(String newName) {
 		if (newName != null) {
-			if ((ctrl_name != null) && !(ctrl_name.isDisposed())) {
+			if ((ctrl_name != null) && !(ctrl_name.isDisposed()) && (modelModifyListener != null)) {
 				ctrl_name.removeModifyListener(modelModifyListener);
 				ctrl_name.setText(newName);
 				ctrl_name.addModifyListener(modelModifyListener);
