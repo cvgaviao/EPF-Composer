@@ -247,4 +247,6 @@
 	<xsl:param name="modelInfo_assistTasksText"/>
 	<xsl:param name="backgroundImage"/>
 	
+	<xsl:param name="wpStatesText"/>
+	
 </xsl:stylesheet>

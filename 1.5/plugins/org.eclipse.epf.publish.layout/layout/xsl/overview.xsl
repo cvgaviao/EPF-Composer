@@ -574,6 +574,7 @@
 		<xsl:variable name="domains" select="referenceList[@name='domains']/Element"/>
 		<xsl:variable name="baseWorkProduct" select="reference[@name='variabilityBasedOnElement']/Element"/>
 		<xsl:variable name="workProductTypes" select="referenceList[@name='workProductTypes']/Element[@Type='WorkProductType']"/>
+		<xsl:variable name="states" select="@States"/>
 		<xsl:variable name="variabilityType" select="attribute[@name='variabilityType']"/>
 		<tr>
 			<td>
@@ -602,8 +603,16 @@
 						<xsl:if test="count($workProductTypes) > position()">,&#160;</xsl:if>
 					</xsl:for-each>
 				</xsl:if>
-				<xsl:if test="count($baseWorkProduct) > 0">
+				<xsl:if test="count($states) > 0">
 					<xsl:if test="count($domains) + count($workProductTypes) > 0">
+						<br/>
+					</xsl:if>
+					<xsl:value-of select="$wpStatesText"/>
+					<xsl:value-of select="$colon_with_space"/>
+					<xsl:value-of select="$states"/>
+				</xsl:if>
+				<xsl:if test="count($baseWorkProduct) > 0">
+					<xsl:if test="count($domains) + count($workProductTypes) + count($states) > 0">
 						<br/>
 					</xsl:if>
 					<xsl:if test="$variabilityType = 'replaces'">
