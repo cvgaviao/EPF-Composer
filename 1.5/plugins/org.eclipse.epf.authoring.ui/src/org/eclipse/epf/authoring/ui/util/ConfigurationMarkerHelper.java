@@ -57,7 +57,7 @@ public class ConfigurationMarkerHelper {
 
 	// marker ID
 	public static final String MARKER_ID = "org.eclipse.epf.authoring.ui.configuration"; //$NON-NLS-1$
-
+	private int maxMarkerCount = 20;
 	
 //	private Map<ElementDependencyError, IMarker> errorMarkerMap = new HashMap<ElementDependencyError, IMarker>();
 	
@@ -70,7 +70,7 @@ public class ConfigurationMarkerHelper {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private Map<MethodConfiguration, Map<String, IMarker>> configMakerMap;
+		private Map<MethodConfiguration, Map<String, IMarker>> configMakerMap;		 
 
 		public ContainerMap() {
 			super();
@@ -238,6 +238,10 @@ public class ConfigurationMarkerHelper {
     		return existingMarker;
     	}
     	try {
+	    	if (getMarkerCount(config) >= maxMarkerCount) {
+	    		return null;
+	    	}
+	    	
 	    	IResource resource = getIResource(config);
 	    	if (resource != null && resource.exists()) {
 	    		IMarker marker = resource.createMarker(getMarkerID());
@@ -426,6 +430,14 @@ public class ConfigurationMarkerHelper {
 			return null;
 		}		
 		return map.get(id);
+	}
+	
+	private int getMarkerCount(MethodConfiguration config) {
+		Map<String, IMarker> map = containersOfMarkedObjects.getConfigMakerMap().get(config);
+		if (map == null) {
+			return 0;
+		}		
+		return map.size();
 	}
 	
 	public void removeAllMarkers(MethodConfiguration config) {
