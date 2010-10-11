@@ -929,7 +929,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	}
 	
 	public void showErrors() {
-		if (closure != null || closure.isAbortCheckError()) {
+		if (closure == null || closure.isAbortCheckError()) {
 			return;
 		}
 		closure.setAbortCheckError(true);
