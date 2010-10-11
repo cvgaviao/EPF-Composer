@@ -1028,6 +1028,8 @@ public class RichTextEditor implements IRichTextEditor {
 		if (text == null || text.length() == 0) 
 			return;
 		if (tabFolder.getSelection() == richTextTab) {
+			//To avoid encoding of javascript
+			text = text.replaceAll("&", "&amp;");  //$NON-NLS-1$//$NON-NLS-2$
 			executeCommand(RichTextCommand.ADD_HTML, text);
 		} else if (tabFolder.getSelection() == htmlTab) {
 			String oldHTML = getSourceEdit().getText();
