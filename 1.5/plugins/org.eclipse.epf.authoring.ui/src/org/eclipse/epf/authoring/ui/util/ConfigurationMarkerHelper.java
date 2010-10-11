@@ -57,7 +57,7 @@ public class ConfigurationMarkerHelper {
 
 	// marker ID
 	public static final String MARKER_ID = "org.eclipse.epf.authoring.ui.configuration"; //$NON-NLS-1$
-	private int maxMarkerCount = 20;
+	private int maxMarkerCount = 2000;
 	
 //	private Map<ElementDependencyError, IMarker> errorMarkerMap = new HashMap<ElementDependencyError, IMarker>();
 	
