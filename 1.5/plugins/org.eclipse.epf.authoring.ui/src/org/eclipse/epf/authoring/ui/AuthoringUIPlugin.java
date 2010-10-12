@@ -13,6 +13,7 @@ package org.eclipse.epf.authoring.ui;
 import org.eclipse.epf.authoring.ui.internal.ImageDescriptorRegistry;
 import org.eclipse.epf.authoring.ui.internal.ProblemMarkerManager;
 import org.eclipse.epf.authoring.ui.preferences.LibraryViewPrefPage;
+import org.eclipse.epf.common.serviceability.Logger;
 import org.eclipse.epf.common.ui.AbstractPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -48,6 +49,7 @@ public class AuthoringUIPlugin extends AbstractPlugin {
 		
 		// Initialize the Authoring UI service.
 		AuthoringUIService.getInstance().start();
+		Logger.SeeLogFileForMoreDetails = AuthoringUIResources.editors_MethodElementEditor_saveErrorReason1;
 	}
 
 	/**

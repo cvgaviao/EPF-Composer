@@ -771,14 +771,14 @@ implements ILibraryResource, IFailSafeSavable
 				}
 			}			
 			
+			handleSynFreeFlag(e);
+			
 			super.save(options);
 
 			// Special handling for saving MethodLibrary to remove all references to
 			// MethodConfigurations from library file.
 			//
 			//MethodElement e = PersistenceUtil.getMethodElement(this);
-			
-			handleSynFreeFlag(e);
 			
 			if (e instanceof MethodLibrary) {
 				MethodLibrary lib = (MethodLibrary) e;

@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.Status;
  */
 public class Logger {
 
+	public static String SeeLogFileForMoreDetails;
+	
 	// The plug-in instance.
 	private Plugin plugin;
 

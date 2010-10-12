@@ -661,8 +661,8 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 						.getDefaultBoolean(
 								ApplicationPreferenceConstants.PREF_INHERIT_SUPPRESSION_STATE));
 		
-		setSynFreeButtonSelection(getPreferenceStore().getDefaultBoolean(
-				ApplicationPreferenceConstants.PREF_SYN_FREE));
+//		setSynFreeButtonSelection(getPreferenceStore().getDefaultBoolean(
+//				ApplicationPreferenceConstants.PREF_SYN_FREE));
 				
 		setSwitchConfigButton(MessageDialogWithToggle.PROMPT);
 	}
