@@ -188,7 +188,7 @@ public class ConfigurationEditor extends MethodElementEditor implements IGotoMar
     
 	public void doSave(IProgressMonitor monitor) {
     	super.doSave(monitor);
-    	configPage.showErrors();
+    	configPage.showErrorsOnSave();
     }
     
 }

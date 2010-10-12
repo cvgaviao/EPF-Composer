@@ -928,7 +928,13 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 	}
 	
-	public void showErrors() {
+	public void showErrorsOnSave() {
+		if (! updateOnClick.getSelection()) {
+			showErrors();
+		}
+	}
+	
+	private void showErrors() {
 		if (closure == null || closure.isAbortCheckError()) {
 			return;
 		}
