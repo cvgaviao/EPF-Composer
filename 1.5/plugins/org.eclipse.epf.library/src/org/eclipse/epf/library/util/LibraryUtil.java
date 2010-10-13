@@ -483,7 +483,9 @@ public class LibraryUtil {
 	}
 	
 	public static Collection<Resource> loadAll(MethodLibrary lib, MethodConfiguration config) {
-
+		if (lib == null) {
+			lib = LibraryService.getInstance().getCurrentMethodLibrary();
+		}
 
 		Collection<Resource> loadedres = getLoadedResources(lib, null);
 		
