@@ -43,6 +43,7 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.RoleDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.TaskDescriptorWrapperItemProvider;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.ui.UIHelper;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.PredecessorList;
@@ -210,6 +211,11 @@ public class ExportMSPXMLService {
 					config = tempConfigAndPlugin.config;					
 				}
 			}
+			IRealizationManager mgr = ConfigurationHelper.getDelegate().getRealizationManager(config);
+			if (mgr != null) {
+				mgr.updateProcessModel(process);
+			}
+			
 			result =  export_(process, exportOptions, config);
 		} finally {
 			LibraryUtil.removeTempConfigAndPluginFromCurrentLibrary(tempConfigAndPlugin);
