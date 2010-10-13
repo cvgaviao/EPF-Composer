@@ -35,7 +35,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.common.utils.FileUtil;
-import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ProcessConfigurator;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
@@ -47,10 +46,13 @@ import org.eclipse.epf.library.edit.process.TaskDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.ui.UIHelper;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.PredecessorList;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
+import org.eclipse.epf.library.util.LibraryUtil.ConfigAndPlugin;
 import org.eclipse.epf.msproject.Assignment;
 import org.eclipse.epf.msproject.DocumentRoot;
 import org.eclipse.epf.msproject.MsprojectFactory;
@@ -81,6 +83,7 @@ import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -180,6 +183,7 @@ public class ExportMSPXMLService {
 		super();
 	}
 
+	ConfigAndPlugin tempConfigAndPlugin;
 	/**
 	 * Export a process to a Microsoft Project XML file.
 	 * 
@@ -192,11 +196,36 @@ public class ExportMSPXMLService {
 	 */
 	public boolean export(Process process, ExportMSPOptions exportOptions)
 			throws ExportMSPServiceException {
+		
+		tempConfigAndPlugin = null;
+		boolean result = false;
+		try {
+			Scope scope = ProcessScopeUtil.getInstance().getScope(process);
+			MethodConfiguration config = exportOptions.getMethodConfiguration();
+			if (config == scope) {
+				List<Process> list = new ArrayList<Process>();
+				list.add(process);
+				tempConfigAndPlugin = LibraryUtil.addTempConfigAndPluginToCurrentLibrary(list);
+				if (tempConfigAndPlugin != null && tempConfigAndPlugin.config != null) {
+					config = tempConfigAndPlugin.config;					
+				}
+			}
+			result =  export_(process, exportOptions, config);
+		} finally {
+			LibraryUtil.removeTempConfigAndPluginFromCurrentLibrary(tempConfigAndPlugin);
+			tempConfigAndPlugin = null;
+		}
+		
+		return result;
+	}
+	
+	private boolean export_(Process process, ExportMSPOptions exportOptions, MethodConfiguration config)
+			throws ExportMSPServiceException {
 		String msprojectName = exportOptions.getMSProjectName();
 		File exportDir = exportOptions.getExportDir();
 		publishContentSite = exportOptions.getPublishWebSite();
 		PublishOptions publishingOptions = exportOptions.getPublishingOptions();
-		processConfig = exportOptions.getMethodConfiguration();
+		processConfig = config;
 		if (debug) {
 			System.out.println("$$$ exporting to Microsoft Project!"); //$NON-NLS-1$
 			System.out.println("$$$ process          = " + process); //$NON-NLS-1$
@@ -303,7 +332,9 @@ public class ExportMSPXMLService {
 		}
 
 		try {
-			MethodConfiguration config = exportOptions.getMethodConfiguration();
+			MethodConfiguration config = tempConfigAndPlugin == null ? exportOptions
+					.getMethodConfiguration()
+					: tempConfigAndPlugin.config;
 			if (config == null) {
 				// Get the default method configuration associated with the
 				// process.

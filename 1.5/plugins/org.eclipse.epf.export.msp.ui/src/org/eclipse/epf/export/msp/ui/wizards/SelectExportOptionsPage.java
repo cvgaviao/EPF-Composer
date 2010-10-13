@@ -15,11 +15,13 @@ import org.eclipse.epf.export.msp.ui.ExportMSPUIResources;
 import org.eclipse.epf.export.msp.ui.preferences.ExportMSPUIPreferences;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.publishing.ui.PublishingUIResources;
 import org.eclipse.epf.ui.wizards.BaseWizardPage;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -167,6 +169,8 @@ public class SelectExportOptionsPage extends BaseWizardPage {
 		});
 	}
 
+	
+	private Process selectedProcess;
 	/**
 	 * Updates the Configuration Combo.
 	 */
@@ -175,6 +179,7 @@ public class SelectExportOptionsPage extends BaseWizardPage {
 		configCombo.setItems(contextNames);
 		String defaultContext = process.getDefaultContext().getName();
 		configCombo.setText(defaultContext);
+		selectedProcess = process;
 	}
 
 	/**
@@ -208,7 +213,7 @@ public class SelectExportOptionsPage extends BaseWizardPage {
 		}
 
 		if (getPublishWebSiteSelection()
-				&& config.getProcessViews().size() == 0) {
+				&& config.getProcessViews().size() == 0 && !(config instanceof Scope)) {
 			setErrorMessage(PublishingUIResources.missingViewError_msg);
 			return false;
 		}
@@ -245,6 +250,13 @@ public class SelectExportOptionsPage extends BaseWizardPage {
 	 */
 	public MethodConfiguration getMethodConfiguration() {
 		String configName = configCombo.getText().trim();
+		Scope scope = selectedProcess == null ? null : ProcessScopeUtil
+				.getInstance().loadScope(selectedProcess);
+		if (scope != null) {
+			if (scope.getName().equals(configName)) {
+				return scope;
+			}
+		}
 		MethodLibrary library = LibraryService.getInstance()
 				.getCurrentMethodLibrary();
 		return LibraryServiceUtil.getMethodConfiguration(library, configName);
