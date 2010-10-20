@@ -102,6 +102,7 @@ import org.eclipse.epf.library.edit.navigator.MethodLibraryItemProvider;
 import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -1097,6 +1098,9 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 				renameAction.setEnabled(enabled);
 			}
 			moveAction.setEnabled(enabled);
+			if (ProcessUtil.isSynFree() && sel.getFirstElement() instanceof ProcessComponent) {
+				moveAction.setEnabled(false);
+			}
 			
 			unassignAction.setEnabled(enabled);
 			reassignAction.setEnabled(enabled);

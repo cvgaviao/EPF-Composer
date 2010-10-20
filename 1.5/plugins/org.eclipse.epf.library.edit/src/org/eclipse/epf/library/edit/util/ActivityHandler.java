@@ -257,11 +257,15 @@ public class ActivityHandler {
 	}
 	
 	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap) {
-		fixGuidReferences(objectToCopyMap, true);
+		fixGuidReferences(objectToCopyMap, true, false);
+	}
+	
+	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap, boolean reverseMap) {
+		fixGuidReferences(objectToCopyMap, true, reverseMap);
 	}
 	
 	private static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap,
-			boolean deepCopy) {
+			boolean deepCopy, boolean reverseMap) {
 		if (! ProcessUtil.isSynFree()) {
 			return;
 		}
@@ -269,8 +273,10 @@ public class ActivityHandler {
 		Map<String, String> srcGuidToCpyGuidMap = new HashMap<String, String>();
 
 		for (Map.Entry entry : objectToCopyMap.entrySet()) {
-			Object src = entry.getKey();
-			Object cpy = entry.getValue();
+//			Object src = entry.getKey();
+//			Object cpy = entry.getValue();
+			Object src = reverseMap ? entry.getValue() : entry.getKey();
+			Object cpy = reverseMap ?  entry.getKey() : entry.getValue();
 			if (src == cpy) {
 				continue;
 			}
