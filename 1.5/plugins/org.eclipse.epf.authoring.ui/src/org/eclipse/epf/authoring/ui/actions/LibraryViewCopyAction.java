@@ -18,12 +18,10 @@ import org.eclipse.emf.edit.command.CopyToClipboardCommand;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.epf.common.ui.util.ClipboardUtil;
 import org.eclipse.epf.common.utils.StrUtil;
-import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -93,11 +91,7 @@ public class LibraryViewCopyAction extends CopyAction {
 					&& !TngUtil.isPredefined((MethodElement) element)) {
 				collection.add(element);
 			}
-			if (ProcessUtil.isSynFree()) {
-				if (element instanceof ProcessComponent) {
-					return false;
-				}
-			}		
+
 		}
 
 		command = createCommand(collection);
