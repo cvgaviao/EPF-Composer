@@ -12,6 +12,7 @@ package org.eclipse.epf.uma.edit.command;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -22,6 +23,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -83,6 +85,13 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 	 * accordingly in the copy. Includes coping of opposite features.
 	 */
 	private void doCopyReferences() {
+		if (domain instanceof TraceableAdapterFactoryEditingDomain) {
+			TraceableAdapterFactoryEditingDomain tDomain = (TraceableAdapterFactoryEditingDomain) domain;
+			Map map = tDomain.getExtenalMaintainedCopyMap();
+			if (map != null) {
+				map.put(owner, copy);
+			}
+		}
 		if (owner instanceof ContentDescription) {
 			super.copyReferences();
 			return;

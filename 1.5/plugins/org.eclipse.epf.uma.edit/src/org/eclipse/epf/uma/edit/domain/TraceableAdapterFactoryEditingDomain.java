@@ -216,4 +216,14 @@ public class TraceableAdapterFactoryEditingDomain extends
 	public Map<EObject, EObject> getClipboardToOriginalMap() {
 		return clipboardToOriginalMap;
 	}
+	
+	private Map<Object, Object> extenalMaintainedCopyMap;	
+	public Map<Object, Object> getExtenalMaintainedCopyMap() {
+		return extenalMaintainedCopyMap;
+	}
+
+	public void setExtenalMaintainedCopyMap(
+			Map<Object, Object> extenalMaintainedCopyMap) {
+		this.extenalMaintainedCopyMap = extenalMaintainedCopyMap;
+	}
 }

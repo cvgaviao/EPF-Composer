@@ -11,21 +11,33 @@
 package org.eclipse.epf.authoring.ui.actions;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.command.PasteFromClipboardCommand;
 import org.eclipse.emf.edit.ui.action.PasteAction;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.common.ui.util.MsgBox;
+import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.category.StandardCategoriesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.ActivityHandler;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.actions.ILibraryAction;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
+import org.eclipse.epf.persistence.MultiFileXMIResourceImpl;
+import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -51,7 +63,45 @@ public class LibraryViewPasteAction extends PasteAction implements
 		runner.run(new IRunnableWithProgress() {
 
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				TraceableAdapterFactoryEditingDomain tDomain = null;
+				if (domain instanceof TraceableAdapterFactoryEditingDomain) {
+					tDomain = (TraceableAdapterFactoryEditingDomain) domain;
+					tDomain.setExtenalMaintainedCopyMap(new HashMap<Object, Object>());
+				}
 				performPaste();
+				if (ProcessUtil.isSynFree()
+						&& tDomain != null) {
+					
+					Set<Resource> resouresToSave = new HashSet<Resource>();			
+					Map map = tDomain.getExtenalMaintainedCopyMap();
+					ActivityHandler.fixGuidReferences(map, false, false, resouresToSave);
+					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
+							.getCurrentPersister().getFailSafePersister();
+
+					try {
+						for (Iterator<Resource> it = resouresToSave.iterator(); it
+								.hasNext();) {
+							MultiFileXMIResourceImpl res = (MultiFileXMIResourceImpl) it
+									.next();
+							res.setModified(true);
+							persister.save(res);
+						}
+						persister.commit();
+
+					} catch (Exception e) {
+						persister.rollback();
+						e.printStackTrace();
+
+					} finally {
+						if (tDomain != null) {
+							tDomain.setExtenalMaintainedCopyMap(null);
+						}
+					}
+				}
+				if (tDomain != null) {
+					tDomain.setExtenalMaintainedCopyMap(null);
+				}
+				
 			}
 			
 		});

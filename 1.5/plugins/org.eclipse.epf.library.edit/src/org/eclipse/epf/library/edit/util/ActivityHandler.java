@@ -28,6 +28,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.CopyCommand;
 import org.eclipse.emf.edit.command.CopyCommand.Helper;
@@ -195,7 +196,7 @@ public class ActivityHandler {
 					new BasicCommandStack());
 			if(!procPackages.isEmpty()) {
 				activities.addAll(copy(procPackages));
-				fixGuidReferences(copyHelper, false);
+				fixGuidReferences(copyHelper, false, false, null);
 			}
 			if(!activitiesToDeepCopy.isEmpty()) {
 					if (monitor == null) {
@@ -257,15 +258,11 @@ public class ActivityHandler {
 	}
 	
 	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap) {
-		fixGuidReferences(objectToCopyMap, true, false);
+		fixGuidReferences(objectToCopyMap, true, false, null);
 	}
 	
-	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap, boolean reverseMap) {
-		fixGuidReferences(objectToCopyMap, true, reverseMap);
-	}
-	
-	private static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap,
-			boolean deepCopy, boolean reverseMap) {
+	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap,
+			boolean deepCopy, boolean reverseMap, Set<Resource> resouresToSave) {
 		if (! ProcessUtil.isSynFree()) {
 			return;
 		}
@@ -277,6 +274,11 @@ public class ActivityHandler {
 //			Object cpy = entry.getValue();
 			Object src = reverseMap ? entry.getValue() : entry.getKey();
 			Object cpy = reverseMap ?  entry.getKey() : entry.getValue();
+//			if (src instanceof Process || src instanceof ProcessComponent) {
+//				System.out.println("LD> src: " + src);
+//				System.out.println("LD> cpy: " + cpy);
+//				System.out.println("");
+//			}
 			if (src == cpy) {
 				continue;
 			}
@@ -325,6 +327,13 @@ public class ActivityHandler {
 					String newWpdGuid = srcGuidToCpyGuidMap.get(oldWpdGuid);
 					if (newWpdGuid != null && ! newWpdGuid.equals(oldWpdGuid)) {
 						c.setBody(newWpdGuid);
+					}
+				}
+				
+				if (resouresToSave != null) {
+					ProcessComponent proc = UmaUtil.getProcessComponent(wbe.getSuperActivities());
+					if (proc != null && proc.eResource() != null) {
+						resouresToSave.add(proc.eResource());
 					}
 				}
 			}
