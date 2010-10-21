@@ -58,7 +58,7 @@ public class ExportConfigSelectConfigPage extends BaseWizardPage implements
 
 	private Table table;
 
-	private TableViewer ctrl_tableViewer;
+	protected TableViewer ctrl_tableViewer;
 
 	private Text ctrl_briefDesc;
 
