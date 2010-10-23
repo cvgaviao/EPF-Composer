@@ -43,6 +43,7 @@ import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyMgr.ChangeEvent;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -127,6 +128,15 @@ public class ConfigurationClosure implements IConfigurationClosure {
 			ConfigurationProperties props = configManager.getConfigurationProperties();
 			configPropListener = new MethodElementPropertyMgr.ChangeEventListener() {
 				public void notifyChange(ChangeEvent event) {
+					if (event.propElement != null) {
+						String name = event.propElement.getName();
+						if (MethodElementPropertyHelper.CONFIG_UPDATE_ON_CLICK
+								.equals(name)
+								|| MethodElementPropertyHelper.CONFIG_NO_UPDATE_ON_CLICK
+										.equals(name)) {
+							return;
+						}
+					}
 					refreshErrormarks();
 				}
 			};			
