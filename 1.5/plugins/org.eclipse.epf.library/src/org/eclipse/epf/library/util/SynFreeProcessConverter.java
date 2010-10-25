@@ -45,7 +45,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 
 public class SynFreeProcessConverter {
 
-	private boolean debug = true;
+	private boolean debug = false;
 
 	private ElementRealizer realizer;
 
