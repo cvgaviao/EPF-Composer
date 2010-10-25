@@ -185,7 +185,7 @@ public class WorkProductDescriptorGeneralSection extends
 				List deliverableParts = element.getDeliverableParts();
 				for (Iterator itor = deliverableParts.iterator(); itor.hasNext();) {
 					WorkProductDescriptor wpDesc = (WorkProductDescriptor) itor.next();
-					if (wpDesc.getSuperActivities() == null)
+					if (wpDesc.getSuperActivities() == null || ProcessUtil.isSynFree())
 						newList.add(wpDesc);
 				}
 				
