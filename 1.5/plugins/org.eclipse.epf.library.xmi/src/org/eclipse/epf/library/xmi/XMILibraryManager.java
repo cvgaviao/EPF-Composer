@@ -34,6 +34,7 @@ import org.eclipse.epf.library.LibraryAlreadyExistsException;
 import org.eclipse.epf.library.LibraryNotFoundException;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryServiceException;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.layout.LayoutResources;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.persistence.PersistenceService;
@@ -92,6 +93,9 @@ public class XMILibraryManager extends AbstractLibraryManager {
 		super();
 		resourceMgr = new XMILibraryResourceManager();
 	}
+	
+	protected boolean isReopeningLib = false;
+	protected boolean isReopeningSynLib = false;
 
 	/**
 	 * Creates a new method library.
@@ -386,7 +390,16 @@ public class XMILibraryManager extends AbstractLibraryManager {
 			DebugTrace.print(this, "reopenMethodLibrary"); //$NON-NLS-1$
 		}
 
-		library = openMethodLibrary(new File(getMethodLibraryLocation()));
+		try {
+			isReopeningLib = true;
+			if (library != null && ProcessUtil.isSynFree()) {
+				isReopeningSynLib = true;
+			}
+			library = openMethodLibrary(new File(getMethodLibraryLocation()));
+		} finally {
+			isReopeningLib = false;
+			isReopeningSynLib = false;
+		}
 
 		if (debug) {
 			DebugTrace.print(this, "reopenMethodLibrary", "library=" + library); //$NON-NLS-1$ //$NON-NLS-2$
