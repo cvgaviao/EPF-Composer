@@ -1420,6 +1420,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String ProcessEditorPreferencePage_conversionDialogText;
 	
 	public static String ProcessEditorPreferencePage_conversionProgressText;
+	
+	public static String ProcessEditorPreferencePage_conversionProgressFailText;
 
 	public static String ProcessEditor_Action_OpenWorkProductDependencyDiagram;
 

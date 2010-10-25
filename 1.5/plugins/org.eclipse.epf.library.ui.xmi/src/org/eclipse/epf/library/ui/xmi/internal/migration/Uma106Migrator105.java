@@ -2,6 +2,7 @@ package org.eclipse.epf.library.ui.xmi.internal.migration;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.ui.xmi.XMILibraryUIPlugin;
 import org.eclipse.epf.library.util.SynFreeProcessConverter;
 import org.eclipse.epf.library.xmi.XMILibraryResources;
 import org.eclipse.epf.persistence.migration.UpgradeCallerInfo;
@@ -20,8 +21,12 @@ public class Uma106Migrator105 extends Migrator104 {
 			return;
 		}	
 		updateStatus(monitor, XMILibraryResources.convertToSynFree_taskName);
-		SynFreeProcessConverter converter = new SynFreeProcessConverter();	
-		converter.convertLibrary(lib, false);
+		SynFreeProcessConverter converter = new SynFreeProcessConverter();
+		try { 
+			converter.convertLibrary(lib, false);
+		} catch (Exception e) {
+			XMILibraryUIPlugin.getDefault().getLogger().logError(e);
+		}
 	}
 
 }

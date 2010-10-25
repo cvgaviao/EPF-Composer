@@ -710,7 +710,7 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 						SynFreeProcessConverter converter = new SynFreeProcessConverter();
 						converter.convertLibrary(lib);
 
-					} catch (Exception e) {
+					} catch (Exception e) {						
 						throw new InvocationTargetException(e);
 					} finally {
 						monitor.done();
@@ -723,6 +723,11 @@ public class ProcessEditorPreferencePage extends PreferencePage implements
 						.run(true, false, op);
 			} catch (Exception e) {
 				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+				AuthoringUIPlugin
+						.getDefault()
+						.getMsgDialog()
+						.displayError(AuthoringUIResources.ProcessEditorPreferencePage_conversionDialogTitle,
+								AuthoringUIResources.ProcessEditorPreferencePage_conversionProgressFailText);
 			}
 
 		}

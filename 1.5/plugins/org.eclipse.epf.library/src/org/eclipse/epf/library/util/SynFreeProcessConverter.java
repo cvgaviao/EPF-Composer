@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
@@ -73,11 +74,11 @@ public class SynFreeProcessConverter {
 		return config == null ? proc.getDefaultContext() : config;
 	}
 
-	public void convertLibrary(MethodLibrary lib) {
+	public void convertLibrary(MethodLibrary lib) throws Exception {
 		convertLibrary(lib, true);
 	}
 
-	public void convertLibrary(MethodLibrary lib, boolean toSave) {
+	public void convertLibrary(MethodLibrary lib, boolean toSave) throws Exception {
 		if (debug) {
 			System.out.println("LD> Begin convertLibrary: " + lib); //$NON-NLS-1$
 			System.out.println(""); //$NON-NLS-1$
@@ -89,7 +90,7 @@ public class SynFreeProcessConverter {
 		}
 	}
 
-	private void convertLibrary_(MethodLibrary lib, boolean toSave) {
+	private void convertLibrary_(MethodLibrary lib, boolean toSave) throws Exception {
 		if (lib == null) {
 			return;
 		}
@@ -111,7 +112,7 @@ public class SynFreeProcessConverter {
 		}
 	}
 
-	public void convertPlugin(MethodPlugin plugin, boolean toSave) {
+	public void convertPlugin(MethodPlugin plugin, boolean toSave) throws Exception {
 		if (plugin == null) {
 			return;
 		}
@@ -142,7 +143,7 @@ public class SynFreeProcessConverter {
 		}
 	}
 
-	public void convertProcess(Process proc, boolean toSave) {
+	public void convertProcess(Process proc, boolean toSave) throws Exception {
 		if (proc == null) {
 			return;
 		}
@@ -493,7 +494,7 @@ public class SynFreeProcessConverter {
 		}
 	}
 
-	private void save() {
+	private void save() throws Exception {
 		ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 				.getCurrentPersister().getFailSafePersister();
 
@@ -508,10 +509,11 @@ public class SynFreeProcessConverter {
 
 		} catch (Exception e) {
 			persister.rollback();
-			e.printStackTrace();
-
+			LibraryPlugin.getDefault().getLogger().logError(e);
+			String msg = "Cannot save file during converions. Likely caused by some file being read-only."; //$NON-NLS-1$
+			LibraryPlugin.getDefault().getLogger().logInfo(msg);
+			throw e;			
 		} finally {
-
 		}
 	}
 
