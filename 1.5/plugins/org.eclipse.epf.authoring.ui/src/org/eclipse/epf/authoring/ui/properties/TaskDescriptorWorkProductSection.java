@@ -115,7 +115,10 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
-					elements.addAll(td.getMandatoryInputExclude());
+//					elements.addAll(td.getMandatoryInputExclude());
+					
+					mixWithExcluded(td, elements, UmaPackage.eINSTANCE.getTask_MandatoryInput(),
+							UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInputExclude());
 				}
 				
 				return getFilteredList(elements).toArray();
@@ -137,7 +140,10 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
-					elements.addAll(td.getOptionalInputExclude());
+//					elements.addAll(td.getOptionalInputExclude());
+					
+					mixWithExcluded(td, elements, UmaPackage.eINSTANCE.getTask_OptionalInput(),
+							UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInputExclude());
 				}
 				
 				return getFilteredList(elements).toArray();
@@ -173,7 +179,10 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
-					elements.addAll(td.getOutputExclude());
+//					elements.addAll(td.getOutputExclude());
+					
+					mixWithExcluded(td, elements, UmaPackage.eINSTANCE.getTask_Output(),
+							UmaPackage.eINSTANCE.getTaskDescriptor_OutputExclude());
 				}
 				
 				return getFilteredList(elements).toArray();
@@ -467,7 +476,10 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
-			list.addAll(td.getMandatoryInputExclude());
+//			list.addAll(td.getMandatoryInputExclude());
+			
+			mixWithExcluded(td, list, UmaPackage.eINSTANCE.getTask_MandatoryInput(),
+					UmaPackage.eINSTANCE.getTaskDescriptor_MandatoryInputExclude());
 		}
 		return list;
 	};
@@ -486,7 +498,10 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
-			list.addAll(td.getOptionalInputExclude());
+//			list.addAll(td.getOptionalInputExclude());
+			
+			mixWithExcluded(td, list, UmaPackage.eINSTANCE.getTask_OptionalInput(),
+					UmaPackage.eINSTANCE.getTaskDescriptor_OptionalInputExclude());
 		}
 		return list;
 	};
@@ -512,7 +527,10 @@ public class TaskDescriptorWorkProductSection extends RelationSection {
 		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
-			list.addAll(td.getOutputExclude());
+//			list.addAll(td.getOutputExclude());			
+			
+			mixWithExcluded(td, list, UmaPackage.eINSTANCE.getTask_Output(),
+					UmaPackage.eINSTANCE.getTaskDescriptor_OutputExclude());
 		}
 		return list;
 	};

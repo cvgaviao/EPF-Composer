@@ -13,12 +13,17 @@ package org.eclipse.epf.authoring.ui.properties;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -1067,6 +1072,26 @@ public class RelationSection extends AbstractSection {
 	
 	protected void createAddtionalButton4(Composite parent) {
 		
+	}
+	
+	protected void mixWithExcluded(Descriptor des,
+			List<MethodElement> elements, EReference linkedElementFeature,
+			EReference excludedFeature) {
+		ElementRealizer realizer = DefaultElementRealizer
+				.newElementRealizer(getConfiguration());
+		MethodElement element = ProcessUtil.getAssociatedElement(des);
+		if (element == null) {
+			return;
+		}
+		List<MethodElement> elementList = ConfigurationHelper
+				.calc0nFeatureValue(element, linkedElementFeature, realizer);
+		List<MethodElement> excludedList = (List<MethodElement>) des
+				.eGet(excludedFeature);
+		for (MethodElement e : excludedList) {
+			if (elementList.contains(e)) {
+				elements.add(e);
+			}
+		}
 	}
 	
 }

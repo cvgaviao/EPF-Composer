@@ -90,7 +90,10 @@ public class TaskDescriptorRoleSection extends RelationSection {
 				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
-					elements.addAll(td.getPerformedPrimarilyByExcluded());
+//					elements.addAll(td.getPerformedPrimarilyByExcluded());
+					
+					mixWithExcluded(td, elements, UmaPackage.eINSTANCE.getTask_PerformedBy(),
+							UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyByExcluded());
 				}
 				
 				return getFilteredList(elements).toArray();
@@ -112,7 +115,10 @@ public class TaskDescriptorRoleSection extends RelationSection {
 				if (isSyncFree()
 						&& ! DescriptorPropUtil.getDesciptorPropUtil()
 								.isNoAutoSyn(td)) {
-					elements.addAll(td.getAdditionallyPerformedByExclude());
+//					elements.addAll(td.getAdditionallyPerformedByExclude());
+					
+					mixWithExcluded(td, elements, UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy(),
+							UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedByExclude());
 				}
 				
 				return getFilteredList(elements).toArray();
@@ -437,7 +443,10 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
-			list.addAll(td.getPerformedPrimarilyByExcluded());
+//			list.addAll(td.getPerformedPrimarilyByExcluded());
+			
+			mixWithExcluded(td, list, UmaPackage.eINSTANCE.getTask_PerformedBy(),
+					UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyByExcluded());
 		}
 		return list;
 	};
@@ -456,7 +465,10 @@ public class TaskDescriptorRoleSection extends RelationSection {
 		if (isSyncFree()
 				&& ! DescriptorPropUtil.getDesciptorPropUtil()
 						.isNoAutoSyn(td)) {
-			list.addAll(td.getAdditionallyPerformedByExclude());
+//			list.addAll(td.getAdditionallyPerformedByExclude());
+			
+			mixWithExcluded(td, list, UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy(),
+					UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedByExclude());
 		}
 		return list;
 	};
