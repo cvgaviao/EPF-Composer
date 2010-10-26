@@ -915,8 +915,8 @@ public class TaskDescriptorImpl extends WorkBreakdownElementImpl implements
 	static {
 		// override the default value of BreakdownElement.isPlanned
 		//
-		//		DefaultValueManager.INSTANCE.setStaticDefaultValue(UmaPackage.eINSTANCE
-		//				.getTaskDescriptor(), UmaPackage.eINSTANCE
-		//				.getBreakdownElement_IsPlanned(), Boolean.FALSE);
+				DefaultValueManager.INSTANCE.setStaticDefaultValue(UmaPackage.eINSTANCE
+						.getTaskDescriptor(), UmaPackage.eINSTANCE
+						.getBreakdownElement_IsPlanned(), Boolean.FALSE);
 	}
 } //TaskDescriptorImpl
