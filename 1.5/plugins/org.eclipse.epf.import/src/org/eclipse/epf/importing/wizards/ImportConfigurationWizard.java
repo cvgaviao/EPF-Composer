@@ -127,13 +127,19 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 	 */
 	public boolean performFinish() {
 		if (ProcessUtil.isSynFree() && !service.isSynFreeLib()) {
-			String message = ImportResources.ImportNoSynLib_ConvertMsg;
-			boolean yes = ImportPlugin.getDefault().getMsgDialog()
-					.displayConfirmation(
-							ImportResources.importConfigWizard_title, message);
-			if (!yes) {
-				return false;
-			}
+//			String message = ImportResources.ImportNoSynLib_ConvertMsg;
+//			boolean yes = ImportPlugin.getDefault().getMsgDialog()
+//					.displayConfirmation(
+//							ImportResources.importConfigWizard_title, message);
+//			if (!yes) {
+//				return false;
+//			}
+			
+			String message = ImportResources.ImportNoSynLibToSynLib_Error;
+			MessageDialog.openError(this.getShell(), ImportResources.importConfigWizard_title, message);			
+			
+			return false;
+			
 		} else if (!ProcessUtil.isSynFree() && service.isSynFreeLib()) {
 			String message = ImportResources.ImportSynLibToNoSynLib_Error;
 //			ImportPlugin.getDefault().getMsgDialog()

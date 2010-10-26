@@ -48,6 +48,7 @@ public final class ImportResources extends NLS {
 	public static String ImportPluginWizard_error;
 	public static String ImportNoSynLib_ConvertMsg;
 	public static String ImportSynLibToNoSynLib_Error;
+	public static String ImportNoSynLibToSynLib_Error;
 	public static String ImportPluginWizard_warn_existing_plugins;
 	public static String ImportPluginWizard_confirm_continue;
 	public static String ImportPluginWizard_warn_circular_plugins;

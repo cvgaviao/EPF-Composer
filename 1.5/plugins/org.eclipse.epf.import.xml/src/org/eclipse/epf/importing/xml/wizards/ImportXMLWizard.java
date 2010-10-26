@@ -245,13 +245,21 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 			SafeUpdateController.syncExec(new Runnable() {
 				public void run() {
 					if (needToConvert) {
-						String message = ImportResources.ImportNoSynLib_ConvertMsg;
-						result[0] = ImportPlugin
+//						String message = ImportResources.ImportNoSynLib_ConvertMsg;
+//						result[0] = ImportPlugin
+//								.getDefault()
+//								.getMsgDialog()
+//								.displayConfirmation(
+//										ImportXMLResources.importXMLWizard_title,
+//										message);
+						String message = ImportResources.ImportNoSynLibToSynLib_Error;
+						ImportPlugin
 								.getDefault()
 								.getMsgDialog()
-								.displayConfirmation(
+								.displayError(
 										ImportXMLResources.importXMLWizard_title,
 										message);
+						result[0] = false;
 					} else if (toReject) {
 						String message = ImportResources.ImportSynLibToNoSynLib_Error;
 						ImportPlugin

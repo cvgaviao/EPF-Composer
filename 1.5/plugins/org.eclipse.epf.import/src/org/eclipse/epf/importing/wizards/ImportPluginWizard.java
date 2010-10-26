@@ -184,13 +184,18 @@ public class ImportPluginWizard extends Wizard implements IImportWizard {
 		}
 		
 		if (ProcessUtil.isSynFree() && !service.isSynFreeLib()) {
-			String message = ImportResources.ImportNoSynLib_ConvertMsg;
-			boolean yes = ImportPlugin.getDefault().getMsgDialog()
-					.displayConfirmation(
+//			String message = ImportResources.ImportNoSynLib_ConvertMsg;
+//			boolean yes = ImportPlugin.getDefault().getMsgDialog()
+//					.displayConfirmation(
+//							ImportResources.importPluginsWizard_title, message);
+//			if (!yes) {
+//				return false;
+//			}
+			String message = ImportResources.ImportNoSynLibToSynLib_Error;
+			ImportPlugin.getDefault().getMsgDialog()
+					.displayError(
 							ImportResources.importPluginsWizard_title, message);
-			if (!yes) {
-				return false;
-			}
+			return false;
 		} else if (!ProcessUtil.isSynFree() && service.isSynFreeLib()) {
 			String message = ImportResources.ImportSynLibToNoSynLib_Error;
 			ImportPlugin.getDefault().getMsgDialog()
