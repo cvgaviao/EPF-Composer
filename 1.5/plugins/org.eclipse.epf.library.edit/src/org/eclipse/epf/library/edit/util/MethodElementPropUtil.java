@@ -50,7 +50,7 @@ public class MethodElementPropUtil {
 		return prop.getValue();
 	}
 	
-	protected void setStringValue(MethodElement element, String propName, String value) {	
+	public void setStringValue(MethodElement element, String propName, String value) {	
 		setProperty(element, propName, value);
 	}	
 	
