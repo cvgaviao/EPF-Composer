@@ -42,7 +42,7 @@ public class MethodElementPropUtil {
 		return actionManager;
 	}
 	
-	protected String getStringValue(MethodElement element, String propName) {		
+	public String getStringValue(MethodElement element, String propName) {		
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(element, propName);
 		if (prop == null) {
 			return null;
