@@ -19,7 +19,7 @@
 	<CompareToLibrary 
 		goldenLibFolderName="143867golden" 	
 		diffCount="1"
-		elementCount="37" >		
+		elementCount="19" >		
 	</CompareToLibrary>
 
 </MethodLibraryTest>

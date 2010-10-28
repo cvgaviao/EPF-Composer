@@ -33,10 +33,15 @@ public class TestCommandFileTest extends TestCase {
 		"newMethodPlugin",
 		"newMethodPlugin.tc"*/
 
+//		"ExportImport",
+//		"Bugs_1",
+//		"143867",
+//		"143867.tc"		
+		
 		"ExportImport",
 		"Bugs_1",
-		"143867",
-		"143867.tc"		
+		"150702",
+		"150702.tc"		
 		
 //		"TestCommands",
 //		"newMethodElements",

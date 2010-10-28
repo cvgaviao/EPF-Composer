@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1">
   <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_zBMsEUziEdusTL_I3jJQtA" guid="_zBMsEUziEdusTL_I3jJQtA"/>
   <org.eclipse.epf.uma:MethodPlugin xmi:id="_zBGlcEziEdusTL_I3jJQtA" name="Plug_A" guid="_zBGlcEziEdusTL_I3jJQtA">
     <methodPackages xsi:type="org.eclipse.epf.uma:ContentPackage" xmi:id="_zBGlcUziEdusTL_I3jJQtA" name="Content" guid="_zBGlcUziEdusTL_I3jJQtA">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ArtifactDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-JTWKn5d4CLc4KFQMDTFpSQ" name="artifact_A2,_E7Z0kA-REdqL2O1PJV9cZA" guid="-JTWKn5d4CLc4KFQMDTFpSQ" changeDate="2005-08-17T19:41:24.391-0700">
+<org.eclipse.epf.uma:ArtifactDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmi:id="-JTWKn5d4CLc4KFQMDTFpSQ" name="artifact_A2,_E7Z0kA-REdqL2O1PJV9cZA" guid="-JTWKn5d4CLc4KFQMDTFpSQ" changeDate="2005-08-17T19:41:24.391-0700" version="7.5.0">
   <mainDescription>Artifact A2 main</mainDescription>
   <externalId>Artifact A2 unique</externalId>
   <keyConsiderations>Artifact A2 key</keyConsiderations>

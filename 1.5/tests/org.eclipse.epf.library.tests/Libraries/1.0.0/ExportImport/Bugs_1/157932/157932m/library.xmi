@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:org.eclipse.epf.uma.resourcemanager="http:///org/eclipse/epf/uma/resourcemanager.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1">
   <org.eclipse.epf.uma.resourcemanager:ResourceManager xmi:id="_poZXUE2rEduiG53NqvE4Hg" guid="_poZXUE2rEduiG53NqvE4Hg">
     <subManagers xmi:id="_qbfoME2rEduiG53NqvE4Hg" href="uma://_qbZhkE2rEduiG53NqvE4Hg#_qbfoME2rEduiG53NqvE4Hg"/>
     <resourceDescriptors xmi:id="_polkkE2rEduiG53NqvE4Hg" id="_poTQsE2rEduiG53NqvE4Hg" uri=""/>

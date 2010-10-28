@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1">
   <org.eclipse.epf.uma:ProcessDescription xmi:id="-icO6pIHdZm9Vxyc-JZ9Uyw" name="CP2 containing variability elements,_ZtZbMUDFEdqO9M3fukYA_A" guid="-icO6pIHdZm9Vxyc-JZ9Uyw">
     <mainDescription>main: CP2 containing variability elements</mainDescription>
     <externalId>External ID: CP2 containing variability elements</externalId>

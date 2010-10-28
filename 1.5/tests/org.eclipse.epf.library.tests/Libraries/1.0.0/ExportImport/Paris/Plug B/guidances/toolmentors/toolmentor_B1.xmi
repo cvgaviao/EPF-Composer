@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-yi0o9gkUUN06zNcCf9tWJA" name="toolmentor_B1,_GoDtUB8sEdqQvOjX8doCCw" guid="-yi0o9gkUUN06zNcCf9tWJA" changeDate="2005-09-06T16:20:34.531-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmi:id="-yi0o9gkUUN06zNcCf9tWJA" name="toolmentor_B1,_GoDtUB8sEdqQvOjX8doCCw" guid="-yi0o9gkUUN06zNcCf9tWJA" changeDate="2005-09-06T16:20:34.531-0700" version="7.5.0">
   <mainDescription>Toolmentor B1 context</mainDescription>
 </org.eclipse.epf.uma:ContentDescription>

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-XReBLdN4iLbvaffBwebNCw" name="report_A1,_Q5Dc4A-SEdqL2O1PJV9cZA" guid="-XReBLdN4iLbvaffBwebNCw" changeDate="2005-08-18T14:30:51.422-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmi:id="-XReBLdN4iLbvaffBwebNCw" name="report_A1,_Q5Dc4A-SEdqL2O1PJV9cZA" guid="-XReBLdN4iLbvaffBwebNCw" changeDate="2005-08-18T14:30:51.422-0700" version="7.5.0">
   <mainDescription>Report A1 content</mainDescription>
 </org.eclipse.epf.uma:ContentDescription>

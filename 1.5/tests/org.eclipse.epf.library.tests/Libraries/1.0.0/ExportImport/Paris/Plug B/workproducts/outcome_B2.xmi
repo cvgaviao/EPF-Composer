@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:WorkProductDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-HNXLH1Hgdn72WXG77AHGZA" name="outcome_B2,_asFOkB8nEdq1Oo-DowdpBg" guid="-HNXLH1Hgdn72WXG77AHGZA" changeDate="2005-09-06T15:46:01.156-0700">
+<org.eclipse.epf.uma:WorkProductDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmi:id="-HNXLH1Hgdn72WXG77AHGZA" name="outcome_B2,_asFOkB8nEdq1Oo-DowdpBg" guid="-HNXLH1Hgdn72WXG77AHGZA" changeDate="2005-09-06T15:46:01.156-0700" version="7.5.0">
   <mainDescription>Outcome B2 main</mainDescription>
   <externalId>Outcome B2 unique ID</externalId>
   <keyConsiderations>Outcome B2 key</keyConsiderations>

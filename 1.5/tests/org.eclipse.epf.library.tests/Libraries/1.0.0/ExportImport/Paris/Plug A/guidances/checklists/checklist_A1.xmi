@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-oWo3UCifX4Ic_VBICWwqRw" name="checklist_A1,_KV4q0A-SEdqL2O1PJV9cZA" guid="-oWo3UCifX4Ic_VBICWwqRw" changeDate="2005-08-18T14:30:34.125-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmi:id="-oWo3UCifX4Ic_VBICWwqRw" name="checklist_A1,_KV4q0A-SEdqL2O1PJV9cZA" guid="-oWo3UCifX4Ic_VBICWwqRw" changeDate="2005-08-18T14:30:34.125-0700" version="7.5.0">
   <mainDescription>Checklist A1 content</mainDescription>
 </org.eclipse.epf.uma:ContentDescription>

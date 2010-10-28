@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.5/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmlns:rmc="http://www.ibm.com/rmc" rmc:version="7.5.0" xmi:id="-Vphz65Z1B9-rIMJKjX7h0A" name="custom_category_A2,_OSSSIA-WEdqL2O1PJV9cZA" guid="-Vphz65Z1B9-rIMJKjX7h0A" changeDate="2005-08-18T18:02:07.172-0700">
+<org.eclipse.epf.uma:ContentDescription xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.epf.uma="http://www.eclipse.org/epf/uma/1.0.6/uma.ecore" xmlns:epf="http://www.eclipse.org/epf" epf:version="1.5.1" xmi:id="-Vphz65Z1B9-rIMJKjX7h0A" name="custom_category_A2,_OSSSIA-WEdqL2O1PJV9cZA" guid="-Vphz65Z1B9-rIMJKjX7h0A" changeDate="2005-08-18T18:02:07.172-0700" version="7.5.0">
   <mainDescription>Custom Category A2 main</mainDescription>
   <keyConsiderations>Custom Category A2 key</keyConsiderations>
 </org.eclipse.epf.uma:ContentDescription>
