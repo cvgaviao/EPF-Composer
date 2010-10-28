@@ -547,6 +547,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setEnableProcessScope(true);
 						fd.setSection(getSection());
 						fd.open();
 						addItems1(fd.getSelectedItems());
@@ -675,6 +676,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setEnableProcessScope(true);
 						fd.setSection(getSection());
 						fd.open();
 						addItems2(fd.getSelectedItems());
@@ -782,6 +784,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setEnableProcessScope(true);
 						fd.setSection(getSection());
 						fd.open();
 						addItems3(fd.getSelectedItems());
@@ -899,6 +902,7 @@ public class RelationSection extends AbstractSection {
 
 						fd.setBlockOnOpen(true);
 						fd.setTitle(tabString);
+						fd.setEnableProcessScope(true);
 						fd.setSection(getSection());
 						fd.open();
 						addItems4(fd.getSelectedItems());

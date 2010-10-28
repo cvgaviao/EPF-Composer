@@ -600,6 +600,8 @@ public class ActivityGuidanceSection extends AbstractSection {
 					fd.setTitle(FilterConstants.ROADMAP);
 					fd.setInput(UmaUtil.getMethodLibrary((EObject) element));
 					fd.setBlockOnOpen(true);
+					fd.setEnableProcessScope(true);
+					fd.setSection(getSection());
 					fd.open();
 					addGuidances(fd.getSelectedItems());
 					viewer_1.refresh();
@@ -657,6 +659,8 @@ public class ActivityGuidanceSection extends AbstractSection {
 					fd.setInput(UmaUtil.getMethodLibrary((EObject) element));
 					fd.setBlockOnOpen(true);
 					fd.setTypes(getFilterTypes());
+					fd.setEnableProcessScope(true);
+					fd.setSection(getSection());
 					fd.open();
 					addGuidances(fd.getSelectedItems());
 					viewer_2.refresh();
@@ -719,6 +723,8 @@ public class ActivityGuidanceSection extends AbstractSection {
 								.setInput(UmaUtil
 										.getMethodLibrary((EObject) element));
 						fd.setBlockOnOpen(true);
+						fd.setEnableProcessScope(true);
+						fd.setSection(getSection());
 						fd.open();
 
 						actionMgr
@@ -800,6 +806,8 @@ public class ActivityGuidanceSection extends AbstractSection {
 								.setInput(UmaUtil
 										.getMethodLibrary((EObject) element));
 						fd.setBlockOnOpen(true);
+						fd.setEnableProcessScope(true);
+						fd.setSection(getSection());
 						fd.open();
 
 						actionMgr

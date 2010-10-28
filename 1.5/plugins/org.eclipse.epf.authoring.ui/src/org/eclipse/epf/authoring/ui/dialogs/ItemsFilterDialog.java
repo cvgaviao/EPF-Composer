@@ -134,6 +134,8 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 
 	private Button viewBtn;
 	
+	private boolean enableProcessScope = false;
+	
 	private AbstractSection section;
 	
 	private Process configFreeProcess;
@@ -1221,19 +1223,16 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 	private boolean supportProcessScope(Object inputElement) {
 		boolean result = false;
 		
-		if (inputElement != null) {
-			if (inputElement instanceof Process) {
-				//Won't display selection scope if invoke filter dialog
-				//from "Add from process" button in properties view editor
-			} else if (inputElement instanceof BreakdownElement) {
+		if (enableProcessScope) {
+			if (inputElement instanceof BreakdownElement) {
 				Process process = getProcess((BreakdownElement)inputElement);
 				result = processUtil.isConfigFree(process);
 				if (result) {
 					configFreeProcess = process;
 				}
-			}			
-		}	
-		
+			}	
+		}
+
 		return result;
 	}
 	
@@ -1286,6 +1285,18 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 		
 		initProviderForTabs();
 		refreshTreeViewer();
+	}
+	
+	/**
+	 * Methods setEnableProcessScope() and setSection() must be used together, client should
+	 * call those two methods together when want to support process scope selection under
+	 * config-free process situation.
+	 * 
+	 * Example: please see /org.eclipse.epf.authoring.ui/src/org/eclipse/epf/authoring/ui/properties/RelationSection.java
+	 * 
+	 */	
+	public void setEnableProcessScope(boolean enableProcessScope) {
+		this.enableProcessScope = enableProcessScope;
 	}
 	
 	public void setSection(AbstractSection section) {
