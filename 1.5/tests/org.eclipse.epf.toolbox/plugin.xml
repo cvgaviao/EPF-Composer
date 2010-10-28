@@ -34,7 +34,6 @@
                </action>
 -->
                
-<!--  
                <action
                      class="org.eclipse.epf.toolbox.actions.RemoveLocalDescriptors"
                      id="ogr.eclipse.epf.toolbox.actions.RemoveLocalDesciporAction"
@@ -42,7 +41,6 @@
                      menubarPath="epfToolboxMenu/LibraryToolsGroup"
                      tooltip="Remove local role/workproduct descriptors for configuration-free processes">
                </action>
--->
                
                <action
                      class="org.eclipse.epf.toolbox.actions.ConvertToConfigFree"
