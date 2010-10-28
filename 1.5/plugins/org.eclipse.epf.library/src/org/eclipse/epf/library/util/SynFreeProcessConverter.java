@@ -503,6 +503,7 @@ public class SynFreeProcessConverter {
 					.hasNext();) {
 				MultiFileXMIResourceImpl res = (MultiFileXMIResourceImpl) it
 						.next();
+				res.setModified(true);
 				persister.save(res);
 			}
 			persister.commit();
