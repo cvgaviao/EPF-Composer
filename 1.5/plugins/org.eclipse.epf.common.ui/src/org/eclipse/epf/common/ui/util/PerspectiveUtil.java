@@ -39,6 +39,11 @@ public class PerspectiveUtil {
 	 * @return The active perspective ID.
 	 */
 	public static String getActivePerspectiveId() {
+		if (PlatformUI.getWorkbench() == null || PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow() == null) {
+			return null;
+		}
+		
 		IWorkbenchPage activePage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
 		if (activePage != null) {
