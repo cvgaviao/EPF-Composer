@@ -54,9 +54,30 @@ public class WorkProductLayout extends AbstractElementLayout {
 		WorkProductPropUtil propUtil = WorkProductPropUtil.getWorkProductPropUtil();
 		List<Constraint> states = propUtil.getWorkProductStates(wp);
 		addStatesAttValue(elementXml, states);
+		addReferences(stateFeauteObj, elementXml, "States", states); //$NON-NLS-1$
 		return elementXml;
 	}
 
+	private static Object stateFeauteObj = new Object();
+	protected void processChild(Object feature, XmlElement parent, List items,
+			boolean includeReferences) {
+		if (feature == stateFeauteObj) {
+			if (items == null || items.isEmpty()) {
+				return;
+			}
+			
+			for (Constraint state : (List<Constraint>) items) {
+				XmlElement childXmlElement = new XmlElement("Element");//$NON-NLS-1$
+				childXmlElement.setAttribute("Name", state.getBody());//$NON-NLS-1$
+				childXmlElement.setAttribute("Description", state.getBriefDescription());//$NON-NLS-1$
+				parent.addChild(childXmlElement);
+			}
+			
+			return;
+		}
+		super.processChild(feature, parent, items, includeReferences);
+	}
+	
 	private void addStatesAttValue(XmlElement elementXml, List<Constraint> states) {
 		if (states == null || states.isEmpty()) {
 			return;
