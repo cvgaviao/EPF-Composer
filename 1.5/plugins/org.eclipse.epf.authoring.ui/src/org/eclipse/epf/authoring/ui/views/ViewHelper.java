@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.ui.util.MsgDialog;
 import org.eclipse.epf.common.ui.util.PerspectiveUtil;
@@ -840,7 +841,7 @@ public final class ViewHelper {
 	 * 			View
 	 */
 	public static IViewPart findView(String viewId, boolean show) {
-		try {
+		try {			
 			IWorkbenchPage activePage = PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getActivePage();
 			if (activePage != null) {
@@ -858,6 +859,9 @@ public final class ViewHelper {
 				return view;
 			}
 		} catch (Exception e) {
+			if (CommandLineRunUtil.getInstance().isNeedToRun()) {
+				return null;
+			}
 			AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
 					AuthoringUIResources.errorDialog_title, 
 					AuthoringUIResources.internalError_msg, 
