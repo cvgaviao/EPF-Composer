@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
@@ -499,6 +501,16 @@ public class SynFreeProcessConverter {
 				.getCurrentPersister().getFailSafePersister();
 
 		try {
+			List<String> modifiedFiles = new ArrayList<String>();
+			for (Resource res : resouresToSave) {
+				String path = res.getURI().toFileString();
+				modifiedFiles.add(path);
+			}
+			FileUtil.loadDeafultFileChecker();
+			IStatus status = FileUtil.syncExecCheckModify(modifiedFiles);
+			// To do: check status and handle bad status here.
+			// For now, leave the following catch to handle bad status
+			
 			for (Iterator<Resource> it = resouresToSave.iterator(); it
 					.hasNext();) {
 				MultiFileXMIResourceImpl res = (MultiFileXMIResourceImpl) it

@@ -39,7 +39,11 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.epf.common.CommonPlugin;
+import org.osgi.framework.Bundle;
 
 /**
  * Utility class for managing directories and files.
@@ -1199,6 +1203,34 @@ public class FileUtil {
 
 		in.close();
 		out.close();
+	}
+	
+	public static class FileChecker {		
+		public IStatus syncExecCheckModify(List<String> modifiedFiles) {
+			return Status.OK_STATUS;
+		}				
+	}
+	
+	private static FileChecker fileChecker;
+	public static void loadDeafultFileChecker() {
+		if (fileChecker != null) {
+			return;
+		}
+		Bundle bundle = Platform.getBundle("org.eclipse.epf.import");
+		try { 
+			bundle.start();
+		} catch (Exception e) {
+		}
+	}
+	public static void setFileChecker(FileChecker fileChecker) {
+		FileUtil.fileChecker = fileChecker;
+	}
+	
+	public static IStatus syncExecCheckModify(List<String> modifiedFiles) {
+		if (fileChecker != null) {
+			return fileChecker.syncExecCheckModify(modifiedFiles);
+		}
+		return Status.OK_STATUS;
 	}
 	
 }
