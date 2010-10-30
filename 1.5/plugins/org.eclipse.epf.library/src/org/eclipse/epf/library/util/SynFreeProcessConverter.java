@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -497,8 +499,19 @@ public class SynFreeProcessConverter {
 	private void save() throws Exception {
 		ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 				.getCurrentPersister().getFailSafePersister();
-
-		try {
+		
+		try {			
+			if (getFileChecker() != null) {
+				List<String> modifiedFiles = new ArrayList<String>();							
+				for (Resource res : resouresToSave) {
+					String path = res.getURI().toFileString();
+					modifiedFiles.add(path);
+				}				
+				IStatus status = getFileChecker().syncExecCheckModify(modifiedFiles);
+				//To do: check status and handle bad status here.
+				//For now, leave the following catch to handle bad status
+			}
+			
 			for (Iterator<Resource> it = resouresToSave.iterator(); it
 					.hasNext();) {
 				MultiFileXMIResourceImpl res = (MultiFileXMIResourceImpl) it
@@ -540,4 +553,21 @@ public class SynFreeProcessConverter {
 	
 		throw new UnsupportedOperationException();
 	}
+	
+	private FileChecker fileChecker;
+	
+	private FileChecker getFileChecker() {
+		return fileChecker;
+	}
+
+	public void setFileChecker(FileChecker fileChecker) {
+		this.fileChecker = fileChecker;
+	}
+
+	public static class FileChecker {		
+		public IStatus syncExecCheckModify(List<String> modifiedFiles) {
+			return Status.OK_STATUS;
+		}				
+	}
+	
 }
