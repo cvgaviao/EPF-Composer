@@ -70,6 +70,7 @@ public class WorkProductLayout extends AbstractElementLayout {
 				XmlElement childXmlElement = new XmlElement("Element");//$NON-NLS-1$
 				childXmlElement.setAttribute("Name", state.getBody());//$NON-NLS-1$
 				childXmlElement.setAttribute("Description", state.getBriefDescription());//$NON-NLS-1$
+				childXmlElement.setAttribute("Type", "State"); //$NON-NLS-1$ //$NON-NLS-2$
 				parent.addChild(childXmlElement);
 			}
 			

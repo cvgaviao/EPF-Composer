@@ -84,7 +84,7 @@
 										<xsl:when test="$elementType = 'Task'">
 											<xsl:call-template name="taskKeyInfo"/>
 										</xsl:when>
-										<xsl:when test="$elementType = 'Artifact' or $elementType = 'Deliverable' or $elementType = 'Outcome'">
+										<xsl:when test="$elementType = 'Artifact' or $elementType = 'Deliverable' or $elementType = 'Outcome' or $elementType = 'WorkProductSlot'">
 											<xsl:call-template name="workProductKeyInfo"/>
 										</xsl:when>
 										<xsl:when test="$elementType = 'ToolMentor'">
