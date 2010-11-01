@@ -1212,7 +1212,7 @@ public class FileUtil {
 	}
 	
 	private static FileChecker fileChecker;
-	public static void loadDeafultFileChecker() {
+	private static void loadDeafultFileChecker() {
 		if (fileChecker != null) {
 			return;
 		}
@@ -1227,6 +1227,7 @@ public class FileUtil {
 	}
 	
 	public static IStatus syncExecCheckModify(List<String> modifiedFiles) {
+		loadDeafultFileChecker();
 		if (fileChecker != null) {
 			return fileChecker.syncExecCheckModify(modifiedFiles);
 		}

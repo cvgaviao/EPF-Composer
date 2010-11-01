@@ -506,7 +506,6 @@ public class SynFreeProcessConverter {
 				String path = res.getURI().toFileString();
 				modifiedFiles.add(path);
 			}
-			FileUtil.loadDeafultFileChecker();
 			IStatus status = FileUtil.syncExecCheckModify(modifiedFiles);
 			// To do: check status and handle bad status here.
 			// For now, leave the following catch to handle bad status
