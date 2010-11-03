@@ -277,7 +277,13 @@ public class SelectContentPage extends BaseWizardPage implements Listener {
 		ITreeContentProvider cp = (ITreeContentProvider) processViewer
 				.getContentProvider();
 		if (config != null) {
-			Object[] plugins = cp.getChildren(config);
+			Object[] plugins = null;			
+			if (ConfigFreeProcessPublishUtil.getInstance().isSameMethodConfiguration(config)) {
+				//For config free process publish
+				plugins = cp.getChildren(LibraryService.getInstance().getCurrentMethodLibrary());				
+			} else {
+				plugins = cp.getChildren(config);
+			}			
 			for (int i = 0; i < plugins.length; i++) {
 				Object[] uiFolders = cp.getChildren(plugins[i]);
 				int totalUIFolders = uiFolders.length;
