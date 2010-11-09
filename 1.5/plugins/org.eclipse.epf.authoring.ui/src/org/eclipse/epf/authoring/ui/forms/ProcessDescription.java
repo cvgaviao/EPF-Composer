@@ -1223,10 +1223,18 @@ public class ProcessDescription extends ProcessFormPage {
 			buttonRemove.setEnabled(editable);
 		
 		if (processUtil.isConfigFree(process)) {
-			configSection.setEnabled(false);
-			buttonAdd.setEnabled(false);
-			buttonRemove.setEnabled(false);
-			buttonMakeDefault.setEnabled(false);
+			if (!configSection.isDisposed()) {
+				configSection.setEnabled(false);
+			}
+			if (!buttonAdd.isDisposed()) {
+				buttonAdd.setEnabled(false);
+			}
+			if (!buttonRemove.isDisposed()) {
+				buttonRemove.setEnabled(false);
+			}
+			if (!buttonMakeDefault.isDisposed()) {
+				buttonMakeDefault.setEnabled(false);
+			}
 		}
 	}
 
