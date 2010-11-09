@@ -56,6 +56,7 @@ import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -263,12 +264,24 @@ public class ActivityHandler {
 	
 	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap,
 			boolean deepCopy, boolean reverseMap, Set<Resource> resouresToSave) {
-		if (! ProcessUtil.isSynFree()) {
-			return;
-		}
 		Set<MethodElement> cpySet = new HashSet<MethodElement>();
 		Map<String, String> srcGuidToCpyGuidMap = new HashMap<String, String>();
 
+		for (Map.Entry entry : objectToCopyMap.entrySet()) {
+			Object cpy = reverseMap ?  entry.getKey() : entry.getValue();
+			if (cpy instanceof Process) {
+				Process cpyProcess = (Process) cpy;
+				Scope scope = ProcessScopeUtil.getInstance().getScope(cpyProcess);
+				if (scope != null) {
+					cpyProcess.setDefaultContext(null);
+					cpyProcess.getValidContext().clear();
+				}
+			}
+		}
+		
+		if (! ProcessUtil.isSynFree()) {
+			return;
+		}
 		for (Map.Entry entry : objectToCopyMap.entrySet()) {
 //			Object src = entry.getKey();
 //			Object cpy = entry.getValue();
