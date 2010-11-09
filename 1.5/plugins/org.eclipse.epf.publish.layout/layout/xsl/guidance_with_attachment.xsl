@@ -136,7 +136,7 @@
 	<xsl:template name="relationshipsSection">
 		<xsl:variable name="contentElements" select="referenceList[@name='contentElements']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($contentElements) > 0">
+		<xsl:if test="count($contentElements) + count($categories) > 0">
 			<div class="sectionHeading">
 				<xsl:value-of select="$relationshipsText"/>
 			</div>
