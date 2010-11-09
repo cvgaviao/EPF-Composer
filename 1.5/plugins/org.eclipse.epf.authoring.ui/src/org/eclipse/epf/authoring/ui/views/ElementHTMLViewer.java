@@ -123,9 +123,21 @@ public class ElementHTMLViewer {
 					//System.out.println("location changing...");
 					// Get the current location.
 					String location = getElementUrl(e.location);
+//					System.out.println("e.location: " + e.location);
+//					System.out.println("location: " + location);
 					if ( location == null || location.startsWith(ResourceHelper.URL_STR_JAVASCRIPT))
 					{
-						return;
+						int ix = e.location.indexOf(".html?proc=");//$NON-NLS-1$
+						if (ix > 0) {
+							String str =  e.location.substring(0, ix + 5);
+//							System.out.println("str: " + str);
+							 location = getElementUrl(str);
+							 if (location == null) {
+								 return;
+							 }
+						} else {
+							return;
+						}
 					}
 					if (isLocationChanged(location)) {
 						// Save the current location for printing purposes.
