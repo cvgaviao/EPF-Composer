@@ -841,8 +841,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
 						saveContentCategorySelectionsToConfiguration();
-						// update the closure error
-						showErrors();
+						if (updateOnClick.getSelection()) {
+							// update the closure error
+							showErrors();
+						}
 					}
 				});
 			}
