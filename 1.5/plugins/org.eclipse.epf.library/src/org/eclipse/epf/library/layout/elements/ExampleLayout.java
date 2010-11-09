@@ -60,7 +60,8 @@ public class ExampleLayout extends AbstractElementLayout {
 					AssociationHelper.Example_BreakdownElements, layoutManager
 							.getElementRealizer());
 
-			contentElements.addAll(activities);
+//			contentElements.addAll(activities);			
+			contentElements = addBreakdownElementsToContentElements(contentElements, activities);
 			
 			addReferences(AssociationHelper.Example_ContentElements, elementXml, "contentElements", contentElements); //$NON-NLS-1$
 

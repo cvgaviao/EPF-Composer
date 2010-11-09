@@ -36,6 +36,7 @@ import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.ElementPropertyProviderManager;
@@ -1355,5 +1356,31 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		
 		return extender.getTagQualifiedList(config, items);
 	}
+	
+	protected List addBreakdownElementsToContentElements(List contentElements, List breakdownElements) {
+		if (breakdownElements == null || breakdownElements.isEmpty()) {
+			return contentElements;
+		} else if (contentElements == null || contentElements.isEmpty()) {
+			return breakdownElements;
+		}		
+		Set set = new HashSet(contentElements);
+		for (Object obj : breakdownElements) {
+			boolean toAdd = true;
+			if (obj instanceof Descriptor) {
+				MethodElement element = ProcessUtil.getAssociatedElement((Descriptor) obj);
+				if (set.contains(element)) {
+					toAdd = false;
+				}
+			}
+			
+			if (toAdd) {
+				contentElements.add(obj);
+			}
+		}
+		
+		return contentElements;
+	}
+	
+	
 	
 }

@@ -60,7 +60,8 @@ public class ReusableAssetLayout extends AbstractElementLayout {
 					AssociationHelper.ReusableAsset_BreakdownElements, layoutManager
 							.getElementRealizer());
 
-			contentElements.addAll(activities);
+//			contentElements.addAll(activities);
+			contentElements = addBreakdownElementsToContentElements(contentElements, activities);
 
 			addReferences(AssociationHelper.ReusableAsset_ContentElements, elementXml, "contentElements", contentElements); //$NON-NLS-1$
 

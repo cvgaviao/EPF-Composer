@@ -58,7 +58,8 @@ public class ConceptLayout extends AbstractElementLayout {
 					AssociationHelper.Concept_BreakdownElements, layoutManager
 							.getElementRealizer());
 
-			contentElements.addAll(activities);
+//			contentElements.addAll(activities);
+			contentElements = addBreakdownElementsToContentElements(contentElements, activities);
 			
 			addReferences(AssociationHelper.Concept_ContentElements, elementXml, "contentElements", contentElements); //$NON-NLS-1$
 		}

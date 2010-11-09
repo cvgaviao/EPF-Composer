@@ -58,7 +58,8 @@ public class ChecklistLayout extends AbstractElementLayout {
 					AssociationHelper.Checklist_BreakdownElements, layoutManager
 							.getElementRealizer());
 
-			contentElements.addAll(activities);
+//			contentElements.addAll(activities);
+			contentElements = addBreakdownElementsToContentElements(contentElements, activities);
 
 			addReferences(AssociationHelper.Checklist_ContentElements, elementXml, "contentElements", contentElements); //$NON-NLS-1$
 		}

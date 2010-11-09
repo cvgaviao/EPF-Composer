@@ -51,7 +51,8 @@ public class GuidelineLayout extends AbstractElementLayout {
 					AssociationHelper.Guideline_BreakdownElements, layoutManager
 							.getElementRealizer());
 
-			contentElements.addAll(activities);
+//			contentElements.addAll(activities);
+			contentElements = addBreakdownElementsToContentElements(contentElements, activities);
 
 			addReferences(AssociationHelper.Guideline_ContentElements, elementXml, "contentElements", contentElements); //$NON-NLS-1$
 		}

@@ -51,7 +51,8 @@ public class SupportingMaterialLayout extends AbstractElementLayout {
 					AssociationHelper.SupportingMaterial_BreakdownElements, layoutManager
 							.getElementRealizer());
 
-			contentElements.addAll(activities);
+//			contentElements.addAll(activities);
+			contentElements = addBreakdownElementsToContentElements(contentElements, activities);
 
 			addReferences(AssociationHelper.SupportingMaterial_ContentElements, elementXml, "contentElements", contentElements); //$NON-NLS-1$
 		}
