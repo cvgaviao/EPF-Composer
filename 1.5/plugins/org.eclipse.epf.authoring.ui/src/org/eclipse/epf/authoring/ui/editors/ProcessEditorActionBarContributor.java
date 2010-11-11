@@ -2699,6 +2699,10 @@ public class ProcessEditorActionBarContributor extends
 				deleteWPDiagram.setEnabled(true);
 			}			
 		} catch (Exception e) {
+			if (e instanceof IllegalArgumentException) {
+				//this can happen and is normal when selection is an green activity
+				return;
+			}
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
 		}		
 	}
