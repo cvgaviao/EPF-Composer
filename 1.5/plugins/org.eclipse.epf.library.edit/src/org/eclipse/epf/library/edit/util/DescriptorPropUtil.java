@@ -659,7 +659,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	}
 	
     public boolean isFromGreenParentLocalList(Object obj, Descriptor desc, EReference ref) {
-    	if (!isDynamic(obj, desc, ref)) {
+    	if ((obj instanceof Descriptor) && !isDynamic(obj, desc, ref)) {
     		Descriptor greenParent = getGreenParentDescriptor(desc);
     		if (greenParent != null) {
     			if (localUse((Descriptor)obj, greenParent, ref)) {
