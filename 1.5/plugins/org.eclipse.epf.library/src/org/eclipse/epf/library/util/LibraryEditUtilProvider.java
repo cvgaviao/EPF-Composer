@@ -83,6 +83,9 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 				.newElementRealizer(config);
 				
 				MethodElement element = ProcessUtil.getAssociatedElement(desc);
+				if (element == null) {
+					return false;
+				}
 				EReference elemRef = LibraryEditUtil.getInstance().getLinkedElementFeature(ref);
 				List<MethodElement> elementList = ConfigurationHelper.calc0nFeatureValue(element,
 						elemRef, realizer);
