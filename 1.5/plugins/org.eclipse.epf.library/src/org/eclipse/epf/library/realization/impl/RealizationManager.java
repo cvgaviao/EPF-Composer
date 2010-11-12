@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.process.command.CustomizeDescriptorCommand;
 import org.eclipse.epf.library.edit.process.command.ProcessCommandUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
@@ -333,6 +334,9 @@ public class RealizationManager implements IRealizationManager {
 				return;
 			}
 		}
+		if (! canBeAutoSyned(proc)) {
+			return;
+		}
 		long time = 0;
 		if (timing && localTiming) {
 			time = System.currentTimeMillis();
@@ -345,6 +349,12 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	public void updateActivityModel(Activity act) {
+		if (act instanceof Process) {
+			if (! canBeAutoSyned((Process) act)) {
+				return;
+			}			
+		}
+
 		clearCacheData();
 		setCaching(true);
 		updateModelImpl(act, new HashSet<Activity>(), false);
@@ -488,5 +498,9 @@ public class RealizationManager implements IRealizationManager {
 		}
 	}
 
+	private boolean canBeAutoSyned(Process proc) {
+		boolean ret = ConfigurationHelper.getDelegate().canBeConfigFree(proc);
+		return ret;
+	}
 	
 }
