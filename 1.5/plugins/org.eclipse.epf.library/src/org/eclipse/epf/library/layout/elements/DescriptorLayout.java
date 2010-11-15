@@ -14,13 +14,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
-import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
@@ -237,4 +239,12 @@ public abstract class DescriptorLayout extends AbstractProcessElementLayout {
 		return b;
 	}
 
+	protected boolean isSynReferece(EStructuralFeature feature) {
+		if (! ProcessUtil.isSynFree() || linkedElement == null) {
+			return false;
+		}
+		Map<EReference, EReference> guidanceRefMap = LibraryEditUtil.getInstance().getGuidanceRefMap(linkedElement.eClass());
+		return guidanceRefMap == null ? false : guidanceRefMap.containsKey(feature);
+	}
+	
 }

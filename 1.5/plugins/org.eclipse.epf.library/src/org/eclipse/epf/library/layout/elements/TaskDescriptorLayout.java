@@ -17,20 +17,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.Suppression;
-import org.eclipse.epf.library.edit.util.TaskDescriptorPropUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.library.util.LibraryUtil;
-import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
-import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
@@ -88,7 +84,9 @@ public class TaskDescriptorLayout extends DescriptorLayout {
 			// also load the linked element referenced information
 			for (Iterator<EStructuralFeature> iterator = getExtraFeaturesFromContentElement().iterator(); iterator.hasNext();) {
 				EStructuralFeature feature = iterator.next();
-				super.elementLayout.loadFeature(feature, elementXml, false);
+				if (! isSynReferece(feature)) {
+					super.elementLayout.loadFeature(feature, elementXml, false);
+				}
 			}
 		}
 	}
