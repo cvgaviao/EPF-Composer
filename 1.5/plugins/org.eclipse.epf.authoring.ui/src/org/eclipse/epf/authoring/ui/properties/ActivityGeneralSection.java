@@ -30,6 +30,7 @@ import org.eclipse.epf.diagram.core.part.AbstractDiagramEditor;
 import org.eclipse.epf.diagram.core.part.DiagramEditorInput;
 import org.eclipse.epf.diagram.core.part.DiagramEditorInputProxy;
 import org.eclipse.epf.diagram.core.providers.SharedResourceDiagramDocumentProvider;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ProcessVariabilityConfigurator;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
@@ -53,6 +54,7 @@ import org.eclipse.epf.uma.Phase;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -439,6 +441,9 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 		selectButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				MethodConfiguration config = getConfiguration();
+				if (config instanceof Scope) {
+					config = LibraryService.getInstance().getCurrentMethodConfiguration();
+				}
 				String tabName = FilterConstants.ACTIVITIES;
 
 				VariabilityType type = (VariabilityType) ((IStructuredSelection) viewer_variability
