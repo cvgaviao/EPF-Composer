@@ -73,6 +73,9 @@ public class ExProcessAuthoringConfigurator extends
 		if(obj == null) return false;
 		
 		if (obj instanceof MethodConfiguration) {
+			if (methodConfiguration == null) {
+				return true;
+			}
 			return methodConfiguration.equals(obj);
 		}
 
