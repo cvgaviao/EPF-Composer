@@ -52,6 +52,8 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
+import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
+import org.eclipse.emf.transaction.util.ValidateEditSupport;
 import org.eclipse.emf.workspace.AbstractEMFOperation;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.epf.common.CommonPlugin;
@@ -365,7 +367,19 @@ public class DiagramManager {
 						{
 							Adapter adapter = adapters[i];
 							if(!(adapter instanceof AccessibleDiagramModificationListener)) {
+								TransactionChangeRecorder recorder = null;
+								ValidateEditSupport support = null;
+								if (adapter instanceof TransactionChangeRecorder) {
+									recorder = (TransactionChangeRecorder) adapter;
+									support = recorder.getValidateEditSupport();
+									if (support != null) {
+										recorder.setValidateEditSupport(null);
+									}
+								}
 								adapter.notifyChanged(notification);
+								if (support != null) {
+									recorder.setValidateEditSupport(support);
+								}
 							}
 						}
 					}
