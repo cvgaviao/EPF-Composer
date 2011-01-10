@@ -94,9 +94,9 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 			}
 			
 			Descriptor des = (Descriptor)obj;			
-//			if (! isCreatedByReference(des)) {
-//				return false;
-//			}
+			if (ProcessUtil.getAssociatedElement(des) == null) {
+				return false;
+			}
 			
 			if (! propUtil.localUse(des, desc, ref)) {
 				return true;
