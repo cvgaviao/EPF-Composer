@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -2128,18 +2129,29 @@ public class ConfigurationHelper {
 		OppositeFeature ofeature = AssociationHelper.Role_Primary_Tasks;
 		ToManyOppositeFeatureValue fv2 = new ToManyOppositeFeatureValue(element, ofeature, realizer);
 		calculateOppositeFeature(element, ofeature, realizer, fv2);
+		
 		if ( fv2.size() > 0 ) {
 			List v2 = (List)fv2.getValue();
 			EStructuralFeature feature = UmaPackage.eINSTANCE.getTask_Output();
+			Set set = new LinkedHashSet();
 			for (Iterator it = v2.iterator(); it.hasNext(); ) {
 				MethodElement e = (MethodElement)it.next();
 				ToManyFeatureValue fv = new ToManyFeatureValue(element, ownerElement, feature, realizer);
-				((List)fv.getValue()).addAll(v);
+				
+//				This is wrong: fv.getValue() may return a copy instead of the reference of the internal value field! 				
+//				((List)).addAll(v);   
 				
 				calculateFeature(e, ownerElement, 
 						feature, 
 						realizer.getConfiguration(), fv, realizer);	
-				v = (List)fv.getValue();
+//				v = (List)fv.getValue();
+				List list = (List)fv.getValue();
+				if (list != null && !list.isEmpty()) {
+					set.addAll(list);
+				}								
+			}
+			if (! set.isEmpty()) {
+				v.addAll(set);
 			}
 		}	
 		
