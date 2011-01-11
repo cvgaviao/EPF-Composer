@@ -14,6 +14,7 @@ import org.eclipse.epf.library.edit.util.ILibraryEditUtilProvider;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -44,7 +45,15 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	public MethodElement getMethodElement(String guid) {
 		ILibraryManager mgr = LibraryService.getInstance()
 				.getCurrentLibraryManager();
-		return mgr == null ? null : mgr.getMethodElement(guid);
+		boolean oldValue = MultiFileResourceSetImpl.REPORT_ERROR;
+		if (oldValue) {
+			MultiFileResourceSetImpl.REPORT_ERROR = false;
+		}
+		MethodElement ret = mgr == null ? null : mgr.getMethodElement(guid);
+		if (oldValue) {
+			MultiFileResourceSetImpl.REPORT_ERROR = true;
+		}
+		return ret;
 	}
 
 	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
