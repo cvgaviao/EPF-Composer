@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.WrapperItemProvider;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.action.CutAction;
 import org.eclipse.emf.edit.ui.action.DeleteAction;
@@ -1137,9 +1138,16 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		protected void addGlobalActions(IMenuManager menuManager) {
 			super.addGlobalActions(menuManager);
 			menuManager.insertAfter("fixed-additions", newPluginAction); //$NON-NLS-1$
-		}
-
+		} 
+		
 		private boolean canMove(IStructuredSelection selection) {
+			if (tempCCMoveFlag) {
+				int ix = canMoveCheck4CustomCategories(selection);
+				if (ix != 0) {
+					return ix == 1;
+				}
+			}
+			
 			for (Iterator iter = selection.iterator(); iter.hasNext();) {
 				Object element = iter.next();
 				if ((element instanceof MethodElement)
@@ -1152,6 +1160,64 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 			}
 			return false;
 		}
+		
+		//-1: cannot move
+		//0:  need futhre check
+		//1:  can move
+		private int canMoveCheck4CustomCategories(IStructuredSelection selection) {
+			boolean hasCC = false;
+			boolean hasOther = false;
+			MethodPlugin firstSelectionPlugin = null;
+			CustomCategory firstParentCC = null;
+			for (Iterator iter = selection.iterator(); iter.hasNext();) {
+				Object obj = iter.next();
+				if (obj instanceof WrapperItemProvider && TngUtil.unwrap(obj) instanceof CustomCategory) {
+					hasCC = true;
+				} else {
+					hasOther = true;
+				}
+				
+				if (hasCC && hasOther) {
+					return -1;
+				}
+								
+				// All the selected CCs need to be:
+				// 1: in the same plug-in
+				// 2: assigned to a same parent CC
+				MethodPlugin selectionPlugin = null;
+				CustomCategory parentCC = null;
+				while (obj instanceof WrapperItemProvider) {
+					obj = ((WrapperItemProvider) obj).getParent(null);
+					if (parentCC == null) {
+						if (!(TngUtil.unwrap(obj) instanceof CustomCategory)) {
+							return -1;
+						}
+						parentCC = (CustomCategory) TngUtil.unwrap(obj);
+						if (firstParentCC == null) {
+							firstParentCC = parentCC;
+						} else if (firstParentCC != parentCC) {
+							return -1;
+						}
+					}
+				}
+				if (obj instanceof CustomCategory) {
+					selectionPlugin = UmaUtil
+							.getMethodPlugin((CustomCategory) obj);
+					if (selectionPlugin == null) {
+						return -1;
+					}
+				}
+				if (firstSelectionPlugin == null) {
+					firstSelectionPlugin = selectionPlugin;
+				} else if (firstSelectionPlugin != selectionPlugin) {
+					return -1;
+				}							
+				
+			}
+			
+			return hasCC ? 1 : 0;
+		}
+		
 
 		/**
 		 * Adds Separators for editor additions to the tool bar.
@@ -1913,4 +1979,6 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 	public void refresh(IProgressMonitor monitor) {
 		refreshHandler.refresh(monitor);
 	}
+	
+	public static boolean tempCCMoveFlag = false;
 }
