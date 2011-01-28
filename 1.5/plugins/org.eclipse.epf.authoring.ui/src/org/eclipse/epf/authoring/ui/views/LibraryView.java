@@ -78,6 +78,7 @@ import org.eclipse.epf.authoring.ui.actions.UnassignAction;
 import org.eclipse.epf.authoring.ui.dialogs.MoveDialog;
 import org.eclipse.epf.authoring.ui.dialogs.SwitchConfigDialog;
 import org.eclipse.epf.authoring.ui.dialogs.VariabilitySelection;
+import org.eclipse.epf.authoring.ui.dialogs.MoveDialog.MoveDialogExt;
 import org.eclipse.epf.authoring.ui.dnd.LibraryViewerDragAdapter;
 import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.authoring.ui.editors.IEditorKeeper;
@@ -773,8 +774,13 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 					}
 				}
 
-				MoveDialog dlg = new MoveDialog(getSite().getShell(),
-						elementsToMove, editingDomain);
+//				MoveDialog dlg = new MoveDialog(getSite().getShell(),
+//						elementsToMove, editingDomain);
+				MoveDialog dlg = movingCC ? 
+						new MoveDialogExt(getSite().getShell(), elementsToMove, editingDomain) : 
+						new    MoveDialog(getSite().getShell(), elementsToMove, editingDomain);
+				
+				
 				dlg.open();
 			}
 
@@ -1140,12 +1146,12 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 			menuManager.insertAfter("fixed-additions", newPluginAction); //$NON-NLS-1$
 		} 
 		
-		private boolean canMove(IStructuredSelection selection) {
-			if (tempCCMoveFlag) {
-				int ix = canMoveCheck4CustomCategories(selection);
-				if (ix != 0) {
-					return ix == 1;
-				}
+		private boolean movingCC = false;
+		private boolean canMove(IStructuredSelection selection) {		
+			int ix = canMoveCheck4CustomCategories(selection);
+			movingCC = ix == 1;
+			if (ix != 0) {
+				return movingCC;
 			}
 			
 			for (Iterator iter = selection.iterator(); iter.hasNext();) {
@@ -1980,5 +1986,4 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		refreshHandler.refresh(monitor);
 	}
 	
-	public static boolean tempCCMoveFlag = false;
 }

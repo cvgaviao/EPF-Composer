@@ -32,13 +32,18 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.category.StandardCategoriesItemProvider;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand.MoveOperation;
+import org.eclipse.epf.library.edit.command.MethodElementAddCommand.MoveOperationExt;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -77,7 +82,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 
 	private EditingDomain editingDomain;
 
-	private Object destination;
+	protected Object destination;
 
 	private Cursor waitCursor;
 
@@ -392,7 +397,12 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			Command command = AddCommand.create(editingDomain, destination,
 					null, elements);
 
-			moveOp = new MoveOperation(command, progressMonitorPart, shell);
+			if ( this instanceof MoveDialogExt) {					
+				moveOp = new MoveOperationExt(command, progressMonitorPart, shell);
+			} else {
+				moveOp = new MoveOperation(command, progressMonitorPart, shell);
+			}
+			
 			moveOp.run();
 		} finally {
 			moving = false;
@@ -429,6 +439,28 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 		if (moving)
 			return false;
 		return super.close();
+	}
+
+	//MoveDialog for moving custom category
+	public static class MoveDialogExt extends MoveDialog {
+		private CustomCategory srcParent;
+		
+		public MoveDialogExt(Shell parentShell, Collection elementsToMove,
+			EditingDomain editingDomain) {
+			super(parentShell, elementsToMove, editingDomain);	
+			
+		}
+		
+		@Override
+		public void selectionChanged(SelectionChangedEvent event) {
+			destination = TngUtil.unwrap(((IStructuredSelection) event
+					.getSelection()).getFirstElement());
+			if (destination instanceof CustomCategory) {
+				srcParent = (CustomCategory) destination;
+				MethodPlugin plugin = UmaUtil.getMethodPlugin(srcParent);
+				destination = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
+			}
+		}
 	}
 
 }

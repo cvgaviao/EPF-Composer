@@ -2297,6 +2297,16 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			return validator.isValid(newText);
 		}
 
+	}	
+
+	public static class MoveOperationExt extends MoveOperation {
+
+		public MoveOperationExt(Command command, IProgressMonitor monitor,
+				Object shell) {
+			super(command, monitor, shell);
+		}
 	}
+
+	
 
 }
