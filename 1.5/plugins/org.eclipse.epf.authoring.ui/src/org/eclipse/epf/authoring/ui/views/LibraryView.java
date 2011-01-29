@@ -104,6 +104,7 @@ import org.eclipse.epf.library.edit.navigator.MethodLibraryItemProvider;
 import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -776,9 +777,12 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 
 //				MoveDialog dlg = new MoveDialog(getSite().getShell(),
 //						elementsToMove, editingDomain);
-				MoveDialog dlg = movingCC ? 
-						new MoveDialogExt(getSite().getShell(), elementsToMove, editingDomain) : 
-						new    MoveDialog(getSite().getShell(), elementsToMove, editingDomain);
+				MoveDialog dlg = movingCC ? new MoveDialogExt(getSite()
+						.getShell(), elementsToMove, editingDomain,
+						(CustomCategory) LibraryEditUtil.getInstance()
+								.getMethodElement(movingCCsrcParentGuid))
+						: new MoveDialog(getSite().getShell(), elementsToMove,
+								editingDomain);
 				
 				
 				dlg.open();
@@ -1147,6 +1151,7 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		} 
 		
 		private boolean movingCC = false;
+		private String movingCCsrcParentGuid;		//Use guid instead of object to avoid handing memory leak
 		private boolean canMove(IStructuredSelection selection) {		
 			int ix = canMoveCheck4CustomCategories(selection);
 			movingCC = ix == 1;
@@ -1188,8 +1193,9 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 				}
 								
 				// All the selected CCs need to be:
-				// 1: in the same plug-in
-				// 2: assigned to a same parent CC
+				// a: selected in the same plug-in from libray view
+				// b: assigned to a same parent CC
+				// c: the parent CC's pluign is the same as the selected plugin				
 				MethodPlugin selectionPlugin = null;
 				CustomCategory parentCC = null;
 				while (obj instanceof WrapperItemProvider) {
@@ -1199,9 +1205,13 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 							return -1;
 						}
 						parentCC = (CustomCategory) TngUtil.unwrap(obj);
+						if (parentCC == null) {
+							return -1;
+						}
 						if (firstParentCC == null) {
 							firstParentCC = parentCC;
-						} else if (firstParentCC != parentCC) {
+							movingCCsrcParentGuid = firstParentCC.getGuid();
+						} else if (firstParentCC != parentCC) {							//check b
 							return -1;
 						}
 					}
@@ -1215,7 +1225,10 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 				}
 				if (firstSelectionPlugin == null) {
 					firstSelectionPlugin = selectionPlugin;
-				} else if (firstSelectionPlugin != selectionPlugin) {
+					if (UmaUtil.getMethodPlugin(parentCC) != firstSelectionPlugin) {	// check c
+						return -1;
+					}
+				} else if (firstSelectionPlugin != selectionPlugin) {					//check a
 					return -1;
 				}							
 				

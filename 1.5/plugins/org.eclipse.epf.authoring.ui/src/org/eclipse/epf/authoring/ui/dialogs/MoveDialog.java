@@ -12,7 +12,10 @@ package org.eclipse.epf.authoring.ui.dialogs;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -43,6 +46,7 @@ import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -71,7 +75,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 
 	private TreeViewer treeViewer;
 
-	private Collection elements;
+	protected Collection elements;
 
 	// private IStructuredSelection selection;
 
@@ -397,11 +401,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			Command command = AddCommand.create(editingDomain, destination,
 					null, elements);
 
-			if ( this instanceof MoveDialogExt) {					
-				moveOp = new MoveOperationExt(command, progressMonitorPart, shell);
-			} else {
-				moveOp = new MoveOperation(command, progressMonitorPart, shell);
-			}
+			moveOp = newMoveOperation(command, progressMonitorPart, shell);
 			
 			moveOp.run();
 		} finally {
@@ -440,15 +440,47 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			return false;
 		return super.close();
 	}
+	
+	protected MoveOperation newMoveOperation(Command command, IProgressMonitor monitor,
+			Object shell) {
+		return new MoveOperation(command, monitor, shell);
+	}
 
 	//MoveDialog for moving custom category
 	public static class MoveDialogExt extends MoveDialog {
 		private CustomCategory srcParent;
+		private CustomCategory tgtParent;
+		private List<CustomCategory> topSiblingsToMove;
 		
 		public MoveDialogExt(Shell parentShell, Collection elementsToMove,
-			EditingDomain editingDomain) {
-			super(parentShell, elementsToMove, editingDomain);	
+			EditingDomain editingDomain, CustomCategory srcParent) {
+			super(parentShell, elementsToMove, editingDomain);
+			this.srcParent = srcParent;
 			
+			topSiblingsToMove = (List<CustomCategory>) elements;
+			elements = calculateRealElementsToMove(topSiblingsToMove);
+		}
+		
+		private List<CustomCategory> calculateRealElementsToMove(List<CustomCategory> topSiblingsToMove) {
+			Set<CustomCategory> moveCCSet = new HashSet<CustomCategory>();			
+			addToElementList(topSiblingsToMove, moveCCSet);
+			
+			List<CustomCategory> realElementsToMove = new ArrayList<CustomCategory>();
+			realElementsToMove.addAll(moveCCSet);
+			
+//			AssociationHelper.getCustomCategories(null);
+			
+			return realElementsToMove;
+		}		
+		
+		private void addToElementList(Collection siblingElements, Set<CustomCategory> moveCCSet) {
+			for (Object obj : siblingElements) {
+				if (obj instanceof CustomCategory && !moveCCSet.contains(obj)) {
+					CustomCategory cc = (CustomCategory) obj;
+					moveCCSet.add(cc);
+					addToElementList(cc.getCategorizedElements(), moveCCSet);
+				}
+			}
 		}
 		
 		@Override
@@ -456,10 +488,16 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			destination = TngUtil.unwrap(((IStructuredSelection) event
 					.getSelection()).getFirstElement());
 			if (destination instanceof CustomCategory) {
-				srcParent = (CustomCategory) destination;
-				MethodPlugin plugin = UmaUtil.getMethodPlugin(srcParent);
+				tgtParent = (CustomCategory) destination;
+				MethodPlugin plugin = UmaUtil.getMethodPlugin(tgtParent);
 				destination = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
 			}
+		}
+		
+		@Override
+		protected MoveOperation newMoveOperation(Command command, IProgressMonitor monitor,
+				Object shell) {
+			return new MoveOperationExt(command, monitor, shell, srcParent, tgtParent, topSiblingsToMove);
 		}
 	}
 

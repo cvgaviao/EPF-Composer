@@ -66,6 +66,7 @@ import org.eclipse.epf.services.IFileBasedLibraryPersister;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
@@ -1683,7 +1684,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				// check if the configurations that will be updated after this
 				// command can be modified
 				//
-				IStatus execStatus = UserInteractionHelper
+				IStatus execStatus = movingCC() ? Status.OK_STATUS : UserInteractionHelper
 						.checkConfigurationsToUpdate(addCommand, shell);
 				if (!execStatus.isOK()) {
 					Messenger.INSTANCE.showError(LibraryEditResources.moveDialog_title, null, execStatus);
@@ -1890,12 +1891,16 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			return elementToNewNameMap != null;
 		}
 
+		private boolean movingCC() {
+			return this instanceof MoveOperationExt;
+		}
+		
 		/**
 		 * Long running method
 		 * 
 		 * @return
 		 */
-		private String checkForIllegalReferences() {
+		private String checkForIllegalReferences() {			
 			elementToOldPluginMap = new HashMap();
 
 			moveList = new ArrayList(addCommand.getCollection());
@@ -1934,6 +1939,9 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			// check if there is any illegal reference in the moved objects
 			//			
 			ownerPlugin = UmaUtil.getMethodPlugin(addCommand.getOwner());
+			if (movingCC()) {
+				return null;
+			}			
 			find_xPluginRef: for (Iterator iter = addCommand.getCollection()
 					.iterator(); iter.hasNext();) {
 				Object element = iter.next();
@@ -1973,7 +1981,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		 * 
 		 * @return
 		 */
-		private void doMove(IProgressMonitor monitor,
+		protected void doMove(IProgressMonitor monitor,
 				Map elementToOldResourceMap, Set modifiedResources) {
 			monitor.subTask(""); //$NON-NLS-1$
 
@@ -2299,11 +2307,31 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 	}	
 
+	//MoveOperation for moving custom category
 	public static class MoveOperationExt extends MoveOperation {
-
+		private CustomCategory srcParent;
+		private CustomCategory tgtParent;
+		private List<CustomCategory> topSiblingsToMove;
+		
 		public MoveOperationExt(Command command, IProgressMonitor monitor,
-				Object shell) {
+				Object shell, CustomCategory srcParent, CustomCategory tgtParent, List<CustomCategory> topSiblingsToMove) {
 			super(command, monitor, shell);
+			this.srcParent = srcParent;
+			this.tgtParent = tgtParent;
+			this.topSiblingsToMove = topSiblingsToMove;
+		}
+		
+		@Override
+		protected void doMove(IProgressMonitor monitor,
+				Map elementToOldResourceMap, Set modifiedResources) {
+			super.doMove(monitor, elementToOldResourceMap, modifiedResources);
+			srcParent.getCategorizedElements().removeAll(topSiblingsToMove);
+			tgtParent.getCategorizedElements().addAll(topSiblingsToMove);
+		}
+		
+		@Override
+		public void undo() {
+			super.undo();
 		}
 	}
 
