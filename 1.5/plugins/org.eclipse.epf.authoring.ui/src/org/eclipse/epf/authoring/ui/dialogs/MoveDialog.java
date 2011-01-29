@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -43,6 +44,7 @@ import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.VariabilityElement;
@@ -451,6 +453,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 		private CustomCategory srcParent;
 		private CustomCategory tgtParent;
 		private List<CustomCategory> topSiblingsToMove;
+		private Set<CustomCategory> topSiblingsToMoveSet;
 		
 		public MoveDialogExt(Shell parentShell, Collection elementsToMove,
 			EditingDomain editingDomain, CustomCategory srcParent) {
@@ -458,6 +461,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			this.srcParent = srcParent;
 			
 			topSiblingsToMove = (List<CustomCategory>) elements;
+			topSiblingsToMoveSet = new HashSet<CustomCategory>(topSiblingsToMove);
 			elements = calculateRealElementsToMove(topSiblingsToMove);
 		}
 		
@@ -465,11 +469,49 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			Set<CustomCategory> moveCCSet = new HashSet<CustomCategory>();			
 			addToElementList(topSiblingsToMove, moveCCSet);
 			
+			Set<CustomCategory> realMoveSet = new HashSet<CustomCategory>();
+			realMoveSet.addAll(moveCCSet);
+
+			for (CustomCategory cc : moveCCSet) {
+				if (! realMoveSet.contains(cc)) {
+					continue;
+				}
+				List parentList = AssociationHelper.getCustomCategories(cc);
+				boolean realMove = parentList != null && !parentList.isEmpty();
+				if (realMove) {
+					for (Object parent : parentList) {
+						if (! realMoveSet.contains(parent)) {
+							if (! topSiblingsToMoveSet.contains(cc) || parent != srcParent ) {							
+								realMove = false;
+								break;
+							}
+						}
+					}
+				}
+				if (! realMove) {
+					Set<CustomCategory> processedSet = new HashSet<CustomCategory>();
+					realMoveSet.remove(cc);
+					processedSet.add(cc);
+					
+					Stack<List> stack = new Stack<List>();
+					stack.push(cc.getCategorizedElements());
+					while (! stack.isEmpty()) {
+						List categorizedElements = stack.pop();
+						for (Object obj : categorizedElements) {
+							if (obj instanceof CustomCategory && ! processedSet.contains(obj) && realMoveSet.contains(obj)) {
+								CustomCategory childCC = (CustomCategory) obj;
+								realMoveSet.remove(childCC);
+								processedSet.add(childCC);
+								stack.push(childCC.getCategorizedElements());
+							}
+						}
+					}
+					
+				}
+			}
+						
 			List<CustomCategory> realElementsToMove = new ArrayList<CustomCategory>();
-			realElementsToMove.addAll(moveCCSet);
-			
-//			AssociationHelper.getCustomCategories(null);
-			
+			realElementsToMove.addAll(realMoveSet);
 			return realElementsToMove;
 		}		
 		
