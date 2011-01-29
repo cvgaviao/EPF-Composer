@@ -462,16 +462,16 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			
 			topSiblingsToMove = (List<CustomCategory>) elements;
 			topSiblingsToMoveSet = new HashSet<CustomCategory>(topSiblingsToMove);
-			elements = calculateRealElementsToMove(topSiblingsToMove);
 		}
 		
-		private List<CustomCategory> calculateRealElementsToMove(List<CustomCategory> topSiblingsToMove) {
+		private List<CustomCategory> calculateRealElementsToMove() {
 			Set<CustomCategory> moveCCSet = new HashSet<CustomCategory>();			
 			addToElementList(topSiblingsToMove, moveCCSet);
 			
 			Set<CustomCategory> realMoveSet = new HashSet<CustomCategory>();
 			realMoveSet.addAll(moveCCSet);
 
+			MethodPlugin tgtPlugin = UmaUtil.getMethodPlugin(tgtParent);			
 			for (CustomCategory cc : moveCCSet) {
 				if (! realMoveSet.contains(cc)) {
 					continue;
@@ -480,7 +480,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 				boolean realMove = parentList != null && !parentList.isEmpty();
 				if (realMove) {
 					for (Object parent : parentList) {
-						if (! realMoveSet.contains(parent)) {
+						if (! realMoveSet.contains(parent) && tgtPlugin != UmaUtil.getMethodPlugin((CustomCategory) parent)) {
 							if (! topSiblingsToMoveSet.contains(cc) || parent != srcParent ) {							
 								realMove = false;
 								break;
@@ -533,6 +533,8 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 				tgtParent = (CustomCategory) destination;
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(tgtParent);
 				destination = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
+				
+				elements = calculateRealElementsToMove();
 			}
 		}
 		
