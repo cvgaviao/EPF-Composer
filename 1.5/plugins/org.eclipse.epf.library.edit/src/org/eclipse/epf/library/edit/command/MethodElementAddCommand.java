@@ -1938,10 +1938,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 			// check if there is any illegal reference in the moved objects
 			//			
-			ownerPlugin = UmaUtil.getMethodPlugin(addCommand.getOwner());
-			if (movingCC()) {
-				return null;
-			}			
+			ownerPlugin = UmaUtil.getMethodPlugin(addCommand.getOwner());			
 			find_xPluginRef: for (Iterator iter = addCommand.getCollection()
 					.iterator(); iter.hasNext();) {
 				Object element = iter.next();
@@ -1963,7 +1960,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					.hasNext();) {
 				Object element = iter.next();
 				if (element instanceof MethodElement) {
-					if (isReferencedIllegally(ownerPlugin,
+					if (referencedIllegally(ownerPlugin,
 							(MethodElement) element, moveList)) {
 						isRefenrecedIllegally = true;
 						break find_illegalReferencer;
@@ -1976,6 +1973,11 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			return null;
 		}
 
+		protected boolean referencedIllegally(MethodPlugin ownerPlugin,
+				MethodElement e, Collection moveList) {			
+			return isReferencedIllegally(ownerPlugin, e, moveList);	
+		}
+		
 		/**
 		 * Long running method
 		 * 
@@ -2312,6 +2314,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		private List<CustomCategory> movingCCs;
 		private List<CustomCategory> movingCCsrcParents;
 		private CustomCategory tgtParent;
+		private Map<CustomCategory, CustomCategory> movingCCtoParentsMap = new HashMap<CustomCategory, CustomCategory>();
 		
 		public MoveOperationExt(Command command, IProgressMonitor monitor,
 				Object shell, List<CustomCategory> movingCCs, List<CustomCategory> movingCCsrcParents, CustomCategory tgtParent) {
@@ -2319,6 +2322,9 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			this.movingCCs = movingCCs;
 			this.movingCCsrcParents = movingCCsrcParents;
 			this.tgtParent = tgtParent;
+			for (int i = 0; i < movingCCs.size(); i++) {
+				movingCCtoParentsMap.put(movingCCs.get(i), movingCCsrcParents.get(i));
+			}
 		}
 		
 		@Override
@@ -2340,6 +2346,38 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				tgtParent.getCategorizedElements().add(cc);
 			}
 			
+		}
+		
+		@Override
+		protected boolean referencedIllegally(MethodPlugin ownerPlugin,
+				MethodElement e, Collection moveList) {	
+			if (e instanceof CustomCategory) {
+				CustomCategory referencedCC = (CustomCategory) e;
+				
+				Map<String, Boolean> map = new HashMap<String, Boolean>();
+				Collection references = AssociationHelper.getReferences(referencedCC);
+				
+				for (Iterator iter = references.iterator(); iter.hasNext();) {
+					MethodElement element = (MethodElement) iter.next();
+					if (movingCCtoParentsMap.containsKey(element)) {
+						continue;
+					}
+					if (element instanceof CustomCategory) {
+						if (movingCCtoParentsMap.get(referencedCC) == element) {
+							continue;
+						}
+					} 
+					MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+					if (plugin != null && plugin != ownerPlugin
+							&& !Misc.isBaseOf(ownerPlugin, plugin, map)) {
+						return true;
+					}
+				}
+				
+				return false;
+			}
+
+			return super.referencedIllegally(ownerPlugin, e, moveList);	
 		}
 		
 		@Override
