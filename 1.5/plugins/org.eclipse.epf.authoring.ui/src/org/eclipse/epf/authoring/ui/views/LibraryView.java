@@ -104,7 +104,6 @@ import org.eclipse.epf.library.edit.navigator.MethodLibraryItemProvider;
 import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurableComposedAdapterFactory;
-import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -186,6 +185,8 @@ import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.HTMLTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -237,6 +238,8 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 	private LayoutActionGroup fLayoutActionSet;
 	
 	private String PERFORM_ID = "org.eclipse.epf.authoring.view.LibraryView.performValidatorAction"; //$NON-NLS-1$
+	
+	private Font italicFont = null;
 	
 	private IAction performLibraryValidationAction = new Action(
 			AuthoringUIResources.Validate_method_library, AuthoringUIPlugin.getDefault().getImageDescriptor(
@@ -555,7 +558,32 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		// AdapterFactoryLabelProvider(adapterFactory));
 		treeViewer.setLabelProvider(new DecoratingLabelProvider(
 				new AdapterFactoryLabelProvider(adapterFactory),
-				new MethodElementLabelDecorator()));
+				new MethodElementLabelDecorator()) {
+		    
+			public Font getFont(Object element) {
+				if (customCategoryOwnedByOtherPlugin(element)) {
+					return getItalicFont();
+				}				
+				return super.getFont(element);
+			}
+			
+			private Font getItalicFont() {
+				if (italicFont == null) {
+					italicFont = createFont(SWT.ITALIC);
+				}
+				
+				return italicFont;
+			}
+			
+			private Font createFont(int style) {
+				FontData[] fontdata = Display.getCurrent().getSystemFont().getFontData();
+				for (FontData data : fontdata) {
+					data.setStyle(style);
+				}
+				
+				return new Font(Display.getCurrent(), fontdata);    	
+		    }
+		});
 
 		// Add a double click listener for launching the Method editors.
 		doubleClickListener = new IDoubleClickListener() {
@@ -777,14 +805,53 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 
 //				MoveDialog dlg = new MoveDialog(getSite().getShell(),
 //						elementsToMove, editingDomain);
-				MoveDialog dlg = movingCC ? new MoveDialogExt(getSite()
-						.getShell(), elementsToMove, editingDomain,
-						(CustomCategory) LibraryEditUtil.getInstance()
-								.getMethodElement(movingCCsrcParentGuid))
+
+				boolean movingCCerror = false;
+				List<CustomCategory> movingCCsrcParents = new ArrayList<CustomCategory>();
+				int sz = elementsToMove == null ? 0 : elementsToMove.size();
+				if (sz > 0 && elementsToMove.iterator().next() instanceof CustomCategory) {
+					List uiList = ((IStructuredSelection) getSelection()).toList();
+					if (uiList.size() == sz) {
+						int i = -1;
+						for (Object element : elementsToMove) {
+							i++;
+							Object ui = uiList.get(i);
+							if (ui instanceof WrapperItemProvider) {
+								if (TngUtil.unwrap(ui) != element) {
+									movingCCerror = true;
+									break;
+								}
+								Object parent = ((WrapperItemProvider) ui).getParent(null);
+								if (TngUtil.unwrap(parent) instanceof CustomCategory) {
+									movingCCsrcParents.add((CustomCategory) TngUtil.unwrap(parent));
+								} else {
+									movingCCerror = true;
+									break;
+								}
+							} else {
+								movingCCerror = true;
+								break;
+							}
+						}
+					} else {
+						movingCCerror = true;
+					}
+				}
+				
+				if (movingCCerror) {
+					AuthoringUIPlugin
+					.getDefault()
+					.getMsgDialog()
+					.displayError(
+							AuthoringUIResources.errorDialog_title,
+							AuthoringUIResources.errorDialog_moveError);
+						return;
+				}
+						
+				MoveDialog dlg = ! movingCCsrcParents.isEmpty() ? new MoveDialogExt(getSite()
+						.getShell(), elementsToMove, editingDomain, movingCCsrcParents)
 						: new MoveDialog(getSite().getShell(), elementsToMove,
-								editingDomain);
-				
-				
+								editingDomain);				
 				dlg.open();
 			}
 
@@ -1150,13 +1217,10 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 			menuManager.insertAfter("fixed-additions", newPluginAction); //$NON-NLS-1$
 		} 
 		
-		private boolean movingCC = false;
-		private String movingCCsrcParentGuid;		//Use guid instead of object to avoid handing memory leak
 		private boolean canMove(IStructuredSelection selection) {		
 			int ix = canMoveCheck4CustomCategories(selection);
-			movingCC = ix == 1;
 			if (ix != 0) {
-				return movingCC;
+				return ix == 1;
 			}
 			
 			for (Iterator iter = selection.iterator(); iter.hasNext();) {
@@ -1178,62 +1242,20 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		private int canMoveCheck4CustomCategories(IStructuredSelection selection) {
 			boolean hasCC = false;
 			boolean hasOther = false;
-			MethodPlugin firstSelectionPlugin = null;
-			CustomCategory firstParentCC = null;
 			for (Iterator iter = selection.iterator(); iter.hasNext();) {
 				Object obj = iter.next();
 				if (obj instanceof WrapperItemProvider && TngUtil.unwrap(obj) instanceof CustomCategory) {
+					if (customCategoryOwnedByOtherPlugin(obj)) {
+						return -1;
+					}
 					hasCC = true;
 				} else {
 					hasOther = true;
 				}
-				
 				if (hasCC && hasOther) {
 					return -1;
 				}
-								
-				// All the selected CCs need to be:
-				// a: selected in the same plug-in from libray view
-				// b: assigned to a same parent CC
-				// c: the parent CC's pluign is the same as the selected plugin				
-				MethodPlugin selectionPlugin = null;
-				CustomCategory parentCC = null;
-				while (obj instanceof WrapperItemProvider) {
-					obj = ((WrapperItemProvider) obj).getParent(null);
-					if (parentCC == null) {
-						if (!(TngUtil.unwrap(obj) instanceof CustomCategory)) {
-							return -1;
-						}
-						parentCC = (CustomCategory) TngUtil.unwrap(obj);
-						if (parentCC == null) {
-							return -1;
-						}
-						if (firstParentCC == null) {
-							firstParentCC = parentCC;
-							movingCCsrcParentGuid = firstParentCC.getGuid();
-						} else if (firstParentCC != parentCC) {							//check b
-							return -1;
-						}
-					}
-				}
-				if (obj instanceof CustomCategory) {
-					selectionPlugin = UmaUtil
-							.getMethodPlugin((CustomCategory) obj);
-					if (selectionPlugin == null) {
-						return -1;
-					}
-				}
-				if (firstSelectionPlugin == null) {
-					firstSelectionPlugin = selectionPlugin;
-					if (UmaUtil.getMethodPlugin(parentCC) != firstSelectionPlugin) {	// check c
-						return -1;
-					}
-				} else if (firstSelectionPlugin != selectionPlugin) {					//check a
-					return -1;
-				}							
-				
-			}
-			
+			}			
 			return hasCC ? 1 : 0;
 		}
 		
@@ -1536,6 +1558,9 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 			treeViewer.removeDoubleClickListener(doubleClickListener);
 		}
 		
+    	if (italicFont != null) {
+    		italicFont.dispose();
+    	}		
 	}
 
 	/**
@@ -1997,6 +2022,25 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 
 	public void refresh(IProgressMonitor monitor) {
 		refreshHandler.refresh(monitor);
+	}
+	
+	private boolean customCategoryOwnedByOtherPlugin(Object element) {
+		if (!(element instanceof WrapperItemProvider)) {
+			return false;
+		}
+		Object unwrapped = TngUtil.unwrap(element);
+		if (! (unwrapped instanceof CustomCategory)) {
+			return false;
+		}
+		CustomCategory cc = (CustomCategory) unwrapped;
+		
+		while (element instanceof WrapperItemProvider) {
+			element = ((WrapperItemProvider) element).getParent(null);
+		}
+		if (element instanceof CustomCategory) {
+			return UmaUtil.getMethodPlugin(cc) != UmaUtil.getMethodPlugin((CustomCategory) element); 
+		}
+		return false;
 	}
 	
 }

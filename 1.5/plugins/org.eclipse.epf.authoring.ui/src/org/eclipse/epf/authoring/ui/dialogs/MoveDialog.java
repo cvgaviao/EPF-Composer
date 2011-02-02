@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -44,11 +43,9 @@ import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
-import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.VariabilityElement;
-import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -450,77 +447,20 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 
 	//MoveDialog for moving custom category
 	public static class MoveDialogExt extends MoveDialog {
-		private CustomCategory srcParent;
+		private List<CustomCategory> movingCCs = new ArrayList<CustomCategory>();
+		private List<CustomCategory> movingCCsrcParents;
 		private CustomCategory tgtParent;
-		private List<CustomCategory> topSiblingsToMove;
-		private Set<CustomCategory> topSiblingsToMoveSet;
 		
 		public MoveDialogExt(Shell parentShell, Collection elementsToMove,
-			EditingDomain editingDomain, CustomCategory srcParent) {
+			EditingDomain editingDomain, List<CustomCategory> movingCCsrcParents) {
 			super(parentShell, elementsToMove, editingDomain);
-			this.srcParent = srcParent;
-			
-			topSiblingsToMove = (List<CustomCategory>) elements;
-			topSiblingsToMoveSet = new HashSet<CustomCategory>(topSiblingsToMove);
-		}
-		
-		private List<CustomCategory> calculateRealElementsToMove() {
-			Set<CustomCategory> moveCCSet = new HashSet<CustomCategory>();			
-			addToElementList(topSiblingsToMove, moveCCSet);
-			
-			Set<CustomCategory> realMoveSet = new HashSet<CustomCategory>();
-			realMoveSet.addAll(moveCCSet);
-
-			MethodPlugin tgtPlugin = UmaUtil.getMethodPlugin(tgtParent);			
-			for (CustomCategory cc : moveCCSet) {
-				if (! realMoveSet.contains(cc)) {
-					continue;
-				}
-				List parentList = AssociationHelper.getCustomCategories(cc);
-				boolean realMove = parentList != null && !parentList.isEmpty();
-				if (realMove) {
-					for (Object parent : parentList) {
-						if (! realMoveSet.contains(parent) && tgtPlugin != UmaUtil.getMethodPlugin((CustomCategory) parent)) {
-							if (! topSiblingsToMoveSet.contains(cc) || parent != srcParent ) {							
-								realMove = false;
-								break;
-							}
-						}
-					}
-				}
-				if (! realMove) {
-					Set<CustomCategory> processedSet = new HashSet<CustomCategory>();
-					realMoveSet.remove(cc);
-					processedSet.add(cc);
-					
-					Stack<List> stack = new Stack<List>();
-					stack.push(cc.getCategorizedElements());
-					while (! stack.isEmpty()) {
-						List categorizedElements = stack.pop();
-						for (Object obj : categorizedElements) {
-							if (obj instanceof CustomCategory && ! processedSet.contains(obj) && realMoveSet.contains(obj)) {
-								CustomCategory childCC = (CustomCategory) obj;
-								realMoveSet.remove(childCC);
-								processedSet.add(childCC);
-								stack.push(childCC.getCategorizedElements());
-							}
-						}
-					}
-					
-				}
-			}
-						
-			List<CustomCategory> realElementsToMove = new ArrayList<CustomCategory>();
-			realElementsToMove.addAll(realMoveSet);
-			return realElementsToMove;
-		}		
-		
-		private void addToElementList(Collection siblingElements, Set<CustomCategory> moveCCSet) {
-			for (Object obj : siblingElements) {
-				if (obj instanceof CustomCategory && !moveCCSet.contains(obj)) {
-					CustomCategory cc = (CustomCategory) obj;
-					moveCCSet.add(cc);
-					addToElementList(cc.getCategorizedElements(), moveCCSet);
+			this.movingCCsrcParents = movingCCsrcParents;
+			movingCCs.addAll(elementsToMove);
+			Set<CustomCategory> set = new HashSet<CustomCategory>(elements);
+			if (set.size() != elements.size()) {
+				elements = new ArrayList();
+				for (CustomCategory cc : set) {
+					elements.add(cc);
 				}
 			}
 		}
@@ -533,15 +473,13 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 				tgtParent = (CustomCategory) destination;
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(tgtParent);
 				destination = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
-				
-				elements = calculateRealElementsToMove();
 			}
 		}
 		
 		@Override
 		protected MoveOperation newMoveOperation(Command command, IProgressMonitor monitor,
 				Object shell) {
-			return new MoveOperationExt(command, monitor, shell, srcParent, tgtParent, topSiblingsToMove);
+			return new MoveOperationExt(command, monitor, shell, movingCCs, movingCCsrcParents, tgtParent);
 		}
 	}
 

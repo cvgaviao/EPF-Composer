@@ -2309,24 +2309,37 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 	//MoveOperation for moving custom category
 	public static class MoveOperationExt extends MoveOperation {
-		private CustomCategory srcParent;
+		private List<CustomCategory> movingCCs;
+		private List<CustomCategory> movingCCsrcParents;
 		private CustomCategory tgtParent;
-		private List<CustomCategory> topSiblingsToMove;
 		
 		public MoveOperationExt(Command command, IProgressMonitor monitor,
-				Object shell, CustomCategory srcParent, CustomCategory tgtParent, List<CustomCategory> topSiblingsToMove) {
+				Object shell, List<CustomCategory> movingCCs, List<CustomCategory> movingCCsrcParents, CustomCategory tgtParent) {
 			super(command, monitor, shell);
-			this.srcParent = srcParent;
+			this.movingCCs = movingCCs;
+			this.movingCCsrcParents = movingCCsrcParents;
 			this.tgtParent = tgtParent;
-			this.topSiblingsToMove = topSiblingsToMove;
 		}
 		
 		@Override
 		protected void doMove(IProgressMonitor monitor,
 				Map elementToOldResourceMap, Set modifiedResources) {
-			super.doMove(monitor, elementToOldResourceMap, modifiedResources);
-			srcParent.getCategorizedElements().removeAll(topSiblingsToMove);
-			tgtParent.getCategorizedElements().addAll(topSiblingsToMove);
+			super.doMove(monitor, elementToOldResourceMap, modifiedResources);			
+			for (int i = 0; i < movingCCs.size(); i++) {
+				movingCCsrcParents.get(i).getCategorizedElements().remove(movingCCs.get(i));
+			}
+			
+			
+			Set set = new HashSet();
+			set.addAll(tgtParent.getCategorizedElements());
+			for (CustomCategory cc : movingCCs) {
+				if (set.contains(cc)) {
+					continue;
+				}
+				set.add(cc);
+				tgtParent.getCategorizedElements().add(cc);
+			}
+			
 		}
 		
 		@Override
