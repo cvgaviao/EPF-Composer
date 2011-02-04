@@ -316,8 +316,16 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 					// the last super custom category of e in the current plugin
 					//
 					if(TngUtil.isInPluginWithLessThanOneSuperCustomCategory((CustomCategory) e, currentPlugin)) {
-						customCategoriesToDelete.add(e);
-						continue;
+//						customCategoriesToDelete.add(e);
+//						continue;
+						
+						//Now, don't delete it, but add it to the root instead
+						CustomCategory rootCC = TngUtil.getRootCustomCategory(currentPlugin);
+						if (rootCC == category) {
+							return;
+						}
+						LibraryManager.getInstance().addToCustomCategory(
+								actionManager, rootCC, e, new ArrayList());
 					}
 				}				
 				LibraryManager.getInstance().removeFromCustomCategory(

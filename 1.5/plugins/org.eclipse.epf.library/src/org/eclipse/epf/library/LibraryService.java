@@ -461,7 +461,7 @@ public class LibraryService implements ILibraryService {
 	 *            a method library
 	 */
 	public void setCurrentMethodLibrary(MethodLibrary library) {
-//		fixUpDanglingCustomCategories(library);
+		fixUpDanglingCustomCategories(library);
 		currentLibrary = library;
 		notifyListeners(library, EVENT_SET_CURRENT_LIBRARY);
 	}
