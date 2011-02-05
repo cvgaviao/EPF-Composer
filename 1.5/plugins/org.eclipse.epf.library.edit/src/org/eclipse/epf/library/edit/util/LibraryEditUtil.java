@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,8 +15,11 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.services.ILibraryPersister;
+import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.Descriptor;
@@ -530,6 +534,27 @@ public class LibraryEditUtil {
 			}
 		};
 		return (Set<WorkProduct> ) getElementsUnder(topElement, filter);
+	}
+	
+	public static boolean save(Collection<Resource> resouresToSave) {
+		ILibraryPersister.FailSafeMethodLibraryPersister persister = Services.getDefaultLibraryPersister().getFailSafePersister();
+		try {
+			HashSet<Resource> seens = new HashSet<Resource>();
+			for (Iterator<Resource> it = resouresToSave.iterator(); it.hasNext();) {
+				Resource res = it.next();
+				if (! seens.contains(res)) {
+					persister.save(res);
+					seens.add(res);
+				}
+			}
+			persister.commit();
+		} catch (Exception e) {
+			persister.rollback();
+			return false;
+		} finally {
+		}
+		
+		return true;
 	}
 	
 	
