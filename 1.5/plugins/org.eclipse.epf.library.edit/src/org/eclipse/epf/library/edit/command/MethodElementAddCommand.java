@@ -52,6 +52,7 @@ import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.edit.util.ITextReferenceReplacer;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.Messenger;
 import org.eclipse.epf.library.edit.util.Misc;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -1590,7 +1591,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 		private HashSet movedResources;
 
-		private MultiStatus status;
+		protected MultiStatus status;
 
 		/**
 		 * Current state of the move operation, it can be one of the state
@@ -2315,6 +2316,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		private List<CustomCategory> movingCCsrcParents;
 		private CustomCategory tgtParent;
 		private Map<CustomCategory, CustomCategory> movingCCtoParentsMap = new HashMap<CustomCategory, CustomCategory>();
+		private boolean samePluginMove = false;
 		
 		public MoveOperationExt(Command command, IProgressMonitor monitor,
 				Object shell, List<CustomCategory> movingCCs, List<CustomCategory> movingCCsrcParents, CustomCategory tgtParent) {
@@ -2325,12 +2327,33 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			for (int i = 0; i < movingCCs.size(); i++) {
 				movingCCtoParentsMap.put(movingCCs.get(i), movingCCsrcParents.get(i));
 			}
+			samePluginMove = UmaUtil.getMethodPlugin(movingCCs.get(0)) == UmaUtil.getMethodPlugin(tgtParent);
+		}
+				
+		@Override
+		public void run() {
+			if (samePluginMove) {
+				reassign();
+				MethodPlugin plugin = UmaUtil.getMethodPlugin(tgtParent);
+				modifiedResources = new HashSet();
+				modifiedResources.add(plugin.eResource());
+				LibraryEditUtil.getInstance().save(modifiedResources);
+				status = new MultiStatus(LibraryEditPlugin.INSTANCE
+						.getSymbolicName(), IStatus.OK,
+						LibraryEditResources.error_reason, null); 
+				return;
+			}
+			super.run();
 		}
 		
 		@Override
 		protected void doMove(IProgressMonitor monitor,
 				Map elementToOldResourceMap, Set modifiedResources) {
-			super.doMove(monitor, elementToOldResourceMap, modifiedResources);			
+			super.doMove(monitor, elementToOldResourceMap, modifiedResources);
+			reassign();
+		}
+
+		private void reassign() {
 			for (int i = 0; i < movingCCs.size(); i++) {
 				movingCCsrcParents.get(i).getCategorizedElements().remove(movingCCs.get(i));
 			}
@@ -2345,7 +2368,6 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				set.add(cc);
 				tgtParent.getCategorizedElements().add(cc);
 			}
-			
 		}
 		
 		@Override

@@ -809,7 +809,10 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 				boolean movingCCerror = false;
 				List<CustomCategory> movingCCsrcParents = new ArrayList<CustomCategory>();
 				int sz = elementsToMove == null ? 0 : elementsToMove.size();
-				if (sz > 0 && elementsToMove.iterator().next() instanceof CustomCategory) {
+				if (sz == 0) {
+					return;
+				}
+				if (elementsToMove.iterator().next() instanceof CustomCategory) {
 					List uiList = ((IStructuredSelection) getSelection()).toList();
 					if (uiList.size() == sz) {
 						int i = -1;

@@ -256,7 +256,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 		}
 	}
 
-	private boolean isValidDestination() {
+	protected boolean isValidDestination() {
 		// preventing moving elements to category
 		//
 		if (destination instanceof ContentCategory) {
@@ -450,6 +450,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 		private List<CustomCategory> movingCCs = new ArrayList<CustomCategory>();
 		private List<CustomCategory> movingCCsrcParents;
 		private CustomCategory tgtParent;
+		private boolean samePluginMove = false;
 		
 		public MoveDialogExt(Shell parentShell, Collection elementsToMove,
 			EditingDomain editingDomain, List<CustomCategory> movingCCsrcParents) {
@@ -472,7 +473,10 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 			if (destination instanceof CustomCategory) {
 				tgtParent = (CustomCategory) destination;
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(tgtParent);
-				destination = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
+				samePluginMove = UmaUtil.getMethodPlugin(movingCCs.get(0)) == UmaUtil.getMethodPlugin(tgtParent);
+				if (! samePluginMove) {
+					destination = UmaUtil.findContentPackage(plugin, ModelStructure.DEFAULT.customCategoryPath);
+				}
 			}
 		}
 		
@@ -481,6 +485,21 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 				Object shell) {
 			return new MoveOperationExt(command, monitor, shell, movingCCs, movingCCsrcParents, tgtParent);
 		}
+		
+		@Override
+		protected boolean isValidDestination() {
+			if (samePluginMove) {
+				if (!DependencyChecker
+						.checkCircularForMovingVariabilityElement(
+								(VariabilityElement) destination, movingCCs)) {
+					return false;
+				}
+				return true;
+			}
+			return super.isValidDestination();
+		}
+		
+		
 	}
 
 }
