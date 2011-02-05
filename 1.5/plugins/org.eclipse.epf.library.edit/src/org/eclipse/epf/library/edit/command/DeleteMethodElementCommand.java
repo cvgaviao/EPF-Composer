@@ -51,6 +51,7 @@ import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.Messenger;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -113,6 +114,8 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 	private ArrayList<Command> nestedCommands;
 
 	private HashSet<Descriptor> descriptors;
+	
+	private Set<MethodPlugin> plugins;
 
 	/**
 	 * @param command
@@ -167,6 +170,9 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 		if(descriptors != null) {
 			descriptors.clear();
 		}
+		if (plugins != null) {
+			plugins.clear();
+		}
 		
 		super.dispose();
 	}
@@ -206,6 +212,7 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 	}
 
 	protected void prepareElements() {
+		plugins = new HashSet<MethodPlugin>();
 		ArrayList newElements = new ArrayList();
 		Collection<CustomCategory> customCategoriesToDelete = new HashSet<CustomCategory>();
 		RemoveCommand cmd = null;
@@ -218,9 +225,19 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 						&& cmd.getOwnerList().contains(element)) {
 					customCategoriesToDelete.add((CustomCategory) element);
 				}
+				MethodPlugin plugin = UmaUtil.getMethodPlugin((CustomCategory) element);
+				if (plugin != null) {
+					plugins.add(plugin);
+				}
 			}
 		}
 		
+		boolean newDeleteRule = true;
+		if (newDeleteRule) {
+			return;
+		}
+		
+		//The following code is no longer in used, keep it for future reference
 		if (!customCategoriesToDelete.isEmpty()) {
 			ArrayList<CustomCategory> topCustomCategoriesToDelete = new ArrayList<CustomCategory>(
 					customCategoriesToDelete);
@@ -532,6 +549,12 @@ public class DeleteMethodElementCommand extends CommandWrapper {
 			}
 			
 			notifyExecuted();
+			if (plugins != null && !plugins.isEmpty()) {
+				for (MethodPlugin p : plugins) {
+					LibraryEditUtil.getInstance().fixUpDanglingCustomCategories(p);
+				}
+			}
+			
 		} else {
 			if (failed) {
 				notifyFailure();

@@ -13,27 +13,18 @@ package org.eclipse.epf.library;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
-import org.eclipse.epf.library.edit.util.ModelStructure;
-import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryProblemMonitor;
-import org.eclipse.epf.uma.ContentElement;
-import org.eclipse.epf.uma.ContentPackage;
-import org.eclipse.epf.uma.CustomCategory;
-import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
-import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaFactory;
-import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
  * The default Library Service implementation.
@@ -461,53 +452,9 @@ public class LibraryService implements ILibraryService {
 	 *            a method library
 	 */
 	public void setCurrentMethodLibrary(MethodLibrary library) {
-		fixUpDanglingCustomCategories(library);
+		LibraryEditUtil.getInstance().fixUpDanglingCustomCategories(library);
 		currentLibrary = library;
 		notifyListeners(library, EVENT_SET_CURRENT_LIBRARY);
-	}
-
-
-	private void fixUpDanglingCustomCategories(MethodLibrary library) {
-		if (library == null) {
-			return;
-		}
-		for (MethodPlugin plugin : library.getMethodPlugins()) {
-			ContentPackage customCategoryPkg = UmaUtil.findContentPackage(
-					plugin, ModelStructure.DEFAULT.customCategoryPath);
-			if (customCategoryPkg == null) {
-				continue;
-			}
-			CustomCategory rootCC = TngUtil.getRootCustomCategory(plugin);
-
-			Set<CustomCategory> ccSet = new HashSet<CustomCategory>();
-			addToCCSet(rootCC.getCategorizedElements(), ccSet);
-
-			for (ContentElement element : customCategoryPkg
-					.getContentElements()) {
-				if (element instanceof CustomCategory) {
-					addToCCSet(((CustomCategory) element)
-							.getCategorizedElements(), ccSet);
-				}
-			}
-
-			for (ContentElement element : customCategoryPkg
-					.getContentElements()) {
-				if (element instanceof CustomCategory
-						&& !ccSet.contains(element)) {
-					rootCC.getCategorizedElements().add(element);
-				}
-			}
-		}
-
-	}
-
-	private void addToCCSet(List<DescribableElement> list,
-			Set<CustomCategory> ccSet) {
-		for (DescribableElement element : list) {
-			if (element instanceof CustomCategory) {
-				ccSet.add((CustomCategory) element);
-			}
-		}
 	}
 	
 	/**

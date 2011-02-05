@@ -21,7 +21,11 @@ import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.CapabilityPattern;
+import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.ContentPackage;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DeliveryProcess;
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -42,6 +46,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class LibraryEditUtil {
 	
@@ -557,5 +562,51 @@ public class LibraryEditUtil {
 		return true;
 	}
 	
+	public void fixUpDanglingCustomCategories(MethodLibrary library) {
+		if (library == null) {
+			return;
+		}
+		for (MethodPlugin plugin : library.getMethodPlugins()) {
+			fixUpDanglingCustomCategories(plugin);
+		}
+
+	}
+
+	public void fixUpDanglingCustomCategories(MethodPlugin plugin) {
+		ContentPackage customCategoryPkg = UmaUtil.findContentPackage(
+				plugin, ModelStructure.DEFAULT.customCategoryPath);
+		if (customCategoryPkg == null) {
+//				continue;
+		}
+		CustomCategory rootCC = TngUtil.getRootCustomCategory(plugin);
+
+		Set<CustomCategory> ccSet = new HashSet<CustomCategory>();
+		addToCCSet(rootCC.getCategorizedElements(), ccSet);
+
+		for (ContentElement element : customCategoryPkg
+				.getContentElements()) {
+			if (element instanceof CustomCategory) {
+				addToCCSet(((CustomCategory) element)
+						.getCategorizedElements(), ccSet);
+			}
+		}
+
+		for (ContentElement element : customCategoryPkg
+				.getContentElements()) {
+			if (element instanceof CustomCategory
+					&& !ccSet.contains(element)) {
+				rootCC.getCategorizedElements().add(element);
+			}
+		}
+	}
+	
+	private void addToCCSet(List<DescribableElement> list,
+			Set<CustomCategory> ccSet) {
+		for (DescribableElement element : list) {
+			if (element instanceof CustomCategory) {
+				ccSet.add((CustomCategory) element);
+			}
+		}
+	}
 	
 }
