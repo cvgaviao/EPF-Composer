@@ -118,7 +118,7 @@ public class ExportPluginWizard extends Wizard implements IExportWizard {
 							IProgressMonitor.UNKNOWN);
 
 					if (data.validate()) {
-						(new PluginExportService(data)).run(monitor);
+						PluginExportService.newInstance(data).run(monitor);
 					}
 
 				} catch (Exception e) {

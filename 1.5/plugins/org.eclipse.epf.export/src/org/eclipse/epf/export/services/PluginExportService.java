@@ -21,6 +21,7 @@ import org.apache.tools.ant.taskdefs.Copy;
 import org.apache.tools.ant.types.FileSet;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.export.ExportResources;
 import org.eclipse.epf.library.LibraryService;
@@ -50,6 +51,14 @@ public class PluginExportService extends BaseExportService {
 		this.data = data;
 	}
 
+	public static PluginExportService newInstance(PluginExportData data) {
+		Object obj = ExtensionHelper.create(PluginExportService.class, data);
+		if (obj instanceof PluginExportService) {
+			return (PluginExportService) obj;
+		}		
+		return new PluginExportService(data);
+	}
+	
 	/**
 	 * Run to export plugins
 	 */
