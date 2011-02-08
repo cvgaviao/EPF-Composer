@@ -11,6 +11,7 @@
 package org.eclipse.epf.importing.wizards;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,10 +33,11 @@ import org.eclipse.epf.library.ui.LibraryUIImages;
 import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
 import org.eclipse.epf.services.IFileManager;
 import org.eclipse.epf.services.Services;
+import org.eclipse.epf.ui.wizards.BaseWizard;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IImportWizard;
@@ -49,7 +51,7 @@ import org.eclipse.ui.IWorkbench;
  * @author Kelvin Low
  * @since 1.0
  */
-public class ImportPluginWizard extends Wizard implements IImportWizard {
+public class ImportPluginWizard extends BaseWizard implements IImportWizard {
 
 	protected SelectImportPluginSource page1;
 
@@ -58,6 +60,8 @@ public class ImportPluginWizard extends Wizard implements IImportWizard {
 	protected PluginImportData data = new PluginImportData();
 
 	protected PluginImportingService service = new PluginImportingService(data);
+	
+	public static final String WIZARD_EXTENSION_POINT_ID = "org.eclipse.epf.import.importPluginWizard"; //$NON-NLS-1$	
 
 	/**
 	 * Creates a new instance.
@@ -72,6 +76,7 @@ public class ImportPluginWizard extends Wizard implements IImportWizard {
 	 *      IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		super.init(workbench, selection);
 	}
 
 	/**
@@ -98,13 +103,49 @@ public class ImportPluginWizard extends Wizard implements IImportWizard {
 				.getDefault().getImageDescriptor(
 						"full/wizban/ImportMethodPlugins.gif")); //$NON-NLS-1$
 
-		page1 = new SelectImportPluginSource(data, service);
-		addPage(page1);
+		if (wizardExtender == null) {
+			page1 = new SelectImportPluginSource(data, service);
+			addPage(page1);
+	
+			page2 = new SelectPluginsToImport(data, service);
+			addPage(page2);
+			
+			return;
+		}
+		
+		List<IWizardPage> wizardPages = new ArrayList<IWizardPage>();
 
-		page2 = new SelectPluginsToImport(data, service);
-		addPage(page2);
+		IWizardPage page = wizardExtender
+				.getReplaceWizardPage(SelectImportPluginSource.PAGE_NAME);
+		if (page != null) {
+			((SelectImportPluginSource) page).setData(data);
+			((SelectImportPluginSource) page).setService(service);
+			wizardPages.add(page);
+		} else {
+			page1 = new SelectImportPluginSource(data, service);
+			wizardPages.add(page1);
+		}
+
+		page = wizardExtender
+				.getReplaceWizardPage(SelectPluginsToImport.PAGE_NAME);
+		if (page != null) {
+			wizardPages.add(page);
+		} else {
+			page2 = new SelectPluginsToImport(data, service);
+			wizardPages.add(page2);
+		}
+
+		super.getNewWizardPages(wizardPages);
+
+		for (Iterator<IWizardPage> it = wizardPages.iterator(); it
+				.hasNext();) {
+			IWizardPage wizardPage = it.next();
+			super.addPage(wizardPage);
+		}
+
+		wizardExtender.initWizardPages(wizardPages);
 	}
-
+	
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#createPageControls(Composite)
 	 */
@@ -299,4 +340,11 @@ public class ImportPluginWizard extends Wizard implements IImportWizard {
 		}
 	}
 
+	/**
+	 * @see org.eclipse.epf.ui.wizards.BaseWizard#getWizardExtenderExtensionPointId()
+	 */
+	public String getWizardExtenderExtensionPointId() {
+		return WIZARD_EXTENSION_POINT_ID;
+	}
+	
 }

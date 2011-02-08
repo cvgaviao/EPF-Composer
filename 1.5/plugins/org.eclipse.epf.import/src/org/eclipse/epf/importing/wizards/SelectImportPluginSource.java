@@ -53,6 +53,14 @@ public class SelectImportPluginSource extends DestinationCommonPage {
 
 	private Status status = OK_STATUS;
 
+	protected SelectImportPluginSource() {
+		super(PAGE_NAME, null);
+		setTitle(ImportResources.selectPluginsDirWizardPage_title);
+		setDescription(ImportResources.selectPluginsDirWizardPage_text);
+		setImageDescriptor(ImportPlugin.getDefault().getImageDescriptor(
+				"full/wizban/imp_meth_plugin_wizban.gif")); //$NON-NLS-1$
+	}
+	
 	/**
 	 * Creates a new instance.
 	 */
@@ -67,6 +75,15 @@ public class SelectImportPluginSource extends DestinationCommonPage {
 		this.data = data;
 	}
 
+	public void setData(PluginImportData data) {
+		this.data = data;
+		this.llData = data.llData;
+	}
+	
+	public void setService(PluginImportingService service) {
+		this.service = service;
+	}
+	
 	/**
 	 * Initializes the wizard page controls with data.
 	 */
