@@ -164,7 +164,7 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 					monitor.beginTask(ExportXMLResources.exportingXML_text,
 							IProgressMonitor.UNKNOWN);					
 					xmlData.setXMLFile(selectXMLFilePage.getPath());
-					service = new ExportXMLService(xmlData);
+					service = ExportXMLService.newInstance(xmlData);
 					
 					if (exportConfig) {
 						if (! preExportConfig(monitor)) {
@@ -241,7 +241,7 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 			public void run() {
 				try {
 					monitor.setTaskName(ExportXMLResources.export_config_to_temp_location);
-					(new ConfigurationExportService(data)).run(new NullProgressMonitor());
+					(ConfigurationExportService.newInstance(data)).run(new NullProgressMonitor());
 					monitor.setTaskName(ExportXMLResources.open_lib_from_temp_exported_location);
 					OpenLibraryWizard wizard = new OpenLibraryWizard();
 					wizard.openMethodLibrary(tempExportFolder.getAbsolutePath(), "xmi", false); //$NON-NLS-1$ 

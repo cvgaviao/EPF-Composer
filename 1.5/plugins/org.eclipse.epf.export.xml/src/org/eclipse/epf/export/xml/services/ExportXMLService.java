@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.dataexchange.util.ContentProcessor;
 import org.eclipse.epf.dataexchange.util.IResourceHandler;
 import org.eclipse.epf.diagram.ui.service.DiagramImageService;
@@ -57,11 +58,11 @@ import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
-import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ecore.IModelObject;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -76,7 +77,7 @@ import org.eclipse.osgi.util.NLS;
 public class ExportXMLService {
 
 	// String xmlPath;
-	private ExportXMLData data;
+	protected ExportXMLData data;
 	
 	private boolean debug = ExportXMLPlugin.getDefault().isDebugging();
 
@@ -105,6 +106,15 @@ public class ExportXMLService {
 		logger = new ExportXMLLogger(new File(this.data.xmlFile)
 				.getParentFile());
 	}
+	
+	public static ExportXMLService newInstance(ExportXMLData data) {
+		Object obj = ExtensionHelper.create(ExportXMLService.class, data);
+		if (obj instanceof ExportXMLService) {
+			return (ExportXMLService) obj;
+		}		
+		return new ExportXMLService(data);
+	}
+	
 	/**
 	 * Gets the logger file.
 	 */
