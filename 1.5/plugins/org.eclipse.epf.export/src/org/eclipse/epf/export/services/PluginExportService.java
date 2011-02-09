@@ -43,6 +43,7 @@ import org.eclipse.epf.uma.MethodPlugin;
 public class PluginExportService extends BaseExportService {
 
 	PluginExportData data;
+	protected File exportLibFolder;
 
 	/**
 	 * Creates a new instance.
@@ -74,7 +75,7 @@ public class PluginExportService extends BaseExportService {
 
 		// Create the library folder in the target directory.
 		String exportLibPath = (new File(data.llData.getParentFolder())).getAbsolutePath();
-		File exportLibFolder = new File(exportLibPath);
+		exportLibFolder = new File(exportLibPath);
 		if (!exportLibFolder.exists()) {
 			exportLibFolder.mkdir();
 		}
