@@ -56,6 +56,14 @@ public class SelectImportConfigurationSource extends DestinationCommonPage {
 
 	private Status status = okStatus;
 
+	protected SelectImportConfigurationSource() {
+		super(PAGE_NAME, null);
+		setTitle(ImportResources.selectConfigDirWizardPage_title);
+		setDescription(ImportResources.selectConfigDirWizardPage_text);
+		setImageDescriptor(ImportPlugin.getDefault().getImageDescriptor(
+				"full/wizban/imp_lib_conf_wizban.gif")); //$NON-NLS-1$	
+	}
+	
 	/**
 	 * Creates a new instance.
 	 */
@@ -70,6 +78,15 @@ public class SelectImportConfigurationSource extends DestinationCommonPage {
 		this.data = data;
 	}
 
+	public void setData(ConfigurationImportData data) {
+		this.data = data;
+		this.llData = data.llData;
+	}
+	
+	public void setService(ConfigurationImportService service) {
+		this.service = service;
+	}
+	
 	/**
 	 * Initializes the wizard page controls with data.
 	 */

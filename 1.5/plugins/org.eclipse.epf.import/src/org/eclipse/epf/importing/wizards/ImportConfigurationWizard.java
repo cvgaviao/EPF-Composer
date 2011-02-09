@@ -11,6 +11,9 @@
 package org.eclipse.epf.importing.wizards;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.authoring.ui.wizards.SaveAllEditorsPage;
@@ -26,10 +29,11 @@ import org.eclipse.epf.library.ui.LibraryUIImages;
 import org.eclipse.epf.library.ui.wizards.LibraryBackupUtil;
 import org.eclipse.epf.services.IFileManager;
 import org.eclipse.epf.services.Services;
+import org.eclipse.epf.ui.wizards.BaseWizard;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
@@ -42,7 +46,7 @@ import org.eclipse.ui.IWorkbench;
  * @author Kelvin Low
  * @since 1.0
  */
-public class ImportConfigurationWizard extends Wizard implements IImportWizard {
+public class ImportConfigurationWizard extends BaseWizard implements IImportWizard {
 
 	public boolean okToComplete = false;
 
@@ -57,6 +61,8 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 	protected ConfigurationImportService service = ConfigurationImportService.newInstance(
 			data);	
 
+	public static final String WIZARD_EXTENSION_POINT_ID = "org.eclipse.epf.import.importConfigurationWizard"; //$NON-NLS-1$
+	
 	/**
 	 * Creates a new instance.
 	 */
@@ -70,6 +76,7 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 	 *      IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		super.init(workbench, selection);
 	}
 
 	/**
@@ -95,15 +102,61 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 		SaveAllEditorsPage.addPageIfNeeded(this, true, null, null, ImportPlugin
 				.getDefault().getImageDescriptor(
 						"full/wizban/ImportLibraryConfiguration.gif")); //$NON-NLS-1$
+		if (wizardExtender == null) {
+			page1 = new SelectImportConfigurationSource(data, service);
+			addPage(page1);
+	
+			configPage = new SelectConfigsToImport(service);
+			addPage(configPage);
+	
+			specsPage = new SelectConfigSpecsToImportPage(data);
+			addPage(specsPage);
+			
+			return;
+		}
+		
+		
+		List<IWizardPage> wizardPages = new ArrayList<IWizardPage>();
 
-		page1 = new SelectImportConfigurationSource(data, service);
-		addPage(page1);
+		IWizardPage page = wizardExtender
+				.getReplaceWizardPage(SelectImportConfigurationSource.PAGE_NAME);
+		if (page != null) {
+			((SelectImportConfigurationSource) page).setData(data);
+			((SelectImportConfigurationSource) page).setService(service);
+			wizardPages.add(page);
+		} else {
+			page1 = new SelectImportConfigurationSource(data, service);
+			wizardPages.add(page1);
+		}
 
-		configPage = new SelectConfigsToImport(service);
-		addPage(configPage);
+		page = wizardExtender
+				.getReplaceWizardPage(SelectPluginsToImport.PAGE_NAME);
+		if (page != null) {
+			wizardPages.add(page);
+		} else {
+			configPage = new SelectConfigsToImport(service);
+			wizardPages.add(configPage);
+		}
 
-		specsPage = new SelectConfigSpecsToImportPage(data);
-		addPage(specsPage);
+		page = wizardExtender
+				.getReplaceWizardPage(SelectConfigSpecsToImportPage.PAGE_NAME);
+		if (page != null) {
+			wizardPages.add(page);
+		} else {
+			specsPage = new SelectConfigSpecsToImportPage(data);
+			wizardPages.add(configPage);
+		}
+		
+		super.getNewWizardPages(wizardPages);
+
+		for (Iterator<IWizardPage> it = wizardPages.iterator(); it
+				.hasNext();) {
+			IWizardPage wizardPage = it.next();
+			super.addPage(wizardPage);
+		}
+
+		wizardExtender.initWizardPages(wizardPages);
+		
 	}
 
 	/**
@@ -190,4 +243,11 @@ public class ImportConfigurationWizard extends Wizard implements IImportWizard {
 		return true;
 	}
 
+	/**
+	 * @see org.eclipse.epf.ui.wizards.BaseWizard#getWizardExtenderExtensionPointId()
+	 */
+	public String getWizardExtenderExtensionPointId() {
+		return WIZARD_EXTENSION_POINT_ID;
+	}
+	
 }
