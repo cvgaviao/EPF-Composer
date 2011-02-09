@@ -133,7 +133,7 @@ public class ExportConfigurationWizard extends Wizard implements IExportWizard {
 									.run(monitor);
 						} else {
 							// Export a configuration closure.
-							(new ConfigurationExportService(data)).run(monitor);
+							(ConfigurationExportService.newInstance(data)).run(monitor);
 						}
 					}
 				} catch (Exception e) {

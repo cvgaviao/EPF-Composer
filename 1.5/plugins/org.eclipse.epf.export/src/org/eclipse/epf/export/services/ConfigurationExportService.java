@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.export.ExportPlugin;
 import org.eclipse.epf.export.ExportResources;
 import org.eclipse.epf.library.IConfigurationClosure;
@@ -43,12 +44,21 @@ public class ConfigurationExportService {
 
 	public static String excludes = ".copyarea.dat, **/.copyarea.dat, .copyarea.db, **/.copyarea.db"; //$NON-NLS-1$
 	private ConfigurationExportData data;
+	protected File exportLibFolder;
 
 	/**
 	 * Creates a new instance.
 	 */
 	public ConfigurationExportService(ConfigurationExportData data) {
 		this.data = data;
+	}
+	
+	public static ConfigurationExportService newInstance(ConfigurationExportData data) {
+		Object obj = ExtensionHelper.create(ConfigurationExportService.class, data);
+		if (obj instanceof ConfigurationExportService) {
+			return (ConfigurationExportService) obj;
+		}		
+		return new ConfigurationExportService(data);
 	}
 	
 	/**
@@ -62,7 +72,7 @@ public class ConfigurationExportService {
 			}
 			monitor.setTaskName(ExportResources.ConfigurationExportService_MSG0); 
 			String exportLibPath = data.llData.getParentFolder();
-			File exportLibFolder = new File(exportLibPath);
+			exportLibFolder = new File(exportLibPath);
 			if (!exportLibFolder.exists()) {
 				exportLibFolder.mkdir();
 			}
