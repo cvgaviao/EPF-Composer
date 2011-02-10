@@ -287,13 +287,13 @@ public class ConfigurationImportService {
 		}	
 		
 		try {
-			postImportOperation();
+			postImportOperation(monitor);
 		} catch (Exception e) {
 			ImportPlugin.getDefault().getLogger().logError(e);
 		}
 	}
 	
-	protected void postImportOperation() throws Exception {
+	protected void postImportOperation(IProgressMonitor monitor) throws Exception {
 		// Reopen the library.
 		LibraryService.getInstance().reopenCurrentMethodLibrary();	
 	}

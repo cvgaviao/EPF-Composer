@@ -54,7 +54,7 @@ import org.eclipse.ui.IWorkbench;
  */
 public class ImportXMLWizard extends Wizard implements IImportWizard {
 
-	ImportXMLService service = new ImportXMLService();
+	ImportXMLService service = ImportXMLService.newInstance();
 
 	private boolean succeed = true;
 	

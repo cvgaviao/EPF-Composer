@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
 import org.eclipse.epf.common.ui.util.MsgDialog;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.export.services.ConfigurationExportService;
@@ -109,6 +110,14 @@ public class PluginImportingService {
 	 */
 	public PluginImportingService(PluginImportData data) {
 		this.data = data;
+	}
+	
+	public static PluginImportingService newInstance(PluginImportData data) {
+		Object obj = ExtensionHelper.create(PluginImportingService.class, data);
+		if (obj instanceof PluginImportingService) {
+			return (PluginImportingService) obj;
+		}		
+		return new PluginImportingService(data);
 	}
 
 	/**
@@ -269,7 +278,8 @@ public class PluginImportingService {
 				
 				if (toSave) {
 					LibraryService.getInstance().saveCurrentMethodLibrary();
-					LibraryService.getInstance().reopenCurrentMethodLibrary();
+//					LibraryService.getInstance().reopenCurrentMethodLibrary();
+					postImportOperation(monitor);
 				}
 				MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
 				ResourceUtil.refreshResources(lib, monitor);
@@ -312,6 +322,11 @@ public class PluginImportingService {
 		}
 	}
 
+	protected void postImportOperation(IProgressMonitor monitor) throws Exception {
+		// Reopen the library.
+		LibraryService.getInstance().reopenCurrentMethodLibrary();	
+	}
+	
 	private List unlockPlugins() {
 
 		List pluginIds = new ArrayList();

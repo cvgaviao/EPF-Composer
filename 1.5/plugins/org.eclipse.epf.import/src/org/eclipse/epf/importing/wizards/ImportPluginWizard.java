@@ -59,7 +59,7 @@ public class ImportPluginWizard extends BaseWizard implements IImportWizard {
 
 	protected PluginImportData data = new PluginImportData();
 
-	protected PluginImportingService service = new PluginImportingService(data);
+	protected PluginImportingService service = PluginImportingService.newInstance(data);
 	
 	public static final String WIZARD_EXTENSION_POINT_ID = "org.eclipse.epf.import.importPluginWizard"; //$NON-NLS-1$	
 

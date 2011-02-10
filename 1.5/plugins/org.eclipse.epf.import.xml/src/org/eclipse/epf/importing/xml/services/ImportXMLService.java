@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.ui.util.MsgDialog;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.dataexchange.util.ContentProcessor;
 import org.eclipse.epf.dataexchange.util.IResourceHandler;
 import org.eclipse.epf.export.services.DiagramHandler;
@@ -134,6 +135,14 @@ public class ImportXMLService {
 
 	}
 
+	public static ImportXMLService newInstance() {
+		Object obj = ExtensionHelper.create(ImportXMLService.class, null);
+		if (obj instanceof ImportXMLService) {
+			return (ImportXMLService) obj;
+		}		
+		return new ImportXMLService();
+	}
+	
 	/**
 	 * Loads the xml file.
 	 * @param xmlPath
@@ -453,7 +462,9 @@ public class ImportXMLService {
 				diagramHandler.execute();				
 	
 				logger.logMessage("re-open target library ..."); //$NON-NLS-1$
-				LibraryService.getInstance().reopenCurrentMethodLibrary();
+//				LibraryService.getInstance().reopenCurrentMethodLibrary();
+				postImportOperation(monitor);
+				
 				if (migrator != null) {
 					org.eclipse.epf.uma.MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
 					migrator.migrateXmlImportedLib(lib, monitor);					
@@ -489,6 +500,11 @@ public class ImportXMLService {
 		}
 	}
 
+	protected void postImportOperation(IProgressMonitor monitor) throws Exception {
+		// Reopen the library.
+		LibraryService.getInstance().reopenCurrentMethodLibrary();	
+	}
+	
 	private void creatEDataObjectTree(IModelObject xmlObj, IModelObject umaObj) {
 
 		for (Iterator it = xmlObj.eContents().iterator(); it.hasNext();) {
