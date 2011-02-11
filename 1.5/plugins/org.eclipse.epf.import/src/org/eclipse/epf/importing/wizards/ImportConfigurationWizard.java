@@ -121,8 +121,9 @@ public class ImportConfigurationWizard extends BaseWizard implements IImportWiza
 		IWizardPage page = wizardExtender
 				.getReplaceWizardPage(SelectImportConfigurationSource.PAGE_NAME);
 		if (page != null) {
-			((SelectImportConfigurationSource) page).setData(data);
-			((SelectImportConfigurationSource) page).setService(service);
+			page1 = (SelectImportConfigurationSource) page;
+			page1.setData(data);
+			page1.setService(service);
 			wizardPages.add(page);
 		} else {
 			page1 = new SelectImportConfigurationSource(data, service);
@@ -132,6 +133,7 @@ public class ImportConfigurationWizard extends BaseWizard implements IImportWiza
 		page = wizardExtender
 				.getReplaceWizardPage(SelectPluginsToImport.PAGE_NAME);
 		if (page != null) {
+			configPage = (SelectConfigsToImport) page;
 			wizardPages.add(page);
 		} else {
 			configPage = new SelectConfigsToImport(service);
@@ -141,10 +143,11 @@ public class ImportConfigurationWizard extends BaseWizard implements IImportWiza
 		page = wizardExtender
 				.getReplaceWizardPage(SelectConfigSpecsToImportPage.PAGE_NAME);
 		if (page != null) {
+			specsPage = (SelectConfigSpecsToImportPage) page;
 			wizardPages.add(page);
 		} else {
 			specsPage = new SelectConfigSpecsToImportPage(data);
-			wizardPages.add(configPage);
+			wizardPages.add(specsPage);
 		}
 		
 		super.getNewWizardPages(wizardPages);

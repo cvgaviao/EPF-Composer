@@ -63,7 +63,7 @@ public class ConfigurationImportService {
 	
 	private ConfigurationImportData data;
 
-	LibraryDocument importingLibDoc = null;
+	protected LibraryDocument importingLibDoc = null;
 
 	LibraryDiffManager diffMgr = null;
 

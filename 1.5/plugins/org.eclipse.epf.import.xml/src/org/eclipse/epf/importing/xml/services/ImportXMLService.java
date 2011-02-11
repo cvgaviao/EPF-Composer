@@ -106,7 +106,7 @@ public class ImportXMLService {
 	
 	private String xmlPath;
 
-	private XMLLibrary xmlLib;
+	protected XMLLibrary xmlLib;
 
 	private UmaLibrary umaLib;
 
