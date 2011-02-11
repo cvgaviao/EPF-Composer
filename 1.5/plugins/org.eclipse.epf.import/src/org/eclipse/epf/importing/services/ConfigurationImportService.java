@@ -61,7 +61,7 @@ public class ConfigurationImportService {
 	
 	private UpgradeCallerInfo upGradeInfo;
 	
-	private ConfigurationImportData data;
+	protected ConfigurationImportData data;
 
 	protected LibraryDocument importingLibDoc = null;
 

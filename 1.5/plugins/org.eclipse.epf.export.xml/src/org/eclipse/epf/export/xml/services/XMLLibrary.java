@@ -49,6 +49,7 @@ import org.eclipse.epf.xml.uma.ContentCategoryPackage;
 import org.eclipse.epf.xml.uma.ContentElement;
 import org.eclipse.epf.xml.uma.ContentPackage;
 import org.eclipse.epf.xml.uma.DocumentRoot;
+import org.eclipse.epf.xml.uma.MethodConfiguration;
 import org.eclipse.epf.xml.uma.MethodElement;
 import org.eclipse.epf.xml.uma.MethodElementProperty;
 import org.eclipse.epf.xml.uma.MethodLibrary;
@@ -137,6 +138,16 @@ public class XMLLibrary {
 		String[] ids = new String[plugins.size()];
 		for (int i = 0; i < plugins.size(); i++) {
 			ids[i] = ((MethodPlugin) plugins.get(i)).getId();
+		}
+
+		return ids;
+	}
+	
+	public String[] getConfigIds() {
+		List configs = rootObject.getMethodConfiguration();
+		String[] ids = new String[configs.size()];
+		for (int i = 0; i < configs.size(); i++) {
+			ids[i] = ((MethodConfiguration) configs.get(i)).getId();
 		}
 
 		return ids;
