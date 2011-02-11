@@ -90,11 +90,11 @@ public class PluginImportingService {
 	
 	private static boolean localDebug = false;
 	
-	private PluginImportData data;
+	protected PluginImportData data;
 	
 	private Object validateHookData;
 
-	LibraryDocument importingLibDoc;
+	protected LibraryDocument importingLibDoc;
 	LibraryDocument targetLibDoc;
 
 	// Flag to indicate the file checkout status.
@@ -279,8 +279,8 @@ public class PluginImportingService {
 				if (toSave) {
 					LibraryService.getInstance().saveCurrentMethodLibrary();
 //					LibraryService.getInstance().reopenCurrentMethodLibrary();
-					postImportOperation(monitor);
 				}
+				postImportOperation(monitor);
 				MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();
 				ResourceUtil.refreshResources(lib, monitor);
 				return;
