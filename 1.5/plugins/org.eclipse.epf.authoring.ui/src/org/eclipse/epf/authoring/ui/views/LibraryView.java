@@ -1226,6 +1226,22 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 				return ix == 1;
 			}
 			
+			MethodPlugin srcPlugin = null;
+			for (Iterator iter = selection.iterator(); iter.hasNext();) {
+				Object element = iter.next();
+				if (element instanceof MethodElement) {
+					MethodPlugin plugin = UmaUtil.getMethodPlugin((MethodElement) element);
+					if (plugin == null) {
+						return false;
+					} else if (plugin != srcPlugin) {
+						if (srcPlugin != null) {
+							return false;
+						}
+						srcPlugin = plugin;
+					}
+				}
+			}
+			
 			for (Iterator iter = selection.iterator(); iter.hasNext();) {
 				Object element = iter.next();
 				if ((element instanceof MethodElement)
