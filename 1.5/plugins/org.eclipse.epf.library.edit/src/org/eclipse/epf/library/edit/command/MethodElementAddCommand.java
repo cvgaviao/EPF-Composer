@@ -1445,33 +1445,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 						// get incoming references
 						//
 						if (searchIncomingRefs) {
-							Collection references = AssociationHelper
-									.getReferences(e);
-							for (Iterator iter = references.iterator(); iter
-									.hasNext();) {
-								MethodElement element = (MethodElement) iter
-										.next();
-								if (!elementsToMove.contains(element)) {
-									MethodPlugin plugin = UmaUtil
-											.getMethodPlugin(element);
-									if (plugin != null
-											&& plugin != targetPlugin
-											&& !Misc.isBaseOf(targetPlugin,
-													plugin, new HashMap<String, Boolean>())) {
-										Collection xRefs = getXReferences(
-												element, e, null);
-										for (Iterator iter1 = xRefs.iterator(); iter1
-												.hasNext();) {
-											EStructuralFeature f = (EStructuralFeature) iter1
-													.next();
-											illegalReferences
-													.add(new Reference(element,
-															f, e));
-										}
-
-									}
-								}
-							}
+							getIllegalIncomingReferences(e);
 						}
 					}
 				}
@@ -1486,6 +1460,36 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				}
 			}
 			return affectedResources;
+		}
+
+		private void getIllegalIncomingReferences(MethodElement e) {
+			Collection references = AssociationHelper
+					.getReferences(e);
+			for (Iterator iter = references.iterator(); iter
+					.hasNext();) {
+				MethodElement element = (MethodElement) iter
+						.next();
+				if (!elementsToMove.contains(element)) {
+					MethodPlugin plugin = UmaUtil
+							.getMethodPlugin(element);
+					if (plugin != null
+							&& plugin != targetPlugin
+							&& !Misc.isBaseOf(targetPlugin,
+									plugin, new HashMap<String, Boolean>())) {
+						Collection xRefs = getXReferences(
+								element, e, null);
+						for (Iterator iter1 = xRefs.iterator(); iter1
+								.hasNext();) {
+							EStructuralFeature f = (EStructuralFeature) iter1
+									.next();
+							illegalReferences
+									.add(new Reference(element,
+											f, e));
+						}
+
+					}
+				}
+			}
 		}
 
 		public void removeIllegalReferences() {
@@ -1721,51 +1725,8 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				}
 
 				if (msgBuffer.length() > 0) {
-					IUserInteractionHandler uiHandler = ExtensionManager.getDefaultUserInteractionHandler();
-					if(uiHandler  != null) {
-						
-//					Old code: ask confirmation to remove illegal references						
-//						int ret = uiHandler.selectOne(new int[] {IUserInteractionHandler.ACTION_YES, IUserInteractionHandler.ACTION_NO }, 
-//								LibraryEditResources.moveDialog_title, msgBuffer.toString(), null);
-//						if(ret == IUserInteractionHandler.ACTION_NO) {
-//							return;
-//						}
-//					New code: ask confirmation to add required plug-ins	
-						refPluginsInfo = calRefPluginsInfo(ownerPlugin);
-						List<String> pluginsToAdd = new ArrayList<String>();
-						for (MethodPlugin p : refPluginsInfo.refPluginsToAdd) {
-							pluginsToAdd.add(p.getName());
-						}
-						if (pluginsToAdd.size() > 1) {
-							Collections.sort(pluginsToAdd);
-						}
-						
-						if (! pluginsToAdd.isEmpty()) {
-							String str = " " + this.ownerPlugin.getName() + ":";//$NON-NLS-1$ //$NON-NLS-2$
-							for (String p : pluginsToAdd) {
-								str += "\n" + p;//$NON-NLS-1$
-							}						
-							int ret = uiHandler.selectOne(new int[] {
-									IUserInteractionHandler.ACTION_YES,
-									IUserInteractionHandler.ACTION_NO,
-									IUserInteractionHandler.ACTION_CANCEL,
-									},
-									LibraryEditResources.moveDialog_title,
-									LibraryEditResources.moveDialog_addRefPluginsText + str, null);
-						 
-							if (ret == IUserInteractionHandler.ACTION_CANCEL) {
-								refPluginsInfo.refPluginsToAdd.clear();
-								return;
-								
-							} else if (ret == IUserInteractionHandler.ACTION_CANCEL) {
-								refPluginsInfo.refPluginsToAdd.clear();
-								
-							} else {
-								ownerPlugin.getBases().addAll(refPluginsInfo.refPluginsToAdd);
-								
-							}
-														
-						}
+					if (! addRefPlugins()) {
+						return;
 					}
 				}
 
@@ -1783,53 +1744,9 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					}
 				}
 
-				if (removeXRefRequired || isRefenrecedIllegally) {
-					// get set of resources that will be modified during this
-					// move
-					//
-					illegalReferenceRemover = new IllegalReferenceRemover(
-							ownerPlugin, moveList, removeXRefRequired,
-							isRefenrecedIllegally);
-					runnable = new IRunnableWithProgress() {
-
-						public void run(IProgressMonitor monitor)
-								throws InvocationTargetException,
-								InterruptedException {
-							monitor
-									.subTask(LibraryEditResources.checkAffectedResourcesTask_name); 
-							modifiedResources = illegalReferenceRemover
-									.getAffectedResources();
-						}
-
-					};
-					stat = UserInteractionHelper.getUIHelper().runInModalContext(runnable, true, monitor, shell);
-					if(!stat.isOK()) {
-						status.add(stat);
-						return;
-					}
-
-					// check affected resources for unmodifiable
-					execStatus = UserInteractionHelper.checkModify(
-							modifiedResources, shell);
-					if (!execStatus.isOK()) {
-						Messenger.INSTANCE.showError(LibraryEditResources.moveDialog_title, null, execStatus);
-						return;
-					}
-
-					try {
-						monitor
-								.subTask(LibraryEditResources.removingReferencestask_name); 
-						illegalReferenceRemover.removeIllegalReferences();
-					} catch (Exception e) {
-						undo();
-						String msg = TngUtil.toStackTraceString(e);
-						status.add(new Status(IStatus.ERROR,
-								LibraryEditPlugin.INSTANCE.getSymbolicName(),
-								0, msg, e));
-					}
-				} else {
-					modifiedResources = new HashSet();
-					monitor.subTask(""); //$NON-NLS-1$
+				//Never remove references with new code, but keep the old code here for easy reference
+				if (false) {
+					removeReferences();
 				}
 
 				// set new name if there is any
@@ -1924,6 +1841,113 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			}
 
 			state = STATE_END;
+		}
+
+		@Deprecated
+		private void removeReferences() {
+			IStatus execStatus;
+			IRunnableWithProgress runnable;
+			IStatus stat;
+			if (removeXRefRequired || isRefenrecedIllegally) {
+				// get set of resources that will be modified during this
+				// move
+				//
+				illegalReferenceRemover = new IllegalReferenceRemover(
+						ownerPlugin, moveList, removeXRefRequired,
+						isRefenrecedIllegally);
+				runnable = new IRunnableWithProgress() {
+
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException,
+							InterruptedException {
+						monitor
+								.subTask(LibraryEditResources.checkAffectedResourcesTask_name); 
+						modifiedResources = illegalReferenceRemover
+								.getAffectedResources();
+					}
+
+				};
+				stat = UserInteractionHelper.getUIHelper().runInModalContext(runnable, true, monitor, shell);
+				if(!stat.isOK()) {
+					status.add(stat);
+//						return;
+				}
+
+				// check affected resources for unmodifiable
+				execStatus = UserInteractionHelper.checkModify(
+						modifiedResources, shell);
+				if (!execStatus.isOK()) {
+					Messenger.INSTANCE.showError(LibraryEditResources.moveDialog_title, null, execStatus);
+//						return;
+				}
+
+				try {
+					monitor
+							.subTask(LibraryEditResources.removingReferencestask_name); 
+					illegalReferenceRemover.removeIllegalReferences();
+				} catch (Exception e) {
+					undo();
+					String msg = TngUtil.toStackTraceString(e);
+					status.add(new Status(IStatus.ERROR,
+							LibraryEditPlugin.INSTANCE.getSymbolicName(),
+							0, msg, e));
+				}
+			} else {
+				modifiedResources = new HashSet();
+				monitor.subTask(""); //$NON-NLS-1$
+			}
+		}
+		
+		private boolean addRefPlugins() {
+			IUserInteractionHandler uiHandler = ExtensionManager.getDefaultUserInteractionHandler();
+			if (uiHandler == null) {
+				return false;
+			}
+				
+//					Old code: ask confirmation to remove illegal references						
+//						int ret = uiHandler.selectOne(new int[] {IUserInteractionHandler.ACTION_YES, IUserInteractionHandler.ACTION_NO }, 
+//								LibraryEditResources.moveDialog_title, msgBuffer.toString(), null);
+//						if(ret == IUserInteractionHandler.ACTION_NO) {
+//							return;
+//						}
+//					New code: ask confirmation to add required plug-ins	
+			refPluginsInfo = calRefPluginsInfo(ownerPlugin);
+			List<String> pluginsToAdd = new ArrayList<String>();
+			for (MethodPlugin p : refPluginsInfo.refPluginsToAdd) {
+				pluginsToAdd.add(p.getName());
+			}
+			if (pluginsToAdd.size() > 1) {
+				Collections.sort(pluginsToAdd);
+			}
+			
+			if (! pluginsToAdd.isEmpty()) {
+				String str = " " + this.ownerPlugin.getName() + ":";//$NON-NLS-1$ //$NON-NLS-2$
+				for (String p : pluginsToAdd) {
+					str += "\n" + p;//$NON-NLS-1$
+				}						
+				int ret = uiHandler.selectOne(new int[] {
+						IUserInteractionHandler.ACTION_YES,
+						IUserInteractionHandler.ACTION_NO,
+						IUserInteractionHandler.ACTION_CANCEL,
+						},
+						LibraryEditResources.moveDialog_title,
+						LibraryEditResources.moveDialog_addRefPluginsText + str, null);
+			 
+				if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+					refPluginsInfo.refPluginsToAdd.clear();
+					return false;
+					
+				} else if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+					refPluginsInfo.refPluginsToAdd.clear();
+					
+				} else {
+					ownerPlugin.getBases().addAll(refPluginsInfo.refPluginsToAdd);
+					
+				}
+											
+			}
+			
+			return true;
 		}
 
 
