@@ -1605,6 +1605,8 @@ public class MethodElementAddCommand extends CommandWrapper implements
 
 		private HashMap elementToOldContainerMap;
 
+		private RefPluginsInfo refPluginsInfo;
+
 		public MoveOperation(Command command, IProgressMonitor monitor,
 				Object shell) {
 			super(command);
@@ -1667,6 +1669,10 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			if (illegalReferenceRemover != null) {
 				illegalReferenceRemover.restoreRemovedReferences();
 			}
+			
+			if (refPluginsInfo != null && !refPluginsInfo.refPluginsToAdd.isEmpty()) {
+				ownerPlugin.getBases().removeAll(refPluginsInfo.refPluginsToAdd);
+			}
 		}
 		
 		@Override
@@ -1717,10 +1723,48 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				if (msgBuffer.length() > 0) {
 					IUserInteractionHandler uiHandler = ExtensionManager.getDefaultUserInteractionHandler();
 					if(uiHandler  != null) {
-						int ret = uiHandler.selectOne(new int[] {IUserInteractionHandler.ACTION_YES, IUserInteractionHandler.ACTION_NO }, 
-								LibraryEditResources.moveDialog_title, msgBuffer.toString(), null);
-						if(ret == IUserInteractionHandler.ACTION_NO) {
-							return;
+						
+//					Old code: ask confirmation to remove illegal references						
+//						int ret = uiHandler.selectOne(new int[] {IUserInteractionHandler.ACTION_YES, IUserInteractionHandler.ACTION_NO }, 
+//								LibraryEditResources.moveDialog_title, msgBuffer.toString(), null);
+//						if(ret == IUserInteractionHandler.ACTION_NO) {
+//							return;
+//						}
+//					New code: ask confirmation to add required plug-ins	
+						refPluginsInfo = calRefPluginsInfo(ownerPlugin);
+						List<String> pluginsToAdd = new ArrayList<String>();
+						for (MethodPlugin p : refPluginsInfo.refPluginsToAdd) {
+							pluginsToAdd.add(p.getName());
+						}
+						if (pluginsToAdd.size() > 1) {
+							Collections.sort(pluginsToAdd);
+						}
+						
+						if (! pluginsToAdd.isEmpty()) {
+							String str = " " + this.ownerPlugin.getName() + ":";//$NON-NLS-1$ //$NON-NLS-2$
+							for (String p : pluginsToAdd) {
+								str += "\n" + p;//$NON-NLS-1$
+							}						
+							int ret = uiHandler.selectOne(new int[] {
+									IUserInteractionHandler.ACTION_YES,
+									IUserInteractionHandler.ACTION_NO,
+									IUserInteractionHandler.ACTION_CANCEL,
+									},
+									LibraryEditResources.moveDialog_title,
+									LibraryEditResources.moveDialog_addRefPluginsText + str, null);
+						 
+							if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+								refPluginsInfo.refPluginsToAdd.clear();
+								return;
+								
+							} else if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+								refPluginsInfo.refPluginsToAdd.clear();
+								
+							} else {
+								ownerPlugin.getBases().addAll(refPluginsInfo.refPluginsToAdd);
+								
+							}
+														
 						}
 					}
 				}
@@ -1880,6 +1924,60 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			}
 
 			state = STATE_END;
+		}
+
+
+		static class RefPluginsInfo {
+			Set<MethodPlugin > refPluginsToAdd = new HashSet<MethodPlugin>();
+			Set<MethodPlugin> refPluginsCircular = new HashSet<MethodPlugin>();
+			Set<MethodPlugin> refPluginsToAddBase = new HashSet<MethodPlugin>(); 
+		}
+
+		private RefPluginsInfo calRefPluginsInfo(MethodPlugin ownerPlugin) {
+			RefPluginsInfo info = new RefPluginsInfo();
+			Set<MethodPlugin> refPluginsToAdd = info.refPluginsToAdd;
+			Set<MethodPlugin> refPluginsCircular = info.refPluginsCircular;
+			Set<MethodPlugin> refPluginsToAddBase = info.refPluginsToAddBase;
+
+			List<MethodPlugin> referencedPlugnList = new ArrayList<MethodPlugin>();
+			for (EObject element : (Collection<EObject>) moveList) {
+				if (element instanceof MethodElement) {
+					Collection<Reference> iReferences = getIllegalOutgoingReferences(
+							ownerPlugin, element, null);
+					for (Reference ref : iReferences) {
+						Object value = ref.getValue();
+						if (value instanceof MethodElement) {
+							MethodPlugin p = UmaUtil
+									.getMethodPlugin((MethodElement) value);
+							if (p != null) {
+								if (refPluginsToAdd.add(p)) {
+									referencedPlugnList.add(p);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			Map<String, Boolean> map = new HashMap<String, Boolean>();
+			for (MethodPlugin plugin : referencedPlugnList) {
+				if (Misc.isBaseOf(ownerPlugin, plugin, map)) {
+					refPluginsCircular.add(plugin);
+					refPluginsToAdd.remove(plugin);
+
+				} else if (refPluginsToAdd.contains(plugin)) {
+					List<MethodPlugin> toRmoveList = new ArrayList<MethodPlugin>();
+					for (MethodPlugin testBasePlugin : refPluginsToAdd) {
+						if (Misc.isBaseOf(testBasePlugin, plugin, map)) {
+							refPluginsToAddBase.add(testBasePlugin);
+							toRmoveList.add(testBasePlugin);
+						}
+					}
+					refPluginsToAdd.removeAll(toRmoveList);
+				}
+			}
+
+			return info;
 		}
 
 		/**

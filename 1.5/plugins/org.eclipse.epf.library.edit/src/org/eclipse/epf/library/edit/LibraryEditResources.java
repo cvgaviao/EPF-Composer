@@ -69,6 +69,8 @@ public final class LibraryEditResources extends NLS {
 	public static String deepCopy_title;
 
 	public static String moveDialog_title;
+	
+	public static String moveDialog_addRefPluginsText;
 
 	public static String deleteDialog_title;
 
