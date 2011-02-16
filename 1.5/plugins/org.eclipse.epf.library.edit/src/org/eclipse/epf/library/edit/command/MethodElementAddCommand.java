@@ -1610,6 +1610,8 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		private HashMap elementToOldContainerMap;
 
 		private RefPluginsInfo refPluginsInfo;
+		
+		private MethodPlugin pluginForAddingTagetAsBase;
 
 		public MoveOperation(Command command, IProgressMonitor monitor,
 				Object shell) {
@@ -1676,6 +1678,10 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			
 			if (refPluginsInfo != null && !refPluginsInfo.refPluginsToAdd.isEmpty()) {
 				ownerPlugin.getBases().removeAll(refPluginsInfo.refPluginsToAdd);
+			}
+			
+			if (pluginForAddingTagetAsBase != null) {
+				pluginForAddingTagetAsBase.getBases().remove(ownerPlugin);
 			}
 		}
 		
@@ -1747,6 +1753,8 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				//Never remove references with new code, but keep the old code here for easy reference
 				if (false) {
 					removeReferences();
+				} else {
+					modifiedResources = new HashSet();
 				}
 
 				// set new name if there is any
@@ -1947,7 +1955,72 @@ public class MethodElementAddCommand extends CommandWrapper implements
 											
 			}
 			
+			pluginForAddingTagetAsBase = getPluginForAddingTagetAsBase();
+			if (pluginForAddingTagetAsBase != null) {
+				String str = " " + pluginForAddingTagetAsBase.getName() + ":";//$NON-NLS-1$ //$NON-NLS-2$
+				str += "\n" + ownerPlugin.getName();//$NON-NLS-1$					
+				int ret = uiHandler.selectOne(new int[] {
+						IUserInteractionHandler.ACTION_YES,
+						IUserInteractionHandler.ACTION_NO,
+						IUserInteractionHandler.ACTION_CANCEL,
+						},
+						LibraryEditResources.moveDialog_title,
+						LibraryEditResources.moveDialog_addRefPluginsText + str, null);
+				if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+					pluginForAddingTagetAsBase = null;
+					
+				} else if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+					pluginForAddingTagetAsBase = null;
+					if (! refPluginsInfo.refPluginsToAdd.isEmpty()) {
+						ownerPlugin.getBases().removeAll(refPluginsInfo.refPluginsToAdd);
+						refPluginsInfo.refPluginsToAdd.clear();
+					}
+					return false;
+					
+				} else {
+					pluginForAddingTagetAsBase.getBases().add(ownerPlugin);	
+					
+				}
+				
+			}						
+			
 			return true;
+		}
+
+		private MethodPlugin getPluginForAddingTagetAsBase() {
+			MethodPlugin srcPlugin = null;
+			Set<MethodElement> moveSet = new HashSet<MethodElement>();
+			for (Object obj : moveList) {
+				if (obj instanceof MethodElement) {
+					if (srcPlugin == null) {
+						srcPlugin = UmaUtil
+								.getMethodPlugin((MethodElement) obj);
+					}
+					moveSet.add((MethodElement) obj);
+				}
+			}
+			if (srcPlugin == null) {
+				return null;
+			}
+
+			Map<String, Boolean> map = new HashMap<String, Boolean>();
+			if (Misc.isBaseOf(ownerPlugin, srcPlugin, map) || (Misc.isBaseOf(srcPlugin, ownerPlugin, map))) {
+				return null;
+			}
+			
+			for (MethodElement element : moveSet) {
+				for (MethodElement referencing : (Collection<MethodElement>) AssociationHelper
+						.getReferences(element)) {
+					if (!moveSet.contains(referencing)
+							&& srcPlugin == UmaUtil
+									.getMethodPlugin(referencing)) {
+						return srcPlugin;
+					}
+				}
+
+			}
+
+			return null;
 		}
 
 
