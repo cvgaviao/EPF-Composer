@@ -184,8 +184,18 @@ public class SelectXMLFilePage extends BaseWizardPage {
 		setControl(composite);
 
 		setPageComplete(isValidPath(pathText.getText().trim()));
+		
+		createAdditionalControls(composite);
 	}
 
+	/**
+	 * Adds additional controls to this wizard page.
+	 * 
+	 * @param composite the parent composite
+	 */
+	protected void createAdditionalControls(Composite composite) {
+	}
+	
 	/**
 	 * Checks whether the user specific path is valid.
 	 * 

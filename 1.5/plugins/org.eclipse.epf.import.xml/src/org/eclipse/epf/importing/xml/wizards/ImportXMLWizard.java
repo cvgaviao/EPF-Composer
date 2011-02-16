@@ -12,6 +12,9 @@ package org.eclipse.epf.importing.xml.wizards;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -35,9 +38,10 @@ import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.services.IFileManager;
 import org.eclipse.epf.services.Services;
+import org.eclipse.epf.ui.wizards.BaseWizard;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IImportWizard;
@@ -52,13 +56,15 @@ import org.eclipse.ui.IWorkbench;
  * @author Kelvin Low
  * @since 1.0
  */
-public class ImportXMLWizard extends Wizard implements IImportWizard {
+public class ImportXMLWizard extends BaseWizard implements IImportWizard {
 
 	ImportXMLService service = ImportXMLService.newInstance();
 
 	private boolean succeed = true;
 	
 	private SelectXMLFilePage filePage = null;
+	
+	public static final String WIZARD_EXTENSION_POINT_ID = "org.eclipse.epf.import.xml.importXMLWizard"; //$NON-NLS-1$	
 
 	/**
 	 * Creates a new instance.
@@ -74,6 +80,7 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 	 *      IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		super.init(workbench, selection);
 	}
 
 	/**
@@ -107,8 +114,33 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 				.getDefault().getImageDescriptor(
 						"full/wizban/ImportXML.gif")); //$NON-NLS-1$
 		
-		filePage = new SelectXMLFilePage();
-		addPage(filePage);
+		if (wizardExtender == null) {			
+			filePage = new SelectXMLFilePage();
+			addPage(filePage);			
+			return;
+		}
+		
+		List<IWizardPage> wizardPages = new ArrayList<IWizardPage>();
+
+		IWizardPage page = wizardExtender
+				.getReplaceWizardPage(SelectXMLFilePage.PAGE_NAME);
+		if (page != null) {
+			filePage = (SelectXMLFilePage) page;
+			wizardPages.add(page);
+		} else {
+			filePage = new SelectXMLFilePage();
+			addPage(filePage);		
+		}
+
+		super.getNewWizardPages(wizardPages);
+
+		for (Iterator<IWizardPage> it = wizardPages.iterator(); it
+				.hasNext();) {
+			IWizardPage wizardPage = it.next();
+			super.addPage(wizardPage);
+		}
+
+		wizardExtender.initWizardPages(wizardPages);
 	}
 
 	/**
@@ -275,5 +307,13 @@ public class ImportXMLWizard extends Wizard implements IImportWizard {
 		}
 		
 		return result[0];
+	}
+	
+
+	/**
+	 * @see org.eclipse.epf.ui.wizards.BaseWizard#getWizardExtenderExtensionPointId()
+	 */
+	public String getWizardExtenderExtensionPointId() {
+		return WIZARD_EXTENSION_POINT_ID;
 	}
 }
