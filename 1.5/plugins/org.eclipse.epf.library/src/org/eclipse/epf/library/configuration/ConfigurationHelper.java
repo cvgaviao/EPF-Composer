@@ -1372,6 +1372,18 @@ public class ConfigurationHelper {
 	 */
 	public static List calc0nFeatureValue(MethodElement element, MethodElement ownerElement, 
 			EStructuralFeature feature, ElementRealizer realizer) {
+		List ret = calc0nFeatureValue_(element, ownerElement, feature, realizer);
+		if (ret != null && !ret.isEmpty() && (element instanceof Task) && feature == UmaPackage.eINSTANCE.getTask_OptionalInput()) {
+			List mInputs = calc0nFeatureValue_(element, ownerElement, UmaPackage.eINSTANCE.getTask_MandatoryInput(), realizer);
+			if (mInputs != null && ! mInputs.isEmpty()) {
+				ret.removeAll(mInputs);
+			}			
+		}		
+		return ret;
+	}
+	
+	private static List calc0nFeatureValue_(MethodElement element, MethodElement ownerElement, 
+			EStructuralFeature feature, ElementRealizer realizer) {
 				
 		List v = null;
 		MethodConfiguration config = realizer.getConfiguration();
