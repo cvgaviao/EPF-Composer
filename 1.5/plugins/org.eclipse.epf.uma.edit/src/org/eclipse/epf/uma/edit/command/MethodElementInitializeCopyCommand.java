@@ -10,18 +10,22 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma.edit.command;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.command.InitializeCopyCommand;
 import org.eclipse.emf.edit.command.CopyCommand.Helper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.uma.ContentDescription;
+import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
@@ -165,6 +169,16 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 
 	protected void copyReferences() {
 		doCopyReferences();
+	}
+
+	@Override
+	protected Collection<? extends EAttribute> getAttributesToCopy() {
+		Collection<? extends EAttribute> ret = super.getAttributesToCopy();
+		if (UmaUtil.isSynFree() && owner instanceof DescriptorDescription) {
+			ret.remove(UmaPackage.eINSTANCE.getDescriptorDescription_RefinedDescription());
+			ret.remove(UmaPackage.eINSTANCE.getContentDescription_KeyConsiderations());			
+		}		
+		return ret;
 	}
 
 }
