@@ -893,5 +893,39 @@ public class UmaUtil {
 		}
 		return set;
 	}
+	
+	public static Process getProcess(MethodElement e) {
+		ProcessComponent procComp = UmaUtil.getProcessComponent(e);
+		if (procComp != null) {
+			org.eclipse.epf.uma.Process proc = procComp.getProcess();
+			return proc;
+		}
+		return null;
+	}
+	
+	public static Scope getScope(Process proc) {
+		if (proc == null || !(proc.getDefaultContext() instanceof Scope)) {
+			return null;
+		}
+		
+		Scope scope = (Scope) proc.getDefaultContext();		
+		return scope;
+	}
+	
+	public static boolean isConfigFree(Process process) {
+		if (getScope(process) != null) {
+			return true;
+		}
+	
+		if (process.getDefaultContext() == null && process
+						.getValidContext().isEmpty()) {
+			return true;
+		}
+		if (! process.getValidContext().isEmpty()) {
+			return process.getValidContext().get(0) instanceof Scope;
+		}
+				
+		return false;
+	}
 
 }
