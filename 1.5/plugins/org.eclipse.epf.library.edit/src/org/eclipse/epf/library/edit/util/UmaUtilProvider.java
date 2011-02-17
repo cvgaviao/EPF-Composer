@@ -15,6 +15,10 @@ public class UmaUtilProvider implements IUmaUtilProvider {
 	private UmaUtilProvider() {		
 	}
 	
+	public boolean isSynFree() {
+		return ProcessUtil.isSynFree();
+	}
+	
 	public boolean isSynFreeLibrary(MethodLibrary lib) {
 		return MethodLibraryPropUtil.getMethodLibraryPropUtil().isSynFree(lib);
 	}

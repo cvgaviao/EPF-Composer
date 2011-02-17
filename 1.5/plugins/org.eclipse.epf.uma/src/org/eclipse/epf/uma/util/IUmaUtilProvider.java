@@ -6,6 +6,8 @@ import org.eclipse.epf.uma.Process;
 
 public interface IUmaUtilProvider {
 	
+	boolean isSynFree();
+	
 	boolean isSynFreeLibrary(MethodLibrary lib);
 	boolean isSynFreePlugin(MethodPlugin lib);
 	boolean isSynFreeProcess(Process proc);

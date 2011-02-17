@@ -817,6 +817,11 @@ public class UmaUtil {
 		System.out.println(generateGUID());
 	}
 	
+	public static boolean isSynFree() {
+		IUmaUtilProvider p = getProvider();
+		return p == null ? true : p.isSynFree();
+	}
+	
 	public static boolean isSynFreeLibrary(MethodLibrary lib) {
 		IUmaUtilProvider p = getProvider();
 		return p == null ? true : p.isSynFreeLibrary(lib);
