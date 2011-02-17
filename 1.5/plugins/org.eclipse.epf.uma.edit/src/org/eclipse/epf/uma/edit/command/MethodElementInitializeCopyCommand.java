@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma.edit.command;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
@@ -174,10 +176,26 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 	@Override
 	protected Collection<? extends EAttribute> getAttributesToCopy() {
 		Collection<? extends EAttribute> ret = super.getAttributesToCopy();
-		if (UmaUtil.isSynFree() && owner instanceof DescriptorDescription) {
-			ret.remove(UmaPackage.eINSTANCE.getDescriptorDescription_RefinedDescription());
-			ret.remove(UmaPackage.eINSTANCE.getContentDescription_KeyConsiderations());			
-		}		
+		if (owner instanceof DescriptorDescription) {
+			boolean toRemove = UmaUtil.isSynFree();
+			if (!toRemove) {
+				Process process = UmaUtil
+						.getProcess((DescriptorDescription) owner);
+				toRemove = UmaUtil.isConfigFree(process);
+			}
+			if (toRemove) {
+				List<EAttribute> modifiedRet = new ArrayList<EAttribute>();
+				for (EAttribute att : ret) {
+					if (att != UmaPackage.eINSTANCE
+							.getDescriptorDescription_RefinedDescription()
+							&& att != UmaPackage.eINSTANCE
+									.getContentDescription_KeyConsiderations()) {
+						modifiedRet.add(att);
+					}
+				}				
+				ret = modifiedRet;
+			}
+		}
 		return ret;
 	}
 
