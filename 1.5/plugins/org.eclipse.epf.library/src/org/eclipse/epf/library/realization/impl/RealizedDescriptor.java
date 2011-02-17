@@ -300,9 +300,9 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	public void updateStringValues() {
-		if (! ProcessUtil.isSynFree()) {
-			return;
-		}
+//		if (! ProcessUtil.isSynFree()) {
+//			return;
+//		}
 		for (EStructuralFeature feature : featureSet) {
 			getFeatureValue(feature);
 		}
