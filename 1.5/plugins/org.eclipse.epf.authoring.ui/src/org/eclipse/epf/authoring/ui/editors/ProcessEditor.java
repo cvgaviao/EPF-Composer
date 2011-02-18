@@ -844,8 +844,10 @@ public class ProcessEditor extends MethodElementEditor implements
 									.getSource()).getMostRecentCommand();
 							if (mostRecentCommand != null) {
 									if (!(TngUtil.unwrap(mostRecentCommand) instanceof SetCommand)) {
-										setSelectionToViewer(mostRecentCommand
-												.getAffectedObjects());
+										if (mostRecentCommand.getAffectedObjects().size() == 1) {		//Multiple select does not make sense
+											setSelectionToViewer(mostRecentCommand
+													.getAffectedObjects());
+										}
 									}
 									if (mostRecentCommand instanceof CreateChildCommand
 											&& currentViewer instanceof ProcessViewer) {
