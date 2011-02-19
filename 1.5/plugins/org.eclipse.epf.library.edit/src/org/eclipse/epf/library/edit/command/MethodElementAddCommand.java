@@ -2512,6 +2512,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		private CustomCategory tgtParent;
 		private Map<CustomCategory, CustomCategory> movingCCtoParentsMap = new HashMap<CustomCategory, CustomCategory>();
 		private boolean samePluginMove = false;
+		private MethodPlugin srcPlugin;
 		
 		public MoveOperationExt(Command command, IProgressMonitor monitor,
 				Object shell, List<CustomCategory> movingCCs, List<CustomCategory> movingCCsrcParents, CustomCategory tgtParent) {
@@ -2522,7 +2523,8 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			for (int i = 0; i < movingCCs.size(); i++) {
 				movingCCtoParentsMap.put(movingCCs.get(i), movingCCsrcParents.get(i));
 			}
-			samePluginMove = UmaUtil.getMethodPlugin(movingCCs.get(0)) == UmaUtil.getMethodPlugin(tgtParent);
+			srcPlugin = UmaUtil.getMethodPlugin(movingCCs.get(0));
+			samePluginMove = srcPlugin == UmaUtil.getMethodPlugin(tgtParent);
 		}
 				
 		@Override
@@ -2546,6 +2548,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				Map elementToOldResourceMap, Set modifiedResources) {
 			super.doMove(monitor, elementToOldResourceMap, modifiedResources);
 			reassign();
+			LibraryEditUtil.getInstance().fixUpDanglingCustomCategories(srcPlugin);
 		}
 
 		private void reassign() {
