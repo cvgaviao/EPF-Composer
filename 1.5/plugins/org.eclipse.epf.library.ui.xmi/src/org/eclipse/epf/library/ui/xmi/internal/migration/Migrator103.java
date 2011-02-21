@@ -67,6 +67,8 @@ public class Migrator103 extends MigratorBase {
 	}
 	
 	public void migrate(String libPath, IProgressMonitor monitor, UpgradeCallerInfo info) throws Exception {
+		setCallerInfo(info);
+		
 		File libFile = new File(libPath);
 		
 		boolean toVerify = true;
