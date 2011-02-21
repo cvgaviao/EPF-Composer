@@ -643,11 +643,11 @@ public class ExportMSPXMLService {
 				generateProjectTask(wbsContentProvider,
 						(BreakdownElement) process, 1, project);
 			} else {
-				List breakdownElements = process.getBreakdownElements();
-				if (breakdownElements.size() > 0) {
+//				List breakdownElements = process.getBreakdownElements();
+//				if (breakdownElements.size() > 0) {
 					generateProjectTask(wbsContentProvider,
 							(BreakdownElement) process, 1, project);
-				}
+//				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
