@@ -11,8 +11,11 @@
 package org.eclipse.epf.authoring.ui.properties;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
@@ -32,6 +35,7 @@ import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
@@ -50,6 +54,7 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -297,12 +302,34 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 			public Object[] getElements(Object object) {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(getSelectedGuidances());
-				
-				if (isSyncFree() && !propUtil.isNoAutoSyn((Descriptor) element)) {
-					elements.addAll(((Descriptor) element).getGuidanceExclude());
+
+				Descriptor des = (Descriptor) element;
+
+				if (isSyncFree() && !propUtil.isNoAutoSyn(des)) {
+					elements.addAll((des).getGuidanceExclude());
 				}
 
-				return getFilteredList(elements).toArray();				
+				MethodElement linkedElement = ProcessUtil
+						.getAssociatedElement(des);
+
+				if (linkedElement != null) {
+					Process process = ProcessUtil.getProcess(des
+							.getSuperActivities());
+					if (ProcessScopeUtil.getInstance().isConfigFree(process)) {
+						Map<EReference, EReference> refMap = LibraryEditUtil.getInstance().getGuidanceRefMap(
+										linkedElement.eClass());
+						Set<Object> set = new HashSet<Object>();
+						for (EReference ref : refMap.keySet()) {
+							Object value = linkedElement.eGet(ref);
+							if (value instanceof List) {
+								set.addAll((List) value);
+							}
+						}
+						elements.retainAll(set);
+					}
+				}
+
+				return getFilteredList(elements).toArray();
 			}
 		};
 
