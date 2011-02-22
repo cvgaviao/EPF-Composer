@@ -75,7 +75,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 	//Test if the descriptor is not to be automatically synchronized
 	public boolean isNoAutoSyn(Descriptor d) {
 		if (getLinkedElement(d) == null) {
-			return false;
+			return true;
 		}
 		Boolean value = getBooleanValue(d, DESCRIPTOR_NoAutoSyn);
 		return value == null ? false : value.booleanValue();
