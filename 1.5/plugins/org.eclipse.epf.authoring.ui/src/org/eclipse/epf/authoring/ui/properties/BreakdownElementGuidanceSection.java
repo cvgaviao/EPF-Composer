@@ -324,6 +324,10 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							if (value instanceof List) {
 								set.addAll((List) value);
 							}
+							List<Guidance> locals = des.getGuidanceAdditional(); 
+							if (locals != null && !locals.isEmpty()) {
+								set.addAll(locals);
+							}
 						}
 						elements.retainAll(set);
 					}
