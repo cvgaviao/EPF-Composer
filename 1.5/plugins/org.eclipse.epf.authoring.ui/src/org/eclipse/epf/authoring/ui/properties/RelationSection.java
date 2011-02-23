@@ -11,7 +11,9 @@
 package org.eclipse.epf.authoring.ui.properties;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
@@ -21,6 +23,7 @@ import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -1080,7 +1083,7 @@ public class RelationSection extends AbstractSection {
 	
 	protected void mixWithExcluded(Descriptor des,
 			List<MethodElement> elements, EReference linkedElementFeature,
-			EReference excludedFeature) {
+			EReference excludedFeature, EReference desFeature) {
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(getConfiguration());
 		MethodElement element = ProcessUtil.getAssociatedElement(des);
@@ -1095,6 +1098,36 @@ public class RelationSection extends AbstractSection {
 			if (elementList.contains(e)) {
 				elements.add(e);
 			}
+		}
+		
+		// The following handle additional logic for config-free process - only
+		// showing the non-realized results, since realization results could get
+		// set into the model in memory due to browsing and publishing.
+		Process process = ProcessUtil.getProcess(des.getSuperActivities());
+		if (ProcessScopeUtil.getInstance().isConfigFree(process)) {
+			DescriptorPropUtil propUtil = DescriptorPropUtil
+					.getDesciptorPropUtil();
+			Set<Object> set = new HashSet<Object>();
+			Object value = element.eGet(linkedElementFeature);			//not realized value
+			if (value instanceof List) {
+				set.addAll((List) value);
+			}			
+			List<MethodElement> modifiedElements = new ArrayList<MethodElement>();
+			for (MethodElement item : elements) {
+				if (item instanceof Descriptor) {
+					Descriptor desItem = (Descriptor) item;
+					MethodElement elemItem = ProcessUtil
+							.getAssociatedElement(desItem);
+					if (elemItem == null || set.contains(elemItem)
+							|| propUtil.localUse(desItem, des, desFeature)) {
+						modifiedElements.add(desItem);
+					}
+				} else {
+					modifiedElements.add(item);
+				}
+			}
+			elements.clear();
+			elements.addAll(modifiedElements);
 		}
 	}
 	

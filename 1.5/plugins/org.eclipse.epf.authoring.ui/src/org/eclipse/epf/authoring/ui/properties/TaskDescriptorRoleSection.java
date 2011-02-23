@@ -93,7 +93,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 //					elements.addAll(td.getPerformedPrimarilyByExcluded());
 					
 					mixWithExcluded(td, elements, UmaPackage.eINSTANCE.getTask_PerformedBy(),
-							UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyByExcluded());
+							UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyByExcluded(), UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy());
 				}
 				
 				return getFilteredList(elements).toArray();
@@ -118,7 +118,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 //					elements.addAll(td.getAdditionallyPerformedByExclude());
 					
 					mixWithExcluded(td, elements, UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy(),
-							UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedByExclude());
+							UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedByExclude(), UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy());
 				}
 				
 				return getFilteredList(elements).toArray();
@@ -446,7 +446,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 //			list.addAll(td.getPerformedPrimarilyByExcluded());
 			
 			mixWithExcluded(td, list, UmaPackage.eINSTANCE.getTask_PerformedBy(),
-					UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyByExcluded());
+					UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyByExcluded(), UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy());
 		}
 		return list;
 	};
@@ -468,7 +468,7 @@ public class TaskDescriptorRoleSection extends RelationSection {
 //			list.addAll(td.getAdditionallyPerformedByExclude());
 			
 			mixWithExcluded(td, list, UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy(),
-					UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedByExclude());
+					UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedByExclude(), UmaPackage.eINSTANCE.getTaskDescriptor_AdditionallyPerformedBy());
 		}
 		return list;
 	};
