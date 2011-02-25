@@ -87,7 +87,16 @@ public class LibraryTraversalStrategy extends AbstractTraversalStrategy {
 				{
 					return Collections.EMPTY_LIST.iterator();
 				}
-				return super.getEObjectChildren(object);
+				
+				List<MethodElement> list = new ArrayList<MethodElement>();
+				for(Iterator<?> it = super.getEObjectChildren(object) ; it.hasNext();) {
+					Object obj = it.next();
+					if (obj instanceof MethodElement) {
+						list.add((MethodElement) obj);
+					}
+				}
+				
+				return list.iterator();
 			}
 			
 			if(object instanceof CustomCategory) {
@@ -143,6 +152,9 @@ public class LibraryTraversalStrategy extends AbstractTraversalStrategy {
 		
 		private Iterator getEObjectChildren(EObject eObject, EReference reference, EClass eClass) {
 			Iterator iter;
+			if (reference == UmaPackage.eINSTANCE.getMethodElement_MethodElementProperty()) {
+				return Collections.EMPTY_LIST.iterator();
+			}
 			if(reference.isMany()) {
 				boolean resolve = isResolveProxies();
 				List list = (List) eObject.eGet(reference, resolve);
