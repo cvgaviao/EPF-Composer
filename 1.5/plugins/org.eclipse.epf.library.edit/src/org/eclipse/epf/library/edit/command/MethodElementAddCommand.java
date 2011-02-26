@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -2552,15 +2553,54 @@ public class MethodElementAddCommand extends CommandWrapper implements
 		}
 
 		private void reassign() {
+			
+			Set<CustomCategory> notToReassignSet = new HashSet<CustomCategory>();
 			for (int i = 0; i < movingCCs.size(); i++) {
-				movingCCsrcParents.get(i).getCategorizedElements().remove(movingCCs.get(i));
+				CustomCategory cc = movingCCs.get(i);
+				boolean toReassign = true;
+				
+				if (!samePluginMove && movingCCs.size() > 1) {
+					
+					//Build ancestorSet
+					Set ancestorSet = new HashSet();
+					Stack<List> stack = new Stack<List>();
+					List<CustomCategory> parents = AssociationHelper.getCustomCategories(cc);
+					if (parents != null && !parents.isEmpty()) {
+						stack.push(parents);	
+					}					
+					while (! stack.isEmpty()) {
+						parents = stack.pop();
+						for (CustomCategory p : parents) {
+							if (! ancestorSet.contains(p)) {
+								List<CustomCategory> moreParents = AssociationHelper.getCustomCategories(p);
+								if (moreParents != null && !moreParents.isEmpty()) {
+									stack.push(moreParents);	
+								}
+							}
+						}						
+						ancestorSet.addAll(parents);
+					}
+					
+					//Test if any other moving cc1 is an ancestor, and not to assign if there is any
+					for (CustomCategory cc1 : movingCCs) {
+						if (cc1 != cc && ancestorSet.contains(cc1)) {
+							notToReassignSet.add(cc);
+							toReassign = false;
+							break;
+						}
+					}
+				}
+				
+				if (toReassign) {
+					movingCCsrcParents.get(i).getCategorizedElements().remove(cc);
+				}
 			}
 			
 			
 			Set set = new HashSet();
 			set.addAll(tgtParent.getCategorizedElements());
 			for (CustomCategory cc : movingCCs) {
-				if (set.contains(cc)) {
+				if (set.contains(cc) || notToReassignSet.contains(cc)) {
 					continue;
 				}
 				set.add(cc);
