@@ -525,12 +525,17 @@
             category="org.eclipse.epf.authoring.ui.preferences.AuthoringPreferencePage"
             class="org.eclipse.epf.authoring.ui.preferences.LibraryViewPrefPage"
             id="org.eclipse.epf.authoring.ui.preferences.LibraryViewPrefPage"
-            name="%libraryViewOptions"/>
+            name="%libraryViewOptions"/>            
        <page
             category="org.eclipse.epf.authoring.ui.preferences.AuthoringPreferencePage"
             class="org.eclipse.epf.authoring.ui.preferences.ActivityDiagramPrefPage"
             id="org.eclipse.epf.authoring.ui.preferences.ActivityDiagramPrefPage"
             name="%activityDiagram"/>
+        <page
+            category="org.eclipse.epf.authoring.ui.preferences.AuthoringPreferencePage"
+            class="org.eclipse.epf.authoring.ui.preferences.AuthoringValidationPrefPage"
+            id="org.eclipse.epf.authoring.ui.preferences.AuthoringValidationPrefPage"
+            name="%validation"/>  
       <!--
       <page
             class="org.eclipse.epf.authoring.ui.preferences.RootPrefPage"
