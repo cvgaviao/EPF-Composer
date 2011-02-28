@@ -14,6 +14,8 @@ import org.eclipse.epf.library.edit.util.ILibraryEditUtilProvider;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.validation.IValidationManager;
+import org.eclipse.epf.library.validation.ValidationManager;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -153,6 +155,10 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	
 	public boolean inConfig(MethodElement element, MethodConfiguration config) {
 		return  ConfigurationHelper.inConfig(element, config);
+	}
+	
+	public IValidationManager getValidationManager() {
+		return ValidationManager.getInstance();
 	}
 	
 }

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.CapabilityPattern;
@@ -74,6 +75,12 @@ public class LibraryEditUtil {
 			provider = ExtensionManager.getLibraryEditUtilProvider();
 		}
 		return provider;
+	}
+	
+	
+	public IValidationManager getValidationManager() {
+		ILibraryEditUtilProvider p = getProvider();				
+		return p == null ? null : p.getValidationManager();
 	}
 	
 	public IRealizationManager getDefaultRealizationManager() {
@@ -608,5 +615,7 @@ public class LibraryEditUtil {
 			}
 		}
 	}
+	
+	
 	
 }

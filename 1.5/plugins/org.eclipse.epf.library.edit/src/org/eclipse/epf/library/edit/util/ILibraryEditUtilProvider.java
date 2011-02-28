@@ -2,6 +2,7 @@ package org.eclipse.epf.library.edit.util;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -31,5 +32,7 @@ public interface ILibraryEditUtilProvider {
 	MethodElement getCalculatedElement(MethodElement element, MethodConfiguration config);
 
 	boolean inConfig(MethodElement element, MethodConfiguration config);
-	
+
+	IValidationManager getValidationManager();
+		
 }

@@ -34,8 +34,10 @@ import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
 import org.eclipse.epf.authoring.ui.providers.MethodElementLabelDecorator;
 import org.eclipse.epf.authoring.ui.util.LibraryValidationMarkerHelper;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyValidationMgr;
+import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.NamedElement;
@@ -76,6 +78,15 @@ public class LibraryValidateAction extends ValidateAction {
 	 * @see org.eclipse.emf.edit.ui.action.ValidateAction#validate(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	protected Diagnostic validate(final IProgressMonitor progressMonitor) {
+		Diagnostic ret = validate_old(progressMonitor);
+		
+		IValidationManager validationMgr = LibraryEditUtil.getInstance().getValidationManager();
+		System.out.println("LD> validationMgr: " + validationMgr);
+		
+		return ret;
+	}
+	
+	private Diagnostic validate_old(final IProgressMonitor progressMonitor) {
 	    if(resources == null) {
 	    	resources = new HashSet();
 	    }

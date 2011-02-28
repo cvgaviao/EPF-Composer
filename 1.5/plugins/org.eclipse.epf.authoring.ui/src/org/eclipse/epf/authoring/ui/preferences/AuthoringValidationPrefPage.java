@@ -32,7 +32,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * The supporiting plugins Preference page
  * 
  * @author Weiping Lu
- * @since 7.5
+ * @since 1.5.1.2
  */
 public class AuthoringValidationPrefPage extends BasePreferencePage
 		implements IWorkbenchPreferencePage, SelectionListener {
