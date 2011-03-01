@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.ui;
 
 import org.eclipse.epf.common.ui.AbstractPlugin;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
@@ -43,6 +44,7 @@ public class LibraryUIPlugin extends AbstractPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		SupportingElementData.setDescriptorExclusiveOption(! LibraryUIPreferences.getIncludeDescriptors());
 	}
 
 	/**
