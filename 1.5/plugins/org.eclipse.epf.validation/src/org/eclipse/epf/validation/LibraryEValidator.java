@@ -391,7 +391,7 @@ public class LibraryEValidator extends EObjectValidator {
 	 * @param diagnostics
 	 *            a diagnostic chain to accumulate results on
 	 */
-	private void appendDiagnostics(IStatus status, DiagnosticChain diagnostics) {
+	public static void appendDiagnostics(IStatus status, DiagnosticChain diagnostics) {
 		if (status.isMultiStatus()) {
 			IStatus[] children = status.getChildren();
 

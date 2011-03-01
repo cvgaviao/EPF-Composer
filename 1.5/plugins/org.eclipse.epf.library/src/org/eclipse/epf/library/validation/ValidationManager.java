@@ -1,9 +1,10 @@
 package org.eclipse.epf.library.validation;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.epf.common.utils.ExtensionHelper;
-import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
-
+import org.eclipse.epf.validation.LibraryEValidator;
 
 public class ValidationManager implements IValidationManager {
 
@@ -49,8 +50,16 @@ public class ValidationManager implements IValidationManager {
 		return circularDependancyCheck;
 	}
 		
-	public boolean isUndeclaredDependancyCheck() {
+	public boolean isUndeclaredDepenancyCheck() {
 		return undeclaredDependancyCheck;
+	}
+	
+	public void validate(DiagnosticChain diagnostics, Object scope) {
+		
+	}
+	
+	private void appendDiagnostics(IStatus status, DiagnosticChain diagnostics) {
+		LibraryEValidator.appendDiagnostics(status, diagnostics);
 	}
 	
 }

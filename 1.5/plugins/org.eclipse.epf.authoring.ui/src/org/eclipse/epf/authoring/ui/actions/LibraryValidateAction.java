@@ -87,15 +87,16 @@ public class LibraryValidateAction extends ValidateAction {
 	 * @see org.eclipse.emf.edit.ui.action.ValidateAction#validate(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	protected Diagnostic validate(final IProgressMonitor progressMonitor) {
-		Diagnostic ret = validate_old(progressMonitor);
+		BasicDiagnostic ret = validate_old(progressMonitor);
 		
 		IValidationManager validationMgr = LibraryEditUtil.getInstance().getValidationManager();
-		System.out.println("LD> validationMgr: " + validationMgr);
+		Object scope = library == null ? selectedObjects : library;
+		validationMgr.validate(ret, scope);
 		
 		return ret;
 	}
 	
-	private Diagnostic validate_old(final IProgressMonitor progressMonitor) {
+	private BasicDiagnostic validate_old(final IProgressMonitor progressMonitor) {
 		SafeUpdateController.syncExec(new Runnable() {	
 			public void run() {	
 				ViewHelper.checkLibraryHealth(library == null ? selectedObjects : library);
