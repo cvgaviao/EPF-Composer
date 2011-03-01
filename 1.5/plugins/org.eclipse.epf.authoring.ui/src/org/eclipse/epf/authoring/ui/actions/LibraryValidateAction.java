@@ -98,7 +98,7 @@ public class LibraryValidateAction extends ValidateAction {
 	private Diagnostic validate_old(final IProgressMonitor progressMonitor) {
 		SafeUpdateController.syncExec(new Runnable() {	
 			public void run() {	
-				ViewHelper.checkLibraryHealth(library == null ? selectedObjects : null);
+				ViewHelper.checkLibraryHealth(library == null ? selectedObjects : library);
 			}
 		});
 		

@@ -557,7 +557,7 @@ public final class ViewHelper {
 			}
 		}
 		
-		if (lib == null || pluginList.isEmpty()) {
+		if (lib == null && pluginList.isEmpty()) {
 			return;
 		}
 
@@ -576,7 +576,7 @@ public final class ViewHelper {
 						.println("------------------------------------------"); //$NON-NLS-1$
 				
 				Iterator iter = null;
-				if (pluginList != null) {
+				if (! pluginList.isEmpty()) {
 					List list = new ArrayList();					
 					for (MethodPlugin plugin :  pluginList) {
 						for (Iterator it = plugin.eAllContents(); it.hasNext();) {
