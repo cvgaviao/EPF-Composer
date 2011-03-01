@@ -34,12 +34,15 @@ import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.emf.edit.ui.action.ValidateAction;
 import org.eclipse.epf.authoring.ui.providers.MethodElementLabelDecorator;
 import org.eclipse.epf.authoring.ui.util.LibraryValidationMarkerHelper;
+import org.eclipse.epf.authoring.ui.views.ViewHelper;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyValidationMgr;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
+import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.NamedElement;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.validation.LibraryEValidator;
@@ -59,6 +62,7 @@ public class LibraryValidateAction extends ValidateAction {
 	private boolean success;
 	private boolean showSuccess = true;
 	private Map contextData = new HashMap();
+	private MethodLibrary library;
 
 	public LibraryValidateAction() {
 		super();
@@ -68,6 +72,11 @@ public class LibraryValidateAction extends ValidateAction {
 	public LibraryValidateAction(boolean showSuccess) {
 		this();
 		this.showSuccess  = showSuccess;
+	}
+	
+	public LibraryValidateAction(MethodLibrary library) {
+		this();
+		this.library = library;
 	}
 	
 	public void putContextData(Object key, Object value) {
@@ -87,6 +96,13 @@ public class LibraryValidateAction extends ValidateAction {
 	}
 	
 	private Diagnostic validate_old(final IProgressMonitor progressMonitor) {
+		SafeUpdateController.syncExec(new Runnable() {	
+			public void run() {	
+				ViewHelper.checkLibraryHealth(library == null ? selectedObjects : null);
+			}
+		});
+		
+		
 	    if(resources == null) {
 	    	resources = new HashSet();
 	    }
@@ -95,8 +111,10 @@ public class LibraryValidateAction extends ValidateAction {
 	    }
 	    boolean dependencyInfoMgrSet = false;
 		Collection eObjects = new ArrayList();
-		for (Iterator iter = selectedObjects.iterator(); iter.hasNext();) {
-			Object element = TngUtil.unwrap(iter.next());
+		
+		Iterator it = library == null ? selectedObjects.iterator() : library.getMethodPlugins().iterator();
+		for ( ; it.hasNext();) {
+			Object element = TngUtil.unwrap(it.next());
 			if(element instanceof EObject) {
 				eObjects.add(element);
 				Resource resource = ((EObject)element).eResource();

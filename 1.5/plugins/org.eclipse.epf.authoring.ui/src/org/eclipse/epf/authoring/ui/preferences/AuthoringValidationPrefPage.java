@@ -39,6 +39,7 @@ public class AuthoringValidationPrefPage extends BasePreferencePage
 
 	private Button button1;
 	private Button button2;
+	private Button button3;
 
 	/**
 	 * 
@@ -71,6 +72,10 @@ public class AuthoringValidationPrefPage extends BasePreferencePage
 				layoutGroup,
 				"Check circular dependency", 1);
 
+		button3 = createCheckbox(
+				layoutGroup,
+				"Check un-declared plug-in dependency", 1);
+		
 		// Initialize values
 		initializeValues();
 

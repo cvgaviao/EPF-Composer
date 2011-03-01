@@ -66,6 +66,7 @@ import org.eclipse.epf.authoring.ui.actions.CustomCategoryDeepCopyAction;
 import org.eclipse.epf.authoring.ui.actions.ILibraryActionBarContributor;
 import org.eclipse.epf.authoring.ui.actions.LayoutActionGroup;
 import org.eclipse.epf.authoring.ui.actions.LibraryActionBarContributor;
+import org.eclipse.epf.authoring.ui.actions.LibraryValidateAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewCopyAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewCutAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewDeleteAction;
@@ -151,6 +152,7 @@ import org.eclipse.epf.uma.provider.MethodPluginItemProvider;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.MessageException;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.validation.LibraryEValidator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -251,7 +253,16 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		 */
 		public void run() {
 			try {
-				ViewHelper.checkLibraryHealth();
+//				ViewHelper.checkLibraryHealth();
+				
+				LibraryValidateAction validateAction = new LibraryValidateAction(LibraryService.getInstance().getCurrentMethodLibrary());
+				((LibraryValidateAction)validateAction).putContextData(LibraryEValidator.CTX_ADAPTER_FACTORY_PROVIDER,
+						ProcessEditor.adapterFactoryProvider);
+	
+				validateAction.run();
+				
+				
+				
 			} catch (Exception e) {
 				AuthoringUIPlugin.getDefault().getLogger().logError(e);
 			}
@@ -1286,9 +1297,9 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 //			toolBarManager.add(new Separator("method-settings")); //$NON-NLS-1$
 //			toolBarManager.add(new Separator("method-additions")); //$NON-NLS-1$
 			performLibraryValidationAction.setId(PERFORM_ID);
-			if (AuthoringUIPreferences.getEnableLibraryValidation()) {
+//			if (AuthoringUIPreferences.getEnableLibraryValidation()) {
 				toolBarManager.add(performLibraryValidationAction);
-			}
+//			}
 			
 		}
 		
@@ -1535,28 +1546,28 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		AuthoringUIPlugin.getDefault().getPreferenceStore()
 				.addPropertyChangeListener(new IPropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent event) {
-						if (event
-								.getProperty()
-								.equals(
-										AuthoringUIPreferences.ENABLE_LIBRARY_VALIDATION)) {
-							Boolean enabled = (Boolean) event.getNewValue();
-							IToolBarManager toolBarManager = getViewSite()
-								.getActionBars().getToolBarManager();
-					
-							if (enabled != null && enabled.booleanValue()) {
-								performLibraryValidationAction
-										.setId(PERFORM_ID);
-								toolBarManager.insertAfter("additions", performLibraryValidationAction); //$NON-NLS-1$
-							} else {
-								IContributionItem[] items = toolBarManager.getItems();
-								for (int i = 0; i < items.length; i++) {
-									IContributionItem item = (IContributionItem) items[i];
-									if (item.getId().equals(PERFORM_ID))
-										toolBarManager.remove(item);
-								}
-							}
-							toolBarManager.update(true);
-						}
+//						if (event
+//								.getProperty()
+//								.equals(
+//										AuthoringUIPreferences.ENABLE_LIBRARY_VALIDATION)) {
+//							Boolean enabled = (Boolean) event.getNewValue();
+//							IToolBarManager toolBarManager = getViewSite()
+//								.getActionBars().getToolBarManager();
+//					
+//							if (enabled != null && enabled.booleanValue()) {		//always on now
+//								performLibraryValidationAction
+//										.setId(PERFORM_ID);
+//								toolBarManager.insertAfter("additions", performLibraryValidationAction); //$NON-NLS-1$
+//							} else {
+//								IContributionItem[] items = toolBarManager.getItems();
+//								for (int i = 0; i < items.length; i++) {
+//									IContributionItem item = (IContributionItem) items[i];
+//									if (item.getId().equals(PERFORM_ID))
+//										toolBarManager.remove(item);
+//								}
+//							}
+//							toolBarManager.update(true);
+//						}
 					}
 				});
 	}

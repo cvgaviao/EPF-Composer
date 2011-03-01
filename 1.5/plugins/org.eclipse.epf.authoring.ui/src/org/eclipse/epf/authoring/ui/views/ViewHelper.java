@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -36,6 +37,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.ui.util.MsgBox;
 import org.eclipse.epf.common.ui.util.MsgDialog;
@@ -539,11 +541,25 @@ public final class ViewHelper {
 	 * Library health check
 	 *
 	 */
-	public static void checkLibraryHealth() {
-		final MethodLibrary lib = LibraryService.getInstance()
-				.getCurrentMethodLibrary();
-		if (lib == null)
+	public static void checkLibraryHealth(Object context) {
+		if (! AuthoringUIPreferences.getEnableLibraryValidation()) {
 			return;
+		}
+		
+		final MethodLibrary lib = context instanceof MethodLibrary ? (MethodLibrary) context : null;
+		
+		final List<MethodPlugin> pluginList = new ArrayList<MethodPlugin>();
+		if (context instanceof  List) {
+			for (Object obj : (List) context) {
+				if (obj instanceof MethodPlugin) {
+					pluginList.add((MethodPlugin) obj);
+				}
+			}
+		}
+		
+		if (lib == null || pluginList.isEmpty()) {
+			return;
+		}
 
 		org.eclipse.epf.library.edit.util.IRunnableWithProgress runnable = new org.eclipse.epf.library.edit.util.IRunnableWithProgress() {
 
@@ -558,7 +574,20 @@ public final class ViewHelper {
 						.println("UNRESOLVED/INVALID PROXIES IN X-REFERENCES"); //$NON-NLS-1$
 				printWriter
 						.println("------------------------------------------"); //$NON-NLS-1$
-				for (Iterator iter = lib.eAllContents(); iter.hasNext();) {
+				
+				Iterator iter = null;
+				if (pluginList != null) {
+					List list = new ArrayList();					
+					for (MethodPlugin plugin :  pluginList) {
+						for (Iterator it = plugin.eAllContents(); it.hasNext();) {
+							list.add(it.next());
+						}
+					}
+					iter = list.iterator();
+				} else {
+					iter = lib.eAllContents();
+				}
+				for ( ; iter.hasNext();) {
 					InternalEObject element = (InternalEObject) iter.next();
 					if (element.eProxyURI() == null) {
 						if (element instanceof ContentDescription) {

@@ -12,6 +12,7 @@ package org.eclipse.epf.rcp.ui;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.views.ViewHelper;
+import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.rcp.ui.actions.NewWizardMenu;
 import org.eclipse.epf.rcp.ui.actions.UIActionFactory;
 import org.eclipse.epf.rcp.ui.actions.UIOpenPerspectiveDialogAction;
@@ -540,7 +541,7 @@ public class MainActionBarAdvisor extends ActionBarAdvisor {
 		internalMenu.add(new Action(
 				RCPUIResources.mainActionBarAdvisor_HealthCheck) {
 			public void run() {
-				ViewHelper.checkLibraryHealth();
+				ViewHelper.checkLibraryHealth(LibraryService.getInstance().getCurrentMethodLibrary());
 			}
 		});
 	}
