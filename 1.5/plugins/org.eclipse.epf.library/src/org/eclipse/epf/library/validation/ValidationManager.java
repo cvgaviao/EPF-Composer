@@ -7,6 +7,13 @@ import org.eclipse.epf.library.edit.validation.IValidationManager;
 
 public class ValidationManager implements IValidationManager {
 
+	private boolean nameCheck = false;
+
+
+	private boolean circularDependancyCheck = false;
+
+	private boolean undeclaredDependancyCheck = false;
+
 	protected ValidationManager() {		
 	}
 	
@@ -21,5 +28,29 @@ public class ValidationManager implements IValidationManager {
 		return instance;
 	}
 	
+
+	public void setNameCheck(boolean b) {
+		nameCheck = b;
+	}
+
+	public void setCircularDependancyCheck(boolean b) {
+		circularDependancyCheck = b;
+	}
+
+	public void setUndeclaredDependancyCheck(boolean b) {
+		undeclaredDependancyCheck = b;
+	}
+	
+	public boolean isNameCheck() {
+		return nameCheck;
+	}
+	
+	public boolean isCircularDependancyCheck() {
+		return circularDependancyCheck;
+	}
+		
+	public boolean isUndeclaredDependancyCheck() {
+		return undeclaredDependancyCheck;
+	}
 	
 }

@@ -1579,6 +1579,14 @@ public final class AuthoringUIResources extends NLS {
 
 	public static String AuthoringUIPlugin_AbstractNewLibraryPage_DirectoryLabel;
 
+	public static String AuthoringValidationPrefPage_0;
+
+	public static String AuthoringValidationPrefPage_1;
+
+	public static String AuthoringValidationPrefPage_2;
+
+	public static String AuthoringValidationPrefPage_3;
+
 	public static String RootPrefPage_enableprocesscontribution_text;
 
 	public static String ConfigurationDescriptionDescription_text;

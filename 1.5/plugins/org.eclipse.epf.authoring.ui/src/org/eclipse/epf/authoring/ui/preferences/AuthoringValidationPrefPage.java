@@ -37,9 +37,9 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class AuthoringValidationPrefPage extends BasePreferencePage
 		implements IWorkbenchPreferencePage, SelectionListener {
 
-	private Button button1;
-	private Button button2;
-	private Button button3;
+	private Button NameCheckButton;
+	private Button circularCheckButton;
+	private Button undeclaredCheckButton;
 
 	/**
 	 * 
@@ -60,21 +60,21 @@ public class AuthoringValidationPrefPage extends BasePreferencePage
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		Group layoutGroup = createGridLayoutGroup(composite,
-				"Validation Types", 1);
+				AuthoringUIResources.AuthoringValidationPrefPage_0, 1);
 		layoutGroup.setLayout(new GridLayout());
 		layoutGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		button1 = createCheckbox(
+		NameCheckButton = createCheckbox(
 				layoutGroup,
-				"Check names", 1);
+				AuthoringUIResources.AuthoringValidationPrefPage_1, 1);
 		
-		button2 = createCheckbox(
+		circularCheckButton = createCheckbox(
 				layoutGroup,
-				"Check circular dependency", 1);
+				AuthoringUIResources.AuthoringValidationPrefPage_2, 1);
 
-		button3 = createCheckbox(
+		undeclaredCheckButton = createCheckbox(
 				layoutGroup,
-				"Check un-declared plug-in dependency", 1);
+				AuthoringUIResources.AuthoringValidationPrefPage_3, 1);
 		
 		// Initialize values
 		initializeValues();
@@ -115,7 +115,11 @@ public class AuthoringValidationPrefPage extends BasePreferencePage
 	 */
 	protected void performDefaults() {
 		super.performDefaults();
-		button1.setSelection(false);
+		LibraryUIPreferences.setNameValidation(true);
+		LibraryUIPreferences.setCircularValidation(true);
+		LibraryUIPreferences.setUndeclaredValidation(true);
+		initializeValues();
+
 	}
 
 	/*
@@ -124,34 +128,17 @@ public class AuthoringValidationPrefPage extends BasePreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#performOk()
 	 */
 	public boolean performOk() {
-		LibraryUIPreferences.setIncludeDescriptors(getIncludeDescriptors());
 		return true;
 	}
 
-	private boolean getIncludeDescriptors() {
-		return button1.getSelection();
-	}
 
 	/**
 	 * Initializes states of the controls from the preference store.
 	 */
 	private void initializeValues() {
-		button1.setSelection(LibraryUIPreferences.getIncludeDescriptors());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.jface.preference.PreferencePage#doGetPreferenceStore()
-	 */
-	protected IPreferenceStore doGetPreferenceStore() {
-		IPreferenceStore wrapper = LibraryUIPlugin.getDefault()
-				.getPreferenceStore();
-
-		if (wrapper instanceof PreferenceStoreWrapper) {
-			return ((PreferenceStoreWrapper) wrapper).getStore();
-		}
-		return null;
+		NameCheckButton.setSelection(LibraryUIPreferences.getNameValidation());
+		circularCheckButton.setSelection(LibraryUIPreferences.getCircularValidation());
+		undeclaredCheckButton.setSelection(LibraryUIPreferences.getUndeclaredValidation());
 	}
 
 }

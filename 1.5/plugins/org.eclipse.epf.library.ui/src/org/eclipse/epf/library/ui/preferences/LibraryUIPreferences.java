@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.ui.util.PreferenceUtil;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.configuration.SupportingElementData;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.library.ui.LibraryUIPlugin;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.uma.UmaPackage;
@@ -75,6 +77,12 @@ public class LibraryUIPreferences {
 	private static final String DESCRIPTOR_ONGOING = "descriptor_multiple_ongoing"; //$NON-NLS-1$
 
 	private static final String INCLUDE_DESCRIPTORS = "include descriptors"; //$NON-NLS-1$
+	
+	private static final String NAME_VALIDATION = "name validation"; //$NON-NLS-1$
+	
+	private static final String CIRCULAR_VALIDATION = "circular validation"; //$NON-NLS-1$
+
+	private static final String UNDECLARED_VALIDATION = "circular validation"; //$NON-NLS-1$
 
 	private static final String DESCRIPTOR_REPEATABLE = "descriptor_repeatable"; //$NON-NLS-1$
 
@@ -112,6 +120,10 @@ public class LibraryUIPreferences {
 		prefStore.setDefault(DESCRIPTOR_ONGOING, false);
 		prefStore.setDefault(INCLUDE_DESCRIPTORS, !SupportingElementData.isDescriptorExclusiveOption());
 		prefStore.setDefault(DESCRIPTOR_REPEATABLE, false);
+		
+		prefStore.setDefault(NAME_VALIDATION, true);
+		prefStore.setDefault(CIRCULAR_VALIDATION, true);
+		prefStore.setDefault(CIRCULAR_VALIDATION, true);
 		
 		SupportingElementData.setDescriptorExclusiveOption(! LibraryUIPreferences.getIncludeDescriptors());
 	}
@@ -695,4 +707,78 @@ public class LibraryUIPreferences {
 			}
 		}
 	}
+
+
+	/**
+	 * Returns "name validation" feature value in preference store
+	 * 
+	 * @return value - boolean
+	 */
+	public static boolean getNameValidation() {
+		return prefStore.getBoolean(NAME_VALIDATION);
+	}
+
+	/**
+	 * Saves value for "name validation"  feature in preference store
+	 * 
+	 * @param value -
+	 *            boolean true/false
+	 * 
+	 */
+	public static void setNameValidation(boolean value) {
+		prefStore.setValue(NAME_VALIDATION, value);
+		IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
+		if (mgr != null) {
+			mgr.setNameCheck(value);
+		}
+	}
+	
+	/**
+	 * Returns "circular validation" feature value in preference store
+	 * 
+	 * @return value - boolean
+	 */
+	public static boolean getCircularValidation() {
+		return prefStore.getBoolean(CIRCULAR_VALIDATION);
+	}
+
+	/**
+	 * Saves value for "circular validation"  feature in preference store
+	 * 
+	 * @param value -
+	 *            boolean true/false
+	 * 
+	 */
+	public static void setCircularValidation(boolean value) {
+		prefStore.setValue(CIRCULAR_VALIDATION, value);
+		IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
+		if (mgr != null) {
+			mgr.setCircularDependancyCheck(value);
+		}
+	}
+	
+	/**
+	 * Returns "Undeclared validation" feature value in preference store
+	 * 
+	 * @return value - boolean
+	 */
+	public static boolean getUndeclaredValidation() {
+		return prefStore.getBoolean(UNDECLARED_VALIDATION);
+	}
+
+	/**
+	 * Saves value for "Undeclared validation"  feature in preference store
+	 * 
+	 * @param value -
+	 *            boolean true/false
+	 * 
+	 */
+	public static void setUndeclaredValidation(boolean value) {
+		prefStore.setValue(UNDECLARED_VALIDATION, value);
+		IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
+		if (mgr != null) {
+			mgr.setUndeclaredDependancyCheck(value);
+		}
+	}
+	
 }
