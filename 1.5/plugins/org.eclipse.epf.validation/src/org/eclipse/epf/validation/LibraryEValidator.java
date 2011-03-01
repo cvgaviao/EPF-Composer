@@ -40,9 +40,11 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.IAdapterFactoryProvider;
 import org.eclipse.epf.library.edit.process.DescribableElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.edit.validation.DependencyValidationMgr;
+import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.library.edit.validation.IValidator;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -134,9 +136,11 @@ public class LibraryEValidator extends EObjectValidator {
 
 		IStatus status = Status.OK_STATUS;
 
+		IValidationManager validationMgr = LibraryEditUtil.getInstance().getValidationManager();
+		boolean checkCircular = validationMgr == null ? false : validationMgr.isCircularDependancyCheck();
 		boolean circularCheckOk = true;
 		DependencyValidationMgr mgr = (DependencyValidationMgr) context.get(CTX_DEPENDENCY_VALIDATION_MGR);
-		if (DependencyChecker.newCheck && mgr != null && 
+		if (checkCircular && DependencyChecker.newCheck && mgr != null && 
 				(eObject instanceof VariabilityElement || eObject instanceof MethodPlugin)) {
 			status = mgr.checkCircularDependnecy((MethodElement) eObject);
 			if(!status.isOK()) {
@@ -168,8 +172,11 @@ public class LibraryEValidator extends EObjectValidator {
 					batchValidator.addConstraintFilter(filter);
 				}
 				try {
-					status = batchValidator.validate(eObject,
+					boolean checkName = validationMgr == null ? false : validationMgr.isNameCheck();
+					if (checkName) {
+						status = batchValidator.validate(eObject,
 							new NullProgressMonitor());
+					}
 				} finally {
 					if (filter != null) {
 						batchValidator.removeConstraintFilter(filter);

@@ -727,10 +727,6 @@ public class LibraryUIPreferences {
 	 */
 	public static void setNameValidation(boolean value) {
 		prefStore.setValue(NAME_VALIDATION, value);
-		IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
-		if (mgr != null) {
-			mgr.setNameCheck(value);
-		}
 	}
 	
 	/**
@@ -751,10 +747,7 @@ public class LibraryUIPreferences {
 	 */
 	public static void setCircularValidation(boolean value) {
 		prefStore.setValue(CIRCULAR_VALIDATION, value);
-		IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
-		if (mgr != null) {
-			mgr.setCircularDependancyCheck(value);
-		}
+
 	}
 	
 	/**
@@ -775,9 +768,13 @@ public class LibraryUIPreferences {
 	 */
 	public static void setUndeclaredValidation(boolean value) {
 		prefStore.setValue(UNDECLARED_VALIDATION, value);
-		IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
+	}
+	
+	public static void update(IValidationManager mgr) {
 		if (mgr != null) {
-			mgr.setUndeclaredDependancyCheck(value);
+			mgr.setNameCheck(getNameValidation());
+			mgr.setCircularDependancyCheck(getCircularValidation());
+			mgr.setUndeclaredDependancyCheck(getUndeclaredValidation());
 		}
 	}
 	

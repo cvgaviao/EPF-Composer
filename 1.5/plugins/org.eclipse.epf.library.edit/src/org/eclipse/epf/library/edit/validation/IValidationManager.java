@@ -1,19 +1,19 @@
 package org.eclipse.epf.library.edit.validation;
 
-import java.util.List;
-
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.emf.ecore.EObject;
 
 public interface IValidationManager {
 
 	void setNameCheck(boolean b);
+	boolean isNameCheck();
 
 	void setCircularDependancyCheck(boolean b);
+	boolean isCircularDependancyCheck();
 
 	void setUndeclaredDependancyCheck(boolean b);
 	
-	void validate(DiagnosticChain diagnostics, Object scope);
+	void validate(DiagnosticChain diagnostics, Object scope, IProgressMonitor progressMonitor);
 	
 	
 }

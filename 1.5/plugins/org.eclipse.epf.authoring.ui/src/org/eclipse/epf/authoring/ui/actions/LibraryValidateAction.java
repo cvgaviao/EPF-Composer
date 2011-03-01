@@ -40,9 +40,9 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyValidationMgr;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.library.services.SafeUpdateController;
+import org.eclipse.epf.library.ui.preferences.LibraryUIPreferences;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
-import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.NamedElement;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.validation.LibraryEValidator;
@@ -87,11 +87,13 @@ public class LibraryValidateAction extends ValidateAction {
 	 * @see org.eclipse.emf.edit.ui.action.ValidateAction#validate(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	protected Diagnostic validate(final IProgressMonitor progressMonitor) {
+		IValidationManager validationMgr = LibraryEditUtil.getInstance().getValidationManager();
+		LibraryUIPreferences.update(validationMgr);
+		
 		BasicDiagnostic ret = validate_old(progressMonitor);
 		
-		IValidationManager validationMgr = LibraryEditUtil.getInstance().getValidationManager();
 		Object scope = library == null ? selectedObjects : library;
-		validationMgr.validate(ret, scope);
+		validationMgr.validate(ret, scope, progressMonitor);
 		
 		return ret;
 	}

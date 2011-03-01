@@ -128,6 +128,9 @@ public class AuthoringValidationPrefPage extends BasePreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#performOk()
 	 */
 	public boolean performOk() {
+		LibraryUIPreferences.setNameValidation(NameCheckButton.getSelection());
+		LibraryUIPreferences.setCircularValidation(circularCheckButton.getSelection());
+		LibraryUIPreferences.setUndeclaredValidation(undeclaredCheckButton.getSelection());
 		return true;
 	}
 
