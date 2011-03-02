@@ -562,7 +562,7 @@ public class LibraryUtil {
 		}
 	}
 	
-	private static boolean isContentRef(EReference ref) {
+	public static boolean isContentRef(EReference ref) {
 		if (ref == UmaPackage.eINSTANCE.getDescribableElement_Presentation()) {
 			return true;
 		}

@@ -1,7 +1,8 @@
 package org.eclipse.epf.library.validation;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -38,11 +39,11 @@ public class ValidationManager implements IValidationManager {
 		return instance;
 	}
 	
-	private DiagnosticChain getDiagnostics() {
+	public DiagnosticChain getDiagnostics() {
 		return diagnostics;
 	}
 	
-	private IProgressMonitor getProgressMonitor() {
+	public IProgressMonitor getProgressMonitor() {
 		return progressMonitor;
 	}
 	
@@ -80,35 +81,42 @@ public class ValidationManager implements IValidationManager {
 			this.diagnostics = null;
 			this.progressMonitor = null;
 			
-			pluginList = null;
+			pluginSet = null;
 		}
 	}
 	
 	
-	private List<MethodPlugin> pluginList;
-	protected List<MethodPlugin> getPluginList() {
-		return pluginList;
+	private Set<MethodPlugin> pluginSet;
+	public Set<MethodPlugin> getPluginSet() {
+		return pluginSet;
 	}
 
 	protected void initValidationScope(Object scope) {
-		pluginList = new ArrayList<MethodPlugin>();
+		pluginSet = new LinkedHashSet<MethodPlugin>();
 		if (scope instanceof MethodLibrary) {
-			pluginList.addAll(((MethodLibrary) scope).getMethodPlugins());
+			pluginSet.addAll(((MethodLibrary) scope).getMethodPlugins());
 		} else if (scope instanceof List) {
 			for (Object obj : (List) scope) {
 				if (obj instanceof MethodPlugin) {
-					pluginList.add((MethodPlugin) obj);
+					pluginSet.add((MethodPlugin) obj);
 				}
 			}
 		}
 	}
 	
 	protected void validate()  {
-		
+		if (isUndeclaredDepenancyCheck()) {
+			UndeclaredDependencyCheck check = newUndeclaredDependencyCheck();
+			check.run();
+		}
 	}
 	
 	private void appendDiagnostics(IStatus status, DiagnosticChain diagnostics) {
 		LibraryEValidator.appendDiagnostics(status, diagnostics);
+	}
+	
+	protected UndeclaredDependencyCheck newUndeclaredDependencyCheck() {
+		return new UndeclaredDependencyCheck(this);
 	}
 	
 }
