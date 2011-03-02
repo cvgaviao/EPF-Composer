@@ -548,6 +548,24 @@ public class LibraryEditUtil {
 		return (Set<WorkProduct> ) getElementsUnder(topElement, filter);
 	}
 	
+	public Set<? extends ContentElement> getContentElements(MethodElement topElement, final Class type) {
+		CollectElementFilter filter = new CollectElementFilter() {
+			public boolean accept(MethodElement element) {
+				return type.isInstance(element);
+			}
+			
+			public boolean skipChildren(MethodElement element) {
+				if (element instanceof ProcessPackage) {
+					return true;
+				}
+				
+				return super.skipChildren(element);
+			}
+		};
+		return (Set<? extends ContentElement>) getElementsUnder(topElement, filter);
+	}
+	
+	
 	public static boolean save(Collection<Resource> resouresToSave) {
 		ILibraryPersister.FailSafeMethodLibraryPersister persister = Services.getDefaultLibraryPersister().getFailSafePersister();
 		try {
