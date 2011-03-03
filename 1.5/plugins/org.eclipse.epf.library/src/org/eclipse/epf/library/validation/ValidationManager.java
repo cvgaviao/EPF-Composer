@@ -1,7 +1,9 @@
 package org.eclipse.epf.library.validation;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -39,9 +41,12 @@ public class ValidationManager implements IValidationManager {
 	private UndeclaredDependencyCheck undeclaredDependencyCheck;
 	
 	private ValidateAction emfValidateAction;
+	
+	private Map<IMarker, Object> markerInfoMap;
 
 	protected ValidationManager() {	
 		undeclaredDependencyCheck = newUndeclaredDependencyCheck();
+		markerInfoMap = new HashMap<IMarker, Object>();
 	}
 	
 	private static ValidationManager instance;
@@ -160,15 +165,35 @@ public class ValidationManager implements IValidationManager {
 		return file;
     }
     
-	public void UndeclaredDependencyCheckAddPluginFix(IMarker marker) {
-		undeclaredDependencyCheck.addPluginFix(marker);
+	public String UndeclaredDependencyCheckAddPluginFix(IMarker marker) {
+		return undeclaredDependencyCheck.addPluginFix(marker);
 	}
 	
-	public void UndeclaredDependencyCheckRemoveReferenceFix(IMarker marker) {
-		undeclaredDependencyCheck.removeReferenceFix(marker);
+	public String UndeclaredDependencyCheckRemoveReferenceFix(IMarker marker) {
+		return undeclaredDependencyCheck.removeReferenceFix(marker);
 	}
 	
 	public void setEmfValidateAction(ValidateAction emfValidateAction) {
 		this.emfValidateAction = emfValidateAction;
 	}
+	
+	public void addToMarkInfoMap(IMarker marker, Object obj) {
+		markerInfoMap.put(marker, obj);
+	}
+	
+	public Object getMarkInfo(IMarker marker) {
+		return markerInfoMap.get(marker);
+	}
+	
+	public void removeFromMarkInfoMap(IMarker marker) {
+		markerInfoMap.remove(marker);
+    	try {
+    		if (marker.exists()) {
+    			marker.delete();	  
+    		}
+		} catch (CoreException e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
 }

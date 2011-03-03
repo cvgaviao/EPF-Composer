@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.library.validation.ValidationManager;
@@ -56,14 +57,6 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 		@Override
 		public IMarker[] findOtherMarkers(IMarker[] markers) {
 			ArrayList<IMarker> similarMarkerList = new ArrayList<IMarker>();
-			for (int i = 0; i < markers.length; i++) {
-				IMarker marker = markers[i];
-				if(! currentMarker.equals(marker)) {
-					if(acceptedType(marker)) {
-						similarMarkerList.add(marker);
-					}
-				}
-			}
 			IMarker[] similarMarkers = new IMarker[similarMarkerList.size()];
 			similarMarkerList.toArray(similarMarkers);
 			return similarMarkers;
@@ -107,7 +100,13 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 
 		public void run(IMarker marker) {			
 			IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
-			((ValidationManager) mgr).UndeclaredDependencyCheckAddPluginFix(marker);
+			String msg = ((ValidationManager) mgr).UndeclaredDependencyCheckAddPluginFix(marker);
+			if (msg != null && msg.length() > 0) {
+				AuthoringUIPlugin.getDefault().getMsgDialog()
+				.displayWarning(
+						"AddPluginResolution fix", 
+						msg);
+			}
 		}
 
 		@Override

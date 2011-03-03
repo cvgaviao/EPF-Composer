@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.validation;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Set;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.Misc;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -77,6 +80,9 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 							IMarker.SEVERITY_WARNING);
 					
 					marker.setAttribute(IMarker.LOCATION, TngUtil.getLabelWithPath(plugin));
+					
+					MarkerInfo markerInfo = new MarkerInfo(plugin, p);
+					getMgr().addToMarkInfoMap(marker, markerInfo);
 					
 				} catch (Exception e) {
 					LibraryPlugin.getDefault().getLogger().logError(e);
@@ -147,12 +153,44 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 	public void clearResults() {		
 	}
 
-	public void addPluginFix(IMarker marker) {
+	public String addPluginFix(IMarker marker) {
+		String ret = "";
 		
+		Object obj = getMgr().getMarkInfo(marker);
+		MarkerInfo info = obj instanceof MarkerInfo ? (MarkerInfo) obj : null;
+		if (info == null) {
+			return ret;
+		}
+		if (info.referencing == null || info.referenced == null || info.referencing == info.referenced) {
+			return ret;
+		}
+		
+		if (Misc.isBaseOf(info.referencing, info.referenced, new HashMap())) {
+			return "The fix would cause circular dependency";
+		}
+		
+		info.referencing.getBases().add(info.referenced);
+		Resource resource = info.referencing.eResource();
+		if (resource == null && !LibraryEditUtil.getInstance().save(Collections.singleton(resource))) {			
+			info.referencing.getBases().remove(info.referenced);
+			return "Falied at save";
+		}
+		
+		getMgr().removeFromMarkInfoMap(marker);
+		return ret;
 	}
 	
-	public void removeReferenceFix(IMarker marker) {
-		
+	public String removeReferenceFix(IMarker marker) {
+		return null;
+	}
+	
+	static class MarkerInfo {
+		MethodPlugin referencing;
+		MethodPlugin referenced;
+		public MarkerInfo(MethodPlugin referencing, MethodPlugin referenced) {
+			this.referencing = referencing;
+			this.referenced = referenced;
+		}
 	}
 	
 }
