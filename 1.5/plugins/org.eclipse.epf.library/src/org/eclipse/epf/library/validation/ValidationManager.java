@@ -43,6 +43,12 @@ public class ValidationManager implements IValidationManager {
 	private ValidateAction emfValidateAction;
 	
 	private Map<IMarker, Object> markerInfoMap;
+	
+	private DiagnosticChain diagnostics;
+
+	public DiagnosticChain getDiagnostics() {
+		return diagnostics;
+	}
 
 	protected ValidationManager() {	
 		undeclaredDependencyCheck = newUndeclaredDependencyCheck();
@@ -88,7 +94,8 @@ public class ValidationManager implements IValidationManager {
 		return undeclaredDependancyCheck;
 	}
 	
-	public void validate(Object scope, IProgressMonitor progressMonitor)  {
+	public void validate(DiagnosticChain diagnostics, Object scope, IProgressMonitor progressMonitor)  {
+		this.diagnostics = diagnostics;
 		this.progressMonitor = progressMonitor;
 		initValidationScope(scope);		
 		try {

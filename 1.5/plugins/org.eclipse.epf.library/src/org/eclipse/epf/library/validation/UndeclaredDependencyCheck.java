@@ -171,7 +171,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 		
 		info.referencing.getBases().add(info.referenced);
 		Resource resource = info.referencing.eResource();
-		if (resource == null && !LibraryEditUtil.getInstance().save(Collections.singleton(resource))) {			
+		if (resource == null || !LibraryEditUtil.getInstance().save(Collections.singleton(resource))) {			
 			info.referencing.getBases().remove(info.referenced);
 			return "Falied at save";
 		}
