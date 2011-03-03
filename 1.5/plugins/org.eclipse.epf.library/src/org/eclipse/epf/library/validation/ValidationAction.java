@@ -1,6 +1,6 @@
 package org.eclipse.epf.library.validation;
 
-public class ValidationAction {
+public abstract class ValidationAction {
 
 	private ValidationManager mgr;
 	
@@ -16,8 +16,8 @@ public class ValidationAction {
 		this.mgr = mgr;
 	}
 	
-	public void run() {
-		
-	}
+	public abstract void run();
+	
+	public abstract void clearResults();
 	
 }

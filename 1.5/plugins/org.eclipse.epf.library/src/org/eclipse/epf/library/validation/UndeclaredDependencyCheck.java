@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.util.Misc;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -48,28 +51,39 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 		//Validation check
 		Set<MethodElement> processed = new HashSet<MethodElement>();
 		for (MethodPlugin plugin : pluginSet) {
-			checReferences(plugin, processed);
+			checkReferences(plugin, processed);
 		}
 		
 		//Build problem markers
 		//To do
 		
 
-		// Debug
+		//Create markers
 		for (Map.Entry<MethodPlugin, Set<MethodPlugin>> entry : problemPluginMap
 				.entrySet()) {
 			MethodPlugin plugin = entry.getKey();
 			Set<MethodPlugin> set = entry.getValue();
-			System.out.println("LD> plugin: " + plugin);
+
+			String msg0 = "Undeclared dependency from plug-in: \""
+					+ plugin.getName() + "\" to plug-in: ";
 			for (MethodPlugin p : set) {
-				System.out.println("LD>		" + p);
+				IMarker marker = getMgr().createMarker(plugin);
+
+				String msg = msg0 + "\"" + p.getName() + "\"" + p.getName();
+				try {
+					marker.setAttribute(IMarker.MESSAGE, msg);
+					
+					marker.setAttribute(IMarker.SEVERITY,
+							IMarker.SEVERITY_WARNING);
+					
+					marker.setAttribute(IMarker.LOCATION, TngUtil.getLabelWithPath(plugin));
+					
+				} catch (Exception e) {
+					LibraryPlugin.getDefault().getLogger().logError(e);
+				}
 			}
-			System.out.println("");
 		}
 
-		for (MethodElement element : problemElementSet) {
-			System.out.println("LD>	element: " + element);
-		}
 	}
 	
 	private void addToProblemPluginMap(MethodPlugin plugin, MethodPlugin referencedPlugin) {
@@ -82,7 +96,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 	}
 	
 	
-	private void checReferences(MethodElement me, Set<MethodElement> processed) {
+	private void checkReferences(MethodElement me, Set<MethodElement> processed) {
 		if (processed.contains(me)) {
 			return;
 		}
@@ -106,7 +120,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 			if (obj instanceof MethodElement) {
 				MethodElement referenced = (MethodElement) obj;
 				recordOneHit(me, ownerPlugin, baseSet, referenced);				
-				checReferences(referenced, processed);
+				checkReferences(referenced, processed);
 				
 			} else if (obj instanceof List) {
 				List list = (List) obj;
@@ -114,7 +128,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 					if (itemObj instanceof MethodElement) {
 						MethodElement referenced = (MethodElement) itemObj;					
 						recordOneHit(me, ownerPlugin, baseSet, referenced);	
-						checReferences(referenced, processed);
+						checkReferences(referenced, processed);
 					}
 				}
 			}
@@ -129,4 +143,16 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 			problemElementSet.add(me);
 		}
 	}
+		
+	public void clearResults() {		
+	}
+
+	public void addPluginFix(IMarker marker) {
+		
+	}
+	
+	public void removeReferenceFix(IMarker marker) {
+		
+	}
+	
 }

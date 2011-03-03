@@ -1,14 +1,25 @@
 package org.eclipse.epf.library.validation;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.epf.common.utils.ExtensionHelper;
+import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.validation.LibraryEValidator;
@@ -24,8 +35,15 @@ public class ValidationManager implements IValidationManager {
 	private DiagnosticChain diagnostics;
 
 	private IProgressMonitor progressMonitor;
+	
+	public static final String MARKER_ID = "org.eclipse.epf.library.validation"; //$NON-NLS-1$
+	
+	private UndeclaredDependencyCheck undeclaredDependencyCheck;
+	
+//	private Map<IMarker, >
 
-	protected ValidationManager() {		
+	protected ValidationManager() {	
+		undeclaredDependencyCheck = newUndeclaredDependencyCheck();
 	}
 	
 	private static ValidationManager instance;
@@ -105,10 +123,14 @@ public class ValidationManager implements IValidationManager {
 	}
 	
 	protected void validate()  {
+		clearResults();
 		if (isUndeclaredDepenancyCheck()) {
-			UndeclaredDependencyCheck check = newUndeclaredDependencyCheck();
-			check.run();
+			 undeclaredDependencyCheck.run();
 		}
+	}
+	
+	private void clearResults() {
+		undeclaredDependencyCheck.clearResults();
 	}
 	
 	private void appendDiagnostics(IStatus status, DiagnosticChain diagnostics) {
@@ -119,4 +141,36 @@ public class ValidationManager implements IValidationManager {
 		return new UndeclaredDependencyCheck(this);
 	}
 	
+	public IMarker createMarker(MethodElement element) {   
+		return createMarker(element, MARKER_ID);
+	}
+	
+    public static IMarker createMarker(MethodElement element, String markerId) {    	
+    	try {
+    		IFile file = getFile(element);
+    		IMarker marker = file.createMarker(markerId);
+    		return marker;
+	    	
+		} catch (CoreException e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
+		return null;
+    }
+
+    private static IFile getFile(MethodElement element) {
+    	URI containerURI = element.eResource().getURI();
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IPath path = new Path(containerURI.toFileString());
+		IFile file = workspace.getRoot().getFileForLocation(path);
+		return file;
+    }
+    
+	public void UndeclaredDependencyCheckAddPluginFix(IMarker marker) {
+		undeclaredDependencyCheck.addPluginFix(marker);
+	}
+	
+	public void UndeclaredDependencyCheckRemoveReferenceFix(IMarker marker) {
+		undeclaredDependencyCheck.removeReferenceFix(marker);
+	}
+    
 }

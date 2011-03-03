@@ -670,7 +670,8 @@
       <attribute name="configGuid"/>
       <attribute name="elementGuid"/> 
       <attribute name="causeGuid"/>
-   </extension>
+   </extension>      
+   
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator class="org.eclipse.epf.authoring.ui.util.LibraryProblemMarkerResolutionGenerator"
@@ -686,6 +687,13 @@
       <markerResolutionGenerator class="org.eclipse.epf.authoring.ui.util.ConfigurationMarkerResolutionGenerator"
       markerType="org.eclipse.epf.authoring.ui.configuration"/>
    </extension>
+   
+   <extension
+      	point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator class="org.eclipse.epf.authoring.ui.util.ValidationMarkerResolutionGenerator"
+      markerType="org.eclipse.epf.library.validation"/>
+   </extension>  
+   
    <extension
          point="org.eclipse.epf.library.edit.userInteractionHandler">
       <userInteractionHandler class="org.eclipse.epf.authoring.ui.actions.UserInteractionHandler"/>
