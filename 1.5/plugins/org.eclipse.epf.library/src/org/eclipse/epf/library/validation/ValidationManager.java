@@ -1,6 +1,5 @@
 package org.eclipse.epf.library.validation;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.ui.action.ValidateAction;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
@@ -31,8 +31,6 @@ public class ValidationManager implements IValidationManager {
 	private boolean circularDependancyCheck = false;
 
 	private boolean undeclaredDependancyCheck = false;
-	
-	private DiagnosticChain diagnostics;
 
 	private IProgressMonitor progressMonitor;
 	
@@ -40,7 +38,7 @@ public class ValidationManager implements IValidationManager {
 	
 	private UndeclaredDependencyCheck undeclaredDependencyCheck;
 	
-//	private Map<IMarker, >
+	private ValidateAction emfValidateAction;
 
 	protected ValidationManager() {	
 		undeclaredDependencyCheck = newUndeclaredDependencyCheck();
@@ -55,10 +53,6 @@ public class ValidationManager implements IValidationManager {
 			}		
 		}
 		return instance;
-	}
-	
-	public DiagnosticChain getDiagnostics() {
-		return diagnostics;
 	}
 	
 	public IProgressMonitor getProgressMonitor() {
@@ -89,14 +83,15 @@ public class ValidationManager implements IValidationManager {
 		return undeclaredDependancyCheck;
 	}
 	
-	public void validate(DiagnosticChain diagnostics, Object scope, IProgressMonitor progressMonitor)  {
-		this.diagnostics = diagnostics;
+	public void validate(Object scope, IProgressMonitor progressMonitor)  {
 		this.progressMonitor = progressMonitor;
 		initValidationScope(scope);		
 		try {
+			if (emfValidateAction != null) {
+				emfValidateAction.updateSelection(null);
+			}
 			validate();
 		} finally {
-			this.diagnostics = null;
 			this.progressMonitor = null;
 			
 			pluginSet = null;
@@ -172,5 +167,8 @@ public class ValidationManager implements IValidationManager {
 	public void UndeclaredDependencyCheckRemoveReferenceFix(IMarker marker) {
 		undeclaredDependencyCheck.removeReferenceFix(marker);
 	}
-    
+	
+	public void setEmfValidateAction(ValidateAction emfValidateAction) {
+		this.emfValidateAction = emfValidateAction;
+	}
 }
