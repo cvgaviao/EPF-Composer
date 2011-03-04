@@ -712,4 +712,11 @@
             version="0">
       </methodRichTextEditor>
    </extension>
+   
+    <extension point="org.eclipse.ui.popupMenus">
+      <viewerContribution id="org.eclipse.epf.authoring.ui.actions.ClearValidationMarkers" targetID="org.eclipse.ui.views.ProblemView">
+         <action class="org.eclipse.epf.authoring.ui.actions.ClearValidationMarkersAction" id="org.eclipse.epf.authoring.ui.actions.ClearValidationMarkers" label="%ClearAllValidationItems" menubarPath="additions">
+         </action>
+      </viewerContribution>
+   </extension>
 </plugin>

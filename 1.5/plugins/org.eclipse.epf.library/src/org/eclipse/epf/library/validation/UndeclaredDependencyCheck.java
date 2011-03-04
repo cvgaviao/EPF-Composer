@@ -80,7 +80,8 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 							IMarker.SEVERITY_WARNING);
 					
 					marker.setAttribute(IMarker.LOCATION, TngUtil.getLabelWithPath(plugin));
-					
+					marker.setAttribute(ValidationManager.validationType, ValidationManager.validationType_undeclaredDependancyCheck);
+										
 					MarkerInfo markerInfo = new MarkerInfo(plugin, p);
 					getMgr().addToMarkInfoMap(marker, markerInfo);
 					

@@ -46,6 +46,9 @@ public class ValidationManager implements IValidationManager {
 	
 	private DiagnosticChain diagnostics;
 
+	public static final String validationType = "validationType"; //$NON-NLS-1$
+	public static final String validationType_undeclaredDependancyCheck = "undeclaredDependancyCheck"; //$NON-NLS-1$
+	
 	public DiagnosticChain getDiagnostics() {
 		return diagnostics;
 	}
@@ -94,14 +97,18 @@ public class ValidationManager implements IValidationManager {
 		return undeclaredDependancyCheck;
 	}
 	
+	public void clearAllMarkers() {
+		if (emfValidateAction != null) {
+			emfValidateAction.updateSelection(null);
+		}
+	}
+	
 	public void validate(DiagnosticChain diagnostics, Object scope, IProgressMonitor progressMonitor)  {
 		this.diagnostics = diagnostics;
 		this.progressMonitor = progressMonitor;
 		initValidationScope(scope);		
 		try {
-			if (emfValidateAction != null) {
-				emfValidateAction.updateSelection(null);
-			}
+			clearAllMarkers();
 			validate();
 		} finally {
 			this.progressMonitor = null;

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
-import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.library.validation.ValidationManager;
@@ -33,9 +32,24 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 	
 	private static final IMarkerResolution[] EMPTY_RESOLUTIONS = new IMarkerResolution[0];
 
+	private static boolean acceptedType(IMarker marker) {
+		boolean ret = false;
+		try {
+			ret = ValidationManager.MARKER_ID.equals(marker.getType());
+			if (ret) {
+				Object typeValue = marker.getAttribute(ValidationManager.validationType);
+				ret = ValidationManager.validationType_undeclaredDependancyCheck.equals(typeValue);
+			}
+		} catch (CoreException e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		}
+
+		return ret;
+	}
+	
 	public IMarkerResolution[] getResolutions(IMarker marker) {
 		try {
-			if (marker.getType() == ValidationManager.MARKER_ID) {
+			if (acceptedType(marker)) {
 				return new IMarkerResolution[] {
 						new AddPluginResolution(marker),
 						new RemoveUndeclaredResolution(marker),
@@ -57,21 +71,18 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 		@Override
 		public IMarker[] findOtherMarkers(IMarker[] markers) {
 			ArrayList<IMarker> similarMarkerList = new ArrayList<IMarker>();
+//			for (int i = 0; i < markers.length; i++) {
+//				IMarker marker = markers[i];
+//				if(! currentMarker.equals(marker)) {
+//					if(acceptedType(marker)) {
+//						similarMarkerList.add(marker);
+//					}
+//				}
+//			}
 			IMarker[] similarMarkers = new IMarker[similarMarkerList.size()];
 			similarMarkerList.toArray(similarMarkers);
 			return similarMarkers;
-		}
-		
-		protected boolean acceptedType(IMarker marker) {
-			boolean ret = false;
-			try {
-				ret = ValidationManager.MARKER_ID.equals(marker.getType());
-			} catch (CoreException e) {
-				AuthoringUIPlugin.getDefault().getLogger().logError(e);
-			}
-			
-			return ret;
-		}
+		}	
 
 		public String getDescription() {
 			// TODO provide detailed description
@@ -97,7 +108,7 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 		public String getLabel() {
 			return "Add reference plug-in";
 		}
-
+		
 		public void run(IMarker marker) {			
 			IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
 			String msg = ((ValidationManager) mgr).UndeclaredDependencyCheckAddPluginFix(marker);
@@ -107,12 +118,6 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 						"AddPluginResolution fix", 
 						msg);
 			}
-		}
-
-		@Override
-		protected boolean acceptedType(IMarker marker) {
-			boolean ret = super.acceptedType(marker);
-			return ret;
 		}
 		
 	}	
@@ -133,12 +138,6 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 		public void run(IMarker marker) {			
 			IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
 			((ValidationManager) mgr).UndeclaredDependencyCheckRemoveReferenceFix(marker);
-		}
-
-		@Override
-		protected boolean acceptedType(IMarker marker) {
-			boolean ret = super.acceptedType(marker);
-			return ret;
 		}
 		
 		
