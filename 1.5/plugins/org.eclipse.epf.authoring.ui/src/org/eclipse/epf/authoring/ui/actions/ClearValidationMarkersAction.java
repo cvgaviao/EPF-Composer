@@ -9,6 +9,7 @@
 package org.eclipse.epf.authoring.ui.actions;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.validation.ValidationManager;
 import org.eclipse.jface.action.IAction;
@@ -46,7 +47,28 @@ public class ClearValidationMarkersAction implements IViewActionDelegate {
 	 * @see org.eclipse.ui.IActionDelegate#selectionChanged(org.eclipse.jface.action.IAction, org.eclipse.jface.viewers.ISelection)
 	 */
 	public void selectionChanged(IAction action, ISelection selection) {
-//			action.setEnabled(true);
+		IStructuredSelection sel = (IStructuredSelection) selection;			
+		if (sel == null) {
+			return;
+		}
+
+		Object selObj = sel.getFirstElement();
+		if (selObj instanceof MarkerItem) {
+			selObj = ((MarkerItem) selObj).getMarker();
+		}
+		if (selObj instanceof IMarker) {
+			IMarker selectedMarker = (IMarker) selObj;
+			try {		
+				if (ValidationManager.MARKER_ID.equals(selectedMarker.getType())) {					
+					action.setEnabled(true);
+					return;
+				}
+			} catch (Exception ex) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(ex);
+			}
+		}
+		
+		action.setEnabled(false);
 	}
 	
 }
