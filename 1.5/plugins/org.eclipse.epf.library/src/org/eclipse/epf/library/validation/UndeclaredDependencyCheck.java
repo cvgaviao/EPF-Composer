@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.validation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -16,6 +18,7 @@ import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.Misc;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -24,7 +27,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 	
 	private Map<MethodPlugin, Set<MethodPlugin>> baseMap;
 	private Map<MethodPlugin, Set<MethodPlugin>> problemPluginMap;
-	private Set<MethodElement> problemElementSet;
+	private Map<String, Set<MethodElement>> problemElementMap;
 	private boolean skipContent = true;
 
 	public UndeclaredDependencyCheck(ValidationManager mgr) {
@@ -40,7 +43,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 
 		//Initialization
 		problemPluginMap = new HashMap<MethodPlugin, Set<MethodPlugin>>();
-		problemElementSet = new HashSet<MethodElement>();
+		problemElementMap = new HashMap<String, Set<MethodElement>>();
 		baseMap = new HashMap<MethodPlugin, Set<MethodPlugin>>();
 
 		Misc.clearCachedMap();
@@ -57,22 +60,35 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 			checkReferences(plugin, processed);
 		}
 		
-		//Build problem markers
-		//To do
-		
 
-		//Create markers
+		//Build markers
 		for (Map.Entry<MethodPlugin, Set<MethodPlugin>> entry : problemPluginMap
 				.entrySet()) {
 			MethodPlugin plugin = entry.getKey();
 			Set<MethodPlugin> set = entry.getValue();
 
-			String msg0 = "Undeclared dependency from plug-in: \""
-					+ plugin.getName() + "\" to plug-in: ";
+			String msg0 = "Undeclared plug-in dependency from \""
+					+ plugin.getName() + "\" to ";
 			for (MethodPlugin p : set) {
 				IMarker marker = getMgr().createMarker(plugin);
-
-				String msg = msg0 + "\"" + p.getName() + "\"" + p.getName();
+				String msg = msg0 + "\"" + p.getName() + "\"";
+				String key = plugin.getGuid() + p.getGuid();
+				Set<MethodElement> elements = problemElementMap.get(key);
+				if (elements != null && !elements.isEmpty()) {
+					String line2msg0 = " \n" + "Offender elements: ";
+					String line2msg = line2msg0;
+					for (MethodElement e : elements) {
+						if (line2msg.length() > 155) {
+							line2msg += " ... ";
+							break;
+						}
+						if (line2msg != line2msg0) {
+							line2msg += "; ";
+						}
+						line2msg += TngUtil.getLabelWithPath(e);
+					}
+					msg += line2msg;
+				}							
 				try {
 					marker.setAttribute(IMarker.MESSAGE, msg);
 					
@@ -82,7 +98,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 					marker.setAttribute(IMarker.LOCATION, TngUtil.getLabelWithPath(plugin));
 					marker.setAttribute(ValidationManager.validationType, ValidationManager.validationType_undeclaredDependancyCheck);
 										
-					MarkerInfo markerInfo = new MarkerInfo(plugin, p);
+					MarkerInfo markerInfo = new MarkerInfo(plugin, p, elements);
 					getMgr().addToMarkInfoMap(marker, markerInfo);
 					
 				} catch (Exception e) {
@@ -90,7 +106,11 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 				}
 			}
 		}
-
+		
+		//Clear
+		problemPluginMap = null;
+		problemElementMap = null;
+		baseMap =null;
 	}
 	
 	private void addToProblemPluginMap(MethodPlugin plugin, MethodPlugin referencedPlugin) {
@@ -147,7 +167,13 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 		MethodPlugin referencedPlugin = UmaUtil.getMethodPlugin(referenced);
 		if (referencedPlugin != null && referencedPlugin != ownerPlugin && !baseSet.contains(referencedPlugin)) {
 			addToProblemPluginMap(ownerPlugin, referencedPlugin);
-			problemElementSet.add(me);
+			String key = ownerPlugin.getGuid() + referencedPlugin.getGuid();
+			Set<MethodElement> set = problemElementMap.get(key);
+			if (set == null) {
+				set = new HashSet<MethodElement>();
+				problemElementMap.put(key, set);
+			}
+			set.add(me);
 		}
 	}
 		
@@ -182,15 +208,84 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 	}
 	
 	public String removeReferenceFix(IMarker marker) {
-		return null;
+		String ret = "";
+		
+		Object infoObj = getMgr().getMarkInfo(marker);
+		MarkerInfo info = infoObj instanceof MarkerInfo ? (MarkerInfo) infoObj : null;
+		if (info == null || info.referenced == null) {
+			return ret;
+		}
+		Set<MethodElement> offenderElements = info.offenderElements;
+		if (offenderElements == null || offenderElements.isEmpty()) {
+			return ret;
+		}
+		Set<Resource> resources = new HashSet<Resource>();
+		for (MethodElement e : offenderElements) {
+			Resource res = e.eResource();
+			if (res != null) {
+				resources.add(res);
+			}
+		}
+		List<String> pathList = new ArrayList<String>();
+		for (Resource res : resources) {
+			pathList.add(res.getURI().toFileString());
+		}
+		
+		IStatus status = FileManager.getInstance().checkModify(pathList.toArray(new String[pathList.size()]), LibraryPlugin.getDefault().getContext());
+		if (!status.isOK()) {
+			info.referencing.getBases().remove(info.referenced);
+			return "Falied at file check";
+		}
+
+		for (MethodElement me : offenderElements) {				
+			EList<EReference> refList = me.eClass().getEAllReferences();
+			if (refList == null) {
+				continue;
+			}
+			for (EReference ref : refList) {				
+				if (skipContent && LibraryUtil.isContentRef(ref)) {
+					continue;
+				}
+				Object obj = me.eGet(ref);
+				if (obj instanceof MethodElement) {
+					MethodElement referenced = (MethodElement) obj;
+					if (info.referenced == UmaUtil.getMethodPlugin(referenced)) {
+						me.eSet(ref, null);
+					}
+					
+				} else if (obj instanceof List) {
+					List list = (List) obj;
+					for (int i = list.size() - 1; i >= 0 ; i--) {
+						Object itemObj = list.get(i);
+						if (itemObj instanceof MethodElement) {
+							MethodElement referenced = (MethodElement) itemObj;	
+							if (info.referenced == UmaUtil.getMethodPlugin(referenced)) {
+								list.remove(i);
+							}
+						}
+					}
+				}
+			}
+
+		}
+		
+		if (!LibraryEditUtil.getInstance().save(resources)) {			
+			info.referencing.getBases().remove(info.referenced);
+			return "Falied at save";
+		}
+		
+		getMgr().removeFromMarkInfoMap(marker);
+		return ret;
 	}
 	
 	static class MarkerInfo {
 		MethodPlugin referencing;
 		MethodPlugin referenced;
-		public MarkerInfo(MethodPlugin referencing, MethodPlugin referenced) {
+		Set<MethodElement> offenderElements;
+		public MarkerInfo(MethodPlugin referencing, MethodPlugin referenced, Set<MethodElement> offenderElements) {
 			this.referencing = referencing;
 			this.referenced = referenced;
+			this.offenderElements = offenderElements;
 		}
 	}
 	
