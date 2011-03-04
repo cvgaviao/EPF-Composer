@@ -20,8 +20,8 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.views.markers.MarkerItem;
 
 /**
- * Show explanation action on ProblemView
- * 
+ * Clear all validation markers
+ *  
  * @author Weiping Lu
  * @since 1.5.1.1
  *
