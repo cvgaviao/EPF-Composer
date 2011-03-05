@@ -488,6 +488,9 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 		
 		@Override
 		protected boolean isValidDestination() {
+			if (! (destination instanceof CustomCategory)) {
+				return false;
+			}
 			if (samePluginMove) {
 				if (!DependencyChecker
 						.checkCircularForMovingVariabilityElement(
