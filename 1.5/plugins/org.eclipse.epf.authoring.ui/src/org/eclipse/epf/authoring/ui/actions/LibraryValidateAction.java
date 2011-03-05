@@ -70,6 +70,7 @@ public class LibraryValidateAction extends ValidateAction {
 		eclipseResourcesUtil = new LibraryValidationMarkerHelper();
 	}
 	
+	//Called from method editors only
 	public LibraryValidateAction(boolean showSuccess) {
 		this();
 		this.showSuccess  = showSuccess;
@@ -88,19 +89,27 @@ public class LibraryValidateAction extends ValidateAction {
 	 * @see org.eclipse.emf.edit.ui.action.ValidateAction#validate(org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	protected Diagnostic validate(final IProgressMonitor progressMonitor) {
-		SafeUpdateController.syncExec(new Runnable() {	
-			public void run() {
-				PlatformUI.
-				getWorkbench().
-				getActiveWorkbenchWindow().
-				getActivePage().
-				closeAllEditors(true);
-			}
-		});
-				
 		ValidationManager validationMgr = (ValidationManager) LibraryEditUtil.getInstance().getValidationManager();
 		LibraryUIPreferences.update(validationMgr);
 		validationMgr.setEmfValidateAction(this);
+		
+		if (showSuccess) {	
+			SafeUpdateController.syncExec(new Runnable() {	
+				public void run() {
+					PlatformUI.
+					getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					closeAllEditors(true);
+					
+					ViewHelper.checkLibraryHealth(library == null ? selectedObjects : library);
+				}
+			});			
+		} else {	//called from an method element editing
+			validationMgr.setNameCheck(true);
+			validationMgr.setCircularDependancyCheck(true);
+			validationMgr.setUndeclaredDependancyCheck(false);
+		}
 		
 		BasicDiagnostic ret = validate_old(progressMonitor);
 		
@@ -111,14 +120,7 @@ public class LibraryValidateAction extends ValidateAction {
 		return ret;
 	}
 	
-	private BasicDiagnostic validate_old(final IProgressMonitor progressMonitor) {
-		SafeUpdateController.syncExec(new Runnable() {	
-			public void run() {	
-				ViewHelper.checkLibraryHealth(library == null ? selectedObjects : library);
-			}
-		});
-		
-		
+	private BasicDiagnostic validate_old(final IProgressMonitor progressMonitor) {				
 	    if(resources == null) {
 	    	resources = new HashSet();
 	    }
