@@ -404,7 +404,11 @@ public final class LibraryEditResources extends NLS {
 	public static String newElement_text;
 	
 	public static String CreateProcessComponentCommand_Message;
-
+	
+	public static String DeliveryProcessLabel;
+	
+	public static String CapabilityPatternLabel;
+	
 	public static String SortType_Label;
 
 	public static String SortType_Manual;

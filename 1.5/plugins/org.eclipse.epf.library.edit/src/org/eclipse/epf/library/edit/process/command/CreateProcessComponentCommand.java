@@ -226,8 +226,18 @@ public class CreateProcessComponentCommand extends CreateChildCommand {
 		}
 		
 		boolean canExecute = false;
-		String msg = NLS.bind(LibraryEditResources.CreateProcessComponentCommand_Message, 
-				TngUtil.getTypeText(procType.getName()).toLowerCase());
+		
+//		String msg = NLS.bind(LibraryEditResources.CreateProcessComponentCommand_Message, 
+//				TngUtil.getTypeText(procType.getName()).toLowerCase());
+		
+		String msg = ""; //$NON-NLS-1$
+		if (procType.getName().equals("DeliveryProcess")) { //$NON-NLS-1$
+			msg = NLS.bind(LibraryEditResources.CreateProcessComponentCommand_Message,
+					LibraryEditResources.DeliveryProcessLabel);
+		} else if (procType.getName().equals("CapabilityPattern")) { //$NON-NLS-1$
+			msg = NLS.bind(LibraryEditResources.CreateProcessComponentCommand_Message,
+					LibraryEditResources.CapabilityPatternLabel);
+		}		
 		
 		// request input
 		if (uiHandler.requestInput(LibraryEditResources.newProcessComponentDialog_title, 
