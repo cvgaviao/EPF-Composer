@@ -440,6 +440,8 @@ public class LibraryUIResources extends NLS {
 	public static String elementTCProvider_capabilityPatterns;
 
 	public static String elementTCProvider_deliveryProcesses;
+	
+	public static String generteReportWizard_title;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, LibraryUIResources.class);

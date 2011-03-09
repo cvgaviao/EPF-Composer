@@ -37,7 +37,13 @@
                label="%openLibraryActionlabel"
                menubarPath="file/org.eclipse.epf.library.ui.menu.fileOpenMenu/groupm1"
                tooltip="%openLibraryActionTooltip"/>
+         <action
+               class="org.eclipse.epf.library.ui.actions.GenerateReportAction"
+               icon="icons/full/obj16/Report.gif"
+               id="org.eclipse.epf.library.ui.actions.GenerateReportAction"
+               label="%generateReportActionlabel"
+               menubarPath="file/report"/>               
       </actionSet>
    </extension>
-
+  
 </plugin>
