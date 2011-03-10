@@ -10,19 +10,24 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.Misc;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.validation.ValidationStatus;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.validation.LibraryEValidator;
 
 public class UndeclaredDependencyCheck extends ValidationAction {
 	
@@ -62,6 +67,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 		}
 		
 
+		MultiStatus multiStatus = new MultiStatus(LibraryPlugin.PLUGIN_ID, 0, "", null); //$NON-NLS-1$
 		//Build markers
 		for (Map.Entry<MethodPlugin, Set<MethodPlugin>> entry : problemPluginMap
 				.entrySet()) {
@@ -101,12 +107,15 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 					MarkerInfo markerInfo = new MarkerInfo(plugin, p, elements);
 					getMgr().addToMarkInfoMap(marker, markerInfo);
 					
+					multiStatus.add(new ValidationStatus(IStatus.WARNING, 0, LibraryResources.UndeclaredDep_MarkerTxt0, plugin, null));					
+					
 				} catch (Exception e) {
 					LibraryPlugin.getDefault().getLogger().logError(e);
 				}
 			}
 		}
 		
+		LibraryEValidator.appendDiagnostics(multiStatus, getMgr().getDiagnostics());		
 		//Clear
 		problemPluginMap = null;
 		problemElementMap = null;
@@ -193,7 +202,7 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 		}
 		
 		if (Misc.isBaseOf(info.referencing, info.referenced, new HashMap())) {
-			return LibraryResources.UndeclaredDep_FixMsg1;	
+			return LibraryEditResources.circular_dependency_error_msg;	
 		}
 		
 		info.referencing.getBases().add(info.referenced);

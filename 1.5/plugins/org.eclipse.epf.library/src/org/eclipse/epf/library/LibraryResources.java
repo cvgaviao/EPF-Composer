@@ -121,10 +121,9 @@ public final class LibraryResources extends NLS {
 	public static String configFreeProcessView_title;
 	public static String systemCreatedCustomCategory_brief;
 	
+	public static String UndeclaredDep_MarkerTxt0;
 	public static String UndeclaredDep_MarkerTxt1;
 	public static String UndeclaredDep_MarkerTxt2;
-	
-	public static String UndeclaredDep_FixMsg1;
 	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, LibraryResources.class);

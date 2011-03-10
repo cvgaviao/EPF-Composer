@@ -26,6 +26,9 @@ import org.osgi.framework.BundleContext;
  */
 public class LibraryPlugin extends AbstractActivator {
 
+	// The plug-in ID
+	public static final String PLUGIN_ID = "org.eclipse.epf.library"; //$NON-NLS-1$
+	
 	// The shared plug-in instance.
 	private static LibraryPlugin plugin;
 

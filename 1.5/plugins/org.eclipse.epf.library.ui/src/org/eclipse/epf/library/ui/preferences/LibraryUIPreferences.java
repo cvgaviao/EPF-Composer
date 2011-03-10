@@ -82,7 +82,7 @@ public class LibraryUIPreferences {
 	
 	private static final String CIRCULAR_VALIDATION = "circular validation"; //$NON-NLS-1$
 
-	private static final String UNDECLARED_VALIDATION = "circular validation"; //$NON-NLS-1$
+	private static final String UNDECLARED_VALIDATION = "undeclared validation"; //$NON-NLS-1$
 
 	private static final String DESCRIPTOR_REPEATABLE = "descriptor_repeatable"; //$NON-NLS-1$
 
@@ -121,9 +121,9 @@ public class LibraryUIPreferences {
 		prefStore.setDefault(INCLUDE_DESCRIPTORS, !SupportingElementData.isDescriptorExclusiveOption());
 		prefStore.setDefault(DESCRIPTOR_REPEATABLE, false);
 		
-		prefStore.setDefault(NAME_VALIDATION, true);
-		prefStore.setDefault(CIRCULAR_VALIDATION, true);
-		prefStore.setDefault(CIRCULAR_VALIDATION, true);
+		prefStore.setDefault(NAME_VALIDATION, false);
+		prefStore.setDefault(CIRCULAR_VALIDATION, false);
+		prefStore.setDefault(UNDECLARED_VALIDATION, true);
 		
 		SupportingElementData.setDescriptorExclusiveOption(! LibraryUIPreferences.getIncludeDescriptors());
 	}

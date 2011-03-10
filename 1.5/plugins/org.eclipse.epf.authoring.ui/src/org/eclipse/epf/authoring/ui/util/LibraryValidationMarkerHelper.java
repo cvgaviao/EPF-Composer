@@ -28,7 +28,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.ui.EMFEditUIPlugin;
 import org.eclipse.emf.edit.ui.action.ValidateAction.EclipseResourcesUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceListener;
@@ -69,6 +71,15 @@ public class LibraryValidationMarkerHelper extends EclipseResourcesUtil {
       return ValidationManager.MARKER_ID;
     }
 	
+    @Override
+    public void createMarkers(Resource resource, Diagnostic diagnostic)
+    {
+    	if (diagnostic.getSeverity() == Diagnostic.WARNING) {
+    		return;
+    	}
+    	super.createMarkers(resource, diagnostic);
+    }
+    
 	private static interface IParentProvider {
 		final IParentProvider containerProvider = new IParentProvider() {
 
