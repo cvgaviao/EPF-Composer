@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.library.validation.ValidationManager;
@@ -106,17 +107,21 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 		 * @see org.eclipse.ui.IMarkerResolution#getLabel()
 		 */
 		public String getLabel() {
-			return "Add reference plug-in";
+			return AuthoringUIResources.ValidationMarkerResolutionGenerator_0;
 		}
 		
-		public void run(IMarker marker) {			
-			IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
-			String msg = ((ValidationManager) mgr).UndeclaredDependencyCheckAddPluginFix(marker);
-			if (msg != null && msg.length() > 0) {
-				AuthoringUIPlugin.getDefault().getMsgDialog()
-				.displayWarning(
-						"AddPluginResolution fix", 
-						msg);
+		public void run(IMarker marker) {
+			try {
+				IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();			
+				String msg = ((ValidationManager) mgr).UndeclaredDependencyCheckAddPluginFix(marker);
+				if (msg != null && msg.length() > 0) {
+					AuthoringUIPlugin.getDefault().getMsgDialog()
+					.displayWarning(
+							AuthoringUIResources.ValidationMarkerResolutionGenerator_0, 
+							msg);
+				}
+			} catch (Throwable e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
 			}
 		}
 		
@@ -132,12 +137,16 @@ public class ValidationMarkerResolutionGenerator implements IMarkerResolutionGen
 		 * @see org.eclipse.ui.IMarkerResolution#getLabel()
 		 */
 		public String getLabel() {
-			return "Remove undeclared references";
+			return AuthoringUIResources.ValidationMarkerResolutionGenerator_1;
 		}
 
-		public void run(IMarker marker) {			
-			IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
-			((ValidationManager) mgr).UndeclaredDependencyCheckRemoveReferenceFix(marker);
+		public void run(IMarker marker) {
+			try {
+				IValidationManager mgr = LibraryEditUtil.getInstance().getValidationManager();
+				((ValidationManager) mgr).UndeclaredDependencyCheckRemoveReferenceFix(marker);
+			} catch (Throwable e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
 		}
 		
 		

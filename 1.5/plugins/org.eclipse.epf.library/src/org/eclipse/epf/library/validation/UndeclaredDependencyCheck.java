@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.LibraryPlugin;
+import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.Misc;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -66,24 +67,23 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 				.entrySet()) {
 			MethodPlugin plugin = entry.getKey();
 			Set<MethodPlugin> set = entry.getValue();
-
-			String msg0 = "Undeclared plug-in dependency from \""
-					+ plugin.getName() + "\" to ";
+			
+			String msg0 = LibraryResources.bind(LibraryResources.UndeclaredDep_MarkerTxt1, (new String[] {plugin.getName()}));
 			for (MethodPlugin p : set) {
 				IMarker marker = getMgr().createMarker(plugin);
-				String msg = msg0 + "\"" + p.getName() + "\"";
+				String msg = msg0 + " '" + p.getName() + "'";	 //$NON-NLS-1$  //$NON-NLS-2$
 				String key = plugin.getGuid() + p.getGuid();
 				Set<MethodElement> elements = problemElementMap.get(key);
 				if (elements != null && !elements.isEmpty()) {
-					String line2msg0 = " \n" + "Offender elements: ";
+					String line2msg0 = ". \n" + LibraryResources.UndeclaredDep_MarkerTxt2 + " ";	//$NON-NLS-1$ //$NON-NLS-2$
 					String line2msg = line2msg0;
 					for (MethodElement e : elements) {
 						if (line2msg.length() > 155) {
-							line2msg += " ... ";
+							line2msg += " ... ";	 //$NON-NLS-1$  
 							break;
 						}
 						if (line2msg != line2msg0) {
-							line2msg += "; ";
+							line2msg += "; ";		 //$NON-NLS-1$  
 						}
 						line2msg += TngUtil.getLabelWithPath(e);
 					}
@@ -181,43 +181,44 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 	}
 
 	public String addPluginFix(IMarker marker) {
-		String ret = "";
+		String emptyStr = "";	//$NON-NLS-1$ 
 		
 		Object obj = getMgr().getMarkInfo(marker);
 		MarkerInfo info = obj instanceof MarkerInfo ? (MarkerInfo) obj : null;
 		if (info == null) {
-			return ret;
+			return emptyStr;
 		}
 		if (info.referencing == null || info.referenced == null || info.referencing == info.referenced) {
-			return ret;
+			return emptyStr;
 		}
 		
 		if (Misc.isBaseOf(info.referencing, info.referenced, new HashMap())) {
-			return "The fix would cause circular dependency";
+			return LibraryResources.UndeclaredDep_FixMsg1;	
 		}
 		
 		info.referencing.getBases().add(info.referenced);
 		Resource resource = info.referencing.eResource();
 		if (resource == null || !LibraryEditUtil.getInstance().save(Collections.singleton(resource))) {			
 			info.referencing.getBases().remove(info.referenced);
-			return "Falied at save";
+			LibraryPlugin.getDefault().getLogger().logError("addPluginFix falied at save");//$NON-NLS-1$ 
+			return emptyStr;
 		}
 		
 		getMgr().removeFromMarkInfoMap(marker);
-		return ret;
+		return emptyStr;
 	}
 	
 	public String removeReferenceFix(IMarker marker) {
-		String ret = "";
+		String emptyStr = ""; //$NON-NLS-1$ 
 		
 		Object infoObj = getMgr().getMarkInfo(marker);
 		MarkerInfo info = infoObj instanceof MarkerInfo ? (MarkerInfo) infoObj : null;
 		if (info == null || info.referenced == null) {
-			return ret;
+			return emptyStr;
 		}
 		Set<MethodElement> offenderElements = info.offenderElements;
 		if (offenderElements == null || offenderElements.isEmpty()) {
-			return ret;
+			return emptyStr;
 		}
 		Set<Resource> resources = new HashSet<Resource>();
 		for (MethodElement e : offenderElements) {
@@ -234,7 +235,8 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 		IStatus status = FileManager.getInstance().checkModify(pathList.toArray(new String[pathList.size()]), LibraryPlugin.getDefault().getContext());
 		if (!status.isOK()) {
 			info.referencing.getBases().remove(info.referenced);
-			return "Falied at file check";
+			LibraryPlugin.getDefault().getLogger().logError("addPluginFix falied at file check");//$NON-NLS-1$ 
+			return emptyStr;
 		}
 
 		for (MethodElement me : offenderElements) {				
@@ -271,11 +273,12 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 		
 		if (!LibraryEditUtil.getInstance().save(resources)) {			
 			info.referencing.getBases().remove(info.referenced);
-			return "Falied at save";
+			LibraryPlugin.getDefault().getLogger().logError("addPluginFix falied at save");//$NON-NLS-1$ 
+			return emptyStr;
 		}
 		
 		getMgr().removeFromMarkInfoMap(marker);
-		return ret;
+		return emptyStr;
 	}
 	
 	static class MarkerInfo {

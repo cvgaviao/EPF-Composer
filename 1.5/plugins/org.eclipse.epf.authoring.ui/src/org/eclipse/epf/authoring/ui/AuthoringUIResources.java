@@ -2093,6 +2093,10 @@ public final class AuthoringUIResources extends NLS {
 	public static String AttachmentDialogattachUrl_text;
 	
 	public static String Validate_method_library;
+
+	public static String ValidationMarkerResolutionGenerator_0;
+
+	public static String ValidationMarkerResolutionGenerator_1;
 	
 	public static String roleCategoriesPage_multipleSelectDescription;
 
