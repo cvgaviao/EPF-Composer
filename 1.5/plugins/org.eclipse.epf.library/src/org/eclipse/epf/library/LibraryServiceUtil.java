@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.configuration.MethodConfigurationElementList;
 import org.eclipse.epf.library.edit.util.ModelStructure;
@@ -436,7 +437,7 @@ public class LibraryServiceUtil {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(process);
 				MethodLibrary lib = UmaUtil.getMethodLibrary(plugin);
 				for (MethodConfiguration config : lib.getPredefinedConfigurations()) {
-					if (config.getMethodPluginSelection().contains(plugin)) {
+					if (ConfigurationHelper.inConfig(process, config)) {
 						contextNames.add(config.getName());
 					}
 				}
