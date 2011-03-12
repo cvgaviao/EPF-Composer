@@ -897,14 +897,31 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
-			closure.setAbortCheckError(false);
-			
-			// save the previous invalid elements
-			final List<Object> invalid = closure.getInvalidElements();
-			closure.checkError();
-			if (closure.isAbortCheckError()) {
-				return Status.OK_STATUS;
+
+			List<Object> invalid0 = null;
+			List<Object> updateInvalid0 = null;
+
+			try {
+				canDisposeClosure = false;
+				closure.setAbortCheckError(false);
+
+				// save the previous invalid elements
+				// final List<Object> invalid = closure.getInvalidElements();
+				invalid0 = closure.getInvalidElements();
+				closure.checkError();
+				if (closure.isAbortCheckError()) {
+					return Status.OK_STATUS;
+				}
+				updateInvalid0 = closure.getInvalidElements();
+			} finally {
+				canDisposeClosure = true;
+				if (disposed) {
+					closure.dispose();
+				}
 			}
+					
+			final List<Object> invalid = invalid0;
+			final List<Object> updateInvalid = updateInvalid0;
 			
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				public void run() {
@@ -913,7 +930,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 					} else {
 						// get the new error elements, add to the previous error elements,
 						// and update them to update the error/warning images
-						invalid.addAll(closure.getInvalidElements());
+//						invalid.addAll(closure.getInvalidElements());
+						invalid.addAll(updateInvalid);
 
 						// also add the UI folders
 						ConfigPackageContentProvider cp = (ConfigPackageContentProvider) configViewer
@@ -1150,7 +1168,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		return result;
 	}
 	
+	private boolean disposed = false;
+	private boolean canDisposeClosure = true;
 	public void dispose() {
+		disposed = true;		
 		super.dispose();
 
 		if (libListener != null) {
@@ -1165,8 +1186,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		}
 
 		if (closure != null) {
-			closure.dispose();
-			closure = null;
+			if (canDisposeClosure) {
+				closure.dispose();
+				closure = null;
+			}
 		}
 		if (adapterFactory != null) {
 			adapterFactory.dispose();
