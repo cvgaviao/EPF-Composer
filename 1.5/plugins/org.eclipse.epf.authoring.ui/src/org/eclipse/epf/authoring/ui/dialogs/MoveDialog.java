@@ -470,6 +470,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 		public void selectionChanged(SelectionChangedEvent event) {
 			destination = TngUtil.unwrap(((IStructuredSelection) event
 					.getSelection()).getFirstElement());
+			tgtParent = null;
 			if (destination instanceof CustomCategory) {
 				tgtParent = (CustomCategory) destination;
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(tgtParent);
@@ -488,7 +489,7 @@ public class MoveDialog extends Dialog implements ISelectionChangedListener {
 		
 		@Override
 		protected boolean isValidDestination() {
-			if (! (destination instanceof CustomCategory)) {
+			if (! (tgtParent instanceof CustomCategory)) {
 				return false;
 			}
 			if (samePluginMove) {
