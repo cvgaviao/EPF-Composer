@@ -422,8 +422,6 @@ public class MainActionBarAdvisor extends ActionBarAdvisor {
 		newMenu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		fileMenu.add(newMenu);
 		fileMenu.add(new GroupMarker(IWorkbenchActionConstants.NEW_EXT));
-		fileMenu.add(new Separator());
-		fileMenu.add(new GroupMarker("report")); //$NON-NLS-1$
 		
 		//Alex: The below comment out code has nothing with UI, but adding confuse.
 		//The real open menu come from /org.eclipse.epf.library.ui/plugin.xml
@@ -449,6 +447,8 @@ public class MainActionBarAdvisor extends ActionBarAdvisor {
 		fileMenu.add(moveAction);
 		fileMenu.add(renameAction);
 		fileMenu.add(refreshAction);
+		fileMenu.add(new Separator());
+		fileMenu.add(new GroupMarker("report")); //$NON-NLS-1$
 		fileMenu.add(new Separator());
 		fileMenu.add(importAction);
 		fileMenu.add(exportAction);
