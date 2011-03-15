@@ -48,6 +48,8 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -252,7 +254,7 @@ public class NestedCommandProvider implements INestedCommandProvider {
 			if (addCommand instanceof AddCommand) {
 				EditingDomain ed = ((AddCommand) addCommand).getDomain();
 				
-				if (((AddCommand)addCommand).getOwner() instanceof ProcessPackage) {
+				if (((AddCommand)addCommand).getOwner() instanceof ProcessPackage || ((AddCommand)addCommand).getOwner() instanceof MethodLibrary) {
 					if (ed instanceof TraceableAdapterFactoryEditingDomain) {
 						Map copyToOriginalMap = ((TraceableAdapterFactoryEditingDomain) ed)
 								.getCopyToOriginalMap();
@@ -262,6 +264,16 @@ public class NestedCommandProvider implements INestedCommandProvider {
 									.hasNext();) {
 								MethodElement element = (MethodElement) iter
 										.next();
+								
+								if (element instanceof MethodPlugin) {
+									for (Process proc : TngUtil
+											.getAllProcesses(((MethodPlugin) element))) {
+										cmd.append(new CopyDiagramCommand(
+												copyToOriginalMap.keySet(),
+												copyToOriginalMap, proc));
+									}
+								}
+								
 								if (element instanceof ProcessComponent) {
 									cmd.append(new CopyDiagramCommand(
 											copyToOriginalMap.keySet(),
