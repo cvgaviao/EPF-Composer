@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.NestedCommandExcecutor;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.DeliveryProcess;
@@ -105,7 +106,7 @@ public class ProcessDeepCopyCommand extends ActivityDeepCopyCommand {
 				
 		// new copy of the process must be saved so other nested commands like diagram copy command 
 		// can be executed.
-		if(pkgCopy != null && pkgCopy instanceof ProcessComponent) {
+		if(pkgCopy != null && pkgCopy instanceof ProcessComponent && ProcessUtil.isDeepCopySave()) {
 			ILibraryPersister.FailSafeMethodLibraryPersister persister = Services.getDefaultLibraryPersister().getFailSafePersister();
 			try {
 				persister.save(pkgCopy.eResource());

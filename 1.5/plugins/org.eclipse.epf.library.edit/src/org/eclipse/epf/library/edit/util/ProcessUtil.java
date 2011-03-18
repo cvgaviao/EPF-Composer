@@ -3504,4 +3504,18 @@ public final class ProcessUtil {
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(wo, MethodElementPropertyHelper.WORK_ORDER__SUCCESSOR);
 		return prop != null && e.getGuid().equals(prop.getValue());
 	}
+	
+	public static boolean deepCopySave = true;
+
+	public static boolean isDeepCopySave() {
+		return deepCopySave;
+	}
+
+	public static void setDeepCopySave(boolean deepCopySave) {
+		ProcessUtil.deepCopySave = deepCopySave;
+	}
+	
+	
+	
+	
 }
