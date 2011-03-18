@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
 
 
@@ -79,7 +80,13 @@ public class UniqueNameHandler {
 		return name;
 	}
 	
-	
+	public void ensureUnique(MethodElement element) {
+		String name = getUniqueName(element.getName());
+		if (! name.equals(element.getName())) {
+			element.setName(name);		
+		}
+		register(name);
+	}
 	
 	
 }
