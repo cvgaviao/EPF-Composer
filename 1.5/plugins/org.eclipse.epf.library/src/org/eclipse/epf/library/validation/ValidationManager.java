@@ -64,7 +64,9 @@ public class ValidationManager implements IValidationManager {
 			Object obj = ExtensionHelper.create(ValidationManager.class, null);
 			if (obj instanceof ValidationManager) {
 				instance = (ValidationManager) obj;
-			}		
+			} else {
+				instance = new ValidationManager();
+			}
 		}
 		return instance;
 	}
