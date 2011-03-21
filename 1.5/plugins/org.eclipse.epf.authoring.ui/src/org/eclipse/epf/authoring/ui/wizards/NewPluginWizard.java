@@ -184,7 +184,7 @@ public class NewPluginWizard extends BaseWizard implements INewWizard {
 					if (AuthoringUIPreferences.getEnableAutoNameGen()) {
 						LibraryUtil.addNameTrackPresentationNameMark(plugin);
 					}
-					EditorChooser.getInstance().openEditor(newPlugin);
+					EditorChooser.getInstance().openEditor(plugin);
 				}
 			});
 
