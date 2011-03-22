@@ -3505,14 +3505,13 @@ public final class ProcessUtil {
 		return prop != null && e.getGuid().equals(prop.getValue());
 	}
 	
-	public static boolean deepCopySave = true;
-
-	public static boolean isDeepCopySave() {
-		return deepCopySave;
+	public static boolean processDeepcopyDiagarm = false;
+	public static boolean isProcessDeepcopyDiagarm() {
+		return processDeepcopyDiagarm;
 	}
 
-	public static void setDeepCopySave(boolean deepCopySave) {
-		ProcessUtil.deepCopySave = deepCopySave;
+	public static void setProcessDeepcopyDiagarm(boolean processDeepcopyDiagarm) {
+		ProcessUtil.processDeepcopyDiagarm = processDeepcopyDiagarm;
 	}
 	
 	

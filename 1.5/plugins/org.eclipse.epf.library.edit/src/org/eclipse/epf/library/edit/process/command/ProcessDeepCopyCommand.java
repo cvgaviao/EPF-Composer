@@ -56,7 +56,9 @@ public class ProcessDeepCopyCommand extends ActivityDeepCopyCommand {
 		createtargetProcess();
 		//TODO: disable copying diagrams for now
 		//
-//		nestedCommandExecutor = new NestedCommandExcecutor(this);
+		if (ProcessUtil.isProcessDeepcopyDiagarm()) {
+			nestedCommandExecutor = new NestedCommandExcecutor(this);
+		}
 	}	
 	
 	public MethodConfiguration getMethodConfiguration() {
@@ -106,7 +108,7 @@ public class ProcessDeepCopyCommand extends ActivityDeepCopyCommand {
 				
 		// new copy of the process must be saved so other nested commands like diagram copy command 
 		// can be executed.
-		if(pkgCopy != null && pkgCopy instanceof ProcessComponent && ProcessUtil.isDeepCopySave()) {
+		if(pkgCopy != null && pkgCopy instanceof ProcessComponent) {
 			ILibraryPersister.FailSafeMethodLibraryPersister persister = Services.getDefaultLibraryPersister().getFailSafePersister();
 			try {
 				persister.save(pkgCopy.eResource());
