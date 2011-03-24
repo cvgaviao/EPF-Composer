@@ -2110,8 +2110,6 @@ public final class ProcessUtil {
 		Activity parentAct = ((Activity) parent);
 		addToActivity(parentAct, act, prevAndNext);
 		
-		//Fix the issue that the contributer lost all its base's locally suppressed states
-		//Use try and catch to prevent any harm due to the call to the quick fix copySuppressions method.
 		try {
 			copySuppressions(adapter, act);
 		} catch (Throwable e) {
@@ -2122,7 +2120,6 @@ public final class ProcessUtil {
 		return act;
 	}
 		
-	//copySuppressions was written without checking all the potential bad conditions - need to refine later.
 	private static void copySuppressions(
 			BreakdownElementWrapperItemProvider adapterForBaseAct,
 			Activity contributerAct) {
@@ -2130,26 +2127,55 @@ public final class ProcessUtil {
 		BreakdownElementWrapperItemProvider newAdapter = (BreakdownElementWrapperItemProvider) factory
 				.createWrapper(contributerAct, adapterForBaseAct.getOwner(),
 						adapterForBaseAct.getAdapterFactory());
-		List oldList = new ArrayList();
-		oldList.addAll(adapterForBaseAct.getChildren(null));
-		List newList = new ArrayList();
-		newList.addAll(newAdapter.getChildren(null));
-		Object top = adapterForBaseAct.getTopItem();
-		Process process = top instanceof Process ? (Process) top : null;
-		Suppression sup = Suppression.getSuppression(process);
-		List<BreakdownElementWrapperItemProvider> toSuppressList = new ArrayList<BreakdownElementWrapperItemProvider>();
-		for (int i = 0; i < oldList.size(); i++) {
-			Object oldItem = oldList.get(i);
-			if (oldItem instanceof BreakdownElementWrapperItemProvider) {
-				BreakdownElementWrapperItemProvider oldProvider = (BreakdownElementWrapperItemProvider) oldItem;
-				if (sup.isSuppressed(oldProvider)) {
-					toSuppressList
-							.add((BreakdownElementWrapperItemProvider) newList
-									.get(i));
+		Map<BreakdownElement, BreakdownElementWrapperItemProvider> newElementProviderMap = new HashMap<BreakdownElement, BreakdownElementWrapperItemProvider>();
+		for (Object newItem : newAdapter.getChildren(null)) {
+			if (newItem instanceof BreakdownElementWrapperItemProvider) {
+				Object unwrapped = TngUtil.unwrap(newItem);
+				if (unwrapped instanceof BreakdownElement) {
+					newElementProviderMap.put((BreakdownElement) unwrapped,
+							(BreakdownElementWrapperItemProvider) newItem);
 				}
 			}
 		}
-		sup.suppress(toSuppressList);
+
+		Object top = adapterForBaseAct.getTopItem();
+		Process process = top instanceof Process ? (Process) top : null;
+		Suppression sup = process == null ? null : Suppression
+				.getSuppression(process);
+		if (sup == null) {
+			return;
+		}
+		List<BreakdownElementWrapperItemProvider> toSuppressList = new ArrayList<BreakdownElementWrapperItemProvider>();
+		List<BreakdownElementWrapperItemProvider> toRevealList = new ArrayList<BreakdownElementWrapperItemProvider>();
+		for (Object oldItem : adapterForBaseAct.getChildren(null)) {
+			if (!(oldItem instanceof BreakdownElementWrapperItemProvider)) {
+				continue;
+			}
+			Object unwrapped = TngUtil.unwrap(oldItem);
+			if (!(unwrapped instanceof BreakdownElement)) {
+				continue;
+			}
+			BreakdownElementWrapperItemProvider newProvider = newElementProviderMap.get(unwrapped);
+			if (newProvider == null) {
+				continue;
+			}
+			BreakdownElementWrapperItemProvider oldProvider = (BreakdownElementWrapperItemProvider) oldItem;
+			boolean oldSup = sup.isSuppressed(oldProvider);
+			boolean newSup = sup.isSuppressed(newProvider);
+			if (oldSup != newSup) {
+				if (oldSup) {
+					toSuppressList.add(newProvider);
+				} else {
+					toRevealList.add(newProvider);
+				}
+			}
+		}
+		if (! toSuppressList.isEmpty()) {
+			sup.suppress(toSuppressList);
+		}
+		if (! toRevealList.isEmpty()) {
+			sup.reveal(toRevealList);
+		}
 	}
 
 	/**
