@@ -57,6 +57,7 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.ComposedBreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.DescribableElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
+import org.eclipse.epf.library.edit.process.IBreakdownElementWrapperItemProviderFactory;
 import org.eclipse.epf.library.edit.process.RoleDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.TaskDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.WorkProductDescriptorWrapperItemProvider;
@@ -65,6 +66,7 @@ import org.eclipse.epf.library.edit.process.command.CopyHelper;
 import org.eclipse.epf.library.edit.process.command.ProcessCommandUtil;
 import org.eclipse.epf.library.edit.process.command.ProcessDeepCopyCommand;
 import org.eclipse.epf.library.edit.process.command.WBSDropCommand;
+import org.eclipse.epf.library.edit.process.internal.BreakdownElementWrapperItemProviderFactory;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.PredecessorList.DepthLevelItemProvider;
@@ -2107,8 +2109,47 @@ public final class ProcessUtil {
 				VariabilityType.LOCAL_CONTRIBUTION, prevAndNext);
 		Activity parentAct = ((Activity) parent);
 		addToActivity(parentAct, act, prevAndNext);
+		
+		//Fix the issue that the contributer lost all its base's locally suppressed states
+		//Use try and catch to prevent any harm due to the call to the quick fix copySuppressions method.
+		try {
+			copySuppressions(adapter, act);
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		
 		createdActivities.add(act);
 		return act;
+	}
+		
+	//copySuppressions was written without checking all the potential bad conditions - need to refine later.
+	private static void copySuppressions(
+			BreakdownElementWrapperItemProvider adapterForBaseAct,
+			Activity contributerAct) {
+		IBreakdownElementWrapperItemProviderFactory factory = BreakdownElementWrapperItemProviderFactory.INSTANCE;
+		BreakdownElementWrapperItemProvider newAdapter = (BreakdownElementWrapperItemProvider) factory
+				.createWrapper(contributerAct, adapterForBaseAct.getOwner(),
+						adapterForBaseAct.getAdapterFactory());
+		List oldList = new ArrayList();
+		oldList.addAll(adapterForBaseAct.getChildren(null));
+		List newList = new ArrayList();
+		newList.addAll(newAdapter.getChildren(null));
+		Object top = adapterForBaseAct.getTopItem();
+		Process process = top instanceof Process ? (Process) top : null;
+		Suppression sup = Suppression.getSuppression(process);
+		List<BreakdownElementWrapperItemProvider> toSuppressList = new ArrayList<BreakdownElementWrapperItemProvider>();
+		for (int i = 0; i < oldList.size(); i++) {
+			Object oldItem = oldList.get(i);
+			if (oldItem instanceof BreakdownElementWrapperItemProvider) {
+				BreakdownElementWrapperItemProvider oldProvider = (BreakdownElementWrapperItemProvider) oldItem;
+				if (sup.isSuppressed(oldProvider)) {
+					toSuppressList
+							.add((BreakdownElementWrapperItemProvider) newList
+									.get(i));
+				}
+			}
+		}
+		sup.suppress(toSuppressList);
 	}
 
 	/**
