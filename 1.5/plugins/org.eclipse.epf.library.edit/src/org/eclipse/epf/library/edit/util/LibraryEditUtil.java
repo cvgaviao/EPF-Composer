@@ -315,7 +315,12 @@ public class LibraryEditUtil {
 			return false;
 		}
 		if (ref.getEType() instanceof EClass) {
-			Object obj = UmaFactory.eINSTANCE.create((EClass) ref.getEType());
+			Object obj = null;
+			try {
+				obj = UmaFactory.eINSTANCE.create((EClass) ref.getEType());
+			} catch (Exception e) {
+				return false;				
+			}
 			return obj instanceof Guidance;
 		}
 		return false;
