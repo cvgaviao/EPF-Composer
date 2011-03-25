@@ -47,6 +47,8 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationFilter;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
@@ -56,6 +58,7 @@ import org.eclipse.epf.library.edit.configuration.GuidanceGroupingItemProvider;
 import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
 import org.eclipse.epf.library.edit.configuration.MethodConfigurationItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
@@ -1396,6 +1399,46 @@ public class LibraryUtil {
 			}
 		}
 		LibraryService.getInstance().removeConfigurationManager(tempConfig);
+	}
+	
+	public static List<EReference> getGuidancesRefList(MethodElement element) {
+		List<EReference> list = new ArrayList<EReference>();
+		if (element != null) {
+			for (EReference ref : element.eClass().getEAllReferences()) {
+				if (LibraryEditUtil.getInstance().isGuidanceListReference(ref)) {
+					list.add(ref);
+				}
+			}		
+		}		
+		return list;
+	}
+	
+	public static List<? extends Guidance> getGuidances(MethodElement element,
+			MethodConfiguration config) {
+		ElementRealizer realizer = config == null ? null
+				: DefaultElementRealizer.newElementRealizer(config);
+
+		List<Guidance> guidanceList = new ArrayList<Guidance>();
+		Set<Guidance> seen = new HashSet<Guidance>();
+
+		for (EReference ref : getGuidancesRefList(element)) {
+			List<Guidance> valueList = realizer == null ? (List<Guidance>) element
+					.eGet(ref)
+					: ConfigurationHelper.calc0nFeatureValue(element, ref,
+							realizer);
+			if (valueList == null || valueList.isEmpty()) {
+				continue;
+			}
+			for (Guidance g : valueList) {
+				if (seen.contains(g)) {
+					continue;
+				}
+				seen.add(g);
+				guidanceList.add(g);
+			}
+		}
+
+		return guidanceList;
 	}
 	
 }
