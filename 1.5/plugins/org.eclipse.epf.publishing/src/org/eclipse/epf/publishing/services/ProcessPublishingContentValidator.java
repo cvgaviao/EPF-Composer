@@ -13,7 +13,6 @@ package org.eclipse.epf.publishing.services;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +21,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.publishing.PublishingPlugin;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -142,6 +143,8 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 
 	private void addReferencesToClosure_(MethodConfiguration config, Set processed,
 			Set<MethodElement> referencedSet, MethodElement element) {
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
+		
 		List properties = LibraryUtil.getStructuralFeatures(element);
 		for (EStructuralFeature f : (List<EStructuralFeature>) properties) {
 			if (!(f instanceof EReference)) {
@@ -152,7 +155,9 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 			if (feature.isContainer() || feature.isContainment()) {
 				continue;
 			}
-			List values = getValues(element, feature);
+//			List values = getValues(element, feature);
+			List values = getRealizedValues(element, feature, realizer);
+			
 			if (values == null) {
 				continue;
 			}
@@ -176,6 +181,19 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 			}
 		}
 
+	}
+	
+	private List getRealizedValues(MethodElement element, EReference feature, ElementRealizer realizer) {
+		if (feature.isMany()) {
+			return ConfigurationHelper.calc0nFeatureValue(element, feature, realizer);
+		}		
+		MethodElement referenced = ConfigurationHelper.calc01FeatureValue(element, feature, realizer);
+		if (referenced == null) {
+			return null;
+		}
+		List values = new ArrayList();
+		values.add(referenced);
+		return values;
 	}
 	
 	private List getValues(MethodElement element, EReference feature) {

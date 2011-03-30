@@ -1720,6 +1720,10 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			} else if ( item instanceof WorkProductDescriptor ) {
 				e = ((WorkProductDescriptor)item).getWorkProduct();
 			} 
+			MethodElement er = ConfigurationHelper.getCalculatedElement(e,  getLayoutMgr().getElementRealizer());
+			if (er != null) {
+				e = er;
+			}
 			
 			if (e != null) {
 				getLayoutMgr().getValidator().addReferencedElement(item, e);
