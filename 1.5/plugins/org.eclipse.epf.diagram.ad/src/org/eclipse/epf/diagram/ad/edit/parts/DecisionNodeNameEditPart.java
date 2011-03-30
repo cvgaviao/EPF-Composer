@@ -25,6 +25,7 @@ import java.util.Collections;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.PositionConstants;
 
 import org.eclipse.draw2d.geometry.Point;
 
@@ -68,6 +69,7 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
+import org.eclipse.gmf.runtime.gef.ui.internal.parts.WrapTextCellEditor;
 
 import org.eclipse.gmf.runtime.notation.FontStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
@@ -352,12 +354,11 @@ public class DecisionNodeNameEditPart extends CompartmentEditPart implements
 	}
 
 	/**
-	 * @generated
+	 * @modified
 	 */
 	protected DirectEditManager getManager() {
 		if (manager == null) {
-			setManager(new TextDirectEditManager(this, TextDirectEditManager
-					.getTextCellEditorClass(this), UMLEditPartFactory
+			setManager(new TextDirectEditManager(this, WrapTextCellEditor.class, UMLEditPartFactory
 					.getTextCellEditorLocator(this)));
 		}
 		return manager;
@@ -632,10 +633,13 @@ public class DecisionNodeNameEditPart extends CompartmentEditPart implements
 	public class NodeNameFigure extends WrapLabel {
 
 		/**
-		 * @generated
+		 * @modified
 		 */
 		public NodeNameFigure() {
-
+			this.setTextWrap(true);
+			this.setAlignment(PositionConstants.CENTER);
+			this.setTextJustification(PositionConstants.CENTER);			
+			
 			this.setText("");		//$NON-NLS-1$
 			createContents();
 		}
