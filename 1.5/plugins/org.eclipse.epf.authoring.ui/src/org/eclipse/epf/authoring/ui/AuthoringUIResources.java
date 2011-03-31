@@ -1161,7 +1161,7 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String AssignDialog_reassign_text;
 	
-	public static String AssignDialog_deepcoppy_text;
+//	public static String AssignDialog_deepcoppy_text;
 
 	public static String ChecklistOrder_title;
 
