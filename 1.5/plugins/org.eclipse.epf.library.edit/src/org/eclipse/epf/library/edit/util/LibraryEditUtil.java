@@ -606,9 +606,12 @@ public class LibraryEditUtil {
 		ContentPackage customCategoryPkg = UmaUtil.findContentPackage(
 				plugin, ModelStructure.DEFAULT.customCategoryPath);
 		if (customCategoryPkg == null) {
-//				continue;
+			return;
 		}
 		CustomCategory rootCC = TngUtil.getRootCustomCategory(plugin);
+		if(rootCC == null) {
+			return;
+		}
 
 		Set<CustomCategory> ccSet = new HashSet<CustomCategory>();
 		addToCCSet(rootCC.getCategorizedElements(), ccSet);
