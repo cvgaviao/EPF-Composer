@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.provider.WrapperItemProvider;
+import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
@@ -34,6 +35,7 @@ import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -327,13 +329,17 @@ public class TaskDescriptorItemProvider extends
 		newChildren.addAll(optionalInput);
 		newChildren.addAll(output);
 		
-		newChildren = removeSubartifactsFromChildren(newChildren, true);
+		MethodConfiguration config = null;
+		if (filter instanceof IConfigurator) {
+			config = ((IConfigurator) filter).getMethodConfiguration();
+		}
+		newChildren = removeSubartifactsFromChildren(newChildren, true, config);
 		updateCachedChildren(newChildren);
 		return newChildren;
 	}
 	
-	protected List removeSubartifactsFromChildren(Collection children, boolean unwrap) {
-		return ProcessUtil.removeSubartifactsFromChildren(children, unwrap);
+	protected List removeSubartifactsFromChildren(Collection children, boolean unwrap, MethodConfiguration config) {
+		return ProcessUtil.removeSubartifactsFromChildren(null, children, unwrap);
 	}
 
 	private IFilter getFilter(Object obj) {

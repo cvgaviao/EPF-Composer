@@ -29,6 +29,8 @@ import org.eclipse.epf.uma.VariabilityElement;
 public interface IConfigurator extends IMethodConfigurationProvider, IFilter, Adapter {
 
 	void setMethodConfiguration(MethodConfiguration config);
+	
+	MethodConfiguration getMethodConfiguration();
 
 	/**
 	 * If this method return a non-NULL, the item provider will use the returned

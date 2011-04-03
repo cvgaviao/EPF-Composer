@@ -23,6 +23,7 @@ import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.WorkProductDescriptor;
@@ -77,7 +78,8 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 	}
 	
 	protected Collection removeSubartifactsFromChildren(Collection children, boolean unwrap) {
-		return ProcessUtil.removeSubartifactsFromChildren(children, unwrap);
+		MethodConfiguration config = getConfigurator() == null ? null : getConfigurator().getMethodConfiguration();
+		return ProcessUtil.removeSubartifactsFromChildren(config, children, unwrap);
 	}
 
 	public Collection getChildren(Object obj) {

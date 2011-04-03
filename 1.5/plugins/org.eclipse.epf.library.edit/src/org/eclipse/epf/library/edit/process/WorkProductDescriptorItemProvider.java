@@ -30,15 +30,20 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.epf.library.edit.ICachedChildrenItemProvider;
+import org.eclipse.epf.library.edit.IConfigurator;
+import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.process.command.WorkProductDescriptorCreateCopyCommand;
+import org.eclipse.epf.library.edit.process.consolidated.ActivityItemProvider;
 import org.eclipse.epf.library.edit.util.Comparators;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Deliverable;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
@@ -116,11 +121,14 @@ implements ICachedChildrenItemProvider
 //		}
 	}
 	
-	protected void addContainedArtifactDescriptors(WorkProductDescriptor wpDesc, Collection children) {
+	protected void addContainedArtifactDescriptors(WorkProductDescriptor wpDesc, Collection children, MethodConfiguration config) {
 		Activity activity = UmaUtil.getParentActivity(wpDesc);
 		if(activity != null) {
 			Artifact artifact = (Artifact) wpDesc.getWorkProduct();
-			List list = artifact.getContainedArtifacts();
+			List list = config == null ? null : LibraryEditUtil.getInstance().calc0nFeatureValue(artifact, UmaPackage.eINSTANCE.getArtifact_ContainedArtifacts(), config);
+			if (list == null) {
+				list = artifact.getContainedArtifacts();
+			}
 			int size = list.size();
 			if(size > 0) {
 				ArrayList artifactDescriptors = new ArrayList();
@@ -137,6 +145,18 @@ implements ICachedChildrenItemProvider
 				}
 			}
 		}
+	}
+	
+	private IFilter getFilter(Object obj) {
+		IFilter filter = null;
+		Object parent = getParent(obj);
+		IBSItemProvider adapter = (IBSItemProvider) getRootAdapterFactory()
+				.adapt(parent, ITreeItemContentProvider.class);
+		if (adapter instanceof ActivityItemProvider) {
+			filter = ((ActivityItemProvider) adapter).getFilter();
+		}
+
+		return filter;
 	}
 
 	/*
@@ -173,10 +193,18 @@ implements ICachedChildrenItemProvider
 			}
 		}
 		
+		IFilter filter = getFilter(object);
+		MethodConfiguration config = null;
+		if (filter == null) {
+			filter = ProcessUtil.getFilter(adapterFactory);
+		}
+		if (filter instanceof IConfigurator) {
+			config = ((IConfigurator) filter).getMethodConfiguration();
+		}
 		// get descriptors of contained artifacts
 		//		
 		if (wpDesc.getWorkProduct() instanceof Artifact) {
-			addContainedArtifactDescriptors(wpDesc, children);
+			addContainedArtifactDescriptors(wpDesc, children, config);
 		}
 
 		// set parent
@@ -430,5 +458,12 @@ implements ICachedChildrenItemProvider
 		}
 		return super.getAttribute(object, property);
 	}
+	
+	 protected boolean hasChildren(Object object, boolean optimized)
+	  {
+		boolean b =  super.hasChildren(object, optimized);
+		return b;
+	  }
+
 
 }

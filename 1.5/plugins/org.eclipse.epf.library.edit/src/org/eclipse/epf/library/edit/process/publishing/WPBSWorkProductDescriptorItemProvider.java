@@ -21,6 +21,7 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -54,7 +55,8 @@ public class WPBSWorkProductDescriptorItemProvider extends
 	/* (non-Javadoc)
 	 * @see org.eclipse.epf.library.edit.process.WorkProductDescriptorItemProvider#addContainedArtifactDescriptors(org.eclipse.epf.uma.WorkProductDescriptor, java.util.Collection)
 	 */
-	protected void addContainedArtifactDescriptors(WorkProductDescriptor wpDesc, Collection children) {
+	@Override
+	protected void addContainedArtifactDescriptors(WorkProductDescriptor wpDesc, Collection children, MethodConfiguration config) {
 		Activity activity = UmaUtil.getParentActivity(wpDesc);
 		if(activity != null) {
 			// collect all artifact descriptors or their wrappers under the same activity

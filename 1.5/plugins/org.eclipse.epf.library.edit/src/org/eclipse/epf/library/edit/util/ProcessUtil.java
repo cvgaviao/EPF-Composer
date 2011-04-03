@@ -2892,8 +2892,8 @@ public final class ProcessUtil {
 		
 		return UmaUtil.isContainedBy(child.getWorkProduct(), parent.getWorkProduct());
 	}
-
-	public static List removeSubartifactsFromChildren(final Collection children, boolean unwrap) {
+	
+	public static List removeSubartifactsFromChildren(MethodConfiguration config, final Collection children, boolean unwrap) {
 		List artifactList = new ArrayList();
 	
 		// get the artifact list
@@ -2929,10 +2929,10 @@ public final class ProcessUtil {
 				Artifact artifact = (Artifact) iter.next();
 				found = false;
 				// if(candidate.getContainedArtifacts().contains(artifact)) {
-				if (UmaUtil.isContainedBy(artifact, candidate)) {
+				if (LibraryEditUtil.getInstance().isContainedBy(artifact, candidate, config)) {
 					iter.remove();
 				}
-				else if (UmaUtil.isContainedBy(candidate, artifact)) {
+				else if (LibraryEditUtil.getInstance().isContainedBy(candidate, artifact, config)) {
 					iter.remove();
 					candidate = artifact;
 					found = true;
@@ -3004,6 +3004,14 @@ public final class ProcessUtil {
 			}
 		}
 		
+		MethodConfiguration config = null;
+		if (adapterFactory != null) {
+			IFilter filter = getFilter(adapterFactory);
+			if (filter instanceof IConfigurator) {
+				config = ((IConfigurator) filter).getMethodConfiguration();
+			}
+		}		
+		
 		// process the artifact list to get the top-most ones
 		//
 		Set topMostArtifactDescList = new HashSet();
@@ -3020,10 +3028,13 @@ public final class ProcessUtil {
 			for (Iterator iter = artifactDescList.iterator(); iter.hasNext();) {
 				WorkProductDescriptor artifactDesc = (WorkProductDescriptor) iter.next();
 				found = false;
-				if (ProcessUtil.isContainedBy(candidate, artifactDesc, artifactDescriptors)) {
+//				if (ProcessUtil.isContainedBy(candidate, artifactDesc, artifactDescriptors)) {
+				if (LibraryEditUtil.getInstance().isContainedBy(artifactDesc.getWorkProduct(), candidate.getWorkProduct(), config)) {
+					
 					iter.remove();
 				}
-				else if (ProcessUtil.isContainedBy(artifactDesc, candidate, artifactDescriptors)) {
+//				else if (ProcessUtil.isContainedBy(artifactDesc, candidate, artifactDescriptors)) {
+				else if (LibraryEditUtil.getInstance().isContainedBy(artifactDesc.getWorkProduct(), candidate.getWorkProduct(), config)) {
 					iter.remove();
 					candidate = artifactDesc;
 

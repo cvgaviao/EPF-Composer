@@ -34,6 +34,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -351,7 +352,8 @@ implements ICachedChildrenItemProvider
 	}
 
 	protected List removeSubartifactsFromChildren(Collection children, boolean unwrap) {
-		List<?> list = ProcessUtil.removeSubartifactsFromChildren(children, unwrap);
+		MethodConfiguration config = getConfigurator() == null ? null : getConfigurator().getMethodConfiguration();
+		List<?> list = ProcessUtil.removeSubartifactsFromChildren(config, children, unwrap);
 		if(list.size() !=  children.size()) {
 			// parent of descriptors of subartifacts has been set to this activity
 			// iterate the subtree of the artifact descriptors in chidren list to correct this
