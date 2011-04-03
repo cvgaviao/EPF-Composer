@@ -642,6 +642,37 @@ public class LibraryEditUtil {
 		}
 	}
 	
+	public boolean isContainedBy(MethodElement element,
+			MethodElement container, MethodConfiguration config) {
+		if (element == null || container == null) {
+			return false;
+		}
+		if (UmaUtil.isContainedBy(element, container)) {
+			return true;
+		}
+		if (config == null) {
+			return false;
+		}
+		
+		EObject parent = element.eContainer();
+		while (parent instanceof VariabilityElement) {
+			MethodElement parentElement = getCalcualtedElement(
+					(VariabilityElement) parent, config);
+			if (parentElement == container) {
+				return true;
+			}
+			parent = parentElement == null ? null : parentElement.eContainer();
+		}
+
+		return parent == container;
+	}
+	
+	public List<MethodElement> calc0nFeatureValue(MethodElement element,
+			EStructuralFeature feature, MethodConfiguration config) {
+		return provider == null ? null : provider.calc0nFeatureValue(element, feature, config);
+	}
+	
+	
 	
 	
 }
