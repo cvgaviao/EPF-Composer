@@ -1,6 +1,9 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.uma.Descriptor;
@@ -34,5 +37,8 @@ public interface ILibraryEditUtilProvider {
 	boolean inConfig(MethodElement element, MethodConfiguration config);
 
 	IValidationManager getValidationManager();
+	
+	List<MethodElement> calc0nFeatureValue(MethodElement element,
+			EStructuralFeature feature, MethodConfiguration config);
 		
 }

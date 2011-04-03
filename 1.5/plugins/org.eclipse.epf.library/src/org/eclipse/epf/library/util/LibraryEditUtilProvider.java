@@ -3,6 +3,7 @@ package org.eclipse.epf.library.util;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
@@ -159,6 +160,13 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	
 	public IValidationManager getValidationManager() {
 		return ValidationManager.getInstance();
+	}
+	
+	public List<MethodElement> calc0nFeatureValue(MethodElement element,
+			EStructuralFeature feature, MethodConfiguration config) {
+		ElementRealizer realizer = DefaultElementRealizer
+		.newElementRealizer(config);
+		return ConfigurationHelper.calc0nFeatureValue(element, feature, realizer);
 	}
 	
 }
