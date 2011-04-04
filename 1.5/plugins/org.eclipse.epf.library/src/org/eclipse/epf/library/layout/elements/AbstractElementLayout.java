@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +36,7 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -64,6 +67,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
 import org.eclipse.epf.uma.Role;
@@ -840,12 +844,48 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 			}
 		} else if (feature.isMany()) {
+			if (feature == AssociationHelper.ContentElement_Practices) {
+				loadPractices(elementXml);
+			}
 			List pv = calc0nFeatureValue(element, feature,
 					layoutManager.getElementRealizer());
 			if ( acceptFeatureValue(feature, pv) && pv.size() > 0) {
 				addReferences(feature, elementXml, name, pv);
 			}
 		}
+	}
+	
+	private void loadPractices(XmlElement elementXml) {
+		if ( ! (element instanceof ContentElement || element instanceof Activity)) {
+			return;
+		}
+		List resultList = new ArrayList();
+		Object container = element.eContainer();
+		if (container instanceof Practice) {
+			container = ConfigurationHelper.getCalculatedElement((Practice) container, layoutManager.getElementRealizer());
+			if (container != null) {
+				resultList.add(container);
+			}
+		}		
+		OppositeFeature feature = element instanceof Activity ? AssociationHelper.Activity_Pratices :  AssociationHelper.ContentElement_Practices;		
+		List list = calc0nFeatureValue(element, feature, layoutManager.getElementRealizer());;
+		if (list != null && ! list.isEmpty()) {
+			resultList.addAll(list);
+		}
+
+		for (int i = resultList.size() - 1; i >=0 ; i--) {
+			MethodElement element = (MethodElement) resultList.get(i);
+			if (! getPublishCategoryProperty(element)) {
+				resultList.remove(i);
+			}			
+		}
+		
+		if (resultList.size() > 1) {
+			Comparator comparator = PresentationContext.INSTANCE.getPresNameComparator();		
+			Collections.<MethodElement>sort(resultList, comparator);
+		}
+		
+		addReferences(feature, elementXml, "Practices", resultList);			//$NON-NLS-1$ 
 	}
 	
 	protected List calc0nFeatureValue(MethodElement element,
