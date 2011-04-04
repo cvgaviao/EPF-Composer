@@ -2049,6 +2049,10 @@ public final class AuthoringUIResources extends NLS {
 	public static String editor_title_colon_with_spaces;
 
 	public static String publish_categories_text;
+	
+	public static String publish_practices_text;
+	
+	public static String publish_deliverables_text;	
 
 	public static String default_list_length_label;
 

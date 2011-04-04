@@ -3046,6 +3046,12 @@ public final class TngUtil {
 	
 	/**
 	 * Return publishing category property for method element
+	 * The meaning of this property is used for:
+	 * 
+	 * CustomCategory: Publish this category with the categorized method elements
+	 * Practice: Publish this practice with the referenced method elements
+	 * Deliverable: Publish this deliverable with the delivered work products
+	 * 
 	 * @param element
 	 * @return
 	 * 		 property if found, else null

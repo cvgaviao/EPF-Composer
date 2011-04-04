@@ -506,6 +506,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	protected boolean publishCategoryOn = false;
 	
+	protected boolean publishPracticeOn = false;
+	
+	protected boolean publishDeliveableOn = false;
+	
 	protected boolean longPresentationNameOn = false;
 
 	// Internal IDs for the sections.
@@ -1029,15 +1033,26 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					40, SWT.MULTI | SWT.TRAVERSE_TAB_NEXT);
 		}		
 
+		String publishButtonText = AuthoringUIText.PUBLISH_CATEGORIES_TEXT;
+		if (! publishCategoryOn) {
+			publishCategoryOn = publishPracticeOn || publishDeliveableOn;
+			if (publishPracticeOn) {
+				publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_TEXT;
+			} else if (publishDeliveableOn) {
+				publishButtonText = AuthoringUIText.PUBLISH_DELIVERABLES_TEXT;				
+			}
+		}
+		
 		if (publishCategoryOn) {
 			ctrl_publish_categories_button = toolkit
 			.createButton(
 					generalComposite,
-					AuthoringUIText.PUBLISH_CATEGORIES_TEXT, SWT.CHECK); 
+					publishButtonText, SWT.CHECK); 
 			GridData data = new GridData();
 			data.horizontalSpan = 3;
 			ctrl_publish_categories_button.setLayoutData(data);
-		}
+		} 
+		
 	}
 
 	/**
