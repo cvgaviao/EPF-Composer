@@ -142,9 +142,6 @@ public class WorkProductDescriptionPage extends DescriptionFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		workProduct = (WorkProduct) contentElement;
-		if (workProduct instanceof Deliverable) {
-			publishDeliveableOn = true;
-		}
 		purposeOn = true;
 		setExternalIDOn(true);
 		if (!(contentElement instanceof Outcome)) {

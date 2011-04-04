@@ -508,7 +508,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	protected boolean publishPracticeOn = false;
 	
-	protected boolean publishDeliveableOn = false;
+//	protected boolean publishDeliveableOn = false;
 	
 	protected boolean longPresentationNameOn = false;
 
@@ -1035,11 +1035,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 
 		String publishButtonText = AuthoringUIText.PUBLISH_CATEGORIES_TEXT;
 		if (! publishCategoryOn) {
-			publishCategoryOn = publishPracticeOn || publishDeliveableOn;
+			publishCategoryOn = publishPracticeOn;
 			if (publishPracticeOn) {
 				publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_TEXT;
-			} else if (publishDeliveableOn) {
-				publishButtonText = AuthoringUIText.PUBLISH_DELIVERABLES_TEXT;				
 			}
 		}
 		
