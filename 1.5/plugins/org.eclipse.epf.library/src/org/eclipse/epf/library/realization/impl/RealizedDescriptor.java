@@ -183,12 +183,18 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 						
 		List<MethodElement> elementList = ConfigurationHelper.calc0nFeatureValue(element,
-				elementFeature, realizer);
+				elementFeature, realizer);		
 		
 		List<Descriptor> resultDescriptorList = new ArrayList<Descriptor>();		
 		
 		EReference eRef = LibraryEditUtil.getInstance().getExcludeFeature(
 				dFeature);
+		Set validValueSet = new HashSet();
+		if (elementList != null && ! elementList.isEmpty()) {
+			validValueSet.addAll(elementList);
+		}
+		removeOutdatedReferences(eRef, validValueSet);
+		
 		Set<MethodElement> excludeElements = this.getExcludeOrAddtionalRefSet(
 				getDescriptor(), eRef, realizer);
 
@@ -247,6 +253,37 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 		
 		return processResultDescriptorList(resultDescriptorList, dFeature);
+	}
+	
+	protected void removeOutdatedReferences(EReference eRef, Set validValueSet) {
+		if (getElement() == null) {
+			return;
+		}
+		Object value = getElement().eGet(eRef);
+		if (! (value instanceof List)) {
+			return;
+		}
+		List list = (List) value;
+		if (list.isEmpty()) {
+			return;
+		}
+		Set toRemoveSet = new HashSet();
+		for (Object obj : list) {
+			if (! validValueSet.contains(obj)) {
+				toRemoveSet.add(obj);
+			}
+		}
+		if (toRemoveSet.isEmpty()) {
+			return;
+		}
+		
+		boolean oldDeliver = getDescriptor().eDeliver();
+		getDescriptor().eSetDeliver(false);
+		try {
+			list.removeAll(toRemoveSet);
+		} finally {
+			getDescriptor().eSetDeliver(oldDeliver);
+		}	
 	}
 	
 	private List<Descriptor> processResultDescriptorList(
