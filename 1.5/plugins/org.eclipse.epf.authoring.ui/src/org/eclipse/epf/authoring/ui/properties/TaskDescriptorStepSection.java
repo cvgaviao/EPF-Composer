@@ -11,8 +11,10 @@
 package org.eclipse.epf.authoring.ui.properties;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicEList;
@@ -613,6 +615,11 @@ public class TaskDescriptorStepSection extends AbstractSection {
 				elements.addAll(element.getSelectedSteps());
 				
 				if (isSyncFree() && !DescriptorPropUtil.getDesciptorPropUtil().isNoAutoSyn(element)) {
+					
+					Set validValueSet = new HashSet();
+					validValueSet.addAll(elements);
+					removeOutdatedReferences(element, UmaPackage.eINSTANCE.getTaskDescriptor_SelectedStepsExclude(), validValueSet);
+					
 					//This is a work around on UI for data layer under sync free
 					elements = syncFreeReOrder(elements);
 					

@@ -14,10 +14,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -29,11 +32,14 @@ import org.eclipse.epf.library.configuration.ProcessAuthoringConfigurator;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.jface.util.Assert;
@@ -402,6 +408,30 @@ public class AbstractSection extends AbstractPropertySection implements
 	
 	protected boolean isSyncFree() {
 		return false;
+	}
+	
+	protected void removeOutdatedReferences(MethodElement element, EReference eRef, Set validValueSet) {
+		if (! (element instanceof Descriptor) || ProcessUtil.getAssociatedElement((Descriptor) element) == null) {
+			return;
+		}
+		Object value = element.eGet(eRef);
+		if (! (value instanceof List)) {
+			return;
+		}
+		List list = (List) value;
+		if (list.isEmpty()) {
+			return;
+		}
+		Set toRemoveSet = new HashSet();
+		for (Object obj : list) {
+			if (! validValueSet.contains(obj)) {
+				toRemoveSet.add(obj);
+			}
+		}
+		if (toRemoveSet.isEmpty()) {
+			return;
+		}
+		
 	}
 	
 }
