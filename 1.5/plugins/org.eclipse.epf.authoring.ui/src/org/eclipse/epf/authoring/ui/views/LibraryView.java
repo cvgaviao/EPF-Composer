@@ -229,6 +229,13 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 
 	private static LibraryView INSTANCE = null;
 	
+	private static boolean needRegisterChangeListenersInCreate = false;
+	
+	public static void setNeedRegisterChangeListenersInCreate(
+			boolean needRegisterChangeListenersInCreate) {
+		LibraryView.needRegisterChangeListenersInCreate = needRegisterChangeListenersInCreate;
+	}
+
 	private static boolean DEBUG = AuthoringUIPlugin.getDefault().isDebugging();
 
 	protected TreeViewer treeViewer;
@@ -450,6 +457,11 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 				AuthoringUIHelpContexts.LIBRARY_NAVIGATOR_VIEW_CONTEXT);
 
 		RefreshJob.getInstance().setRefreshHandler(refreshHandler);
+		
+		if (needRegisterChangeListenersInCreate) {
+			needRegisterChangeListenersInCreate = false; 
+			registerChangeListeners();
+		}
 	}
 	
 	private void makeActions() {

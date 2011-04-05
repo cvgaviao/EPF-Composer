@@ -145,7 +145,11 @@ public class UIActionDispatcher implements ISelectionProvider {
 							if (desc.getId().equals(
 									AuthoringPerspective.PERSPECTIVE_ID)) {
 								addDoubleClickListener(doubleClickListener);
-								LibraryView.getViewInstance().registerChangeListeners();
+								if (LibraryView.getViewInstance() == null) {
+									LibraryView.setNeedRegisterChangeListenersInCreate(true);
+								} else {
+									LibraryView.getViewInstance().registerChangeListeners();
+								}
 							} else {
 								removeDoubleClickListener(doubleClickListener);
 							}
