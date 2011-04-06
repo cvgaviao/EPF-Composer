@@ -78,6 +78,7 @@ import org.eclipse.epf.diagram.ui.service.DiagramEditorHelper;
 import org.eclipse.epf.diagram.wpdd.part.WPDDImages;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ActivityDeepCopyConfigurator;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
@@ -98,6 +99,7 @@ import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.DiagramOptions;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.IDiagramManager;
+import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -2175,7 +2177,20 @@ public class ProcessEditorActionBarContributor extends
 		}
 		IEditorPart editor = getActiveEditor();
 		if (editor instanceof ProcessEditor) {
-			((ProcessEditor) editor).updateAndRefreshProcessModel();
+			ProcessEditor pEditor = (ProcessEditor) editor;
+			Process proc = pEditor.getSelectedProcess();
+			boolean specialUpdateDueToBrowsed = false;
+			if (ProcessScopeUtil.getInstance().isConfigFree(proc)) {
+				if (ConfigurationHelper.getDelegate().isAutoSyncedByBrowsing()) {
+					specialUpdateDueToBrowsed = true;
+				}
+			} 
+			if (specialUpdateDueToBrowsed) {
+				pEditor.updateConfigFreeProcessModelAndRefresh();
+				ConfigurationHelper.getDelegate().setAutoSyncedByBrowsing(false);
+			} else {
+				pEditor.updateAndRefreshProcessModel();				
+			}
 		}
 	}
 	

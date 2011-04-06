@@ -74,6 +74,7 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.ILibraryServiceListener;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ProcessAuthoringConfigurator;
 import org.eclipse.epf.library.edit.IAdapterFactoryProvider;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
@@ -1375,6 +1376,11 @@ public class ProcessEditor extends MethodElementEditor implements
 		}
 	}
 
+	public void updateConfigFreeProcessModelAndRefresh() {
+		updateProcessModel();
+		refreshAll();
+	}
+	
 	private void updateProcessModel() {
 		if (! ProcessUtil.isSynFree()) {
 			return;
@@ -1385,8 +1391,12 @@ public class ProcessEditor extends MethodElementEditor implements
 		if (mgr == null) {
 			mgr = LibraryEditUtil.getInstance().getRealizationManager(proc.getDefaultContext());
 		}
-		if (proc != null && mgr != null)
+		if (proc != null && mgr != null) {
+			if (ProcessScopeUtil.getInstance().isConfigFree(proc)) {
+				ConfigurationHelper.getDelegate().setLoadForBrowsingNeeded(true);
+			}
 			mgr.updateProcessModel(proc);
+		}
 	}
 
 	protected void setActivePage(int pageIndex) {

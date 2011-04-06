@@ -26,7 +26,6 @@ import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
-import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
@@ -46,12 +45,12 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.Scope;
-import org.eclipse.epf.uma.Process;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
@@ -71,6 +70,7 @@ public class ConfigHelperDelegate {
 	private boolean authoringPerspective = false;
 	private MethodConfiguration config;
 	private boolean loadForBrowsingNeeded = true;
+	private boolean autoSyncedByBrowsing = false;
 
 	public ConfigHelperDelegate() {
 		LibraryService.getInstance().addListener(libServiceListener);		
@@ -433,8 +433,8 @@ public class ConfigHelperDelegate {
 				IRealizationManager mgr = getRealizationManager(config);
 				if (mgr != null) {
 					mgr.updateAllProcesseModels();
+					setAutoSyncedByBrowsing(true);
 				}
-
 			}
 		}
 		
@@ -463,7 +463,16 @@ public class ConfigHelperDelegate {
 		return loadForBrowsingNeeded;
 	}
 
-	protected void setLoadForBrowsingNeeded(boolean loadForBrowsingNeeded) {
+	public void setLoadForBrowsingNeeded(boolean loadForBrowsingNeeded) {
 		this.loadForBrowsingNeeded = loadForBrowsingNeeded;
 	}
+	
+	public boolean isAutoSyncedByBrowsing() {
+		return autoSyncedByBrowsing;
+	}
+
+	public void setAutoSyncedByBrowsing(boolean autoSyncedByBrowsing) {
+		this.autoSyncedByBrowsing = autoSyncedByBrowsing;
+	}
+	
 }

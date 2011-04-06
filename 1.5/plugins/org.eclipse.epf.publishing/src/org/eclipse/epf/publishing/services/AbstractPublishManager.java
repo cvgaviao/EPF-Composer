@@ -19,12 +19,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.serviceability.DebugTrace;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.FileNameGenerator;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.publishing.PublishingPlugin;
 import org.eclipse.epf.publishing.PublishingResources;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * The abstract base class for all Publish Managers.
@@ -133,6 +135,15 @@ public abstract class AbstractPublishManager {
 		
 		try {
 			ConfigurationHelper.getDelegate().setPublishingMode(true);
+			SafeUpdateController.syncExec(new Runnable() {	
+				public void run() {
+					PlatformUI.
+					getWorkbench().
+					getActiveWorkbenchWindow().
+					getActivePage().
+					closeAllEditors(true);
+				}
+			});	
 			
 			if (profiling) {
 				beginTime = startTime = System.currentTimeMillis();
