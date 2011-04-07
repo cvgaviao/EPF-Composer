@@ -33,7 +33,7 @@ public class SelectProcessPage extends BaseWizardPage {
 
 	public static final String PAGE_NAME = SelectProcessPage.class.getName();
 
-	private ProcessTreeViewer processTreeViewer;
+	protected ProcessTreeViewer processTreeViewer;
 
 	private Text briefDescText;
 
@@ -58,6 +58,10 @@ public class SelectProcessPage extends BaseWizardPage {
 
 		createLabel(composite, LibraryUIResources.processesLabel_text);
 
+		createControl_(composite);
+	}
+
+	protected void createControl_(Composite composite) {
 		processTreeViewer = new ProcessTreeViewer(composite);
 		GridData gridData = new GridData(GridData.FILL_BOTH
 				| GridData.GRAB_HORIZONTAL);
