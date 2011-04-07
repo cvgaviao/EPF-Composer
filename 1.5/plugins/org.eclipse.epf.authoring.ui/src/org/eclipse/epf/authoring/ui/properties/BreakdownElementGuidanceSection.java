@@ -47,6 +47,7 @@ import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.SupportingMaterial;
@@ -54,7 +55,6 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
-import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -303,34 +303,36 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 				List<MethodElement> elements = new ArrayList<MethodElement>();
 				elements.addAll(getSelectedGuidances());
 
-				Descriptor des = (Descriptor) element;
-
-				if (isSyncFree() && !propUtil.isNoAutoSyn(des)) {
-					elements.addAll((des).getGuidanceExclude());
-				}
-
-				MethodElement linkedElement = ProcessUtil
-						.getAssociatedElement(des);
-
-				if (linkedElement != null) {
-					Process process = ProcessUtil.getProcess(des
-							.getSuperActivities());
-					if (ProcessScopeUtil.getInstance().isConfigFree(process)) {
-						Map<EReference, EReference> refMap = LibraryEditUtil.getInstance().getGuidanceRefMap(
-										linkedElement.eClass());
-						Set<Object> set = new HashSet<Object>();
-						for (EReference ref : refMap.keySet()) {
-							Object value = linkedElement.eGet(ref);
-							if (value instanceof List) {
-								set.addAll((List) value);
-							}
-							List<Guidance> locals = des.getGuidanceAdditional(); 
-							if (locals != null && !locals.isEmpty()) {
-								set.addAll(locals);
-							}
-						}
-						elements.retainAll(set);
+				if (element instanceof Descriptor) {
+					Descriptor des = (Descriptor) element;
+	
+					if (isSyncFree() && !propUtil.isNoAutoSyn(des)) {
+						elements.addAll((des).getGuidanceExclude());
 					}
+	
+					MethodElement linkedElement = ProcessUtil
+							.getAssociatedElement(des);
+	
+					if (linkedElement != null) {
+						Process process = ProcessUtil.getProcess(des
+								.getSuperActivities());
+						if (ProcessScopeUtil.getInstance().isConfigFree(process)) {
+							Map<EReference, EReference> refMap = LibraryEditUtil.getInstance().getGuidanceRefMap(
+											linkedElement.eClass());
+							Set<Object> set = new HashSet<Object>();
+							for (EReference ref : refMap.keySet()) {
+								Object value = linkedElement.eGet(ref);
+								if (value instanceof List) {
+									set.addAll((List) value);
+								}
+								List<Guidance> locals = des.getGuidanceAdditional(); 
+								if (locals != null && !locals.isEmpty()) {
+									set.addAll(locals);
+								}
+							}
+							elements.retainAll(set);
+						}
+					}				
 				}
 
 				return getFilteredList(elements).toArray();
