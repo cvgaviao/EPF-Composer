@@ -294,4 +294,7 @@ public class ResourceScanner implements IResourceScanner {
 		return tgtUrl;
 	}
 
+	public MethodPlugin getSrcPlugin() {
+		return srcPlugin;
+	}
 }
