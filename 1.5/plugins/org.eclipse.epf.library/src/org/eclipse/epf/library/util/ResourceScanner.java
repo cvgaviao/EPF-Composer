@@ -114,7 +114,7 @@ public class ResourceScanner implements IResourceScanner {
 			while (m.find()) {
 				String text = m.group();
 				String url = m.group(1);
-				String tgtUrl = registerFileCopy(srcFolder, tgtFolder, url);
+				String tgtUrl = registerFileCopy(srcFolder, tgtFolder, url, srcElement, tgtElement);
 				String replaceText = text.replace(url, tgtUrl);
 				m.appendReplacement(sb, Matcher.quoteReplacement(replaceText));	
 			}
@@ -126,7 +126,7 @@ public class ResourceScanner implements IResourceScanner {
 			while (m.find()) {
 				String text = m.group();
 				String url = m.group(1);
-				String tgtUrl = registerFileCopy(srcFolder, tgtFolder, url);
+				String tgtUrl = registerFileCopy(srcFolder, tgtFolder, url, srcElement, tgtElement);
 				String replaceText = text.replace(url, tgtUrl);
 				m.appendReplacement(sb, Matcher.quoteReplacement(replaceText));	
 			}
@@ -140,7 +140,12 @@ public class ResourceScanner implements IResourceScanner {
 	}
 	
 	public String registerFileCopy(String srcUrl) {
-		return registerFileCopy(srcPluginRoot, tgtPluginRoot, srcUrl);
+		return registerFileCopy(srcPluginRoot, tgtPluginRoot, srcUrl, null, null);
+	}
+	
+	//Can be overridden by subclass
+	protected String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl, MethodElement srcElement, MethodElement tgtElement) {
+		return registerFileCopy(srcFolder, tgtFolder, srcUrl);
 	}
 	
 	/**
@@ -149,7 +154,7 @@ public class ResourceScanner implements IResourceScanner {
 	 * @param url
 	 * @return tgtUrl
 	 */
-	protected String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl) {
+	private String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl) {
 		if (srcUrl == null) {
 			return srcUrl;
 		}
