@@ -149,7 +149,7 @@ public class ResourceScanner implements IResourceScanner {
 	 * @param url
 	 * @return tgtUrl
 	 */
-	private String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl) {
+	protected String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl) {
 		if (srcUrl == null) {
 			return srcUrl;
 		}
