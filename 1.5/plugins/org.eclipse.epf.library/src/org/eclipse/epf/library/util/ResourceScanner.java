@@ -143,6 +143,25 @@ public class ResourceScanner implements IResourceScanner {
 		return registerFileCopy(srcPluginRoot, tgtPluginRoot, srcUrl, null, null);
 	}
 	
+	public String registerFileCopy(String srcUrl, MethodElement srcElement, MethodElement tgtElement) {
+		String srcPath = ResourceHelper.getElementPath(srcElement);
+		if (srcPath == null) {
+			return srcUrl;
+		}
+		String tgtPath = ResourceHelper.getElementPath(tgtElement);
+		if (tgtPath == null) {
+			if (srcPath.indexOf(srcPlugin.getName()) == 0) {
+				tgtPath = tgtPlugin.getName() + srcPath.substring(srcPlugin.getName().length());
+			} else {
+				return srcUrl;
+			}
+		}
+		File srcFolder = new File(srcPluginRootParent, srcPath);
+		File tgtFolder = new File(tgtPluginRootParent, tgtPath);
+		
+		return registerFileCopy(srcFolder, tgtFolder, srcUrl, srcElement, tgtElement);
+	}
+	
 	//Can be overridden by subclass
 	protected String registerFileCopy(File srcFolder, File tgtFolder, String srcUrl, MethodElement srcElement, MethodElement tgtElement) {
 		return registerFileCopy(srcFolder, tgtFolder, srcUrl);
