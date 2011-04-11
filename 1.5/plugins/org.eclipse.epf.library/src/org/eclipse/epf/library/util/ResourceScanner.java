@@ -12,9 +12,9 @@ package org.eclipse.epf.library.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -82,9 +82,6 @@ public class ResourceScanner implements IResourceScanner {
 		tgtPluginRoot = tgtFile.getParentFile();
 		srcPluginRootParent = srcPluginRoot.getParentFile();
 		tgtPluginRootParent = tgtPluginRoot.getParentFile();
-		
-		fileMap = new LinkedHashMap<File, File>();
-		tgtFileSet = new HashSet<File>();
 	}
 
 	public String scan(MethodElement srcElement, MethodElement tgtElement, String source, EStructuralFeature feature) {
@@ -204,7 +201,7 @@ public class ResourceScanner implements IResourceScanner {
 						return tgtUrl;
 					}
 				}
-				tgtUrl = this.getTargetUrl(srcFile, tgtFolder, tgtUrl, tgtFileSet, fileMap);
+				tgtUrl = this.getTargetUrl(srcFile, tgtFolder, tgtUrl);
 				tgtFile = newFile(tgtFolder, tgtUrl);;
 				
 //				srcFile = srcFile.getCanonicalFile();
@@ -231,14 +228,21 @@ public class ResourceScanner implements IResourceScanner {
 		return tgtUrl;
 	}
 	
-    private static File newFile(File parent, String child) {
+    private File newFile(File parent, String child) {
     	String decodedChild;
     	try {
     		decodedChild = NetUtil.decodeURL(child);
     	} catch (Exception e) {
     		decodedChild = child;
     	}
-    	return new File(parent, decodedChild);
+    	File file = new File(parent, decodedChild);
+		try {
+			return file.getCanonicalFile();
+		} catch (Exception e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return file;
     }
 
 	/**
@@ -249,7 +253,7 @@ public class ResourceScanner implements IResourceScanner {
 			System.out.println("LD> copyFiles: ");	//$NON-NLS-1$
 		}
 				
-		for (Iterator it = fileMap.entrySet().iterator(); it.hasNext(); ) {
+		for (Iterator it = getFileMap().entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry entry = (Map.Entry)it.next();
 			File srcFile = (File) entry.getKey();
 			File tgtFile = (File) entry.getValue();
@@ -264,7 +268,7 @@ public class ResourceScanner implements IResourceScanner {
 		}		
 	}
 	
-	public static String getTargetUrl(File srcFile, File tgtFolder, String tgtUrl0, Set<File> tgtFileSet, Map<File, File> fileMap) {
+	private String getTargetUrl(File srcFile, File tgtFolder, String tgtUrl0) {
 		String dot = ".";	//$NON-NLS-1$
 		String url1 = tgtUrl0;
 		String url2 = "";	//$NON-NLS-1$
@@ -292,14 +296,14 @@ public class ResourceScanner implements IResourceScanner {
 				}
 			}			
 			
-			boolean inTgtSet = tgtFileSet.contains(tgtFile);
+			boolean inTgtSet = getTgtFileSet().contains(tgtFile);
 			if (! exists && !inTgtSet) {
 				break;
 			}
 						
 			if (inTgtSet) {
 				try {
-					File file = fileMap.get(srcFile.getCanonicalFile());
+					File file = getFileMap().get(srcFile.getCanonicalFile());
 					if (file != null && file.equals(tgtFile.getCanonicalFile())) {
 						break;
 					}
@@ -322,7 +326,7 @@ public class ResourceScanner implements IResourceScanner {
 			LibraryPlugin.getDefault().getLogger().logError(e);
 		}
 		
-		tgtFileSet.add(tgtFile);		
+		getTgtFileSet().add(tgtFile);		
 		return tgtUrl;
 	}
 
@@ -330,8 +334,18 @@ public class ResourceScanner implements IResourceScanner {
 		return srcPlugin;
 	}
 	
-	public Map<File, File> getFileMap() {
+	protected Map<File, File> getFileMap() {
+		if (fileMap == null) {
+			fileMap = new HashMap<File, File>();
+		}
 		return fileMap;
+	}
+	
+	protected Set<File> getTgtFileSet() {
+		if (tgtFileSet == null) {
+			tgtFileSet = new HashSet<File>();
+		}
+		return tgtFileSet;
 	}
 	
 }
