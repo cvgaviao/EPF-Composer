@@ -43,6 +43,7 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
+		<xsl:variable name="deliverableParents" select="referenceList[@name='WorkProduct_Deliverables']/Element"></xsl:variable>
 		<xsl:variable name="fulfillingWorkProducts" select="referenceList[@name='FulFills_FullFillableElements']/Element"></xsl:variable>
 		<xsl:variable name="fulfilledSlots" select="referenceList[@name='fulfills']/Element"></xsl:variable>
 		<xsl:variable name="containerArtifact" select="reference[@name='containerArtifact']/Element"/>
@@ -62,6 +63,25 @@
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
 
+					<xsl:if test="count($deliverableParents) > 0">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$deliverableParentsText"/></th>
+							<td class="sectionTableCell" colspan="2">
+							<ul>
+								<xsl:for-each select="$deliverableParents">
+								<xsl:sort select="@DisplayName"/>
+									<li>
+										<a>
+											<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+											<xsl:value-of select="@DisplayName"/>
+										</a>
+									</li>
+								</xsl:for-each>
+							</ul>
+							</td>
+						</tr>
+					</xsl:if>	
+					
 					<xsl:if test="count($fulfillingWorkProducts) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$fulfillingWorkProductsText"/></th>

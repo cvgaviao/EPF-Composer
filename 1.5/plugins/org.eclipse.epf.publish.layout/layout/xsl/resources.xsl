@@ -233,6 +233,8 @@
 	<xsl:param name="fulfilledSlotsText"/>
 	<xsl:param name="fulfillingWorkProductsText"/>
 	
+	<xsl:param name="deliverableParentsText"/>
+	
 	<xsl:param name="modelInfo_mandatoryInputText"/>
 	<xsl:param name="modelInfo_optionalInputText"/>
 	<xsl:param name="modelInfo_externalInputText"/>
