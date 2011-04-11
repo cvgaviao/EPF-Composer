@@ -204,13 +204,13 @@ public class ResourceScanner implements IResourceScanner {
 						return tgtUrl;
 					}
 				}
-				tgtUrl = this.getTargetUrl(srcFile, tgtFolder, tgtUrl);
+				tgtUrl = this.getTargetUrl(srcFile, tgtFolder, tgtUrl, tgtFileSet, fileMap);
 				tgtFile = newFile(tgtFolder, tgtUrl);;
 				
 //				srcFile = srcFile.getCanonicalFile();
 //				tgtFile = tgtFile.getCanonicalFile();				
 //				fileMap.put(srcFile, tgtFile);
-				registerFileCopy(srcFile, tgtFile);
+				tgtUrl = registerFileCopyToMap(srcFile, tgtFile, tgtUrl);
 				
 			}
 		} catch (Throwable e) {
@@ -220,17 +220,18 @@ public class ResourceScanner implements IResourceScanner {
 		return tgtUrl;
 	}
 
-	protected void registerFileCopy(File srcFile0, File tgtFile0) {
+	protected String registerFileCopyToMap(File srcFile0, File tgtFile0, String tgtUrl) {
 		try {
 			File srcFile = srcFile0.getCanonicalFile();
 			File tgtFile = tgtFile0.getCanonicalFile();
-			fileMap.put(srcFile, tgtFile);
+			getFileMap().put(srcFile, tgtFile);
 		} catch (IOException e) {
 			LibraryPlugin.getDefault().getLogger().logError(e);
-		}
+		}		
+		return tgtUrl;
 	}
-
-    private File newFile(File parent, String child) {
+	
+    private static File newFile(File parent, String child) {
     	String decodedChild;
     	try {
     		decodedChild = NetUtil.decodeURL(child);
@@ -263,7 +264,7 @@ public class ResourceScanner implements IResourceScanner {
 		}		
 	}
 	
-	private String getTargetUrl(File srcFile, File tgtFolder, String tgtUrl0) {
+	public static String getTargetUrl(File srcFile, File tgtFolder, String tgtUrl0, Set<File> tgtFileSet, Map<File, File> fileMap) {
 		String dot = ".";	//$NON-NLS-1$
 		String url1 = tgtUrl0;
 		String url2 = "";	//$NON-NLS-1$
@@ -328,4 +329,9 @@ public class ResourceScanner implements IResourceScanner {
 	public MethodPlugin getSrcPlugin() {
 		return srcPlugin;
 	}
+	
+	public Map<File, File> getFileMap() {
+		return fileMap;
+	}
+	
 }
