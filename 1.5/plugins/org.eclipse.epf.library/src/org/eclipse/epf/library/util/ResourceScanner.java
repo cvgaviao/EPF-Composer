@@ -207,15 +207,27 @@ public class ResourceScanner implements IResourceScanner {
 				tgtUrl = this.getTargetUrl(srcFile, tgtFolder, tgtUrl);
 				tgtFile = newFile(tgtFolder, tgtUrl);;
 				
-				srcFile = srcFile.getCanonicalFile();
-				tgtFile = tgtFile.getCanonicalFile();				
-				fileMap.put(srcFile, tgtFile);				
+//				srcFile = srcFile.getCanonicalFile();
+//				tgtFile = tgtFile.getCanonicalFile();				
+//				fileMap.put(srcFile, tgtFile);
+				registerFileCopy(srcFile, tgtFile);
+				
 			}
-		} catch (IOException e) {
+		} catch (Throwable e) {
 			LibraryPlugin.getDefault().getLogger().logError(e);
 		}
 		
 		return tgtUrl;
+	}
+
+	protected void registerFileCopy(File srcFile0, File tgtFile0) {
+		try {
+			File srcFile = srcFile0.getCanonicalFile();
+			File tgtFile = tgtFile0.getCanonicalFile();
+			fileMap.put(srcFile, tgtFile);
+		} catch (IOException e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
 	}
 
     private File newFile(File parent, String child) {
