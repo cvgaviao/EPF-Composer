@@ -34,6 +34,7 @@ import org.eclipse.epf.authoring.ui.actions.LibraryViewSimpleAction;
 import org.eclipse.epf.authoring.ui.actions.UnassignAction;
 import org.eclipse.epf.authoring.ui.forms.CustomCategoryAssignPage;
 import org.eclipse.epf.common.ui.util.MsgDialog;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
@@ -103,6 +104,11 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 	}
 	
 	public static AssignDialog newDeepCopyDialog(Shell parentShell, Collection elements) {
+		Object[] context = new Object[] {parentShell, elements};
+		Object obj = ExtensionHelper.create(CustomCategoryDeepCopyDialog.class, context);
+		if (obj instanceof CustomCategoryDeepCopyDialog) {
+			return (CustomCategoryDeepCopyDialog) obj;
+		}				
 		return new CustomCategoryDeepCopyDialog(parentShell, elements);
 	}
 	
@@ -435,12 +441,12 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 		
 	}
 	
-	private static class CustomCategoryDeepCopyDialog extends AssignDialog {
+	public static class CustomCategoryDeepCopyDialog extends AssignDialog {
 		ContentPackage customCategoryPkg;
 		private UniqueNamePNameHandler nameHandler;
 		private ResourceScanner scanner;
 		
-		protected CustomCategoryDeepCopyDialog(Shell parentShell, 
+		public CustomCategoryDeepCopyDialog(Shell parentShell, 
 				Collection elements) {
 			super(parentShell, elements);
 		}
