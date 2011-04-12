@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.common.utils;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,6 +33,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -1232,6 +1234,52 @@ public class FileUtil {
 			return fileChecker.syncExecCheckModify(modifiedFiles);
 		}
 		return Status.OK_STATUS;
+	}
+		
+	public static boolean binaryEqual(File f1, File f2) {
+		BufferedInputStream is1 = null;
+		BufferedInputStream is2 = null;
+
+		int bufSz = 1024;
+		byte buff1[] = new byte[bufSz];
+		byte buff2[] = new byte[bufSz];
+
+		try {
+			is1 = new BufferedInputStream(new FileInputStream(f1));
+			is2 = new BufferedInputStream(new FileInputStream(f2));
+
+			int read1 = -1;
+			int read2 = -1;
+
+			do {
+				int offset1 = 0;
+				while (offset1 < bufSz
+						&& (read1 = is1.read(buff1, offset1, bufSz - offset1)) >= 0) {
+					offset1 += read1;
+				}
+
+				int offset2 = 0;
+				while (offset2 < bufSz
+						&& (read2 = is2.read(buff2, offset2, bufSz - offset2)) >= 0) {
+					offset2 += read2;
+				}
+				if (offset1 != offset2)
+					return false;
+				if (offset1 != bufSz) {
+					Arrays.fill(buff1, offset1, bufSz, (byte) 0);
+					Arrays.fill(buff2, offset2, bufSz, (byte) 0);
+				}
+				if (!Arrays.equals(buff1, buff2))
+					return false;
+			} while (read1 >= 0 && read2 >= 0);
+			if (read1 < 0 && read2 < 0)
+				return true; 
+			return false;
+
+		} catch (Exception e) {
+			CommonPlugin.getDefault().getLogger().logError(e);
+			return false;
+		}
 	}
 	
 }
