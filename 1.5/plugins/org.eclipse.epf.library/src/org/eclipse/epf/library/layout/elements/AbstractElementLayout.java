@@ -844,7 +844,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 			}
 		} else if (feature.isMany()) {
-			if (feature == AssociationHelper.ContentElement_Practices) {
+			if (feature == AssociationHelper.ContentElement_Practices || feature == AssociationHelper.Activity_Pratices) {
 				loadPractices(elementXml);
 			}
 			List pv = calc0nFeatureValue(element, feature,
