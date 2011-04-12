@@ -118,6 +118,7 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
+			<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>	
 		<xsl:variable name="additionallyPerforms" select="referenceList[@name='additionallyPerforms']/Element"/>
 		<xsl:variable name="workProductModifies" select="referenceList[@name='modifies']/Element[@Type!='WorkProductSlot']"/>
 		<xsl:variable name="workProductSlotModifies" select="referenceList[@name='modifies']/Element[@Type='WorkProductSlot']"/>
@@ -130,6 +131,9 @@
 						<xsl:value-of disable-output-escaping="yes" select="diagram"/>
 					</td>
 				</tr>
+				
+				<xsl:call-template name="showParentPractices"></xsl:call-template> 	
+					
 				<xsl:call-template name="addReferences">
 					<xsl:with-param name="refName" select="$categoriesText"/>
 					<xsl:with-param name="refElement" select="$categories"/>

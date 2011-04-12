@@ -175,6 +175,7 @@
 	</xsl:template>
 
     <xsl:template name="relationshipsSection">
+		
 		<xsl:param name="elementType"/>
 		<xsl:if test="$elementType = 'Discipline'">
 			<xsl:call-template name="showDisciple"/>
@@ -201,16 +202,18 @@
 			<xsl:call-template name="showCustomCategory"/>
 		</xsl:if>		
     </xsl:template>
-
+	
     <xsl:template name="showDisciple">
+    		<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="referenceWorkflows" select="referenceList[@name='referenceWorkflows']/Element"/>
 		<xsl:variable name="tasks" select="referenceList[@name='tasks']/Element"/>
 		<xsl:variable name="subdisciplines" select="referenceList[@name='subdiscipline']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($referenceWorkflows) + count($tasks) + count($subdisciplines)> 0">
+		<xsl:if test="count($practices) + count($referenceWorkflows) + count($tasks) + count($subdisciplines)> 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>
@@ -289,12 +292,14 @@
     </xsl:template>
 
     <xsl:template name="showDiscipleGrouping">
+    		<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="disciplines" select="referenceList[@name='disciplines']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($disciplines) > 0">
+		<xsl:if test="count($practices) + count($disciplines) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>
@@ -321,13 +326,15 @@
     </xsl:template>
 
     <xsl:template name="showDomain">
+        	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="subdomains" select="referenceList[@name='subdomains']/Element"/>
 		<xsl:variable name="workProducts" select="referenceList[@name='workProducts']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>						
-		<xsl:if test="count($subdomains) + count($workProducts) > 0">
+		<xsl:if test="count($practices) + count($subdomains) + count($workProducts) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>
@@ -373,12 +380,14 @@
     </xsl:template>
 
     <xsl:template name="showWorkProductType">
+        	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="workProducts" select="referenceList[@name='workProducts']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($workProducts) > 0">
+		<xsl:if test="count($practices) + count($workProducts) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 							<xsl:with-param name="refName" select="$categoriesText"/>
 							<xsl:with-param name="refElement" select="$categories"/>
@@ -404,12 +413,14 @@
     </xsl:template>
 
     <xsl:template name="showRoleSetGrouping">
+        	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="roleSets" select="referenceList[@name='roleSets']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($roleSets) > 0">
+		<xsl:if test="count($practices) + count($roleSets) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 							<xsl:with-param name="refName" select="$categoriesText"/>
 							<xsl:with-param name="refElement" select="$categories"/>
@@ -436,12 +447,14 @@
     </xsl:template>
 
     <xsl:template name="showRoleSet">
+        	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="roles" select="referenceList[@name='roles']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($roles) > 0">
+		<xsl:if test="count($practices) + count($roles) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 							<xsl:with-param name="refName" select="$categoriesText"/>
 							<xsl:with-param name="refElement" select="$categories"/>
@@ -467,12 +480,14 @@
     </xsl:template>
 
     <xsl:template name="showTool">
+        	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="toolMentors" select="referenceList[@name='toolMentors']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($toolMentors) > 0">
+		<xsl:if test="count($practices) + count($toolMentors) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 							<xsl:with-param name="refName" select="$categoriesText"/>
 							<xsl:with-param name="refElement" select="$categories"/>
@@ -498,12 +513,14 @@
     </xsl:template>
 
     <xsl:template name="showCustomCategory">
+  			<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
   		<xsl:variable name="categorizedElements" select="referenceList[@name='categorizedElements']/Element"/>
         <xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-        <xsl:if test="count($categorizedElements) > 0">
+        <xsl:if test="count($practices) + count($categorizedElements) > 0">
         	<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
             <div class="sectionContent">
-            	<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">                                 
+            	<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">    
+            		<xsl:call-template name="showParentPractices"></xsl:call-template>                             
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>

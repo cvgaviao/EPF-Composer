@@ -154,13 +154,16 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
+	    	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="subTeams" select="referenceList[@name='subTeam']/Element"/>		
 		<xsl:variable name="teamRoles" select="referenceList[@name='teamRoles']/Element"/>
 			
-		<xsl:if test="count($subTeams) + count($teamRoles) > 0">
+		<xsl:if test="count($practices) + count($subTeams) + count($teamRoles) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+				
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 	
 					<xsl:if test="count($subTeams) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$subTeamsText"/></th>

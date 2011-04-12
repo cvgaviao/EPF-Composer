@@ -146,12 +146,16 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
+	    	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="aggregatedRoles" select="referenceList[@name='aggregatedRoles']/Element"/>		
 		<xsl:variable name="responsibleFor" select="referenceList[@name='responsibleFor']/Element"/>			
-		<xsl:if test="count($aggregatedRoles) + count($responsibleFor) > 0">
+		<xsl:if test="count($practices) + count($aggregatedRoles) + count($responsibleFor) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+				
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 		
+					
 					<xsl:if test="count($aggregatedRoles) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$aggregatesText"/></th>

@@ -234,6 +234,7 @@
 	<xsl:param name="fulfillingWorkProductsText"/>
 	
 	<xsl:param name="deliverableParentsText"/>
+	<xsl:param name="practicesText"/>
 	
 	<xsl:param name="modelInfo_mandatoryInputText"/>
 	<xsl:param name="modelInfo_optionalInputText"/>

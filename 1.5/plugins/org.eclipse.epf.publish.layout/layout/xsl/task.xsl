@@ -144,6 +144,7 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
+	    	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="performedBy" select="referenceList[@name='performedBy']/Element"/>
 		<xsl:variable name="additionallyPerformedBy" select="referenceList[@name='additionallyPerformedBy']/Element"/>
 		<xsl:variable name="workProductMandatoryInputs" select="referenceList[@name='mandatoryInput']/Element[@Type!='WorkProductSlot']"/>
@@ -155,10 +156,11 @@
 		<xsl:variable name="imagePath" select="concat(/Element/@BackPath, 'images/')"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
 
-		<xsl:if test="count($performedBy) + count($categories) + count($additionallyPerformedBy) + count($workProductMandatoryInputs) + count($workProductSlotMandatoryInputs) + count($workProductOptionalInputs) + count($workProductSlotOptionalInputs) + count($workProductOutputs) + count($workProductSlotOutputs) > 0">
+		<xsl:if test="count($practices) + count($performedBy) + count($categories) + count($additionallyPerformedBy) + count($workProductMandatoryInputs) + count($workProductSlotMandatoryInputs) + count($workProductOptionalInputs) + count($workProductSlotOptionalInputs) + count($workProductOutputs) + count($workProductSlotOutputs) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
-				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">			
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 						
 					<xsl:if test="count($categories) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$categoriesText"/></th>

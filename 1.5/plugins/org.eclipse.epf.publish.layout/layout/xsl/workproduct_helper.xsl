@@ -43,6 +43,7 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
+	    	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="deliverableParents" select="referenceList[@name='WorkProduct_Deliverables']/Element"></xsl:variable>
 		<xsl:variable name="fulfillingWorkProducts" select="referenceList[@name='FulFills_FullFillableElements']/Element"></xsl:variable>
 		<xsl:variable name="fulfilledSlots" select="referenceList[@name='fulfills']/Element"></xsl:variable>
@@ -58,11 +59,12 @@
 		<xsl:variable name="outputFromTasks_fromSlots" select="referenceList[@name='outputFromTasks_fromSlots']/Element[@Type='Task']"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
 		
-		<xsl:if test="count($fulfillingWorkProducts) + count($fulfilledSlots) + count($categories) + count($responsibleRoles) + count($containerArtifact) + count($containedArtifacts) + count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($outputFromTasks) + count($mandatoryInputToTasks_fromSlots) + count($optionalInputToTasks_fromSlots) + count($outputFromTasks_fromSlots) > 0">
+		<xsl:if test="count($practices) + count($deliverableParents) + count($fulfillingWorkProducts) + count($fulfilledSlots) + count($categories) + count($responsibleRoles) + count($containerArtifact) + count($containedArtifacts) + count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($outputFromTasks) + count($mandatoryInputToTasks_fromSlots) + count($optionalInputToTasks_fromSlots) + count($outputFromTasks_fromSlots) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$relationshipsText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
 
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 		
 					<xsl:if test="count($deliverableParents) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$deliverableParentsText"/></th>

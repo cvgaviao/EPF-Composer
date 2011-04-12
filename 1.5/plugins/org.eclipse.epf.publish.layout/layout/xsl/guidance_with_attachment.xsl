@@ -134,14 +134,18 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
+	    	<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="contentElements" select="referenceList[@name='contentElements']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count($contentElements) + count($categories) > 0">
+		<xsl:if test="count($practices) + count($contentElements) + count($categories) > 0">
 			<div class="sectionHeading">
 				<xsl:value-of select="$relationshipsText"/>
 			</div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+				
+				<xsl:call-template name="showParentPractices"></xsl:call-template> 		
+				<xsl:if test="count($contentElements) + count($categories) > 0">
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>
@@ -164,6 +168,7 @@
 							</ul>
 						</td>
 					</tr>
+				 </xsl:if>	
 				</table>
 			</div>
 		</xsl:if>

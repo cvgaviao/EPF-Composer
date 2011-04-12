@@ -123,4 +123,27 @@
 			</tr>
 		</table>
 	</xsl:template>
+	
+	<xsl:template name="showParentPractices">
+			<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
+			<xsl:if test="count($practices) > 0">
+					<tr valign="top">
+						<th class="sectionTableHeading" scope="row"><xsl:value-of select="$practicesText"/></th>
+						<td class="sectionTableCell" colspan="2">
+						<ul>
+							<xsl:for-each select="$practices">
+							<xsl:sort select="@DisplayName"/>
+								<li>
+									<a>
+										<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+										<xsl:value-of select="@DisplayName"/>
+									</a>
+								</li>
+							</xsl:for-each>
+						</ul>
+						</td>
+					</tr>
+				</xsl:if>	
+	</xsl:template>
+	
 </xsl:stylesheet>
