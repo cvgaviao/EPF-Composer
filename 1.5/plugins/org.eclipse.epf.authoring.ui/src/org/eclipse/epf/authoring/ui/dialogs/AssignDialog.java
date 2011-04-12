@@ -478,7 +478,7 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			return resouresToSave;
 		}		
 		
-		private EObject deepCopy(EObject source, MethodElement copiedOwner) {			
+		protected EObject deepCopy(EObject source, MethodElement copiedOwner) {			
 			EObject copy = UmaFactory.eINSTANCE.create(source.eClass());
 			handleNames(source, copy);
 		
