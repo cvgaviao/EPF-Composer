@@ -219,7 +219,17 @@ public class LibraryValidateAction extends ValidateAction {
 	             EcorePlugin.INSTANCE.getString
 	               ("_UI_DiagnosticRoot_diagnostic", //$NON-NLS-1$ 
 	                new Object [] { strBuf.toString() }), 
-	             list.toArray());
+	             list.toArray()) {
+	    	  
+	    	  @Override
+	    	  public String getMessage() {
+	    		  String msg = super.getMessage();
+	    		  if (msg != null && msg.length() > 2000) {
+	    			  msg = msg.substring(0, 2000) + " ... ";	//$NON-NLS-1$ 
+	    		  }
+	    		  return msg;
+	    	  }
+	      };
 	      for (Iterator iter = eObjects.iterator(); iter.hasNext();) {
 	    	  EObject eObject = (EObject) iter.next();
 	    	  progressMonitor.setTaskName
