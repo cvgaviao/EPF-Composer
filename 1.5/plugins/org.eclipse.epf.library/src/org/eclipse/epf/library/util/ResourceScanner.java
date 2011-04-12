@@ -304,9 +304,23 @@ public class ResourceScanner implements IResourceScanner {
 			if (inTgtSet) {
 				try {
 					File file = getFileMap().get(srcFile.getCanonicalFile());
-					if (file != null && file.equals(tgtFile.getCanonicalFile())) {
+					if (file == null) {	//Check file binary equals
+						boolean findEqual = false;
+						for (Map.Entry<File, File> entry : getFileMap().entrySet()) {
+							if (entry.getValue().equals(tgtFile)) {
+								if (FileUtil.binaryEqual(srcFile.getCanonicalFile(), entry.getKey())) {
+									findEqual = true;
+									break;
+								}
+							}								
+						}
+						if (findEqual) {
+							break;
+						}
+					} else if (file.equals(tgtFile.getCanonicalFile())) {
 						break;
 					}
+					
 				} catch (Exception e) {
 					LibraryPlugin.getDefault().getLogger().logError(e);
 				}
