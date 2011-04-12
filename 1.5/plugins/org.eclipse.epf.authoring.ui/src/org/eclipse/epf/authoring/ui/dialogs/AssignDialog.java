@@ -521,6 +521,8 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			if (sourceObj instanceof CustomCategory) {
 				if (feature == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
 					copiedValue = EcoreUtil.generateUUID();
+					copiedObj.eSet(feature, copiedValue);
+					return;
 				} else if (feature == UmaPackage.eINSTANCE.getNamedElement_Name()) {
 					return;
 				} else if (feature == UmaPackage.eINSTANCE.getMethodElement_PresentationName()) {
@@ -529,6 +531,8 @@ public class AssignDialog extends Dialog implements ISelectionChangedListener {
 			} else if (copiedOwner != null && sourceObj instanceof ContentDescription) {
 				if (feature == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
 					copiedValue =  UmaUtil.generateGUID(copiedOwner.getGuid());
+					copiedObj.eSet(feature, copiedValue);
+					return;
 				}
 			}
 			
