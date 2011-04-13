@@ -419,6 +419,9 @@ public class LibraryValidationMarkerHelper extends EclipseResourcesUtil {
 				for (int i = 0; i < markers.length; i++) {
 					IMarker marker = markers[i];
 					String guid = (String) marker.getAttribute(GUID);
+					if (guid == null) {
+						continue;
+					}
 					MethodElement e = LibraryService.getInstance().getCurrentLibraryManager().getMethodElement(guid);
 					if(e != null) {
 						errorCalculator.removeError(e);
