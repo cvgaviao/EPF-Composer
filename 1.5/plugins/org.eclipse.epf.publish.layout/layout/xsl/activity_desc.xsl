@@ -309,7 +309,7 @@
 	</xsl:template>
 
 	<xsl:template name="relationshipsSection">
-		    <xsl:variable name="practices" select="referenceList[@name='Activity_Pratices']/Element"/>
+		    <xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
 		<xsl:if test="count(referenceList[@name='validContext']/Element) + count(reference[@name='superActivities']/Element) + count(referenceList[@name='includesPatterns']/Element) > 0">
 			<div class="sectionHeading">
@@ -317,24 +317,7 @@
 			</div>	
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">	
-				<xsl:if test="count($practices) > 0">
-					<tr valign="top">
-						<th class="sectionTableHeading" scope="row"><xsl:value-of select="$practicesText"/></th>
-						<td class="sectionTableCell" colspan="2">
-						<ul>
-							<xsl:for-each select="$practices">
-							<xsl:sort select="@DisplayName"/>
-								<li>
-									<a>
-										<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-										<xsl:value-of select="@DisplayName"/>
-									</a>
-								</li>
-							</xsl:for-each>
-						</ul>
-						</td>
-					</tr>
-				</xsl:if>	
+					<xsl:call-template name="showParentPractices"></xsl:call-template> 
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>
