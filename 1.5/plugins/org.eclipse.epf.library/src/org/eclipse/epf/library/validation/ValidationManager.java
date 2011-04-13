@@ -100,6 +100,16 @@ public class ValidationManager implements IValidationManager {
 	}
 	
 	public void clearAllMarkers() {
+		for (IMarker marker : markerInfoMap.keySet()) {			
+	    	try {
+	    		if (marker.exists()) {
+	    			marker.delete();	  
+	    		}
+			} catch (CoreException e) {
+				LibraryPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+		markerInfoMap.clear();
 		if (emfValidateAction != null) {
 			emfValidateAction.updateSelection(null);
 		}
@@ -161,10 +171,12 @@ public class ValidationManager implements IValidationManager {
 		return createMarker(element, MARKER_ID);
 	}
 	
-    public static IMarker createMarker(MethodElement element, String markerId) {    	
+	private static final Object dummyMarkInfo = new Object();
+    public IMarker createMarker(MethodElement element, String markerId) {    	
     	try {
     		IFile file = getFile(element);
     		IMarker marker = file.createMarker(markerId);
+    		addToMarkInfoMap(marker, dummyMarkInfo);
     		return marker;
 	    	
 		} catch (CoreException e) {
