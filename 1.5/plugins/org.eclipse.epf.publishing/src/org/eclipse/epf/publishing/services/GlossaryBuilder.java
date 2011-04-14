@@ -282,6 +282,16 @@ public class GlossaryBuilder {
 	}
 
 	private String fixUrlText(String urltext) {
+		try {
+			return fixUrlText_(urltext);
+		} catch (Throwable e) {			
+			PublishingPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return urltext;
+	}
+	
+	private String fixUrlText_(String urltext) {
 		String guid = ResourceHelper.getGuidFromUrl(urltext);
 		if (guid == null) {
 			return urltext;
