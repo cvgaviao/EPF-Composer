@@ -564,7 +564,7 @@ public class RichText implements IRichText {
 
 			if (initialized) {
 				try {
-					executeCommand(RichTextCommand.SET_TEXT, newText);
+					executeCommand(RichTextCommand.SET_TEXT, workaroundForObjectParamNode(newText));
 					executeCommand(RichTextCommand.SET_EDITABLE, "" + editable); //$NON-NLS-1$				
 				} catch (Exception e) {
 					logger.logError(e);
@@ -977,7 +977,7 @@ public class RichText implements IRichText {
 											"" + editor.getBounds().height); //$NON-NLS-1$
 								}
 								executeCommand(RichTextCommand.SET_TEXT,
-										currentText);
+										workaroundForObjectParamNode(currentText));
 								if (initializedWithFocus) {
 									setFocus();
 								}
@@ -1003,6 +1003,8 @@ public class RichText implements IRichText {
 							if (eventTextLength >= STATUS_PREFIX_LENGTH + 2) {
 								currentText = eventText
 										.substring(STATUS_PREFIX_LENGTH + 2);
+								
+								currentText = unWorkaroundForObjectParamNode(currentText); 
 							} else {
 								currentText = ""; //$NON-NLS-1$
 							}
@@ -1638,6 +1640,32 @@ public class RichText implements IRichText {
 	
 	public boolean hasError() {
 		return htmlFormatter.getLastErrorStr() != null;
+	}
+	
+	private String workaroundForObjectParamNode(String html) {
+		String result = html.replaceAll("param", "paramTemp"); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		return result;
+	}
+	
+	private String unWorkaroundForObjectParamNode(String html) {
+		String result = html.replaceAll("paramTemp", "param"); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		//remove the null string return by browser
+		result = result.replaceAll("null", " ");  //$NON-NLS-1$//$NON-NLS-2$
+		
+		//remove the PARAM node return by browser
+		int startParam = result.indexOf("<PARAM");		 //$NON-NLS-1$
+		while (startParam != -1) {
+			int endParam = result.indexOf(">", startParam);			 //$NON-NLS-1$
+			String param = result.substring(startParam, endParam + 1);
+			result = result.replaceFirst(param, " "); //$NON-NLS-1$
+			startParam = result.indexOf("<PARAM"); //$NON-NLS-1$
+		}
+		
+		result = formatHTML(result);
+				
+		return result;
 	}
 
 }
