@@ -191,6 +191,17 @@ public class ResourceScanner implements IResourceScanner {
 		}
 
 		try {
+	    	String decodedChild = null;
+	    	try {
+	    		decodedChild = NetUtil.decodeURL(srcUrl);
+	    	} catch (Exception e) {
+	    		decodedChild = srcUrl;
+	    	}
+	    	File srcFile0 = new File(srcFolder, decodedChild);
+	    	if (!srcFile0.isFile() || !srcFile0.exists()) {
+	    		return srcUrl;
+	    	}
+	    	
 			File srcFile = newFile(srcFolder, srcUrl);
 			File tgtFile = newFile(tgtFolder, tgtUrl);
 			
