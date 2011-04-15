@@ -1649,21 +1649,7 @@ public class RichText implements IRichText {
 	}
 	
 	private String unWorkaroundForObjectParamNode(String html) {
-		String result = html.replaceAll("paramTemp", "param"); //$NON-NLS-1$ //$NON-NLS-2$
-		
-		//remove the null string return by browser
-		result = result.replaceAll("null", " ");  //$NON-NLS-1$//$NON-NLS-2$
-		
-		//remove the PARAM node return by browser
-		int startParam = result.indexOf("<PARAM");		 //$NON-NLS-1$
-		while (startParam != -1) {
-			int endParam = result.indexOf(">", startParam);			 //$NON-NLS-1$
-			String param = result.substring(startParam, endParam + 1);
-			result = result.replaceFirst(param, " "); //$NON-NLS-1$
-			startParam = result.indexOf("<PARAM"); //$NON-NLS-1$
-		}
-		
-		result = formatHTML(result);
+		String result = html.replaceAll("paramTemp", "param"); //$NON-NLS-1$ //$NON-NLS-2$		
 				
 		return result;
 	}
