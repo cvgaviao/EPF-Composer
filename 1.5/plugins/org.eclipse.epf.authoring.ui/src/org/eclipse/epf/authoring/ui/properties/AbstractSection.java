@@ -431,7 +431,7 @@ public class AbstractSection extends AbstractPropertySection implements
 		if (toRemoveSet.isEmpty()) {
 			return;
 		}
-		
+		list.removeAll(toRemoveSet);
 	}
 	
 }

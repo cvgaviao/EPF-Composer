@@ -616,9 +616,11 @@ public class TaskDescriptorStepSection extends AbstractSection {
 				
 				if (isSyncFree() && !DescriptorPropUtil.getDesciptorPropUtil().isNoAutoSyn(element)) {
 					
-					Set validValueSet = new HashSet();
-					validValueSet.addAll(elements);
-					removeOutdatedReferences(element, UmaPackage.eINSTANCE.getTaskDescriptor_SelectedStepsExclude(), validValueSet);
+					if (element.getTask() != null) {
+						Set validValueSet = new HashSet();
+						validValueSet.addAll(element.getTask().getSteps());
+						removeOutdatedReferences(element, UmaPackage.eINSTANCE.getTaskDescriptor_SelectedStepsExclude(), validValueSet);
+					}
 					
 					//This is a work around on UI for data layer under sync free
 					elements = syncFreeReOrder(elements);
