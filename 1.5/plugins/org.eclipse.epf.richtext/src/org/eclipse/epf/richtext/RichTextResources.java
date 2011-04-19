@@ -138,6 +138,9 @@ public final class RichTextResources extends NLS {
 	public static String tidy_clean_toolTipText;
 	public static String tidy_cleaner_toolTipText;
 	public static String tidy_cleanest_toolTipText;
+	public static String addCodeAction_toolTipText;
+	public static String addCodeDialog_title;
+	public static String addCodeDialog_Msg;
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, RichTextResources.class);

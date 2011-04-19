@@ -21,6 +21,7 @@ import org.eclipse.epf.authoring.ui.richtext.MethodRichTextEditorContext;
 import org.eclipse.epf.richtext.IRichText;
 import org.eclipse.epf.richtext.IRichTextToolBar;
 import org.eclipse.epf.richtext.RichTextEditor;
+import org.eclipse.epf.richtext.actions.AddCodeAction;
 import org.eclipse.epf.richtext.actions.AddOrderedListAction;
 import org.eclipse.epf.richtext.actions.AddTableAction;
 import org.eclipse.epf.richtext.actions.AddUnorderedListAction;
@@ -151,6 +152,7 @@ public class MethodRichTextEditor extends RichTextEditor implements
 		toolBar.addAction(new MethodAddLinkAction(this));
 		toolBar.addAction(new MethodAddImageAction(this));
 		toolBar.addAction(new AddTableAction(this));
+		toolBar.addAction(new AddCodeAction(this));
 	}
 
 	/**
