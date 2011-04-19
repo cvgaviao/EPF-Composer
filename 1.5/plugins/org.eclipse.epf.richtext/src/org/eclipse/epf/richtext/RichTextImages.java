@@ -97,6 +97,8 @@ public class RichTextImages {
 	public static final String IMG_PATH_UNDERLINE = ETOOL16 + "Underline.gif"; //$NON-NLS-1$
 
 	public static final String IMG_PATH_TIDY = ETOOL16 + "TidyHTML.gif"; //$NON-NLS-1$
+	
+	public static final String IMG_PATH_ADD_CODE = ETOOL16 + "AddCode.gif"; //$NON-NLS-1$
 
 	public static final Image IMG_ADD_IMAGE = richTextPlugin
 			.getSharedImage(IMG_PATH_ADD_IMAGE);
@@ -246,6 +248,10 @@ public class RichTextImages {
 
 	public static final ImageDescriptor IMG_DESC_TIDY = richTextPlugin
 			.getImageDescriptor(IMG_PATH_TIDY);
+	
+	public static final ImageDescriptor IMG_DESC_ADD_CODE = richTextPlugin
+			.getImageDescriptor(IMG_PATH_ADD_CODE);
+	
 
 	public static final String DISABLED_IMG_PATH_ADD_IMAGE = DTOOL16
 			+ "AddImage.gif"; //$NON-NLS-1$
@@ -315,6 +321,9 @@ public class RichTextImages {
 		
 	public static final String DISABLED_IMG_PATH_UNDERLINE = DTOOL16
 			+ "Underline.gif"; //$NON-NLS-1$
+	
+	public static final String DISABLED_IMG_PATH_ADD_CODE = DTOOL16
+			+ "AddCode.gif"; //$NON-NLS-1$	
 
 	public static final Image DISABLED_IMG_ADD_IMAGE = richTextPlugin
 			.getSharedImage(DISABLED_IMG_PATH_ADD_IMAGE);
@@ -459,5 +468,8 @@ public class RichTextImages {
 
 	public static final ImageDescriptor DISABLED_IMG_DESC_TIDY = richTextPlugin
 			.getImageDescriptor(DISABLED_IMG_PATH_TIDY);
+	
+	public static final ImageDescriptor DISABLED_IMG_DESC_ADD_CODE = richTextPlugin
+			.getImageDescriptor(DISABLED_IMG_PATH_ADD_CODE);
 
 }

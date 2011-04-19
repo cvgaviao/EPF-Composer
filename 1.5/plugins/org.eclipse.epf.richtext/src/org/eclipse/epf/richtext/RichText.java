@@ -1642,14 +1642,14 @@ public class RichText implements IRichText {
 		return htmlFormatter.getLastErrorStr() != null;
 	}
 	
-	private String workaroundForObjectParamNode(String html) {
-		String result = html.replaceAll("param", "paramTemp"); //$NON-NLS-1$ //$NON-NLS-2$
+	public static String workaroundForObjectParamNode(String html) {
+		String result = html.replaceAll("<param", "<paramTemp"); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		return result;
 	}
 	
 	private String unWorkaroundForObjectParamNode(String html) {
-		String result = html.replaceAll("paramTemp", "param"); //$NON-NLS-1$ //$NON-NLS-2$		
+		String result = html.replaceAll("<paramTemp", "<param"); //$NON-NLS-1$ //$NON-NLS-2$		
 				
 		return result;
 	}
