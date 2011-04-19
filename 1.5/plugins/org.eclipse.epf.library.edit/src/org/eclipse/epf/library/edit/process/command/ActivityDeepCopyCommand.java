@@ -463,7 +463,8 @@ public class ActivityDeepCopyCommand extends CopyCommand {
 						ContentDescription content = activity.getPresentation();
 						for (EAttribute attribute : content.eClass().getEAllAttributes()) {
 							if (attribute.isChangeable() && !attribute.isDerived()
-									&& attribute.getEAttributeType().getInstanceClass() == Literals.STRING.getInstanceClass())
+									&& attribute.getEAttributeType().getInstanceClass() == Literals.STRING.getInstanceClass()
+									&& attribute != UmaPackage.eINSTANCE.getMethodElement_Guid())
 							{
 								Object value = Providers.getConfigurationApplicator().getAttribute(content, activity, attribute, copyConfig);
 								activityCopy.getPresentation().eSet(attribute, value);
