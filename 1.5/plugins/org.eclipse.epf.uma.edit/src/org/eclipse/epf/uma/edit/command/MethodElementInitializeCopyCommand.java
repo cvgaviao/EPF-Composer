@@ -24,6 +24,7 @@ import org.eclipse.emf.edit.command.InitializeCopyCommand;
 import org.eclipse.emf.edit.command.CopyCommand.Helper;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.uma.ContentDescription;
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.DescriptorDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
@@ -83,7 +84,7 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 //				}
 			} else {
 				e.setGuid(UmaUtil.generateGUID());
-				if (e instanceof DescribableElementImpl) {
+				if (e instanceof DescribableElement) {
 					ContentDescription pres =  ((DescribableElementImpl) e).basicGetPresentation();
 					if (pres != null) {
 						pres.setGuid(UmaUtil.generateGUID(e.getGuid()));
@@ -91,6 +92,7 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 				}
 			}
 		}
+	
 	}
 
 	/**
@@ -183,31 +185,26 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 	@Override
 	protected Collection<? extends EAttribute> getAttributesToCopy() {
 		Collection<? extends EAttribute> ret = super.getAttributesToCopy();
-		boolean toRemoveSynAtt = false;
 		if (owner instanceof DescriptorDescription) {
-			toRemoveSynAtt = UmaUtil.isSynFree();
-			if (!toRemoveSynAtt) {
+			boolean toRemove = UmaUtil.isSynFree();
+			if (!toRemove) {
 				Process process = UmaUtil
 						.getProcess((DescriptorDescription) owner);
-				toRemoveSynAtt = UmaUtil.isConfigFree(process);
+				toRemove = UmaUtil.isConfigFree(process);
+			}
+			if (toRemove) {
+				List<EAttribute> modifiedRet = new ArrayList<EAttribute>();
+				for (EAttribute att : ret) {
+					if (att != UmaPackage.eINSTANCE
+							.getDescriptorDescription_RefinedDescription()
+							&& att != UmaPackage.eINSTANCE
+									.getContentDescription_KeyConsiderations()) {
+						modifiedRet.add(att);
+					}
+				}				
+				ret = modifiedRet;
 			}
 		}
-		List<EAttribute> modifiedRet = new ArrayList<EAttribute>();
-		for (EAttribute att : ret) {
-			if (toRemoveSynAtt) {
-				if (att == UmaPackage.eINSTANCE
-						.getDescriptorDescription_RefinedDescription()
-						|| att == UmaPackage.eINSTANCE
-								.getContentDescription_KeyConsiderations()) {
-					continue;
-				}
-			}
-			if (att == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
-				continue;
-			}
-			modifiedRet.add(att);
-		}
-		ret = modifiedRet;
 		return ret;
 	}
 
