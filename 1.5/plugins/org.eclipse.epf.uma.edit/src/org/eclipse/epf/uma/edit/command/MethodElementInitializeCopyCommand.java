@@ -30,6 +30,7 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
+import org.eclipse.epf.uma.impl.DescribableElementImpl;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -71,17 +72,23 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 		if (copy instanceof MethodElement) {
 			MethodElement e = ((MethodElement) copy);
 			if (e instanceof ContentDescription) {
-				EObject eContainer = e.eContainer();
-				if (eContainer instanceof MethodElement) {
-					e.setGuid(UmaUtil.generateGUID(((MethodElement) eContainer)
-							.getGuid()));
-				} else {
-					e.setGuid(UmaUtil.generateGUID());
-					UmaEditPlugin.INSTANCE
-							.log("MethodElementInitializeCopyCommand: eContainer not initialized for " + e); //$NON-NLS-1$
-				}
+//				EObject eContainer = e.eContainer();
+//				if (eContainer instanceof MethodElement) {
+//					e.setGuid(UmaUtil.generateGUID(((MethodElement) eContainer)
+//							.getGuid()));
+//				} else {
+//					e.setGuid(UmaUtil.generateGUID());
+//					UmaEditPlugin.INSTANCE
+//							.log("MethodElementInitializeCopyCommand: eContainer not initialized for " + e); //$NON-NLS-1$
+//				}
 			} else {
 				e.setGuid(UmaUtil.generateGUID());
+				if (e instanceof DescribableElementImpl) {
+					ContentDescription pres =  ((DescribableElementImpl) e).basicGetPresentation();
+					if (pres != null) {
+						pres.setGuid(UmaUtil.generateGUID(e.getGuid()));
+					}
+				}
 			}
 		}
 	}
@@ -176,26 +183,31 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 	@Override
 	protected Collection<? extends EAttribute> getAttributesToCopy() {
 		Collection<? extends EAttribute> ret = super.getAttributesToCopy();
+		boolean toRemoveSynAtt = false;
 		if (owner instanceof DescriptorDescription) {
-			boolean toRemove = UmaUtil.isSynFree();
-			if (!toRemove) {
+			toRemoveSynAtt = UmaUtil.isSynFree();
+			if (!toRemoveSynAtt) {
 				Process process = UmaUtil
 						.getProcess((DescriptorDescription) owner);
-				toRemove = UmaUtil.isConfigFree(process);
-			}
-			if (toRemove) {
-				List<EAttribute> modifiedRet = new ArrayList<EAttribute>();
-				for (EAttribute att : ret) {
-					if (att != UmaPackage.eINSTANCE
-							.getDescriptorDescription_RefinedDescription()
-							&& att != UmaPackage.eINSTANCE
-									.getContentDescription_KeyConsiderations()) {
-						modifiedRet.add(att);
-					}
-				}				
-				ret = modifiedRet;
+				toRemoveSynAtt = UmaUtil.isConfigFree(process);
 			}
 		}
+		List<EAttribute> modifiedRet = new ArrayList<EAttribute>();
+		for (EAttribute att : ret) {
+			if (toRemoveSynAtt) {
+				if (att == UmaPackage.eINSTANCE
+						.getDescriptorDescription_RefinedDescription()
+						|| att == UmaPackage.eINSTANCE
+								.getContentDescription_KeyConsiderations()) {
+					continue;
+				}
+			}
+			if (att == UmaPackage.eINSTANCE.getMethodElement_Guid()) {
+				continue;
+			}
+			modifiedRet.add(att);
+		}
+		ret = modifiedRet;
 		return ret;
 	}
 
