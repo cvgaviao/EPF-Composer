@@ -229,18 +229,37 @@
 		
 	</xsl:template>
 	<xsl:template name="relationshipsSection2">
+				<xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="subPractices" select="referenceList[@name='subPractices']/Element"/>
 		<xsl:variable name="inputSlots" select="referenceList[@name='Input work product slots']/Element"/>
 		<xsl:variable name="contentReferences" select="referenceList[@name='contentReferences']/Element"/>
 		<xsl:variable name="activityReferences" select="referenceList[@name='activityReferences']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
 		<xsl:variable name="practiceTree" select="referenceList[@name='Practice guidance tree']"/>
-		<xsl:if test="count($contentReferences) + count($subPractices) + count($activityReferences) + count($categories) + count($inputSlots) > 0">
+		<xsl:if test="count($practices) + count($contentReferences) + count($subPractices) + count($activityReferences) + count($categories) + count($inputSlots) > 0">
 			<div class="sectionHeading">
 				<xsl:value-of select="$relationshipsText"/>
 			</div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+							<xsl:if test="count($practices) > 0">
+							<tr valign="top">
+									<th class="sectionTableHeading" scope="row"><xsl:value-of select="$practicesText"/></th>
+									<td class="sectionTableCell" colspan="2">
+									<ul>
+										<xsl:for-each select="$practices">
+										<xsl:sort select="@DisplayName"/>
+											<li>
+												<a>
+													<xsl:attribute name="href"><xsl:value-of select="/Element/@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+													<xsl:value-of select="@DisplayName"/>
+												</a>
+											</li>
+										</xsl:for-each>
+									</ul>
+									</td>
+								</tr>
+							</xsl:if>	
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$categoriesText"/>
 						<xsl:with-param name="refElement" select="$categories"/>
