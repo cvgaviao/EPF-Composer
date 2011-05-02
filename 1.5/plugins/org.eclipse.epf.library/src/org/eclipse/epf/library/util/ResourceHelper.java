@@ -155,6 +155,10 @@ public class ResourceHelper {
 			.compile(
 					"(<(img|iframe).*?src\\s*=\\s*\")(.*?)(\")", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
 
+	public static final Pattern p_href_ref = Pattern
+	.compile(
+			"(<(a|area).*?href\\s*=\\s*\")(.*?)(\")", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
+	
 	public static final Pattern p_url_decoder = Pattern
 			.compile(
 					"(<[^>]*?(src|href)\\s*=\\s*\")(.*?)(\"[^>]*?>)", Pattern.CASE_INSENSITIVE | Pattern.DOTALL); //$NON-NLS-1$
