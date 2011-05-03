@@ -42,7 +42,7 @@ public class MethodElementPropertyHelper {
 		if (e != null) {
 			for (Iterator iter = e.getMethodElementProperty().iterator(); iter.hasNext();) {
 				MethodElementProperty prop = (MethodElementProperty) iter.next();
-				if(prop.getName().equals(propertyName)) {
+				if(prop.getName() != null && prop.getName().equals(propertyName)) {
 					return prop;
 				}
 			}
