@@ -17,12 +17,21 @@ import org.eclipse.epf.uma.util.UmaUtil;
 public class MethodElementExt extends ExtendObject {
 
 	private MethodElement element;
-	private boolean transientElement = false; 
-	
+	private boolean transientElement = false;
+	private Object cachedObject;
+
 	public MethodElementExt(MethodElement element) {
 		this.element = element;
 	}	
+	
+	public Object getCachedObject() {
+		return cachedObject;
+	}
 
+	public void setCachedObject(Object cachedObject) {
+		this.cachedObject = cachedObject;
+	}
+	
 	public MethodElement getElement() {
 		return element;
 	}
