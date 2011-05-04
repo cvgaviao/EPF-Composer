@@ -64,9 +64,18 @@ public class ProcessScopeUtil {
 		scope =	ScopeFactory.getInstance().newProcessScope(null);
 
 		addReferenceToScope(scope, proc, new HashSet<MethodElement>());
-		proc.setDefaultContext(scope);
-		proc.getValidContext().add(scope);
-		
+		boolean oldB = proc.eDeliver();
+		try {
+			if (oldB) {
+				proc.eSetDeliver(false);
+			}
+			proc.setDefaultContext(scope);
+			proc.getValidContext().add(scope);
+		} finally {
+			if (oldB) {
+				proc.eSetDeliver(true);
+			}
+		}		
 		return scope;
 	}
 	
