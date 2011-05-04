@@ -1753,6 +1753,21 @@ public final class TngUtil {
 		return rootCustomCategory;
 	}
 
+	public static Set<CustomCategory> getAllCustomCategories(MethodPlugin plugin) {
+		Set<CustomCategory> set = new HashSet<CustomCategory>();
+		ContentPackage customCategoryPkg = UmaUtil.findContentPackage(plugin,
+				ModelStructure.DEFAULT.customCategoryPath);
+		if (customCategoryPkg != null) {
+			for (ContentElement element : customCategoryPkg
+					.getContentElements()) {
+				if (element instanceof CustomCategory) {
+					set.add((CustomCategory) element);
+				}
+			}
+		}
+		return set;
+	}
+	
 	public static CustomCategory getRootCustomCategory(MethodPlugin plugin) {
 		ContentPackage customCategoryPkg = UmaUtil.findContentPackage(plugin,
 				ModelStructure.DEFAULT.customCategoryPath);
