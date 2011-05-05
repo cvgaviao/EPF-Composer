@@ -118,9 +118,11 @@ public class PublishManager extends AbstractPublishManager {
 			RefreshJob.getInstance().setSuspendRefresh(true);
 		}
 		try {
+			ConfigurationHelper.getDelegate().buildDynamicCustomCategoriesMap(config);
 			doPublish_(monitor);
 			MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();			
 		} finally {
+			ConfigurationHelper.getDelegate().clearDynamicCustomCategoriesMap();
 			if (! suspendRefresh) {
 				RefreshJob.getInstance().setSuspendRefresh(false);
 				RefreshJob.getInstance().resumeRefresh();

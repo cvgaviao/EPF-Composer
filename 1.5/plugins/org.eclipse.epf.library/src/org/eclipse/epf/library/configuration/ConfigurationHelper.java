@@ -40,6 +40,7 @@ import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.CapabilityPattern;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DeliveryProcess;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.FulfillableElement;
@@ -1704,10 +1705,18 @@ public class ConfigurationHelper {
 			OppositeFeature feature, boolean mergeReplacerBase, boolean mergeExtenderBase, ElementRealizer realizer) {
 		ToManyOppositeFeatureValue values = new ToManyOppositeFeatureValue(element, feature, realizer);
 		calculateOppositeFeature(element, feature, mergeReplacerBase, mergeExtenderBase, realizer, values);
-		return (List)values.getValue();
+		List ret = (List)values.getValue();
+		if (feature == AssociationHelper.DescribableElement_CustomCategories) {
+			Set<CustomCategory> set = ConfigurationHelper.getDelegate().getDynamicCustomCategories(element);
+			if (set != null && !set.isEmpty()) {
+				set.removeAll(ret);
+				if (! set.isEmpty()) {
+					ret.addAll(set);
+				}
+			}
+		}				
+		return ret;
 	}
-	
-	
 	
 	/**
 	 * get the calculated 0..1 feature value of the specipied element and

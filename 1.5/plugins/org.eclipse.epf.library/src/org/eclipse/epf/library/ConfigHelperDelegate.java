@@ -11,6 +11,7 @@
 package org.eclipse.epf.library;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -22,10 +23,14 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
+import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
@@ -42,12 +47,14 @@ import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.Scope;
@@ -71,11 +78,58 @@ public class ConfigHelperDelegate {
 	private MethodConfiguration config;
 	private boolean loadForBrowsingNeeded = true;
 	private boolean autoSyncedByBrowsing = false;
-
+	private Map<MethodElement, Set<CustomCategory>> dynamicCustomCategoriesMap; 	
+	
 	public ConfigHelperDelegate() {
 		LibraryService.getInstance().addListener(libServiceListener);		
 		IRealizationManager mgr = RealizationManagerFactory.getInstance().newRealizationManager(null);
 		LibraryEditUtil.getInstance().setDefaultRealizationManager(mgr);
+	}
+
+	protected boolean hasDynamicElements(CustomCategory cc) {
+		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(
+				cc,
+				MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
+		return prop != null;
+	}
+	
+	public void buildDynamicCustomCategoriesMap(MethodConfiguration config) {
+		if (config == null) {
+			return;
+		}
+		dynamicCustomCategoriesMap = new HashMap<MethodElement, Set<CustomCategory>>();		
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);		
+		Set<CustomCategory> set = new HashSet<CustomCategory>();
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		for (MethodPlugin plugin : config.getMethodPluginSelection()) {		
+			for (CustomCategory cc : TngUtil.getAllCustomCategories(plugin)) {
+				cc = (CustomCategory) ConfigurationHelper.getCalculatedElement(cc, realizer);
+				if (cc != null && hasDynamicElements(cc)) {
+					set.add(cc);
+				}
+			}			
+		}
+		
+		for (CustomCategory cc : set) {
+			for (MethodElement element : (List<MethodElement>) ConfigurationHelper
+					.calc0nFeatureValue(cc, UmaPackage.eINSTANCE
+							.getCustomCategory_CategorizedElements(), realizer)) {
+				Set<CustomCategory> ccSet = dynamicCustomCategoriesMap.get(element);
+				if (ccSet == null) {
+					ccSet = new HashSet<CustomCategory>();
+					dynamicCustomCategoriesMap.put(element, ccSet);
+				}
+				ccSet.add(cc);				
+			}
+		}		
+	}
+	
+	public void clearDynamicCustomCategoriesMap() {
+		dynamicCustomCategoriesMap = null;
+	}		
+	
+	public Set<CustomCategory> getDynamicCustomCategories(MethodElement element) {
+		return dynamicCustomCategoriesMap == null ? null : dynamicCustomCategoriesMap.get(element);
 	}
 	
 	/**
@@ -420,11 +474,15 @@ public class ConfigHelperDelegate {
 		if (!loadForBrowsingNeeded) {
 			return;
 		}
+
+		MethodConfiguration config = LibraryService.getInstance()
+		.getCurrentMethodConfiguration();
+		if (config != null) {
+			buildDynamicCustomCategoriesMap(config);
+		}
 		if (raw_element instanceof BreakdownElement
 				|| raw_element instanceof ActivityWrapperItemProvider) {
 
-			MethodConfiguration config = LibraryService.getInstance()
-					.getCurrentMethodConfiguration();
 			if (config == null) {
 				LibraryUtil.loadAll(LibraryService.getInstance()
 						.getCurrentMethodLibrary());
@@ -451,6 +509,7 @@ public class ConfigHelperDelegate {
 	
 	private void handleConfigOrPersepctiveChange() {
 		loadForBrowsingNeeded = true;
+		clearDynamicCustomCategoriesMap();
 	}
 	
 	//Check to see if a process can be converted to a config-free process
