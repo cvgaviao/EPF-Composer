@@ -94,6 +94,7 @@ public class ConfigHelperDelegate {
 	}
 	
 	public void buildDynamicCustomCategoriesMap(MethodConfiguration config) {
+		try {
 		if (config == null) {
 			return;
 		}
@@ -121,7 +122,10 @@ public class ConfigHelperDelegate {
 				}
 				ccSet.add(cc);				
 			}
-		}		
+		}
+		} catch (Throwable e) {
+			LibraryPlugin.getDefault().getLogger().logError(e);
+		}
 	}
 	
 	public void clearDynamicCustomCategoriesMap() {
