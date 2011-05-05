@@ -141,17 +141,37 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 	public boolean performFinish() {
 		String xmlFilePath = selectXMLFilePage.getPath();
 		File xmlFile = new File(xmlFilePath);
+		File folder = xmlFile.getParentFile();
+		String folderPath = folder.getAbsolutePath();
 		if (xmlFile.exists()) {
 			boolean ok = ExportXMLPlugin.getDefault().getMsgDialog()
 					.displayPrompt(
 							ExportXMLResources.exportXMLWizard_title,
 							ExportXMLResources.bind(
+									ExportXMLResources.overwriteText_msg1,
+									new String[] { xmlFilePath, folderPath }));
+			if (!ok) {
+				return false;
+			}
+		} else if (folder.exists()) {
+			boolean ok = ExportXMLPlugin.getDefault().getMsgDialog()
+					.displayPrompt(
+							ExportXMLResources.exportXMLWizard_title,
+							ExportXMLResources.bind(
 									ExportXMLResources.overwriteText_msg,
-									new String[] { xmlFilePath }));
+									new String[] { folderPath }));
 			if (!ok) {
 				return false;
 			}
 		}
+		try {
+			if (folder.exists()) {
+				FileUtil.deleteAllFiles(folderPath);
+			}
+		} catch (Throwable e) {
+			ExportXMLPlugin.getDefault().getLogger().logError(e);
+		}
+		
 
 		//hot fix
 		final boolean exportConfig = xmlData.getExportType() == ExportXMLData.EXPORT_METHOD_CONFIGS;

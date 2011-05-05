@@ -45,6 +45,8 @@ public final class ExportXMLResources extends NLS {
 	public static String browseButton_text;
 
 	public static String overwriteText_msg;
+	
+	public static String overwriteText_msg1;
 
 	public static String exportingXML_text;
 
