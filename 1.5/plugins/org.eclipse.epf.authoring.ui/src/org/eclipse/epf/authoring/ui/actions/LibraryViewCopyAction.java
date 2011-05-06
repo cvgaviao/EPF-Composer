@@ -78,7 +78,7 @@ public class LibraryViewCopyAction extends CopyAction {
 			}
 			super.run();
 			
-			if (ProcessUtil.isSynFree() && tDomain != null) {
+			if (tDomain != null) {
 				Set<Resource> resouresToSave = new HashSet<Resource>();
 				Map map = tDomain.getExtenalMaintainedCopyMap();
 				ActivityHandler.fixGuidReferences(map, false, true, null);
