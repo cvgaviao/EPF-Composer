@@ -76,6 +76,7 @@ public class LibraryViewPasteAction extends PasteAction implements
 					
 					LibraryEditUtil.getInstance().fixWpStates(map.keySet(), resouresToSave);					
 					ActivityHandler.fixGuidReferences(map, false, true, resouresToSave);
+					LibraryEditUtil.getInstance().fixProcssWpStates(map.keySet(), resouresToSave);
 					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 							.getCurrentPersister().getFailSafePersister();
 
