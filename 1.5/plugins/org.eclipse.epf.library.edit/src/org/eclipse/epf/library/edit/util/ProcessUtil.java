@@ -3466,9 +3466,7 @@ public final class ProcessUtil {
 		finally {
 			cmd.dispose();
 		}
-		if (handleAutoSyn) {
-			ActivityHandler.fixGuidReferences(copyHelper);
-		}
+		ActivityHandler.fixGuidReferences(copyHelper);	
 		
 		return newProcess;
 	}

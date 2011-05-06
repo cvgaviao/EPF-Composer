@@ -37,6 +37,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryTreeIterator;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.edit.IConfigurator;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDeepCopyCommand;
@@ -263,6 +264,15 @@ public class ActivityHandler {
 	}
 	
 	public static void fixGuidReferences(Map<? extends Object, ? extends Object> objectToCopyMap,
+			boolean deepCopy, boolean reverseMap, Set<Resource> resouresToSave) {
+		try {
+			fixGuidReferences_(objectToCopyMap, deepCopy, reverseMap, resouresToSave);
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
+	private static void fixGuidReferences_(Map<? extends Object, ? extends Object> objectToCopyMap,
 			boolean deepCopy, boolean reverseMap, Set<Resource> resouresToSave) {
 		Set<MethodElement> cpySet = new HashSet<MethodElement>();
 		Map<String, String> srcGuidToCpyGuidMap = new HashMap<String, String>();
