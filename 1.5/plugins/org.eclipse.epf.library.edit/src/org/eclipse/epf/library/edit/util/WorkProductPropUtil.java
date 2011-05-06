@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
@@ -240,6 +241,72 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 		}
 		
 		return state;
+	}
+	
+	/**
+	 * Fix states assigned to the given work-product "wp".
+	 * The states need to be fixed are those belonging to other plug-in
+	 * @param wp
+	 * @param modifeiedResources
+	 */
+	public void fixWorkProductStates(WorkProduct wp, Set<Resource> modifeiedResources) {
+		String propValue = getStringValue(wp, WORKPRODUCT_States);
+		if (propValue == null) {
+			return;
+		}
+		String[] guidList = propValue.split(infoSeperator); 
+		if (guidList == null || guidList.length == 0) {
+			return;
+		}		
+		MethodPlugin plugin = UmaUtil.getMethodPlugin(wp);
+		if (plugin == null) {
+			return;
+		}
+		Set<Constraint> statesInPlugin = new HashSet<Constraint>();
+		List<Constraint> stateListInPlugin = MethodPluginPropUtil.getMethodPluginPropUtil().getWorkProductStatesInPlugin(plugin);
+		statesInPlugin.addAll(stateListInPlugin);
+		
+		boolean modified = false;
+		String newValue = ""; 			//$NON-NLS-1$
+		for (String guid : guidList) {
+			MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
+			if (element instanceof Constraint) {
+				Constraint c = (Constraint) element;
+				if (statesInPlugin.contains(element)) {
+					if (c.getName().equals(ConstraintManager.Plugin_wpState)) {
+						MethodElementPropUtil.getMethodElementPropUtil().addToAssignedToWps(wp, c);
+					}
+					if (newValue.length() > 0) {
+						newValue = newValue.concat(infoSeperator);
+					}
+					newValue = newValue.concat(c.getGuid());
+				} else {
+					Constraint copyState = MethodPluginPropUtil.getMethodPluginPropUtil().getWorkProductState(plugin, c.getBody(), false);
+					if (copyState == null) {
+						copyState = MethodPluginPropUtil.getMethodPluginPropUtil().getWorkProductState(plugin, c.getBody(), true);
+						copyState.setBriefDescription(c.getBriefDescription());
+					}
+					if (newValue.length() > 0) {
+						newValue = newValue.concat(infoSeperator);
+					}
+					newValue = newValue.concat(copyState.getGuid());
+					modified = true;
+				}
+			} else {
+				modified = true;
+			}
+		}
+		
+		
+		if (modified) {
+			setStringValue(wp, WORKPRODUCT_States, newValue);
+			if (wp.eResource() != null) {
+				modifeiedResources.add(wp.eResource());
+			}
+			if (plugin.eResource() != null) {
+				modifeiedResources.add(plugin.eResource());	
+			}
+		}
 	}
 	
 	

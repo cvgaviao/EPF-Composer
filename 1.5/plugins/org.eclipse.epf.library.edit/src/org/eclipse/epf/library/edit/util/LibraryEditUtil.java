@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.services.ILibraryPersister;
@@ -34,6 +35,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -42,6 +44,7 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
@@ -672,6 +675,34 @@ public class LibraryEditUtil {
 		return provider == null ? null : provider.calc0nFeatureValue(element, feature, config);
 	}
 	
+	public void fixWpStates(Collection<? extends MethodElement> elements, Set<Resource> modifeiedResources) {
+		try {
+			fixWpStates_(elements, modifeiedResources);
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
+	private void fixWpStates_(Collection<? extends Object> elements, Set<Resource> modifeiedResources) {				
+		WorkProductPropUtil wpPropUtil =  WorkProductPropUtil.getWorkProductPropUtil();
+		for (Object element : elements) {
+			if (! (element instanceof WorkProduct)) {
+				continue;
+			}			
+			WorkProduct wp = (WorkProduct) element;
+			wpPropUtil.fixWorkProductStates(wp, modifeiedResources);						
+		}
+		
+		for (Object element : elements) {
+			if (! (element instanceof TaskDescriptor || element instanceof Milestone)) {
+				continue;
+			}
+			WorkBreakdownElement wbe = (WorkBreakdownElement) element;
+			
+//			ConstraintManager.fixWpStates(wbe)
+		}			
+		
+	}
 	
 	
 	

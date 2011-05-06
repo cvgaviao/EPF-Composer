@@ -31,6 +31,7 @@ import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.category.StandardCategoriesItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ActivityHandler;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.ui.actions.ILibraryAction;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
@@ -74,6 +75,9 @@ public class LibraryViewPasteAction extends PasteAction implements
 					
 					Set<Resource> resouresToSave = new HashSet<Resource>();			
 					Map map = tDomain.getExtenalMaintainedCopyMap();
+					
+					LibraryEditUtil.getInstance().fixWpStates(map.values(), resouresToSave);
+					
 					ActivityHandler.fixGuidReferences(map, false, false, resouresToSave);
 					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 							.getCurrentPersister().getFailSafePersister();
