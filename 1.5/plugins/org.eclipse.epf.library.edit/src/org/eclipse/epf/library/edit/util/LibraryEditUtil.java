@@ -704,6 +704,20 @@ public class LibraryEditUtil {
 		
 	}
 	
+	public void fixProcssWpStates(Collection<? extends MethodElement> elements, Set<Resource> modifeiedResources) {
+		try {
+			fixProcessWpStates_(elements, modifeiedResources);
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+	}
+	
+	private void fixProcessWpStates_(Collection<? extends Object> elements, Set<Resource> modifeiedResources) {	
+		WorkProductPropUtil wpPropUtil =  WorkProductPropUtil.getWorkProductPropUtil();
+		for (Object element : elements) {
+			wpPropUtil.fixProcessWpStates(element, modifeiedResources);
+		}					
+	}
 	
 	
 }

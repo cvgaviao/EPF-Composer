@@ -10,7 +10,11 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Milestone;
+import org.eclipse.epf.uma.TaskDescriptor;
+import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 public class WorkProductPropUtil extends MethodElementPropUtil {
@@ -308,6 +312,91 @@ public class WorkProductPropUtil extends MethodElementPropUtil {
 			}
 		}
 	}
+		
+	/**
+	 * Fix states assigned to WPDs of a task-descriptor or milestone
+	 * A state need to be fixed is one that can not be found in the wpd's linked work-product 
+	 * @param element - a task-descriptor or milestone
+	 * @param modifeiedResources
+	 */
+	public static void fixProcessWpStates(Object element, Set<Resource> modifeiedResources) {
+		if (! (element instanceof TaskDescriptor || element instanceof Milestone)) {
+			return;
+		}
+		WorkBreakdownElement wbe = (WorkBreakdownElement) element;
+		for (Constraint constraint : wbe.getOwnedRules()) {
+			if (constraint.getName().equals(ConstraintManager.Wbe_WpStates)) {
+				MethodElement e = LibraryEditUtil.getInstance().getMethodElement(constraint.getBody());
+				if (e instanceof WorkProductDescriptor) {
+					fixProcessWorkProductStates(constraint, (WorkProductDescriptor) e, modifeiedResources);
+				}
+			}
+		}
+
+	}
 	
+	private static void fixProcessWorkProductStates(Constraint propertyOwner, WorkProductDescriptor wpd, Set<Resource> modifeiedResources) {
+		if (propertyOwner == null || wpd == null || wpd.getWorkProduct() == null) {
+			return;
+		}
+		WorkProduct wp = wpd.getWorkProduct();				
+		String propName = MethodElementPropUtil.CONSTRAINT_WPStates;
+		
+		
+		MethodElementPropUtil methodElementPropUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		String value = methodElementPropUtil.getStringValue(propertyOwner, propName);
+		if (value == null || value.length() == 0) {
+			return ;
+		}
+		
+		String[] infos = value.split(infoSeperator);
+		if (infos == null || infos.length == 0) {
+			return;
+		}
+		
+		MethodPlugin plugin = UmaUtil.getMethodPlugin(wp);
+		if (plugin == null) {
+			return;
+		}
+		
+		boolean modified = false;
+		String newValue = ""; //$NON-NLS-1$
+		int sz = infos.length / 2; 		
+		for (int i = 0; i < sz; i++) {
+			int i1 = i*2;
+			int i2 = i1 + 1;
+			String iGuid = infos[i1];
+			String iRefName = infos[i2];			
+			MethodElement element = LibraryEditUtil.getInstance()
+					.getMethodElement(iGuid);
+			if (element instanceof Constraint) {
+				Constraint c = (Constraint) element;
+				Constraint copyState = MethodPluginPropUtil.getMethodPluginPropUtil().getWorkProductState(plugin, c.getBody(), false);
+				if (copyState != null) {
+					if (copyState != c) {
+						iGuid = copyState.getGuid();
+						modified = true;
+					}					
+					if (newValue.length() > 0) {
+						newValue = newValue.concat(infoSeperator);
+					}
+					newValue = newValue.concat(iGuid.concat(infoSeperator)
+							.concat(iRefName));
+				} else {
+					modified = true;		
+				}
+			} else {
+				modified = true;
+			}
+		} 	
+		if (modified) {
+			methodElementPropUtil.setStringValue(propertyOwner, propName, newValue);
+			if (propertyOwner.eResource() != null) {
+				modifeiedResources.add(propertyOwner.eResource());
+			}
+		}
+		
+
+	}
 	
 }
