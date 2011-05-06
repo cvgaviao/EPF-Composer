@@ -279,9 +279,6 @@ public class ActivityHandler {
 			}
 		}
 		
-		if (! ProcessUtil.isSynFree()) {
-			return;
-		}
 		for (Map.Entry entry : objectToCopyMap.entrySet()) {
 //			Object src = entry.getKey();
 //			Object cpy = entry.getValue();
@@ -307,9 +304,10 @@ public class ActivityHandler {
 			}
 		}
 		
+		boolean isSynFree = ProcessUtil.isSynFree();
 		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		for (MethodElement cpy : cpySet) {
-			if (cpy instanceof TaskDescriptor) {
+			if (cpy instanceof TaskDescriptor && isSynFree) {
 				TaskDescriptor cpyDes = (TaskDescriptor) cpy;
 				propUtil.replaceLocalUseGuidStrings(cpyDes, srcGuidToCpyGuidMap);
 				String oldGreenParent = propUtil.getGreenParent(cpyDes);
