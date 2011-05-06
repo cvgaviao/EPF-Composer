@@ -359,7 +359,6 @@ public class ActivityHandler {
 				}
 			}
 		}		
-		LibraryEditUtil.getInstance().fixProcssWpStates(cpySet, resouresToSave);
 	}
 	
 	private void updatePredecessors(List workBreakdownElements) {
