@@ -74,8 +74,8 @@ public class LibraryViewPasteAction extends PasteAction implements
 					Set<Resource> resouresToSave = new HashSet<Resource>();			
 					Map map = tDomain.getExtenalMaintainedCopyMap();
 					
-					LibraryEditUtil.getInstance().fixWpStates(map.values(), resouresToSave);					
-					ActivityHandler.fixGuidReferences(map, false, false, resouresToSave);
+					LibraryEditUtil.getInstance().fixWpStates(map.keySet(), resouresToSave);					
+					ActivityHandler.fixGuidReferences(map, false, true, resouresToSave);
 					ILibraryPersister.FailSafeMethodLibraryPersister persister = LibraryServiceUtil
 							.getCurrentPersister().getFailSafePersister();
 

@@ -104,7 +104,7 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 			TraceableAdapterFactoryEditingDomain tDomain = (TraceableAdapterFactoryEditingDomain) domain;
 			Map map = tDomain.getExtenalMaintainedCopyMap();
 			if (map != null) {
-				map.put(owner, copy);
+				map.put(copy, owner);
 			}
 		}
 		if (owner instanceof ContentDescription) {
