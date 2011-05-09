@@ -18,8 +18,8 @@
 	
 	<CompareToLibrary 
 		goldenLibFolderName="158913n158925golden"
-		diffCount="2" 
-		elementCount="21"
+		diffCount="3" 
+		elementCount="22"
 		useNameAsId="true">		
 	</CompareToLibrary>
 
