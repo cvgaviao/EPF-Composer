@@ -31,6 +31,7 @@ public class BrowsingLayoutSettings {
 	private boolean fulfillDescriptorSlotByContent = false;
 	private boolean showLinkedPageForDescriptor = false;
 	private String forbiddenUrlChars;
+	private boolean ignoreDynamicParents = true;
 
 	// if true, the to-many outgoing association from base will be ignored if the extender has its own
 	private boolean useNewExtendSemantics = false;
@@ -164,6 +165,14 @@ public class BrowsingLayoutSettings {
 
 	public void setForbiddenUrlChars(String forbiddenUrlChars) {
 		this.forbiddenUrlChars = forbiddenUrlChars;
+	}
+	
+	public boolean isIgnoreDynamicParents() {
+		return ignoreDynamicParents;
+	}
+
+	public void setIgnoreDynamicParents(boolean ignoreDynamicParents) {
+		this.ignoreDynamicParents = ignoreDynamicParents;
 	}
 	
 }

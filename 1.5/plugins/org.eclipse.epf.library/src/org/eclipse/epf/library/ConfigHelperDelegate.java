@@ -32,6 +32,7 @@ import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.elements.AbstractElementLayout;
@@ -481,7 +482,7 @@ public class ConfigHelperDelegate {
 
 		MethodConfiguration config = LibraryService.getInstance()
 		.getCurrentMethodConfiguration();
-		if (config != null) {
+		if (config != null && ! BrowsingLayoutSettings.INSTANCE.isIgnoreDynamicParents()) {
 			buildDynamicCustomCategoriesMap(config);
 		}
 		if (raw_element instanceof BreakdownElement

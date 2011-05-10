@@ -88,5 +88,7 @@ public class PublishingUIPlugin extends AbstractPlugin {
 		String forbiddenUrlChars = PublishingUIPreferences.getForbiddenChars();
 		BrowsingLayoutSettings.INSTANCE.setForbiddenUrlChars(forbiddenUrlChars);
 		
+		boolean ignoreDynamicParents = PublishingUIPreferences.getIgnoreDynamicParents();
+		BrowsingLayoutSettings.INSTANCE.setIgnoreDynamicParents(ignoreDynamicParents);
 	}
 }
