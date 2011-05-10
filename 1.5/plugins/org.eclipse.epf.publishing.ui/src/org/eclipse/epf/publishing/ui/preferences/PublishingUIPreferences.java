@@ -58,6 +58,8 @@ public class PublishingUIPreferences {
 	
 	private static final String SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR = "showLinkedElementForDescriptor"; //$NON-NLS-1$
 	
+	private static final String Ignore_Dynamic_Parents = "ignoreDynamicParents"; //$NON-NLS-1$	
+	
 	private static final String FULFILL_DESCRIPTOR_SLOT_BY_CONTENT = "fulfillDescriptorSlotByContent"; //$NON-NLS-1$
 
 	private static final String PUBLISH_UNOPEN_ACTIVITY_DD = "publishUnopenActivityDD"; //$NON-NLS-1$
@@ -121,7 +123,9 @@ public class PublishingUIPreferences {
 		prefStore.setDefault(EXTRA_DESCRIPTOR_INFO,
 				getDefaultExtraDescriptorInfo());
 		prefStore.setDefault(SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR,
-				getDefaultShowLinkedElementForDescriptor());
+				getDefaultShowLinkedElementForDescriptor());				
+		prefStore.setDefault(Ignore_Dynamic_Parents,
+				getDefaultIgnoreDynamicParents());
 		prefStore.setDefault(FULFILL_DESCRIPTOR_SLOT_BY_CONTENT,
 				getDefaultFulfillDescriptorSlotByContent());
 		
@@ -132,7 +136,7 @@ public class PublishingUIPreferences {
 		prefStore.setDefault(PUBLISH_STATIC_WEB_SITE, true);
 		prefStore.setDefault(INCLUDE_SERVLET_SEARCH, true);
 		prefStore.setDefault(WEBAPP_NAME, ""); //$NON-NLS-1$			
-		prefStore.setDefault(INCLUDE_SEARCH, true);
+		prefStore.setDefault(INCLUDE_SEARCH, true);		
 	}
 
 	/**
@@ -783,6 +787,19 @@ public class PublishingUIPreferences {
 		return prefStore.getBoolean(SHOW_LINKED_ELEMENT_FOR_DESCRIPTOR);
 	}
 
+	
+	public static void setIgnoreDynamicParents(boolean value) {
+		prefStore.setValue(Ignore_Dynamic_Parents, value);
+	}
+	
+	public static boolean getDefaultIgnoreDynamicParents() {
+		return true;
+	}
+	
+	public static boolean getIgnoreDynamicParents() {
+		return prefStore.getBoolean(Ignore_Dynamic_Parents);
+	}
+	
 	/**
 	 * Sets the default extra descriptor info preference value.
 	 * 

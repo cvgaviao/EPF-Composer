@@ -55,6 +55,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 	
 	private Button showLinkedPageForDescriptorCheckbox;
 	
+	private Button ignoreDynamicParentsCheckbox;
+	
 	private Button fulfillDescriptorSlotByContentCheckbox;
 	
 	private Text forbiddenURLChars;
@@ -94,8 +96,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		
 		showLinkedPageForDescriptorCheckbox = createCheckbox(browsingGroup,
 				PublishingUIResources.showLinkedPageForDescriptorLabel_text, 1);
-		
-		
+				
+		ignoreDynamicParentsCheckbox = createCheckbox(browsingGroup,
+				PublishingUIResources.ignoreDynamicParentsCheckbox_text, 1);		
 		
 		// Create the slot fulfillment rule group.
 		Group wpSlotDpRuleGroup = createGridLayoutGroup(composite, PublishingUIResources.wpSlotDpRuleGroup_text, 1);
@@ -123,7 +126,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		extraDescriptorInfoCheckbox.setSelection(PublishingUIPreferences
 				.getExtraDescriptorInfo());	
 		showLinkedPageForDescriptorCheckbox.setSelection(PublishingUIPreferences
-				.getShowLinkedElementForDescriptor());	
+				.getShowLinkedElementForDescriptor());		
+		ignoreDynamicParentsCheckbox.setSelection(PublishingUIPreferences
+				.getIgnoreDynamicParents());
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
 				.getFulfillDescriptorSlotByContent());
 		forbiddenURLChars.setText(PublishingUIPreferences.getForbiddenChars());
@@ -185,6 +190,11 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		PublishingUIPreferences
 				.setShowLinkedElementForDescriptor(showLinkedPageForDescriptorCheckbox
 						.getSelection());
+
+		PublishingUIPreferences
+				.setIgnoreDynamicParents(ignoreDynamicParentsCheckbox
+						.getSelection());
+		
 		PublishingUIPreferences
 			.setFulfillDescriptorSlotByContent(fulfillDescriptorSlotByContentCheckbox
 				.getSelection());
@@ -209,7 +219,12 @@ public class PublishingPreferencePage extends BasePreferencePage {
 		extraDescriptorInfoCheckbox.setSelection(PublishingUIPreferences
 				.getDefaultExtraDescriptorInfo());
 		showLinkedPageForDescriptorCheckbox.setSelection(PublishingUIPreferences
-				.getDefaultShowLinkedElementForDescriptor());
+				.getDefaultShowLinkedElementForDescriptor());		
+		ignoreDynamicParentsCheckbox.setSelection(PublishingUIPreferences
+				.getDefaultIgnoreDynamicParents());
+		PublishingUIPreferences
+			.setIgnoreDynamicParents(ignoreDynamicParentsCheckbox
+				.getSelection());
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
 				.getDefaultFulfillDescriptorSlotByContent());
 		forbiddenURLChars

@@ -94,6 +94,8 @@ public final class PublishingUIResources extends NLS {
 	
 	public static String showLinkedPageForDescriptorLabel_text;
 	
+	public static String ignoreDynamicParentsCheckbox_text;
+	
 	public static String fulfillDescriptorSlotByContentCheckbox_text;
 
 	public static String publishEmptyCategoriesLabel_text;
