@@ -170,6 +170,19 @@ public class ExportResourceHandler extends BaseResourceHandler {
 		File srcPluginRoot = new File(srcPluginPath);
 		
 		File src = new File(srcPluginRoot.getParentFile(), sourceFile);
+		
+		if ( ! src.exists() ) {
+			sourceFile = NetUtil.decodedFileUrl(sourceFile);
+			src = new File(srcPluginRoot.getParentFile(), sourceFile);
+			if (! src.exists()) {
+				try {
+					sourceFile = NetUtil.decodeURL(sourceFile);
+					src = new File(srcPluginRoot.getParentFile(), sourceFile);					
+				} catch (Exception e) {					
+				}
+			}		
+		}
+		
 		if ( src.exists() ) {
 			File tgt = new File(targetLibRoot, sourceFile);
 			FileUtil.copyFile(src, tgt);
