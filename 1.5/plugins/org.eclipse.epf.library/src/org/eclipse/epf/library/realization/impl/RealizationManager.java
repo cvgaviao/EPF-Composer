@@ -20,6 +20,7 @@ import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -83,8 +84,8 @@ public class RealizationManager implements IRealizationManager {
 	public void dispose() {
 		clearCacheData();
 		
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		if (window != null) {
+		IWorkbenchWindow window = LibraryUtil.getActiveWorkbenchWindow();
+		if (window != null && perspectiveListener != null) {
 			window.removePerspectiveListener(perspectiveListener);
 		}
 	}
@@ -110,7 +111,7 @@ public class RealizationManager implements IRealizationManager {
 	}
 	
 	private void init() {
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IWorkbenchWindow window = LibraryUtil.getActiveWorkbenchWindow();
 		if (window != null) {
 			perspectiveListener = new IPerspectiveListener() {
 				public void perspectiveActivated(IWorkbenchPage page,
