@@ -101,6 +101,8 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Jinhua Xi
@@ -1439,6 +1441,20 @@ public class LibraryUtil {
 		}
 
 		return guidanceList;
+	}
+	
+	public 	IWorkbenchWindow getActiveWorkbenchWindow() {		
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		if (window == null) {
+			final IWorkbenchWindow[] windows = new IWorkbenchWindow[1]; 
+			SafeUpdateController.syncExec(new Runnable() {	
+				public void run() {
+					windows[0] = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+				}
+			});
+			window = windows[0];
+		}		
+		return window;
 	}
 	
 }
