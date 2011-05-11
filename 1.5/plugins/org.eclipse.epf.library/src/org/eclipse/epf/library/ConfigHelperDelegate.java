@@ -440,8 +440,7 @@ public class ConfigHelperDelegate {
 			return;
 		}
 		
-		IWorkbenchWindow window = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
+		IWorkbenchWindow window = LibraryUtil.getActiveWorkbenchWindow();
 		if (window != null) {
 			perspectiveListener = new IPerspectiveListener() {
 				public void perspectiveActivated(IWorkbenchPage page,
