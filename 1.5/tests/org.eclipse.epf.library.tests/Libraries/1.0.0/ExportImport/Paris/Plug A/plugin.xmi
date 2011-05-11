@@ -191,7 +191,7 @@
           <contentElements xsi:type="org.eclipse.epf.uma:Checklist" xmi:id="_KV4q0A-SEdqL2O1PJV9cZA" name="checklist_A1" guid="_KV4q0A-SEdqL2O1PJV9cZA" presentationName="Checklist A1 present" briefDescription="Checklist A1 brief">
             <presentation xmi:id="-oWo3UCifX4Ic_VBICWwqRw" href="uma://-oWo3UCifX4Ic_VBICWwqRw#-oWo3UCifX4Ic_VBICWwqRw"/>
           </contentElements>
-          <contentElements xsi:type="org.eclipse.epf.uma:Concept" xmi:id="_NDL-kA-SEdqL2O1PJV9cZA" name="concept_A1" guid="_NDL-kA-SEdqL2O1PJV9cZA" presentationName="Concept A1 present" briefDescription="Concept A1 brief" shapeicon="file:/C:/Documents%20and%20Settings/tran-luu/IBM/MethodLibraries/paris/Plug%20A/guidances/concepts/resources/tyrannosaurus.gif">
+          <contentElements xsi:type="org.eclipse.epf.uma:Concept" xmi:id="_NDL-kA-SEdqL2O1PJV9cZA" name="concept_A1" guid="_NDL-kA-SEdqL2O1PJV9cZA" presentationName="Concept A1 present" briefDescription="Concept A1 brief" shapeicon="file:Plug%20A/guidances/concepts/resources/tyrannosaurus.gif">
             <presentation xmi:id="-6y7aBQt3cCSBLo8smMRemA" href="uma://-6y7aBQt3cCSBLo8smMRemA#-6y7aBQt3cCSBLo8smMRemA"/>
           </contentElements>
           <contentElements xsi:type="org.eclipse.epf.uma:Example" xmi:id="_OBxtwA-SEdqL2O1PJV9cZA" name="example_A1" guid="_OBxtwA-SEdqL2O1PJV9cZA" presentationName="Example A1 present" briefDescription="Example A1 brief">
