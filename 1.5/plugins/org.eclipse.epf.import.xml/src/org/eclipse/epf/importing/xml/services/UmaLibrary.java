@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.dataexchange.importing.LibraryService;
 import org.eclipse.epf.dataexchange.util.ContentProcessor;
@@ -580,7 +581,12 @@ public class UmaLibrary {
 					MethodPlugin tgtPlugin = UmaUtil.getMethodPlugin((MethodElement) obj);
 					int ix = tgtPlugin.getName().length() + 1;
 										
-					value = new java.net.URI(value.toString().substring(ix));
+					String path = value.toString().substring(ix);
+					try {
+						value = new java.net.URI(path);
+					} catch (Throwable e) {
+						value = new java.net.URI(NetUtil.encodeFileURL(path));
+					}
 
 					// need to copy the resource file to the target library
 					contentProc.copyResource(((java.net.URI) value).getPath(), obj, tgtPlugin);

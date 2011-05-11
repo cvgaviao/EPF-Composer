@@ -14,6 +14,7 @@ import java.io.File;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.common.utils.FileUtil;
+import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.dataexchange.util.BaseResourceHandler;
 import org.eclipse.epf.dataexchange.util.UrlInfo;
 import org.eclipse.epf.library.ILibraryResourceManager;
@@ -98,6 +99,17 @@ public class ImportResourceHandler extends BaseResourceHandler {
 		File srcPluginRoot = new File(sourceLibRoot, umaPlugin.getName());
 		
 		File src = new File(srcPluginRoot, sourceFile);
+		if ( ! src.exists() ) {
+			sourceFile = NetUtil.decodedFileUrl(sourceFile);
+			src = new File(srcPluginRoot, sourceFile);
+			if (! src.exists()) {
+				try {
+					sourceFile = NetUtil.decodeURL(sourceFile);
+					src = new File(srcPluginRoot, sourceFile);				
+				} catch (Exception e) {					
+				}
+			}		
+		}
 		if ( src.exists() ) {
 			File tgt = new File(tgtPluginRoot, sourceFile);
 			FileUtil.copyFile(src, tgt);
