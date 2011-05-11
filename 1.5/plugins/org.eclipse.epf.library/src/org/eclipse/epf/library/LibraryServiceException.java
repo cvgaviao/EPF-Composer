@@ -35,6 +35,7 @@ public class LibraryServiceException extends Exception {
 	 */
 	public LibraryServiceException(Throwable rootCause) {
 		super(rootCause);
+		LibraryPlugin.getDefault().getLogger().logError(rootCause);
 	}
 
 	/**
