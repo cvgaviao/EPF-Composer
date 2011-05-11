@@ -1443,7 +1443,7 @@ public class LibraryUtil {
 		return guidanceList;
 	}
 	
-	public 	IWorkbenchWindow getActiveWorkbenchWindow() {		
+	public 	static IWorkbenchWindow getActiveWorkbenchWindow() {		
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		if (window == null) {
 			final IWorkbenchWindow[] windows = new IWorkbenchWindow[1]; 
