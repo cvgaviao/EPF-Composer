@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
+import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.utils.I18nUtil;
 import org.eclipse.epf.common.utils.Timer;
 import org.eclipse.epf.common.xml.XSLTProcessor;
@@ -489,7 +490,7 @@ public class HtmlBuilder {
 
 		xml.append(XmlHelper.XML_HEADER).append(xmlElement.toXml());
 
-		if ( debug ) {
+		if ( debug || CommandLineRunUtil.getInstance().isNeedToRun()) {
 			try {
 				String xml_file = this.getPublishDir() + "xml" + File.separator; //$NON-NLS-1$
 				xml_file += layout.getType() + "." + layout.getFileName(".xml"); //$NON-NLS-1$ //$NON-NLS-2$
