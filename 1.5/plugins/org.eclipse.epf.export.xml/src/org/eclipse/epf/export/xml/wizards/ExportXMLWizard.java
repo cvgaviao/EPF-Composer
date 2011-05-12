@@ -153,7 +153,7 @@ public class ExportXMLWizard extends Wizard implements IExportWizard {
 			if (!ok) {
 				return false;
 			}
-		} else if (folder.exists()) {
+		} else if (folder.exists() && folder.listFiles() != null && folder.listFiles().length > 0) {
 			boolean ok = ExportXMLPlugin.getDefault().getMsgDialog()
 					.displayPrompt(
 							ExportXMLResources.exportXMLWizard_title,
