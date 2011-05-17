@@ -164,7 +164,7 @@ public class ExportMSPWizard extends BaseWizard implements IExportWizard {
 		super.createPageControls(pageContainer);
 		pageContainer.getShell().setImage(
 				ExportMSPUIPlugin.getDefault().getSharedImage(
-						"full/obj16/MSProject.gif")); //$NON-NLS-1$
+						"full/wizban/exp_ms_prj_wizban.gif")); //$NON-NLS-1$
 	}
 
 	/**
