@@ -1946,7 +1946,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					refPluginsInfo.refPluginsToAdd.clear();
 					return false;
 					
-				} else if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+				} else if (ret == IUserInteractionHandler.ACTION_NO) {
 					refPluginsInfo.refPluginsToAdd.clear();
 					
 				} else {
@@ -1969,14 +1969,14 @@ public class MethodElementAddCommand extends CommandWrapper implements
 						LibraryEditResources.moveDialog_addRefPluginsText + str, null);
 				if (ret == IUserInteractionHandler.ACTION_CANCEL) {
 					pluginForAddingTagetAsBase = null;
-					
-				} else if (ret == IUserInteractionHandler.ACTION_CANCEL) {
-					pluginForAddingTagetAsBase = null;
 					if (! refPluginsInfo.refPluginsToAdd.isEmpty()) {
 						ownerPlugin.getBases().removeAll(refPluginsInfo.refPluginsToAdd);
 						refPluginsInfo.refPluginsToAdd.clear();
 					}
 					return false;
+					
+				} else if (ret == IUserInteractionHandler.ACTION_NO) {
+						pluginForAddingTagetAsBase = null;						
 					
 				} else {
 					pluginForAddingTagetAsBase.getBases().add(ownerPlugin);	
@@ -2009,12 +2009,14 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				return null;
 			}
 			
+			CustomCategory srcRoot = TngUtil.getRootCustomCategory(srcPlugin);
+			
 			for (MethodElement element : moveSet) {
 				for (MethodElement referencing : (Collection<MethodElement>) AssociationHelper
 						.getReferences(element)) {
 					if (!moveSet.contains(referencing)
 							&& srcPlugin == UmaUtil
-									.getMethodPlugin(referencing)) {
+									.getMethodPlugin(referencing) && referencing != srcRoot) {
 						return srcPlugin;
 					}
 				}
