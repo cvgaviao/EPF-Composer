@@ -1707,7 +1707,7 @@ public final class ProcessUtil {
 			RoleDescriptor refObject = (RoleDescriptor) obj;
 			List list = new ArrayList();
 			list.addAll(AssociationHelper.getAssistedTaskDescriptors(refObject));
-			list.addAll(refObject.getResponsibleFor());
+//			list.addAll(refObject.getResponsibleFor());
 			list.addAll(AssociationHelper.getAdditionalTaskDescriptors(refObject));
 			list.addAll(AssociationHelper.getPrimaryTaskDescriptors(refObject));
 			list.addAll(AssociationHelper.getTeamProfiles(refObject));
