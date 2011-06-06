@@ -36,6 +36,10 @@ public class ConfigurationSpec {
 	public List packageIds = new ArrayList();
 
 	public List viewIds = new ArrayList();
+	
+	public List addedCCIds = new ArrayList();
+	
+	public List substractCCIds = new ArrayList();
 
 	public List<MethodElementProperty> mepList = new ArrayList<MethodElementProperty>();
 

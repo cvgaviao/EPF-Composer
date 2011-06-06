@@ -166,6 +166,8 @@ public class ConfigSpecsImportManager {
 		List plugins = config.getMethodPluginSelection();
 		List pkgs = config.getMethodPackageSelection();
 		List views = config.getProcessViews();
+		List added = config.getAddedCategory();
+		List substracted = config.getSubtractedCategory();
 
 		ILibraryManager manager = LibraryService.getInstance()
 				.getCurrentLibraryManager();
@@ -191,6 +193,22 @@ public class ConfigSpecsImportManager {
 				Object element = manager.getMethodElement(guid);
 				if (element != null && !views.contains(element)) {
 					views.add(element);
+				}
+			}
+			
+			for (Iterator it = spec.addedCCIds.iterator(); it.hasNext();) {
+				String guid = (String) it.next();
+				Object element = manager.getMethodElement(guid);
+				if (element != null && !added.contains(element)) {
+					added.add(element);
+				}
+			}
+			
+			for (Iterator it = spec.substractCCIds.iterator(); it.hasNext();) {
+				String guid = (String) it.next();
+				Object element = manager.getMethodElement(guid);
+				if (element != null && !substracted.contains(element)) {
+					substracted.add(element);
 				}
 			}
 		}

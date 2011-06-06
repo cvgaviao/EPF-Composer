@@ -577,6 +577,26 @@ public class LibraryDocument {
 				spec.viewIds.add(guid);
 			}
 		}
+		
+		// get added CCs
+		nodes = configNode.getElementsByTagName("addedCategory"); //$NON-NLS-1$
+		if (nodes != null) {
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Element node = (Element) nodes.item(i);
+				String guid = getGuidFromHref(node.getAttribute(ATTR_href));
+				spec.addedCCIds.add(guid);
+			}
+		}
+		
+		// get substract CCs
+		nodes = configNode.getElementsByTagName("subtractedCategory"); //$NON-NLS-1$
+		if (nodes != null) {
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Element node = (Element) nodes.item(i);
+				String guid = getGuidFromHref(node.getAttribute(ATTR_href));
+				spec.substractCCIds.add(guid);
+			}
+		}
 
 		// get meps
 		nodes = configNode.getElementsByTagName(TAG_methodElementProperty); //$NON-NLS-1$
