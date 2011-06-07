@@ -40,6 +40,8 @@ public class ConfigurationSpec {
 	public List addedCCIds = new ArrayList();
 	
 	public List substractCCIds = new ArrayList();
+	
+	public String defaultView;
 
 	public List<MethodElementProperty> mepList = new ArrayList<MethodElementProperty>();
 

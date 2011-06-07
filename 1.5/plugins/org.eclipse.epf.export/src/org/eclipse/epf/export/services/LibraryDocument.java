@@ -597,6 +597,17 @@ public class LibraryDocument {
 				spec.substractCCIds.add(guid);
 			}
 		}
+		
+		// get default view
+		nodes = configNode.getElementsByTagName("defaultView"); //$NON-NLS-1$
+		if (nodes != null) {
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Element node = (Element) nodes.item(i);
+				String guid = getGuidFromHref(node.getAttribute(ATTR_href));
+				spec.defaultView = guid;
+				break;
+			}
+		}
 
 		// get meps
 		nodes = configNode.getElementsByTagName(TAG_methodElementProperty); //$NON-NLS-1$

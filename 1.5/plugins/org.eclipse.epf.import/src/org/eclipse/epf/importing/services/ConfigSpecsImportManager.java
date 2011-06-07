@@ -22,6 +22,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.persistence.MultiFileSaveUtil;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
@@ -209,6 +210,13 @@ public class ConfigSpecsImportManager {
 				Object element = manager.getMethodElement(guid);
 				if (element != null && !substracted.contains(element)) {
 					substracted.add(element);
+				}
+			}
+			
+			if (spec.defaultView != null) {
+				Object element = manager.getMethodElement(spec.defaultView);
+				if (element instanceof CustomCategory) {
+					config.setDefaultView((CustomCategory) element);
 				}
 			}
 		}
