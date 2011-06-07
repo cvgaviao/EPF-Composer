@@ -109,6 +109,8 @@ public class ConfigSpecsImportManager {
 						List pkgs = entry.existingConfig
 								.getMethodPackageSelection();
 						List views = entry.existingConfig.getProcessViews();
+						List added = entry.existingConfig.getAddedCategory();
+						List substracted = entry.existingConfig.getSubtractedCategory();
 
 						for (Iterator itp = config.getMethodPluginSelection()
 								.iterator(); itp.hasNext();) {
@@ -129,9 +131,29 @@ public class ConfigSpecsImportManager {
 						for (Iterator itp = config.getProcessViews().iterator(); itp
 								.hasNext();) {
 							Object e = itp.next();
-							if (!pkgs.contains(e)) {
+							if (!views.contains(e)) {
 								views.add(e);
 							}
+						}
+						
+						for (Iterator itp = config.getAddedCategory().iterator(); itp
+								.hasNext();) {
+							Object e = itp.next();
+							if (!added.contains(e)) {
+								added.add(e);
+							}
+						}
+						
+						for (Iterator itp = config.getSubtractedCategory()
+								.iterator(); itp.hasNext();) {
+							Object e = itp.next();
+							if (!substracted.contains(e)) {
+								substracted.add(e);
+							}
+						}
+						
+						if (config.getDefaultView() != null && config.getDefaultView() != entry.existingConfig.getDefaultView()) {
+							entry.existingConfig.setDefaultView(config.getDefaultView());
 						}
 						
 						setMepFeatureValue(
