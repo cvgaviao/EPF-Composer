@@ -329,7 +329,7 @@ public class LibraryEditUtil {
 		return false;
 	}
 	
-	public Map<EReference, EReference> getGuidanceRefMap(EClass cls) {
+	public synchronized Map<EReference, EReference> getGuidanceRefMap(EClass cls) {
 		if (cls == up.getTask()) {
 			if (taskGuidanceRefMap == null) {
 				taskGuidanceRefMap = buildGuidanceMap(cls, up.getTaskDescriptor());
