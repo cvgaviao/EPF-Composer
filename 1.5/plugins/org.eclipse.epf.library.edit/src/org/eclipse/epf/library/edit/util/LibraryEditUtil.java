@@ -342,9 +342,9 @@ public class LibraryEditUtil {
 			}
 			return roleGuidanceRefMap;
 		}
-		if (cls == up.getWorkProduct()) {
+		if (up.getWorkProduct().isSuperTypeOf(cls)) {
 			if (workproductGuidanceRefMap == null) {
-				workproductGuidanceRefMap = buildGuidanceMap(cls, up.getWorkProductDescriptor());
+				workproductGuidanceRefMap = buildGuidanceMap(up.getWorkProduct(), up.getWorkProductDescriptor());
 			}
 			return workproductGuidanceRefMap;
 		}
