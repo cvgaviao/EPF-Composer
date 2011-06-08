@@ -72,6 +72,10 @@ public final class LibraryEditResources extends NLS {
 	
 	public static String moveDialog_addRefPluginsText;
 
+	public static String moveDialog_addRefPluginsWarningText;
+	
+	public static String moveDialog_addRefPluginsWarningText1;
+	
 	public static String deleteDialog_title;
 
 	public static String errorDialog_title;

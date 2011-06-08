@@ -1940,6 +1940,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 						IUserInteractionHandler.ACTION_CANCEL,
 						},
 						LibraryEditResources.moveDialog_title,
+						LibraryEditResources.moveDialog_addRefPluginsWarningText + "\n\n" + //$NON-NLS-1$ 
 						LibraryEditResources.moveDialog_addRefPluginsText + str, null);
 			 
 				if (ret == IUserInteractionHandler.ACTION_CANCEL) {
@@ -1953,10 +1954,11 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					ownerPlugin.getBases().addAll(refPluginsInfo.refPluginsToAdd);
 					
 				}
-											
+							
+				return true;
 			}
 			
-			pluginForAddingTagetAsBase = getPluginForAddingTagetAsBase();
+			pluginForAddingTagetAsBase = getPluginForAddingTagetAsBase(true);
 			if (pluginForAddingTagetAsBase != null) {
 				String str = " " + pluginForAddingTagetAsBase.getName() + ":";//$NON-NLS-1$ //$NON-NLS-2$
 				str += "\n" + ownerPlugin.getName();//$NON-NLS-1$					
@@ -1966,6 +1968,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 						IUserInteractionHandler.ACTION_CANCEL,
 						},
 						LibraryEditResources.moveDialog_title,
+						LibraryEditResources.moveDialog_addRefPluginsWarningText + "\n\n" + //$NON-NLS-1$ 
 						LibraryEditResources.moveDialog_addRefPluginsText + str, null);
 				if (ret == IUserInteractionHandler.ACTION_CANCEL) {
 					pluginForAddingTagetAsBase = null;
@@ -1983,12 +1986,25 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					
 				}
 				
+				return true;
 			}						
+			
+			if (! refPluginsInfo.refPluginsCircular.isEmpty() || getPluginForAddingTagetAsBase(false) != null) {
+				int ret = uiHandler.selectOne(new int[] {
+						IUserInteractionHandler.ACTION_YES,
+						IUserInteractionHandler.ACTION_CANCEL,
+						},
+						LibraryEditResources.moveDialog_title,
+						LibraryEditResources.moveDialog_addRefPluginsWarningText1, null);
+				if (ret == IUserInteractionHandler.ACTION_CANCEL) {
+					return false;					
+				} 
+			}
 			
 			return true;
 		}
 
-		private MethodPlugin getPluginForAddingTagetAsBase() {
+		private MethodPlugin getPluginForAddingTagetAsBase(boolean testCircular) {
 			MethodPlugin srcPlugin = null;
 			Set<MethodElement> moveSet = new HashSet<MethodElement>();
 			for (Object obj : moveList) {
@@ -2005,7 +2021,7 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			}
 
 			Map<String, Boolean> map = new HashMap<String, Boolean>();
-			if (Misc.isBaseOf(ownerPlugin, srcPlugin, map) || (Misc.isBaseOf(srcPlugin, ownerPlugin, map))) {
+			if (Misc.isBaseOf(ownerPlugin, srcPlugin, map) || testCircular && (Misc.isBaseOf(srcPlugin, ownerPlugin, map))) {
 				return null;
 			}
 			
