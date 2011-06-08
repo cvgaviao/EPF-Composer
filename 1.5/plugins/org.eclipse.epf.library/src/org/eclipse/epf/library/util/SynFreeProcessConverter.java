@@ -424,6 +424,9 @@ public class SynFreeProcessConverter {
 
 		Map<EReference, EReference> refMap = LibraryEditUtil.getInstance()
 				.getGuidanceRefMap(getLinkedElementType(des));
+		if (refMap == null) {
+			return;
+		}
 
 		Set<Guidance> elementGuidanceSet = new HashSet<Guidance>();
 		Set<Guidance> descripGuidanceSet = new HashSet<Guidance>();

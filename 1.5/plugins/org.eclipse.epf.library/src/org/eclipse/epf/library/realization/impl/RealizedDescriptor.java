@@ -377,6 +377,10 @@ public class RealizedDescriptor extends RealizedElement implements
 
 		Map<EReference, EReference> refMap = LibraryEditUtil.getInstance()
 				.getGuidanceRefMap(getLinkedElementType());
+		
+		if (refMap == null) {
+			return resultList;
+		}
 
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(getConfig());

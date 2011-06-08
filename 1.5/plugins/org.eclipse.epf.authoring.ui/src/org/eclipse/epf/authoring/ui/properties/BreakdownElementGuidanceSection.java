@@ -320,6 +320,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							Map<EReference, EReference> refMap = LibraryEditUtil.getInstance().getGuidanceRefMap(
 											linkedElement.eClass());
 							Set<Object> set = new HashSet<Object>();
+							if (refMap != null) {
 							for (EReference ref : refMap.keySet()) {
 								Object value = linkedElement.eGet(ref);
 								if (value instanceof List) {
@@ -329,6 +330,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 								if (locals != null && !locals.isEmpty()) {
 									set.addAll(locals);
 								}
+							}
 							}
 							elements.retainAll(set);
 						}
