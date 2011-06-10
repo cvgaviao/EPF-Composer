@@ -55,7 +55,7 @@ public class XmlExportImportTest0001 extends ExportImportTestMethodBase {
 		
 		tcs[5] = service.newTestCommand(TCCompareToLibrary.class);
 		tcs[5].setAttribute(TestCommand.AT_GoldenLibFolderName, "Paris");		
-		tcs[5].setAttribute(TestCommand.AT_DiffCount, "25");
+		tcs[5].setAttribute(TestCommand.AT_DiffCount, "24");
 		tcs[5].setAttribute(TestCommand.AT_ElementCount, "370");
 		tcs[5].setAttribute(TestCommand.AT_UseNameAsId, "true");
 		
