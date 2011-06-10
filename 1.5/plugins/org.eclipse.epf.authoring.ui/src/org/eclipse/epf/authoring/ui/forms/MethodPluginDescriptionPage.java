@@ -587,11 +587,12 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 	}
 
 	protected boolean removeAllReferences(MethodPlugin unCheckedPlugin) {
-		removeAllReferences_(unCheckedPlugin);		
+//		removeAllReferences_old(unCheckedPlugin);		
 		return true;
 	}
 	
-	private boolean removeAllReferences_(MethodPlugin unCheckedPlugin) {
+	//no longer called anywhere: keep the code for reference
+	protected boolean removeAllReferences_old(MethodPlugin unCheckedPlugin) {
 		ArrayList<MethodPlugin> removedBases = new ArrayList<MethodPlugin>();
 		removedBases.add(unCheckedPlugin);
 		
