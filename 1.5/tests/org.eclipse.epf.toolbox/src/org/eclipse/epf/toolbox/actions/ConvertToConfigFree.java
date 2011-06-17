@@ -15,6 +15,7 @@ import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.toolbox.ToolboxPlugin;
 import org.eclipse.epf.toolbox.libutil.LibUtil;
+import org.eclipse.epf.toolbox.utils.DebugTest;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.jface.action.IAction;
@@ -41,7 +42,10 @@ public class ConvertToConfigFree implements IWorkbenchWindowActionDelegate {
 	}
 
 	public void run(IAction action) {
-		
+		if (DebugTest.debugTestMode) {
+			DebugTest.run(action);
+			return;
+		}
 		boolean oldValue = RefreshJob.getInstance().isEnabled();
 		RefreshJob.getInstance().setEnabled(false);
 		
