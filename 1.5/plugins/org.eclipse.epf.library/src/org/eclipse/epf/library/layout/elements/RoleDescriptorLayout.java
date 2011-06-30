@@ -108,7 +108,7 @@ public class RoleDescriptorLayout extends DescriptorLayout {
 				//RoleDescriptor r = (RoleDescriptor)tl.getFeatureValue(UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy(), null, false);
 				List rList = (List)tl.getFeatureValue(UmaPackage.eINSTANCE.getTaskDescriptor_PerformedPrimarilyBy(), null, false);
 				//if ( r == this.element ) {
-				if ( rList.contains(this.element) ) {
+				if (rList != null && rList.contains(this.element) ) {
 					List value = (List)tl.getFeatureValue(feature, null, false);
 					if ( value != null && value.size() > 0 ) {
 						for ( Iterator itr = value.iterator(); itr.hasNext(); ) {
