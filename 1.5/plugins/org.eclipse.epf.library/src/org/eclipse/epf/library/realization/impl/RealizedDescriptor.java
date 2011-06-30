@@ -69,7 +69,12 @@ public class RealizedDescriptor extends RealizedElement implements
 
 			Object value = null;
 			if (getDescriptor().getPresentation() != null) {
-				value = getDescriptor().getPresentation().eGet(feature);
+				try {
+					value = getDescriptor().getPresentation().eGet(feature);
+				} catch (Throwable e) {
+					LibraryPlugin.getDefault().getLogger().logError(e);
+					return null;
+				}
 			}
 			
 			if (getLinkedElement() == null || getLinkedElement().getPresentation() == null) {
