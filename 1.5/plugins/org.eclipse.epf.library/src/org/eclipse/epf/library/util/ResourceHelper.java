@@ -1298,6 +1298,9 @@ public class ResourceHelper {
 						if ( isExternalLink(url) ) {
 							// decode for external link 
 							url = XMLUtil.unescape(NetUtil.decodedFileUrl(url));
+							if (NetUtil.isRawUrl(url)) {
+								url = restore(url);
+							}
 						} else {
 							url = resolveUrl(url, contentPath, backPath);
 						}
