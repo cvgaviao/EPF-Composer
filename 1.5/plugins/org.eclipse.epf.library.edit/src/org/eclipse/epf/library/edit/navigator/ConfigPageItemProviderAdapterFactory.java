@@ -22,10 +22,17 @@ import org.eclipse.epf.library.edit.util.ModelStructure;
 public class ConfigPageItemProviderAdapterFactory extends
 		ItemProviderAdapterFactory {
 
-	
+	@Override
 	public Adapter createMethodPluginAdapter() {
 		ConfigPageMethodPluginItemProvider adapter = new ConfigPageMethodPluginItemProvider(this);
 		adapter.setModelStructure(ModelStructure.DEFAULT);
+		return adapter;
+	}
+	
+	@Override
+	public Adapter createContentPackageAdapter() {
+		Adapter adapter = new ConfigContentPackageItemProvider(this);
+		// adapters.add(adapter);
 		return adapter;
 	}
 }

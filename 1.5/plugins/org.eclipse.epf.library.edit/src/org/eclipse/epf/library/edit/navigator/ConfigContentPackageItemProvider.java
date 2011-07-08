@@ -11,12 +11,17 @@ import org.eclipse.epf.library.edit.element.ContentPackageItemProvider;
 public class ConfigContentPackageItemProvider extends
 		ContentPackageItemProvider {
 	
+	public static boolean oldCode = true;
+	
 	public ConfigContentPackageItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 	
 	@Override
 	public Collection getChildren(Object object) {
+		if (oldCode) {
+			return super.getChildren(object);
+		}
 		List result = new ArrayList();
 		result.add(new LeafElementsItemProvider(getAdapterFactory()));		
 		Collection children = super.getChildren(object);		
@@ -24,7 +29,7 @@ public class ConfigContentPackageItemProvider extends
 		return result;
 	}
 	
-	public static class LeafElementsItemProvider extends ConfigContentPackageItemProvider {
+	public static class LeafElementsItemProvider extends ConfigContentPackageItemProvider {		
 		public LeafElementsItemProvider(AdapterFactory adapterFactory) {
 			super(adapterFactory);
 		}
