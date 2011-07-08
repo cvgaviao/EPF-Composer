@@ -61,6 +61,7 @@ public abstract class AbstractLibraryTestCase extends TestCase {
 
 	protected MethodLibrary openLibrary() throws LibraryServiceException {
 		String libPath = System.getProperty("epf.library");
+		libPath = "E:\\Root\\a_Rmc7.5.1-post\\temp\\lib.7.5.1-2.prac-1";
 		if(libPath == null) {
 			String path = TestsPlugin.getDefault().getInstallPath() + File.separator + "Libraries" + File.separator + "OpenUP";
 			if(new File(path, MultiFileSaveUtil.DEFAULT_LIBRARY_MODEL_FILENAME).exists()) {
