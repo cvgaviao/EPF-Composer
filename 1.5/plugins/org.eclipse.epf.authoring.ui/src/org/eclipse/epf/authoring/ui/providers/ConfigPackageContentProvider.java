@@ -25,6 +25,7 @@ import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
 import org.eclipse.epf.library.edit.navigator.MethodPackagesItemProvider;
 import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
 import org.eclipse.epf.library.edit.navigator.ProcessesItemProvider;
+import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.CustomCategory;
@@ -81,6 +82,7 @@ public class ConfigPackageContentProvider extends AdapterFactoryContentProvider 
 		return (e instanceof ContentItemProvider
 				|| e instanceof ProcessesItemProvider || e instanceof MethodPackagesItemProvider ||
 				e instanceof PluginUIPackagesItemProvider || e instanceof ConfigPageCategoriesItemProvider
+				|| e instanceof LeafElementsItemProvider
 		);
 	}
 

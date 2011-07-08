@@ -14,8 +14,10 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementDependencyError;
+import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -69,6 +71,9 @@ public class ConfigPackageLabelProvider extends LabelProvider {
 	 * {@link IItemLabelProvider#getImage IItemLabelProvider.getImage}
 	 */
 	public Image getImage(Object object) {
+		if (object instanceof LeafElementsItemProvider) {
+			return null;
+		}
 		if (closure != null) {
 
 			ElementDependencyError error = null;
@@ -102,6 +107,9 @@ public class ConfigPackageLabelProvider extends LabelProvider {
 	 * {@link IItemLabelProvider#getText IItemLabelProvider.getText}
 	 */
 	public String getText(Object object) {
+		if (object instanceof LeafElementsItemProvider) {
+			return AuthoringUIResources.LeafElementsNode_text;
+		}
 		if (object instanceof ProcessComponent) {
 			Process proc = (Process) ((ProcessComponent) object)
 					.getProcess();

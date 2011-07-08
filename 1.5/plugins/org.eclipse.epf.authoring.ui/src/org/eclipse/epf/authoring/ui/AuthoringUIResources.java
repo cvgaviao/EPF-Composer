@@ -2196,6 +2196,8 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String ProcessEditor_Action_delete_WPDD_text;
 	
+	public static String LeafElementsNode_text;
+	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);
 	}
