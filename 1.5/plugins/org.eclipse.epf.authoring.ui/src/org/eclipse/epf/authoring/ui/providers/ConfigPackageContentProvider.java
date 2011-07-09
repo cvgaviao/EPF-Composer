@@ -28,6 +28,7 @@ import org.eclipse.epf.library.edit.navigator.ProcessesItemProvider;
 import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.library.services.SafeUpdateController;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
@@ -67,6 +68,17 @@ public class ConfigPackageContentProvider extends AdapterFactoryContentProvider 
 				.getChildren(parentElement));
 		return items;
 	}
+		
+	public Object getLeafElementsNode(Object parentElement) {
+		if (! (parentElement instanceof ContentPackage)) {
+			return null;
+		}
+		Object[] children = getChildren(parentElement);
+		if (children == null || children.length == 0) {
+			return null;
+		}
+		return children[0];
+	}	
 
 	/**
 	 * @see org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider#getElements(java.lang.Object)
