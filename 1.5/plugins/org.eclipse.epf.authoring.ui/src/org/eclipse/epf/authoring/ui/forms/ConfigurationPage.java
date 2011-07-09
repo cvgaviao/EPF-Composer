@@ -443,6 +443,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 					if (!contProvider.hasChildren(element)) {
 						viewer.setChecked(element, true);
 					}
+					Object leaf = contProvider.getLeafElementsNode(element);
+					if (leaf != null) {
+						viewer.setChecked(leaf, true);
+					}
 				} catch (Exception e) {
 				}
 			}
