@@ -30,12 +30,15 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
+import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.DebugUtil;
+import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.DisciplineGrouping;
@@ -85,6 +88,9 @@ public class ConfigurationData {
 	private boolean enableUpdate = true;
 	private SupportingElementData supportingElementData;
 	
+	private Set<ContentPackage> elementsUnslectedPkgs;
+	private boolean elementsUnslectedPkgsModified = false;
+	
 	public static ConfigurationData newConfigurationData(MethodConfiguration config) {
 		Object obj = ExtensionHelper.create(ConfigurationData.class, config);
 		if (obj instanceof ConfigurationData) {
@@ -95,6 +101,7 @@ public class ConfigurationData {
 	
 	public ConfigurationData(MethodConfiguration config) {
 		this.config = config;
+		elementsUnslectedPkgs = MethodConfigurationPropUtil.getMethodConfigurationPropUtil().getElementsUnslectedPkgs(config);
 		
 		configListener = new AdapterImpl() {
 			public void notifyChanged(Notification msg) {
@@ -608,6 +615,10 @@ public class ConfigurationData {
 	}
 	
 	public void dispose() {
+		if (elementsUnslectedPkgs != null) {
+			elementsUnslectedPkgs.clear();
+			elementsUnslectedPkgs = null;
+		}
 		config.eAdapters().remove(configListener);
 		if (libraryManager != null) {
 			libraryManager.removeListener(libListener);
@@ -675,6 +686,34 @@ public class ConfigurationData {
 			}
 		}
 		return false;
+	}
+	
+	//Handle leaf elements node APIs
+	public boolean elementsUnslected(ContentPackage pkg) {
+		return elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.contains(pkg);
+	}
+	
+	public void addToElementsUnslectedPkgs(ContentPackage pkg) {
+		boolean b = elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.add(pkg);
+		if (b) {
+			elementsUnslectedPkgsModified = true;
+		}
+	}
+	
+	public void removeFromElementsUnslectedPkgs(ContentPackage pkg) {
+		boolean b = elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.remove(pkg);
+		if (b) {
+			elementsUnslectedPkgsModified = true;
+		}
+	}
+	
+	public void storeElementsUnslectedPkgsProp(IActionManager actionManager) {
+		if (! elementsUnslectedPkgsModified) {
+			return;
+		}
+		MethodConfigurationPropUtil propUtil = MethodConfigurationPropUtil.getMethodConfigurationPropUtil(actionManager);
+		propUtil.setElementsUnslectedPkgsProp(config, elementsUnslectedPkgs);
+		elementsUnslectedPkgsModified = false;
 	}
 	
 }
