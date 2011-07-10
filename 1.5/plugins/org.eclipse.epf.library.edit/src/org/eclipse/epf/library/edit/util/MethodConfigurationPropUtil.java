@@ -2,12 +2,14 @@ package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
 
 
 public class MethodConfigurationPropUtil extends MethodElementPropUtil {
@@ -42,6 +44,28 @@ public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 			}
 		}
 		setStringValue(config, Config_elementsUnslectedPkgs, value);		
+	}
+	
+	public Set<ContentPackage> getElementsUnslectedPkgs(
+			MethodConfiguration config) {
+		Set<ContentPackage> pkgs = new HashSet<ContentPackage>();
+
+		String value = getStringValue(config, Config_elementsUnslectedPkgs);
+		String[] guids = value.split(infoSeperator);
+
+		if (guids == null || guids.length == 0) {
+			return pkgs;
+		}
+
+		for (int i = 0; i < guids.length; i++) {
+			MethodElement element = LibraryEditUtil.getInstance()
+					.getMethodElement(guids[i]);
+			if (element instanceof ContentPackage) {
+				pkgs.add((ContentPackage) element);
+			}
+		}
+
+		return pkgs;
 	}
 	
 }
