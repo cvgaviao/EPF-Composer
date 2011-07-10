@@ -17,10 +17,16 @@ public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 	public static final String Config_elementsUnslectedPkgs = "config_elementsUnslectedPkgs"; //$NON-NLS-1$
 	
 	private static MethodConfigurationPropUtil methodConfigurationPropUtil = new MethodConfigurationPropUtil();
+
 	public static MethodConfigurationPropUtil getMethodConfigurationPropUtil() {
 		return methodConfigurationPropUtil;
 	}
 
+	public static MethodConfigurationPropUtil getMethodConfigurationPropUtil(
+			IActionManager actionManager) {
+		return new MethodConfigurationPropUtil(actionManager);
+	}
+	
 	protected MethodConfigurationPropUtil() {		
 	}
 	
