@@ -57,7 +57,7 @@ public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 		Set<ContentPackage> pkgs = new HashSet<ContentPackage>();
 
 		String value = getStringValue(config, Config_elementsUnslectedPkgs);
-		String[] guids = value.split(infoSeperator);
+		String[] guids = value == null ? null : value.split(infoSeperator);
 
 		if (guids == null || guids.length == 0) {
 			return pkgs;
