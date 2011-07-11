@@ -7,6 +7,10 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.epf.library.edit.element.ContentPackageItemProvider;
+import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.uma.ContentPackage;
+import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class ConfigContentPackageItemProvider extends
 		ContentPackageItemProvider {
@@ -23,8 +27,18 @@ public class ConfigContentPackageItemProvider extends
 			return super.getChildren(object);
 		}
 		List result = new ArrayList();
-		result.add(new LeafElementsItemProvider(getAdapterFactory()));		
-		Collection children = super.getChildren(object);		
+		if (object instanceof ContentPackage) {
+			ContentPackage pkg = (ContentPackage) object;
+			MethodPlugin plugin = UmaUtil.getMethodPlugin(pkg);
+			if (plugin != null && !TngUtil.getAllSystemPackages(plugin).contains(pkg)) {
+				result.add(new LeafElementsItemProvider(getAdapterFactory()));
+			}
+		}		
+		
+		Collection children = super.getChildren(object);
+		if (result.isEmpty()) {
+			return children;
+		}
 		result.addAll(children);
 		return result;
 	}
