@@ -69,7 +69,7 @@ public class ConfigPackageContentProvider extends AdapterFactoryContentProvider 
 		return items;
 	}
 		
-	public Object getLeafElementsNode(Object parentElement) {
+	public LeafElementsItemProvider getLeafElementsNode(Object parentElement) {
 		if (! (parentElement instanceof ContentPackage)) {
 			return null;
 		}
@@ -77,7 +77,7 @@ public class ConfigPackageContentProvider extends AdapterFactoryContentProvider 
 		if (children == null || children.length == 0) {
 			return null;
 		}
-		return children[0];
+		return children[0] instanceof LeafElementsItemProvider ? (LeafElementsItemProvider) children[0] : null;
 	}	
 
 	/**
