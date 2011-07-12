@@ -31,6 +31,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -710,6 +711,9 @@ public class ConfigurationData {
 	
 	
 	public void storeElementsUnslectedPkgsProp(IActionManager actionManager, Set<ContentPackage> updatedElementsUnslectedPkgs) {
+		if (ConfigContentPackageItemProvider.oldCode) {
+			return;
+		}
 		if (! elementsUnslectedPkgsModified(updatedElementsUnslectedPkgs)) {
 			return;
 		}
