@@ -89,7 +89,6 @@ public class ConfigurationData {
 	private SupportingElementData supportingElementData;
 	
 	private Set<ContentPackage> elementsUnslectedPkgs;
-	private boolean elementsUnslectedPkgsModified = false;
 	
 	public static ConfigurationData newConfigurationData(MethodConfiguration config) {
 		Object obj = ExtensionHelper.create(ConfigurationData.class, config);
@@ -693,27 +692,30 @@ public class ConfigurationData {
 		return elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.contains(pkg);
 	}
 	
-	public void addToElementsUnslectedPkgs(ContentPackage pkg) {
-		boolean b = elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.add(pkg);
-		if (b) {
-			elementsUnslectedPkgsModified = true;
+	private boolean elementsUnslectedPkgsModified(Set<ContentPackage> updatedElementsUnslectedPkgs) {
+		boolean updatedIsEmpty = updatedElementsUnslectedPkgs == null || updatedElementsUnslectedPkgs.isEmpty();
+		if (elementsUnslectedPkgs == null || elementsUnslectedPkgs.isEmpty()) {
+			return ! updatedIsEmpty;
 		}
+		if (updatedIsEmpty) {
+			return true;
+		}
+		for (ContentPackage pkg : updatedElementsUnslectedPkgs) {
+			if (! (elementsUnslected(pkg))) {
+				return true;
+			}
+		}		
+		return false;
 	}
 	
-	public void removeFromElementsUnslectedPkgs(ContentPackage pkg) {
-		boolean b = elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.remove(pkg);
-		if (b) {
-			elementsUnslectedPkgsModified = true;
-		}
-	}
 	
-	public void storeElementsUnslectedPkgsProp(IActionManager actionManager) {
-		if (! elementsUnslectedPkgsModified) {
+	public void storeElementsUnslectedPkgsProp(IActionManager actionManager, Set<ContentPackage> updatedElementsUnslectedPkgs) {
+		if (! elementsUnslectedPkgsModified(updatedElementsUnslectedPkgs)) {
 			return;
 		}
+		elementsUnslectedPkgs = updatedElementsUnslectedPkgs;
 		MethodConfigurationPropUtil propUtil = MethodConfigurationPropUtil.getMethodConfigurationPropUtil(actionManager);
 		propUtil.setElementsUnslectedPkgsProp(config, elementsUnslectedPkgs);
-		elementsUnslectedPkgsModified = false;
 	}
 	
 }
