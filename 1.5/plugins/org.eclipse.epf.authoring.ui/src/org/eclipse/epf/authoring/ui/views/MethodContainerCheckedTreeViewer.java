@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.epf.authoring.ui.providers.ConfigPackageContentProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
@@ -301,14 +302,15 @@ public class MethodContainerCheckedTreeViewer extends
 		}
 	}
 		
-    public Set<ContentPackage> getElementsUnslectedPkgs(Collection<MethodPackage> pkgsInConfig) {
+    public Set<ContentPackage> getElementsUnslectedPkgs(Collection<MethodPackage> pkgsInConfig, ConfigPackageContentProvider provider) {
     	Set<ContentPackage> elementsUnslectedPkgs = new HashSet<ContentPackage>();
     	for (MethodPackage pkg : pkgsInConfig) {
     		if (pkg instanceof ContentPackage) {
-            Widget item = findItem(pkg);            
+    			Object leaf = provider.getLeafElementsNode(pkg);
+            Widget item = findItem(leaf);            
 				if (item instanceof TreeItem) {
 					TreeItem treeItem = (TreeItem) item;
-					if (treeItem.getGrayed()) {
+					if (! treeItem.getChecked()) {
 						elementsUnslectedPkgs.add((ContentPackage) pkg);
 					}
 				}
