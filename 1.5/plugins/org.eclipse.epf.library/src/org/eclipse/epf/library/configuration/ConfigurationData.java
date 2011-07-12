@@ -577,7 +577,7 @@ public class ConfigurationData {
 			}
 
 			// if package not selected, return false
-			if ((pkg == null) || !pkgs.contains(pkg)) {
+			if ((pkg == null) || !pkgs.contains(pkg) || (pkg instanceof MethodPackage && elementsUnslected((MethodPackage) pkg))) {
 				return false;
 			}
 
@@ -689,7 +689,10 @@ public class ConfigurationData {
 	}
 	
 	//Handle leaf elements node APIs
-	public boolean elementsUnslected(ContentPackage pkg) {
+	public boolean elementsUnslected(MethodPackage pkg) {
+		if (ConfigContentPackageItemProvider.oldCode) {
+			return false;
+		}
 		return elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.contains(pkg);
 	}
 	
