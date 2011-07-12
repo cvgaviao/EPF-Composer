@@ -3,7 +3,9 @@ package org.eclipse.epf.library.edit.navigator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.epf.library.edit.element.ContentPackageItemProvider;
@@ -21,26 +23,33 @@ public class ConfigContentPackageItemProvider extends
 		super(adapterFactory);
 	}
 	
+	private Map<ContentPackage, LeafElementsItemProvider> map = new HashMap<ContentPackage, LeafElementsItemProvider>();
+	
 	@Override
 	public Collection getChildren(Object object) {
 		if (oldCode) {
 			return super.getChildren(object);
 		}
-		List result = new ArrayList();
+		List modifiedChildren = new ArrayList();
 		if (object instanceof ContentPackage) {
 			ContentPackage pkg = (ContentPackage) object;
 			MethodPlugin plugin = UmaUtil.getMethodPlugin(pkg);
 			if (plugin != null && !TngUtil.getAllSystemPackages(plugin).contains(pkg)) {
-				result.add(new LeafElementsItemProvider(getAdapterFactory()));
+				LeafElementsItemProvider p = map.get(pkg);
+				if (p == null) {
+					p = new LeafElementsItemProvider(getAdapterFactory());
+					map.put(pkg, p);
+				}
+				modifiedChildren.add(p);
 			}
 		}		
 		
 		Collection children = super.getChildren(object);
-		if (result.isEmpty()) {
+		if (modifiedChildren.isEmpty()) {
 			return children;
 		}
-		result.addAll(children);
-		return result;
+		modifiedChildren.addAll(children);
+		return modifiedChildren;
 	}
 	
 	public static class LeafElementsItemProvider extends ConfigContentPackageItemProvider {		
@@ -54,5 +63,14 @@ public class ConfigContentPackageItemProvider extends
 		}
 		
 	}
+	
+	public void dispose() {
+		if (map != null) {
+			map.clear();
+			map = null;
+		}
+		super.dispose();
+	}
+
 	
 }
