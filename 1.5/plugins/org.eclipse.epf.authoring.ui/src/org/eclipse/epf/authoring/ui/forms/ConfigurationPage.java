@@ -58,6 +58,7 @@ import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider;
 import org.eclipse.epf.library.edit.navigator.ConfigPageCategoriesItemProvider;
 import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
 import org.eclipse.epf.library.edit.navigator.MethodPackagesItemProvider;
+import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
@@ -176,6 +177,19 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 						// display selected element's description
 						String briefDesc = ((MethodElement) selectedElement).getBriefDescription();
 						elemDespContentText.setText(briefDesc != null ? briefDesc : ""); //$NON-NLS-1$
+					} else if (selectedElement instanceof LeafElementsItemProvider) {
+						LeafElementsItemProvider leafProvider = (LeafElementsItemProvider) selectedElement;
+						//Temopary demo only
+						String briefDesc = "Elements: ";
+						boolean b = true;
+						for (MethodElement e : leafProvider.getElements()) {
+							if (!b) {
+								briefDesc += "; ";
+							}
+							b = false;
+							briefDesc += e.getName();
+						}
+						elemDespContentText.setText(briefDesc); //$NON-NLS-1$
 					}
 				}
 			});

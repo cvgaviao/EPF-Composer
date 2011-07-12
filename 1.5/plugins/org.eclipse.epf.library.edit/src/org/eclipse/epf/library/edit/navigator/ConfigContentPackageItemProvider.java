@@ -11,13 +11,15 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.epf.library.edit.element.ContentPackageItemProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentPackage;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 public class ConfigContentPackageItemProvider extends
 		ContentPackageItemProvider {
 	
-	public static boolean oldCode = true;
+	public static boolean oldCode = false;
 	
 	public ConfigContentPackageItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
@@ -37,7 +39,7 @@ public class ConfigContentPackageItemProvider extends
 			if (plugin != null && !TngUtil.getAllSystemPackages(plugin).contains(pkg)) {
 				LeafElementsItemProvider p = map.get(pkg);
 				if (p == null) {
-					p = new LeafElementsItemProvider(getAdapterFactory());
+					p = new LeafElementsItemProvider(pkg, getAdapterFactory());
 					map.put(pkg, p);
 				}
 				modifiedChildren.add(p);
@@ -52,14 +54,28 @@ public class ConfigContentPackageItemProvider extends
 		return modifiedChildren;
 	}
 	
-	public static class LeafElementsItemProvider extends ConfigContentPackageItemProvider {		
-		public LeafElementsItemProvider(AdapterFactory adapterFactory) {
+	public static class LeafElementsItemProvider extends ConfigContentPackageItemProvider {
+		private MethodPackage parentPackage;
+
+		public LeafElementsItemProvider(MethodPackage parentPackage, AdapterFactory adapterFactory) {
 			super(adapterFactory);
+			this.parentPackage = parentPackage;
 		}
 		
 		@Override
 		public Collection getChildren(Object object) {		
 			return Collections.EMPTY_LIST;		
+		}
+		
+		public MethodPackage getParentPackage() {
+			return parentPackage;
+		}
+		
+		public List<? extends MethodElement> getElements() {
+			if (parentPackage instanceof ContentPackage) {
+				return ((ContentPackage) parentPackage).getContentElements();
+			}			
+			return Collections.EMPTY_LIST;
 		}
 		
 	}
@@ -69,6 +85,7 @@ public class ConfigContentPackageItemProvider extends
 			map.clear();
 			map = null;
 		}
+		parent = null;
 		super.dispose();
 	}
 
