@@ -54,6 +54,7 @@ import org.eclipse.epf.library.edit.PluginUIPackageContext;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
+import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider;
 import org.eclipse.epf.library.edit.navigator.ConfigPageCategoriesItemProvider;
 import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
 import org.eclipse.epf.library.edit.navigator.MethodPackagesItemProvider;
@@ -66,6 +67,7 @@ import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.ui.util.SWTUtil;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -428,13 +430,29 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	 */
 	private void initializeConfigViewerSelection(ContainerCheckedTreeViewer viewer,
 			List<MethodPackage> packages, List<MethodPlugin> plugins) {
-
+		boolean oldCode = ConfigContentPackageItemProvider.oldCode;
+		
 		// We need to do following 2 lines because viewer.setChecked doesn't
 		// work correctly
 		// for content packages if viewer setCheckedElements is not run before
 		// Somehow setCheckedElements initializes something...
 		// for process package viwer.setChecked works fine.
-		viewer.setCheckedElements(packages.toArray());
+		if (oldCode) {
+			viewer.setCheckedElements(packages.toArray());
+		} else {
+			List pksWithLeafs = new ArrayList();
+			for (MethodPackage element : packages) {
+				pksWithLeafs.add(element);
+				try {
+					Object leaf = contProvider.getLeafElementsNode(element);
+					if (leaf != null) {
+						pksWithLeafs.add(leaf);
+					}
+				} catch (Exception e) {
+				}
+			}
+			viewer.setCheckedElements(pksWithLeafs.toArray());
+		}
 		viewer.setCheckedElements((new ArrayList()).toArray());
 
 		if (!packages.isEmpty()) {
@@ -443,9 +461,16 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 					if (!contProvider.hasChildren(element)) {
 						viewer.setChecked(element, true);
 					}
-					Object leaf = contProvider.getLeafElementsNode(element);
-					if (leaf != null) {
-						viewer.setChecked(leaf, true);
+					if (!oldCode) {
+//						System.out.println("LD> element: " + element);
+						Object leaf = contProvider.getLeafElementsNode(element);
+						if (leaf != null) {
+							if (element instanceof ContentPackage
+									&& !getConfigData().elementsUnslected(
+											(ContentPackage) element)) {
+								viewer.setChecked(leaf, true);
+							}
+						}
 					}
 				} catch (Exception e) {
 				}
@@ -1020,20 +1045,22 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 
 	}
 
+	private ConfigurationData getConfigData() {
+		ConfigurationData configData = LibraryService.getInstance()
+		.getConfigurationManager(config)
+				.getConfigurationData();		
+		return configData;
+	}
+	
 	/**
 	 * Save configuration
 	 * @return
 	 * 		True if configuration is save successfully, false otherwise
 	 */
-	public boolean saveConfiguration() {
-		ConfigurationData configData = LibraryService.getInstance()
-							.getConfigurationManager(config)
-									.getConfigurationData();
-		
-		configData.setEnableUpdate(false);
+	public boolean saveConfiguration() {	
+		getConfigData().setEnableUpdate(false);
 		boolean ret = doSaveConfiguration();
-		configData.setEnableUpdate(true);
-
+		getConfigData().setEnableUpdate(true);
 		return ret;
 	}
 	
@@ -1047,6 +1074,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	    	
 	    	Set<MethodPackage> newPackages = getCheckedMethodPackages(configViewer.getCheckedElements());
 	    	Set<MethodPlugin> newPlugins = getCheckedMethodPlugins(configViewer.getCheckedElements());
+	    	Set<ContentPackage> elementsUnslectedPkgs = configViewer.getElementsUnslectedPkgs(newPackages, contProvider);
 	    	
 	    	// set categories checked for plugins selected
 	    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>();
@@ -1068,8 +1096,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			if (ConfigurationUtil.addCollToMethodPluginList(actionMgr, config, newPlugins) == false)
 				return false;
 			if (ConfigurationUtil.addCollToMethodPackageList(actionMgr, config, newPackages) == false)
-				return false;
-	
+				return false;			
+			getConfigData().storeElementsUnslectedPkgsProp(actionMgr, elementsUnslectedPkgs);
+			
 	    	// validate before save
 			LibraryUtil.validateMethodConfiguration(actionMgr, config);
 
