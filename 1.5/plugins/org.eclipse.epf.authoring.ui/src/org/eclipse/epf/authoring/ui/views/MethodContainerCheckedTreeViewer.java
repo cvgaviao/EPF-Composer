@@ -12,14 +12,18 @@ package org.eclipse.epf.authoring.ui.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -296,5 +300,30 @@ public class MethodContainerCheckedTreeViewer extends
             });
 		}
 	}
+		
+    public Set<ContentPackage> getElementsUnslectedPkgs(Collection<MethodPackage> pkgsInConfig) {
+    	Set<ContentPackage> elementsUnslectedPkgs = new HashSet<ContentPackage>();
+    	for (MethodPackage pkg : pkgsInConfig) {
+    		if (pkg instanceof ContentPackage) {
+            Widget item = findItem(pkg);            
+				if (item instanceof TreeItem) {
+					TreeItem treeItem = (TreeItem) item;
+					if (treeItem.getGrayed()) {
+						elementsUnslectedPkgs.add((ContentPackage) pkg);
+					}
+				}
+    		}
+        }
+        return elementsUnslectedPkgs;
+    }
+    
+    public void debugDump(Collection items, String msg) {
+    	System.out.println("LD> msg : " + msg);						//$NON-NLS-1$	
+    	for (Object item : items) {
+    		System.out.println("LD> item : " + item);				//$NON-NLS-1$	
+    		System.out.println("LD> found: " + findItem(item));		//$NON-NLS-1$	
+    	}
+		System.out.println("");	
+    }
 
 }
