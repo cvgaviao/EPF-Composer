@@ -14,7 +14,9 @@ import org.eclipse.epf.uma.MethodElement;
 
 public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 
-	public static final String Config_elementsUnslectedPkgs = "config_elementsUnslectedPkgs"; //$NON-NLS-1$
+	public static final String Config_elementsUnslectedPkgs = "config_elementsUnslectedPkgs"; 	//$NON-NLS-1$
+	public static final String Config_selectedElements = "config_selectedElements"; 			//$NON-NLS-1$
+	public static final String Config_deselectedElements = "config_deselectedElements"; 		//$NON-NLS-1$	
 	
 	private static MethodConfigurationPropUtil methodConfigurationPropUtil = new MethodConfigurationPropUtil();
 
