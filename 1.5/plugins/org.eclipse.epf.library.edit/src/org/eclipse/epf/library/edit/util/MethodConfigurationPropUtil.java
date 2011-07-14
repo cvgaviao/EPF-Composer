@@ -10,6 +10,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPackage;
 
 
 public class MethodConfigurationPropUtil extends MethodElementPropUtil {
@@ -36,11 +37,11 @@ public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 		super(actionManager);
 	}	
 	
-	public void setElementsUnslectedPkgsProp(MethodConfiguration config, Set<ContentPackage> pkgs) {
+	public void setElementsUnslectedPkgsProp(MethodConfiguration config, Set<MethodPackage> pkgs) {
 		String value = "";	//$NON-NLS-1$
 		List<String> guidList = new ArrayList<String>();
 		if (pkgs != null) {
-			for (ContentPackage pkg : pkgs) {
+			for (MethodPackage pkg : pkgs) {
 				guidList.add(pkg.getGuid());
 			}
 			Collections.sort(guidList);
@@ -54,9 +55,9 @@ public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 		setStringValue(config, Config_elementsUnslectedPkgs, value);		
 	}
 	
-	public Set<ContentPackage> getElementsUnslectedPkgs(
+	public Set<MethodPackage> getElementsUnslectedPkgs(
 			MethodConfiguration config) {
-		Set<ContentPackage> pkgs = new HashSet<ContentPackage>();
+		Set<MethodPackage> pkgs = new HashSet<MethodPackage>();
 
 		String value = getStringValue(config, Config_elementsUnslectedPkgs);
 		String[] guids = value == null ? null : value.split(infoSeperator);
@@ -68,8 +69,8 @@ public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 		for (int i = 0; i < guids.length; i++) {
 			MethodElement element = LibraryEditUtil.getInstance()
 					.getMethodElement(guids[i]);
-			if (element instanceof ContentPackage) {
-				pkgs.add((ContentPackage) element);
+			if (element instanceof MethodPackage) {
+				pkgs.add((MethodPackage) element);
 			}
 		}
 

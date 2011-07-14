@@ -89,7 +89,7 @@ public class ConfigurationData {
 	private boolean enableUpdate = true;
 	private SupportingElementData supportingElementData;
 	
-	private Set<ContentPackage> elementsUnslectedPkgs;
+	private Set<MethodPackage> elementsUnslectedPkgs;
 	
 	public static ConfigurationData newConfigurationData(MethodConfiguration config) {
 		Object obj = ExtensionHelper.create(ConfigurationData.class, config);
@@ -696,7 +696,7 @@ public class ConfigurationData {
 		return elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.contains(pkg);
 	}
 	
-	private boolean elementsUnslectedPkgsModified(Set<ContentPackage> updatedElementsUnslectedPkgs) {
+	private boolean elementsUnslectedPkgsModified(Set<MethodPackage> updatedElementsUnslectedPkgs) {
 		boolean updatedIsEmpty = updatedElementsUnslectedPkgs == null || updatedElementsUnslectedPkgs.isEmpty();
 		if (elementsUnslectedPkgs == null || elementsUnslectedPkgs.isEmpty()) {
 			return ! updatedIsEmpty;
@@ -704,7 +704,7 @@ public class ConfigurationData {
 		if (updatedIsEmpty) {
 			return true;
 		}
-		for (ContentPackage pkg : updatedElementsUnslectedPkgs) {
+		for (MethodPackage pkg : updatedElementsUnslectedPkgs) {
 			if (! (elementsUnslected(pkg))) {
 				return true;
 			}
@@ -713,7 +713,7 @@ public class ConfigurationData {
 	}
 	
 	
-	public void storeElementsUnslectedPkgsProp(IActionManager actionManager, Set<ContentPackage> updatedElementsUnslectedPkgs) {
+	public void storeElementsUnslectedPkgsProp(IActionManager actionManager, Set<MethodPackage> updatedElementsUnslectedPkgs) {
 		if (ConfigContentPackageItemProvider.oldCode) {
 			return;
 		}
