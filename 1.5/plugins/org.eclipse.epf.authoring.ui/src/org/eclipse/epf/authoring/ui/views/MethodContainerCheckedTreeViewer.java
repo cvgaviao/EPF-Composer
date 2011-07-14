@@ -302,8 +302,8 @@ public class MethodContainerCheckedTreeViewer extends
 		}
 	}
 		
-    public Set<ContentPackage> getElementsUnslectedPkgs(Collection<MethodPackage> pkgsInConfig, ConfigPackageContentProvider provider) {
-    	Set<ContentPackage> elementsUnslectedPkgs = new HashSet<ContentPackage>();
+    public Set<MethodPackage> getElementsUnslectedPkgs(Collection<MethodPackage> pkgsInConfig, ConfigPackageContentProvider provider) {
+    	Set<MethodPackage> elementsUnslectedPkgs = new HashSet<MethodPackage>();
     	for (MethodPackage pkg : pkgsInConfig) {
     		if (pkg instanceof ContentPackage) {
     			Object leaf = provider.getLeafElementsNode(pkg);

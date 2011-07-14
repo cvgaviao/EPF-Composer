@@ -1088,7 +1088,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	    	
 	    	Set<MethodPackage> newPackages = getCheckedMethodPackages(configViewer.getCheckedElements());
 	    	Set<MethodPlugin> newPlugins = getCheckedMethodPlugins(configViewer.getCheckedElements());
-	    	Set<ContentPackage> elementsUnslectedPkgs = configViewer.getElementsUnslectedPkgs(newPackages, contProvider);
+	    	Set<MethodPackage> elementsUnslectedPkgs = configViewer.getElementsUnslectedPkgs(newPackages, contProvider);
 	    	
 	    	// set categories checked for plugins selected
 	    	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>();
