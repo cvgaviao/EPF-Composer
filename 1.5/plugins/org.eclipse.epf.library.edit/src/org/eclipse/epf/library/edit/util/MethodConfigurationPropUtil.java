@@ -11,6 +11,7 @@ import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
+import org.eclipse.epf.uma.UmaPackage;
 
 
 public class MethodConfigurationPropUtil extends MethodElementPropUtil {
@@ -35,46 +36,33 @@ public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 	
 	protected MethodConfigurationPropUtil(IActionManager actionManager) {
 		super(actionManager);
-	}	
-	
-	public void setElementsUnslectedPkgsProp(MethodConfiguration config, Set<MethodPackage> pkgs) {
-		String value = "";	//$NON-NLS-1$
-		List<String> guidList = new ArrayList<String>();
-		if (pkgs != null) {
-			for (MethodPackage pkg : pkgs) {
-				guidList.add(pkg.getGuid());
-			}
-			Collections.sort(guidList);
-			for (String guid : guidList) {
-				if (value.length() != 0) {
-					value += infoSeperator;
-				}
-				value += guid;
-			}
-		}
-		setStringValue(config, Config_elementsUnslectedPkgs, value);		
 	}
 	
 	public Set<MethodPackage> getElementsUnslectedPkgs(
 			MethodConfiguration config) {
-		Set<MethodPackage> pkgs = new HashSet<MethodPackage>();
-
-		String value = getStringValue(config, Config_elementsUnslectedPkgs);
-		String[] guids = value == null ? null : value.split(infoSeperator);
-
-		if (guids == null || guids.length == 0) {
-			return pkgs;
-		}
-
-		for (int i = 0; i < guids.length; i++) {
-			MethodElement element = LibraryEditUtil.getInstance()
-					.getMethodElement(guids[i]);
-			if (element instanceof MethodPackage) {
-				pkgs.add((MethodPackage) element);
-			}
-		}
-
-		return pkgs;
+		return (Set<MethodPackage>) getElements(config, Config_elementsUnslectedPkgs, UmaPackage.eINSTANCE.getMethodPackage());
+	}
+	
+	public void setElementsUnslectedPkgsProp(MethodConfiguration config, Set<MethodPackage> pkgs) {
+		setElements(config, Config_elementsUnslectedPkgs, pkgs, UmaPackage.eINSTANCE.getMethodPackage());
+	}
+	
+	public Set<MethodElement> getSelectedElements(
+			MethodConfiguration config) {
+		return (Set<MethodElement>) getElements(config, Config_selectedElements, null);
+	}
+	
+	public void setSelectedElements(MethodConfiguration config, Set<MethodElement> elements) {
+		setElements(config, Config_selectedElements, elements, null);
+	}
+	
+	public Set<MethodElement> getDeselectedElements(
+			MethodConfiguration config) {
+		return (Set<MethodElement>) getElements(config, Config_deselectedElements, null);
+	}
+	
+	public void setDeselectedElements(MethodConfiguration config, Set<MethodElement> elements) {
+		setElements(config, Config_deselectedElements, elements, null);
 	}
 	
 }

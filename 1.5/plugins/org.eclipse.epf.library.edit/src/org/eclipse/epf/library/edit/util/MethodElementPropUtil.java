@@ -2,9 +2,11 @@ package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
@@ -12,6 +14,7 @@ import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
@@ -274,4 +277,56 @@ public class MethodElementPropUtil {
 		return ((WorkProductStateExt) extObj).getAssignedToWorkProducts();
 	}
 	//<- For work product state objects
+	
+	//Get elements stored as guids in the property specified by propName
+	protected Set<? extends MethodElement> getElements(MethodElement owner, String propName, EClass type) {
+		Set<MethodElement> elements = new HashSet<MethodElement>();
+		if (owner == null) {
+			return elements;
+		}
+		
+		String value = getStringValue(owner, propName);
+		String[] guids = value == null ? null : value.split(infoSeperator);
+
+		if (guids == null || guids.length == 0) {
+			return elements;
+		}
+
+		for (int i = 0; i < guids.length; i++) {
+			MethodElement element = LibraryEditUtil.getInstance()
+					.getMethodElement(guids[i]);
+			if (element != null && (type == null || type.isSuperTypeOf(element.eClass()))) {
+				elements.add(element);
+			}
+		}
+
+		return elements;
+
+	}
+	
+	//Store elements as guids in the property specified by propName
+	protected void setElements(MethodElement owner, String propName, Set<? extends MethodElement> elements, EClass type) {
+		if (owner == null) {
+			return;
+		}
+		
+		String value = "";	//$NON-NLS-1$
+		List<String> guidList = new ArrayList<String>();
+		if (elements != null) {
+			for (MethodElement element : elements) {
+				if (element != null && (type == null || type.isSuperTypeOf(element.eClass()))) {
+					guidList.add(element.getGuid());
+				}
+			}
+			Collections.sort(guidList);
+			for (String guid : guidList) {
+				if (value.length() != 0) {
+					value += infoSeperator;
+				}
+				value += guid;
+			}
+		}
+		setStringValue(owner, propName, value);
+	}
+	
 }
