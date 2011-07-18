@@ -39,7 +39,6 @@ import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentCategory;
-import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.DisciplineGrouping;
@@ -476,7 +475,7 @@ public class ConfigurationData {
 			// 2. any element in the added categories should be included
 			// 3. any element not in the selected package or plugin should be excluded.		
 			if ( checkSubtracted) {
-				if (substractedElemMap.containsKey(element.getGuid())) {
+				if (isElementSubtracted(element)) {
 					return false;
 				} else if (element instanceof VariabilityElement){
 					if (contributedBaseInSubstracted((VariabilityElement) element)) {
@@ -485,7 +484,7 @@ public class ConfigurationData {
 				}
 			}
 			
-			if (addedElemMap.containsKey(element.getGuid())) {
+			if (isElementAdded(element)) {
 				return true;
 			}
 			
@@ -655,11 +654,11 @@ public class ConfigurationData {
 		return substractedElemMap.values();
 	}
 	
-	public boolean isElementInSubtractedCategory(MethodElement element) {
+	public boolean isElementSubtracted(MethodElement element) {
 		return substractedElemMap.containsKey(element.getGuid());
 	}
 	
-	public boolean isElementInAddedCategory(MethodElement element) {
+	public boolean isElementAdded(MethodElement element) {
 		return addedElemMap.containsKey(element.getGuid());
 	}
 
@@ -678,7 +677,7 @@ public class ConfigurationData {
 		}
 		updateChanges();
 
-		if (substractedElemMap.containsKey(element.getGuid())) {
+		if (isElementSubtracted(element)) {
 			return true;
 		} else if (element instanceof VariabilityElement) {
 			if (contributedBaseInSubstracted((VariabilityElement) element)) {

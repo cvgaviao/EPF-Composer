@@ -1265,7 +1265,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			return;
 		}
 		
-		if ( closure.getConfigurationManager().getConfigurationData().isElementInSubtractedCategory(element)) {
+		if ( closure.getConfigurationManager().getConfigurationData().isElementSubtracted(element)) {
 			String message = AuthoringUIResources.bind(
 					AuthoringUIResources.configurationPage_QuickfixError_reason1, 
 					(new String[] {LibraryUtil.getTypeName(element)}));
