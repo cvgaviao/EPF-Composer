@@ -12,9 +12,9 @@ import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.uma.Constraint;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
-import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
@@ -26,8 +26,13 @@ public class MethodElementPropUtil {
 	public static final String infoSeperator = "/"; 							//$NON-NLS-1$
 	
 	public static final String CONSTRAINT_WPStates = "constraint_wpStates";		//$NON-NLS-1$
+	public static final String Package_supporting = "pakage_supporting";		//$NON-NLS-1$
 
 	private static MethodElementPropUtil methodElementPropUtil = new MethodElementPropUtil();
+	public static MethodElementPropUtil getMethodElementPropUtil(IActionManager actionManager) {
+		return new MethodElementPropUtil(actionManager);
+	}
+	
 	public static MethodElementPropUtil getMethodElementPropUtil() {
 		return methodElementPropUtil;
 	}
@@ -55,7 +60,16 @@ public class MethodElementPropUtil {
 	
 	public void setStringValue(MethodElement element, String propName, String value) {	
 		setProperty(element, propName, value);
-	}	
+	}
+	
+	public boolean isSupporting(ContentPackage pkg) {
+		 Boolean value = getBooleanValue(pkg, Package_supporting);
+		 return value == null ? false : value.booleanValue();
+	}
+	
+	public void setSupporting(ContentPackage pkg, boolean value) {
+		 setBooleanValue(pkg, Package_supporting, value);
+	}
 	
 	protected Boolean getBooleanValue(MethodElement element, String propName) {		
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(element, propName);

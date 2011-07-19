@@ -853,6 +853,7 @@ public final class AuthoringUIResources extends NLS {
 
 	public static String methodPluginDescriptionPage_lockPluginLabel;
 	public static String methodPluginDescriptionPage_supportingPluginLabel;
+	public static String contentPackageDescriptionPage_supportingPackageLabel;
 
 	public static String methodPluginDescriptionPage_lockPlugin_message;
 

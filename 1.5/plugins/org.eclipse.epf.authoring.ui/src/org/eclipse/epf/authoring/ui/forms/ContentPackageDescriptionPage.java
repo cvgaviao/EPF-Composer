@@ -17,7 +17,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
+import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
@@ -25,6 +30,7 @@ import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -35,7 +41,10 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -63,6 +72,7 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 	private CheckboxTableViewer ctrl_dependency;
 
 	private ContentPackage contentPackage;
+	protected Button supportingCheckbox;
 
 	/**
 	 * Creates a new instance.
@@ -285,6 +295,59 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 		this.generalSectionDescription = MessageFormat.format(
 				AuthoringUIText.GENERAL_INFO_SECTION_DESC,
 				new String[] { LibraryUIText.getUITextLower(contentPackage) });
-	}	
+	}
+	
+	@Override
+	protected void refresh(boolean editable) {
+		super.refresh(editable);
+		if(supportingCheckbox != null) {
+			supportingCheckbox.setEnabled(editable);
+		}
+	}
+	
+	@Override
+	protected void createGeneralSectionContent() {
+		super.createGeneralSectionContent();
+		
+		supportingCheckbox = toolkit
+			.createButton(
+				generalComposite,
+				AuthoringUIResources.contentPackageDescriptionPage_supportingPackageLabel, SWT.CHECK);
+	}
+	
+	@Override
+	protected void addGeneralSectionListeners() {
+		super.addGeneralSectionListeners();
+		
+		supportingCheckbox.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				IStatus status = TngUtil.checkEdit(contentPackage, getSite().getShell());
+				if (status.isOK()) {
+					MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil(actionMgr);
+					propUtil.setSupporting(contentPackage, supportingCheckbox.getSelection());
+				} else {
+					AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
+							AuthoringUIResources.editDialog_title,
+							AuthoringUIResources.editDialog_msgCannotEdit,
+							status);
+					// restore old value
+					//
+					supportingCheckbox.setSelection(!supportingCheckbox.getSelection());
+					return;
+				}
+			}
+
+			
+		});
+	}
+	
+	@Override
+	protected void loadGeneralSectionData() {
+		super.loadGeneralSectionData();
+		boolean isSuporting = MethodElementPropUtil.getMethodElementPropUtil().isSupporting(contentPackage);
+		supportingCheckbox
+			.setSelection(isSuporting);
+	}
+	
 
 }
