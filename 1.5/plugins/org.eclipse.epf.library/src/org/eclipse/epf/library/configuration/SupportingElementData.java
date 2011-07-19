@@ -25,8 +25,10 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.edit.util.DebugUtil;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -83,6 +85,18 @@ public class SupportingElementData extends ConfigDataBase {
 		return isEnabled();
 	}
 	
+	private void addPackageTreeToSet(Set set, Set<MethodPackage> pkgsInConfig, MethodPackage pkg) {
+		if (! pkgsInConfig.contains(pkg)) {
+			return;
+		}
+		if (!set.add(pkg)) {
+			return;
+		}
+		for (MethodPackage childPkg : pkg.getChildPackages()) {
+			addPackageTreeToSet(set, pkgsInConfig, childPkg);
+		}
+	}
+	
 	public void beginUpdateSupportingElements() {
 		setUpdatingChanges(true);
 		if (localDebug) {
@@ -95,12 +109,20 @@ public class SupportingElementData extends ConfigDataBase {
 
 		selectedPackages = new HashSet<MethodPackage>();
 		
-		if (isEnabled() && ! supportingPlugins.isEmpty()) {
-			List<MethodPackage> packages = getConfig().getMethodPackageSelection();
+		if (isEnabled()) {
+			MethodElementPropUtil propUtil = MethodElementPropUtil
+					.getMethodElementPropUtil();
+			Set<MethodPackage> pkgsInConfig = new HashSet<MethodPackage>();
+			pkgsInConfig.addAll(getConfig().getMethodPackageSelection());
+			List<MethodPackage> packages = getConfig()
+					.getMethodPackageSelection();
 			for (MethodPackage pkg : packages) {
 				MethodPlugin plugin = UmaUtil.getMethodPlugin(pkg);
 				if (supportingPlugins.contains(plugin)) {
 					selectedPackages.add(pkg);
+				} else if (pkg instanceof ContentPackage
+						&& propUtil.isSupporting((ContentPackage) pkg)) {
+					addPackageTreeToSet(selectedPackages, pkgsInConfig, pkg);
 				}
 			}
 		}
