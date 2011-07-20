@@ -544,6 +544,10 @@ public class SupportingElementData extends ConfigDataBase {
 			return false;
 		}
 		
+		if (ConfigurationHelper.getDelegate().isSupportingInAuthoringMode()) {
+			return false;
+		}
+				
 		if (! isUpdatingChanges()) {
 			return true;
 		}	

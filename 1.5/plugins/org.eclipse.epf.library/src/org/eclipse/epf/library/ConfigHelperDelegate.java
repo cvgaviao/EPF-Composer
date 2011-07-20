@@ -433,6 +433,16 @@ public class ConfigHelperDelegate {
 		return isAuthoringPerspective();
 	}
 	
+	private boolean supportingInAuthoringMode = false;
+	
+	public boolean isSupportingInAuthoringMode() {
+		return supportingInAuthoringMode;
+	}
+
+	public void setSupportingInAuthoringMode(boolean supportingInAuthoringMode) {
+		this.supportingInAuthoringMode = supportingInAuthoringMode;
+	}
+
 	private IPerspectiveListener perspectiveListener;
 
 	private void addPerspectiveListener() {
