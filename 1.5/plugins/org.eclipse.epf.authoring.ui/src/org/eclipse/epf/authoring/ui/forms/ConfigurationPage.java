@@ -173,23 +173,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 					selectedElement = TngUtil.unwrap(selectedElement);
 					if (selectedElement == null) {
 						return;
-					} else if (elemDespContentText != null && selectedElement instanceof MethodElement) {
+					} else if (elemDespContentText != null) {
 						// display selected element's description
-						String briefDesc = ((MethodElement) selectedElement).getBriefDescription();
+						String briefDesc = getConfigData().getSelectionInfo(selectedElement);
 						elemDespContentText.setText(briefDesc != null ? briefDesc : ""); //$NON-NLS-1$
-					} else if (selectedElement instanceof LeafElementsItemProvider) {
-						LeafElementsItemProvider leafProvider = (LeafElementsItemProvider) selectedElement;
-						//Temopary demo only
-						String briefDesc = "Elements: ";
-						boolean b = true;
-						for (MethodElement e : leafProvider.getElements()) {
-							if (!b) {
-								briefDesc += "; ";
-							}
-							b = false;
-							briefDesc += e.getName();
-						}
-						elemDespContentText.setText(briefDesc); //$NON-NLS-1$
 					}
 				}
 			});
