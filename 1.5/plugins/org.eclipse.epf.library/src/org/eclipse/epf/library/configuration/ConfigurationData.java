@@ -750,4 +750,12 @@ public class ConfigurationData {
 		propUtil.setElementsUnslectedPkgsProp(config, elementsUnslectedPkgs);
 	}
 	
+	public String getSelectionInfo(Object selectedElement) {
+		if (selectedElement instanceof MethodElement) {
+			return ((MethodElement) selectedElement).getBriefDescription();
+		}
+		
+		return "";	//$NON-NLS-1
+	}
+	
 }
