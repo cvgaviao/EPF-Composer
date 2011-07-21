@@ -39,6 +39,8 @@ import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.DisciplineGrouping;
@@ -693,6 +695,30 @@ public class ConfigurationData {
 			return false;
 		}
 		return elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.contains(pkg);
+	}
+	
+	public boolean hasAddedElements(MethodPackage pkg) {
+		if ( !(pkg instanceof ContentPackage)) {
+			return false;
+		}
+		for (ContentElement element : ((ContentPackage) pkg).getContentElements()) {
+			if (isElementAdded(element)) {
+				return true;
+			}
+		}		
+		return false;
+	}
+	
+	public boolean hasSubstractedElements(MethodPackage pkg) {		
+		if ( !(pkg instanceof ContentPackage)) {
+			return false;
+		}
+		for (ContentElement element : ((ContentPackage) pkg).getContentElements()) {
+			if (isElementSubtracted(element)) {
+				return true;
+			}
+		}		
+		return false;
 	}
 	
 	private boolean elementsUnslectedPkgsModified(Set<MethodPackage> updatedElementsUnslectedPkgs) {
