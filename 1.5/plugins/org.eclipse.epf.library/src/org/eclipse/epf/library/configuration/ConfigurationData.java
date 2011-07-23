@@ -697,7 +697,18 @@ public class ConfigurationData {
 		return elementsUnslectedPkgs == null ? false : elementsUnslectedPkgs.contains(pkg);
 	}
 	
+	protected boolean hasAddedElements() {
+		return addedElemMap != null && !addedElemMap.isEmpty();
+	}
+	
+	protected boolean hasSubstractedElements() {
+		return substractedElemMap != null && !substractedElemMap.isEmpty();
+	}
+	
 	public boolean hasAddedElements(MethodPackage pkg) {
+		if (! hasAddedElements()) {
+			return false;
+		}
 		if ( !(pkg instanceof ContentPackage)) {
 			return false;
 		}
@@ -709,7 +720,10 @@ public class ConfigurationData {
 		return false;
 	}
 	
-	public boolean hasSubstractedElements(MethodPackage pkg) {		
+	public boolean hasSubstractedElements(MethodPackage pkg) {
+		if (! hasSubstractedElements()) {
+			return false;
+		}
 		if ( !(pkg instanceof ContentPackage)) {
 			return false;
 		}
