@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
@@ -457,6 +458,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		viewer.setCheckedElements((new ArrayList()).toArray());
 
 		if (!packages.isEmpty()) {
+			List<LeafElementsItemProvider> uncheckedLeafs = new ArrayList<LeafElementsItemProvider>();
+			
 			for (MethodPackage element : packages) {
 				try {
 					if (!contProvider.hasChildren(element)) {
@@ -464,18 +467,44 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 					}
 					if (!oldCode) {
 //						System.out.println("LD> element: " + element);
-						Object leaf = contProvider.getLeafElementsNode(element);
+						LeafElementsItemProvider leaf = contProvider.getLeafElementsNode(element);
 						if (leaf != null) {
 							if (element instanceof ContentPackage
 									&& !getConfigData().elementsUnslected(
 											(ContentPackage) element)) {
 								viewer.setChecked(leaf, true);
+							} else {
+								uncheckedLeafs.add(leaf);
 							}
 						}
 					}
 				} catch (Exception e) {
 				}
 			}
+			
+			Set<MethodElement> grayCheckedSet = new HashSet<MethodElement>(); 
+			for (LeafElementsItemProvider leaf : uncheckedLeafs) {
+				MethodPackage leafParent = leaf.getParentPackage();
+				if (! getConfigData().hasAddedElements(leafParent)) {
+					continue;
+				}
+				 
+				viewer.setGrayChecked(leaf, true);
+				EObject parent = leafParent;
+				while (parent instanceof MethodPackage) {
+					MethodPackage pkg = (MethodPackage) parent;
+					if (grayCheckedSet.contains(pkg)) {
+						break;
+					}
+					grayCheckedSet.add(pkg);
+					viewer.setGrayChecked(pkg, true);				
+					parent = parent.eContainer();
+				}
+				if (parent instanceof MethodPlugin && ! grayCheckedSet.contains(parent)) {
+					grayCheckedSet.add((MethodPlugin) parent);
+					viewer.setGrayChecked(parent,true);
+				}
+			}			
 		}
 
 		// special case for Method Content when plugin is selected but there are
