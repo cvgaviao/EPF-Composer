@@ -729,6 +729,9 @@ public class ConfigurationData {
 		if (updatedIsEmpty) {
 			return true;
 		}
+		if (elementsUnslectedPkgs.size() != updatedElementsUnslectedPkgs.size()) {
+			return true;
+		}
 		for (MethodPackage pkg : updatedElementsUnslectedPkgs) {
 			if (! (elementsUnslected(pkg))) {
 				return true;
@@ -736,7 +739,6 @@ public class ConfigurationData {
 		}		
 		return false;
 	}
-	
 	
 	public void storeElementsUnslectedPkgsProp(IActionManager actionManager, Set<MethodPackage> updatedElementsUnslectedPkgs) {
 		if (ConfigContentPackageItemProvider.oldCode) {
