@@ -19,12 +19,17 @@ import java.util.Set;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.providers.ConfigPackageContentProvider;
+import org.eclipse.epf.library.configuration.ConfigurationData;
+import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.jface.util.SafeRunnable;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -53,6 +58,8 @@ public class MethodContainerCheckedTreeViewer extends
 	
 	protected boolean expandWhenChecking = false;
 	protected boolean initializingTreeCheckState = false;
+	private ConfigurationData configData;
+	private boolean disableHandleLeafCrayChecks = false;
 
 	protected ListenerList childrenCheckStateListeners = new ListenerList();
 
@@ -148,8 +155,68 @@ public class MethodContainerCheckedTreeViewer extends
 			}
 		} else {
 			super.doCheckStateChanged(element);
+			handleLeafCrayChecks(element);			
 		}
     }
+    
+    private void handleLeafCrayChecks(Object element) {
+    	if (getConfigData() == null || disableHandleLeafCrayChecks) {
+    		return;
+    	}
+        Widget item = findItem(element);
+        TreeItem treeItem = item instanceof TreeItem ? (TreeItem) item : null;
+        if (treeItem == null) {
+        	return;
+        }
+        
+        Set<LeafElementsItemProvider> uncheckedLeafs = new HashSet<LeafElementsItemProvider>();        	
+        collectUncheckedLeafs(treeItem, uncheckedLeafs);
+        handleLeafCrayChecks(uncheckedLeafs);
+    }
+    
+    private void collectUncheckedLeafs(TreeItem treeItem, Set<LeafElementsItemProvider> uncheckedLeafs) {
+        if (treeItem.getData() instanceof LeafElementsItemProvider) {
+        	if (! treeItem.getChecked()) {
+        		uncheckedLeafs.add((LeafElementsItemProvider) treeItem.getData());
+        	}
+        	return;
+        }
+        Item[] children = getChildren(treeItem);
+        for (int i = 0; i < children.length; i++) {
+            TreeItem curr = (TreeItem) children[i];
+            collectUncheckedLeafs(curr, uncheckedLeafs);
+        }
+    }
+    
+	public void handleLeafCrayChecks(Collection<LeafElementsItemProvider> uncheckedLeafs) {
+		if (uncheckedLeafs == null || uncheckedLeafs.isEmpty()) {
+			return;
+		}
+		Set<MethodElement> grayCheckedSet = new HashSet<MethodElement>(); 
+		
+		for (LeafElementsItemProvider leaf : uncheckedLeafs) {
+			MethodPackage leafParent = leaf.getParentPackage();
+			if (! getConfigData().hasAddedElements(leafParent)) {
+				continue;
+			}
+			 
+			this.setGrayChecked(leaf, true);
+			EObject parent = leafParent;
+			while (parent instanceof MethodPackage) {
+				MethodPackage pkg = (MethodPackage) parent;
+				if (grayCheckedSet.contains(pkg)) {
+					break;
+				}
+				grayCheckedSet.add(pkg);
+				this.setGrayChecked(pkg, true);				
+				parent = parent.eContainer();
+			}
+			if (parent instanceof MethodPlugin && ! grayCheckedSet.contains(parent)) {
+				grayCheckedSet.add((MethodPlugin) parent);
+				this.setGrayChecked(parent,true);
+			}
+		}
+	}    
         
     public void updateParents(Object element) {
         Widget item = findItem(element);
@@ -327,5 +394,23 @@ public class MethodContainerCheckedTreeViewer extends
     	}
 		System.out.println("");	
     }
+    
+	public ConfigurationData getConfigData() {
+		return configData;
+	}
 
+	public void setConfigData(ConfigurationData configData) {
+		this.configData = configData;
+	}
+
+	@Override
+    public boolean setChecked(Object element, boolean state) {
+		try {
+			disableHandleLeafCrayChecks = true;
+			return super.setChecked(element, state);
+		} finally {
+			disableHandleLeafCrayChecks = false;
+		}
+    }
+	
 }

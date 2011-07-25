@@ -416,6 +416,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	}
 
 	private void initConfigViewer() {
+		configViewer.setConfigData(getConfigData());
 		List<MethodPackage> packages = new ArrayList<MethodPackage>(config.getMethodPackageSelection());
     	List<MethodPlugin> plugins = new ArrayList<MethodPlugin>(config.getMethodPluginSelection());
     	initializeConfigViewerSelection(configViewer, packages, plugins);
@@ -481,30 +482,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				} catch (Exception e) {
 				}
 			}
-			
-			Set<MethodElement> grayCheckedSet = new HashSet<MethodElement>(); 
-			for (LeafElementsItemProvider leaf : uncheckedLeafs) {
-				MethodPackage leafParent = leaf.getParentPackage();
-				if (! getConfigData().hasAddedElements(leafParent)) {
-					continue;
-				}
-				 
-				viewer.setGrayChecked(leaf, true);
-				EObject parent = leafParent;
-				while (parent instanceof MethodPackage) {
-					MethodPackage pkg = (MethodPackage) parent;
-					if (grayCheckedSet.contains(pkg)) {
-						break;
-					}
-					grayCheckedSet.add(pkg);
-					viewer.setGrayChecked(pkg, true);				
-					parent = parent.eContainer();
-				}
-				if (parent instanceof MethodPlugin && ! grayCheckedSet.contains(parent)) {
-					grayCheckedSet.add((MethodPlugin) parent);
-					viewer.setGrayChecked(parent,true);
-				}
-			}			
+			if (viewer instanceof MethodContainerCheckedTreeViewer) {
+				((MethodContainerCheckedTreeViewer) viewer).handleLeafCrayChecks(uncheckedLeafs);			
+			}
 		}
 
 		// special case for Method Content when plugin is selected but there are
@@ -518,7 +498,6 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			}
 		}
 	}
-	
 	
 	/**
 	 * This traverse is only called for plugins when they are included in the configuration.
@@ -611,6 +590,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		
 		// create the library tree viewer
 		configViewer = new MethodContainerCheckedTreeViewer(sectionClient);
+		
 		gd = new GridData(GridData.FILL_BOTH
 				| GridData.GRAB_HORIZONTAL);
 		gd.heightHint = 200;
