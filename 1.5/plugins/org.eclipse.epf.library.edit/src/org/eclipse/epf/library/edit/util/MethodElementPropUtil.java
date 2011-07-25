@@ -300,7 +300,7 @@ public class MethodElementPropUtil {
 		}
 		
 		String value = getStringValue(owner, propName);
-		String[] guids = value == null ? null : value.split(infoSeperator);
+		String[] guids = value == null || value.trim().length() == 0 ? null : value.split(infoSeperator);
 
 		if (guids == null || guids.length == 0) {
 			return elements;
