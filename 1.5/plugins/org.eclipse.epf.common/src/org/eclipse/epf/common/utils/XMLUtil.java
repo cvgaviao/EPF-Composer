@@ -663,4 +663,12 @@ public class XMLUtil {
 		return xml.trim().replaceFirst("^([\\W]+)<", "<"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
+	public static String elementToString(Element element) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DataOutputStream dos = new DataOutputStream(baos);
+		writeNode(element, " ", dos); //$NON-NLS-1$
+		
+		return baos.toString();
+	}
+	
 }
