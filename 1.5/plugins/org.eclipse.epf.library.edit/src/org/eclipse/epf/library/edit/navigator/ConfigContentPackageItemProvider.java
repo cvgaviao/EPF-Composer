@@ -80,6 +80,12 @@ public class ConfigContentPackageItemProvider extends
 		
 	}
 	
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage(
+				"full/obj16/Element")); //$NON-NLS-1$
+	}
+	
 	public void dispose() {
 		if (map != null) {
 			map.clear();

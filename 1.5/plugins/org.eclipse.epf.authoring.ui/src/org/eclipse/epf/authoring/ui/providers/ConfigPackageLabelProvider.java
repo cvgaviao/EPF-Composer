@@ -71,9 +71,6 @@ public class ConfigPackageLabelProvider extends LabelProvider {
 	 * {@link IItemLabelProvider#getImage IItemLabelProvider.getImage}
 	 */
 	public Image getImage(Object object) {
-		if (object instanceof LeafElementsItemProvider) {
-			return null;
-		}
 		if (closure != null) {
 
 			ElementDependencyError error = null;
