@@ -56,6 +56,7 @@ import org.eclipse.emf.edit.ui.action.PasteAction;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.authoring.ui.AuthoringUIExtensionManager;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
@@ -431,6 +432,12 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		}
 	};
 
+	
+	private LibraryViewExtender extender;
+	protected LibraryViewExtender getExtender() {
+		return extender;
+	}
+
 	/**
 	 * Creates a new instance.
 	 */
@@ -443,6 +450,8 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		}
 
 		INSTANCE = this;
+		
+		extender = AuthoringUIExtensionManager.getInstance().createLibraryViewExtender(this);
 	}
 	
 	/**
@@ -1029,6 +1038,7 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		 */
 		public LibraryViewActionBarContributor(EditingDomain editingDomain) {
 			super(editingDomain);
+			getExtender().getActionBarExtender().setActionBar(this);
 		}
 
 		/**
@@ -1182,8 +1192,13 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 				}
 			}
 		}
-
-		void updateSelection(ISelection selection) {			
+		
+		void updateSelection(ISelection selection) {
+			updateSelection_(selection);
+			getExtender().getActionBarExtender().updateSelection(selection);
+		}
+		
+		void updateSelection_(ISelection selection) {			
 			IStructuredSelection sel = (IStructuredSelection) selection;
 			
 			renameAction.setActiveWorkbenchPart(LibraryView.this);
@@ -1319,6 +1334,11 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		 * @see LibraryActionBarContributor#menuAboutToShow(IMenuManager)
 		 */
 		public void menuAboutToShow(IMenuManager menuManager) {
+			menuAboutToShow_(menuManager);
+			getExtender().getActionBarExtender().menuAboutToShow(menuManager);
+		}
+		
+		private void menuAboutToShow_(IMenuManager menuManager) {
 			// This is needed to enable Paste after Copy but the selection has not been changed yet
 			//
 			updatePasteAction();
