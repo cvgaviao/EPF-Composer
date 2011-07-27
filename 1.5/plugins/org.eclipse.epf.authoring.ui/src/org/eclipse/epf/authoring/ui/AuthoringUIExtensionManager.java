@@ -1,8 +1,10 @@
 package org.eclipse.epf.authoring.ui;
 
+import org.eclipse.epf.authoring.ui.views.LibraryView;
+import org.eclipse.epf.authoring.ui.views.LibraryViewExtender;
 import org.eclipse.epf.common.utils.ExtensionHelper;
-import org.eclipse.epf.library.configuration.ConfigurationData;
 
+//Class managing extended functionality for the authoring UI plug-in
 public class AuthoringUIExtensionManager {
 
 	private static AuthoringUIExtensionManager instance;
@@ -23,4 +25,9 @@ public class AuthoringUIExtensionManager {
 		}
 		return instance;
 	}
+	
+	public LibraryViewExtender createLibraryViewExtender(LibraryView libraryView) {
+		return new LibraryViewExtender(libraryView);
+	}
+	
 }
