@@ -8,11 +8,11 @@ import org.eclipse.jface.viewers.ISelection;
 public class LibraryViewExtender {
 	
 	private LibraryView libraryView;
-	private ActionBarExtender actionBarExtender;
-
-	public LibraryViewExtender(LibraryView libraryView) {
-		this.libraryView = libraryView;
+	public LibraryView getLibraryView() {
+		return libraryView;
 	}
+
+	private ActionBarExtender actionBarExtender;
 	
 	public ActionBarExtender getActionBarExtender() {
 		if (actionBarExtender == null) {
@@ -21,30 +21,29 @@ public class LibraryViewExtender {
 		return actionBarExtender;
 	}
 	
+	public LibraryViewExtender(LibraryView libraryView) {
+		this.libraryView = libraryView;
+	}
+	
 	protected ActionBarExtender newActionBarExtender() {
-		return new ActionBarExtender();
+		return new ActionBarExtender(getLibraryView());
 	}
 	
 	public static class ActionBarExtender {
-		private LibraryActionBarContributor actionBar;
+		private LibraryView libraryView;
 
-		public ActionBarExtender() {			
+		public ActionBarExtender(LibraryView libraryView) {
+			this.libraryView = libraryView;
 		}
-		
+				
+		protected LibraryView getLibraryView() {
+			return libraryView;
+		}
 		
 		public void menuAboutToShow(IMenuManager menuManager) {			
 		}
 		
 		public void updateSelection(ISelection selection) {				
-		}
-		
-		public LibraryActionBarContributor getActionBar() {
-			return actionBar;
-		}
-
-
-		public void setActionBar(LibraryActionBarContributor actionBar) {
-			this.actionBar = actionBar;
 		}
 		
 	}
