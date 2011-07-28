@@ -17,13 +17,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.apache.tools.ant.util.ReaderInputStream;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -503,6 +510,15 @@ public class XMLUtil {
 		return builder.parse(file);
 	}
 
+	public static Document loadXml(String xmlString) throws Exception {
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+				.newInstance();
+		DocumentBuilder builder = builderFactory.newDocumentBuilder();
+		ReaderInputStream istrem = new ReaderInputStream(new StringReader(xmlString));
+		
+		return builder.parse(istrem);
+	}
+	
 	public static Document createDocument() throws Exception {
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
 				.newInstance();
@@ -510,6 +526,18 @@ public class XMLUtil {
 		return builder.newDocument();
 	}
 
+	public static String toXmlString(Document doc) throws Exception {
+		DOMSource domSource = new DOMSource(doc);
+		StringWriter writer = new StringWriter();
+		StreamResult result = new StreamResult(writer);
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer transformer = tf.newTransformer();
+		transformer.transform(domSource, result);
+		writer.flush();
+
+		return writer.toString();
+	}
+	
 	/**
 	 * text of a leaf node, without child element
 	 * 
