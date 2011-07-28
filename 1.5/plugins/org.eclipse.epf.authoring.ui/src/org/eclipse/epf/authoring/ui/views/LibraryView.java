@@ -244,7 +244,7 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 	protected IDoubleClickListener doubleClickListener = null;
 
 	private ISelection selection;
-	
+
 	private LayoutActionGroup fLayoutActionSet;
 	
 	private String PERFORM_ID = "org.eclipse.epf.authoring.view.LibraryView.performValidatorAction"; //$NON-NLS-1$
@@ -1038,7 +1038,6 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		 */
 		public LibraryViewActionBarContributor(EditingDomain editingDomain) {
 			super(editingDomain);
-			getExtender().getActionBarExtender().setActionBar(this);
 		}
 
 		/**
@@ -2105,4 +2104,7 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 		return false;
 	}
 	
+	public ISelection getCachedSelection() {
+		return selection;
+	}
 }
