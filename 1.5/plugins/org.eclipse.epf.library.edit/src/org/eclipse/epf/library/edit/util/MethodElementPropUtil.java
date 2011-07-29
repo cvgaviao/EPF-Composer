@@ -343,4 +343,8 @@ public class MethodElementPropUtil {
 		setStringValue(owner, propName, value);
 	}
 	
+	public XmlEditUtil newXmlEditUtil() {
+		return new XmlEditUtil(this);
+	}
+	
 }

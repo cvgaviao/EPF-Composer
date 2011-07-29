@@ -28,15 +28,11 @@ public class XmlEditUtil {
 		return propUtil;
 	}
 
-	protected XmlEditUtil(MethodElementPropUtil propUtil) {
+	public XmlEditUtil(MethodElementPropUtil propUtil) {
 		this.propUtil = propUtil;
 	}
 	
-	public XmlEditUtil newXmlEditUtil(MethodElementPropUtil propUtil) {
-		return new XmlEditUtil(propUtil);
-	}
-	
-	protected Document getDocument() throws Exception {
+	public Document getDocument() throws Exception {
 		if (doc == null) {
 			try {
 				doc = XMLUtil.createDocument();
