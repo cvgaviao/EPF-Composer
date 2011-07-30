@@ -77,6 +77,10 @@ public class ConfigurationData {
 	
 	private MethodConfiguration config;
 	
+	public MethodConfiguration getConfig() {
+		return config;
+	}
+
 	// make sure the map is created.
 	private Map<String, MethodElement> substractedElemMap = new HashMap<String, MethodElement>();
 	private Map<String, MethodElement> addedElemMap = new HashMap<String, MethodElement>();
@@ -772,6 +776,10 @@ public class ConfigurationData {
 		}
 		
 		return "";	//$NON-NLS-1
+	}
+	
+	public String debugSelString() {
+		return "";		//$NON-NLS-1
 	}
 	
 }
