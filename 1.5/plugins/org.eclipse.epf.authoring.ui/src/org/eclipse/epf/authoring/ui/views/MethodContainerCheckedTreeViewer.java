@@ -188,35 +188,33 @@ public class MethodContainerCheckedTreeViewer extends
         }
     }
     
-	public void handleLeafCrayChecks(Collection<LeafElementsItemProvider> uncheckedLeafs) {
+	public void handleLeafCrayChecks(
+			Collection<LeafElementsItemProvider> uncheckedLeafs) {
 		if (uncheckedLeafs == null || uncheckedLeafs.isEmpty()) {
 			return;
 		}
-		Set<MethodElement> grayCheckedSet = new HashSet<MethodElement>(); 
-		
+		Set<TreeItem> grayCheckedSet = new HashSet<TreeItem>();
+
 		for (LeafElementsItemProvider leaf : uncheckedLeafs) {
 			MethodPackage leafParent = leaf.getParentPackage();
-			if (! getConfigData().hasAddedElements(leafParent)) {
+			if (!getConfigData().hasAddedElements(leafParent)) {
 				continue;
 			}
-			 
-			this.setGrayChecked(leaf, true);
-			EObject parent = leafParent;
-			while (parent instanceof MethodPackage) {
-				MethodPackage pkg = (MethodPackage) parent;
-				if (grayCheckedSet.contains(pkg)) {
-					break;
+
+			Widget item = findItem(leaf);
+			if (item instanceof TreeItem) {
+				TreeItem treeItem = (TreeItem) item;
+				while (treeItem != null) {
+					if (!grayCheckedSet.contains(treeItem)) {
+						treeItem.setChecked(true);
+						treeItem.setGrayed(true);
+						grayCheckedSet.add(treeItem);
+					}
+					treeItem = treeItem.getParentItem();
 				}
-				grayCheckedSet.add(pkg);
-				this.setGrayChecked(pkg, true);				
-				parent = parent.eContainer();
-			}
-			if (parent instanceof MethodPlugin && ! grayCheckedSet.contains(parent)) {
-				grayCheckedSet.add((MethodPlugin) parent);
-				this.setGrayChecked(parent,true);
 			}
 		}
-	}    
+	}   
         
     public void updateParents(Object element) {
         Widget item = findItem(element);
@@ -412,5 +410,28 @@ public class MethodContainerCheckedTreeViewer extends
 			disableHandleLeafCrayChecks = false;
 		}
     }
+	
+	public void debugTree() {
+		Object root = getRoot();
+		Tree tree = (Tree) this.findItem(root);
+		debugItem(tree.getItem(0), "LD>");
+	}
+
+	private void debugItem(Object objItem, String indent) {
+		if (objItem instanceof TreeItem) {
+			TreeItem item = (TreeItem) objItem;
+			System.out.println(indent + "item : " + item + ", hash: "
+					+ item.hashCode());
+			System.out.println(indent + "data : " + item.getData());
+			System.out.println("");
+			for (TreeItem cItem : item.getItems()) {
+				debugItem(cItem, indent + "     ");
+			}
+		} else {
+			System.out.println(indent + "objItem : " + objItem);
+			System.out.println("");
+		}
+
+	} 
 	
 }
