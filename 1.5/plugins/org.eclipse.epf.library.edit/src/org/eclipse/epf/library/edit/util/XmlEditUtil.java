@@ -14,6 +14,7 @@ import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.uma.MethodElement;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
 * @author Weiping Lu
@@ -32,7 +33,7 @@ public class XmlEditUtil {
 		this.propUtil = propUtil;
 	}
 	
-	public Document getDocument() throws Exception {
+	private Document getDocument() throws Exception {
 		if (doc == null) {
 			try {
 				doc = XMLUtil.createDocument();
@@ -43,7 +44,12 @@ public class XmlEditUtil {
 		return doc;
 	}
 	
-	public void storeToOwner(MethodElement owner, String propName)  throws Exception  {
+	protected Element createRootElement(String name) throws Exception {
+		Element element = getDocument().createElement(name);
+		return element;
+	}
+	
+	protected void storeToOwner(MethodElement owner, String propName)  throws Exception  {
 		String value = XMLUtil.toXmlString(doc);
 		propUtil.setStringValue(owner, propName, value);
 	}
