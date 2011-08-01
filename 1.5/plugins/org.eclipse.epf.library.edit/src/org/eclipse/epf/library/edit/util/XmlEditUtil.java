@@ -10,9 +10,12 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.util;
 
+import java.util.List;
+
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -46,12 +49,27 @@ public class XmlEditUtil {
 	
 	protected Element createRootElement(String name) throws Exception {
 		Element element = getDocument().createElement(name);
+		getDocument().appendChild(element);
 		return element;
 	}
 	
 	protected void storeToOwner(MethodElement owner, String propName)  throws Exception  {
 		String value = XMLUtil.toXmlString(doc);
 		propUtil.setStringValue(owner, propName, value);
+	}
+	
+	protected String convertToGuidsString(List<? extends MethodElement> elements) {
+		String value = ""; 	//$NON-NLS-1$
+		if (elements == null || elements.isEmpty()) {
+			return value;
+		}
+		for (MethodElement element : elements) {
+			if (value.length() > 0) {
+				value += MethodElementPropUtil.infoSeperator;
+			}
+			value += element.getGuid();
+		}
+		return value;
 	}
 	
 	
