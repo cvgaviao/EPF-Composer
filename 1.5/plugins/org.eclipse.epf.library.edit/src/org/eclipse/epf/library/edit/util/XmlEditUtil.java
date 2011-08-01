@@ -10,14 +10,15 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.common.utils.XMLUtil;
-import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.Practice;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
 * @author Weiping Lu
@@ -38,16 +39,19 @@ public class XmlEditUtil {
 	
 	private Document getDocument() throws Exception {
 		if (doc == null) {
-			try {
-				doc = XMLUtil.createDocument();
-			} catch (Exception e) {
-				LibraryEditPlugin.getDefault().getLogger().logError(e);
-			}
+			doc = XMLUtil.createDocument();
 		}
 		return doc;
 	}
 	
-	protected Element createRootElement(String name) throws Exception {
+	//Return the root element
+	protected Element loadDocumentAndGetFirstElement(String xmlString) throws Exception {
+		doc = XMLUtil.loadXml(xmlString);
+		Node node = doc.getFirstChild();
+		return node instanceof Element ? (Element) node : null;
+	}
+	
+	protected Element createFirstElement(String name) throws Exception {
 		Element element = getDocument().createElement(name);
 		getDocument().appendChild(element);
 		return element;
@@ -72,5 +76,37 @@ public class XmlEditUtil {
 		return value;
 	}
 	
+	protected List<? extends MethodElement> convertToMethodElements(String guidsString, EClass type) {
+		List<MethodElement> list = new ArrayList<MethodElement>();
+		if (guidsString == null || guidsString.length() == 0) {
+			return list;
+		}
+		String[] guids = guidsString.split(MethodElementPropUtil.infoSeperator);
+		if (guids == null || guids.length == 0) {
+			return list;			
+		}		
+		for (String guid : guids) {
+			MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
+			if (element != null) {
+				if (type == null || type.isSuperTypeOf(element.eClass())) {
+					list.add(element);
+				}
+			}
+		}		
+		return list;
+	}
+	
+	
+	protected Integer getIntValue(Element element, String attName) {		
+		String value = element.getAttribute(attName);
+		if (value == null || value.length() == 0) {
+			return null;
+		}
+		try {
+			return Integer.parseInt(value);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	
 }
