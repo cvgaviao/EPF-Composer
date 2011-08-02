@@ -42,6 +42,17 @@ public final class DebugUtil {
 		return System.out;
 	}
 	
+	public static void print(Collection<? extends MethodElement> elements) {
+		out().println(prompt + "elements: " + (elements == null ? "null" : elements.size()));//$NON-NLS-1$ //$NON-NLS-2$
+		if (elements == null || elements.isEmpty()) {
+			return;
+		}
+		for (MethodElement element : elements) {
+			out().println(prompt + element);
+		}
+		out().println("");//$NON-NLS-1$
+	}
+	
 	public static void print(String beginTitle, String endTitle, Collection<? extends MethodElement> elements, int ix) {
 		if (beginTitle != null) {
 			String str = "";				//$NON-NLS-1$
