@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -37,7 +38,7 @@ public class XmlEditUtil {
 		this.propUtil = propUtil;
 	}
 	
-	private Document getDocument() throws Exception {
+	protected Document getDocument() throws Exception {
 		if (doc == null) {
 			doc = XMLUtil.createDocument();
 		}
@@ -62,7 +63,7 @@ public class XmlEditUtil {
 		propUtil.setStringValue(owner, propName, value);
 	}
 	
-	protected String convertToGuidsString(List<? extends MethodElement> elements) {
+	protected String convertToGuidsString(Collection<? extends MethodElement> elements) {
 		String value = ""; 	//$NON-NLS-1$
 		if (elements == null || elements.isEmpty()) {
 			return value;
