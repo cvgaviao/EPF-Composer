@@ -96,8 +96,7 @@ public class XmlEditUtil {
 		}		
 		return list;
 	}
-	
-	
+		
 	protected Integer getIntValue(Element element, String attName) {		
 		String value = element.getAttribute(attName);
 		if (value == null || value.length() == 0) {
@@ -108,6 +107,15 @@ public class XmlEditUtil {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	protected void addClonedElement(Element parent, Element elementToClone)
+			throws Exception {
+		if (elementToClone == null) {
+			return;
+		}
+		Node node = XMLUtil.cloneNode(elementToClone, getDocument());
+		parent.appendChild(node);
 	}
 	
 }
