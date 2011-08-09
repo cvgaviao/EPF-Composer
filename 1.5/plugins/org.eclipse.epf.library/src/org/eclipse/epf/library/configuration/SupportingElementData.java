@@ -26,8 +26,10 @@ import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.configuration.closure.ElementReference;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -135,6 +137,14 @@ public class SupportingElementData extends ConfigDataBase {
 			System.out.println("LD> beginUpdateSupportingElements <- "); //$NON-NLS-1$ 
 			System.out.println(""); //$NON-NLS-1$ 
 		}		
+	}
+	
+	public boolean inSupportingPackage(MethodElement element) {
+		if (! (element instanceof ContentElement) || selectedPackages == null || selectedPackages.isEmpty()) {
+			return false;
+		}
+		MethodPackage pkg = TngUtil.getParentMethodPackage(element);
+		return selectedPackages.contains(pkg);
 	}
 	
 	// Collect map of referred references outside the config

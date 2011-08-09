@@ -517,7 +517,7 @@ public class ConfigurationData {
 				}
 				if (seData.isEnabled()) {
 					MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
-					if (plugin != null && plugin.isSupporting()) {
+					if (plugin != null && plugin.isSupporting() || seData.inSupportingPackage(element)) {
 						if (! config.getMethodPluginSelection().contains(plugin)) {
 							return false;
 						}
