@@ -82,7 +82,8 @@ public class SupportingElementData extends ConfigDataBase {
 			}
 		}
 		
-		setEnabled(supportingPlugins.size() < plugins.size());
+//		Remove this line: no longer needed since in authoring perspective, supporting check is disabled		
+//		setEnabled(supportingPlugins.size() < plugins.size());
 		
 		return isEnabled();
 	}
@@ -127,6 +128,9 @@ public class SupportingElementData extends ConfigDataBase {
 					addPackageTreeToSet(selectedPackages, pkgsInConfig, pkg);
 				}
 			}
+		}
+		if (selectedPackages == null || selectedPackages.isEmpty()) {
+			setEnabled(false);
 		}
 		//vChildrenContentCategorySet = new HashSet<VariabilityElement>();
 
@@ -333,6 +337,10 @@ public class SupportingElementData extends ConfigDataBase {
 					", element: " + DebugUtil.toString(element, 2));//$NON-NLS-1$ 
 		}
 		return ret;
+	}
+	
+	public boolean inSupportingElements(MethodElement element) {
+		return supportingElements == null ? false : supportingElements.contains(element);
 	}
 	
 	//ret: 0 = unknown, 1 = yes, 2 = no
