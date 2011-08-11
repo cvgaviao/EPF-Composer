@@ -22,9 +22,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
@@ -64,7 +66,6 @@ import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Delegate class used in ConfigurationHelper
@@ -546,6 +547,22 @@ public class ConfigHelperDelegate {
 
 	public void setAutoSyncedByBrowsing(boolean autoSyncedByBrowsing) {
 		this.autoSyncedByBrowsing = autoSyncedByBrowsing;
+	}
+	
+	public ConfigurationData getConfigurationData(MethodConfiguration config) {
+		if (config == null) {
+			return null;
+		}
+		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
+		return configMgr == null ? null : configMgr.getConfigurationData();
+	}
+	
+	public SupportingElementData getSupportingElementData(MethodConfiguration config) {
+		if (config == null) {
+			return null;
+		}
+		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
+		return configMgr == null ? null : configMgr.getSupportingElementData();
 	}
 	
 }
