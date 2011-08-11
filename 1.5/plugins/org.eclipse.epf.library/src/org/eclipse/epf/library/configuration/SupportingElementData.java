@@ -73,6 +73,8 @@ public class SupportingElementData extends ConfigDataBase {
 	}
 	
 	private boolean determineEnable() {
+		setEnabled(true);
+		
 		supportingPlugins = new HashSet<MethodPlugin>();
 		Set<MethodPlugin> plugins = new HashSet<MethodPlugin>(getConfig()
 				.getMethodPluginSelection());
