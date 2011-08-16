@@ -76,6 +76,8 @@ public abstract class AbstractActivator extends Plugin implements IActivator {
 
 	// The profiling flag.
 	private boolean profiling;
+	
+	private Map<String, Boolean> debugMap = new HashMap<String, Boolean>();
 
 	/**
 	 * Default constructor.
@@ -163,6 +165,22 @@ public abstract class AbstractActivator extends Plugin implements IActivator {
 			getLogger().logInfo(
 					"Initialized " + pluginId + ", installPath=" + installPath); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
+	
+	public boolean debug(String debugType) {
+		Boolean b = debugMap.get(debugType);
+		if (b == null) {
+			Bundle bundle = getBundle();
+			String symbolicName = bundle.getSymbolicName();
+			if (symbolicName != null) {
+				String key = symbolicName + "/" + debugType; //$NON-NLS-1$
+				String value = InternalPlatform.getDefault().getOption(key);
+				boolean bValue = value == null ? false : value.equalsIgnoreCase("true"); //$NON-NLS-1$
+				b = new Boolean(bValue);
+				debugMap.put(debugType, b);
+			}
+		}		
+		return b.booleanValue();
 	}
 
 	/**
