@@ -1282,4 +1282,8 @@ public class FileUtil {
 		}
 	}
 	
+	public static void log(String msg) {
+		CommonPlugin.getDefault().getLogger().logInfo(msg);
+	}
+	
 }
