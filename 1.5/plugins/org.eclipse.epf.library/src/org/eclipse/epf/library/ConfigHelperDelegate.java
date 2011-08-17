@@ -554,7 +554,11 @@ public class ConfigHelperDelegate {
 			return null;
 		}
 		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
-		return configMgr == null ? null : configMgr.getConfigurationData();
+		ConfigurationData configData = configMgr == null ? null : configMgr.getConfigurationData();
+		if (configData == null) {
+			LibraryPlugin.getDefault().getLogger().logError("getConfigurationData() == null for: " + config.getName());//$NON-NLS-1$	
+		}
+		return configData;
 	}
 	
 	public SupportingElementData getSupportingElementData(MethodConfiguration config) {
