@@ -13,8 +13,10 @@ package org.eclipse.epf.library.edit.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.uma.ContentPackage;
@@ -151,7 +153,7 @@ public final class Misc {
 		List list = map.get(plugin);
 		if (list == null) {
 			list = new ArrayList();
-			getAllBase(plugin, list);
+			getAllBase(plugin, list, new HashSet<MethodPlugin>());
 			map.put(plugin, list);
 		}
 		return list;
@@ -165,23 +167,37 @@ public final class Misc {
 	 */
 	public static List getAllBase(MethodPlugin plugin) {
 		List list = new ArrayList();
-		getAllBase(plugin, list);
+		getAllBase(plugin, list, new HashSet<MethodPlugin>());
 		return list;
 	}
 
-	public static void getAllBase(MethodPlugin plugin, List list) {
-		List base = plugin.getBases();
+//	public static void getAllBase(MethodPlugin plugin, List list) {
+//		List base = plugin.getBases();
+//
+//		// Check if the bases in the list already.
+//		if (!list.containsAll(base)) {
+//			list.addAll(base);
+//		}
+//		for (int i = 0; i < base.size(); i++) {
+//			plugin = (MethodPlugin) base.get(i);
+//			getAllBase(plugin, list);
+//		}
+//	}
 
-		// Check if the bases in the list already.
-		if (!list.containsAll(base)) {
-			list.addAll(base);
+	//wlu: 0819-2011 rewrite
+	public static void getAllBase(MethodPlugin plugin, List list, Set<MethodPlugin> inListSet) {
+		if (plugin == null) {
+			return;
 		}
-		for (int i = 0; i < base.size(); i++) {
-			plugin = (MethodPlugin) base.get(i);
-			getAllBase(plugin, list);
-		}
+		for (MethodPlugin base : plugin.getBases()) {
+			if (base != plugin && ! inListSet.contains(base)) {
+				list.add(base);
+				inListSet.add(base);
+				getAllBase(base, list, inListSet);
+			}
+		}						
 	}
-
+	
 	public static boolean isBaseOf(MethodPlugin base, MethodPlugin plugin,
 			Map<String, Boolean> resultCacheMap) {
 		if (resultCacheMap == null) {
