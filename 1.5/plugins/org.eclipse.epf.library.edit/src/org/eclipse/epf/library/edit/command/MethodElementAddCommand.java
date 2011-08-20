@@ -1951,8 +1951,14 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					refPluginsInfo.refPluginsToAdd.clear();
 					
 				} else {
-					ownerPlugin.getBases().addAll(refPluginsInfo.refPluginsToAdd);
-					
+//					ownerPlugin.getBases().addAll(refPluginsInfo.refPluginsToAdd);
+					//Double check
+					Map<String, Boolean> map = new HashMap<String, Boolean>();
+					for (MethodPlugin baseToAdd : refPluginsInfo.refPluginsToAdd) {
+						if (baseToAdd != ownerPlugin && !Misc.isBaseOf(ownerPlugin, baseToAdd, map) && !Misc.isBaseOf(baseToAdd, ownerPlugin, map)) {
+							ownerPlugin.getBases().add(baseToAdd);
+						}
+					}					
 				}
 							
 				return true;
@@ -1982,8 +1988,16 @@ public class MethodElementAddCommand extends CommandWrapper implements
 						pluginForAddingTagetAsBase = null;						
 					
 				} else {
-					pluginForAddingTagetAsBase.getBases().add(ownerPlugin);	
-					
+//					pluginForAddingTagetAsBase.getBases().add(ownerPlugin);	
+					//Double check
+					Map<String, Boolean> map = new HashMap<String, Boolean>();
+					if (pluginForAddingTagetAsBase != ownerPlugin
+							&& !Misc.isBaseOf(ownerPlugin,
+									pluginForAddingTagetAsBase, map)
+							&& !Misc.isBaseOf(pluginForAddingTagetAsBase,
+									ownerPlugin, map)) {
+						pluginForAddingTagetAsBase.getBases().add(ownerPlugin);
+					}
 				}
 				
 				return true;
