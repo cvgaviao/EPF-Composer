@@ -96,5 +96,10 @@ public interface IWizardExtender {
 	 *         successfully
 	 */
 	public boolean doFinish();
-
+	
+	/**
+	 * Give the wizard extender the chance to adjust the wizard pages
+	 */
+	public void adjustWizardPages(List<IWizardPage> pages);
+	
 }

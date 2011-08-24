@@ -105,6 +105,8 @@ public class NewPluginWizard extends BaseWizard implements INewWizard {
 			}
 
 			super.getNewWizardPages(wizardPages);
+			
+			wizardExtender.adjustWizardPages(wizardPages);
 
 			for (Iterator it = wizardPages.iterator(); it.hasNext();) {
 				IWizardPage wizardPage = (IWizardPage) it.next();
