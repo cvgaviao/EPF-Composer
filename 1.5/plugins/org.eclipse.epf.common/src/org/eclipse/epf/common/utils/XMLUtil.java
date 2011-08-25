@@ -113,7 +113,13 @@ public class XMLUtil {
 			if (childNodes != null) {
 				for (int i = 0; i < childNodes.getLength(); i++) {
 					Node childNode = childNodes.item(i);
+					if (childNode == null) {
+						continue;
+					}
 					Node childClone = cloneNode(childNode, doc);
+					if (childClone == null) {
+						continue;
+					}
 					clone.appendChild(childClone);
 				}
 			}
