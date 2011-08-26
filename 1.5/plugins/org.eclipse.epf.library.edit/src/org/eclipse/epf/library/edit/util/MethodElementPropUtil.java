@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
@@ -65,6 +67,23 @@ public class MethodElementPropUtil {
 	public boolean isSupporting(ContentPackage pkg) {
 		 Boolean value = getBooleanValue(pkg, Package_supporting);
 		 return value == null ? false : value.booleanValue();
+	}
+	
+	public void updatePackageSupportingBits(Collection<? extends MethodPackage> pkgs, boolean supporting) {
+		for (MethodPackage mpkg : pkgs) {
+			if (! (mpkg instanceof ContentPackage)) {
+				continue;
+			}
+			ContentPackage pkg = (ContentPackage) mpkg;
+			boolean pkgIsSupporting = isSupporting(pkg);
+			if (pkgIsSupporting && supporting) {
+				continue;	
+			}
+			if (pkgIsSupporting != supporting) {
+				setBooleanValue(pkg, Package_supporting, supporting);
+			}
+			updatePackageSupportingBits(pkg.getChildPackages(), supporting);
+		}
 	}
 	
 	public void setSupporting(ContentPackage pkg, boolean value) {
