@@ -18,19 +18,19 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
-import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.ContentPackage;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -302,8 +302,27 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 		super.refresh(editable);
 		if(supportingCheckbox != null) {
 			supportingCheckbox.setEnabled(editable);
+			EObject parent = contentPackage.eContainer();
+			if (parent instanceof MethodPlugin
+					&& ((MethodPlugin) parent).isSupporting()) {
+				supportingCheckbox.setEnabled(false);
+			} else if (parent instanceof ContentPackage
+					&& MethodElementPropUtil.getMethodElementPropUtil()
+							.isSupporting((ContentPackage) parent)) {
+				supportingCheckbox.setEnabled(false);
+			}
 		}
 	}
+	
+	public void updateSupportingCheckbox() {
+		if (supportingCheckbox == null) {
+			return;
+		}
+		boolean isSuporting = MethodElementPropUtil.getMethodElementPropUtil().isSupporting(contentPackage);
+		if (supportingCheckbox.getSelection() != isSuporting) {
+			supportingCheckbox.setSelection(isSuporting);
+		}
+	}	
 	
 	@Override
 	protected void createGeneralSectionContent() {
@@ -323,8 +342,13 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 			public void widgetSelected(SelectionEvent e) {
 				IStatus status = TngUtil.checkEdit(contentPackage, getSite().getShell());
 				if (status.isOK()) {
-					MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil(actionMgr);
-					propUtil.setSupporting(contentPackage, supportingCheckbox.getSelection());
+					MethodElementPropUtil propUtil = MethodElementPropUtil
+							.getMethodElementPropUtil(actionMgr);
+					propUtil.setSupporting(contentPackage, supportingCheckbox
+							.getSelection());
+					propUtil.updatePackageSupportingBits(contentPackage
+							.getChildPackages(), supportingCheckbox
+							.getSelection());
 				} else {
 					AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
 							AuthoringUIResources.editDialog_title,

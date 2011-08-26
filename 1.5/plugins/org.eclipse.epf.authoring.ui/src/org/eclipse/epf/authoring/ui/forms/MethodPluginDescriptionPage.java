@@ -36,6 +36,7 @@ import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.RemoveReferencesCommand;
 import org.eclipse.epf.library.edit.util.Comparators;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.Misc;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
@@ -436,6 +437,11 @@ public class MethodPluginDescriptionPage extends DescriptionFormPage implements 
 						supportingPluginCheckbox.setSelection(!supportingPluginCheckbox
 								.getSelection());
 						return;
+					} else {
+						MethodElementPropUtil
+								.getMethodElementPropUtil(actionMgr)
+								.updatePackageSupportingBits(plugin.getMethodPackages(),
+										supportingPluginCheckbox.getSelection());
 					}
 				} else {
 					AuthoringUIPlugin.getDefault().getMsgDialog().displayError(

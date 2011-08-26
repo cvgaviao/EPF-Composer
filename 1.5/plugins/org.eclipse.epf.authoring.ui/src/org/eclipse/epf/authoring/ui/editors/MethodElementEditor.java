@@ -59,6 +59,7 @@ import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.actions.LibraryValidateAction;
+import org.eclipse.epf.authoring.ui.forms.ContentPackageDescriptionPage;
 import org.eclipse.epf.authoring.ui.forms.IRefreshable;
 import org.eclipse.epf.authoring.ui.internal.MethodElementEditorErrorTickUpdater;
 import org.eclipse.epf.authoring.ui.providers.IMethodElementEditorPageProviderExtension;
@@ -2124,5 +2125,14 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 	public EditingDomain getEditingDomain() {
 		return editingDomain;
+	}
+	
+	public void setFocus() {
+		super.setFocus();
+		Object obj = getSelectedPage();
+		if (obj instanceof ContentPackageDescriptionPage) {
+			ContentPackageDescriptionPage page = (ContentPackageDescriptionPage) obj;
+			page.updateSupportingCheckbox();
+		}
 	}
 }
