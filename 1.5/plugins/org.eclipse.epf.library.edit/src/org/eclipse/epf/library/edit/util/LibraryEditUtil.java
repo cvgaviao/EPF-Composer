@@ -478,7 +478,7 @@ public class LibraryEditUtil {
 		return p == null ? false : p.inConfig(element, config);
 	}
 	
-	public class CollectElementFilter {
+	public static class CollectElementFilter {
 		public boolean accept(MethodElement element) {
 			return true;
 		}
