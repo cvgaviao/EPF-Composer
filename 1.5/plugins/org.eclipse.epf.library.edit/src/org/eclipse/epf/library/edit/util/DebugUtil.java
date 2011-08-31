@@ -79,6 +79,9 @@ public final class DebugUtil {
 	}
 	
 	public static String toString(MethodElement element, int ix) {
+		if (element == null) {
+			return "null";//$NON-NLS-1$
+		}
 		if (ix == 1) {
 			return TngUtil.getLabelWithPath(element);
 		} 
