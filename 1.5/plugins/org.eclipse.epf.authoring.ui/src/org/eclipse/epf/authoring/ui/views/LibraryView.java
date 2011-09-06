@@ -1391,6 +1391,7 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 			if (!locked) {
 				MenuManager submenuManager = null;
 				submenuManager = new MenuManager(
+						AuthoringUIResources._UI_CreateChild_menu_item,
 						AuthoringUIResources._UI_CreateChild_menu_item);
 				populateManager(submenuManager, createChildActions, null);
 				menuManager.insertBefore("fixed-additions", submenuManager); //$NON-NLS-1$
