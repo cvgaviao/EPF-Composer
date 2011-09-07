@@ -34,10 +34,10 @@ public class PracticePropUtil extends MethodElementPropUtil {
 	}
 	
 	public  UserDefinedTypeMeta getUtdData(Practice practice)  throws Exception {
-		UserDefinedTypeMeta meta = null;
+		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
 		PracticeXmlEditUtil xmlEditUtil = new PracticeXmlEditUtil(practice, this);
 		xmlEditUtil.retrieveUtdData(meta);
-		return meta;
+		return meta.getId() == null ? null : meta;
 	}
 	
 	private static class PracticeXmlEditUtil extends XmlEditUtil {
@@ -60,8 +60,8 @@ public class PracticePropUtil extends MethodElementPropUtil {
 			firstElement.setAttribute(_id, meta.getId());
 			for (String name : UserDefinedTypeMeta.rteNames) {
 				String value = map.get(name);
-				if (value != null && value.length() > 0) {
-					firstElement.setAttribute(name, value);
+				if (value != null && value.trim().length() > 0) {
+					firstElement.setAttribute(name, value.trim());
 				}
 			}			
 			storeToOwner(practice, Practice_UtdData);	
@@ -71,10 +71,15 @@ public class PracticePropUtil extends MethodElementPropUtil {
 			Map<String, String> map = meta.getRteNameMap();
 			
 			String xmlString = getPropUtil().getStringValue(practice, Practice_UtdData);
+			if (xmlString == null || xmlString.trim().length() == 0) {
+				return;
+			}
 			Element firstElement = loadDocumentAndGetFirstElement(xmlString);	
 				
 			String value = firstElement.getAttribute(_id);
-			meta.setId(value);
+			if (value != null && value.length() > 0) {
+				meta.setId(value);
+			}
 			for (String name : UserDefinedTypeMeta.rteNames) {
 				value = firstElement.getAttribute(name);
 				if (value != null && value.length() > 0) {
