@@ -12,7 +12,9 @@ package org.eclipse.epf.library.xmi;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
@@ -46,6 +48,7 @@ import org.eclipse.epf.persistence.migration.MappingUtil;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.osgi.util.NLS;
 
 import com.ibm.icu.util.Calendar;
@@ -548,5 +551,22 @@ public class XMILibraryManager extends AbstractLibraryManager {
 		//Minimum implementation for defaul register type, to minimize caller code change
 		this.library = null;
 	}
+	
+	private Map<String, UserDefinedTypeMeta> UserDefinedTypeMap;
+	public Collection<UserDefinedTypeMeta> getUserDefinedTypes() {
+		return UserDefinedTypeMap == null ? null : UserDefinedTypeMap.values();
+	}
+	
+	public void addUserDefineType(UserDefinedTypeMeta meta) {
+		if (UserDefinedTypeMap == null) {
+			UserDefinedTypeMap = new HashMap<String, UserDefinedTypeMeta>();
+		}
+		UserDefinedTypeMap.put(meta.getId(), meta);
+	}
+		
+	public UserDefinedTypeMeta getUserDefineType(String id) {
+		return UserDefinedTypeMap == null ? null : UserDefinedTypeMap.get(id);
+	}
+	
 	
 }

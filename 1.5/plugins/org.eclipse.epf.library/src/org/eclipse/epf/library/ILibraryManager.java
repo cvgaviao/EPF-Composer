@@ -12,6 +12,7 @@ package org.eclipse.epf.library;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -21,6 +22,7 @@ import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.ui.IPropertyListener;
 
 /**
@@ -322,4 +324,10 @@ public interface ILibraryManager {
 	 */
 	public void unRegisterMethodLibrary() throws LibraryServiceException;
 
+	public Collection<UserDefinedTypeMeta> getUserDefinedTypes();
+	
+	public void addUserDefineType(UserDefinedTypeMeta meta);
+		
+	public UserDefinedTypeMeta getUserDefineType(String id);
+	
 }
