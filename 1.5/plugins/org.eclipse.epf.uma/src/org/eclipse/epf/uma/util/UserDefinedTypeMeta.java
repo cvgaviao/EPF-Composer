@@ -9,6 +9,8 @@ public class UserDefinedTypeMeta {
 	
 	public static final String _typeName = "typeName";						//$NON-NLS-1$
 	public static final String _problems = "problems";						//$NON-NLS-1$
+	public static final String _goals = "goals";							//$NON-NLS-1$
+	public static final String _background = "background";					//$NON-NLS-1$	
 	public static final String _mainDescription = "mainDescription";		//$NON-NLS-1$	
 	public static final String _application = "application"; 				//$NON-NLS-1$
 	public static final String _levelsOfAdoption = "levelsOfAdoption"; 		//$NON-NLS-1$
@@ -17,6 +19,8 @@ public class UserDefinedTypeMeta {
 	public static String[] rteNames = {
 		_typeName,
 		_problems,
+		_goals,
+		_background,
 		_mainDescription,
 		_application,
 		_levelsOfAdoption,
@@ -25,7 +29,7 @@ public class UserDefinedTypeMeta {
 	
 	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeName) {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
-		meta.setId(meta + ":" + typeName);								//$NON-NLS-1$
+		meta.setId(Type_Practice + ":" + typeName);								//$NON-NLS-1$
 		return meta;
 	}
 	
