@@ -10,13 +10,16 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.forms;
 
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Event;
@@ -72,33 +75,34 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 	
 	@Override
 	protected void createDetailSectionContent() {
+		PracticeRTELabelProvider provider = new PracticeRTELabelProvider(guidance);
+		
 		// Problem is named "Purpose" in the UI
 		ctrl_problem = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.PURPOSE_TEXT, 40, 400,
+				detailComposite, provider.getProblemLabel(), 40, 400,
 				DETAIL_SECTION_ID);
-
 		ctrl_goals = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.GOALS_TEXT, 40, 400,
+				detailComposite, provider.getGoalsLabel(), 40, 400,
 				DETAIL_SECTION_ID);
 		ctrl_background = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.BACKGROUND_TEXT, 40, 400,
+				detailComposite, provider.getBackgroundLabel(), 40, 400,
 				DETAIL_SECTION_ID);
 
 		if (fullDescOn) {
 			ctrl_full_desc = createRichTextEditWithLinkForSection(toolkit,
-					detailComposite, AuthoringUIText.MAIN_DESCRIPTION_TEXT,
+					detailComposite, provider.getMainDescriptionLabel(),
 					100, 400, DETAIL_SECTION_ID);
 		}
 		
 		// Application field is called "How to read this practice" in the UI
 		ctrl_application = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIResources.practice_application_text, 40, 400,
+				detailComposite, provider.getApplicationLabel(), 40, 400,
 				DETAIL_SECTION_ID);
 		ctrl_levels_adoption = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.LEVEL_OF_ADOPTION_TEXT, 40,
+				detailComposite, provider.getLevelsOfAdoptionLabel(), 40,
 				400, DETAIL_SECTION_ID);
 		ctrl_additional_info = createRichTextEditWithLinkForSection(toolkit,
-				detailComposite, AuthoringUIText.ADDITIONAL_INFO_TEXT, 40, 400,
+				detailComposite, provider.getAdditionalInfoLabel(), 40, 400,
 				DETAIL_SECTION_ID);
 	}
 
@@ -359,6 +363,73 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 	 */
 	protected Object getContentElement() {
 		return guidance;
+	}
+
+	private class PracticeRTELabelProvider {
+		private String problemLabel;
+		private String goalsLabel;
+		private String backgroundLabel;
+		private String mainDescriptionLabel;
+		private String applicationLabel;
+		private String levelsOfAdoptionLabel;
+		private String additionalInfoLabel;
+		
+		public PracticeRTELabelProvider(Practice prac) {
+			buildLables(prac);
+		}
+		
+		private void buildLables(Practice prac) {
+			try {
+				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
+				if (udtMeta != null) {
+					problemLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._problems) + ":"; //$NON-NLS-1$
+					goalsLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._goals) + ":"; //$NON-NLS-1$
+					backgroundLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._background) + ":"; //$NON-NLS-1$
+					mainDescriptionLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._mainDescription) + ":"; //$NON-NLS-1$
+					applicationLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._application) + ":"; //$NON-NLS-1$
+					levelsOfAdoptionLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._levelsOfAdoption) + ":"; //$NON-NLS-1$
+					additionalInfoLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._additionalInfo) + ":"; //$NON-NLS-1$
+				} else {
+					problemLabel = AuthoringUIText.PURPOSE_TEXT;
+					goalsLabel = AuthoringUIText.GOALS_TEXT;
+					backgroundLabel = AuthoringUIText.BACKGROUND_TEXT;
+					mainDescriptionLabel = AuthoringUIText.MAIN_DESCRIPTION_TEXT;
+					applicationLabel = AuthoringUIResources.practice_application_text;
+					levelsOfAdoptionLabel = AuthoringUIText.LEVEL_OF_ADOPTION_TEXT;
+					additionalInfoLabel = AuthoringUIText.ADDITIONAL_INFO_TEXT;
+				}				
+			} catch (Exception e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+		
+		public String getProblemLabel() {
+			return problemLabel;
+		}
+
+		public String getGoalsLabel() {
+			return goalsLabel;
+		}
+
+		public String getBackgroundLabel() {
+			return backgroundLabel;
+		}
+
+		public String getMainDescriptionLabel() {
+			return mainDescriptionLabel;
+		}
+
+		public String getApplicationLabel() {
+			return applicationLabel;
+		}
+
+		public String getLevelsOfAdoptionLabel() {
+			return levelsOfAdoptionLabel;
+		}
+
+		public String getAdditionalInfoLabel() {
+			return additionalInfoLabel;
+		}
 	}
 
 }
