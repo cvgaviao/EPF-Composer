@@ -19,10 +19,18 @@ public class MethodElementExt extends ExtendObject {
 	private MethodElement element;
 	private boolean transientElement = false;
 	private Object cachedObject;
+	private ExtendReferenceMap extendReferenceMap;
 
 	public MethodElementExt(MethodElement element) {
 		this.element = element;
 	}	
+	
+	public ExtendReferenceMap getExtendReferenceMap(boolean create) {
+		if (create && extendReferenceMap == null) {
+			extendReferenceMap = new ExtendReferenceMap();
+		}
+		return extendReferenceMap;
+	}
 	
 	public Object getCachedObject() {
 		return cachedObject;
