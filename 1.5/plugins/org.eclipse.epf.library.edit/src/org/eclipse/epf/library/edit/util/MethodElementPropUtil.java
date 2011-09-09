@@ -24,6 +24,7 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.w3c.dom.Element;
 
 public class MethodElementPropUtil {
 	
@@ -369,9 +370,9 @@ public class MethodElementPropUtil {
 		return new XmlEditUtil(this);
 	}
 	
-	public void storeReferences(MethodElement element)  throws Exception  {
+	public void storeReferences(MethodElement element, boolean rollback)  throws Exception  {
 		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
-		meXmlEditUtil.storeReferences();
+		meXmlEditUtil.storeReferences(rollback);
 	}
 	
 	public List<Practice> getUdtList(MethodElement element, boolean toModify) {
@@ -400,19 +401,17 @@ public class MethodElementPropUtil {
 			this.element = element;
 		}
 		
-		public void storeReferences() throws Exception  {
+		public void storeReferences(boolean rollback) throws Exception  {
 			ExtendReferenceMap map = getExtendReferenceMap(element, false);
 			if (map == null) {
 				return;
 			}
+			Element firstElement = createFirstElement(Me_references);			
+			map.storeReferences(firstElement, rollback);
 			
-//			if (getActionManager() == null) {
-//				MethodElementPropertyHelper.setProperty(e, propName, propValue);
-//			} else {
-//				MethodElementSetPropertyCommand cmd = new MethodElementSetPropertyCommand(
-//						e, propName, propValue);
-//				getActionManager().execute(cmd);	
+			storeToOwner(element, Me_references);
 		}
+		
 		
 	}
 	
