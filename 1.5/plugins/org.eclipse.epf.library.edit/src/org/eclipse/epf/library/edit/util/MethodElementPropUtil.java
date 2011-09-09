@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
+import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.uma.Constraint;
@@ -18,6 +19,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
@@ -29,6 +31,7 @@ public class MethodElementPropUtil {
 	
 	public static final String CONSTRAINT_WPStates = "constraint_wpStates";		//$NON-NLS-1$
 	public static final String Package_supporting = "pakage_supporting";		//$NON-NLS-1$
+	public static final String Me_references = "me_references";					//$NON-NLS-1$
 
 	private static MethodElementPropUtil methodElementPropUtil = new MethodElementPropUtil();
 	public static MethodElementPropUtil getMethodElementPropUtil(IActionManager actionManager) {
@@ -365,5 +368,53 @@ public class MethodElementPropUtil {
 	public XmlEditUtil newXmlEditUtil() {
 		return new XmlEditUtil(this);
 	}
+	
+	public void storeReferences(MethodElement element)  throws Exception  {
+		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
+		meXmlEditUtil.storeReferences();
+	}
+	
+	public List<Practice> getUdtList(MethodElement element, boolean toModify) {
+		return (List<Practice>) getReferenceValue(null, element, toModify);
+	}
+	
+	private Object getReferenceValue(String referenceName, MethodElement element, boolean toModify) {
+		ExtendReferenceMap map = getExtendReferenceMap(element, toModify);
+		return map == null ? null : map.get(referenceName, toModify);
+	}
+	
+	private ExtendReferenceMap getExtendReferenceMap(MethodElement element, boolean toModify) {
+		MethodElementExt extendObject = getExtendObject(element, toModify);
+		if (extendObject == null) {
+			return null;
+		}
+		return extendObject.getExtendReferenceMap(toModify);
+	}
+	
+	private class MeXmlEditUtil extends XmlEditUtil {
+		
+		private MethodElement element;
+		
+		public MeXmlEditUtil(MethodElement element, MethodElementPropUtil propUtil) {
+			super(propUtil);
+			this.element = element;
+		}
+		
+		public void storeReferences() throws Exception  {
+			ExtendReferenceMap map = getExtendReferenceMap(element, false);
+			if (map == null) {
+				return;
+			}
+			
+//			if (getActionManager() == null) {
+//				MethodElementPropertyHelper.setProperty(e, propName, propValue);
+//			} else {
+//				MethodElementSetPropertyCommand cmd = new MethodElementSetPropertyCommand(
+//						e, propName, propValue);
+//				getActionManager().execute(cmd);	
+		}
+		
+	}
+	
 	
 }
