@@ -3,6 +3,7 @@ package org.eclipse.epf.library.edit.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -38,6 +39,15 @@ public class PracticePropUtil extends MethodElementPropUtil {
 		PracticeXmlEditUtil xmlEditUtil = new PracticeXmlEditUtil(practice, this);
 		xmlEditUtil.retrieveUtdData(meta);
 		return meta.getId() == null ? null : meta;
+	}
+	
+	public  boolean isUtdType(Practice practice) {
+		try {
+			return getUtdData(practice) != null;			
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		return false;
 	}
 	
 	private static class PracticeXmlEditUtil extends XmlEditUtil {

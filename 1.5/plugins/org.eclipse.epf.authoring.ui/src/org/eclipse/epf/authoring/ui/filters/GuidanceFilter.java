@@ -11,12 +11,14 @@
 package org.eclipse.epf.authoring.ui.filters;
 
 import org.eclipse.epf.library.edit.itemsfilter.FilterInitializer;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
 import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.SupportingMaterial;
@@ -64,6 +66,12 @@ public class GuidanceFilter extends ContentFilter {
 				return true;
 		}
 		
+		if (obj instanceof Practice) {
+			if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) obj)) {
+				return true;
+			}
+		}
+				
 		return false;
 	}
 
