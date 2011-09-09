@@ -138,8 +138,8 @@ public final class MethodCreateChildAction extends StaticSelectionCommandAction 
 		try {
 			if (descriptor instanceof CommandParameter
 					&& ((CommandParameter) descriptor).getValue() instanceof Practice) {
-				Practice parc = (Practice)((CommandParameter) descriptor).getValue();
-				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(parc);
+				Practice prac = (Practice)((CommandParameter) descriptor).getValue();
+				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
 				if (udtMeta != null) {
 					return true;
 				}
@@ -154,8 +154,8 @@ public final class MethodCreateChildAction extends StaticSelectionCommandAction 
 	private String getNameForUserDefinedType() {
 		try {
 			if (isUserDefinedType()) {
-				Practice parc = (Practice)((CommandParameter) descriptor).getValue();
-				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(parc);
+				Practice prac = (Practice)((CommandParameter) descriptor).getValue();
+				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
 				return udtMeta.getRteNameMap().get(UserDefinedTypeMeta._typeName);
 			}
 		} catch (Exception e) {
