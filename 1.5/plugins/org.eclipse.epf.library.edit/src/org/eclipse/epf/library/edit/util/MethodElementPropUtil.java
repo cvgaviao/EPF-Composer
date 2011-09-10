@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.common.utils.XMLUtil;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
@@ -393,11 +394,11 @@ public class MethodElementPropUtil {
 	}
 	
 	private Object getReferenceValue(String referenceName, MethodElement element, boolean toModify) {
-		ExtendReferenceMap map = getExtendReferenceMap(element, toModify);
-		return map == null ? null : map.get(referenceName, toModify);
+		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
+		return meXmlEditUtil.getReferenceValue(referenceName, element, toModify);
 	}
 	
-	private ExtendReferenceMap getExtendReferenceMap(MethodElement element, boolean toModify) {
+	private ExtendReferenceMap getCachedExtendReferenceMap(MethodElement element, boolean toModify) {
 		MethodElementExt extendObject = getExtendObject(element, toModify);
 		if (extendObject == null) {
 			return null;
@@ -405,7 +406,7 @@ public class MethodElementPropUtil {
 		return extendObject.getExtendReferenceMap(toModify);
 	}
 	
-	private class MeXmlEditUtil extends XmlEditUtil {
+	private static class MeXmlEditUtil extends XmlEditUtil {
 		
 		private MethodElement element;
 		
@@ -421,18 +422,38 @@ public class MethodElementPropUtil {
 			storeToOwner(element, Me_references);
 		}
 		
+		public Object getReferenceValue(String referenceName, MethodElement element, boolean toModify) {
+			ExtendReferenceMap map = getExtendReferenceMap(element, toModify);
+			return map == null ? null : map.get(referenceName, toModify);
+		}
+		
+		public ExtendReferenceMap getExtendReferenceMap(MethodElement element, boolean toModify) {
+			ExtendReferenceMap map = getPropUtil().getCachedExtendReferenceMap(element, toModify);
+			if (map != null || ! getPropUtil().hasUtdList(element)) {
+				return map;
+			}
+
+			String xmlString = getPropUtil().getStringValue(element, Me_references);
+			Element firstElement = null;
+			try {
+				firstElement = loadDocumentAndGetFirstElement(xmlString);
+			} catch (Exception e) {
+				LibraryEditPlugin.getDefault().getLogger().logError(e);
+				firstElement = null;
+			}
+			if (firstElement != null) {
+				map = getExtendReferenceMap(element, true);				
+				map.retrieveReferencesFromElement(firstElement);
+			}
+
+			return map;
+		}
+		
 		//storeIx: -1: store rollback value, 0: store and clear rollback value, 1: store without clearing rollback value
 		private boolean buildReferencesElement(int storeIx) throws Exception {
 			ExtendReferenceMap map = getExtendReferenceMap(element, false);
 			if (map == null) {
-				if (! getPropUtil().hasUtdList(element)) {
-					return false;
-				} 				
-				String xmlString = getPropUtil().getStringValue(element, Me_references);
-				Element firstElement = loadDocumentAndGetFirstElement(xmlString);				
-				map = getExtendReferenceMap(element, true);				
-				map.retrieveReferencesFromElement(firstElement);
-				return true;
+				return false;
 			}
 			Element firstElement = createFirstElement(Me_references);
 			if (storeIx == 0) {
