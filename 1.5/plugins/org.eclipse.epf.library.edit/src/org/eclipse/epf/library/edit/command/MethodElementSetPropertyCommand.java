@@ -29,6 +29,7 @@ public class MethodElementSetPropertyCommand extends AbstractCommand implements
 	protected MethodElement element;
 	protected String key;
 	protected String value;
+
 	protected String oldValue;
 	protected Collection<Resource> modifiedResources;
 	
@@ -37,7 +38,12 @@ public class MethodElementSetPropertyCommand extends AbstractCommand implements
 		this.key = key;
 		this.value = value;
 	}
-
+	
+	public MethodElementSetPropertyCommand(MethodElement element, String key) {
+		this.element = element;
+		this.key = key;
+	}
+	
 	protected boolean prepare() {
 		// check if this operation will modify the element in opposite feature
 		// value

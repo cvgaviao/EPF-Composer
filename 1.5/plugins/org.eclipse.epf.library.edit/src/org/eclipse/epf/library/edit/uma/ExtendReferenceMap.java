@@ -6,22 +6,38 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.XmlEditUtil;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.UmaPackage;
 import org.w3c.dom.Element;
 
 public class ExtendReferenceMap {
 
 	//Reference names
-	public static final String PracticeUtd = "practiceUtd";			//$NON-NLS-1$
+	public static final String UtdList = "udtList";			//$NON-NLS-1$
 	
 	public static String[] names = {
-		PracticeUtd,
+		UtdList,
 	};
 	
 	private Map<String, Object> map;
 	private Map<String, Object> oldValueMap;
 
 	public ExtendReferenceMap() {		
+	}
+	
+	public void retrieveReferencesFromElement(Element element) {
+		for (String name : names) {
+			String value = element.getAttribute(name);
+			if (value == null || value.length() == 0) {
+				continue;
+			}			
+			List<Practice> items = (List<Practice>) XmlEditUtil.convertToMethodElements(value, UmaPackage.eINSTANCE.getPractice());
+			if (items != null && !items.isEmpty()) {
+				getMap().put(name, items);
+			}
+		}
 	}
 	
 	public Object get(String name, boolean toModify) {
@@ -35,8 +51,8 @@ public class ExtendReferenceMap {
 				getMap().put(name, value);
 			}
 			if (value instanceof ArrayList) {
-				value = ((ArrayList) value).clone();
-				getOldValueMap().put(name, value);
+				Object oldValue = ((ArrayList) value).clone();
+				getOldValueMap().put(name, oldValue);
 			}
 		}
 		return value;
@@ -66,7 +82,12 @@ public class ExtendReferenceMap {
 		return oldValueMap;
 	}
 	
-	public void storeReferences(Element element, boolean rollback) {
+	public void storeReferencesToElement(Element element) {
+		storeReferencesToElement(element, false);
+		getOldValueMap().clear();
+	}
+	
+	public void storeReferencesToElement(Element element, boolean rollback) {
 		for (String name : names) {
 			Object value = get(name, false);
 			if (rollback && getOldValueMap().containsKey(name)) {
@@ -79,8 +100,8 @@ public class ExtendReferenceMap {
 			} else if (value instanceof List) {
 				String str = ""; //$NON-NLS-1$	
 				for (Object item : (List) value) {
-					if (value instanceof MethodElement) {
-						MethodElement eValue = (MethodElement) value;
+					if (item instanceof MethodElement) {
+						MethodElement eValue = (MethodElement) item;
 						if (str.length() > 0) {
 							str += MethodElementPropUtil.infoSeperator;
 						}

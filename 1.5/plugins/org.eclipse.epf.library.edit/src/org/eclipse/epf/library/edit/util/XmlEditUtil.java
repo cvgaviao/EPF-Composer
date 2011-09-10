@@ -63,7 +63,7 @@ public class XmlEditUtil {
 		propUtil.setStringValue(owner, propName, value);
 	}
 	
-	protected String convertToGuidsString(Collection<? extends MethodElement> elements) {
+	public static String convertToGuidsString(Collection<? extends MethodElement> elements) {
 		String value = ""; 	//$NON-NLS-1$
 		if (elements == null || elements.isEmpty()) {
 			return value;
@@ -77,7 +77,7 @@ public class XmlEditUtil {
 		return value;
 	}
 	
-	protected List<? extends MethodElement> convertToMethodElements(String guidsString, EClass type) {
+	public static List<? extends MethodElement> convertToMethodElements(String guidsString, EClass type) {
 		List<MethodElement> list = new ArrayList<MethodElement>();
 		if (guidsString == null || guidsString.length() == 0) {
 			return list;

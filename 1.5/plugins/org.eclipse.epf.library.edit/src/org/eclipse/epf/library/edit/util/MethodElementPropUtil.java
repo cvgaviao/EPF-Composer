@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
@@ -24,6 +26,7 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
 
 public class MethodElementPropUtil {
@@ -370,13 +373,23 @@ public class MethodElementPropUtil {
 		return new XmlEditUtil(this);
 	}
 	
-	public void storeReferences(MethodElement element, boolean rollback)  throws Exception  {
+	public void storeReferences(MethodElement element)  throws Exception  {
 		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
-		meXmlEditUtil.storeReferences(rollback);
+		meXmlEditUtil.storeReferences();
+	}
+	
+	public String getReferencesXml(MethodElement element, boolean rollback) throws Exception  {
+		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
+		return meXmlEditUtil.getReferencesXml(rollback);
+	}
+	
+	public boolean hasUtdList(MethodElement element) {
+		String value = getStringValue(element, Me_references);
+		return value != null && value.length() > 0;
 	}
 	
 	public List<Practice> getUdtList(MethodElement element, boolean toModify) {
-		return (List<Practice>) getReferenceValue(null, element, toModify);
+		return (List<Practice>) getReferenceValue(ExtendReferenceMap.UtdList, element, toModify);
 	}
 	
 	private Object getReferenceValue(String referenceName, MethodElement element, boolean toModify) {
@@ -401,17 +414,41 @@ public class MethodElementPropUtil {
 			this.element = element;
 		}
 		
-		public void storeReferences(boolean rollback) throws Exception  {
-			ExtendReferenceMap map = getExtendReferenceMap(element, false);
-			if (map == null) {
+		public void storeReferences() throws Exception  {
+			if (! buildReferencesElement(0)) {
 				return;
-			}
-			Element firstElement = createFirstElement(Me_references);			
-			map.storeReferences(firstElement, rollback);
-			
+			}			
 			storeToOwner(element, Me_references);
 		}
 		
+		//storeIx: -1: store rollback value, 0: store and clear rollback value, 1: store without clearing rollback value
+		private boolean buildReferencesElement(int storeIx) throws Exception {
+			ExtendReferenceMap map = getExtendReferenceMap(element, false);
+			if (map == null) {
+				if (! getPropUtil().hasUtdList(element)) {
+					return false;
+				} 				
+				String xmlString = getPropUtil().getStringValue(element, Me_references);
+				Element firstElement = loadDocumentAndGetFirstElement(xmlString);				
+				map = getExtendReferenceMap(element, true);				
+				map.retrieveReferencesFromElement(firstElement);
+				return true;
+			}
+			Element firstElement = createFirstElement(Me_references);
+			if (storeIx == 0) {
+				map.storeReferencesToElement(firstElement);
+			} else {
+				map.storeReferencesToElement(firstElement, storeIx == -1);
+			}
+			return true;
+		}		
+		
+		public String getReferencesXml(boolean rollback) throws Exception  {
+			if (! buildReferencesElement(rollback ? -1 : 1)) {
+				return null;
+			}			
+			return XMLUtil.toXmlString(getDocument());
+		}
 		
 	}
 	

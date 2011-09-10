@@ -13,15 +13,18 @@ package org.eclipse.epf.library.edit.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -90,10 +93,21 @@ public class MethodElementUtil {
 				}
 			}
 		}
-
+		
 		itemList
 				.addAll(AssociationHelper.getPractices((ContentElement) object));
 
+		List<Practice> utdItems = MethodElementPropUtil.getMethodElementPropUtil().getUdtList((ContentElement) object, false);
+		if (utdItems != null && ! utdItems.isEmpty()) {
+			Set set = new HashSet();
+			set.addAll(itemList);
+			for (Practice p : utdItems) {
+				if (! set.contains(p)) {
+					itemList.add(p);
+					set.add(p);
+				}
+			}
+		}		
 		return itemList;
 	}
 	

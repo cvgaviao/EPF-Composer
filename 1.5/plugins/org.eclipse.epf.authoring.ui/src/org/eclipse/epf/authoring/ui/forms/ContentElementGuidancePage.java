@@ -21,9 +21,11 @@ import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.filters.GuidanceFilter;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.command.ChangeUdtCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
 import org.eclipse.epf.uma.CustomCategory;
@@ -104,6 +106,10 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 							.equals(contentElement
 									.getVariabilityBasedOnElement()))) {
 						local.add(obj);
+					} else if (obj instanceof Practice) {
+						if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) obj)) {
+							local.add(obj);
+						}
 					}
 				}
 				return local.toArray();
@@ -118,6 +124,7 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 	protected void addItemsToModel1(ArrayList addItems) {
 		// Update the model.
 		IActionManager actionMgr = editor.getActionManager();
+		List<Practice> utdItems = new ArrayList<Practice>();
 		if (!addItems.isEmpty()) {
 			for (Iterator it = addItems.iterator(); it.hasNext();) {
 				Guidance item = (Guidance) it.next();
@@ -227,6 +234,10 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 							UmaPackage.eINSTANCE.getContentElement_Assets(),
 							(ReusableAsset) item, -1);
 					continue;
+				} else if (item instanceof Practice) {
+					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+						utdItems.add((Practice) item);
+					}
 				} else {
 					AuthoringUIPlugin
 							.getDefault()
@@ -241,6 +252,9 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 			}
 			setDirty(true);
 		}
+		if (! utdItems.isEmpty()) {
+			actionMgr.execute(new ChangeUdtCommand(contentElement, utdItems, false));
+		}
 	}
 
 	/**
@@ -249,6 +263,7 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 	protected void removeItemsFromModel1(ArrayList rmItems) {
 		// Update the model.
 		IActionManager actionMgr = editor.getActionManager();
+		List<Practice> utdItems = new ArrayList<Practice>();
 		if (!rmItems.isEmpty()) {
 			for (Iterator it = rmItems.iterator(); it.hasNext();) {
 				Guidance item = (Guidance) it.next();
@@ -358,6 +373,10 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 							UmaPackage.eINSTANCE.getContentElement_Assets(),
 							(ReusableAsset) item, -1);
 					continue;
+				} else if (item instanceof Practice) {
+					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+						utdItems.add((Practice) item);
+					}
 				} else {
 					AuthoringUIPlugin
 							.getDefault()
@@ -371,6 +390,9 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 				}
 			}
 			setDirty(true);
+		}
+		if (! utdItems.isEmpty()) {
+			actionMgr.execute(new ChangeUdtCommand(contentElement, utdItems, true));
 		}
 	}
 
