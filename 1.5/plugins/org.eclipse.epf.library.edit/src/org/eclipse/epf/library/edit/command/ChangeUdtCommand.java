@@ -14,7 +14,7 @@ public class ChangeUdtCommand extends MethodElementSetPropertyCommand {
 	private List<Practice> items;
 	
 	public ChangeUdtCommand(MethodElement element, List<Practice> items, boolean remove) {
-		super(element, PracticePropUtil.Practice_UtdData);
+		super(element, MethodElementPropUtil.Me_references);
 		this.items = items;
 		this.remove = remove;
 	}
