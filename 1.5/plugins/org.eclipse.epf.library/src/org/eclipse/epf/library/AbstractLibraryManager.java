@@ -745,7 +745,9 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 //		if (debug) {
 //			DebugTrace.print(this, "getMethodElement", "guid=" + guid); //$NON-NLS-1$ //$NON-NLS-2$
 //		}
-
+		if (guid == null) {
+			return null;
+		}
 		try {
 			ILibraryResourceSet resourceSet = (ILibraryResourceSet) library
 					.eResource().getResourceSet();
