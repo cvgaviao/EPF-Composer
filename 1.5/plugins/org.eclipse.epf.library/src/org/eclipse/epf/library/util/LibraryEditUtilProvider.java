@@ -26,6 +26,7 @@ import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
@@ -46,6 +47,12 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	}
 
 	public MethodElement getMethodElement(String guid) {
+		if (guid == null) {
+			return null;
+		}
+		if (! UmaUtil.unresolvedGuidSet.isEmpty() && UmaUtil.unresolvedGuidSet.contains(guid)) {
+			return null;
+		}
 		ILibraryManager mgr = LibraryService.getInstance()
 				.getCurrentLibraryManager();
 		boolean oldValue = MultiFileResourceSetImpl.REPORT_ERROR;
@@ -53,6 +60,9 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 			MultiFileResourceSetImpl.REPORT_ERROR = false;
 		}
 		MethodElement ret = mgr == null ? null : mgr.getMethodElement(guid);
+		if (mgr != null && ret == null) {
+			UmaUtil.unresolvedGuidSet.add(guid);
+		}
 		if (oldValue) {
 			MultiFileResourceSetImpl.REPORT_ERROR = true;
 		}

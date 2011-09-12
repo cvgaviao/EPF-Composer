@@ -69,6 +69,7 @@ import org.eclipse.epf.uma.WorkProductType;
 public class UmaUtil {
 
 	private static IUmaUtilProvider provider;
+	public static Set<String> unresolvedGuidSet = new HashSet<String>();
 	
 	private static IUmaUtilProvider getProvider() {
 		return provider;
