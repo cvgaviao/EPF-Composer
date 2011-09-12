@@ -27,7 +27,7 @@ public class MethodElementExt extends ExtendObject {
 	
 	public ExtendReferenceMap getExtendReferenceMap(boolean create) {
 		if (create && extendReferenceMap == null) {
-			extendReferenceMap = new ExtendReferenceMap();
+			extendReferenceMap = new ExtendReferenceMap(element);
 		}
 		return extendReferenceMap;
 	}

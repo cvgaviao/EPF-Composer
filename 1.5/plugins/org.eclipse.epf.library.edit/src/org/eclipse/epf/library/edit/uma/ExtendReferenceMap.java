@@ -1,15 +1,18 @@
 package org.eclipse.epf.library.edit.uma;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.XmlEditUtil;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.MeList;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.w3c.dom.Element;
 
 public class ExtendReferenceMap {
@@ -23,8 +26,14 @@ public class ExtendReferenceMap {
 	
 	private Map<String, Object> map;
 	private Map<String, Object> oldValueMap;
-
-	public ExtendReferenceMap() {		
+	private MethodElement ownerElement;
+	
+	public ExtendReferenceMap(MethodElement ownerElement) {
+		this.ownerElement = ownerElement;
+	}
+	
+	public MethodElement getOwnerElement() {
+		return ownerElement;
 	}
 	
 	public void retrieveReferencesFromElement(Element element) {
@@ -32,8 +41,9 @@ public class ExtendReferenceMap {
 			String value = element.getAttribute(name);
 			if (value == null || value.length() == 0) {
 				continue;
-			}			
-			List<Practice> items = (List<Practice>) XmlEditUtil.convertToMethodElements(value, UmaPackage.eINSTANCE.getPractice());
+			}
+			UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
+			MeList items = XmlEditUtil.convertToMethodElements(value, UmaPackage.eINSTANCE.getPractice(), uHandler);
 			if (items != null && !items.isEmpty()) {
 				getMap().put(name, items);
 			}
@@ -45,17 +55,80 @@ public class ExtendReferenceMap {
 			return null;
 		}
 		Object value = getMap().get(name);
-		if (isMany(name) && toModify) {
-			if (value == null) {
-				value = new MeList();
-				getMap().put(name, value);
-			}
-			if (value instanceof MeList) {
-				Object oldValue = ((MeList) value).clone();
-				getOldValueMap().put(name, oldValue);
+		if (! isMany(name)) {
+			return value;
+		}
+		
+		if (value == null && toModify) {
+			value = new MeList();
+			getMap().put(name, value);
+		}			
+		if (! (value instanceof MeList)) {
+			return value;
+		}
+		
+		MeList meList = (MeList) value;
+		if (!meList.isOFeatureHandled()) {
+			for (Object obj : meList) {
+				if (obj instanceof MethodElement) {
+					MethodElement element = (MethodElement) obj; 
+					addOpposite(name, element);
+				}
+			}					
+			meList.setOFeatureHandled(true);
+		}
+		if (meList.isHasUnresolved()) {
+			boolean allResoved = true;					
+			for (int i = 0; i < meList.size(); i++) {
+				Object obj = meList.get(i);
+				if (obj instanceof MethodElement) {
+					MethodElement element = (MethodElement) obj;
+					if (UmaUtil.isUnresolved(element)) {
+						MethodElement resolveElement = LibraryEditUtil.getInstance().getMethodElement(element.getGuid());
+						if (resolveElement == null) {
+							allResoved = false;
+						} else {
+							meList.set(i, resolveElement);
+							addOpposite(name, resolveElement);
+						}
+					}
+				}
+			}					
+			if (allResoved) {
+				meList.setHasUnresolved(false);
 			}
 		}
-		return value;
+		if (toModify) {
+			Object oldValue = meList.clone();
+			getOldValueMap().put(name, oldValue);
+		}
+
+		return meList;
+
+	}
+
+	private void addOpposite(String name, MethodElement element) {
+		if (UmaUtil.isUnresolved(element)) {
+			return;
+		}
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		ExtendReferenceMap otherMap = propUtil.getExtendReferenceMap(element, true);
+		Object ovalue = otherMap.get(getOppositeName(name), true);
+		if (ovalue instanceof MeList) {
+			((MeList) ovalue).add(getOwnerElement());
+		}
+	}
+	
+	private void renmoveOpposite(String name, MethodElement element) {
+		if (UmaUtil.isUnresolved(element)) {
+			return;
+		}
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		ExtendReferenceMap otherMap = propUtil.getExtendReferenceMap(element, true);
+		Object ovalue = otherMap.get(getOppositeName(name), true);
+		if (ovalue instanceof MeList) {
+			((MeList) ovalue).remove(getOwnerElement());
+		}
 	}
 
 	public void set(String name, Object value) {
@@ -129,20 +202,23 @@ public class ExtendReferenceMap {
 		return true;
 	}
 	
-	private static class MeList extends ArrayList {
+	private static class UnresolvedGuidHandler extends XmlEditUtil.UnresolvedGuidHandler {
 		
-		private boolean hasUnresolved = false;
-
-		public boolean isHasUnresolved() {
-			return hasUnresolved;
+		@Override
+		public MethodElement getElement(String guid) {
+			Practice practic = UmaFactory.eINSTANCE.createPractice();
+			practic.setGuid(guid);
+			UmaUtil.setUnresolved(practic);					
+			return practic;
 		}
-
-		public void setHasUnresolved(boolean hasUnresolved) {
-			this.hasUnresolved = hasUnresolved;
-		} 
 		
-	}
-	
-	
+		@Override
+		public boolean hasUnresolvedElement() {
+			return false;
+		}
+		
+		
+		
+	};
 	
 }

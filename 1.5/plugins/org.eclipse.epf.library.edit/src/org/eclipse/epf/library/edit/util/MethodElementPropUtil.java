@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -27,7 +26,6 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
-import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
 
 public class MethodElementPropUtil {
@@ -404,6 +402,11 @@ public class MethodElementPropUtil {
 			return null;
 		}
 		return extendObject.getExtendReferenceMap(toModify);
+	}
+	
+	public ExtendReferenceMap getExtendReferenceMap(MethodElement element, boolean toModify) {
+		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
+		return meXmlEditUtil.getExtendReferenceMap(element, toModify);
 	}
 	
 	private static class MeXmlEditUtil extends XmlEditUtil {

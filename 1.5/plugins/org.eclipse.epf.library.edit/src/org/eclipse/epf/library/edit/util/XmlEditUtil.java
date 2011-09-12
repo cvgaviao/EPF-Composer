@@ -10,13 +10,12 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.util;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.util.MeList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -77,8 +76,12 @@ public class XmlEditUtil {
 		return value;
 	}
 	
-	public static List<? extends MethodElement> convertToMethodElements(String guidsString, EClass type) {
-		List<MethodElement> list = new ArrayList<MethodElement>();
+	public static MeList convertToMethodElements(String guidsString, EClass type) {
+		return convertToMethodElements(guidsString, type, uHandler);
+	}
+	
+	public static MeList convertToMethodElements(String guidsString, EClass type, UnresolvedGuidHandler uHandler) {
+		MeList list = new MeList();
 		if (guidsString == null || guidsString.length() == 0) {
 			return list;
 		}
@@ -86,14 +89,25 @@ public class XmlEditUtil {
 		if (guids == null || guids.length == 0) {
 			return list;			
 		}		
+		
+		boolean hasUnresolved = false;
 		for (String guid : guids) {
 			MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
+			if (element == null && uHandler != null) {
+				element = uHandler.getElement(guid);
+				if (element != null) {
+					hasUnresolved = true;
+				}
+			}
 			if (element != null) {
 				if (type == null || type.isSuperTypeOf(element.eClass())) {
 					list.add(element);
 				}
 			}
-		}		
+		}
+		if (hasUnresolved) {
+			list.setHasUnresolved(true);
+		}
 		return list;
 	}
 		
@@ -117,5 +131,18 @@ public class XmlEditUtil {
 		Node node = XMLUtil.cloneNode(elementToClone, getDocument());
 		parent.appendChild(node);
 	}
+	
+	public static UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
+	public static class UnresolvedGuidHandler {
+		
+		public MethodElement getElement(String guid) {
+			return null;
+		}
+		
+		public boolean hasUnresolvedElement() {
+			return false;
+		}
+		
+	}	
 	
 }
