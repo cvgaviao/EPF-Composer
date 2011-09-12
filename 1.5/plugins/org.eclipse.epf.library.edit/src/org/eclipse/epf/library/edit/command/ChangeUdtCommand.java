@@ -41,6 +41,12 @@ public class ChangeUdtCommand extends MethodElementSetPropertyCommand {
 		
 	@Override
 	public void undo() {
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();	
+		try {
+			this.value = propUtil.getReferencesXml(this.element, true);
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}	
 		super.undo();
 	}
 	

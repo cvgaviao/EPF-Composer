@@ -47,11 +47,11 @@ public class ExtendReferenceMap {
 		Object value = getMap().get(name);
 		if (isMany(name) && toModify) {
 			if (value == null) {
-				value = new ArrayList<Object>();
+				value = new MeList();
 				getMap().put(name, value);
 			}
-			if (value instanceof ArrayList) {
-				Object oldValue = ((ArrayList) value).clone();
+			if (value instanceof MeList) {
+				Object oldValue = ((MeList) value).clone();
 				getOldValueMap().put(name, oldValue);
 			}
 		}
@@ -60,8 +60,8 @@ public class ExtendReferenceMap {
 
 	public void set(String name, Object value) {
 		Object oldValue = get(name, false);
-		if (oldValue instanceof ArrayList) {
-			oldValue = ((ArrayList) oldValue).clone();
+		if (oldValue instanceof MeList) {
+			oldValue = ((MeList) oldValue).clone();
 		}
 		getOldValueMap().put(name, oldValue);
 		getMap().put(name, value);
@@ -92,6 +92,11 @@ public class ExtendReferenceMap {
 			Object value = get(name, false);
 			if (rollback && getOldValueMap().containsKey(name)) {
 				value = getOldValueMap().get(name);
+				if (value == null) {
+					getMap().remove(name);
+				} else {
+					getMap().put(name, value);
+				}
 			}
 			if (value instanceof MethodElement) {
 				MethodElement eValue = (MethodElement) value;
@@ -123,5 +128,21 @@ public class ExtendReferenceMap {
 	public boolean isMany(String name) {
 		return true;
 	}
+	
+	private static class MeList extends ArrayList {
+		
+		private boolean hasUnresolved = false;
+
+		public boolean isHasUnresolved() {
+			return hasUnresolved;
+		}
+
+		public void setHasUnresolved(boolean hasUnresolved) {
+			this.hasUnresolved = hasUnresolved;
+		} 
+		
+	}
+	
+	
 	
 }
