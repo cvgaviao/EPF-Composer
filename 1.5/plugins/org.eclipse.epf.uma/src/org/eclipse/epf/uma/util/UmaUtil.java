@@ -68,6 +68,8 @@ import org.eclipse.epf.uma.WorkProductType;
  */
 public class UmaUtil {
 
+	public static final String Unresolved = "unresolved";		//$NON-NLS-1$
+	
 	private static IUmaUtilProvider provider;
 	public static Set<String> unresolvedGuidSet = new HashSet<String>();
 	
@@ -79,6 +81,14 @@ public class UmaUtil {
 		UmaUtil.provider = provider;
 	}
 
+	public static void setUnresolved(MethodElement element) {
+		element.setName(Unresolved);
+	}
+	
+	public static boolean isUnresolved(MethodElement element) {
+		return element.getName() == Unresolved;
+	}
+	
 	/**
 	 * Replaces the feature values of an old method element with the
 	 * corresponding feature values of a new method element.
