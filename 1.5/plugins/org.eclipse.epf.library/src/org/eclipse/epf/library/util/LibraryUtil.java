@@ -98,7 +98,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
-import org.eclipse.epf.uma.util.IMeVistor;
+import org.eclipse.epf.uma.util.IMeVisitor;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.swt.widgets.Display;
@@ -535,7 +535,7 @@ public class LibraryUtil {
 		loadAllSkipContents(lib, null);
 	}
 	
-	public static void loadAllSkipContents(MethodLibrary lib, IMeVistor vistor) {
+	public static void loadAllSkipContents(MethodLibrary lib, IMeVisitor vistor) {
 		List<MethodPlugin> pluigns = lib.getMethodPlugins();
 		Set<MethodElement> processed = new HashSet<MethodElement>();
 		for (MethodPlugin plugin: pluigns) {
@@ -547,7 +547,7 @@ public class LibraryUtil {
 		loadAllPlugins(config, null);
 	}
 	
-	public static void loadAllPlugins(MethodConfiguration config, IMeVistor vistor) {
+	public static void loadAllPlugins(MethodConfiguration config, IMeVisitor vistor) {
 		boolean skipContent = true;
 		List<MethodPlugin> pluigns = config.getMethodPluginSelection();
 		Set<MethodElement> processed = new HashSet<MethodElement>();
@@ -561,7 +561,7 @@ public class LibraryUtil {
 	}
 	
 	private static void loadImmidiateChildren(MethodElement me,
-			boolean skipContent, Set<MethodElement> processed, IMeVistor vistor) {
+			boolean skipContent, Set<MethodElement> processed, IMeVisitor vistor) {
 		if (processed.contains(me)) {
 			return;
 		}
@@ -1481,5 +1481,15 @@ public class LibraryUtil {
 		}		
 		return window;
 	}
+	
+	public class MeVisitor implements IMeVisitor {
+		public void visit(MethodElement element) {
+			
+		}
+	}
+	
+	
+	
+	
 	
 }
