@@ -1494,7 +1494,7 @@ public class LibraryUtil {
 		
 		public void visit(MethodElement element) {
 			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
-			if (propUtil.hasUtdList(element)) {
+			if (propUtil.hasUdtList(element)) {
 				elementsToProcess.add(element);
 			}
 		}

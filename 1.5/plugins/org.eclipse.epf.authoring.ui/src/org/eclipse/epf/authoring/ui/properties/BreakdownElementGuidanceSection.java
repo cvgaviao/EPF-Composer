@@ -611,7 +611,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		itemList.addAll(element.getReports());
 		itemList.addAll(element.getEstimationconsiderations());
 		itemList.addAll(element.getToolmentor());
-		if (propUtil.hasUtdList(element)) {
+		if (propUtil.hasUdtList(element)) {
 			itemList.addAll(propUtil.getUdtList(element, false));
 		}
 
