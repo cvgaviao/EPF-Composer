@@ -330,7 +330,8 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							Set<Object> set = new HashSet<Object>();
 							if (refMap != null) {
 							for (EReference ref : refMap.keySet()) {
-								Object value = linkedElement.eGet(ref);
+//								Object value = linkedElement.eGet(ref);
+								Object value = propUtil.eGet(linkedElement, ref, false);
 								if (value instanceof List) {
 									set.addAll((List) value);
 								}

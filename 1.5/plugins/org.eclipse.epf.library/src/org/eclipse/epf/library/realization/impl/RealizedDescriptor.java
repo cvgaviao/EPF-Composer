@@ -34,6 +34,7 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class RealizedDescriptor extends RealizedElement implements
 		IRealizedDescriptor, IRealizedElement {
@@ -446,12 +447,14 @@ public class RealizedDescriptor extends RealizedElement implements
 			}
 		} 
 				
+		DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 		List<Guidance> resultGuidanceList = new ArrayList<Guidance>();
 		boolean oldDeliver =  getDescriptor().eDeliver();		
 		try {
 			LibraryEditUtil libEditUtil = LibraryEditUtil.getInstance();
 			getDescriptor().eSetDeliver(false);
-			List<Guidance> desCuidanceList = (List<Guidance>) getDescriptor().eGet(dRef);
+//			List<Guidance> desCuidanceList = (List<Guidance>) getDescriptor().eGet(dRef);
+			List<Guidance> desCuidanceList = (List<Guidance>) propUtil.eGet(getDescriptor(), dRef, true);
 			for (int i = desCuidanceList.size() -1; i >= 0 ; i--) {
 				boolean keepInList = resultGuidanceSet.remove(desCuidanceList.get(i));
 				if (! keepInList) {
@@ -468,7 +471,14 @@ public class RealizedDescriptor extends RealizedElement implements
 						libEditUtil.addOppositeFeature(getDescriptor(), g, dRef);
 					}
 				}
-			}			
+			}
+			if (dRef == UmaUtil.MethodElement_UdtList) {
+				try {
+					propUtil.storeReferences(getDescriptor(), false);
+				} catch (Exception e) {
+					LibraryPlugin.getDefault().getLogger().logError(e);	
+				}
+			}
 			resultGuidanceList.addAll(desCuidanceList);
 			
 		} finally {

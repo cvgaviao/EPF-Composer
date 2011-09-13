@@ -63,6 +63,7 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.Scope;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 
 /**
@@ -1335,6 +1336,9 @@ public class ConfigurationHelper {
 	 */
 	public static List calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, ElementRealizer realizer) {
+		if (feature == UmaUtil.MethodElement_UdtList) {
+			return getDelegate().calcUtdList(element, realizer);
+		}
 		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
 			Object value = element.eGet(feature);
 			if (value instanceof List) {
