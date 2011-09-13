@@ -502,17 +502,19 @@ public class LibraryUtil {
 		}
 
 		Collection<Resource> loadedres = getLoadedResources(lib, null);
+		MeVisitor meVisitor = new MeVisitor();
 		
 		if (config == null) {
 			if (skipContent) {
-				loadAllSkipContents(lib, null);
+				loadAllSkipContents(lib, meVisitor);
 				
 			} else {
 				loadAllContained(lib);
 			}
 		} else {
-			loadAllPlugins(config, null);
+			loadAllPlugins(config, meVisitor);
 		}
+		meVisitor.processElements();
 		
 		return getLoadedResources(lib, loadedres);
 	}
@@ -532,7 +534,9 @@ public class LibraryUtil {
 	}
 
 	public static void loadAllSkipContents(MethodLibrary lib) {
-		loadAllSkipContents(lib, null);
+		MeVisitor meVisitor = new MeVisitor();
+		loadAllSkipContents(lib, meVisitor);
+		meVisitor.processElements();
 	}
 	
 	public static void loadAllSkipContents(MethodLibrary lib, IMeVisitor vistor) {
@@ -544,7 +548,9 @@ public class LibraryUtil {
 	}
 	
 	public static void loadAllPlugins(MethodConfiguration config) {
-		loadAllPlugins(config, null);
+		MeVisitor meVisitor = new MeVisitor();
+		loadAllPlugins(config, meVisitor);
+		meVisitor.processElements();
 	}
 	
 	public static void loadAllPlugins(MethodConfiguration config, IMeVisitor vistor) {
@@ -1482,9 +1488,22 @@ public class LibraryUtil {
 		return window;
 	}
 	
-	public class MeVisitor implements IMeVisitor {
+	public static class MeVisitor implements IMeVisitor {
+		
+		private Set<MethodElement> elementsToProcess = new HashSet<MethodElement>(); 
+		
 		public void visit(MethodElement element) {
-			
+			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+			if (propUtil.hasUtdList(element)) {
+				elementsToProcess.add(element);
+			}
+		}
+		
+		public void processElements() {
+			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+			for (MethodElement element : elementsToProcess) {
+				propUtil.getUdtList(element, false);
+			}
 		}
 	}
 	
