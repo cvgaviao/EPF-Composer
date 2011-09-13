@@ -24,7 +24,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -68,6 +70,7 @@ import org.eclipse.epf.uma.WorkProductType;
  */
 public class UmaUtil {
 
+	public static final EReference MethodElement_UdtList = EcoreFactory.eINSTANCE.createEReference();
 	public static final String Unresolved = "unresolved";		//$NON-NLS-1$
 	
 	private static IUmaUtilProvider provider;
