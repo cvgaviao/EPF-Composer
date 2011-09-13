@@ -98,6 +98,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.epf.uma.util.IMeVistor;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.swt.widgets.Display;
@@ -484,10 +485,18 @@ public class LibraryUtil {
 	 * @param lib MethodLibrary
 	 */
 	public static Collection<Resource> loadAll(MethodLibrary lib) {
-		return loadAll(lib, null);
+		return loadAll(lib, null, false);
+	}
+	
+	public static Collection<Resource> loadAll(MethodLibrary lib, boolean skipContent) {
+		return loadAll(lib, null, skipContent);
 	}
 	
 	public static Collection<Resource> loadAll(MethodLibrary lib, MethodConfiguration config) {
+		return loadAll(lib, config, true);
+	}
+	
+	public static Collection<Resource> loadAll(MethodLibrary lib, MethodConfiguration config, boolean skipContent) {
 		if (lib == null) {
 			lib = LibraryService.getInstance().getCurrentMethodLibrary();
 		}
@@ -495,9 +504,14 @@ public class LibraryUtil {
 		Collection<Resource> loadedres = getLoadedResources(lib, null);
 		
 		if (config == null) {
-			loadAllContained(lib);
+			if (skipContent) {
+				loadAllSkipContents(lib, null);
+				
+			} else {
+				loadAllContained(lib);
+			}
 		} else {
-			loadAllPlugins(config);
+			loadAllPlugins(config, null);
 		}
 		
 		return getLoadedResources(lib, loadedres);
@@ -516,22 +530,30 @@ public class LibraryUtil {
 			}
 		}
 	}
-	
+
 	public static void loadAllSkipContents(MethodLibrary lib) {
+		loadAllSkipContents(lib, null);
+	}
+	
+	public static void loadAllSkipContents(MethodLibrary lib, IMeVistor vistor) {
 		List<MethodPlugin> pluigns = lib.getMethodPlugins();
 		Set<MethodElement> processed = new HashSet<MethodElement>();
 		for (MethodPlugin plugin: pluigns) {
-			loadImmidiateChildren(plugin, true, processed);
+			loadImmidiateChildren(plugin, true, processed, vistor);
 		}
 	}
 	
 	public static void loadAllPlugins(MethodConfiguration config) {
+		loadAllPlugins(config, null);
+	}
+	
+	public static void loadAllPlugins(MethodConfiguration config, IMeVistor vistor) {
 		boolean skipContent = true;
 		List<MethodPlugin> pluigns = config.getMethodPluginSelection();
 		Set<MethodElement> processed = new HashSet<MethodElement>();
 		for (MethodPlugin plugin: pluigns) {
 			if (skipContent) {
-				loadImmidiateChildren(plugin, true, processed);
+				loadImmidiateChildren(plugin, true, processed, vistor);
 			} else {
 				loadAllContained(plugin);
 			}
@@ -539,9 +561,12 @@ public class LibraryUtil {
 	}
 	
 	private static void loadImmidiateChildren(MethodElement me,
-			boolean skipContent, Set<MethodElement> processed) {
+			boolean skipContent, Set<MethodElement> processed, IMeVistor vistor) {
 		if (processed.contains(me)) {
 			return;
+		}
+		if (vistor != null) {
+			vistor.visit(me);
 		}
 		processed.add(me);
 		EList<EReference> refList = me.eClass().getEAllReferences();
@@ -554,13 +579,13 @@ public class LibraryUtil {
 			}
 			Object obj = me.eGet(ref);
 			if (obj instanceof MethodElement) {
-				loadImmidiateChildren((MethodElement) obj, skipContent, processed);
+				loadImmidiateChildren((MethodElement) obj, skipContent, processed, vistor);
 				
 			} else if (obj instanceof List) {
 				List list = (List) obj;
 				for (Object itemObj : list) {
 					if (itemObj instanceof MethodElement) {
-						loadImmidiateChildren((MethodElement) itemObj, skipContent, processed);
+						loadImmidiateChildren((MethodElement) itemObj, skipContent, processed, vistor);
 					}
 				}
 			}
