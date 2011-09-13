@@ -143,8 +143,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 			if (listValue != null && ! utdItems.isEmpty()) {
 				listValue.addAll(utdItems);
 				try {
-					String str = propUtil.getReferencesXml(brElement, false);
-					propUtil.setStringValue(brElement, propUtil.Me_references, str);
+					propUtil.storeReferences(brElement, false);
 				} catch (Exception e) {
 					LibraryEditPlugin.getDefault().getLogger().logError(e);
 				}	

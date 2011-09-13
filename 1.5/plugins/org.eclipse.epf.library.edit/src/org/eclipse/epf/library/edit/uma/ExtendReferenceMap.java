@@ -98,7 +98,7 @@ public class ExtendReferenceMap {
 				meList.setHasUnresolved(false);
 			}
 		}
-		if (toModify) {
+		if (toModify && !getOldValueMap().containsKey(name)) {
 			Object oldValue = meList.clone();
 			getOldValueMap().put(name, oldValue);
 		}
@@ -153,11 +153,6 @@ public class ExtendReferenceMap {
 			oldValueMap = new HashMap<String, Object>();
 		}
 		return oldValueMap;
-	}
-	
-	public void storeReferencesToElement(Element element) {
-		storeReferencesToElement(element, false);
-		getOldValueMap().clear();
 	}
 	
 	public void storeReferencesToElement(Element element, boolean rollback) {
