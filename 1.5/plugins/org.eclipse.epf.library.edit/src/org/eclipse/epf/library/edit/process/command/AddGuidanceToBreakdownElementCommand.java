@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.epf.library.edit.process.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
@@ -30,6 +32,7 @@ import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
@@ -93,6 +96,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 	 */
 	public void redo() {
 
+		List<Practice> utdItems = new ArrayList<Practice>();
 		if (!guidances.isEmpty()) {
 			for (Iterator it = guidances.iterator(); it.hasNext();) {
 				Object obj = it.next();
@@ -124,11 +128,26 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 						if (brElement instanceof Activity) {
 							((Activity) brElement).getRoadmaps().add((Roadmap) item);
 						}
+					} else if (item instanceof Practice) {
+						if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+							utdItems.add((Practice) item);
+						}
 					} else {
 						LibraryEditPlugin.getDefault().getLogger()
 								.logError("Cant set guidance " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				}
+			}
+			
+			List<Practice> listValue = propUtil.getUdtList(brElement, true);
+			if (listValue != null && ! utdItems.isEmpty()) {
+				listValue.addAll(utdItems);
+				try {
+					String str = propUtil.getReferencesXml(brElement, false);
+					propUtil.setStringValue(brElement, propUtil.Me_references, str);
+				} catch (Exception e) {
+					LibraryEditPlugin.getDefault().getLogger().logError(e);
+				}	
 			}
 			
 			if (propUtil.isDescriptor(brElement) && ProcessUtil.isSynFree()) {

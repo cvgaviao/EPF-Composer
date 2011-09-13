@@ -71,7 +71,7 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 
 	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
 			EReference ref, MethodConfiguration config) {
-		if (! (obj instanceof MethodElement) || !ref.isMany()) {
+		if (ref == null || ! (obj instanceof MethodElement) || !ref.isMany()) {
 			return false;
 		}
 		EReference eRef = propUtil.getExcludeFeature(ref);

@@ -35,6 +35,7 @@ import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -47,6 +48,7 @@ import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
@@ -147,6 +149,12 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							|| (obj instanceof EstimationConsiderations))
 						return true;
 
+					if (obj instanceof Practice) {
+						if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) obj)) {
+							return true;
+						}
+					}
+					
 					return false;
 
 				}
@@ -603,7 +611,9 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 		itemList.addAll(element.getReports());
 		itemList.addAll(element.getEstimationconsiderations());
 		itemList.addAll(element.getToolmentor());
-
+		if (propUtil.hasUtdList(element)) {
+			itemList.addAll(propUtil.getUdtList(element, false));
+		}
 
 		return itemList;
 	}
