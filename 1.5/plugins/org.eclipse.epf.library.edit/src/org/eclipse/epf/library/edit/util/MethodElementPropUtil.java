@@ -382,7 +382,7 @@ public class MethodElementPropUtil {
 		return meXmlEditUtil.getReferencesXml(rollback);
 	}
 	
-	public boolean hasUtdList(MethodElement element) {
+	public boolean hasUdtList(MethodElement element) {
 		String value = getStringValue(element, Me_references);
 		return value != null && value.length() > 0;
 	}
@@ -432,7 +432,7 @@ public class MethodElementPropUtil {
 		
 		public ExtendReferenceMap getExtendReferenceMap(MethodElement element, boolean toModify) {
 			ExtendReferenceMap map = getPropUtil().getCachedExtendReferenceMap(element, toModify);
-			if (map != null || ! getPropUtil().hasUtdList(element)) {
+			if (map != null || ! getPropUtil().hasUdtList(element)) {
 				return map;
 			}
 
