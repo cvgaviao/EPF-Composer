@@ -370,6 +370,8 @@ public class LibraryEditUtil {
 			}
 		}
 		
+		resultMap.put(UmaUtil.MethodElement_UdtList, UmaUtil.MethodElement_UdtList);
+		
 		return resultMap;
 	}
 	

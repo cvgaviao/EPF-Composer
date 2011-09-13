@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -372,9 +374,9 @@ public class MethodElementPropUtil {
 		return new XmlEditUtil(this);
 	}
 	
-	public void storeReferences(MethodElement element)  throws Exception  {
+	public void storeReferences(MethodElement element, boolean rollback)  throws Exception  {
 		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
-		meXmlEditUtil.storeReferences();
+		meXmlEditUtil.storeReferences(rollback);
 	}
 	
 	public String getReferencesXml(MethodElement element, boolean rollback) throws Exception  {
@@ -418,8 +420,8 @@ public class MethodElementPropUtil {
 			this.element = element;
 		}
 		
-		public void storeReferences() throws Exception  {
-			if (! buildReferencesElement(0)) {
+		public void storeReferences(boolean rollback) throws Exception  {
+			if (! buildReferencesElement(rollback)) {
 				return;
 			}			
 			storeToOwner(element, Me_references);
@@ -452,23 +454,18 @@ public class MethodElementPropUtil {
 			return map;
 		}
 		
-		//storeIx: -1: store rollback value, 0: store and clear rollback value, 1: store without clearing rollback value
-		private boolean buildReferencesElement(int storeIx) throws Exception {
+		private boolean buildReferencesElement(boolean rollback) throws Exception {
 			ExtendReferenceMap map = getExtendReferenceMap(element, false);
 			if (map == null) {
 				return false;
 			}
 			Element firstElement = createFirstElement(Me_references);
-			if (storeIx == 0) {
-				map.storeReferencesToElement(firstElement);
-			} else {
-				map.storeReferencesToElement(firstElement, storeIx == -1);
-			}
+			map.storeReferencesToElement(firstElement, rollback);
 			return true;
 		}		
 		
 		public String getReferencesXml(boolean rollback) throws Exception  {
-			if (! buildReferencesElement(rollback ? -1 : 1)) {
+			if (! buildReferencesElement(rollback)) {
 				return null;
 			}			
 			return XMLUtil.toXmlString(getDocument());
@@ -476,5 +473,17 @@ public class MethodElementPropUtil {
 		
 	}
 	
+	public Object eGet(EObject eobj, EStructuralFeature feature, boolean toModify) {
+		if (eobj == null) {
+			return null;
+		}
+		if (feature == UmaUtil.MethodElement_UdtList) {
+			if (! (eobj instanceof MethodElement)) {
+				return null;
+			}
+			return getUdtList((MethodElement) eobj, toModify);
+		}
+		return eobj.eGet(feature);
+	}
 	
 }
