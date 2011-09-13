@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,6 +55,7 @@ import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -568,5 +570,23 @@ public class ConfigHelperDelegate {
 		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
 		return configMgr == null ? null : configMgr.getSupportingElementData();
 	}
+	
+	public List<Practice> calcUtdList(MethodElement element, ElementRealizer realizer) {
+		List<Practice> utdList = new ArrayList<Practice>();
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		if (propUtil.hasUdtList(element)) {
+			List<Practice> list = propUtil.getUdtList(element, false);
+			if (list != null) {
+				for (Practice p : list) {
+					Object realized = ConfigurationHelper.getCalculatedElement(p, realizer);
+					if (realized instanceof Practice) {
+						utdList.add(p);
+					}
+				}
+			}
+		}		
+		return utdList;
+	}
+	
 	
 }
