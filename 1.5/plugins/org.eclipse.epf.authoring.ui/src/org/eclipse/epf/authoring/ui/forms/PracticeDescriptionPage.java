@@ -10,6 +10,8 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.forms;
 
+import java.util.Map;
+
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
@@ -381,14 +383,15 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 		private void buildLables(Practice prac) {
 			try {
 				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
+				Map<String, String> rteNameMap = udtMeta.getRteNameMap();
 				if (udtMeta != null) {
-					problemLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._problems) + ":"; //$NON-NLS-1$
-					goalsLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._goals) + ":"; //$NON-NLS-1$
-					backgroundLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._background) + ":"; //$NON-NLS-1$
-					mainDescriptionLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._mainDescription) + ":"; //$NON-NLS-1$
-					applicationLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._application) + ":"; //$NON-NLS-1$
-					levelsOfAdoptionLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._levelsOfAdoption) + ":"; //$NON-NLS-1$
-					additionalInfoLabel = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._additionalInfo) + ":"; //$NON-NLS-1$
+					problemLabel = rteNameMap.get(UserDefinedTypeMeta._problems) + ":"; //$NON-NLS-1$
+					goalsLabel = rteNameMap.get(UserDefinedTypeMeta._goals) + ":"; //$NON-NLS-1$
+					backgroundLabel = rteNameMap.get(UserDefinedTypeMeta._background) + ":"; //$NON-NLS-1$
+					mainDescriptionLabel = rteNameMap.get(UserDefinedTypeMeta._mainDescription) + ":"; //$NON-NLS-1$
+					applicationLabel = rteNameMap.get(UserDefinedTypeMeta._application) + ":"; //$NON-NLS-1$
+					levelsOfAdoptionLabel = rteNameMap.get(UserDefinedTypeMeta._levelsOfAdoption) + ":"; //$NON-NLS-1$
+					additionalInfoLabel = rteNameMap.get(UserDefinedTypeMeta._additionalInfo) + ":"; //$NON-NLS-1$
 				} else {
 					problemLabel = AuthoringUIText.PURPOSE_TEXT;
 					goalsLabel = AuthoringUIText.GOALS_TEXT;
