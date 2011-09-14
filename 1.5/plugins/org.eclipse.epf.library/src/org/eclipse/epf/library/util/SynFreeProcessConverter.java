@@ -19,6 +19,7 @@ import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessPropUtil;
@@ -428,6 +429,7 @@ public class SynFreeProcessConverter {
 			return;
 		}
 
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
 		Set<Guidance> elementGuidanceSet = new HashSet<Guidance>();
 		Set<Guidance> descripGuidanceSet = new HashSet<Guidance>();
 		for (Map.Entry<EReference, EReference> entry : refMap.entrySet()) {
@@ -441,9 +443,10 @@ public class SynFreeProcessConverter {
 				List list = (List) elementValue;
 				if (!list.isEmpty()) {
 					elementGuidanceSet.addAll((List) elementValue);
-				}
+				} 
 				
-				Object rawDescripValue = des.eGet(descripRef);
+//				Object rawDescripValue = des.eGet(descripRef);				
+				Object rawDescripValue = list.isEmpty() ? null : propUtil.eGet(des, descripRef, true);
 				if (rawDescripValue instanceof List) {
 					List rawList = (List) rawDescripValue;
 					Set<Guidance> rewDescripGuidanceSet = new HashSet<Guidance>(rawList);

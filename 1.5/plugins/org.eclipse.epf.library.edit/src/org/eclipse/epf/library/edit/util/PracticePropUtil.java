@@ -1,10 +1,10 @@
 package org.eclipse.epf.library.edit.util;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
@@ -41,11 +41,13 @@ public class PracticePropUtil extends MethodElementPropUtil {
 		return meta.getId() == null ? null : meta;
 	}
 	
-	public  boolean isUtdType(Practice practice) {
-		try {
-			return getUtdData(practice) != null;			
-		} catch (Exception e) {
-			LibraryEditPlugin.getDefault().getLogger().logError(e);
+	public  boolean isUtdType(MethodElement element) {
+		if (element instanceof Practice) {
+			try {
+				return getUtdData((Practice) element) != null;			
+			} catch (Exception e) {
+				LibraryEditPlugin.getDefault().getLogger().logError(e);
+			}
 		}
 		return false;
 	}

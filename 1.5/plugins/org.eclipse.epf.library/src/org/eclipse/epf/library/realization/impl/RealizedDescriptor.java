@@ -22,6 +22,7 @@ import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentElement;
@@ -435,7 +436,11 @@ public class RealizedDescriptor extends RealizedElement implements
 		if (addtionList != null) {
 			for (MethodElement me : addtionList) {
 				Guidance g = (Guidance) me;
-				if (eRef.getEType().isInstance(g)) {
+				if (eRef == UmaUtil.MethodElement_UdtList) {
+					if (PracticePropUtil.getPracticePropUtil().isUtdType(g)) {
+						resultGuidanceSet.add(g);		
+					}
+				} else if (eRef.getEType().isInstance(g)) {
 					resultGuidanceSet.add(g);
 				}
 			}

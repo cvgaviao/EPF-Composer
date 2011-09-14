@@ -274,6 +274,12 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 				}
 			}
 		}
+		
+		try {
+			propUtil.storeReferences(brElement, true);
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
 	}
 
 	protected boolean prepare() {

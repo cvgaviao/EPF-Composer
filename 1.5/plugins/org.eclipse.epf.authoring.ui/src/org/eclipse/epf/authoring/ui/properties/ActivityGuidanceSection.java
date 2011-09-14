@@ -32,6 +32,8 @@ import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.FilterInitializer;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
@@ -40,6 +42,7 @@ import org.eclipse.epf.uma.EstimationConsiderations;
 import org.eclipse.epf.uma.Example;
 import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.Roadmap;
@@ -873,6 +876,7 @@ public class ActivityGuidanceSection extends AbstractSection {
 	 */
 	private void removeGuidances(ArrayList rmItems) {
 		// update the model
+		List<Practice> utdItems = new ArrayList<Practice>();
 		if (!rmItems.isEmpty()) {
 			for (Iterator it = rmItems.iterator(); it.hasNext();) {
 				Guidance item = (Guidance) it.next();
@@ -923,11 +927,26 @@ public class ActivityGuidanceSection extends AbstractSection {
 					actionMgr.doAction(IActionManager.REMOVE, element,
 							UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations(),
 							item, -1);
+				} else if (item instanceof Practice) {
+					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+						utdItems.add((Practice) item);
+					}
 				} else {
 					logger
 							.logError("Can't remove Guidance: " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
+		}
+		
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil(actionMgr);
+		List<Practice> listValue = propUtil.getUdtList(element, true);
+		if (listValue != null && ! utdItems.isEmpty()) {
+			listValue.removeAll(utdItems);
+			try {
+				propUtil.storeReferences(element, false);
+			} catch (Exception e) {
+				LibraryEditPlugin.getDefault().getLogger().logError(e);
+			}	
 		}
 	}
 
