@@ -71,7 +71,7 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 
 	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
 			EReference ref, MethodConfiguration config) {
-		if (ref == null || ! (obj instanceof MethodElement) || !ref.isMany()) {
+		if (ref == null || ! (obj instanceof MethodElement) || !ref.isMany() && ref != UmaUtil.MethodElement_UdtList) {
 			return false;
 		}
 		EReference eRef = propUtil.getExcludeFeature(ref);
@@ -79,7 +79,8 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 			return false;
 		}
 		
-		List<MethodElement> listValue = (List<MethodElement> )desc.eGet(eRef);
+//		List<MethodElement> listValue = (List<MethodElement> )desc.eGet(eRef);
+		List<MethodElement> listValue =  (List<MethodElement> ) propUtil.eGet(desc, eRef, false);
 	    if (listValue == null) {
 	    	return false;
 	    }
@@ -133,7 +134,8 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 		if (ProcessUtil.isSynFree()) {
 			EReference aRef = UmaPackage.eINSTANCE.getDescriptor_GuidanceAdditional();
 			
-			List<MethodElement> listValue = (List<MethodElement> )desc.eGet(aRef);
+//			List<MethodElement> listValue = (List<MethodElement> )desc.eGet(aRef);
+			List<MethodElement> listValue =  (List<MethodElement> ) propUtil.eGet(desc, aRef, false);
 		    if (listValue == null) {
 		    	return false;
 		    }

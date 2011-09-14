@@ -23,6 +23,7 @@ import org.eclipse.epf.uma.Guidance;
 import org.eclipse.epf.uma.Guideline;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Report;
 import org.eclipse.epf.uma.ReusableAsset;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -717,6 +718,10 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 			ref = UmaPackage.eINSTANCE.getBreakdownElement_Toolmentor();
 		}else if (item instanceof EstimationConsiderations) {
 			ref = UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations();
+		} else if (item instanceof Practice) {
+			if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+				ref = UmaUtil.MethodElement_UdtList;
+			}
 		}
 		
 		return ref;

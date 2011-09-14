@@ -226,7 +226,8 @@ public class LibraryEditUtil {
 				|| ref == up.getBreakdownElement_Examples() || ref == up.getBreakdownElement_SupportingMaterials()
 				|| ref == up.getBreakdownElement_Guidelines() || ref == up.getBreakdownElement_ReusableAssets()
 				|| ref == up.getBreakdownElement_Templates() || ref == up.getBreakdownElement_Reports()
-				|| ref == up.getBreakdownElement_Toolmentor() || ref == up.getBreakdownElement_Estimationconsiderations()) {
+				|| ref == up.getBreakdownElement_Toolmentor() || ref == up.getBreakdownElement_Estimationconsiderations()
+				|| ref == UmaUtil.MethodElement_UdtList) {
 			return up.getDescriptor_GuidanceExclude();
 		}
 		

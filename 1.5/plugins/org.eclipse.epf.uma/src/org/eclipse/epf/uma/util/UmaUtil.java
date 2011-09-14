@@ -70,8 +70,11 @@ import org.eclipse.epf.uma.WorkProductType;
  */
 public class UmaUtil {
 
-	public static final EReference MethodElement_UdtList = EcoreFactory.eINSTANCE.createEReference();
+	public static EReference MethodElement_UdtList = EcoreFactory.eINSTANCE.createEReference();
 	public static final String Unresolved = "unresolved";		//$NON-NLS-1$
+	static {
+		MethodElement_UdtList.setName("MethodElement_UdtList");		//$NON-NLS-1$
+	}
 	
 	private static IUmaUtilProvider provider;
 	public static Set<String> unresolvedGuidSet = new HashSet<String>();

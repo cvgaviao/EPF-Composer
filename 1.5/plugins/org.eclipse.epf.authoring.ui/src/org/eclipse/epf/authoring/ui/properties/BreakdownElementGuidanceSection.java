@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.filters.ProcessGuidanceFilter;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
@@ -502,6 +503,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 	 */
 	private void removeGuidances(List<Guidance> rmItems, boolean localUse) {
 		// update the model
+		List<Practice> utdItems = new ArrayList<Practice>();
 		if (!rmItems.isEmpty()) {
 			for (Iterator it = rmItems.iterator(); it.hasNext();) {
 				Guidance item = (Guidance) it.next();
@@ -548,9 +550,23 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 					actionMgr.doAction(IActionManager.REMOVE, element,
 							UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations(),
 							item, -1);
+				} else if (item instanceof Practice) {
+					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+						utdItems.add((Practice) item);
+					}
 				} else {
 					logger
 							.logError("Can't remove Guidance: " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				
+				List<Practice> listValue = propUtil.getUdtList(element, true);
+				if (listValue != null && ! utdItems.isEmpty()) {
+					listValue.removeAll(utdItems);
+					try {
+						propUtil.storeReferences(element, false);
+					} catch (Exception e) {
+						LibraryEditPlugin.getDefault().getLogger().logError(e);
+					}	
 				}
 				
 				if (isSyncFree()) {
