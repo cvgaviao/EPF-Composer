@@ -116,6 +116,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.NamedElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -1677,6 +1678,12 @@ public final class TngUtil {
 		if(image != null) {
 			return image;
 		}
+		
+		//For user defined type
+		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object))) {
+			return LibraryEditPlugin.getDefault().getImage("full/obj16/UserDefinedType"); //$NON-NLS-1$
+		}		
+		
 		Object adapter = null;
 		try {
 			adapter = umaItemProviderAdapterFactory.adapt(object,

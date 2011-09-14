@@ -104,11 +104,7 @@ public class PracticeItemProvider extends
 		return TngUtil.getLabel(object, getString("_UI_Practice_type")); //$NON-NLS-1$
 	}
 
-	public Object getImage(Object object) {
-		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {			
-			return LibraryEditPlugin.getDefault().getImage("full/obj16/UserDefinedType"); //$NON-NLS-1$
-		}
-		
+	public Object getImage(Object object) {		
 		if (object instanceof DescribableElement) {
 			if (((DescribableElement) object).getNodeicon() != null) {
 				URI imgUri = TngUtil.getFullPathofNodeorShapeIconURI(
@@ -119,6 +115,10 @@ public class PracticeItemProvider extends
 				if (image != null)
 					return image;
 			}
+		}
+		
+		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {			
+			return LibraryEditPlugin.getDefault().getImage("full/obj16/UserDefinedType"); //$NON-NLS-1$
 		}
 		
 		return super.getImage(object);
