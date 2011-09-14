@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
@@ -381,6 +382,13 @@ public class LibraryEditUtil {
 		if (referencing == null || referenced == null) {
 			return;
 		}
+		if (feature == UmaUtil.MethodElement_UdtList) {
+			if (PracticePropUtil.getPracticePropUtil().isUtdType(referenced)) {
+				MethodElementPropUtil.getMethodElementPropUtil().addOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
+			}
+			return;
+		}
+		
 		OppositeFeature oppositeFeature = OppositeFeature
 				.getOppositeFeature(feature);
 		if (oppositeFeature == null) {
@@ -393,6 +401,12 @@ public class LibraryEditUtil {
 	public void removeOppositeFeature(MethodElement referencing,
 			MethodElement referenced, EStructuralFeature feature) {
 		if (referencing == null || referenced == null) {
+			return;
+		}
+		if (feature == UmaUtil.MethodElement_UdtList) {
+			if (PracticePropUtil.getPracticePropUtil().isUtdType(referenced)) {
+				MethodElementPropUtil.getMethodElementPropUtil().removeOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
+			}
 			return;
 		}
 		OppositeFeature oppositeFeature = OppositeFeature

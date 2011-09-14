@@ -107,7 +107,7 @@ public class ExtendReferenceMap {
 
 	}
 
-	private void addOpposite(String name, MethodElement element) {
+	public void addOpposite(String name, MethodElement element) {
 		if (UmaUtil.isUnresolved(element)) {
 			return;
 		}
@@ -119,7 +119,7 @@ public class ExtendReferenceMap {
 		}
 	}
 	
-	private void renmoveOpposite(String name, MethodElement element) {
+	public void removeOpposite(String name, MethodElement element) {
 		if (UmaUtil.isUnresolved(element)) {
 			return;
 		}

@@ -393,6 +393,22 @@ public class MethodElementPropUtil {
 		return (List<Practice>) getReferenceValue(ExtendReferenceMap.UtdList, element, toModify);
 	}
 	
+	public void addOpposite(String referenceName, MethodElement thisElement, MethodElement otherElement) {
+		ExtendReferenceMap map = getCachedExtendReferenceMap(thisElement, false);
+		if (map == null) {
+			return;
+		}
+		map.addOpposite(referenceName, otherElement);
+	}
+	
+	public void removeOpposite(String referenceName, MethodElement thisElement, MethodElement otherElement) {
+		ExtendReferenceMap map = getCachedExtendReferenceMap(thisElement, false);
+		if (map == null) {
+			return;
+		}
+		map.removeOpposite(referenceName, otherElement);
+	}
+	
 	private Object getReferenceValue(String referenceName, MethodElement element, boolean toModify) {
 		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
 		return meXmlEditUtil.getReferenceValue(referenceName, element, toModify);
