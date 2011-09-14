@@ -83,6 +83,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -1350,6 +1351,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 					persister.commit();
 					dirty = false;
 					actionMgr.saveIsDone();
+					MethodElementPropUtil.getMethodElementPropUtil().notifyElemetSaved(elementObj);
 					changeTime = -1;
 					resourcesToAdjustLocation = getResourceToAdjustLocation();	
 					setResourceInfos(getUsedResources());

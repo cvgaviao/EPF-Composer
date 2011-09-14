@@ -141,6 +141,9 @@ public class MethodElementPropUtil {
 	}
 	
 	public MethodElementExt getExtendObject(MethodElement element, boolean create) {
+		if (element == null) {
+			return null;
+		}
 		MultiResourceEObject mobj = (MultiResourceEObject) element;		
 		ExtendObject obj = mobj.getExtendObject();
 		if (create && !(obj instanceof MethodElementExt)) {
@@ -391,6 +394,14 @@ public class MethodElementPropUtil {
 	
 	public List<Practice> getUdtList(MethodElement element, boolean toModify) {
 		return (List<Practice>) getReferenceValue(ExtendReferenceMap.UtdList, element, toModify);
+	}
+	
+	public void notifyElemetSaved(MethodElement element) {
+		ExtendReferenceMap map = getCachedExtendReferenceMap(element, false);
+		if (map == null) {
+			return;
+		}
+		map.notifyOwnerElementSaved();
 	}
 	
 	public void addOpposite(String referenceName, MethodElement thisElement, MethodElement otherElement) {

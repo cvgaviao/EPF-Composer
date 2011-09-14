@@ -25,6 +25,7 @@ import org.eclipse.epf.diagram.model.util.DiagramInfo;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.command.ChangeUdtCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.configuration.GuidanceGroupingItemProvider;
 import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
@@ -32,7 +33,6 @@ import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.FilterInitializer;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
-import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Checklist;
@@ -938,15 +938,8 @@ public class ActivityGuidanceSection extends AbstractSection {
 			}
 		}
 		
-		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil(actionMgr);
-		List<Practice> listValue = propUtil.getUdtList(element, true);
-		if (listValue != null && ! utdItems.isEmpty()) {
-			listValue.removeAll(utdItems);
-			try {
-				propUtil.storeReferences(element, false);
-			} catch (Exception e) {
-				LibraryEditPlugin.getDefault().getLogger().logError(e);
-			}	
+		if (! utdItems.isEmpty()) {
+			actionMgr.execute(new ChangeUdtCommand(element, utdItems, true));
 		}
 	}
 

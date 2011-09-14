@@ -16,9 +16,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -57,6 +59,8 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 	private Collection modifiedResources;
 	
 	private boolean calledForExculded = false;
+	
+	private Set<Practice> affectedSet = new HashSet<Practice>();
 	
 	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
 	
@@ -141,9 +145,14 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 			
 			List<Practice> listValue = propUtil.getUdtList(brElement, true);
 			if (listValue != null && ! utdItems.isEmpty()) {
-				listValue.addAll(utdItems);
+				for (Practice p : utdItems) {
+					if (! listValue.contains(p) && listValue.add(p)) {
+						affectedSet.add(p);
+						propUtil.addOpposite(ExtendReferenceMap.UtdList, brElement, p);
+					}
+				}
 				try {
-					propUtil.storeReferences(brElement, false);
+					propUtil.storeReferences(brElement, false);					
 				} catch (Exception e) {
 					LibraryEditPlugin.getDefault().getLogger().logError(e);
 				}	
@@ -276,6 +285,9 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 		}
 		
 		try {
+			for (Practice p : affectedSet) {
+				propUtil.removeOpposite(ExtendReferenceMap.UtdList, brElement, p);	
+			}	
 			propUtil.storeReferences(brElement, true);
 		} catch (Exception e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);

@@ -36,6 +36,10 @@ public class ExtendReferenceMap {
 		return ownerElement;
 	}
 	
+	public void notifyOwnerElementSaved() {
+		getOldValueMap().clear();
+	}
+	
 	public void retrieveReferencesFromElement(Element element) {
 		for (String name : names) {
 			String value = element.getAttribute(name);

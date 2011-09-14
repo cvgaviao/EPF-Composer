@@ -26,8 +26,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.filters.ProcessGuidanceFilter;
 import org.eclipse.epf.library.edit.IFilter;
-import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.command.ChangeUdtCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
@@ -559,14 +559,8 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							.logError("Can't remove Guidance: " + item.getType().getName() + ":" + item.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 				
-				List<Practice> listValue = propUtil.getUdtList(element, true);
-				if (listValue != null && ! utdItems.isEmpty()) {
-					listValue.removeAll(utdItems);
-					try {
-						propUtil.storeReferences(element, false);
-					} catch (Exception e) {
-						LibraryEditPlugin.getDefault().getLogger().logError(e);
-					}	
+				if (! utdItems.isEmpty()) {
+					actionMgr.execute(new ChangeUdtCommand(element, utdItems, true));
 				}
 				
 				if (isSyncFree()) {
