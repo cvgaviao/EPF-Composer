@@ -25,6 +25,7 @@ import org.eclipse.epf.library.edit.IDefaultNameSetter;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
 import org.eclipse.epf.library.edit.util.LibraryEditConstants;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Guidance;
@@ -55,10 +56,15 @@ public class PracticeItemProvider extends
 	 */
 	protected void collectNewChildDescriptors(Collection newChildDescriptors,
 			Object object) {
+		
+		//User defined type won't have sub practice
+		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {
+			return;
+		}
+		
 		newChildDescriptors.add(createChildParameter(UmaPackage.eINSTANCE
 				.getPractice_SubPractices(), UmaFactory.eINSTANCE
 				.createPractice()));
-
 	}
 
 	/*
@@ -99,6 +105,10 @@ public class PracticeItemProvider extends
 	}
 
 	public Object getImage(Object object) {
+		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {			
+			return LibraryEditPlugin.getDefault().getImage("full/obj16/UserDefinedType"); //$NON-NLS-1$
+		}
+		
 		if (object instanceof DescribableElement) {
 			if (((DescribableElement) object).getNodeicon() != null) {
 				URI imgUri = TngUtil.getFullPathofNodeorShapeIconURI(
@@ -110,6 +120,7 @@ public class PracticeItemProvider extends
 					return image;
 			}
 		}
+		
 		return super.getImage(object);
 	}
 
