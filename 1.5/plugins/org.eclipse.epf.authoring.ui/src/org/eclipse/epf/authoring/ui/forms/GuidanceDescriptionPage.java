@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.forms;
 
+import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
@@ -19,6 +20,7 @@ import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.VariabilityBaseElementFilter;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
@@ -37,6 +39,8 @@ import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.Whitepaper;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -277,11 +281,26 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 			this.iconSectionDescription = AuthoringUIResources.estimationconsideration_iconSection_desc;
 		}
 		else if(contentElement instanceof Practice){
-			this.generalSectionDescription = AuthoringUIResources.practice_generalInfoSection_desc;
-			this.detailSectionDescription = AuthoringUIResources.practice_detailSection_desc;
-			this.variabilitySectionDescription = AuthoringUIResources.practice_variabilitySection_desc;
-			this.versionSectionDescription = AuthoringUIResources.practice_versionInfoSection_desc;
-			this.iconSectionDescription = AuthoringUIResources.practice_iconSection_desc;
+			if (PracticePropUtil.getPracticePropUtil().isUtdType(contentElement)) {
+				try {
+					String typeName = PracticePropUtil.getPracticePropUtil()
+						.getUtdData((Practice)contentElement)
+						.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+					this.generalSectionDescription = NLS.bind(AuthoringUIResources.generalInfoSection_desc, typeName);
+					this.detailSectionDescription = NLS.bind(AuthoringUIResources.detailSection_desc, typeName);
+					this.variabilitySectionDescription = NLS.bind(AuthoringUIResources.variabilitySection_desc, typeName);
+					this.versionSectionDescription = NLS.bind(AuthoringUIResources.versionInfoSection_desc, typeName);
+					this.iconSectionDescription = NLS.bind(AuthoringUIResources.iconSection_desc, typeName);
+				} catch (Exception e) {
+					AuthoringUIPlugin.getDefault().getLogger().logError(e);
+				}				
+			} else {			
+				this.generalSectionDescription = AuthoringUIResources.practice_generalInfoSection_desc;
+				this.detailSectionDescription = AuthoringUIResources.practice_detailSection_desc;
+				this.variabilitySectionDescription = AuthoringUIResources.practice_variabilitySection_desc;
+				this.versionSectionDescription = AuthoringUIResources.practice_versionInfoSection_desc;
+				this.iconSectionDescription = AuthoringUIResources.practice_iconSection_desc;
+			}
 		}
 		else if(contentElement instanceof SupportingMaterial){
 			this.generalSectionDescription = AuthoringUIResources.supportingmaterial_generalInfoSection_desc;

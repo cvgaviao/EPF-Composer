@@ -358,6 +358,20 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 			ctrl_levels_adoption
 					.setText(guidanceDescription.getLevelsOfAdoption() == null ? "" : guidanceDescription.getLevelsOfAdoption()); //$NON-NLS-1$
 		}
+		
+		//For user defined type
+		if (elementTypeOn) {
+			if (PracticePropUtil.getPracticePropUtil().isUtdType(guidance)) {
+				try {
+					String typeName = PracticePropUtil.getPracticePropUtil()
+							.getUtdData(guidance)
+							.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+					ctrl_type_label.setText(typeName);
+				} catch (Exception e) {
+					AuthoringUIPlugin.getDefault().getLogger().logError(e);
+				}
+			}
+		}
 	}
 
 	/**
@@ -382,9 +396,9 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 		
 		private void buildLables(Practice prac) {
 			try {
-				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
-				Map<String, String> rteNameMap = udtMeta.getRteNameMap();
+				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);				
 				if (udtMeta != null) {
+					Map<String, String> rteNameMap = udtMeta.getRteNameMap();					
 					problemLabel = rteNameMap.get(UserDefinedTypeMeta._problems) + ":"; //$NON-NLS-1$
 					goalsLabel = rteNameMap.get(UserDefinedTypeMeta._goals) + ":"; //$NON-NLS-1$
 					backgroundLabel = rteNameMap.get(UserDefinedTypeMeta._background) + ":"; //$NON-NLS-1$
