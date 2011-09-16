@@ -39,6 +39,7 @@ import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -1124,6 +1125,12 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				} else if (cc.getName().equals("Processes")) {//$NON-NLS-1$
 					type = "processes";//$NON-NLS-1$
 				}
+			}
+		}
+		
+		if (element instanceof Practice) {
+			if (PracticePropUtil.getPracticePropUtil().isUtdType(element)) {
+				type = "userdefinedtype"; //$NON-NLS-1$
 			}
 		}
 		
