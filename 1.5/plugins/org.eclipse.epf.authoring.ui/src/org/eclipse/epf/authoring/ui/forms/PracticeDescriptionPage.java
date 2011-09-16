@@ -61,7 +61,12 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		guidance = (Practice) contentElement;
-		publishPracticeOn = true;
+		
+		if (PracticePropUtil.getPracticePropUtil().isUtdType(guidance)) {
+			publishPracticeOn = false;
+		} else {
+			publishPracticeOn = true;
+		}
 		setContentFieldHeight(200);
 		setFullDescOn(true);
 		contentOn = false;

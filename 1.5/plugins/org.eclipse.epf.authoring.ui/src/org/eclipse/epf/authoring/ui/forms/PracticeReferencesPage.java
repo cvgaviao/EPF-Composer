@@ -32,6 +32,7 @@ import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.uma.Activity;
@@ -41,7 +42,9 @@ import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -342,6 +345,17 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#getSectionDescription()
 	 */
 	protected String getSectionDescription() {
+		if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+			try {
+				String typeName = PracticePropUtil.getPracticePropUtil()
+					.getUtdData(practice)
+					.getRteNameMap().get(UserDefinedTypeMeta._typeName).toLowerCase();
+				return NLS.bind(AuthoringUIResources.practiceReferencesPage_sectionDescription_udt, typeName);
+			} catch (Exception e) {
+				AuthoringUIPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+		
 		return AuthoringUIResources.practiceReferencesPage_sectionDescription;
 	}
 

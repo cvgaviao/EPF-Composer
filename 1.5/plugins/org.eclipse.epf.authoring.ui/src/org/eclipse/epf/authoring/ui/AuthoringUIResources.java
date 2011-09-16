@@ -491,6 +491,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String practiceReferencesPage_sectionName;
 
 	public static String practiceReferencesPage_sectionDescription;
+	
+	public static String practiceReferencesPage_sectionDescription_udt;
 
 	public static String practiceReferencesPage_availableLabel;
 

@@ -285,7 +285,7 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 				try {
 					String typeName = PracticePropUtil.getPracticePropUtil()
 						.getUtdData((Practice)contentElement)
-						.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+						.getRteNameMap().get(UserDefinedTypeMeta._typeName).toLowerCase();
 					this.generalSectionDescription = NLS.bind(AuthoringUIResources.generalInfoSection_desc, typeName);
 					this.detailSectionDescription = NLS.bind(AuthoringUIResources.detailSection_desc, typeName);
 					this.variabilitySectionDescription = NLS.bind(AuthoringUIResources.variabilitySection_desc, typeName);

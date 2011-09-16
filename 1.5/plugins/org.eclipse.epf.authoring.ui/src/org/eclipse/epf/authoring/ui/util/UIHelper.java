@@ -29,6 +29,7 @@ import org.eclipse.epf.diagram.ui.service.DiagramEditorHelper;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
@@ -47,6 +48,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
@@ -124,10 +126,28 @@ public class UIHelper {
 		if (methodElement instanceof WorkProduct) {
 			return LibraryUIText.TEXT_WORK_PRODUCT + " (" + elementLabel + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 		} else if (methodElement instanceof Guidance) {
+			if (methodElement instanceof Practice) {
+				Practice prac = (Practice)methodElement;
+				if (PracticePropUtil.getPracticePropUtil().isUtdType(prac)) {
+					elementLabel = getNameForUtd(prac);
+				}
+			}			
 			return LibraryUIText.TEXT_GUIDANCE + " (" + elementLabel + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			return elementLabel;
 		}
+	}
+	
+	private static String getNameForUtd(Practice prac) {
+		try {
+			String typeName = PracticePropUtil.getPracticePropUtil().getUtdData(prac)
+				.getRteNameMap().get(UserDefinedTypeMeta._typeName);			
+			return typeName;
+		} catch (Exception e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return null;
 	}
 
 	/**
