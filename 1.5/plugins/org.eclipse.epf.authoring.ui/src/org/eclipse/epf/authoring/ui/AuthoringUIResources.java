@@ -979,6 +979,8 @@ public final class AuthoringUIResources extends NLS {
 
 	public static String AuthoringUIPlugin_SaveAllEditorsPage_DeselectAllButtonLabel;
 
+	public static String ElementHTMLViewer_0;
+
 	public static String ElementsView_migration_dir_dlg_description_text;
 
 	public static String editors_EditorChooser_systemErrorDialog_reason;

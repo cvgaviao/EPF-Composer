@@ -81,7 +81,7 @@ public class AttributeRichTextBox implements ModifyListener {
 	
 	protected String getAttribute() {
 		Object val = object.eGet(attribute);
-		return val == null ? "" : val.toString();
+		return val == null ? "" : val.toString(); //$NON-NLS-1$
 	}
 	
 	public IMethodRichText getRichText() {

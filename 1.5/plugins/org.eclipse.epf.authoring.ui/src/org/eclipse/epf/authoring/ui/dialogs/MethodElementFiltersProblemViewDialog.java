@@ -48,11 +48,11 @@ public class MethodElementFiltersProblemViewDialog extends Dialog {
 		GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
 		gridData.horizontalSpan = 3;
 		optionGroup.setLayoutData(gridData);
-		optionGroup.setText("Options");
+		optionGroup.setText("Options"); //$NON-NLS-1$
 
 		for (int i = 1; i <= 10; i++) {
 			Button button = SWTUtil.createCheckbox(optionGroup,
-					"Option " + i, 1);
+					"Option " + i, 1); //$NON-NLS-1$
 		}
 
 		return composite;
@@ -65,7 +65,7 @@ public class MethodElementFiltersProblemViewDialog extends Dialog {
 	 */
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-		newShell.setText("Method Element Filter Options"); 
+		newShell.setText("Method Element Filter Options");  //$NON-NLS-1$
 	}	
 	
 

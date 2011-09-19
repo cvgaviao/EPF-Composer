@@ -390,7 +390,7 @@ public class MethodContainerCheckedTreeViewer extends
     		System.out.println("LD> item : " + item);				//$NON-NLS-1$	
     		System.out.println("LD> found: " + findItem(item));		//$NON-NLS-1$	
     	}
-		System.out.println("");	
+		System.out.println("");	 //$NON-NLS-1$
     }
     
 	public ConfigurationData getConfigData() {
@@ -414,22 +414,22 @@ public class MethodContainerCheckedTreeViewer extends
 	public void debugTree() {
 		Object root = getRoot();
 		Tree tree = (Tree) this.findItem(root);
-		debugItem(tree.getItem(0), "LD>");
+		debugItem(tree.getItem(0), "LD>"); //$NON-NLS-1$
 	}
 
 	private void debugItem(Object objItem, String indent) {
 		if (objItem instanceof TreeItem) {
 			TreeItem item = (TreeItem) objItem;
-			System.out.println(indent + "item : " + item + ", hash: "
+			System.out.println(indent + "item : " + item + ", hash: " //$NON-NLS-1$ //$NON-NLS-2$
 					+ item.hashCode());
-			System.out.println(indent + "data : " + item.getData());
-			System.out.println("");
+			System.out.println(indent + "data : " + item.getData()); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
 			for (TreeItem cItem : item.getItems()) {
-				debugItem(cItem, indent + "     ");
+				debugItem(cItem, indent + "     "); //$NON-NLS-1$
 			}
 		} else {
-			System.out.println(indent + "objItem : " + objItem);
-			System.out.println("");
+			System.out.println(indent + "objItem : " + objItem); //$NON-NLS-1$
+			System.out.println(""); //$NON-NLS-1$
 		}
 
 	} 

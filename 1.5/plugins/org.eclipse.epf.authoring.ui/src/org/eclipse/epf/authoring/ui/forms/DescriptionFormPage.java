@@ -1501,15 +1501,15 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			// make presentation name empty
 			actionMgr.doAction(IActionManager.SET, methodElement,
 					UmaPackage.eINSTANCE.getMethodElement_PresentationName(),
-					"", -1);
-			ctrl_presentation_name.setText("");
+					"", -1); //$NON-NLS-1$
+			ctrl_presentation_name.setText(""); //$NON-NLS-1$
 
 			// make external Id empty
 			actionMgr.doAction(IActionManager.SET, contentElement
 					.getPresentation(), UmaPackage.eINSTANCE
-					.getContentDescription_ExternalId(), "", -1);
+					.getContentDescription_ExternalId(), "", -1); //$NON-NLS-1$
 			if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
-				ctrl_external_id.setText("");
+				ctrl_external_id.setText(""); //$NON-NLS-1$
 			}
 		}
 	
@@ -1526,11 +1526,11 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		
 		if (contentElement != null
 				&& (contentElement.getVariabilityType() == VariabilityType.CONTRIBUTES)) {	
-			if (contentElement.getPresentationName().equals("")) {
+			if (contentElement.getPresentationName().equals("")) { //$NON-NLS-1$
 				ctrl_presentation_name.setEditable(false);
 			}
 			if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
-				if (contentElement.getPresentation().getExternalId().equals("")) {
+				if (contentElement.getPresentation().getExternalId().equals("")) { //$NON-NLS-1$
 					ctrl_external_id.setEditable(false);
 				}
 			}

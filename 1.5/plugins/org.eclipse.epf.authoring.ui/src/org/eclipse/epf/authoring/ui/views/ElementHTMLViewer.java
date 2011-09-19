@@ -17,6 +17,7 @@ import java.net.URLDecoder;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -332,7 +333,7 @@ public class ElementHTMLViewer {
 				public void run(IProgressMonitor monitor)
 				throws InvocationTargetException, InterruptedException {
 					try {
-						monitor.beginTask("Generating HTML...", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(AuthoringUIResources.ElementHTMLViewer_0, IProgressMonitor.UNKNOWN);
 						fileUrlHolder[0] = generateHtml(raw_element, getHtmlBuilder());
 					} finally {
 						monitor.done();
@@ -365,7 +366,7 @@ public class ElementHTMLViewer {
 				public void run(IProgressMonitor monitor)
 				throws InvocationTargetException, InterruptedException {
 					try {
-						monitor.beginTask("Generating HTML...", IProgressMonitor.UNKNOWN);
+						monitor.beginTask(AuthoringUIResources.ElementHTMLViewer_0, IProgressMonitor.UNKNOWN);
 						getHtmlBuilder().generateHtml(url);
 					} finally {
 						monitor.done();

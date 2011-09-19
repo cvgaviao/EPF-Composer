@@ -82,7 +82,7 @@ public class AttributeTextBox implements ModifyListener {
 	
 	protected String getAttribute() {
 		Object val = object != null ? object.eGet(attribute) : null;
-		return val == null ? "" : val.toString();
+		return val == null ? "" : val.toString(); //$NON-NLS-1$
 	}
 	
 	public Text getTextControl() {
