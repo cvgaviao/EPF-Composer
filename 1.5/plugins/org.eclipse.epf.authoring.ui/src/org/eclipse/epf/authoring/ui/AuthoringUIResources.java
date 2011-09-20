@@ -1122,6 +1122,8 @@ public final class AuthoringUIResources extends NLS {
 	public static String addLinkDialog_linkType;
 
 	public static String openLinkCheckbox_text;
+	
+	public static String keepRawURLCheckbox_text;
 
 	public static String heightLabel_text;
 
@@ -2202,6 +2204,10 @@ public final class AuthoringUIResources extends NLS {
 	public static String ProcessEditor_Action_delete_WPDD_text;
 	
 	public static String LeafElementsNode_text;
+	
+	public static String ConfigurationPage_RunQuery_label;
+	
+	public static String ConfigurationPage_RunQuery_ToolTip;
 	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);
