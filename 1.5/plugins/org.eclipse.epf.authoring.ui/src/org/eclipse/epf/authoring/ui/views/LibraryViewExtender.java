@@ -1,7 +1,5 @@
 package org.eclipse.epf.authoring.ui.views;
 
-import org.eclipse.epf.authoring.ui.actions.LibraryActionBarContributor;
-import org.eclipse.epf.authoring.ui.views.LibraryView.LibraryViewActionBarContributor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ISelection;
 
