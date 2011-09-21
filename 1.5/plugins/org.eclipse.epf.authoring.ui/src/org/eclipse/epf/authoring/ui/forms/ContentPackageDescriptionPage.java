@@ -318,7 +318,8 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 		if (supportingCheckbox == null) {
 			return;
 		}
-		boolean isSuporting = MethodElementPropUtil.getMethodElementPropUtil().isSupporting(contentPackage);
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		boolean isSuporting = propUtil.isSupporting(contentPackage) || propUtil.ancestorIsSupporting(contentPackage);
 		if (supportingCheckbox.getSelection() != isSuporting) {
 			supportingCheckbox.setSelection(isSuporting);
 		}

@@ -26,6 +26,7 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.TransientGroupItemProvider;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.LibraryEditConstants;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.MethodElement;
@@ -99,6 +100,14 @@ public class MethodPackagesItemProvider extends TransientGroupItemProvider {
 				boolean notify = false;
 				switch (msg.getEventType()) {
 				case Notification.ADD:
+					if (msg.getNewValue() instanceof ContentPackage) {
+						MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+						ContentPackage pkg = (ContentPackage) msg.getNewValue();
+						if (propUtil.ancestorIsSupporting(pkg)) {
+							propUtil.setSupporting(pkg, true);
+						}
+					}					
+					
 				case Notification.MOVE:
 					Object obj = msg.getNewValue();
 					notify = acceptAsChild(obj);

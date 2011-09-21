@@ -77,6 +77,20 @@ public class MethodElementPropUtil {
 		 return value == null ? false : value.booleanValue();
 	}
 	
+	public boolean ancestorIsSupporting(ContentPackage pkg) {
+		EObject parent = pkg.eContainer();
+		while(parent != null) {
+			if (parent instanceof MethodPlugin) { 
+				return ((MethodPlugin) parent).isSupporting();
+			}
+			if (parent instanceof ContentPackage && isSupporting((ContentPackage) parent)) {
+				return true;
+			}
+			parent = parent.eContainer();
+		}
+		return false;
+	}
+		
 	public void updatePackageSupportingBits(Collection<? extends MethodPackage> pkgs, boolean supporting) {
 		for (MethodPackage mpkg : pkgs) {
 			if (! (mpkg instanceof ContentPackage)) {
