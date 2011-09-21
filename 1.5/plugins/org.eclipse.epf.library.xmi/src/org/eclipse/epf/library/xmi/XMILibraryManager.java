@@ -568,5 +568,12 @@ public class XMILibraryManager extends AbstractLibraryManager {
 		return UserDefinedTypeMap == null ? null : UserDefinedTypeMap.get(id);
 	}
 	
+	private boolean userDefinedTypeLoaded = false;
+	public boolean isUserDefinedTypeLoaded() {
+		return userDefinedTypeLoaded;
+	}
 	
+	public void setUserDefinedTypeLoaded(boolean b) {
+		userDefinedTypeLoaded = b;
+	}
 }

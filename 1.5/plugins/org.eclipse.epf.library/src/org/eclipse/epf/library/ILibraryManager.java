@@ -12,7 +12,6 @@ package org.eclipse.epf.library;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -330,4 +329,7 @@ public interface ILibraryManager {
 		
 	public UserDefinedTypeMeta getUserDefineType(String id);
 	
+	public boolean isUserDefinedTypeLoaded();
+	
+	public void setUserDefinedTypeLoaded(boolean b);
 }

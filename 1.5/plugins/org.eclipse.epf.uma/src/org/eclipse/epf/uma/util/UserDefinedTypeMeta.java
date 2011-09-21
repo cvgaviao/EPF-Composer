@@ -29,8 +29,12 @@ public class UserDefinedTypeMeta {
 	
 	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeName) {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
-		meta.setId(Type_Practice + ":" + typeName);								//$NON-NLS-1$
+		meta.setId(getPracticeUdtId(typeName));								//$NON-NLS-1$
 		return meta;
+	}
+	
+	public static String getPracticeUdtId(String typeName) {
+		return Type_Practice + ":" + typeName;			//$NON-NLS-1$
 	}
 	
 	private Map<String, String> rteNameMap;

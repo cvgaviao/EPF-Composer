@@ -101,6 +101,7 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.util.IMeVisitor;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -1507,8 +1508,17 @@ public class LibraryUtil {
 		}
 	}
 	
+	public static boolean isUdtTypeName(String typeName) {
+		ILibraryManager mgr = LibraryService.getInstance().getCurrentLibraryManager();
+		return isUdtTypeName(typeName, mgr);
+	}
 	
-	
-	
-	
+	private static boolean isUdtTypeName(String typeName, ILibraryManager mgr) {
+		if (mgr == null) {
+			return false;
+		}
+		String id = UserDefinedTypeMeta.getPracticeUdtId(typeName);		
+		return mgr.getUserDefineType(id) != null;
+	}
+		
 }
