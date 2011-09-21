@@ -52,6 +52,20 @@ public class PracticePropUtil extends MethodElementPropUtil {
 		return false;
 	}
 	
+	public  boolean isUtdType(MethodElement element, String typeName) {
+		if (typeName != null && element instanceof Practice) {
+			try {
+				UserDefinedTypeMeta meta = getUtdData((Practice) element);
+				if (meta != null) {
+					return typeName.equals(meta.getRteNameMap().get(UserDefinedTypeMeta._typeName));
+				}
+			} catch (Exception e) {
+				LibraryEditPlugin.getDefault().getLogger().logError(e);
+			}
+		}
+		return false;
+	}
+	
 	private static class PracticeXmlEditUtil extends XmlEditUtil {
 		
 		private Practice practice;
