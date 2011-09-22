@@ -490,7 +490,8 @@ public class HtmlBuilder {
 
 		xml.append(XmlHelper.XML_HEADER).append(xmlElement.toXml());
 
-		if ( debug || CommandLineRunUtil.getInstance().isNeedToRun()) {
+//		if ( debug || CommandLineRunUtil.getInstance().isNeedToRun()) {
+		if ( debug) {			
 			try {
 				String xml_file = this.getPublishDir() + "xml" + File.separator; //$NON-NLS-1$
 				xml_file += layout.getType() + "." + layout.getFileName(".xml"); //$NON-NLS-1$ //$NON-NLS-2$
