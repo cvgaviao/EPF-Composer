@@ -1,9 +1,12 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -64,6 +67,12 @@ public class PracticePropUtil extends MethodElementPropUtil {
 			}
 		}
 		return false;
+	}
+	
+	public List<MethodElement> getUdtReferencingList(Practice practice) {
+		String ofeature = ExtendReferenceMap.getOppositeName(ExtendReferenceMap.UtdList);
+		List<MethodElement> list = (List<MethodElement>) getReferenceValue(ofeature, practice, false);
+		return list == null ? new ArrayList<MethodElement>() : list;
 	}
 	
 	private static class PracticeXmlEditUtil extends XmlEditUtil {

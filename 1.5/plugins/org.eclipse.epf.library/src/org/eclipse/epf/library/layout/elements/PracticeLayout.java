@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider.GroupingHelper;
@@ -60,10 +61,11 @@ public class PracticeLayout extends AbstractElementLayout {
 		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 		try {
 			UserDefinedTypeMeta meta = propUtil.getUtdData(practice);
-			addReferences(udtFeauteObj, elementXml,
+			if (meta != null) {
+				addReferences(udtFeauteObj, elementXml,
 					"Use defined type", Collections.singletonList(meta)); //$NON-NLS-1$
+			}
 		} catch (Exception e) {
-
 		}
 		return elementXml;
 	}
@@ -140,6 +142,16 @@ public class PracticeLayout extends AbstractElementLayout {
 					elementXml, "Input work product slots", wpSlotInputs); //$NON-NLS-1$
 			}
 
+			Practice practice = (Practice) getElement();
+			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+			if (propUtil.isUtdType(practice)) {
+				List<MethodElement> list = propUtil.getUdtReferencingList(practice);
+				if (list != null && !list.isEmpty()) {
+					list = ConfigurationHelper.getCalculatedElements(list, layoutManager.getElementRealizer());
+				}
+				addReferences(feature,
+						elementXml, "Udt referencing list", list); //$NON-NLS-1$
+			}	
 		}
 
 		return elementXml;

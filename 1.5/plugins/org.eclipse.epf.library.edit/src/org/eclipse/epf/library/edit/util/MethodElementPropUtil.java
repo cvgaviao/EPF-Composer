@@ -434,7 +434,7 @@ public class MethodElementPropUtil {
 		map.removeOpposite(referenceName, otherElement);
 	}
 	
-	private Object getReferenceValue(String referenceName, MethodElement element, boolean toModify) {
+	protected Object getReferenceValue(String referenceName, MethodElement element, boolean toModify) {
 		MeXmlEditUtil meXmlEditUtil = new MeXmlEditUtil(element, this);
 		return meXmlEditUtil.getReferenceValue(referenceName, element, toModify);
 	}
