@@ -24,14 +24,16 @@ import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider;
 import org.eclipse.epf.library.edit.configuration.PracticeItemProvider.GroupingHelper;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.util.XmlElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
-import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 
 /**
@@ -49,7 +51,49 @@ public class PracticeLayout extends AbstractElementLayout {
 	public void init(ElementLayoutManager layoutManager, MethodElement element) {
 		super.__init(layoutManager, element);
 	}
+	
+	@Override
+	protected XmlElement getXmlElement() {
+		XmlElement elementXml = super.getXmlElement();
 
+		Practice practice = (Practice) getElement();
+		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+		try {
+			UserDefinedTypeMeta meta = propUtil.getUtdData(practice);
+			addReferences(udtFeauteObj, elementXml,
+					"Use defined type", Collections.singletonList(meta)); //$NON-NLS-1$
+		} catch (Exception e) {
+
+		}
+		return elementXml;
+	}
+
+	private static Object udtFeauteObj = new Object();	
+	@Override
+	protected void processChild(Object feature, XmlElement parent, List items,
+			boolean includeReferences) {
+		if (feature == udtFeauteObj) {
+			if (items == null || items.isEmpty()) {
+				return;
+			}
+			
+			for (UserDefinedTypeMeta meta : (List<UserDefinedTypeMeta>) items) {
+				XmlElement childXmlElement = new XmlElement("Element");//$NON-NLS-1$
+				parent.addChild(childXmlElement);
+				for (String name : UserDefinedTypeMeta.rteNames) {
+					String value = meta.getRteNameMap().get(name);
+					if (value == null) {
+						value = name;
+					}
+					childXmlElement.setAttribute(name, value);//$NON-NLS-1$
+				}
+			}
+			
+			return;
+		}
+		super.processChild(feature, parent, items, includeReferences);
+	}
+	
 	/**
 	 * @see org.eclipse.epf.library.layout.IElementLayout#getXmlElement(boolean)
 	 */
