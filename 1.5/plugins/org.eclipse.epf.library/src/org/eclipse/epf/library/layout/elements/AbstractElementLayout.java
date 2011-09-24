@@ -989,9 +989,23 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			loadAttributes(elementXml);
 
 			loadReferences(elementXml, false);
+			
+			loadUdtReferences(elementXml);			
+			
 		}
 
 		return elementXml;
+	}
+	
+	private void loadUdtReferences(XmlElement elementXml) {
+		List<Practice> udtList = ConfigurationHelper.calc0nFeatureValue(
+				element, UmaUtil.MethodElement_UdtList, layoutManager
+						.getElementRealizer());
+		if (udtList != null && !udtList.isEmpty()) {
+			addReferences(UmaUtil.MethodElement_UdtList, elementXml,
+					"User defined type references", //$NON-NLS-1$
+					udtList);
+		}
 	}
 
 	/**
