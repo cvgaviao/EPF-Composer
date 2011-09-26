@@ -423,10 +423,16 @@ public class LibraryActionBarContributor extends
 		Collection actions = new ArrayList();
 		if (descriptors != null) {
 			for (Iterator i = descriptors.iterator(); i.hasNext();) {
-				actions.add(new MethodCreateChildAction(editingDomain,
-						selection, i.next()));
+				Object obj = i.next();
+				if (obj instanceof Separator) {
+					actions.add(obj);
+				} else {
+					actions.add(new MethodCreateChildAction(editingDomain,
+							selection, obj));
+				}
 			}
 		}
+		
 		return actions;
 	}
 
@@ -459,13 +465,18 @@ public class LibraryActionBarContributor extends
 	protected void populateManager(IContributionManager manager,
 			Collection actions, String contributionID) {
 		if (actions != null) {
-			for (Iterator i = actions.iterator(); i.hasNext();) {
-				IAction action = (IAction) i.next();
-				if (contributionID != null) {
-					manager.insertBefore(contributionID, action);
-				} else {
-					manager.add(action);
-				}
+			for (Iterator i = actions.iterator(); i.hasNext();) {				
+				Object obj = i.next();
+				if (obj instanceof IAction) {
+					IAction action = (IAction)obj;
+					if (contributionID != null) {
+						manager.insertBefore(contributionID, action);
+					} else {
+						manager.add(action);
+					}
+				} else if (obj instanceof Separator) {
+					manager.add((Separator)obj);
+				}				
 			}
 		}
 	}
