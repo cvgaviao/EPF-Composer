@@ -341,9 +341,9 @@ public class SupportingElementData extends ConfigDataBase {
 		return ret;
 	}
 	
-	public boolean inSupportingElements(MethodElement element) {
-		return supportingElements == null ? false : supportingElements.contains(element);
-	}
+//	public boolean inSupportingElements(MethodElement element) {
+//		return supportingElements == null ? false : supportingElements.contains(element);
+//	}
 	
 	//ret: 0 = unknown, 1 = yes, 2 = no
 	private int checkInConfigIndex_(MethodElement element) {

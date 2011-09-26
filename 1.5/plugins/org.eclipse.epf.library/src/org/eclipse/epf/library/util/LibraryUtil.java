@@ -1520,5 +1520,24 @@ public class LibraryUtil {
 		String id = UserDefinedTypeMeta.getPracticeUdtId(typeName);		
 		return mgr.getUserDefineType(id) != null;
 	}
+	
+	public static boolean isUnderSupporting(MethodElement element) {
+		MethodPlugin plugin = UmaUtil.getMethodPlugin(element);
+		if (plugin == null) {
+			return false;
+		}
+		if (plugin.isSupporting()) {
+			return true;
+		}
+		
+		EObject parent = getSelectable(element);
+		if (parent instanceof ContentPackage) {
+			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+			propUtil.isSupporting((ContentPackage) parent);
+		}
+		
+		return false;
+	}
+	
 		
 }
