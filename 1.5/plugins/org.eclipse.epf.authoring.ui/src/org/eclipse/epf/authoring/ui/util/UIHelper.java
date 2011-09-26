@@ -130,6 +130,7 @@ public class UIHelper {
 				Practice prac = (Practice)methodElement;
 				if (PracticePropUtil.getPracticePropUtil().isUtdType(prac)) {
 					elementLabel = getNameForUtd(prac);
+					return elementLabel;
 				}
 			}			
 			return LibraryUIText.TEXT_GUIDANCE + " (" + elementLabel + ")"; //$NON-NLS-1$ //$NON-NLS-2$
