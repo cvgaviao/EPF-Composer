@@ -37,6 +37,7 @@ public class DebugLog {
 		String str = prompt + label;	//$NON-NLS-1$
 		
 		if (!empty) {
+			str += " size = " + elements.size();//$NON-NLS-1$
 			for (MethodElement element : elements) {
 				String line = "\n" + indent + DebugUtil.toString(element, 2);//$NON-NLS-1$
 				str += line;
