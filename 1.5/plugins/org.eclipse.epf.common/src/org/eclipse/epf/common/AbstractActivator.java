@@ -26,7 +26,6 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import org.eclipse.core.internal.runtime.InternalPlatform;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
@@ -157,7 +156,7 @@ public abstract class AbstractActivator extends Plugin implements IActivator {
 		String symbolicName = bundle.getSymbolicName();
 		if (symbolicName != null) {
 			String key = symbolicName + "/profiling"; //$NON-NLS-1$
-			String value = InternalPlatform.getDefault().getOption(key);
+			String value = Platform.getDebugOption(key);
 			profiling = value == null ? false : value.equalsIgnoreCase("true"); //$NON-NLS-1$
 		}
 
@@ -174,7 +173,7 @@ public abstract class AbstractActivator extends Plugin implements IActivator {
 			String symbolicName = bundle.getSymbolicName();
 			if (symbolicName != null) {
 				String key = symbolicName + "/" + debugType; //$NON-NLS-1$
-				String value = InternalPlatform.getDefault().getOption(key);
+				String value = Platform.getDebugOption(key);
 				boolean bValue = value == null ? false : value.equalsIgnoreCase("true"); //$NON-NLS-1$
 				b = new Boolean(bValue);
 				debugMap.put(debugType, b);
