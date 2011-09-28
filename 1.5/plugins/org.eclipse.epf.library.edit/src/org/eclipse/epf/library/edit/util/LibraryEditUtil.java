@@ -513,6 +513,27 @@ public class LibraryEditUtil {
 		
 	}
 	
+	public static class CollectElementFilterExtend extends CollectElementFilter {
+		
+		@Override
+		public boolean accept(MethodElement element) {
+			if (element instanceof MethodPlugin) {
+				return false;
+			}
+			if (element instanceof MethodPackage) {
+				return false;
+			}
+			if (element instanceof MethodConfiguration) {
+				return false;
+			}
+			if (element instanceof MethodLibrary) {
+				return false;
+			}
+			return true;
+		}
+		
+	}
+	
 	private void collectElements(MethodElement element,
 			CollectElementFilter filter, Set<MethodElement> collected,
 			Set<MethodElement> processed) {
