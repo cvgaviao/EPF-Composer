@@ -27,7 +27,6 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-import org.eclipse.core.internal.runtime.InternalPlatform;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.epf.common.IActivator;
@@ -82,6 +81,8 @@ public abstract class AbstractPlugin extends AbstractUIPlugin implements IActiva
 
 	// The profiling flag.
 	private boolean profiling;
+	
+	private Map<String, Boolean> debugMap = new HashMap<String, Boolean>();
 
 	/**
 	 * Default constructor.
@@ -161,7 +162,7 @@ public abstract class AbstractPlugin extends AbstractUIPlugin implements IActiva
 		String symbolicName = bundle.getSymbolicName();
 		if (symbolicName != null) {
 			String key = symbolicName + "/profiling"; //$NON-NLS-1$
-			String value = InternalPlatform.getDefault().getOption(key);
+			String value = Platform.getDebugOption(key);
 			profiling = value == null ? false : value.equalsIgnoreCase("true"); //$NON-NLS-1$
 		}
 
@@ -169,6 +170,22 @@ public abstract class AbstractPlugin extends AbstractUIPlugin implements IActiva
 			getLogger().logInfo(
 					"Initialized " + pluginId + ", installPath=" + installPath); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
+	
+	public boolean debug(String debugType) {
+		Boolean b = debugMap.get(debugType);
+		if (b == null) {
+			Bundle bundle = getBundle();
+			String symbolicName = bundle.getSymbolicName();
+			if (symbolicName != null) {
+				String key = symbolicName + "/" + debugType; //$NON-NLS-1$
+				String value = Platform.getDebugOption(key);
+				boolean bValue = value == null ? false : value.equalsIgnoreCase("true"); //$NON-NLS-1$
+				b = new Boolean(bValue);
+				debugMap.put(debugType, b);
+			}
+		}		
+		return b.booleanValue();
 	}
 
 	/**
