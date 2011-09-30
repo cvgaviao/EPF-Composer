@@ -147,6 +147,8 @@ import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.MessageException;
 import org.eclipse.epf.uma.util.UmaResources;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 
 import com.ibm.icu.util.StringTokenizer;
@@ -1681,7 +1683,7 @@ public final class TngUtil {
 		
 		//For user defined type
 		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object))) {
-			return LibraryEditPlugin.getDefault().getImage("full/obj16/UserDefinedType"); //$NON-NLS-1$
+			return getImageForUdt((Practice)object);
 		}		
 		
 		Object adapter = null;
@@ -1697,6 +1699,18 @@ public final class TngUtil {
 				((IDisposable)adapter).dispose();
 			}
 		}
+		return null;
+	}
+	
+	public static ImageDescriptor getImageForUdt(Practice prac) {
+		try {
+			UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
+			String imageUrl = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon);
+			return ImageDescriptor.createFromURL(new URL(imageUrl));
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		
 		return null;
 	}
 

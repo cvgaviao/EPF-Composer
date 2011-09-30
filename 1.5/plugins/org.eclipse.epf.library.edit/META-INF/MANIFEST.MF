@@ -10,7 +10,8 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.epf.common;visibility:=reexport,
  org.eclipse.epf.uma.edit;visibility:=reexport,
  org.eclipse.epf.services;visibility:=reexport,
- org.eclipse.emf.ecore.xmi
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.jface
 Eclipse-LazyStart: true
 Export-Package: org.eclipse.epf.library.edit,
  org.eclipse.epf.library.edit.category,

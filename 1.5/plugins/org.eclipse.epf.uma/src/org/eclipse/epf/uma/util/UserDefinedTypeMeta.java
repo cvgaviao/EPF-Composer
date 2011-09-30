@@ -15,6 +15,7 @@ public class UserDefinedTypeMeta {
 	public static final String _application = "application"; 				//$NON-NLS-1$
 	public static final String _levelsOfAdoption = "levelsOfAdoption"; 		//$NON-NLS-1$
 	public static final String _additionalInfo = "additionalInfo"; 			//$NON-NLS-1$
+	public static final String _icon = "icon";                              //$NON-NLS-1$
 	
 	public static String[] rteNames = {
 		_typeName,
@@ -25,6 +26,7 @@ public class UserDefinedTypeMeta {
 		_application,
 		_levelsOfAdoption,
 		_additionalInfo,
+		_icon
 	};
 	
 	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeName) {

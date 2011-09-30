@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.edit.navigator;
 
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,6 +34,8 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
+import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * The item provider adapter for a practice.
@@ -117,8 +120,11 @@ public class PracticeItemProvider extends
 			}
 		}
 		
-		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {			
-			return LibraryEditPlugin.getDefault().getImage("full/obj16/UserDefinedType"); //$NON-NLS-1$
+		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {	
+			ImageDescriptor img = TngUtil.getImageForUdt((Practice)object);
+			if (img != null) {
+				return img;
+			}
 		}
 		
 		return super.getImage(object);

@@ -27,11 +27,13 @@ import org.eclipse.emf.edit.ui.action.StaticSelectionCommandAction;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.library.edit.process.command.CreateProcessComponentCommand;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 
 
@@ -105,8 +107,12 @@ public final class MethodCreateChildAction extends StaticSelectionCommandAction 
 					}
 					
 					public Object getImage() {
-						return AuthoringUIPlugin.getDefault()
-							.getImageDescriptor("full/obj16/UserDefinedType.gif"); //$NON-NLS-1$
+						ImageDescriptor img = getImageForUserDefinedType();
+						if (img != null) {
+							return img;
+						} else {
+							return super.getImage();
+						}
 					}
 				};
 			} else {
@@ -162,6 +168,15 @@ public final class MethodCreateChildAction extends StaticSelectionCommandAction 
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
 		}
 		
+		return null;
+	}
+	
+	private ImageDescriptor getImageForUserDefinedType() {
+		if (isUserDefinedType()) {
+			Practice prac = (Practice) ((CommandParameter) descriptor).getValue();
+			return TngUtil.getImageForUdt(prac);
+		}
+
 		return null;
 	}
 	
