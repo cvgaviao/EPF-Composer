@@ -34,6 +34,10 @@ public class DebugLog {
 	}
 	
 	public void logElements(String label, Collection<? extends MethodElement> elements, boolean showEmpty) {
+		logElements(label, elements, showEmpty, true);
+	}
+	
+	public void logElements(String label, Collection<? extends MethodElement> elements, boolean showEmpty, boolean showTags) {
 		boolean empty = elements == null || elements.isEmpty();
 		if (!showEmpty && empty) {
 			return;
@@ -55,7 +59,7 @@ public class DebugLog {
 			
 			for (String guid : sortedGuids) {
 				MethodElement element = map.get(guid);
-				String line = "\n" + indent + DebugUtil.toString(element, 2);//$NON-NLS-1$
+				String line = "\n" + indent + toString(element, 2, showTags, indent + indent);//$NON-NLS-1$
 				str += line;
 			}
 			
@@ -63,6 +67,10 @@ public class DebugLog {
 			str += "\n" + indent + "Empty list";		//$NON-NLS-1$ //$NON-NLS-2$
 		}
 		FileUtil.log(str + "\n");//$NON-NLS-1$
+	}
+	
+	public String toString(MethodElement element, int ix, boolean showTags, String tagLineInden) {
+		return DebugUtil.toString(element, ix);
 	}
 		
 }
