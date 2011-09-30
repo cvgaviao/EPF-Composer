@@ -1,7 +1,11 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.uma.MethodElement;
@@ -37,11 +41,24 @@ public class DebugLog {
 		String str = prompt + label;	//$NON-NLS-1$
 		
 		if (!empty) {
-			str += " size = " + elements.size();//$NON-NLS-1$
+			str += " size = " + elements.size();//$NON-NLS-1$			
+			
+			List<String> sortedGuids = new ArrayList<String>();
+			Map<String, MethodElement> map = new HashMap<String, MethodElement>();
 			for (MethodElement element : elements) {
+				String guid = element.getGuid();
+				sortedGuids.add(guid);
+				map.put(guid, element);
+			}
+			
+			Collections.sort(sortedGuids);
+			
+			for (String guid : sortedGuids) {
+				MethodElement element = map.get(guid);
 				String line = "\n" + indent + DebugUtil.toString(element, 2);//$NON-NLS-1$
 				str += line;
 			}
+			
 		} else {
 			str += "\n" + indent + "Empty list";		//$NON-NLS-1$ //$NON-NLS-2$
 		}
