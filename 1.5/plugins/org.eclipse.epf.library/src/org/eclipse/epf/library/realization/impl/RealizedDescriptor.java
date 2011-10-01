@@ -35,6 +35,7 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.ContentDescriptionFactory;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 public class RealizedDescriptor extends RealizedElement implements
@@ -65,6 +66,13 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	private Object getContentFeatureValue(EStructuralFeature feature) {
+		if (getLinkedElement() == null) {
+			return null;
+		}
+		if (! ContentDescriptionFactory.hasPresentation(getLinkedElement())) {
+			return null;
+		}
+				
 		EStructuralFeature elementFeature = contentFeatureMap.get(feature);
 		
 		if (elementFeature != null) {	
