@@ -33,6 +33,7 @@ import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.edit.domain.TraceableAdapterFactoryEditingDomain;
 import org.eclipse.epf.uma.impl.DescribableElementImpl;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
+import org.eclipse.epf.uma.util.ContentDescriptionFactory;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -85,9 +86,12 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 			} else {
 				e.setGuid(UmaUtil.generateGUID());
 				if (e instanceof DescribableElement) {
-					ContentDescription pres =  ((DescribableElementImpl) e).basicGetPresentation();
-					if (pres != null) {
-						pres.setGuid(UmaUtil.generateGUID(e.getGuid()));
+					DescribableElement element = (DescribableElement) e;
+					if (ContentDescriptionFactory.hasPresentation(element)) {
+						ContentDescription pres = element.getPresentation();
+						if (pres != null) {
+							pres.setGuid(UmaUtil.generateGUID(e.getGuid()));
+						}
 					}
 				}
 			}
