@@ -557,6 +557,11 @@ public class LibraryUtil {
 	public static void loadAllPlugins(MethodConfiguration config, IMeVisitor vistor) {
 		boolean skipContent = true;
 		List<MethodPlugin> pluigns = config.getMethodPluginSelection();
+		loadPlugins(vistor, skipContent, pluigns);
+	}
+	
+	private static void loadPlugins(IMeVisitor vistor, boolean skipContent,
+			Collection<MethodPlugin> pluigns) {
 		Set<MethodElement> processed = new HashSet<MethodElement>();
 		for (MethodPlugin plugin: pluigns) {
 			if (skipContent) {
@@ -565,6 +570,12 @@ public class LibraryUtil {
 				loadAllContained(plugin);
 			}
 		}
+	}
+	
+	public static void loadPlugins(Collection<MethodPlugin> pluigns) {
+		MeVisitor meVisitor = new MeVisitor();
+		loadPlugins(meVisitor, true, pluigns);
+		meVisitor.processElements();
 	}
 	
 	private static void loadImmidiateChildren(MethodElement me,
