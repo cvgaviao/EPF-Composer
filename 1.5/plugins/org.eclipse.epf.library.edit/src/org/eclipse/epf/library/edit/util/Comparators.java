@@ -114,6 +114,17 @@ public final class Comparators {
 		return collator.compare(name1, name2);
 	}
 	
+	private static int comparePresentationNameGuid(MethodElement e1, MethodElement e2) {
+		Collator collator = Collator.getInstance();
+		String name1 = e1 instanceof BreakdownElement ? ProcessUtil.getPresentationName((BreakdownElement)e1)
+				: e1.getPresentationName();
+		if (name1.length() < 1) name1 = e1.getName();
+		String name2 = e2 instanceof BreakdownElement ? ProcessUtil.getPresentationName((BreakdownElement)e2)
+				: e2.getPresentationName();
+		if (name2.length() < 1) name2 = e2.getName();
+		return collator.compare(name1 + e1.getGuid(), name2 + e2.getGuid());
+	}
+	
 	private static MethodElement getMethodElement(Object obj) {
 		Object object = TngUtil.unwrap(obj);
 		if (object instanceof ProcessComponent)
@@ -142,6 +153,26 @@ public final class Comparators {
 			}
 
 			return comparePresentationName((MethodElement) o1, (MethodElement) o2);
+		}
+
+	};
+	
+	public static final Comparator<Object> PRESENTATION_NAME_GUID_COMPARATOR = new Comparator<Object>() {
+		
+		public int compare(Object o1, Object o2) {
+			if (o1 == o2)
+				return 0;
+			o1 = getMethodElement(o1);
+			if (o1 == null) {
+				return 0;
+			}
+
+			o2 = getMethodElement(o2);
+			if (o2 == null) {
+				return 0;
+			}
+
+			return comparePresentationNameGuid((MethodElement) o1, (MethodElement) o2);
 		}
 
 	};

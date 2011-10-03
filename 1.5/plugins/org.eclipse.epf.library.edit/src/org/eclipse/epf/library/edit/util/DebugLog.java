@@ -55,7 +55,7 @@ public class DebugLog {
 				map.put(guid, element);
 			}
 			
-			Collections.sort(sortedGuids);
+			Collections.sort(sortedGuids, Comparators.PRESENTATION_NAME_GUID_COMPARATOR);
 			
 			for (String guid : sortedGuids) {
 				MethodElement element = map.get(guid);
