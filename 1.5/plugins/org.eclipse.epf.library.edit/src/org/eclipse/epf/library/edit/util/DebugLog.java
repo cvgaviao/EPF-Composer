@@ -47,18 +47,10 @@ public class DebugLog {
 		if (!empty) {
 			str += " size = " + elements.size();//$NON-NLS-1$			
 			
-			List<String> sortedGuids = new ArrayList<String>();
-			Map<String, MethodElement> map = new HashMap<String, MethodElement>();
-			for (MethodElement element : elements) {
-				String guid = element.getGuid();
-				sortedGuids.add(guid);
-				map.put(guid, element);
-			}
+			List<MethodElement> sortedElements = new ArrayList<MethodElement>(elements);			
+			Collections.sort(sortedElements, Comparators.NAME_GUID_COMPARATOR);
 			
-			Collections.sort(sortedGuids, Comparators.PRESENTATION_NAME_GUID_COMPARATOR);
-			
-			for (String guid : sortedGuids) {
-				MethodElement element = map.get(guid);
+			for (MethodElement element : sortedElements) {
 				String line = "\n" + indent + toString(element, 2, showTags, indent + indent);//$NON-NLS-1$
 				str += line;
 			}
