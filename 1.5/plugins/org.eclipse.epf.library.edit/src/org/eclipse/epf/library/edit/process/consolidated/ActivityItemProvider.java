@@ -22,8 +22,10 @@ import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.WorkProductDescriptor;
@@ -142,5 +144,17 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 		return false;
 	}
 	
+	@Override
+	protected boolean acceptAsChild(Object parent, Object child) {
+		if (parent instanceof Activity) {
+			child = TngUtil.unwrap(child);
+			if(child instanceof Activity || child instanceof TaskDescriptor
+					|| child instanceof Milestone) {
+				return super.acceptAsChild(child);
+			}
+			return false;
+		}			
+		return super.acceptAsChild(child);
+	}	
 
 }

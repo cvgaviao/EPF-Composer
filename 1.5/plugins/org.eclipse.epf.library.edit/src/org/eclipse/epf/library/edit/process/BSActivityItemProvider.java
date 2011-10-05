@@ -194,6 +194,10 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		}
 		return true;
 	}
+	
+	protected boolean acceptAsChild(Object parent, Object child) {
+		return acceptAsChild(child);
+	}
 
 	/**
 	 * Checks if the given object can be accepted as a rolled-up child.
@@ -433,7 +437,7 @@ public abstract class BSActivityItemProvider extends ActivityItemProvider
 		Collection children = new ArrayList();
 		for (Iterator iter = super.getChildren(object).iterator(); iter.hasNext();) {
 			Object child = (Object) iter.next();
-			if(acceptAsChild(child)) {
+			if(acceptAsChild(object, child)) {
 
 				if (isSynFree) {
 					Object unwrapped = TngUtil.unwrap(child);
