@@ -25,7 +25,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
@@ -40,6 +39,7 @@ import org.eclipse.epf.authoring.ui.providers.ConfigPackageLabelProvider;
 import org.eclipse.epf.authoring.ui.providers.HideUncheckedViewerFilter;
 import org.eclipse.epf.authoring.ui.util.AuthoringAccessibleListener;
 import org.eclipse.epf.authoring.ui.util.ConfigurationMarkerHelper;
+import org.eclipse.epf.authoring.ui.views.ConfigurationView;
 import org.eclipse.epf.authoring.ui.views.MethodContainerCheckedTreeViewer;
 import org.eclipse.epf.authoring.ui.views.MethodContainerCheckedTreeViewer2;
 import org.eclipse.epf.library.IConfigurationManager;
@@ -861,6 +861,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
+						collapseConfigView();
 						// save configurtion
 						saveConfiguration();
 						if (updateOnClick.getSelection()) {
@@ -879,6 +880,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
+						collapseConfigView();
 						saveContentCategorySelectionsToConfiguration();
 						if (updateOnClick.getSelection()) {
 							// update the closure error
@@ -926,6 +928,23 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		
 		// listen to plugin presentation layout changes
 		PluginUIPackageContext.INSTANCE.addListener(layoutListener);
+	}
+	
+	private void collapseConfigView() {
+		final ConfigurationView configView = ConfigurationView.getView();
+		if (configView == null) {
+			return;
+		}
+		if (! config.getName().equals(configView.getCurrentConfig())) {
+			return;
+		}
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+			public void run() {
+				if (configView.getViewer() instanceof TreeViewer) {
+					((TreeViewer) configView.getViewer()).collapseAll();
+				}
+			}
+		});
 	}
 	
 	class ShowErrorJob extends Job {
