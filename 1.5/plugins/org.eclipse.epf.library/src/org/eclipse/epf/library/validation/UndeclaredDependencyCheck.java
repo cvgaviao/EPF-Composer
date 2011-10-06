@@ -26,6 +26,7 @@ import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.validation.LibraryEValidator;
 
@@ -255,6 +256,9 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 			}
 			for (EReference ref : refList) {				
 				if (skipContent && LibraryUtil.isContentRef(ref)) {
+					continue;
+				}
+				if (ref == UmaPackage.eINSTANCE.getRole_Modifies()) {
 					continue;
 				}
 				Object obj = me.eGet(ref);
