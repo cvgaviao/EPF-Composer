@@ -1412,18 +1412,20 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	}
 	
 	protected List addBreakdownElementsToContentElements(List contentElements, List breakdownElements) {
-		if (breakdownElements == null || breakdownElements.isEmpty()) {
+		if ( !getLayoutMgr().getValidator().showRelatedDescriptors() ) {
 			return contentElements;
 		}
-		Set set = new HashSet();
-		if (contentElements != null && !contentElements.isEmpty()) {
-			set.addAll(contentElements);
-		}
+		if (breakdownElements == null || breakdownElements.isEmpty()) {
+			return contentElements;
+		} else if (contentElements == null || contentElements.isEmpty()) {
+			return breakdownElements;
+		}		
+		Set set = new HashSet(contentElements);
 		for (Object obj : breakdownElements) {
 			boolean toAdd = true;
 			if (obj instanceof Descriptor) {
 				MethodElement element = ProcessUtil.getAssociatedElement((Descriptor) obj);
-				if (! set.add(element)) {
+				if (set.contains(element)) {
 					toAdd = false;
 				}
 			}
