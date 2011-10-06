@@ -16,7 +16,6 @@ import java.util.Iterator;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
-import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.dialogs.SectionsOrderDialog;
@@ -29,7 +28,6 @@ import org.eclipse.epf.authoring.ui.richtext.IMethodRichText;
 import org.eclipse.epf.authoring.ui.richtext.IMethodRichTextEditor;
 import org.eclipse.epf.authoring.ui.util.EditorsContextHelper;
 import org.eclipse.epf.authoring.ui.util.UIHelper;
-import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.AddToSectionListCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
@@ -38,6 +36,7 @@ import org.eclipse.epf.library.edit.command.RemoveFromSectionList;
 import org.eclipse.epf.library.edit.util.SectionList;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
+import org.eclipse.epf.richtext.RichText;
 import org.eclipse.epf.richtext.RichTextListener;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaFactory;
@@ -53,8 +52,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -689,6 +686,9 @@ public class TaskStepsPage extends BaseFormPage {
 				return;
 			}
 			String newContent = control.getText();
+			if (control instanceof RichText) {
+				newContent = ((RichText) control).getCurrentRawText();
+			}
 			if (!newContent.equals(oldContent)) {
 				actionMgr.doAction(IActionManager.SET, currentStep,
 						UmaPackage.eINSTANCE.getSection_SectionDescription(),
