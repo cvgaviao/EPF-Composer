@@ -162,6 +162,8 @@ public class RichText implements IRichText {
 	// The control's current text.
 	protected String currentText = ""; //$NON-NLS-1$
 
+	private String currentRawText = "";	//$NON-NLS-1$
+
 	// The control's editable flag.
 	protected boolean editable = true;
 
@@ -540,6 +542,8 @@ public class RichText implements IRichText {
 				printDebugMessage("setText", "text=", text); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
+			setCurrentRawText(text);
+			
 			String newText = text;
 			if (newText != null) {
 				newText = tidyText(newText);
@@ -1652,6 +1656,14 @@ public class RichText implements IRichText {
 		String result = html.replaceAll("<paramTemp", "<param"); //$NON-NLS-1$ //$NON-NLS-2$		
 				
 		return result;
+	}
+	
+	public String getCurrentRawText() {
+		return currentRawText;
+	}
+
+	private void setCurrentRawText(String currentRawText) {
+		this.currentRawText = currentRawText == null ? "" : currentRawText;	//$NON-NLS-1		
 	}
 
 }
