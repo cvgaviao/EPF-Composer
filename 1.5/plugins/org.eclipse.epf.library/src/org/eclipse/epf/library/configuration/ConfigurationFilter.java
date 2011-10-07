@@ -464,7 +464,7 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 		return modifiedChildren.size() == children.size() ?  children : modifiedChildren;
 	}
 	
-	private boolean isEmpty(ContentCategory cc) {
+	public boolean isEmpty(ContentCategory cc) {
 		return isEmpty(cc, new HashMap<ContentCategory, Boolean>());
 	}
 	
