@@ -116,4 +116,11 @@ public interface IConfigurator extends IMethodConfigurationProvider, IFilter, Ad
 	 */
 	public IRealizationManager getRealizationManager();
 		
+	/**
+	 * @param parentObject
+	 * @param children
+	 * @return
+	 */
+	public Collection<?> getModifiedChildren(Object parentObject, Collection children);
+	
 }

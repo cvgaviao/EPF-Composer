@@ -365,6 +365,15 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 		 * @see org.eclipse.emf.edit.provider.IEditingDomainItemProvider#getChildren(java.lang.Object)
 		 */
 		public Collection<?> getChildren(Object object) {
+			Collection<?> children = getChildren_(object);
+			if (filter instanceof IConfigurator) {
+				IConfigurator configurator = (IConfigurator) filter;
+				children = configurator.getModifiedChildren(object, children);
+			}
+			return children;
+		}
+		
+		private Collection<?> getChildren_(Object object) {
 			List<Object> children = null;
 			fake_loop: do {
 				

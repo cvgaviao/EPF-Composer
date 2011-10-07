@@ -10,22 +10,31 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.configuration;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.VariabilityInfo;
+import org.eclipse.epf.library.edit.configuration.CategoriesItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.Log;
+import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.DisciplineGrouping;
+import org.eclipse.epf.uma.Domain;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
@@ -33,9 +42,12 @@ import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleSet;
 import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.ToolMentor;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductType;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.Scope;
 
@@ -424,6 +436,132 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	public IRealizationManager getRealizationManager() {
 		MethodConfiguration c = getMethodConfiguration();
 		return ConfigurationHelper.getDelegate().getRealizationManager(c);
+	}
+	
+	public Collection<?> getModifiedChildren(Object parentObject, Collection children) {
+		if (ConfigurationHelper.getDelegate().isAuthoringMode()) {
+			return children;
+		}		
+		if (ConfigurationHelper.getDelegate().isPublishingMode()) {
+			return children;
+		}
+		if (children == null || children.isEmpty()) {
+			return children;			
+		}
+		
+		List modifiedChildren = new ArrayList();
+		if (parentObject instanceof CategoriesItemProvider || TngUtil.unwrap(parentObject) instanceof ContentCategory) {
+			for (Object child : children) {
+				if (child instanceof ContentCategory) {
+					if (! isEmpty((ContentCategory) child)) {
+						modifiedChildren.add(child);
+					}
+				} else {
+					modifiedChildren.add(child);
+				}
+			}
+		}		
+		return modifiedChildren.size() == children.size() ?  children : modifiedChildren;
+	}
+	
+	private boolean isEmpty(ContentCategory cc) {
+		return isEmpty(cc, new HashMap<ContentCategory, Boolean>());
+	}
+	
+	private boolean isEmpty(ContentCategory cc, Map<ContentCategory, Boolean> processedMap) {
+		Boolean bvalue = processedMap.get(cc);
+		if (bvalue == null) {
+			boolean b = isEmpty_(cc, processedMap);
+			bvalue = b ? Boolean.TRUE : Boolean.FALSE;
+			processedMap.put(cc, bvalue);
+		}		
+		return bvalue.booleanValue();
+	}
+	
+	private boolean isEmpty_(ContentCategory cc, Map<ContentCategory, Boolean> processedMap) {
+		LibraryEditUtil util = LibraryEditUtil.getInstance();
+		
+		EReference ref = getCategorizedRef(cc);
+		Object value = ref == null ? null : util.calc0nFeatureValue(cc, ref, getMethodConfiguration());
+		if (value instanceof List) {
+			for (Object item : (List) value) {
+				if (! (item instanceof ContentCategory)) {
+					return false;
+				}
+			}
+		}
+
+		ref = getSubCategoryRef(cc);
+		value = ref == null ? null : util.calc0nFeatureValue(cc, ref, getMethodConfiguration());
+		if (value instanceof List) {
+			for (Object item : (List) value) {
+				if (item instanceof ContentCategory) {
+					if (! isEmpty((ContentCategory) item, processedMap)) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
+	
+	private EReference getSubCategoryRef(ContentCategory cc) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		if (cc instanceof CustomCategory) {
+			return up.getCustomCategory_CategorizedElements();
+		}
+		if (cc instanceof Discipline) {
+			return up.getDiscipline_Subdiscipline();
+		}
+		if (cc instanceof DisciplineGrouping) {
+			return up.getDisciplineGrouping_Disciplines();
+		}
+		if (cc instanceof Domain) {
+			return up.getDomain_Subdomains();
+		}
+		if (cc instanceof RoleSet) {
+			return null;
+		}
+		if (cc instanceof RoleSetGrouping) {
+			return up.getRoleSetGrouping_RoleSets();
+		}
+		if (cc instanceof Tool) {
+			return null;
+		}
+		if (cc instanceof WorkProductType) {
+			return null;
+		}		
+		return null;
+	}
+	
+	private EReference getCategorizedRef(ContentCategory cc) {
+		UmaPackage up = UmaPackage.eINSTANCE;
+		if (cc instanceof CustomCategory) {
+			return up.getCustomCategory_CategorizedElements();
+		}
+		if (cc instanceof Discipline) {
+			return up.getDiscipline_Tasks();
+		}
+		if (cc instanceof DisciplineGrouping) {
+			return null;
+		}
+		if (cc instanceof Domain) {
+			return up.getDomain_WorkProducts();
+		}
+		if (cc instanceof RoleSet) {
+			return up.getRoleSet_Roles();
+		}
+		if (cc instanceof RoleSetGrouping) {
+			return null;
+		}
+		if (cc instanceof Tool) {
+			return up.getTool_ToolMentors();
+		}
+		if (cc instanceof WorkProductType) {
+			return up.getWorkProductType_WorkProducts();
+		}		
+		return null;
 	}
 	
 }
