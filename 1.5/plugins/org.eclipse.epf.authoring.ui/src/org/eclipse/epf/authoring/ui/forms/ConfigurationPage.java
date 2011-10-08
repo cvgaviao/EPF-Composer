@@ -263,6 +263,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		actionMgr = ((ConfigurationEditor) getEditor()).getActionManager();
 		configProperties = LibraryService.getInstance()
 		.getConfigurationManager(config).getConfigurationProperties();
+		
+		getConfigData().setBeingEdit(true);
 	}
 
 	/**
@@ -1235,6 +1237,8 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	public void dispose() {
 		disposed = true;		
 		super.dispose();
+
+		getConfigData().setBeingEdit(false);
 
 		if (libListener != null) {
 			ILibraryManager manager = LibraryService.getInstance().getCurrentLibraryManager();
