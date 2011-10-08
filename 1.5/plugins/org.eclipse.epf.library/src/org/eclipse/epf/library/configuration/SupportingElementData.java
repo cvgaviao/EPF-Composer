@@ -422,6 +422,11 @@ public class SupportingElementData extends ConfigDataBase {
 		return ret;
 	}
 
+	protected void registerAsSupportingForBackardReference(MethodElement element,
+			Set<MethodElement> newSupportingElements) {
+		registerAsSupporting(element, newSupportingElements);
+	}
+	
 	private void registerAsSupporting(MethodElement element,
 			Set<MethodElement> newSupportingElements) {
 		supportingElements.add(element);
@@ -505,16 +510,12 @@ public class SupportingElementData extends ConfigDataBase {
 						if (replacers != null && !replacers.isEmpty()) {
 							for (VariabilityElement replacer : replacers) {
 								if (isOwnerSelected(replacer,
-										newSupportingElements, true)
-										&& isContentCategory) {
-									//vChildrenContentCategorySet.add(child);
+										newSupportingElements, false)) {
+									registerAsSupportingForBackardReference(replacer, newSupportingElements);
 								}
 							}
 						} else {
-							registerAsSupporting(child, newSupportingElements);
-							if (isContentCategory) {
-								//vChildrenContentCategorySet.add(child);
-							}
+							registerAsSupportingForBackardReference(child, newSupportingElements);
 						}
 					} 
 
