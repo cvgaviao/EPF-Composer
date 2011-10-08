@@ -786,4 +786,7 @@ public class ConfigurationData {
 		return new SupportingElementData(getConfig());
 	}
 	
+	public void setBeingEdit(boolean b) {		
+	}
+	
 }
