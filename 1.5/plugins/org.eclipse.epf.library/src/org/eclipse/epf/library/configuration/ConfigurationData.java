@@ -782,4 +782,8 @@ public class ConfigurationData {
 		return "";		//$NON-NLS-1
 	}
 	
+	public SupportingElementData newSupportingElementData() {
+		return new SupportingElementData(getConfig());
+	}
+	
 }

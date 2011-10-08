@@ -76,10 +76,10 @@ public class ConfigurationManager implements IConfigurationManager {
 	public ConfigurationManager(MethodConfiguration config) {
 		this.config = config;
 		
-		if (! ConfigurationData.ignoreSupportingPlugin) {
-			supportingElementData = new SupportingElementData(config);
-		}
 		configData = ConfigurationData.newConfigurationData(config);
+		if (! ConfigurationData.ignoreSupportingPlugin) {
+			supportingElementData = configData.newSupportingElementData();
+		}
 				
 		configProps = new ConfigurationProperties(config);
 		MethodElementPropertyMgr.getInstance().register(config, configProps);
