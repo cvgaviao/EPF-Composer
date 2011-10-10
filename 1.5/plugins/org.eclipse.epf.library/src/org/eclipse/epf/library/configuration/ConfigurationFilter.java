@@ -449,19 +449,22 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 			return children;			
 		}
 		
+		boolean modified = false;
 		List modifiedChildren = new ArrayList();
 		if (parentObject instanceof CategoriesItemProvider || TngUtil.unwrap(parentObject) instanceof ContentCategory) {
 			for (Object child : children) {
 				if (child instanceof ContentCategory) {
 					if (! isEmpty((ContentCategory) child)) {
 						modifiedChildren.add(child);
+					} else {
+						modified = true;
 					}
 				} else {
 					modifiedChildren.add(child);
 				}
 			}
 		}		
-		return modifiedChildren.size() == children.size() ?  children : modifiedChildren;
+		return modified ? modifiedChildren : children;
 	}
 	
 	public boolean isEmpty(ContentCategory cc) {
