@@ -47,6 +47,8 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 		return true;
 	}
 		
+	//Warning: the UmaUtil.unresolvedGuidSet mechanism needs to be enhanced to handle the case when skipContent = false.
+	//At this time, all the calls to this method are with skipContent = true, therefore leave it as it is now.
 	public MethodElement getMethodElement(String guid, boolean skipContent) {		
 		if (guid == null) {
 			return null;
