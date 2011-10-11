@@ -45,8 +45,8 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 
 		return true;
 	}
-
-	public MethodElement getMethodElement(String guid) {
+		
+	public MethodElement getMethodElement(String guid, boolean skipContent) {		
 		if (guid == null) {
 			return null;
 		}

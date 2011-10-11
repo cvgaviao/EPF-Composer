@@ -154,10 +154,13 @@ public class LibraryEditUtil {
 	}
 	
 	public MethodElement getMethodElement(String guid) {
-		ILibraryEditUtilProvider p = getProvider();				
-		return p == null ? null : p.getMethodElement(guid);
+		return getMethodElement(guid, true);
 	}
 	
+	public MethodElement getMethodElement(String guid, boolean skipContent) {
+		ILibraryEditUtilProvider p = getProvider();				
+		return p == null ? null : p.getMethodElement(guid, skipContent);		
+	}
 	
 	public String getPresentationName(MethodElement element,
 			MethodConfiguration config) {

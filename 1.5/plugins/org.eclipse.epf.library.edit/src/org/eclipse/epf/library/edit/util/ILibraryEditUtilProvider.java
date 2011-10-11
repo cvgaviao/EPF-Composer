@@ -15,8 +15,8 @@ public interface ILibraryEditUtilProvider {
 
 	boolean isSynFree();
 
-	MethodElement getMethodElement(String guid);
-
+	MethodElement getMethodElement(String guid, boolean skipContent);
+	
 	boolean isDynamicAndExclude(Object obj, Descriptor desc, EReference ref,
 			MethodConfiguration config);
 
