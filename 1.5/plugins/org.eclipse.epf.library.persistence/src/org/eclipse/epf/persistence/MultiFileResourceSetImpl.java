@@ -1124,15 +1124,21 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		return ((MultiFileURIConverter) getURIConverter()).getResourceManager();
 	}
 
-	protected EObject findEObjectInUnloadedResources(String id) {
-		return findEObjectInUnloadedResources(getResourceManager(), id);
+	protected EObject findEObjectInUnloadedResources(String id, boolean skipContent) {
+		return findEObjectInUnloadedResources(getResourceManager(), id, skipContent);
 	}
 
 	private EObject findEObjectInUnloadedResources(ResourceManager resMgr,
-			String id) {
+			String id, boolean skipContent) {
 		for (Iterator iter = resMgr.getResourceDescriptors().iterator(); iter
 				.hasNext();) {
 			ResourceDescriptor desc = (ResourceDescriptor) iter.next();
+			if (skipContent) {
+				if (! (desc.getUri().endsWith(MultiFileSaveUtil.DEFAULT_PLUGIN_MODEL_FILENAME) ||
+						desc.getUri().endsWith(MultiFileSaveUtil.DEFAULT_MODEL_FILENAME))	) {
+					continue;				
+				}
+			}
 			Resource resource = super.getResource(desc.getResolvedURI(), false);
 			if (resource == null || !resource.isLoaded()) {
 				try {
@@ -1150,7 +1156,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 		}
 		for (Iterator iter = resMgr.getSubManagers().iterator(); iter.hasNext();) {
 			EObject eObject = findEObjectInUnloadedResources(
-					(ResourceManager) iter.next(), id);
+					(ResourceManager) iter.next(), id, skipContent);
 			if (eObject != null)
 				return eObject;
 		}
@@ -1161,6 +1167,13 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 	 * Gets object with the given id
 	 */
 	public EObject getEObject(String id) {
+		return getEObject(id, false);
+	}
+	
+	/**
+	 * Gets object with the given id
+	 */
+	public EObject getEObject(String id, boolean skipContent) {
 		// first, try to get the object from the cache guidToMethodElement
 		//
 		EObject eObject = (EObject) getGuidToMethodElementMap().get(id);
@@ -1176,7 +1189,7 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 			// go thru all unloaded resources, load them, and try to find the
 			// object with the given id.
 			//
-			eObject = findEObjectInUnloadedResources(id);
+			eObject = findEObjectInUnloadedResources(id, skipContent);
 			if (eObject == null && REPORT_ERROR) {
 				handleException(NLS.bind(
 						PersistenceResources.objNotFoundError_msg, id));
