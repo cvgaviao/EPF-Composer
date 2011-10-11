@@ -37,6 +37,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -276,6 +277,16 @@ public class SupportingElementData extends ConfigDataBase {
 						outConfigRefMap.put(key, elementReference);
 					}
 					elementReference.addFeature(feature);
+				}
+			}
+		}
+		
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		if (propUtil.hasUdtList(element)) {
+			List<Practice> list = propUtil.getUdtList(element, false);
+			if (list != null && !list.isEmpty()) {
+				for (MethodElement referenced : list) {
+					checkOutConfigElement(referenced, element, newSupportingElements);
 				}
 			}
 		}
