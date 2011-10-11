@@ -16,6 +16,7 @@ import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
+import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.validation.ValidationManager;
 import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.uma.Descriptor;
@@ -53,14 +54,12 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 		if (! UmaUtil.unresolvedGuidSet.isEmpty() && UmaUtil.unresolvedGuidSet.contains(guid)) {
 			return null;
 		}
-		ILibraryManager mgr = LibraryService.getInstance()
-				.getCurrentLibraryManager();
 		boolean oldValue = MultiFileResourceSetImpl.REPORT_ERROR;
 		if (oldValue) {
 			MultiFileResourceSetImpl.REPORT_ERROR = false;
 		}
-		MethodElement ret = mgr == null ? null : mgr.getMethodElement(guid);
-		if (mgr != null && ret == null) {
+		MethodElement ret = getMethodElement_(guid, skipContent);
+		if (ret == null) {
 			UmaUtil.unresolvedGuidSet.add(guid);
 		}
 		if (oldValue) {
@@ -69,6 +68,28 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 		return ret;
 	}
 
+	private MethodElement getMethodElement_(String guid, boolean skipContent) {
+		if (guid == null) {
+			return null;
+		}
+		try {
+			MethodLibrary library = LibraryService.getInstance().getCurrentMethodLibrary();
+			ILibraryResourceSet resourceSet = (ILibraryResourceSet) library
+					.eResource().getResourceSet();
+			if (resourceSet != null) {
+				if (resourceSet instanceof MultiFileResourceSetImpl) {
+					return (MethodElement) ((MultiFileResourceSetImpl) resourceSet).getEObject(guid, skipContent);
+				} else {
+					return (MethodElement) resourceSet.getEObject(guid);
+				}
+			}
+		} catch (Throwable th) {
+			// Log error here
+			th.printStackTrace();
+		}
+		return null;
+	}
+	
 	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
 			EReference ref, MethodConfiguration config) {
 		if (ref == null || ! (obj instanceof MethodElement) || !ref.isMany() && ref != UmaUtil.MethodElement_UdtList) {

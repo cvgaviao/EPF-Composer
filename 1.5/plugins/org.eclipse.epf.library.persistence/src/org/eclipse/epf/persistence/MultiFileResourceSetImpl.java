@@ -1130,15 +1130,17 @@ public class MultiFileResourceSetImpl extends ResourceSetImpl implements
 
 	private EObject findEObjectInUnloadedResources(ResourceManager resMgr,
 			String id, boolean skipContent) {
+		boolean isLibraryResMgr = getResourceManager() == resMgr;
 		for (Iterator iter = resMgr.getResourceDescriptors().iterator(); iter
 				.hasNext();) {
 			ResourceDescriptor desc = (ResourceDescriptor) iter.next();
-			if (skipContent) {
+			if (! isLibraryResMgr && skipContent) {
 				if (! (desc.getUri().endsWith(MultiFileSaveUtil.DEFAULT_PLUGIN_MODEL_FILENAME) ||
 						desc.getUri().endsWith(MultiFileSaveUtil.DEFAULT_MODEL_FILENAME))	) {
 					continue;				
 				}
-			}
+			}	
+			
 			Resource resource = super.getResource(desc.getResolvedURI(), false);
 			if (resource == null || !resource.isLoaded()) {
 				try {
