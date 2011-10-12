@@ -1,5 +1,7 @@
 package org.eclipse.epf.authoring.ui;
 
+import org.eclipse.epf.authoring.ui.views.ConfigurationView;
+import org.eclipse.epf.authoring.ui.views.ConfigurationViewExtender;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
 import org.eclipse.epf.authoring.ui.views.LibraryViewExtender;
 import org.eclipse.epf.common.utils.ExtensionHelper;
@@ -28,6 +30,10 @@ public class AuthoringUIExtensionManager {
 	
 	public LibraryViewExtender createLibraryViewExtender(LibraryView libraryView) {
 		return new LibraryViewExtender(libraryView);
+	}
+	
+	public ConfigurationViewExtender createConfigurationViewExtender(ConfigurationView configurationView) {
+		return new ConfigurationViewExtender(configurationView);
 	}
 	
 }
