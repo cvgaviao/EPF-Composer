@@ -24,6 +24,7 @@ import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.epf.authoring.ui.AuthoringUIExtensionManager;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
@@ -121,6 +122,7 @@ public class ConfigurationView extends AbstractBaseView implements
 	 * Creates a new instance.
 	 */
 	public ConfigurationView() {
+		extender = AuthoringUIExtensionManager.getInstance().createConfigurationViewExtender(this);
 	}
 
 	/**
@@ -601,6 +603,11 @@ public class ConfigurationView extends AbstractBaseView implements
 		 * @see LibraryActionBarContributor#menuAboutToShow(IMenuManager)
 		 */
 		public void menuAboutToShow(IMenuManager menuManager) {
+			menuAboutToShow_(menuManager);
+			getExtender().getActionBarExtender().menuAboutToShow(menuManager);
+		}
+		
+		private void menuAboutToShow_(IMenuManager menuManager) {
 			// Add our standard markers.
 			menuManager.add(new Separator("additions")); //$NON-NLS-1$
 			menuManager.add(new Separator("edit")); //$NON-NLS-1$
@@ -691,4 +698,16 @@ public class ConfigurationView extends AbstractBaseView implements
 	public String getViewId() {
 		return VIEW_ID;
 	}
+	
+	private ConfigurationViewExtender extender;
+	protected ConfigurationViewExtender getExtender() {
+		return extender;
+	}
+	
+	@Override
+	public void setSelection(ISelection selection) {
+		getExtender().getActionBarExtender().updateSelection(selection);
+		super.setSelection(selection);
+	}
+	
 }
