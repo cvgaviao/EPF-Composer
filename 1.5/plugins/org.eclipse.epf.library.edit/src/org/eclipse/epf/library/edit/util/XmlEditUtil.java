@@ -46,6 +46,9 @@ public class XmlEditUtil {
 	
 	//Return the root element
 	protected Element loadDocumentAndGetFirstElement(String xmlString) throws Exception {
+		if (xmlString == null) {
+			return null;
+		}
 		doc = XMLUtil.loadXml(xmlString);
 		Node node = doc.getFirstChild();
 		return node instanceof Element ? (Element) node : null;

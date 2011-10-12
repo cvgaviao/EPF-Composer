@@ -109,8 +109,10 @@ public class PracticePropUtil extends MethodElementPropUtil {
 			if (xmlString == null || xmlString.trim().length() == 0) {
 				return;
 			}
-			Element firstElement = loadDocumentAndGetFirstElement(xmlString);	
-				
+			Element firstElement = loadDocumentAndGetFirstElement(xmlString);
+			if (firstElement == null) {
+				return;
+			}				
 			String value = firstElement.getAttribute(_id);
 			if (value != null && value.length() > 0) {
 				meta.setId(value);
