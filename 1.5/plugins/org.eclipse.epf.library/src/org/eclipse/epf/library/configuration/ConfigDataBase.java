@@ -161,7 +161,7 @@ public abstract class ConfigDataBase {
 	
 	protected abstract void updateChangeImpl();
 
-	protected boolean isUpdatingChanges() {
+	public boolean isUpdatingChanges() {
 		return updatingChanges;
 	}
 
