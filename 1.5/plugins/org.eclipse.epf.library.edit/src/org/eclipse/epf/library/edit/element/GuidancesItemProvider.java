@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.LibraryEditConstants;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Checklist;
@@ -202,7 +203,8 @@ public class GuidancesItemProvider extends TransientContentPackageItemProvider {
 		// newChildDescriptors.add(createChildParameter(UmaPackage.eINSTANCE
 		// .getContentPackage_ContentElements(), UmaFactory.eINSTANCE
 		// .createWorkProductGuideline()));
-
+		
+		LibraryEditUtil.getInstance().createUserDefinedTypeContextMenuOnGuidanceNode(newChildDescriptors);		
 	}
 
 	/*

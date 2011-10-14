@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
@@ -40,5 +41,7 @@ public interface ILibraryEditUtilProvider {
 	
 	List<MethodElement> calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, MethodConfiguration config);
+	
+	public void createUserDefinedTypeContextMenuOnGuidanceNode(Collection<Object> newChildDescriptors);
 		
 }

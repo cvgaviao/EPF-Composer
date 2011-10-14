@@ -760,5 +760,8 @@ public class LibraryEditUtil {
 		}					
 	}
 	
+	public void createUserDefinedTypeContextMenuOnGuidanceNode(Collection<Object> newChildDescriptors) {
+		getProvider().createUserDefinedTypeContextMenuOnGuidanceNode(newChildDescriptors);
+	}
 	
 }
