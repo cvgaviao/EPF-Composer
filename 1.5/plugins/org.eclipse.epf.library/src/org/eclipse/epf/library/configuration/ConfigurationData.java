@@ -217,7 +217,11 @@ public class ConfigurationData {
 		if (changed && localDebug) {
 			DebugUtil.print("calSubstracted after handleContributors: ", null, calSubstracted.values(), 2);//$NON-NLS-1$
 		}		
-		
+		changed = handleContributors(calAdded, false);
+		if (changed && localDebug) {
+			DebugUtil.print("calAdded after handleContributors: ", null, calAdded.values(), 2);//$NON-NLS-1$
+		}
+				
 		calSubstracted = handleReplacers(calSubstracted, true);
 		calAdded = handleReplacers(calAdded, false);
 		
@@ -268,7 +272,8 @@ public class ConfigurationData {
 		
 	//return true if any change
 	private boolean handleContributors(Map<String, ContentCategory> map,  boolean substracted) {
-		if (map == null || ! substracted) {
+//		if (map == null || ! substracted) {
+		if (map == null) {
 			return false;
 		}
 		List<ContentCategory> addedList = new ArrayList<ContentCategory>();
