@@ -1783,10 +1783,12 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 			}
 			if (o instanceof ProcessComponent || o instanceof ProcessPackage) {
 
-				treeViewer.setExpandedState(pluginAdapter.getChildren(plugin)
-						.toArray()[1], true);
-				// Expand the process packages.
-				expandTreeViewerPackages(((MethodElement) o).eContainer());
+				if (pluginAdapter != null) {	//Check null pointer here. To do: fix the root cause so that pluginAdapte would not be null here.
+					treeViewer.setExpandedState(pluginAdapter.getChildren(plugin)
+							.toArray()[1], true);
+					// Expand the process packages.
+					expandTreeViewerPackages(((MethodElement) o).eContainer());
+				}
 
 			} else {
 				ITreeItemContentProvider methodContentPkg = (ITreeItemContentProvider) pluginAdapter
