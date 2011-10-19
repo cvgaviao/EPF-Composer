@@ -1037,13 +1037,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		String publishButtonText = AuthoringUIText.PUBLISH_CATEGORIES_TEXT;
 		if (! publishCategoryOn) {
 			publishCategoryOn = publishPracticeOn;
-			if (publishPracticeOnForUDT) {
-				// TODO_translation: to avoid new translation, use the new string in English, otherwise use the old one
+			if (publishPracticeOn) {
 				publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_TEXT;
-				if (publishButtonText.startsWith("Publish back links to this practice from its contained elements"))	//$NON-NLS-1$
-					publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_FOR_UDT_TEXT;
-			} else if (publishPracticeOn) {
-				publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_TEXT;
+				if (publishPracticeOnForUDT) {
+					// TODO_translation: to avoid new translation, use the new string in English, otherwise use the old one
+					if (publishButtonText.startsWith("Publish back links to this practice from its contained elements"))	//$NON-NLS-1$
+						publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_FOR_UDT_TEXT;
+				}
 			}
 		}
 		
@@ -1055,7 +1055,11 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			GridData data = new GridData();
 			data.horizontalSpan = 3;
 			ctrl_publish_categories_button.setLayoutData(data);
+			if (publishPracticeOn) {
+				ctrl_publish_categories_button.setSelection(true);
+			}
 		} 
+		
 		
 	}
 
