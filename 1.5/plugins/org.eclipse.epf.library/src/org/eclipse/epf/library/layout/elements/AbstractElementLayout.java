@@ -13,6 +13,7 @@ package org.eclipse.epf.library.layout.elements;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,6 +40,7 @@ import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -83,6 +85,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 /**
  * The abstract layout for all Method Elements.
@@ -330,6 +333,11 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	 * @see org.eclipse.epf.library.layout.IElementLayout#getType()
 	 */
 	public String getType() {
+		//For user defined type
+		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)element))) {
+			return "udt";  //$NON-NLS-1$
+		}		
+		
 		return element.getType().getName();
 	}
 
@@ -1140,6 +1148,22 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 			}
 		}
+		
+		//For user defined type
+		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)element))) {
+			try {
+				String imagesPath = getLayoutMgr().getPublishDir() + "images"; //$NON-NLS-1$
+				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)element);
+				String iconPath = new URL(udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon)).getFile();
+				File iconFile = new File(iconPath);
+				
+				if (FileUtil.copyFileToDir(iconFile, imagesPath)) {
+					return "images/" + iconFile.getName(); //$NON-NLS-1$
+				}				
+			} catch (Exception e) {
+				LibraryPlugin.getDefault().getLogger().logError(e);
+			}			
+		}		
 		
 		return LayoutResources.getDefaultShapeiconUrl(type);
 	}

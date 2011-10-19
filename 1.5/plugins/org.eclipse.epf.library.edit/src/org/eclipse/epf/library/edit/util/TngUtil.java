@@ -1713,6 +1713,17 @@ public final class TngUtil {
 		
 		return null;
 	}
+	
+	private static String getTypeNameForUdt(Practice prac) {
+		try {
+			UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
+			return udtMeta.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return null;
+	}
 
 	public static Object getColumnImage(Object object, String colName) {
 		// if(colName == IBSItemProvider.COL_TYPE)
@@ -2322,6 +2333,11 @@ public final class TngUtil {
 	 * Looks up the user friendly type name for a Method element.
 	 */
 	public static String getTypeText(EObject element) {
+		//For user defined type
+		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)element))) {
+			return getTypeNameForUdt((Practice)element);
+		}		
+		
 		return getTypeText(element.eClass());
 	}
 	

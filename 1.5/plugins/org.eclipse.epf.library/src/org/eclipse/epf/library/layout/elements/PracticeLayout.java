@@ -63,7 +63,7 @@ public class PracticeLayout extends AbstractElementLayout {
 			UserDefinedTypeMeta meta = propUtil.getUtdData(practice);
 			if (meta != null) {
 				addReferences(udtFeauteObj, elementXml,
-					"Use defined type", Collections.singletonList(meta)); //$NON-NLS-1$
+					"User defined type", Collections.singletonList(meta)); //$NON-NLS-1$
 			}
 		} catch (Exception e) {
 		}

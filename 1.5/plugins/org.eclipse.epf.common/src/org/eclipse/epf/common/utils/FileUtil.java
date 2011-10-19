@@ -738,6 +738,17 @@ public class FileUtil {
 			}
 		}
 	}
+	
+	public static boolean copyFileToDir(File srcFile, String tgtDirName) {
+		String tgtFileName = tgtDirName + File.separator + srcFile.getName();
+		File tgtFile = new File(tgtFileName);
+		
+		if (tgtFile.exists()) {
+			return true;
+		} else {
+			return copyFile(srcFile, tgtFile);
+		}		
+	}
 
 	/**
 	 * Copies the content of a directory to another directory.
