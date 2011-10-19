@@ -507,6 +507,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected boolean publishCategoryOn = false;
 	
 	protected boolean publishPracticeOn = false;
+	protected boolean publishPracticeOnForUDT = false;
 	
 //	protected boolean publishDeliveableOn = false;
 	
@@ -1036,7 +1037,12 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		String publishButtonText = AuthoringUIText.PUBLISH_CATEGORIES_TEXT;
 		if (! publishCategoryOn) {
 			publishCategoryOn = publishPracticeOn;
-			if (publishPracticeOn) {
+			if (publishPracticeOnForUDT) {
+				// TODO_translation: to avoid new translation, use the new string in English, otherwise use the old one
+				publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_TEXT;
+				if (publishButtonText.startsWith("Publish back links to this practice from its contained elements"))	//$NON-NLS-1$
+					publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_FOR_UDT_TEXT;
+			} else if (publishPracticeOn) {
 				publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_TEXT;
 			}
 		}
