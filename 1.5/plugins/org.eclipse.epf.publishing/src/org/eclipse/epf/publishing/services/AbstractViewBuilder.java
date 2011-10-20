@@ -24,6 +24,7 @@ import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.Bookmark;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -37,8 +38,10 @@ import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -375,7 +378,19 @@ public abstract class AbstractViewBuilder {
 						}
 					}
 				}
-				iconFile = IconUtil.getNodeIconFile(type);
+				
+				if ((obj instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)obj))) {
+					//for user defined type
+					try {
+						UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)obj);
+						String iconPath = new URL(udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon)).getFile();
+						iconFile = new File(iconPath);
+					} catch (Exception e) {
+						getHtmlBuilder().getValidator().logError("", e); //$NON-NLS-1$
+					}			
+				} else {				
+					iconFile = IconUtil.getNodeIconFile(type);
+				}
 			} else if (obj instanceof PracticeSubgroupItemProvider) {
 				iconFile = IconUtil.getNodeIconFile((PracticeSubgroupItemProvider) obj);
 			}
