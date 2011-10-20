@@ -319,9 +319,13 @@ public class ContentPackageDescriptionPage extends DescriptionFormPage implement
 			return;
 		}
 		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
-		boolean isSuporting = propUtil.isSupporting(contentPackage) || propUtil.ancestorIsSupporting(contentPackage);
+		boolean isSupporitng0 = propUtil.ancestorIsSupporting(contentPackage);
+		boolean isSuporting = isSupporitng0 || propUtil.isSupporting(contentPackage);
 		if (supportingCheckbox.getSelection() != isSuporting) {
 			supportingCheckbox.setSelection(isSuporting);
+		}
+		if (isSupporitng0) {
+			supportingCheckbox.setEnabled(false);
 		}
 	}	
 	
