@@ -153,6 +153,9 @@ public class UndeclaredDependencyCheck extends ValidationAction {
 			if (skipContent && LibraryUtil.isContentRef(ref)) {
 				continue;
 			}
+			if (ref == UmaPackage.eINSTANCE.getRole_Modifies()) {
+				continue;
+			}
 			Object obj = me.eGet(ref);
 			if (obj instanceof MethodElement) {
 				MethodElement referenced = (MethodElement) obj;
