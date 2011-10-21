@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.CustomCategory;
@@ -29,6 +31,7 @@ import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 /**
  * This is a filter for variability base element selection. The filter will
@@ -187,6 +190,27 @@ public class VariabilityBaseElementFilter implements
 		VariabilityElement ve = (VariabilityElement) obj;
 		if (ve.getType() != element.getType()) {
 			return false;
+		}
+		
+		if (element instanceof Practice && ve instanceof Practice) {
+			Practice p1 = (Practice) element;
+			Practice p2 = (Practice) ve;
+			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+			UserDefinedTypeMeta meta1 = null;
+			UserDefinedTypeMeta meta2 = null;
+			try {
+				meta1 = propUtil.getUtdData(p1);
+				meta2 = propUtil.getUtdData(p2);
+			} catch (Exception e) {
+				LibraryEditPlugin.getDefault().getLogger().logError(e);
+			}
+			if (meta1 != null && meta2 != null) {
+				if (! meta1.getId().equals(meta2.getId())) {
+					return false;
+				}
+			} else if (!(meta1 == null && meta2 == null)) {
+				return false;
+			}
 		}
 
 		// can't be my any of my generalizers
