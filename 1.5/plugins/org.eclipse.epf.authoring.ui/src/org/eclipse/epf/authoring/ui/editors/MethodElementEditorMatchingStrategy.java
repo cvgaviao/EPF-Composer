@@ -66,6 +66,14 @@ public class MethodElementEditorMatchingStrategy implements IEditorMatchingStrat
 	private MethodElement getMethodElementFromInput(IEditorInput input) {
 		MethodElement inputElement = null;
 		if (input instanceof FileEditorInput) {
+			try {
+				FileEditorInput finput = (FileEditorInput) input;
+				if (finput.getFile().getName().endsWith(".xmldef")) {//$NON-NLS-1$
+					return null;
+				}
+			} catch (Exception e) {
+				return null;
+			}
 			// probably opened from Problems View
 			inputElement = PersistenceUtil.getMethodElement(((FileEditorInput)input).getFile(),
 					LibraryService.getInstance().getCurrentLibraryManager().
