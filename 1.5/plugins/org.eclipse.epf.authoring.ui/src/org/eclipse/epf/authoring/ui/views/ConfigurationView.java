@@ -51,6 +51,7 @@ import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.ui.LibraryUIManager;
+import org.eclipse.epf.library.ui.actions.ConfigurationContributionItem;
 import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -134,6 +135,26 @@ public class ConfigurationView extends AbstractBaseView implements
 		LibraryUIManager.getInstance();
 	}
 
+	private IAction collapseViewAction;
+	public IAction getCollapseViewAction() {
+		if (collapseViewAction == null) {
+			collapseViewAction = new Action() {
+				public void run() {
+					PlatformUI.getWorkbench().getDisplay().syncExec(
+							new Runnable() {
+								public void run() {
+									if (getViewer() instanceof TreeViewer) {
+										((TreeViewer) getViewer())
+												.collapseAll();
+									}
+								}
+							});
+				}
+			};
+		}
+		return collapseViewAction;
+	}
+	
 	/**
 	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(Composite)
 	 */
@@ -260,6 +281,10 @@ public class ConfigurationView extends AbstractBaseView implements
 	 */
 	public void configurationSet(MethodConfiguration config) {
 		setMethodConfiguration(config);
+		ConfigurationContributionItem configCombo = LibraryUIManager.getInstance().getConfigCombo();
+		if (configCombo != null) {
+			configCombo.setCollapseConfigViewAction(getCollapseViewAction());
+		}
 	}
 
 	/**

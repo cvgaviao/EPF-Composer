@@ -75,7 +75,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 	
 	protected ISelectionChangedListener postSelectionChangedListener = new ISelectionChangedListener() {
 		public void selectionChanged(SelectionChangedEvent event) {
-			performSelectionChanged();
+			performSelectionChanged(getCollapseConfigViewAction());
 		}
 	};
 
@@ -297,16 +297,29 @@ public class ConfigurationContributionItem extends ContributionItem {
 		return ""; //$NON-NLS-1$
 	}
 
-	private static void performSelectionChanged() {
+	private static void performSelectionChanged(IAction collapseConfigViewAction) {
 		if (LibraryService.getInstance().getCurrentMethodLibrary() != null) {
 			MethodConfiguration config = getSelectedConfig();
 			if (config != LibraryService.getInstance()
 					.getCurrentMethodConfiguration()) {
+				if (collapseConfigViewAction != null) {
+					collapseConfigViewAction.run();
+				}
 				LibraryService.getInstance().setCurrentMethodConfiguration(config);
 			}
 			PreferenceUtil.saveSelectedConfigIntoPersistence(getCurrentSelectedConfigName());
 			refresh();
 		}
+	}
+
+	private IAction collapseConfigViewAction;
+	
+	private IAction getCollapseConfigViewAction() {
+		return collapseConfigViewAction;
+	}
+
+	public void setCollapseConfigViewAction(IAction collapseConfigViewAction) {
+		this.collapseConfigViewAction = collapseConfigViewAction;
 	}
 
 	/*
