@@ -1,11 +1,14 @@
 package org.eclipse.epf.library.edit.uma;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.util.XmlEditUtil;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
@@ -13,23 +16,51 @@ import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.MeList;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
 
 public class ExtendReferenceMap {
 
 	//Reference names
-	public static final String UtdList = "udtList";			//$NON-NLS-1$
-	
-	public static String[] names = {
-		UtdList,
-	};
+	public static final String UtdList = "udtList";							//$NON-NLS-1$
+	private static final String QrList = "QrList:";		//$NON-NLS-1$
 	
 	private Map<String, Object> map;
 	private Map<String, Object> oldValueMap;
 	private MethodElement ownerElement;
+	private List<String> referenceNames;
 	
 	public ExtendReferenceMap(MethodElement ownerElement) {
 		this.ownerElement = ownerElement;
+		referenceNames = new ArrayList<String>();
+		referenceNames.add(UtdList);
+		List<String> refQualifies = getReferenceQualifiers(ownerElement);
+		if (refQualifies != null && ! refQualifies.isEmpty()) {
+			for (String qualifier : refQualifies) {
+				referenceNames.add(QrList + qualifier);
+			}
+		}
+	}
+			
+	public static List<String> getReferenceQualifiers(MethodElement element) {
+		if (! (element instanceof Practice)) {
+			return null;
+		}		
+		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+		Practice practice = (Practice) element;
+		UserDefinedTypeMeta meta = null;
+		try {
+			meta = propUtil.getUtdData(practice);
+		} catch (Exception e) {
+		}
+		if (meta == null) {
+			return null;
+		}
+		String value = meta.getRteNameMap().get(meta._referenceQualifiers);
+		if (value == null || value.trim().length() == 0) {
+			return null;
+		}
+		return TngUtil.convertStringsToList(value);
 	}
 	
 	public MethodElement getOwnerElement() {
@@ -41,7 +72,7 @@ public class ExtendReferenceMap {
 	}
 	
 	public void retrieveReferencesFromElement(Element element) {
-		for (String name : names) {
+		for (String name : referenceNames) {
 			String value = element.getAttribute(name);
 			if (value == null || value.length() == 0) {
 				continue;
@@ -160,7 +191,7 @@ public class ExtendReferenceMap {
 	}
 	
 	public void storeReferencesToElement(Element element, boolean rollback) {
-		for (String name : names) {
+		for (String name : referenceNames) {
 			Object value = get(name, false);
 			if (rollback && getOldValueMap().containsKey(name)) {
 				value = getOldValueMap().get(name);
