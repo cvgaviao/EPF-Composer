@@ -384,11 +384,14 @@ public abstract class AbstractViewBuilder {
 					try {
 						UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)obj);
 						String iconPath = new URL(udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon)).getFile();
-						iconFile = new File(iconPath);
+						if (iconPath != null && iconPath.trim().length() > 0) {
+							iconFile = new File(iconPath);
+						}
 					} catch (Exception e) {
 						getHtmlBuilder().getValidator().logError("", e); //$NON-NLS-1$
 					}			
-				} else {				
+				}
+				if (iconFile == null) {				
 					iconFile = IconUtil.getNodeIconFile(type);
 				}
 			} else if (obj instanceof PracticeSubgroupItemProvider) {

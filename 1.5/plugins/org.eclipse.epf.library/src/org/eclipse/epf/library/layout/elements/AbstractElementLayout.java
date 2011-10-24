@@ -1161,7 +1161,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 					return "images/" + shapeIconFile.getName(); //$NON-NLS-1$
 				}				
 			} catch (Exception e) {
-				LibraryPlugin.getDefault().getLogger().logError(e);
+				//NPE can be thrown here if image is not specified in Udt definition file
+				//LibraryPlugin.getDefault().getLogger().logError(e);
 			}			
 		}		
 		

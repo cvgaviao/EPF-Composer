@@ -15,7 +15,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.epf.authoring.gef.figures.Colors;
-import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.FeatureValueWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
@@ -28,6 +27,7 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Color;
@@ -60,7 +60,10 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 	public Image getImage(Object object) {
 		//For user defined type
 		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object))) {
-			return TngUtil.getImageForUdt((Practice)object).createImage();
+			ImageDescriptor desc =  TngUtil.getImageForUdt((Practice)object);
+			if (desc != null) {
+				return desc.createImage();
+			}
 		}
 		
 		// by default, return the default image
