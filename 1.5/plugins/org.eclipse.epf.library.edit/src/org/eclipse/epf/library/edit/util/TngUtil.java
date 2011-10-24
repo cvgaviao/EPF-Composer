@@ -1706,6 +1706,9 @@ public final class TngUtil {
 		try {
 			UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
 			String imageUrl = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon);
+			if (imageUrl == null || imageUrl.trim().length() == 0) {
+				return null;
+			}
 			return ImageDescriptor.createFromURL(new URL(imageUrl));
 		} catch (Exception e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
