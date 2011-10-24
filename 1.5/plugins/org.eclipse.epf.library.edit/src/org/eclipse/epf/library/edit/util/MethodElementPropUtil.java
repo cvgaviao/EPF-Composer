@@ -402,12 +402,20 @@ public class MethodElementPropUtil {
 	}
 	
 	public boolean hasUdtList(MethodElement element) {
+		return hasReferences(element);
+	}
+	
+	public boolean hasReferences(MethodElement element) {
 		String value = getStringValue(element, Me_references);
 		return value != null && value.length() > 0;
 	}
 	
 	public List<Practice> getUdtList(MethodElement element, boolean toModify) {
-		return (List<Practice>) getReferenceValue(ExtendReferenceMap.UtdList, element, toModify);
+		List<Practice> value = (List<Practice>) getReferenceValue(ExtendReferenceMap.UtdList, element, toModify);
+		if (value == null) {
+			return new ArrayList<Practice>();
+		}
+		return value;
 	}
 	
 	public void notifyElemetSaved(MethodElement element) {
