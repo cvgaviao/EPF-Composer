@@ -43,7 +43,10 @@ import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -52,6 +55,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 
@@ -75,6 +79,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	private ContentElementOrderList activityOrderList;
 	private Button manualSortCheckButton;
 	private Button typeSortButton;
+	private Button assignQualifierButton;
 
 	/**
 	 * Creates a new instance.
@@ -138,6 +143,53 @@ public class PracticeReferencesPage extends AssociationFormPage {
 				refreshViewers();
 			}
 		});
+		
+		//For user defined type
+		if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+			assignQualifierButton = toolkit.createButton(category1pane2, AuthoringUIResources.practiceReferencesPage_assignQualifierButton_text, SWT.PUSH);
+			assignQualifierButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			assignQualifierButton.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+							editor.getSite().getShell(),
+							getLabelProviderForQualifierOfUDT());
+					dialog.setElements(getInputForQualifierOfUDT(practice));
+					dialog.setMultipleSelection(false);
+					dialog.setTitle(AuthoringUIResources.practiceReferencesPage_selectQualifierDialog_title);
+					dialog.setMessage(AuthoringUIResources.practiceReferencesPage_selectQualifierDialog_msg);					
+					dialog.setImage(null);
+					if (dialog.open() == Dialog.CANCEL) {
+						return;
+					}
+					
+					Object[] objs = dialog.getResult();
+					//TODO: assign to reference
+				}
+			});
+		}
+	}
+	
+	private ILabelProvider getLabelProviderForQualifierOfUDT() {
+		ILabelProvider provider = new LabelProvider();		
+		return provider;
+	}
+	
+	private String[] getInputForQualifierOfUDT(Practice practice) {
+		try {
+			String qualifiers = PracticePropUtil.getPracticePropUtil().getUtdData(practice)
+				.getRteNameMap().get(UserDefinedTypeMeta._referenceQualifiers);
+			
+			if (qualifiers == null) {
+				return new String[0];
+			}
+			
+			String[] qualifierArray = qualifiers.split(","); //$NON-NLS-1$			
+			return qualifierArray;
+		} catch (Exception e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return new String[0];
 	}
 	
 	@Override
