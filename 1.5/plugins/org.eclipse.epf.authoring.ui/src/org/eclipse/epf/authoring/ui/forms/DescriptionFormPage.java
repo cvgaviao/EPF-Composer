@@ -682,8 +682,32 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		setFormTextWithVariableInfo();
 		loadData();
 		addListeners();
+		checkBackLinkForPracticeAndUDT();
 	}
 
+	protected void checkBackLinkForPracticeAndUDT() {
+		// bxu-2011-10-24: need to set this checkbox by default the first time for Pracctice and UDTs
+		if (publishCategoryOn) {
+			MethodElementProperty prop = TngUtil.getPublishCategoryProperty(methodElement);
+			if (prop == null && publishPracticeOn) {
+				ctrl_publish_categories_button.setSelection(true);
+				String val = new Boolean(ctrl_publish_categories_button.getSelection()).toString();				
+				System.out.println("checkbox value = " + val);					
+				prop = UmaFactory.eINSTANCE
+						.createMethodElementProperty();
+				prop.setName(TngUtil.PUBLISH_CATEGORY_PROPERTY);
+				prop.setValue(val);
+							
+				actionMgr.doAction(
+						IActionManager.ADD,
+						methodElement,
+						UmaPackage.eINSTANCE
+								.getMethodElement_MethodElementProperty(),
+						prop, -1);
+			}
+		}
+	}
+	
 	private void setFormTextWithVariableInfo() {
 		UIHelper.setFormText(form, methodElement);
 	}
@@ -1055,9 +1079,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			GridData data = new GridData();
 			data.horizontalSpan = 3;
 			ctrl_publish_categories_button.setLayoutData(data);
-			if (publishPracticeOn) {
-				ctrl_publish_categories_button.setSelection(true);
-			}
+//			if (publishPracticeOn) {
+//				ctrl_publish_categories_button.setSelection(true);
+//			}
 		} 
 		
 		
