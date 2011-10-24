@@ -16,6 +16,7 @@ public class UserDefinedTypeMeta {
 	public static final String _levelsOfAdoption = "levelsOfAdoption"; 		//$NON-NLS-1$
 	public static final String _additionalInfo = "additionalInfo"; 			//$NON-NLS-1$
 	public static final String _icon = "icon";                              //$NON-NLS-1$
+	public static final String _shapeIcon = "shapeIcon";                    //$NON-NLS-1$
 	public static final String _referenceQualifiers = "referenceQualifiers";//$NON-NLS-1$
 	
 	public static String[] rteNames = {
@@ -28,12 +29,13 @@ public class UserDefinedTypeMeta {
 		_levelsOfAdoption,
 		_additionalInfo,
 		_icon,
+		_shapeIcon,
 		_referenceQualifiers
 	};
 	
 	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeName) {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
-		meta.setId(getPracticeUdtId(typeName));								//$NON-NLS-1$
+		meta.setId(getPracticeUdtId(typeName));
 		return meta;
 	}
 	

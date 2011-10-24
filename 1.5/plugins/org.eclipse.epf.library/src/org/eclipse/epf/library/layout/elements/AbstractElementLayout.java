@@ -1154,11 +1154,11 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			try {
 				String imagesPath = getLayoutMgr().getPublishDir() + "images"; //$NON-NLS-1$
 				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)element);
-				String iconPath = new URL(udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon)).getFile();
-				File iconFile = new File(iconPath);
+				String shapeIconPath = new URL(udtMeta.getRteNameMap().get(UserDefinedTypeMeta._shapeIcon)).getFile();
+				File shapeIconFile = new File(shapeIconPath);
 				
-				if (FileUtil.copyFileToDir(iconFile, imagesPath)) {
-					return "images/" + iconFile.getName(); //$NON-NLS-1$
+				if (FileUtil.copyFileToDir(shapeIconFile, imagesPath)) {
+					return "images/" + shapeIconFile.getName(); //$NON-NLS-1$
 				}				
 			} catch (Exception e) {
 				LibraryPlugin.getDefault().getLogger().logError(e);
