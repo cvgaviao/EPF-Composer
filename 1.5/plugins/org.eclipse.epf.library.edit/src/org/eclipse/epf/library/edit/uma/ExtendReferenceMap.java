@@ -22,8 +22,10 @@ import org.w3c.dom.Element;
 public class ExtendReferenceMap {
 
 	//Reference names
-	public static final String UtdList = "udtList";							//$NON-NLS-1$
-	private static final String QrList = "QrList:";		//$NON-NLS-1$
+	public static final String UtdList = "udtList";			//$NON-NLS-1$
+	
+	private static final String Opposite_ = "opposite_";	//$NON-NLS-1$
+	private static final String QReference_ = "qReference_";		//$NON-NLS-1$
 	
 	private Map<String, Object> map;
 	private Map<String, Object> oldValueMap;
@@ -37,7 +39,8 @@ public class ExtendReferenceMap {
 		List<String> refQualifies = getReferenceQualifiers(ownerElement);
 		if (refQualifies != null && ! refQualifies.isEmpty()) {
 			for (String qualifier : refQualifies) {
-				referenceNames.add(QrList + qualifier);
+				String name = getQReferenceName(qualifier);
+				referenceNames.add(name);
 			}
 		}
 	}
@@ -225,9 +228,13 @@ public class ExtendReferenceMap {
 	}
 
 	public static String getOppositeName(String name) {
-		return "opposite_" + name;									//$NON-NLS-1$
+		return Opposite_ + name;									
 	}
 
+	public static String getQReferenceName(String qualifiedName) {
+		return QReference_ + qualifiedName;
+	}
+	
 	public boolean isMany(String name) {
 		return true;
 	}

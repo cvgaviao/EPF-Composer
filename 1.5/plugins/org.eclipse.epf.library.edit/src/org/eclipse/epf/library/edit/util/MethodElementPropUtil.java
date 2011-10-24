@@ -418,6 +418,15 @@ public class MethodElementPropUtil {
 		return value;
 	}
 	
+	public List<MethodElement> getQReferenceList(MethodElement element, String qualifiedName, boolean toModify) {
+		String referenceName = ExtendReferenceMap.getQReferenceName(qualifiedName);		
+		List<MethodElement> value = (List<MethodElement>) getReferenceValue(referenceName, element, toModify);
+		if (value == null) {
+			return new ArrayList<MethodElement>();
+		}
+		return value;
+	}
+	
 	public void notifyElemetSaved(MethodElement element) {
 		ExtendReferenceMap map = getCachedExtendReferenceMap(element, false);
 		if (map == null) {
