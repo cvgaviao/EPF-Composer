@@ -37,6 +37,15 @@ public class PracticePropUtil extends MethodElementPropUtil {
 		xmlEditUtil.storeUtdData(meta);
 	}
 	
+	public  UserDefinedTypeMeta getUdtMeta(Practice practice) {
+		try {
+			return getUtdData(practice);			
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		return null;
+	}
+	
 	public  UserDefinedTypeMeta getUtdData(Practice practice)  throws Exception {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
 		PracticeXmlEditUtil xmlEditUtil = new PracticeXmlEditUtil(practice, this);

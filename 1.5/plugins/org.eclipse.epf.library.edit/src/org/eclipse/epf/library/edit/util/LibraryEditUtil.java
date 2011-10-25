@@ -37,6 +37,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Milestone;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -52,6 +53,7 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 public class LibraryEditUtil {
 	
@@ -557,6 +559,9 @@ public class LibraryEditUtil {
 			return;
 		}
 		for (EReference ref : refList) {
+			if (ref == UmaPackage.eINSTANCE.getDescribableElement_Presentation()) {
+				continue;
+			}
 			Object obj = element.eGet(ref);
 			if (obj instanceof MethodElement) {
 				collectElements((MethodElement) obj, filter, collected,
@@ -597,10 +602,10 @@ public class LibraryEditUtil {
 		return (Set<WorkProduct> ) getElementsUnder(topElement, filter);
 	}
 	
-	public Set<? extends ContentElement> getContentElements(MethodElement topElement, final Class type) {
+	public Set<? extends ContentElement> getContentElements(MethodElement topElement, final EClass type) {
 		CollectElementFilter filter = new CollectElementFilter() {
 			public boolean accept(MethodElement element) {
-				return type.isInstance(element);
+				return type.isSuperTypeOf(element.eClass());
 			}
 			
 			public boolean skipChildren(MethodElement element) {
@@ -614,6 +619,33 @@ public class LibraryEditUtil {
 		return (Set<? extends ContentElement>) getElementsUnder(topElement, filter);
 	}
 	
+	public Map<UserDefinedTypeMeta, Set<Practice>> getUdtInstanceMap(MethodElement topElement, Collection<UserDefinedTypeMeta> metas) {
+		Map<UserDefinedTypeMeta, Set<Practice>> map = new HashMap<UserDefinedTypeMeta, Set<Practice>>();
+		if (topElement == null || metas == null || metas.isEmpty()) {
+			return map;
+		}
+		Map<String, UserDefinedTypeMeta> idMetaMap = new HashMap<String, UserDefinedTypeMeta>();
+		for (UserDefinedTypeMeta meta : metas) {
+			idMetaMap.put(meta.getId(), meta);
+		}
+		
+		Set<Practice> practices = (Set<Practice> ) getContentElements(topElement, UmaPackage.eINSTANCE.getPractice());
+		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+		for (Practice practice : practices) {
+			UserDefinedTypeMeta meta = propUtil.getUdtMeta(practice);
+			if (meta != null) {
+				meta = idMetaMap.get(meta.getId());
+				if (meta != null) {
+					Set<Practice> set = map.get(meta);
+					if (set == null) {
+						set = new HashSet<Practice>();
+					}
+					set.add(practice);
+				}
+			}
+		}
+		return map;
+	}
 	
 	public static boolean save(Collection<Resource> resouresToSave) {
 		ILibraryPersister.FailSafeMethodLibraryPersister persister = Services.getDefaultLibraryPersister().getFailSafePersister();
