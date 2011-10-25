@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -81,11 +82,18 @@ public class ExtendReferenceMap {
 				continue;
 			}
 			UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
-			MeList items = XmlEditUtil.convertToMethodElements(value, UmaPackage.eINSTANCE.getPractice(), uHandler);
+			MeList items = XmlEditUtil.convertToMethodElements(value, getRetrieveType(name), uHandler);
 			if (items != null && !items.isEmpty()) {
 				getMap().put(name, items);
 			}
 		}
+	}
+	
+	private EClass getRetrieveType(String referenceName) {
+		if (referenceName.equals(UtdList)) {
+			return UmaPackage.eINSTANCE.getPractice();
+		}
+		return  null;
 	}
 	
 	public Object get(String name, boolean toModify) {
