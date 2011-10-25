@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewFindElementAction;
 import org.eclipse.epf.authoring.ui.dialogs.ContentElementsOrderDialog;
@@ -32,6 +31,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.library.util.LibraryManager;
@@ -102,7 +102,13 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getColumnText(Object object, int columnIndex) {
-			return TngUtil.getLabelWithPath(object);
+			String result = TngUtil.getLabelWithPath(object); 
+			
+			if (PracticePropUtil.getPracticePropUtil().isUtdType(contentElement)) {
+				result = getQualifierDecorator(object) + result;
+			} 
+			
+			return result;
 		}
 	};
 
@@ -1456,6 +1462,10 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		} else {
 			return false;
 		}
+	}
+	
+	protected String getQualifierDecorator(Object object) {
+		return ""; //$NON-NLS-1$
 	}
 
 }

@@ -96,9 +96,14 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 				DETAIL_SECTION_ID);
 
 		if (fullDescOn) {
+			int width = 40;
+			if (!PracticePropUtil.getPracticePropUtil().isUtdType(guidance)) {
+				width = 100;
+			}
+			
 			ctrl_full_desc = createRichTextEditWithLinkForSection(toolkit,
 					detailComposite, provider.getMainDescriptionLabel(),
-					100, 400, DETAIL_SECTION_ID);
+					width, 400, DETAIL_SECTION_ID);
 		}
 		
 		// Application field is called "How to read this practice" in the UI

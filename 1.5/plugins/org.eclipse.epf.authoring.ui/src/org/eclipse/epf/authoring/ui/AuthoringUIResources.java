@@ -506,6 +506,8 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String practiceReferencesPage_assignQualifierButton_text;
 	
+	public static String practiceReferencesPage_unassignQualifierButton_text;
+	
 	public static String practiceReferencesPage_selectQualifierDialog_title;
 	
 	public static String practiceReferencesPage_selectQualifierDialog_msg;
@@ -2066,6 +2068,7 @@ public final class AuthoringUIResources extends NLS {
 	public static String publish_categories_text;
 	
 	public static String publish_practices_text;
+	
 	public static String publish_practices_for_udt_text;
 
 	public static String default_list_length_label;

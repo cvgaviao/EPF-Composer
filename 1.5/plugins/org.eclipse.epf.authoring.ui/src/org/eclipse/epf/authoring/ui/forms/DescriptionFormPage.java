@@ -58,7 +58,6 @@ import org.eclipse.epf.library.edit.command.DeleteMethodElementCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
-import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.edit.validation.IValidator;
@@ -507,6 +506,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected boolean publishCategoryOn = false;
 	
 	protected boolean publishPracticeOn = false;
+	
 	protected boolean publishPracticeOnForUDT = false;
 	
 //	protected boolean publishDeliveableOn = false;
@@ -682,7 +682,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		setFormTextWithVariableInfo();
 		loadData();
 		addListeners();
-		checkBackLinkForPracticeAndUDT();
+		//checkBackLinkForPracticeAndUDT();
 	}
 
 	protected void checkBackLinkForPracticeAndUDT() {
@@ -1079,12 +1079,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			GridData data = new GridData();
 			data.horizontalSpan = 3;
 			ctrl_publish_categories_button.setLayoutData(data);
-//			if (publishPracticeOn) {
-//				ctrl_publish_categories_button.setSelection(true);
-//			}
-		} 
-		
-		
+		}
 	}
 
 	/**

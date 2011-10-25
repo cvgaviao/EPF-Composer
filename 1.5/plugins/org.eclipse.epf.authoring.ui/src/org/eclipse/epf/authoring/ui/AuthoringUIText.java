@@ -265,6 +265,7 @@ public class AuthoringUIText {
 	public static final String PUBLISH_CATEGORIES_TEXT = AuthoringUIResources.publish_categories_text;
 	
 	public static final String PUBLISH_PRACTICES_TEXT = AuthoringUIResources.publish_practices_text;
+	
 	public static final String PUBLISH_PRACTICES_FOR_UDT_TEXT = AuthoringUIResources.publish_practices_for_udt_text;
 	
 	public static final String STATES_ADD_TEXT = AuthoringUIResources.states_add_text;
