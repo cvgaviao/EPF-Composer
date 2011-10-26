@@ -3,8 +3,11 @@ package org.eclipse.epf.uma.util;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserDefinedTypeMeta {
+import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 
+public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
+
+	public static final UserDefinedTypeMeta noneValue = new UserDefinedTypeMeta();
 	public static final String Type_Practice = "Practice";					//$NON-NLS-1$
 	
 	public static final String _typeName = "typeName";						//$NON-NLS-1$
@@ -45,7 +48,7 @@ public class UserDefinedTypeMeta {
 	
 	private Map<String, String> rteNameMap;
 	
-	private String id;
+	private String id;								
 	public UserDefinedTypeMeta() {
 	}
 	
@@ -63,4 +66,30 @@ public class UserDefinedTypeMeta {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	public boolean same(UserDefinedTypeMeta other) {
+		if (other == null) {
+			return false;
+		}
+		if (! same(this.id, other.id)) {
+			return false;
+		}
+		for (String name : rteNames) {
+			String thisValue = this.getRteNameMap().get(name);
+			String otherValue = other.getRteNameMap().get(name);
+			if (! same(thisValue, otherValue)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean same(String a, String b) {
+		if (a == null) {
+			return b == null;
+		} 
+		return a.equals(b);
+	}
+	
 }
