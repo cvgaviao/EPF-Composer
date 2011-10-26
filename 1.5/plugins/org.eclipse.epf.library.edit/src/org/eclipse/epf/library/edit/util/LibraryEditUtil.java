@@ -619,6 +619,7 @@ public class LibraryEditUtil {
 		return (Set<? extends ContentElement>) getElementsUnder(topElement, filter);
 	}
 	
+	//<key: meta, value: set of udt of same meta for update>
 	public Map<UserDefinedTypeMeta, Set<Practice>> getUdtInstanceMap(MethodElement topElement, Collection<UserDefinedTypeMeta> metas) {
 		Map<UserDefinedTypeMeta, Set<Practice>> map = new HashMap<UserDefinedTypeMeta, Set<Practice>>();
 		if (topElement == null || metas == null || metas.isEmpty()) {
@@ -632,13 +633,14 @@ public class LibraryEditUtil {
 		Set<Practice> practices = (Set<Practice> ) getContentElements(topElement, UmaPackage.eINSTANCE.getPractice());
 		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 		for (Practice practice : practices) {
-			UserDefinedTypeMeta meta = propUtil.getUdtMeta(practice);
-			if (meta != null) {
-				meta = idMetaMap.get(meta.getId());
-				if (meta != null) {
+			UserDefinedTypeMeta oldMeta = propUtil.getUdtMeta(practice);
+			if (oldMeta != null) {
+				UserDefinedTypeMeta meta = idMetaMap.get(oldMeta.getId());
+				if (meta != null && ! meta.same(oldMeta)) {
 					Set<Practice> set = map.get(meta);
 					if (set == null) {
 						set = new HashSet<Practice>();
+						map.put(meta, set);
 					}
 					set.add(practice);
 				}
