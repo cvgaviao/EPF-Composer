@@ -2,9 +2,13 @@ package org.eclipse.epf.uma.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 
 public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
@@ -38,6 +42,15 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		_referenceQualifiers
 	};
 	
+	
+	private Map<String, String> rteNameMap;
+	
+	private String id;
+	
+	private Set<EReference> qualifiedReferences;
+	
+	private boolean qualifiedReferencesLoaded = false;
+
 	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeName) {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
 		meta.setId(getPracticeUdtId(typeName));
@@ -47,10 +60,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	public static String getPracticeUdtId(String typeName) {
 		return Type_Practice + ":" + typeName;			//$NON-NLS-1$
 	}
-	
-	private Map<String, String> rteNameMap;
-	
-	private String id;								
+					
 	public UserDefinedTypeMeta() {
 	}
 	
@@ -114,4 +124,34 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		}
 		return strList;
 	}
+	
+	public boolean isQualifiedRefernce(EReference ref) {
+		return getQualifiedReferences().contains(ref);
+	}
+	
+	public Set<EReference> getQualifiedReferences() {
+		if (qualifiedReferences == null) {
+			qualifiedReferences = new LinkedHashSet<EReference>();
+		}
+		String value = getRteNameMap().get(_referenceQualifiers);
+		if (value == null || value.trim().length() == 0) {
+			qualifiedReferencesLoaded = false;
+			if (!qualifiedReferences.isEmpty()) {
+				qualifiedReferences.clear();
+			}
+		} else if (!qualifiedReferencesLoaded) {
+			if (!qualifiedReferences.isEmpty()) {
+				qualifiedReferences.clear();
+			}
+			List<String> refNames = convertStringsToList(value);
+			for (String refName : refNames) {
+				EReference ref = EcoreFactory.eINSTANCE.createEReference();
+				ref.setName(refName);
+				qualifiedReferences.add(ref);
+			}
+			qualifiedReferencesLoaded = true;
+		}
+		return qualifiedReferences;
+	}
+	
 }
