@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
-import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.util.XmlEditUtil;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
@@ -23,10 +22,11 @@ import org.w3c.dom.Element;
 public class ExtendReferenceMap {
 
 	//Reference names
-	public static final String UtdList = "udtList";			//$NON-NLS-1$
+	public static final String UtdList = "udtList";					//$NON-NLS-1$
 	
-	private static final String Opposite_ = "opposite_";	//$NON-NLS-1$
+	private static final String Opposite_ = "opposite_";			//$NON-NLS-1$
 	private static final String QReference_ = "qReference_";		//$NON-NLS-1$
+	public static final String WSpace = "__ws__";					//$NON-NLS-1$
 	
 	private Map<String, Object> map;
 	private Map<String, Object> oldValueMap;
@@ -236,6 +236,18 @@ public class ExtendReferenceMap {
 	}
 
 	public static String getQReferenceName(String qualifiedName) {
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < qualifiedName.length(); i++) {
+			char c = qualifiedName.charAt(i);
+			if (c == ' ' || c == '\t' || c == '\n') {
+				sb.append(WSpace);
+			} else {
+				sb.append(c);
+			}
+		}
+		if (sb.length() != qualifiedName.length()) {
+			qualifiedName = sb.toString();
+		}
 		return QReference_ + qualifiedName;
 	}
 	
