@@ -998,7 +998,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			loadReferences(elementXml, false);
 			
 			loadUdtReferences(elementXml);			
-			
+		
+			loadQrReferences(elementXml);
 		}
 
 		return elementXml;
@@ -1014,7 +1015,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 					udtList);
 		}
 	}
-
+	
+	protected void loadQrReferences(XmlElement elementXml) {
+	}
+	
 	/**
 	 * some layout need to have the feature values for further processing. So
 	 * this method will be called when a feature is calculated in this abstract
