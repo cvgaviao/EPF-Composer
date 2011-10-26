@@ -332,7 +332,7 @@ public class PracticeItemProvider extends
 	public static class GroupingHelper {
 		
 		private Object grouper;
-		private boolean alwayGroup = false;
+		protected boolean alwayGroup = false;
 		
 		public GroupingHelper(Object grouper) {
 			this.grouper = grouper;
@@ -438,6 +438,7 @@ public class PracticeItemProvider extends
 			List ret = new ArrayList<Object>();
 			
 			GroupingHelper groupingHelper = new GuidanceGroupingHelper(grouper);
+			groupingHelper.alwayGroup = this.alwayGroup;
 			grouping(parentObject, ret, subgroupChildren, groupingHelper);
 			
 			return ret;
@@ -539,7 +540,11 @@ public class PracticeItemProvider extends
 			return keys;
 		}
 		
+		@Override
 		public boolean toGroup(String key, List subgroupChildren) {
+			if (alwayGroup) {
+				return true;
+			}
 			if (key.equals(UNKNOWN) || 
 				subgroupChildren.size() < 3) {
 				return false;
