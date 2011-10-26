@@ -7,6 +7,7 @@ import java.util.Map;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
+import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -47,10 +48,27 @@ public class PracticePropUtil extends MethodElementPropUtil {
 	}
 	
 	public  UserDefinedTypeMeta getUtdData(Practice practice)  throws Exception {
+		MethodElementExt extendObject = getExtendObject(practice, true);
+		if (extendObject != null && extendObject.getUserDefinedTypeMeta() instanceof UserDefinedTypeMeta) {
+			UserDefinedTypeMeta meta = (UserDefinedTypeMeta) extendObject.getUserDefinedTypeMeta();
+			return meta == UserDefinedTypeMeta.noneValue ? null : meta;
+		}
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
 		PracticeXmlEditUtil xmlEditUtil = new PracticeXmlEditUtil(practice, this);
 		xmlEditUtil.retrieveUtdData(meta);
-		return meta.getId() == null ? null : meta;
+		if (extendObject == null) {
+			return meta.getId() == null ? null : meta;
+		}
+		if (meta.getId() == null) {
+			meta = UserDefinedTypeMeta.noneValue;
+		} else {
+			UserDefinedTypeMeta globalMeta = LibraryEditUtil.getInstance().getUserDefineType(meta.getId());
+			if (meta.same(globalMeta)) {
+				meta = globalMeta;
+			}
+		}
+		extendObject.setUserDefinedTypeMeta(meta);
+		return meta == UserDefinedTypeMeta.noneValue ? null : meta;
 	}
 	
 	public  boolean isUtdType(MethodElement element) {

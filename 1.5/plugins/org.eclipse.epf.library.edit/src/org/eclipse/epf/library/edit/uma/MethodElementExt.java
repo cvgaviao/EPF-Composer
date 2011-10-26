@@ -11,6 +11,7 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -20,6 +21,7 @@ public class MethodElementExt extends ExtendObject {
 	private boolean transientElement = false;
 	private Object cachedObject;
 	private ExtendReferenceMap extendReferenceMap;
+	private IUserDefinedTypeMeta userDefinedTypeMeta;
 
 	public MethodElementExt(MethodElement element) {
 		this.element = element;
@@ -110,6 +112,14 @@ public class MethodElementExt extends ExtendObject {
 		public void setWpStatesLoaded(boolean wpStatesLoaded) {
 			this.wpStatesLoaded = wpStatesLoaded;
 		}
+	}
+	
+	public IUserDefinedTypeMeta getUserDefinedTypeMeta() {
+		return userDefinedTypeMeta;
+	}
+
+	public void setUserDefinedTypeMeta(IUserDefinedTypeMeta userDefinedTypeMeta) {
+		this.userDefinedTypeMeta = userDefinedTypeMeta;
 	}
 	
 }

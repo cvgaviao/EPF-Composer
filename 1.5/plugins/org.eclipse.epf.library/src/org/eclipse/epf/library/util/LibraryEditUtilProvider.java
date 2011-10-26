@@ -28,6 +28,7 @@ import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	private DescriptorPropUtil propUtil = DescriptorPropUtil.getDesciptorPropUtil();
@@ -206,6 +207,10 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	
 	public void createUserDefinedTypeContextMenuOnGuidanceNode(Collection<Object> newChildDescriptors) {
 		UserDefinedTypeContextMenuUtil.getInstance().addDescriptorsForUserDefinedType(newChildDescriptors);
+	}
+	
+	public UserDefinedTypeMeta getUserDefineType(String id) {
+		return LibraryService.getInstance().getCurrentLibraryManager().getUserDefineType(id);
 	}
 	
 }

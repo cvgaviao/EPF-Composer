@@ -796,4 +796,7 @@ public class LibraryEditUtil {
 		getProvider().createUserDefinedTypeContextMenuOnGuidanceNode(newChildDescriptors);
 	}
 	
+	public UserDefinedTypeMeta getUserDefineType(String id) {
+		return getProvider() == null ? null : getProvider().getUserDefineType(id);
+	}
 }
