@@ -1,6 +1,8 @@
 package org.eclipse.epf.uma.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
@@ -92,4 +94,24 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		return a.equals(b);
 	}
 	
+	public List<String> getReferenceQualifiers() {
+		String value = getRteNameMap().get(_referenceQualifiers);
+		if (value == null || value.trim().length() == 0) {
+			return null;
+		}
+		return convertStringsToList(value);
+	}
+		
+	private List<String> convertStringsToList(String string) {
+		ArrayList<String> strList = new ArrayList<String>();
+		if (string == null)
+			string = ""; //$NON-NLS-1$
+		String strings[] = string
+				.split("\\,"); 		//$NON-NLS-1$);
+		for (int i = 0; i < strings.length; i++) {
+			if (strings[i].trim().length() > 0)
+				strList.add(strings[i].trim());
+		}
+		return strList;
+	}
 }
