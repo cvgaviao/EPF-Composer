@@ -122,7 +122,11 @@ public class PracticeLayout extends AbstractElementLayout {
 			
 			List ret = new ArrayList();
 
-			GroupingHelper groupingHelper = new GroupingHelper(this) {			
+			Practice practice = (Practice) getElement();
+			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+			boolean isUtdType = propUtil.isUtdType(practice);
+			
+			GroupingHelper groupingHelper = new GroupingHelper(this, isUtdType) {			
 				protected void grouping(Object parentObject, List ret,
 						Collection children, GroupingHelper groupingHelper) {					
 					if (getGrouper() instanceof PracticeLayout) {
@@ -142,9 +146,7 @@ public class PracticeLayout extends AbstractElementLayout {
 					elementXml, "Input work product slots", wpSlotInputs); //$NON-NLS-1$
 			}
 
-			Practice practice = (Practice) getElement();
-			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
-			if (propUtil.isUtdType(practice)) {
+			if (isUtdType) {
 				List<MethodElement> list = propUtil.getUdtReferencingList(practice);
 				if (list != null && !list.isEmpty()) {
 					list = ConfigurationHelper.getCalculatedElements(list, layoutManager.getElementRealizer());

@@ -27,6 +27,7 @@ import org.eclipse.epf.library.edit.ILibraryItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Checklist;
@@ -331,9 +332,24 @@ public class PracticeItemProvider extends
 	public static class GroupingHelper {
 		
 		private Object grouper;
+		private boolean alwayGroup = false;
 		
 		public GroupingHelper(Object grouper) {
 			this.grouper = grouper;
+			if (grouper instanceof PracticeItemProvider) {
+				Object obj = ((PracticeItemProvider) grouper).getTarget();
+				if (obj instanceof Practice) {
+					PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+					if (propUtil.isUtdType((Practice) obj)) {
+						alwayGroup = true;
+					}
+				}
+			}
+		}
+		
+		public GroupingHelper(Object grouper, boolean alwayGroup) {
+			this.grouper = grouper;
+			this.alwayGroup = alwayGroup;
 		}
 		
 		protected Object getGrouper() {
@@ -402,6 +418,9 @@ public class PracticeItemProvider extends
 		}
 		
 		public boolean toGroup(String key, List subgroupChildren) {
+			if (alwayGroup) {
+				return true;
+			}
 			if (key.equals(ROADMAP) || 
 				key.equals(CATEGORIES) ||
 				key.equals(UNKNOWN) ||
