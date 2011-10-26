@@ -60,11 +60,7 @@ public class ExtendReferenceMap {
 		if (meta == null) {
 			return null;
 		}
-		String value = meta.getRteNameMap().get(meta._referenceQualifiers);
-		if (value == null || value.trim().length() == 0) {
-			return null;
-		}
-		return TngUtil.convertStringsToList(value);
+		return meta.getReferenceQualifiers();
 	}
 	
 	public MethodElement getOwnerElement() {
