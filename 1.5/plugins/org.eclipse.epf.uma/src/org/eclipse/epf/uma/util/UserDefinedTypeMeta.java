@@ -27,6 +27,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	public static final String _icon = "icon";                              //$NON-NLS-1$
 	public static final String _shapeIcon = "shapeIcon";                    //$NON-NLS-1$
 	public static final String _referenceQualifiers = "referenceQualifiers";//$NON-NLS-1$
+	public static final String _referenceQualifierNames = "referenceQualifierNames";//$NON-NLS-1$
 	
 	public static String[] rteNames = {
 		_typeName,
@@ -39,7 +40,8 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		_additionalInfo,
 		_icon,
 		_shapeIcon,
-		_referenceQualifiers
+		_referenceQualifiers,
+		_referenceQualifierNames
 	};
 	
 	
