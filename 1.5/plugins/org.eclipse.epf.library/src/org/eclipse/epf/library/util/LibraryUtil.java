@@ -64,6 +64,7 @@ import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodLibraryPropUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ModelStructure;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
@@ -1508,13 +1509,31 @@ public class LibraryUtil {
 			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
 			if (propUtil.hasUdtList(element)) {
 				elementsToProcess.add(element);
+				
+			} else if (element instanceof Practice) {
+				PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
+				UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta((Practice) element);
+				if (meta != null && !meta.getQualifiedReferences().isEmpty()) {
+					elementsToProcess.add(element);
+				}
 			}
 		}
 		
 		public void processElements() {
 			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
 			for (MethodElement element : elementsToProcess) {
-				propUtil.getUdtList(element, false);
+				if (propUtil.hasUdtList(element)) {
+					propUtil.getUdtList(element, false);
+				}				
+				if (element instanceof Practice) {
+					PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
+					UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta((Practice) element);
+					if (meta != null && !meta.getQualifiedReferences().isEmpty()) {
+						for (EReference ref : meta.getQualifiedReferences()) {
+							practicePropUtil.getQReferenceList(element, ref.getName(), false);
+						}
+					}
+				}
 			}
 		}
 	}
