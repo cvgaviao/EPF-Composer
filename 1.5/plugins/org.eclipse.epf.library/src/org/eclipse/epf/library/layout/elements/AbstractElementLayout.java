@@ -1154,15 +1154,15 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			try {
 				String imagesPath = getLayoutMgr().getPublishDir() + "images"; //$NON-NLS-1$
 				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)element);
-				String shapeIconPath = new URL(udtMeta.getRteNameMap().get(UserDefinedTypeMeta._shapeIcon)).getFile();
-				File shapeIconFile = new File(shapeIconPath);
-				
-				if (FileUtil.copyFileToDir(shapeIconFile, imagesPath)) {
-					return "images/" + shapeIconFile.getName(); //$NON-NLS-1$
-				}				
+				String shapeIcon = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._shapeIcon);
+				if (shapeIcon != null) {
+					File shapeIconFile = new File(new URL(shapeIcon).getFile());
+					if (FileUtil.copyFileToDir(shapeIconFile, imagesPath)) {
+						return "images/" + shapeIconFile.getName(); //$NON-NLS-1$
+					}					
+				}
 			} catch (Exception e) {
-				//NPE can be thrown here if image is not specified in Udt definition file
-				//LibraryPlugin.getDefault().getLogger().logError(e);
+				LibraryPlugin.getDefault().getLogger().logError(e);
 			}			
 		}		
 		

@@ -1683,7 +1683,10 @@ public final class TngUtil {
 		
 		//For user defined type
 		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object))) {
-			return getImageForUdt((Practice)object);
+			ImageDescriptor desc = getImageForUdt((Practice)object);
+			if (desc != null) {
+				return desc;
+			}
 		}		
 		
 		Object adapter = null;
@@ -1706,7 +1709,7 @@ public final class TngUtil {
 		try {
 			UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
 			String imageUrl = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon);
-			if (imageUrl == null || imageUrl.trim().length() == 0) {
+			if (imageUrl == null) {
 				return null;
 			}
 			return ImageDescriptor.createFromURL(new URL(imageUrl));
@@ -2338,7 +2341,10 @@ public final class TngUtil {
 	public static String getTypeText(EObject element) {
 		//For user defined type
 		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)element))) {
-			return getTypeNameForUdt((Practice)element);
+			String typeName = getTypeNameForUdt((Practice)element);
+			if (typeName != null) {
+				return typeName;
+			}
 		}		
 		
 		return getTypeText(element.eClass());

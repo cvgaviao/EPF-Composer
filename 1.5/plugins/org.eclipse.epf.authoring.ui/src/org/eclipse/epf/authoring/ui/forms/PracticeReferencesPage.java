@@ -484,10 +484,6 @@ public class PracticeReferencesPage extends AssociationFormPage {
 			String qualifiers = PracticePropUtil.getPracticePropUtil().getUtdData(practice)
 				.getRteNameMap().get(UserDefinedTypeMeta._referenceQualifiers);
 			
-			if (qualifiers == null) {
-				return new String[0];
-			}
-			
 			String[] qualifierArray = qualifiers.split(","); //$NON-NLS-1$
 			for (int i = 0; i < qualifierArray.length; i++) {
 				qualifierArray[i] = qualifierArray[i].trim();
@@ -562,16 +558,20 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	}
 	
 	protected String getQualifierDecorator(Object object) {
-		StringBuffer buf = new StringBuffer();
-		List<String> allQualifiers = getAllQualifiersOfMethodElement((MethodElement)object);
-		
-		if (allQualifiers.size() > 0) {
-			buf.append("["); //$NON-NLS-1$
-			buf.append(TngUtil.convertListToString(allQualifiers));
-			buf.append("]  "); //$NON-NLS-1$
+		if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+			StringBuffer buf = new StringBuffer();
+			List<String> allQualifiers = getAllQualifiersOfMethodElement((MethodElement)object);
+			
+			if (allQualifiers.size() > 0) {
+				buf.append("["); //$NON-NLS-1$
+				buf.append(TngUtil.convertListToString(allQualifiers));
+				buf.append("]  "); //$NON-NLS-1$
+			}
+			
+			return buf.toString();
 		}
 		
-		return buf.toString();
+		return super.getQualifierDecorator(object);
 	}
 	
 }

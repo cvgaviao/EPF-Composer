@@ -383,14 +383,16 @@ public abstract class AbstractViewBuilder {
 					//for user defined type
 					try {
 						UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)obj);
-						String iconPath = new URL(udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon)).getFile();
-						if (iconPath != null && iconPath.trim().length() > 0) {
-							iconFile = new File(iconPath);
+						String icon = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon);
+						if (icon != null) {
+							iconFile = new File(new URL(icon).getFile());
 						}
 					} catch (Exception e) {
 						getHtmlBuilder().getValidator().logError("", e); //$NON-NLS-1$
+						iconFile = null;
 					}			
 				}
+				
 				if (iconFile == null) {				
 					iconFile = IconUtil.getNodeIconFile(type);
 				}

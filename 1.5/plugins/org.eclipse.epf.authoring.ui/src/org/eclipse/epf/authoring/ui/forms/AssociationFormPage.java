@@ -31,7 +31,6 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
-import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.library.util.LibraryManager;
@@ -101,14 +100,8 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	protected ILabelProvider labelProviderSelected = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
-		public String getColumnText(Object object, int columnIndex) {
-			String result = TngUtil.getLabelWithPath(object); 
-			
-			if (PracticePropUtil.getPracticePropUtil().isUtdType(contentElement)) {
-				result = getQualifierDecorator(object) + result;
-			} 
-			
-			return result;
+		public String getColumnText(Object object, int columnIndex) {			
+			return getQualifierDecorator(object) + TngUtil.getLabelWithPath(object); 
 		}
 	};
 
