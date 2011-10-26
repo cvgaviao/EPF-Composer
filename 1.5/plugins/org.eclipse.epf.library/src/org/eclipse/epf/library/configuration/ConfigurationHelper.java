@@ -24,6 +24,7 @@ import java.util.TreeSet;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.common.utils.StrUtil;
@@ -31,6 +32,7 @@ import org.eclipse.epf.library.ConfigHelperDelegate;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.SectionList;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -64,6 +66,7 @@ import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 
 /**
@@ -1338,6 +1341,14 @@ public class ConfigurationHelper {
 			EStructuralFeature feature, ElementRealizer realizer) {
 		if (feature == UmaUtil.MethodElement_UdtList) {
 			return getDelegate().calcUtdList(element, realizer);
+		}
+		if (feature instanceof EReference && element instanceof Practice) {
+			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+			Practice practice = (Practice) element;
+			UserDefinedTypeMeta meta = propUtil.getUdtMeta(practice);
+			if (meta != null && meta.isQualifiedRefernce((EReference) feature)) {
+				return getDelegate().calcgetQReferenceList(element, feature.getName(), realizer);
+			}
 		}
 		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
 			Object value = element.eGet(feature);

@@ -580,7 +580,7 @@ public class ConfigHelperDelegate {
 				for (Practice p : list) {
 					Object realized = ConfigurationHelper.getCalculatedElement(p, realizer);
 					if (realized instanceof Practice) {
-						utdList.add(p);
+						utdList.add((Practice) realized);
 					}
 				}
 			}
@@ -588,5 +588,23 @@ public class ConfigHelperDelegate {
 		return utdList;
 	}
 	
+	public List<MethodElement> calcgetQReferenceList(MethodElement element,
+			String qualifiedName, ElementRealizer realizer) {
+		List<MethodElement> qrReferenceList = new ArrayList<MethodElement>();
+		MethodElementPropUtil propUtil = MethodElementPropUtil
+				.getMethodElementPropUtil();
+		List<MethodElement> list = propUtil.getQReferenceList(element,
+				qualifiedName, false);
+		if (list != null) {
+			for (MethodElement m : list) {
+				Object realized = ConfigurationHelper.getCalculatedElement(m,
+						realizer);
+				if (realized instanceof MethodElement) {
+					qrReferenceList.add((MethodElement) realized);
+				}
+			}
+		}
+		return qrReferenceList;
+	}
 	
 }
