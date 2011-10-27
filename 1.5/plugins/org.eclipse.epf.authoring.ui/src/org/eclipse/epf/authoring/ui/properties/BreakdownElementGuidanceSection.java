@@ -151,7 +151,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 						return true;
 
 					if (obj instanceof Practice) {
-						if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) obj)) {
+						if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj)) {
 							return true;
 						}
 					}
@@ -551,7 +551,7 @@ public class BreakdownElementGuidanceSection extends AbstractSection {
 							UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations(),
 							item, -1);
 				} else if (item instanceof Practice) {
-					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+					if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) item)) {
 						utdItems.add((Practice) item);
 					}
 				} else {

@@ -379,7 +379,7 @@ public abstract class AbstractViewBuilder {
 					}
 				}
 				
-				if ((obj instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)obj))) {
+				if ((obj instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)obj))) {
 					//for user defined type
 					try {
 						UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)obj);

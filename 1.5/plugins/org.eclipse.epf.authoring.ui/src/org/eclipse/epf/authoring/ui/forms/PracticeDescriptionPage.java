@@ -63,7 +63,7 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 		guidance = (Practice) contentElement;
 		
 		publishPracticeOn = true;
-		if (PracticePropUtil.getPracticePropUtil().isUtdType(guidance)) {
+		if (PracticePropUtil.getPracticePropUtil().isUdtType(guidance)) {
 			publishPracticeOnForUDT = true;
 		} 
 		
@@ -97,7 +97,7 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 
 		if (fullDescOn) {
 			int width = 40;
-			if (!PracticePropUtil.getPracticePropUtil().isUtdType(guidance)) {
+			if (!PracticePropUtil.getPracticePropUtil().isUdtType(guidance)) {
 				width = 100;
 			}
 			
@@ -371,7 +371,7 @@ public class PracticeDescriptionPage extends GuidanceDescriptionPage {
 		
 		//For user defined type
 		if (elementTypeOn) {
-			if (PracticePropUtil.getPracticePropUtil().isUtdType(guidance)) {
+			if (PracticePropUtil.getPracticePropUtil().isUdtType(guidance)) {
 				try {
 					String typeName = PracticePropUtil.getPracticePropUtil()
 							.getUtdData(guidance)

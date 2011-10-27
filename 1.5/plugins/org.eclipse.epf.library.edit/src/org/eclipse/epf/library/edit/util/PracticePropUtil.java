@@ -71,26 +71,19 @@ public class PracticePropUtil extends MethodElementPropUtil {
 		return meta == UserDefinedTypeMeta.noneValue ? null : meta;
 	}
 	
-	public  boolean isUtdType(MethodElement element) {
+	public  boolean isUdtType(MethodElement element) {
 		if (element instanceof Practice) {
-			try {
-				return getUtdData((Practice) element) != null;			
-			} catch (Exception e) {
-				LibraryEditPlugin.getDefault().getLogger().logError(e);
-			}
+			return getUdtMeta((Practice) element) != null;			
 		}
 		return false;
 	}
 	
-	public  boolean isUtdType(MethodElement element, String typeName) {
-		if (typeName != null && element instanceof Practice) {
-			try {
-				UserDefinedTypeMeta meta = getUtdData((Practice) element);
-				if (meta != null) {
-					return typeName.equals(meta.getRteNameMap().get(UserDefinedTypeMeta._typeName));
-				}
-			} catch (Exception e) {
-				LibraryEditPlugin.getDefault().getLogger().logError(e);
+	public boolean isUdtType(MethodElement element, String typeId) {
+		if (typeId != null && element instanceof Practice) {
+			UserDefinedTypeMeta meta = getUdtMeta((Practice) element);
+			if (meta != null) {
+				return typeId.equals(meta.getRteNameMap().get(
+						UserDefinedTypeMeta._typeId));
 			}
 		}
 		return false;

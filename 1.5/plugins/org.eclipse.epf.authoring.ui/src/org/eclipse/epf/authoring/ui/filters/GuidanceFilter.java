@@ -67,7 +67,7 @@ public class GuidanceFilter extends ContentFilter {
 		}
 		
 		if (obj instanceof Practice) {
-			if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) obj)) {
+			if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj)) {
 				return true;
 			}
 		}

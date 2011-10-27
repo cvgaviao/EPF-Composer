@@ -126,7 +126,7 @@ public class PracticeLayout extends AbstractElementLayout {
 
 			Practice practice = (Practice) getElement();
 			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
-			boolean isUtdType = propUtil.isUtdType(practice);
+			boolean isUtdType = propUtil.isUdtType(practice);
 			
 			GroupingHelper groupingHelper = new GroupingHelper(this, isUtdType) {			
 				protected void grouping(Object parentObject, List ret,

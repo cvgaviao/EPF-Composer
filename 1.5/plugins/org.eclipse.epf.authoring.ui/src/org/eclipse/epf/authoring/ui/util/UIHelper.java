@@ -128,7 +128,7 @@ public class UIHelper {
 		} else if (methodElement instanceof Guidance) {
 			if (methodElement instanceof Practice) {
 				Practice prac = (Practice)methodElement;
-				if (PracticePropUtil.getPracticePropUtil().isUtdType(prac)) {
+				if (PracticePropUtil.getPracticePropUtil().isUdtType(prac)) {
 					elementLabel = getNameForUtd(prac);
 					return elementLabel;
 				}

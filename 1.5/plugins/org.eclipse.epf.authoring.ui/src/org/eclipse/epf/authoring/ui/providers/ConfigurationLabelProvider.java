@@ -59,7 +59,7 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 	 */
 	public Image getImage(Object object) {
 		//For user defined type
-		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object))) {
+		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object))) {
 			ImageDescriptor desc =  TngUtil.getImageForUdt((Practice)object);
 			if (desc != null) {
 				return desc.createImage();

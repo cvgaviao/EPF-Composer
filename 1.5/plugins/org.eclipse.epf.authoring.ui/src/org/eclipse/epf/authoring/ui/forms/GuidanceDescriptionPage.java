@@ -281,7 +281,7 @@ public class GuidanceDescriptionPage extends DescriptionFormPage {
 			this.iconSectionDescription = AuthoringUIResources.estimationconsideration_iconSection_desc;
 		}
 		else if(contentElement instanceof Practice){
-			if (PracticePropUtil.getPracticePropUtil().isUtdType(contentElement)) {
+			if (PracticePropUtil.getPracticePropUtil().isUdtType(contentElement)) {
 				try {
 					String typeName = PracticePropUtil.getPracticePropUtil()
 						.getUtdData((Practice)contentElement)

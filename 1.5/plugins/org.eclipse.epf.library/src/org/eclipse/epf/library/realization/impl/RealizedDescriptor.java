@@ -445,7 +445,7 @@ public class RealizedDescriptor extends RealizedElement implements
 			for (MethodElement me : addtionList) {
 				Guidance g = (Guidance) me;
 				if (eRef == UmaUtil.MethodElement_UdtList) {
-					if (PracticePropUtil.getPracticePropUtil().isUtdType(g)) {
+					if (PracticePropUtil.getPracticePropUtil().isUdtType(g)) {
 						resultGuidanceSet.add(g);		
 					}
 				} else if (eRef.getEType().isInstance(g)) {

@@ -150,7 +150,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		});
 		
 		//For user defined type
-		if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+		if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 			assignQualifierButton = toolkit.createButton(category1pane2, AuthoringUIResources.practiceReferencesPage_assignQualifierButton_text, SWT.PUSH);
 			assignQualifierButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			assignQualifierButton.addSelectionListener(new SelectionAdapter() {
@@ -405,7 +405,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	 * @see org.eclipse.epf.authoring.ui.forms.AssociationFormPage#getSectionDescription()
 	 */
 	protected String getSectionDescription() {
-		if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+		if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 			try {
 				String typeName = PracticePropUtil.getPracticePropUtil()
 					.getUtdData(practice)
@@ -450,7 +450,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	protected void enableControls(boolean editable) {
 		super.enableControls(editable);
 		
-		if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+		if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 			if (editable && (getSelectedElement().size() > 0)) {
 				assignQualifierButton.setEnabled(true);
 				unassignQualifierButton.setEnabled(true);
@@ -466,7 +466,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		
 		viewer_selected.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+				if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 					if (!TngUtil.isLocked(contentElement) && (getSelectedElement().size() > 0)) {
 						assignQualifierButton.setEnabled(true);
 						unassignQualifierButton.setEnabled(true);
@@ -558,7 +558,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	}
 	
 	protected String getQualifierDecorator(Object object) {
-		if (PracticePropUtil.getPracticePropUtil().isUtdType(practice)) {
+		if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 			StringBuffer buf = new StringBuffer();
 			List<String> allQualifiers = getAllQualifiersOfMethodElement((MethodElement)object);
 			

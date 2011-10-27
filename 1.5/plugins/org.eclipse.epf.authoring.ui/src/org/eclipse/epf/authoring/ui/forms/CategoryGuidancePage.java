@@ -153,7 +153,7 @@ public class CategoryGuidancePage extends AssociationFormPage {
 							UmaPackage.eINSTANCE.getContentElement_Assets(),
 							(ReusableAsset) item, -1);
 				} else if (item instanceof Practice) {
-					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+					if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) item)) {
 						utdItems.add((Practice) item);
 					}
 				} else {
@@ -227,7 +227,7 @@ public class CategoryGuidancePage extends AssociationFormPage {
 							UmaPackage.eINSTANCE.getContentElement_Assets(),
 							(ReusableAsset) item, -1);
 				} else if (item instanceof Practice) {
-					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+					if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) item)) {
 						utdItems.add((Practice) item);
 					}
 				} else {

@@ -107,7 +107,7 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 									.getVariabilityBasedOnElement()))) {
 						local.add(obj);
 					} else if (obj instanceof Practice) {
-						if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) obj)) {
+						if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj)) {
 							local.add(obj);
 						}
 					}
@@ -235,7 +235,7 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 							(ReusableAsset) item, -1);
 					continue;
 				} else if (item instanceof Practice) {
-					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+					if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) item)) {
 						utdItems.add((Practice) item);
 					}
 				} else {
@@ -374,7 +374,7 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 							(ReusableAsset) item, -1);
 					continue;
 				} else if (item instanceof Practice) {
-					if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+					if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) item)) {
 						utdItems.add((Practice) item);
 					}
 				} else {

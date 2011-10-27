@@ -133,7 +133,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 							((Activity) brElement).getRoadmaps().add((Roadmap) item);
 						}
 					} else if (item instanceof Practice) {
-						if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+						if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) item)) {
 							utdItems.add((Practice) item);
 						}
 					} else {

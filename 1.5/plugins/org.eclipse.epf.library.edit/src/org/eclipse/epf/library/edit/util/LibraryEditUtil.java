@@ -388,7 +388,7 @@ public class LibraryEditUtil {
 			return;
 		}
 		if (feature == UmaUtil.MethodElement_UdtList) {
-			if (PracticePropUtil.getPracticePropUtil().isUtdType(referenced)) {
+			if (PracticePropUtil.getPracticePropUtil().isUdtType(referenced)) {
 				MethodElementPropUtil.getMethodElementPropUtil().addOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
 			}
 			return;
@@ -409,7 +409,7 @@ public class LibraryEditUtil {
 			return;
 		}
 		if (feature == UmaUtil.MethodElement_UdtList) {
-			if (PracticePropUtil.getPracticePropUtil().isUtdType(referenced)) {
+			if (PracticePropUtil.getPracticePropUtil().isUdtType(referenced)) {
 				MethodElementPropUtil.getMethodElementPropUtil().removeOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
 			}
 			return;

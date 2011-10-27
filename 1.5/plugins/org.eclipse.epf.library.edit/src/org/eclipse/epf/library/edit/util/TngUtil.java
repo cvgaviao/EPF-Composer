@@ -1682,7 +1682,7 @@ public final class TngUtil {
 		}
 		
 		//For user defined type
-		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object))) {
+		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object))) {
 			ImageDescriptor desc = getImageForUdt((Practice)object);
 			if (desc != null) {
 				return desc;
@@ -2340,7 +2340,7 @@ public final class TngUtil {
 	 */
 	public static String getTypeText(EObject element) {
 		//For user defined type
-		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)element))) {
+		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)element))) {
 			String typeName = getTypeNameForUdt((Practice)element);
 			if (typeName != null) {
 				return typeName;

@@ -61,7 +61,7 @@ public class PracticeItemProvider extends
 			Object object) {
 		
 		//User defined type won't have sub practice
-		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {
+		if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object)) {
 			return;
 		}
 		
@@ -120,7 +120,7 @@ public class PracticeItemProvider extends
 			}
 		}
 		
-		if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)object)) {	
+		if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object)) {	
 			ImageDescriptor img = TngUtil.getImageForUdt((Practice)object);
 			if (img != null) {
 				return img;

@@ -1538,16 +1538,16 @@ public class LibraryUtil {
 		}
 	}
 	
-	public static boolean isUdtTypeName(String typeName) {
+	public static boolean isUdtTypeId(String typeId) {
 		ILibraryManager mgr = LibraryService.getInstance().getCurrentLibraryManager();
-		return isUdtTypeName(typeName, mgr);
+		return isUdtTypeId(typeId, mgr);
 	}
 	
-	private static boolean isUdtTypeName(String typeName, ILibraryManager mgr) {
+	private static boolean isUdtTypeId(String typeId, ILibraryManager mgr) {
 		if (mgr == null) {
 			return false;
 		}
-		String id = UserDefinedTypeMeta.getPracticeUdtId(typeName);		
+		String id = UserDefinedTypeMeta.getPracticeUdtId(typeId);		
 		return mgr.getUserDefineType(id) != null;
 	}
 	

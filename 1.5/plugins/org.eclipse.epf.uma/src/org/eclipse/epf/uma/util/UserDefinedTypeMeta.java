@@ -17,7 +17,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	public static final String Type_Practice = "Practice";					//$NON-NLS-1$
 	
 	public static final String _typeName = "typeName";						//$NON-NLS-1$
-	public static final String _id = "id";                                  //$NON-NLS-1$
+	public static final String _typeId = "typeId";                                  //$NON-NLS-1$
 	public static final String _problems = "problems";						//$NON-NLS-1$
 	public static final String _goals = "goals";							//$NON-NLS-1$
 	public static final String _background = "background";					//$NON-NLS-1$	
@@ -32,7 +32,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	
 	public static String[] rteNames = {
 		_typeName,
-		_id,
+		_typeId,
 		_problems,
 		_goals,
 		_background,
@@ -54,14 +54,14 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	
 	private boolean qualifiedReferencesLoaded = false;
 
-	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeName) {
+	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeId) {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
-		meta.setId(getPracticeUdtId(typeName));
+		meta.setId(getPracticeUdtId(typeId));
 		return meta;
 	}
 	
-	public static String getPracticeUdtId(String typeName) {
-		return Type_Practice + ":" + typeName;			//$NON-NLS-1$
+	public static String getPracticeUdtId(String typeId) {
+		return Type_Practice + ":" + typeId;			//$NON-NLS-1$
 	}
 					
 	public UserDefinedTypeMeta() {

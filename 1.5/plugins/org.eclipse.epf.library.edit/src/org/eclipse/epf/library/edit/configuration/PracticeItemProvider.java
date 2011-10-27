@@ -340,7 +340,7 @@ public class PracticeItemProvider extends
 				Object obj = ((PracticeItemProvider) grouper).getTarget();
 				if (obj instanceof Practice) {
 					PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
-					if (propUtil.isUtdType((Practice) obj)) {
+					if (propUtil.isUdtType((Practice) obj)) {
 						alwayGroup = true;
 					}
 				}

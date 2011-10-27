@@ -334,7 +334,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	 */
 	public String getType() {
 		//For user defined type
-		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)element))) {
+		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)element))) {
 			return "udt";  //$NON-NLS-1$
 		}		
 		
@@ -1154,7 +1154,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 		
 		//For user defined type
-		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUtdType((Practice)element))) {
+		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)element))) {
 			try {
 				String imagesPath = getLayoutMgr().getPublishDir() + "images"; //$NON-NLS-1$
 				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)element);

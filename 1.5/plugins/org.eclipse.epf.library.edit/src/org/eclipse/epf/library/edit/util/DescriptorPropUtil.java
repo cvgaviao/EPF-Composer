@@ -719,7 +719,7 @@ public class DescriptorPropUtil extends MethodElementPropUtil {
 		}else if (item instanceof EstimationConsiderations) {
 			ref = UmaPackage.eINSTANCE.getBreakdownElement_Estimationconsiderations();
 		} else if (item instanceof Practice) {
-			if (PracticePropUtil.getPracticePropUtil().isUtdType((Practice) item)) {
+			if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) item)) {
 				ref = UmaUtil.MethodElement_UdtList;
 			}
 		}
