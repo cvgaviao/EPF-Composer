@@ -22,12 +22,17 @@ import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.IEditorKeeper;
 import org.eclipse.epf.authoring.ui.preferences.AuthoringUIPreferences;
 import org.eclipse.epf.authoring.ui.views.ViewHelper;
+import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.edit.command.CommandStatusChecker;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
 import org.eclipse.epf.library.edit.process.command.CreateProcessComponentCommand;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodElementProperty;
+import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.UmaFactory;
 
 /**
  * Creates a new Method element.
@@ -99,6 +104,22 @@ public class CreateMethodElementCommand extends CommandWrapper implements
 				if (AuthoringUIPreferences.getEnableAutoNameGen() && obj instanceof MethodElement) {
 					LibraryUtil.addNameTrackPresentationNameMark((MethodElement) obj);				
 				}
+				
+				//Set the publish back link for Practice and UDT before opening editor
+				if (obj instanceof Practice) {
+					Practice prac = (Practice)obj;
+					MethodElementProperty prop = UmaFactory.eINSTANCE.createMethodElementProperty();
+					prop.setName(TngUtil.PUBLISH_CATEGORY_PROPERTY);
+					prop.setValue(new Boolean(true).toString());
+					prac.getMethodElementProperty().add(prop);
+					
+					try {
+						LibraryService.getInstance().saveCurrentMethodLibrary();
+					} catch (LibraryServiceException e) {
+						AuthoringUIPlugin.getDefault().getLogger().logError(e);
+					}
+				}
+				
 				IEditorKeeper.REFERENCE.getEditorKeeper().openEditor(obj);
 			}
 		}

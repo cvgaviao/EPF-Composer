@@ -75,7 +75,6 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.SupportingMaterial;
-import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
@@ -682,30 +681,6 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		setFormTextWithVariableInfo();
 		loadData();
 		addListeners();
-		//checkBackLinkForPracticeAndUDT();
-	}
-
-	protected void checkBackLinkForPracticeAndUDT() {
-		// bxu-2011-10-24: need to set this checkbox by default the first time for Pracctice and UDTs
-		if (publishCategoryOn) {
-			MethodElementProperty prop = TngUtil.getPublishCategoryProperty(methodElement);
-			if (prop == null && publishPracticeOn) {
-				ctrl_publish_categories_button.setSelection(true);
-				String val = new Boolean(ctrl_publish_categories_button.getSelection()).toString();				
-				System.out.println("checkbox value = " + val);					
-				prop = UmaFactory.eINSTANCE
-						.createMethodElementProperty();
-				prop.setName(TngUtil.PUBLISH_CATEGORY_PROPERTY);
-				prop.setValue(val);
-							
-				actionMgr.doAction(
-						IActionManager.ADD,
-						methodElement,
-						UmaPackage.eINSTANCE
-								.getMethodElement_MethodElementProperty(),
-						prop, -1);
-			}
-		}
 	}
 	
 	private void setFormTextWithVariableInfo() {
@@ -1749,33 +1724,16 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			}
 		}
 		
-		if (publishCategoryOn)	{
+		if (publishCategoryOn) {
 			ctrl_publish_categories_button.addSelectionListener(new SelectionAdapter() {			
 				public void widgetSelected(SelectionEvent e) {				
 					String val = new Boolean(ctrl_publish_categories_button.getSelection()).toString();				
 					MethodElementProperty prop = TngUtil.getPublishCategoryProperty(methodElement);
-										
-					if (prop == null) {			
-						prop = UmaFactory.eINSTANCE
-							.createMethodElementProperty();
-						prop.setName(TngUtil.PUBLISH_CATEGORY_PROPERTY);
-						prop.setValue(val);
-								
-						actionMgr
-						.doAction(
-								IActionManager.ADD,
-								methodElement,
-								UmaPackage.eINSTANCE
-										.getMethodElement_MethodElementProperty(),
-								prop, -1);
-					}
-					else {
-						actionMgr.doAction(IActionManager.SET,
+					
+					actionMgr.doAction(IActionManager.SET,
 							prop,
-							UmaPackage.eINSTANCE
-									.getMethodElementProperty_Value(),
-							val, -1);
-					}
+							UmaPackage.eINSTANCE.getMethodElementProperty_Value(),
+							val, -1);					
 				}
 			});
 		}
