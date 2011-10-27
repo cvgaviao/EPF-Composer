@@ -17,6 +17,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	public static final String Type_Practice = "Practice";					//$NON-NLS-1$
 	
 	public static final String _typeName = "typeName";						//$NON-NLS-1$
+	public static final String _id = "id";                                  //$NON-NLS-1$
 	public static final String _problems = "problems";						//$NON-NLS-1$
 	public static final String _goals = "goals";							//$NON-NLS-1$
 	public static final String _background = "background";					//$NON-NLS-1$	
@@ -31,6 +32,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	
 	public static String[] rteNames = {
 		_typeName,
+		_id,
 		_problems,
 		_goals,
 		_background,
@@ -43,8 +45,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		_referenceQualifiers,
 		_referenceQualifierNames
 	};
-	
-	
+		
 	private Map<String, String> rteNameMap;
 	
 	private String id;

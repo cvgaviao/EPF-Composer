@@ -482,7 +482,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	private String[] getAllQualifiersOfUDT() {
 		try {
 			String qualifiers = PracticePropUtil.getPracticePropUtil().getUtdData(practice)
-				.getRteNameMap().get(UserDefinedTypeMeta._referenceQualifiers);
+				.getRteNameMap().get(UserDefinedTypeMeta._referenceQualifierNames);
 			
 			String[] qualifierArray = qualifiers.split(","); //$NON-NLS-1$
 			for (int i = 0; i < qualifierArray.length; i++) {
