@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -37,30 +38,26 @@ public class ExtendReferenceMap {
 		this.ownerElement = ownerElement;
 		referenceNames = new ArrayList<String>();
 		referenceNames.add(UtdList);
-		List<String> refQualifies = getReferenceQualifiers(ownerElement);
-		if (refQualifies != null && ! refQualifies.isEmpty()) {
-			for (String qualifier : refQualifies) {
-				String name = getQReferenceName(qualifier);
+		List<String> refQualifieIds = getReferenceQualifierIds(ownerElement);
+		if (refQualifieIds != null && ! refQualifieIds.isEmpty()) {
+			for (String qualifierId : refQualifieIds) {
+				String name = getQReferenceNameById(qualifierId);
 				referenceNames.add(name);
 			}
 		}
 	}
 			
-	public static List<String> getReferenceQualifiers(MethodElement element) {
+	private List<String> getReferenceQualifierIds(MethodElement element) {
 		if (! (element instanceof Practice)) {
 			return null;
 		}		
+		List<String> refQualifieIds = new ArrayList<String>();		
 		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
-		Practice practice = (Practice) element;
-		UserDefinedTypeMeta meta = null;
-		try {
-			meta = propUtil.getUtdData(practice);
-		} catch (Exception e) {
-		}
-		if (meta == null) {
-			return null;
-		}
-		return meta.getReferenceQualifiers();
+		UserDefinedTypeMeta meta = propUtil.getUdtMeta((Practice) element);
+		for (EReference ref : meta.getQualifiedReferences()) {
+			refQualifieIds.add(ref.getName());
+		}		
+		return refQualifieIds;
 	}
 	
 	public MethodElement getOwnerElement() {
@@ -234,21 +231,21 @@ public class ExtendReferenceMap {
 	public static String getOppositeName(String name) {
 		return Opposite_ + name;									
 	}
-
-	public static String getQReferenceName(String qualifiedName) {
+	
+	public static String getQReferenceNameById(String qualifiedId) {
 		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < qualifiedName.length(); i++) {
-			char c = qualifiedName.charAt(i);
+		for (int i = 0; i < qualifiedId.length(); i++) {
+			char c = qualifiedId.charAt(i);
 			if (c == ' ' || c == '\t' || c == '\n') {
 				sb.append(WSpace);
 			} else {
 				sb.append(c);
 			}
 		}
-		if (sb.length() != qualifiedName.length()) {
-			qualifiedName = sb.toString();
+		if (sb.length() != qualifiedId.length()) {
+			qualifiedId = sb.toString();
 		}
-		return QReference_ + qualifiedName;
+		return QReference_ + qualifiedId;
 	}
 	
 	public boolean isMany(String name) {

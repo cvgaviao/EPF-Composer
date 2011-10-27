@@ -53,6 +53,8 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	private Set<EReference> qualifiedReferences;
 	
 	private boolean qualifiedReferencesLoaded = false;
+	
+	private Map<String, String> referenceQualifiedNameToIdMap;
 
 	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeId) {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
@@ -106,14 +108,6 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		} 
 		return a.equals(b);
 	}
-	
-	public List<String> getReferenceQualifiers() {
-		String value = getRteNameMap().get(_referenceQualifiers);
-		if (value == null || value.trim().length() == 0) {
-			return null;
-		}
-		return convertStringsToList(value);
-	}
 		
 	private List<String> convertStringsToList(String string) {
 		ArrayList<String> strList = new ArrayList<String>();
@@ -136,8 +130,9 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		if (qualifiedReferences == null) {
 			qualifiedReferences = new LinkedHashSet<EReference>();
 		}
-		String value = getRteNameMap().get(_referenceQualifiers);
-		if (value == null || value.trim().length() == 0) {
+		String idStrValue = getRteNameMap().get(_referenceQualifiers);
+		String nameStrValue = getRteNameMap().get(_referenceQualifierNames);
+		if (idStrValue == null || idStrValue.trim().length() == 0) {
 			qualifiedReferencesLoaded = false;
 			if (!qualifiedReferences.isEmpty()) {
 				qualifiedReferences.clear();
@@ -146,15 +141,32 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 			if (!qualifiedReferences.isEmpty()) {
 				qualifiedReferences.clear();
 			}
-			List<String> refNames = convertStringsToList(value);
-			for (String refName : refNames) {
+			List<String> refIds = convertStringsToList(idStrValue);
+			List<String> refNames = convertStringsToList(nameStrValue);
+			getReferenceQualifiedNameToIdMap().clear();
+			for (int i = 0; i < refIds.size(); i++) {
+				String refId = refIds.get(i);
+				String refName = refNames.get(i);
+				getReferenceQualifiedNameToIdMap().put(refName, refId);
 				EReference ref = EcoreFactory.eINSTANCE.createEReference();
-				ref.setName(refName);
+				ref.setName(refId);
 				qualifiedReferences.add(ref);
 			}
 			qualifiedReferencesLoaded = true;
 		}
 		return qualifiedReferences;
+	}
+	
+	private Map<String, String>  getReferenceQualifiedNameToIdMap() {
+		if (referenceQualifiedNameToIdMap == null) {
+			referenceQualifiedNameToIdMap = new HashMap<String, String>();
+		}
+		return referenceQualifiedNameToIdMap;
+	}
+
+	public String getReferenceQualifierId(String referenceQualifierName) {
+		getQualifiedReferences();
+		return getReferenceQualifiedNameToIdMap().get(referenceQualifierName);		
 	}
 	
 }

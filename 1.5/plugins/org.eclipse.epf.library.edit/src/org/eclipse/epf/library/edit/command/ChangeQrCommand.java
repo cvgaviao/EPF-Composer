@@ -14,21 +14,21 @@ public class ChangeQrCommand extends MethodElementSetPropertyCommand {
 	private boolean remove = false;
 	private List<MethodElement> items;
 	private Set<MethodElement> affectedSet = new HashSet<MethodElement>();
-	private String qualifiedName;
+	private String qualifierId;
 	private String oppositeName;
 	
-	public ChangeQrCommand(MethodElement element, List<MethodElement> items, String qualifiedName, boolean remove) {
+	public ChangeQrCommand(MethodElement element, List<MethodElement> items, String qualifierId, boolean remove) {
 		super(element, MethodElementPropUtil.Me_references);
 		this.items = items;
 		this.remove = remove;
-		this.qualifiedName = qualifiedName;
-		this.oppositeName = ExtendReferenceMap.getOppositeName(ExtendReferenceMap.getQReferenceName(qualifiedName));
+		this.qualifierId = qualifierId;
+		this.oppositeName = ExtendReferenceMap.getOppositeName(ExtendReferenceMap.getQReferenceNameById(qualifierId));
 	}
 	
 	@Override
 	public void redo() {
 		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();		
-		List<MethodElement> listValue = propUtil.getQReferenceList(element, qualifiedName, true);
+		List<MethodElement> listValue = propUtil.getQReferenceListById(element, qualifierId, true);
 		if (listValue == null || items == null || items.isEmpty()) {
 			return;
 		}		

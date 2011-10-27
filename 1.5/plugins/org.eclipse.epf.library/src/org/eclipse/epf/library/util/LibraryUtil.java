@@ -1530,7 +1530,7 @@ public class LibraryUtil {
 					UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta((Practice) element);
 					if (meta != null && !meta.getQualifiedReferences().isEmpty()) {
 						for (EReference ref : meta.getQualifiedReferences()) {
-							practicePropUtil.getQReferenceList(element, ref.getName(), false);
+							practicePropUtil.getQReferenceListById(element, ref.getName(), false);
 						}
 					}
 				}

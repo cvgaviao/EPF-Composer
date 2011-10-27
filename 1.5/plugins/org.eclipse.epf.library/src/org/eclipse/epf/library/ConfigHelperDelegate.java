@@ -593,7 +593,7 @@ public class ConfigHelperDelegate {
 		List<MethodElement> qrReferenceList = new ArrayList<MethodElement>();
 		MethodElementPropUtil propUtil = MethodElementPropUtil
 				.getMethodElementPropUtil();
-		List<MethodElement> list = propUtil.getQReferenceList(element,
+		List<MethodElement> list = propUtil.getQReferenceListById(element,
 				qualifiedName, false);
 		if (list != null) {
 			for (MethodElement m : list) {

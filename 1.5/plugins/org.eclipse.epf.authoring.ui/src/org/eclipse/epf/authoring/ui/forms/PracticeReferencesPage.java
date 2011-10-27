@@ -77,6 +77,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	private static final String FORM_PAGE_ID = "practiceReferencesPage"; //$NON-NLS-1$
 
 	private Practice practice;
+	private UserDefinedTypeMeta meta;
 
 	private IActionManager actionMgr;
 	
@@ -99,6 +100,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
 		practice = (Practice) contentElement;
+		meta = PracticePropUtil.getPracticePropUtil().getUdtMeta(practice);
 		actionMgr = ((MethodElementEditor) getEditor()).getActionManager();
 		setIsUpAndDownButtonsRequired1(true);
 		setUseCategory2(false);
@@ -479,10 +481,18 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		});
 	}
 	
+	private String[] getAllQualifiersOfUDTById() {
+		return getAllQualifiersOfUDT(true);
+	}
+	
 	private String[] getAllQualifiersOfUDT() {
+		return getAllQualifiersOfUDT(false);
+	}
+	
+	private String[] getAllQualifiersOfUDT(boolean byId) {
 		try {
 			String qualifiers = PracticePropUtil.getPracticePropUtil().getUtdData(practice)
-				.getRteNameMap().get(UserDefinedTypeMeta._referenceQualifierNames);
+				.getRteNameMap().get(byId ? UserDefinedTypeMeta._referenceQualifiers : UserDefinedTypeMeta._referenceQualifierNames);
 			
 			String[] qualifierArray = qualifiers.split(","); //$NON-NLS-1$
 			for (int i = 0; i < qualifierArray.length; i++) {
@@ -515,10 +525,10 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		List<String> result = new ArrayList<String>();
 		
 		MethodElementPropUtil util = MethodElementPropUtil.getMethodElementPropUtil();
-		String[] allQualifiers = getAllQualifiersOfUDT();
+		String[] allQualifiers = getAllQualifiersOfUDT(true);
 		
 		for(String qualifier : allQualifiers) {
-			List<MethodElement> elementList = util.getQReferenceList(practice, qualifier, false);
+			List<MethodElement> elementList = util.getQReferenceListById(practice, qualifier, false);
 			if (elementList.contains(element)) {
 				result.add(qualifier);
 			}
@@ -536,7 +546,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 				if (!allQualifiers.contains(qualifier)) {
 					List<MethodElement> targetList = new ArrayList<MethodElement>();
 					targetList.add(element);
-					ChangeQrCommand cmd = new ChangeQrCommand(practice, targetList, qualifier, false);
+					ChangeQrCommand cmd = new ChangeQrCommand(practice, targetList, meta.getReferenceQualifierId(qualifier), false);
 					editor.getActionManager().execute(cmd);
 				}				
 			}			
