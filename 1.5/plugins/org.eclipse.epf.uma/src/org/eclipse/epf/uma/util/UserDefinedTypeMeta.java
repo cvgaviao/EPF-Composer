@@ -55,6 +55,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	private boolean qualifiedReferencesLoaded = false;
 	
 	private Map<String, String> referenceQualifiedNameToIdMap;
+	private Map<String, String> referenceQualifiedIdToNameMap;
 
 	public static UserDefinedTypeMeta newPracticeUtdpeMeta(String typeId) {
 		UserDefinedTypeMeta meta = new UserDefinedTypeMeta();
@@ -144,10 +145,12 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 			List<String> refIds = convertStringsToList(idStrValue);
 			List<String> refNames = convertStringsToList(nameStrValue);
 			getReferenceQualifiedNameToIdMap().clear();
+			getReferenceQualifiedIdToNameMap().clear();
 			for (int i = 0; i < refIds.size(); i++) {
 				String refId = refIds.get(i);
 				String refName = refNames.get(i);
 				getReferenceQualifiedNameToIdMap().put(refName, refId);
+				getReferenceQualifiedIdToNameMap().put(refId, refName);
 				EReference ref = EcoreFactory.eINSTANCE.createEReference();
 				ref.setName(refId);
 				qualifiedReferences.add(ref);
@@ -164,6 +167,18 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 		return referenceQualifiedNameToIdMap;
 	}
 
+	private Map<String, String>  getReferenceQualifiedIdToNameMap() {
+		if (referenceQualifiedIdToNameMap == null) {
+			referenceQualifiedIdToNameMap = new HashMap<String, String>();
+		}
+		return referenceQualifiedIdToNameMap;
+	}
+	
+	public String getReferenceQualifierName(String referenceQualifierId) {
+		getQualifiedReferences();
+		return getReferenceQualifiedIdToNameMap().get(referenceQualifierId);		
+	}
+		
 	public String getReferenceQualifierId(String referenceQualifierName) {
 		getQualifiedReferences();
 		return getReferenceQualifiedNameToIdMap().get(referenceQualifierName);		

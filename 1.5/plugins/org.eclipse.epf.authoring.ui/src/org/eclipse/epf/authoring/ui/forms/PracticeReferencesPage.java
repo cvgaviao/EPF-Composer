@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -200,6 +201,24 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	
 	private String[] getInputForSelectQualifierDialog() {
 		return getAllQualifiersOfUDT();
+	}
+	
+	private String[] getAllQualifiersOfUDT() {
+		try {
+			String qualifiers = PracticePropUtil.getPracticePropUtil().getUtdData(practice)
+				.getRteNameMap().get(UserDefinedTypeMeta._referenceQualifierNames);
+			
+			String[] qualifierArray = qualifiers.split(","); //$NON-NLS-1$
+			for (int i = 0; i < qualifierArray.length; i++) {
+				qualifierArray[i] = qualifierArray[i].trim();
+			}
+			
+			return qualifierArray;
+		} catch (Exception e) {
+			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return new String[0];
 	}
 	
 	@Override
@@ -481,32 +500,6 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		});
 	}
 	
-	private String[] getAllQualifiersOfUDTById() {
-		return getAllQualifiersOfUDT(true);
-	}
-	
-	private String[] getAllQualifiersOfUDT() {
-		return getAllQualifiersOfUDT(false);
-	}
-	
-	private String[] getAllQualifiersOfUDT(boolean byId) {
-		try {
-			String qualifiers = PracticePropUtil.getPracticePropUtil().getUtdData(practice)
-				.getRteNameMap().get(byId ? UserDefinedTypeMeta._referenceQualifiers : UserDefinedTypeMeta._referenceQualifierNames);
-			
-			String[] qualifierArray = qualifiers.split(","); //$NON-NLS-1$
-			for (int i = 0; i < qualifierArray.length; i++) {
-				qualifierArray[i] = qualifierArray[i].trim();
-			}
-			
-			return qualifierArray;
-		} catch (Exception e) {
-			AuthoringUIPlugin.getDefault().getLogger().logError(e);
-		}
-		
-		return new String[0];
-	}
-	
 	private List<MethodElement> getSelectedElement() {
 		List<MethodElement> result = new ArrayList<MethodElement>();
 		
@@ -521,16 +514,18 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		return result;	
 	}
 	
-	private List<String> getAllQualifiersOfMethodElement(MethodElement element) {
+	private List<String> getAllQualifierNames(MethodElement element) {
 		List<String> result = new ArrayList<String>();
+		if (meta == null) {
+			return result;
+		}
 		
-		MethodElementPropUtil util = MethodElementPropUtil.getMethodElementPropUtil();
-		String[] allQualifiers = getAllQualifiersOfUDT(true);
-		
-		for(String qualifier : allQualifiers) {
-			List<MethodElement> elementList = util.getQReferenceListById(practice, qualifier, false);
+		MethodElementPropUtil util = MethodElementPropUtil.getMethodElementPropUtil();		
+		for(EReference ref : meta.getQualifiedReferences()) {
+			String qualifierId = ref.getName();
+			List<MethodElement> elementList = util.getQReferenceListById(practice, qualifierId, false);
 			if (elementList.contains(element)) {
-				result.add(qualifier);
+				result.add(meta.getReferenceQualifierName(qualifierId));
 			}
 		}
 		
@@ -542,7 +537,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	private void assignQualifier(List<MethodElement> elements, List<String> qualifiers) {
 		for (String qualifier : qualifiers) {
 			for (MethodElement element : elements) {
-				List<String> allQualifiers = getAllQualifiersOfMethodElement(element);
+				List<String> allQualifiers = getAllQualifierNames(element);
 				if (!allQualifiers.contains(qualifier)) {
 					List<MethodElement> targetList = new ArrayList<MethodElement>();
 					targetList.add(element);
@@ -555,12 +550,12 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	
 	private void unassignQualifier(List<MethodElement> elements) {
 		for (MethodElement element : elements) {
-			List<String> allQualifiers = getAllQualifiersOfMethodElement(element);
+			List<String> allQualifiers = getAllQualifierNames(element);
 			if (allQualifiers.size() > 0) {
 				List<MethodElement> targetList = new ArrayList<MethodElement>();
 				targetList.add(element);
 				for (String qualifier : allQualifiers) {
-					ChangeQrCommand cmd = new ChangeQrCommand(practice, targetList, qualifier, true);
+					ChangeQrCommand cmd = new ChangeQrCommand(practice, targetList, meta.getReferenceQualifierId(qualifier), true);
 					editor.getActionManager().execute(cmd);
 				}
 			}
@@ -570,7 +565,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	protected String getQualifierDecorator(Object object) {
 		if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 			StringBuffer buf = new StringBuffer();
-			List<String> allQualifiers = getAllQualifiersOfMethodElement((MethodElement)object);
+			List<String> allQualifiers = getAllQualifierNames((MethodElement)object);
 			
 			if (allQualifiers.size() > 0) {
 				buf.append("["); //$NON-NLS-1$
