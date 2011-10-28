@@ -11,6 +11,7 @@
 package org.eclipse.epf.authoring.ui.actions;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.command.Command;
@@ -27,6 +28,7 @@ import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.edit.command.CommandStatusChecker;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand;
 import org.eclipse.epf.library.edit.process.command.CreateProcessComponentCommand;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodElement;
@@ -112,12 +114,7 @@ public class CreateMethodElementCommand extends CommandWrapper implements
 					prop.setName(TngUtil.PUBLISH_CATEGORY_PROPERTY);
 					prop.setValue(new Boolean(true).toString());
 					prac.getMethodElementProperty().add(prop);
-					
-					try {
-						LibraryService.getInstance().saveCurrentMethodLibrary();
-					} catch (LibraryServiceException e) {
-						AuthoringUIPlugin.getDefault().getLogger().logError(e);
-					}
+					LibraryEditUtil.save(Collections.singleton(prac.eResource()));
 				}
 				
 				IEditorKeeper.REFERENCE.getEditorKeeper().openEditor(obj);

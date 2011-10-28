@@ -101,7 +101,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getColumnText(Object object, int columnIndex) {			
-			return getQualifierDecorator(object) + TngUtil.getLabelWithPath(object); 
+			return getDecorator(object) + TngUtil.getLabelWithPath(object); 
 		}
 	};
 
@@ -1457,7 +1457,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		}
 	}
 	
-	protected String getQualifierDecorator(Object object) {
+	protected String getDecorator(Object object) {
 		return ""; //$NON-NLS-1$
 	}
 

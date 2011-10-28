@@ -562,7 +562,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		}
 	}
 	
-	protected String getQualifierDecorator(Object object) {
+	protected String getDecorator(Object object) {
 		if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 			StringBuffer buf = new StringBuffer();
 			List<String> allQualifiers = getAllQualifierNames((MethodElement)object);
@@ -576,7 +576,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 			return buf.toString();
 		}
 		
-		return super.getQualifierDecorator(object);
+		return super.getDecorator(object);
 	}
 	
 }
