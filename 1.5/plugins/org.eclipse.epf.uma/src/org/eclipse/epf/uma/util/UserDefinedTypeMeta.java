@@ -1,6 +1,7 @@
 package org.eclipse.epf.uma.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -185,6 +186,14 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	public String getReferenceQualifierId(String referenceQualifierName) {
 		getQualifiedReferences();
 		return getReferenceQualifiedNameToIdMap().get(referenceQualifierName);		
+	}
+	
+	public String[] getReferenceQualifierNames() {
+		getQualifiedReferences();
+		Set<String> nameSet = getReferenceQualifiedNameToIdMap().keySet();
+		List<String> nameList = new ArrayList<String>(nameSet);
+		Collections.sort(nameList);
+		return nameList.toArray(new String[0]);
 	}
 	
 }
