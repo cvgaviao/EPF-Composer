@@ -144,6 +144,9 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 			}
 			List<String> refIds = convertStringsToList(idStrValue);
 			List<String> refNames = convertStringsToList(nameStrValue);
+			if (refIds.size() != refNames.size()) {
+				refNames = refIds;
+			}
 			getReferenceQualifiedNameToIdMap().clear();
 			getReferenceQualifiedIdToNameMap().clear();
 			for (int i = 0; i < refIds.size(); i++) {
