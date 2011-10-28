@@ -54,9 +54,11 @@ public class ExtendReferenceMap {
 		List<String> refQualifieIds = new ArrayList<String>();		
 		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 		UserDefinedTypeMeta meta = propUtil.getUdtMeta((Practice) element);
-		for (EReference ref : meta.getQualifiedReferences()) {
-			refQualifieIds.add(ref.getName());
-		}		
+		if (meta != null) {
+			for (EReference ref : meta.getQualifiedReferences()) {
+				refQualifieIds.add(ref.getName());
+			}		
+		}
 		return refQualifieIds;
 	}
 	

@@ -126,6 +126,20 @@ public class PracticeLayout extends AbstractElementLayout {
 			Practice practice = (Practice) getElement();
 			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 			boolean isUtdType = propUtil.isUdtType(practice);
+			if (isUtdType) {
+				Set<MethodElement> set = new HashSet<MethodElement>();
+				for (EReference ref : propUtil.getUdtMeta(practice).getQualifiedReferences()) {
+					List<MethodElement> qrList = ConfigurationHelper
+							.calc0nFeatureValue(element, ref, layoutManager
+									.getElementRealizer());
+					if (qrList != null && !qrList.isEmpty()) {
+						set.addAll(qrList);
+					}
+				}
+				if (! set.isEmpty()) {
+					children.removeAll(set);
+				}
+			}
 			
 			GroupingHelper groupingHelper = new GroupingHelper(this, isUtdType) {			
 				protected void grouping(Object parentObject, List ret,
