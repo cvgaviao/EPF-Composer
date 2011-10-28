@@ -89,6 +89,7 @@
 	<xsl:param name="containerArtifactText"/>
 	<xsl:param name="contentElementsText"/>
 	<xsl:param name="contentReferencesText"/>
+	<xsl:param name="referenceQualifiersText"/>
 	<xsl:param name="contentsText"/>
 	<xsl:param name="contextText"/>
 	<xsl:param name="contributesText"/>

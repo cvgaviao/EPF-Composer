@@ -35,7 +35,6 @@ import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
-import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 
@@ -263,25 +262,45 @@ public class PracticeLayout extends AbstractElementLayout {
 
 	protected void loadQrReferences(XmlElement elementXml) {
 		super.loadQrReferences(elementXml);
+		
 		Practice practice = (Practice) getElement();
 		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 		UserDefinedTypeMeta meta = propUtil.getUdtMeta(practice);
 		if (meta == null || meta.getQualifiedReferences().isEmpty()) {
 			return;
 		}
+		
+		XmlElement qrWrapper = elementXml.newChild(TAG_REFERENCELIST);
+		qrWrapper.setAttribute("name", "UDT reference qualifiers");  //$NON-NLS-1$//$NON-NLS-2$
+		
+		List<EReference> references = getSortedReferences(meta.getQualifiedReferences(), meta);
 
-		for (EReference ref : meta.getQualifiedReferences()) {
+		for (EReference ref : references) {
 			List<MethodElement> qrList = ConfigurationHelper
 					.calc0nFeatureValue(element, ref, layoutManager
 							.getElementRealizer());
 			if (qrList != null && !qrList.isEmpty()) {
-				addReferences(ref, elementXml, ref.getName(), //$NON-NLS-1$
-						qrList);
+				String name = meta.getReferenceQualifierName(ref.getName());
+				addReferences(ref, qrWrapper, name, qrList);
 			}
-
 		}
-
 	}
 	
+	private List<EReference> getSortedReferences(Set<EReference> references, final UserDefinedTypeMeta meta) {
+		List<EReference> result = new ArrayList<EReference>();
+		for (EReference ref : references) {
+			result.add(ref);
+		}
+		
+		Collections.sort(result, new Comparator<EReference>() {
+			public int compare(EReference object1, EReference object2) {
+				String name1 = meta.getReferenceQualifierName(object1.getName());
+				String name2 = meta.getReferenceQualifierName(object2.getName());
+				return name1.compareTo(name2);
+			}			
+		});
+		
+		return result;
+	}
 	
 }
