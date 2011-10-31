@@ -409,138 +409,142 @@
 						<xsl:with-param name="refName" select="$subPracticesText"/>
 						<xsl:with-param name="refElement" select="$subPractices"/>
 					</xsl:call-template>
-					<tr valign="top">
-						<th class="sectionTableHeading" scope="row">
-							<xsl:value-of select="$contentReferencesText"/>
-						</th>
-						<td class="sectionTableCell">
-							<xsl:for-each select="$practiceTree/*">
-								<ul>
-									<xsl:if test="name()='Element'">
-										<li>
-											<img>
-												<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
-												<xsl:attribute name="height">16</xsl:attribute>
-												<xsl:attribute name="width">16</xsl:attribute>
-											</img>
-											<a>
-												<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-												<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
-											</a>
-										</li>
-									</xsl:if>
-									<xsl:if test="name()='referenceList'">
-										<li>
-											<xsl:value-of select="@name"/>
-										</li>
-										<ul>
-											<xsl:for-each select="./*">
-												<xsl:if test="name()='referenceList'">
-													<li>
-														<xsl:value-of select="@name"/>
-													</li>
-													<ul>
-														<xsl:for-each select="./*">
-															<li>
-																<img>
-																	<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
-																	<xsl:attribute name="height">16</xsl:attribute>
-																	<xsl:attribute name="width">16</xsl:attribute>
-																</img>
-																<a>
-																	<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-																	<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
-																</a>
-															</li>
-														</xsl:for-each>
-													</ul>
-												</xsl:if>
-												<xsl:if test="name()='Element'">
-													<li>
-														<img>
-															<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
-															<xsl:attribute name="height">16</xsl:attribute>
-															<xsl:attribute name="width">16</xsl:attribute>
-														</img>
-														<a>
-															<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-															<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
-														</a>
-													</li>
-												</xsl:if>
-											</xsl:for-each>
-										</ul>
-									</xsl:if>
-								</ul>
-							</xsl:for-each>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th class="sectionTableHeading" scope="row">
-							<xsl:value-of select="$referenceQualifiersText"/>
-						</th>
-						<td class="sectionTableCell">
-							<xsl:for-each select="$qualifierTree/*">
-								<ul>
-									<xsl:if test="name()='Element'">
-										<li>
-											<img>
-												<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
-												<xsl:attribute name="height">16</xsl:attribute>
-												<xsl:attribute name="width">16</xsl:attribute>
-											</img>
-											<a>
-												<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-												<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
-											</a>
-										</li>
-									</xsl:if>
-									<xsl:if test="name()='referenceList'">
-										<li>
-											<xsl:value-of select="@name"/>
-										</li>
-										<ul>
-											<xsl:for-each select="./*">
-												<xsl:if test="name()='referenceList'">
-													<li>
-														<xsl:value-of select="@name"/>
-													</li>
-													<ul>
-														<xsl:for-each select="./*">
-															<li>
-																<img>
-																	<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
-																	<xsl:attribute name="height">16</xsl:attribute>
-																	<xsl:attribute name="width">16</xsl:attribute>
-																</img>
-																<a>
-																	<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-																	<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
-																</a>
-															</li>
-														</xsl:for-each>
-													</ul>
-												</xsl:if>
-												<xsl:if test="name()='Element'">
-													<li>
-														<img>
-															<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
-															<xsl:attribute name="height">16</xsl:attribute>
-															<xsl:attribute name="width">16</xsl:attribute>
-														</img>
-														<a>
-															<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-															<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
-														</a>
-													</li>
-												</xsl:if>
-											</xsl:for-each>
-										</ul>
-									</xsl:if>
-								</ul>
-							</xsl:for-each>
-						</td>
-					</tr>
+					<xsl:if test="count($practiceTree/*) > 0">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row">
+								<xsl:value-of select="$contentReferencesText"/>
+							</th>
+							<td class="sectionTableCell">
+								<xsl:for-each select="$practiceTree/*">
+									<ul>
+										<xsl:if test="name()='Element'">
+											<li>
+												<img>
+													<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+													<xsl:attribute name="height">16</xsl:attribute>
+													<xsl:attribute name="width">16</xsl:attribute>
+												</img>
+												<a>
+													<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+													<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
+												</a>
+											</li>
+										</xsl:if>
+										<xsl:if test="name()='referenceList'">
+											<li>
+												<xsl:value-of select="@name"/>
+											</li>
+											<ul>
+												<xsl:for-each select="./*">
+													<xsl:if test="name()='referenceList'">
+														<li>
+															<xsl:value-of select="@name"/>
+														</li>
+														<ul>
+															<xsl:for-each select="./*">
+																<li>
+																	<img>
+																		<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																		<xsl:attribute name="height">16</xsl:attribute>
+																		<xsl:attribute name="width">16</xsl:attribute>
+																	</img>
+																	<a>
+																		<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+																		<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
+																	</a>
+																</li>
+															</xsl:for-each>
+														</ul>
+													</xsl:if>
+													<xsl:if test="name()='Element'">
+														<li>
+															<img>
+																<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																<xsl:attribute name="height">16</xsl:attribute>
+																<xsl:attribute name="width">16</xsl:attribute>
+															</img>
+															<a>
+																<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+																<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
+															</a>
+														</li>
+													</xsl:if>
+												</xsl:for-each>
+											</ul>
+										</xsl:if>
+									</ul>
+								</xsl:for-each>
+							</td>
+						</tr>
+					</xsl:if>
+					<xsl:if test="count($qualifierTree/*) > 0">
+						<tr valign="top">
+							<th class="sectionTableHeading" scope="row">
+								<xsl:value-of select="$referenceQualifiersText"/>
+							</th>
+							<td class="sectionTableCell">
+								<xsl:for-each select="$qualifierTree/*">
+									<ul>
+										<xsl:if test="name()='Element'">
+											<li>
+												<img>
+													<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+													<xsl:attribute name="height">16</xsl:attribute>
+													<xsl:attribute name="width">16</xsl:attribute>
+												</img>
+												<a>
+													<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+													<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
+												</a>
+											</li>
+										</xsl:if>
+										<xsl:if test="name()='referenceList'">
+											<li>
+												<xsl:value-of select="@name"/>
+											</li>
+											<ul>
+												<xsl:for-each select="./*">
+													<xsl:if test="name()='referenceList'">
+														<li>
+															<xsl:value-of select="@name"/>
+														</li>
+														<ul>
+															<xsl:for-each select="./*">
+																<li>
+																	<img>
+																		<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																		<xsl:attribute name="height">16</xsl:attribute>
+																		<xsl:attribute name="width">16</xsl:attribute>
+																	</img>
+																	<a>
+																		<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+																		<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
+																	</a>
+																</li>
+															</xsl:for-each>
+														</ul>
+													</xsl:if>
+													<xsl:if test="name()='Element'">
+														<li>
+															<img>
+																<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																<xsl:attribute name="height">16</xsl:attribute>
+																<xsl:attribute name="width">16</xsl:attribute>
+															</img>
+															<a>
+																<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
+																<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
+															</a>
+														</li>
+													</xsl:if>
+												</xsl:for-each>
+											</ul>
+										</xsl:if>
+									</ul>
+								</xsl:for-each>
+							</td>
+						</tr>
+					</xsl:if>
 					<xsl:call-template name="addReferences">
 						<xsl:with-param name="refName" select="$inputsText"/>
 						<xsl:with-param name="refElement" select="$inputSlots"/>
