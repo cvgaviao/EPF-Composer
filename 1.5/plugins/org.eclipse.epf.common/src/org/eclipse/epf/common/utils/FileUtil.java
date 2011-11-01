@@ -882,8 +882,7 @@ public class FileUtil {
 				result.append(buffer, 0, size);
 			}
 		} catch (Exception e) {
-			// System.out.println(encoding);
-			e.printStackTrace();
+			CommonPlugin.getDefault().getLogger().logError(e);
 		} finally {
 			if (fis != null) {
 				fis.close();
