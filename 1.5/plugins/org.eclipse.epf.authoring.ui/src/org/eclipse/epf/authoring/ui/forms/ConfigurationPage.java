@@ -46,6 +46,7 @@ import org.eclipse.epf.library.IConfigurationManager;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationData;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ConfigurationProperties;
 import org.eclipse.epf.library.configuration.closure.ClosureListener;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
@@ -1053,7 +1054,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	 *
 	 */
 	protected void makeClosure() {
-		closure.fixErrors();
+		if (! ConfigurationHelper.getDelegate().makeClosure(config)) {
+			closure.fixErrors();
+		}
 		configViewer.refresh();
 		initConfigViewer();
 		//refreshViewers();
@@ -1066,8 +1069,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	 * Fix all warnings 
 	 */
 	protected void fixWarning() {
-
-		closure.fixProblems();
+		if (! ConfigurationHelper.getDelegate().makeClosure(config)) {
+			closure.fixProblems();
+		}
 		configViewer.refresh();
 		initConfigViewer();
 		//refreshViewers();	

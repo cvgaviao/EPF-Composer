@@ -607,4 +607,11 @@ public class ConfigHelperDelegate {
 		return qrReferenceList;
 	}
 	
+
+	//Make closure if conig stores any making closure info
+	//Return true if processed otherwise false
+	public boolean makeClosure(MethodConfiguration config) {
+		return false;
+	}
+	
 }
