@@ -520,7 +520,7 @@ public class XMLUtil {
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
 				.newInstance();
 		DocumentBuilder builder = builderFactory.newDocumentBuilder();
-		ReaderInputStream istrem = new ReaderInputStream(new StringReader(xmlString));
+		ReaderInputStream istrem = new ReaderInputStream(new StringReader(xmlString), "UTF-8"); //$NON-NLS-1$
 		
 		return builder.parse(istrem);
 	}
