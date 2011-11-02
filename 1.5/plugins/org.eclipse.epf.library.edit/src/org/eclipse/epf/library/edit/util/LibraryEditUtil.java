@@ -602,10 +602,10 @@ public class LibraryEditUtil {
 		return (Set<WorkProduct> ) getElementsUnder(topElement, filter);
 	}
 	
-	public Set<? extends ContentElement> getContentElements(MethodElement topElement, final EClass type) {
+	public Set<Practice> getAllPractices(MethodElement topElement) {
 		CollectElementFilter filter = new CollectElementFilter() {
 			public boolean accept(MethodElement element) {
-				return type.isSuperTypeOf(element.eClass());
+				return element instanceof Practice;
 			}
 			
 			public boolean skipChildren(MethodElement element) {
@@ -616,13 +616,30 @@ public class LibraryEditUtil {
 				return super.skipChildren(element);
 			}
 		};
-		return (Set<? extends ContentElement>) getElementsUnder(topElement, filter);
+		return (Set<Practice> ) getElementsUnder(topElement, filter);
 	}
 	
+//	public Set<? extends ContentElement> getContentElements(MethodElement topElement, final EClass type) {
+//		CollectElementFilter filter = new CollectElementFilter() {
+//			public boolean accept(MethodElement element) {
+//				return type.isSuperTypeOf(element.eClass());
+//			}
+//			
+//			public boolean skipChildren(MethodElement element) {
+//				if (element instanceof ProcessPackage) {
+//					return true;
+//				}
+//				
+//				return super.skipChildren(element);
+//			}
+//		};
+//		return (Set<? extends ContentElement>) getElementsUnder(topElement, filter);
+//	}
+	
 	//<key: meta, value: set of udt of same meta for update>
-	public Map<UserDefinedTypeMeta, Set<Practice>> getUdtInstanceMap(MethodElement topElement, Collection<UserDefinedTypeMeta> metas) {
+	public Map<UserDefinedTypeMeta, Set<Practice>> getUdtInstanceMap(MethodLibrary lib, Collection<UserDefinedTypeMeta> metas) {
 		Map<UserDefinedTypeMeta, Set<Practice>> map = new HashMap<UserDefinedTypeMeta, Set<Practice>>();
-		if (topElement == null || metas == null || metas.isEmpty()) {
+		if (lib == null || metas == null || metas.isEmpty()) {
 			return map;
 		}
 		Map<String, UserDefinedTypeMeta> idMetaMap = new HashMap<String, UserDefinedTypeMeta>();
@@ -630,7 +647,11 @@ public class LibraryEditUtil {
 			idMetaMap.put(meta.getId(), meta);
 		}
 		
-		Set<Practice> practices = (Set<Practice> ) getContentElements(topElement, UmaPackage.eINSTANCE.getPractice());
+		Set<Practice> practices = new HashSet<Practice>();
+		for (MethodPlugin plugin : lib.getMethodPlugins()) {
+			practices.addAll(getAllPractices(plugin));
+		}
+		
 		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 		for (Practice practice : practices) {
 			UserDefinedTypeMeta oldMeta = propUtil.getUdtMeta(practice);

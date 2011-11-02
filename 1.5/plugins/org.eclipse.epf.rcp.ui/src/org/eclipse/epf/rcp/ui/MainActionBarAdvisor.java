@@ -448,6 +448,8 @@ public class MainActionBarAdvisor extends ActionBarAdvisor {
 		fileMenu.add(renameAction);
 		fileMenu.add(refreshAction);
 		fileMenu.add(new Separator());
+		fileMenu.add(new GroupMarker("udt")); //$NON-NLS-1$
+		fileMenu.add(new Separator());
 		fileMenu.add(new GroupMarker("report")); //$NON-NLS-1$
 		fileMenu.add(new Separator());
 		fileMenu.add(importAction);
