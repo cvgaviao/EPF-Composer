@@ -96,6 +96,8 @@ public class MethodContainerCheckedTreeViewer extends
             public void checkStateChanged(CheckStateChangedEvent event) {
 				updateWrappers(event.getElement());
 				doCheckStateChanged(event.getElement());
+//	not ready to call the following line yet				
+//				handleLeafCrayChecks(element);	
 			}
         });
         addTreeListener(new ITreeViewerListener() {
@@ -154,8 +156,7 @@ public class MethodContainerCheckedTreeViewer extends
 				updateParentItems(treeItem.getParentItem());
 			}
 		} else {
-			super.doCheckStateChanged(element);
-			handleLeafCrayChecks(element);			
+			super.doCheckStateChanged(element);		
 		}
     }
     
