@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.epf.common.serviceability.Logger;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.common.utils.StrUtil;
@@ -1157,17 +1158,22 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		if ((element instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)element))) {
 			try {
 				boolean debug = LibraryPlugin.getDefault().isDebugging();
+				Logger logger = LibraryPlugin.getDefault().getLogger();
+				
 				String imagesPath = getLayoutMgr().getPublishDir() + "images"; //$NON-NLS-1$
 				UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData((Practice)element);
 				String shapeIcon = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._shapeIcon);
 				if (debug) {
-					LibraryPlugin.getDefault().getLogger().logInfo("The udt shape icon: " + shapeIcon); //$NON-NLS-1$
+					logger.logInfo("The udt shape icon get from meta: " + shapeIcon); //$NON-NLS-1$
 				}
 				if (shapeIcon != null) {
 					File shapeIconFile = new File(new URL(shapeIcon).getFile());
+					if (debug) {
+						logger.logInfo("The udt shape icon file: " + shapeIconFile); //$NON-NLS-1$
+					}
 					if (FileUtil.copyFileToDir(shapeIconFile, imagesPath)) {
 						if (debug) {
-							LibraryPlugin.getDefault().getLogger().logInfo("Copy the udt shape icon succeed"); //$NON-NLS-1$
+							logger.logInfo("Copy the udt shape icon succeed"); //$NON-NLS-1$
 						}
 						return "images/" + shapeIconFile.getName(); //$NON-NLS-1$
 					}					
