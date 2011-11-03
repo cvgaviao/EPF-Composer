@@ -792,7 +792,11 @@ public class ConfigurationData {
 		return new SupportingElementData(getConfig());
 	}
 	
-	public void setBeingEdit(boolean b) {		
+	public void setBeingEdit(boolean b) {
+		setBeingEdit(b, false);
+	}
+	
+	public void setBeingEdit(boolean b, boolean editorDirty) {		
 	}
 	
 	public void updatePackageSelections(IActionManager actionManager, 

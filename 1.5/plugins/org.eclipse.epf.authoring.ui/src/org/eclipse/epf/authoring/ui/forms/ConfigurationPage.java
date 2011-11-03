@@ -1242,7 +1242,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 		disposed = true;		
 		super.dispose();
 
-		getConfigData().setBeingEdit(false);
+		getConfigData().setBeingEdit(false, getEditor().isDirty());
 
 		if (libListener != null) {
 			ILibraryManager manager = LibraryService.getInstance().getCurrentLibraryManager();
