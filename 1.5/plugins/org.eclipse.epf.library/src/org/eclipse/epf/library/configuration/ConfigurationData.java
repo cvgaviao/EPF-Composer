@@ -763,16 +763,17 @@ public class ConfigurationData {
 		return false;
 	}
 	
-	public void storeElementsUnslectedPkgsProp(IActionManager actionManager, Set<MethodPackage> updatedElementsUnslectedPkgs) {
+	protected boolean storeElementsUnslectedPkgsProp(IActionManager actionManager, Set<MethodPackage> updatedElementsUnslectedPkgs) {
 		if (ConfigContentPackageItemProvider.oldCode) {
-			return;
+			return false;
 		}
 		if (! elementsUnslectedPkgsModified(updatedElementsUnslectedPkgs)) {
-			return;
+			return false;
 		}
 		elementsUnslectedPkgs = updatedElementsUnslectedPkgs;
 		MethodConfigurationPropUtil propUtil = MethodConfigurationPropUtil.getMethodConfigurationPropUtil(actionManager);
 		propUtil.setElementsUnslectedPkgsProp(config, elementsUnslectedPkgs);
+		return true;
 	}
 	
 	public String getSelectionInfo(Object selectedElement) {
@@ -792,6 +793,13 @@ public class ConfigurationData {
 	}
 	
 	public void setBeingEdit(boolean b) {		
+	}
+	
+	public void updatePackageSelections(IActionManager actionManager, 
+			Set<MethodPackage> elementsUnslectedPkgs,
+			Collection<MethodPackage> toggleToUncheckPkgs,
+			Collection<MethodPackage> toggleToCheckPkgs) {
+		storeElementsUnslectedPkgsProp(actionManager, elementsUnslectedPkgs);
 	}
 	
 }

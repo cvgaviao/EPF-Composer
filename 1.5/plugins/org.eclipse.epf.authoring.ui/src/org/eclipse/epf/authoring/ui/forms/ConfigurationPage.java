@@ -1132,7 +1132,7 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 				return false;
 			if (ConfigurationUtil.addCollToMethodPackageList(actionMgr, config, newPackages) == false)
 				return false;			
-			getConfigData().storeElementsUnslectedPkgsProp(actionMgr, elementsUnslectedPkgs);
+			getConfigData().updatePackageSelections(actionMgr, elementsUnslectedPkgs, oldPackages, newPackages);
 			
 	    	// validate before save
 			LibraryUtil.validateMethodConfiguration(actionMgr, config);
