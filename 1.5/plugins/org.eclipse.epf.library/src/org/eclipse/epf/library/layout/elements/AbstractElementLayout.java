@@ -1167,7 +1167,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 					logger.logInfo("The udt shape icon get from meta: " + shapeIcon); //$NON-NLS-1$
 				}
 				if (shapeIcon != null) {
-					File shapeIconFile = new File(new URL(shapeIcon).getFile());
+					File shapeIconFile = new File(NetUtil.decodedFileUrl(new URL(shapeIcon).getFile()));
 					if (debug) {
 						logger.logInfo("The udt shape icon file: " + shapeIconFile); //$NON-NLS-1$
 					}

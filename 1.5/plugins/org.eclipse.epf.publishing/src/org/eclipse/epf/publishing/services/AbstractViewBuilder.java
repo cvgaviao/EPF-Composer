@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.epf.common.serviceability.Logger;
 import org.eclipse.epf.common.utils.FileUtil;
+import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
@@ -392,7 +393,7 @@ public abstract class AbstractViewBuilder {
 							logger.logInfo("The udt node icon get from meta: " + icon); //$NON-NLS-1$
 						}
 						if (icon != null) {
-							iconFile = new File(new URL(icon).getFile());
+							iconFile = new File(NetUtil.decodedFileUrl(new URL(icon).getFile()));
 							if (debug) {
 								logger.logInfo("The udt node icon file: " + iconFile); //$NON-NLS-1$
 							}
