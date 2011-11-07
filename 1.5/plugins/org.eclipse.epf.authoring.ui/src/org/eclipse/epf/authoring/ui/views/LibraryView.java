@@ -1790,7 +1790,7 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 					expandTreeViewerPackages(((MethodElement) o).eContainer());
 				}
 
-			} else {
+			} else if (pluginAdapter != null) {
 				ITreeItemContentProvider methodContentPkg = (ITreeItemContentProvider) pluginAdapter
 						.getChildren(plugin).toArray()[0];
 				treeViewer.setExpandedState(methodContentPkg, true);
