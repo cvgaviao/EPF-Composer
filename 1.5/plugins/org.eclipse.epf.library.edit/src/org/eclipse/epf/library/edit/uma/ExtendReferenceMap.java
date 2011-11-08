@@ -2,8 +2,10 @@ package org.eclipse.epf.library.edit.uma;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -71,13 +73,30 @@ public class ExtendReferenceMap {
 	}
 	
 	public void retrieveReferencesFromElement(Element element) {
+
+		Set<MethodElement> referenceSet = null;
+		if (ownerElement instanceof Practice) {
+			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
+			Practice practice = (Practice) ownerElement;
+			if (propUtil.isUdtType(practice)) {
+				referenceSet = new HashSet<MethodElement>();
+				referenceSet.addAll(practice.getActivityReferences());
+				referenceSet.addAll(practice.getContentReferences());
+			}
+		}
+		
 		for (String name : referenceNames) {
 			String value = element.getAttribute(name);
 			if (value == null || value.length() == 0) {
 				continue;
 			}
 			UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
-			MeList items = XmlEditUtil.convertToMethodElements(value, getRetrieveType(name), uHandler);
+			Set<MethodElement> validSet = null;
+			if (referenceSet != null && name.startsWith(QReference_)) {
+				validSet = referenceSet;
+			}
+			MeList items = XmlEditUtil.convertToMethodElements(value, getRetrieveType(name), uHandler, validSet);
+			
 			if (items != null && !items.isEmpty()) {
 				getMap().put(name, items);
 			}

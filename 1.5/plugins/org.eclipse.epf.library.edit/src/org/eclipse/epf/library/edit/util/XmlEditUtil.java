@@ -11,6 +11,7 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.epf.common.utils.XMLUtil;
@@ -84,6 +85,10 @@ public class XmlEditUtil {
 	}
 	
 	public static MeList convertToMethodElements(String guidsString, EClass type, UnresolvedGuidHandler uHandler) {
+		return convertToMethodElements(guidsString, type, uHandler, null);
+	}
+	
+	public static MeList convertToMethodElements(String guidsString, EClass type, UnresolvedGuidHandler uHandler, Set<MethodElement> validSet) {
 		MeList list = new MeList();
 		if (guidsString == null || guidsString.length() == 0) {
 			return list;
@@ -104,7 +109,9 @@ public class XmlEditUtil {
 			}
 			if (element != null) {
 				if (type == null || type.isSuperTypeOf(element.eClass())) {
-					list.add(element);
+					if (validSet == null || validSet.contains(element)) {
+						list.add(element);
+					}
 				}
 			}
 		}
