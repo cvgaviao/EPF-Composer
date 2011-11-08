@@ -1569,5 +1569,41 @@ public class LibraryUtil {
 		return false;
 	}
 	
+	public static List<UserDefinedTypeMeta> getAllUDTMetas() {
+		List<UserDefinedTypeMeta> result = new ArrayList<UserDefinedTypeMeta>();
 		
+		ILibraryManager libMgr = LibraryService.getInstance().getCurrentLibraryManager();
+		if (libMgr != null) {
+			Collection<UserDefinedTypeMeta> metas = libMgr.getUserDefinedTypes();
+			if (metas != null) {
+				result.addAll(metas);
+			}
+			Collections.sort(result, new UdtMetaComparator());
+		}
+		
+		return result;
+	}
+	
+	public static UserDefinedTypeMeta getUDTMetaFromId(String id) {
+		List<UserDefinedTypeMeta> metas = getAllUDTMetas();
+		
+		for (UserDefinedTypeMeta meta : metas) {
+			String metaId = meta.getRteNameMap().get(UserDefinedTypeMeta._typeId);
+			if (id.equals(metaId)) {
+				return meta;
+			}			
+		}
+		
+		return null;
+	}
+	
+	private static class UdtMetaComparator implements Comparator<UserDefinedTypeMeta> {
+	    public int compare(UserDefinedTypeMeta obj1, UserDefinedTypeMeta obj2) {
+	    	String name1 = obj1.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+	    	String name2 = obj2.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+	    	
+	    	return name1.compareTo(name2);
+	    }		
+	}
+	
 }

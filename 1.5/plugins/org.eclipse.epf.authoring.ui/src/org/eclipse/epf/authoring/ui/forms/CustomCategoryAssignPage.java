@@ -56,6 +56,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.MessageException;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -129,23 +130,34 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 			public String getText(Object element) {
 				if(element instanceof EClass) {
 					return TngUtil.getTypeText((EClass) element);
+				} else if (element instanceof UserDefinedTypeMeta) {
+					return ((UserDefinedTypeMeta)element).getRteNameMap().get(UserDefinedTypeMeta._typeName);
 				}
+				
 				return super.getText(element);
 			}
 		});
-		typeComboViewer.setInput(LibraryUtil.getIncludedElementTypes());
+		List<Object> allTypeValues = new ArrayList<Object>();
+		allTypeValues.addAll(LibraryUtil.getIncludedElementTypes());
+		allTypeValues.addAll(LibraryUtil.getAllUDTMetas());
+		typeComboViewer.setInput(allTypeValues.toArray());
 		
 		// populate data
 		//
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
 		if(prop != null) {
 			includeCheckBox.setSelection(true);
+			Object item = null;
 			EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
-			if(cls instanceof EClass) {
-				typeComboViewer.setSelection(new StructuredSelection(cls));
+			if ((cls != null) && (cls instanceof EClass)) {
+				item = cls;
+			} else if (cls == null) {
+				item = LibraryUtil.getUDTMetaFromId(prop.getValue());
 			}
-		}
-		else {
+			if (item != null) {
+				typeComboViewer.setSelection(new StructuredSelection(item));
+			}
+		} else {
 			typeCombo.setEnabled(false);
 		}
 		
@@ -171,23 +183,25 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 
 	private void updateInclude() {
 		if(includeCheckBox.getSelection()) {
-			String type;
+			String type = null;
 			IStructuredSelection selection = (IStructuredSelection) typeComboViewer.getSelection();
 			if(selection.isEmpty()) {
 				type = StrUtil.EMPTY_STRING;
-			}
-			else {
-				type = ((EClass) selection.getFirstElement()).getName();
+			} else {
+				if (selection.getFirstElement() instanceof EClass) {
+					type = ((EClass) selection.getFirstElement()).getName();
+				} else if (selection.getFirstElement() instanceof UserDefinedTypeMeta) {
+					type = ((UserDefinedTypeMeta)selection.getFirstElement()).getRteNameMap().get(UserDefinedTypeMeta._typeId);
+				}
 			}
 			MethodElementSetPropertyCommand cmd = new MethodElementSetPropertyCommand(category,
 					MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS, type);
 			getActionManager().execute(cmd);
-		}
-		else {
+		} else {
 			// remove property "include"
 			//
 			MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
-			if(prop != null) {
+			if (prop != null) {
 				getActionManager().doAction(IActionManager.REMOVE, category, UmaPackage.eINSTANCE.getMethodElement_MethodElementProperty(), prop, -1);
 			}
 		}
