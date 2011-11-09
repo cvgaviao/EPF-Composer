@@ -1090,6 +1090,11 @@ public class LibraryUtil {
 		}
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
 		EClassifier cls = prop == null ? null : UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
+		String udtId = null;		
+		if (cls == null && isUdtTypeId(prop.getValue())) {
+			udtId = UserDefinedTypeMeta.getPracticeUdtId(prop.getValue());
+			cls = UmaPackage.eINSTANCE.getPractice();
+		}
 		if(cls instanceof EClass) {
 			EClass eClass = (EClass) cls;
 			if (UmaPackage.eINSTANCE.getDescribableElement().isSuperTypeOf(eClass)) {
@@ -1101,9 +1106,21 @@ public class LibraryUtil {
 //					if (eClass.isInstance(eObject)) {
 //						includedElements.add((DescribableElement) eObject);
 //					}
-//				}
+				// }
 				for (DescribableElement element : LibraryEditUtil.getInstance().getTypedElements(lib, eClass)) {
-					includedElements.add(element);
+					boolean toAdd = true;
+					if (udtId != null) {
+						toAdd = false;
+						if (element instanceof Practice) {
+							UserDefinedTypeMeta meta = PracticePropUtil.getPracticePropUtil().getUdtMeta((Practice) element);
+							if (meta != null && meta.getId().equals(udtId)) {
+								toAdd = true;
+							}
+						}
+					}
+					if (toAdd) {
+						includedElements.add(element);
+					}
 				}
 			}
 		}
