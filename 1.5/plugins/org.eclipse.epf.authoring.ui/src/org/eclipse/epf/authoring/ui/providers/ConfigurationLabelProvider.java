@@ -18,16 +18,13 @@ import org.eclipse.epf.authoring.gef.figures.Colors;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.FeatureValueWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
-import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Color;
@@ -58,14 +55,6 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 	 * {@link IItemLabelProvider#getImage IItemLabelProvider.getImage}
 	 */
 	public Image getImage(Object object) {
-		//For user defined type
-		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object))) {
-			ImageDescriptor desc =  TngUtil.getImageForUdt((Practice)object);
-			if (desc != null) {
-				return desc.createImage();
-			}
-		}
-		
 		// by default, return the default image
 		return super.getImage(object);
 	}

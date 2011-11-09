@@ -52,6 +52,7 @@ import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
  * The item provider adapter for a practice.
@@ -326,6 +327,14 @@ public class PracticeItemProvider extends
 					return image;
 			}
 		}
+		
+		if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object)) {	
+			ImageDescriptor img = TngUtil.getImageForUdt((Practice)object);
+			if (img != null) {
+				return img;
+			}
+		}
+		
 		return super.getImage(object);
 	}
 	
