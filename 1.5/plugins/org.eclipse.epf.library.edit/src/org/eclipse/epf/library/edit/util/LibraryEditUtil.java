@@ -506,6 +506,9 @@ public class LibraryEditUtil {
 		}
 		
 		public boolean skipChildren(MethodElement element) {
+			if (element instanceof MethodLibrary) {
+				return false;
+			}
 			if (element instanceof MethodPlugin) {
 				return false;
 			}
@@ -619,22 +622,34 @@ public class LibraryEditUtil {
 		return (Set<Practice> ) getElementsUnder(topElement, filter);
 	}
 	
-//	public Set<? extends ContentElement> getContentElements(MethodElement topElement, final EClass type) {
-//		CollectElementFilter filter = new CollectElementFilter() {
-//			public boolean accept(MethodElement element) {
-//				return type.isSuperTypeOf(element.eClass());
-//			}
-//			
-//			public boolean skipChildren(MethodElement element) {
-//				if (element instanceof ProcessPackage) {
-//					return true;
-//				}
-//				
-//				return super.skipChildren(element);
-//			}
-//		};
-//		return (Set<? extends ContentElement>) getElementsUnder(topElement, filter);
-//	}
+	public Set<? extends DescribableElement> getTypedElements(MethodElement topElement, final EClass type) {
+		final boolean processElementType = UmaPackage.eINSTANCE.getProcessElement().isSuperTypeOf(type);
+		
+		CollectElementFilter filter = new CollectElementFilter() {
+			public boolean accept(MethodElement element) {
+				return type.isSuperTypeOf(element.eClass());
+			}
+			
+			public boolean skipChildren(MethodElement element) {
+				if (element instanceof ProcessPackage) {
+					return processElementType ? false : true;
+					
+				} else if (element instanceof ContentPackage) {
+					if (processElementType) {
+						if (element.getName().equals(ModelStructure.CONTENT_PACKAGE_NAME) ||
+							element.eContainer() instanceof MethodPlugin) {
+							return false;
+						}
+						return true;
+					}
+					return false;
+				}
+				
+				return super.skipChildren(element);
+			}
+		};
+		return (Set<? extends DescribableElement>) getElementsUnder(topElement, filter);
+	}
 	
 	//<key: meta, value: set of udt of same meta for update>
 	public Map<UserDefinedTypeMeta, Set<Practice>> getUdtInstanceMap(MethodLibrary lib, Collection<UserDefinedTypeMeta> metas) {
