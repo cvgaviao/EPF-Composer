@@ -1095,12 +1095,15 @@ public class LibraryUtil {
 			if (UmaPackage.eINSTANCE.getDescribableElement().isSuperTypeOf(eClass)) {
 				MethodLibrary lib = (MethodLibrary) config
 						.eContainer();
-				Iterator<EObject> iter = lib.eAllContents();
-				while (iter.hasNext()) {
-					EObject eObject = iter.next();
-					if (eClass.isInstance(eObject)) {
-						includedElements.add((DescribableElement) eObject);
-					}
+//				Iterator<EObject> iter = lib.eAllContents();
+//				while (iter.hasNext()) {
+//					EObject eObject = iter.next();
+//					if (eClass.isInstance(eObject)) {
+//						includedElements.add((DescribableElement) eObject);
+//					}
+//				}
+				for (DescribableElement element : LibraryEditUtil.getInstance().getTypedElements(lib, eClass)) {
+					includedElements.add(element);
 				}
 			}
 		}
