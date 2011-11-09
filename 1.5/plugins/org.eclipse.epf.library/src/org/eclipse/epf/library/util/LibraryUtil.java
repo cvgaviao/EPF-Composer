@@ -1091,7 +1091,7 @@ public class LibraryUtil {
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(category, MethodElementPropertyHelper.CUSTOM_CATEGORY__INCLUDED_ELEMENTS);
 		EClassifier cls = prop == null ? null : UmaPackage.eINSTANCE.getEClassifier(prop.getValue());
 		String udtId = null;		
-		if (cls == null && isUdtTypeId(prop.getValue())) {
+		if (cls == null && prop != null && isUdtTypeId(prop.getValue())) {
 			udtId = UserDefinedTypeMeta.getPracticeUdtId(prop.getValue());
 			cls = UmaPackage.eINSTANCE.getPractice();
 		}
