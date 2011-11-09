@@ -116,7 +116,7 @@ public class LibraryUtil {
 
 	public static boolean PUBLISH_MODE = false;
 	
-	private static Comparator<EClass> typeComparator = new Comparator<EClass>() {
+	public static Comparator<EClass> typeComparator = new Comparator<EClass>() {
 
 		public int compare(EClass o1, EClass o2) {
 			return o1.getName().compareTo(o2.getName());
