@@ -102,6 +102,7 @@ public class ConfigHelperDelegate {
 		if (config == null) {
 			return;
 		}
+		ConfigurationHelper.getDelegate().loadUserDefinedType();
 		dynamicCustomCategoriesMap = new HashMap<MethodElement, Set<CustomCategory>>();		
 		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);		
 		Set<CustomCategory> set = new HashSet<CustomCategory>();
@@ -526,6 +527,7 @@ public class ConfigHelperDelegate {
 	
 	private void handleConfigOrPersepctiveChange() {
 		loadForBrowsingNeeded = true;
+		ConfigurationHelper.getDelegate().loadUserDefinedType();
 		clearDynamicCustomCategoriesMap();
 	}
 	
@@ -612,6 +614,9 @@ public class ConfigHelperDelegate {
 	//Return true if processed otherwise false
 	public boolean makeClosure(MethodConfiguration config) {
 		return false;
+	}
+	
+	public void loadUserDefinedType() {
 	}
 	
 }

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
 import org.eclipse.epf.library.services.SafeUpdateController;
@@ -454,6 +455,7 @@ public class LibraryService implements ILibraryService {
 	public void setCurrentMethodLibrary(MethodLibrary library) {
 		LibraryEditUtil.getInstance().fixUpDanglingCustomCategories(library);
 		currentLibrary = library;
+		ConfigurationHelper.getDelegate().loadUserDefinedType();
 		notifyListeners(library, EVENT_SET_CURRENT_LIBRARY);
 	}
 	
