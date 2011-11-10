@@ -487,10 +487,11 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 		}
 	}
 	
-	interface FileChangeListener {
+	public static class FileChangeListener {
 		//Make sure that notifyChange method is a very quick and short execution
 		//Otherwise, use some other mechanism
-		public void notifyChange(IResourceDelta delta);		
+		public void notifyChange(IResourceDelta delta) {			
+		}
 	}
 	
 	private List<FileChangeListener> fileChangeListeners = new ArrayList<FileChangeListener>();
