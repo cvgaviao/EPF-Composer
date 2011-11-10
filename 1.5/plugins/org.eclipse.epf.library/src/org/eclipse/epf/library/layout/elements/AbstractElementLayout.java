@@ -1467,13 +1467,15 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			boolean toAdd = true;
 			if (obj instanceof Descriptor) {
 				MethodElement element = ProcessUtil.getAssociatedElement((Descriptor) obj);
-				if (set.contains(element)) {
+				element = ConfigurationHelper.getCalculatedElement(element, layoutManager.getElementRealizer());
+				if (set.contains(element) || set.contains(obj)) {
 					toAdd = false;
 				}
 			}
 			
 			if (toAdd) {
 				contentElements.add(obj);
+				set.add(obj);
 			}
 		}
 		
