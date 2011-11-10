@@ -13,6 +13,7 @@ package org.eclipse.epf.persistence.refresh;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -429,6 +430,8 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 							}
 							break;
 						}
+						
+						notiFyfileChangeListeners(delta);
 					}
 					
 					return true;
@@ -482,6 +485,28 @@ public class RefreshJob extends WorkspaceJob implements IResourceChangeListener 
 		if (shouldRefresh()) {
 			scheduleRefresh();
 		}
+	}
+	
+	interface FileChangeListener {
+		//Make sure that notifyChange method is a very quick and short execution
+		//Otherwise, use some other mechanism
+		public void notifyChange(IResourceDelta delta);		
+	}
+	
+	private List<FileChangeListener> fileChangeListeners = new ArrayList<FileChangeListener>();
+	
+	public void addFileChangeListener(FileChangeListener listener) {
+		fileChangeListeners.add(listener);
+	}
+	
+	public void removeFileChangeListener(FileChangeListener listener) {
+		fileChangeListeners.remove(listener);
+	}
+	
+	private void notiFyfileChangeListeners(IResourceDelta delta) {
+		for (FileChangeListener lis : fileChangeListeners) {
+			lis.notifyChange(delta);
+		}		
 	}
 	
 }
