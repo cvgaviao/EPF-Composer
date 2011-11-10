@@ -215,6 +215,9 @@ public abstract class DescriptorLayout extends AbstractProcessElementLayout {
 			MethodElement linkedContentElement = ProcessUtil
 					.getAssociatedElement((Descriptor) element);
 			if (linkedContentElement != null) {
+				linkedContentElement = ConfigurationHelper.getCalculatedElement(linkedContentElement, layoutManager.getElementRealizer());
+			}
+			if (linkedContentElement != null) {
 				return linkedContentElement;
 			}
 		}
