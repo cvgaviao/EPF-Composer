@@ -1117,6 +1117,10 @@ public class LibraryUtil {
 								toAdd = true;
 							}
 						}
+					} else if (eClass == UmaPackage.eINSTANCE.getPractice()) {
+						if (PracticePropUtil.getPracticePropUtil().isUdtType(element)) {
+							toAdd = false;
+						}
 					}
 					if (toAdd) {
 						includedElements.add(element);
