@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 /**
  * Utility class for debug purpose
@@ -90,7 +92,14 @@ public final class DebugUtil {
 			return TngUtil.getLabelWithPath(element);
 		} 
 		if (ix == 2) {
-			return element.eClass().getName() + ", " +  //$NON-NLS-1$
+			String typeName = element.eClass().getName();
+			if (element instanceof Practice) {
+				UserDefinedTypeMeta meta = PracticePropUtil.getPracticePropUtil().getUdtMeta((Practice) element);
+				if (meta != null) {
+					typeName = meta.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+				}
+			}			
+			return typeName + ", " +  //$NON-NLS-1$
 					element.getGuid() + ", " + TngUtil.getLabelWithPath(element);//$NON-NLS-1$ 
 		}
 		return element.toString();
