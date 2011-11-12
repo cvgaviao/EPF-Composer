@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -32,6 +33,7 @@ import org.eclipse.epf.library.ConfigHelperDelegate;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.SectionList;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -1493,7 +1495,10 @@ public class ConfigurationHelper {
 		
 		List returnList = realizer.realize(element, feature, values);
 		if (CategorySortHelper.needToSort(element, feature)) {
-			returnList = CategorySortHelper.sortCategoryElements(element, returnList.toArray(), true, feature, config);
+			Map map = MethodElementPropUtil.getMethodElementPropUtil().getExtendedPropertyMap(element, false);
+			if (map == null || ! map.containsKey(ConfigurationFilter.isEmptyCheckLock)) {
+				returnList = CategorySortHelper.sortCategoryElements(element, returnList.toArray(), true, feature, config);
+			}
 		}
 
 		// the following part might not be general to all cases

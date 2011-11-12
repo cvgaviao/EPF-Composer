@@ -27,6 +27,7 @@ import org.eclipse.epf.library.edit.VariabilityInfo;
 import org.eclipse.epf.library.edit.configuration.CategoriesItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.Log;
@@ -471,12 +472,20 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 		return isEmpty(cc, new HashMap<ContentCategory, Boolean>());
 	}
 	
+	public static Object isEmptyCheckLock = new Object();
+	
 	private boolean isEmpty(ContentCategory cc, Map<ContentCategory, Boolean> processedMap) {
 		Boolean bvalue = processedMap.get(cc);
 		if (bvalue == null) {
-			boolean b = isEmpty_(cc, processedMap);
-			bvalue = b ? Boolean.TRUE : Boolean.FALSE;
-			processedMap.put(cc, bvalue);
+			Map map = MethodElementPropUtil.getMethodElementPropUtil().getExtendedPropertyMap(cc, true);
+			try {
+				map.put(isEmptyCheckLock, true);
+				boolean b = isEmpty_(cc, processedMap);
+				bvalue = b ? Boolean.TRUE : Boolean.FALSE;
+				processedMap.put(cc, bvalue);
+			} finally {
+				map.remove(isEmptyCheckLock);
+			}
 		}		
 		return bvalue.booleanValue();
 	}
