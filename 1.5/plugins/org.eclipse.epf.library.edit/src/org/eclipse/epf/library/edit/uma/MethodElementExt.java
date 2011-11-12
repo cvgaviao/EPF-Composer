@@ -2,8 +2,10 @@ package org.eclipse.epf.library.edit.uma;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.epf.library.edit.util.Comparators;
@@ -22,6 +24,8 @@ public class MethodElementExt extends ExtendObject {
 	private Object cachedObject;
 	private ExtendReferenceMap extendReferenceMap;
 	private IUserDefinedTypeMeta userDefinedTypeMeta;
+		
+	private Map<Object, Object> extendedPropertyMap;
 
 	public MethodElementExt(MethodElement element) {
 		this.element = element;
@@ -120,6 +124,13 @@ public class MethodElementExt extends ExtendObject {
 
 	public void setUserDefinedTypeMeta(IUserDefinedTypeMeta userDefinedTypeMeta) {
 		this.userDefinedTypeMeta = userDefinedTypeMeta;
+	}
+	
+	public Map<Object, Object> getExtendedPropertyMap(boolean create) {
+		if (extendedPropertyMap == null && create) {
+			extendedPropertyMap = new HashMap<Object, Object>();
+		}
+		return extendedPropertyMap;
 	}
 	
 }

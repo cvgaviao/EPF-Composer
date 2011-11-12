@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -165,6 +166,11 @@ public class MethodElementPropUtil {
 			mobj.setExtendObject(obj);
 		}
 		return (MethodElementExt) obj;
+	}
+	
+	public Map<Object, Object> getExtendedPropertyMap(MethodElement element, boolean create) {
+		MethodElementExt ext = getExtendObject(element, create);
+		return ext == null ? null : ext.getExtendedPropertyMap(create);
 	}
 	
 	protected MethodElementExt createExtendObject(MethodElement element) {
