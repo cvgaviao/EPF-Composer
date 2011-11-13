@@ -783,7 +783,7 @@ public class LibraryEditUtil {
 	
 	public List<MethodElement> calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, MethodConfiguration config) {
-		return provider == null ? null : provider.calc0nFeatureValue(element, feature, config);
+		return getProvider() == null ? null : getProvider().calc0nFeatureValue(element, feature, config);
 	}
 	
 	public void fixWpStates(Collection<? extends MethodElement> elements, Set<Resource> modifeiedResources) {
