@@ -1041,7 +1041,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_TEXT;
 				if (publishPracticeOnForUDT) {
 					// TODO_translation: to avoid new translation, use the new string in English, otherwise use the old one
-					if (publishButtonText.startsWith("Publish back links to this practice from its contained elements"))	//$NON-NLS-1$
+					// if (publishButtonText.startsWith("Publish back links to this practice from its contained elements"))	//$NON-NLS-1$
 						publishButtonText = AuthoringUIText.PUBLISH_PRACTICES_FOR_UDT_TEXT;
 				}
 			}
