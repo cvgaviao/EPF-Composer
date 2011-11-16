@@ -33,5 +33,5 @@ fragment@org.eclipse.epf.search.nlBidi=v20080828-2225,:pserver:anonymous@dev.ecl
 fragment@org.eclipse.epf.search.ui.nlBidi=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/plugins/org.eclipse.epf.search.ui.nlBidi
 fragment@org.eclipse.epf.ui.nlBidi=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/plugins/org.eclipse.epf.ui.nlBidi
 fragment@org.eclipse.epf.uma.nlBidi=v20111114-1652,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/plugins/org.eclipse.epf.uma.nlBidi
-fragment@org.eclipse.epf.uma.edit.nlBidi=v20111017-1555,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/plugins/org.eclipse.epf.uma.edit.nlBidi
+fragment@org.eclipse.epf.uma.edit.nlBidi=v20111116-1943,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/plugins/org.eclipse.epf.uma.edit.nlBidi
 fragment@org.eclipse.epf.validation.nlBidi=v20080828-2225,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/nls/nlBidi/plugins/org.eclipse.epf.validation.nlBidi
