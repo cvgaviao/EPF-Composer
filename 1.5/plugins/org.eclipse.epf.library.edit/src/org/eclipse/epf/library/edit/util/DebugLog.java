@@ -18,7 +18,7 @@ import org.eclipse.epf.uma.MethodElement;
 public class DebugLog {
 
 	private String indent; //$NON-NLS-1$
-	private static String prompt;
+	private String prompt;
 	public DebugLog(String prompt) {
 		this.prompt = prompt;
 		int n = 5 + (prompt == null ? 0 : prompt.length());
