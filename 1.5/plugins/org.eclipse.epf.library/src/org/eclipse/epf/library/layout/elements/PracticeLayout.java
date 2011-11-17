@@ -287,7 +287,8 @@ public class PracticeLayout extends AbstractElementLayout {
 		XmlElement qrWrapper = elementXml.newChild(TAG_REFERENCELIST);
 		qrWrapper.setAttribute("name", "UDT reference qualifiers");  //$NON-NLS-1$//$NON-NLS-2$
 		
-		List<EReference> references = getSortedReferences(meta.getQualifiedReferences(), meta);
+		//List<EReference> references = getSortedReferences(meta.getQualifiedReferences(), meta);
+		Set<EReference> references = meta.getQualifiedReferences();
 
 		for (EReference ref : references) {
 			List<MethodElement> qrList = ConfigurationHelper
