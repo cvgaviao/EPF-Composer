@@ -542,7 +542,10 @@ public abstract class AbstractDiagramEditor extends FileDiagramEditor implements
 		}
 		
 		cleanUp();
-		super.doSave(progressMonitor);
+		super.doSave(progressMonitor);		
+
+		//Alex: to fix RATLC00430370 
+		getDiagramManager().backupDiagram(activity, getDiagram());
 	}
 	
 	protected void cleanUp() {
