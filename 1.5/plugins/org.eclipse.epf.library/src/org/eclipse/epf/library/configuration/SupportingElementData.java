@@ -60,8 +60,8 @@ public class SupportingElementData extends ConfigDataBase {
 	private boolean duringUpdateSupporitngElements = false;
 	private Set<MethodPlugin> supportingPlugins;
 	private Set<MethodPackage> selectedPackages;
-	private static boolean localDebug = false;
-	private static boolean localDebug1 = false;
+	public static boolean localDebug = false;
+	public static boolean localDebug1 = false;
 	private boolean enabled = true;
 	
 	//private Set<VariabilityElement> vChildrenContentCategorySet;
