@@ -26,6 +26,7 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.SupportingElementData;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -38,6 +39,7 @@ import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
  * Manages the method element dependencies in a method library.
@@ -294,6 +296,10 @@ public class DependencyManager {
 		}
 */
 		List properties = LibraryUtil.getStructuralFeatures(element);
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		if (propUtil.hasUdtList(element)) {
+			properties.add(UmaUtil.MethodElement_UdtList);
+		}				
 		for (int i = 0; i < properties.size(); i++) {
 			EStructuralFeature f = (EStructuralFeature) properties.get(i);
 			if (!(f instanceof EReference) ) {
@@ -317,7 +323,12 @@ public class DependencyManager {
 				}
 			}
 			
-			Object value = element.eGet(feature);
+			Object value = null;
+			if (feature == UmaUtil.MethodElement_UdtList) {
+				value = propUtil.getUdtList(element, false);
+			} else {
+				value = element.eGet(feature);
+			}
 			if ( value == null ) {
 				continue;
 			}
@@ -326,7 +337,7 @@ public class DependencyManager {
 			List values = null;
 			int count = 0;
 			
-			if ( feature.isMany() ) {
+			if ( feature.isMany() || feature == UmaUtil.MethodElement_UdtList) {
 				values = (List)value;
 				if ( values.size() > 0 ) {
 					refElement = (MethodElement)values.get(count);
