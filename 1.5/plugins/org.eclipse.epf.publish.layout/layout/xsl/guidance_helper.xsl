@@ -312,5 +312,29 @@
 			</tr>
 		</xsl:if>
 	</xsl:template>
+	<xsl:template name="addUdts">
+		<xsl:param name="udts"/>
+		<xsl:if test="count($udts) > 0">
+			<tr valign="top">
+				<th class="sectionTableHeading" scope="row">
+					<xsl:value-of select="$udtText"/>
+				</th>
+				<td class="sectionTableCell">
+					<ul>
+						<xsl:for-each select="$udts/../*">
+						<xsl:sort select="@DisplayName"/>
+							<xsl:if test="@Type='udt'">
+								<li>
+									<xsl:call-template name="addElementWithLink">
+										<xsl:with-param name="element" select="."/>
+									</xsl:call-template>
+								</li>
+							</xsl:if>
+						</xsl:for-each>
+					</ul>
+				</td>
+			</tr>
+		</xsl:if>
+	</xsl:template>	
 
 </xsl:stylesheet>

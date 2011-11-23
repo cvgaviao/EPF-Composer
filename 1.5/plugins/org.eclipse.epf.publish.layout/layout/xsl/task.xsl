@@ -372,8 +372,9 @@
 		<xsl:variable name="whitePapers" select="referenceList/Element[@Type='Whitepaper']"/>		
 		<xsl:variable name="imagePath" select="concat(/Element/@BackPath, 'images/')"/>
 		<xsl:variable name="estimationConsiderations" select="referenceList/Element[@Type='EstimationConsiderations']"/>
+		<xsl:variable name="udts" select="referenceList[@name='User defined type references']/Element[@Type='udt']"/>
 
-		<xsl:if test="count($checklists) + count($concepts) + count($guidelines) + count($supportingMaterials) + count($toolMentors) + count($whitePapers) + count($estimationConsiderations) > 0">
+		<xsl:if test="count($checklists) + count($concepts) + count($guidelines) + count($supportingMaterials) + count($toolMentors) + count($whitePapers) + count($estimationConsiderations) + count($udts) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$moreInfoText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
@@ -397,6 +398,9 @@
 					</xsl:call-template>
 					<xsl:call-template name="addEstimationConsiderations">
 						<xsl:with-param name="estimationConsiderations" select="$estimationConsiderations"/>
+					</xsl:call-template>
+					<xsl:call-template name="addUdts">
+						<xsl:with-param name="udts" select="$udts"/>
 					</xsl:call-template>
 				</table>
 			</div>

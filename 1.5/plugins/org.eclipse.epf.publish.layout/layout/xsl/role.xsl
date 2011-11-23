@@ -196,8 +196,9 @@
 		<xsl:variable name="guidelines" select="referenceList/Element[@Type='Guideline']"/>
 		<xsl:variable name="supportingMaterials" select="referenceList/Element[@Type='SupportingMaterial']"/>
 		<xsl:variable name="whitePapers" select="referenceList/Element[@Type='Whitepaper']"/>
+		<xsl:variable name="udts" select="referenceList[@name='User defined type references']/Element[@Type='udt']"/>
 		
-		<xsl:if test="count($checklists) + count($concepts) + count($guidelines) + count($supportingMaterials) + count($whitePapers) > 0">
+		<xsl:if test="count($checklists) + count($concepts) + count($guidelines) + count($supportingMaterials) + count($whitePapers) + count($udts) > 0">
 			<div class="sectionHeading"><xsl:value-of select="$moreInfoText"/></div>
 			<div class="sectionContent">
 				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
@@ -216,6 +217,9 @@
 					<xsl:call-template name="addWhitePapers">
 						<xsl:with-param name="whitePapers" select="$whitePapers"/>
 					</xsl:call-template>
+					<xsl:call-template name="addUdts">
+						<xsl:with-param name="udts" select="$udts"/>
+					</xsl:call-template>					
 				</table>
 			</div>
 		</xsl:if>
