@@ -1260,7 +1260,15 @@ implements ILibraryResource, IFailSafeSavable
 					if (e instanceof MethodPlugin) {
 						MethodPlugin p = (MethodPlugin) e;
 						if (! UmaUtil.isSynFreePlugin(p)) {
-							UmaUtil.setSynFreePlugin(p, true);
+							boolean oldD = p.eDeliver();
+							try {
+								p.eSetDeliver(false);
+								UmaUtil.setSynFreePlugin(p, true);
+							} finally {
+								if (oldD) {
+									p.eSetDeliver(oldD);
+								}
+							}
 						}					
 					}
 				}
