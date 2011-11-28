@@ -79,6 +79,11 @@ public class DependencyManager {
 		this.config = config;
 		init();
 	}
+	
+	private void reset() {
+		dependencyMap = new HashMap();
+		replacerSet = new HashSet<VariabilityElement>();
+	}
 
 	/**
 	 * Performs the necessary initialization.
@@ -93,28 +98,11 @@ public class DependencyManager {
 //					// refresh();
 //				} else 
 				if (option == ILibraryChangeListener.OPTION_DELETED) {
-					handleDeletedElement(changedItems);
+					reset();
 				} else if (option == ILibraryChangeListener.OPTION_CHANGED
 						|| option == ILibraryChangeListener.OPTION_NEWCHILD) {
 					if (changedItems != null && changedItems.size() > 0) {
-						for (Iterator it = changedItems.iterator(); it
-								.hasNext();) {
-							try {
-								Object e = it.next();
-								if (e instanceof MethodElement) {
-									buildDependencyFor((MethodElement) e);
-								} else {
-									if (debug) {
-										System.out.println(e
-												+ " is not a method element"); //$NON-NLS-1$
-									}
-								}
-							} catch (Exception e) {
-								if (debug) {
-									e.printStackTrace();
-								}
-							}
-						}
+						reset();
 					}
 				}
 			}
