@@ -35,6 +35,7 @@ import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Roadmap;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.TermDefinition;
+import org.eclipse.epf.uma.UmaPackage;
 
 /**
  * This is the content validator for publishing a process closure. 
@@ -152,7 +153,7 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 			}
 
 			EReference feature = (EReference) f;
-			if (feature.isContainer() || feature.isContainment()) {
+			if (feature.isContainer() || feature.isContainment() || feature == UmaPackage.eINSTANCE.getRole_Modifies()) {
 				continue;
 			}
 //			List values = getValues(element, feature);
