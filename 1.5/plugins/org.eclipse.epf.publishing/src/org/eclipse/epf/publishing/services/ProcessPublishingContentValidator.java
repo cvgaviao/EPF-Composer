@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.publishing.PublishingPlugin;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -36,6 +37,7 @@ import org.eclipse.epf.uma.Roadmap;
 import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
  * This is the content validator for publishing a process closure. 
@@ -147,6 +149,10 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
 		List properties = LibraryUtil.getStructuralFeatures(element);
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		if (propUtil.hasUdtList(element)) {
+			properties.add(UmaUtil.MethodElement_UdtList);
+		}
 		for (EStructuralFeature f : (List<EStructuralFeature>) properties) {
 			if (!(f instanceof EReference)) {
 				continue;
@@ -185,7 +191,7 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 	}
 	
 	private List getRealizedValues(MethodElement element, EReference feature, ElementRealizer realizer) {
-		if (feature.isMany()) {
+		if (feature.isMany() || feature == UmaUtil.MethodElement_UdtList) {
 			return ConfigurationHelper.calc0nFeatureValue(element, feature, realizer);
 		}		
 		MethodElement referenced = ConfigurationHelper.calc01FeatureValue(element, feature, realizer);
