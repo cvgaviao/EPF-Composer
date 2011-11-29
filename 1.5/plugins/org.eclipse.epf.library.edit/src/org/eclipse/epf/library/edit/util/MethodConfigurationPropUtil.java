@@ -16,6 +16,8 @@ import org.eclipse.epf.uma.UmaPackage;
 
 public class MethodConfigurationPropUtil extends MethodElementPropUtil {
 
+	public static final String TOUCHED_BY_CONFIG_EDITOR = "TouchedByConfigEditor";				//$NON-NLS-1$	
+	
 	public static final String Config_elementsUnslectedPkgs = "config_elementsUnslectedPkgs"; 	//$NON-NLS-1$
 	public static final String Config_selectedElements = "config_selectedElements"; 			//$NON-NLS-1$
 	public static final String Config_deselectedElements = "config_deselectedElements"; 		//$NON-NLS-1$	

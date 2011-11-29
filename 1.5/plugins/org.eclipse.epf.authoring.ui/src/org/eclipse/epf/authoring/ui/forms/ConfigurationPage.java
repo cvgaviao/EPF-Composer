@@ -63,6 +63,7 @@ import org.eclipse.epf.library.edit.navigator.MethodPackagesItemProvider;
 import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
+import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -117,7 +118,8 @@ import org.eclipse.ui.ide.IGotoMarker;
 
 public class ConfigurationPage extends FormPage implements IGotoMarker {
 	
-	public static final String TOUCHED_BY_CONFIG_EDITOR = "TouchedByConfigEditor";	//$NON-NLS-1$	
+//	public static final String TOUCHED_BY_CONFIG_EDITOR = "TouchedByConfigEditor";	//$NON-NLS-1$	
+	public static final String TOUCHED_BY_CONFIG_EDITOR = MethodConfigurationPropUtil.TOUCHED_BY_CONFIG_EDITOR;	
 	
 	private String formPrefix = AuthoringUIResources.ConfigurationPage_FormPrefix; 
 
