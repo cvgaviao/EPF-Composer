@@ -842,7 +842,9 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			public void widgetSelected(SelectionEvent e) {
 				BusyIndicator.showWhile(form.getDisplay(), new Runnable() {
 					public void run() {
-						saveConfiguration();
+//	Comment out the following "saveConfiguration()" which was added at version 1.3 
+//	- not sure why. So leave the commented out trace here for easy future reference.					
+//						saveConfiguration();
 						showErrors();
 					}
 				});				
