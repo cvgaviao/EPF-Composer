@@ -33,6 +33,7 @@ import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.FilterInitializer;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.AddGuidanceToBreakdownElementCommand;
+import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Checklist;
@@ -179,6 +180,12 @@ public class ActivityGuidanceSection extends AbstractSection {
 					//		|| (obj instanceof EstimationConsiderations)
 							)
 						return true;
+					
+					if (obj instanceof Practice) {
+						if (PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj)) {
+							return true;
+						}
+					}
 
 					return false;
 
@@ -972,6 +979,11 @@ public class ActivityGuidanceSection extends AbstractSection {
 		itemList.addAll(element.getReports());
 		itemList.addAll(element.getEstimationconsiderations());
 
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		if (propUtil.hasUdtList(element)) {
+			itemList.addAll(propUtil.getUdtList(element, false));
+		}
+		
 		return itemList;
 	}
 
@@ -1003,6 +1015,11 @@ public class ActivityGuidanceSection extends AbstractSection {
 		itemList.addAll(element.getReports());
 		itemList.addAll(element.getEstimationconsiderations());
 
+		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+		if (propUtil.hasUdtList(element)) {
+			itemList.addAll(propUtil.getUdtList(element, false));
+		}
+		
 		return itemList;
 	}
 
