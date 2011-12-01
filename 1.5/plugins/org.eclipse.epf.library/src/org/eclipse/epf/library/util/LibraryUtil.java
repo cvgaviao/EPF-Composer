@@ -1587,7 +1587,7 @@ public class LibraryUtil {
 		EObject parent = getSelectable(element);
 		if (parent instanceof ContentPackage) {
 			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
-			propUtil.isSupporting((ContentPackage) parent);
+			return propUtil.isSupporting((ContentPackage) parent);
 		}
 		
 		return false;
