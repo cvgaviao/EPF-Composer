@@ -281,6 +281,9 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			return elementXml;
 		}
 		
+		// Load the udt info
+		loadUdtReferences(elementXml);
+		
 		elementXml.setAttribute("ShowFullMethodContent", (layoutManager.getValidator().showExtraInfoForDescriptors()) ? "true" : "false"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 		// get the tabs xml section

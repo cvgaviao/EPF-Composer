@@ -429,12 +429,14 @@
 
 	<xsl:template name="moreInfoSection">
 		<xsl:param name="contentDescription"/>
-		<xsl:if test="count(referenceList[@name='concepts']/Element) + count(referenceList[@name='checklists']/Element) + count(referenceList[@name='communicationsMaterials']/Element) + count(referenceList[@name='guidelines']/Element) + count(referenceList[@name='supportingMaterials']/Element) + count(referenceList[@name='reusableAssets']/Element) > 0">
+		<xsl:variable name="udts" select="referenceList[@name='User defined type references']/Element[@Type='udt']"/>
+		
+		<xsl:if test="count(referenceList[@name='concepts']/Element) + count(referenceList[@name='checklists']/Element) + count(referenceList[@name='communicationsMaterials']/Element) + count(referenceList[@name='guidelines']/Element) + count(referenceList[@name='supportingMaterials']/Element) + count(referenceList[@name='reusableAssets']/Element) + count($udts) > 0">
 			<div class="sectionHeading">
 				<xsl:value-of select="$moreInfoText"/>
 			</div>
 			<div class="sectionContent">
-				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">
+				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0"> 
 					<xsl:call-template name="addChecklists">
 						<xsl:with-param name="checklists" select="referenceList[@name='checklists']/Element"/>
 					</xsl:call-template>
@@ -466,6 +468,9 @@
 					<xsl:call-template name="addWhitePapers">
 						<xsl:with-param name="whitePapers" select="referenceList/Element[@Type='Whitepaper']"/>
 					</xsl:call-template>
+					<xsl:call-template name="addUdts">
+						<xsl:with-param name="udts" select="$udts"/>
+					</xsl:call-template>					
 				</table>
 			</div>
 		</xsl:if>

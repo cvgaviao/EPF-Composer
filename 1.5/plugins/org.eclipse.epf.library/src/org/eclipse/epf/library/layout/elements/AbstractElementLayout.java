@@ -1006,7 +1006,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		return elementXml;
 	}
 	
-	private void loadUdtReferences(XmlElement elementXml) {
+	public void loadUdtReferences(XmlElement elementXml) {
 		List<Practice> udtList = ConfigurationHelper.calc0nFeatureValue(
 				element, UmaUtil.MethodElement_UdtList, layoutManager
 						.getElementRealizer());
