@@ -496,6 +496,15 @@ public class ConfigurationData {
 			}
 			
 			if (isElementAdded(element)) {
+				if (element instanceof Activity) {
+					VariabilityElement base = ((Activity) element).getVariabilityBasedOnElement();
+					if (base != null
+							&& base != element
+							&& !ConfigurationHelper.inConfig(base, config,
+									checkSubtracted)) {
+						return false;
+					}
+				}
 				return true;
 			}
 			
