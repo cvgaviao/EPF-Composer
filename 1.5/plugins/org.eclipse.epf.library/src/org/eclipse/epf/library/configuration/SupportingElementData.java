@@ -438,7 +438,7 @@ public class SupportingElementData extends ConfigDataBase {
 		registerAsSupporting(element, newSupportingElements);
 	}
 	
-	private void registerAsSupporting(MethodElement element,
+	protected void registerAsSupporting(MethodElement element,
 			Set<MethodElement> newSupportingElements) {
 		supportingElements.add(element);
 		EObject pkg = element.eContainer();
