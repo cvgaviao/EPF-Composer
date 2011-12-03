@@ -94,8 +94,9 @@ public class MethodElementUtil {
 			}
 		}
 		
-		itemList
-				.addAll(AssociationHelper.getPractices((ContentElement) object));
+//		This is a bug
+//		itemList
+//				.addAll(AssociationHelper.getPractices((ContentElement) object));
 
 		List<Practice> utdItems = MethodElementPropUtil.getMethodElementPropUtil().getUdtList((ContentElement) object, false);
 		if (utdItems != null && ! utdItems.isEmpty()) {
