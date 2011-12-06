@@ -376,7 +376,7 @@ public class MethodContainerCheckedTreeViewer extends
             Widget item = findItem(leaf);            
 				if (item instanceof TreeItem) {
 					TreeItem treeItem = (TreeItem) item;
-					if (! treeItem.getChecked()) {
+					if (! treeItem.getChecked() || treeItem.getGrayed()) {
 						elementsUnslectedPkgs.add((ContentPackage) pkg);
 					}
 				}
