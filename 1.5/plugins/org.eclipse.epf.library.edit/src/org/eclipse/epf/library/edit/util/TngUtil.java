@@ -2132,7 +2132,7 @@ public final class TngUtil {
 			List pkgs = TngUtil.getAllSystemPackages(plugin);
 			for (Iterator it = pkgs.iterator(); it.hasNext();) {
 				Object pkg = it.next();
-				if (!pkgSels.contains(pkg) && pkg instanceof MethodPackage) {
+				if (!pkgSels.contains(pkg) && pkg instanceof ContentPackage) {
 					pkgSels.add(pkg);
 					sysPackagesToAdd.add((MethodPackage)pkg);
 				}
