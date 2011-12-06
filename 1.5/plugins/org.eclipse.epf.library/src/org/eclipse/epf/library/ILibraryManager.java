@@ -332,4 +332,7 @@ public interface ILibraryManager {
 	public boolean isUserDefinedTypeLoaded();
 	
 	public void setUserDefinedTypeLoaded(boolean b);
+	
+	public void prepareToLoadUserDefinedTypes();
+	
 }

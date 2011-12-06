@@ -552,20 +552,20 @@ public class XMILibraryManager extends AbstractLibraryManager {
 		this.library = null;
 	}
 	
-	private Map<String, UserDefinedTypeMeta> UserDefinedTypeMap;
+	private Map<String, UserDefinedTypeMeta> userDefinedTypeMap;
 	public Collection<UserDefinedTypeMeta> getUserDefinedTypes() {
-		return UserDefinedTypeMap == null ? null : UserDefinedTypeMap.values();
+		return userDefinedTypeMap == null ? null : userDefinedTypeMap.values();
 	}
 	
 	public void addUserDefineType(UserDefinedTypeMeta meta) {
-		if (UserDefinedTypeMap == null) {
-			UserDefinedTypeMap = new HashMap<String, UserDefinedTypeMeta>();
+		if (userDefinedTypeMap == null) {
+			userDefinedTypeMap = new HashMap<String, UserDefinedTypeMeta>();
 		}
-		UserDefinedTypeMap.put(meta.getId(), meta);
+		userDefinedTypeMap.put(meta.getId(), meta);
 	}
 		
 	public UserDefinedTypeMeta getUserDefineType(String id) {
-		return UserDefinedTypeMap == null ? null : UserDefinedTypeMap.get(id);
+		return userDefinedTypeMap == null ? null : userDefinedTypeMap.get(id);
 	}
 	
 	private boolean userDefinedTypeLoaded = false;
@@ -575,5 +575,9 @@ public class XMILibraryManager extends AbstractLibraryManager {
 	
 	public void setUserDefinedTypeLoaded(boolean b) {
 		userDefinedTypeLoaded = b;
+	}
+	
+	public void prepareToLoadUserDefinedTypes() {
+		userDefinedTypeMap = null;		
 	}
 }
