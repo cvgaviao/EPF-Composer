@@ -499,7 +499,7 @@ public class MethodElementPropUtil {
 		
 		public ExtendReferenceMap getExtendReferenceMap(MethodElement element, boolean toModify) {
 			ExtendReferenceMap map = getPropUtil().getCachedExtendReferenceMap(element, toModify);
-			if (map != null || ! getPropUtil().hasUdtList(element)) {
+			if (map != null && map.isRetrieved() || ! getPropUtil().hasUdtList(element)) {
 				return map;
 			}
 
@@ -512,7 +512,8 @@ public class MethodElementPropUtil {
 				firstElement = null;
 			}
 			if (firstElement != null) {
-				map = getExtendReferenceMap(element, true);				
+//				map = getExtendReferenceMap(element, true);	
+				map = getPropUtil().getCachedExtendReferenceMap(element, true);
 				map.retrieveReferencesFromElement(firstElement);
 			}
 

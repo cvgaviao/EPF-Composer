@@ -35,7 +35,8 @@ public class ExtendReferenceMap {
 	private Map<String, Object> oldValueMap;
 	private MethodElement ownerElement;
 	private List<String> referenceNames;
-	
+	private boolean retrieved = false;
+
 	public ExtendReferenceMap(MethodElement ownerElement) {
 		this.ownerElement = ownerElement;
 		referenceNames = new ArrayList<String>();
@@ -49,6 +50,10 @@ public class ExtendReferenceMap {
 		}
 	}
 			
+	public boolean isRetrieved() {
+		return retrieved;
+	}
+	
 	private List<String> getReferenceQualifierIds(MethodElement element) {
 		if (! (element instanceof Practice)) {
 			return null;
@@ -73,7 +78,8 @@ public class ExtendReferenceMap {
 	}
 	
 	public void retrieveReferencesFromElement(Element element) {
-
+		retrieved = true;
+		
 		Set<MethodElement> referenceSet = null;
 		if (ownerElement instanceof Practice) {
 			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
