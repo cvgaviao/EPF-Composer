@@ -111,6 +111,8 @@ public class LibraryUIManager {
 	private static final String PROCESS_EDITOR_ID = "org.eclipse.epf.authoring.ui.editors.ProcessEditor"; //$NON-NLS-1$
 	
 	private static final String REPORT_PERS_ID = "org.eclipse.birt.report.designer.ui.ReportPerspective"; //$NON-NLS-1$
+	
+	private static final String PB_PERS_ID = "com.ibm.rmc.authoring.ui.RMCProcessBuilderPerspective"; //$NON-NLS-1$
 
 	private static LibraryUIManager instance = null;
 	
@@ -688,7 +690,8 @@ public class LibraryUIManager {
 					if (activePage != null) {
 						if (foundConfigView(activePage)
 								|| foundProcessEditor(activePage)
-								|| foundPerspective(activePage, REPORT_PERS_ID)) {
+								|| foundPerspective(activePage, REPORT_PERS_ID)
+								|| foundPerspective(activePage, PB_PERS_ID)) {
 							showConfigurationContribution(coolBarMgr);
 						} else {
 							hideConfigurationContribution(coolBarMgr);
@@ -725,7 +728,7 @@ public class LibraryUIManager {
 	}
 	
 	/**
-	 * Checks for the presence of Report Perspective in the active workbench
+	 * Checks for the presence of specific Perspective in the active workbench
 	 * page. 
 	 */
 	private boolean foundPerspective(IWorkbenchPage activePage, String persId) {
