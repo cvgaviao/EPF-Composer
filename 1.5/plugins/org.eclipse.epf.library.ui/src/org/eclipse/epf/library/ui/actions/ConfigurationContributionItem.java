@@ -140,8 +140,28 @@ public class ConfigurationContributionItem extends ContributionItem {
 		configCombo = new Combo(parent, SWT.DROP_DOWN | SWT.READ_ONLY);
 		configCombo.setVisibleItemCount(10);
 		configCombo.setEnabled(true);
-		configComboViewer = new ComboViewer(configCombo);
+		configComboViewer = new ComboViewer(configCombo) {
+			protected void handleDispose(DisposeEvent event) {
+				super.handleDispose(event);
+				if (!getCombo().isDisposed()) {
+					IStructuredContentProvider c = new IStructuredContentProvider() {
+						public void inputChanged(Viewer viewer,
+								Object oldInput, Object newInput) {
+						}
 
+						public Object[] getElements(Object inputElement) {
+							return new Object[0];
+						}
+
+						public void dispose() {
+
+						}
+					};
+					setContentProvider(c);
+				}
+			}
+
+		};
 		contentProvider = new AdapterFactoryContentProvider(
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
@@ -358,19 +378,6 @@ public class ConfigurationContributionItem extends ContributionItem {
 		if (configComboViewer != null) {
 			configComboViewer
 			.removePostSelectionChangedListener(postSelectionChangedListener);
-			if (!configComboViewer.getCombo().isDisposed()) {
-				IStructuredContentProvider c = new IStructuredContentProvider() {
-				    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {				    	
-				    }
-				    public Object[] getElements(Object inputElement) {
-				    	return new Object[0];
-				    }
-				    public void dispose() {
-				    	
-				    }
-				};
-				configComboViewer.setContentProvider(c);
-			}
 		}
 		
 		super.dispose();
