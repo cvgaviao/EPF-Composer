@@ -35,6 +35,7 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -205,6 +206,9 @@ public class ConfigurationContributionItem extends ContributionItem {
 
 			public void configurationSet(MethodConfiguration config) {
 				configComboViewer.removePostSelectionChangedListener(postSelectionChangedListener);
+				if (configComboViewer.getCombo().isDisposed()) {
+					return;
+				}
 				try {
 					selectConfiguration(config);
 				}
@@ -216,15 +220,24 @@ public class ConfigurationContributionItem extends ContributionItem {
 			}
 
 			public void libraryClosed(MethodLibrary library) {
+				if (configComboViewer.getCombo().isDisposed()) {
+					return;
+				}
 				configComboViewer.setInput(null);
 			}
 
 			public void libraryCreated(MethodLibrary library) {
+				if (configComboViewer.getCombo().isDisposed()) {
+					return;
+				}
 				configComboViewer.setInput(library);
 				selectConfiguration(null);
 			}
 
 			public void libraryOpened(MethodLibrary library) {
+				if (configComboViewer.getCombo().isDisposed()) {
+					return;
+				}
 				configComboViewer.setInput(library);
 				refresh();
 				MethodConfiguration config = LibraryService.getInstance().getCurrentMethodConfiguration();					
@@ -234,6 +247,9 @@ public class ConfigurationContributionItem extends ContributionItem {
 			}
 
 			public void libraryReopened(MethodLibrary library) {
+				if (configComboViewer.getCombo().isDisposed()) {
+					return;
+				}
 				if (library != configComboViewer.getInput()) {
 					configComboViewer.setInput(library);
 					refresh();
@@ -241,6 +257,9 @@ public class ConfigurationContributionItem extends ContributionItem {
 			}
 
 			public void librarySet(MethodLibrary library) {
+				if (configComboViewer.getCombo().isDisposed()) {
+					return;
+				}
 				if (library != configComboViewer.getInput()) {
 					configComboViewer.setInput(library);
 					if (library == null) {
@@ -253,18 +272,24 @@ public class ConfigurationContributionItem extends ContributionItem {
 
 		};
 		LibraryService.getInstance().addListener(libSvcListener);
-
+		libSvcListenerAdded = true;
+		
 		return configCombo;
 	}
 
+	private boolean libSvcListenerAdded = false;
 	/*
 	 * @see org.eclipse.jface.action.ContributionItem#void setVisibile(boolean)
 	 */
 	public void setVisible(boolean visible) {
-		if (visible) {
+		if (libSvcListener == null) {
+			return;
+		}
+		if (visible && !libSvcListenerAdded && !configCombo.isDisposed()) {
 			LibraryService.getInstance().addListener(libSvcListener);
 		} else {
 			LibraryService.getInstance().removeListener(libSvcListener);
+			libSvcListenerAdded = false;
 		}
 		super.setVisible(visible);
 	}
@@ -333,6 +358,19 @@ public class ConfigurationContributionItem extends ContributionItem {
 		if (configComboViewer != null) {
 			configComboViewer
 			.removePostSelectionChangedListener(postSelectionChangedListener);
+			if (!configComboViewer.getCombo().isDisposed()) {
+				IStructuredContentProvider c = new IStructuredContentProvider() {
+				    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {				    	
+				    }
+				    public Object[] getElements(Object inputElement) {
+				    	return new Object[0];
+				    }
+				    public void dispose() {
+				    	
+				    }
+				};
+				configComboViewer.setContentProvider(c);
+			}
 		}
 		
 		super.dispose();
@@ -342,6 +380,10 @@ public class ConfigurationContributionItem extends ContributionItem {
 	 * Refreshes the configuration combo.
 	 */
 	public static void refresh() {
+		if (configComboViewer == null || configComboViewer.getCombo() == null || 
+			 configComboViewer.getCombo().isDisposed()) {
+			 return;
+		}
 		configComboViewer.refresh();
 	}
 
