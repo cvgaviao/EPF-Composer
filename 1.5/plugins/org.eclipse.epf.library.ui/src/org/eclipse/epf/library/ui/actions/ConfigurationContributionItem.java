@@ -143,6 +143,16 @@ public class ConfigurationContributionItem extends ContributionItem {
 		configComboViewer = new ComboViewer(configCombo) {
 			protected void handleDispose(DisposeEvent event) {
 				super.handleDispose(event);
+				
+				// With removing libSvcListener here, some previous changes (check for compbo dispose 
+				// and adding dummy content provider) may not be needed - but ok to leave them
+				if (libSvcListener != null) {
+					LibraryService.getInstance().removeListener(libSvcListener);
+				}				
+				if (postSelectionChangedListener != null) {
+					removePostSelectionChangedListener(postSelectionChangedListener);
+				}
+				
 				if (!getCombo().isDisposed()) {
 					IStructuredContentProvider c = new IStructuredContentProvider() {
 						public void inputChanged(Viewer viewer,
@@ -375,7 +385,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 			LibraryService.getInstance().removeListener(libSvcListener);
 		}
 		
-		if (configComboViewer != null) {
+		if (configComboViewer != null && postSelectionChangedListener != null) {
 			configComboViewer
 			.removePostSelectionChangedListener(postSelectionChangedListener);
 		}
