@@ -14,7 +14,7 @@ import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.UmaPackage;
 
 
-public class MethodConfigurationPropUtil extends MethodElementPropUtil {
+public class MethodConfigurationPropUtil extends PropUtil {
 
 	public static final String TOUCHED_BY_CONFIG_EDITOR = "TouchedByConfigEditor";				//$NON-NLS-1$	
 	

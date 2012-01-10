@@ -13,7 +13,7 @@ import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
 
-public class PracticePropUtil extends MethodElementPropUtil {
+public class PracticePropUtil extends PropUtil {
 	
 	public static final String Practice_UtdData = "Practice_utdData";		//$NON-NLS-1$		
 	

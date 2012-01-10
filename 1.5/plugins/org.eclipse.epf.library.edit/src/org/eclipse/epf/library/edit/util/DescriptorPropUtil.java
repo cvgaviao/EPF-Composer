@@ -35,7 +35,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.UmaUtil;
 
-public class DescriptorPropUtil extends MethodElementPropUtil {
+public class DescriptorPropUtil extends PropUtil {
 	
 	public static boolean useLinkedElementInDiagram = false; 
 	

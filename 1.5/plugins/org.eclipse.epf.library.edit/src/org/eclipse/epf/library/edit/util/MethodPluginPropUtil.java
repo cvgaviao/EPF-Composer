@@ -18,7 +18,7 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 
-public class MethodPluginPropUtil extends MethodElementPropUtil {
+public class MethodPluginPropUtil extends PropUtil {
 
 	public static final String PLUGIN_SynFree = "plugin_synFree"; //$NON-NLS-1$
 

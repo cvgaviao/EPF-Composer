@@ -8,7 +8,7 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 
-public class MilestonePropUtil extends MethodElementPropUtil {
+public class MilestonePropUtil extends PropUtil {
 
 	private static MilestonePropUtil milestonePropUtil = new MilestonePropUtil();
 	public static MilestonePropUtil getMilestonePropUtil() {

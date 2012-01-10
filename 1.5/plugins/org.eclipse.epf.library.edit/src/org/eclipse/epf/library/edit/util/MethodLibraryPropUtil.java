@@ -2,7 +2,7 @@ package org.eclipse.epf.library.edit.util;
 
 import org.eclipse.epf.uma.MethodLibrary;
 
-public class MethodLibraryPropUtil extends MethodElementPropUtil {
+public class MethodLibraryPropUtil extends PropUtil {
 
 	public static final String Library_SynFree = "library_synFree"; //$NON-NLS-1$
 	

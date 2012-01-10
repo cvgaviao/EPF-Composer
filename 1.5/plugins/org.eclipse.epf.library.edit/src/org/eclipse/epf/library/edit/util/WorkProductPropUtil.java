@@ -17,7 +17,7 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.UmaUtil;
 
-public class WorkProductPropUtil extends MethodElementPropUtil {
+public class WorkProductPropUtil extends PropUtil {
 
 	
 	public static final String WORKPRODUCT_States = "Workproduct_states";		//$NON-NLS-1$

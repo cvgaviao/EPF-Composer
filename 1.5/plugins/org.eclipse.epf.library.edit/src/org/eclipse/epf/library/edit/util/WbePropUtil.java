@@ -4,7 +4,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 
-public class WbePropUtil extends MethodElementPropUtil {
+public class WbePropUtil extends PropUtil {
 	public static final String WBE_GlobalPresentedAfter = "wbe_GlobalPresentedAfter";	//$NON-NLS-1$
 
 	private static WbePropUtil WbePropUtil = new WbePropUtil();

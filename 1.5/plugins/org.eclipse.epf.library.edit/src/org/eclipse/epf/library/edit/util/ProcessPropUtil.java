@@ -3,7 +3,7 @@ package org.eclipse.epf.library.edit.util;
 import org.eclipse.epf.uma.Process;
 
 
-public class ProcessPropUtil extends MethodElementPropUtil {
+public class ProcessPropUtil extends PropUtil {
 
 	public static final String Process_SynFree = "process_synFree"; //$NON-NLS-1$
 
