@@ -24,7 +24,8 @@ public class MethodElementExt extends ExtendObject {
 	private Object cachedObject;
 	private ExtendReferenceMap extendReferenceMap;
 	private IUserDefinedTypeMeta userDefinedTypeMeta;
-		
+	private IUserDefinedTypeMeta modifiedTypeMeta;
+
 	private Map<Object, Object> extendedPropertyMap;
 
 	public MethodElementExt(MethodElement element) {
@@ -124,6 +125,14 @@ public class MethodElementExt extends ExtendObject {
 
 	public void setUserDefinedTypeMeta(IUserDefinedTypeMeta userDefinedTypeMeta) {
 		this.userDefinedTypeMeta = userDefinedTypeMeta;
+	}
+	
+	public IUserDefinedTypeMeta getModifiedTypeMeta() {
+		return modifiedTypeMeta;
+	}
+
+	public void setModifiedTypeMeta(IUserDefinedTypeMeta modifiedTypeMeta) {
+		this.modifiedTypeMeta = modifiedTypeMeta;
 	}
 	
 	public Map<Object, Object> getExtendedPropertyMap(boolean create) {

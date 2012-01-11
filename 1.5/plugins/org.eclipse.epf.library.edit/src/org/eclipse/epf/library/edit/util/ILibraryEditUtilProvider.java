@@ -11,6 +11,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 public interface ILibraryEditUtilProvider {
@@ -46,5 +47,7 @@ public interface ILibraryEditUtilProvider {
 	public void createUserDefinedTypeContextMenuOnGuidanceNode(Collection<Object> newChildDescriptors);
 		
 	public UserDefinedTypeMeta getUserDefineType(String id);
+	
+	public ModifiedTypeMeta getModifiedType(String id);
 	
 }

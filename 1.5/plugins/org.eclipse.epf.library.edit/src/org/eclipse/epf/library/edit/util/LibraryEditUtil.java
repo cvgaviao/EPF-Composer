@@ -52,6 +52,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
@@ -836,5 +837,9 @@ public class LibraryEditUtil {
 	
 	public UserDefinedTypeMeta getUserDefineType(String id) {
 		return getProvider() == null ? null : getProvider().getUserDefineType(id);
+	}
+	
+	public ModifiedTypeMeta getModifiedType(String id) {
+		return getProvider() == null ? null : getProvider().getModifiedType(id);
 	}
 }
