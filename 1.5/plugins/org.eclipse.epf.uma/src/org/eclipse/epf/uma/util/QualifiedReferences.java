@@ -13,7 +13,9 @@ import org.eclipse.emf.ecore.EcoreFactory;
 
 public class QualifiedReferences {
 
+	public static final String scopeSeperator = "::"; 							//$NON-NLS-1$
 	private Set<EReference> qualifiedReferences;
+	private ExtendedReference parent;
 
 	private boolean qualifiedReferencesLoaded = false;
 
@@ -22,7 +24,8 @@ public class QualifiedReferences {
 	private String qualifiedIdStr;
 	private String qualifiedNameStr;
 
-	public QualifiedReferences() {
+	public QualifiedReferences(ExtendedReference parent) {
+		this.parent = parent;
 	}
 
 	public void setQualifiers(String qualifiedIdStr, String qualifiedNameStr) {
@@ -58,6 +61,9 @@ public class QualifiedReferences {
 			getReferenceQualifiedIdToNameMap().clear();
 			for (int i = 0; i < refIds.size(); i++) {
 				String refId = refIds.get(i);
+				if (parent != null) {
+					refId = parent.getId() + scopeSeperator + refId;
+				}
 				String refName = refNames.get(i);
 				getReferenceQualifiedNameToIdMap().put(refName, refId);
 				getReferenceQualifiedIdToNameMap().put(refId, refName);

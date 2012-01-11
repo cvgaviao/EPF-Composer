@@ -11,7 +11,7 @@ public class ModifiedTypeMeta implements IUserDefinedTypeMeta {
 	public static final ModifiedTypeMeta noneValue = new ModifiedTypeMeta();
 		
 	private String id;
-	private List<ExtendedReference> referernces;
+	private List<ExtendedReference> references;
 
 	public ModifiedTypeMeta() {		
 	}
@@ -24,7 +24,8 @@ public class ModifiedTypeMeta implements IUserDefinedTypeMeta {
 		this.id = id;
 	}
 		
-	public List<ExtendedReference> getReferernces() {
-		return referernces;
+	public List<ExtendedReference> getReferences() {
+		return references;
 	}
+
 }

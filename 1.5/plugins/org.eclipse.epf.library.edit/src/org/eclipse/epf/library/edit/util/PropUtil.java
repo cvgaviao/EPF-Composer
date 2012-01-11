@@ -2,9 +2,11 @@ package org.eclipse.epf.library.edit.util;
 
 import java.util.Map;
 
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
@@ -29,7 +31,16 @@ public class PropUtil extends MethodElementPropUtil {
 		super(actionManager);
 	}
 	
-	public  ModifiedTypeMeta getMdtData(MethodElement element)  throws Exception {
+	public ModifiedTypeMeta getMdtMeta(MethodElement element) {
+		try {
+			return getMdtData(element);			
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		return null;
+	}
+	
+	private  ModifiedTypeMeta getMdtData(MethodElement element)  throws Exception {
 		MethodElementExt extendObject = getExtendObject(element, true);
 		if (extendObject != null && extendObject.getModifiedTypeMeta() instanceof ModifiedTypeMeta) {
 			ModifiedTypeMeta meta = (ModifiedTypeMeta) extendObject.getModifiedTypeMeta();
