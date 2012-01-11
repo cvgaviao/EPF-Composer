@@ -21,6 +21,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MeList;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
+import org.eclipse.epf.uma.util.QualifiedReferences;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
@@ -119,6 +120,7 @@ public class ExtendReferenceMap {
 			}
 		}
 		
+		Map<String, Set<MethodElement>> mdtQrValidSetMap = new HashMap<String, Set<MethodElement>>();
 		for (String name : referenceNames) {
 			String value = element.getAttribute(name);
 			if (value == null || value.length() == 0) {
@@ -126,7 +128,15 @@ public class ExtendReferenceMap {
 			}
 			UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
 			Set<MethodElement> validSet = null;
-			if (referenceSet != null && name.startsWith(QReference_)) {
+			if (name.startsWith(MdtQReference_)) {
+				int i0 = MdtQReference_.length();
+				int i1 = name.indexOf(QualifiedReferences.scopeSeperator);
+				if (i1 > i0) {
+					String parentRefName = name.substring(i0, i1);
+					validSet = getMdtQrValidSet(element, mdtQrValidSetMap,
+							uHandler, parentRefName);
+				}
+			} else if (referenceSet != null && name.startsWith(QReference_)) {
 				validSet = referenceSet;
 			}
 			MeList items = XmlEditUtil.convertToMethodElements(value, getRetrieveType(name), uHandler, validSet);
@@ -135,6 +145,21 @@ public class ExtendReferenceMap {
 				getMap().put(name, items);
 			}
 		}
+	}
+
+	private Set<MethodElement> getMdtQrValidSet(Element element,
+			Map<String, Set<MethodElement>> mdtQrValidSetMap,
+			UnresolvedGuidHandler uHandler, String parentRefName) {
+		Set<MethodElement> validSet;
+		validSet = mdtQrValidSetMap.get(parentRefName);
+		if (validSet == null) {
+			validSet = new HashSet<MethodElement>();
+			String parentRefValue = element.getAttribute(parentRefName);
+			MeList items = XmlEditUtil.convertToMethodElements(parentRefValue, getRetrieveType(parentRefName), uHandler, null);
+			validSet.addAll(items);
+			mdtQrValidSetMap.put(parentRefName, validSet);
+		}
+		return validSet;
 	}
 	
 	private EClass getRetrieveType(String referenceName) {
