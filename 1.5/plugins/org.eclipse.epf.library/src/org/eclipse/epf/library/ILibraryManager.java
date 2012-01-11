@@ -21,6 +21,7 @@ import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.ui.IPropertyListener;
 
@@ -334,5 +335,11 @@ public interface ILibraryManager {
 	public void setUserDefinedTypeLoaded(boolean b);
 	
 	public void prepareToLoadUserDefinedTypes();
+	
+	public Collection<ModifiedTypeMeta> getModifiedTypes();
+	
+	public void addModifiedType(ModifiedTypeMeta meta);
+		
+	public ModifiedTypeMeta getModifiedType(String id);
 	
 }

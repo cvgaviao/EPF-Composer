@@ -48,6 +48,7 @@ import org.eclipse.epf.persistence.migration.MappingUtil;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.osgi.util.NLS;
 
@@ -580,4 +581,21 @@ public class XMILibraryManager extends AbstractLibraryManager {
 	public void prepareToLoadUserDefinedTypes() {
 		userDefinedTypeMap = null;		
 	}
+	
+	private Map<String, ModifiedTypeMeta> modifiedTypeMap;
+	public Collection<ModifiedTypeMeta> getModifiedTypes() {
+		return modifiedTypeMap == null ? null : modifiedTypeMap.values();		
+	}
+	
+	public void addModifiedType(ModifiedTypeMeta meta) {
+		if (modifiedTypeMap == null) {
+			modifiedTypeMap = new HashMap<String, ModifiedTypeMeta>();
+		}
+		modifiedTypeMap.put(meta.getId(), meta);
+	}
+		
+	public ModifiedTypeMeta getModifiedType(String id) {
+		return modifiedTypeMap == null ? null : modifiedTypeMap.get(id);
+	}
+	
 }
