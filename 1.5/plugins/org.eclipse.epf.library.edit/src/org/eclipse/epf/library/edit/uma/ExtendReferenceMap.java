@@ -12,12 +12,15 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.XmlEditUtil;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MeList;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
@@ -29,6 +32,7 @@ public class ExtendReferenceMap {
 	
 	private static final String Opposite_ = "opposite_";			//$NON-NLS-1$
 	private static final String QReference_ = "qReference_";		//$NON-NLS-1$
+	private static final String MdtQReference_ = "mdtQReference_";		//$NON-NLS-1$
 	public static final String WSpace = "__ws__";					//$NON-NLS-1$
 	
 	private Map<String, Object> map;
@@ -45,6 +49,14 @@ public class ExtendReferenceMap {
 		if (refQualifieIds != null && ! refQualifieIds.isEmpty()) {
 			for (String qualifierId : refQualifieIds) {
 				String name = getQReferenceNameById(qualifierId);
+				referenceNames.add(name);
+			}
+		}
+		
+		refQualifieIds = getReferenceMdtQualifierIds(ownerElement);
+		if (refQualifieIds != null && ! refQualifieIds.isEmpty()) {
+			for (String qualifierId : refQualifieIds) {
+				String name = getMdtQReferenceNameById(qualifierId);
 				referenceNames.add(name);
 			}
 		}
@@ -65,6 +77,22 @@ public class ExtendReferenceMap {
 			for (EReference ref : meta.getQualifiedReferences()) {
 				refQualifieIds.add(ref.getName());
 			}		
+		}
+		return refQualifieIds;
+	}
+	
+	private List<String> getReferenceMdtQualifierIds(MethodElement element) {	
+		PropUtil propUtil = PropUtil.getPropUtil();
+		ModifiedTypeMeta meta = propUtil.getMdtMeta(element);
+		if (meta == null) {
+			return null;
+		}
+		
+		List<String> refQualifieIds = new ArrayList<String>();	
+		for (ExtendedReference extendRef : meta.getReferences()) {
+			for (EReference ref : extendRef.getQualifiedReferences()) {
+				refQualifieIds.add(ref.getName());
+			}
 		}
 		return refQualifieIds;
 	}
@@ -260,6 +288,14 @@ public class ExtendReferenceMap {
 	}
 	
 	public static String getQReferenceNameById(String qualifiedId) {
+		return getQReferenceNameById(qualifiedId, QReference_);
+	}
+	
+	public static String getMdtQReferenceNameById(String qualifiedId) {
+		return getQReferenceNameById(qualifiedId, MdtQReference_);
+	}
+	
+	private static String getQReferenceNameById(String qualifiedId, String prefix) {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < qualifiedId.length(); i++) {
 			char c = qualifiedId.charAt(i);
@@ -272,8 +308,9 @@ public class ExtendReferenceMap {
 		if (sb.length() != qualifiedId.length()) {
 			qualifiedId = sb.toString();
 		}
-		return QReference_ + qualifiedId;
+		return prefix + qualifiedId;
 	}
+	
 	
 	public boolean isMany(String name) {
 		return true;
