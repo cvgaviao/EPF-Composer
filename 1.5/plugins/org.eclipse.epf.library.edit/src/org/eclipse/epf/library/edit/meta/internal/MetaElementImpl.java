@@ -26,7 +26,7 @@ public class MetaElementImpl implements MetaElement, IMetaDef {
 		this.name = name;
 	}
 
-	public IMetaDef parse(Element element)	throws TypeDefException {
+	public IMetaDef parseElement(Element element)	throws TypeDefException {
 		return null;
 	}
 	

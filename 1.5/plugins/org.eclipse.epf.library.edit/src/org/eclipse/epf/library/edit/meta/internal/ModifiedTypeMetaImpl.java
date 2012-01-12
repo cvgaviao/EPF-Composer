@@ -19,7 +19,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		return references;
 	}
 	
-	public IMetaDef parse(Element element)	throws TypeDefException {
+	public IMetaDef parseElement(Element element)	throws TypeDefException {
 		return null;
 	}
 	

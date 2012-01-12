@@ -10,6 +10,6 @@ public interface IMetaDef {
 
 	public static final String ID = "id"; //$NON-NLS-1$
 	
-	public IMetaDef parse(Element element)	throws TypeDefException;
+	public IMetaDef parseElement(Element element)	throws TypeDefException;
 		
 }

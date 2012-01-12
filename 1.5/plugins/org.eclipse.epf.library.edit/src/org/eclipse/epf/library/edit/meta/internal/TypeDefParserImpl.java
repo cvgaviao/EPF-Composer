@@ -23,7 +23,7 @@ public class TypeDefParserImpl implements TypeDefParser {
 		for (int i = 0; i < size; i++) {
 			Element element = (Element) list.item(i);
 			IMetaDef typeDef = new ModifiedTypeMetaImpl();
-			typeDef.parse(element);
+			typeDef.parseElement(element);
 			typeDefList.add(typeDef);
 		}				
 		return typeDefList;

@@ -28,7 +28,7 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		return qReferences == null ? Collections.EMPTY_SET : qReferences.getQualifiedReferences();
 	}
 	
-	public IMetaDef parse(Element element)	throws TypeDefException {
+	public IMetaDef parseElement(Element element)	throws TypeDefException {
 		return null;
 	}
 }
