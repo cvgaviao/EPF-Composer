@@ -579,7 +579,8 @@ public class XMILibraryManager extends AbstractLibraryManager {
 	}
 	
 	public void prepareToLoadUserDefinedTypes() {
-		userDefinedTypeMap = null;		
+		userDefinedTypeMap = null;
+		modifiedTypeMap = null;
 	}
 	
 	private Map<String, ModifiedTypeMeta> modifiedTypeMap;
