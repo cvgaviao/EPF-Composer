@@ -2,8 +2,11 @@ package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.List;
 
+import org.eclipse.epf.library.edit.meta.ITypeDef;
+import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
+import org.w3c.dom.Element;
 
 public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTypeMeta {
 		
@@ -14,6 +17,10 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		
 	public List<ExtendedReference> getReferences() {
 		return references;
+	}
+	
+	public ITypeDef parse(Element element)	throws TypeDefException {
+		return null;
 	}
 	
 }

@@ -4,8 +4,11 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.epf.library.edit.meta.ITypeDef;
+import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.QualifiedReferences;
+import org.w3c.dom.Element;
 
 public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedReference {
 	private EReference ref;	
@@ -23,5 +26,9 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 	
 	public Set<EReference> getQualifiedReferences() {
 		return qReferences == null ? Collections.EMPTY_SET : qReferences.getQualifiedReferences();
+	}
+	
+	public ITypeDef parse(Element element)	throws TypeDefException {
+		return null;
 	}
 }

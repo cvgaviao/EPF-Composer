@@ -7,15 +7,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 
-public interface ExtendedReference {
-
-	public String getName();
-	
-	public void setName(String name);
-	
-	public String getId();
-
-	public void setId(String id);
+public interface ExtendedReference extends MetaElement {
 	
 	public EReference getReference();
 	

@@ -1,8 +1,11 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
+import org.eclipse.epf.library.edit.meta.ITypeDef;
+import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.MetaElement;
+import org.w3c.dom.Element;
 
-public class MetaElementImpl implements MetaElement {
+public class MetaElementImpl implements MetaElement, ITypeDef {
 
 	private String id;
 	private String name;
@@ -23,4 +26,8 @@ public class MetaElementImpl implements MetaElement {
 		this.name = name;
 	}
 
+	public ITypeDef parse(Element element)	throws TypeDefException {
+		return null;
+	}
+	
 }
