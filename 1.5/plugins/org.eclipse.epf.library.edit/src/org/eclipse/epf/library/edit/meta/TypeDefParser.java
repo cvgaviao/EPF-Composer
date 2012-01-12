@@ -6,6 +6,6 @@ import org.w3c.dom.Document;
 
 public interface TypeDefParser {
 
-	public List<ITypeDef> parse(Document doc) throws TypeDefException;
+	public List<IMetaDef> parse(Document doc) throws TypeDefException;
 	
 }

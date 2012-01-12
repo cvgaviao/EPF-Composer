@@ -2,7 +2,7 @@ package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.List;
 
-import org.eclipse.epf.library.edit.meta.ITypeDef;
+import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
@@ -19,7 +19,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		return references;
 	}
 	
-	public ITypeDef parse(Element element)	throws TypeDefException {
+	public IMetaDef parse(Element element)	throws TypeDefException {
 		return null;
 	}
 	
