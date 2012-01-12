@@ -7,41 +7,18 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 
-public class ExtendedReference {
+public interface ExtendedReference {
 
-	private String name;
-	private String id;
-	private EReference ref;	
-//	private ExtendedReference parent;		//for future nested extended reference structure
-
-	private QualifiedReferences qReferences;
-	private Set<EReference> scopedQualifiedReferences;
-
-	public String getName() {
-		return name;
-	}
-
-	public ExtendedReference() {		
-	}
+	public String getName();
 	
-	public void setName(String name) {
-		this.name = name;
-	}
+	public void setName(String name);
 	
-	public String getId() {
-		return id;
-	}
+	public String getId();
 
-	public void setId(String id) {
-		this.id = id;
-	}
+	public void setId(String id);
 	
-	public EReference getReference() {
-		return ref;
-	}
+	public EReference getReference();
 	
-	public Set<EReference> getQualifiedReferences() {
-		return qReferences == null ? Collections.EMPTY_SET : qReferences.getQualifiedReferences();
-	}
-		
+	public Set<EReference> getQualifiedReferences();
+	
 }

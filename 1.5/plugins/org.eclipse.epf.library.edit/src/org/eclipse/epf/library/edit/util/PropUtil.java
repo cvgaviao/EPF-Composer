@@ -4,9 +4,10 @@ import java.util.Map;
 
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
@@ -46,7 +47,7 @@ public class PropUtil extends MethodElementPropUtil {
 			ModifiedTypeMeta meta = (ModifiedTypeMeta) extendObject.getModifiedTypeMeta();
 			return meta == ModifiedTypeMeta.noneValue ? null : meta;
 		}
-		ModifiedTypeMeta meta = new ModifiedTypeMeta();
+		ModifiedTypeMeta meta = new ModifiedTypeMetaImpl();
 		
 		PropXmlEditUtil xmlEditUtil = new PropXmlEditUtil(element, this);
 		xmlEditUtil.retrieveMdtData(meta);
@@ -54,12 +55,12 @@ public class PropUtil extends MethodElementPropUtil {
 			return meta.getId() == null ? null : meta;
 		}
 		if (meta.getId() == null) {
-			meta = ModifiedTypeMeta.noneValue;
+			meta = null;
 		} else {
 			meta = LibraryEditUtil.getInstance().getModifiedType(meta.getId());
 		}
-		extendObject.setUserDefinedTypeMeta(meta);
-		return meta == ModifiedTypeMeta.noneValue ? null : meta;
+		extendObject.setModifiedTypeMeta(meta == null ? MetaElement.noneValue : meta);
+		return meta;
 	}
 	
 	private static class PropXmlEditUtil extends XmlEditUtil {
