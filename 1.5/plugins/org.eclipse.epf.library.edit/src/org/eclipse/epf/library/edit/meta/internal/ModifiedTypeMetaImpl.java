@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.epf.common.utils.XMLUtil;
@@ -18,6 +19,9 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 	}
 		
 	public List<ExtendedReference> getReferences() {
+		if (references == null) {
+			return Collections.EMPTY_LIST;
+		}
 		return references;
 	}
 	
@@ -32,6 +36,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		for (Element rElement : refenceElements) {
 			ExtendedReferenceImpl ref = new ExtendedReferenceImpl();
 			ref.parseElement(rElement);
+			references.add(ref);
 		}
 	}
 	
