@@ -55,14 +55,17 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		ref.eAdapters().add(this);
 		
 		qualifiedReferences = new ArrayList<QualifiedReference>();
-		List<Element> qElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.QUALIFIER);
-		if (qElements == null || qElements.isEmpty()) {
+		List<Element> rqElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.REFERENCE_QUALIFIERS);
+		if (rqElements == null || rqElements.isEmpty()) {
 			return;
 		}
-		for (Element rElement : qElements) {
-			QualifiedReferenceImpl q = new QualifiedReferenceImpl();
-			q.setNestedParent(this);
-			q.parseElement(rElement);
+		for (Element rqElement : rqElements) {
+			List<Element> qElements = XMLUtil.getChildElementsByTagName(rqElement, IMetaDef.QUALIFIER);
+			for (Element qElement : qElements) {
+				QualifiedReferenceImpl q = new QualifiedReferenceImpl();
+				q.setNestedParent(this);
+				q.parseElement(qElement);
+			}
 		}
 	}
 	
