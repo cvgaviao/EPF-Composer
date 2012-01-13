@@ -1,34 +1,85 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
-import java.util.Collections;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedReference;
-import org.eclipse.epf.uma.util.QualifiedReferences;
+import org.eclipse.epf.uma.util.QualifiedReference;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.w3c.dom.Element;
 
-public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedReference {
+public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedReference, Adapter {
 	private EReference ref;	
-//	private ExtendedReference parent;		//for future nested extended reference structure
+	private ExtendedReference nestedParent;		//for future nested extended reference structure
 
-	private QualifiedReferences qReferences;
-	private Set<EReference> scopedQualifiedReferences;
+	private List<QualifiedReference> qualifiedReferences;
 
 	public ExtendedReferenceImpl() {		
+	}
+	
+	protected ExtendedReferenceImpl(ExtendedReference netedParent) {
+		this.nestedParent = netedParent;
+	}
+	
+	public ExtendedReference getNestedParent() {
+		return nestedParent;
+	}
+	
+	public void setNestedParent(ExtendedReference nestedParent) {
+		this.nestedParent = nestedParent;
 	}
 	
 	public EReference getReference() {
 		return ref;
 	}
 	
-	public Set<EReference> getQualifiedReferences() {
-		return qReferences == null ? Collections.EMPTY_SET : qReferences.getQualifiedReferences();
+	protected void setReference(EReference ref) {
+		this.ref = ref;
 	}
 	
-	public IMetaDef parseElement(Element element)	throws TypeDefException {
+	public List<QualifiedReference> getQualifiedReferences() {
+		return qualifiedReferences;
+	}
+	
+	public void parseElement(Element element)	throws TypeDefException {
+		super.parseElement(element);
+		ref =  UmaUtil.createReference(getId());
+		ref.eAdapters().add(this);
+		
+		qualifiedReferences = new ArrayList<QualifiedReference>();
+		List<Element> qElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.QUALIFIER);
+		if (qElements == null || qElements.isEmpty()) {
+			return;
+		}
+		for (Element rElement : qElements) {
+			QualifiedReferenceImpl q = new QualifiedReferenceImpl();
+			q.setNestedParent(this);
+			q.parseElement(rElement);
+		}
+	}
+	
+	//Adapter interface methods ->
+	public void notifyChanged(Notification notification) {
+	}
+
+	public Notifier getTarget() {
 		return null;
 	}
+
+	public void setTarget(Notifier newTarget) {
+	}
+
+	public boolean isAdapterForType(Object type) {
+		return false;
+	}
+	//Adapter interface methods <-
+	
 }

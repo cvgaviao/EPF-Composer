@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
+import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.MetaElement;
@@ -26,8 +27,13 @@ public class MetaElementImpl implements MetaElement, IMetaDef {
 		this.name = name;
 	}
 
-	public IMetaDef parseElement(Element element)	throws TypeDefException {
-		return null;
+	public void parseElement(Element element)	throws TypeDefException {
+		id = element.getAttribute(IMetaDef.ID);
+		name = element.getAttribute(IMetaDef.NAME);;
+		Element nameElement = XMLUtil.getFirstChildElementByTagName(element, IMetaDef.NAME);
+		if (nameElement != null) {
+			name = element.getTextContent();
+		}		
 	}
 	
 }

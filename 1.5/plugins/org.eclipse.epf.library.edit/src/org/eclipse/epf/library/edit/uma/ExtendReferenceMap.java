@@ -21,6 +21,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MeList;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
+import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.QualifiedReferences;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -91,8 +92,8 @@ public class ExtendReferenceMap {
 		
 		List<String> refQualifieIds = new ArrayList<String>();	
 		for (ExtendedReference extendRef : meta.getReferences()) {
-			for (EReference ref : extendRef.getQualifiedReferences()) {
-				refQualifieIds.add(ref.getName());
+			for (QualifiedReference qref : extendRef.getQualifiedReferences()) {
+				refQualifieIds.add(qref.getReference().getName());
 			}
 		}
 		return refQualifieIds;

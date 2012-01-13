@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EContentsEList;
@@ -70,6 +71,15 @@ import org.eclipse.epf.uma.WorkProductType;
  */
 public class UmaUtil {
 
+	public static EReference createReference(String name) {
+		EReference ref =  EcoreFactory.eINSTANCE.createEReference();
+		ref.eSetDeliver(false);
+		ref.setName(name);
+		ref.setContainment(false);
+		ref.setUpperBound(ETypedElement.UNBOUNDED_MULTIPLICITY);
+		return ref;
+	}
+	
 	public static EReference MethodElement_UdtList = EcoreFactory.eINSTANCE.createEReference();
 	public static final String Unresolved = "unresolved";		//$NON-NLS-1$
 	static {

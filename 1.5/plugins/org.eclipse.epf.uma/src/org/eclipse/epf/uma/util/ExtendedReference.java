@@ -1,16 +1,15 @@
 package org.eclipse.epf.uma.util;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcoreFactory;
 
 public interface ExtendedReference extends MetaElement {
 	
+	public ExtendedReference getNestedParent();
+		
 	public EReference getReference();
 	
-	public Set<EReference> getQualifiedReferences();
+	public List<QualifiedReference> getQualifiedReferences();
 	
 }
