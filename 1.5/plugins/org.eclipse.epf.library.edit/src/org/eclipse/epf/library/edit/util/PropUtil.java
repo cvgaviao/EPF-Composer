@@ -1,12 +1,17 @@
 package org.eclipse.epf.library.edit.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
+import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -30,6 +35,14 @@ public class PropUtil extends MethodElementPropUtil {
 	
 	protected PropUtil(IActionManager actionManager) {
 		super(actionManager);
+	}
+	
+	public List<MethodElement> getExtendedReferenceList(MethodElement element, 	ExtendedReference meta, boolean toModify) {
+		List<MethodElement> value = (List<MethodElement>) getReferenceValue(meta.getId(), element, toModify);
+		if (value == null) {
+			return new ArrayList<MethodElement>();
+		}
+		return value;
 	}
 	
 	public ModifiedTypeMeta getMdtMeta(MethodElement element) {
