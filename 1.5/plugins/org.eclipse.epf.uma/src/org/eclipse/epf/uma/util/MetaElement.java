@@ -9,20 +9,17 @@ public interface MetaElement extends IUserDefinedTypeMeta {
 		public String getId() {
 			return null;
 		}
-		public void setId(String id) {			
-		}
 		public String getName() {
 			return null;
 		}
-		public void setName(String name) {			
+		public String getGlobalId() {
+			return null;
 		}
+
 	};
 		
-	
-	public String getId();
-	public void setId(String id);
-	
+	public String getId();	
 	public String getName();
-	public void setName(String name);	
+	public String getGlobalId();	
 	
 }

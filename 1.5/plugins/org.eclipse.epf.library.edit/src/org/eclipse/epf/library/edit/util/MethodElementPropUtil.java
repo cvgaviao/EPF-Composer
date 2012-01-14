@@ -463,7 +463,7 @@ public class MethodElementPropUtil {
 		return meXmlEditUtil.getReferenceValue(referenceName, element, toModify);
 	}
 	
-	private ExtendReferenceMap getCachedExtendReferenceMap(MethodElement element, boolean toModify) {
+	protected ExtendReferenceMap getCachedExtendReferenceMap(MethodElement element, boolean toModify) {
 		MethodElementExt extendObject = getExtendObject(element, toModify);
 		if (extendObject == null) {
 			return null;

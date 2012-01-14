@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.epf.library.edit.meta.internal.ExtendedReferenceImpl;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -34,34 +35,38 @@ public class ExtendReferenceMap {
 	
 	private static final String Opposite_ = "opposite_";			//$NON-NLS-1$
 	private static final String QReference_ = "qReference_";		//$NON-NLS-1$
-	private static final String MdtQReference_ = "mdtQReference_";		//$NON-NLS-1$
+	public static final String MdtQReference_ = "mdtQReference_";		//$NON-NLS-1$
 	public static final String WSpace = "__ws__";					//$NON-NLS-1$
 	
 	private Map<String, Object> map;
 	private Map<String, Object> oldValueMap;
 	private MethodElement ownerElement;
-	private List<String> referenceNames;
+//	private List<String> referenceNames;
+	private List<ExtendedReference> extendedReferences;
 	private boolean retrieved = false;
 
 	public ExtendReferenceMap(MethodElement ownerElement) {
 		this.ownerElement = ownerElement;
-		referenceNames = new ArrayList<String>();
-		referenceNames.add(UtdList);
+		extendedReferences = new ArrayList<ExtendedReference>();
+		extendedReferences.add(createLocalExtendedReference(UtdList));
 		List<String> refQualifieIds = getReferenceQualifierIds(ownerElement);
 		if (refQualifieIds != null && ! refQualifieIds.isEmpty()) {
 			for (String qualifierId : refQualifieIds) {
 				String name = getQReferenceNameById(qualifierId);
-				referenceNames.add(name);
+				extendedReferences.add(createLocalExtendedReference(name));
 			}
 		}
 		
-		refQualifieIds = getReferenceMdtQualifierIds(ownerElement);
-		if (refQualifieIds != null && ! refQualifieIds.isEmpty()) {
-			for (String qualifierId : refQualifieIds) {
-				String name = getMdtQReferenceNameById(qualifierId);
-				referenceNames.add(name);
-			}
+		List<ExtendedReference> refs = getAllMdtReferences(ownerElement);
+		if (refs != null ) {
+			extendedReferences.addAll(refs);
 		}
+	}
+	
+	private ExtendedReference createLocalExtendedReference(String globalId) {
+		ExtendedReferenceImpl ref = new ExtendedReferenceImpl();
+		ref.setGlobalId(globalId);
+		return ref;
 	}
 			
 	public boolean isRetrieved() {
@@ -83,20 +88,21 @@ public class ExtendReferenceMap {
 		return refQualifieIds;
 	}
 	
-	private List<String> getReferenceMdtQualifierIds(MethodElement element) {	
+	private List<ExtendedReference> getAllMdtReferences(MethodElement element) {	
 		PropUtil propUtil = PropUtil.getPropUtil();
 		ModifiedTypeMeta meta = propUtil.getMdtMeta(element);
 		if (meta == null) {
 			return null;
 		}
 		
-		List<String> refQualifieIds = new ArrayList<String>();	
+		List<ExtendedReference> references = new ArrayList<ExtendedReference>();	
 		for (ExtendedReference extendRef : meta.getReferences()) {
+			references.add(extendRef);
 			for (QualifiedReference qref : extendRef.getQualifiedReferences()) {
-				refQualifieIds.add(qref.getReference().getName());
+				references.add(qref);
 			}
 		}
-		return refQualifieIds;
+		return references;
 	}
 	
 	public MethodElement getOwnerElement() {
@@ -122,21 +128,17 @@ public class ExtendReferenceMap {
 		}
 		
 		Map<String, Set<MethodElement>> mdtQrValidSetMap = new HashMap<String, Set<MethodElement>>();
-		for (String name : referenceNames) {
+		for (ExtendedReference eRef : extendedReferences) {
+			String name = eRef.getGlobalId();
 			String value = element.getAttribute(name);
 			if (value == null || value.length() == 0) {
 				continue;
 			}
 			UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
 			Set<MethodElement> validSet = null;
-			if (name.startsWith(MdtQReference_)) {
-				int i0 = MdtQReference_.length();
-				int i1 = name.indexOf(QualifiedReferences.scopeSeperator);
-				if (i1 > i0) {
-					String parentRefName = name.substring(i0, i1);
-					validSet = getMdtQrValidSet(element, mdtQrValidSetMap,
-							uHandler, parentRefName);
-				}
+			if (eRef.getNestedParent() != null) {
+				validSet = getMdtQrValidSet(element, mdtQrValidSetMap,
+							uHandler, eRef.getNestedParent().getGlobalId());
 			} else if (referenceSet != null && name.startsWith(QReference_)) {
 				validSet = referenceSet;
 			}
@@ -250,6 +252,14 @@ public class ExtendReferenceMap {
 			((MeList) ovalue).remove(getOwnerElement());
 		}
 	}
+	
+	public void addOpposite(ExtendedReference reference, MethodElement element) {
+		addOpposite(reference.getGlobalId(), element);
+	}
+	
+	public void removeOpposite(ExtendedReference reference, MethodElement element) {
+		removeOpposite(reference.getGlobalId(), element);
+	}
 
 	public void set(String name, Object value) {
 		Object oldValue = get(name, false);
@@ -276,7 +286,8 @@ public class ExtendReferenceMap {
 	}
 	
 	public void storeReferencesToElement(Element element, boolean rollback) {
-		for (String name : referenceNames) {
+		for (ExtendedReference eRef : extendedReferences) {
+			String name = eRef.getGlobalId();
 			Object value = get(name, false);
 			if (rollback && getOldValueMap().containsKey(name)) {
 				value = getOldValueMap().get(name);
@@ -315,10 +326,6 @@ public class ExtendReferenceMap {
 	
 	public static String getQReferenceNameById(String qualifiedId) {
 		return getQReferenceNameById(qualifiedId, QReference_);
-	}
-	
-	public static String getMdtQReferenceNameById(String qualifiedId) {
-		return getQReferenceNameById(qualifiedId, MdtQReference_);
 	}
 	
 	private static String getQReferenceNameById(String qualifiedId, String prefix) {

@@ -93,6 +93,9 @@ public class PropUtil extends MethodElementPropUtil {
 		}	
 		
 		public void retrieveMdtData(ModifiedTypeMeta meta) throws Exception {
+			if (meta instanceof ModifiedTypeMetaImpl) {
+				return;
+			}
 			Map<String, String> map = null;
 			
 			String xmlString = getPropUtil().getStringValue(element, Me_mdtData);
@@ -103,17 +106,24 @@ public class PropUtil extends MethodElementPropUtil {
 			if (firstElement == null) {
 				return;
 			}				
-			String value = firstElement.getAttribute(_id);
-			if (value != null && value.length() > 0) {
-				meta.setId(value);
-			}
-			for (String name : UserDefinedTypeMeta.rteNames) {
-				value = firstElement.getAttribute(name);
-				if (value != null && value.length() > 0) {
-					map.put(name, value);
-				}
-			}
+			((ModifiedTypeMetaImpl) meta).parseElement(firstElement);
 		}
 	}
 	
+	public void addOpposite(ExtendedReference reference, MethodElement thisElement, MethodElement otherElement) {
+		ExtendReferenceMap map = getCachedExtendReferenceMap(thisElement, false);
+		if (map == null) {
+			return;
+		}
+		map.addOpposite(reference, otherElement);
+	}
+	
+	public void removeOpposite(ExtendedReference reference, MethodElement thisElement, MethodElement otherElement) {
+		ExtendReferenceMap map = getCachedExtendReferenceMap(thisElement, false);
+		if (map == null) {
+			return;
+		}
+		map.removeOpposite(reference, otherElement);
+	}
+
 }

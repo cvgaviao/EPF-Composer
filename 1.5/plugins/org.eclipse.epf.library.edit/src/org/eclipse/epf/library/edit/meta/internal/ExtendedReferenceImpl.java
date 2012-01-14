@@ -51,6 +51,9 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 	
 	public void parseElement(Element element)	throws TypeDefException {
 		super.parseElement(element);
+		if (element == null) {
+			return;
+		}
 		ref =  UmaUtil.createReference(getId());
 		ref.eAdapters().add(this);
 		

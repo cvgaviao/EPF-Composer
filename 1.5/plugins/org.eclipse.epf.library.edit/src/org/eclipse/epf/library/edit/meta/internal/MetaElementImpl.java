@@ -10,6 +10,7 @@ public class MetaElementImpl implements MetaElement, IMetaDef {
 
 	private String id;
 	private String name;
+	private String globalId;
 	
 	public String getId() {
 		return id;
@@ -26,10 +27,22 @@ public class MetaElementImpl implements MetaElement, IMetaDef {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getGlobalId() {
+		return globalId;
+	}
+	
+	public void setGlobalId(String globalId) {
+		this.globalId = globalId;
+	}
 
-	public void parseElement(Element element)	throws TypeDefException {
+	public void parseElement(Element element) throws TypeDefException {
+		if (element == null) {
+			return;
+		}
 		id = element.getAttribute(IMetaDef.ID);
-		name = element.getAttribute(IMetaDef.NAME);;
+		name = element.getAttribute(IMetaDef.NAME);
+		globalId = id;
 		Element nameElement = XMLUtil.getFirstChildElementByTagName(element, IMetaDef.NAME);
 		if (nameElement != null) {
 			name = element.getTextContent();
