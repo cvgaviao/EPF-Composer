@@ -55,7 +55,7 @@ public class PropUtil extends MethodElementPropUtil {
 	}
 	
 	private static String umaTypeScope = "org.eclipse.epf.uma.";		//$NON-NLS-1$	
-	public ModifiedTypeMeta getGlobalMdtData(MethodElement element) {
+	public ModifiedTypeMeta getGlobalMdtMeta(MethodElement element) {
 		String id = umaTypeScope + element.eClass().getName();
 		ModifiedTypeMeta meta = LibraryEditUtil.getInstance().getModifiedType(id);
 		return meta;

@@ -90,7 +90,7 @@ public class ExtendReferenceMap {
 	
 	private List<ExtendedReference> getAllMdtReferences(MethodElement element) {	
 		PropUtil propUtil = PropUtil.getPropUtil();
-		ModifiedTypeMeta meta = propUtil.getMdtMeta(element);
+		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
 		if (meta == null) {
 			return null;
 		}

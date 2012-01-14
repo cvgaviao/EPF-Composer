@@ -21,6 +21,7 @@ public class ChangeReferenceCommand extends MethodElementSetPropertyCommand {
 		super(element, MethodElementPropUtil.Me_references);
 		this.items = items;
 		this.remove = remove;
+		this.reference = reference;
 	}
 	
 	@Override
