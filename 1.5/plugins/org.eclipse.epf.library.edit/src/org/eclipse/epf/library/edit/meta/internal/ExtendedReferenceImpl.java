@@ -68,6 +68,7 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 				QualifiedReferenceImpl q = new QualifiedReferenceImpl();
 				q.setNestedParent(this);
 				q.parseElement(qElement);
+				qualifiedReferences.add(q);
 			}
 		}
 	}
@@ -87,5 +88,9 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		return false;
 	}
 	//Adapter interface methods <-
+	
+    public int compareTo(ExtendedReference o) {
+    	return getName().compareTo(o.getName());
+    }
 	
 }

@@ -23,7 +23,6 @@ import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MeList;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
-import org.eclipse.epf.uma.util.QualifiedReferences;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;

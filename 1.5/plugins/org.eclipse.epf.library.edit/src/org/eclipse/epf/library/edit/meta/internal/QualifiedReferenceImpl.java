@@ -8,7 +8,13 @@ import org.eclipse.epf.uma.util.QualifiedReference;
 import org.w3c.dom.Element;
 
 public class QualifiedReferenceImpl extends ExtendedReferenceImpl implements QualifiedReference {
-
+	
+	/**
+	 * Validation note:
+	 * (1) Uniqueness of names and id
+	 * (2) Reserved key words
+	 * (3) Forbidden chars
+	 */
 	public QualifiedReferenceImpl() {		
 	}
 	

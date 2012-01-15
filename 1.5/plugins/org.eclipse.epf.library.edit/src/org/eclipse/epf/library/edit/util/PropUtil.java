@@ -38,7 +38,7 @@ public class PropUtil extends MethodElementPropUtil {
 	}
 	
 	public List<MethodElement> getExtendedReferenceList(MethodElement element, 	ExtendedReference meta, boolean toModify) {
-		List<MethodElement> value = (List<MethodElement>) getReferenceValue(meta.getId(), element, toModify);
+		List<MethodElement> value = (List<MethodElement>) getReferenceValue(meta.getGlobalId(), element, toModify);
 		if (value == null) {
 			return new ArrayList<MethodElement>();
 		}
