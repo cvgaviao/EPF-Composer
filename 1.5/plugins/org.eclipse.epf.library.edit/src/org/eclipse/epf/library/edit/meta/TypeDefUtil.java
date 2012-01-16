@@ -1,5 +1,8 @@
 package org.eclipse.epf.library.edit.meta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -8,6 +11,7 @@ import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 
@@ -47,8 +51,8 @@ public class TypeDefUtil {
 		ref.eAdapters().add((Adapter) eRef);
 	}
 	
-	public ExtendedReference getAssociatedExtendedReference(EReference ref) {
-		for (Object adapter : ref.eAdapters()) {
+	public ExtendedReference getAssociatedExtendedReference(EStructuralFeature feature) {
+		for (Object adapter : feature.eAdapters()) {
 			if (adapter instanceof ExtendedReference) {
 				return (ExtendedReference) adapter;
 			}
