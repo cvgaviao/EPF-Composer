@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -55,7 +56,7 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 			return;
 		}
 		ref =  UmaUtil.createReference(getId());
-		ref.eAdapters().add(this);
+		TypeDefUtil.getInstance().associate(this, ref);
 		
 		qualifiedReferences = new ArrayList<QualifiedReference>();
 		List<Element> rqElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.REFERENCE_QUALIFIERS);

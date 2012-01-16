@@ -1,8 +1,13 @@
 package org.eclipse.epf.library.edit.meta;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
+import org.eclipse.epf.library.edit.util.PropUtil;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 
@@ -28,13 +33,42 @@ public class TypeDefUtil {
 		return null;
 	}
 	
-	public ExtendedReference getExtendedReference(EReference ref) {
+	public void associate(ExtendedReference eRef, EReference ref) {
+		if (! (eRef instanceof Adapter)) {
+			return;
+		}
+		int sz = ref.eAdapters().size();
+		for (int i = sz - 1; i >=0; i--) {
+			Object adapter = ref.eAdapters().get(i);
+			if (adapter instanceof ExtendedReference) {
+				ref.eAdapters().remove(i);
+			}
+		}
+		ref.eAdapters().add((Adapter) eRef);
+	}
+	
+	public ExtendedReference getAssociatedExtendedReference(EReference ref) {
 		for (Object adapter : ref.eAdapters()) {
 			if (adapter instanceof ExtendedReference) {
 				return (ExtendedReference) adapter;
 			}
 		}
 		return null;
+	}
+		
+	public Object eGet(EObject obj, EStructuralFeature feature) {
+		if (obj instanceof MethodElement) {
+			MethodElement element = (MethodElement) obj;
+			if (feature instanceof EReference) {
+				EReference ref = (EReference) feature;
+				ExtendedReference eRef = getAssociatedExtendedReference(ref);
+				if (eRef != null) {
+					PropUtil propUtil = PropUtil.getPropUtil();
+					return propUtil.getExtendedReferenceList(element, eRef, false);
+				}
+			}
+		}
+		return obj.eGet(feature);
 	}
 	
 }

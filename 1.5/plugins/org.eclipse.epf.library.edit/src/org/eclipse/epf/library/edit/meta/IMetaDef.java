@@ -4,7 +4,7 @@ import org.w3c.dom.Element;
 
 public interface IMetaDef {
 	
-	public static final String scopeSeperator = "-"; 							//$NON-NLS-1$
+	public static final String scopeSeperator = ".."; 							//$NON-NLS-1$
 
 	public static final String MODIFIED_TYPE = "modifiedType"; 					//$NON-NLS-1$
 	
