@@ -32,6 +32,7 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.ConfigHelperDelegate;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.PresentationContext;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -709,12 +710,14 @@ public class ConfigurationHelper {
 			MethodElement OwnerElement, EStructuralFeature feature,
 			MethodConfiguration config, FeatureValue values, ElementRealizer realizer) {
 		
+		TypeDefUtil typeDefUtil = TypeDefUtil.getInstance();
+		
 		// make sure this is a valid feature 
 		// for example, if an activity contributes to a Capability Pattern,
 		// some CapabilityPattern specific feature may not be a valid feature for the Activity
 //		List features = element.getInstanceProperties();
 		List features = LibraryUtil.getStructuralFeatures(element);
-		if ( !features.contains(feature) ) {
+		if ( !features.contains(feature) && typeDefUtil.getAssociatedExtendedReference(feature) == null) {
 			return;
 		}
 		
@@ -722,7 +725,8 @@ public class ConfigurationHelper {
 		VariabilityElement ve = getVariableOwner((OwnerElement == null) ? element
 				: OwnerElement);
 
-		Object value = element.eGet(feature);
+//		Object value = element.eGet(feature);
+		Object value = typeDefUtil.eGet(element, feature);
 
 		values.add(ve, value);
 
@@ -1341,6 +1345,8 @@ public class ConfigurationHelper {
 	 */
 	public static List calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, ElementRealizer realizer) {
+		TypeDefUtil typeDefUtil = TypeDefUtil.getInstance();
+		
 		if (feature == UmaUtil.MethodElement_UdtList) {
 			return getDelegate().calcUtdList(element, realizer);
 		}
@@ -1353,7 +1359,8 @@ public class ConfigurationHelper {
 			}
 		}
 		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
-			Object value = element.eGet(feature);
+//			Object value = element.eGet(feature);
+			Object value = typeDefUtil.eGet(element, feature);
 			if (value instanceof List) {
 				List listValue = new ArrayList((List) value); 
 				for (int i = 0; i < listValue.size(); i++) {
