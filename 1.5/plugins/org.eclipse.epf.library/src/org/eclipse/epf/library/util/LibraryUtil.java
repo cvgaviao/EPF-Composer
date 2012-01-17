@@ -66,6 +66,7 @@ import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -99,7 +100,10 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.IMeVisitor;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
+import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -1530,8 +1534,11 @@ public class LibraryUtil {
 		private Set<MethodElement> elementsToProcess = new HashSet<MethodElement>(); 
 		
 		public void visit(MethodElement element) {
-			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
-			if (propUtil.hasUdtList(element)) {
+			PropUtil propUtil = PropUtil.getPropUtil();
+			if (propUtil.getMdtMeta(element) != null) {
+				elementsToProcess.add(element);
+			
+			} else if (propUtil.hasUdtList(element)) {
 				elementsToProcess.add(element);
 				
 			} else if (element instanceof Practice) {
@@ -1544,8 +1551,17 @@ public class LibraryUtil {
 		}
 		
 		public void processElements() {
-			MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
+			PropUtil propUtil = PropUtil.getPropUtil();
 			for (MethodElement element : elementsToProcess) {
+				ModifiedTypeMeta modifiedTypeMeta = propUtil.getMdtMeta(element);
+				if (modifiedTypeMeta != null) {
+					for (ExtendedReference eRef : modifiedTypeMeta.getReferences()) {
+						propUtil.getExtendedReferenceList(element, eRef, false);
+						for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
+							propUtil.getExtendedReferenceList(element, qRef, false);
+						}
+					}
+				}
 				if (propUtil.hasUdtList(element)) {
 					propUtil.getUdtList(element, false);
 				}				
