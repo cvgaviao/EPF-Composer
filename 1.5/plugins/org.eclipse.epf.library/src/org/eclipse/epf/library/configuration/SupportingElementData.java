@@ -205,7 +205,7 @@ public class SupportingElementData extends ConfigDataBase {
 			replacerSet = configManager.getDependencyManager().getReplacerSet();
 		}		
 		
-		List properties = LibraryUtil.getStructuralFeatures(element);
+		List properties = LibraryUtil.getStructuralFeatures(element, true);
 		for (EStructuralFeature f: (List<EStructuralFeature>) properties) {			
 			if (!(f instanceof EReference)) {
 				continue;
