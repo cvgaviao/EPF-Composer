@@ -106,8 +106,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	
 	public static final String TAG_REFERENCE = "reference"; //$NON-NLS-1$
 	public static final String TAG_REFERENCELIST = "referenceList"; //$NON-NLS-1$
-	private static final String Att_ExtendeReference_1 = "ExtendedReference (format-1)";	//$NON-NLS-1$	
-	private static final String Att_ExtendeReference_2 = "ExtendedReference (format-2)";	//$NON-NLS-1$	
+	
+	//Use "new String" to make sure the following instances are not the same
+	private static final String Att_ExtendeReference_1 = new String("ExtendedReference");	//$NON-NLS-1$	
+	private static final String Att_ExtendeReference_2 = new String("ExtendedReference");	//$NON-NLS-1$	
 	
 	protected ElementLayoutManager layoutManager;
 
@@ -992,8 +994,11 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		} else if (feature instanceof ExtendedReference) {
 			ExtendedReference eRef = (ExtendedReference) feature;					
 			childXml.setAttribute("referenceId", eRef.getId());		//$NON-NLS-1$
-			childXml.setAttribute("referenceName", eRef.getName());	//$NON-NLS-1$			
-			if (Att_ExtendeReference_2.equals(referenceName)) {
+			childXml.setAttribute("referenceName", eRef.getName());	//$NON-NLS-1$
+			if (referenceName == Att_ExtendeReference_1) {
+				childXml.setAttribute("format", "immidate child list");	//$NON-NLS-1$ 	//$NON-NLS-2$
+				
+			} else if (referenceName == Att_ExtendeReference_2) {	
 				for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
 					List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
 							element, qRef.getReference(), layoutManager
@@ -1002,6 +1007,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 						addReferences(qRef, childXml, "Qualified references", list);		//$NON-NLS-1$
 					}
 				}
+				childXml.setAttribute("format", "nested list");	//$NON-NLS-1$	//$NON-NLS-2$
 			}
 		}
 		return childXml;
