@@ -11,9 +11,9 @@ import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
+import org.eclipse.epf.uma.util.QualifiedReference;
 
 public class TypeDefUtil {
 
@@ -73,6 +73,22 @@ public class TypeDefUtil {
 			}
 		}
 		return obj.eGet(feature);
+	}
+	
+	public List<EReference> getEAllReferences(MethodElement element) {
+		List<EReference> list = element.eClass().getEAllReferences();
+		PropUtil propUtil = PropUtil.getPropUtil();		
+		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
+		if (meta != null) {
+			list = new ArrayList<EReference>(list);
+			for (ExtendedReference eRef : meta.getReferences()) {
+				list.add(eRef.getReference());
+				for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
+					list.add(qRef.getReference());
+				}
+			}
+		}
+		return list;
 	}
 	
 }
