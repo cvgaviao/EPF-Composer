@@ -148,7 +148,7 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 			Set<MethodElement> referencedSet, MethodElement element) {
 		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		
-		List properties = LibraryUtil.getStructuralFeatures(element);
+		List properties = LibraryUtil.getStructuralFeatures(element, true);
 		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
 		if (propUtil.hasUdtList(element)) {
 			properties.add(UmaUtil.MethodElement_UdtList);
