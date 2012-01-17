@@ -1046,6 +1046,23 @@ public class LibraryUtil {
 	 * @param element
 	 * @return
 	 */
+	public static List getStructuralFeatures(MethodElement element, boolean addMdtReferences) {
+		List list = getStructuralFeatures(element);
+		if (addMdtReferences) {
+			PropUtil propUtil = PropUtil.getPropUtil();		
+			ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
+			if (meta != null) {
+				for (ExtendedReference eRef : meta.getReferences()) {
+					list.add(eRef.getReference());
+					for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
+						list.add(qRef.getReference());
+					}
+				}
+			}
+		}
+		return list;
+	}
+	
 	public static List getStructuralFeatures(MethodElement element) {
 		List properties = element.getInstanceProperties();
 
