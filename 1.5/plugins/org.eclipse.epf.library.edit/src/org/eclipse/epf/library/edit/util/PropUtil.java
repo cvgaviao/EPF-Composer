@@ -135,7 +135,7 @@ public class PropUtil extends MethodElementPropUtil {
 		if (! UmaUtil.isInLibrary(element)) {
 			return null;
 		}
-		return (MethodPlugin) element;
+		return element;
 	}
 	
 	public void setElement(MethodElement ownerElement, String propName, MethodElement element) {
