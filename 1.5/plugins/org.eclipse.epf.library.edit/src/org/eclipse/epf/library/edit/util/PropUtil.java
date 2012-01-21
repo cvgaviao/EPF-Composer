@@ -129,8 +129,8 @@ public class PropUtil extends MethodElementPropUtil {
 		map.removeOpposite(reference, otherElement);
 	}
 	
-	public MethodElement getElement(MethodConfiguration config, String propName) {
-		String guid = this.getStringValue(config, propName);
+	public MethodElement getElement(MethodElement ownerElement, String propName) {
+		String guid = this.getStringValue(ownerElement, propName);
 		MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
 		if (! UmaUtil.isInLibrary(element)) {
 			return null;
@@ -138,9 +138,9 @@ public class PropUtil extends MethodElementPropUtil {
 		return (MethodPlugin) element;
 	}
 	
-	public void setElement(MethodConfiguration config, String propName, MethodElement element) {
+	public void setElement(MethodElement ownerElement, String propName, MethodElement element) {
 		if (element != null) {
-			setStringValue(config, propName, element.getGuid());
+			setStringValue(ownerElement, propName, element.getGuid());
 		}
 	}
 
