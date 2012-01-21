@@ -842,4 +842,11 @@ public class LibraryEditUtil {
 	public ModifiedTypeMeta getModifiedType(String id) {
 		return getProvider() == null ? null : getProvider().getModifiedType(id);
 	}
+	
+	public MethodPackage getCoreContentPackage(MethodPlugin plugin) {
+		String[] path = new String[] { ModelStructure.CONTENT_PACKAGE_NAME,
+				ModelStructure.CORE_CONTENT_PACAKGE_NAME };
+		MethodPackage pkg = UmaUtil.findMethodPackage(plugin, path);
+		return pkg;
+	}
 }
