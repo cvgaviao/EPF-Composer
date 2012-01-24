@@ -1,5 +1,6 @@
 package org.eclipse.epf.authoring.ui;
 
+import org.eclipse.epf.authoring.ui.forms.TableViewerProviderDelegate;
 import org.eclipse.epf.authoring.ui.views.ConfigurationView;
 import org.eclipse.epf.authoring.ui.views.ConfigurationViewExtender;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
@@ -35,5 +36,8 @@ public class AuthoringUIExtensionManager {
 	public ConfigurationViewExtender createConfigurationViewExtender(ConfigurationView configurationView) {
 		return new ConfigurationViewExtender(configurationView);
 	}
-	
+		
+	public TableViewerProviderDelegate createTableViewerProviderDelegate() {
+		return new TableViewerProviderDelegate();
+	}
 }
