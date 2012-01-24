@@ -104,7 +104,7 @@ public class LibraryUIManager {
 
 	public static boolean DEBUG = LibraryUIPlugin.getDefault().isDebugging();
 
-	private static final String TOOLBAR_CONFIG_CONTRIBUTION_ID = "toolbar.config.contribution"; //$NON-NLS-1$
+	public static final String TOOLBAR_CONFIG_CONTRIBUTION_ID = "toolbar.config.contribution"; //$NON-NLS-1$
 
 	private static final String CONFIG_VIEW_ID = "org.eclipse.epf.authoring.ui.views.ConfigurationView"; //$NON-NLS-1$
 
