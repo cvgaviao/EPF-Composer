@@ -1300,6 +1300,18 @@ public final class TngUtil {
 		return obj;
 	}
 	
+	public static MethodElement getWrappedElement(Object obj) {
+		if (obj instanceof MethodElement) {
+			return (MethodElement) obj;
+		}
+		obj = unwrap(obj);
+		if (obj instanceof MethodElement) {
+			return (MethodElement) obj;
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * Returns boolean value based on whether object is wrapper object or not
 	 * @param obj
