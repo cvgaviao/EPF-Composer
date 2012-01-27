@@ -16,11 +16,13 @@ import java.util.List;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.authoring.ui.AuthoringUIExtensionManager;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewFindElementAction;
 import org.eclipse.epf.authoring.ui.dialogs.ContentElementsOrderDialog;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
+import org.eclipse.epf.authoring.ui.providers.FormPageProviderExtender;
 import org.eclipse.epf.authoring.ui.util.EditorsContextHelper;
 import org.eclipse.epf.authoring.ui.util.UIHelper;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
@@ -93,6 +95,8 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
  */
 public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
+	private FormPageProviderExtender providerExtender;
+
 	protected static final String PACKAGE_PREFIX = "AuthoringUI_"; //$NON-NLS-1$	
 
 	protected IStructuredContentProvider contentProviderSelected;
@@ -100,7 +104,10 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	protected ILabelProvider labelProviderSelected = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
-		public String getColumnText(Object object, int columnIndex) {			
+		public String getColumnText(Object object, int columnIndex) {
+			if (isProviderExtenderActive(1)) {
+				return getProviderExtender().getColumnText(object, columnIndex, 1);
+			}
 			return getDecorator(object) + TngUtil.getLabelWithPath(object); 
 		}
 	};
@@ -111,6 +118,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getColumnText(Object object, int columnIndex) {
+			if (isProviderExtenderActive(2)) {
+				return getProviderExtender().getColumnText(object, columnIndex, 2);
+			}
 			return TngUtil.getLabelWithPath(object);
 		}
 	};
@@ -121,6 +131,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getColumnText(Object object, int columnIndex) {
+			if (isProviderExtenderActive(3)) {
+				return getProviderExtender().getColumnText(object, columnIndex, 3);
+			}
 			return TngUtil.getLabelWithPath(object);
 		}
 	};
@@ -324,6 +337,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getText(Object object) {
+			if (isProviderExtenderActive(4)) {
+				return getProviderExtender().getText(object, 4);
+			}
 			if (object instanceof String) {
 				String str = ((String)object);
 				return CategorySortHelper.getSortTypeDisplayName(str);
@@ -345,8 +361,15 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
+		FormPageProviderExtender p = AuthoringUIExtensionManager.getInstance().createFormPageProviderExtender(this);
+		setProviderExtender(p);
 	}
 
+	protected boolean isProviderExtenderActive(int providerIx) {
+		FormPageProviderExtender p = getProviderExtender();
+		return p == null ? false : p.isActive(providerIx);
+	}
+	
 	/**
 	 * @see org.eclipse.ui.forms.editor.createFormContent(IManagedForm)
 	 */
@@ -1123,6 +1146,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		if (labelProviderSelected3 != null) {
 			labelProviderSelected3.dispose();
 		}
+		if (getProviderExtender() != null) {
+			getProviderExtender().dispose();
+		}
 		super.dispose();
 	}
 
@@ -1459,6 +1485,42 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	
 	protected String getDecorator(Object object) {
 		return ""; //$NON-NLS-1$
+	}
+	
+	protected FormPageProviderExtender getProviderExtender() {
+		return providerExtender;
+	}
+
+	private void setProviderExtender(FormPageProviderExtender providerExtender) {
+		this.providerExtender = providerExtender;
+	}
+	
+	public AdapterFactoryLabelProvider getLableProvider(int providerIx) {
+		ILabelProvider ret = null;
+		if (providerIx == 1) {
+			ret = labelProviderSelected;
+		} else if (providerIx == 2) {
+			ret = labelProviderSelected2;
+		} else if (providerIx == 3) {
+			ret = labelProviderSelected3;
+		} else if (providerIx == 4) {
+			ret = labelProviderSort;
+		}		
+		return (AdapterFactoryLabelProvider) ret;
+	}
+	
+	public AdapterFactoryLabelProvider getContentProvider(int providerIx) {
+		IStructuredContentProvider ret = null;
+		if (providerIx == 1) {
+			ret = contentProviderSelected;
+		} else if (providerIx == 2) {
+			ret = contentProviderSelected2;
+		} else if (providerIx == 3) {
+			ret = contentProviderSelected3;
+		} else if (providerIx == 4) {
+			ret = contentProviderSort;
+		}		
+		return (AdapterFactoryLabelProvider) ret;
 	}
 
 }
