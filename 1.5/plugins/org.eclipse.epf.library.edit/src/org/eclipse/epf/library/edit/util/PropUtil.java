@@ -130,6 +130,9 @@ public class PropUtil extends MethodElementPropUtil {
 	}
 	
 	public MethodElement getElement(MethodElement ownerElement, String propName) {
+		if (ownerElement == null) {
+			return null;
+		}
 		String guid = this.getStringValue(ownerElement, propName);
 		MethodElement element = LibraryEditUtil.getInstance().getMethodElement(guid);
 		if (! UmaUtil.isInLibrary(element)) {
