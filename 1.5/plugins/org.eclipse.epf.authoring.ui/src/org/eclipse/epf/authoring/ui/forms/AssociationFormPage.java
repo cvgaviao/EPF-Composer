@@ -1509,7 +1509,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		return (AdapterFactoryLabelProvider) ret;
 	}
 	
-	public AdapterFactoryLabelProvider getContentProvider(int providerIx) {
+	public AdapterFactoryContentProvider getContentProvider(int providerIx) {
 		IStructuredContentProvider ret = null;
 		if (providerIx == 1) {
 			ret = contentProviderSelected;
@@ -1520,7 +1520,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		} else if (providerIx == 4) {
 			ret = contentProviderSort;
 		}		
-		return (AdapterFactoryLabelProvider) ret;
+		return (AdapterFactoryContentProvider) ret;
 	}
 
 }
