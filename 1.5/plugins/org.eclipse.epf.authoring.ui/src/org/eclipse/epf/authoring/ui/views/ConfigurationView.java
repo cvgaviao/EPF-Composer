@@ -735,4 +735,9 @@ public class ConfigurationView extends AbstractBaseView implements
 		super.setSelection(selection);
 	}
 	
+	//temp code
+	public void setDiffName(String name) {
+		setPartName(name);
+	}
+	
 }
