@@ -44,6 +44,7 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.LibraryServiceUtil;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.layout.LayoutResources;
@@ -688,7 +689,8 @@ public class LibraryUIManager {
 					if (activePage != null) {
 						if (foundConfigView(activePage)
 								|| foundProcessEditor(activePage)
-								|| foundPerspective(activePage, REPORT_PERS_ID)) {
+								|| foundPerspective(activePage, REPORT_PERS_ID)
+								|| ConfigurationHelper.getDelegate().additionShowConfigSelectMenu(activePage)) {
 							showConfigurationContribution(coolBarMgr);
 						} else {
 							hideConfigurationContribution(coolBarMgr);

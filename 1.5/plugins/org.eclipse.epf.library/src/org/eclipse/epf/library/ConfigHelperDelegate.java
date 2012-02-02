@@ -619,4 +619,8 @@ public class ConfigHelperDelegate {
 	public void loadUserDefinedType() {
 	}
 	
+	public boolean additionShowConfigSelectMenu(IWorkbenchPage activePage) {
+		return false;
+	}
+	
 }
