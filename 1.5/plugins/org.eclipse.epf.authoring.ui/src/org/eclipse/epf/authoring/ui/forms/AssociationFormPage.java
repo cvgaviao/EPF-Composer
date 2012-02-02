@@ -13,6 +13,7 @@ package org.eclipse.epf.authoring.ui.forms;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -63,6 +64,8 @@ import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -95,19 +98,18 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
  */
 public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
-	private FormPageProviderExtender providerExtender;
-
 	protected static final String PACKAGE_PREFIX = "AuthoringUI_"; //$NON-NLS-1$	
 
+	private	Font boldFont;
+	
+	private FormPageProviderExtender providerExtender;
+	
 	protected IStructuredContentProvider contentProviderSelected;
 
 	protected ILabelProvider labelProviderSelected = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
-		public String getColumnText(Object object, int columnIndex) {
-			if (isProviderExtenderActive(1)) {
-				return getProviderExtender().getColumnText(object, columnIndex, 1);
-			}
+		public String getColumnText(Object object, int columnIndex) {			
 			return getDecorator(object) + TngUtil.getLabelWithPath(object); 
 		}
 	};
@@ -118,9 +120,6 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getColumnText(Object object, int columnIndex) {
-			if (isProviderExtenderActive(2)) {
-				return getProviderExtender().getColumnText(object, columnIndex, 2);
-			}
 			return TngUtil.getLabelWithPath(object);
 		}
 	};
@@ -131,9 +130,6 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getColumnText(Object object, int columnIndex) {
-			if (isProviderExtenderActive(3)) {
-				return getProviderExtender().getColumnText(object, columnIndex, 3);
-			}
 			return TngUtil.getLabelWithPath(object);
 		}
 	};
@@ -337,9 +333,6 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getText(Object object) {
-			if (isProviderExtenderActive(4)) {
-				return getProviderExtender().getText(object, 4);
-			}
 			if (object instanceof String) {
 				String str = ((String)object);
 				return CategorySortHelper.getSortTypeDisplayName(str);
@@ -354,6 +347,11 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	public AssociationFormPage(FormEditor editor, String id, String name) {
 		super(editor, id, name);
 		this.editorTabName = name;
+		FormPageProviderExtender p = AuthoringUIExtensionManager.getInstance().createFormPageProviderExtender(this);
+		AdapterFactory adapterFactory = TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory();
+		labelProviderSelected = p.newLabelProvider(adapterFactory, 1);
+		labelProviderSelected2 = p.newLabelProvider(adapterFactory, 2);
+		labelProviderSelected3 = p.newLabelProvider(adapterFactory, 3);
 	}
 
 	/**
@@ -361,15 +359,8 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
-		FormPageProviderExtender p = AuthoringUIExtensionManager.getInstance().createFormPageProviderExtender(this);
-		setProviderExtender(p);
 	}
 
-	protected boolean isProviderExtenderActive(int providerIx) {
-		FormPageProviderExtender p = getProviderExtender();
-		return p == null ? false : p.isActive(providerIx);
-	}
-	
 	/**
 	 * @see org.eclipse.ui.forms.editor.createFormContent(IManagedForm)
 	 */
@@ -1146,9 +1137,6 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		if (labelProviderSelected3 != null) {
 			labelProviderSelected3.dispose();
 		}
-		if (getProviderExtender() != null) {
-			getProviderExtender().dispose();
-		}
 		super.dispose();
 	}
 
@@ -1483,44 +1471,24 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		}
 	}
 	
-	protected String getDecorator(Object object) {
+	public String getDecorator(Object object) {
 		return ""; //$NON-NLS-1$
 	}
 	
-	protected FormPageProviderExtender getProviderExtender() {
-		return providerExtender;
-	}
-
-	private void setProviderExtender(FormPageProviderExtender providerExtender) {
-		this.providerExtender = providerExtender;
-	}
-	
-	public AdapterFactoryLabelProvider getLableProvider(int providerIx) {
-		ILabelProvider ret = null;
-		if (providerIx == 1) {
-			ret = labelProviderSelected;
-		} else if (providerIx == 2) {
-			ret = labelProviderSelected2;
-		} else if (providerIx == 3) {
-			ret = labelProviderSelected3;
-		} else if (providerIx == 4) {
-			ret = labelProviderSort;
-		}		
-		return (AdapterFactoryLabelProvider) ret;
+	public Font getBoldFont() {
+		if (boldFont == null) {
+			boldFont = createFont(SWT.BOLD);
+		}
+		return boldFont;
 	}
 	
-	public AdapterFactoryContentProvider getContentProvider(int providerIx) {
-		IStructuredContentProvider ret = null;
-		if (providerIx == 1) {
-			ret = contentProviderSelected;
-		} else if (providerIx == 2) {
-			ret = contentProviderSelected2;
-		} else if (providerIx == 3) {
-			ret = contentProviderSelected3;
-		} else if (providerIx == 4) {
-			ret = contentProviderSort;
-		}		
-		return (AdapterFactoryContentProvider) ret;
-	}
+    private Font createFont(int style) {
+		FontData[] fontdata = Display.getCurrent().getSystemFont().getFontData();
+		for (FontData data : fontdata) {
+			data.setStyle(style);
+		}
+		
+		return new Font(Display.getCurrent(), fontdata);    	
+    }
 
 }

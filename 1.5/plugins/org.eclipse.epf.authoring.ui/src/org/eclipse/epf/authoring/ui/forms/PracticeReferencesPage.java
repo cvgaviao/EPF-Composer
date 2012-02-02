@@ -551,7 +551,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 		}
 	}
 	
-	protected String getDecorator(Object object) {
+	public String getDecorator(Object object) {
 		if (PracticePropUtil.getPracticePropUtil().isUdtType(practice)) {
 			StringBuffer buf = new StringBuffer();
 			List<String> allQualifiers = getAllQualifierNames((MethodElement)object);
