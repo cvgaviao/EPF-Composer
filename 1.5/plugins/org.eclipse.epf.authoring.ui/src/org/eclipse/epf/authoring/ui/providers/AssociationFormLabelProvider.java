@@ -23,6 +23,11 @@ public class AssociationFormLabelProvider extends AdapterFactoryLabelProvider
 		implements ITableFontProvider {
 	
 	private FormPageProviderExtender providerExtender;
+
+	protected void setProviderExtender(FormPageProviderExtender providerExtender) {
+		this.providerExtender = providerExtender;
+	}
+
 	private int ix;
 	public AssociationFormLabelProvider(AdapterFactory adapterFactory, FormPageProviderExtender providerExtender, int ix) {
 		super(adapterFactory);
@@ -49,5 +54,13 @@ public class AssociationFormLabelProvider extends AdapterFactoryLabelProvider
     	super.dispose();
     	providerExtender = null;
     }
+	
+	protected FormPageProviderExtender getProviderExtender() {
+		return providerExtender;
+	}
+    
+	protected int getIx() {
+		return ix;
+	}
 	
 }

@@ -16,7 +16,6 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.UmaPackage;
 
 /**
  * @author Weiping Lu
@@ -35,6 +34,15 @@ public class FormPageProviderExtender {
 	
 	public AssociationFormLabelProvider newLabelProvider(AdapterFactory adapterFactory, int ix) {
 			return new AssociationFormLabelProvider(adapterFactory, this, ix);
+	}
+	
+	protected MethodConfiguration getConfig() {
+		return LibraryService.getInstance().getCurrentMethodConfiguration();
+	}
+	
+	protected ElementRealizer newRealizer() {
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(getConfig());
+		return realizer;
 	}
 	
 }
