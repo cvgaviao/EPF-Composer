@@ -727,8 +727,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 						for (int i = 0; i < items.length; i++) {
 							selectedList.add(items[i].getData());
 						}
-						if (getProviderExtender().useContentProviderAPIs(1)) {
-							if (getProviderExtender().handleAddItems(selectedList, 1)) {
+						if (getProviderExtender().useContentProviderAPIs()) {
+							if (getProviderExtender().handleAddItems(viewer_selected.getSelection(), 1)) {
+								refreshViewers();
 								return;
 							}
 						}
@@ -829,8 +830,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 						for (int i = 0; i < items.length; i++) {
 							selectedList.add(items[i].getData());
 						}
-						if (getProviderExtender().useContentProviderAPIs(2)) {
-							if (getProviderExtender().handleAddItems(selectedList, 2)) {
+						if (getProviderExtender().useContentProviderAPIs()) {
+							if (getProviderExtender().handleAddItems(viewer_selected2.getSelection(), 2)) {
+								refreshViewers();
 								return;
 							}
 						}
@@ -922,8 +924,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 						for (int i = 0; i < items.length; i++) {
 							selectedList.add(items[i].getData());
 						}
-						if (getProviderExtender().useContentProviderAPIs(3)) {
-							if (getProviderExtender().handleAddItems(selectedList, 3)) {
+						if (getProviderExtender().useContentProviderAPIs()) {
+							if (getProviderExtender().handleAddItems(viewer_selected3.getSelection(), 3)) {
+								refreshViewers();
 								return;
 							}
 						}
@@ -1527,6 +1530,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	}
 
 	public List<?> retrieveTableViewerContents(TableViewer viewer) {
+		if (getProviderExtender().useContentProviderAPIs()) {
+			return Collections.EMPTY_LIST;
+		}
 		return super.retrieveTableViewerContents(viewer);
 	}
 	

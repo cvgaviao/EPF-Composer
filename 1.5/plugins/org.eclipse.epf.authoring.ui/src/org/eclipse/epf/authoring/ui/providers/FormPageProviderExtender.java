@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.providers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -18,6 +19,8 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 
 /**
  * @author Weiping Lu
@@ -30,7 +33,7 @@ public class FormPageProviderExtender {
 		this.formPage = formPage;
 	}
 	
-	public boolean useContentProviderAPIs(int ix) {
+	public boolean useContentProviderAPIs() {
 		return false;
 	}
 	
@@ -38,7 +41,7 @@ public class FormPageProviderExtender {
 		return new Object[0];
 	}
 	
-	public boolean handleAddItems(List selectedList, int ix) {
+	public boolean handleAddItems(ISelection selection, int ix) {
 		return false;
 	}
 	
@@ -59,6 +62,13 @@ public class FormPageProviderExtender {
 		return realizer;
 	}
 		
+	protected List getSelectionList(ISelection selection) {
+		if (! (selection instanceof IStructuredSelection)) {
+			return Collections.EMPTY_LIST;
+		}
+		return ((IStructuredSelection) selection).toList();
+	}
+	
 	public void dispose() {		
 	}
 	
