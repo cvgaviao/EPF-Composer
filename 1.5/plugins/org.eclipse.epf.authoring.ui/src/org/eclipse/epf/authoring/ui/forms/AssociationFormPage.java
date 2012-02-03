@@ -103,7 +103,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	private	Font boldFont;
 	
 	private FormPageProviderExtender providerExtender;
-	
+
 	protected IStructuredContentProvider contentProviderSelected;
 
 	protected ILabelProvider labelProviderSelected = new AdapterFactoryLabelProvider(
@@ -347,11 +347,11 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	public AssociationFormPage(FormEditor editor, String id, String name) {
 		super(editor, id, name);
 		this.editorTabName = name;
-		FormPageProviderExtender p = AuthoringUIExtensionManager.getInstance().createFormPageProviderExtender(this);
+		providerExtender = AuthoringUIExtensionManager.getInstance().createFormPageProviderExtender(this);
 		AdapterFactory adapterFactory = TngAdapterFactory.INSTANCE.getNavigatorView_ComposedAdapterFactory();
-		labelProviderSelected = p.newLabelProvider(adapterFactory, 1);
-		labelProviderSelected2 = p.newLabelProvider(adapterFactory, 2);
-		labelProviderSelected3 = p.newLabelProvider(adapterFactory, 3);
+		labelProviderSelected = providerExtender.newLabelProvider(adapterFactory, 1);
+		labelProviderSelected2 = providerExtender.newLabelProvider(adapterFactory, 2);
+		labelProviderSelected3 = providerExtender.newLabelProvider(adapterFactory, 3);
 	}
 
 	/**
@@ -1137,6 +1137,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		if (labelProviderSelected3 != null) {
 			labelProviderSelected3.dispose();
 		}
+		if (providerExtender != null) {
+			providerExtender.dispose();
+		}
 		super.dispose();
 	}
 
@@ -1490,5 +1493,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		
 		return new Font(Display.getCurrent(), fontdata);    	
     }
+    
+	protected FormPageProviderExtender getProviderExtender() {
+		return providerExtender;
+	}
 
 }

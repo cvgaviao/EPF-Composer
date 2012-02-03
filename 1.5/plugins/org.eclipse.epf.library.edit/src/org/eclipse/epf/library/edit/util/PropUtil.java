@@ -23,6 +23,7 @@ import org.w3c.dom.Element;
 public class PropUtil extends MethodElementPropUtil {
 
 	public static final String Me_mdtData = "me_mdtData";					//$NON-NLS-1$
+	public static final String Me_customize = "me_customize";					//$NON-NLS-1$
 	
 	private static PropUtil propUtil = new PropUtil();
 	public static PropUtil getPropUtil(IActionManager actionManager) {
@@ -38,6 +39,15 @@ public class PropUtil extends MethodElementPropUtil {
 	
 	protected PropUtil(IActionManager actionManager) {
 		super(actionManager);
+	}
+	
+	public boolean isCustomize(MethodElement element) {
+		Boolean value = getBooleanValue(element, Me_customize);
+		return value == null ? false : value.booleanValue();
+	}
+	
+	public void setCustomize(MethodElement element, boolean b) {
+		setBooleanValue(element, Me_customize, b);
 	}
 	
 	public List<MethodElement> getExtendedReferenceList(MethodElement element, 	ExtendedReference meta, boolean toModify) {

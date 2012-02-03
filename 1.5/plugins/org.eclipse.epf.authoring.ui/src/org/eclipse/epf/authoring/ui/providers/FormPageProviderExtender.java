@@ -16,6 +16,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.Task;
 
 /**
  * @author Weiping Lu
@@ -26,6 +27,14 @@ public class FormPageProviderExtender {
 
 	public FormPageProviderExtender(AssociationFormPage formPage) {
 		this.formPage = formPage;
+	}
+	
+	public boolean useContentProviderAPIs(int ix) {
+		return false;
+	}
+	
+	public Object[] getElements(Object object, int ix) {
+		return new Object[0];
 	}
 	
 	public AssociationFormPage getFormPage() {
@@ -43,6 +52,9 @@ public class FormPageProviderExtender {
 	protected ElementRealizer newRealizer() {
 		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(getConfig());
 		return realizer;
+	}
+	
+	public void dispose() {		
 	}
 	
 }

@@ -36,6 +36,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.SectionList;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -922,6 +923,10 @@ public class ConfigurationHelper {
 		boolean extendReplace = isExtendReplacer(ve) || 
 				ElementRealizer.isExtendReplaceEnabled() && isReplacer(ve);
 		boolean isExtender = isExtender(ve);
+		
+		if (extendReplace && PropUtil.getPropUtil().isCustomize(ve)) {
+			return;
+		}
 		
 		if (isExtender || extendReplace) {
 			boolean mergebase = false;

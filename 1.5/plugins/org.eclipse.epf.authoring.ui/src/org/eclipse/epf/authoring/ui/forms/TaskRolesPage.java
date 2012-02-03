@@ -75,6 +75,9 @@ public class TaskRolesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs(1)) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				return ((Task) object).getPerformedBy().toArray();
 			}
 		};
