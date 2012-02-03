@@ -11,6 +11,7 @@
 package org.eclipse.epf.authoring.ui.forms;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -201,6 +202,19 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
 	protected String selectedLabel3 = "Selected Label 3"; //$NON-NLS-1$
 
+	public void addItemsToMode(List items, int ix) {
+		ArrayList newItems = items instanceof ArrayList ? (ArrayList) items : new ArrayList(items);		
+		if (ix == 1) {
+			addItemsToModel1(newItems);
+		}
+		if (ix == 2) {
+			addItemsToModel2(newItems);	
+		}
+		if (ix == 3) {
+			addItemsToModel3(newItems);	
+		}
+	}
+	
 	// Data model methods.
 	protected void addItemsToModel1(ArrayList newItems) {
 	}
@@ -713,7 +727,11 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 						for (int i = 0; i < items.length; i++) {
 							selectedList.add(items[i].getData());
 						}
-
+						if (getProviderExtender().useContentProviderAPIs(1)) {
+							if (getProviderExtender().handleAddItems(selectedList, 1)) {
+								return;
+							}
+						}
 						if (getFilter() != null) {
 							ItemsFilterDialog fd = new ItemsFilterDialog(
 									PlatformUI.getWorkbench()
@@ -811,6 +829,11 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 						for (int i = 0; i < items.length; i++) {
 							selectedList.add(items[i].getData());
 						}
+						if (getProviderExtender().useContentProviderAPIs(2)) {
+							if (getProviderExtender().handleAddItems(selectedList, 2)) {
+								return;
+							}
+						}
 						if (getFilter2() != null) {
 							ItemsFilterDialog fd = new ItemsFilterDialog(
 									PlatformUI.getWorkbench()
@@ -898,6 +921,11 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 						List selectedList = new ArrayList();
 						for (int i = 0; i < items.length; i++) {
 							selectedList.add(items[i].getData());
+						}
+						if (getProviderExtender().useContentProviderAPIs(3)) {
+							if (getProviderExtender().handleAddItems(selectedList, 3)) {
+								return;
+							}
 						}
 						if (getFilter3() != null) {
 							ItemsFilterDialog fd = new ItemsFilterDialog(
@@ -1498,4 +1526,8 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		return providerExtender;
 	}
 
+	public List<?> retrieveTableViewerContents(TableViewer viewer) {
+		return super.retrieveTableViewerContents(viewer);
+	}
+	
 }

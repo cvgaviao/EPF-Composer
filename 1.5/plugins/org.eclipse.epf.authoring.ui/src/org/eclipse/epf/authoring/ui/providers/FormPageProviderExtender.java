@@ -10,13 +10,14 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.authoring.ui.providers;
 
+import java.util.List;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.epf.authoring.ui.forms.AssociationFormPage;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.uma.MethodConfiguration;
-import org.eclipse.epf.uma.Task;
 
 /**
  * @author Weiping Lu
@@ -37,6 +38,10 @@ public class FormPageProviderExtender {
 		return new Object[0];
 	}
 	
+	public boolean handleAddItems(List selectedList, int ix) {
+		return false;
+	}
+	
 	public AssociationFormPage getFormPage() {
 		return formPage;
 	}
@@ -53,7 +58,7 @@ public class FormPageProviderExtender {
 		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(getConfig());
 		return realizer;
 	}
-	
+		
 	public void dispose() {		
 	}
 	
