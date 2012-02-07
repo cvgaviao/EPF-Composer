@@ -164,8 +164,10 @@ public class ConfigurationView extends AbstractBaseView implements
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
 				AuthoringUIHelpContexts.CONFIGURATION_VIEW_CONTEXT);
 
-		editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
-				new BasicCommandStack());
+//		editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
+//				new BasicCommandStack());				
+		editingDomain = newEditingDomain();
+		
 		adapterFactory = (ComposedAdapterFactory) editingDomain
 				.getAdapterFactory();
 
@@ -188,6 +190,11 @@ public class ConfigurationView extends AbstractBaseView implements
 				AuthoringUIPlugin.getDefault().getLogger().logError(e);
 			}
 		}
+	}
+	
+	protected AdapterFactoryEditingDomain newEditingDomain() {
+		return new AdapterFactoryEditingDomain(adapterFactory,
+				new BasicCommandStack());
 	}
 	
 	/** 
