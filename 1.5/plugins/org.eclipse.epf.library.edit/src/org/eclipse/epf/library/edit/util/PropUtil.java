@@ -47,8 +47,8 @@ public class PropUtil extends MethodElementPropUtil {
 		return value == null ? false : value.booleanValue();
 	}
 	
-	public void setEdited(MethodElement element, boolean b) {
-		setBooleanValue(element, Me_edited, b);
+	public void setCustomize(MethodElement element, boolean b) {
+		setBooleanValue(element, Me_customize, b);
 	}
 	
 	public boolean isEdited(MethodElement element) {
@@ -56,7 +56,7 @@ public class PropUtil extends MethodElementPropUtil {
 		return value == null ? false : value.booleanValue();
 	}
 	
-	public void setCustomize(MethodElement element, boolean b) {
+	public void setEdited(MethodElement element, boolean b) {
 		setBooleanValue(element, Me_edited, b);
 	}
 	
