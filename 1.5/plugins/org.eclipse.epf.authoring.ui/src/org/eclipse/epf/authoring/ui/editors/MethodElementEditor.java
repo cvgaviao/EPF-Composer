@@ -84,6 +84,7 @@ import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.persistence.ILibraryResource;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -1327,6 +1328,7 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 			Collection<Resource> resourcesToAdjustLocation = null;
 			
+			PropUtil.getPropUtil(getActionManager()).setEdited(elementObj, true);
 			try {
 				persister.getSaveOptions().put(
 						ILibraryPersister.FailSafeMethodLibraryPersister.OPTIONS_OVERWRITABLE_RESOURCES, 
