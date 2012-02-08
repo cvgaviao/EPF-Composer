@@ -52,7 +52,7 @@ public class PropUtil extends MethodElementPropUtil {
 	}
 	
 	public boolean isEdited(MethodElement element) {
-		Boolean value = getBooleanValue(element, Me_customize);
+		Boolean value = getBooleanValue(element, Me_edited);
 		return value == null ? false : value.booleanValue();
 	}
 	
