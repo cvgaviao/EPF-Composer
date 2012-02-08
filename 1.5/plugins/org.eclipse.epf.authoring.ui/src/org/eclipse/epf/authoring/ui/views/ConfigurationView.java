@@ -522,6 +522,11 @@ public class ConfigurationView extends AbstractBaseView implements
 		return (ConfigurationView)ViewHelper.findView(VIEW_ID, show);
 	}
 
+	public static ConfigurationView getView(String viewId) {
+		boolean show = ViewHelper.isViewInCurrentPerspective(viewId);
+		return (ConfigurationView)ViewHelper.findView(viewId, show);
+	}
+	
 	/**
 	 * @see org.eclipse.epf.authoring.ui.views.AbstractBaseView#getViewer()
 	 */
