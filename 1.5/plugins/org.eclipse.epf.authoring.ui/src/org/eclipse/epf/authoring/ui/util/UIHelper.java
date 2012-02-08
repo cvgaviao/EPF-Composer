@@ -12,11 +12,14 @@ package org.eclipse.epf.authoring.ui.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.BreakdownElementEditorInput;
@@ -26,8 +29,10 @@ import org.eclipse.epf.diagram.core.part.AbstractDiagramEditor;
 import org.eclipse.epf.diagram.core.part.DiagramEditorInput;
 import org.eclipse.epf.diagram.core.part.DiagramEditorInputProxy;
 import org.eclipse.epf.diagram.ui.service.DiagramEditorHelper;
+import org.eclipse.epf.library.edit.IModifyChecker;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
+import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -56,7 +61,9 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.osgi.util.TextProcessor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorInput;
@@ -604,5 +611,52 @@ public class UIHelper {
 				}
 			}
 		});
+	}
+	
+	public static boolean checkModify(Resource res, Shell shell) {
+		return checkModify(Collections.singleton(res), shell);
+	}
+	
+	public static class ModifyChecker implements IModifyChecker {
+		private Shell shell;
+		
+		public ModifyChecker() {
+		}
+		
+		public ModifyChecker(Shell shell) {
+			this.shell = shell;
+		}
+		
+		public boolean checkModify(Resource res) {
+			return UIHelper.checkModify(res, shell);
+		}
+
+		public boolean checkModify(Collection<Resource> modifiedResources) {
+			return UIHelper.checkModify(modifiedResources, shell);	
+		}
+	}
+	
+	public static boolean checkModify(Collection modifiedResources, Shell shell) {
+		if (shell == null) {
+			Display display = Display.getCurrent();
+			if (display != null) {
+				shell = display.getActiveShell();
+			}
+		}
+		IStatus status = UserInteractionHelper.checkModify(modifiedResources,
+				shell);
+		if (!status.isOK()) {
+			handleError(status);
+			return false;
+		}
+		return true;
+	}
+
+	private static void handleError(IStatus status) {
+		AuthoringUIPlugin
+				.getDefault()
+				.getMsgDialog()
+				.display(AuthoringUIResources.errorDialog_title,
+						AuthoringUIResources.editDialog_msgCannotEdit, status);
 	}
 }
