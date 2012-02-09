@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
-import org.eclipse.epf.library.edit.uma.MethodElementExt.MethodPluginExt;
+import org.eclipse.epf.library.edit.uma.MethodPluginExt;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;

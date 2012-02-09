@@ -11,7 +11,6 @@ import java.util.Set;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
@@ -133,31 +132,6 @@ public class MethodElementExt extends ExtendObject {
 		
 	}
 
-	public static class MethodPluginExt extends MethodElementExt {
-		
-		private boolean wpStatesLoaded = false;
-		public MethodPluginExt(MethodPlugin plugin, ExtendObject oldObj) {
-			super(plugin, oldObj);
-		}	
-		
-		@Override
-		protected void copy(ExtendObject oldObj) {
-			super.copy(oldObj);
-			if (! (oldObj instanceof MethodPluginExt)) {
-				return;
-			}
-			MethodPluginExt old = (MethodPluginExt) oldObj;			
-			wpStatesLoaded = old.wpStatesLoaded;
-		}
-		
-		public boolean isWpStatesLoaded() {
-			return wpStatesLoaded;
-		}
-		public void setWpStatesLoaded(boolean wpStatesLoaded) {
-			this.wpStatesLoaded = wpStatesLoaded;
-		}
-	}
-	
 	public IUserDefinedTypeMeta getUserDefinedTypeMeta() {
 		return userDefinedTypeMeta;
 	}
