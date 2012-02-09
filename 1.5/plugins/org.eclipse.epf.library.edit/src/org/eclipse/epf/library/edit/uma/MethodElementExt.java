@@ -25,12 +25,30 @@ public class MethodElementExt extends ExtendObject {
 	private ExtendReferenceMap extendReferenceMap;
 	private IUserDefinedTypeMeta userDefinedTypeMeta;
 	private IUserDefinedTypeMeta modifiedTypeMeta;
-
 	private Map<Object, Object> extendedPropertyMap;
 
-	public MethodElementExt(MethodElement element) {
+	public MethodElementExt(MethodElement element, ExtendObject oldObj) {
+		if (oldObj != null) {
+			copy(oldObj);
+		}
 		this.element = element;
 	}	
+	
+	@Override
+	protected void copy(ExtendObject oldObj) {
+		super.copy(oldObj);
+		if (! (oldObj instanceof MethodElementExt)) {
+			return;
+		}
+		MethodElementExt old = (MethodElementExt) oldObj;
+		element = 				old.element;
+		transientElement = 		old.transientElement;
+		cachedObject = 			old.cachedObject;
+		extendReferenceMap =	old.extendReferenceMap;
+		userDefinedTypeMeta =	old.userDefinedTypeMeta;
+		modifiedTypeMeta = 		old.modifiedTypeMeta;
+		extendedPropertyMap =	old.extendedPropertyMap;
+	}
 	
 	public ExtendReferenceMap getExtendReferenceMap(boolean create) {
 		if (create && extendReferenceMap == null) {
@@ -62,8 +80,19 @@ public class MethodElementExt extends ExtendObject {
 	public static class WorkProductStateExt extends MethodElementExt {
 		private Set<WorkProduct> assignedToWps;
 		
-		public WorkProductStateExt(Constraint element) {
-			super(element);
+		public WorkProductStateExt(Constraint element, ExtendObject oldObj) {
+			super(element, oldObj);
+		}
+		
+		@Override
+		protected void copy(ExtendObject oldObj) {
+			super.copy(oldObj);
+			if (! (oldObj instanceof WorkProductStateExt)) {
+				return;
+			}
+			WorkProductStateExt old = (WorkProductStateExt) oldObj;			
+			assignedToWps = old.assignedToWps;
+
 		}
 		
 		public void addToAssignedToWps(WorkProduct wp) {
@@ -107,9 +136,19 @@ public class MethodElementExt extends ExtendObject {
 	public static class MethodPluginExt extends MethodElementExt {
 		
 		private boolean wpStatesLoaded = false;
-		public MethodPluginExt(MethodPlugin plugin) {
-			super(plugin);
+		public MethodPluginExt(MethodPlugin plugin, ExtendObject oldObj) {
+			super(plugin, oldObj);
 		}	
+		
+		@Override
+		protected void copy(ExtendObject oldObj) {
+			super.copy(oldObj);
+			if (! (oldObj instanceof MethodPluginExt)) {
+				return;
+			}
+			MethodPluginExt old = (MethodPluginExt) oldObj;			
+			wpStatesLoaded = old.wpStatesLoaded;
+		}
 		
 		public boolean isWpStatesLoaded() {
 			return wpStatesLoaded;

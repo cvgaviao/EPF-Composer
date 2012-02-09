@@ -39,8 +39,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.epf.uma.ecore.IModelObject;
@@ -989,8 +989,9 @@ public class MultiResourceEObject extends EObjectImpl implements
 		eSet(feature, value);
 	}	
 	
-	public static abstract class ExtendObject {
-		
+	public static class ExtendObject {		
+		protected void copy(ExtendObject oldObj) {			
+		}
 	}
 	
 	//-2: unknown

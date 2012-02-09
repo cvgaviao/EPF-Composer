@@ -33,6 +33,7 @@ import org.eclipse.epf.uma.Template;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 public class DescriptorPropUtil extends PropUtil {
@@ -727,11 +728,15 @@ public class DescriptorPropUtil extends PropUtil {
 		return ref;
 	}
 	
-	protected MethodElementExt createExtendObject(MethodElement element) {
-		if (element instanceof Descriptor) {
-			return new DescriptorExt((Descriptor) element);
+	@Override
+	protected MethodElementExt createExtendObjectIfNeeded(MethodElement element, ExtendObject oldObj) {
+		if (oldObj instanceof DescriptorExt) {
+			return (DescriptorExt) oldObj;
 		}
-		return super.createExtendObject(element);
+		if (element instanceof Descriptor) {
+			return new DescriptorExt((Descriptor) element, oldObj);
+		}
+		return super.createExtendObjectIfNeeded(element, oldObj);
 	}
 	
 	public void clearAllAutoSynProps(Descriptor des) {		

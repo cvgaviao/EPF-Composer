@@ -15,6 +15,7 @@ import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 
@@ -139,11 +140,15 @@ public class MethodPluginPropUtil extends PropUtil {
 		return state.getBody() + ", " + state.getBriefDescription();  //$NON-NLS-1$
 	}
 	
-	protected MethodElementExt createExtendObject(MethodElement element) {
-		if (element instanceof MethodPlugin) {
-			return new MethodPluginExt((MethodPlugin) element);
+	@Override
+	protected MethodElementExt createExtendObjectIfNeeded(MethodElement element, ExtendObject oldObj) {
+		if (oldObj instanceof MethodPluginExt) {
+			return (MethodPluginExt) oldObj;
 		}
-		return super.createExtendObject(element);
+		if (element instanceof MethodPlugin) {
+			return new MethodPluginExt((MethodPlugin) element, oldObj);
+		}
+		return super.createExtendObjectIfNeeded(element, oldObj);
 	}
 	
 	private boolean isWpStatesLoaded(MethodPlugin plugin) {

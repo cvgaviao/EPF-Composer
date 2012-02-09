@@ -161,9 +161,11 @@ public class MethodElementPropUtil {
 		}
 		MultiResourceEObject mobj = (MultiResourceEObject) element;		
 		ExtendObject obj = mobj.getExtendObject();
-		if (create && !(obj instanceof MethodElementExt)) {
-			obj = createExtendObject(element);
-			mobj.setExtendObject(obj);
+		if (create) {
+			ExtendObject newObj = createExtendObjectIfNeeded(element, obj);
+			if (newObj != obj) {
+				mobj.setExtendObject(obj);
+			}
 		}
 		return (MethodElementExt) obj;
 	}
@@ -173,11 +175,14 @@ public class MethodElementPropUtil {
 		return ext == null ? null : ext.getExtendedPropertyMap(create);
 	}
 	
-	protected MethodElementExt createExtendObject(MethodElement element) {
+	protected MethodElementExt createExtendObjectIfNeeded(MethodElement element, ExtendObject oldObj) {
 		if (isWorkProductState(element)) {
-			return new WorkProductStateExt((Constraint) element);
+			if (oldObj instanceof WorkProductStateExt) {
+				return (WorkProductStateExt) oldObj;
+			}
+			return new WorkProductStateExt((Constraint) element, oldObj);
 		}
-		return new MethodElementExt(element);
+		return new MethodElementExt(element, oldObj);
 	}
 	
 	public boolean isWorkProductState(MethodElement element) {
