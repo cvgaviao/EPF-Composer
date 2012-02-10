@@ -164,6 +164,7 @@ public class MethodElementPropUtil {
 		if (create) {
 			ExtendObject newObj = createExtendObjectIfNeeded(element, obj);
 			if (newObj != obj) {
+				obj = newObj;
 				mobj.setExtendObject(obj);
 			}
 		}
