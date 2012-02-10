@@ -9,15 +9,13 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
-import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
-import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
 
 public class PropUtil extends MethodElementPropUtil {
@@ -49,6 +47,20 @@ public class PropUtil extends MethodElementPropUtil {
 	
 	public void setCustomize(MethodElement element, boolean b) {
 		setBooleanValue(element, Me_customize, b);
+	}
+	
+	public MethodElement getCustomizeParent(MethodElement element) {
+		if (! (element instanceof VariabilityElement)) {
+			return null;
+		}
+		VariabilityElement v = (VariabilityElement) element;
+		if (v.getVariabilityType() != VariabilityType.EXTENDS_REPLACES) {
+			return null;
+		}
+		if (! isCustomize(element)) {
+			return null;
+		}
+		return v.getVariabilityBasedOnElement();
 	}
 	
 	public boolean isEdited(MethodElement element) {
