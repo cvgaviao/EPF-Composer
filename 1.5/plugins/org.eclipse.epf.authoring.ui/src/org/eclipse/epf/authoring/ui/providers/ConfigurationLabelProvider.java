@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.epf.authoring.gef.figures.Colors;
+import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.FeatureValueWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
@@ -22,6 +23,7 @@ import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
@@ -58,13 +60,24 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 		// by default, return the default image
 		return super.getImage(object);
 	}
-
+	
 	/**
 	 * This implements {@link ILabelProvider}.getText by forwarding it to an
 	 * object that implements
 	 * {@link IItemLabelProvider#getText IItemLabelProvider.getText}
 	 */
 	public String getText(Object object) {
+		String text = getText_(object);
+		if (object instanceof ContentElement) {
+			ConfigurationData configData = ConfigurationHelper.getDelegate().getConfigurationData(config);
+			if (configData.isSuppressed((ContentElement) object)) {
+				return "--<" + text + ">";	    		 //$NON-NLS-1$ //$NON-NLS-2$	
+			}
+		}
+		return text;
+	}
+	
+	private String getText_(Object object) {
 		String name = null;
 		Object element = null;
 		if (object instanceof MethodElement) {

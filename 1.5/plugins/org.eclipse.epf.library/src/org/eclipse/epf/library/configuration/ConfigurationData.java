@@ -815,4 +815,9 @@ public class ConfigurationData {
 		storeElementsUnslectedPkgsProp(actionManager, elementsUnslectedPkgs);
 	}
 	
+	public boolean isSuppressed(MethodElement element) {
+		return false;
+	}
+
+	
 }
