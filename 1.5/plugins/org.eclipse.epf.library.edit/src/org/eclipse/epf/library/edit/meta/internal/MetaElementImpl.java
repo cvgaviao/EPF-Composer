@@ -36,6 +36,10 @@ public class MetaElementImpl implements MetaElement, IMetaDef {
 		this.globalId = globalId;
 	}
 
+    public int compareTo(MetaElement o) {
+    	return getName().compareTo(o.getName());
+    }
+	
 	public void parseElement(Element element) throws TypeDefException {
 		if (element == null) {
 			return;

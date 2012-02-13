@@ -3,7 +3,7 @@ package org.eclipse.epf.uma.util;
 import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 
 
-public interface MetaElement extends IUserDefinedTypeMeta {
+public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElement> {
 
 	public static final MetaElement noneValue = new MetaElement() {
 		public String getId() {
@@ -15,7 +15,9 @@ public interface MetaElement extends IUserDefinedTypeMeta {
 		public String getGlobalId() {
 			return null;
 		}
-
+	    public int compareTo(MetaElement o) {
+	    	return 0;
+	    }
 	};
 		
 	public String getId();	

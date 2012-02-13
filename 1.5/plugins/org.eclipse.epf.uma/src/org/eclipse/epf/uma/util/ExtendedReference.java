@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
 
-public interface ExtendedReference extends MetaElement, Comparable<ExtendedReference> {
+public interface ExtendedReference extends MetaElement {
 	
 	public ExtendedReference getNestedParent();
 		

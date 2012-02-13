@@ -90,8 +90,4 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 	}
 	//Adapter interface methods <-
 	
-    public int compareTo(ExtendedReference o) {
-    	return getName().compareTo(o.getName());
-    }
-	
 }
