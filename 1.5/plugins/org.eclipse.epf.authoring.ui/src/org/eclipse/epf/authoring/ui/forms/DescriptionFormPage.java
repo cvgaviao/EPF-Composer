@@ -306,7 +306,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	private IColumnProvider columnProvider;
 	
-	private List<ISectionProvider> sectionProviders;
+	protected List<ISectionProvider> sectionProviders;
 	
 	private boolean autoGenName = false;
 	
@@ -828,7 +828,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 * Get all section providers
 	 * @return
 	 */
-	private List<ISectionProvider> loadSectionProviders() {
+	protected List<ISectionProvider> loadSectionProviders() {
 		if (sectionProviders == null) {
 			sectionProviders = ExtensionManager.getExtensions(AuthoringUIPlugin.getDefault().getId(), "descriptionPageSectionProvider", ISectionProvider.class); //$NON-NLS-1$	
 		}
@@ -1786,7 +1786,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		return null;
 	}
 
-	private void addDetailSectionListeners() {
+	protected void addDetailSectionListeners() {
 		if (fullDescOn) {
 			ctrl_full_desc.setModalObject(contentElement.getPresentation());
 			ctrl_full_desc.setModalObjectFeature(UmaPackage.eINSTANCE

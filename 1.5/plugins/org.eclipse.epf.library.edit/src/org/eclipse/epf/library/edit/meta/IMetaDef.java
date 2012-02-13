@@ -10,6 +10,8 @@ public interface IMetaDef {
 	
 	public static final String REFERENCE = "reference"; 						//$NON-NLS-1$
 	
+	public static final String RTE = "rte"; 									//$NON-NLS-1$
+	
 	//Old
 	public static final String NAME = "name"; 									//$NON-NLS-1$
 

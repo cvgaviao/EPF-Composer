@@ -50,7 +50,8 @@ public class MetaElementImpl implements MetaElement, IMetaDef {
 		Element nameElement = XMLUtil.getFirstChildElementByTagName(element, IMetaDef.NAME);
 		if (nameElement != null) {
 			name = element.getTextContent();
-		}		
+		}
+		name = name.trim();
 	}
 	
 }

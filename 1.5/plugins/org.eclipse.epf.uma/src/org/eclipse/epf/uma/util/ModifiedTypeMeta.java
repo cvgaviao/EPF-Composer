@@ -8,5 +8,6 @@ import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 public interface ModifiedTypeMeta extends MetaElement {
 	
 	public List<ExtendedReference> getReferences();
+	public List<ExtendedRte> getRtes();	
 	
 }
