@@ -8,14 +8,14 @@ import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedReference;
-import org.eclipse.epf.uma.util.ExtendedRte;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.w3c.dom.Element;
 
 public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTypeMeta {
 		
 	private List<ExtendedReference> references;
-	private List<ExtendedRte> rtes;
+	private List<ExtendedAttribute> rtes;
 	
 	public ModifiedTypeMetaImpl() {		
 	}
@@ -27,7 +27,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		return references;
 	}
 	
-	public List<ExtendedRte> getRtes() {
+	public List<ExtendedAttribute> getRtes() {
 		if (rtes == null) {
 			return Collections.EMPTY_LIST;
 		}
@@ -47,11 +47,11 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 			}
 		}
 		
-		rtes = new ArrayList<ExtendedRte>();
+		rtes = new ArrayList<ExtendedAttribute>();
 		List<Element> rteElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.RTE);
 		if (rtes != null) {
 			for (Element rElement : rteElements) {
-				ExtendedRteImpl rte = new ExtendedRteImpl();
+				ExtendedAttributeImpl rte = new ExtendedAttributeImpl();
 				rte.parseElement(rElement);
 				rtes.add(rte);
 			}

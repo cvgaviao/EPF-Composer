@@ -23,6 +23,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -78,6 +79,13 @@ public class UmaUtil {
 		ref.setContainment(false);
 		ref.setUpperBound(ETypedElement.UNBOUNDED_MULTIPLICITY);
 		return ref;
+	}
+	
+	public static EAttribute createAttribute(String name) {
+		EAttribute att =  EcoreFactory.eINSTANCE.createEAttribute();
+		att.eSetDeliver(false);
+		att.setName(name);
+		return att;
 	}
 	
 	public static EReference MethodElement_UdtList = EcoreFactory.eINSTANCE.createEReference();
