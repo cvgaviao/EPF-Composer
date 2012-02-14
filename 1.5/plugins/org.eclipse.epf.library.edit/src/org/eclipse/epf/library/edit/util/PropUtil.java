@@ -9,9 +9,11 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
@@ -20,9 +22,10 @@ import org.w3c.dom.Element;
 
 public class PropUtil extends MethodElementPropUtil {
 
-	public static final String Me_mdtData = "me_mdtData";					//$NON-NLS-1$
-	public static final String Me_customize = "me_customize";					//$NON-NLS-1$
+	public static final String Me_mdtData = "me_mdtData";				//$NON-NLS-1$
+	public static final String Me_customize = "me_customize";			//$NON-NLS-1$
 	public static final String Me_edited = "me_edited";					//$NON-NLS-1$
+	public static final String Me_attribute_ = "me_attribute_";			//$NON-NLS-1$
 	
 	private static PropUtil propUtil = new PropUtil();
 	public static PropUtil getPropUtil(IActionManager actionManager) {
@@ -40,6 +43,15 @@ public class PropUtil extends MethodElementPropUtil {
 		super(actionManager);
 	}
 	
+	public String getExtendedAttribute(ContentDescription content, ExtendedAttribute att) {
+		String value = getStringValue(content, Me_attribute_ + att.getGlobalId());
+		return value;
+	}
+	
+	public void setExtendedAttribute(ContentDescription content, ExtendedAttribute att, String value) {
+		setStringValue(content, Me_attribute_ + att.getGlobalId(), value);
+	}
+		
 	public boolean isCustomize(MethodElement element) {
 		Boolean value = getBooleanValue(element, Me_customize);
 		return value == null ? false : value.booleanValue();

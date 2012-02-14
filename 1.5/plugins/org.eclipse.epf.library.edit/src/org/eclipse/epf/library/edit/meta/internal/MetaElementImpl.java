@@ -1,12 +1,15 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.w3c.dom.Element;
 
-public class MetaElementImpl implements MetaElement, IMetaDef {
+public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 
 	private String id;
 	private String name;
@@ -53,5 +56,22 @@ public class MetaElementImpl implements MetaElement, IMetaDef {
 		}
 		name = name.trim();
 	}
+	
+	
+	//Adapter interface methods ->
+	public void notifyChanged(Notification notification) {
+	}
+
+	public Notifier getTarget() {
+		return null;
+	}
+
+	public void setTarget(Notifier newTarget) {
+	}
+
+	public boolean isAdapterForType(Object type) {
+		return false;
+	}
+	//Adapter interface methods <-
 	
 }

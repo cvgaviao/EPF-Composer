@@ -81,6 +81,7 @@ import org.eclipse.epf.library.edit.command.ActionManager;
 import org.eclipse.epf.library.edit.command.FullyRevertibleCommandStack;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
@@ -99,8 +100,8 @@ import org.eclipse.epf.persistence.util.LibrarySchedulingRule;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.richtext.IRichText;
 import org.eclipse.epf.services.ILibraryPersister;
-import org.eclipse.epf.services.Services;
 import org.eclipse.epf.services.ILibraryPersister.FailSafeMethodLibraryPersister;
+import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
@@ -1174,7 +1175,8 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 			EStructuralFeature modalObjectFeature = richText
 					.getModalObjectFeature();
 			if (modalObject != null && modalObjectFeature != null) {
-				Object oldContent = modalObject.eGet(modalObjectFeature);
+//				Object oldContent = modalObject.eGet(modalObjectFeature);
+				Object oldContent = TypeDefUtil.getInstance().eGet(modalObject, modalObjectFeature);
 				if (!mustRestoreValue(richText, oldContent)) {
 					Object newContent = richText.getText();
 					richText.setInitialText((String)newContent);

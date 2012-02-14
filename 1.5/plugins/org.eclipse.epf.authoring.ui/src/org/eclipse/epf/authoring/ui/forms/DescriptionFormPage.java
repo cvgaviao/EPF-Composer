@@ -1967,7 +1967,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		}
 	}
 
-	private void loadDetailSectionData() {
+	protected void loadDetailSectionData() {
 		if (fullDescOn) {
 			String full_desc = (contentElement.getPresentation())
 					.getMainDescription();

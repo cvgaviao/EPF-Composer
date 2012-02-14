@@ -11,9 +11,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.util.PropUtil;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
-import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
@@ -96,6 +97,13 @@ public class TypeDefUtil {
 				if (eRef != null) {
 					PropUtil propUtil = PropUtil.getPropUtil();
 					return propUtil.getExtendedReferenceList(element, eRef, false);
+				}
+			} else if (feature instanceof EAttribute && element instanceof ContentDescription) {
+				EAttribute att = (EAttribute) feature;
+				ExtendedAttribute eAtt = getAssociatedExtendedAttribute(att);
+				if (eAtt != null) {
+					PropUtil propUtil = PropUtil.getPropUtil();
+					return propUtil.getExtendedAttribute((ContentDescription) element, eAtt);
 				}
 			}
 		}

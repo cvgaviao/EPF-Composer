@@ -17,7 +17,7 @@ import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.w3c.dom.Element;
 
-public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedReference, Adapter {
+public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedReference {
 	private EReference ref;	
 	private ExtendedReference nestedParent;		//for future nested extended reference structure
 
@@ -73,21 +73,5 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 			}
 		}
 	}
-	
-	//Adapter interface methods ->
-	public void notifyChanged(Notification notification) {
-	}
-
-	public Notifier getTarget() {
-		return null;
-	}
-
-	public void setTarget(Notifier newTarget) {
-	}
-
-	public boolean isAdapterForType(Object type) {
-		return false;
-	}
-	//Adapter interface methods <-
 	
 }

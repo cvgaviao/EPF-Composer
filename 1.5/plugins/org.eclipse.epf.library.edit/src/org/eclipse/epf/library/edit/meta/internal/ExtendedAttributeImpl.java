@@ -9,6 +9,8 @@ import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
+import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -26,10 +28,9 @@ public class ExtendedAttributeImpl  extends MetaElementImpl implements ExtendedA
 	}
 	
 	public void parseElement(Element element)	throws TypeDefException {
-		super.parseElement(element);
-		
+		super.parseElement(element);			
 		att =  UmaUtil.createAttribute(getId());
-		TypeDefUtil.getInstance().associate(this, att);
+		TypeDefUtil.getInstance().associate(this, att);				
 	}
-	
+		
 }
