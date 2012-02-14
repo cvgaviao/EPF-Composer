@@ -34,7 +34,6 @@ public class ExtendReferenceMap {
 	
 	private static final String Opposite_ = "opposite_";			//$NON-NLS-1$
 	private static final String QReference_ = "qReference_";		//$NON-NLS-1$
-	public static final String MdtQReference_ = "mdtQReference_";		//$NON-NLS-1$
 	public static final String WSpace = "__ws__";					//$NON-NLS-1$
 	
 	private Map<String, Object> map;
@@ -62,9 +61,9 @@ public class ExtendReferenceMap {
 		}
 	}
 	
-	private ExtendedReference createLocalExtendedReference(String globalId) {
+	private ExtendedReference createLocalExtendedReference(String id) {
 		ExtendedReferenceImpl ref = new ExtendedReferenceImpl();
-		ref.setGlobalId(globalId);
+		ref.setId(id);
 		return ref;
 	}
 			
@@ -135,9 +134,9 @@ public class ExtendReferenceMap {
 			}
 			UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
 			Set<MethodElement> validSet = null;
-			if (eRef.getNestedParent() != null) {
+			if (eRef.getParent() != null) {
 				validSet = getMdtQrValidSet(element, mdtQrValidSetMap,
-							uHandler, eRef.getNestedParent().getGlobalId());
+							uHandler, eRef.getParent().getGlobalId());
 			} else if (referenceSet != null && name.startsWith(QReference_)) {
 				validSet = referenceSet;
 			}

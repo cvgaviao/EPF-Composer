@@ -9,6 +9,7 @@ import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.w3c.dom.Element;
 
@@ -16,47 +17,75 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		
 	private List<ExtendedReference> references;
 	private List<ExtendedAttribute> rtes;
+	List<ExtendedSection> sections;
+	List<ExtendedSection> referenceSections;
+	List<ExtendedSection> rteSections;
 	
 	public ModifiedTypeMetaImpl() {		
 	}
 		
 	public List<ExtendedReference> getReferences() {
 		if (references == null) {
-			return Collections.EMPTY_LIST;
+			references = new ArrayList<ExtendedReference>();
 		}
 		return references;
 	}
 	
 	public List<ExtendedAttribute> getRtes() {
 		if (rtes == null) {
-			return Collections.EMPTY_LIST;
+			rtes = new ArrayList<ExtendedAttribute>();
 		}
 		return rtes;
+	}
+	
+	public List<ExtendedSection> getSections() {
+		if (sections == null) {
+			sections = new ArrayList<ExtendedSection>();
+		}
+		return sections;
+	}
+	
+	public List<ExtendedSection> getReferenceSections() {
+		if (referenceSections == null) {
+			referenceSections = new ArrayList<ExtendedSection>();
+		}
+		return referenceSections;
+	}
+	
+	public List<ExtendedSection> getRteSections() {
+		if (rteSections == null) {
+			rteSections = new ArrayList<ExtendedSection>();
+		}
+		return rteSections;
 	}
 	
 	public void parseElement(Element element)	throws TypeDefException {		
 		super.parseElement(element);
 		
-		references = new ArrayList<ExtendedReference>();
-		List<Element> referenceElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.REFERENCE);
-		if (referenceElements != null) {
-			for (Element rElement : referenceElements) {
-				ExtendedReferenceImpl ref = new ExtendedReferenceImpl();
-				ref.parseElement(rElement);
-				references.add(ref);
+		getReferences().clear();
+		getRtes().clear();		
+		getSections().clear();
+		getReferenceSections().clear();
+		getRteSections().clear();
+		
+		List<Element> sectionElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.SECTION);
+		if (sectionElements != null) {
+			for (Element sElement : sectionElements) {
+				ExtendedSectionImpl ses = new ExtendedSectionImpl();
+				ses.parseElement(sElement);
+				
+				getSections().add(ses);
+				if (IMetaDef.REFERENCE.equals(ses.getType())) {
+					getReferenceSections().add(ses);
+					getReferences().addAll(ses.getReferences());
+					
+				} else if (IMetaDef.RTE.equals(ses.getType())) {
+					getRteSections().add(ses);
+					getRtes().addAll(ses.getRtes());
+					
+				}
 			}
 		}
-		
-		rtes = new ArrayList<ExtendedAttribute>();
-		List<Element> rteElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.RTE);
-		if (rtes != null) {
-			for (Element rElement : rteElements) {
-				ExtendedAttributeImpl rte = new ExtendedAttributeImpl();
-				rte.parseElement(rElement);
-				rtes.add(rte);
-			}
-		}
-		
 	}
 	
 }

@@ -18,10 +18,16 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 	    public int compareTo(MetaElement o) {
 	    	return 0;
 	    }
+	    
+		public MetaElement getParent() {
+			return null;
+		}
+
 	};
 		
 	public String getId();	
 	public String getName();
-	public String getGlobalId();	
+	public String getGlobalId();
+	public MetaElement getParent();
 	
 }

@@ -19,23 +19,10 @@ import org.w3c.dom.Element;
 
 public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedReference {
 	private EReference ref;	
-	private ExtendedReference nestedParent;		//for future nested extended reference structure
 
 	private List<QualifiedReference> qualifiedReferences;
 
 	public ExtendedReferenceImpl() {		
-	}
-	
-	protected ExtendedReferenceImpl(ExtendedReference netedParent) {
-		this.nestedParent = netedParent;
-	}
-	
-	public ExtendedReference getNestedParent() {
-		return nestedParent;
-	}
-	
-	public void setNestedParent(ExtendedReference nestedParent) {
-		this.nestedParent = nestedParent;
 	}
 	
 	public EReference getReference() {
@@ -67,7 +54,7 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 			List<Element> qElements = XMLUtil.getChildElementsByTagName(rqElement, IMetaDef.QUALIFIER);
 			for (Element qElement : qElements) {
 				QualifiedReferenceImpl q = new QualifiedReferenceImpl();
-				q.setNestedParent(this);
+				q.setParent(this);
 				q.parseElement(qElement);
 				qualifiedReferences.add(q);
 			}

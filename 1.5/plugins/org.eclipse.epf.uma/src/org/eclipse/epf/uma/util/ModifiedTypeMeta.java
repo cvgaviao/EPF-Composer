@@ -10,4 +10,8 @@ public interface ModifiedTypeMeta extends MetaElement {
 	public List<ExtendedReference> getReferences();
 	public List<ExtendedAttribute> getRtes();	
 	
+	public List<ExtendedSection> getSections();
+	public List<ExtendedSection> getReferenceSections();
+	public List<ExtendedSection> getRteSections();	
+	
 }

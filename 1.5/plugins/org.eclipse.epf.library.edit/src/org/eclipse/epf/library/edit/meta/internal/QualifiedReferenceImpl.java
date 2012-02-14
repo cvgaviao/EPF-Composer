@@ -24,16 +24,7 @@ public class QualifiedReferenceImpl extends ExtendedReferenceImpl implements Qua
 			return;
 		}
 		String name = element.getTextContent();
-		setName(name);
-		
-		String globalId = getId();
-		ExtendedReference parent = getNestedParent();
-		if (parent != null) {
-			globalId = parent.getId() + IMetaDef.scopeSeperator + globalId;
-			parent = parent.getNestedParent();
-		}
-		globalId = ExtendReferenceMap.MdtQReference_ + globalId;
-		setGlobalId(globalId);		
+		setName(name);		
 	}
 	
 }

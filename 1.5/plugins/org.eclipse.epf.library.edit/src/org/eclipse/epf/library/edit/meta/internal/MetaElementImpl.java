@@ -14,7 +14,8 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	private String id;
 	private String name;
 	private String globalId;
-	
+	private MetaElement parent;
+
 	public String getId() {
 		return id;
 	}
@@ -32,13 +33,20 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	}
 	
 	public String getGlobalId() {
-		return globalId;
-	}
-	
-	public void setGlobalId(String globalId) {
-		this.globalId = globalId;
+		if (getParent() != null) {
+			return getParent().getGlobalId() + IMetaDef.scopeSeperator + getId();
+		}
+		return getId();
 	}
 
+	public MetaElement getParent() {
+		return parent;
+	}
+	
+	public void setParent(MetaElement parent) {
+		this.parent = parent;
+	}
+	
     public int compareTo(MetaElement o) {
     	return getName().compareTo(o.getName());
     }
@@ -52,7 +60,7 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		globalId = id;
 		Element nameElement = XMLUtil.getFirstChildElementByTagName(element, IMetaDef.NAME);
 		if (nameElement != null) {
-			name = element.getTextContent();
+			name = nameElement.getTextContent();
 		}
 		name = name.trim();
 	}
