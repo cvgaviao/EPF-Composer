@@ -188,7 +188,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
 	protected boolean categoryIsSingleSelection3 = false;
 
-	private LibraryViewFindElementAction libraryViewFindElementAction;
+	protected LibraryViewFindElementAction libraryViewFindElementAction;
 	// strings used in the form
 	protected String formNamePrefix = "Form prefix"; //$NON-NLS-1$
 
@@ -380,7 +380,10 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	 */
 	protected void createFormContent(IManagedForm managedForm) {
 		super.createFormContent(managedForm);
-
+		createFormContent_(managedForm);
+	}
+	
+	protected void createFormContent_(IManagedForm managedForm) {
 		UIHelper.setFormText(form, contentElement);
 		
 		// Create a section.
