@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -111,7 +112,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 			TngAdapterFactory.INSTANCE
 					.getNavigatorView_ComposedAdapterFactory()) {
 		public String getColumnText(Object object, int columnIndex) {			
-			return getDecorator(object) + TngUtil.getLabelWithPath(object); 
+			return getDecorator(object, null) + TngUtil.getLabelWithPath(object); 
 		}
 	};
 
@@ -1506,6 +1507,10 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		} else {
 			return false;
 		}
+	}
+	
+	public String getDecorator(Object object, EReference ref) {
+		return getDecorator(object);
 	}
 	
 	public String getDecorator(Object object) {
