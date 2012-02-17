@@ -580,7 +580,7 @@ public class BaseFormPage extends FormPage {
 	 *            the text for the label.
 	 * @return A new <code>Text</code> control.
 	 */
-	protected static Text createTextEditWithLabelLarge(FormToolkit toolkit,
+	public static Text createTextEditWithLabelLarge(FormToolkit toolkit,
 			Composite parent, String labelText) {
 		Label label = createLabel(toolkit, parent, labelText);
 		((GridData) label.getLayoutData()).widthHint = SWT.DEFAULT;
@@ -909,7 +909,7 @@ public class BaseFormPage extends FormPage {
 	 *            The number of columns in the grid.
 	 * @return A new <code>Composite</code>.
 	 */
-	protected static Composite createComposite(FormToolkit toolkit,
+	public static Composite createComposite(FormToolkit toolkit,
 			Composite parent, int gridDataStyle, int verticalSpan,
 			int horizontalSpan, int numColumns) {
 		Composite composite = toolkit.createComposite(parent, SWT.NONE);
@@ -932,7 +932,7 @@ public class BaseFormPage extends FormPage {
 	 *            The number of row cells taken up by the Composite.
 	 * @return A new <code>Composite</code>.
 	 */
-	protected static Composite createComposite(FormToolkit toolkit,
+	public static Composite createComposite(FormToolkit toolkit,
 			Composite parent, int verticalSpan) {
 		return createComposite(toolkit, parent, GridData.FILL_BOTH,
 				verticalSpan, 1, 1);
@@ -949,7 +949,7 @@ public class BaseFormPage extends FormPage {
 	 *            The Composite type.
 	 * @return A new <code>Composite</code>.
 	 */
-	protected static Composite createCompositeForButtons(FormToolkit toolkit,
+	public static Composite createCompositeForButtons(FormToolkit toolkit,
 			Composite parent) {
 		return createComposite(toolkit, parent, GridData.VERTICAL_ALIGN_CENTER
 				| GridData.HORIZONTAL_ALIGN_CENTER, SWT.DEFAULT, SWT.DEFAULT, 1);
@@ -1020,7 +1020,7 @@ public class BaseFormPage extends FormPage {
 	 *            The table table.
 	 * @return A new <code>Table</code>.
 	 */
-	protected static Table createTable(FormToolkit toolkit, Composite parent,
+	public static Table createTable(FormToolkit toolkit, Composite parent,
 			int type) {
 		switch (type) {
 		case SMALL_SIZE:
@@ -1051,7 +1051,7 @@ public class BaseFormPage extends FormPage {
 	 *            The button type.
 	 * @return A new <code>Button</code>.
 	 */
-	protected static Button createButton(FormToolkit toolkit, Composite parent,
+	public static Button createButton(FormToolkit toolkit, Composite parent,
 			int type) {
 		Button button;
 		switch (type) {
