@@ -80,6 +80,9 @@ public class TypeDefUtil {
 	}
 	
 	private MetaElement getAssociatedMetaElement(EStructuralFeature feature) {
+		if (feature == null) {
+			return null;
+		}
 		for (Object adapter : feature.eAdapters()) {
 			if (adapter instanceof MetaElement) {
 				return (MetaElement) adapter;
