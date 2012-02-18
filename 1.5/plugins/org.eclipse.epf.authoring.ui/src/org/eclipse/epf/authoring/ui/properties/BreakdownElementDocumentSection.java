@@ -200,10 +200,13 @@ public class BreakdownElementDocumentSection extends AbstractSection {
 		this.parent = parent;
 		super.createControls(parent, tabbedPropertySheetPage);
 		init();
-
 		parent.setLayout(new GridLayout());
 		parent.setLayoutData(new GridData(GridData.FILL_BOTH));
-
+		createControls_(parent, tabbedPropertySheetPage);
+	}
+	
+	protected void createControls_(Composite parent,
+			TabbedPropertySheetPage tabbedPropertySheetPage) {
 		// create Docment section
 		createDocumentSection(parent);
 
