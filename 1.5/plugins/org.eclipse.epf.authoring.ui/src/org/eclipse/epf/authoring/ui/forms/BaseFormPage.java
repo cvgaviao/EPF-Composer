@@ -229,7 +229,7 @@ public class BaseFormPage extends FormPage {
 	 *            The section description.
 	 * @return A new <code>Section</code>.
 	 */
-	protected Section createSection(FormToolkit toolkit, Composite parent,
+	public Section createSection(FormToolkit toolkit, Composite parent,
 			String title, String description) {
 		Section section = toolkit.createSection(parent, Section.DESCRIPTION
 				| Section.TWISTIE | Section.EXPANDED | Section.TITLE_BAR);
@@ -751,7 +751,7 @@ public class BaseFormPage extends FormPage {
 	 *            The section ID.
 	 * @return A new <code>IRichMethodText</code>.
 	 */
-	protected IMethodRichText createRichTextEditWithLinkForSection(
+	public IMethodRichText createRichTextEditWithLinkForSection(
 			FormToolkit toolkit, Composite parent, String labelText,
 			int height, int width, int sectionID) {
 		final int SECTION_ID = sectionID;
@@ -884,7 +884,7 @@ public class BaseFormPage extends FormPage {
 	 * @return A new <code>Composite</code>.
 	 */
 
-	protected Composite createComposite(FormToolkit toolkit, Section section) {
+	public Composite createComposite(FormToolkit toolkit, Section section) {
 		Composite composite = toolkit.createComposite(section);
 		composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		composite.setLayout(new GridLayout(3, false));
