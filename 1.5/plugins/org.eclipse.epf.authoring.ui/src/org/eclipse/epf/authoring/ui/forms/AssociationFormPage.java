@@ -104,7 +104,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
 	private	Font boldFont;
 	
-	private FormPageProviderExtender providerExtender;
+	protected FormPageProviderExtender providerExtender;
 
 	protected IStructuredContentProvider contentProviderSelected;
 
