@@ -684,7 +684,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		addListeners();
 	}
 	
-	private void setFormTextWithVariableInfo() {
+	protected void setFormTextWithVariableInfo() {
 		UIHelper.setFormText(form, methodElement);
 	}
 
