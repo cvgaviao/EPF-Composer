@@ -28,6 +28,10 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
+import org.eclipse.epf.uma.ContentDescription;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 
 /**
  * Manages the execution of editing commands with full support for dirty flag,
@@ -132,10 +136,16 @@ public class ActionManager implements IActionManager {
 			break;
 		}
 		case SET: {
-			oldValue = object.eGet(feature);
+			TypeDefUtil typeDefUtil = TypeDefUtil.getInstance();
+			ExtendedAttribute att = typeDefUtil.getAssociatedExtendedAttribute(feature);
+			oldValue = att == null ? object.eGet(feature) : typeDefUtil.eGet(object, feature);
 			if ((oldValue != null && !oldValue.equals(value))
 					|| (oldValue == null && value != null)) {
-				cmd = new SetCommand(editingDomain, object, feature, value);
+				if (att == null) {
+					cmd = new SetCommand(editingDomain, object, feature, value);
+				} else if ((value == null || value instanceof String) && object instanceof ContentDescription) {
+					cmd = PropUtil.getSetExtendedAttributeCommand((ContentDescription) object, att, (String) value);
+				}
 			}
 			break;
 		}

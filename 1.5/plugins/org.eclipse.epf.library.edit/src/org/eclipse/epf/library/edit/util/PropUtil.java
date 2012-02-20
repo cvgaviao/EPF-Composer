@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
@@ -50,6 +52,10 @@ public class PropUtil extends MethodElementPropUtil {
 	
 	public void setExtendedAttribute(ContentDescription content, ExtendedAttribute att, String value) {
 		setStringValue(content, Me_attribute_ + att.getGlobalId(), value);
+	}
+	
+	public static Command getSetExtendedAttributeCommand(ContentDescription content, ExtendedAttribute att, String value) {
+		return new MethodElementSetPropertyCommand(content,  Me_attribute_ + att.getGlobalId(), value);
 	}
 		
 	public boolean isCustomize(MethodElement element) {
