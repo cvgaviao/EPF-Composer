@@ -100,6 +100,7 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.IMeVisitor;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
@@ -1046,9 +1047,9 @@ public class LibraryUtil {
 	 * @param element
 	 * @return
 	 */
-	public static List getStructuralFeatures(MethodElement element, boolean addMdtReferences) {
+	public static List getStructuralFeatures(MethodElement element, boolean addExtended) {
 		List list = getStructuralFeatures(element);
-		if (addMdtReferences) {
+		if (addExtended) {
 			PropUtil propUtil = PropUtil.getPropUtil();		
 			ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
 			if (meta != null) {
@@ -1057,6 +1058,9 @@ public class LibraryUtil {
 					for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
 						list.add(qRef.getReference());
 					}
+				}
+				for (ExtendedAttribute eAtt : meta.getRtes()) {
+					list.add(eAtt.getAttribute());
 				}
 			}
 		}
