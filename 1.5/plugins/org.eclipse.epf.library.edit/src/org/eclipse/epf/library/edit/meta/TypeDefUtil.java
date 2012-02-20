@@ -93,6 +93,10 @@ public class TypeDefUtil {
 	}
 		
 	public Object eGet(EObject obj, EStructuralFeature feature) {
+		return eGet(obj, feature, false);
+	}
+	
+	public Object eGet(EObject obj, EStructuralFeature feature, boolean modifiy) {
 		if (obj instanceof MethodElement) {
 			MethodElement element = (MethodElement) obj;
 			if (feature instanceof EReference) {
@@ -100,7 +104,7 @@ public class TypeDefUtil {
 				ExtendedReference eRef = getAssociatedExtendedReference(ref);
 				if (eRef != null) {
 					PropUtil propUtil = PropUtil.getPropUtil();
-					return propUtil.getExtendedReferenceList(element, eRef, false);
+					return propUtil.getExtendedReferenceList(element, eRef, modifiy);
 				}
 			} else if (feature instanceof EAttribute && element instanceof ContentDescription) {
 				EAttribute att = (EAttribute) feature;
@@ -114,15 +118,12 @@ public class TypeDefUtil {
 		return obj.eGet(feature);
 	}
 	
-	public List<EReference> getEAllReferences(MethodElement element) {
-		return getEAllReferences(element, false);
-	}
 	
-	public List<EReference> getEAllReferences(MethodElement element, boolean addUdtList) {
+	public List<EReference> getEAllReferences(MethodElement element) {
 		List<EReference> list = element.eClass().getEAllReferences();
 		PropUtil propUtil = PropUtil.getPropUtil();	
 		
-		if (addUdtList && propUtil.hasUdtList(element)) {
+		if (propUtil.hasUdtList(element)) {
 			list.add(UmaUtil.MethodElement_UdtList);
 		}
 					
