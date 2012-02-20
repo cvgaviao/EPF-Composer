@@ -78,6 +78,7 @@ import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.DescribableElement;
@@ -1049,20 +1050,38 @@ public class LibraryUtil {
 	 */
 	public static List getStructuralFeatures(MethodElement element, boolean addExtended) {
 		List list = getStructuralFeatures(element);
-		if (addExtended) {
-			PropUtil propUtil = PropUtil.getPropUtil();		
-			ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
-			if (meta != null) {
-				for (ExtendedReference eRef : meta.getReferences()) {
-					list.add(eRef.getReference());
-					for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
-						list.add(qRef.getReference());
-					}
-				}
-				for (ExtendedAttribute eAtt : meta.getRtes()) {
-					list.add(eAtt.getAttribute());
-				}
+		if (! addExtended) {
+			return list;
+		}
+		
+		PropUtil propUtil = PropUtil.getPropUtil();		
+		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
+		if (meta == null) {
+			return list;
+		}
+				
+		for (ExtendedReference eRef : meta.getReferences()) {
+			list.add(eRef.getReference());
+			for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
+				list.add(qRef.getReference());
 			}
+		}
+				
+		if (! (element instanceof ContentDescription)) {
+			return list;
+		}
+					
+		EObject owner = element.eContainer();
+		if (! (owner instanceof MethodElement)) {
+			return list;
+		}
+		
+		meta = propUtil.getGlobalMdtMeta((MethodElement) owner);
+		if (meta == null) {
+			return list;
+		}
+		for (ExtendedAttribute eAtt : meta.getRtes()) {
+			list.add(eAtt.getAttribute());
 		}
 		return list;
 	}
