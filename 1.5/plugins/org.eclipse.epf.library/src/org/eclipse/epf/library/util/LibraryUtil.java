@@ -1049,12 +1049,21 @@ public class LibraryUtil {
 	 * @return
 	 */
 	public static List getStructuralFeatures(MethodElement element, boolean addExtended) {
+		return getStructuralFeatures(element, addExtended, false);
+	}
+	
+	public static List getStructuralFeatures(MethodElement element, boolean addExtended, boolean addUdtList) {
 		List list = getStructuralFeatures(element);
+		
+		PropUtil propUtil = PropUtil.getPropUtil();	
+		if (addUdtList && propUtil.hasUdtList(element)) {
+			list.add(UmaUtil.MethodElement_UdtList);
+		}
+						
 		if (! addExtended) {
 			return list;
 		}
 		
-		PropUtil propUtil = PropUtil.getPropUtil();		
 		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
 		if (meta == null) {
 			return list;
