@@ -1617,7 +1617,8 @@ public class ConfigurationHelper {
 			MethodElement ownerElement, EStructuralFeature feature,
 			MethodConfiguration config) {
 		if (config instanceof Scope) {
-			Object value = element.eGet(feature);
+//			Object value = element.eGet(feature);
+			Object value = TypeDefUtil.getInstance().eGet(element, feature);
 			if (value instanceof MethodElement) {
 				ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 				value = realizer.realize((MethodElement) value);
@@ -1704,7 +1705,8 @@ public class ConfigurationHelper {
 			return values.getValue();
 		}
 
-		return element.eGet(feature);
+//		return element.eGet(feature);
+		return TypeDefUtil.getInstance().eGet(element, feature);
 	}
 
 	/**
@@ -1968,7 +1970,8 @@ public class ConfigurationHelper {
 			ve = (VariabilityElement)e;
 			isDesc = false;
 		} else {
-			str = e.eGet(attrib);
+//			str = e.eGet(attrib);
+			str = TypeDefUtil.getInstance().eGet(e, attrib);
 			return (str==null) ? "" : str.toString(); //$NON-NLS-1$
 		}
 		
@@ -1983,7 +1986,8 @@ public class ConfigurationHelper {
 			// for local contribution, append the text to the base
 			Object strBase;
 			if ( isDesc ) {
-				str = ((DescribableElement)ve).getPresentation().eGet(attrib);
+//				str = ((DescribableElement)ve).getPresentation().eGet(attrib);
+				str = TypeDefUtil.getInstance().eGet(((DescribableElement)ve).getPresentation(), attrib);
 				strBase = calcAttributeFeatureValue( ((DescribableElement)base).getPresentation(), base, attrib, config);
 			} else {
 				str = ve.eGet(attrib);
