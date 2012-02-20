@@ -118,7 +118,17 @@ public class TypeDefUtil {
 		return obj.eGet(feature);
 	}
 	
-	
+	public void eSet(EObject obj, EStructuralFeature feature, Object newValue) {
+		if (obj instanceof ContentDescription) {
+			ExtendedAttribute eAtt = getAssociatedExtendedAttribute(feature);
+			if (eAtt != null && (newValue == null || newValue instanceof String) ) {
+				PropUtil.getPropUtil().setExtendedAttribute((ContentDescription) obj, eAtt, (String) newValue);
+				return;
+			}
+		}
+		obj.eSet(feature, newValue);
+	}
+		
 	public List<EReference> getEAllReferences(MethodElement element) {
 		List<EReference> list = element.eClass().getEAllReferences();
 		PropUtil propUtil = PropUtil.getPropUtil();	
