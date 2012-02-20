@@ -717,8 +717,8 @@ public class ConfigurationHelper {
 		// for example, if an activity contributes to a Capability Pattern,
 		// some CapabilityPattern specific feature may not be a valid feature for the Activity
 //		List features = element.getInstanceProperties();
-		List features = LibraryUtil.getStructuralFeatures(element);
-		if ( !features.contains(feature) && typeDefUtil.getAssociatedExtendedReference(feature) == null) {
+		List features = LibraryUtil.getStructuralFeatures(element, true, true);
+		if ( !features.contains(feature)) {
 			return;
 		}
 		

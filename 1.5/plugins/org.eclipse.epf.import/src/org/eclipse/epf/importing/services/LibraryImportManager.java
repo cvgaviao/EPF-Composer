@@ -35,6 +35,7 @@ import org.eclipse.epf.importing.ImportPlugin;
 import org.eclipse.epf.importing.ImportResources;
 import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -886,7 +887,7 @@ public class LibraryImportManager {
 			return;
 		}
 		
-		List features = LibraryUtil.getStructuralFeatures(element);
+		List features = LibraryUtil.getStructuralFeatures(element, true);
 //		List properties = element.getInstanceProperties();
 		if (features != null) {
 			for (int i = 0; i < features.size(); i++) {
@@ -895,7 +896,8 @@ public class LibraryImportManager {
 					continue;
 				}
 
-				Object value = element.eGet(feature);
+//				Object value = element.eGet(feature);
+				Object value = TypeDefUtil.getInstance().eGet(element, feature);
 				scanResources(element, feature, value);
 			}
 		}
