@@ -18,6 +18,7 @@ import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
+import org.eclipse.epf.uma.util.UmaUtil;
 
 public class TypeDefUtil {
 
@@ -114,8 +115,17 @@ public class TypeDefUtil {
 	}
 	
 	public List<EReference> getEAllReferences(MethodElement element) {
+		return getEAllReferences(element, false);
+	}
+	
+	public List<EReference> getEAllReferences(MethodElement element, boolean addUdtList) {
 		List<EReference> list = element.eClass().getEAllReferences();
-		PropUtil propUtil = PropUtil.getPropUtil();		
+		PropUtil propUtil = PropUtil.getPropUtil();	
+		
+		if (addUdtList && propUtil.hasUdtList(element)) {
+			list.add(UmaUtil.MethodElement_UdtList);
+		}
+					
 		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
 		if (meta != null) {
 			list = new ArrayList<EReference>(list);
@@ -126,6 +136,30 @@ public class TypeDefUtil {
 				}
 			}
 		}
+		return list;
+	}
+	
+	public List<EAttribute> getEAllAttributes(MethodElement element) {
+		List<EAttribute> list = element.eClass().getEAllAttributes();
+		
+		if (! (element instanceof ContentDescription)) {
+			return list;
+		}
+					
+		EObject owner = element.eContainer();
+		if (! (owner instanceof MethodElement)) {
+			return list;
+		}
+		
+		PropUtil propUtil = PropUtil.getPropUtil();	
+		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta((MethodElement) owner);
+		if (meta == null) {
+			return list;
+		}
+		for (ExtendedAttribute eAtt : meta.getRtes()) {
+			list.add(eAtt.getAttribute());
+		}
+		
 		return list;
 	}
 	
