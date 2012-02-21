@@ -1,5 +1,7 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
+import java.util.List;
+
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
@@ -25,6 +27,15 @@ public class QualifiedReferenceImpl extends ExtendedReferenceImpl implements Qua
 		}
 		String name = element.getTextContent();
 		setName(name);		
+	}
+	
+	@Override
+	public boolean processInheritance() {
+		if (! super.processInheritance()) {
+			return false;
+		}		
+		
+		return true;
 	}
 	
 }

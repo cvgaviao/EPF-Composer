@@ -12,7 +12,9 @@ import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.util.PropUtil;
+import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentDescription;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
@@ -182,6 +184,21 @@ public class TypeDefUtil {
 		}
 		
 		return list;
+	}
+	
+	public static Class getSuperClass(Class cls) {
+		Class cls1 = ContentElement.class;
+		Class cls2 = BreakdownElement.class;
+		Class[] ins = cls.getInterfaces();
+		if (ins == null || ins.length == 0) {
+			return null;
+		}
+		for (Class in : ins) {
+			if (cls1.isAssignableFrom(in) || cls2.isAssignableFrom(in)) {
+				return in;
+			}
+		}
+		return null;
 	}
 	
 }

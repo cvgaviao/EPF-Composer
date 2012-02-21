@@ -622,14 +622,14 @@ public class XMILibraryManager extends AbstractLibraryManager {
 			}
 			List<Class> list = new ArrayList<Class>();
 			list.add(cls);
-			cls = getSuperClass(cls);
+			cls = TypeDefUtil.getSuperClass(cls);
 			while (cls != null) {
 				meta = modifiedTypeMap.get(cls.getName());
 				if (meta != null) {
 					break;
 				}
 				list.add(cls);
-				cls = getSuperClass(cls);
+				cls = TypeDefUtil.getSuperClass(cls);
 			}
 			if (meta == null) {
 				meta = noneValue;
@@ -642,21 +642,6 @@ public class XMILibraryManager extends AbstractLibraryManager {
 			e.printStackTrace();
 		}
 		return meta == noneValue ? null : meta;
-	}
-		
-	private Class getSuperClass(Class cls) {
-		Class cls1 = ContentElement.class;
-		Class cls2 = BreakdownElement.class;
-		Class[] ins = cls.getInterfaces();
-		if (ins == null || ins.length == 0) {
-			return null;
-		}
-		for (Class in : ins) {
-			if (cls1.isAssignableFrom(in) || cls2.isAssignableFrom(in)) {
-				return in;
-			}
-		}
-		return null;
 	}
 	
 }

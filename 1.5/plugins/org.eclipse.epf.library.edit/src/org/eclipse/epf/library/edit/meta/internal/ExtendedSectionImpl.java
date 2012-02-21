@@ -1,18 +1,14 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
-import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
-import org.eclipse.epf.uma.util.MetaElement;
-import org.eclipse.epf.uma.util.UmaUtil;
 import org.w3c.dom.Element;
 
 public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSection {
@@ -67,4 +63,36 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 		}
 	}
 
+	@Override
+	public boolean processInheritance() {
+		if (! super.processInheritance()) {
+			return false;
+		}
+		
+		if (getSuperMeta() == null) {
+			references = (List<ExtendedReference>) processSuppress(this.getReferences());
+			rtes = (List<ExtendedAttribute>) processSuppress(this.getRtes());
+			return true;
+
+		} 
+		
+		if (getSuperMeta() instanceof ExtendedSectionImpl){
+			ExtendedSectionImpl sMeta = (ExtendedSectionImpl) getSuperMeta();
+			sMeta.processInheritance();
+			
+			references = (List<ExtendedReference>) processInherentList(this.getReferences(), sMeta.getReferences());
+			for (ExtendedReference ref : getReferences()) {
+				ref.processInheritance();
+			}
+			
+			rtes = (List<ExtendedAttribute>) processInherentList(this.getRtes(), sMeta.getRtes());
+			for (ExtendedAttribute att : getRtes()) {
+				att.processInheritance();
+			}
+			return true;
+		} 
+		
+		return false;
+	}
+	
 }

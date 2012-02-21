@@ -19,6 +19,8 @@ public interface IMetaDef {
 
 	public static final String ID = "id"; 										//$NON-NLS-1$
 	
+	public static final String SUPPRESSED = "suppressed"; 						//$NON-NLS-1$
+	
 	public static final String type = "type"; 									//$NON-NLS-1$
 	
 	public static final String REFERENCE_QUALIFIERS = "reference_qualifiers"; 	//$NON-NLS-1$

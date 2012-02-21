@@ -22,12 +22,26 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		public MetaElement getParent() {
 			return null;
 		}
-
+		public boolean isSuppressed() {
+			return false;
+		}
+		public boolean processInheritance() {
+			return false;
+		}
+		public MetaElement getSuperMeta() {
+			return null;
+		}
+		public void setSuperMeta(MetaElement superMeta) {
+		}
 	};
 		
 	public String getId();	
 	public String getName();
 	public String getGlobalId();
 	public MetaElement getParent();
+	public boolean isSuppressed();
+	public boolean processInheritance();
+	public MetaElement getSuperMeta();
+	public void setSuperMeta(MetaElement superMeta);
 	
 }

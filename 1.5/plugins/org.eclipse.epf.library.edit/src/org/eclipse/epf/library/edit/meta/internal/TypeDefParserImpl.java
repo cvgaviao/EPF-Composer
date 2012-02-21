@@ -1,11 +1,15 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefParser;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
+import org.eclipse.epf.uma.util.MetaElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,17 +20,48 @@ public class TypeDefParserImpl implements TypeDefParser {
 	}
 	
 	public List<IMetaDef> parse(Document doc) throws TypeDefException {
-		List typeDefList = new ArrayList<IMetaDef>();
-		
+		List metaList = new ArrayList<IMetaDef>();		
 		NodeList list = doc.getElementsByTagName(IMetaDef.MODIFIED_TYPE);
 		int size = list.getLength();
+
+		Map<String, ModifiedTypeMetaImpl> map = new HashMap<String, ModifiedTypeMetaImpl>();
 		for (int i = 0; i < size; i++) {
 			Element element = (Element) list.item(i);
-			IMetaDef typeDef = new ModifiedTypeMetaImpl();
-			typeDef.parseElement(element);
-			typeDefList.add(typeDef);
-		}				
-		return typeDefList;
+			ModifiedTypeMetaImpl meta = new ModifiedTypeMetaImpl();
+			meta.parseElement(element);
+			metaList.add(meta);			
+			map.put(meta.getId(), meta);			
+		}
+		
+		for (ModifiedTypeMetaImpl meta : (List<ModifiedTypeMetaImpl>) metaList) {
+			try {
+				Class cls = Class.forName(meta.getId());
+				if (cls == null) {
+					continue;
+				}
+				while (cls != null) {
+					ModifiedTypeMetaImpl superMeta = map.get(meta.getId());
+					if (superMeta != null) {
+						meta.setSuperMeta(superMeta);
+						break;
+					}
+					cls = TypeDefUtil.getSuperClass(cls);
+				}				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		for (ModifiedTypeMetaImpl meta : (List<ModifiedTypeMetaImpl>) metaList) {
+			meta.processInheritance();
+		}
+		
+		return metaList;
 	}
 
+	
+	
+	
+	
+	
 }

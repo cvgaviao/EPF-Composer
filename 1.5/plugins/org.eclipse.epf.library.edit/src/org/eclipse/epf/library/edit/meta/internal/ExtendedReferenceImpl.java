@@ -12,6 +12,7 @@ import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -61,4 +62,28 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		}
 	}
 	
+	@Override
+	public boolean processInheritance() {
+		if (! super.processInheritance()) {
+			return false;
+		}		
+		
+		if (getSuperMeta() == null) {
+			qualifiedReferences = (List<QualifiedReference>) processSuppress(this.getQualifiedReferences());
+			return true;
+			
+		} 
+		
+		if (getSuperMeta() instanceof ExtendedReferenceImpl) {			
+			ExtendedReferenceImpl sMeta = (ExtendedReferenceImpl) getSuperMeta();
+			sMeta.processInheritance();			
+			qualifiedReferences = (List<QualifiedReference>) processInherentList(this.getQualifiedReferences(), sMeta.getQualifiedReferences());
+			for (QualifiedReference qref : getQualifiedReferences()) {
+				qref.processInheritance();
+			}
+			return true;
+			
+		}
+		return false;
+	}
 }
