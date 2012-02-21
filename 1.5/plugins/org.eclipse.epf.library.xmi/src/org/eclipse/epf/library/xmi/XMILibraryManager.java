@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
@@ -36,6 +37,7 @@ import org.eclipse.epf.library.LibraryAlreadyExistsException;
 import org.eclipse.epf.library.LibraryNotFoundException;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryServiceException;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.layout.LayoutResources;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -47,6 +49,8 @@ import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.migration.MappingUtil;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.Services;
+import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -595,8 +599,63 @@ public class XMILibraryManager extends AbstractLibraryManager {
 		modifiedTypeMap.put(meta.getId(), meta);
 	}
 		
+	private ModifiedTypeMeta noneValue = (ModifiedTypeMeta) TypeDefUtil
+			.getInstance().createMetaDef(ModifiedTypeMeta.class);
+
 	public ModifiedTypeMeta getModifiedType(String id) {
-		return modifiedTypeMap == null ? null : modifiedTypeMap.get(id);
+		if (modifiedTypeMap == null) {
+			return null;
+		}		
+		
+		ModifiedTypeMeta meta = modifiedTypeMap.get(id);
+		if (meta == noneValue) {
+			return null;
+		} else if (meta != null) {
+			return meta;
+		}
+		
+		try {
+			Class cls = Class.forName(id);
+			if (cls == null) {
+				return null;
+			}
+			List<Class> list = new ArrayList<Class>();
+			list.add(cls);
+			cls = getSuperClass(cls);
+			while (cls != null) {
+				meta = modifiedTypeMap.get(cls.getName());
+				if (meta != null) {
+					break;
+				}
+				list.add(cls);
+				cls = getSuperClass(cls);
+			}
+			if (meta == null) {
+				meta = noneValue;
+			}
+			for (Class c : list) {
+				modifiedTypeMap.put(c.getName(), meta);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return meta == noneValue ? null : meta;
+	}
+		
+	private Class getSuperClass(Class cls) {
+		Class cls1 = ContentElement.class;
+		Class cls2 = BreakdownElement.class;
+		Class[] ins = cls.getInterfaces();
+		if (ins == null || ins.length == 0) {
+			return null;
+		}
+		for (Class in : ins) {
+			if (cls1.isAssignableFrom(in) || cls2.isAssignableFrom(in)) {
+				return in;
+			}
+		}
+		return null;
 	}
 	
 }
