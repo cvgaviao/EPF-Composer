@@ -617,6 +617,7 @@ public class XMILibraryManager extends AbstractLibraryManager {
 		try {
 			Class cls = Class.forName(id);
 			if (cls == null) {
+				modifiedTypeMap.put(id, noneValue);
 				return null;
 			}
 			List<Class> list = new ArrayList<Class>();
