@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.util.PropUtil;
@@ -22,13 +23,22 @@ import org.eclipse.epf.uma.util.UmaUtil;
 
 public class TypeDefUtil {
 
-	private static TypeDefUtil instance = new TypeDefUtil();
+	private static TypeDefUtil instance;
+	
+	static {
+		Object obj = ExtensionHelper.create(TypeDefUtil.class, null);
+		if (obj instanceof TypeDefUtil) {
+			instance = (TypeDefUtil) obj;
+		} else {
+			instance = new TypeDefUtil();
+		}
+	}
 	
 	public static TypeDefUtil getInstance() {
 		return instance;
 	}
 
-	private TypeDefUtil() {		
+	protected TypeDefUtil() {		
 	}
 	
 	public TypeDefParser getTypeDefParser() {
