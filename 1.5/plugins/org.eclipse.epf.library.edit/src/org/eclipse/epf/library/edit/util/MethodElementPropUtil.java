@@ -155,7 +155,7 @@ public class MethodElementPropUtil {
 		MethodElementPropertyHelper.removeProperty(e, propName);
 	}
 	
-	public MethodElementExt getExtendObject(MethodElement element, boolean create) {
+	public final MethodElementExt getExtendObject(MethodElement element, boolean create) {
 		if (element == null) {
 			return null;
 		}

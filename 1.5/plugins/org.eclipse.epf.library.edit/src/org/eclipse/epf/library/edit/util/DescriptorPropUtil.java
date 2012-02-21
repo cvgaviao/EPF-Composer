@@ -36,7 +36,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 
-public class DescriptorPropUtil extends PropUtil {
+public class DescriptorPropUtil extends WbePropUtil {
 	
 	public static boolean useLinkedElementInDiagram = false; 
 	

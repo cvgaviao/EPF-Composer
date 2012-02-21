@@ -1,9 +1,10 @@
 package org.eclipse.epf.library.edit.util;
 
+import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.uma.Process;
 
 
-public class ProcessPropUtil extends PropUtil {
+public class ProcessPropUtil extends WbePropUtil {
 
 	public static final String Process_SynFree = "process_synFree"; //$NON-NLS-1$
 
@@ -11,8 +12,15 @@ public class ProcessPropUtil extends PropUtil {
 	public static ProcessPropUtil getProcessPropUtil() {
 		return processPropUtil;
 	}
+	public static ProcessPropUtil getProcessPropUtil(IActionManager actionManager) {
+		return new ProcessPropUtil(actionManager);
+	}
 	
 	protected ProcessPropUtil() {		
+	}
+	
+	protected ProcessPropUtil(IActionManager actionManager) {
+		super(actionManager);
 	}
 	
 	public boolean isSynFree(Process d) {
