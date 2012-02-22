@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -78,6 +79,7 @@ public class UmaUtil {
 		ref.setName(name);
 		ref.setContainment(false);
 		ref.setUpperBound(ETypedElement.UNBOUNDED_MULTIPLICITY);
+		ref.setEType(UmaPackage.eINSTANCE.getMethodElement());
 		return ref;
 	}
 	
@@ -85,6 +87,7 @@ public class UmaUtil {
 		EAttribute att =  EcoreFactory.eINSTANCE.createEAttribute();
 		att.eSetDeliver(false);
 		att.setName(name);
+		att.setEType(UmaPackage.eINSTANCE.getContentDescription_MainDescription().getEType());
 		return att;
 	}
 	
