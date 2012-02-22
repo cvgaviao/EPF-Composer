@@ -1076,8 +1076,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			seXmlAttributes(section, sectionXml);			
 			for (ExtendedAttribute eAtt : attributes) {
 				XmlElement attXml = sectionXml.newChild(TAG_RTE);
-//				String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
-				String value = (String) TypeDefUtil.getInstance().eGet(element, eAtt.getAttribute());
+				String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
 				seXmlAttributes(eAtt, attXml);
 				attXml.setValue(value);//$NON-NLS-1$
 			}

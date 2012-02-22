@@ -1065,14 +1065,12 @@ public class LibraryUtil {
 		}
 		
 		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
-		if (meta == null) {
-			return list;
-		}
-				
-		for (ExtendedReference eRef : meta.getReferences()) {
-			list.add(eRef.getReference());
-			for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
-				list.add(qRef.getReference());
+		if (meta != null) {
+			for (ExtendedReference eRef : meta.getReferences()) {
+				list.add(eRef.getReference());
+				for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
+					list.add(qRef.getReference());
+				}
 			}
 		}
 				
