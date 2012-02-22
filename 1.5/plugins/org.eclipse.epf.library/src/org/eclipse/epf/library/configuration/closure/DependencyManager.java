@@ -26,6 +26,7 @@ import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.SupportingElementData;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -315,7 +316,7 @@ public class DependencyManager {
 			if (feature == UmaUtil.MethodElement_UdtList) {
 				value = propUtil.getUdtList(element, false);
 			} else {
-				value = element.eGet(feature);
+				value = TypeDefUtil.getInstance().eGet(element, feature);
 			}
 			if ( value == null ) {
 				continue;
