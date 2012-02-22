@@ -39,6 +39,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.PresentationContext;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -86,7 +87,9 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -104,8 +107,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 
 	public static boolean processDescritorsNewOption = false;
 	
-	public static final String TAG_REFERENCE = "reference"; //$NON-NLS-1$
+	public static final String TAG_REFERENCE = "reference"; 		//$NON-NLS-1$
 	public static final String TAG_REFERENCELIST = "referenceList"; //$NON-NLS-1$
+	public static final String TAG_SECTION = "section";				//$NON-NLS-1$
+	public static final String TAG_RTE = "rte";						//$NON-NLS-1$
 	
 	//Use "new String" to make sure the following instances are not the same
 	private static final String Att_ExtendeReference_1 = new String("ExtendedReference");	//$NON-NLS-1$	
@@ -1027,6 +1032,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 
 			// load the attributes
 			loadAttributes(elementXml);
+			loadExtendedAttributes(elementXml);
 
 			loadReferences(elementXml, false);
 			
@@ -1051,6 +1057,38 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 	}
 	
+	public void loadExtendedAttributes(XmlElement elementXml) {
+		if (ownerElement == null) {
+			return;
+		}
+		PropUtil propUtil = PropUtil.getPropUtil();
+		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(ownerElement);
+		if (meta == null) {
+			return;
+		}
+		
+		for (ExtendedSection section : meta.getRteSections()) {
+			List<ExtendedAttribute> attributes = section.getRtes();
+			if (attributes == null || attributes.isEmpty()) {
+				continue;
+			}
+			XmlElement sectionXml = elementXml.newChild(TAG_SECTION);
+			seXmlAttributes(section, sectionXml);			
+			for (ExtendedAttribute eAtt : attributes) {
+				XmlElement attXml = sectionXml.newChild(TAG_RTE);
+//				String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
+				String value = (String) TypeDefUtil.getInstance().eGet(element, eAtt.getAttribute());
+				seXmlAttributes(eAtt, attXml);
+				attXml.setValue(value);//$NON-NLS-1$
+			}
+		}
+	}
+	
+	private void seXmlAttributes(ExtendedAttribute att, XmlElement xmlElement) {
+		xmlElement.setAttribute("name", att.getName());		//$NON-NLS-1$
+		xmlElement.setAttribute("id", att.getId());			//$NON-NLS-1$
+	}
+	
 	public void loadExtendedReferences(XmlElement elementXml) {
 		PropUtil propUtil = PropUtil.getPropUtil();
 		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
@@ -1058,16 +1096,30 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			return;
 		}
 		
-		for (ExtendedReference eRef : meta.getReferences()) {
-			List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
-					element, eRef.getReference(), layoutManager
-							.getElementRealizer());
-			if (list != null && !list.isEmpty()) {
-				addReferences(eRef, elementXml, Att_ExtendeReference_1, list);	//$NON-NLS-1$
-				addReferences(eRef, elementXml, Att_ExtendeReference_2, list);	//$NON-NLS-1$
+		for (ExtendedSection section : meta.getReferenceSections()) {
+			List<ExtendedReference> references = section.getReferences();
+			if (references == null || references.isEmpty()) {
+				continue;
+			}
+			XmlElement sectionXml = elementXml.newChild(TAG_SECTION);
+			seXmlAttributes(section, sectionXml);
+			
+			for (ExtendedReference eRef : references) {
+				List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
+						element, eRef.getReference(), layoutManager
+								.getElementRealizer());
+				if (list != null && !list.isEmpty()) {
+					addReferences(eRef, sectionXml, Att_ExtendeReference_1, list);	//$NON-NLS-1$
+					addReferences(eRef, sectionXml, Att_ExtendeReference_2, list);	//$NON-NLS-1$
+				}
 			}
 		}
-
+	}
+	
+	private void seXmlAttributes(ExtendedSection section, XmlElement xmlElement) {
+		xmlElement.setAttribute("name", section.getName());		//$NON-NLS-1$
+		xmlElement.setAttribute("type", section.getType());		//$NON-NLS-1$
+		xmlElement.setAttribute("id", section.getId());			//$NON-NLS-1$
 	}
 	
 	protected void loadQrReferences(XmlElement elementXml) {

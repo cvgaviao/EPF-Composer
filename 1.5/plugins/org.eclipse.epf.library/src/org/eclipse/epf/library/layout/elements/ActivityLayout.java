@@ -281,8 +281,11 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			return elementXml;
 		}
 		
+		loadExtendedAttributes(elementXml);
+		
 		// Load the udt info
 		loadUdtReferences(elementXml);
+		loadExtendedReferences(elementXml);
 		
 		elementXml.setAttribute("ShowFullMethodContent", (layoutManager.getValidator().showExtraInfoForDescriptors()) ? "true" : "false"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
