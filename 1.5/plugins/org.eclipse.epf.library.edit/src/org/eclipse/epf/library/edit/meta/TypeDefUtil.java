@@ -160,7 +160,7 @@ public class TypeDefUtil {
 	}
 		
 	public List<EReference> getEAllReferences(MethodElement element) {
-		List<EReference> list = element.eClass().getEAllReferences();
+		List<EReference> list = new ArrayList<EReference>(element.eClass().getEAllReferences());
 		PropUtil propUtil = PropUtil.getPropUtil();	
 		
 		if (propUtil.hasUdtList(element)) {
@@ -181,7 +181,7 @@ public class TypeDefUtil {
 	}
 	
 	public List<EAttribute> getEAllAttributes(MethodElement element) {
-		List<EAttribute> list = element.eClass().getEAllAttributes();
+		List<EAttribute> list =new ArrayList<EAttribute>(element.eClass().getEAllAttributes());
 		
 		if (! (element instanceof ContentDescription)) {
 			return list;
