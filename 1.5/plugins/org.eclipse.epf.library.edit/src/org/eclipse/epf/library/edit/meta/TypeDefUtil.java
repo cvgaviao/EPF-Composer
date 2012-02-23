@@ -11,17 +11,20 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 public class TypeDefUtil {
 
@@ -111,12 +114,22 @@ public class TypeDefUtil {
 	public Object eGet(EObject obj, EStructuralFeature feature, boolean toModify) {
 		if (obj == null) {
 			return null;
-		}
+		}		
 		if (obj instanceof MethodElement) {
 			PropUtil propUtil = PropUtil.getPropUtil();
 			MethodElement element = (MethodElement) obj;
 			if (feature instanceof EReference) {
 				EReference ref = (EReference) feature;
+				if (element instanceof Practice) {
+					PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
+					Practice practice = (Practice) element;
+					UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta(practice);
+					if (meta != null && meta.isQualifiedRefernce((EReference) feature)) {
+						List list = practicePropUtil.getQReferenceListById(element,
+								feature.getName(), false);
+						return list;
+					}
+				}								
 				if (ref == UmaUtil.MethodElement_UdtList) {
 					return propUtil.getUdtList(element, toModify);
 				}

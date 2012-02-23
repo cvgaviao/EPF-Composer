@@ -184,6 +184,9 @@ public class MethodElementPropUtil {
 			}
 			return new WorkProductStateExt((Constraint) element, oldObj);
 		}
+		if (oldObj instanceof MethodElementExt) {
+			return (MethodElementExt) oldObj;
+		}
 		return new MethodElementExt(element, oldObj);
 	}
 	

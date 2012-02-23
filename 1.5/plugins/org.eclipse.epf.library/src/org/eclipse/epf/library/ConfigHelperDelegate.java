@@ -10,7 +10,6 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -570,25 +569,6 @@ public class ConfigHelperDelegate {
 		}
 		IConfigurationManager configMgr = LibraryService.getInstance().getConfigurationManager(config);
 		return configMgr == null ? null : configMgr.getSupportingElementData();
-	}
-	
-	public List<MethodElement> calcgetQReferenceList(MethodElement element,
-			String qualifiedName, ElementRealizer realizer) {
-		List<MethodElement> qrReferenceList = new ArrayList<MethodElement>();
-		MethodElementPropUtil propUtil = MethodElementPropUtil
-				.getMethodElementPropUtil();
-		List<MethodElement> list = propUtil.getQReferenceListById(element,
-				qualifiedName, false);
-		if (list != null) {
-			for (MethodElement m : list) {
-				Object realized = ConfigurationHelper.getCalculatedElement(m,
-						realizer);
-				if (realized instanceof MethodElement) {
-					qrReferenceList.add((MethodElement) realized);
-				}
-			}
-		}
-		return qrReferenceList;
 	}
 	
 	//Make closure if conig stores any making closure info

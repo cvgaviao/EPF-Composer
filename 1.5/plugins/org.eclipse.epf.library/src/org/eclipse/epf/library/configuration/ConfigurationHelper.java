@@ -718,7 +718,16 @@ public class ConfigurationHelper {
 //		List features = element.getInstanceProperties();
 		List features = LibraryUtil.getStructuralFeatures(element, true);
 		if ( !features.contains(feature)) {
-			return;
+			if (element instanceof Practice) {
+				PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
+				Practice practice = (Practice) element;
+				UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta(practice);
+				if (! meta.isQualifiedRefernce((EReference) feature)) {
+					return;
+				}
+			} else {	
+				return;
+			}
 		}
 		
 		// EClassifier type = feature.getEType();
@@ -1351,14 +1360,6 @@ public class ConfigurationHelper {
 			EStructuralFeature feature, ElementRealizer realizer) {
 		TypeDefUtil typeDefUtil = TypeDefUtil.getInstance();
 		
-		if (feature instanceof EReference && element instanceof Practice) {
-			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
-			Practice practice = (Practice) element;
-			UserDefinedTypeMeta meta = propUtil.getUdtMeta(practice);
-			if (meta != null && meta.isQualifiedRefernce((EReference) feature)) {
-				return getDelegate().calcgetQReferenceList(element, feature.getName(), realizer);
-			}
-		}
 		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
 //			Object value = element.eGet(feature);
 			Object value = typeDefUtil.eGet(element, feature);
