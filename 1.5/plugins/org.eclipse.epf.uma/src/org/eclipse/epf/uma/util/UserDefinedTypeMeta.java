@@ -71,6 +71,10 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 	public UserDefinedTypeMeta() {
 	}
 	
+	public String getTypeId() {
+		return getRteNameMap().get(_typeId);		//$NON-NLS-1$
+	}
+	
 	public Map<String, String> getRteNameMap() {
 		if (rteNameMap == null) {
 			rteNameMap  = new HashMap<String, String>();

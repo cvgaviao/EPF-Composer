@@ -13,6 +13,7 @@ import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
@@ -20,6 +21,7 @@ import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.w3c.dom.Element;
 
 public class PropUtil extends MethodElementPropUtil {
@@ -110,6 +112,14 @@ public class PropUtil extends MethodElementPropUtil {
 	private static String umaTypeScope = "org.eclipse.epf.uma.";		//$NON-NLS-1$	
 	public ModifiedTypeMeta getGlobalMdtMeta(MethodElement element) {
 		String id = umaTypeScope + element.eClass().getName();
+		if (element instanceof Practice) {
+			PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
+			Practice practice = (Practice) element;
+			UserDefinedTypeMeta udtMeta = practicePropUtil.getUdtMeta(practice);
+			if (udtMeta != null) {
+				id = udtMeta.getTypeId();		
+			}
+		}	
 		ModifiedTypeMeta meta = LibraryEditUtil.getInstance().getModifiedType(id);
 		return meta;
 	}
