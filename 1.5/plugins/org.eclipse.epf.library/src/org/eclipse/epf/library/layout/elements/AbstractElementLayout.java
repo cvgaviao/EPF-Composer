@@ -1073,17 +1073,17 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				continue;
 			}
 			XmlElement sectionXml = elementXml.newChild(TAG_SECTION);
-			seXmlAttributes(section, sectionXml);			
+			setXmlAttributes(section, sectionXml);			
 			for (ExtendedAttribute eAtt : attributes) {
 				XmlElement attXml = sectionXml.newChild(TAG_RTE);
 				String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
-				seXmlAttributes(eAtt, attXml);
+				setXmlAttributes(eAtt, attXml);
 				attXml.setValue(value);//$NON-NLS-1$
 			}
 		}
 	}
 	
-	private void seXmlAttributes(ExtendedAttribute att, XmlElement xmlElement) {
+	private void setXmlAttributes(ExtendedAttribute att, XmlElement xmlElement) {
 		xmlElement.setAttribute("name", att.getName());		//$NON-NLS-1$
 		xmlElement.setAttribute("id", att.getId());			//$NON-NLS-1$
 	}
@@ -1101,7 +1101,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				continue;
 			}
 			XmlElement sectionXml = elementXml.newChild(TAG_SECTION);
-			seXmlAttributes(section, sectionXml);
+			setXmlAttributes(section, sectionXml);
 			
 			for (ExtendedReference eRef : references) {
 				List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
@@ -1115,7 +1115,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 	}
 	
-	private void seXmlAttributes(ExtendedSection section, XmlElement xmlElement) {
+	private void setXmlAttributes(ExtendedSection section, XmlElement xmlElement) {
 		xmlElement.setAttribute("name", section.getName());		//$NON-NLS-1$
 		xmlElement.setAttribute("type", section.getType());		//$NON-NLS-1$
 		xmlElement.setAttribute("id", section.getId());			//$NON-NLS-1$
