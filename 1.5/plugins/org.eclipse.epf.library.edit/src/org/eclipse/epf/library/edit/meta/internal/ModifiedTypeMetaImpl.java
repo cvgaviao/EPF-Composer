@@ -135,4 +135,16 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		}
 	}
 	
+	public boolean processLink(ModifiedTypeMeta linkedMeta) {
+		if (linkedMeta == null) {
+			return false;
+		}
+		getSections().addAll(linkedMeta.getSections());
+		getReferences().addAll(linkedMeta.getReferences());
+		getRtes().addAll(linkedMeta.getRtes());
+		getReferenceSections().addAll(linkedMeta.getReferenceSections());;
+		getRteSections().addAll(linkedMeta.getRteSections());
+		return true;
+	}
+	
 }

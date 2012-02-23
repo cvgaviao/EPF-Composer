@@ -10,6 +10,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefParser;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.util.MetaElement;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -56,12 +57,25 @@ public class TypeDefParserImpl implements TypeDefParser {
 			meta.processInheritance();
 		}
 		
+		for (ModifiedTypeMetaImpl meta : (List<ModifiedTypeMetaImpl>) metaList) {
+			ModifiedTypeMeta linkedMeta = getLinkedMeta(meta, map);
+			meta.processLink(linkedMeta);
+		}
+		
 		return metaList;
 	}
-
 	
-	
-	
-	
+	private ModifiedTypeMeta getLinkedMeta(ModifiedTypeMeta meta, Map<String, ModifiedTypeMetaImpl> map) {
+		if (meta.getId().equals("org.eclipse.epf.uma.TaskDescriptor")) {		//$NON-NLS-1$
+			return map.get("org.eclipse.epf.uma.Task");
+		}
+		if (meta.getId().equals("org.eclipse.epf.uma.RoleDescriptor")) {		//$NON-NLS-1$
+			return map.get("org.eclipse.epf.uma.Role");
+		}
+		if (meta.getId().equals("org.eclipse.epf.uma.WorkProductDescriptor")) {		//$NON-NLS-1$
+			return map.get("org.eclipse.epf.uma.WorkProduct");
+		}		
+		return null;
+	}
 	
 }
