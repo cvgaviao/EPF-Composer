@@ -24,9 +24,10 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 	List<ExtendedSection> referenceSections;
 	List<ExtendedSection> rteSections;
 	
-	public ModifiedTypeMetaImpl() {		
+	public ModifiedTypeMetaImpl() {
+		super(null);
 	}
-		
+	
 	public List<ExtendedReference> getReferences() {
 		if (references == null) {
 			references = new ArrayList<ExtendedReference>();
@@ -79,7 +80,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		List<Element> sectionElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.SECTION);
 		if (sectionElements != null) {
 			for (Element sElement : sectionElements) {
-				ExtendedSectionImpl ses = new ExtendedSectionImpl();
+				ExtendedSectionImpl ses = new ExtendedSectionImpl(this);
 				ses.parseElement(sElement);				
 				getSections().add(ses);
 			}

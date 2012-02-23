@@ -12,6 +12,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.w3c.dom.Element;
@@ -20,7 +21,8 @@ public class ExtendedAttributeImpl  extends MetaElementImpl implements ExtendedA
 
 	private EAttribute att;	
 	
-	public ExtendedAttributeImpl() {		
+	public ExtendedAttributeImpl(MetaElement parent) {
+		super(parent);
 	}
 
 	public EAttribute getAttribute() {

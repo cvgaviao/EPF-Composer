@@ -14,6 +14,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.w3c.dom.Element;
@@ -23,7 +24,8 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 
 	private List<QualifiedReference> qualifiedReferences;
 
-	public ExtendedReferenceImpl() {		
+	public ExtendedReferenceImpl(MetaElement parent) {
+		super(parent);
 	}
 	
 	public EReference getReference() {
@@ -54,8 +56,7 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		for (Element rqElement : rqElements) {
 			List<Element> qElements = XMLUtil.getChildElementsByTagName(rqElement, IMetaDef.QUALIFIER);
 			for (Element qElement : qElements) {
-				QualifiedReferenceImpl q = new QualifiedReferenceImpl();
-				q.setParent(this);
+				QualifiedReferenceImpl q = new QualifiedReferenceImpl(this);
 				q.parseElement(qElement);
 				qualifiedReferences.add(q);
 			}

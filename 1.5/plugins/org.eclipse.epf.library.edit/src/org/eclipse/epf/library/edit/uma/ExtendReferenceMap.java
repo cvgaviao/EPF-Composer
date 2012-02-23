@@ -62,7 +62,7 @@ public class ExtendReferenceMap {
 	}
 	
 	private ExtendedReference createLocalExtendedReference(String id) {
-		ExtendedReferenceImpl ref = new ExtendedReferenceImpl();
+		ExtendedReferenceImpl ref = new ExtendedReferenceImpl(null);
 		ref.setId(id);
 		return ref;
 	}

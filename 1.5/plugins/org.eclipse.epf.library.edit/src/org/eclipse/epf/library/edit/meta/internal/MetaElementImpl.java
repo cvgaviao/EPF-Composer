@@ -25,6 +25,10 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	private boolean inheritanceProcessed =false;
 	private MetaElement superMeta;
 
+	public MetaElementImpl(MetaElement parent) {
+		this.parent = parent;
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -50,10 +54,6 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 
 	public MetaElement getParent() {
 		return parent;
-	}
-	
-	public void setParent(MetaElement parent) {
-		this.parent = parent;
 	}
 	
 	public boolean isSuppressed() {

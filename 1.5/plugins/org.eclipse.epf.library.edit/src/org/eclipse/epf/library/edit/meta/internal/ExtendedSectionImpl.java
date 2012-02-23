@@ -9,6 +9,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
+import org.eclipse.epf.uma.util.MetaElement;
 import org.w3c.dom.Element;
 
 public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSection {
@@ -17,7 +18,8 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 	private List<ExtendedReference> references;
 	private List<ExtendedAttribute> rtes;
 	
-	public ExtendedSectionImpl() {		
+	public ExtendedSectionImpl(MetaElement parent) {
+		super(parent);
 	}
 	
 	public String getType() {
@@ -46,7 +48,7 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 		List<Element> referenceElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.REFERENCE);
 		if (referenceElements != null) {
 			for (Element rElement : referenceElements) {
-				ExtendedReferenceImpl ref = new ExtendedReferenceImpl();
+				ExtendedReferenceImpl ref = new ExtendedReferenceImpl(this);
 				ref.parseElement(rElement);
 				references.add(ref);
 			}
@@ -56,7 +58,7 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 		List<Element> rteElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.RTE);
 		if (rtes != null) {
 			for (Element rElement : rteElements) {
-				ExtendedAttributeImpl rte = new ExtendedAttributeImpl();
+				ExtendedAttributeImpl rte = new ExtendedAttributeImpl(this);
 				rte.parseElement(rElement);
 				rtes.add(rte);
 			}
