@@ -55,7 +55,6 @@ import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
@@ -573,23 +572,6 @@ public class ConfigHelperDelegate {
 		return configMgr == null ? null : configMgr.getSupportingElementData();
 	}
 	
-	public List<Practice> calcUtdList(MethodElement element, ElementRealizer realizer) {
-		List<Practice> utdList = new ArrayList<Practice>();
-		MethodElementPropUtil propUtil = MethodElementPropUtil.getMethodElementPropUtil();
-		if (propUtil.hasUdtList(element)) {
-			List<Practice> list = propUtil.getUdtList(element, false);
-			if (list != null) {
-				for (Practice p : list) {
-					Object realized = ConfigurationHelper.getCalculatedElement(p, realizer);
-					if (realized instanceof Practice) {
-						utdList.add((Practice) realized);
-					}
-				}
-			}
-		}		
-		return utdList;
-	}
-	
 	public List<MethodElement> calcgetQReferenceList(MethodElement element,
 			String qualifiedName, ElementRealizer realizer) {
 		List<MethodElement> qrReferenceList = new ArrayList<MethodElement>();
@@ -609,7 +591,6 @@ public class ConfigHelperDelegate {
 		return qrReferenceList;
 	}
 	
-
 	//Make closure if conig stores any making closure info
 	//Return true if processed otherwise false
 	public boolean makeClosure(MethodConfiguration config) {

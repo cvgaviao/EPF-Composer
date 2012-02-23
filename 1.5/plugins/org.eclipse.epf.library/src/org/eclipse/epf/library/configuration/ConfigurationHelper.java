@@ -69,7 +69,6 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.Scope;
-import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 
@@ -717,7 +716,7 @@ public class ConfigurationHelper {
 		// for example, if an activity contributes to a Capability Pattern,
 		// some CapabilityPattern specific feature may not be a valid feature for the Activity
 //		List features = element.getInstanceProperties();
-		List features = LibraryUtil.getStructuralFeatures(element, true, true);
+		List features = LibraryUtil.getStructuralFeatures(element, true);
 		if ( !features.contains(feature)) {
 			return;
 		}
@@ -1352,9 +1351,6 @@ public class ConfigurationHelper {
 			EStructuralFeature feature, ElementRealizer realizer) {
 		TypeDefUtil typeDefUtil = TypeDefUtil.getInstance();
 		
-		if (feature == UmaUtil.MethodElement_UdtList) {
-			return getDelegate().calcUtdList(element, realizer);
-		}
 		if (feature instanceof EReference && element instanceof Practice) {
 			PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 			Practice practice = (Practice) element;

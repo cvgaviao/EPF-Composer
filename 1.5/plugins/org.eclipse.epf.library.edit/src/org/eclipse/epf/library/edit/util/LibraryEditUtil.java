@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
@@ -52,6 +53,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -390,10 +392,17 @@ public class LibraryEditUtil {
 		}
 		if (feature == UmaUtil.MethodElement_UdtList) {
 			if (PracticePropUtil.getPracticePropUtil().isUdtType(referenced)) {
-				MethodElementPropUtil.getMethodElementPropUtil().addOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
+				PropUtil.getPropUtil().addOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
 			}
 			return;
 		}
+		
+		ExtendedReference eRef = TypeDefUtil.getInstance().getAssociatedExtendedReference(feature);
+		if (eRef != null) {
+			PropUtil.getPropUtil().addOpposite(eRef.getGlobalId(), referencing, referenced);
+			return;
+		}
+		
 		
 		OppositeFeature oppositeFeature = OppositeFeature
 				.getOppositeFeature(feature);
@@ -415,6 +424,12 @@ public class LibraryEditUtil {
 			}
 			return;
 		}
+		ExtendedReference eRef = TypeDefUtil.getInstance().getAssociatedExtendedReference(feature);
+		if (eRef != null) {
+			PropUtil.getPropUtil().removeOpposite(eRef.getGlobalId(), referencing, referenced);
+			return;
+		}
+		
 		OppositeFeature oppositeFeature = OppositeFeature
 				.getOppositeFeature(feature);
 		if (oppositeFeature == null) {

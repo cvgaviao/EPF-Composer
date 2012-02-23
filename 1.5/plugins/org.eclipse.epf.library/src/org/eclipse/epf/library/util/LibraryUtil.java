@@ -1049,14 +1049,10 @@ public class LibraryUtil {
 	 * @return
 	 */
 	public static List getStructuralFeatures(MethodElement element, boolean addExtended) {
-		return getStructuralFeatures(element, addExtended, false);
-	}
-	
-	public static List getStructuralFeatures(MethodElement element, boolean addExtended, boolean addUdtList) {
 		List list = getStructuralFeatures(element);
 		
 		PropUtil propUtil = PropUtil.getPropUtil();	
-		if (addUdtList && propUtil.hasUdtList(element)) {
+		if (propUtil.hasUdtList(element)) {
 			list.add(UmaUtil.MethodElement_UdtList);
 		}
 						
@@ -1585,7 +1581,7 @@ public class LibraryUtil {
 			if (propUtil.getMdtMeta(element) != null) {
 				elementsToProcess.add(element);
 			
-			} else if (propUtil.hasUdtList(element)) {
+			} else if (propUtil.hasReferences(element)) {
 				elementsToProcess.add(element);
 				
 			} else if (element instanceof Practice) {
@@ -1609,8 +1605,18 @@ public class LibraryUtil {
 						}
 					}
 				}
-				if (propUtil.hasUdtList(element)) {
-					propUtil.getUdtList(element, false);
+				if (propUtil.hasReferences(element)) {
+					propUtil.getUdtList(element, false);					
+					ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
+					if (meta != null) {
+						for (ExtendedReference ref : meta.getReferences()) {
+							propUtil.getExtendedReferenceList(element, ref, false);
+							for (ExtendedReference qref : ref.getQualifiedReferences()) {
+								propUtil.getExtendedReferenceList(element, qref, false);
+							}
+						}
+					}
+					
 				}				
 				if (element instanceof Practice) {
 					PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();

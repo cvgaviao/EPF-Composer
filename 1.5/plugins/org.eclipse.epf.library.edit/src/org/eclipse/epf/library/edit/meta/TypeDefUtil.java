@@ -108,21 +108,26 @@ public class TypeDefUtil {
 		return eGet(obj, feature, false);
 	}
 	
-	public Object eGet(EObject obj, EStructuralFeature feature, boolean modifiy) {
+	public Object eGet(EObject obj, EStructuralFeature feature, boolean toModify) {
+		if (obj == null) {
+			return null;
+		}
 		if (obj instanceof MethodElement) {
+			PropUtil propUtil = PropUtil.getPropUtil();
 			MethodElement element = (MethodElement) obj;
 			if (feature instanceof EReference) {
 				EReference ref = (EReference) feature;
+				if (ref == UmaUtil.MethodElement_UdtList) {
+					return propUtil.getUdtList(element, toModify);
+				}
 				ExtendedReference eRef = getAssociatedExtendedReference(ref);
 				if (eRef != null) {
-					PropUtil propUtil = PropUtil.getPropUtil();
-					return propUtil.getExtendedReferenceList(element, eRef, modifiy);
+					return propUtil.getExtendedReferenceList(element, eRef, toModify);
 				}
 			} else if (feature instanceof EAttribute && element instanceof ContentDescription) {
 				EAttribute att = (EAttribute) feature;
 				ExtendedAttribute eAtt = getAssociatedExtendedAttribute(att);
 				if (eAtt != null) {
-					PropUtil propUtil = PropUtil.getPropUtil();
 					return propUtil.getExtendedAttribute((ContentDescription) element, eAtt);
 				}
 			}

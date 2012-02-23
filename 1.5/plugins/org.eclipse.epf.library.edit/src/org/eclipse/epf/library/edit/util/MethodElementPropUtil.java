@@ -15,6 +15,7 @@ import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
@@ -546,16 +547,7 @@ public class MethodElementPropUtil {
 	}
 	
 	public Object eGet(EObject eobj, EStructuralFeature feature, boolean toModify) {
-		if (eobj == null) {
-			return null;
-		}
-		if (feature == UmaUtil.MethodElement_UdtList) {
-			if (! (eobj instanceof MethodElement)) {
-				return null;
-			}
-			return getUdtList((MethodElement) eobj, toModify);
-		}
-		return eobj.eGet(feature);
+		return TypeDefUtil.getInstance().eGet(eobj, feature, toModify);
 	}
 	
 }

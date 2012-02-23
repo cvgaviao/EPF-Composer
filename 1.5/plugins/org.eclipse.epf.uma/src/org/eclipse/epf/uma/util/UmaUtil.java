@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -91,11 +90,8 @@ public class UmaUtil {
 		return att;
 	}
 	
-	public static EReference MethodElement_UdtList = EcoreFactory.eINSTANCE.createEReference();
+	public static EReference MethodElement_UdtList = createReference("MethodElement_UdtList");	//$NON-NLS-1$
 	public static final String Unresolved = "unresolved";		//$NON-NLS-1$
-	static {
-		MethodElement_UdtList.setName("MethodElement_UdtList");		//$NON-NLS-1$
-	}
 	
 	private static IUmaUtilProvider provider;
 	public static Set<String> unresolvedGuidSet = new HashSet<String>();
