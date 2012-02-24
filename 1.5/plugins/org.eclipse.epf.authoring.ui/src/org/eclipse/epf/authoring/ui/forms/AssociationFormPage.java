@@ -43,7 +43,6 @@ import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
-import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IMenuListener;
@@ -1545,8 +1544,8 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		return super.retrieveTableViewerContents(viewer);
 	}
 	
-	public Object[] getElements(Object object, int ix) {
-		return new Object[0];
+	public EReference getReference(int ix) {
+		return null;
 	}
 	
 }

@@ -13,6 +13,7 @@ package org.eclipse.epf.authoring.ui.forms;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
@@ -273,18 +274,17 @@ public class TaskWorkProductsPage extends AssociationFormPage {
 	}
 	
 	@Override
-	public Object[] getElements(Object object, int ix) {
+	public EReference getReference(int ix) {
 		if (ix == 1) {
-			return ((Task) object).getMandatoryInput().toArray();
+			return UmaPackage.eINSTANCE.getTask_MandatoryInput();
 		}
 		if (ix == 2) {
-			return ((Task) object).getOptionalInput().toArray();
+			return UmaPackage.eINSTANCE.getTask_OptionalInput();
 		}
 		if (ix == 3) {
-			return ((Task) object).getOutput().toArray();
-		}
-		
-		return super.getElements(object, ix);
+			return UmaPackage.eINSTANCE.getTask_Output();
+		}		
+		return super.getReference(ix);
 	}
 
 }

@@ -639,7 +639,7 @@ public class XMILibraryManager extends AbstractLibraryManager {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return meta == noneValue ? null : meta;
 	}
