@@ -27,16 +27,23 @@ public class AssociationFormLabelProvider extends AdapterFactoryLabelProvider
 	private EReference reference;
 
 	private int ix;
+	private int typeIx;
+
 	public AssociationFormLabelProvider(AdapterFactory adapterFactory, FormPageProviderExtender providerExtender, int ix) {
 		super(adapterFactory);
 		this.providerExtender = providerExtender;
 		this.ix = ix;
+		this.typeIx = ix;
 	}  	
-    
+	
+	public void setTypeIx(int typeIx) {
+		this.typeIx = typeIx;
+	}
+	
 	@Override
 	public String getColumnText(Object object, int columnIndex) {
 		String text = TngUtil.getLabelWithPath(object);
-		if (ix == 1) {
+		if (typeIx == 1) {
 			text = providerExtender.getFormPage().getDecorator(object, getReference()) + text;
 		}
 		return text;
