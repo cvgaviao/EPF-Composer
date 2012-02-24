@@ -72,6 +72,9 @@ public class TaskWorkProductsPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				return ((Task) object).getMandatoryInput().toArray();
 			}
 		};
@@ -118,6 +121,9 @@ public class TaskWorkProductsPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 2);
+				}
 				return ((Task) object).getOptionalInput().toArray();
 			}
 		};
@@ -164,6 +170,9 @@ public class TaskWorkProductsPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 3);
+				}
 				return ((Task) object).getOutput().toArray();
 			}
 		};
@@ -261,6 +270,21 @@ public class TaskWorkProductsPage extends AssociationFormPage {
 	 */
 	protected String getSelectedLabel3() {
 		return AuthoringUIResources.taskWorkProductsPage_selectedLabel3;
+	}
+	
+	@Override
+	public Object[] getElements(Object object, int ix) {
+		if (ix == 1) {
+			return ((Task) object).getMandatoryInput().toArray();
+		}
+		if (ix == 2) {
+			return ((Task) object).getOptionalInput().toArray();
+		}
+		if (ix == 3) {
+			return ((Task) object).getOutput().toArray();
+		}
+		
+		return super.getElements(object, ix);
 	}
 
 }
