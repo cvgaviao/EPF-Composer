@@ -100,15 +100,6 @@ public class PropUtil extends MethodElementPropUtil {
 		return value;
 	}
 	
-	public ModifiedTypeMeta getMdtMeta(MethodElement element) {
-		try {
-			return getMdtData(element);			
-		} catch (Exception e) {
-			LibraryEditPlugin.getDefault().getLogger().logError(e);
-		}
-		return null;
-	}
-	
 	private static String umaTypeScope = "org.eclipse.epf.uma.";		//$NON-NLS-1$	
 	public ModifiedTypeMeta getGlobalMdtMeta(MethodElement element) {
 		String id = umaTypeScope + element.eClass().getName();
@@ -124,28 +115,6 @@ public class PropUtil extends MethodElementPropUtil {
 		return meta;
 	}
 	
-	private  ModifiedTypeMeta getMdtData(MethodElement element)  throws Exception {
-		MethodElementExt extendObject = getExtendObject(element, true);
-		if (extendObject != null && extendObject.getModifiedTypeMeta() instanceof ModifiedTypeMeta) {
-			ModifiedTypeMeta meta = (ModifiedTypeMeta) extendObject.getModifiedTypeMeta();
-			return meta == ModifiedTypeMeta.noneValue ? null : meta;
-		}
-		ModifiedTypeMeta meta = new ModifiedTypeMetaImpl();
-		
-		PropXmlEditUtil xmlEditUtil = new PropXmlEditUtil(element, this);
-		xmlEditUtil.retrieveMdtData(meta);
-		if (extendObject == null) {
-			return meta.getId() == null ? null : meta;
-		}
-		if (meta.getId() == null) {
-			meta = null;
-		} else {
-			meta = LibraryEditUtil.getInstance().getModifiedType(meta.getId());
-		}
-		extendObject.setModifiedTypeMeta(meta == null ? MetaElement.noneValue : meta);
-		return meta;
-	}
-	
 	private static class PropXmlEditUtil extends XmlEditUtil {
 		private MethodElement element;
 		public static final String _id = "id"; 					//$NON-NLS-1$	
@@ -155,22 +124,22 @@ public class PropUtil extends MethodElementPropUtil {
 			this.element = element;
 		}	
 		
-		public void retrieveMdtData(ModifiedTypeMeta meta) throws Exception {
-			if (meta instanceof ModifiedTypeMetaImpl) {
-				return;
-			}
-			Map<String, String> map = null;
-			
-			String xmlString = getPropUtil().getStringValue(element, Me_mdtData);
-			if (xmlString == null || xmlString.trim().length() == 0) {
-				return;
-			}
-			Element firstElement = loadDocumentAndGetFirstElement(xmlString);
-			if (firstElement == null) {
-				return;
-			}				
-			((ModifiedTypeMetaImpl) meta).parseElement(firstElement);
-		}
+//		public void retrieveMdtData(ModifiedTypeMeta meta) throws Exception {
+//			if (meta instanceof ModifiedTypeMetaImpl) {
+//				return;
+//			}
+//			Map<String, String> map = null;
+//			
+//			String xmlString = getPropUtil().getStringValue(element, Me_mdtData);
+//			if (xmlString == null || xmlString.trim().length() == 0) {
+//				return;
+//			}
+//			Element firstElement = loadDocumentAndGetFirstElement(xmlString);
+//			if (firstElement == null) {
+//				return;
+//			}				
+//			((ModifiedTypeMetaImpl) meta).parseElement(firstElement);
+//		}
 	}
 	
 	public void addOpposite(ExtendedReference reference, MethodElement thisElement, MethodElement otherElement) {

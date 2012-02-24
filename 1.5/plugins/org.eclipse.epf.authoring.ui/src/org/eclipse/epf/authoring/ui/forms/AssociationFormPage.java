@@ -1533,7 +1533,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		return new Font(Display.getCurrent(), fontdata);    	
     }
     
-	protected FormPageProviderExtender getProviderExtender() {
+	public FormPageProviderExtender getProviderExtender() {
 		return providerExtender;
 	}
 

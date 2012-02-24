@@ -134,7 +134,7 @@ public class ExtendReferenceMap {
 			}
 			UnresolvedGuidHandler uHandler = new UnresolvedGuidHandler();
 			Set<MethodElement> validSet = null;
-			if (eRef.getParent() != null) {
+			if (eRef.getParent() instanceof ExtendedReference) {
 				validSet = getMdtQrValidSet(element, mdtQrValidSetMap,
 							uHandler, eRef.getParent().getGlobalId());
 			} else if (referenceSet != null && name.startsWith(QReference_)) {

@@ -49,7 +49,7 @@ public class TypeDefParserImpl implements TypeDefParser {
 					cls = TypeDefUtil.getSuperClass(cls);
 				}				
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		

@@ -1578,7 +1578,7 @@ public class LibraryUtil {
 		
 		public void visit(MethodElement element) {
 			PropUtil propUtil = PropUtil.getPropUtil();
-			if (propUtil.getMdtMeta(element) != null) {
+			if (propUtil.getGlobalMdtMeta(element) != null) {
 				elementsToProcess.add(element);
 			
 			} else if (propUtil.hasReferences(element)) {
@@ -1596,7 +1596,7 @@ public class LibraryUtil {
 		public void processElements() {
 			PropUtil propUtil = PropUtil.getPropUtil();
 			for (MethodElement element : elementsToProcess) {
-				ModifiedTypeMeta modifiedTypeMeta = propUtil.getMdtMeta(element);
+				ModifiedTypeMeta modifiedTypeMeta = propUtil.getGlobalMdtMeta(element);
 				if (modifiedTypeMeta != null) {
 					for (ExtendedReference eRef : modifiedTypeMeta.getReferences()) {
 						propUtil.getExtendedReferenceList(element, eRef, false);

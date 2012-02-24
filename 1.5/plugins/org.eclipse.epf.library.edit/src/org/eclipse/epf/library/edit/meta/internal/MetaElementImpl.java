@@ -46,6 +46,13 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	}
 	
 	public String getGlobalId() {
+		if (globalId == null) {
+			globalId = getGlobalId_();
+		}
+		return globalId;		
+	}
+	
+	private String getGlobalId_() {
 		if (getParent() != null) {
 			return getParent().getGlobalId() + IMetaDef.scopeSeperator + getId();
 		}
@@ -73,7 +80,6 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		String str = element.getAttribute(IMetaDef.SUPPRESSED);
 		suppressed = str == null ? false : Boolean.parseBoolean(str.trim());
 				
-		globalId = id;
 		Element nameElement = XMLUtil.getFirstChildElementByTagName(element, IMetaDef.NAME);
 		if (nameElement != null) {
 			name = nameElement.getTextContent();
