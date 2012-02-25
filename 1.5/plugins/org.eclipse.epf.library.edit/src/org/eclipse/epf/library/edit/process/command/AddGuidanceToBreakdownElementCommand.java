@@ -148,7 +148,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 				for (Practice p : utdItems) {
 					if (! listValue.contains(p) && listValue.add(p)) {
 						affectedSet.add(p);
-						propUtil.addOpposite(ExtendReferenceMap.UtdList, brElement, p);
+						propUtil.addOpposite(ExtendReferenceMap.UdtList, brElement, p);
 					}
 				}
 				try {
@@ -286,7 +286,7 @@ public class AddGuidanceToBreakdownElementCommand extends AddMethodElementComman
 		
 		try {
 			for (Practice p : affectedSet) {
-				propUtil.removeOpposite(ExtendReferenceMap.UtdList, brElement, p);	
+				propUtil.removeOpposite(ExtendReferenceMap.UdtList, brElement, p);	
 			}	
 			propUtil.storeReferences(brElement, true);
 		} catch (Exception e) {

@@ -34,12 +34,12 @@ public class ChangeUdtCommand extends MethodElementSetPropertyCommand {
 			if (remove) {
 				if (listValue.remove(p)) {
 					affectedSet.add(p);
-					propUtil.removeOpposite(ExtendReferenceMap.UtdList, element, p);
+					propUtil.removeOpposite(ExtendReferenceMap.UdtList, element, p);
 				}
 			} else {
 				if (! listValue.contains(p) && listValue.add(p)) {
 					affectedSet.add(p);
-					propUtil.addOpposite(ExtendReferenceMap.UtdList, element, p);
+					propUtil.addOpposite(ExtendReferenceMap.UdtList, element, p);
 				}
 			}	
 		}
@@ -57,9 +57,9 @@ public class ChangeUdtCommand extends MethodElementSetPropertyCommand {
 		try {
 			for (Practice p : affectedSet) {
 				if (remove) {
-					propUtil.addOpposite(ExtendReferenceMap.UtdList, element, p);	
+					propUtil.addOpposite(ExtendReferenceMap.UdtList, element, p);	
 				} else {
-					propUtil.removeOpposite(ExtendReferenceMap.UtdList, element, p);	
+					propUtil.removeOpposite(ExtendReferenceMap.UdtList, element, p);	
 				}	
 			}
 			this.value = propUtil.getReferencesXml(this.element, true);

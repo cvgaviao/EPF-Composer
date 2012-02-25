@@ -427,7 +427,7 @@ public class MethodElementPropUtil {
 	}
 	
 	public List<Practice> getUdtList(MethodElement element, boolean toModify) {
-		List<Practice> value = (List<Practice>) getReferenceValue(ExtendReferenceMap.UtdList, element, toModify);
+		List<Practice> value = (List<Practice>) getReferenceValue(UmaUtil.MethodElement_UdtList.getName(), element, toModify);
 		if (value == null) {
 			return new ArrayList<Practice>();
 		}
@@ -435,7 +435,7 @@ public class MethodElementPropUtil {
 	}
 	
 	public List<MethodElement> getQReferenceListById(MethodElement element, String qualifierId, boolean toModify) {
-		String referenceName = ExtendReferenceMap.getQReferenceNameById(qualifierId);
+		String referenceName = qualifierId;
 		List<MethodElement> value = (List<MethodElement>) getReferenceValue(
 				referenceName, element, toModify);
 		if (value == null) {

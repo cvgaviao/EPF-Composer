@@ -90,7 +90,7 @@ public class UmaUtil {
 		return att;
 	}
 	
-	public static EReference MethodElement_UdtList = createReference("MethodElement_UdtList");	//$NON-NLS-1$
+	public static EReference MethodElement_UdtList = createReference("udtList");	//$NON-NLS-1$
 	public static final String Unresolved = "unresolved";		//$NON-NLS-1$
 	
 	private static IUmaUtilProvider provider;

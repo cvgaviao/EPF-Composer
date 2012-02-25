@@ -1050,14 +1050,23 @@ public class LibraryUtil {
 	 */
 	public static List getStructuralFeatures(MethodElement element, boolean addExtended) {
 		List list = getStructuralFeatures(element);
+						
+		if (! addExtended) {
+			return list;
+		}
+		
+		if (element instanceof Practice) {
+			PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
+			Practice practice = (Practice) element;
+			UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta(practice);
+			if (meta != null && !meta.getQualifiedReferences().isEmpty()) {
+				list.addAll(meta.getQualifiedReferences());
+			}
+		}
 		
 		PropUtil propUtil = PropUtil.getPropUtil();	
 		if (propUtil.hasUdtList(element)) {
 			list.add(UmaUtil.MethodElement_UdtList);
-		}
-						
-		if (! addExtended) {
-			return list;
 		}
 		
 		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);

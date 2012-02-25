@@ -94,7 +94,7 @@ public class PracticePropUtil extends PropUtil {
 	}
 	
 	public List<MethodElement> getUdtReferencingList(Practice practice) {
-		String ofeature = ExtendReferenceMap.getOppositeName(ExtendReferenceMap.UtdList);
+		String ofeature = ExtendReferenceMap.getOppositeName(ExtendReferenceMap.UdtList);
 		List<MethodElement> list = (List<MethodElement>) getReferenceValue(ofeature, practice, false);
 		return list == null ? new ArrayList<MethodElement>() : list;
 	}

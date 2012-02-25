@@ -161,6 +161,16 @@ public class TypeDefUtil {
 		
 	public List<EReference> getEAllReferences(MethodElement element) {
 		List<EReference> list = new ArrayList<EReference>(element.eClass().getEAllReferences());
+		
+		if (element instanceof Practice) {
+			PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
+			Practice practice = (Practice) element;
+			UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta(practice);
+			if (meta != null && !meta.getQualifiedReferences().isEmpty()) {
+				list.addAll(meta.getQualifiedReferences());
+			}
+		}
+		
 		PropUtil propUtil = PropUtil.getPropUtil();	
 		
 		if (propUtil.hasUdtList(element)) {

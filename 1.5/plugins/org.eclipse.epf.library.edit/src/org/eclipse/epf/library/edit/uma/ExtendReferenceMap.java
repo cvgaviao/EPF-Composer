@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.meta.internal.ExtendedReferenceImpl;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
@@ -30,10 +31,8 @@ import org.w3c.dom.Element;
 public class ExtendReferenceMap {
 
 	//Reference names
-	public static final String UtdList = "udtList";					//$NON-NLS-1$
-	
 	private static final String Opposite_ = "opposite_";			//$NON-NLS-1$
-	private static final String QReference_ = "qReference_";		//$NON-NLS-1$
+	public static final String QReference_ = UserDefinedTypeMeta.QReference_;		//$NON-NLS-1$
 	public static final String WSpace = "__ws__";					//$NON-NLS-1$
 	
 	private Map<String, Object> map;
@@ -42,16 +41,17 @@ public class ExtendReferenceMap {
 //	private List<String> referenceNames;
 	private List<ExtendedReference> extendedReferences;
 	private boolean retrieved = false;
+	private static ExtendedReference eUdtList = createLocalExtendedReference(UmaUtil.MethodElement_UdtList);
+	public static String UdtList = UmaUtil.MethodElement_UdtList.getName();
 
 	public ExtendReferenceMap(MethodElement ownerElement) {
 		this.ownerElement = ownerElement;
 		extendedReferences = new ArrayList<ExtendedReference>();
-		extendedReferences.add(createLocalExtendedReference(UtdList));
-		List<String> refQualifieIds = getReferenceQualifierIds(ownerElement);
-		if (refQualifieIds != null && ! refQualifieIds.isEmpty()) {
-			for (String qualifierId : refQualifieIds) {
-				String name = getQReferenceNameById(qualifierId);
-				extendedReferences.add(createLocalExtendedReference(name));
+		extendedReferences.add(eUdtList);
+		Set<EReference> qualifiedReferences = getQualifiedReferences(ownerElement);
+		if (qualifiedReferences != null && ! qualifiedReferences.isEmpty()) {
+			for (EReference qref : qualifiedReferences) {
+				extendedReferences.add(createLocalExtendedReference(qref));
 			}
 		}
 		
@@ -61,29 +61,24 @@ public class ExtendReferenceMap {
 		}
 	}
 	
-	private ExtendedReference createLocalExtendedReference(String id) {
-		ExtendedReferenceImpl ref = new ExtendedReferenceImpl(null);
-		ref.setId(id);
-		return ref;
+	private static ExtendedReference createLocalExtendedReference(EReference ref) {
+		ExtendedReferenceImpl eRef = new ExtendedReferenceImpl(null);
+		eRef.setId(ref.getName());
+		TypeDefUtil.getInstance().associate(eRef, ref);
+		return eRef;
 	}
 			
 	public boolean isRetrieved() {
 		return retrieved;
 	}
 	
-	private List<String> getReferenceQualifierIds(MethodElement element) {
+	private Set<EReference> getQualifiedReferences(MethodElement element) {
 		if (! (element instanceof Practice)) {
 			return null;
 		}		
-		List<String> refQualifieIds = new ArrayList<String>();		
 		PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
 		UserDefinedTypeMeta meta = propUtil.getUdtMeta((Practice) element);
-		if (meta != null) {
-			for (EReference ref : meta.getQualifiedReferences()) {
-				refQualifieIds.add(ref.getName());
-			}		
-		}
-		return refQualifieIds;
+		return meta == null ? null : meta.getQualifiedReferences();
 	}
 	
 	private List<ExtendedReference> getAllMdtReferences(MethodElement element) {	
@@ -164,7 +159,7 @@ public class ExtendReferenceMap {
 	}
 	
 	private EClass getRetrieveType(String referenceName) {
-		if (referenceName.equals(UtdList)) {
+		if (referenceName.equals(UdtList)) {
 			return UmaPackage.eINSTANCE.getPractice();
 		}
 		return  null;
@@ -320,28 +315,7 @@ public class ExtendReferenceMap {
 
 	public static String getOppositeName(String name) {
 		return Opposite_ + name;									
-	}
-	
-	public static String getQReferenceNameById(String qualifiedId) {
-		return getQReferenceNameById(qualifiedId, QReference_);
-	}
-	
-	private static String getQReferenceNameById(String qualifiedId, String prefix) {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < qualifiedId.length(); i++) {
-			char c = qualifiedId.charAt(i);
-			if (c == ' ' || c == '\t' || c == '\n') {
-				sb.append(WSpace);
-			} else {
-				sb.append(c);
-			}
-		}
-		if (sb.length() != qualifiedId.length()) {
-			qualifiedId = sb.toString();
-		}
-		return prefix + qualifiedId;
-	}
-	
+	}	
 	
 	public boolean isMany(String name) {
 		return true;

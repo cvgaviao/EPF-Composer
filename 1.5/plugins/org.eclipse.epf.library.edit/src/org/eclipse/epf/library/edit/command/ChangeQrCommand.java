@@ -22,7 +22,7 @@ public class ChangeQrCommand extends MethodElementSetPropertyCommand {
 		this.items = items;
 		this.remove = remove;
 		this.qualifierId = qualifierId;
-		this.oppositeName = ExtendReferenceMap.getOppositeName(ExtendReferenceMap.getQReferenceNameById(qualifierId));
+		this.oppositeName = ExtendReferenceMap.getOppositeName(qualifierId);
 	}
 	
 	@Override

@@ -390,13 +390,6 @@ public class LibraryEditUtil {
 		if (referencing == null || referenced == null) {
 			return;
 		}
-		if (feature == UmaUtil.MethodElement_UdtList) {
-			if (PracticePropUtil.getPracticePropUtil().isUdtType(referenced)) {
-				PropUtil.getPropUtil().addOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
-			}
-			return;
-		}
-		
 		ExtendedReference eRef = TypeDefUtil.getInstance().getAssociatedExtendedReference(feature);
 		if (eRef != null) {
 			PropUtil.getPropUtil().addOpposite(eRef.getGlobalId(), referencing, referenced);
@@ -416,12 +409,6 @@ public class LibraryEditUtil {
 	public void removeOppositeFeature(MethodElement referencing,
 			MethodElement referenced, EStructuralFeature feature) {
 		if (referencing == null || referenced == null) {
-			return;
-		}
-		if (feature == UmaUtil.MethodElement_UdtList) {
-			if (PracticePropUtil.getPracticePropUtil().isUdtType(referenced)) {
-				MethodElementPropUtil.getMethodElementPropUtil().removeOpposite(ExtendReferenceMap.UtdList, referencing, referenced);
-			}
 			return;
 		}
 		ExtendedReference eRef = TypeDefUtil.getInstance().getAssociatedExtendedReference(feature);

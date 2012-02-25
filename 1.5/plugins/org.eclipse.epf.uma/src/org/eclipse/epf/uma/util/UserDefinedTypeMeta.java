@@ -14,6 +14,8 @@ import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 
 public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 
+	public static final String QReference_ = "qReference_";		//$NON-NLS-1$
+	
 	public static final UserDefinedTypeMeta noneValue = new UserDefinedTypeMeta();
 	public static final String Type_Practice = "Practice";					//$NON-NLS-1$
 	
@@ -155,7 +157,7 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 			getReferenceQualifiedNameToIdMap().clear();
 			getReferenceQualifiedIdToNameMap().clear();
 			for (int i = 0; i < refIds.size(); i++) {
-				String refId = refIds.get(i);
+				String refId = QReference_ + refIds.get(i);
 				String refName = refNames.get(i);
 				getReferenceQualifiedNameToIdMap().put(refName, refId);
 				getReferenceQualifiedIdToNameMap().put(refId, refName);
