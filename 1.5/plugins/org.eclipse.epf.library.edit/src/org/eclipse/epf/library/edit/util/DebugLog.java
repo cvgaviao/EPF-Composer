@@ -82,7 +82,12 @@ public class DebugLog {
 		} else {
 			str += "\n" + indent + "Empty list";		//$NON-NLS-1$ //$NON-NLS-2$
 		}
-		FileUtil.log(str + "\n");//$NON-NLS-1$
+		if (isConsole()) {
+			System.out.println(str + "\n");
+		}
+		if (isLog()) {
+			FileUtil.log(str + "\n");//$NON-NLS-1$
+		}
 	}
 	
 	public String toString(MethodElement element, int ix, boolean showTags, String tagLineInden) {
