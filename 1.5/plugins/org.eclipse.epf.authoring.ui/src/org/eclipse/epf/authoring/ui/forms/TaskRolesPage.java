@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
@@ -125,6 +126,9 @@ public class TaskRolesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 2);
+				}
 				return ((Task) object).getAdditionallyPerformedBy().toArray();
 			}
 		};
@@ -296,5 +300,17 @@ public class TaskRolesPage extends AssociationFormPage {
 		return AuthoringUIResources.taskRolesPage_selectedLabel2;
 	}
 	
+	
+	@Override
+	public EReference getReference(int ix) {
+		if (ix == 1) {
+			return UmaPackage.eINSTANCE.getTask_PerformedBy();
+		}
+		if (ix == 2) {
+			return UmaPackage.eINSTANCE.getTask_AdditionallyPerformedBy();
+		}		
+		return super.getReference(ix);
+	}
+
 	
 }
