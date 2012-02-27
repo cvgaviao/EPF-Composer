@@ -19,6 +19,9 @@ public class DebugLog {
 
 	private String indent; //$NON-NLS-1$
 	private String prompt;
+	private boolean console = false;
+	private boolean log = true;
+
 	public DebugLog(String prompt) {
 		this.prompt = prompt;
 		int n = 5 + (prompt == null ? 0 : prompt.length());
@@ -27,10 +30,31 @@ public class DebugLog {
 			sb.append(" ");	//$NON-NLS-1$
 		}
 		indent = sb.toString();
+	}		
+	
+	protected boolean isConsole() {
+		return console;
 	}
-		
+
+	public void setConsole(boolean console) {
+		this.console = console;
+	}
+	
+	protected boolean isLog() {
+		return log;
+	}
+
+	public void setLog(boolean log) {
+		this.log = log;
+	}
+	
 	public void log(String msg) {
-		FileUtil.log(prompt + msg);
+		if (isConsole()) {
+			System.out.println(prompt + msg);
+		}
+		if (isLog()) {
+			FileUtil.log(prompt + msg);
+		}
 	}
 	
 	public void logElements(String label, Collection<? extends MethodElement> elements, boolean showEmpty) {
