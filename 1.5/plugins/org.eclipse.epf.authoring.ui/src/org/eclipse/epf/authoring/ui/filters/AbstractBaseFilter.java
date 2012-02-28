@@ -38,6 +38,21 @@ public class AbstractBaseFilter {
 		this.additionalFilters = additionalFilters;
 	}
 
+	public void addAdditionalFilter(IFilter filter) {
+		if (additionalFilters == null) {
+			additionalFilters = new IFilter[]{filter};
+			
+		} else {
+			int sz = additionalFilters.length + 1;
+			IFilter[] newFilters = new IFilter[sz];
+			for (int i = 0; i < sz - 1; i++) {
+				newFilters[i] = additionalFilters[i];
+			}
+			newFilters[sz - 1] = filter;
+			additionalFilters = newFilters;
+		}
+	}
+	
 	public FilterHelper getHelper() {
 		return helper;
 	}

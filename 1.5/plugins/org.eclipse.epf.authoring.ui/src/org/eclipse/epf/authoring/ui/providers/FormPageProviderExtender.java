@@ -44,6 +44,10 @@ public class FormPageProviderExtender {
 	public boolean handleAddItems(ISelection selection, int ix) {
 		return false;
 	}
+		
+	public boolean handleRemoveItems(ISelection selection, int ix) {
+		return false;
+	}
 	
 	public AssociationFormPage getFormPage() {
 		return formPage;
@@ -53,7 +57,7 @@ public class FormPageProviderExtender {
 			return new AssociationFormLabelProvider(adapterFactory, this, ix);
 	}
 	
-	protected MethodConfiguration getConfig() {
+	public MethodConfiguration getConfig() {
 		return LibraryService.getInstance().getCurrentMethodConfiguration();
 	}
 	

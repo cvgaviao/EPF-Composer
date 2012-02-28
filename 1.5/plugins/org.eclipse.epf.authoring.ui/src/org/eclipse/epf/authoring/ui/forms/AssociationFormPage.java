@@ -203,7 +203,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 
 	protected String selectedLabel3 = "Selected Label 3"; //$NON-NLS-1$
 
-	public void addItemsToMode(List items, int ix) {
+	public void addItemsToModel(List items, int ix) {
 		ArrayList newItems = items instanceof ArrayList ? (ArrayList) items : new ArrayList(items);		
 		if (ix == 1) {
 			addItemsToModel1(newItems);
@@ -213,6 +213,19 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		}
 		if (ix == 3) {
 			addItemsToModel3(newItems);	
+		}
+	}
+	
+	public void removeItemsFromModel(List items, int ix) {
+		ArrayList newItems = items instanceof ArrayList ? (ArrayList) items : new ArrayList(items);		
+		if (ix == 1) {
+			removeItemsFromModel1(newItems);
+		}
+		if (ix == 2) {
+			removeItemsFromModel2(newItems);	
+		}
+		if (ix == 3) {
+			removeItemsFromModel3(newItems);	
 		}
 	}
 	
@@ -330,6 +343,19 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		return filter;
 	}
 
+	public IFilter getFilter(int ix) {
+		if (ix == 1) {
+			return getFilter();
+		}
+		if (ix == 2) {
+			return getFilter2();
+		}
+		if (ix == 3) {
+			return getFilter3();
+		}
+		return null;
+	}
+	
 	// Ordering of contributed categorized elements in custom
 	// categories
 	protected Button ctrl_ordering;
@@ -765,6 +791,12 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 					public void widgetSelected(SelectionEvent e) {
 						IStructuredSelection selection = (IStructuredSelection) viewer_selected
 								.getSelection();
+						if (getProviderExtender().useContentProviderAPIs()) {
+							if (getProviderExtender().handleRemoveItems(selection, 1)) {
+								refreshViewers();
+								return;
+							}
+						}
 						if (selection.size() > 0) {
 							// update the model
 							ArrayList rmItems = new ArrayList();
@@ -860,6 +892,12 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 					public void widgetSelected(SelectionEvent e) {
 						IStructuredSelection selection = (IStructuredSelection) viewer_selected2
 								.getSelection();
+						if (getProviderExtender().useContentProviderAPIs()) {
+							if (getProviderExtender().handleRemoveItems(selection, 2)) {
+								refreshViewers();
+								return;
+							}
+						}
 						if (selection.size() > 0) {
 							// update the model
 							ArrayList rmItems = new ArrayList();
@@ -955,6 +993,12 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 					public void widgetSelected(SelectionEvent e) {
 						IStructuredSelection selection = (IStructuredSelection) viewer_selected3
 								.getSelection();
+						if (getProviderExtender().useContentProviderAPIs()) {
+							if (getProviderExtender().handleRemoveItems(selection, 3)) {
+								refreshViewers();
+								return;
+							}
+						}
 						if (selection.size() > 0) {
 							// update the model
 							ArrayList rmItems = new ArrayList();
