@@ -96,6 +96,9 @@ public class ContentElementGuidancePage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				List list = MethodElementUtil
 						.getSelectedGuidances(contentElement);
 				List local = new ArrayList();
