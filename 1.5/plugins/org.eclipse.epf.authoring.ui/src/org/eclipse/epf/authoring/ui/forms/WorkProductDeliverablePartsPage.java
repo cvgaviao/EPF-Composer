@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
@@ -76,6 +77,9 @@ public class WorkProductDeliverablePartsPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				Deliverable wp = (Deliverable) workProduct;
 				return wp.getDeliveredWorkProducts().toArray();
 			}
@@ -332,5 +336,13 @@ public class WorkProductDeliverablePartsPage extends AssociationFormPage {
 		return AuthoringUIResources.workProductDeliverablePartsPage_selectedLabel;
 	}
 	
+	@Override
+	public EReference getReference(int ix) {
+		if (ix == 1) {
+			return UmaPackage.eINSTANCE.getDeliverable_DeliveredWorkProducts();
+		}	
+		return super.getReference(ix);
+	}
+
 
 }

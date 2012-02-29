@@ -12,6 +12,7 @@ package org.eclipse.epf.authoring.ui.forms;
 
 import java.util.ArrayList;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
@@ -67,6 +68,9 @@ public class DisciplineGroupingDisciplinesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				return ((DisciplineGrouping) object).getDisciplines().toArray();
 			}
 		};
@@ -166,5 +170,15 @@ public class DisciplineGroupingDisciplinesPage extends AssociationFormPage {
 		return AuthoringUIResources.disciplineGroupingDisciplinesPage_selectedLabel;
 	}
 
+	
+	@Override
+	public EReference getReference(int ix) {
+		if (ix == 1) {
+			return UmaPackage.eINSTANCE.getDisciplineGrouping_Disciplines();
+		}	
+		return super.getReference(ix);
+	}
 
+	
+	
 }

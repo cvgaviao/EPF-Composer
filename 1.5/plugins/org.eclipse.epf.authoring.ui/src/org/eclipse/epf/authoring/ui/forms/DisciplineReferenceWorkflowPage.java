@@ -13,6 +13,7 @@ package org.eclipse.epf.authoring.ui.forms;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
@@ -73,6 +74,9 @@ public class DisciplineReferenceWorkflowPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				return discipline.getReferenceWorkflows().toArray();
 			}
 		};
@@ -191,5 +195,14 @@ public class DisciplineReferenceWorkflowPage extends AssociationFormPage {
 	protected String getSelectedLabel3() {
 		return AuthoringUIResources.disciplineReferenceWorkflowPage_selectedLabel;
 	}
+	
+	@Override
+	public EReference getReference(int ix) {
+		if (ix == 1) {
+			return UmaPackage.eINSTANCE.getDiscipline_ReferenceWorkflows();
+		}	
+		return super.getReference(ix);
+	}
+
 
 }
