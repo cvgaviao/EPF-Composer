@@ -284,7 +284,7 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	protected void initContentProviderSelected3() {
 	}
 
-	protected ContentElementOrderList getContentElementOrderList() {
+	public ContentElementOrderList getContentElementOrderList() {
 		return null;
 	}
 	
@@ -1592,6 +1592,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 	}
 	
 	public EReference getReference(int ix) {
+		if (ix == 1 && 	getOrderFeature() instanceof EReference) {
+			return (EReference) getOrderFeature();
+		}
 		return null;
 	}
 	

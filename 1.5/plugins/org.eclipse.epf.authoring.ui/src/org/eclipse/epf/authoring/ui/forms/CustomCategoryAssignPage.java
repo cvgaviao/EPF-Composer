@@ -228,10 +228,16 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
 				if (allSteps == null) {
-					allSteps = new ContentElementOrderList(
-							contentElement,
+//					allSteps = new ContentElementOrderList(
+//							contentElement,
+//							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
+//							getOrderFeature());
+					allSteps = getProviderExtender().newContentElementOrderList(contentElement, 
 							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
-							getOrderFeature());
+							getOrderFeature(), 1);
+				}
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
 				}
 				List returnList = CategorySortHelper.sortCategoryElements(contentElement, allSteps.toArray());
 				return returnList.toArray();
@@ -545,7 +551,7 @@ public class CustomCategoryAssignPage extends AssociationFormPage {
 	}
 	
 	@Override
-	protected ContentElementOrderList getContentElementOrderList() {
+	public ContentElementOrderList getContentElementOrderList() {
 		return allSteps;
 	}
 }

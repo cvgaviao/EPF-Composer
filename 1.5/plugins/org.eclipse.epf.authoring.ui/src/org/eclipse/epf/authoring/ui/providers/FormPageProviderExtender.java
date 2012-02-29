@@ -14,11 +14,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.authoring.ui.forms.AssociationFormPage;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
+import org.eclipse.epf.library.edit.util.ContentElementOrderList;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -55,6 +58,10 @@ public class FormPageProviderExtender {
 	
 	public AssociationFormLabelProvider newLabelProvider(AdapterFactory adapterFactory, int ix) {
 			return new AssociationFormLabelProvider(adapterFactory, this, ix);
+	}
+	
+	public ContentElementOrderList newContentElementOrderList(VariabilityElement e, int scope, EStructuralFeature feature, int ix) {
+		return new ContentElementOrderList(e, scope, feature);
 	}
 	
 	public MethodConfiguration getConfig() {

@@ -23,13 +23,11 @@ import org.eclipse.epf.authoring.ui.filters.GuidanceFilter;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
-import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
 import org.eclipse.epf.library.edit.util.ModelStructure;
-import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.ToolMentor;
@@ -86,10 +84,16 @@ public class ToolToolMentorsPage extends AssociationFormPage {
 			public Object[] getElements(Object object) {
 				//return tool.getToolMentors().toArray();
 				if (allSteps == null) {
-					allSteps = new ContentElementOrderList(
-							contentElement,
+//					allSteps = new ContentElementOrderList(
+//							contentElement,
+//							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
+//							getOrderFeature());
+					allSteps = getProviderExtender().newContentElementOrderList(contentElement, 
 							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
-							getOrderFeature());
+							getOrderFeature(), 1);
+				}
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
 				}
 				List returnList = CategorySortHelper.sortCategoryElements(
 						contentElement, allSteps.toArray());
@@ -193,7 +197,7 @@ public class ToolToolMentorsPage extends AssociationFormPage {
 	}
 	
 	@Override
-	protected ContentElementOrderList getContentElementOrderList() {
+	public ContentElementOrderList getContentElementOrderList() {
 		return allSteps;
 	}
 

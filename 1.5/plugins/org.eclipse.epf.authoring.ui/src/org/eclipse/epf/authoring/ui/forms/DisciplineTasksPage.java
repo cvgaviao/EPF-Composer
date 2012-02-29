@@ -21,13 +21,11 @@ import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.filters.ContentFilter;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
-import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.util.LibraryManager;
-import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.Task;
@@ -83,10 +81,16 @@ public class DisciplineTasksPage extends AssociationFormPage {
 			public Object[] getElements(Object object) {
 				//return ((Discipline) object).getTasks().toArray();
 				if (allSteps == null) {
-					allSteps = new ContentElementOrderList(
-							contentElement,
+//					allSteps = new ContentElementOrderList(
+//							contentElement,
+//							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
+//							getOrderFeature());
+					allSteps = getProviderExtender().newContentElementOrderList(contentElement, 
 							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
-							getOrderFeature());
+							getOrderFeature(), 1);
+				}
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
 				}
 				List returnList = CategorySortHelper.sortCategoryElements(contentElement, 
 						allSteps.toArray());
@@ -224,7 +228,7 @@ public class DisciplineTasksPage extends AssociationFormPage {
 	}
 	
 	@Override
-	protected ContentElementOrderList getContentElementOrderList() {
+	public ContentElementOrderList getContentElementOrderList() {
 		return allSteps;
 	}
 

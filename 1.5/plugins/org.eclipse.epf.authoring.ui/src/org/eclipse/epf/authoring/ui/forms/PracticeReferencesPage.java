@@ -337,7 +337,7 @@ public class PracticeReferencesPage extends AssociationFormPage {
 	}
 	
 	@Override
-	protected ContentElementOrderList getContentElementOrderList() {
+	public ContentElementOrderList getContentElementOrderList() {
 		List<ContentElement> ceList = getSelectedContentElements();
 		List<Activity> aList = getSelectedActivities();
 		if (ceList.size() > 0 && aList.size() == 0) {
