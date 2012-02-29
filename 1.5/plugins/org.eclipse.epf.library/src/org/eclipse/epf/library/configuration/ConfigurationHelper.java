@@ -1359,6 +1359,10 @@ public class ConfigurationHelper {
 	public static List calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, ElementRealizer realizer) {
 		TypeDefUtil typeDefUtil = TypeDefUtil.getInstance();
+		if (realizer == null) {
+			Object value = typeDefUtil.eGet(element, feature);
+			return value instanceof List ? (List) value : null;
+		}
 		
 		if (realizer != null && realizer.getConfiguration() instanceof Scope) {
 //			Object value = element.eGet(feature);
