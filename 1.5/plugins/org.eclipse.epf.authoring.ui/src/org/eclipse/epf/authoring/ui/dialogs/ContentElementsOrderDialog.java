@@ -19,16 +19,18 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.AuthoringUIText;
 import org.eclipse.epf.authoring.ui.providers.VariabilityElementLabelProvider;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MoveInListCommand;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.ContentElementOrderList;
-import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.UmaPackage;
@@ -63,6 +65,8 @@ import org.eclipse.swt.widgets.Table;
  * 
  */
 public class ContentElementsOrderDialog extends Dialog {
+
+	private MethodConfiguration config;
 
 	private Composite baseComposite;
 
@@ -301,6 +305,15 @@ public class ContentElementsOrderDialog extends Dialog {
 						.eGet(feature)).contains(element);
 			}
 
+			public String getColumnText(Object object, int columnIndex) {
+				if (getConfig() != null && object instanceof MethodElement) {
+					object = ConfigurationHelper.getCalculatedElement((MethodElement)object,
+							DefaultElementRealizer
+									.newElementRealizer(getConfig()));
+				}
+				return super.getColumnText(object, columnIndex);
+			}
+			
 		};
 	}
 
@@ -462,6 +475,14 @@ public class ContentElementsOrderDialog extends Dialog {
 		} else {
 			return false;
 		}
+	}
+	
+	private MethodConfiguration getConfig() {
+		return config;
+	}
+
+	public void setConfig(MethodConfiguration config) {
+		this.config = config;
 	}
 
 }

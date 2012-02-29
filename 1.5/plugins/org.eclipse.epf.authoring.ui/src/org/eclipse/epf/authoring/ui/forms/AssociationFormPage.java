@@ -1053,6 +1053,9 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 						ContentElementsOrderDialog dlg = new ContentElementsOrderDialog(
 								Display.getCurrent().getActiveShell(),
 								contentElement, getActionManager());
+						if (getProviderExtender().useContentProviderAPIs()) {
+							dlg.setConfig(getProviderExtender().getConfig());
+						}
 						dlg.setFeature(getOrderFeature());
 						if(dlg.open() == Window.OK){
 							if (allowChange1 && isUpAndDownButtonsRequired1) {
