@@ -30,6 +30,7 @@ import org.eclipse.epf.library.util.LibraryManager;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Discipline;
 import org.eclipse.epf.uma.Task;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -76,6 +77,9 @@ public class TaskCategoriesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				return AssociationHelper.getDisciplines((Task) object).toArray();				
 			}
 		};
@@ -241,6 +245,11 @@ public class TaskCategoriesPage extends AssociationFormPage {
 	
 	protected String getMultipleSelectDescriptionString() {
 		return AuthoringUIResources.taskCategoriesPage_multipleSelectDescription;
+	}
+	
+	@Override
+	public OppositeFeature getOppositeFeature(int ix) {
+		return ix == 1 ? AssociationHelper.Task_Disciplines : super.getOppositeFeature(ix);
 	}
 
 }

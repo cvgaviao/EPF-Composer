@@ -25,6 +25,7 @@ import org.eclipse.epf.library.util.LibraryManager;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleSet;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -71,6 +72,9 @@ public class RoleCategoriesPage extends AssociationFormPage {
 				TngAdapterFactory.INSTANCE
 						.getNavigatorView_ComposedAdapterFactory()) {
 			public Object[] getElements(Object object) {
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				return AssociationHelper.getRoleSets((Role) object).toArray();
 			}
 		};
@@ -226,6 +230,10 @@ public class RoleCategoriesPage extends AssociationFormPage {
 	protected String getMultipleSelectDescriptionString() {
 		return AuthoringUIResources.roleCategoriesPage_multipleSelectDescription;
 	}
-
-
+	
+	@Override
+	public OppositeFeature getOppositeFeature(int ix) {
+		return ix == 1 ? AssociationHelper.Role_RoleSets : super.getOppositeFeature(ix);
+	}
+	
 }

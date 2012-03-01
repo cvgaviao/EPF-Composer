@@ -44,6 +44,7 @@ import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodElementProperty;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -1595,6 +1596,10 @@ public class AssociationFormPage extends BaseFormPage implements IMenuListener {
 		if (ix == 1 && 	getOrderFeature() instanceof EReference) {
 			return (EReference) getOrderFeature();
 		}
+		return null;
+	}
+	
+	public OppositeFeature getOppositeFeature(int ix) {
 		return null;
 	}
 	
