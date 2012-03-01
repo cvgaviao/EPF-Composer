@@ -722,7 +722,7 @@ public class ConfigurationHelper {
 				PracticePropUtil practicePropUtil = PracticePropUtil.getPracticePropUtil();
 				Practice practice = (Practice) element;
 				UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta(practice);
-				if (! meta.isQualifiedRefernce((EReference) feature)) {
+				if (meta == null || ! meta.isQualifiedRefernce((EReference) feature)) {
 					return;
 				}
 			} else {	

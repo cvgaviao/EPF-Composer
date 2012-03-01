@@ -173,10 +173,8 @@ public class TypeDefUtil {
 		
 		PropUtil propUtil = PropUtil.getPropUtil();	
 		
-		if (propUtil.hasUdtList(element)) {
-			list.add(UmaUtil.MethodElement_UdtList);
-		}
-					
+		list.add(UmaUtil.MethodElement_UdtList);
+							
 		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
 		if (meta != null) {
 			list = new ArrayList<EReference>(list);

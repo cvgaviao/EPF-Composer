@@ -252,6 +252,9 @@ public class PracticeReferencesPage extends AssociationFormPage {
 							ContentElementOrderList.CONTENT_ELEMENTS__FOR_ELEMENT_ONLY,
 							getActivityOrderFeature());
 				}
+				if (getProviderExtender().useContentProviderAPIs()) {
+					return getProviderExtender().getElements(object, 1);
+				}
 				List<Object> list = new ArrayList<Object>();
 				list.addAll(contentElementOrderList);
 				list.addAll(activityOrderList);
