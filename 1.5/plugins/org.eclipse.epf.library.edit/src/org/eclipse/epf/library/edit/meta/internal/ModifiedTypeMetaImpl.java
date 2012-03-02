@@ -1,9 +1,7 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
@@ -11,7 +9,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
-import org.eclipse.epf.uma.util.MetaElement;
+import org.eclipse.epf.uma.util.ExtendedTable;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.w3c.dom.Element;
 
@@ -23,6 +21,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 	private List<ExtendedSection> sections;
 	private List<ExtendedSection> referenceSections;
 	private List<ExtendedSection> rteSections;
+	private List<ExtendedTable> tables;
 	
 	private List<String> linkTypes;
 
@@ -69,6 +68,13 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		}
 		return rteSections;
 	}
+	
+	public List<ExtendedTable> getTables() {
+		if (tables == null) {
+			tables = new ArrayList<ExtendedTable>();
+		}
+		return tables;
+	}
 		
 	public List<String> getLinkTypes() {
 		if (linkTypes == null) {
@@ -80,11 +86,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 	public void parseElement(Element element)	throws TypeDefException {		
 		super.parseElement(element);
 				
-		getReferences().clear();
-		getRtes().clear();		
 		getSections().clear();
-		getReferenceSections().clear();
-		getRteSections().clear();
 		getLinkTypes().clear();
 		
 		List<Element> linkTypeElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.linkType);
@@ -140,11 +142,13 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		getRtes().clear();		
 		getReferenceSections().clear();
 		getRteSections().clear();
+		getTables().clear();
 
 		for (ExtendedSection section : getSections()) {
 			if (IMetaDef.REFERENCE.equals(section.getType())) {
 				getReferenceSections().add(section);
 				getReferences().addAll(section.getReferences());
+				getTables().addAll(section.getTables());
 
 			} else if (IMetaDef.RTE.equals(section.getType())) {
 				getRteSections().add(section);
