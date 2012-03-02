@@ -13,6 +13,7 @@ public interface ModifiedTypeMeta extends MetaElement {
 	public List<ExtendedSection> getSections();
 	public List<ExtendedSection> getReferenceSections();
 	public List<ExtendedSection> getRteSections();
+	public List<String> getLinkTypes();
 	
 	public boolean processLink(ModifiedTypeMeta linkedMeta);
 	

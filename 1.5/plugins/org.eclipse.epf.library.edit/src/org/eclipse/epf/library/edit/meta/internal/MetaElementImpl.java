@@ -77,6 +77,12 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		}
 		id = element.getAttribute(IMetaDef.ID);
 		name = element.getAttribute(IMetaDef.NAME);
+		if (id != null) {
+			id = id.trim();
+		}
+		if (name != null) {
+			name = name.trim();
+		}
 		String str = element.getAttribute(IMetaDef.SUPPRESSED);
 		suppressed = str == null ? false : Boolean.parseBoolean(str.trim());
 				

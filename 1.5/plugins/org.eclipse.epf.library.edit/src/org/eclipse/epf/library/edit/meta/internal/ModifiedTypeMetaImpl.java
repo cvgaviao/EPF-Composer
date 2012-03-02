@@ -20,10 +20,12 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 	private List<ExtendedReference> references;
 	private List<ExtendedAttribute> rtes;
 
-	List<ExtendedSection> sections;
-	List<ExtendedSection> referenceSections;
-	List<ExtendedSection> rteSections;
+	private List<ExtendedSection> sections;
+	private List<ExtendedSection> referenceSections;
+	private List<ExtendedSection> rteSections;
 	
+	private List<String> linkTypes;
+
 	public ModifiedTypeMetaImpl() {
 		super(null);
 	}
@@ -67,15 +69,31 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		}
 		return rteSections;
 	}
+		
+	public List<String> getLinkTypes() {
+		if (linkTypes == null) {
+			linkTypes = new ArrayList<String>();
+		}
+		return linkTypes;
+	}
 	
 	public void parseElement(Element element)	throws TypeDefException {		
 		super.parseElement(element);
-		
+				
 		getReferences().clear();
 		getRtes().clear();		
 		getSections().clear();
 		getReferenceSections().clear();
 		getRteSections().clear();
+		getLinkTypes().clear();
+		
+		List<Element> linkTypeElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.linkType);
+		if (linkTypeElements != null) {
+			for (Element linkTypeElement : linkTypeElements) {
+				String linkType = linkTypeElement.getAttribute(IMetaDef.ID);
+				getLinkTypes().add(linkType);
+			}
+		}
 		
 		List<Element> sectionElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.SECTION);
 		if (sectionElements != null) {
