@@ -9,7 +9,6 @@ import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefParser;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
-import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,7 +33,13 @@ public class TypeDefParserImpl implements TypeDefParser {
 			map.put(meta.getId(), meta);			
 		}
 		
+		Map<String, ModifiedTypeMetaImpl> linkTypeMap = new HashMap<String, ModifiedTypeMetaImpl>();
 		for (ModifiedTypeMetaImpl meta : (List<ModifiedTypeMetaImpl>) metaList) {
+			for (String linkType : meta.getLinkTypes()) {
+				if (linkTypeMap.put(linkType, meta) != null) {
+					//log validation error: linkedType cannot be associated with two modified types
+				}
+			}			
 			try {
 				Class cls = Class.forName(meta.getId());
 				if (cls == null) {
@@ -59,6 +64,9 @@ public class TypeDefParserImpl implements TypeDefParser {
 		
 		for (ModifiedTypeMetaImpl meta : (List<ModifiedTypeMetaImpl>) metaList) {
 			ModifiedTypeMeta linkedMeta = getLinkedMeta(meta, map);
+			if (linkedMeta == null && !linkTypeMap.isEmpty()) {
+				linkedMeta = linkTypeMap.get(meta.getId());
+			}
 			meta.processLink(linkedMeta);
 		}
 		
@@ -74,7 +82,7 @@ public class TypeDefParserImpl implements TypeDefParser {
 		}
 		if (meta.getId().equals("org.eclipse.epf.uma.WorkProductDescriptor")) {		//$NON-NLS-1$
 			return map.get("org.eclipse.epf.uma.WorkProduct");
-		}		
+		}
 		return null;
 	}
 	
