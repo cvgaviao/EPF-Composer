@@ -9,6 +9,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
+import org.eclipse.epf.uma.util.ExtendedTable;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.w3c.dom.Element;
 
@@ -17,6 +18,7 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 	private String type;
 	private List<ExtendedReference> references;
 	private List<ExtendedAttribute> rtes;
+	private List<ExtendedTable> tables;
 	
 	public ExtendedSectionImpl(MetaElement parent) {
 		super(parent);
@@ -40,6 +42,13 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 		return rtes;
 	}
 	
+	public List<ExtendedTable> getTables() {
+		if (tables == null) {
+			tables = new ArrayList<ExtendedTable>();
+		}
+		return tables;
+	}
+	
 	public void parseElement(Element element)	throws TypeDefException {
 		super.parseElement(element);			
 		type = element.getAttribute(IMetaDef.type);
@@ -50,17 +59,27 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 			for (Element rElement : referenceElements) {
 				ExtendedReferenceImpl ref = new ExtendedReferenceImpl(this);
 				ref.parseElement(rElement);
-				references.add(ref);
+				getReferences().add(ref);
 			}
 		}
 		
 		getRtes().clear();
 		List<Element> rteElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.RTE);
-		if (rtes != null) {
+		if (rteElements != null) {
 			for (Element rElement : rteElements) {
 				ExtendedAttributeImpl rte = new ExtendedAttributeImpl(this);
 				rte.parseElement(rElement);
-				rtes.add(rte);
+				getRtes().add(rte);
+			}
+		}
+		
+		getTables().clear();
+		List<Element> tableElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.TABLE);
+		if (tableElements != null) {
+			for (Element tElement : tableElements) {
+				ExtendedTableImpl table = new ExtendedTableImpl(this);
+				table.parseElement(tElement);
+				getTables().add(table);
 			}
 		}
 	}
