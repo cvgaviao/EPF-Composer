@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Copyright (c) 2005, 2007 IBM Corporation and others.
+    Copyright (c) 2005, 2012 IBM Corporation and others.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
@@ -13,10 +13,13 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
+	<xsl:include href="extended_rtes.xsl"/>
+	
 	<xsl:template name="mainDescriptionSection">
 		<xsl:param name="description"/>
 		<xsl:variable name="mainDescription" select="$description/attribute[@name='mainDescription']"/>
 		<xsl:if test="$mainDescription != ''">
+		
 			<div class="sectionHeading">
 				<xsl:value-of select="$mainDescriptionText"/>
 			</div>
@@ -30,6 +33,10 @@
 				</table>
 			</div>
 		</xsl:if>
+		
+		<xsl:call-template name="extendedRtesAllSections">
+			<xsl:with-param name="descriptionDown" select="$description"/>
+		</xsl:call-template>
 	</xsl:template>
 
 </xsl:stylesheet>
