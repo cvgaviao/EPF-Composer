@@ -49,19 +49,16 @@ public class PropUtil extends MethodElementPropUtil {
 			return null;
 		}
 		String value = getStringValue(element, Me_table_ + tableMeta.getGlobalId());
-		if (value == null) {
-			return null;
-		}
-		ReferenceTable table = new ReferenceTable(element, tableMeta, value.trim());
+		ReferenceTable table = new ReferenceTable(element, tableMeta, value);
 		return table;
 	}
 	
-	public ReferenceTable getExtendedTable(MethodElement element, ExtendedTable tableMeta) {
-		ExtendReferenceMap map = getExtendReferenceMap(element, false);
+	public ReferenceTable getReferenceTable(MethodElement element, ExtendedTable tableMeta, boolean modified) {
+		ExtendReferenceMap map = getExtendReferenceMap(element, modified);
 		return map == null ? null : map.getReferenceTable(tableMeta);
 	}
 	
-	public void setExtendedTableProp(ReferenceTable table) {
+	public void setReferenceTableProp(ReferenceTable table) {
 		setStringValue(table.getElement(), Me_table_ + table.getMeta().getGlobalId(), table.getGuidListString());
 	}
 	

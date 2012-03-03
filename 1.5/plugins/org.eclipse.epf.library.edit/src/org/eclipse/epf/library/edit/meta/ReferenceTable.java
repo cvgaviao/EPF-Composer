@@ -22,6 +22,10 @@ public class ReferenceTable {
 	
 	public ReferenceTable(MethodElement element, ExtendedTable meta, String guidListString) {
 		this(element, meta);
+		if (guidListString == null) {
+			return;
+		}
+		guidListString = guidListString.trim();
 		String[] guids = guidListString.split(MethodElementPropUtil.infoSeperator);
 		int sz = guids == null ? 0 : guids.length;
 		if (sz < 3) {
@@ -62,6 +66,14 @@ public class ReferenceTable {
 			data.put(row, colCelMap);			
 		}
 		colCelMap.put(col, cel);
+	}
+	
+	public MethodElement getCellElement(MethodElement row, MethodElement col) {
+		if (row == null || col == null) {
+			return null;
+		}
+		Map<MethodElement, MethodElement> map = data.get(row);
+		return map == null ? null : map.get(col);
 	}
 	
 	
