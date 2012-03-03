@@ -45,8 +45,14 @@ public class PropUtil extends MethodElementPropUtil {
 	}
 	
 	public ReferenceTable retrieveExtendedTable(MethodElement element, ExtendedTable tableMeta) {
+		if (tableMeta == null) {
+			return null;
+		}
 		String value = getStringValue(element, Me_table_ + tableMeta.getGlobalId());
-		ReferenceTable table = new ReferenceTable(element, tableMeta, value);
+		if (value == null) {
+			return null;
+		}
+		ReferenceTable table = new ReferenceTable(element, tableMeta, value.trim());
 		return table;
 	}
 	
