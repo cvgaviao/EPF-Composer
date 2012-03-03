@@ -2,15 +2,12 @@ package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
-import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
+import org.eclipse.epf.library.edit.meta.ReferenceTable;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
-import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
@@ -18,11 +15,10 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
-import org.eclipse.epf.uma.util.MetaElement;
+import org.eclipse.epf.uma.util.ExtendedTable;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
-import org.w3c.dom.Element;
 
 public class PropUtil extends MethodElementPropUtil {
 
@@ -30,6 +26,7 @@ public class PropUtil extends MethodElementPropUtil {
 	public static final String Me_customize = "me_customize";			//$NON-NLS-1$
 	public static final String Me_edited = "me_edited";					//$NON-NLS-1$
 	public static final String Me_attribute_ = "me_attribute_";			//$NON-NLS-1$
+	public static final String Me_table_ = "me_table_";					//$NON-NLS-1$
 	
 	private static PropUtil propUtil = new PropUtil();
 	public static PropUtil getPropUtil(IActionManager actionManager) {
@@ -45,6 +42,21 @@ public class PropUtil extends MethodElementPropUtil {
 	
 	protected PropUtil(IActionManager actionManager) {
 		super(actionManager);
+	}
+	
+	public ReferenceTable retrieveExtendedTable(MethodElement element, ExtendedTable tableMeta) {
+		String value = getStringValue(element, Me_table_ + tableMeta.getGlobalId());
+		ReferenceTable table = new ReferenceTable(element, tableMeta, value);
+		return table;
+	}
+	
+	public ReferenceTable getExtendedTable(MethodElement element, ExtendedTable tableMeta) {
+		ExtendReferenceMap map = getExtendReferenceMap(element, false);
+		return map == null ? null : map.getReferenceTable(tableMeta);
+	}
+	
+	public void setExtendedTableProp(ReferenceTable table) {
+		setStringValue(table.getElement(), Me_table_ + table.getMeta().getGlobalId(), table.getGuidListString());
 	}
 	
 	public String getExtendedAttribute(ContentDescription content, ExtendedAttribute att) {

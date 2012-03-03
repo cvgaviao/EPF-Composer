@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.epf.library.edit.meta.ReferenceTable;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.meta.internal.ExtendedReferenceImpl;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
@@ -21,6 +22,7 @@ import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ExtendedTable;
 import org.eclipse.epf.uma.util.MeList;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
@@ -44,6 +46,8 @@ public class ExtendReferenceMap {
 	private static ExtendedReference eUdtList = createLocalExtendedReference(UmaUtil.MethodElement_UdtList);
 	public static String UdtList = UmaUtil.MethodElement_UdtList.getName();
 
+	private Map<ExtendedTable, ReferenceTable> tableMap;
+	
 	public ExtendReferenceMap(MethodElement ownerElement) {
 		this.ownerElement = ownerElement;
 		extendedReferences = new ArrayList<ExtendedReference>();
@@ -55,7 +59,7 @@ public class ExtendReferenceMap {
 			}
 		}
 		
-		List<ExtendedReference> refs = getAllMdtReferences(ownerElement);
+		List<ExtendedReference> refs = getAllMdtReferences();
 		if (refs != null ) {
 			extendedReferences.addAll(refs);
 		}
@@ -81,11 +85,21 @@ public class ExtendReferenceMap {
 		return meta == null ? null : meta.getQualifiedReferences();
 	}
 	
-	private List<ExtendedReference> getAllMdtReferences(MethodElement element) {	
+	private List<ExtendedReference> getAllMdtReferences() {	
 		PropUtil propUtil = PropUtil.getPropUtil();
-		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(element);
+		ModifiedTypeMeta meta = propUtil.getGlobalMdtMeta(getOwnerElement());
 		if (meta == null) {
 			return null;
+		}
+		
+		if (! meta.getTables().isEmpty()) {
+			tableMap = new HashMap<ExtendedTable, ReferenceTable>();
+			for(ExtendedTable tableMeta : meta.getTables()) {
+				ReferenceTable table = propUtil.retrieveExtendedTable(getOwnerElement(), tableMeta);
+				if (table != null) {
+					tableMap.put(tableMeta, table);
+				}
+			}
 		}
 		
 		List<ExtendedReference> references = new ArrayList<ExtendedReference>();	
@@ -96,6 +110,10 @@ public class ExtendReferenceMap {
 			}
 		}
 		return references;
+	}
+	
+	public ReferenceTable getReferenceTable(ExtendedTable meta) {
+		return tableMap == null ? null : tableMap.get(meta);
 	}
 	
 	public MethodElement getOwnerElement() {
