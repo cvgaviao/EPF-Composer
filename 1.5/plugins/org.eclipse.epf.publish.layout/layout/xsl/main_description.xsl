@@ -34,6 +34,7 @@
 			</div>
 		</xsl:if>
 		
+		
 		<xsl:call-template name="extendedRtesAllSections">
 			<xsl:with-param name="descriptionDown" select="$description"/>
 		</xsl:call-template>
