@@ -67,6 +67,13 @@ public class ReferenceTable {
 		}
 		colCelMap.put(col, cel);
 	}
+	public void remove(MethodElement row, MethodElement col) {
+		Map<MethodElement, MethodElement> colCelMap = data.get(row);
+		if (colCelMap == null) {
+			return;
+		}
+		colCelMap.remove(col);
+	}	
 	
 	public MethodElement getCellElement(MethodElement row, MethodElement col) {
 		if (row == null || col == null) {
