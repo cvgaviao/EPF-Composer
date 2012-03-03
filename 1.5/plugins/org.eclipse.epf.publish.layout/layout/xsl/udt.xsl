@@ -257,7 +257,7 @@
 		</xsl:if>
 		
 		
-		<xsl:call-template name="extendedRtesAllSections">
+		<xsl:call-template name="extendedRtesAllSections"> 
 			<xsl:with-param name="descriptionDown" select="/Element/reference[@name='presentation']/Element[@Type='PracticeDescription']"/>
 		</xsl:call-template>
 		

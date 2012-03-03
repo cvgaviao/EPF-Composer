@@ -35,7 +35,7 @@
 						</table>
 					</div>
 
-				</xsl:if>
+				</xsl:if> 
 				
 			</xsl:for-each>
 		</xsl:for-each>
