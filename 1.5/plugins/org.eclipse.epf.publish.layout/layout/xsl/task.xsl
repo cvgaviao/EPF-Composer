@@ -24,7 +24,9 @@
 	<xsl:include href="mapping.xsl"/>
 	<xsl:include href="overview.xsl"/>
 	<xsl:include href="purpose.xsl"/>
+	<xsl:include href="extended_refs.xsl"/>
 	<xsl:include href="main_description.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
 	<xsl:include href="illustration.xsl"/>
 	<xsl:include href="key_consideration.xsl"/>
 	<xsl:include href="guidance_helper.xsl"/>
@@ -115,8 +117,14 @@
 								<xsl:with-param name="description" select="$taskDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$taskDescription"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$taskDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="stepsSection">
 								<xsl:with-param name="description" select="$taskDescription"/>

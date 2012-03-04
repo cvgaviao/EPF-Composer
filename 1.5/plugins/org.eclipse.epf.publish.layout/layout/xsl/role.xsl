@@ -21,7 +21,9 @@
 	<xsl:include href="resources.xsl"/>
 	<xsl:include href="common.xsl"/>
 	<xsl:include href="overview.xsl"/>
+	<xsl:include href="extended_refs.xsl"/>
 	<xsl:include href="main_description.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
 	<xsl:include href="illustration.xsl"/>
 	<xsl:include href="key_consideration.xsl"/>
 	<xsl:include href="guidance_helper.xsl"/>
@@ -95,8 +97,14 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$roleDescription"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$roleDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="illustrationsSection"/>
 							<xsl:call-template name="staffingSection"/>

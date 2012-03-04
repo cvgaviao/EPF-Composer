@@ -15,6 +15,8 @@
 	<xsl:output method="html" version="1.0" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" indent="yes"/>
 	
 	<xsl:include href="guidance.xsl"/>
+	<xsl:include href="extended_refs.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
 	
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
@@ -112,6 +114,12 @@
 								<xsl:with-param name="udt_levelsOfAdoption_text" select="$udt_levelsOfAdoption_text"/>
 								<xsl:with-param name="udt_additionalInfo_text" select="$udt_additionalInfo_text"/>
 							</xsl:call-template>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$presentation/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="copyright">
 								<xsl:with-param name="copyright" select="$copyright"/>
 							</xsl:call-template>
@@ -124,6 +132,7 @@
 			</script>
 		</html>
 	</xsl:template>
+	
 	<xsl:template name="descriptionSection">
 		<xsl:param name="description"/>
 		<xsl:param name="udt_purpose_text"/>
@@ -564,4 +573,5 @@
 			</div>
 		</xsl:if>
 	</xsl:template>
+	
 </xsl:stylesheet>
