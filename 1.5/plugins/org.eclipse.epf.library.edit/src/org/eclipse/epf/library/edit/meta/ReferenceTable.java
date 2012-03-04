@@ -86,7 +86,7 @@ public class ReferenceTable {
 	
 	public String getGuidListString() {
 		LibraryEditUtil util = LibraryEditUtil.getInstance();
-		String sp = MethodElementPropUtil.infoSeperator;
+		String sep = MethodElementPropUtil.infoSeperator;
 		StringBuffer sb = new StringBuffer();
 		for (Map.Entry<MethodElement, Map<MethodElement, MethodElement>> entry : data
 				.entrySet()) {
@@ -102,12 +102,12 @@ public class ReferenceTable {
 					if (col != null && cel != null
 							&& col == util.getMethodElement(col.getGuid())
 							&& cel == util.getMethodElement(cel.getGuid())) {
-						if (sp.length() != 0) {
-							sb.append(sp);
+						if (sb.length() != 0) {
+							sb.append(sep);
 						}
 						sb.append(row.getGuid());
-						sb.append(sp + col.getGuid());
-						sb.append(sp + cel.getGuid());
+						sb.append(sep + col.getGuid());
+						sb.append(sep + cel.getGuid());
 					}
 
 				}
