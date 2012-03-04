@@ -21,11 +21,15 @@ import org.eclipse.emf.edit.provider.WrapperItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
+import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.editors.ColumnDescriptor;
 import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
+import org.eclipse.epf.authoring.ui.filters.ProcessTaskFilter;
 import org.eclipse.epf.common.ui.util.MsgDialog;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.PredecessorList;
@@ -53,6 +57,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -64,6 +69,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -100,6 +106,12 @@ public class WorkBreakdownElementGeneralSection extends
 
 	private ComboBoxCellEditor comboBoxCellEditor;
 
+	private Text ctrl_method_element;
+
+	private Button linkButton;
+	
+	private Button clearButton;
+	
 	// predecessor map list
 	private List predMapList = new ArrayList();
 
@@ -243,6 +255,30 @@ public class WorkBreakdownElementGeneralSection extends
 	 * @see org.eclipse.epf.authoring.ui.properties.BreakdownElementGeneralSection#createGeneralSection(org.eclipse.swt.widgets.Composite)
 	 */
 	protected void createGeneralSection(Composite composite) {
+		createGeneralSection_(composite);
+		if (! accpetLink()) {
+			return;
+		}
+		// method element
+		FormUI.createLabel(toolkit, generalComposite, PropertiesResources.Process_Type_Task); 
+		ctrl_method_element = FormUI.createText(toolkit, generalComposite,
+				SWT.DEFAULT, 1);
+
+		ctrl_method_element.setText(element.getName());
+		ctrl_method_element.setEnabled(false);
+
+		Composite buttonComposite = FormUI.createComposite(toolkit,
+				generalComposite, SWT.NONE, 2, true);
+		linkButton = FormUI.createButton(toolkit, buttonComposite, SWT.PUSH, 1);
+		linkButton
+				.setText(PropertiesResources.Process_Button_LinkMethodElement); 
+
+		clearButton = FormUI.createButton(toolkit, buttonComposite, SWT.PUSH, 1);
+		clearButton
+				.setText(PropertiesResources.Process_Button_ClearMethodElement); 
+	}
+	
+	private void createGeneralSection_(Composite composite) {
 		super.createGeneralSection(composite);
 
 		// Event Driven
@@ -435,6 +471,56 @@ public class WorkBreakdownElementGeneralSection extends
 			}
 		});
 
+		if (! accpetLink()) {
+			return;
+		}
+		
+		linkButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				IFilter filter = new ProcessTaskFilter(
+						getConfiguration(), null, FilterConstants.TASKS);
+				List existingElements = new ArrayList();
+//				if (element.getTask() != null) {
+//					existingElements.add(element.getTask());
+//				}
+				ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
+						.getWorkbench().getActiveWorkbenchWindow().getShell(),
+						filter, element, FilterConstants.TASKS,
+						existingElements);
+
+				fd.setBlockOnOpen(true);
+				fd.setViewerSelectionSingle(true);
+				fd.setTitle(FilterConstants.TASKS);
+				fd.setEnableProcessScope(true);
+				fd.setSection(getSection());
+				fd.open();
+//				setMethodElement(fd.getSelectedItems());
+//
+//				// update method element control
+//				ctrl_method_element.setText(getMethodElementName(element));
+//				if (isSyncFree()) {
+//					getEditor().updateOnLinkedElementChange(element);
+//				}
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e1) {
+			}
+		});
+				
+		clearButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				actionMgr.doAction(IActionManager.SET, element,
+						UmaPackage.eINSTANCE
+								.getTaskDescriptor_Task(),
+						null, -1);
+				// update method element control
+//				ctrl_method_element.setText(getMethodElementName(element));
+			}
+
+			public void widgetDefaultSelected(SelectionEvent e1) {
+			}
+		});
+	
 	}
 
 	/**
@@ -1174,4 +1260,9 @@ public class WorkBreakdownElementGeneralSection extends
 
 		return false;
 	}
+	
+	private boolean accpetLink() {
+		return false;
+	}
+		
 }
