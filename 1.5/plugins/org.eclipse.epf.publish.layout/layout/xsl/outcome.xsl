@@ -21,7 +21,9 @@
 	<xsl:include href="workproduct.xsl"/>
 	<xsl:include href="mapping.xsl"/>
 	<xsl:include href="main_description.xsl"/>	
-
+	<xsl:include href="extended_refs.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
+	
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
 		<xsl:variable name="elementTypeName" select="@TypeName"/>
@@ -95,8 +97,14 @@
 								<xsl:with-param name="description" select="$outcomeDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$outcomeDescription"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$outcomeDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="workProductIllustrationsSection"/>
 							<xsl:call-template name="keyConsiderationsSection">

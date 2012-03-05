@@ -19,6 +19,8 @@
 	indent="yes"/>
 	
 	<xsl:include href="workproduct.xsl"/>
+	<xsl:include href="extended_refs.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
 
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
@@ -100,8 +102,14 @@
 								<xsl:with-param name="description" select="$artifactDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$artifactDescription"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$artifactDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="workProductIllustrationsSection"/>
 							<xsl:call-template name="keyConsiderationsSection">
