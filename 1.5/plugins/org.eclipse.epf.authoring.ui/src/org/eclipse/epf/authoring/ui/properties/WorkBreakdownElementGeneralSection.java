@@ -30,12 +30,14 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Milestone;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
@@ -44,6 +46,7 @@ import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkOrderType;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.ICellEditorValidator;
@@ -260,11 +263,11 @@ public class WorkBreakdownElementGeneralSection extends
 			return;
 		}
 		// method element
-		FormUI.createLabel(toolkit, generalComposite, PropertiesResources.Process_Type_Task); 
+		FormUI.createLabel(toolkit, generalComposite, PropertiesResources.Linked_Element); 
 		ctrl_method_element = FormUI.createText(toolkit, generalComposite,
 				SWT.DEFAULT, 1);
 
-		ctrl_method_element.setText(element.getName());
+		ctrl_method_element.setText(getLinkedElementName(element));
 		ctrl_method_element.setEnabled(false);
 
 		Composite buttonComposite = FormUI.createComposite(toolkit,
@@ -1261,8 +1264,14 @@ public class WorkBreakdownElementGeneralSection extends
 		return false;
 	}
 	
+	private String getLinkedElementName(MethodElement element) {
+		MethodElement linkedElement = null;
+		return linkedElement == null ? PropertiesResources.Process_None : linkedElement.getName();
+	}
+		
 	private boolean accpetLink() {
-		return false;
+		ModifiedTypeMeta linedMeta = TypeDefUtil.getLinkedMdtMeta(element);
+		return linedMeta == null ? false : true;
 	}
 		
 }

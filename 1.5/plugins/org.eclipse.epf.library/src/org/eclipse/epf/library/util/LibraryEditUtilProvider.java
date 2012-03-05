@@ -217,4 +217,9 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	public ModifiedTypeMeta getModifiedType(String id) {
 		return LibraryService.getInstance().getCurrentLibraryManager().getModifiedType(id);
 	}
+	
+	public Collection<ModifiedTypeMeta> getModifiedTypes() {
+		return LibraryService.getInstance().getCurrentLibraryManager().getModifiedTypes();
+	}
+	
 }

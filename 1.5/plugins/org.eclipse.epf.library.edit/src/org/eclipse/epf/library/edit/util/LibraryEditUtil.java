@@ -845,6 +845,10 @@ public class LibraryEditUtil {
 		return getProvider() == null ? null : getProvider().getModifiedType(id);
 	}
 	
+	public Collection<ModifiedTypeMeta> getModifiedTypes() {
+		return getProvider() == null ? null : getProvider().getModifiedTypes();
+	}
+	
 	public MethodPackage getCoreContentPackage(MethodPlugin plugin) {
 		String[] path = new String[] { ModelStructure.CONTENT_PACKAGE_NAME,
 				ModelStructure.CORE_CONTENT_PACAKGE_NAME };

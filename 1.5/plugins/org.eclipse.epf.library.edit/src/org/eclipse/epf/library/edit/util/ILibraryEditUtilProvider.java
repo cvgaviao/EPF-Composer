@@ -50,4 +50,6 @@ public interface ILibraryEditUtilProvider {
 	
 	public ModifiedTypeMeta getModifiedType(String id);
 	
+	public Collection<ModifiedTypeMeta> getModifiedTypes();
+	
 }

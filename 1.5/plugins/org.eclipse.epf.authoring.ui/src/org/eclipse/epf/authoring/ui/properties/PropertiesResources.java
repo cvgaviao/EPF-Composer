@@ -58,6 +58,7 @@ public final class PropertiesResources extends NLS {
 	public static String Process_Type_Task;
 	public static String Process_Type_Role;
 	public static String Process_Type_WorkProduct;
+	public static String Linked_Element;	
 	public static String WorkProduct_Type;
 	public static String Activity_ModelInfo;
 	public static String Activity_Type;

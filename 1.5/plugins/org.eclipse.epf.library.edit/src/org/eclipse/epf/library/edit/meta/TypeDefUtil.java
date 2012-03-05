@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.edit.meta;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -11,6 +12,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -225,6 +227,28 @@ public class TypeDefUtil {
 			}
 		}
 		return null;
+	}	
+	
+	public static ModifiedTypeMeta getMdtMeta(MethodElement element) {		
+		return PropUtil.getPropUtil().getGlobalMdtMeta(element);
 	}
+	
+	public static ModifiedTypeMeta getLinkedMdtMeta(MethodElement element) {		
+		ModifiedTypeMeta meta = getMdtMeta(element);
+		if (meta == null) {
+			return null;
+		}
+		Collection<ModifiedTypeMeta> allTypes = LibraryEditUtil.getInstance().getModifiedTypes();
+		if (allTypes == null) {
+			return null;
+		}
+		for (ModifiedTypeMeta oMeta : allTypes) {
+			if (! oMeta.getLinkTypes().isEmpty() && meta.getId().equals(oMeta.getLinkTypes().get(0))) {
+				return oMeta;
+			}
+		}
+		return null;
+	}
+	
 	
 }
