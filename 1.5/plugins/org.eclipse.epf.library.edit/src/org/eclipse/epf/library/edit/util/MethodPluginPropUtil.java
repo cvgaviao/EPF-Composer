@@ -22,6 +22,8 @@ import org.eclipse.epf.uma.util.UmaUtil;
 public class MethodPluginPropUtil extends PropUtil {
 
 	public static final String PLUGIN_SynFree = "plugin_synFree"; //$NON-NLS-1$
+	public static final String Plugin_customizedConfig = 	"plugin_customizedConfig";		//$NON-NLS-1$
+	public static final String Plugin_customizedParent = 	"plugin_customizedParent";		//$NON-NLS-1$
 
 	private static MethodPluginPropUtil methodPluginPropUtil = new MethodPluginPropUtil();
 	public static MethodPluginPropUtil getMethodPluginPropUtil() {
@@ -46,6 +48,11 @@ public class MethodPluginPropUtil extends PropUtil {
 	
 	public void setSynFree(MethodPlugin d, boolean value) {
 		setBooleanValue(d, PLUGIN_SynFree, value);
+	}
+	
+	public MethodPlugin getCustomizedParent(MethodPlugin plugin) {
+		return (MethodPlugin) getElement(plugin,
+				MethodPluginPropUtil.Plugin_customizedParent);
 	}
 	
 	/**

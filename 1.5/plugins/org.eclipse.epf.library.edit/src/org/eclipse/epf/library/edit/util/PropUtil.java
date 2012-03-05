@@ -27,6 +27,7 @@ public class PropUtil extends MethodElementPropUtil {
 	public static final String Me_edited = "me_edited";					//$NON-NLS-1$
 	public static final String Me_attribute_ = "me_attribute_";			//$NON-NLS-1$
 	public static final String Me_table_ = "me_table_";					//$NON-NLS-1$
+	public static final String Me_linkedElement = "me_linkedElement";	//$NON-NLS-1$
 	
 	private static PropUtil propUtil = new PropUtil();
 	public static PropUtil getPropUtil(IActionManager actionManager) {
@@ -42,6 +43,14 @@ public class PropUtil extends MethodElementPropUtil {
 	
 	protected PropUtil(IActionManager actionManager) {
 		super(actionManager);
+	}
+	
+	public MethodElement getLinkedElement(MethodElement element) {
+		return getElement(element, Me_linkedElement);
+	}
+		
+	public void setLinkedElement(MethodElement element, MethodElement value) {
+		setElement(element, Me_linkedElement, value);
 	}
 	
 	public ReferenceTable retrieveExtendedTable(MethodElement element, ExtendedTable tableMeta) {

@@ -28,6 +28,7 @@ import org.eclipse.epf.library.edit.configuration.CategoriesItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.Log;
@@ -39,6 +40,7 @@ import org.eclipse.epf.uma.Domain;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleSet;
 import org.eclipse.epf.uma.RoleSetGrouping;
@@ -88,8 +90,15 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	 * @see org.eclipse.epf.library.edit.IFilter#accept(java.lang.Object)
 	 */
 	public boolean accept(Object obj) {
-		if (methodConfig == null)
+		if (methodConfig == null) {
+			if (obj instanceof MethodPlugin) {
+				MethodPlugin plugin = (MethodPlugin) obj;
+				if (null != MethodPluginPropUtil.getMethodPluginPropUtil().getCustomizedParent(plugin)) {
+					return false;
+				}
+			}
 			return true;
+		}
 		
 		obj = LibraryUtil.unwrap(obj);
 

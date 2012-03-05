@@ -24,7 +24,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.dialogs.ItemsFilterDialog;
 import org.eclipse.epf.authoring.ui.editors.ColumnDescriptor;
 import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
-import org.eclipse.epf.authoring.ui.filters.ProcessTaskFilter;
+import org.eclipse.epf.authoring.ui.filters.MdtElementFilter;
 import org.eclipse.epf.common.ui.util.MsgDialog;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.IFilter;
@@ -35,6 +35,7 @@ import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.MethodElement;
@@ -480,30 +481,30 @@ public class WorkBreakdownElementGeneralSection extends
 		
 		linkButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				IFilter filter = new ProcessTaskFilter(
-						getConfiguration(), null, FilterConstants.TASKS);
+				ModifiedTypeMeta meta =  TypeDefUtil.getLinkedMdtMeta(element);
+				IFilter filter = new MdtElementFilter(getConfiguration(), meta);
 				List existingElements = new ArrayList();
-//				if (element.getTask() != null) {
-//					existingElements.add(element.getTask());
-//				}
 				ItemsFilterDialog fd = new ItemsFilterDialog(PlatformUI
 						.getWorkbench().getActiveWorkbenchWindow().getShell(),
-						filter, element, FilterConstants.TASKS,
+						filter, element, meta.getId(),
 						existingElements);
 
 				fd.setBlockOnOpen(true);
 				fd.setViewerSelectionSingle(true);
-				fd.setTitle(FilterConstants.TASKS);
+				fd.setTitle( meta.getId());
 				fd.setEnableProcessScope(true);
 				fd.setSection(getSection());
 				fd.open();
-//				setMethodElement(fd.getSelectedItems());
-//
-//				// update method element control
-//				ctrl_method_element.setText(getMethodElementName(element));
-//				if (isSyncFree()) {
+				if (! fd.getSelectedItems().isEmpty()) {
+					Object item = fd.getSelectedItems().get(0);
+					if (item instanceof MethodElement) {
+						PropUtil.getPropUtil(actionMgr).setLinkedElement(element, (MethodElement) item);
+					}
+				} else {
+					return;
+				}
+				ctrl_method_element.setText(getLinkedElementName(element));
 //					getEditor().updateOnLinkedElementChange(element);
-//				}
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e1) {
@@ -1265,11 +1266,14 @@ public class WorkBreakdownElementGeneralSection extends
 	}
 	
 	private String getLinkedElementName(MethodElement element) {
-		MethodElement linkedElement = null;
+		MethodElement linkedElement = PropUtil.getPropUtil().getLinkedElement(element);
 		return linkedElement == null ? PropertiesResources.Process_None : linkedElement.getName();
 	}
 		
 	private boolean accpetLink() {
+		if (! ProcessUtil.isSynFree()) {
+			return false;
+		}
 		ModifiedTypeMeta linedMeta = TypeDefUtil.getLinkedMdtMeta(element);
 		return linedMeta == null ? false : true;
 	}
