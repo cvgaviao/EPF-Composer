@@ -22,7 +22,7 @@
 	<xsl:include href="mapping.xsl"/>
 	<xsl:include href="main_description.xsl"/>	
 	<xsl:include href="extended_refs.xsl"/>
-	<xsl:include href="extended_rtes.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/> 
 	
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>

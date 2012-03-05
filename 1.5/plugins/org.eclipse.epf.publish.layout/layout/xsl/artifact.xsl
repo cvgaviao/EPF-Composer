@@ -20,7 +20,7 @@
 	
 	<xsl:include href="workproduct.xsl"/>
 	<xsl:include href="extended_refs.xsl"/>
-	<xsl:include href="extended_rtes.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/> 
 
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>

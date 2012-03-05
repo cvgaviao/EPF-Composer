@@ -18,7 +18,7 @@
 	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" 
 	indent="yes"/>
 	
-	<xsl:include href="resources.xsl"/>
+	<xsl:include href="resources.xsl"/> 
 	<xsl:include href="common.xsl"/>
 	<xsl:include href="overview.xsl"/>
 	<xsl:include href="extended_refs.xsl"/>
