@@ -18,14 +18,12 @@ import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
-import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.realization.IRealizedDescriptor;
 import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
-import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Descriptor;
@@ -38,12 +36,9 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.ContentDescriptionFactory;
-import org.eclipse.epf.uma.util.ExtendedAttribute;
-import org.eclipse.epf.uma.util.ExtendedReference;
-import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
 
-public class RealizedDescriptor extends RealizedElement implements
+public class RealizedDescriptor extends RealizedBreakdownElement implements
 		IRealizedDescriptor, IRealizedElement {
 
 	private static Set<EStructuralFeature> featureSet = new HashSet<EStructuralFeature>();
@@ -70,7 +65,11 @@ public class RealizedDescriptor extends RealizedElement implements
 		return featureSet.contains(feature);
 	}
 	
-	private Object getContentFeatureValue(EStructuralFeature feature) {
+	protected Object getContentFeatureValue(EStructuralFeature feature) {
+		Object superValue = super.getContentFeatureValue(feature);
+		if (superValue != null) {
+			return superValue;
+		}
 		if (getLinkedElement() == null) {
 			return null;
 		}
@@ -79,18 +78,13 @@ public class RealizedDescriptor extends RealizedElement implements
 		}
 				
 		EStructuralFeature elementFeature = contentFeatureMap.get(feature);
-		if (elementFeature == null && 
-				TypeDefUtil.getInstance().getAssociatedExtendedAttribute(feature) != null) {
-			elementFeature = feature;
-		}
 		
 		if (elementFeature != null) {	
 
 			Object value = null;
 			if (getDescriptor().getPresentation() != null) {
 				try {
-//					value = getDescriptor().getPresentation().eGet(feature);
-					value = TypeDefUtil.getInstance().eGet(getDescriptor().getPresentation(), feature);
+					value = getDescriptor().getPresentation().eGet(feature);
 				} catch (Throwable e) {
 					LibraryPlugin.getDefault().getLogger().logError(e);
 					return null;
@@ -112,13 +106,11 @@ public class RealizedDescriptor extends RealizedElement implements
 				linkedValue = ConfigurationHelper.calcAttributeFeatureValue(
 						getLinkedElement().getPresentation(), elementFeature, getConfig());
 			} else {
-//				linkedValue = greenParent.getPresentation().eGet(feature);
-				linkedValue = TypeDefUtil.getInstance().eGet(greenParent.getPresentation(), feature);
+				linkedValue = greenParent.getPresentation().eGet(feature);
 			}
 
 			if (linkedValue == null && value != null ||  linkedValue != null && !linkedValue.equals(value)) {
-//				getDescriptor().getPresentation().eSet(feature, linkedValue);
-				TypeDefUtil.getInstance().eSet(getDescriptor().getPresentation(), feature, linkedValue);
+				getDescriptor().getPresentation().eSet(feature, linkedValue);
 			}
 
 			return linkedValue;
@@ -128,8 +120,12 @@ public class RealizedDescriptor extends RealizedElement implements
 	}
 	
 	public Object getFeatureValue(EStructuralFeature feature) {
-		if (contentFeatureMap.containsKey(feature) || 
-				TypeDefUtil.getInstance().getAssociatedExtendedAttribute(feature) != null) {
+		Object superValue = super.getFeatureValue(feature);
+		if (superValue != null) {
+			return superValue;
+		}
+
+		if (contentFeatureMap.containsKey(feature)) {
 			return getContentFeatureValue(feature);
 		}
 		
@@ -139,8 +135,7 @@ public class RealizedDescriptor extends RealizedElement implements
 
 		if (feature instanceof EAttribute) {	
 
-//			Object value = getDescriptor().eGet(feature);
-			Object value = TypeDefUtil.getInstance().eGet(getDescriptor(), feature);
+			Object value = getDescriptor().eGet(feature);
 			if (getLinkedElement() == null) {
 				return value;
 			}
@@ -317,40 +312,9 @@ public class RealizedDescriptor extends RealizedElement implements
 	}	
 	
 	public Set<Descriptor> updateAndGetAllReferenced() {
+		super.updateAndGetAllReferenced();
 		List<Guidance> gList = getGuidances();
-		
-		updateExtendedReferences();		
-		
 		return Collections.EMPTY_SET;
-	}
-
-	private void updateExtendedReferences() {
-		ContentElement element = getLinkedElement();
-		if (element == null) {
-			return;
-		}
-
-		ModifiedTypeMeta meta = PropUtil.getPropUtil()
-				.getGlobalMdtMeta(element);
-		if (meta == null) {
-			return;
-		}
-		
-		ElementRealizer realizer = DefaultElementRealizer
-				.newElementRealizer(getConfig());
-		for (ExtendedReference eRef : meta.getReferences()) {
-			List elementList = ConfigurationHelper.calc0nFeatureValue(element,
-					eRef.getReference(), realizer);
-			Object value = TypeDefUtil.getInstance().eGet(getDescriptor(),
-					eRef.getReference(), true);
-			if (value instanceof List) {
-				List dList = (List) value;
-				dList.clear();
-				if (elementList != null && !elementList.isEmpty()) {
-					dList.addAll(elementList);
-				}
-			}
-		}
 	}
 	
 	protected void addToSet(Set<Descriptor> set, List<? extends Descriptor> list) {
@@ -371,22 +335,6 @@ public class RealizedDescriptor extends RealizedElement implements
 		for (EStructuralFeature feature : contentFeatureMap.keySet()) {
 			getFeatureValue(feature);
 		}
-		
-		ContentElement element = getLinkedElement();
-		if (element == null) {
-			return;
-		}
-
-		ModifiedTypeMeta meta = PropUtil.getPropUtil()
-				.getGlobalMdtMeta(element);
-		if (meta == null) {
-			return;
-		}
-
-		for (ExtendedAttribute eAtt : meta.getRtes()) {
-			getFeatureValue(eAtt.getAttribute());
-		}
-
 	}
 	
 	protected Set<MethodElement> getExcludeOrAddtionalRefSet(Descriptor des,

@@ -42,7 +42,6 @@ import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 public class RealizationManager implements IRealizationManager {
 
@@ -138,6 +137,9 @@ public class RealizationManager implements IRealizationManager {
 			
 		} else if (element instanceof WorkProductDescriptor) {
 			rElement = new RealizedWorkProductDescriptor((WorkProductDescriptor) element);
+			
+		} else if (element instanceof BreakdownElement) {
+			rElement = new RealizedBreakdownElement((BreakdownElement) element);
 			
 		}
 					
@@ -454,6 +456,10 @@ public class RealizationManager implements IRealizationManager {
 			if (be instanceof Descriptor) {
 				RealizedDescriptor rdes = (RealizedDescriptor) getRealizedElement(be);	
 				rdes.updateStringValues();
+			} else {
+				RealizedBreakdownElement rBe = (RealizedBreakdownElement) getRealizedElement(be);
+				rBe.updateAndGetAllReferenced();
+				rBe.updateStringValues();
 			}
 		}
 				
