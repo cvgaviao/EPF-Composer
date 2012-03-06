@@ -14,7 +14,7 @@
 	
 	<xsl:output method="html" version="1.0" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" indent="yes"/>
 	
-	<xsl:include href="guidance.xsl"/>
+	<xsl:include href="guidance.xsl"/> 
 	
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
