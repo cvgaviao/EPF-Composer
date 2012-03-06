@@ -438,7 +438,7 @@ public class BaseFormPage extends FormPage {
 		createLabel(toolkit, parent, labelText, 2);
 		return createTextEdit(toolkit, parent);
 	}
-
+	
 	/**
 	 * Creates a double-line text control with a label on a form page.
 	 * 
@@ -458,6 +458,15 @@ public class BaseFormPage extends FormPage {
 				| GridData.GRAB_HORIZONTAL, 40, 300, 1);
 	}
 
+	public static Text createTextEditWithLabel2a(FormToolkit toolkit,
+			Composite parent, String labelText) {
+		Label label = createLabel(toolkit, parent, labelText);
+		((GridData) label.getLayoutData()).widthHint = SWT.DEFAULT;
+		return createTextEdit(toolkit, parent, SWT.MULTI | SWT.WRAP
+				| SWT.V_SCROLL, GridData.FILL_HORIZONTAL
+				| GridData.GRAB_HORIZONTAL, 40, 300, 1);
+	}
+	
 	/**
 	 * Creates a single or multi-line text control with a label on a form page.
 	 * 
