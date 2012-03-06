@@ -45,8 +45,9 @@ public class TypeDefParserImpl implements TypeDefParser {
 				if (cls == null) {
 					continue;
 				}
+				cls = TypeDefUtil.getSuperClass(cls);
 				while (cls != null) {
-					ModifiedTypeMetaImpl superMeta = map.get(meta.getId());
+					ModifiedTypeMetaImpl superMeta = map.get(cls.getName());
 					if (superMeta != null) {
 						meta.setSuperMeta(superMeta);
 						break;
