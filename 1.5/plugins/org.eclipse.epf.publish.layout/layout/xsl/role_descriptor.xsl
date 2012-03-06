@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Copyright (c) 2005, 2007 IBM Corporation and others.
+    Copyright (c) 2005, 2012 IBM Corporation and others.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
@@ -20,6 +20,8 @@
 	
 	<xsl:include href="descriptor.xsl"/>
 	<xsl:include href="guidance_helper.xsl"/>
+	<xsl:include href="extended_refs.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
 
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
@@ -90,8 +92,14 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="refinedDescriptionSection">
 								<xsl:with-param name="description" select="$descriptorDescription"/>
+							</xsl:call-template>			
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$descriptorDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="propertiesSection">
 								<xsl:with-param name="contentDescription" select="$contentDescription"/>
