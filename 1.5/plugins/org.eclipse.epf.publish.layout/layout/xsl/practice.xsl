@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-    Copyright (c) 2005, 2007 IBM Corporation and others.
+    Copyright (c) 2005, 2012 IBM Corporation and others.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
@@ -11,6 +11,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<xsl:output method="html" version="1.0" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" indent="yes"/>
 	<xsl:include href="guidance.xsl"/>
+	
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
 		<xsl:variable name="elementTypeName" select="@TypeName"/>
@@ -87,8 +88,14 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection2"/>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$contentDescription"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$contentDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="copyright">
 								<xsl:with-param name="copyright" select="$copyright"/>
