@@ -15,7 +15,7 @@
 
 	<xsl:template name="extendedRtesAllSections">
 		<xsl:param name="descriptionDown"/>
-	
+		
 		<xsl:for-each select="$descriptionDown/section[@type='rte']">
 			<xsl:for-each select="rte">
 			
