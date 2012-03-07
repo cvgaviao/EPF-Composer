@@ -65,11 +65,7 @@ public class RealizedDescriptor extends RealizedBreakdownElement implements
 		return featureSet.contains(feature);
 	}
 	
-	protected Object getContentFeatureValue(EStructuralFeature feature) {
-		Object superValue = super.getContentFeatureValue(feature);
-		if (superValue != null) {
-			return superValue;
-		}
+	private Object getContentFeatureValue(EStructuralFeature feature) {
 		if (getLinkedElement() == null) {
 			return null;
 		}
@@ -120,19 +116,18 @@ public class RealizedDescriptor extends RealizedBreakdownElement implements
 	}
 	
 	public Object getFeatureValue(EStructuralFeature feature) {
-		Object superValue = super.getFeatureValue(feature);
-		if (superValue != null) {
-			return superValue;
+		Object value = super.getFeatureValue(feature);
+		if (value != null) {
+			return value;
 		}
-
+		return getFeatureValue_(feature);
+	}
+	
+	private Object getFeatureValue_(EStructuralFeature feature) {
 		if (contentFeatureMap.containsKey(feature)) {
 			return getContentFeatureValue(feature);
 		}
 		
-		if (! featureSet.contains(feature)) {
-			return super.getFeatureValue(feature); 
-		}		
-
 		if (feature instanceof EAttribute) {	
 
 			Object value = getDescriptor().eGet(feature);
@@ -160,7 +155,7 @@ public class RealizedDescriptor extends RealizedBreakdownElement implements
 			return linkedValue;
 		}
 
-		return super.getFeatureValue(feature);
+		return null;
 	}
 	
 	private Object calcAttributeFeatureValue(MethodElement linkedElement,
@@ -325,15 +320,13 @@ public class RealizedDescriptor extends RealizedBreakdownElement implements
 	}
 	
 	public void updateStringValues() {
-//		if (! ProcessUtil.isSynFree()) {
-//			return;
-//		}
+		super.updateStringValues();
 		for (EStructuralFeature feature : featureSet) {
-			getFeatureValue(feature);
+			getFeatureValue_(feature);
 		}
 		
 		for (EStructuralFeature feature : contentFeatureMap.keySet()) {
-			getFeatureValue(feature);
+			getFeatureValue_(feature);
 		}
 	}
 	

@@ -87,19 +87,23 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 		}
 
 		for (ExtendedAttribute eAtt : meta.getRtes()) {
-			getFeatureValue(eAtt.getAttribute());
+			getFeatureValue_(eAtt.getAttribute());
 		}
 
 	}
 	
 	public Object getFeatureValue(EStructuralFeature feature) {
+		return getFeatureValue_(feature);
+	}
+		
+	private Object getFeatureValue_(EStructuralFeature feature) {
 		if (TypeDefUtil.getInstance().getAssociatedExtendedAttribute(feature) == null) {
 			return null;
 		}
 		return getContentFeatureValue(feature);
 	}
 	
-	protected Object getContentFeatureValue(EStructuralFeature feature) {
+	private Object getContentFeatureValue(EStructuralFeature feature) {
 		if (getLinkedElement() == null) {
 			return null;
 		}
