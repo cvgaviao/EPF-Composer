@@ -26,6 +26,8 @@
 	<xsl:include href="illustration.xsl"/>
 	<xsl:include href="key_consideration.xsl"/>
 	<xsl:include href="guidance_helper.xsl"/>
+	<xsl:include href="extended_refs.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
 	
 	<xsl:template match="/Element">
 		<xsl:variable name="Name" select="@Name"/>
@@ -108,8 +110,14 @@
 							<xsl:call-template name="relationshipsSection">
 								<xsl:with-param name="elementType" select="$elementType"/>
 							</xsl:call-template>
+							<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="elementDown" select="/Element"/>
+							</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$description"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRtesAllSections">
+								<xsl:with-param name="descriptionDown" select="$description"/>
 							</xsl:call-template>
 							<xsl:if test="$elementType != 'CustomCategory'">
 								<xsl:call-template name="illustrationsSection"/>
