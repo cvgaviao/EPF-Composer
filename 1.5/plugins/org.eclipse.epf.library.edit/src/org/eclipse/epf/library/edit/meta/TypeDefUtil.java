@@ -20,6 +20,7 @@ import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
@@ -161,6 +162,20 @@ public class TypeDefUtil {
 		obj.eSet(feature, newValue);
 	}
 		
+	public void eBasicSet(EObject obj, EStructuralFeature feature, Object newValue) {
+		boolean oldB = obj.eDeliver();
+		try {
+			if (oldB) {
+				obj.eSetDeliver(false);
+			}
+			eSet(obj, feature, newValue);
+		} finally {
+			if (oldB) {
+				obj.eSetDeliver(true);
+			}
+		}
+	}
+	
 	public List<EReference> getEAllReferences(MethodElement element) {
 		List<EReference> list = new ArrayList<EReference>(element.eClass().getEAllReferences());
 		
