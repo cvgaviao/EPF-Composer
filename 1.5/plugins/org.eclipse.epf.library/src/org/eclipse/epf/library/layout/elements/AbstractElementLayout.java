@@ -41,6 +41,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.PresentationContext;
+import org.eclipse.epf.library.edit.meta.ReferenceTable;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -1103,6 +1104,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			return;
 		}
 		
+		ElementRealizer realizer = layoutManager.getElementRealizer();
+		
 		for (ExtendedSection section : meta.getReferenceSections()) {
 			List<ExtendedReference> references = section.getReferences();
 			if (references == null || references.isEmpty()) {
@@ -1123,8 +1126,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			
 			for (ExtendedReference eRef : references) {
 				List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
-						element, eRef.getReference(), layoutManager
-								.getElementRealizer());
+						element, eRef.getReference(), realizer);
 				if (list != null && !list.isEmpty()) {
 					if (tableRefMap.containsKey(eRef)) {
 						tableRefMap.put(eRef, list);
@@ -1137,6 +1139,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			if (tables == null || tables.isEmpty()) {
 				continue;
 			}
+			
 			for (ExtendedTable table : tables) {
 				XmlElement cXml = elementXml.newChild(TAG_TABLE);
 				cXml.setAttribute("tableId", table.getId());		//$NON-NLS-1$
@@ -1148,6 +1151,28 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				if (colList.isEmpty() || rowList.isEmpty()) {
 					continue;
 				}
+				
+				List<MethodElement> colList0 = propUtil.getExtendedReferenceList(element, table.getColumnReference(), false);
+				List<MethodElement> rowList0 = propUtil.getExtendedReferenceList(element, table.getRowReference(), false);
+				if (colList0 == null || colList0.isEmpty() || rowList0 == null || rowList0.isEmpty()) {
+					return;
+				}
+				
+				ReferenceTable referenceTable = propUtil.getReferenceTable(element, table, false);								
+				
+				Map<MethodElement, MethodElement> colMap = new HashMap<MethodElement, MethodElement>();
+				Map<MethodElement, MethodElement> rowMap = new HashMap<MethodElement, MethodElement>();
+				for (MethodElement e : colList0) {
+					MethodElement r = ConfigurationHelper.getCalculatedElement(e, realizer);
+					if (r != null) {
+						colMap.put(r, e);
+					}
+				}
+				for (MethodElement e : rowList0) {
+					MethodElement r = ConfigurationHelper.getCalculatedElement(e, realizer);
+					if (r != null) {
+						rowMap.put(r, e);
+					}				}				
 				XmlElement ccXml = cXml.newChild(TAG_ColumnList);
 				for (MethodElement e : colList) {
 					XmlElement cccXml = ccXml.newChild(TAG_Column);
@@ -1157,11 +1182,25 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 				
 				ccXml = cXml.newChild(TAG_RowList);
-				for (MethodElement e : rowList) {
+				for (MethodElement rowE : rowList) {
 					XmlElement cccXml = ccXml.newChild(TAG_Row);
-					String name = ConfigurationHelper.getPresentationName(e, layoutManager.getConfiguration());
+					String name = ConfigurationHelper.getPresentationName(rowE, layoutManager.getConfiguration());
 					cccXml.setAttribute("name", name);				//$NON-NLS-1$
-					addReference(table.getColumnReference().getReference(), cccXml, table.getColumnReference().getId(), e);
+					addReference(table.getColumnReference().getReference(), cccXml, table.getColumnReference().getId(), rowE);
+					MethodElement rowE0 = rowMap.get(rowE);
+					for (MethodElement colE : colList) {
+						MethodElement colE0 = colMap.get(colE);
+						MethodElement celE = referenceTable == null ? null : referenceTable.getCellElement(rowE0, colE0);
+						if (celE != null) {
+							celE = ConfigurationHelper.getCalculatedElement(celE, realizer);
+						}
+						XmlElement ccccXml = cccXml.newChild(TAG_Cell);
+						name = celE == null ? "" : ConfigurationHelper.getPresentationName(celE, layoutManager.getConfiguration());		//$NON-NLS-1$
+						ccccXml.setAttribute("name", name);				//$NON-NLS-1$
+						if (celE != null) {
+							addReference(table.getCellReference().getReference(), ccccXml, table.getCellReference().getId(), celE);
+						}
+					}
 				}
 			}
 		}
