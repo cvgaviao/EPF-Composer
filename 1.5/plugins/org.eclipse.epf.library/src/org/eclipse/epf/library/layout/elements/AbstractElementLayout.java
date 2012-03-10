@@ -18,9 +18,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -39,7 +41,6 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.PresentationContext;
-import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -90,6 +91,7 @@ import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
+import org.eclipse.epf.uma.util.ExtendedTable;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -111,6 +113,12 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	public static final String TAG_REFERENCELIST = "referenceList"; //$NON-NLS-1$
 	public static final String TAG_SECTION = "section";				//$NON-NLS-1$
 	public static final String TAG_RTE = "rte";						//$NON-NLS-1$
+	public static final String TAG_TABLE = "table";					//$NON-NLS-1$
+	public static final String TAG_ColumnList = "columnList";		//$NON-NLS-1$
+	public static final String TAG_RowList = "rowList";				//$NON-NLS-1$
+	public static final String TAG_Column = "column";				//$NON-NLS-1$
+	public static final String TAG_Row = "row";						//$NON-NLS-1$
+	public static final String TAG_Cell = "Cell";					//$NON-NLS-1$
 	
 	//Use "new String" to make sure the following instances are not the same
 	private static final String Att_ExtendeReference_1 = new String("ExtendedReference");	//$NON-NLS-1$	
@@ -1103,13 +1111,57 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			XmlElement sectionXml = elementXml.newChild(TAG_SECTION);
 			setXmlAttributes(section, sectionXml);
 			
+			Map<ExtendedReference, List<MethodElement>> tableRefMap = new HashMap<ExtendedReference, List<MethodElement>>();
+			List<ExtendedTable> tables = section.getTables();
+			if (tables != null && !tables.isEmpty()) {
+				for (ExtendedTable table : tables) {
+					tableRefMap.put(table.getColumnReference(), Collections.EMPTY_LIST);
+					tableRefMap.put(table.getRowReference(), Collections.EMPTY_LIST);
+					tableRefMap.put(table.getCellReference(), Collections.EMPTY_LIST);
+				}
+			}
+			
 			for (ExtendedReference eRef : references) {
 				List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
 						element, eRef.getReference(), layoutManager
 								.getElementRealizer());
 				if (list != null && !list.isEmpty()) {
+					if (tableRefMap.containsKey(eRef)) {
+						tableRefMap.put(eRef, list);
+					}
 					addReferences(eRef, sectionXml, Att_ExtendeReference_1, list);	//$NON-NLS-1$
 					addReferences(eRef, sectionXml, Att_ExtendeReference_2, list);	//$NON-NLS-1$
+				}
+			}
+						
+			if (tables == null || tables.isEmpty()) {
+				continue;
+			}
+			for (ExtendedTable table : tables) {
+				XmlElement cXml = elementXml.newChild(TAG_TABLE);
+				cXml.setAttribute("tableId", table.getId());		//$NON-NLS-1$
+				cXml.setAttribute("tableName", table.getName());	//$NON-NLS-1$
+
+				List<MethodElement> colList = tableRefMap.get(table.getColumnReference());
+				List<MethodElement> rowList = tableRefMap.get(table.getRowReference());
+				List<MethodElement> celList = tableRefMap.get(table.getCellReference());
+				if (colList.isEmpty() || rowList.isEmpty()) {
+					continue;
+				}
+				XmlElement ccXml = cXml.newChild(TAG_ColumnList);
+				for (MethodElement e : colList) {
+					XmlElement cccXml = ccXml.newChild(TAG_Column);
+					String name = ConfigurationHelper.getPresentationName(e, layoutManager.getConfiguration());
+					cccXml.setAttribute("name", name);				//$NON-NLS-1$
+					addReference(table.getColumnReference().getReference(), cccXml, table.getColumnReference().getId(), e);
+				}
+				
+				ccXml = cXml.newChild(TAG_RowList);
+				for (MethodElement e : rowList) {
+					XmlElement cccXml = ccXml.newChild(TAG_Row);
+					String name = ConfigurationHelper.getPresentationName(e, layoutManager.getConfiguration());
+					cccXml.setAttribute("name", name);				//$NON-NLS-1$
+					addReference(table.getColumnReference().getReference(), cccXml, table.getColumnReference().getId(), e);
 				}
 			}
 		}
