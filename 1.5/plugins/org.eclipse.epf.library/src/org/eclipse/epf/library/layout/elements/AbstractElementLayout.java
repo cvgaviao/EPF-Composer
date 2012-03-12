@@ -1020,13 +1020,19 @@ public abstract class AbstractElementLayout implements IElementLayout {
 							element, qRef.getReference(), layoutManager
 									.getElementRealizer());
 					if (list != null && !list.isEmpty()) {
-						addReferences(qRef, childXml, "Qualified references", list);		//$NON-NLS-1$
 						uniqueItems.removeAll(list);
+					}
+				}				
+				processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
+				for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
+					List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
+							element, qRef.getReference(), layoutManager
+									.getElementRealizer());
+					if (list != null && !list.isEmpty()) {
+						addReferences(qRef, childXml, "Qualified references", list);		//$NON-NLS-1$
 					}
 				}
 				childXml.setAttribute("format", "nested list");	//$NON-NLS-1$	//$NON-NLS-2$
-				
-				processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
 			}
 		}
 		return childXml;
