@@ -1004,7 +1004,6 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			ExtendedReference qRef = (QualifiedReference) feature;
 			childXml.setAttribute("qualifierId", qRef.getId());		//$NON-NLS-1$
 			childXml.setAttribute("qualifierName", qRef.getName());	//$NON-NLS-1$	
-			processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
 
 		} else if (feature instanceof ExtendedReference) {
 			ExtendedReference eRef = (ExtendedReference) feature;					
@@ -1012,7 +1011,6 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			childXml.setAttribute("referenceName", eRef.getName());	//$NON-NLS-1$
 			if (referenceName == Att_ExtendeReference_1) {
 				childXml.setAttribute("format", "immidate child list");	//$NON-NLS-1$ 	//$NON-NLS-2$
-				processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
 
 			} else if (referenceName == Att_ExtendeReference_2) {	
 				for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
@@ -1033,8 +1031,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 					}
 				}
 				childXml.setAttribute("format", "nested list");	//$NON-NLS-1$	//$NON-NLS-2$
+				return childXml;
 			}
 		}
+		processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$		
 		return childXml;
 	}
 
