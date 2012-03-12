@@ -619,8 +619,12 @@ public class DescriptorPropUtil extends WbePropUtil {
 		if (des == null) {
 			return null;
 		}
-		DescriptorExt ext = (DescriptorExt) getExtendObject(des, false);
-
+		MethodElementExt mext =  getExtendObject(des, false);
+		if (! (mext instanceof DescriptorExt)) {
+			return null;
+		}
+		
+		DescriptorExt ext = (DescriptorExt) mext;		 
 		return ext == null ? null : ext.getCustomizingChildren();
 	}
 	
