@@ -122,8 +122,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	public static final String TAG_Cell = "Cell";					//$NON-NLS-1$
 	
 	//Use "new String" to make sure the following instances are not the same
-	private static final String Att_ExtendeReference_1 = new String("ExtendedReference");	//$NON-NLS-1$
-	private static final String Att_ExtendeReference_1a = new String("ExtendedReference");	//$NON-NLS-1$	
+	private static final String Att_ExtendeReference_1 = new String("ExtendedReference");	//$NON-NLS-1$	
 	private static final String Att_ExtendeReference_2 = new String("ExtendedReference");	//$NON-NLS-1$	
 	
 	protected ElementLayoutManager layoutManager;
@@ -1005,25 +1004,16 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			ExtendedReference qRef = (QualifiedReference) feature;
 			childXml.setAttribute("qualifierId", qRef.getId());		//$NON-NLS-1$
 			childXml.setAttribute("qualifierName", qRef.getName());	//$NON-NLS-1$	
-			
+			processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
+
 		} else if (feature instanceof ExtendedReference) {
 			ExtendedReference eRef = (ExtendedReference) feature;					
 			childXml.setAttribute("referenceId", eRef.getId());		//$NON-NLS-1$
 			childXml.setAttribute("referenceName", eRef.getName());	//$NON-NLS-1$
 			if (referenceName == Att_ExtendeReference_1) {
 				childXml.setAttribute("format", "immidate child list");	//$NON-NLS-1$ 	//$NON-NLS-2$
-				
-			} else if (referenceName == Att_ExtendeReference_1a) {
-				childXml.setAttribute(
-						"format", "immidate no qualified child list"); //$NON-NLS-1$ 	//$NON-NLS-2$
-				for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
-					List<MethodElement> list = ConfigurationHelper
-							.calc0nFeatureValue(element, qRef.getReference(),
-									layoutManager.getElementRealizer());
-					if (list != null && !list.isEmpty()) {
-						uniqueItems.removeAll(list);
-					}
-				}					
+				processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
+
 			} else if (referenceName == Att_ExtendeReference_2) {	
 				for (QualifiedReference qRef : eRef.getQualifiedReferences()) {
 					List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
@@ -1031,13 +1021,14 @@ public abstract class AbstractElementLayout implements IElementLayout {
 									.getElementRealizer());
 					if (list != null && !list.isEmpty()) {
 						addReferences(qRef, childXml, "Qualified references", list);		//$NON-NLS-1$
+						uniqueItems.removeAll(list);
 					}
 				}
 				childXml.setAttribute("format", "nested list");	//$NON-NLS-1$	//$NON-NLS-2$
-				return childXml;
+				
+				processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
 			}
 		}
-		processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
 		return childXml;
 	}
 
@@ -1146,7 +1137,6 @@ public abstract class AbstractElementLayout implements IElementLayout {
 						tableRefMap.put(eRef, list);
 					}
 					addReferences(eRef, sectionXml, Att_ExtendeReference_1, list);	//$NON-NLS-1$
-					addReferences(eRef, sectionXml, Att_ExtendeReference_1a, list);	//$NON-NLS-1$
 					addReferences(eRef, sectionXml, Att_ExtendeReference_2, list);	//$NON-NLS-1$
 				}
 			}
