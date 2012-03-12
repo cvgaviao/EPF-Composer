@@ -990,8 +990,6 @@ public class MultiResourceEObject extends EObjectImpl implements
 	}	
 	
 	public static class ExtendObject {		
-		protected void copy(ExtendObject oldObj) {			
-		}
 	}
 	
 	//-2: unknown

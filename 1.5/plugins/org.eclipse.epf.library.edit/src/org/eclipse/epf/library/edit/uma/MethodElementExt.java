@@ -23,31 +23,13 @@ public class MethodElementExt extends ExtendObject {
 	private Object cachedObject;
 	private ExtendReferenceMap extendReferenceMap;
 	private IUserDefinedTypeMeta userDefinedTypeMeta;
-	private IUserDefinedTypeMeta modifiedTypeMeta;
+		
 	private Map<Object, Object> extendedPropertyMap;
+	private IUserDefinedTypeMeta modifiedTypeMeta;
 
-	public MethodElementExt(MethodElement element, ExtendObject oldObj) {
-		if (oldObj != null) {
-			copy(oldObj);
-		}
+	public MethodElementExt(MethodElement element) {
 		this.element = element;
 	}	
-	
-	@Override
-	protected void copy(ExtendObject oldObj) {
-		super.copy(oldObj);
-		if (! (oldObj instanceof MethodElementExt)) {
-			return;
-		}
-		MethodElementExt old = (MethodElementExt) oldObj;
-		element = 				old.element;
-		transientElement = 		old.transientElement;
-		cachedObject = 			old.cachedObject;
-		extendReferenceMap =	old.extendReferenceMap;
-		userDefinedTypeMeta =	old.userDefinedTypeMeta;
-		modifiedTypeMeta = 		old.modifiedTypeMeta;
-		extendedPropertyMap =	old.extendedPropertyMap;
-	}
 	
 	public ExtendReferenceMap getExtendReferenceMap(boolean create) {
 		if (create && extendReferenceMap == null) {
@@ -79,19 +61,8 @@ public class MethodElementExt extends ExtendObject {
 	public static class WorkProductStateExt extends MethodElementExt {
 		private Set<WorkProduct> assignedToWps;
 		
-		public WorkProductStateExt(Constraint element, ExtendObject oldObj) {
-			super(element, oldObj);
-		}
-		
-		@Override
-		protected void copy(ExtendObject oldObj) {
-			super.copy(oldObj);
-			if (! (oldObj instanceof WorkProductStateExt)) {
-				return;
-			}
-			WorkProductStateExt old = (WorkProductStateExt) oldObj;			
-			assignedToWps = old.assignedToWps;
-
+		public WorkProductStateExt(Constraint element) {
+			super(element);
 		}
 		
 		public void addToAssignedToWps(WorkProduct wp) {
@@ -131,7 +102,7 @@ public class MethodElementExt extends ExtendObject {
 		}
 		
 	}
-
+	
 	public IUserDefinedTypeMeta getUserDefinedTypeMeta() {
 		return userDefinedTypeMeta;
 	}

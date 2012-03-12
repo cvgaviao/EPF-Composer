@@ -156,18 +156,15 @@ public class MethodElementPropUtil {
 		MethodElementPropertyHelper.removeProperty(e, propName);
 	}
 	
-	public final MethodElementExt getExtendObject(MethodElement element, boolean create) {
+	public MethodElementExt getExtendObject(MethodElement element, boolean create) {
 		if (element == null) {
 			return null;
 		}
 		MultiResourceEObject mobj = (MultiResourceEObject) element;		
 		ExtendObject obj = mobj.getExtendObject();
-		if (create) {
-			ExtendObject newObj = createExtendObjectIfNeeded(element, obj);
-			if (newObj != obj) {
-				obj = newObj;
-				mobj.setExtendObject(obj);
-			}
+		if (create && !(obj instanceof MethodElementExt)) {
+			obj = TypeDefUtil.getInstance().createExtendObject(element);
+			mobj.setExtendObject(obj);
 		}
 		return (MethodElementExt) obj;
 	}
@@ -175,19 +172,6 @@ public class MethodElementPropUtil {
 	public Map<Object, Object> getExtendedPropertyMap(MethodElement element, boolean create) {
 		MethodElementExt ext = getExtendObject(element, create);
 		return ext == null ? null : ext.getExtendedPropertyMap(create);
-	}
-	
-	protected MethodElementExt createExtendObjectIfNeeded(MethodElement element, ExtendObject oldObj) {
-		if (isWorkProductState(element)) {
-			if (oldObj instanceof WorkProductStateExt) {
-				return (WorkProductStateExt) oldObj;
-			}
-			return new WorkProductStateExt((Constraint) element, oldObj);
-		}
-		if (oldObj instanceof MethodElementExt) {
-			return (MethodElementExt) oldObj;
-		}
-		return new MethodElementExt(element, oldObj);
 	}
 	
 	public boolean isWorkProductState(MethodElement element) {

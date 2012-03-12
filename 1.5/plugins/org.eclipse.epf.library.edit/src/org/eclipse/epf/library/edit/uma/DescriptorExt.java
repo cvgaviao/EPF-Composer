@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 import org.eclipse.epf.uma.Descriptor;
@@ -15,20 +13,8 @@ public class DescriptorExt extends MethodElementExt {
 	private Descriptor greenParent;
 	private Set<Descriptor> customizingChildSet;
 
-	public DescriptorExt (Descriptor des, ExtendObject oldOb) {
-		super(des, oldOb);
-	}
-	
-	@Override
-	protected void copy(ExtendObject oldObj) {
-		super.copy(oldObj);
-		if (! (oldObj instanceof DescriptorExt)) {
-			return;
-		}
-		DescriptorExt old = (DescriptorExt) oldObj;
-		
-		greenParent = 			old.greenParent;
-		customizingChildSet = 	old.customizingChildSet;
+	public DescriptorExt (Descriptor des) {
+		super(des);
 	}
 	
 	public void setGreenParent(Descriptor greenParent) {

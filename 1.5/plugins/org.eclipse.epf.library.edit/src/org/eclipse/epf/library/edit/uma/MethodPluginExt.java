@@ -6,19 +6,9 @@ import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 public class MethodPluginExt extends MethodElementExt {
 	
 	private boolean wpStatesLoaded = false;
-	public MethodPluginExt(MethodPlugin plugin, ExtendObject oldObj) {
-		super(plugin, oldObj);
+	public MethodPluginExt(MethodPlugin plugin) {
+		super(plugin);
 	}	
-	
-	@Override
-	protected void copy(ExtendObject oldObj) {
-		super.copy(oldObj);
-		if (! (oldObj instanceof MethodPluginExt)) {
-			return;
-		}
-		MethodPluginExt old = (MethodPluginExt) oldObj;			
-		wpStatesLoaded = old.wpStatesLoaded;
-	}
 	
 	public boolean isWpStatesLoaded() {
 		return wpStatesLoaded;

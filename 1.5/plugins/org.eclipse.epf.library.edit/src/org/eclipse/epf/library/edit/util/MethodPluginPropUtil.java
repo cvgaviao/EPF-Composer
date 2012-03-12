@@ -147,17 +147,6 @@ public class MethodPluginPropUtil extends PropUtil {
 		return state.getBody() + ", " + state.getBriefDescription();  //$NON-NLS-1$
 	}
 	
-	@Override
-	protected MethodElementExt createExtendObjectIfNeeded(MethodElement element, ExtendObject oldObj) {
-		if (oldObj instanceof MethodPluginExt) {
-			return (MethodPluginExt) oldObj;
-		}
-		if (element instanceof MethodPlugin) {
-			return new MethodPluginExt((MethodPlugin) element, oldObj);
-		}
-		return super.createExtendObjectIfNeeded(element, oldObj);
-	}
-	
 	private boolean isWpStatesLoaded(MethodPlugin plugin) {
 		MethodPluginExt ext = (MethodPluginExt) getExtendObject(plugin, true);
 		return ext.isWpStatesLoaded();

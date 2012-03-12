@@ -728,17 +728,6 @@ public class DescriptorPropUtil extends WbePropUtil {
 		return ref;
 	}
 	
-	@Override
-	protected MethodElementExt createExtendObjectIfNeeded(MethodElement element, ExtendObject oldObj) {
-		if (oldObj instanceof DescriptorExt) {
-			return (DescriptorExt) oldObj;
-		}
-		if (element instanceof Descriptor) {
-			return new DescriptorExt((Descriptor) element, oldObj);
-		}
-		return super.createExtendObjectIfNeeded(element, oldObj);
-	}
-	
 	public void clearAllAutoSynProps(Descriptor des) {		
 		removeProperty(des, DESCRIPTOR_Customization);
 		removeProperty(des, DESCRIPTOR_LocalUsingInfo);

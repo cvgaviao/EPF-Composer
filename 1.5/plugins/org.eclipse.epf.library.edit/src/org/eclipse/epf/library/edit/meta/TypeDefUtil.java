@@ -12,15 +12,21 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
+import org.eclipse.epf.library.edit.uma.DescriptorExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
+import org.eclipse.epf.library.edit.uma.MethodPluginExt;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.BreakdownElement;
+import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Practice;
-import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
@@ -229,6 +235,20 @@ public class TypeDefUtil {
 		return list;
 	}
 	
+	public MethodElementExt createExtendObject(MethodElement element) {
+		PropUtil propUtil = PropUtil.getPropUtil();
+		if (propUtil.isWorkProductState(element)) {
+			return new WorkProductStateExt((Constraint) element);
+		}
+		if (element instanceof Descriptor) {
+			return new DescriptorExt((Descriptor) element);
+		}
+		if (element instanceof MethodPlugin) {
+			return new MethodPluginExt((MethodPlugin) element);
+		}
+		return new MethodElementExt(element);
+	}
+		
 	public static Class getSuperClass(Class cls) {
 		Class cls1 = ContentElement.class;
 		Class cls2 = BreakdownElement.class;
@@ -263,7 +283,6 @@ public class TypeDefUtil {
 			}
 		}
 		return null;
-	}
-	
+	}			
 	
 }
