@@ -14,6 +14,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<xsl:include href="qualified_ref.xsl"/>
+	<xsl:include href="tables.xsl"/>
 	
 	<xsl:template name="extendedRefsAllSections">
 		<xsl:param name="elementDown"/>
@@ -46,6 +47,12 @@
 				-->
 				 
 			</xsl:for-each>
+			
+		   
+			<xsl:call-template name="displayTables">
+				<xsl:with-param name="sectionElement" select="."/>
+			</xsl:call-template>
+			
 		</xsl:for-each>
 		
 	</xsl:template>
