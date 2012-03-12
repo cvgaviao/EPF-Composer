@@ -1141,7 +1141,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			}
 			
 			for (ExtendedTable table : tables) {
-				XmlElement cXml = elementXml.newChild(TAG_TABLE);
+				XmlElement cXml = sectionXml.newChild(TAG_TABLE);
 				cXml.setAttribute("tableId", table.getId());		//$NON-NLS-1$
 				cXml.setAttribute("tableName", table.getName());	//$NON-NLS-1$
 
