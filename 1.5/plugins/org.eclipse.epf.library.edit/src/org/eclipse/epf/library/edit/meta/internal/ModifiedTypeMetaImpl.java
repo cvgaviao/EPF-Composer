@@ -1,12 +1,15 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.util.ExtendedFeature;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.ExtendedTable;
@@ -166,7 +169,17 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		getRtes().addAll(linkedMeta.getRtes());
 		getReferenceSections().addAll(linkedMeta.getReferenceSections());;
 		getRteSections().addAll(linkedMeta.getRteSections());
+		if (extendedFeatures == null) {
+			extendedFeatures = new HashSet<ExtendedFeature>();
+		}
+		extendedFeatures.addAll(linkedMeta.getReferences());
+		extendedFeatures.addAll(linkedMeta.getRtes());
 		return true;
+	}
+	
+	private Set<ExtendedFeature> extendedFeatures;
+	public boolean isLinkedFeature(ExtendedFeature feature) {
+		return extendedFeatures == null ? false : extendedFeatures.contains(feature);
 	}
 	
 }

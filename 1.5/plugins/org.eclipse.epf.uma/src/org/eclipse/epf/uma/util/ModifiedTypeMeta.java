@@ -15,4 +15,6 @@ public interface ModifiedTypeMeta extends MetaElement {
 	
 	public boolean processLink(ModifiedTypeMeta linkedMeta);
 	
+	public boolean isLinkedFeature(ExtendedFeature feature);
+	
 }
