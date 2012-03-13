@@ -198,9 +198,8 @@ public class PropUtil extends MethodElementPropUtil {
 	}
 	
 	public void setElement(MethodElement ownerElement, String propName, MethodElement element) {
-		if (element != null) {
-			setStringValue(ownerElement, propName, element.getGuid());
-		}
+		String guid = element == null ? "" : element.getGuid();
+		setStringValue(ownerElement, propName, guid);
 	}
 
 }
