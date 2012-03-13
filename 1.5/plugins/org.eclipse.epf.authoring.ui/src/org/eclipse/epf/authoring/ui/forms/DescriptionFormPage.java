@@ -58,6 +58,7 @@ import org.eclipse.epf.library.edit.command.DeleteMethodElementCommand;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.util.ExtensionManager;
+import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.edit.validation.IValidator;
@@ -1176,6 +1177,13 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		if (variabilitySectionOn) {
 			ctrl_variability.setEnabled(editable);
 			ctrl_base_button.setEnabled(editable);
+
+			MethodPlugin plugin = UmaUtil.getMethodPlugin(methodElement);
+			if (MethodPluginPropUtil.getMethodPluginPropUtil().isCustomizePlugin(plugin)) {
+				ctrl_variability.setEnabled(false);
+				ctrl_base_button.setEnabled(false);
+			}
+			
 			if (((IStructuredSelection) viewer_variability.getSelection())
 					.getFirstElement() == VariabilityType.NA) {
 				ctrl_base_button.setEnabled(false);
