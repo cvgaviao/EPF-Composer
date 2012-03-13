@@ -55,6 +55,11 @@ public class MethodPluginPropUtil extends PropUtil {
 				MethodPluginPropUtil.Plugin_customizedParent);
 	}
 	
+	public boolean isCustomizePlugin(MethodPlugin plugin) {
+		return null != getElement(plugin,
+				MethodPluginPropUtil.Plugin_customizedConfig);
+	}
+	
 	/**
 	 * Find the state under the plug-in with the given name "stateName".
 	 * If such state cannot be found, return null if "create" is false, otherwise create a new state
