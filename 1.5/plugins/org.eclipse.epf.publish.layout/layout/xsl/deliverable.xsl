@@ -111,6 +111,7 @@
 							<xsl:call-template name="relationshipsSection"/>
 							<xsl:call-template name="extendedRefsAllSections">
 								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:call-template name="extendedRefsAllSections">
 							</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$deliverableDescription"/>

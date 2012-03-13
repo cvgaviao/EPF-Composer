@@ -14,9 +14,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 	<xsl:template name="qualifiedRefField">
+		<xsl:param name="iconLevel"/>
 		<!--
 		<br/><xsl:value-of select="@referenceId"></xsl:value-of>
 		-->
+		<xsl:value-of select="$iconLevel"/>
+				
 		<xsl:if test="count(*) >0">
 			
 			<div class="sectionHeading">
@@ -28,7 +31,7 @@
 					<xsl:if test="count(*) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row">
-								<xsl:value-of select="$referenceQualifiersText"/>
+								<xsl:value-of select="@referenceQualifiersText"/>
 							</th>
 							<td class="sectionTableCell">
 								<xsl:for-each select="*">
@@ -36,7 +39,14 @@
 										<xsl:if test="name()='Element'">
 											<li>
 												<img>
-													<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+													<xsl:choose> 
+														<xsl:when test="$iconLevel = 'two'"> 
+															<xsl:attribute name="src">./../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+														</xsl:when> 
+														<xsl:otherwise> 
+															<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+														</xsl:otherwise>
+													</xsl:choose> 				
 													<xsl:attribute name="height">16</xsl:attribute>
 													<xsl:attribute name="width">16</xsl:attribute>
 												</img>
@@ -48,7 +58,7 @@
 										</xsl:if>
 										<xsl:if test="name()='referenceList'">
 											<li>
-												<xsl:value-of select="@name"/>
+												<xsl:value-of select="@qualifierName"/>
 											</li>
 											<ul>
 												<xsl:for-each select="./*">
@@ -60,7 +70,14 @@
 															<xsl:for-each select="./*">
 																<li>
 																	<img>
-																		<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																		<xsl:choose> 
+																			<xsl:when test="$iconLevel = 'two'"> 
+																				<xsl:attribute name="src">./../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																			</xsl:when> 
+																			<xsl:otherwise> 
+																				<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																			</xsl:otherwise>
+																		</xsl:choose> 
 																		<xsl:attribute name="height">16</xsl:attribute>
 																		<xsl:attribute name="width">16</xsl:attribute>
 																	</img>
@@ -75,7 +92,14 @@
 													<xsl:if test="name()='Element'">
 														<li>
 															<img>
-																<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																<xsl:choose> 
+																	<xsl:when test="$iconLevel = 'two'"> 
+																		<xsl:attribute name="src">./../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																	</xsl:when> 
+																	<xsl:otherwise> 
+																		<xsl:attribute name="src">./../../../<xsl:value-of select="@ShapeiconUrl"/></xsl:attribute>
+																	</xsl:otherwise>
+																</xsl:choose> 
 																<xsl:attribute name="height">16</xsl:attribute>
 																<xsl:attribute name="width">16</xsl:attribute>
 															</img>

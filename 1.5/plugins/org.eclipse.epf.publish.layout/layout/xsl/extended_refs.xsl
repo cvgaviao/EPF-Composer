@@ -18,14 +18,14 @@
 	
 	<xsl:template name="extendedRefsAllSections">
 		<xsl:param name="elementDown"/>
-	
+		<xsl:param name="iconLevel"/>
+		
 		<xsl:for-each select="$elementDown/section[@type='reference']">
-			<xsl:for-each select="referenceList[@format='immidate child list']">
-				<!--  
-				<br/><xsl:value-of select="@referenceName"></xsl:value-of>
-				-->
+			<xsl:for-each select="referenceList[@format='nested list']">
 				
-				<xsl:call-template name="qualifiedRefField"/>
+				<xsl:call-template name="qualifiedRefField">
+					<xsl:with-param name="iconLevel" select="$iconLevel"/>
+				</xsl:call-template>
 				<!-- 
 				<xsl:variable name="rteText" select="text()"/>
 				<xsl:if test="string($rteText) != ''">
