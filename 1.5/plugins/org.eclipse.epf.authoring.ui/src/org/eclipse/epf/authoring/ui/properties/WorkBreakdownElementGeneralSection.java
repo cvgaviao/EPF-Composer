@@ -513,12 +513,8 @@ public class WorkBreakdownElementGeneralSection extends
 				
 		clearButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				actionMgr.doAction(IActionManager.SET, element,
-						UmaPackage.eINSTANCE
-								.getTaskDescriptor_Task(),
-						null, -1);
-				// update method element control
-//				ctrl_method_element.setText(getMethodElementName(element));
+				PropUtil.getPropUtil(actionMgr).setLinkedElement(element, null);
+				ctrl_method_element.setText("");//$NON-NLS-1$
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e1) {
