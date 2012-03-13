@@ -52,7 +52,7 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	//Warning: the UmaUtil.unresolvedGuidSet mechanism needs to be enhanced to handle the case when skipContent = false.
 	//At this time, all the calls to this method are with skipContent = true, therefore leave it as it is now.
 	public MethodElement getMethodElement(String guid, boolean skipContent) {		
-		if (guid == null) {
+		if (guid == null || guid.trim().length() == 0) {
 			return null;
 		}
 		if (! UmaUtil.unresolvedGuidSet.isEmpty() && UmaUtil.unresolvedGuidSet.contains(guid)) {
