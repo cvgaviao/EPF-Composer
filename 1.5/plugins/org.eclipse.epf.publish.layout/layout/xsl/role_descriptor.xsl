@@ -94,7 +94,7 @@
 							<xsl:call-template name="relationshipsSection"/>
 							<xsl:call-template name="extendedRefsAllSections">
 								<xsl:with-param name="elementDown" select="/Element"/>
-								<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="iconLevel" select="'two'"/>
 							</xsl:call-template>
 							<xsl:call-template name="refinedDescriptionSection">
 								<xsl:with-param name="description" select="$descriptorDescription"/>

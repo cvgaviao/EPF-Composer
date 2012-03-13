@@ -17,8 +17,8 @@
 		<xsl:param name="iconLevel"/>
 		<!--
 		<br/><xsl:value-of select="@referenceId"></xsl:value-of>
-		-->
 		<xsl:value-of select="$iconLevel"/>
+		-->
 				
 		<xsl:if test="count(*) >0">
 			

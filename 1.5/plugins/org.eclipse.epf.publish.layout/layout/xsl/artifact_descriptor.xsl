@@ -119,7 +119,7 @@
 							</xsl:call-template>
 							<xsl:call-template name="extendedRefsAllSections">
 								<xsl:with-param name="elementDown" select="/Element"/>
-								<xsl:call-template name="extendedRefsAllSections">
+								<xsl:with-param name="iconLevel" select="'two'"/>
 							</xsl:call-template>
 							<xsl:choose>
 								<xsl:when test="$descriptorDescription/attribute[@name='briefOutline'] !='' ">
