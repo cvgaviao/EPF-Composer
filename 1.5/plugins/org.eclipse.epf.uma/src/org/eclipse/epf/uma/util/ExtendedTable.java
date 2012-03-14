@@ -5,5 +5,5 @@ public interface ExtendedTable  extends MetaElement {
 	ExtendedReference getColumnReference();
 	ExtendedReference getRowReference();
 	ExtendedReference getCellReference();
-	
+	String getColumnSplit();	
 }

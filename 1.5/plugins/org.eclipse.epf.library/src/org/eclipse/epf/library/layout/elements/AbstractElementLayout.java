@@ -1155,6 +1155,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				XmlElement cXml = sectionXml.newChild(TAG_TABLE);
 				cXml.setAttribute("tableId", table.getId());		//$NON-NLS-1$
 				cXml.setAttribute("tableName", table.getName());	//$NON-NLS-1$
+				cXml.setAttribute("columnSplit", table.getColumnSplit());//$NON-NLS-1$
 
 				List<MethodElement> colList = tableRefMap.get(table.getColumnReference());
 				List<MethodElement> rowList = tableRefMap.get(table.getRowReference());

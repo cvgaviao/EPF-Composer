@@ -15,6 +15,7 @@ public class ExtendedTableImpl extends MetaElementImpl implements ExtendedTable 
 	private ExtendedReference columnReference;
 	private ExtendedReference rowReference;
 	private ExtendedReference cellReference;
+	private String columnSplit;
 	
 	public ExtendedTableImpl(MetaElement parent) {
 		super(parent);
@@ -32,6 +33,10 @@ public class ExtendedTableImpl extends MetaElementImpl implements ExtendedTable 
 		return cellReference;
 	}
 	
+	public String getColumnSplit() {
+		return columnSplit;
+	}
+	
 	public void parseElement(Element element)	throws TypeDefException {
 		super.parseElement(element);
 		if (! (getParent() instanceof ExtendedSection)) {
@@ -44,12 +49,14 @@ public class ExtendedTableImpl extends MetaElementImpl implements ExtendedTable 
 		String colStr = element.getAttribute(IMetaDef.columnReference);
 		String rowStr = element.getAttribute(IMetaDef.rowReference);
 		String celStr = element.getAttribute(IMetaDef.cellReference);
+		columnSplit = element.getAttribute(IMetaDef.columnSplit);
 		if (colStr == null || rowStr == null || celStr == null) {
 			return;
 		}
 		colStr = colStr.trim();
 		rowStr = rowStr.trim();
 		celStr = celStr.trim();
+		
 		for (ExtendedReference ref : references) {
 			if (colStr.equals(ref.getId())) {
 				columnReference = ref;
