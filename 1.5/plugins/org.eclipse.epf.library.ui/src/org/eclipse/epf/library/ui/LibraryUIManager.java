@@ -770,6 +770,7 @@ public class LibraryUIManager {
 				// combobox contribution.
 				configCombo = new ConfigurationContributionItem(
 						null);
+				configCombo.setId(ConfigurationContributionItem.class.getName());
 				toolBarMgr.add(configCombo);
 				configToolBar.setVisible(true);
 				updateSystemToolBar(coolBarMgr);
@@ -780,6 +781,7 @@ public class LibraryUIManager {
 		IToolBarManager toolBarMgr = new ToolBarManager(SWT.FLAT | SWT.LEFT);
 		configCombo = new ConfigurationContributionItem(
 				null);
+		configCombo.setId(ConfigurationContributionItem.class.getName());
 		toolBarMgr.add(configCombo);
 		ToolBarContributionItem configComboToolBar = new ToolBarContributionItem(
 				toolBarMgr, TOOLBAR_CONFIG_CONTRIBUTION_ID);
