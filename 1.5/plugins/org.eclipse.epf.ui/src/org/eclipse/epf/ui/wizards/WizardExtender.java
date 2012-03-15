@@ -107,5 +107,9 @@ public class WizardExtender implements IWizardExtender {
 	public void adjustWizardPages(List<IWizardPage> pages) {
 		
 	}
-
+	
+    public IWizardPage getStartingPage() {
+    	return null;
+    }
+    
 }

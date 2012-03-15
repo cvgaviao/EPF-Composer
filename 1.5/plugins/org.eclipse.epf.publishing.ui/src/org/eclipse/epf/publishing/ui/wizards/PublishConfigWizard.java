@@ -159,6 +159,15 @@ public class PublishConfigWizard extends BaseWizard implements INewWizard {
 	}
 
 	@Override
+	public IWizardPage getStartingPage() {
+		IWizardPage page = wizardExtender == null ?  null : wizardExtender.getStartingPage();
+		if (page != null) {
+			return page;
+		}
+		return super.getStartingPage();
+	}
+	
+	@Override
 	public IWizardPage getNextPage(IWizardPage page) {
 		//override the base wizard's logic, 
 		//let the wizard extender drive the page flow when there is a wizard extender

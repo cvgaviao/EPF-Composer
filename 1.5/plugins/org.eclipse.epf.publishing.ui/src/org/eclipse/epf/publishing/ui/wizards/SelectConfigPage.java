@@ -331,7 +331,7 @@ public class SelectConfigPage extends BaseWizardPage {
 		return selectedConfig;
 	}
 
-	private void setSelectedConfig(MethodConfiguration selectedConfig) {
+	public void setSelectedConfig(MethodConfiguration selectedConfig) {
 		this.selectedConfig = selectedConfig;
 	}
 	

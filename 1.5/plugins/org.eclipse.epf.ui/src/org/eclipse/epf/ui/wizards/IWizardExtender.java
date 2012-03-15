@@ -102,4 +102,6 @@ public interface IWizardExtender {
 	 */
 	public void adjustWizardPages(List<IWizardPage> pages);
 	
+    public IWizardPage getStartingPage();
+	
 }
