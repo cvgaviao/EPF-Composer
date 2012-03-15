@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -52,6 +54,7 @@ import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
@@ -132,6 +135,7 @@ public class PracticeItemProvider extends
 		
 		for (int i = 0; i < keys.length; i++) {
 			String key = keys[i];
+			
 			String prefix = prefixes[i];
 			List subgroupChildren = map.get(key);
 			if (subgroupChildren == null || subgroupChildren.isEmpty()) {
@@ -341,24 +345,15 @@ public class PracticeItemProvider extends
 	public static class GroupingHelper {
 		
 		private Object grouper;
-		protected boolean alwayGroup = false;
+		private List<String> udtTypeNameList = new ArrayList<String>();
+		private Set<String> udtTypeNameSet = new HashSet<String>();
 		
 		public GroupingHelper(Object grouper) {
 			this.grouper = grouper;
-			if (grouper instanceof PracticeItemProvider) {
-				Object obj = ((PracticeItemProvider) grouper).getTarget();
-				if (obj instanceof Practice) {
-					PracticePropUtil propUtil = PracticePropUtil.getPracticePropUtil();
-					if (propUtil.isUdtType((Practice) obj)) {
-						alwayGroup = true;
-					}
-				}
-			}
 		}
 		
 		public GroupingHelper(Object grouper, boolean alwayGroup) {
 			this.grouper = grouper;
-			this.alwayGroup = alwayGroup;
 		}
 		
 		protected Object getGrouper() {
@@ -384,7 +379,17 @@ public class PracticeItemProvider extends
 			if (obj instanceof Activity) {
 				return getUIString("_UI_Activities_group"); //$NON-NLS-1$
 			}
-			if (obj instanceof Guidance) {			
+			if (obj instanceof Guidance) {
+				if (obj instanceof Practice) {
+					UserDefinedTypeMeta meta = PracticePropUtil.getPracticePropUtil().getUdtMeta((Practice) obj);
+					if (meta != null) {						
+						String name = meta.getRteNameMap().get(UserDefinedTypeMeta._typeName);
+						if (udtTypeNameSet.add(name)) {
+							udtTypeNameList.add(name);
+						}
+						return name;
+					}
+				}
 				return getUIString("_UI_Guidances_group"); //$NON-NLS-1$
 			}
 			if (obj instanceof ContentCategory) {			
@@ -407,6 +412,19 @@ public class PracticeItemProvider extends
 					UNKNOWN
 			};
 			
+			if (! udtTypeNameList.isEmpty()) {
+				Collections.sort(udtTypeNameList);
+				int sz = prefixes.length + udtTypeNameList.size();
+				String[] modified = new String[sz];
+				for (int i = 0; i < prefixes.length; i++) {
+					modified[i] = prefixes[i];
+				}
+				for (int i = prefixes.length; i < sz; i++) {
+					modified[i] = udtTypeNameList.get(i - prefixes.length);
+				}
+				prefixes = modified;
+			}
+			
 			return prefixes;
 		}
 		
@@ -423,11 +441,23 @@ public class PracticeItemProvider extends
 					UNKNOWN
 			};
 			
+			if (! udtTypeNameList.isEmpty()) {
+				Collections.sort(udtTypeNameList);
+				int sz = keys.length + udtTypeNameList.size();
+				String[] modifiedKesy = new String[sz];
+				for (int i = 0; i < keys.length; i++) {
+					modifiedKesy[i] = keys[i];
+				}
+				for (int i = keys.length; i < sz; i++) {
+					modifiedKesy[i] = udtTypeNameList.get(i - keys.length);
+				}
+				keys = modifiedKesy;
+			}			
 			return keys;
 		}
 		
 		public boolean toGroup(String key, List subgroupChildren) {
-			if (alwayGroup) {
+			if (udtTypeNameSet.contains(key)) {
 				return true;
 			}
 			if (key.equals(ROADMAP) || 
@@ -447,7 +477,6 @@ public class PracticeItemProvider extends
 			List ret = new ArrayList<Object>();
 			
 			GroupingHelper groupingHelper = new GuidanceGroupingHelper(grouper);
-			groupingHelper.alwayGroup = this.alwayGroup;
 			grouping(parentObject, ret, subgroupChildren, groupingHelper);
 			
 			return ret;
@@ -551,9 +580,6 @@ public class PracticeItemProvider extends
 		
 		@Override
 		public boolean toGroup(String key, List subgroupChildren) {
-			if (alwayGroup) {
-				return true;
-			}
 			if (key.equals(UNKNOWN) || 
 				subgroupChildren.size() < 3) {
 				return false;
