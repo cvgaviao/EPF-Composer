@@ -307,7 +307,7 @@ public class BaseFormPage extends FormPage {
 	 *            The text for the label.
 	 * @return A new <code>Label</code>.
 	 */
-	protected static Label createLabel(FormToolkit toolkit, Composite parent,
+	public static Label createLabel(FormToolkit toolkit, Composite parent,
 			String text) {
 		return createLabel(toolkit, parent, text, GridData.BEGINNING, 1);
 	}
