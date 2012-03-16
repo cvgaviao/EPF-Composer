@@ -669,6 +669,23 @@ public class XMLUtil {
 		return elements;
 	}
 	
+	public static List<String> getChildTextsByTagName(Element element, String tagName) {	
+		List<Element> elements = getChildElementsByTagName(element, tagName);
+		List <String> list = new ArrayList<String>();
+		for (Element e : elements) {
+			String textValue = e.getTextContent().trim();
+			if (textValue.length() != 0) {
+				list.add(textValue);
+			}
+		}
+		return list;
+	}
+	
+	public static String getFirstChildTextByTagName(Element element, String tagName) {	
+		Element e = getFirstChildElementByTagName(element, tagName);
+		return e == null ? null : e.getTextContent().trim();
+	}
+	
 	/**
 	 * Gets the first element with the given tag name in the immediate child elements.
 	 * 
