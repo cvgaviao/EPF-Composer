@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -284,5 +285,29 @@ public class TypeDefUtil {
 		}
 		return null;
 	}			
+	
+	public static String getTypeId(MethodElement element) {
+		if (element instanceof Practice) {
+			UserDefinedTypeMeta meta = PracticePropUtil.getPracticePropUtil().getUdtMeta((Practice) element);
+			if (meta != null) {
+				return meta.getRteNameMap().get(UserDefinedTypeMeta._typeId);
+			}
+		}
+		return element.eClass().getInstanceClass().getName();
+	}
+	
+	public static boolean isTypeOf(MethodElement element, String typeId) {
+		String elementTypeId = getTypeId(element);
+		if (elementTypeId.equals(typeId)) {
+			return true;
+		}		
+		for (EClass cls : element.eClass().getEAllSuperTypes()) {
+			Class c = cls.getInstanceClass();
+			if (c.getName().equals(typeId)) {
+				return true;
+			}
+		}		
+		return false;
+	}
 	
 }

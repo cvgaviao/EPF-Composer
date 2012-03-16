@@ -10,4 +10,8 @@ public interface ExtendedReference extends ExtendedFeature {
 	
 	public List<QualifiedReference> getQualifiedReferences();
 	
+	public List<String> getValueTypes();
+	
+	public String getContributeTo();
+	
 }

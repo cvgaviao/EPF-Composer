@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -23,6 +24,10 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 	private EReference ref;	
 
 	private List<QualifiedReference> qualifiedReferences;
+	
+	private List<String> valueTypes;
+	
+	private String contributeTo;
 
 	public ExtendedReferenceImpl(MetaElement parent) {
 		super(parent);
@@ -48,6 +53,9 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		ref =  UmaUtil.createReference(getId());
 		TypeDefUtil.getInstance().associate(this, ref);
 		
+		valueTypes = XMLUtil.getChildTextsByTagName(element, IMetaDef.valueType);
+		contributeTo = element.getAttribute(IMetaDef.contributeTo);
+		
 		qualifiedReferences = new ArrayList<QualifiedReference>();
 		List<Element> rqElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.REFERENCE_QUALIFIERS);
 		if (rqElements == null || rqElements.isEmpty()) {
@@ -61,6 +69,14 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 				qualifiedReferences.add(q);
 			}
 		}
+	}
+	
+	public List<String> getValueTypes() {		
+		return valueTypes;
+	}
+	
+	public String getContributeTo() {
+		return contributeTo;
 	}
 	
 	@Override
