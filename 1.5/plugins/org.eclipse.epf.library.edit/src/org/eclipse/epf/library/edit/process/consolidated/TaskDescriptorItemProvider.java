@@ -27,20 +27,25 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.provider.WrapperItemProvider;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.IBreakdownElementWrapperItemProviderFactory;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 
 
 /**
@@ -335,6 +340,21 @@ public class TaskDescriptorItemProvider extends
 		}
 		newChildren = removeSubartifactsFromChildren(newChildren, true, config);
 		updateCachedChildren(newChildren);
+		
+		if (false && obj instanceof TaskDescriptor) {
+			TaskDescriptor td = (TaskDescriptor) obj;
+			Task task = td.getTask();
+			if (task != null) {
+				ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(task);
+				for (ExtendedReference eRef : meta.getReferences()) {
+					if (ExtendedReference.Roles.equals(eRef.getContributeTo()) ||
+							ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
+						newChildren.addAll(PropUtil.getPropUtil().getExtendedReferenceList(td, eRef, false));
+					}
+				}
+			}				
+		}
+		
 		return newChildren;
 	}
 	

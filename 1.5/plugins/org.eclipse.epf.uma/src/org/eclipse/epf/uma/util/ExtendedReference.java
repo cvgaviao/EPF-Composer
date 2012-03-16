@@ -6,6 +6,10 @@ import org.eclipse.emf.ecore.EReference;
 
 public interface ExtendedReference extends ExtendedFeature {
 		
+	public String Roles = "roles"; 					//$NON-NLS-1$
+	
+	public String WorkProducts = "workProducts"; 	//$NON-NLS-1$
+	
 	public EReference getReference();
 	
 	public List<QualifiedReference> getQualifiedReferences();
