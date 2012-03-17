@@ -274,6 +274,7 @@ public class TaskDescriptorItemProvider extends
 		List output = new ArrayList();
 
 		IFilter filter = getFilter(obj);
+		int sz = children.size();
 
 		for (Iterator itor = children.iterator(); itor.hasNext();) {
 			Object o = itor.next();
@@ -350,7 +351,11 @@ public class TaskDescriptorItemProvider extends
 					if (ExtendedReference.Roles.equals(eRef.getContributeTo()) ||
 							ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
 						List list = PropUtil.getPropUtil().getExtendedReferenceList(td, eRef, false);
-						newChildren.addAll(list);
+						int ix = 0;
+						for (Object item : list) {
+							 Object wrapped = wrap(td, eRef.getReference(), item, ix++);
+							 newChildren.add(wrapped);
+						}
 					}
 				}
 			}				

@@ -177,7 +177,7 @@ public class RealizationManager implements IRealizationManager {
 		try {
 			if (feature.isMany()) {
 //				List listValue = (List) referencingDes.eGet(feature);
-				List listValue = (List) TypeDefUtil.getInstance().eGet(referencingDes, feature);
+				List listValue = (List) TypeDefUtil.getInstance().eGet(referencingDes, feature, true);
 				if (listValue != null) {
 					listValue.add(descriptor);
 					libEditUtil.addOppositeFeature(referencingDes, descriptor, feature);

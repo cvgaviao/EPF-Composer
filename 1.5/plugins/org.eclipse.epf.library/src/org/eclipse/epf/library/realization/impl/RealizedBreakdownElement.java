@@ -83,7 +83,7 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 			List dList = (List) value;
 			dList.clear();
 			if (elementList != null && !elementList.isEmpty()) {
-				dList.addAll(elementList);
+//				dList.addAll(elementList);
 				if (getDescriptor() != null && eRef.getContributeTo() != null) {
 					Set<Descriptor> set = new HashSet<Descriptor>();
 					Activity parentAct = getDescriptor().getSuperActivities();
@@ -91,13 +91,13 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 						return set;
 					}
 
-					for (int i = 0; i < dList.size(); i++) {
-						Object item = dList.get(i);
+					for (int i = 0; i < elementList.size(); i++) {
+						Object item = elementList.get(i);
 						if (item instanceof Role || item instanceof WorkProduct) {
+							//Note: this call add to dList
 							Descriptor des = (Descriptor) getMgr().getDescriptor(
 									getDescriptor(), parentAct, (MethodElement) item, eRef.getReference());
 							set.add(des);
-							dList.set(i, des);
 						}
 					}
 					return set;

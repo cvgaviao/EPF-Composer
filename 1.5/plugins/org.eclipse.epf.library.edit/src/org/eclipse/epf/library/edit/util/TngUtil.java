@@ -44,10 +44,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.PasteFromClipboardCommand;
@@ -80,6 +80,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
 import org.eclipse.epf.library.edit.element.ContentPackageItemProvider;
 import org.eclipse.epf.library.edit.internal.IListenerProvider;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
 import org.eclipse.epf.library.edit.navigator.MethodPluginItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
@@ -144,6 +145,7 @@ import org.eclipse.epf.uma.provider.MethodElementItemProvider;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.provider.UmaItemProviderAdapterFactory;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MessageException;
 import org.eclipse.epf.uma.util.UmaResources;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -2470,6 +2472,10 @@ public final class TngUtil {
 		// return "Secondary Performer";
 		case UmaPackage.TASK_DESCRIPTOR__ASSISTED_BY:
 			return LibraryEditResources.assists_text; 
+		}
+		ExtendedReference eRef = TypeDefUtil.getInstance().getAssociatedExtendedReference(feature);
+		if (eRef != null) {
+			return eRef.getName();
 		}
 
 		String featureKey;
