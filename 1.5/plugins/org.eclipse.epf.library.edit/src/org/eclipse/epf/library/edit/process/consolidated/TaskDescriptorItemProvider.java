@@ -341,7 +341,7 @@ public class TaskDescriptorItemProvider extends
 		newChildren = removeSubartifactsFromChildren(newChildren, true, config);
 		updateCachedChildren(newChildren);
 		
-		if (false && obj instanceof TaskDescriptor) {
+		if (obj instanceof TaskDescriptor) {
 			TaskDescriptor td = (TaskDescriptor) obj;
 			Task task = td.getTask();
 			if (task != null) {
@@ -349,7 +349,8 @@ public class TaskDescriptorItemProvider extends
 				for (ExtendedReference eRef : meta.getReferences()) {
 					if (ExtendedReference.Roles.equals(eRef.getContributeTo()) ||
 							ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
-						newChildren.addAll(PropUtil.getPropUtil().getExtendedReferenceList(td, eRef, false));
+						List list = PropUtil.getPropUtil().getExtendedReferenceList(td, eRef, false);
+						newChildren.addAll(list);
 					}
 				}
 			}				

@@ -204,9 +204,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 	}
 	
 	@Override
-	public Set<Descriptor> updateAndGetAllReferenced() {
-		super.updateAndGetAllReferenced();
-		
+	public Set<Descriptor> updateAndGetAllReferenced() {		
 		Set<Descriptor> referenced = new HashSet<Descriptor>();
 		addToSet(referenced, getPerformedPrimarilyBy());
 		addToSet(referenced, getMandatoryInput());
@@ -216,6 +214,8 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 		
 		getSelectedSteps();
 		
+		Set<Descriptor> superSet = super.updateAndGetAllReferenced();
+		referenced.addAll(superSet);		
 		return referenced;
 	}
 	

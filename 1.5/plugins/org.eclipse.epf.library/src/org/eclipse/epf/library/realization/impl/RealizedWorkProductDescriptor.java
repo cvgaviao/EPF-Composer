@@ -99,13 +99,13 @@ public class RealizedWorkProductDescriptor extends
 	}
 	
 	@Override
-	public Set<Descriptor> updateAndGetAllReferenced() {
-		super.updateAndGetAllReferenced();
-		
+	public Set<Descriptor> updateAndGetAllReferenced() {		
 		Set<Descriptor> referenced = new HashSet<Descriptor>();
 		addToSet(referenced, getDeliverableParts());
 		addToSet(referenced, getContainedArtifacts());
 		
+		Set<Descriptor> superSet = super.updateAndGetAllReferenced();
+		referenced.addAll(superSet);		
 		return referenced;
 	}
 	

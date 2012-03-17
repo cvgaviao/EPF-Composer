@@ -56,12 +56,12 @@ public class RealizedRoleDescriptor extends RealizedDescriptor implements
 	}
 	
 	@Override
-	public Set<Descriptor> updateAndGetAllReferenced() {
-		super.updateAndGetAllReferenced();
-		
+	public Set<Descriptor> updateAndGetAllReferenced() {		
 		Set<Descriptor> referenced = new HashSet<Descriptor>();
 		addToSet(referenced, getResponsibleFor());
 		
+		Set<Descriptor> superSet = super.updateAndGetAllReferenced();
+		referenced.addAll(superSet);		
 		return referenced;
 	}
 	

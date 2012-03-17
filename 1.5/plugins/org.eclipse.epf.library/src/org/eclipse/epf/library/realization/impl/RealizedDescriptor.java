@@ -2,7 +2,6 @@ package org.eclipse.epf.library.realization.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -306,10 +305,9 @@ public class RealizedDescriptor extends RealizedBreakdownElement implements
 		return ConfigurationHelper.getCalculatedElement(element, getConfig());
 	}	
 	
-	public Set<Descriptor> updateAndGetAllReferenced() {
-		super.updateAndGetAllReferenced();
+	public Set<Descriptor> updateAndGetAllReferenced() {		
 		List<Guidance> gList = getGuidances();
-		return Collections.EMPTY_SET;
+		return super.updateAndGetAllReferenced();
 	}
 	
 	protected void addToSet(Set<Descriptor> set, List<? extends Descriptor> list) {

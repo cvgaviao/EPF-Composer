@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.command.CustomizeDescriptorCommand;
 import org.eclipse.epf.library.edit.process.command.ProcessCommandUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
@@ -175,7 +176,8 @@ public class RealizationManager implements IRealizationManager {
 		LibraryEditUtil libEditUtil = LibraryEditUtil.getInstance();
 		try {
 			if (feature.isMany()) {
-				List listValue = (List) referencingDes.eGet(feature);
+//				List listValue = (List) referencingDes.eGet(feature);
+				List listValue = (List) TypeDefUtil.getInstance().eGet(referencingDes, feature);
 				if (listValue != null) {
 					listValue.add(descriptor);
 					libEditUtil.addOppositeFeature(referencingDes, descriptor, feature);

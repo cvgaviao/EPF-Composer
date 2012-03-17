@@ -1,6 +1,7 @@
 package org.eclipse.epf.library.realization.impl;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,11 +13,14 @@ import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.realization.IRealizedBreakdownElement;
 import org.eclipse.epf.library.edit.util.PropUtil;
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.Role;
+import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.util.ContentDescriptionFactory;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
@@ -41,37 +45,70 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 	}
 	
 	public Set<Descriptor> updateAndGetAllReferenced() {
-		updateExtendedReferences();				
-		return Collections.EMPTY_SET;
+		return updateExtendedReferences();				
 	}
 
-	private void updateExtendedReferences() {
+	private Set<Descriptor> updateExtendedReferences() {
+		Set<Descriptor> set = new HashSet<Descriptor>();
 		ContentElement element = getLinkedElement();
 		if (element == null) {
-			return;
+			return set;
 		}
 
 		ModifiedTypeMeta meta = PropUtil.getPropUtil()
 				.getGlobalMdtMeta(element);
 		if (meta == null) {
-			return;
-		}
-		
+			return set;
+		}		
+
 		ElementRealizer realizer = DefaultElementRealizer
 				.newElementRealizer(getConfig());
 		for (ExtendedReference eRef : meta.getReferences()) {
-			List elementList = ConfigurationHelper.calc0nFeatureValue(element,
-					eRef.getReference(), realizer);
-			Object value = TypeDefUtil.getInstance().eGet(getElement(),
-					eRef.getReference(), true);
-			if (value instanceof List) {
-				List dList = (List) value;
-				dList.clear();
-				if (elementList != null && !elementList.isEmpty()) {
-					dList.addAll(elementList);
+			 Set<Descriptor> descriptors = updateExtendedReference(eRef);
+			 if (! descriptors.isEmpty()) {
+				 set.addAll(descriptors);
+			 }
+		}		
+		return set;
+	}
+
+	protected Set<Descriptor> updateExtendedReference(ExtendedReference eRef) {
+		ElementRealizer realizer = DefaultElementRealizer
+				.newElementRealizer(getConfig());
+		List elementList = ConfigurationHelper.calc0nFeatureValue(
+				getLinkedElement(), eRef.getReference(), realizer);
+		Object value = TypeDefUtil.getInstance().eGet(getElement(),
+				eRef.getReference(), true);
+		if (value instanceof List) {
+			List dList = (List) value;
+			dList.clear();
+			if (elementList != null && !elementList.isEmpty()) {
+				dList.addAll(elementList);
+				if (getDescriptor() != null && eRef.getContributeTo() != null) {
+					Set<Descriptor> set = new HashSet<Descriptor>();
+					Activity parentAct = getDescriptor().getSuperActivities();
+					if (parentAct == null) {
+						return set;
+					}
+
+					for (int i = 0; i < dList.size(); i++) {
+						Object item = dList.get(i);
+						if (item instanceof Role || item instanceof WorkProduct) {
+							Descriptor des = (Descriptor) getMgr().getDescriptor(
+									getDescriptor(), parentAct, (MethodElement) item, eRef.getReference());
+							set.add(des);
+							dList.set(i, des);
+						}
+					}
+					return set;
 				}
 			}
 		}
+		return Collections.EMPTY_SET;
+	}
+	
+	protected Descriptor getDescriptor() {
+		return null;
 	}
 	
 	public void updateStringValues() {

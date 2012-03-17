@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
-import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.QualifiedReference;
@@ -56,7 +52,11 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		valueTypes = XMLUtil.getChildTextsByTagName(element, IMetaDef.valueType);
 		contributeTo = element.getAttribute(IMetaDef.contributeTo);
 		if (Roles.equals(contributeTo)) {
-			valueTypes = Collections.singletonList(Roles);
+			valueTypes = Collections.singletonList(UmaPackage.eINSTANCE.getRole().getInstanceClass().getName());
+		} else if (WorkProducts.equals(contributeTo)) {
+			valueTypes = Collections.singletonList(UmaPackage.eINSTANCE.getWorkProduct().getInstanceClass().getName());			
+		} else {
+			contributeTo = null;
 		}
 		
 		qualifiedReferences = new ArrayList<QualifiedReference>();
