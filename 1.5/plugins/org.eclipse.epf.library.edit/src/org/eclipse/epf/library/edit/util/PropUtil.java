@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.meta.ReferenceTable;
@@ -200,6 +201,16 @@ public class PropUtil extends MethodElementPropUtil {
 	public void setElement(MethodElement ownerElement, String propName, MethodElement element) {
 		String guid = element == null ? "" : element.getGuid();
 		setStringValue(ownerElement, propName, guid);
+	}
+	
+	public List<MethodElement> getReferencingList(MethodElement element, ExtendedReference ref) {
+		return getReferencingList(element, ref, false);
+	}
+	
+	public List<MethodElement> getReferencingList(MethodElement element, ExtendedReference ref, boolean modified) {
+		String ofeature = ExtendReferenceMap.getOppositeName(ref.getGlobalId());
+		List<MethodElement> list = (List<MethodElement>) getReferenceValue(ofeature, element, modified);
+		return list == null ? new ArrayList<MethodElement>() : list;
 	}
 
 }
