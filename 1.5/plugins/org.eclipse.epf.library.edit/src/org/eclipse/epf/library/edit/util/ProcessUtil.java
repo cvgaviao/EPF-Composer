@@ -51,6 +51,7 @@ import org.eclipse.epf.library.edit.LibraryEditResources;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
@@ -104,6 +105,8 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.Scope;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -2534,6 +2537,20 @@ public final class ProcessUtil {
 						if(AssociationHelper.getOutputFrom(wpd).contains(parentDescriptor)) {
 							features.add(UmaPackage.eINSTANCE.getTaskDescriptor_Output());
 						}
+						
+						ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getTask());
+						if (meta != null) {
+						TaskDescriptor td = (TaskDescriptor) parentDescriptor;
+							for (ExtendedReference eRef : meta.getReferences()) {
+								if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
+									List list = PropUtil.getPropUtil().getExtendedReferenceList(td, eRef, false);
+									if (list.contains(wpd)) {
+										features.add(eRef.getReference());
+									}
+								}
+							}
+						}
+						
 						if(!features.isEmpty()) {
 							if (modelInfo.toString().length() > 0) {
 								modelInfo.append(","); //$NON-NLS-1$
@@ -2582,6 +2599,17 @@ public final class ProcessUtil {
 			}
 			modelInfo.append(UmaEditPlugin.INSTANCE
 					.getString("_UI_TaskDescriptor_output_feature")); //$NON-NLS-1$
+		}
+		ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getTask());
+		if (meta != null) {
+			for (ExtendedReference eRef : meta.getReferences()) {
+				if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
+					List list = PropUtil.getPropUtil().getReferencingList(object, eRef);
+					if (list != null && !list.isEmpty()) {
+						modelInfo.append(eRef.getName());
+					}
+				}
+			}
 		}
 	}
 
