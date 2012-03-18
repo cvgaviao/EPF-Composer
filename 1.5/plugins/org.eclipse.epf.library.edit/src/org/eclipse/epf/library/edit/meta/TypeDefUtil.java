@@ -28,6 +28,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Practice;
+import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
@@ -264,6 +265,16 @@ public class TypeDefUtil {
 		}
 		return null;
 	}	
+	
+	public static ModifiedTypeMeta getMdtMeta(EClass cls) {
+		try {
+			MethodElement element = (MethodElement) UmaFactory.eINSTANCE
+					.create(cls);
+			return getMdtMeta(element);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	
 	public static ModifiedTypeMeta getMdtMeta(MethodElement element) {		
 		return PropUtil.getPropUtil().getGlobalMdtMeta(element);
