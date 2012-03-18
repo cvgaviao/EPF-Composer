@@ -15,9 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
+import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 
 
 /**
@@ -53,7 +56,15 @@ public class ModelInfoKeyMap {
 		map.put(LibraryResources.ActivityLayout_assistTasks_text, 
 				"assistTasks");//$NON-NLS-1$ 
 		
-
+		ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getTask());
+		if (meta != null) {
+			for (ExtendedReference eRef : meta.getReferences()) {
+				if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
+					map.put(eRef.getName(), eRef.getName());
+				}
+			}
+		}
+		
 	}
 	
 	public static ModelInfoKeyMap getInstance() {
