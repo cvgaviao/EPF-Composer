@@ -2606,6 +2606,9 @@ public final class ProcessUtil {
 				if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
 					List list = PropUtil.getPropUtil().getReferencingList(object, eRef);
 					if (list != null && !list.isEmpty()) {
+						if (modelInfo.toString().length() > 0) {
+							modelInfo.append(comma);
+						}
 						modelInfo.append(eRef.getName());
 					}
 				}
