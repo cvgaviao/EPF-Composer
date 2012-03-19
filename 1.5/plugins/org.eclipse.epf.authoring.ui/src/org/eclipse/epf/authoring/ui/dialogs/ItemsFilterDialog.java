@@ -27,6 +27,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.filters.AllFilter;
 import org.eclipse.epf.authoring.ui.filters.DescriptorConfigurationFilter;
 import org.eclipse.epf.authoring.ui.filters.ExProcessAuthoringConfigurator;
 import org.eclipse.epf.authoring.ui.properties.AbstractSection;
@@ -866,6 +867,19 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 			String space = "-"; //$NON-NLS-1$
 			String[] str = new String[28];
 			int i = 0;
+			if (filter instanceof AllFilter) {
+				AllFilter allFilter = (AllFilter) filter;
+				int sz = allFilter.getSelectedTypeStrings() == null ? 0 : allFilter.getSelectedTypeStrings().size();
+				if (sz != 0) {
+					str = new String[sz];
+					for (String typeString : allFilter.getSelectedTypeStrings()) {
+						str[i++] = typeString;
+					}
+					filterType.setItems(str);
+					filterTypeStr = str[0];
+					return;
+				}
+			}
 			str[i++] = FilterConstants.ALL_ELEMENTS;
 			str[i++] = FilterConstants.CONTENT_PACKAGES;
 			str[i++] = space + FilterConstants.ROLES;

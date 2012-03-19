@@ -69,6 +69,19 @@ import org.eclipse.epf.uma.util.AssociationHelper;
  * @since 1.0
  */
 public class AllFilter extends AbstractBaseFilter implements IAllFilter {
+	
+	private List<String> selectedTypeStrings; 
+	
+	public List<String> getSelectedTypeStrings() {
+		return selectedTypeStrings;
+	}
+
+	public void addToSelectedTypeStrings(String typeString) {
+		if (selectedTypeStrings == null) {
+			selectedTypeStrings = new ArrayList<String>();
+		}
+		selectedTypeStrings.add(typeString);
+	}
 
 	/*
 	 * (non-Javadoc)
