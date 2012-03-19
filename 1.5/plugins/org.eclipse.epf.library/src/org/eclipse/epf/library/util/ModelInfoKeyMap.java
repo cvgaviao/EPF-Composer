@@ -56,15 +56,23 @@ public class ModelInfoKeyMap {
 		map.put(LibraryResources.ActivityLayout_assistTasks_text, 
 				"assistTasks");//$NON-NLS-1$ 
 		
-		ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getTask());
-		if (meta != null) {
-			for (ExtendedReference eRef : meta.getReferences()) {
-				if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
-					map.put(eRef.getName(), eRef.getName());
-				}
+		ModifiedTypeMeta taskMeta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getTask());
+//		ModifiedTypeMeta roleMeta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getRole());
+
+		addForModifiedType(taskMeta);
+//		addForModifiedType(roleMeta);
+	}
+
+	private void addForModifiedType(ModifiedTypeMeta meta) {
+		if (meta == null) {
+			return;
+		}
+		for (ExtendedReference eRef : meta.getReferences()) {
+			if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())
+					|| ExtendedReference.Roles.equals(eRef.getContributeTo())) {
+				map.put(eRef.getName(), eRef.getName());
 			}
 		}
-		
 	}
 	
 	public static ModelInfoKeyMap getInstance() {
