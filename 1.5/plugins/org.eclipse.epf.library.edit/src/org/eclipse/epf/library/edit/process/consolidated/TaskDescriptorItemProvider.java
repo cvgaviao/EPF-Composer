@@ -347,14 +347,16 @@ public class TaskDescriptorItemProvider extends
 			Task task = td.getTask();
 			if (task != null) {
 				ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(task);
-				for (ExtendedReference eRef : meta.getReferences()) {
-					if (ExtendedReference.Roles.equals(eRef.getContributeTo()) ||
-							ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
-						List list = PropUtil.getPropUtil().getExtendedReferenceList(td, eRef, false);
-						int ix = 0;
-						for (Object item : list) {
-							 Object wrapped = wrap(td, eRef.getReference(), item, ix++);
-							 newChildren.add(wrapped);
+				if (meta != null) {
+					for (ExtendedReference eRef : meta.getReferences()) {
+						if (ExtendedReference.Roles.equals(eRef.getContributeTo()) ||
+								ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
+							List list = PropUtil.getPropUtil().getExtendedReferenceList(td, eRef, false);
+							int ix = 0;
+							for (Object item : list) {
+								 Object wrapped = wrap(td, eRef.getReference(), item, ix++);
+								 newChildren.add(wrapped);
+							}
 						}
 					}
 				}
