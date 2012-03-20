@@ -1066,6 +1066,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			loadQrReferences(elementXml);
 			
 			loadExtendedReferences(elementXml);
+			
+			loadExtendedOpposites(elementXml);
 		}
 
 		return elementXml;

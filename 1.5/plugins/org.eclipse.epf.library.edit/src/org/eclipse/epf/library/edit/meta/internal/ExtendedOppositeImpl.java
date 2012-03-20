@@ -1,6 +1,5 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
-import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.uma.util.ExtendedOpposite;
@@ -22,6 +21,7 @@ public class ExtendedOppositeImpl  extends MetaElementImpl implements ExtendedOp
 
 	@Override
 	public void parseElement(Element element) throws TypeDefException {
+		super.parseElement(element);	
 		if (element == null) {
 			return;
 		}
