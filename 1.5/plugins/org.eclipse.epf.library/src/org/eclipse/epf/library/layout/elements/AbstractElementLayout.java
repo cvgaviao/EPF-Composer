@@ -90,6 +90,7 @@ import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.ExtendedTable;
@@ -1009,6 +1010,10 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			ExtendedReference eRef = (ExtendedReference) feature;					
 			childXml.setAttribute("referenceId", eRef.getId());		//$NON-NLS-1$
 			childXml.setAttribute("referenceName", eRef.getName());	//$NON-NLS-1$
+			if (eRef.getContributeTo() != null) {
+				childXml.setAttribute("contributeTo", eRef.getContributeTo());	//$NON-NLS-1$
+			}			
+			
 			if (referenceName == Att_ExtendeReference_1) {
 				childXml.setAttribute("format", "immidate child list");	//$NON-NLS-1$ 	//$NON-NLS-2$
 
@@ -1064,6 +1069,22 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 
 		return elementXml;
+	}
+	
+	protected void loadExtendedOpposites(XmlElement elementXml) {
+		List<ExtendedOpposite> opposites = LibraryService.getInstance().getCurrentLibraryManager().getLoadedOpposites();
+		if (opposites == null || opposites.isEmpty()) {
+			return;
+		}
+		for (ExtendedOpposite opposite : opposites) {
+			if (! opposite.publish()) {
+				continue;
+			}
+			List list = PropUtil.getPropUtil().getReferencingList(element, opposite.getTargetReference());
+			if (list != null && !list.isEmpty()) {
+				addReferences(opposite, elementXml, opposite.getName(), list);
+			}			
+		}
 	}
 	
 	public void loadUdtReferences(XmlElement elementXml) {
@@ -1136,6 +1157,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			}
 			
 			for (ExtendedReference eRef : references) {
+				if (! eRef.publish()) {
+					continue;
+				}
 				List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
 						element, eRef.getReference(), realizer);
 				if (list != null && !list.isEmpty()) {
