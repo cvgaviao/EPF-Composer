@@ -83,7 +83,6 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 			List dList = (List) value;
 			dList.clear();
 			if (elementList != null && !elementList.isEmpty()) {
-//				dList.addAll(elementList);
 				if (getDescriptor() != null && eRef.getContributeTo() != null) {
 					Set<Descriptor> set = new HashSet<Descriptor>();
 					Activity parentAct = getDescriptor().getSuperActivities();
@@ -101,6 +100,8 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 						}
 					}
 					return set;
+				} else {
+					dList.addAll(elementList);
 				}
 			}
 		}
