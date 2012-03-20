@@ -34,6 +34,7 @@ import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.ComposedWPDescriptorWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
@@ -41,6 +42,7 @@ import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.PredecessorList;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.Suppression;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
@@ -75,6 +77,8 @@ import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -1153,6 +1157,36 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 		createRoleRollupNodes(parentXml, assistTasks, 
 				LibraryResources.ActivityLayout_assistTasks_text, setting);
 
+		ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getRole());
+		if (meta != null) {
+			for ( Iterator it = descriptors.iterator(); it.hasNext(); ) {			
+				roleItem = (RoleDescriptor) it.next();				
+				for (ExtendedReference eRef : meta.getReferences()) {
+					if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
+						items = PropUtil.getPropUtil().getExtendedReferenceList(roleItem, eRef, false);
+						createRoleRollupNodes(parentXml, items, 
+								eRef.getName(), setting);
+					}
+				}
+				
+			}
+		}
+		
+		meta = TypeDefUtil.getMdtMeta(UmaPackage.eINSTANCE.getTask());
+		if (meta != null) {
+			for ( Iterator it = descriptors.iterator(); it.hasNext(); ) {			
+				roleItem = (RoleDescriptor) it.next();				
+				for (ExtendedReference eRef : meta.getReferences()) {
+					if (ExtendedReference.Roles.equals(eRef.getContributeTo())) {
+						items = PropUtil.getPropUtil().getReferencingList(roleItem, eRef);
+						String info = LibraryResources.bind(LibraryResources.ActivityLayout_performAs_text, (new String[] {eRef.getName()}));
+						createRoleRollupNodes(parentXml, items, 
+								info, setting);
+					}
+				}
+				
+			}
+		}
 	}
 	
 	private void createRoleRollupNodes(XmlElement parentXml, List items,
