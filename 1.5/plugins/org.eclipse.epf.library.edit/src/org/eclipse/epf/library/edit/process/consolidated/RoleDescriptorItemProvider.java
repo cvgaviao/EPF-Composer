@@ -25,17 +25,22 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.WrapperItemProvider;
 import org.eclipse.epf.library.edit.IFilter;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.IBreakdownElementWrapperItemProviderFactory;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.Process;
+import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 
 
 /**
@@ -201,6 +206,24 @@ public class RoleDescriptorItemProvider extends
 					}
 				}
 			}
+			
+			Role role = roleDesc.getRole();
+			if (role != null) {
+				ModifiedTypeMeta meta = TypeDefUtil.getMdtMeta(role);
+				if (meta != null) {
+					for (ExtendedReference eRef : meta.getReferences()) {
+						if (ExtendedReference.WorkProducts.equals(eRef.getContributeTo())) {
+							List list = PropUtil.getPropUtil().getExtendedReferenceList(roleDesc, eRef, false);
+							int ix = 0;
+							for (Object item : list) {
+								 Object wrapped = wrap(roleDesc, eRef.getReference(), item, ix++);
+								 newChildren.add(wrapped);
+							}
+						}
+					}
+				}
+			}				
+			
 		}
 		
 		//		 sort the children
