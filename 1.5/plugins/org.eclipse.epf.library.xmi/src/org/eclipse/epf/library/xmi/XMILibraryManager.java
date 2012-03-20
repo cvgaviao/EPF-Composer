@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -49,9 +51,9 @@ import org.eclipse.epf.persistence.MultiFileSaveUtil;
 import org.eclipse.epf.persistence.migration.MappingUtil;
 import org.eclipse.epf.persistence.util.PersistenceUtil;
 import org.eclipse.epf.services.Services;
-import org.eclipse.epf.uma.BreakdownElement;
-import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.util.ExtendedOpposite;
+import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.osgi.util.NLS;
@@ -642,6 +644,27 @@ public class XMILibraryManager extends AbstractLibraryManager {
 //			e.printStackTrace();
 		}
 		return meta == noneValue ? null : meta;
+	}
+	
+	private List<ExtendedOpposite> opposites;
+	public List<ExtendedOpposite> getLoadedOpposites() {
+		if (! isUserDefinedTypeLoaded() || modifiedTypeMap == null) {
+			return Collections.EMPTY_LIST;
+		}
+		if (opposites == null) {
+			opposites = new ArrayList<ExtendedOpposite>();
+			Set<ExtendedOpposite> set = new HashSet<ExtendedOpposite>();
+			for (ModifiedTypeMeta meta : modifiedTypeMap.values()) {
+				for (ExtendedReference ref : meta.getReferences()) {
+					ExtendedOpposite o = ref.getOpposite();
+					if (o != null && set.add(o)) {
+						opposites.add(o);
+					}
+				}
+			}
+			Collections.sort(opposites);
+		}
+		return opposites;
 	}
 	
 }

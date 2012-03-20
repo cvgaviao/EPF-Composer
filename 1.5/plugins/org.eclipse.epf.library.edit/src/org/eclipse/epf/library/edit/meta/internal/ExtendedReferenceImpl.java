@@ -10,6 +10,7 @@ import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.QualifiedReference;
@@ -24,6 +25,8 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 	private List<String> valueTypes;
 	
 	private String contributeTo;
+	
+	private ExtendedOppositeImpl opposite;
 
 	public ExtendedReferenceImpl(MetaElement parent) {
 		super(parent);
@@ -57,6 +60,12 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 			valueTypes = Collections.singletonList(UmaPackage.eINSTANCE.getWorkProduct().getInstanceClass().getName());			
 		} else {
 			contributeTo = null;
+		}
+		
+		Element childElement = XMLUtil.getFirstChild(element, IMetaDef.oppositeReference);
+		if (childElement != null) {
+			opposite = new ExtendedOppositeImpl(this);
+			opposite.parseElement(childElement);
 		}
 		
 		qualifiedReferences = new ArrayList<QualifiedReference>();
@@ -106,4 +115,9 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		}
 		return false;
 	}
+	
+	public ExtendedOpposite getOpposite() {
+		return opposite;
+	}
+	
 }

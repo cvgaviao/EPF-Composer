@@ -33,6 +33,9 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		}
 		public void setSuperMeta(MetaElement superMeta) {
 		}
+		public boolean publish() {
+			return false;
+		}
 	};
 		
 	public String getId();	
@@ -43,5 +46,6 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 	public boolean processInheritance();
 	public MetaElement getSuperMeta();
 	public void setSuperMeta(MetaElement superMeta);
+	public boolean publish();
 	
 }

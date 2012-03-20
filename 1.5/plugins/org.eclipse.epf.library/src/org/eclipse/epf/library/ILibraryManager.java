@@ -11,6 +11,7 @@
 package org.eclipse.epf.library;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.CommandStack;
@@ -21,6 +22,7 @@ import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.ui.IPropertyListener;
@@ -341,5 +343,7 @@ public interface ILibraryManager {
 	public void addModifiedType(ModifiedTypeMeta meta);
 		
 	public ModifiedTypeMeta getModifiedType(String id);
+	
+	public List<ExtendedOpposite> getLoadedOpposites();
 	
 }

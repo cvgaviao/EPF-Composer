@@ -18,4 +18,6 @@ public interface ExtendedReference extends ExtendedFeature {
 	
 	public String getContributeTo();
 	
+	public ExtendedOpposite getOpposite();
+	
 }

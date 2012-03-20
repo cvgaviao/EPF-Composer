@@ -24,6 +24,7 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	private MetaElement parent;	
 	private boolean inheritanceProcessed =false;
 	private MetaElement superMeta;
+	private boolean publish = true;
 
 	public MetaElementImpl(MetaElement parent) {
 		this.parent = parent;
@@ -85,6 +86,9 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		}
 		String str = element.getAttribute(IMetaDef.SUPPRESSED);
 		suppressed = str == null ? false : Boolean.parseBoolean(str.trim());
+		
+		str = element.getAttribute(IMetaDef.publish);
+		publish = str == null ? true : Boolean.parseBoolean(str.trim());
 				
 		Element nameElement = XMLUtil.getFirstChildElementByTagName(element, IMetaDef.NAME);
 		if (nameElement != null) {
@@ -137,6 +141,10 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 			}
 		}		
 		return newList;
+	}
+	
+	public boolean publish() {
+		return publish;
 	}
 	
 	//Adapter interface methods ->

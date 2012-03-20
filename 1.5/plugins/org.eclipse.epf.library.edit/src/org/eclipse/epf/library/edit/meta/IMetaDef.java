@@ -29,6 +29,8 @@ public interface IMetaDef {
 	
 	public static final String valueType = "valueType";							//$NON-NLS-1$
 	
+	public static final String oppositeReference = "oppositeReference";			//$NON-NLS-1$
+	
 	//Attributes
 	public static final String NAME = "name"; 									//$NON-NLS-1$
 
@@ -43,6 +45,8 @@ public interface IMetaDef {
 	public static final String columnSplit = "columnSplit";						//$NON-NLS-1$
 	
 	public static final String contributeTo = "contributeTo";					//$NON-NLS-1$
+	
+	public static final String publish = "publish";								//$NON-NLS-1$
 	
 	//APIs
 	public String getName();
