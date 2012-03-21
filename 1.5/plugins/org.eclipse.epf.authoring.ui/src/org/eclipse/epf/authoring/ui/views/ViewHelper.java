@@ -900,6 +900,26 @@ public final class ViewHelper {
 
 	}
 	
+	public static IViewPart findView(String viewId) {
+		try {			
+			IWorkbenchPage activePage = PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getActivePage();
+			if (activePage != null) {
+				return activePage.findView(viewId);
+			}
+		} catch (Exception e) {
+			if (CommandLineRunUtil.getInstance().isNeedToRun()) {
+				return null;
+			}
+			AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
+					AuthoringUIResources.errorDialog_title, 
+					AuthoringUIResources.internalError_msg, 
+					e);
+		}
+		return null;
+
+	}
+	
 	public static boolean isViewInCurrentPerspective(String viewId) {		
 		String perspectiveId = PerspectiveUtil.getActivePerspectiveId();
 		return isViewInPerspective(viewId, perspectiveId);
