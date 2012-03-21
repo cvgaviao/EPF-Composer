@@ -14,12 +14,10 @@ public class ExtendedOppositeImpl  extends MetaElementImpl implements ExtendedOp
 		super(parent);
 	}
 
-	@Override
 	public ExtendedReference getTargetReference() {
 		return (ExtendedReference) getParent();
 	}
 
-	@Override
 	public void parseElement(Element element) throws TypeDefException {
 		super.parseElement(element);	
 		if (element == null) {
@@ -31,7 +29,6 @@ public class ExtendedOppositeImpl  extends MetaElementImpl implements ExtendedOp
 		}
 	}
 		
-	@Override
 	public boolean publish() {
 		return publish;
 	}
