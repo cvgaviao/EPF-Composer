@@ -121,7 +121,7 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		suppressed = str == null ? false : Boolean.parseBoolean(str.trim());
 		
 		str = element.getAttribute(IMetaDef.publish);
-		publish = str == null ? true : Boolean.parseBoolean(str.trim());
+		publish = str == null || str.trim().length() == 0 ? true : Boolean.parseBoolean(str.trim());
 				
 		Element nameElement = XMLUtil.getFirstChildElementByTagName(element, IMetaDef.NAME);
 		if (nameElement != null) {
