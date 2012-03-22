@@ -333,19 +333,19 @@ public class TypeDefUtil {
 			return "Invalid id string for " + context + ": id cannot be null or empty!";//$NON-NLS-1$	//$NON-NLS-2$	
 		}
 		char c = id.charAt(0);
-		if (! (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')) {
-			return "Invalid id string for " + context + ": " + id + "\nid must start with an English letter";//$NON-NLS-1$	//$NON-NLS-2$//$NON-NLS-3$		
+		if (! (c == '_' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')) {
+			return "Invalid id string for " + context + ": " + id + "\nid must start with an letter or underscore";//$NON-NLS-1$	//$NON-NLS-2$//$NON-NLS-3$		
 		}		
 		
 		char lastC = c;
 		for (int i = 1 ; i < id.length(); i++) {
 			c = id.charAt(i);			
-			boolean valid = (c == '.' || c >= '0' && c <= '9' || (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'));
+			boolean valid = (c == '_' || c == '-' || c == '.' || c >= '0' && c <= '9' || (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'));
 			if (c == '.' && lastC == c) {
 				valid = false;
 			}
 			if (! valid) {
-				return "Invalid id string for " + context + ": " + id + "\nid can only contain letters, numbers and single dots";//$NON-NLS-1$	//$NON-NLS-2$//$NON-NLS-3$		
+				return "Invalid id string for " + context + ": " + id + "\nid can only contain letters, digits, underscores, hyphens, and single periods";//$NON-NLS-1$	//$NON-NLS-2$//$NON-NLS-3$		
 			}
 			lastC = c;
 		}
