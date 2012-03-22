@@ -30,7 +30,9 @@ public class TypeDefParserImpl implements TypeDefParser {
 			ModifiedTypeMetaImpl meta = new ModifiedTypeMetaImpl();
 			meta.parseElement(element);
 			metaList.add(meta);			
-			map.put(meta.getId(), meta);			
+			if (map.put(meta.getId(), meta) != null) {
+				throw new TypeDefException("Duplicate modified type id values are not allowed: " + meta.getId()); //$NON-NLS-1$			
+			}
 		}
 		
 		Map<String, ModifiedTypeMetaImpl> linkTypeMap = new HashMap<String, ModifiedTypeMetaImpl>();

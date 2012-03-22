@@ -11,8 +11,14 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
-import org.eclipse.epf.uma.util.ExtendedSection;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.util.ExtendedOpposite;
+import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ExtendedTable;
 import org.eclipse.epf.uma.util.MetaElement;
+import org.eclipse.epf.uma.util.ModifiedTypeMeta;
+import org.eclipse.epf.uma.util.QualifiedReference;
 import org.w3c.dom.Element;
 
 public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
@@ -72,6 +78,33 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
     	return getName().compareTo(o.getName());
     }
 	
+	private void validateId(String id) throws TypeDefException {
+		String context = "";	//$NON-NLS-1$
+		if (this instanceof ModifiedTypeMeta) {
+			context = "Modified type";
+			
+		} else if (this instanceof ExtendedAttribute) {
+			context = "Rte";
+			
+		} else if (this instanceof QualifiedReference) {
+			context = "Qualified reference";
+			
+		} else if (this instanceof ExtendedReference) {
+			context = "Reference";
+				
+		} else if (this instanceof ExtendedTable) {
+			context = "Table";
+			
+		} else if (this instanceof ExtendedOpposite) {
+			if (id == null || id.length() == 0) {
+				return;
+			}
+			context = "Opposite feature";
+		}
+
+		TypeDefUtil.getInstance().validateId(context, id);	
+	}
+    
 	public void parseElement(Element element) throws TypeDefException {
 		if (element == null) {
 			return;
@@ -95,6 +128,8 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 			name = nameElement.getTextContent();
 		}
 		name = name.trim();
+		
+		validateId(id);
 	}
 	
 	//Return true if this method is called the first time
