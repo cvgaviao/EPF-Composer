@@ -15,6 +15,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.ExtendedTable;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
@@ -82,6 +83,9 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		String context = "";	//$NON-NLS-1$
 		if (this instanceof ModifiedTypeMeta) {
 			context = "Modified type";
+			
+		} else if (this instanceof ExtendedSection) {
+			context = "Section";
 			
 		} else if (this instanceof ExtendedAttribute) {
 			context = "Rte";
