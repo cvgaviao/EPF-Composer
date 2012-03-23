@@ -585,7 +585,17 @@ public class LibraryEditUtil {
 		}
 	}
 		
+	public Set<? extends MethodElement> getFilteredElements(
+			MethodConfiguration config, CollectElementFilter filter) {
+		Set<MethodElement> set = new HashSet<MethodElement>();
+		for (MethodPlugin plugin : config.getMethodPluginSelection()) {
+			set.addAll(getElementsUnder(plugin, filter));
+		}
+		return set;
+	}
+	
 	public Set<? extends MethodElement> getElementsUnder(MethodElement topElement, CollectElementFilter filter) {
+
 		Set<MethodElement> set = new HashSet<MethodElement>();
 		collectElements(topElement, filter, set, new HashSet<MethodElement>());
 		return set;
