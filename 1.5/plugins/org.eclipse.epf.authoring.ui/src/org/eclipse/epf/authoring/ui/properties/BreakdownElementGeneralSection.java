@@ -16,9 +16,11 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.authoring.ui.AuthoringUIExtensionManager;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.editors.MethodElementEditor;
 import org.eclipse.epf.authoring.ui.editors.ProcessEditor;
+import org.eclipse.epf.authoring.ui.forms.DescriptionFormPage;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.diagram.core.services.DiagramManager;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
@@ -125,6 +127,8 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	private ILabelProvider labelProvider;
 
 	final boolean ignoreSuppressed = true;
+	
+	private BeGeneralSectionExtender extender;
 
 	protected Listener nameDeactivateListener = new Listener() {
 		public void handleEvent(Event e) {
@@ -361,6 +365,8 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 	};
 	
 	protected void init() {
+		extender = AuthoringUIExtensionManager.getInstance().createBeGeneralSectionExtender(this);
+			
 		// get BreakdownElement object
 		element = (BreakdownElement) getElement();
 
@@ -388,6 +394,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 
 		// create general section
 		createGeneralSection(parent);
+		extender.modifyGeneralSectionContent(toolkit);
 
 		// addListeners
 		addListeners();
@@ -885,6 +892,26 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 		}
 		
 		return null;
+	}
+	
+	public static class BeGeneralSectionExtender {
+
+		protected BreakdownElementGeneralSection section;
+		public BeGeneralSectionExtender(BreakdownElementGeneralSection section) {
+			this.section = section;
+		}
+		
+		public void modifyGeneralSectionContent(FormToolkit toolkit) {
+		}
+		
+		public void dispose() {
+			
+		}
+		
+		protected Composite getComposite() {
+			return section.generalComposite;
+		}
+		
 	}
 
 }

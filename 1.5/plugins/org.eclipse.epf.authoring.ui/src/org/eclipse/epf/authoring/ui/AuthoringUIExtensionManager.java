@@ -4,6 +4,8 @@ import org.eclipse.epf.authoring.ui.forms.AssociationFormPage;
 import org.eclipse.epf.authoring.ui.forms.DescriptionFormPage;
 import org.eclipse.epf.authoring.ui.forms.DescriptionFormPage.DescriptionFormSectionExtender;
 import org.eclipse.epf.authoring.ui.forms.TableViewerProviderDelegate;
+import org.eclipse.epf.authoring.ui.properties.BreakdownElementGeneralSection;
+import org.eclipse.epf.authoring.ui.properties.BreakdownElementGeneralSection.BeGeneralSectionExtender;
 import org.eclipse.epf.authoring.ui.providers.FormPageProviderExtender;
 import org.eclipse.epf.authoring.ui.views.ConfigurationView;
 import org.eclipse.epf.authoring.ui.views.ConfigurationViewExtender;
@@ -51,6 +53,10 @@ public class AuthoringUIExtensionManager {
 	
 	public DescriptionFormSectionExtender createDescriptionFormSectionExtender(DescriptionFormPage formPage) {
 		return new DescriptionFormSectionExtender(formPage);
+	}
+		
+	public BeGeneralSectionExtender createBeGeneralSectionExtender(BreakdownElementGeneralSection section) {
+		return new BeGeneralSectionExtender(section);
 	}
 	
 }

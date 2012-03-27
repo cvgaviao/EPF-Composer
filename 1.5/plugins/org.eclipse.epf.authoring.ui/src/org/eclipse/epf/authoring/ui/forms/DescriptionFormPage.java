@@ -28,6 +28,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.epf.authoring.ui.AuthoringUIExtensionManager;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIImages;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
@@ -310,6 +311,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected List<ISectionProvider> sectionProviders;
 	
 	private boolean autoGenName = false;
+	
+	private DescriptionFormSectionExtender extender;
 	
 	protected ILabelProvider labelProviderVariability = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
@@ -605,6 +608,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 */
 	public DescriptionFormPage(FormEditor editor, String id, String title) {
 		super(editor, id, title);
+		extender = AuthoringUIExtensionManager.getInstance().createDescriptionFormSectionExtender(this);
 	}
 	
 	private class VariabilityTypeContentProvider extends AdapterFactoryContentProvider {
@@ -975,6 +979,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		generalComposite = createComposite(toolkit, generalSection);
 		((GridLayout) generalComposite.getLayout()).numColumns = 4;
 		createGeneralSectionContent();
+		extender.modifyGeneralSectionContent(toolkit);
 	}
 
 	/**
@@ -3372,19 +3377,21 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	public static class DescriptionFormSectionExtender {
 
-		private DescriptionFormPage formPage;
+		protected DescriptionFormPage formPage;
 		public DescriptionFormSectionExtender(DescriptionFormPage formPage) {
 			this.formPage = formPage;
 		}
 		
-		public void modifyGeneralSectionContent() {
-			Object obj = formPage.generalComposite;
+		public void modifyGeneralSectionContent(FormToolkit toolkit) {
 		}
 		
-		public void dispose() {
-			
+		protected Composite getGeneralComposite() {
+			return formPage.generalComposite;
 		}
 		
+		protected MethodElement getElement() {
+			return formPage.methodElement;
+		}
 	}
 			
 }
