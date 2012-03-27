@@ -1,6 +1,8 @@
 package org.eclipse.epf.authoring.ui;
 
 import org.eclipse.epf.authoring.ui.forms.AssociationFormPage;
+import org.eclipse.epf.authoring.ui.forms.DescriptionFormPage;
+import org.eclipse.epf.authoring.ui.forms.DescriptionFormPage.DescriptionFormSectionExtender;
 import org.eclipse.epf.authoring.ui.forms.TableViewerProviderDelegate;
 import org.eclipse.epf.authoring.ui.providers.FormPageProviderExtender;
 import org.eclipse.epf.authoring.ui.views.ConfigurationView;
@@ -45,6 +47,10 @@ public class AuthoringUIExtensionManager {
 	
 	public FormPageProviderExtender createFormPageProviderExtender(AssociationFormPage formPage) {
 		return new FormPageProviderExtender(formPage);
+	}
+	
+	public DescriptionFormSectionExtender createDescriptionFormSectionExtender(DescriptionFormPage formPage) {
+		return new DescriptionFormSectionExtender(formPage);
 	}
 	
 }

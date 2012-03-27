@@ -3369,5 +3369,22 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	protected void setAutoGenName(boolean autoGenName) {
 		this.autoGenName = autoGenName;
 	}
+	
+	public static class DescriptionFormSectionExtender {
+
+		private DescriptionFormPage formPage;
+		public DescriptionFormSectionExtender(DescriptionFormPage formPage) {
+			this.formPage = formPage;
+		}
+		
+		public void modifyGeneralSectionContent() {
+			Object obj = formPage.generalComposite;
+		}
+		
+		public void dispose() {
+			
+		}
+		
+	}
 			
 }
