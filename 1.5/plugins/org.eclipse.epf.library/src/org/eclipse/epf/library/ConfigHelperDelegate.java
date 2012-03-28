@@ -584,4 +584,16 @@ public class ConfigHelperDelegate {
 		return false;
 	}
 	
+	public boolean filterOutEmptyCategories() {
+		if (isAuthoringMode()) {
+			return false;
+		}		
+		if (isPublishingMode()) {
+			//Publishing logic does its own filter out, ok to return false here
+			return false;	
+		}		
+		return true;
+	}
+	
+	
 }

@@ -449,12 +449,15 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 	}
 	
 	public Collection<?> getModifiedChildren(Object parentObject, Collection children) {
-		if (ConfigurationHelper.getDelegate().isAuthoringMode()) {
-			return children;
-		}		
-		if (ConfigurationHelper.getDelegate().isPublishingMode()) {
-			return children;
-		}
+//		if (ConfigurationHelper.getDelegate().isAuthoringMode()) {
+//			return children;
+//		}		
+//		if (ConfigurationHelper.getDelegate().isPublishingMode()) {
+//			return children;
+//		}
+		if (! ConfigurationHelper.getDelegate().filterOutEmptyCategories()) {
+				return children;
+		}	
 		if (children == null || children.isEmpty()) {
 			return children;			
 		}
