@@ -124,7 +124,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	
 	//Use "new String" to make sure the following instances are not the same
 	private static final String Att_ExtendeReference_1 = new String("ExtendedReference");	//$NON-NLS-1$	
-	private static final String Att_ExtendeReference_2 = new String("ExtendedReference");	//$NON-NLS-1$	
+	private static final String Att_ExtendeReference_2 = new String("ExtendedReference");	//$NON-NLS-1$
+	private static final String Att_ReferenceType = "referenceType"; 						//$NON-NLS-1$
 	
 	protected ElementLayoutManager layoutManager;
 
@@ -1000,6 +1001,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			}
 		}
 		XmlElement childXml = elementXml.newChild(TAG_REFERENCELIST);
+		if (feature instanceof ExtendedOpposite) {
+			childXml.setAttribute(Att_ReferenceType, "customOpposite");	//$NON-NLS-1$
+		}
 //		processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
 		if (feature instanceof QualifiedReference) {
 			ExtendedReference qRef = (QualifiedReference) feature;
