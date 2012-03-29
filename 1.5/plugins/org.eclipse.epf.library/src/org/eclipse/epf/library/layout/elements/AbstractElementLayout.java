@@ -1159,17 +1159,19 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			}
 			
 			for (ExtendedReference eRef : references) {
-				if (! eRef.publish()) {
-					continue;
-				}
+//				if (! eRef.publish()) {
+//					continue;
+//				}
 				List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
 						element, eRef.getReference(), realizer);
 				if (list != null && !list.isEmpty()) {
 					if (tableRefMap.containsKey(eRef)) {
 						tableRefMap.put(eRef, list);
 					}
-					addReferences(eRef, sectionXml, Att_ExtendeReference_1, list);	//$NON-NLS-1$
-					addReferences(eRef, sectionXml, Att_ExtendeReference_2, list);	//$NON-NLS-1$
+					if (eRef.publish()) {
+						addReferences(eRef, sectionXml, Att_ExtendeReference_1, list);	//$NON-NLS-1$
+						addReferences(eRef, sectionXml, Att_ExtendeReference_2, list);	//$NON-NLS-1$
+					}
 				}
 			}
 						
