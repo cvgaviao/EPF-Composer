@@ -18,22 +18,19 @@
 	
 		<xsl:for-each select="table">
 		
-		<div class="sectionHeading">
-			<xsl:value-of select="@tableName"/>
-		</div>
-
 		<table border="1">
-					
+				
+		<br/>			
 		<!-- generate table column heads -->
 		<tr>
-		<th></th>
-		<xsl:for-each select="columnList/column">
-			<th><xsl:value-of select="@name"/></th>
-		</xsl:for-each>
+			<th><xsl:value-of select="@tableName"/></th>
+			<xsl:for-each select="columnList/column">
+				<th><xsl:value-of select="@name"/></th>
+			</xsl:for-each>
 		</tr>
 		
-			<xsl:for-each select="rowList/row">
-			    <tr>
+		<xsl:for-each select="rowList/row">
+			<tr>
 				<th><xsl:value-of select="@name"/></th>
 					<xsl:for-each select="Cell">
 						<xsl:choose> 
@@ -46,12 +43,13 @@
 						</xsl:choose> 
 						
 					</xsl:for-each>
-				</tr>
-			</xsl:for-each>
+			</tr>
+		</xsl:for-each>
 			
 		</table>
 		
 		</xsl:for-each>
+		
 	</xsl:template>
 
 </xsl:stylesheet>

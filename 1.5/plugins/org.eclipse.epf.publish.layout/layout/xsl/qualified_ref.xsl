@@ -21,13 +21,6 @@
 		-->
 				
 		<xsl:if test="count(*) >0">
-			
-			<div class="sectionHeading">
-				<xsl:value-of select="@name"/>
-			</div>
-			
-			<div class="sectionContent">
-				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">	
 					<xsl:if test="count(*) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row">
@@ -117,9 +110,6 @@
 							</td>
 						</tr>
 					</xsl:if>
-					
-				</table>
-			</div>
 			
 		</xsl:if>
 	</xsl:template>

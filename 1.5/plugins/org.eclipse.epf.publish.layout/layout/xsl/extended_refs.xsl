@@ -21,6 +21,9 @@
 		<xsl:param name="iconLevel"/>
 		
 		<xsl:for-each select="$elementDown/section[@type='reference']">
+			<div class="sectionHeading"><xsl:value-of select="@name"/></div>
+			<div class="sectionContent">
+				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">	
 			<xsl:for-each select="referenceList[@format='nested list']">
 				
 				<xsl:call-template name="qualifiedRefField">
@@ -52,7 +55,9 @@
 			<xsl:call-template name="displayTables">
 				<xsl:with-param name="sectionElement" select="."/>
 			</xsl:call-template>
-			
+				
+				</table>
+			</div>
 		</xsl:for-each>
 		
 	</xsl:template>
