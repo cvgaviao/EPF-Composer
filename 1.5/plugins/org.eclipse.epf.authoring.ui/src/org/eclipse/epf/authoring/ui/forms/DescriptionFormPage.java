@@ -979,7 +979,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		generalComposite = createComposite(toolkit, generalSection);
 		((GridLayout) generalComposite.getLayout()).numColumns = 4;
 		createGeneralSectionContent();
-		extender.modifyGeneralSectionContent(toolkit);
+		extender.modifyGeneralSectionContent(toolkit, ((MethodElementEditor) getEditor()).getActionManager());
 	}
 
 	/**
@@ -1237,7 +1237,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 				((ISectionProvider) provider).refresh(editable);
 			}
 		}
-			
+	
+		if (extender != null) {
+			extender.refresh(editable);
+		}
 	}
 
 	/**
@@ -3382,7 +3385,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 			this.formPage = formPage;
 		}
 		
-		public void modifyGeneralSectionContent(FormToolkit toolkit) {
+		public void modifyGeneralSectionContent(FormToolkit toolkit, IActionManager actionMgr) {
 		}
 		
 		protected Composite getGeneralComposite() {
@@ -3392,6 +3395,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		protected MethodElement getElement() {
 			return formPage.methodElement;
 		}
+		
+		protected void refresh(boolean editable) {
+		}
+		
 	}
 			
 }

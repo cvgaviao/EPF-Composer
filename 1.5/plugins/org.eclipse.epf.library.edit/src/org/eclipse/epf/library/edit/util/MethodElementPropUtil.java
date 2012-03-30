@@ -114,7 +114,7 @@ public class MethodElementPropUtil {
 		 setBooleanValue(pkg, Package_supporting, value);
 	}
 	
-	protected Boolean getBooleanValue(MethodElement element, String propName) {		
+	public Boolean getBooleanValue(MethodElement element, String propName) {		
 		MethodElementProperty prop = MethodElementPropertyHelper.getProperty(element, propName);
 		if (prop == null) {
 			return null;
@@ -123,7 +123,7 @@ public class MethodElementPropUtil {
 		return Boolean.parseBoolean(value);
 	}
 	
-	protected void setBooleanValue(MethodElement element, String propName, boolean value) {	
+	public void setBooleanValue(MethodElement element, String propName, boolean value) {	
 		String strValue = value ? Boolean.TRUE.toString() : Boolean.FALSE.toString();
 		setProperty(element, propName, strValue);
 	}
