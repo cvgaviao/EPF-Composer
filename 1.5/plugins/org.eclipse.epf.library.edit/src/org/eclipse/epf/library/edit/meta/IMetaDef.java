@@ -48,6 +48,8 @@ public interface IMetaDef {
 	
 	public static final String publish = "publish";								//$NON-NLS-1$
 	
+	public static final String layout = "layout";								//$NON-NLS-1$
+	
 	//APIs
 	public String getName();
 	

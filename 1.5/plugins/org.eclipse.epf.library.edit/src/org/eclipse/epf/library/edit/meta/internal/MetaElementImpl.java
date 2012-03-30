@@ -32,6 +32,7 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	private boolean inheritanceProcessed =false;
 	private MetaElement superMeta;
 	private boolean publish = true;
+	private String layout;
 
 	public MetaElementImpl(MetaElement parent) {
 		this.parent = parent;
@@ -115,11 +116,15 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		}
 		id = element.getAttribute(IMetaDef.ID);
 		name = element.getAttribute(IMetaDef.NAME);
+		layout = element.getAttribute(IMetaDef.layout);
 		if (id != null) {
 			id = id.trim();
 		}
 		if (name != null) {
 			name = name.trim();
+		}
+		if (layout != null && layout.length() > 0) {
+			layout = layout.trim();
 		}
 		String str = element.getAttribute(IMetaDef.SUPPRESSED);
 		suppressed = str == null ? false : Boolean.parseBoolean(str.trim());
@@ -184,6 +189,10 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	
 	public boolean publish() {
 		return publish;
+	}
+	
+	public String getLayout() {
+		return layout;
 	}
 	
 	//Adapter interface methods ->

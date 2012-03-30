@@ -36,6 +36,9 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		public boolean publish() {
 			return false;
 		}
+		public String getLayout() {
+			return null;
+		}
 	};
 		
 	public String getId();	
@@ -47,5 +50,6 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 	public MetaElement getSuperMeta();
 	public void setSuperMeta(MetaElement superMeta);
 	public boolean publish();
+	public String getLayout();
 	
 }

@@ -41,6 +41,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.PresentationContext;
+import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.ReferenceTable;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
@@ -1254,6 +1255,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		xmlElement.setAttribute("name", section.getName());		//$NON-NLS-1$
 		xmlElement.setAttribute("type", section.getType());		//$NON-NLS-1$
 		xmlElement.setAttribute("id", section.getId());			//$NON-NLS-1$
+		if (section.getLayout() != null && section.getLayout().length() > 0) {
+			xmlElement.setAttribute(IMetaDef.layout, section.getLayout());
+		}
 	}
 	
 	protected void loadQrReferences(XmlElement elementXml) {
