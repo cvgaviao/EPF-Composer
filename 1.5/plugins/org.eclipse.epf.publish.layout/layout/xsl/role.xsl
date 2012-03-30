@@ -28,6 +28,7 @@
 	<xsl:include href="key_consideration.xsl"/>
 	<xsl:include href="guidance_helper.xsl"/>
 	<xsl:include href="descriptor_helper.xsl"/>
+	<xsl:include href="custom_opposite.xsl"/>
 
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
@@ -97,6 +98,10 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+														<xsl:call-template name="customOppositeRelationships">
+								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:with-param name="iconLevel" select="'two'"/>
+							</xsl:call-template>
 							<xsl:call-template name="extendedRefsAllSections">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>
