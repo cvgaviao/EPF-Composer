@@ -19,14 +19,13 @@
 		
 		<xsl:for-each select="referenceList[@referenceType='customOpposite']">
 			
-			<div class="sectionContent">
-				<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">	
 					<xsl:if test="count(*) > 0">
 						<tr valign="top">
+
 							<th class="sectionTableHeading" scope="row">
 								<xsl:value-of select="@name"/>
 							</th>
-							<td class="sectionTableCell">
+							<td class="sectionTableCell" colspan="2">
 								<xsl:for-each select="*">
 									<ul>
 										<xsl:if test="name()='Element'">
@@ -54,8 +53,6 @@
 							</td>
 						</tr>
 					</xsl:if>	
-				</table>
-			</div>
 				 
 		</xsl:for-each>
 		
