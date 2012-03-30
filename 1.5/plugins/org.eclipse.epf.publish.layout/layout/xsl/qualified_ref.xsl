@@ -23,7 +23,7 @@
 		<xsl:if test="count(*) >0">
 			
 			<div class="sectionHeading">
-				<xsl:value-of select="@referenceName"/>
+				<xsl:value-of select="@name"/>
 			</div>
 			
 			<div class="sectionContent">
@@ -31,7 +31,7 @@
 					<xsl:if test="count(*) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row">
-								<xsl:value-of select="@referenceQualifiersText"/>
+								<xsl:value-of select="@referenceName"/>
 							</th>
 							<td class="sectionTableCell">
 								<xsl:for-each select="*">
