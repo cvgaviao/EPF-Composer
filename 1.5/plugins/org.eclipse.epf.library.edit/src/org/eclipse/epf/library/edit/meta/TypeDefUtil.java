@@ -63,7 +63,7 @@ public class TypeDefUtil {
 	
 	public IMetaDef createMetaDef(Class cls) {
 		if (cls == ModifiedTypeMeta.class) {
-			return new ModifiedTypeMetaImpl();
+			return (ModifiedTypeMetaImpl) newModifiedTypeMeta();
 		}
 		return null;
 	}
@@ -350,6 +350,10 @@ public class TypeDefUtil {
 			lastC = c;
 		}
 		return null;
-	}	
+	}
+	
+	public ModifiedTypeMeta newModifiedTypeMeta() {
+		return new ModifiedTypeMetaImpl();
+	}
 	
 }

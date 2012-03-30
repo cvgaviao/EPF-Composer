@@ -27,7 +27,7 @@ public class TypeDefParserImpl implements TypeDefParser {
 		Map<String, ModifiedTypeMetaImpl> map = new HashMap<String, ModifiedTypeMetaImpl>();
 		for (int i = 0; i < size; i++) {
 			Element element = (Element) list.item(i);
-			ModifiedTypeMetaImpl meta = new ModifiedTypeMetaImpl();
+			ModifiedTypeMetaImpl meta = (ModifiedTypeMetaImpl) TypeDefUtil.getInstance().newModifiedTypeMeta();
 			meta.parseElement(element);
 			metaList.add(meta);			
 			if (map.put(meta.getId(), meta) != null) {
