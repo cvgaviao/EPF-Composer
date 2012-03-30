@@ -1003,7 +1003,11 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 		XmlElement childXml = elementXml.newChild(TAG_REFERENCELIST);
 		if (feature instanceof ExtendedOpposite) {
+			ExtendedOpposite opposite = (ExtendedOpposite) feature;
 			childXml.setAttribute(Att_ReferenceType, "customOpposite");	//$NON-NLS-1$
+			if (opposite.getLayout() != null && opposite.getLayout().length() > 0) {
+				childXml.setAttribute(IMetaDef.layout, opposite.getLayout());
+			}
 		}
 //		processChild(feature, childXml.setAttribute("name", referenceName), uniqueItems, false); //$NON-NLS-1$
 		if (feature instanceof QualifiedReference) {
