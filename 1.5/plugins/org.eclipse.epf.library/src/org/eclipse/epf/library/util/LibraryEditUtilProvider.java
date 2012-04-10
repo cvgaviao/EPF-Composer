@@ -27,6 +27,7 @@ import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -201,6 +202,13 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	
 	public List<MethodElement> calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, MethodConfiguration config) {
+		ElementRealizer realizer = DefaultElementRealizer
+		.newElementRealizer(config);
+		return ConfigurationHelper.calc0nFeatureValue(element, feature, realizer);
+	}
+	
+	public List<MethodElement> calc0nFeatureValue(MethodElement element,
+			OppositeFeature feature, MethodConfiguration config) {
 		ElementRealizer realizer = DefaultElementRealizer
 		.newElementRealizer(config);
 		return ConfigurationHelper.calc0nFeatureValue(element, feature, realizer);

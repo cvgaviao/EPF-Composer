@@ -799,6 +799,11 @@ public class LibraryEditUtil {
 		return getProvider() == null ? null : getProvider().calc0nFeatureValue(element, feature, config);
 	}
 	
+	public List<MethodElement> calc0nFeatureValue(MethodElement element,
+			OppositeFeature feature, MethodConfiguration config) {
+		return getProvider() == null ? null : getProvider().calc0nFeatureValue(element, feature, config);
+	}
+	
 	public void fixWpStates(Collection<? extends MethodElement> elements, Set<Resource> modifeiedResources) {
 		try {
 			fixWpStates_(elements, modifeiedResources);

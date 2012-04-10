@@ -11,6 +11,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
@@ -43,6 +44,9 @@ public interface ILibraryEditUtilProvider {
 	
 	List<MethodElement> calc0nFeatureValue(MethodElement element,
 			EStructuralFeature feature, MethodConfiguration config);
+	
+	public List<MethodElement> calc0nFeatureValue(MethodElement element,
+			OppositeFeature feature, MethodConfiguration config);
 	
 	public void createUserDefinedTypeContextMenuOnGuidanceNode(Collection<Object> newChildDescriptors);
 		
