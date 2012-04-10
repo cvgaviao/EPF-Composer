@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IDisposable;
+import org.eclipse.epf.library.edit.ContextIFilter;
 import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IConfigurator;
 import org.eclipse.epf.library.edit.IFilter;
@@ -141,13 +142,13 @@ public class MethodConfigurationItemProvider extends
 
 	};
 
-	private static final IFilter customCategoriesFilter = new IFilter() {
+	private static final ContextIFilter customCategoriesFilter = new ContextIFilter() {
 
 		public boolean accept(Object obj) {
 			// Browsing: With categories, replace generalization
 			// causes both replacement and base to become invisible to browsing
 			return org.eclipse.epf.library.edit.category.CustomCategoriesItemProvider
-					.accept(obj) /*
+					.accept(obj, getMethodConfiguration()) /*
 									 * &&
 									 * ((VariabilityElement)obj).getVariabilityBasedOnElement() ==
 									 * null
@@ -342,6 +343,7 @@ public class MethodConfigurationItemProvider extends
 							.getImage("full/obj16/MethodPackages"), //$NON-NLS-1$
 					ModelStructure.DEFAULT.customCategoryPath);
 			child.setParent(conf);
+			customCategoriesFilter.setContext(conf);
 			child.setCategorizedFilter(customCategoriesFilter);
 			children.add(child);
 			groupItemProviderMap.put(name, child);
