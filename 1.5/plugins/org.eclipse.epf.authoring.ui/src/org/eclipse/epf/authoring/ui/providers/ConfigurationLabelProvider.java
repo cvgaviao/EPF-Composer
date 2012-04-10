@@ -71,7 +71,7 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 		if (object instanceof ContentElement) {
 			ConfigurationData configData = ConfigurationHelper.getDelegate().getConfigurationData(config);
 			if (configData.isSuppressed((ContentElement) object)) {
-				return "--<" + text + ">";	    		 //$NON-NLS-1$ //$NON-NLS-2$	
+				return "<--" + text + "-->";	    		 //$NON-NLS-1$ //$NON-NLS-2$	
 			}
 		}
 		return text;

@@ -37,7 +37,7 @@ import org.eclipse.epf.authoring.ui.actions.LibraryActionBarContributor;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewCopyAction;
 import org.eclipse.epf.authoring.ui.actions.LibraryViewFindElementAction;
 import org.eclipse.epf.authoring.ui.dnd.LibraryViewerDragAdapter;
-import org.eclipse.epf.authoring.ui.providers.ConfigurationLabelProvider;
+import org.eclipse.epf.authoring.ui.providers.ConfigurationDecoratingLabelProvider;
 import org.eclipse.epf.authoring.ui.providers.IContentProviderFactory;
 import org.eclipse.epf.common.ui.util.ClipboardUtil;
 import org.eclipse.epf.common.utils.StrUtil;
@@ -426,7 +426,7 @@ public class ConfigurationView extends AbstractBaseView implements
 				contentProvider.setAdapterFactory(adapterFactory);
 			}
 			treeViewer.setContentProvider(contentProvider);
-			treeViewer.setLabelProvider(new ConfigurationLabelProvider(config,
+			treeViewer.setLabelProvider(new ConfigurationDecoratingLabelProvider(config,
 					adapterFactory));
 			title = config.getName();
 		} else {
