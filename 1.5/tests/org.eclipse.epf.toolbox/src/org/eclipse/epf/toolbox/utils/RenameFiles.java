@@ -12,7 +12,7 @@ public class RenameFiles {
 	private static String rootPath = "E:/Root/a_Rmc7.5.0.1/Tvt/Returns/1stReturns/renamed/ARA/RmcTool";
 
 	private final static boolean runAll = true;	
-	private static String rootPathPrefix = "E:\\Root\\a_Rmc7.5.1\\TVT\\Returns\\2nd-Return\\Renamed\\";
+	private static String rootPathPrefix = "C:\\a_dev\\Rmc7.5.2\\TVT\\Returns\\1stReturns\\renamed\\";
 	private static String lastFoler = "RmcTool";
 	private static String langFolerList[] = {"DEU", "ESP", "FRA", "ITA", "JPN", "KOR", "PTB", "CHS", "CHT", "PLK", "RUS", "DAN", "ARA"};
 	
