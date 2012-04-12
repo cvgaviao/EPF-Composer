@@ -1189,17 +1189,17 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			}
 			
 			for (ExtendedTable table : tables) {
-				XmlElement cXml = sectionXml.newChild(TAG_TABLE);
-				cXml.setAttribute("tableId", table.getId());		//$NON-NLS-1$
-				cXml.setAttribute("tableName", table.getName());	//$NON-NLS-1$
-				cXml.setAttribute("columnSplit", table.getColumnSplit());//$NON-NLS-1$
-
 				List<MethodElement> colList = tableRefMap.get(table.getColumnReference());
 				List<MethodElement> rowList = tableRefMap.get(table.getRowReference());
 				List<MethodElement> celList = tableRefMap.get(table.getCellReference());
 				if (colList.isEmpty() || rowList.isEmpty()) {
 					continue;
 				}
+				
+				XmlElement cXml = sectionXml.newChild(TAG_TABLE);
+				cXml.setAttribute("tableId", table.getId());		//$NON-NLS-1$
+				cXml.setAttribute("tableName", table.getName());	//$NON-NLS-1$
+				cXml.setAttribute("columnSplit", table.getColumnSplit());//$NON-NLS-1$
 				
 				List<MethodElement> colList0 = propUtil.getExtendedReferenceList(element, table.getColumnReference(), false);
 				List<MethodElement> rowList0 = propUtil.getExtendedReferenceList(element, table.getRowReference(), false);
