@@ -55,6 +55,6 @@ plugin@org.eclipse.epf.ui=v20120314-1905,:pserver:anonymous@dev.eclipse.org:/cvs
 plugin@org.eclipse.epf.ui.intro=v20101012-1720,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.ui.intro
 plugin@org.eclipse.epf.uma=v20120330-1301,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.uma
 plugin@org.eclipse.epf.uma.ecore=v20120312-1034,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.uma.ecore
-plugin@org.eclipse.epf.uma.edit=v20111001-0957,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.uma.edit
+plugin@org.eclipse.epf.uma.edit=v20120412-1330,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.uma.edit
 plugin@org.eclipse.epf.validation=v20110228-2324,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.validation
 plugin@org.eclipse.epf.xml.uma=v20101012-1720,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.xml.uma
