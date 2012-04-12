@@ -20,7 +20,6 @@ import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
-import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
@@ -870,4 +869,18 @@ public class LibraryEditUtil {
 		MethodPackage pkg = UmaUtil.findMethodPackage(plugin, path);
 		return pkg;
 	}
+	
+	public List<CustomCategory> getRootLevelCustomCategories(MethodPlugin plugin) {
+		List list = new ArrayList<CustomCategory>();
+		CustomCategory topRoot = TngUtil.getRootCustomCategory(plugin);
+		if (topRoot != null) {
+			for (DescribableElement element : topRoot.getCategorizedElements()) {
+				if (element instanceof CustomCategory) {
+					list.add((CustomCategory) element); 
+				}
+			}
+		}
+		return list;
+	}
+	
 }
