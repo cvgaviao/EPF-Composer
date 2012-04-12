@@ -189,6 +189,13 @@ public class MethodElementInitializeCopyCommand extends InitializeCopyCommand {
 	@Override
 	protected Collection<? extends EAttribute> getAttributesToCopy() {
 		Collection<? extends EAttribute> ret = super.getAttributesToCopy();
+		List<EAttribute> list = new ArrayList<EAttribute>();
+		for (EAttribute att : ret) {
+			if (att != UmaPackage.eINSTANCE.getMethodElement_Guid()) {
+				list.add(att);
+			}
+		}
+		ret = list;
 		if (owner instanceof DescriptorDescription) {
 			boolean toRemove = UmaUtil.isSynFree();
 			if (!toRemove) {
