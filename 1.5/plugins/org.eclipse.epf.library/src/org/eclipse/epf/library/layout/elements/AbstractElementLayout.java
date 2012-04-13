@@ -1167,6 +1167,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				}
 			}
 			
+			boolean toRemoveSection = true;
 			for (ExtendedReference eRef : references) {
 //				if (! eRef.publish()) {
 //					continue;
@@ -1174,6 +1175,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				List<MethodElement> list = ConfigurationHelper.calc0nFeatureValue(
 						element, eRef.getReference(), realizer);
 				if (list != null && !list.isEmpty()) {
+					toRemoveSection = false;
+					
 					if (tableRefMap.containsKey(eRef)) {
 						tableRefMap.put(eRef, list);
 					}
@@ -1182,6 +1185,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 						addReferences(eRef, sectionXml, Att_ExtendeReference_2, list);	//$NON-NLS-1$
 					}
 				}
+			}
+			if (toRemoveSection) {
+				elementXml.removeChild(sectionXml);
 			}
 						
 			if (tables == null || tables.isEmpty()) {

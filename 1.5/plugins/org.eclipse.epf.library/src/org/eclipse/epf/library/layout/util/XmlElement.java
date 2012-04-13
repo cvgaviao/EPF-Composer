@@ -132,6 +132,17 @@ public class XmlElement implements IXmlElement {
 	}
 
 	/**
+	 * @param child
+	 * @return
+	 */
+	public XmlElement removeChild(XmlElement child) {
+		if (children.remove(child)) {
+			return child;
+		}
+		return null;
+	}
+	
+	/**
 	 * create a new chiild element
 	 * @param name
 	 * @return XmlElement the child element
