@@ -1125,12 +1125,19 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				continue;
 			}
 			XmlElement sectionXml = elementXml.newChild(TAG_SECTION);
-			setXmlAttributes(section, sectionXml);			
+			setXmlAttributes(section, sectionXml);
+			boolean toRemoveSection = true;
 			for (ExtendedAttribute eAtt : attributes) {
 				XmlElement attXml = sectionXml.newChild(TAG_RTE);
 				String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
+				if (value != null && value.trim().length() > 0) {
+					toRemoveSection = false;	
+				}
 				setXmlAttributes(eAtt, attXml);
 				attXml.setValue(value);//$NON-NLS-1$
+			}
+			if (toRemoveSection) {
+				elementXml.removeChild(sectionXml);
 			}
 		}
 	}
