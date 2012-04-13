@@ -137,7 +137,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 			return true;
 		}
 		
-		return false;
+		return true;
 	}
 
 	private void init() {

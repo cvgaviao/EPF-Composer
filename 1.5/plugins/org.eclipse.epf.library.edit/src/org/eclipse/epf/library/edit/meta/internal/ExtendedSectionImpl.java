@@ -113,7 +113,7 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 			return true;
 		} 
 		
-		return false;
+		return true;
 	}
 	
 }

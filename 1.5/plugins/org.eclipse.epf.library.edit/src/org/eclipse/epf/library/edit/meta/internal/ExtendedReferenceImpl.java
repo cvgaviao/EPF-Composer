@@ -113,7 +113,7 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 			return true;
 			
 		}
-		return false;
+		return true;
 	}
 	
 	public ExtendedOpposite getOpposite() {
