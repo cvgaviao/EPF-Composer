@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.library.edit.category;
 
+import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -446,8 +447,13 @@ public class CustomCategoryItemProvider extends
 							((DescribableElement) object).getNodeicon());
 					Object image = LibraryEditPlugin.INSTANCE
 							.getSharedImage(imgUri);
-					if (image != null)
-						return image;
+					if (image != null) {
+						//To handle case: during copy/paste, the file may not get copied before this method gets called
+						File file = new File (imgUri.getPath());
+						if (file.exists()) {					
+							return image;
+						}
+					}
 				}
 			}
 			return super.getImage(object);
