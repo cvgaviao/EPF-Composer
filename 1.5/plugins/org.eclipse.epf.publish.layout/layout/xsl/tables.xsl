@@ -25,24 +25,39 @@
 		<tr>
 			<th><xsl:value-of select="@tableName"/></th>
 			<xsl:for-each select="columnList/column">
-				<th><xsl:value-of select="@name"/></th>
+				<th>
+					<a>
+						<xsl:attribute name="href"><xsl:value-of select="reference/Element/@BackPath"/><xsl:value-of select="reference/Element/@Url"/></xsl:attribute>
+						<xsl:value-of disable-output-escaping="yes" select="reference/Element/@DisplayName"/>
+					</a>
+				</th>
 			</xsl:for-each>
 		</tr>
 		
 		<xsl:for-each select="rowList/row">
 			<tr>
-				<th><xsl:value-of select="@name"/></th>
-					<xsl:for-each select="Cell">
+				<th>
+					<a>
+						<xsl:attribute name="href"><xsl:value-of select="reference/Element/@BackPath"/><xsl:value-of select="reference/Element/@Url"/></xsl:attribute>
+						<xsl:value-of disable-output-escaping="yes" select="reference/Element/@DisplayName"/>
+					</a>
+				</th>
+				<xsl:for-each select="Cell">
 						<xsl:choose> 
 							<xsl:when test="string-length(@name) = 0"> 
 								<td>&#160;</td>
 							</xsl:when> 
 							<xsl:otherwise> 
-								<td><xsl:value-of select="@name"/></td>
+								<td>
+									<a>
+									<xsl:attribute name="href"><xsl:value-of select="reference/Element/@BackPath"/><xsl:value-of select="reference/Element/@Url"/></xsl:attribute>
+									<xsl:value-of disable-output-escaping="yes" select="reference/Element/@DisplayName"/>
+									</a>		
+								</td>
 							</xsl:otherwise> 
 						</xsl:choose> 
 						
-					</xsl:for-each>
+				</xsl:for-each>
 			</tr>
 		</xsl:for-each>
 			
