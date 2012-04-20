@@ -620,9 +620,6 @@ public class UIHelper {
 	public static class ModifyChecker implements IModifyChecker {
 		private Shell shell;
 		
-		public ModifyChecker() {
-		}
-		
 		public ModifyChecker(Shell shell) {
 			this.shell = shell;
 		}
