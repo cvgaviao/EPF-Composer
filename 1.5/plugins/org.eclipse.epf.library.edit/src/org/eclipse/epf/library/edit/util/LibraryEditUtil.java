@@ -16,10 +16,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.util.model.util.StringResource;
 import org.eclipse.epf.library.edit.validation.IValidationManager;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
@@ -881,6 +884,34 @@ public class LibraryEditUtil {
 			}
 		}
 		return list;
+	}	
+	
+	public String getXmiString(EObject obj) {
+		Map options = new HashMap();
+		options.put(XMLResource.OPTION_ENCODING, "ASCII"); //$NON-NLS-1$
+		
+		StringResource res = new StringResource(null);
+		res.getContents().add(EcoreUtil.copy(obj));
+		try {
+			res.save(options);
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		return res.getString();
+	}
+	
+	public EObject loadObject(String xmiString) {
+		Map options = new HashMap();
+		options.put(XMLResource.OPTION_ENCODING, "ASCII"); //$NON-NLS-1$
+				
+		StringResource res = new StringResource(xmiString);
+		try {
+			res.load(options);
+			return res.getContents().get(0);
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		return null;
 	}
 	
 }
