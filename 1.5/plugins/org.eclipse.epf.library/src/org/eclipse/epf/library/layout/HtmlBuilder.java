@@ -21,9 +21,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
-import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.utils.I18nUtil;
 import org.eclipse.epf.common.utils.Timer;
 import org.eclipse.epf.common.xml.XSLTProcessor;
@@ -71,6 +71,8 @@ public class HtmlBuilder {
 	// override this path to specify xsl path
 	private String layoutXslRootPath = LayoutPlugin.getDefault().getLayoutXslPath();
 	
+	private Map<MethodElement, String> elementContentMap;
+
 	/**
 	 * Creates a new instance.
 	 */
@@ -84,6 +86,10 @@ public class HtmlBuilder {
 	public HtmlBuilder(ElementLayoutManager mgr) {
 		init();
 		setLayoutManager(mgr);
+	}
+		
+	public void setElementContentMap(Map<MethodElement, String> elementContentMap) {
+		this.elementContentMap = elementContentMap;
 	}
 	
 	public void setLayoutXslRootPath(String path) {
@@ -436,7 +442,10 @@ public class HtmlBuilder {
 			}
 			
 			content = getLayoutManager().getAdjustedElementPathStringValue(content);		
-
+			if (elementContentMap != null) {
+				elementContentMap.put(layout.getElement(), content);
+			}
+						
 			if ( debug) {
 				timer.stop();
 				System.out.println(timer.getTime() + " mini seconds scanning content"); //$NON-NLS-1$
