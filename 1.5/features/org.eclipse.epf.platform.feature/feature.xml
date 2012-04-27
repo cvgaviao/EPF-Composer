@@ -491,13 +491,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.core.resources.compatibility"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.resources.win32.x86"
          download-size="0"
          install-size="0"
@@ -1371,284 +1364,301 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
-<plugin
-      id="net.sourceforge.lpg.lpgjavaruntime"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
 
-<plugin
-      id="org.eclipse.ant.ui"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-      
-<plugin
-      id="org.eclipse.core.boot"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="net.sourceforge.lpg.lpgjavaruntime"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.core.filesystem.linux.x86"
-      os="linux"
-      arch="x86"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      fragment="true"
-      unpack="false"/>
-      
-<plugin
-      id="org.eclipse.cvs"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-      
-<plugin
-      id="org.eclipse.debug.core"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.ant.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.debug.ui"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.core.boot"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.emf.mapping.ecore.editor"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-      
-<plugin
-      id="org.eclipse.emf.ocl"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.emf.query"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.emf.query.ocl"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.core.filesystem.linux.x86"
+         os="linux"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.emf.transaction.ui"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.equinox.launcher"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.equinox.launcher.gtk.linux.x86"
-      os="linux"
-      ws="gtk"
-      arch="x86"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      fragment="true"/>
-<plugin
-      id="org.eclipse.equinox.launcher.win32.win32.x86"
-      os="win32"
-      ws="win32"
-      arch="x86"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      fragment="true"/>
+   <plugin
+         id="org.eclipse.cvs"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.gmf.runtime.common.ui.services.dnd"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.gmf.runtime.common.ui.services.dnd.ide"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.debug.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.gmf.runtime.diagram.ui.dnd"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.gmf.runtime.emf.type.ui"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.emf.mapping.ecore.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.help.appserver"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.emf.ocl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.jdt.core"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.jdt.core.manipulation"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.jdt.debug"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"/>
-<plugin
-      id="org.eclipse.jdt.launching"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.jdt.ui"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.emf.query"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.ocl.ecore"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.emf.query.ocl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.platform"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"/>
-<plugin
-      id="org.eclipse.rcp"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.emf.transaction.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.swt.gtk.linux.x86"
-      os="linux"
-      ws="gtk"
-      arch="x86"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      fragment="true"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.equinox.launcher"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.team.cvs.ssh"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.team.cvs.ssh2"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.ui.ide.application"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.equinox.launcher.gtk.linux.x86"
+         os="linux"
+         ws="gtk"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
 
-<plugin
-      id="org.eclipse.ui.net"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.equinox.launcher.win32.win32.x86"
+         os="win32"
+         ws="win32"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
 
-<plugin
-      id="org.eclipse.ui.workbench.compatibility"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      fragment="true"/>
+   <plugin
+         id="org.eclipse.gmf.runtime.common.ui.services.dnd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-<plugin
-      id="org.eclipse.update.core"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.update.core.linux"
-      os="linux"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      fragment="true"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.update.core.win32"
-      os="win32"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      fragment="true"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.update.scheduler"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.eclipse.update.ui"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
-<plugin
-      id="org.w3c.css.sac"
-      download-size="0"
-      install-size="0"
-      version="0.0.0"
-      unpack="false"/>
+   <plugin
+         id="org.eclipse.gmf.runtime.common.ui.services.dnd.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
+   <plugin
+         id="org.eclipse.gmf.runtime.diagram.ui.dnd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.gmf.runtime.emf.type.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.help.appserver"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.core.manipulation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.debug"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.jdt.launching"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ocl.ecore"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.platform"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.rcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.swt.gtk.linux.x86"
+         os="linux"
+         ws="gtk"
+         arch="x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.team.cvs.ssh"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.team.cvs.ssh2"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.ide.application"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.net"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.ui.workbench.compatibility"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="org.eclipse.update.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.core.linux"
+         os="linux"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.core.win32"
+         os="win32"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.scheduler"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.update.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.w3c.css.sac"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.epf.platform"
@@ -1656,9 +1666,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-      
-      
-         
 
 </feature>
