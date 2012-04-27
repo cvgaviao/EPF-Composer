@@ -6,24 +6,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.library.edit.uma.MethodPluginExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.uma.Constraint;
-import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
-import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 
 public class MethodPluginPropUtil extends PropUtil {
 
 	public static final String PLUGIN_SynFree = "plugin_synFree"; //$NON-NLS-1$
-	public static final String Plugin_customizedConfig = 	"plugin_customizedConfig";		//$NON-NLS-1$
-	public static final String Plugin_customizedParent = 	"plugin_customizedParent";		//$NON-NLS-1$
+	public static final String Plugin_customizedConfig = 	"plugin_customizedConfig";					//$NON-NLS-1$
+	public static final String Plugin_customizedParent = 	"plugin_customizedParent";					//$NON-NLS-1$
+	public static final String Plugin_embeddedConfigXmiString = "plugin_embeddedConfigXmiString";		//$NON-NLS-1$
 
 	private static MethodPluginPropUtil methodPluginPropUtil = new MethodPluginPropUtil();
 	public static MethodPluginPropUtil getMethodPluginPropUtil() {
@@ -41,6 +44,39 @@ public class MethodPluginPropUtil extends PropUtil {
 		super(actionManager);
 	}	
 		
+	public void saveEmbeddedConfig(MethodPlugin plugin, MethodConfiguration config) {
+		String xmiString = LibraryEditUtil.getInstance().getXmiString(config);
+		setStringValue(plugin, Plugin_embeddedConfigXmiString, xmiString);
+		MethodPluginExt ext = getMethodPluginExt(plugin, true);
+		ext.setEmbeddedConfig(config);
+	}
+	
+	private MethodPluginExt getMethodPluginExt(MethodPlugin plugin, boolean create) {
+		MethodElementExt extObj = getExtendObject(plugin, create);
+		if (! (extObj instanceof MethodPluginExt)) {
+			LibraryEditPlugin.getDefault().getLogger().logError("saveEmbeddedConfig, extObj: " + extObj);	//$NON-NLS-1$
+			return null;
+		}
+		return (MethodPluginExt) extObj;
+	}
+	
+	public MethodConfiguration getEmbeddedConfig(MethodPlugin plugin) {
+		MethodPluginExt ext = getMethodPluginExt(plugin, true);
+		if (ext.isEmbeddedConfigLoaded()) {
+			return ext.getEmbeddedConfig();
+		}		
+		ext.setEmbeddedConfigLoaded(true);
+		MethodConfiguration config = null;
+		
+		String xmiString = getStringValue(plugin, Plugin_embeddedConfigXmiString);		
+		EObject obj = LibraryEditUtil.getInstance().loadObject(xmiString);
+		if (obj instanceof MethodConfiguration) {
+			config = (MethodConfiguration) obj;
+		}
+		ext.setEmbeddedConfig(config);
+		return config;
+	}
+	
 	public boolean isSynFree(MethodPlugin d) {
 		Boolean value = getBooleanValue(d, PLUGIN_SynFree);
 		return value == null ? false : value.booleanValue();

@@ -887,6 +887,9 @@ public class LibraryEditUtil {
 	}	
 	
 	public String getXmiString(EObject obj) {
+		if (obj == null) {
+			return "";			//$NON-NLS-1$
+		}
 		Map options = new HashMap();
 		options.put(XMLResource.OPTION_ENCODING, "ASCII"); //$NON-NLS-1$
 		
@@ -901,6 +904,9 @@ public class LibraryEditUtil {
 	}
 	
 	public EObject loadObject(String xmiString) {
+		if (xmiString == null || xmiString.length() == 0) {
+			return null;
+		}
 		Map options = new HashMap();
 		options.put(XMLResource.OPTION_ENCODING, "ASCII"); //$NON-NLS-1$
 				
