@@ -1,6 +1,6 @@
 feature@org.eclipse.epf.base.feature=v20091119-1003,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.base.feature
 feature@org.eclipse.epf.doc.feature=v20090824-2116,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.doc.feature
-feature@org.eclipse.epf.platform.feature=v20120428-1009,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
+feature@org.eclipse.epf.platform.feature=v20120428-1414,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.platform.feature
 feature@org.eclipse.epf.rcp.feature=v20100823-1123,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.rcp.feature
 feature@org.eclipse.epf.common.html.feature=v20111026-2006,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.common.html.feature
 feature@org.eclipse.epf.richtext.feature=v20101028-1109,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/features/org.eclipse.epf.richtext.feature
@@ -46,7 +46,7 @@ plugin@org.eclipse.epf.publishing=v20120409-1741,:pserver:anonymous@dev.eclipse.
 plugin@org.eclipse.epf.publishing.cmdline=v20101012-1720,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.publishing.cmdline
 plugin@org.eclipse.epf.publishing.ui=v20120314-1905,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.publishing.ui
 plugin@org.eclipse.epf.rcp=v20101012-1720,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.rcp
-plugin@org.eclipse.epf.rcp.ui=v20111206-1609,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.rcp.ui
+plugin@org.eclipse.epf.rcp.ui=v20120428-1414,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.rcp.ui
 plugin@org.eclipse.epf.richtext=v20111006-1020,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.richtext
 plugin@org.eclipse.epf.search=v20101012-1720,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.search
 plugin@org.eclipse.epf.search.ui=v20101012-1720,:pserver:anonymous@dev.eclipse.org:/cvsroot/technology,,org.eclipse.epf/composer/1.5/plugins/org.eclipse.epf.search.ui
