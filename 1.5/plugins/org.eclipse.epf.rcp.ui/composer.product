@@ -11,6 +11,7 @@
    </aboutInfo>
 
    <configIni use="default">
+      <win32>/org.eclipse.epf.rcp.ui/config/rcp_packaging/config.ini</win32>
    </configIni>
 
    <launcherArgs>
@@ -31,8 +32,10 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
 
    <plugins>
    </plugins>
