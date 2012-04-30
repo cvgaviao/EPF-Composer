@@ -46,6 +46,7 @@ import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.IRunnableWithProgress;
 import org.eclipse.epf.library.layout.LayoutResources;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -151,6 +152,9 @@ public class LibraryUIManager {
 		// Monitor perspective changes to display/hide the configuration combo.
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
+		if (DebugUtil.uiDebug) {
+			DebugUtil.print("LibraryUIManager() called, window: " + window);
+		}
 		if (window != null) {
 			window.addPerspectiveListener(new IPerspectiveListener() {
 				public void perspectiveActivated(IWorkbenchPage page,
