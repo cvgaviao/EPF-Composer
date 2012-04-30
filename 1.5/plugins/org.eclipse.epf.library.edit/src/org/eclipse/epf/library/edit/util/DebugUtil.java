@@ -14,6 +14,7 @@ import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
@@ -25,6 +26,9 @@ import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
  * @since 1.2
  */
 public final class DebugUtil {
+
+	public static final boolean uiDebug = LibraryEditPlugin.getDefault().debug("UiDebug");			//$NON-NLS-1$
+	public static final boolean udtDebug = LibraryEditPlugin.getDefault().debug("UdtDebug");		//$NON-NLS-1$
 
 	private static PrintStream output;
 	private static String prompt = "LD> "; 					//$NON-NLS-1$
