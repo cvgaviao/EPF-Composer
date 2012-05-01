@@ -153,7 +153,8 @@ public class LibraryUIManager {
 		IWorkbenchWindow window = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		if (DebugUtil.uiDebug) {
-			DebugUtil.print("LibraryUIManager() called, window: " + window);
+			DebugUtil.print("LibraryUIManager() called, window: " + window);//$NON-NLS-1$
+			DebugUtil.print();
 		}
 		if (window != null) {
 			window.addPerspectiveListener(new IPerspectiveListener() {
