@@ -11,9 +11,9 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.library.edit.uma.MethodPluginExt;
-import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.UmaPackage;
@@ -87,13 +87,17 @@ public class MethodPluginPropUtil extends PropUtil {
 	}
 	
 	public MethodPlugin getCustomizedParent(MethodPlugin plugin) {
-		return (MethodPlugin) getElement(plugin,
-				MethodPluginPropUtil.Plugin_customizedParent);
+		MethodElement element = getElement(plugin, Plugin_customizedParent);
+		return element instanceof MethodPlugin ? (MethodPlugin) element : null;
+	}
+	
+	public MethodConfiguration getCustomizedConfig(MethodPlugin plugin) {
+		MethodElement element = getElement(plugin, Plugin_customizedConfig);
+		return element instanceof MethodConfiguration ? (MethodConfiguration) element : null;
 	}
 	
 	public boolean isCustomizePlugin(MethodPlugin plugin) {
-		return null != getElement(plugin,
-				MethodPluginPropUtil.Plugin_customizedConfig);
+		return getCustomizedConfig(plugin) != null;
 	}
 	
 	/**
