@@ -311,7 +311,7 @@
 	<xsl:template name="relationshipsSection">
 		    <xsl:variable name="practices" select="referenceList[@name='Practices']/Element"/>
 		<xsl:variable name="categories" select="referenceList[@name='ContentElement_CustomCategories']/Element"/>
-		<xsl:if test="count(referenceList[@name='validContext']/Element) + count(reference[@name='superActivities']/Element) + count(referenceList[@name='includesPatterns']/Element) > 0">
+		<xsl:if test="count($practices) + count($categories) + count(referenceList[@name='validContext']/Element) + count(reference[@name='superActivities']/Element) + count(referenceList[@name='includesPatterns']/Element) > 0">
 			<div class="sectionHeading">
 				<xsl:value-of select="$relationshipsText"/>
 			</div>	
