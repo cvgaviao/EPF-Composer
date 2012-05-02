@@ -218,5 +218,21 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		this.superMeta = superMeta;
 	}
 	//Adapter interface methods <-
+
+	@Override
+	public String getDebugString(String indent) {
+//		private String id;
+//		private String name;
+//		private String globalId;
+//		private boolean suppressed = false;;
+//		private MetaElement parent;	
+//		private boolean inheritanceProcessed =false;
+//		private MetaElement superMeta;
+//		private boolean publish = true;
+//		private String layout;
+		
+		
+		return null;
+	}
 	
 }

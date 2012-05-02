@@ -12,6 +12,7 @@ package org.eclipse.epf.library.edit.meta;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -367,6 +368,32 @@ public class TypeDefUtil {
 	
 	public ModifiedTypeMeta newModifiedTypeMeta() {
 		return new ModifiedTypeMetaImpl();
+	}
+	
+	private static String indent0 = "     ";  //$NON-NLS-1$
+	public static String getMTypesDebugString(Collection<ModifiedTypeMeta> mtypes, String label) {
+		List<ModifiedTypeMeta> list = new ArrayList<ModifiedTypeMeta>();
+		if (mtypes != null) {
+			list.addAll(mtypes);
+		}
+		Collections.sort(list);
+				
+		StringBuffer sb = new StringBuffer();
+		if (label == null) {
+			label = "";
+		}
+		sb.append(label + "\n"); 	//$NON-NLS-1$
+		sb.append("size: " + list.size() + "\n"); 	//$NON-NLS-1$
+		if (list.isEmpty()) {
+			return sb.toString();
+		}
+		for (ModifiedTypeMeta meta : list) {
+//			sb.append(indent0 + plugin.getName() + "\n"); //$NON-NLS-1$
+//			debugSelString(sb, plugin.getMethodPackages(), selectedPkgs, indent0 + indent0);
+		}
+		
+		
+		return sb.toString();
 	}
 	
 }

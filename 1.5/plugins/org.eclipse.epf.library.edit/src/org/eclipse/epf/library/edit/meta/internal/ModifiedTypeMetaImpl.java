@@ -182,4 +182,9 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		return extendedFeatures == null ? false : extendedFeatures.contains(feature);
 	}
 	
+	@Override
+	public String getDebugString(String indent) {
+		return "";//$NON-NLS-1$
+	}
+	
 }

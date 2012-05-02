@@ -39,6 +39,9 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		public String getLayout() {
 			return null;
 		}
+		public String getDebugString(String indent) {
+			return "";//$NON-NLS-1$
+		}
 	};
 		
 	public String getId();	
@@ -51,5 +54,6 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 	public void setSuperMeta(MetaElement superMeta);
 	public boolean publish();
 	public String getLayout();
+	public String getDebugString(String indent);
 	
 }
