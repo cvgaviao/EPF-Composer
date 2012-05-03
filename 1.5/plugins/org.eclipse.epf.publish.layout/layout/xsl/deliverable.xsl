@@ -109,6 +109,11 @@
 								<xsl:with-param name="description" select="$deliverableDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
+							<xsl:call-template name="customOppositeRelationshipsAll">
+								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:with-param name="iconLevel" select="'two'"/>
+								<xsl:with-param name="layoutLocation" select="'Reverse References'"/>
+							</xsl:call-template>
 							<xsl:call-template name="extendedRefsAllSections">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>
