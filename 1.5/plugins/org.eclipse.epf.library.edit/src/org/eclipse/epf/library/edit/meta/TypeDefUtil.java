@@ -389,7 +389,7 @@ public class TypeDefUtil {
 		}
 		for (int i = 0; i < list.size(); i++) {
 			ModifiedTypeMeta meta = list.get(i);
-			sb.append(i + meta.getDebugString(indent0));
+			sb.append(meta.getDebugString(i, indent0));
 		}
 				
 		return sb.toString();

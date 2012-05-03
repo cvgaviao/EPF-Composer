@@ -185,6 +185,16 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 	@Override
 	protected void getDebugStringImpl(StringBuffer sb, String indent) {
 		super.getDebugStringImpl(sb, indent);
+		sb.append(indent + "sections: " + sections.size() + "\n");
+		for (int i = 0; i < sections.size(); i++) {
+			ExtendedSection meta = sections.get(i);
+			sb.append(meta.getDebugString(i, indent + indent));
+		}
+		sb.append(indent + "linkTypes: " + linkTypes.size() + "\n");
+		for (int i = 0; i < linkTypes.size(); i++) {
+			sb.append(indent + indent + linkTypes.get(i) + "\n");
+		}		
+		sb.append("\n");		
 	}
 	
 }

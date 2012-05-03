@@ -219,15 +219,18 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	}
 	//Adapter interface methods <-
 
-	public String getDebugString(String indent) {
+	public String getDebugString(int ix, String indent) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(indent + getClass().getSimpleName() + ": " + getHashCode(this) + "\n");//$NON-NLS-1$//$NON-NLS-2$
+		sb.append(indent + "[" + ix + "] " + getReferenceString(this) + "\n");//$NON-NLS-1$//$NON-NLS-2$
 		getDebugStringImpl(sb, indent);
 		return sb.toString();
 	}
 	
-	protected String getHashCode(Object obj) {
-		return obj == null ? "null" : Integer.toString(obj.hashCode());//$NON-NLS-1$
+	protected String getReferenceString(Object obj) {
+		if (obj == null) {
+			return null;
+		}
+		return  getClass().getSimpleName() + ": " + obj.hashCode();//$NON-NLS-1$
 	}
 	
 	protected void getDebugStringImpl(StringBuffer sb, String indent) {
@@ -235,9 +238,11 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		sb.append(indent + "name:        " + name + "\n");
 		sb.append(indent + "globalId:    " + getGlobalId() + "\n");
 		sb.append(indent + "suppressed:  " + suppressed + "\n");
-		sb.append(indent + "parent:      " + getHashCode(parent) + "\n");
-		sb.append(indent + "superMeta:   " + getHashCode(superMeta) + "\n");
-		sb.append(indent + "publish:     " + publish + "\n\n");
+		sb.append(indent + "parent:      " + getReferenceString(parent) + "\n");
+		sb.append(indent + "superMeta:   " + getReferenceString(superMeta) + "\n");
+		sb.append(indent + "publish:     " + publish + "\n");
+		
+		sb.append("\n");
 	}
 	
 }
