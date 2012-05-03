@@ -40,6 +40,7 @@ import org.eclipse.epf.library.LibraryNotFoundException;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.LibraryServiceException;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
+import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.layout.LayoutResources;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
@@ -581,6 +582,10 @@ public class XMILibraryManager extends AbstractLibraryManager {
 	}
 	
 	public void setUserDefinedTypeLoaded(boolean b) {
+		if (DebugUtil.udtDebug && !userDefinedTypeLoaded && b) {
+			String str = TypeDefUtil.getMTypesDebugString(getModifiedTypes(), "User defined types loaded");//$NON-NLS-1$
+			DebugUtil.print(str);
+		}
 		userDefinedTypeLoaded = b;
 	}
 	

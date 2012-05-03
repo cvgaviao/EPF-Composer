@@ -387,12 +387,11 @@ public class TypeDefUtil {
 		if (list.isEmpty()) {
 			return sb.toString();
 		}
-		for (ModifiedTypeMeta meta : list) {
-//			sb.append(indent0 + plugin.getName() + "\n"); //$NON-NLS-1$
-//			debugSelString(sb, plugin.getMethodPackages(), selectedPkgs, indent0 + indent0);
+		for (int i = 0; i < list.size(); i++) {
+			ModifiedTypeMeta meta = list.get(i);
+			sb.append(i + meta.getDebugString(indent0));
 		}
-		
-		
+				
 		return sb.toString();
 	}
 	

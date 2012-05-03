@@ -83,28 +83,28 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	private void validateId(String id) throws TypeDefException {
 		String context = "";	//$NON-NLS-1$
 		if (this instanceof ModifiedTypeMeta) {
-			context = "Modified type";
+			context = "Modified type";//$NON-NLS-1$
 			
 		} else if (this instanceof ExtendedSection) {
-			context = "Section";
+			context = "Section";//$NON-NLS-1$
 			
 		} else if (this instanceof ExtendedAttribute) {
-			context = "Rte";
+			context = "Rte";//$NON-NLS-1$
 			
 		} else if (this instanceof QualifiedReference) {
-			context = "Qualified reference";
+			context = "Qualified reference";//$NON-NLS-1$
 			
 		} else if (this instanceof ExtendedReference) {
-			context = "Reference";
+			context = "Reference";//$NON-NLS-1$
 				
 		} else if (this instanceof ExtendedTable) {
-			context = "Table";
+			context = "Table";//$NON-NLS-1$
 			
 		} else if (this instanceof ExtendedOpposite) {
 			if (id == null || id.length() == 0) {
 				return;
 			}
-			context = "Opposite feature";
+			context = "Opposite feature";//$NON-NLS-1$
 		}
 
 		TypeDefUtil.getInstance().validateId(context, id);	
@@ -221,18 +221,24 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 
 	@Override
 	public String getDebugString(String indent) {
-//		private String id;
-//		private String name;
-//		private String globalId;
-//		private boolean suppressed = false;;
-//		private MetaElement parent;	
-//		private boolean inheritanceProcessed =false;
-//		private MetaElement superMeta;
-//		private boolean publish = true;
-//		private String layout;
-		
-		
-		return null;
+		StringBuffer sb = new StringBuffer();
+		sb.append(indent + getClass().getSimpleName() + ": " + getHashCode(this) + "\n");//$NON-NLS-1$//$NON-NLS-2$
+		getDebugStringImpl(sb, indent);
+		return sb.toString();
+	}
+	
+	protected String getHashCode(Object obj) {
+		return obj == null ? "null" : Integer.toString(obj.hashCode());//$NON-NLS-1$
+	}
+	
+	protected void getDebugStringImpl(StringBuffer sb, String indent) {
+		sb.append(indent + "id:          " + id + "\n");
+		sb.append(indent + "name:        " + name + "\n");
+		sb.append(indent + "globalId:    " + getGlobalId() + "\n");
+		sb.append(indent + "suppressed:  " + suppressed + "\n");
+		sb.append(indent + "parent:      " + getHashCode(parent) + "\n");
+		sb.append(indent + "superMeta:   " + getHashCode(superMeta) + "\n");
+		sb.append(indent + "publish:     " + publish + "\n\n");
 	}
 	
 }

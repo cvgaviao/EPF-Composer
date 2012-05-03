@@ -183,8 +183,8 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 	}
 	
 	@Override
-	public String getDebugString(String indent) {
-		return "";//$NON-NLS-1$
+	protected void getDebugStringImpl(StringBuffer sb, String indent) {
+		super.getDebugStringImpl(sb, indent);
 	}
 	
 }
