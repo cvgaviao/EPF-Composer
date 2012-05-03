@@ -837,7 +837,7 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 				} else
 				supressedButton.setSelection(element.getSuppressed()
 						.booleanValue());
-
+				extender.refresh();
 				updateControls();
 			}
 		} catch (Exception ex) {
@@ -855,6 +855,8 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 		optionalButton.setEnabled(editable);
 		plannedButton.setEnabled(editable);
 //		supressedButton.setEnabled(editable);
+		
+		extender.updateControls(editable);
 	}
 	
 	private class SyncFreeNameModifyListener implements ModifyListener {
@@ -904,6 +906,14 @@ public class BreakdownElementGeneralSection extends AbstractSection {
 		}
 		
 		public void dispose() {
+			
+		}
+		
+		public void refresh() {
+			
+		}
+		
+		public void updateControls(boolean editable) {
 			
 		}
 		
