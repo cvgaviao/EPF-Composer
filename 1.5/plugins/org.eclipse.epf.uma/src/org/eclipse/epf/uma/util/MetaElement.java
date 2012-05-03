@@ -39,7 +39,6 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		public String getLayout() {
 			return null;
 		}
-		@Override
 		public String getDebugString(int ix, String indent) {
 			return "";//$NON-NLS-1$
 		}
