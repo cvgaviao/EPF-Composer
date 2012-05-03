@@ -142,9 +142,10 @@
 					</td>
 				</tr>
 				
-				<xsl:call-template name="customOppositeRelationships">
+				<xsl:call-template name="customOppositeRelationshipsEmbedded">
 					<xsl:with-param name="elementDown" select="/Element"/>
 					<xsl:with-param name="iconLevel" select="'two'"/>
+					<xsl:with-param name="layoutLocation" select="'head'"/>
 				</xsl:call-template>
 				
 				<xsl:call-template name="showParentPractices"></xsl:call-template> 	
@@ -156,6 +157,11 @@
 				<xsl:call-template name="addReferences">
 					<xsl:with-param name="refName" select="$additionallyPerformsText"/>
 					<xsl:with-param name="refElement" select="$additionallyPerforms"/>
+				</xsl:call-template>
+				<xsl:call-template name="customOppositeRelationshipsEmbedded">
+					<xsl:with-param name="elementDown" select="/Element"/>
+					<xsl:with-param name="iconLevel" select="'two'"/>
+					<xsl:with-param name="layoutLocation" select="'middle'"/>
 				</xsl:call-template>
 				<xsl:if test="count($workProductModifies) + count($workProductSlotModifies) > 0">
 					<tr valign="top">
@@ -200,6 +206,11 @@
 				<xsl:call-template name="addDescriptors">
 					<xsl:with-param name="descriptors" select="referenceList[@name='descriptors']/Element"/>
 					<xsl:with-param name="colspan" select="'1'"/>
+				</xsl:call-template>
+				<xsl:call-template name="customOppositeRelationshipsEmbedded">
+					<xsl:with-param name="elementDown" select="/Element"/>
+					<xsl:with-param name="iconLevel" select="'two'"/>
+					<xsl:with-param name="layoutLocation" select="'tail'"/>
 				</xsl:call-template>
 			</table>
 		</div>

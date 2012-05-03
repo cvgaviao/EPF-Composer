@@ -67,9 +67,10 @@
 
 					<xsl:call-template name="showParentPractices"></xsl:call-template>
 					
-					<xsl:call-template name="customOppositeRelationships">
+					<xsl:call-template name="customOppositeRelationshipsEmbedded">
 						<xsl:with-param name="elementDown" select="/Element"/>
 						<xsl:with-param name="iconLevel" select="'two'"/>
+						<xsl:with-param name="layoutLocation" select="'head'"/>
 					</xsl:call-template>
 				
 					<xsl:if test="count($deliverableParents) > 0">
@@ -128,6 +129,12 @@
 							</td>
 						</tr>
 					</xsl:if>		
+					
+					<xsl:call-template name="customOppositeRelationshipsEmbedded">
+						<xsl:with-param name="elementDown" select="/Element"/>
+						<xsl:with-param name="iconLevel" select="'two'"/>
+						<xsl:with-param name="layoutLocation" select="'middle'"/>
+					</xsl:call-template>
 					
 					<xsl:if test="count($categories) > 0">
 						<tr valign="top">
@@ -302,6 +309,12 @@
 							</td>							
 						</tr>
 					</xsl:if>
+					
+					<xsl:call-template name="customOppositeRelationshipsEmbedded">
+						<xsl:with-param name="elementDown" select="/Element"/>
+						<xsl:with-param name="iconLevel" select="'two'"/>
+						<xsl:with-param name="layoutLocation" select="'tail'"/>
+					</xsl:call-template>
 					
 					<xsl:call-template name="addDescriptors">
 						<xsl:with-param name="descriptors" select="referenceList[@name='descriptors']/Element"/>

@@ -13,11 +13,12 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<xsl:template name="customOppositeRelationships">
+	<xsl:template name="customOppositeRelationshipsEmbedded">
 		<xsl:param name="elementDown"/>
 		<xsl:param name="iconLevel"/>
+		<xsl:param name="layoutLocation"/>
 		
-		<xsl:for-each select="referenceList[@referenceType='customOpposite']">
+		<xsl:for-each select="referenceList[@referenceType='customOpposite' and @layout=$layoutLocation]">
 			
 					<xsl:if test="count(*) > 0">
 						<tr valign="top">
