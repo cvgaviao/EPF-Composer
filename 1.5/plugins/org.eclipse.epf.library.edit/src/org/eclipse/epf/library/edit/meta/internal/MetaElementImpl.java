@@ -219,7 +219,6 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 	}
 	//Adapter interface methods <-
 
-	@Override
 	public String getDebugString(String indent) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(indent + getClass().getSimpleName() + ": " + getHashCode(this) + "\n");//$NON-NLS-1$//$NON-NLS-2$
