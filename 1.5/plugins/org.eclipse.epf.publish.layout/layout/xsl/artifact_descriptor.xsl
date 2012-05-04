@@ -134,7 +134,7 @@
 									</xsl:call-template>	
 								</xsl:otherwise>
 							</xsl:choose>
-							<xsl:call-template name="extendedRtesAllSections">
+							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$descriptorDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="propertiesSection">

@@ -108,7 +108,7 @@
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$contentDescription"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRtesAllSections">
+							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$contentDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="checkItemsSection">

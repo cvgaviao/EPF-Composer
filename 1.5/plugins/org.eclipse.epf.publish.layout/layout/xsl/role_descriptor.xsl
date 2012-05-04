@@ -100,7 +100,7 @@
 							<xsl:call-template name="refinedDescriptionSection">
 								<xsl:with-param name="description" select="$descriptorDescription"/>
 							</xsl:call-template>			
-							<xsl:call-template name="extendedRtesAllSections">
+							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$descriptorDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="propertiesSection">

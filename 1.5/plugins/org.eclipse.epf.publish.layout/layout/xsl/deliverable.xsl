@@ -122,7 +122,7 @@
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$deliverableDescription"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRtesAllSections">
+							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$deliverableDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="workProductIllustrationsSection"/>

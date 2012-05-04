@@ -130,7 +130,7 @@
 								<xsl:with-param name="iconLevel" select="'two'"/>
 								<xsl:with-param name="layoutLocation" select="'group1'"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRtesAllSections">
+							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$taskDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="stepsSection">
@@ -194,7 +194,7 @@
 							</td>
 						</tr>
 					</xsl:if>				
-					
+							<!-- This is a sample to embed custom relationships into the existing relationships section -->
 							<xsl:call-template name="extendedRefsSectionsEmbedded">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>

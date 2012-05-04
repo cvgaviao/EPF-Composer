@@ -118,7 +118,7 @@
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$description"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRtesAllSections">
+							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$description"/>
 							</xsl:call-template>
 							<xsl:if test="$elementType != 'CustomCategory'">

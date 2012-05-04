@@ -115,7 +115,7 @@
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$artifactDescription"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRtesAllSections">
+							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$artifactDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="workProductIllustrationsSection"/>
