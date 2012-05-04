@@ -110,7 +110,7 @@
 							<xsl:call-template name="relationshipsSection">
 								<xsl:with-param name="elementType" select="$elementType"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRefsAllSections">
+							<xsl:call-template name="extendedRefsSectionsAll">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>
 							</xsl:call-template>

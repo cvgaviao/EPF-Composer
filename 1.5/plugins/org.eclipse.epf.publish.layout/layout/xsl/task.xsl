@@ -117,12 +117,18 @@
 								<xsl:with-param name="description" select="$taskDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
-							<xsl:call-template name="extendedRefsAllSections">
+							<xsl:call-template name="extendedRefsSectionsAll">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$taskDescription"/>
+							</xsl:call-template>
+							<xsl:call-template name="extendedRefsSectionsAll">
+								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:with-param name="iconLevel" select="'two'"/>
+								<xsl:with-param name="layoutLocation" select="'group1'"/>
 							</xsl:call-template>
 							<xsl:call-template name="extendedRtesAllSections">
 								<xsl:with-param name="descriptionDown" select="$taskDescription"/>
@@ -189,6 +195,11 @@
 						</tr>
 					</xsl:if>				
 					
+							<xsl:call-template name="extendedRefsSectionsEmbedded">
+								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:with-param name="iconLevel" select="'two'"/>
+							</xsl:call-template>
+							
 					<xsl:if test="count($performedBy) + count($additionallyPerformedBy) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$rolesText"/></th>

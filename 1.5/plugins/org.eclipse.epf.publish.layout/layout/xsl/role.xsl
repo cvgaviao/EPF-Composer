@@ -98,7 +98,7 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection"/>
-							<xsl:call-template name="extendedRefsAllSections">
+							<xsl:call-template name="extendedRefsSectionsAll">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>
 							</xsl:call-template>

@@ -112,7 +112,7 @@
 								<xsl:with-param name="udt_levelsOfAdoption_text" select="$udt_levelsOfAdoption_text"/>
 								<xsl:with-param name="udt_additionalInfo_text" select="$udt_additionalInfo_text"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRefsAllSections">
+							<xsl:call-template name="extendedRefsSectionsAll">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'three'"/>
 							</xsl:call-template>
