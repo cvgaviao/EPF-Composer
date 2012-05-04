@@ -54,6 +54,9 @@ public class ExtendedReferenceImpl extends MetaElementImpl implements ExtendedRe
 		
 		valueTypes = XMLUtil.getChildTextsByTagName(element, IMetaDef.valueType);
 		contributeTo = element.getAttribute(IMetaDef.contributeTo);
+		if (contributeTo != null) {
+			contributeTo = contributeTo.toLowerCase();
+		}
 		if (Roles.equals(contributeTo)) {
 			valueTypes = Collections.singletonList(UmaPackage.eINSTANCE.getRole().getInstanceClass().getName());
 		} else if (WorkProducts.equals(contributeTo)) {

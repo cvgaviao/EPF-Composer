@@ -8,7 +8,7 @@ public interface ExtendedReference extends ExtendedFeature {
 		
 	public String Roles = "roles"; 					//$NON-NLS-1$
 	
-	public String WorkProducts = "workProducts"; 	//$NON-NLS-1$
+	public String WorkProducts = "workproducts"; 	//$NON-NLS-1$
 	
 	public EReference getReference();
 	
