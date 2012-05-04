@@ -21,7 +21,7 @@
 		<xsl:param name="iconLevel"/>
 		<xsl:param name="layoutLocation"/>
 		
-		<!-- -->
+		<!-- render all sections with a specific layout="VALUE" except no layout= attribute -->
 		<xsl:if test="string($layoutLocation)">
 			<xsl:variable name="theSections" select="$elementDown/section[@type='reference' and @layout=$layoutLocation]"/>
 			<xsl:call-template name="renderReferenceLists">
@@ -30,9 +30,9 @@
 			</xsl:call-template>
 		</xsl:if>
 
-		<!-- -->
+		<!-- render all sections without layout= attribute -->
 		<xsl:if test="not(string($layoutLocation))">
-			<xsl:variable name="theSections" select="$elementDown/section[@type='reference' and (not(@layout))]"/>
+			<xsl:variable name="theSections" select="$elementDown/section[@type='reference' and (not(@layout)) ]"/>
 			<xsl:call-template name="renderReferenceLists">
 				<xsl:with-param name="sections" select="$theSections"/>
 				<xsl:with-param name="iconLevelDown" select="$iconLevel"/>

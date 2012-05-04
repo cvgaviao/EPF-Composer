@@ -90,6 +90,7 @@
 							<xsl:call-template name="relationshipsSection2"/>
 							<xsl:call-template name="extendedRefsSectionsAll">
 								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$contentDescription"/>

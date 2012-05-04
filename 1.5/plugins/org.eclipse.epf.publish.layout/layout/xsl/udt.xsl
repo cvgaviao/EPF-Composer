@@ -115,6 +115,7 @@
 							<xsl:call-template name="extendedRefsSectionsAll">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'three'"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="extendedRtesAllSections">
 								<xsl:with-param name="descriptionDown" select="$presentation/Element"/>
