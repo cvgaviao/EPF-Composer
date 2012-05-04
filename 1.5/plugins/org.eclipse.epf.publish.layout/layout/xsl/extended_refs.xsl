@@ -77,8 +77,9 @@
 	<xsl:template name="extendedRefsSectionsEmbedded">
 		<xsl:param name="elementDown"/>
 		<xsl:param name="iconLevel"/>
+		<xsl:param name="layoutLocation"/>
 		
-		<xsl:for-each select="$elementDown/section[@type='reference']">
+		<xsl:for-each select="$elementDown/section[@type='reference' and @layout=$layoutLocation]">
 
 			<xsl:for-each select="referenceList[@format='nested list']">
 				

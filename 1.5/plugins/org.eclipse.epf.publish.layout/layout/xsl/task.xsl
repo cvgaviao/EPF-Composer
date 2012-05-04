@@ -198,6 +198,7 @@
 							<xsl:call-template name="extendedRefsSectionsEmbedded">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>
+								<xsl:with-param name="layoutLocation" select="'head'"/>
 							</xsl:call-template>
 							
 					<xsl:if test="count($performedBy) + count($additionallyPerformedBy) > 0">
