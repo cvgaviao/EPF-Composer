@@ -70,7 +70,7 @@
 					<xsl:call-template name="customOppositeRelationshipsEmbedded">
 						<xsl:with-param name="elementDown" select="/Element"/>
 						<xsl:with-param name="iconLevel" select="'two'"/>
-						<xsl:with-param name="layoutLocation" select="'head'"/>
+						<xsl:with-param name="layoutLocation" select="'rel_head'"/>
 					</xsl:call-template>
 				
 					<xsl:if test="count($deliverableParents) > 0">
@@ -129,13 +129,7 @@
 							</td>
 						</tr>
 					</xsl:if>		
-					
-					<xsl:call-template name="customOppositeRelationshipsEmbedded">
-						<xsl:with-param name="elementDown" select="/Element"/>
-						<xsl:with-param name="iconLevel" select="'two'"/>
-						<xsl:with-param name="layoutLocation" select="'middle'"/>
-					</xsl:call-template>
-					
+										
 					<xsl:if test="count($categories) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$categoriesText"/></th>
@@ -191,6 +185,7 @@
 							</td>
 						</tr>
 					</xsl:if>
+					
 					<xsl:if test="count($responsibleRoles) + count($modifyRoles) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$rolesText"/></th>
@@ -228,6 +223,12 @@
 							</td>							
 						</tr>
 					</xsl:if>
+						<!--  next template call is an example for advanced skin customization -->
+						<xsl:call-template name="customOppositeRelationshipsEmbedded">
+							<xsl:with-param name="elementDown" select="/Element"/>
+							<xsl:with-param name="iconLevel" select="'two'"/>
+							<xsl:with-param name="layoutLocation" select="'rel_middle'"/>
+						</xsl:call-template>
 					<xsl:if test="count($mandatoryInputToTasks) + count($optionalInputToTasks) + count($outputFromTasks) + count($mandatoryInputToTasks_fromSlots) + count($optionalInputToTasks_fromSlots) + count($outputFromTasks_fromSlots) > 0">
 						<tr valign="top">
 							<th class="sectionTableHeading" scope="row"><xsl:value-of select="$tasksText"/></th>
@@ -310,10 +311,11 @@
 						</tr>
 					</xsl:if>
 					
+					<!--  next template call is an example for advanced skin customization -->
 					<xsl:call-template name="customOppositeRelationshipsEmbedded">
 						<xsl:with-param name="elementDown" select="/Element"/>
 						<xsl:with-param name="iconLevel" select="'two'"/>
-						<xsl:with-param name="layoutLocation" select="'tail'"/>
+						<xsl:with-param name="layoutLocation" select="'rel_tail'"/>
 					</xsl:call-template>
 					
 					<xsl:call-template name="addDescriptors">

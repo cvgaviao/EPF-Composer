@@ -102,6 +102,7 @@
 							</xsl:call-template>			
 							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$descriptorDescription"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="propertiesSection">
 								<xsl:with-param name="contentDescription" select="$contentDescription"/>

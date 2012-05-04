@@ -112,6 +112,7 @@
 							</xsl:call-template>
 							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$outcomeDescription"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="workProductIllustrationsSection"/>
 							<xsl:call-template name="keyConsiderationsSection">

@@ -120,6 +120,7 @@
 							</xsl:call-template>
 							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$description"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:if test="$elementType != 'CustomCategory'">
 								<xsl:call-template name="illustrationsSection"/>

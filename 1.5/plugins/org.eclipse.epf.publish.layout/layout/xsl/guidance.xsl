@@ -121,6 +121,7 @@
 							</xsl:call-template>
 							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$contentDescription"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="moreInfoSection">
 								<xsl:with-param name="referenceList" select="referenceList"/>

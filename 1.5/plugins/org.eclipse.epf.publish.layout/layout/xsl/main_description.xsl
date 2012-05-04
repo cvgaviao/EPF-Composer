@@ -39,6 +39,7 @@
 		<!--
 		<xsl:call-template name="extendedRtesSectionsAll">
 			<xsl:with-param name="descriptionDown" select="$description"/>
+			<xsl:with-param name="layoutLocation" select="''"/>
 		</xsl:call-template>
 		-->
 	</xsl:template>

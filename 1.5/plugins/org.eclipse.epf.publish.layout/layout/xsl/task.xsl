@@ -122,16 +122,23 @@
 								<xsl:with-param name="iconLevel" select="'two'"/>
 								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
+								<!--  next template call is an example for advanced skin customization -->
+								<xsl:call-template name="extendedRtesSectionsAll">
+									<xsl:with-param name="descriptionDown" select="$taskDescription"/>
+									<xsl:with-param name="layoutLocation" select="'rte_group1'"/>
+								</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$taskDescription"/>
 							</xsl:call-template>
-							<xsl:call-template name="extendedRefsSectionsAll">
-								<xsl:with-param name="elementDown" select="/Element"/>
-								<xsl:with-param name="iconLevel" select="'two'"/>
-								<xsl:with-param name="layoutLocation" select="'group1'"/>
-							</xsl:call-template>
+								<!--  next template call is an example for advanced skin customization -->
+								<xsl:call-template name="extendedRefsSectionsAll">
+									<xsl:with-param name="elementDown" select="/Element"/>
+									<xsl:with-param name="iconLevel" select="'two'"/>
+									<xsl:with-param name="layoutLocation" select="'ref_group1'"/>
+								</xsl:call-template>
 							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$taskDescription"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="stepsSection">
 								<xsl:with-param name="description" select="$taskDescription"/>
@@ -194,11 +201,11 @@
 							</td>
 						</tr>
 					</xsl:if>				
-							<!-- This is a sample to embed custom relationships into the existing relationships section -->
+							<!--  next template call is an example for advanced skin customization -->
 							<xsl:call-template name="extendedRefsSectionsEmbedded">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'two'"/>
-								<xsl:with-param name="layoutLocation" select="'head'"/>
+								<xsl:with-param name="layoutLocation" select="'rel_head'"/>
 							</xsl:call-template>
 							
 					<xsl:if test="count($performedBy) + count($additionallyPerformedBy) > 0">

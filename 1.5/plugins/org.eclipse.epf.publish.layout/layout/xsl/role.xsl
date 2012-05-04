@@ -103,16 +103,18 @@
 								<xsl:with-param name="iconLevel" select="'two'"/>
 								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
-							<xsl:call-template name="customOppositeRelationshipsAll">
-								<xsl:with-param name="elementDown" select="/Element"/>
-								<xsl:with-param name="iconLevel" select="'two'"/>
-								<xsl:with-param name="layoutLocation" select="'Reverse References'"/>
-							</xsl:call-template>
+								<!--  next template call is an example for advanced skin customization -->
+								<xsl:call-template name="customOppositeRelationshipsAll">
+									<xsl:with-param name="elementDown" select="/Element"/>
+									<xsl:with-param name="iconLevel" select="'two'"/>
+									<xsl:with-param name="layoutLocation" select="'Reverse References'"/>
+								</xsl:call-template>
 							<xsl:call-template name="mainDescriptionSection">
 								<xsl:with-param name="description" select="$roleDescription"/>
 							</xsl:call-template>
 							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$roleDescription"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
 							<xsl:call-template name="illustrationsSection"/>
 							<xsl:call-template name="staffingSection"/>
@@ -151,7 +153,7 @@
 				<xsl:call-template name="customOppositeRelationshipsEmbedded">
 					<xsl:with-param name="elementDown" select="/Element"/>
 					<xsl:with-param name="iconLevel" select="'two'"/>
-					<xsl:with-param name="layoutLocation" select="'head'"/>
+					<xsl:with-param name="layoutLocation" select="'rel_head'"/>
 				</xsl:call-template>
 				
 				<xsl:call-template name="showParentPractices"></xsl:call-template> 	
@@ -164,11 +166,12 @@
 					<xsl:with-param name="refName" select="$additionallyPerformsText"/>
 					<xsl:with-param name="refElement" select="$additionallyPerforms"/>
 				</xsl:call-template>
-				<xsl:call-template name="customOppositeRelationshipsEmbedded">
-					<xsl:with-param name="elementDown" select="/Element"/>
-					<xsl:with-param name="iconLevel" select="'two'"/>
-					<xsl:with-param name="layoutLocation" select="'middle'"/>
-				</xsl:call-template>
+					<!--  next template call is an example for advanced skin customization -->
+					<xsl:call-template name="customOppositeRelationshipsEmbedded">
+						<xsl:with-param name="elementDown" select="/Element"/>
+						<xsl:with-param name="iconLevel" select="'two'"/>
+						<xsl:with-param name="layoutLocation" select="'rel_middle'"/>
+					</xsl:call-template>
 				<xsl:if test="count($workProductModifies) + count($workProductSlotModifies) > 0">
 					<tr valign="top">
 						<th class="sectionTableHeading" scope="row"><xsl:value-of select="$modifiesText"/></th>
@@ -213,11 +216,12 @@
 					<xsl:with-param name="descriptors" select="referenceList[@name='descriptors']/Element"/>
 					<xsl:with-param name="colspan" select="'1'"/>
 				</xsl:call-template>
-				<xsl:call-template name="customOppositeRelationshipsEmbedded">
-					<xsl:with-param name="elementDown" select="/Element"/>
-					<xsl:with-param name="iconLevel" select="'two'"/>
-					<xsl:with-param name="layoutLocation" select="'tail'"/>
-				</xsl:call-template>
+					<!--  next template call is an example for advanced skin customization -->
+					<xsl:call-template name="customOppositeRelationshipsEmbedded">
+						<xsl:with-param name="elementDown" select="/Element"/>
+						<xsl:with-param name="iconLevel" select="'two'"/>
+						<xsl:with-param name="layoutLocation" select="'rel_tail'"/>
+					</xsl:call-template>
 			</table>
 		</div>
 	</xsl:template>
