@@ -1222,6 +1222,15 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				
 				ReferenceTable referenceTable = propUtil.getReferenceTable(element, table, false);								
 				
+				if (referenceTable == null && this instanceof DescriptorLayout) {
+					MethodElement linkedElement = ((DescriptorLayout) this).getLinkedElement();
+					if (linkedElement != null) {
+						referenceTable = propUtil.getReferenceTable(linkedElement, table, false);
+						colList0 = propUtil.getExtendedReferenceList(linkedElement, table.getColumnReference(), false);
+						rowList0 = propUtil.getExtendedReferenceList(linkedElement, table.getRowReference(), false);					
+					}
+				}
+				
 				Map<MethodElement, MethodElement> colMap = new HashMap<MethodElement, MethodElement>();
 				Map<MethodElement, MethodElement> rowMap = new HashMap<MethodElement, MethodElement>();
 				for (MethodElement e : colList0) {
@@ -1234,7 +1243,8 @@ public abstract class AbstractElementLayout implements IElementLayout {
 					MethodElement r = ConfigurationHelper.getCalculatedElement(e, realizer);
 					if (r != null) {
 						rowMap.put(r, e);
-					}				}				
+					}				
+				}				
 				XmlElement ccXml = cXml.newChild(TAG_ColumnList);
 				for (MethodElement e : colList) {
 					XmlElement cccXml = ccXml.newChild(TAG_Column);
