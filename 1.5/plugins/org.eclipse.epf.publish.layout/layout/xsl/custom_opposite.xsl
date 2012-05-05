@@ -18,7 +18,32 @@
 		<xsl:param name="iconLevel"/>
 		<xsl:param name="layoutLocation"/>
 		
-		<xsl:for-each select="referenceList[@referenceType='customOpposite' and @layout=$layoutLocation]">
+		<!-- render all opposite lists with a specific layout="VALUE" except no layout= attribute -->
+		<xsl:if test="string($layoutLocation)">
+			<xsl:variable name="oppositeLists" select="referenceList[@referenceType='customOpposite' and @layout=$layoutLocation]"/>
+			<xsl:call-template name="renderOppositeLists">
+				<xsl:with-param name="oppositeLists" select="$oppositeLists"/>
+				<xsl:with-param name="iconLevel" select="$iconLevel"/>
+			</xsl:call-template>
+		</xsl:if>
+
+		<!-- render all opposite lists without layout= attribute -->
+		<xsl:if test="not(string($layoutLocation))">
+			<xsl:variable name="oppositeLists" select="referenceList[@referenceType='customOpposite' and (not(@layout)) ]"/>
+			<xsl:call-template name="renderOppositeLists">
+				<xsl:with-param name="oppositeLists" select="$oppositeLists"/>
+				<xsl:with-param name="iconLevel" select="$iconLevel"/>
+			</xsl:call-template>
+		</xsl:if>
+				
+	</xsl:template>
+
+	<!-- for internal use in this file only -->
+	<xsl:template name="renderOppositeLists">
+		<xsl:param name="oppositeLists"/>
+		<xsl:param name="iconLevel"/>
+		
+		<xsl:for-each select="$oppositeLists">
 			
 					<xsl:if test="count(*) > 0">
 						<tr valign="top">
@@ -58,7 +83,7 @@
 		</xsl:for-each>
 		
 	</xsl:template>
-
+	
 	<xsl:template name="customOppositeRelationshipsAll">
 		<xsl:param name="elementDown"/>
 		<xsl:param name="iconLevel"/>

@@ -153,7 +153,7 @@
 				<xsl:call-template name="customOppositeRelationshipsEmbedded">
 					<xsl:with-param name="elementDown" select="/Element"/>
 					<xsl:with-param name="iconLevel" select="'two'"/>
-					<xsl:with-param name="layoutLocation" select="'rel_head'"/>
+					<xsl:with-param name="layoutLocation" select="''"/>
 				</xsl:call-template>
 				
 				<xsl:call-template name="showParentPractices"></xsl:call-template> 	
