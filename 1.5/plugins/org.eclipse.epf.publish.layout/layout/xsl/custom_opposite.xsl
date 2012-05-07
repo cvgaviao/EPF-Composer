@@ -70,7 +70,7 @@
 												</img>
 												<a>
 													<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-													<xsl:value-of disable-output-escaping="yes" select="@Name"/>
+													<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
 												</a>
 											</li>
 										</xsl:if>
@@ -121,7 +121,7 @@
 												</img>
 												<a>
 													<xsl:attribute name="href"><xsl:value-of select="@BackPath"/><xsl:value-of select="@Url"/></xsl:attribute>
-													<xsl:value-of disable-output-escaping="yes" select="@Name"/>
+													<xsl:value-of disable-output-escaping="yes" select="@DisplayName"/>
 												</a>
 											</li>
 										</xsl:if>
