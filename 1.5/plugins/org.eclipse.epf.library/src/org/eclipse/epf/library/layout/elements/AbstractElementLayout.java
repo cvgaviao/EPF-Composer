@@ -1093,6 +1093,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			}
 			List list = PropUtil.getPropUtil().getReferencingList(element, opposite.getTargetReference());
 			if (list != null && !list.isEmpty()) {
+				list = ConfigurationHelper.getCalculatedElements(list,  layoutManager.getElementRealizer());
+			}
+			if (list != null && !list.isEmpty()) {
 				addReferences(opposite, elementXml, opposite.getName(), list);
 			}			
 		}
