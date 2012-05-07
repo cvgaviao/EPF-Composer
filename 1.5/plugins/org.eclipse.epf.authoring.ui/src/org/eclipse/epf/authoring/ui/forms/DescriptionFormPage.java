@@ -640,6 +640,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	 */
 	public void init(IEditorSite site, IEditorInput input) {
 		super.init(site, input);
+		init_();
+	}
+
+	protected void init_() {
 		if (AuthoringUIPreferences.getEnableAutoNameGen()) {
 			if (AuthoringUIPreferences.getEnableAutoNameGen()) {
 				if (LibraryUtil.hasNameTrackPresentationNameMark(methodElement)) {
