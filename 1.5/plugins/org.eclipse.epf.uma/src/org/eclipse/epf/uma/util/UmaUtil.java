@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 package org.eclipse.epf.uma.util;
 
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -962,4 +963,19 @@ public class UmaUtil {
 		return false;
 	}
 
+	public static void dumpUmaTypes() {
+		Set<Class> set = new HashSet<Class>();
+		List<String> types = new ArrayList<String>();
+		for (Method m : UmaFactory.eINSTANCE.getClass().getDeclaredMethods()) {
+			Class cls = m.getReturnType();
+			if (cls != null && set.add(cls)) {
+				types.add(cls.getName());
+			}
+		}
+		Collections.sort(types);
+		for (String type : types) {
+			System.out.println(type);
+		}
+	}
+	
 }
