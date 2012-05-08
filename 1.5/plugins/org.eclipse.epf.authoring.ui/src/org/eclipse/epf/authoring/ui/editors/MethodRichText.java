@@ -114,7 +114,7 @@ public class MethodRichText extends RichText implements IMethodRichText {
 	 *            Rich text encoded in HTML format.
 	 */
 	@Override
-	protected String tidyText(String text) {
+	public String tidyText(String text) {
 		/*
 		 *  this will do the following to the HTML:
 		 *  1.  update Element Links

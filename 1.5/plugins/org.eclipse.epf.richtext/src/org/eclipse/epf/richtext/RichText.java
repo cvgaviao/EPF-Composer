@@ -1527,7 +1527,7 @@ public class RichText implements IRichText {
 	 * @param text
 	 *            rich text encoded in HTML format
 	 */
-	protected String tidyText(String text) {
+	public String tidyText(String text) {
 		return text;
 	}
 
@@ -1537,7 +1537,7 @@ public class RichText implements IRichText {
 	 * @param text
 	 *            rich text encoded in HTML format
 	 */
-	protected String formatText(String text) {
+	public String formatText(String text) {
 		if (text == null || text.length() == 0) {
 			return text;
 		}
