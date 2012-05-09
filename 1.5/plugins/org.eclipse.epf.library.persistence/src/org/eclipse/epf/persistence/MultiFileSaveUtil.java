@@ -675,6 +675,9 @@ public final class MultiFileSaveUtil {
 			if (resource == null) {
 			}
 			String pluginDir = null;
+			if (! UmaUtil.hasDirectResource(plugin)) {
+				resource = null;
+			}
 			if(resource != null) {
 				pluginDir = new File(getFinalURI(resource).toFileString()).getParent();
 			}
