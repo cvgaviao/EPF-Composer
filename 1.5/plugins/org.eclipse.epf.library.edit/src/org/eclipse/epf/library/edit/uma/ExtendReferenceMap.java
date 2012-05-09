@@ -358,4 +358,17 @@ public class ExtendReferenceMap {
 		
 	};
 	
+	public Set<MethodElement> getExtendedReferencingSet(MethodElement element) {
+		Set<MethodElement> set = new HashSet<MethodElement>();
+		for (Map.Entry<String, Object>	entry : getMap().entrySet()) {
+			String name = entry.getKey();
+			Object value = entry.getValue();
+			if (name.startsWith(Opposite_) && value instanceof List) {
+				set.addAll((List) value);
+			}
+		}
+		return set;
+	}
+	
+	
 }

@@ -1,10 +1,11 @@
 package org.eclipse.epf.library.edit.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.meta.ReferenceTable;
@@ -213,4 +214,9 @@ public class PropUtil extends MethodElementPropUtil {
 		return list == null ? new ArrayList<MethodElement>() : list;
 	}
 
+	public Set<MethodElement> getExtendedReferencingSet(MethodElement element) {
+		ExtendReferenceMap map = getCachedExtendReferenceMap(element, false);
+		return map == null ? Collections.EMPTY_SET : map.getExtendedReferencingSet(element);
+	}
+	
 }
