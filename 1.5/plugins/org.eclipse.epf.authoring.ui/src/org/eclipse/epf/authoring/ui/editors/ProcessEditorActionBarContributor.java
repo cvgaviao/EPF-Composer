@@ -2172,7 +2172,7 @@ public class ProcessEditorActionBarContributor extends
 	@Override
 	public void setActiveEditor(IEditorPart part) {
 		super.setActiveEditor(part);
-		if (! ProcessUtil.isSynFree()) {
+		if (! ProcessUtil.isSynFree() || part == null) {
 			return;
 		}
 		IEditorPart editor = getActiveEditor();
