@@ -309,7 +309,15 @@ public class TypeDefUtil {
 			}
 		}
 		return null;
-	}			
+	}
+	
+	public static boolean hasLinkTypes(MethodElement element) {
+		ModifiedTypeMeta meta = getMdtMeta(element);
+		if (meta == null) {
+			return false;
+		}
+		return meta.getLinkTypes() != null && ! meta.getLinkTypes().isEmpty();
+	}
 	
 	public static String getTypeId(MethodElement element) {
 		if (element instanceof Practice) {
