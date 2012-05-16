@@ -81,6 +81,7 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.ActionManager;
 import org.eclipse.epf.library.edit.command.CommandStackChangedEvent;
 import org.eclipse.epf.library.edit.command.IResourceAwareCommand;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityDropCommand;
@@ -523,11 +524,15 @@ public class ProcessEditor extends MethodElementEditor implements
 			}
 			
 			for (Object obj : collection) {
+				if (! (obj instanceof MethodElement)) {
+					continue;
+				}
 				if (obj instanceof ContentDescription) {
 					obj = ((ContentDescription) obj).eContainer();
 				}
+				MethodElement element = (MethodElement) obj;
 				if (obj instanceof Task || obj instanceof Role
-						|| obj instanceof WorkProduct) {
+						|| obj instanceof WorkProduct || TypeDefUtil.hasLinkTypes(element)) {					
 					if (changedElementSet == null) {
 						changedElementSet = new HashSet<MethodElement>();
 					}
@@ -2647,14 +2652,14 @@ public class ProcessEditor extends MethodElementEditor implements
 		refreshAll();
 	}
 	
-	public void updateOnLinkedElementChange(Descriptor des) {
+	public void updateOnLinkedElementChange(BreakdownElement be) {
 		if (! ProcessUtil.isSynFree()) {
 			return;
 		}
 		if (changedElementSet == null) {
 			changedElementSet = new HashSet<MethodElement>();
 		}
-		changedElementSet.add(des);
+		changedElementSet.add(be);
 		
 		updateAndRefreshProcessModel();
 	}
