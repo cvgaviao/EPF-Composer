@@ -21,6 +21,7 @@ import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ProcessScopeUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -162,7 +163,7 @@ public class RealizationManager implements IRealizationManager {
 			return ((TaskDescriptor) element).getTask();
 		}
 		
-		return null;
+		return PropUtil.getPropUtil().getLinkedElement(element);
 	}
 
 	public Descriptor getDescriptor(Descriptor referencingDes, Activity parentAct, MethodElement element, EReference feature) {
@@ -316,17 +317,20 @@ public class RealizationManager implements IRealizationManager {
 		List<BreakdownElement> beList = act.getBreakdownElements();
 		for (int i = 0; i < beList.size(); i++) {
 			BreakdownElement be = beList.get(i);
-			if (be instanceof Descriptor && !actCollectedSet.contains(act)) {
-				MethodElement element = getLinkedElement((Descriptor) be);
-				if (changedElementSet.contains(element)) {
-					actCollectedSet.add(act);
-
-				} else if (be instanceof Descriptor) {
-					if (changedElementSet.contains(be)) {
+			if (!actCollectedSet.contains(act)) {
+				MethodElement element = getLinkedElement(be);
+				if (element != null) {
+					if (changedElementSet.contains(element)) {
 						actCollectedSet.add(act);
+	
+					} else if (be instanceof Descriptor) {
+						if (changedElementSet.contains(be)) {
+							actCollectedSet.add(act);
+						}
 					}
 				}
-			} else if (be instanceof Activity) {
+			}
+			if (be instanceof Activity) {
 				collectActivitiesToUpdate((Activity) be, actCollectedSet,
 						actProcessedSet, changedElementSet);
 			}
