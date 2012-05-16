@@ -89,4 +89,9 @@ public class MethodElementSetPropertyCommand extends AbstractCommand implements
 		}
 	}
 
+	@Override
+	public Collection<?> getAffectedObjects() {
+		return Collections.singletonList(element);
+	}
+	
 }
