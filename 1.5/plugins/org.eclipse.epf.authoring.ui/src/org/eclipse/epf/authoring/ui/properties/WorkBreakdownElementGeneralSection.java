@@ -29,7 +29,6 @@ import org.eclipse.epf.common.ui.util.MsgDialog;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.command.IActionManager;
-import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.process.BreakdownElementWrapperItemProvider;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
@@ -504,7 +503,7 @@ public class WorkBreakdownElementGeneralSection extends
 					return;
 				}
 				ctrl_method_element.setText(getLinkedElementName(element));
-//					getEditor().updateOnLinkedElementChange(element);
+				getEditor().updateOnLinkedElementChange(element);
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e1) {
