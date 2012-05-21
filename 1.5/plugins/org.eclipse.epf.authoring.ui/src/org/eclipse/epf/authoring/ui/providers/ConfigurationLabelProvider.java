@@ -68,6 +68,9 @@ public class ConfigurationLabelProvider extends VariabilityElementLabelProvider 
 	 */
 	public String getText(Object object) {
 		String text = getText_(object);
+		if(object instanceof IWrapperItemProvider){
+			object = TngUtil.unwrap(object);
+		}
 		if (object instanceof ContentElement) {
 			ConfigurationData configData = ConfigurationHelper.getDelegate().getConfigurationData(config);
 			if (configData.isSuppressed((ContentElement) object)) {
