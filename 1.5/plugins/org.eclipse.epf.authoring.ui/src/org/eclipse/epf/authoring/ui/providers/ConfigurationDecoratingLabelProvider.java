@@ -1,13 +1,13 @@
 package org.eclipse.epf.authoring.ui.providers;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.edit.provider.IWrapperItemProvider;
 import org.eclipse.epf.library.configuration.ConfigurationData;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
-import org.eclipse.jface.viewers.ILabelDecorator;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -27,6 +27,9 @@ public class ConfigurationDecoratingLabelProvider extends
 	}
 
 	public Font getFont(Object element) {
+		if(element instanceof IWrapperItemProvider){
+			element = TngUtil.unwrap(element);
+		}
 		if (element instanceof ContentElement) {
 			ConfigurationData configData = ConfigurationHelper.getDelegate().getConfigurationData(config);
 			if (configData.isSuppressed((ContentElement) element)) {
