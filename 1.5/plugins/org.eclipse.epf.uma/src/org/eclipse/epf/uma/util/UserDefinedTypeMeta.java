@@ -161,8 +161,9 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 				String refName = refNames.get(i);
 				getReferenceQualifiedNameToIdMap().put(refName, refId);
 				getReferenceQualifiedIdToNameMap().put(refId, refName);
-				EReference ref = EcoreFactory.eINSTANCE.createEReference();
-				ref.setName(refId);
+//				EReference ref = EcoreFactory.eINSTANCE.createEReference();
+//				ref.setName(refId);
+				EReference ref = UmaUtil.createReference(refId);
 				qualifiedReferences.add(ref);
 			}
 			qualifiedReferencesLoaded = true;
