@@ -22,12 +22,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
+import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.uma.DescriptorExt;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.library.edit.uma.MethodPluginExt;
+import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.PropUtil;
@@ -137,6 +139,22 @@ public class TypeDefUtil {
 	}
 	
 	public Object eGet(EObject obj, EStructuralFeature feature, boolean toModify) {
+		try {
+			return eGet_(obj, feature, toModify);			
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);			
+			if (DebugUtil.udtDebug || DebugUtil.uiDebug) {
+				e.printStackTrace();
+			}
+		}
+		boolean isMany = false;
+		if (feature instanceof EReference) {
+			isMany = ((EReference) feature).isMany();
+		}
+		return isMany ? new ArrayList() : null;
+	}
+	
+	private Object eGet_(EObject obj, EStructuralFeature feature, boolean toModify) {
 		if (obj == null) {
 			return null;
 		}		
@@ -173,7 +191,19 @@ public class TypeDefUtil {
 		return obj.eGet(feature);
 	}
 	
+	
 	public void eSet(EObject obj, EStructuralFeature feature, Object newValue) {
+		try {
+			eSet_(obj, feature, newValue);			
+		} catch (Throwable e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+			if (DebugUtil.udtDebug || DebugUtil.uiDebug) {
+				e.printStackTrace();
+			}
+		}		
+	}
+	
+	private void eSet_(EObject obj, EStructuralFeature feature, Object newValue) {
 		if (obj instanceof ContentDescription) {
 			ExtendedAttribute eAtt = getAssociatedExtendedAttribute(feature);
 			if (eAtt != null && (newValue == null || newValue instanceof String) ) {
