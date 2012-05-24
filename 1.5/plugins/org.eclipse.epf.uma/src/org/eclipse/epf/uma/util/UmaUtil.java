@@ -92,7 +92,7 @@ public class UmaUtil {
 	}
 	
 	public static EReference MethodElement_UdtList = createReference("udtList");	//$NON-NLS-1$
-	public static final String Unresolved = "unresolved";		//$NON-NLS-1$
+	public static final String Unresolved = new String("unresolved");		//$NON-NLS-1$  Don' use Unresolved = "unresolved";
 	
 	private static IUmaUtilProvider provider;
 	public static Set<String> unresolvedGuidSet = new HashSet<String>();
@@ -110,14 +110,14 @@ public class UmaUtil {
 	}
 	
 	public static boolean isUnresolved(MethodElement element) {
-		return element.getName() == Unresolved;
+		return element.getName() == Unresolved;		//Don't use "equals" !
 	}
 	
 	public static List<MethodElement> filterOutUnresolved(List<MethodElement> list) {
 		List<MethodElement> filteredList = new ArrayList<MethodElement>();
 		if (list != null && !list.isEmpty()) {
 			for (MethodElement element : list) {
-				if (! isUnresolved(element)) {
+				if (! isUnresolved(element) && isInLibrary(element)) {
 					filteredList.add(element);
 				}
 			}
