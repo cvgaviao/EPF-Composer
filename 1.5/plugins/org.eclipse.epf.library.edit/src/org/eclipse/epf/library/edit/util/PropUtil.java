@@ -123,6 +123,9 @@ public class PropUtil extends MethodElementPropUtil {
 		if (value == null) {
 			return new ArrayList<MethodElement>();
 		}
+		if (! toModify) {
+			return UmaUtil.filterOutUnresolved(value);
+		}
 		return value;
 	}
 	

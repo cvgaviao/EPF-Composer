@@ -113,6 +113,18 @@ public class UmaUtil {
 		return element.getName() == Unresolved;
 	}
 	
+	public static List<MethodElement> filterOutUnresolved(List<MethodElement> list) {
+		List<MethodElement> filteredList = new ArrayList<MethodElement>();
+		if (list != null && !list.isEmpty()) {
+			for (MethodElement element : list) {
+				if (! isUnresolved(element)) {
+					filteredList.add(element);
+				}
+			}
+		}
+		return filteredList;
+	}
+	
 	/**
 	 * Replaces the feature values of an old method element with the
 	 * corresponding feature values of a new method element.
