@@ -645,8 +645,11 @@ public class DescriptorPropUtil extends WbePropUtil {
 		if (parent == null || child == null) {
 			return;
 		}
-		DescriptorExt ext = (DescriptorExt) getExtendObject(parent, true);
-		ext.addToCustomizingChildren(child);
+		Object eObj = getExtendObject(parent, true);
+		if (eObj instanceof DescriptorExt) {
+			DescriptorExt ext = (DescriptorExt) eObj;
+			ext.addToCustomizingChildren(child);
+		}
 	}
 	
 	public boolean isDynamicAndExclude(Object obj, Descriptor desc,
