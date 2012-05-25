@@ -1262,7 +1262,7 @@ public class WorkBreakdownElementGeneralSection extends
 	
 	private String getLinkedElementName(MethodElement element) {
 		MethodElement linkedElement = PropUtil.getPropUtil().getLinkedElement(element);
-		return linkedElement == null ? PropertiesResources.Process_None : linkedElement.getName();
+		return linkedElement == null ? PropertiesResources.Process_None : TngUtil.getLabelWithPath(linkedElement);
 	}
 		
 	private boolean accpetLink() {

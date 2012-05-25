@@ -22,6 +22,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.LinkMethodElementCommand;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.CompositeRole;
 import org.eclipse.epf.uma.Role;
@@ -207,7 +208,8 @@ public class RoleDescriptorGeneralSection extends DescriptorGeneralSection {
 	private String getMethodElementName(RoleDescriptor element) {
 		String str = PropertiesResources.Process_None; 
 		if (element.getRole() != null) {
-			str = element.getRole().getName();
+//			str = element.getRole().getName();
+			str = TngUtil.getLabelWithPath(element.getRole());
 		}
 
 		return str;

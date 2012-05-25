@@ -22,6 +22,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.command.LinkMethodElementCommand;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
+import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.TaskDescriptor;
@@ -149,7 +150,8 @@ public class TaskDescriptorGeneralSection extends
 	private String getMethodElementName(TaskDescriptor element) {
 		String str = PropertiesResources.Process_None; 
 		if (element.getTask() != null) {
-			str = element.getTask().getName();
+//			str = element.getTask().getName();
+			str = TngUtil.getLabelWithPath(element.getTask());
 		}
 
 		return str;

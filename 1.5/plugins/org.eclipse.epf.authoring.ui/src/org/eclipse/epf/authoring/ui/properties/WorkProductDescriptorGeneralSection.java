@@ -278,7 +278,8 @@ public class WorkProductDescriptorGeneralSection extends
 	private String getMethodElementName(WorkProductDescriptor element) {
 		String str = PropertiesResources.Process_None; 
 		if (element.getWorkProduct() != null) {
-			str = element.getWorkProduct().getName();
+//			str = element.getWorkProduct().getName();
+			str = TngUtil.getLabelWithPath(element.getWorkProduct());
 		}
 
 		return str;
