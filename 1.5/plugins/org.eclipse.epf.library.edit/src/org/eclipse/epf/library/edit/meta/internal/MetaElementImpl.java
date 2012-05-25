@@ -244,5 +244,16 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		
 		sb.append("\n");
 	}
+
+	public boolean isAncestorOf(MetaElement element) {
+		MetaElement parent = element == null ? null : element.getParent();
+		while (parent != null) {
+			if (parent == this) {
+				return true;
+			}
+			parent = parent.getParent();
+		}
+		return false;
+	}
 	
 }

@@ -42,6 +42,9 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		public String getDebugString(int ix, String indent) {
 			return "";//$NON-NLS-1$
 		}
+		public boolean isAncestorOf(MetaElement element) {
+			return false;
+		}
 	};
 		
 	public String getId();	
@@ -55,5 +58,6 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 	public boolean publish();
 	public String getLayout();
 	public String getDebugString(int ix, String indent);
+	public boolean isAncestorOf(MetaElement element);
 	
 }
