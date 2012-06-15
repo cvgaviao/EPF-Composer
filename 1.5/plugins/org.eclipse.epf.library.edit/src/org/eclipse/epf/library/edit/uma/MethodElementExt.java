@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.Comparators;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
+import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 public class MethodElementExt extends ExtendObject {
@@ -124,6 +128,26 @@ public class MethodElementExt extends ExtendObject {
 			extendedPropertyMap = new HashMap<Object, Object>();
 		}
 		return extendedPropertyMap;
+	}
+	
+	@Override
+	public boolean handleOppostie(OppositeFeature oFeature) {
+		return oFeature == UmaUtil.UdtListOpposite || TypeDefUtil.getInstance().getAssociatedExtendedOpposite(oFeature) != null;
+	}
+	
+	@Override
+	public Object getOppositeFeatureValue(OppositeFeature feature) {
+		if (feature == UmaUtil.UdtListOpposite) {
+			return PropUtil.getPropUtil().getReferencingList(
+					element,
+					TypeDefUtil.getInstance().getAssociatedExtendedReference(
+							UmaUtil.MethodElement_UdtList));
+		}
+		ExtendedOpposite extendedOpposite = TypeDefUtil.getInstance().getAssociatedExtendedOpposite(feature);
+		if (extendedOpposite != null) {
+			return PropUtil.getPropUtil().getReferencingList(element, extendedOpposite.getTargetReference());
+		}
+		return super.getOppositeFeatureValue(feature);
 	}
 	
 }

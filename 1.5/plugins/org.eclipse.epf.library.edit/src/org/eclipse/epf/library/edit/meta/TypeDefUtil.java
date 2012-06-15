@@ -42,7 +42,9 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.UmaFactory;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
+import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
@@ -431,6 +433,14 @@ public class TypeDefUtil {
 		}
 				
 		return sb.toString();
+	}
+	
+	public ExtendedOpposite getAssociatedExtendedOpposite(OppositeFeature oFeature) {
+		if (oFeature == null) {
+			return null;
+		}
+		ExtendedReference extendedReference = getAssociatedExtendedReference(oFeature.getTargetFeature());
+		return extendedReference == null ? null : extendedReference.getOpposite();
 	}
 	
 }

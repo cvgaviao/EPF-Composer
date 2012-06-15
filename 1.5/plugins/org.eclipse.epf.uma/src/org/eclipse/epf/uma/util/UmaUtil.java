@@ -63,6 +63,7 @@ import org.eclipse.epf.uma.WorkBreakdownElement;
 import org.eclipse.epf.uma.WorkOrder;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductType;
+import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 
 /**
  * Utility class for accessing and updating the UMA model objects.
@@ -92,6 +93,8 @@ public class UmaUtil {
 	}
 	
 	public static EReference MethodElement_UdtList = createReference("udtList");	//$NON-NLS-1$
+	public static OppositeFeature UdtListOpposite = new OppositeFeature(MethodElement.class, "udtListOpposite", MethodElement_UdtList, true);	//$NON-NLS-1$
+	
 	public static final String Unresolved = new String("unresolved");		//$NON-NLS-1$  Don' use Unresolved = "unresolved";
 	
 	private static IUmaUtilProvider provider;

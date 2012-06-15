@@ -762,6 +762,11 @@ public class MultiResourceEObject extends EObjectImpl implements
 	 * @return the value for the opposite feature
 	 */
 	public Object getOppositeFeatureValue(OppositeFeature feature) {
+		ExtendObject extendObject = getExtendObject();
+		if (extendObject != null && extendObject.handleOppostie(feature)) {
+			return extendObject.getOppositeFeatureValue(feature);
+		}
+				
 		Object value = getOppositeFeatureMap().get(feature);
 
 		// System.out.println("MultiResourceEObject.getOppositeFeatureValue():");
@@ -989,7 +994,16 @@ public class MultiResourceEObject extends EObjectImpl implements
 		eSet(feature, value);
 	}	
 	
-	public static class ExtendObject {		
+	public static class ExtendObject {
+		
+		public boolean handleOppostie(OppositeFeature oFeature) {
+			return false;
+		}
+		
+		public Object getOppositeFeatureValue(OppositeFeature feature) {
+			return null;
+		}
+		
 	}
 	
 	//-2: unknown
