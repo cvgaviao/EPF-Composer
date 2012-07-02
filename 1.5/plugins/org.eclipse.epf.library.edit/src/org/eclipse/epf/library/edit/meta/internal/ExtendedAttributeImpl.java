@@ -20,6 +20,7 @@ import org.w3c.dom.Element;
 public class ExtendedAttributeImpl  extends MetaElementImpl implements ExtendedAttribute {
 
 	private EAttribute att;	
+	private String valueType;
 	
 	public ExtendedAttributeImpl(MetaElement parent) {
 		super(parent);
@@ -29,10 +30,18 @@ public class ExtendedAttributeImpl  extends MetaElementImpl implements ExtendedA
 		return att;
 	}
 	
+	public String getValueType() {
+		return valueType;
+	}
+	
 	public void parseElement(Element element)	throws TypeDefException {
 		super.parseElement(element);			
 		att =  UmaUtil.createAttribute(getId());
-		TypeDefUtil.getInstance().associate(this, att);				
+		TypeDefUtil.getInstance().associate(this, att);			
+		valueType = element.getAttribute(IMetaDef.valueType);
+		if (valueType == null || valueType.length() == 0) {
+			valueType = IMetaDef.rte;
+		}
 	}
 		
 }

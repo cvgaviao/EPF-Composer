@@ -20,10 +20,12 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		
 	private List<ExtendedReference> references;
 	private List<ExtendedAttribute> rtes;
+	private List<ExtendedAttribute> attributes;
 
 	private List<ExtendedSection> sections;
 	private List<ExtendedSection> referenceSections;
 	private List<ExtendedSection> rteSections;
+	private List<ExtendedSection> attributeSections;
 	private List<ExtendedTable> tables;
 	
 	private List<String> linkTypes;
@@ -39,11 +41,19 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		return references;
 	}
 	
+	@Deprecated
 	public List<ExtendedAttribute> getRtes() {
 		if (rtes == null) {
 			rtes = new ArrayList<ExtendedAttribute>();
 		}
 		return rtes;
+	}
+	
+	public List<ExtendedAttribute> getAttributes() {
+		if (attributes == null) {
+			attributes = new ArrayList<ExtendedAttribute>();
+		}
+		return attributes;
 	}
 	
 	@Override
@@ -65,11 +75,19 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		return referenceSections;
 	}
 	
+	@Deprecated
 	public List<ExtendedSection> getRteSections() {
 		if (rteSections == null) {
 			rteSections = new ArrayList<ExtendedSection>();
 		}
 		return rteSections;
+	}
+	
+	public List<ExtendedSection> getAttributeSections() {
+		if (attributeSections == null) {
+			attributeSections = new ArrayList<ExtendedSection>();
+		}
+		return attributeSections;
 	}
 	
 	public List<ExtendedTable> getTables() {
@@ -142,9 +160,11 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 
 	private void init() {
 		getReferences().clear();
-		getRtes().clear();		
+		getRtes().clear();
+		getAttributes().clear();
 		getReferenceSections().clear();
 		getRteSections().clear();
+		getAttributeSections().clear();
 		getTables().clear();
 
 		for (ExtendedSection section : getSections()) {
@@ -156,6 +176,10 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 			} else if (IMetaDef.RTE.equals(section.getType())) {
 				getRteSections().add(section);
 				getRtes().addAll(section.getRtes());
+				
+			} else if (IMetaDef.ATTRIBUTE.equals(section.getType())) {
+				getAttributeSections().add(section);
+				getAttributes().addAll(section.getAttributes());
 			}
 		}
 	}
@@ -167,13 +191,16 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		getSections().addAll(linkedMeta.getSections());
 		getReferences().addAll(linkedMeta.getReferences());
 		getRtes().addAll(linkedMeta.getRtes());
+		getAttributes().addAll(linkedMeta.getAttributes());
 		getReferenceSections().addAll(linkedMeta.getReferenceSections());;
 		getRteSections().addAll(linkedMeta.getRteSections());
+		getAttributeSections().addAll(linkedMeta.getAttributeSections());
 		if (extendedFeatures == null) {
 			extendedFeatures = new HashSet<ExtendedFeature>();
 		}
 		extendedFeatures.addAll(linkedMeta.getReferences());
 		extendedFeatures.addAll(linkedMeta.getRtes());
+		extendedFeatures.addAll(linkedMeta.getAttributes());
 		return true;
 	}
 	

@@ -18,6 +18,7 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 	private String type;
 	private List<ExtendedReference> references;
 	private List<ExtendedAttribute> rtes;
+	private List<ExtendedAttribute> attributes;
 	private List<ExtendedTable> tables;
 	
 	public ExtendedSectionImpl(MetaElement parent) {
@@ -35,11 +36,19 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 		return references;
 	}
 	
+	@Deprecated
 	public List<ExtendedAttribute> getRtes() {
 		if (rtes == null) {
 			rtes = new ArrayList<ExtendedAttribute>();
 		}
 		return rtes;
+	}
+	
+	public List<ExtendedAttribute> getAttributes() {
+		if (attributes == null) {
+			attributes = new ArrayList<ExtendedAttribute>();
+		}
+		return attributes;
 	}
 	
 	public List<ExtendedTable> getTables() {
@@ -70,6 +79,16 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 				ExtendedAttributeImpl rte = new ExtendedAttributeImpl(this);
 				rte.parseElement(rElement);
 				getRtes().add(rte);
+			}
+		}
+		
+		getAttributes().clear();
+		List<Element> attributeElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.ATTRIBUTE);
+		if (attributeElements != null) {
+			for (Element aElement : attributeElements) {
+				ExtendedAttributeImpl att = new ExtendedAttributeImpl(this);
+				att.parseElement(aElement);
+				getAttributes().add(att);
 			}
 		}
 		

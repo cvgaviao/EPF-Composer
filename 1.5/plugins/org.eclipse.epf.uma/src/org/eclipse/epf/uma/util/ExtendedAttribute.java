@@ -5,5 +5,6 @@ import org.eclipse.emf.ecore.EAttribute;
 public interface ExtendedAttribute  extends ExtendedFeature {
 
 	public EAttribute getAttribute();
+	public String getValueType();
 	
 }

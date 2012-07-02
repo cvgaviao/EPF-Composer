@@ -15,6 +15,8 @@ public interface IMetaDef {
 	
 	public static final String RTE = "rte"; 									//$NON-NLS-1$
 	
+	public static final String ATTRIBUTE = "attribute"; 						//$NON-NLS-1$
+	
 	public static final String TABLE = "table";									///$NON-NLS-1$
 	
 	public static final String REFERENCE_QUALIFIERS = "reference_qualifiers"; 	//$NON-NLS-1$
@@ -49,6 +51,14 @@ public interface IMetaDef {
 	public static final String publish = "publish";								//$NON-NLS-1$
 	
 	public static final String layout = "layout";								//$NON-NLS-1$
+	
+	public static final String rte = "rte"; 									//$NON-NLS-1$
+	
+	public static final String text = "text"; 									//$NON-NLS-1$
+	
+	public static final String choice = "choice"; 								//$NON-NLS-1$
+	
+	public static final String attachment = "attachment"; 						//$NON-NLS-1$
 	
 	//APIs
 	public String getName();
