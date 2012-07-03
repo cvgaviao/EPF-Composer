@@ -40,7 +40,7 @@ public class ExtendedAttributeImpl  extends MetaElementImpl implements ExtendedA
 		TypeDefUtil.getInstance().associate(this, att);			
 		valueType = element.getAttribute(IMetaDef.valueType);
 		if (valueType == null || valueType.length() == 0) {
-			valueType = IMetaDef.rte;
+			valueType = IMetaDef.richText;
 		}
 	}
 		

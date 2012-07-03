@@ -52,7 +52,7 @@ public interface IMetaDef {
 	
 	public static final String layout = "layout";								//$NON-NLS-1$
 	
-	public static final String rte = "rte"; 									//$NON-NLS-1$
+	public static final String richText = "richText"; 									//$NON-NLS-1$
 	
 	public static final String text = "text"; 									//$NON-NLS-1$
 	
