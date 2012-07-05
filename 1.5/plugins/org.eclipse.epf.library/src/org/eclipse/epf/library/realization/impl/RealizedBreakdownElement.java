@@ -127,7 +127,9 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 		for (ExtendedAttribute eAtt : meta.getRtes()) {
 			getFeatureValue_(eAtt.getAttribute());
 		}
-
+		for (ExtendedAttribute eAtt : meta.getAttributes()) {
+			getFeatureValue_(eAtt.getAttribute());
+		}
 	}
 	
 	public Object getFeatureValue(EStructuralFeature feature) {

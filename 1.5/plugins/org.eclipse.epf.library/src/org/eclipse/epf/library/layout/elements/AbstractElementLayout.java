@@ -1124,6 +1124,31 @@ public abstract class AbstractElementLayout implements IElementLayout {
 			return;
 		}
 		
+		if (!  meta.getAttributeSections().isEmpty()) {
+			for (ExtendedSection section : meta.getAttributeSections()) {
+				List<ExtendedAttribute> attributes = section.getAttributes();
+				if (attributes == null || attributes.isEmpty()) {
+					continue;
+				}
+				XmlElement sectionXml = elementXml.newChild(TAG_SECTION);
+				setXmlAttributes(section, sectionXml);
+				boolean toRemoveSection = true;
+				for (ExtendedAttribute eAtt : attributes) {
+					XmlElement attXml = sectionXml.newChild(TAG_RTE);
+					String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
+					if (value != null && value.trim().length() > 0) {
+						toRemoveSection = false;	
+					}
+					setXmlAttributes(eAtt, attXml);
+					attXml.setValue(value);//$NON-NLS-1$
+				}
+				if (toRemoveSection) {
+					elementXml.removeChild(sectionXml);
+				}
+			}
+			return;
+		}
+		
 		for (ExtendedSection section : meta.getRteSections()) {
 			List<ExtendedAttribute> attributes = section.getRtes();
 			if (attributes == null || attributes.isEmpty()) {
@@ -1285,7 +1310,11 @@ public abstract class AbstractElementLayout implements IElementLayout {
 	
 	private void setXmlAttributes(ExtendedSection section, XmlElement xmlElement) {
 		xmlElement.setAttribute("name", section.getName());		//$NON-NLS-1$
-		xmlElement.setAttribute("type", section.getType());		//$NON-NLS-1$
+		String type = section.getType();
+		if (type.equals(IMetaDef.ATTRIBUTE)) {
+			type = IMetaDef.RTE;
+		}
+		xmlElement.setAttribute("type", type);		//$NON-NLS-1$
 		xmlElement.setAttribute("id", section.getId());			//$NON-NLS-1$
 		if (section.getLayout() != null && section.getLayout().length() > 0) {
 			xmlElement.setAttribute(IMetaDef.layout, section.getLayout());

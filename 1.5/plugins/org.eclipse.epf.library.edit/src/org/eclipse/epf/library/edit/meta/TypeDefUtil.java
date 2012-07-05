@@ -279,7 +279,9 @@ public class TypeDefUtil {
 		for (ExtendedAttribute eAtt : meta.getRtes()) {
 			list.add(eAtt.getAttribute());
 		}
-		
+		for (ExtendedAttribute eAtt : meta.getAttributes()) {
+			list.add(eAtt.getAttribute());
+		}
 		return list;
 	}
 	
