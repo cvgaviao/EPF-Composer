@@ -26,6 +26,8 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 
 	private String id;
 	private String name;
+	private String textContent;
+
 	private String globalId;
 	private boolean suppressed = false;;
 	private MetaElement parent;	
@@ -52,6 +54,10 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getTextContent() {
+		return textContent;
 	}
 	
 	public String getGlobalId() {
@@ -136,7 +142,8 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		if (nameElement != null) {
 			name = nameElement.getTextContent();
 		}
-		name = name.trim();
+		name = name.trim();		
+		textContent = element.getTextContent().trim();
 		
 		validateId(id);
 	}

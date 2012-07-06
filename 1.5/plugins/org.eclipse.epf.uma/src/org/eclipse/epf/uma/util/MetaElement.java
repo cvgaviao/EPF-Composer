@@ -45,10 +45,14 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		public boolean isAncestorOf(MetaElement element) {
 			return false;
 		}
+		public String getTextContent() {
+			return null;
+		}
 	};
 		
 	public String getId();	
 	public String getName();
+	public String getTextContent();
 	public String getGlobalId();
 	public MetaElement getParent();
 	public boolean isSuppressed();
