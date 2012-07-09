@@ -83,11 +83,11 @@ public class BaseFormPage extends FormPage {
 
 	protected static final int CLEAR_BUTTON = 6;
 
-	protected static final int ATTACH_BUTTON = 7;
+	public static final int ATTACH_BUTTON = 7;
 
-	protected static final int DETACH_BUTTON = 8;
+	public static final int DETACH_BUTTON = 8;
 	
-	protected static final int ATTACH_URL_BUTTON = 9;
+	public static final int ATTACH_URL_BUTTON = 9;
 	
 	/**
 	 * Table types.
@@ -325,7 +325,7 @@ public class BaseFormPage extends FormPage {
 	 *            The number of column cells taken up by the Label.
 	 * @return A new <code>Label</code>.
 	 */
-	protected static Label createLabel(FormToolkit toolkit, Composite parent,
+	public static Label createLabel(FormToolkit toolkit, Composite parent,
 			String text, int horizontalSpan) {
 		return createLabel(toolkit, parent, text, GridData.BEGINNING,
 				horizontalSpan);

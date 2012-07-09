@@ -60,7 +60,7 @@ public class GuidanceWithAttachmentsDescriptionPage extends GuidanceDescriptionP
 
 	private List ctrl_attached_files;
 
-	private static final String GUIDANCE_ATTACHMENT_LAST_DIRECTORY_BROWSED_PREF = "guidance_attachment_last_dir_browsed"; //$NON-NLS-1$
+	public static final String GUIDANCE_ATTACHMENT_LAST_DIRECTORY_BROWSED_PREF = "guidance_attachment_last_dir_browsed"; //$NON-NLS-1$
 
 	/**
 	 * Creates a new instance.
