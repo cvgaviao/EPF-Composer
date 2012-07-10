@@ -1136,6 +1136,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				for (ExtendedAttribute eAtt : attributes) {
 					XmlElement attXml = sectionXml.newChild(TAG_RTE);
 					String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
+					if (IMetaDef.attachment.equalsIgnoreCase(eAtt.getValueType())) {
+						value = ResourceHelper.convertToRteString(value);
+					}
 					if (value != null && value.trim().length() > 0) {
 						toRemoveSection = false;	
 					}
