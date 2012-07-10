@@ -1969,6 +1969,38 @@ public class ResourceHelper {
 		return getFolderAbsolutePath(plugin);
 	}
 	
+	public static String convertToRteString(String attachmentString) {
+		String str = "<ul>";		//$NON-NLS-1$		
+		if ( (attachmentString != null) && (attachmentString.indexOf(ConfigurationHelper.ATTRIBUTE_VALUE_SEPERATOR) > 0) ) {
+			attachmentString = attachmentString.replaceAll(ConfigurationHelper.ATTRIBUTE_VALUE_SEPERATOR, TngUtil.GUIDANCE_FILESTRING_SEPARATOR); 
+		}
+		List attachmentList = TngUtil.convertGuidanceAttachmentsToList(attachmentString);
+		for (Iterator iter = attachmentList.iterator();iter.hasNext();) {
+			String attachmentFile = (String) iter.next();
+			if (attachmentFile != null) {
+				Matcher m = ResourceHelper.p_template_attachment_url.matcher(attachmentFile);
+				if (!m.find()) {
+					String fileName = FileUtil.getFileName(attachmentFile);
+					str += "<li>";										//$NON-NLS-1$
+					str += "<a  href=\"" + attachmentFile;				//$NON-NLS-1$					
+					str += "\" target=\"_blank\"; >" + fileName;		//$NON-NLS-1$					
+					str += "</a>";										//$NON-NLS-1$
+					str += "</li>";										//$NON-NLS-1$ 
+				} else {
+					String fileName = m.group(2);
+					str += "<li>";										//$NON-NLS-1$
+					str += "<a  href=\"" + attachmentFile;				//$NON-NLS-1$					
+					str += "\" target=\"_blank\"; >" + fileName;		//$NON-NLS-1$					
+					str += "</a>";										//$NON-NLS-1$
+					str += "</li>";										//$NON-NLS-1$
+				}
+			}
+		}
+		str += "<ul>";													//$NON-NLS-1$
+		return str;
+	}
+	
+	
 
 	
 }
