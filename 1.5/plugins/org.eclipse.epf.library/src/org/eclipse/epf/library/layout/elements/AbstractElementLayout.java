@@ -95,6 +95,7 @@ import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.ExtendedTable;
+import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
 import org.eclipse.epf.uma.util.UmaUtil;
@@ -1136,7 +1137,14 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				for (ExtendedAttribute eAtt : attributes) {
 					XmlElement attXml = sectionXml.newChild(TAG_RTE);
 					String value = (String) getAttributeFeatureValue(eAtt.getAttribute());
-					if (IMetaDef.attachment.equalsIgnoreCase(eAtt.getValueType())) {
+					if (IMetaDef.choice.equalsIgnoreCase(eAtt.getValueType())) {
+						for (MetaElement me : eAtt.getChoiceValues()) {
+							if (me.getId().equals(value)) {
+								value = me.getTextContent();
+							}
+						}
+						
+					} else if (IMetaDef.attachment.equalsIgnoreCase(eAtt.getValueType())) {
 						value = ResourceHelper.convertToRteString(value);
 					}
 					if (value != null && value.trim().length() > 0) {
