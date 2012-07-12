@@ -30,7 +30,9 @@ import org.eclipse.epf.library.edit.IConfigurable;
 import org.eclipse.epf.library.edit.IFilter;
 import org.eclipse.epf.library.edit.IGroupContainer;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.element.GuidancesItemProvider;
 import org.eclipse.epf.library.edit.element.IElementItemProvider;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.uma.Checklist;
 import org.eclipse.epf.uma.Concept;
 import org.eclipse.epf.uma.EstimationConsiderations;
@@ -90,7 +92,13 @@ public class GuidanceGroupingItemProvider extends ItemProviderAdapter implements
 
 	public static final IFilter practiceFilter = new IFilter() {
 		public boolean accept(Object obj) {
-			return obj instanceof Practice;
+			if (! (obj instanceof Practice)) {
+				return false;
+			}
+			if (GuidancesItemProvider.showUDTElements) {
+				return true;
+			}
+			return ! PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj);
 		}
 	};
 

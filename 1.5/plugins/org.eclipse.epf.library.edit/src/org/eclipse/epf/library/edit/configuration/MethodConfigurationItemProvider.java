@@ -31,10 +31,12 @@ import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.category.DisciplineCategoriesItemProvider;
 import org.eclipse.epf.library.edit.category.RoleSetsItemProvider;
 import org.eclipse.epf.library.edit.util.ModelStructure;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.Domain;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.Tool;
@@ -348,12 +350,28 @@ public class MethodConfigurationItemProvider extends
 			children.add(child);
 			groupItemProviderMap.put(name, child);
 
+			name = LibraryEditPlugin.INSTANCE.getString("_UI_UdtElements_group"); //$NON-NLS-1$
+			GuidanceItemProvider child2 = new GuidanceItemProvider(
+					adapterFactory, conf, name, LibraryEditPlugin.INSTANCE.getImage("full/obj16/Practices"));
+			IFilter udtFilter = new IFilter() {
+				public boolean accept(Object obj) {
+					if (! (obj instanceof Practice)) {
+						return false;
+					}
+					return PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj);
+				}
+			};
+			child2.setGuidanceFilter(udtFilter);
+			children.add(child2);
+			groupItemProviderMap.put(name, child2);
+			
 			name = LibraryEditPlugin.INSTANCE.getString("_UI_Guidances_group"); //$NON-NLS-1$
 			GuidanceGroupingItemProvider child1 = new GuidanceGroupingItemProvider(
 					adapterFactory, conf);
 			child1.setFilter(filter);
 			children.add(child1);
 			groupItemProviderMap.put(name, child1);
+						
 		}
 
 		return children;
