@@ -60,7 +60,7 @@ public class ContentPackageItemProvider extends
 	protected GuidancesItemProvider guidances;
 
 	protected UdtElementsItemProvider udtElements;
-	
+
 	protected String label;
 
 	protected Object parent;
@@ -212,6 +212,11 @@ public class ContentPackageItemProvider extends
 		allChildren.add(workProducts);
 		allChildren.add(guidances);
 		allChildren.add(udtElements);
+		
+		if(udtElements.getChildren(null).isEmpty()) {
+			allChildren.remove(udtElements);
+			udtElements = null;
+		}
 		return allChildren;
 	}
 
@@ -307,6 +312,10 @@ public class ContentPackageItemProvider extends
 	public GuidancesItemProvider getGuidances() {
 		return guidances;
 	}
+	
+	public UdtElementsItemProvider getUdtElements() {
+		return udtElements;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -391,6 +400,10 @@ public class ContentPackageItemProvider extends
 		if (workProducts != null) {
 			workProducts.dispose();
 			workProducts = null;
+		}
+		if (udtElements != null) {
+			udtElements.dispose();
+			udtElements = null;
 		}
 		super.dispose();
 	}

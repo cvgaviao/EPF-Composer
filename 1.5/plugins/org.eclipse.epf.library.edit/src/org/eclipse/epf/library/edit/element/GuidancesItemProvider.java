@@ -58,6 +58,8 @@ import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
  */
 public class GuidancesItemProvider extends TransientContentPackageItemProvider {
 
+	public static boolean showUDTElements = false;
+	
 	/**
 	 * Creates a new instance.
 	 */
@@ -74,6 +76,11 @@ public class GuidancesItemProvider extends TransientContentPackageItemProvider {
 	protected boolean acceptAsChild(Object obj) {
 		if (!super.acceptAsChild(obj))
 			return false;
+		if (! showUDTElements) {
+			if (obj instanceof Practice) {
+				return ! PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj);
+			}
+		}
 		return obj instanceof Guidance;
 	}
 
@@ -203,8 +210,9 @@ public class GuidancesItemProvider extends TransientContentPackageItemProvider {
 		// newChildDescriptors.add(createChildParameter(UmaPackage.eINSTANCE
 		// .getContentPackage_ContentElements(), UmaFactory.eINSTANCE
 		// .createWorkProductGuideline()));
-		
-		LibraryEditUtil.getInstance().createUserDefinedTypeContextMenuOnGuidanceNode(newChildDescriptors);		
+		if (showUDTElements) {
+			LibraryEditUtil.getInstance().createUserDefinedTypeContextMenuOnGuidanceNode(newChildDescriptors);
+		}
 	}
 
 	/*
