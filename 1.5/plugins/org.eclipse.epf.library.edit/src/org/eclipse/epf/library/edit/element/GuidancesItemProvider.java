@@ -268,7 +268,7 @@ public class GuidancesItemProvider extends TransientContentPackageItemProvider {
 		}
 	}
 	
-	private String getDefaultNameForPractice(Practice prac) {
+	public static String getDefaultNameForPractice(Practice prac) {
 		try {
 			UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
 			if (udtMeta != null) {
@@ -282,7 +282,7 @@ public class GuidancesItemProvider extends TransientContentPackageItemProvider {
 		return LibraryEditConstants.NEW_PRACTICE;
 	}
 	
-	private String buildDefaultNameForUdt(String rawName) {
+	public static String buildDefaultNameForUdt(String rawName) {
 		StringBuffer buf = new StringBuffer();
 		buf.append("new_"); //$NON-NLS-1$
 		

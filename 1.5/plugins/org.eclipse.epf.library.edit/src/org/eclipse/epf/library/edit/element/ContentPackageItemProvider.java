@@ -59,6 +59,8 @@ public class ContentPackageItemProvider extends
 
 	protected GuidancesItemProvider guidances;
 
+	protected UdtElementsItemProvider udtElements;
+	
 	protected String label;
 
 	protected Object parent;
@@ -201,10 +203,15 @@ public class ContentPackageItemProvider extends
 			guidances = new GuidancesItemProvider(adapterFactory, contentPkg);
 		}
 
+		if (udtElements == null) {
+			udtElements = new UdtElementsItemProvider(adapterFactory, contentPkg);
+		}
+		
 		allChildren.add(roles);
 		allChildren.add(tasks);
 		allChildren.add(workProducts);
 		allChildren.add(guidances);
+		allChildren.add(udtElements);
 		return allChildren;
 	}
 
