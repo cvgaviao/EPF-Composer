@@ -41,6 +41,8 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -1294,6 +1296,25 @@ public class FileUtil {
 	
 	public static void log(String msg) {
 		CommonPlugin.getDefault().getLogger().logInfo(msg);
+	}
+	
+	private static ValidateEdit validateEdit;
+	private static ValidateEdit getValidateEdit() {
+		if (validateEdit != null) {
+			return validateEdit;
+		}
+		Object obj = ExtensionHelper.create(ValidateEdit.class, null);
+		if (obj instanceof ValidateEdit) {
+			validateEdit = (ValidateEdit) obj;
+			return validateEdit;
+		}
+		//Don't cache this default one.
+		return new ValidateEdit();
+	}
+	
+	public static IStatus validateEdit(IWorkspace workspace, IFile[] files, Object context) {
+		ValidateEdit validateEdit = getValidateEdit();
+		return validateEdit.validateEdit(workspace, files, context);
 	}
 	
 }

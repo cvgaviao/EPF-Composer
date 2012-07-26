@@ -40,6 +40,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.persistence.util.PersistenceResources;
 import org.eclipse.epf.services.IFileManager;
 import org.eclipse.osgi.util.NLS;
@@ -343,15 +344,18 @@ public class FileManager implements IFileManager {
 		}
 
 		if (!validateEditInitialized) {
-			status = workspace.validateEdit(files, context);
+//			status = workspace.validateEdit(files, context);
+			status = FileUtil.validateEdit(workspace, files, context);
 			validateEditInitialized = true;
 			if (status.isOK()) {
 				// double-check after initialization
 				//
-				status = workspace.validateEdit(files, context);
+//				status = workspace.validateEdit(files, context);
+				status = FileUtil.validateEdit(workspace, files, context);
 			}
 		} else {
-			status = workspace.validateEdit(files, context);
+//			status = workspace.validateEdit(files, context);
+			status = FileUtil.validateEdit(workspace, files, context);
 		}
 
 		if (status.isOK()) {
