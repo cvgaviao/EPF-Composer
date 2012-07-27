@@ -45,6 +45,7 @@ import org.eclipse.emf.transaction.DemultiplexingListener;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.gmf.runtime.diagram.core.DiagramEditingDomainFactory;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.AbstractDocumentProvider;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.DiagramDocument;
@@ -364,7 +365,11 @@ public class UMLDocumentProvider extends AbstractDocumentProvider implements
 					files2Validate.add(file);
 				}
 			}
-			ResourcesPlugin.getWorkspace().validateEdit(
+//			ResourcesPlugin.getWorkspace().validateEdit(
+//					(IFile[]) files2Validate.toArray(new IFile[files2Validate
+//							.size()]), computationContext);
+			
+			FileUtil.validateEdit(ResourcesPlugin.getWorkspace(),
 					(IFile[]) files2Validate.toArray(new IFile[files2Validate
 							.size()]), computationContext);
 		}
