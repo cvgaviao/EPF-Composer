@@ -190,7 +190,7 @@ public class PropUtil extends MethodElementPropUtil {
 		map.removeOpposite(reference, otherElement);
 	}
 	
-	protected MethodElement getElement(MethodElement ownerElement, String propName) {
+	public MethodElement getElement(MethodElement ownerElement, String propName) {
 		if (ownerElement == null) {
 			return null;
 		}
