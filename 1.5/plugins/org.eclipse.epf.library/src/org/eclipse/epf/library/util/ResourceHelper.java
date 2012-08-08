@@ -1298,9 +1298,11 @@ public class ResourceHelper {
 						if ( isExternalLink(url) ) {
 							// decode for external link 
 							url = XMLUtil.unescape(NetUtil.decodedFileUrl(url));
-							if (NetUtil.isRawUrl(url)) {
-								url = restore(url);
-							}
+							
+							//Alex: below 2 lines code fix a BIRT issue, but it will cause regression on raw_URL_raw.
+//							if (NetUtil.isRawUrl(url)) {
+//								url = restore(url);
+//							}
 						} else {
 							url = resolveUrl(url, contentPath, backPath);
 						}
