@@ -15,6 +15,7 @@
 	<xsl:output method="html" version="1.0" encoding="UTF-8" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" indent="yes"/>
 	
 	<xsl:include href="guidance.xsl"/> 
+	<xsl:include href="custom_opposite.xsl"/>
 	
 	<xsl:template match="/Element">
 		<xsl:variable name="elementType" select="@Type"/>
@@ -102,6 +103,12 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection3"/>
+								<!--  this next template call is an example for advanced skin customization -->
+								<xsl:call-template name="customOppositeRelationshipsAll">
+									<xsl:with-param name="elementDown" select="/Element"/>
+									<xsl:with-param name="iconLevel" select="'two'"/>
+									<xsl:with-param name="layoutLocation" select="''"/>
+								</xsl:call-template>
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$contentDescription"/>
 								<xsl:with-param name="udt_purpose_text" select="$udt_purpose_text"/>
@@ -112,11 +119,18 @@
 								<xsl:with-param name="udt_levelsOfAdoption_text" select="$udt_levelsOfAdoption_text"/>
 								<xsl:with-param name="udt_additionalInfo_text" select="$udt_additionalInfo_text"/>
 							</xsl:call-template>
+
 							<xsl:call-template name="extendedRefsSectionsAll">
 								<xsl:with-param name="elementDown" select="/Element"/>
 								<xsl:with-param name="iconLevel" select="'three'"/>
 								<xsl:with-param name="layoutLocation" select="''"/>
 							</xsl:call-template>
+								<!--  this next template call is an example for advanced skin customization -->
+								<xsl:call-template name="customOppositeRelationshipsAll">
+									<xsl:with-param name="elementDown" select="/Element"/>
+									<xsl:with-param name="iconLevel" select="'two'"/>
+									<xsl:with-param name="layoutLocation" select="'Derived Relationships at MyLocation'"/>
+								</xsl:call-template>
 							<xsl:call-template name="extendedRtesSectionsAll">
 								<xsl:with-param name="descriptionDown" select="$presentation/Element"/>
 								<xsl:with-param name="layoutLocation" select="''"/>
@@ -266,11 +280,12 @@
 			</xsl:if>
 		</xsl:if>
 		
-		
+		<!-- unnecassary call in the description section
 		<xsl:call-template name="extendedRtesSectionsAll"> 
 			<xsl:with-param name="descriptionDown" select="/Element/reference[@name='presentation']/Element[@Type='PracticeDescription']"/>
 			<xsl:with-param name="layoutLocation" select="''"/>
 		</xsl:call-template>
+		-->
 		
 	</xsl:template>
 							

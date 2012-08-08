@@ -88,15 +88,48 @@
 		<xsl:param name="elementDown"/>
 		<xsl:param name="iconLevel"/>
 		<xsl:param name="layoutLocation"/>
+					
+		<!-- render all opposite lists with a specific layout="VALUE" except no layout= attribute -->
+		<xsl:if test="string($layoutLocation)">
+			<xsl:variable name="theLists" select="referenceList[@referenceType='customOpposite' and @layout=$layoutLocation]"/>
+			<xsl:call-template name="renderOppositeListsAll">
+				<xsl:with-param name="oppositeLists" select="$theLists"/>
+				<xsl:with-param name="iconLevel" select="$iconLevel"/>
+				<xsl:with-param name="sectionName" select="$layoutLocation"/>
+			</xsl:call-template>
+		</xsl:if>
 		
-		<xsl:variable name="theList" select="referenceList[@referenceType='customOpposite' and @layout=$layoutLocation]"/>	
-		<xsl:if test="count($theList) > 0">
-			<div class="sectionHeading"><xsl:value-of select="$layoutLocation"/></div>
+		<!--
+		<xsl:variable name="theList" select="referenceList[@referenceType='customOpposite' and @layout=$layoutLocation]"/>
+		-->
+			<!-- render all opposite lists without layout= attribute -->
+		<xsl:if test="not(string($layoutLocation))">
+			<xsl:variable name="theLists" select="referenceList[@referenceType='customOpposite' and (not(@layout))]"/>
+			<xsl:call-template name="renderOppositeListsAll">
+				<xsl:with-param name="oppositeLists" select="$theLists"/>
+				<xsl:with-param name="iconLevel" select="$iconLevel"/>
+				<xsl:with-param name="sectionName" select="'Derived Relationships'"/>
+			</xsl:call-template>
+		</xsl:if>
+			
+	</xsl:template>
+		
+	<!-- for internal use in this file only -->
+	<xsl:template name="renderOppositeListsAll">
+		<xsl:param name="oppositeLists"/>
+		<xsl:param name="iconLevel"/>
+		<xsl:param name="sectionName"/>
+		
+		<xsl:if test="count($oppositeLists) > 0">
+			<div class="sectionHeading"><xsl:value-of select="$sectionName"/></div>
 			<div class="sectionContent">
 			<table class="sectionTable" border="0" cellspacing="0" cellpadding="0">	
-		
+			
+	        <!--	
 			<xsl:for-each select="referenceList[@referenceType='customOpposite' and @layout=$layoutLocation]">
-	
+			-->
+			
+			<xsl:for-each select="$oppositeLists">
 						<tr valign="top">
 
 							<th class="sectionTableHeading" scope="row">
