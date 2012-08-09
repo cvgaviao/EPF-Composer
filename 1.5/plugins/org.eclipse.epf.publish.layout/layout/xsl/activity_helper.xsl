@@ -18,6 +18,8 @@
 	<xsl:include href="mapping.xsl"/>
 	<xsl:include href="overview.xsl"/>
 	<xsl:include href="guidance_helper.xsl"/>
+	<xsl:include href="extended_refs.xsl"/>
+	<xsl:include href="extended_rtes.xsl"/>
 
 	<xsl:template name="tabUrlAttribute">
 		<xsl:param name="url"/>

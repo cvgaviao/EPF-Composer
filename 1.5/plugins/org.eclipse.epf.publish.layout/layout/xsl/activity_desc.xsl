@@ -116,6 +116,19 @@
 								</xsl:call-template>
 							</xsl:if>
 							<xsl:call-template name="relationshipsSection"/>
+							
+							<!-- display custom references in the Activity description page -->
+							<xsl:call-template name="extendedRefsSectionsAll">
+								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:with-param name="iconLevel" select="'two'"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
+							</xsl:call-template>
+							<!-- display custom RTEs in the Activity description page -->
+							<xsl:call-template name="extendedRtesSectionsAll">
+								<xsl:with-param name="descriptionDown" select="/Element/reference[@name='presentation']/Element"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
+							</xsl:call-template>
+							
 							<xsl:call-template name="generalTextFieldSection">
 								<xsl:with-param name="fieldLabel" select="$descriptionText"/>
 								<xsl:with-param name="fieldText" select="$contentDescription/attribute[@name='mainDescription']"/>
