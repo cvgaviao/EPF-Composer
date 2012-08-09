@@ -103,12 +103,21 @@
 								<xsl:with-param name="showTreeBrowser" select="$showTreeBrowser"/>
 							</xsl:call-template>
 							<xsl:call-template name="relationshipsSection3"/>
+							
+							<!-- display all custom relationships at this default location -->
+							<xsl:call-template name="extendedRefsSectionsAll">
+								<xsl:with-param name="elementDown" select="/Element"/>
+								<xsl:with-param name="iconLevel" select="'three'"/>
+								<xsl:with-param name="layoutLocation" select="''"/>
+							</xsl:call-template>
+							
 								<!--  this next template call is an example for advanced skin customization -->
 								<xsl:call-template name="customOppositeRelationshipsAll">
 									<xsl:with-param name="elementDown" select="/Element"/>
 									<xsl:with-param name="iconLevel" select="'two'"/>
 									<xsl:with-param name="layoutLocation" select="''"/>
 								</xsl:call-template>
+								
 							<xsl:call-template name="descriptionSection">
 								<xsl:with-param name="description" select="$contentDescription"/>
 								<xsl:with-param name="udt_purpose_text" select="$udt_purpose_text"/>
@@ -120,11 +129,6 @@
 								<xsl:with-param name="udt_additionalInfo_text" select="$udt_additionalInfo_text"/>
 							</xsl:call-template>
 
-							<xsl:call-template name="extendedRefsSectionsAll">
-								<xsl:with-param name="elementDown" select="/Element"/>
-								<xsl:with-param name="iconLevel" select="'three'"/>
-								<xsl:with-param name="layoutLocation" select="''"/>
-							</xsl:call-template>
 								<!--  this next template call is an example for advanced skin customization -->
 								<xsl:call-template name="customOppositeRelationshipsAll">
 									<xsl:with-param name="elementDown" select="/Element"/>
