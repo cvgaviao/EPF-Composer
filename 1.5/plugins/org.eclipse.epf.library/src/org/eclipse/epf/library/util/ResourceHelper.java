@@ -53,8 +53,6 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
 import org.eclipse.epf.uma.MethodPlugin;
-import org.eclipse.epf.uma.VariabilityElement;
-import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -186,6 +184,8 @@ public class ResourceHelper {
 	private static boolean showSkinResource = false;
 	
 	public static String LAYOUT_XSL_ROOT_PATH = null;
+	
+	public static boolean birt_publishing = true;
 	
 	public ResourceHelper() {
 	}
@@ -1298,11 +1298,9 @@ public class ResourceHelper {
 						if ( isExternalLink(url) ) {
 							// decode for external link 
 							url = XMLUtil.unescape(NetUtil.decodedFileUrl(url));
-							
-							//Alex: below 2 lines code fix a BIRT issue, but it will cause regression on raw_URL_raw.
-//							if (NetUtil.isRawUrl(url)) {
-//								url = restore(url);
-//							}
+							if (birt_publishing && NetUtil.isRawUrl(url)) {
+								url = restore(url);
+							}
 						} else {
 							url = resolveUrl(url, contentPath, backPath);
 						}

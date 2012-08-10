@@ -29,6 +29,7 @@ import org.eclipse.epf.library.layout.Bookmark;
 import org.eclipse.epf.library.layout.ElementLayoutManager;
 import org.eclipse.epf.library.layout.HtmlBuilder;
 import org.eclipse.epf.library.layout.util.XmlElement;
+import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.persistence.refresh.RefreshJob;
 import org.eclipse.epf.publishing.PublishingPlugin;
 import org.eclipse.epf.publishing.PublishingResources;
@@ -118,10 +119,12 @@ public class PublishManager extends AbstractPublishManager {
 			RefreshJob.getInstance().setSuspendRefresh(true);
 		}
 		try {
+			ResourceHelper.birt_publishing = false;
 			ConfigurationHelper.getDelegate().buildDynamicCustomCategoriesMap(config);
 			doPublish_(monitor);
 			MethodLibrary lib = LibraryService.getInstance().getCurrentMethodLibrary();			
 		} finally {
+			ResourceHelper.birt_publishing = true;
 			ConfigurationHelper.getDelegate().clearDynamicCustomCategoriesMap();
 			if (! suspendRefresh) {
 				RefreshJob.getInstance().setSuspendRefresh(false);

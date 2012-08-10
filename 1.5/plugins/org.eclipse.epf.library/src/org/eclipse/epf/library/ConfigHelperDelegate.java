@@ -44,6 +44,7 @@ import org.eclipse.epf.library.layout.elements.SummaryPageLayout;
 import org.eclipse.epf.library.persistence.ILibraryResourceSet;
 import org.eclipse.epf.library.realization.RealizationManagerFactory;
 import org.eclipse.epf.library.util.LibraryUtil;
+import org.eclipse.epf.library.util.ResourceHelper;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
@@ -353,6 +354,8 @@ public class ConfigHelperDelegate {
 	}
 	
 	public String generateHtml(Object raw_element, HtmlBuilder htmlBuilder) {
+		ResourceHelper.birt_publishing = false;
+		
 		loadForBrowsing(raw_element);
 		
 		IElementLayout layout = null;
@@ -400,6 +403,9 @@ public class ConfigHelperDelegate {
 				file_url += ((AbstractProcessElementLayout)layout).getQueryString();
 			}
 		}
+		
+		ResourceHelper.birt_publishing = true;
+		
 		return file_url;
 	}
 	
