@@ -3,10 +3,9 @@ package org.eclipse.epf.library.edit.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.uma.MethodElement;
 
@@ -93,5 +92,40 @@ public class DebugLog {
 	public String toString(MethodElement element, int ix, boolean showTags, String tagLineInden) {
 		return DebugUtil.toString(element, ix);
 	}
-		
+	
+	public void logFiles(String label, IFile[] files,  boolean showEmpty) {
+		List<IFile> fileList = new ArrayList<IFile>();
+		if (files != null && files.length > 0) {
+			for (IFile file : files) {
+				fileList.add(file);
+			}
+		}
+		logFiles(label, fileList, showEmpty);
+	}
+ 		
+	public void logFiles(String label, Collection<IFile> files,  boolean showEmpty) {
+		boolean empty = files == null || files.isEmpty();
+		if (!showEmpty && empty) {
+			return;
+		}
+		String str = prompt + label;	
+		if (!empty) {
+			str += " size = " + files.size();//$NON-NLS-1$			
+			
+			for (IFile file : files) {
+				String line = "\n" + indent + file;//$NON-NLS-1$
+				str += line;
+			}
+			
+		} else {
+			str += "\n" + indent + "Empty list";		//$NON-NLS-1$ //$NON-NLS-2$
+		}
+		if (isConsole()) {
+			System.out.println(str + "\n");
+		}
+		if (isLog()) {
+			FileUtil.log(str + "\n");//$NON-NLS-1$
+		}
+	}
+	
 }
