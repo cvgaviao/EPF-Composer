@@ -44,6 +44,9 @@ public class LibraryViewExtender {
 		public void updateSelection(ISelection selection) {				
 		}
 		
+		public void contributeToViewMenu(IMenuManager viewMenu) {			
+		}
+		
 	}
 	
 	

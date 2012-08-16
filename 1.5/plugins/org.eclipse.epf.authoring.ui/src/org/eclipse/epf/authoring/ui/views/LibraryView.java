@@ -476,7 +476,8 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 	private void makeActions() {
 		fLayoutActionSet= new LayoutActionGroup(this);
 		IActionBars actionBars= getViewSite().getActionBars();
-		fLayoutActionSet.fillActionBars(actionBars);
+		fLayoutActionSet.fillActionBars(actionBars);		
+		getExtender().getActionBarExtender().contributeToViewMenu(actionBars.getMenuManager());
 	}
 
 	/**
