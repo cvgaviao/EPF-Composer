@@ -13,4 +13,7 @@ public class ValidateEdit {
 		return workspace.validateEdit(files, context);
 	}
 	
+	public void clearCache() {		
+	}
+	
 }

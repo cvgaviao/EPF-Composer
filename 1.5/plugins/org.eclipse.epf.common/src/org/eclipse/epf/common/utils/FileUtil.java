@@ -1299,7 +1299,7 @@ public class FileUtil {
 	}
 	
 	private static ValidateEdit validateEdit;
-	private static ValidateEdit getValidateEdit() {
+	public static ValidateEdit getValidateEdit() {
 		if (validateEdit != null) {
 			return validateEdit;
 		}
