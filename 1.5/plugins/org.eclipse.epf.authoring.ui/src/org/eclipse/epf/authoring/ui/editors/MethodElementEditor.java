@@ -102,6 +102,7 @@ import org.eclipse.epf.richtext.IRichText;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.ILibraryPersister.FailSafeMethodLibraryPersister;
 import org.eclipse.epf.services.Services;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
@@ -1330,7 +1331,9 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 
 			Collection<Resource> resourcesToAdjustLocation = null;
 			
-			PropUtil.getPropUtil(getActionManager()).setEdited(elementObj, true);
+			if (! PropUtil.getPropUtil().isEdited(elementObj)) {
+				PropUtil.getPropUtil(getActionManager()).setEdited(elementObj, true);
+			}
 			try {
 				persister.getSaveOptions().put(
 						ILibraryPersister.FailSafeMethodLibraryPersister.OPTIONS_OVERWRITABLE_RESOURCES, 
@@ -1750,15 +1753,27 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 					}
 					return;
 				}
+				
+				boolean checkParent = checkContainerResource;
+				if (element instanceof ContentDescription) {
+					ContentDescription content = (ContentDescription) element;
+					EObject containder = content.eContainer();
+					if (containder instanceof DescribableElement) {
+						DescribableElement parent = (DescribableElement) containder;						
+						if (! PropUtil.getPropUtil().isEdited(parent)) {
+							checkParent = true;
+						}
+					}
+				}
 
-				if (!checkEdit(element, widget, checkContainerResource)) {
+				if (!checkEdit(element, widget, checkParent)) {
 					if (DEBUG) {
 						System.out
 								.println("MethodElementEditor.ModifyListener.modifyText: checkEdit failed, exit"); //$NON-NLS-1$
 					}
 					return;
 				}
-
+				
 				if (widget instanceof IMethodRichText) {
 					IMethodRichText richText = (IMethodRichText) widget;
 					setModifiedRichText(richText);
