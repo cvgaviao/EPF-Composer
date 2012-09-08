@@ -179,6 +179,19 @@ public class RenameAction extends
 				return;
 			}
 		}
+		if (e instanceof MethodPlugin) {
+			IStatus status = UserInteractionHelper.checkModify(e, shell);
+			if (!status.isOK()) {
+				AuthoringUIPlugin
+				.getDefault()
+				.getMsgDialog()
+				.displayError(
+						AuthoringUIResources.renameDialog_title,
+						AuthoringUIResources.renameDialog_renameError,
+						status);
+				return;
+			}
+		}
 
 		final IValidator validator = IValidatorFactory.INSTANCE
 		.createNameValidator(e, ((AdapterFactoryEditingDomain)domain).getAdapterFactory());
