@@ -31,6 +31,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.EditorChooser;
 import org.eclipse.epf.common.ui.util.MsgBox;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.diagram.core.services.DiagramManager;
 import org.eclipse.epf.library.LibraryService;
@@ -249,14 +250,18 @@ public class RenameAction extends
 						continue;
 					}
 
-					if (e instanceof MethodPlugin) {
-						String msg = AuthoringUIResources.bind(AuthoringUIResources.methodPluginDescriptionPage_confirmRename, (new Object[] { e.getName(), newName })); 
-						String title = AuthoringUIResources.methodPluginDescriptionPage_confirmRename_title; 
-						if (!MessageDialog.openConfirm(shell, title, msg)) {
-							return;
-						}
-
-						EditorChooser.getInstance().closeMethodEditorsForPluginElements((MethodPlugin)e);
+//					if (e instanceof MethodPlugin) {
+//						String msg = AuthoringUIResources.bind(AuthoringUIResources.methodPluginDescriptionPage_confirmRename, (new Object[] { e.getName(), newName })); 
+//						String title = AuthoringUIResources.methodPluginDescriptionPage_confirmRename_title; 
+//						if (!MessageDialog.openConfirm(shell, title, msg)) {
+//							return;
+//						}
+//
+//						EditorChooser.getInstance().closeMethodEditorsForPluginElements((MethodPlugin)e);
+//					}
+					
+					if (! FileUtil.getValidateEdit().renamePrecheck(e, newName, shell)) {
+						return;
 					}
 					
 					RenameCommand renameCmd = (RenameCommand) command;
