@@ -1345,6 +1345,9 @@ public class ExportMSPXMLService {
 		if (name == null || name.length() == 0) {
 			name = element.getName();
 		}
+		if (name.indexOf("\n") >= 0) {//$NON-NLS-1$
+			name = name.replaceAll("\r\n", " ");//$NON-NLS-1$ //$NON-NLS-2$
+		}
 		return name;
 		
 		//This is not needed since EMF would take care of encoding
