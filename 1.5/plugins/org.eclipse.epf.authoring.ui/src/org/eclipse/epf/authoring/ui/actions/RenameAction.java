@@ -180,18 +180,9 @@ public class RenameAction extends
 				return;
 			}
 		}
-		if (e instanceof MethodPlugin) {
-			IStatus status = UserInteractionHelper.checkModify(e, shell);
-			if (!status.isOK()) {
-				AuthoringUIPlugin
-				.getDefault()
-				.getMsgDialog()
-				.displayError(
-						AuthoringUIResources.renameDialog_title,
-						AuthoringUIResources.renameDialog_renameError,
-						status);
-				return;
-			}
+		
+		if (! FileUtil.getValidateEdit().renamePrecheck(e, shell)) {
+			return;
 		}
 
 		final IValidator validator = IValidatorFactory.INSTANCE
@@ -250,18 +241,14 @@ public class RenameAction extends
 						continue;
 					}
 
-//					if (e instanceof MethodPlugin) {
-//						String msg = AuthoringUIResources.bind(AuthoringUIResources.methodPluginDescriptionPage_confirmRename, (new Object[] { e.getName(), newName })); 
-//						String title = AuthoringUIResources.methodPluginDescriptionPage_confirmRename_title; 
-//						if (!MessageDialog.openConfirm(shell, title, msg)) {
-//							return;
-//						}
-//
-//						EditorChooser.getInstance().closeMethodEditorsForPluginElements((MethodPlugin)e);
-//					}
-					
-					if (! FileUtil.getValidateEdit().renamePrecheck(e, newName, shell)) {
-						return;
+					if (e instanceof MethodPlugin) {
+						String msg = AuthoringUIResources.bind(AuthoringUIResources.methodPluginDescriptionPage_confirmRename, (new Object[] { e.getName(), newName })); 
+						String title = AuthoringUIResources.methodPluginDescriptionPage_confirmRename_title; 
+						if (!MessageDialog.openConfirm(shell, title, msg)) {
+							return;
+						}
+
+						EditorChooser.getInstance().closeMethodEditorsForPluginElements((MethodPlugin)e);
 					}
 					
 					RenameCommand renameCmd = (RenameCommand) command;

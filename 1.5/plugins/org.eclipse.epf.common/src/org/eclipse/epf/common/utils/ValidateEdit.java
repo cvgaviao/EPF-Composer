@@ -13,7 +13,7 @@ public class ValidateEdit {
 		return workspace.validateEdit(files, context);
 	}
 	
-	public boolean renamePrecheck(Object element, String newName, Object shell) {
+	public boolean renamePrecheck(Object element, Object shell) {
 		return true;
 	}
 	
