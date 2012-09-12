@@ -486,20 +486,22 @@ public class TngAdapterFactoryImpl implements TngAdapterFactory {
 		 * @see org.eclipse.emf.edit.provider.ITreeItemContentProvider#hasChildren(java.lang.Object)
 		 */
 		public boolean hasChildren(Object object) {
-//			if (filter instanceof IConfigurator
-//					&& adapter instanceof ILibraryItemProvider) {
-//				// always return true to improve performance
-//				//
-//				return true;
-//			}
-//			if(object instanceof ContentElement){
-//				return adapter.hasChildren(object);
-//			}
+			if (object instanceof TaskDescriptor) {
+				return false;
+			}
+			if (filter instanceof IConfigurator
+					&& adapter instanceof ILibraryItemProvider) {
+				// always return true to improve performance
+				//
+				return true;
+			}
+			if(object instanceof ContentElement){
+				return adapter.hasChildren(object);
+			}
 			if(TngUtil.unwrap(object) instanceof Milestone) {
 				return false;
 			}
-//			return true;
-			return adapter.hasChildren(object);
+			return true;
 		}
 
 		/*
