@@ -31,6 +31,8 @@ public class PropUtil extends MethodElementPropUtil {
 	public static final String Me_table_ = "me_table_";					//$NON-NLS-1$
 	public static final String Me_linkedElement = "me_linkedElement";	//$NON-NLS-1$
 	
+	public static final String Pkg_loadCheck = "pkg_loadCheck";	//$NON-NLS-1$
+	
 	private static PropUtil propUtil = new PropUtil();
 	public static PropUtil getPropUtil(IActionManager actionManager) {
 		return new PropUtil(actionManager);

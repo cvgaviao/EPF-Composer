@@ -20,7 +20,8 @@ public class MethodConfigurationPropUtil extends PropUtil {
 	
 	public static final String Config_elementsUnslectedPkgs = "config_elementsUnslectedPkgs"; 	//$NON-NLS-1$
 	public static final String Config_selectedElements = "config_selectedElements"; 			//$NON-NLS-1$
-	public static final String Config_deselectedElements = "config_deselectedElements"; 		//$NON-NLS-1$	
+	public static final String Config_deselectedElements = "config_deselectedElements"; 		//$NON-NLS-1$
+	public static final String Config_doneLoadCheckPkgs = "Config_doneLoadCheckPkgs"; 		//$NON-NLS-1$	
 	
 	private static MethodConfigurationPropUtil methodConfigurationPropUtil = new MethodConfigurationPropUtil();
 
@@ -38,6 +39,15 @@ public class MethodConfigurationPropUtil extends PropUtil {
 	
 	protected MethodConfigurationPropUtil(IActionManager actionManager) {
 		super(actionManager);
+	}
+		
+	public Set<MethodPackage> getDoneLoadCheckPkgs(
+			MethodConfiguration config) {
+		return (Set<MethodPackage>) getElements(config, Config_doneLoadCheckPkgs, UmaPackage.eINSTANCE.getMethodPackage());
+	}
+	
+	public void setDoneLoadCheckPkgs(MethodConfiguration config, Set<MethodPackage> pkgs) {
+		setElements(config, Config_doneLoadCheckPkgs, pkgs, UmaPackage.eINSTANCE.getMethodPackage());
 	}
 	
 	public Set<MethodPackage> getElementsUnslectedPkgs(

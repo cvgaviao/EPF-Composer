@@ -1353,8 +1353,9 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 					}
 				}
 			}
-
-			helper.save();
+			
+//wlu0 9-12-2012: we are now using "loadCheckPkgs" property mechanism to handle adding to configuration. No need to save here.
+//			helper.save();
 
 		} catch (RuntimeException e) {
 			LibraryPlugin.getDefault().getLogger().logError(e);

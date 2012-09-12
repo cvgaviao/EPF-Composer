@@ -459,6 +459,7 @@ public class LibraryService implements ILibraryService {
 		LibraryEditUtil.getInstance().fixUpDanglingCustomCategories(library);
 		currentLibrary = library;
 		if (library != null) {
+			ConfigurationHelper.getDelegate().fixupLoadCheckPackages(library);
 			ConfigurationHelper.getDelegate().loadUserDefinedType();
 		}
 		notifyListeners(library, EVENT_SET_CURRENT_LIBRARY);

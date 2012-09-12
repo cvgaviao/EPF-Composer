@@ -23,9 +23,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
-import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -56,6 +56,7 @@ import org.eclipse.epf.library.edit.util.ITextReferenceReplacer;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.Messenger;
 import org.eclipse.epf.library.edit.util.Misc;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.edit.validation.AbstractStringValidator;
 import org.eclipse.epf.library.edit.validation.IValidator;
@@ -72,6 +73,7 @@ import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodLibrary;
+import org.eclipse.epf.uma.MethodPackage;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.MethodUnit;
 import org.eclipse.epf.uma.NamedElement;
@@ -1223,6 +1225,18 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					// add the elements
 					//
 					superExecute();
+					
+					//Note: no need to undo this prop change if fails since the added pkgs instances would be removed
+					PropUtil propUtil = PropUtil.getPropUtil();
+					for (Object addedItem : addList) {
+						if (addedItem instanceof MethodPackage) {
+							MethodPackage pkg = (MethodPackage) addedItem;
+							Boolean b = propUtil.getBooleanValue(pkg, PropUtil.Pkg_loadCheck);
+							if (b == null || !b.booleanValue() ) {
+								propUtil.setBooleanValue(pkg, PropUtil.Pkg_loadCheck, true);
+							}
+						}						
+					}
 
 					executeNestedCommands();
 

@@ -33,6 +33,7 @@ import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.layout.HtmlBuilder;
@@ -601,5 +602,42 @@ public class ConfigHelperDelegate {
 		return true;
 	}
 	
+	public void fixupLoadCheckPackages(MethodLibrary lib) {
+		if (lib == null) {
+			return;
+		}
+		
+		Map<MethodPlugin, Set<MethodPackage>> map = new HashMap<MethodPlugin, Set<MethodPackage>>();
+		for (MethodConfiguration config : lib.getPredefinedConfigurations()) {
+			Set<MethodPackage> selectedPkgs = new HashSet<MethodPackage>(config.getMethodPackageSelection());
+			Set<MethodPackage> toAddCheckPkgs =  new HashSet<MethodPackage>();
+			for (MethodPlugin plugin : config.getMethodPluginSelection()) {
+				Set<MethodPackage> loadCheckPkgs = map.get(plugin);
+				if (loadCheckPkgs == null) {
+					loadCheckPkgs = new HashSet<MethodPackage>();
+					map.put(plugin, loadCheckPkgs);
+				}
+				collectLoadCheckPkgs(plugin.getMethodPackages(), loadCheckPkgs);
+				toAddCheckPkgs.addAll(loadCheckPkgs);
+			}
+			for (MethodPackage pkg : toAddCheckPkgs) {
+				if (selectedPkgs.add(pkg)) {
+					config.getMethodPackageSelection().add(pkg);
+				}
+			}
+		}				
+	}
+	
+	private void collectLoadCheckPkgs(List<MethodPackage> pkgList, Set<MethodPackage> loadCheckPkgs) {
+		PropUtil propUtil = PropUtil.getPropUtil();
+		for (MethodPackage pkg : pkgList) {
+			Boolean b = propUtil.getBooleanValue(pkg, PropUtil.Pkg_loadCheck);
+			if (b != null && b.booleanValue()) {
+				loadCheckPkgs.add(pkg);
+			}
+			collectLoadCheckPkgs(pkg.getChildPackages(), loadCheckPkgs);
+		}
+		
+	}
 	
 }

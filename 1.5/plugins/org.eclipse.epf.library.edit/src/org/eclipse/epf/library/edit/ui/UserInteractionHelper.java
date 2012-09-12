@@ -640,6 +640,12 @@ public final class UserInteractionHelper {
 	 */
 	public static IStatus checkConfigurationsToUpdate(AddCommand addCommand,
 			Object shell) {
+		//wlu0 9-12-2012: we are now using "loadCheckPkgs" property mechanism to handle adding to configuration. No need to checkModify here.
+		//				  Therefore, directly return ok stat.	
+		if (true) {
+			return Status.OK_STATUS;
+		}
+		
 		EObject parent = addCommand.getOwner();
 		if (!(parent instanceof MethodPackage)) {
 			return Status.OK_STATUS;
