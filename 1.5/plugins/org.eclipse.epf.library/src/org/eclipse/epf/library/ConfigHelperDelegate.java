@@ -620,12 +620,43 @@ public class ConfigHelperDelegate {
 				collectLoadCheckPkgs(plugin.getMethodPackages(), loadCheckPkgs);
 				toAddCheckPkgs.addAll(loadCheckPkgs);
 			}
+			Set<MethodPackage> handkedSet =  new HashSet<MethodPackage>(); 
 			for (MethodPackage pkg : toAddCheckPkgs) {
-				if (selectedPkgs.add(pkg)) {
-					config.getMethodPackageSelection().add(pkg);
+				if (handkedSet.add(pkg)) {
+					if (checkParentPackage(handkedSet, config, selectedPkgs, pkg,
+							toAddCheckPkgs)) {
+						addToConfig(config, selectedPkgs, pkg);
+					}
 				}
 			}
-		}				
+		}
+					
+	}
+
+	private void addToConfig(MethodConfiguration config,
+			Set<MethodPackage> selectedPkgs, MethodPackage pkg) {
+		config.getMethodPackageSelection().add(pkg);
+		selectedPkgs.add(pkg);
+	}
+	
+	private boolean checkParentPackage(Set<MethodPackage> handkedSet, MethodConfiguration config, Set<MethodPackage> selectedPkgs, MethodPackage pkg, Set<MethodPackage> toAddCheckPkgs) {
+		EObject container = pkg.eContainer();
+		if (! (container instanceof MethodPackage)) {
+			return false;
+		}
+		MethodPackage parentPkg = (MethodPackage) container;		
+		if (selectedPkgs.contains(parentPkg)) {
+			return true;
+		}
+		if (! toAddCheckPkgs.contains(parentPkg)) {
+			return false;
+		}
+		if (handkedSet.add(parentPkg)) {
+			if (checkParentPackage(handkedSet, config, selectedPkgs, parentPkg, toAddCheckPkgs)) {
+				addToConfig(config, selectedPkgs, parentPkg);
+			}		
+		}
+		return false;
 	}
 	
 	private void collectLoadCheckPkgs(List<MethodPackage> pkgList, Set<MethodPackage> loadCheckPkgs) {
