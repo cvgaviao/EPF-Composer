@@ -69,6 +69,7 @@ import org.eclipse.epf.services.IFileBasedLibraryPersister;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
 import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.ContentPackage;
 import org.eclipse.epf.uma.CustomCategory;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
@@ -1698,6 +1699,13 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			if (pluginForAddingTagetAsBase != null) {
 				pluginForAddingTagetAsBase.getBases().remove(ownerPlugin);
 			}
+			
+			if (pkgsMarkedByLoadCheck != null) {
+				PropUtil propUtil = PropUtil.getPropUtil();
+				for (MethodPackage pkg : pkgsMarkedByLoadCheck) {
+					propUtil.setBooleanValue(pkg, PropUtil.Pkg_loadCheck, false);
+				}
+			}
 		}
 		
 		@Override
@@ -2221,6 +2229,8 @@ public class MethodElementAddCommand extends CommandWrapper implements
 			return isReferencedIllegally(ownerPlugin, e, moveList);	
 		}
 		
+		private Set<MethodPackage> pkgsMarkedByLoadCheck;
+		
 		/**
 		 * Long running method
 		 * 
@@ -2230,7 +2240,9 @@ public class MethodElementAddCommand extends CommandWrapper implements
 				Map elementToOldResourceMap, Set modifiedResources) {
 			monitor.subTask(""); //$NON-NLS-1$
 
+			PropUtil propUtil = PropUtil.getPropUtil();
 			elementToOldContainerMap = new HashMap();
+			pkgsMarkedByLoadCheck = new HashSet<MethodPackage>();
 			for (Iterator iter = addCommand.getCollection().iterator(); iter
 					.hasNext();) {
 				EObject element = (EObject) iter.next();
@@ -2246,6 +2258,15 @@ public class MethodElementAddCommand extends CommandWrapper implements
 					}
 					elementToOldContainerMap.put(element, new ContainmentInfo(
 							container, index));
+					
+					if (element instanceof MethodPackage) {
+						MethodPackage pkg = (MethodPackage) element;
+						Boolean b = propUtil.getBooleanValue(pkg, PropUtil.Pkg_loadCheck);
+						if (b == null || !b.booleanValue()) {
+							propUtil.setBooleanValue(pkg, PropUtil.Pkg_loadCheck, true);
+							pkgsMarkedByLoadCheck.add(pkg);
+						}
+					}
 				}
 			}
 
