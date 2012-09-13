@@ -609,6 +609,9 @@ public class ConfigHelperDelegate {
 		
 		Map<MethodPlugin, Set<MethodPackage>> map = new HashMap<MethodPlugin, Set<MethodPackage>>();
 		for (MethodConfiguration config : lib.getPredefinedConfigurations()) {
+			if (! needFixupLoadCheckPackages(config)) {
+				continue;
+			}
 			Set<MethodPackage> selectedPkgs = new HashSet<MethodPackage>(config.getMethodPackageSelection());
 			Set<MethodPackage> toAddCheckPkgs =  new HashSet<MethodPackage>();
 			for (MethodPlugin plugin : config.getMethodPluginSelection()) {
@@ -631,6 +634,10 @@ public class ConfigHelperDelegate {
 			}
 		}
 					
+	}
+	
+	protected boolean needFixupLoadCheckPackages(MethodConfiguration config) {
+		return config != null;
 	}
 
 	private void addToConfig(MethodConfiguration config,
