@@ -66,6 +66,7 @@ import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.MethodElementUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -1142,13 +1143,34 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 			LibraryUtil.validateMethodConfiguration(actionMgr, config);
 
 			actionMgr.execute(new MethodElementSetPropertyCommand(config, TOUCHED_BY_CONFIG_EDITOR, Boolean.TRUE.toString()));
-
+			setDoneLoadCheckPkgs();
+			
 			return true;
 		
 		} finally {
 			config.eSetDeliver(oldNotify);
 		}
 	}
+	
+	private void setDoneLoadCheckPkgs() {		
+		Set<MethodPackage> doneLoadCheckPkgs = new HashSet<MethodPackage>();
+		for (MethodPlugin plugin : config.getMethodPluginSelection()) {
+			collectDoneLoadCheckPkgs(plugin.getMethodPackages(), doneLoadCheckPkgs);
+		}
+		MethodConfigurationPropUtil propUtil = MethodConfigurationPropUtil.getMethodConfigurationPropUtil(actionMgr);
+		propUtil.setDoneLoadCheckPkgs(config, doneLoadCheckPkgs);
+	}	
+	
+	private void collectDoneLoadCheckPkgs(List<MethodPackage> pkgs, Set<MethodPackage> doneLoadCheckPkgs) {
+		PropUtil propUtil = PropUtil.getPropUtil();
+		for (MethodPackage pkg : pkgs) {
+			Boolean b = propUtil.getBooleanValue(pkg, PropUtil.Pkg_loadCheck);
+			if (b != null && b.booleanValue()) {
+				doneLoadCheckPkgs.add(pkg);
+			}
+			collectDoneLoadCheckPkgs(pkg.getChildPackages(), doneLoadCheckPkgs);
+		}		
+	}	
 	
 	/**
 	 * Save configuration

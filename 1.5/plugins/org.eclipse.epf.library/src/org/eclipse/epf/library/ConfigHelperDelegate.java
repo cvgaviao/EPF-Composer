@@ -31,6 +31,7 @@ import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
+import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
 import org.eclipse.epf.library.edit.util.PropUtil;
@@ -623,6 +624,9 @@ public class ConfigHelperDelegate {
 				collectLoadCheckPkgs(plugin.getMethodPackages(), loadCheckPkgs);
 				toAddCheckPkgs.addAll(loadCheckPkgs);
 			}
+			
+			Set<MethodPackage> doneSet = MethodConfigurationPropUtil.getMethodConfigurationPropUtil().getDoneLoadCheckPkgs(config);
+			toAddCheckPkgs.removeAll(doneSet);
 			Set<MethodPackage> handkedSet =  new HashSet<MethodPackage>(); 
 			for (MethodPackage pkg : toAddCheckPkgs) {
 				if (handkedSet.add(pkg)) {
