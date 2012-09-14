@@ -50,6 +50,7 @@ import org.eclipse.epf.common.preferences.IPreferenceStoreWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeEventWrapper;
 import org.eclipse.epf.common.preferences.IPropertyChangeListenerWrapper;
 import org.eclipse.epf.common.serviceability.DebugTrace;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.util.Suppression;
@@ -1337,6 +1338,9 @@ public abstract class AbstractLibraryManager implements ILibraryManager {
 								.hasNext();) {
 							MethodConfiguration config = (MethodConfiguration) itconfig
 									.next();
+							if (! ConfigurationHelper.getDelegate().needFixupLoadCheckPackages(config)) {
+								continue;
+							}
 							List pkgs = config.getMethodPackageSelection();
 							if (!pkgs.contains(e)) {
 								// pkgs.add(e);

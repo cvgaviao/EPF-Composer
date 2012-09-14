@@ -640,7 +640,7 @@ public class ConfigHelperDelegate {
 					
 	}
 	
-	protected boolean needFixupLoadCheckPackages(MethodConfiguration config) {
+	public boolean needFixupLoadCheckPackages(MethodConfiguration config) {
 		return config != null;
 	}
 

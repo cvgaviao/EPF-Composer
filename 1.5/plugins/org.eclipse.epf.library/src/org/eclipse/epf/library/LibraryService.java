@@ -459,7 +459,9 @@ public class LibraryService implements ILibraryService {
 		LibraryEditUtil.getInstance().fixUpDanglingCustomCategories(library);
 		currentLibrary = library;
 		if (library != null) {
+//			long t = System.currentTimeMillis();
 			ConfigurationHelper.getDelegate().fixupLoadCheckPackages(library);
+//			System.out.println("LD> time: " +  (System.currentTimeMillis() - t));
 			ConfigurationHelper.getDelegate().loadUserDefinedType();
 		}
 		notifyListeners(library, EVENT_SET_CURRENT_LIBRARY);
