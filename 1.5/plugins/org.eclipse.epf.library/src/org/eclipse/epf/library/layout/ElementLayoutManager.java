@@ -98,6 +98,7 @@ public class ElementLayoutManager {
 	
 	public ElementLayoutManager() {
 		this(null, null, null, false);
+		buildPublishDir(null);
 	}
 
 	public ElementLayoutManager(MethodConfiguration config) {
@@ -112,6 +113,24 @@ public class ElementLayoutManager {
 			this.config = config;
 		}
 
+		if (isPublishingMode) {
+			buildPublishDir(publishdir);
+		}
+
+		contentLayoutAdapterFactory = new LayoutAdapterFactory(this.config);
+		diagramLayoutAdapterFactory = new LayoutAdapterFactory(this.config);
+		
+		//	load the layout extensions for this configuration
+		loadLayoutExtensions();
+	}
+
+	private boolean publishDirBuilt = false;
+	public void buildPublishDir(String publishdir) {
+		if (publishDirBuilt) {
+			return;
+		}
+		publishDirBuilt = true;
+		
 		if (publishdir == null) {
 			publishdir = LayoutResources.getDefaultPublishDir();
 			if (!publishdir.endsWith(File.separator)) {
@@ -131,12 +150,6 @@ public class ElementLayoutManager {
 		}
 
 		setPublishDir(publishdir);
-
-		contentLayoutAdapterFactory = new LayoutAdapterFactory(this.config);
-		diagramLayoutAdapterFactory = new LayoutAdapterFactory(this.config);
-		
-		//	load the layout extensions for this configuration
-		loadLayoutExtensions();
 	}
 
 	private void loadLayoutExtensions() {
@@ -412,10 +425,10 @@ public class ElementLayoutManager {
 
 	private void init_publishingSite() {
 		if ( BrowsingLayoutSettings.INSTANCE.needUpdate(publish_dir) ) {
-			if ( LibraryPlugin.getDefault().isDebugging() ) {
+//			if ( LibraryPlugin.getDefault().isDebugging() ) {
 				System.out
 						.println("Begin initializing publishing site: " + publish_dir); //$NON-NLS-1$
-			}
+//			}
 			
 			// copy the layout files from plugin layout to publishign site
 			LayoutResources.copyLayoutFiles(publish_dir);

@@ -173,6 +173,9 @@ public class ConfigurationManager implements IConfigurationManager {
 	 * @return an element layout manager
 	 */
 	public ElementLayoutManager getElementLayoutManager() {
+		if (layoutManager != null) {
+			layoutManager.buildPublishDir(null);
+		}
 		return layoutManager;
 	}
 
