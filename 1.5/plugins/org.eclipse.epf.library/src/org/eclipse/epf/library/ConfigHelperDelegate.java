@@ -30,6 +30,7 @@ import org.eclipse.epf.library.configuration.SupportingElementData;
 import org.eclipse.epf.library.edit.configuration.PracticeSubgroupItemProvider;
 import org.eclipse.epf.library.edit.process.ActivityWrapperItemProvider;
 import org.eclipse.epf.library.edit.realization.IRealizationManager;
+import org.eclipse.epf.library.edit.uma.MethodElementExt.MethodConfigurationExt;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
@@ -610,34 +611,54 @@ public class ConfigHelperDelegate {
 		
 		Map<MethodPlugin, Set<MethodPackage>> map = new HashMap<MethodPlugin, Set<MethodPackage>>();
 		for (MethodConfiguration config : lib.getPredefinedConfigurations()) {
-			if (! needFixupLoadCheckPackages(config)) {
-				continue;
+			fixupLoadCheckPackages(map, config);
+		}
+					
+	}
+
+	public void fixupLoadCheckPackages(MethodConfiguration config) {
+		fixupLoadCheckPackages(null, config);
+	}
+	
+	private void fixupLoadCheckPackages(
+			Map<MethodPlugin, Set<MethodPackage>> map,
+			MethodConfiguration config) {
+		MethodConfigurationPropUtil propUtil = MethodConfigurationPropUtil.getMethodConfigurationPropUtil();
+		MethodConfigurationExt ext = propUtil.getMethocConfigurationExt(config);
+		if (ext == null && ext.isLoadCheckPackagesCalled()) {
+			return;
+		}
+		ext.setLoadCheckPackagesCalled(true);
+		
+		if (! needFixupLoadCheckPackages(config)) {
+				return;
+		}		
+		if (map == null) {
+			map = new HashMap<MethodPlugin, Set<MethodPackage>>();
+		}
+		Set<MethodPackage> selectedPkgs = new HashSet<MethodPackage>(config.getMethodPackageSelection());
+		Set<MethodPackage> toAddCheckPkgs =  new HashSet<MethodPackage>();
+		for (MethodPlugin plugin : config.getMethodPluginSelection()) {
+			Set<MethodPackage> loadCheckPkgs = map.get(plugin);
+			if (loadCheckPkgs == null) {
+				loadCheckPkgs = new HashSet<MethodPackage>();
+				map.put(plugin, loadCheckPkgs);
 			}
-			Set<MethodPackage> selectedPkgs = new HashSet<MethodPackage>(config.getMethodPackageSelection());
-			Set<MethodPackage> toAddCheckPkgs =  new HashSet<MethodPackage>();
-			for (MethodPlugin plugin : config.getMethodPluginSelection()) {
-				Set<MethodPackage> loadCheckPkgs = map.get(plugin);
-				if (loadCheckPkgs == null) {
-					loadCheckPkgs = new HashSet<MethodPackage>();
-					map.put(plugin, loadCheckPkgs);
-				}
-				collectLoadCheckPkgs(plugin.getMethodPackages(), loadCheckPkgs);
-				toAddCheckPkgs.addAll(loadCheckPkgs);
-			}
-			
-			Set<MethodPackage> doneSet = MethodConfigurationPropUtil.getMethodConfigurationPropUtil().getDoneLoadCheckPkgs(config);
-			toAddCheckPkgs.removeAll(doneSet);
-			Set<MethodPackage> handkedSet =  new HashSet<MethodPackage>(); 
-			for (MethodPackage pkg : toAddCheckPkgs) {
-				if (handkedSet.add(pkg)) {
-					if (checkParentPackage(handkedSet, config, selectedPkgs, pkg,
-							toAddCheckPkgs)) {
-						addToConfig(config, selectedPkgs, pkg);
-					}
+			collectLoadCheckPkgs(plugin.getMethodPackages(), loadCheckPkgs);
+			toAddCheckPkgs.addAll(loadCheckPkgs);
+		}
+		
+		Set<MethodPackage> doneSet = propUtil.getDoneLoadCheckPkgs(config);
+		toAddCheckPkgs.removeAll(doneSet);
+		Set<MethodPackage> handkedSet =  new HashSet<MethodPackage>(); 
+		for (MethodPackage pkg : toAddCheckPkgs) {
+			if (handkedSet.add(pkg)) {
+				if (checkParentPackage(handkedSet, config, selectedPkgs, pkg,
+						toAddCheckPkgs)) {
+					addToConfig(config, selectedPkgs, pkg);
 				}
 			}
 		}
-					
 	}
 	
 	public boolean needFixupLoadCheckPackages(MethodConfiguration config) {

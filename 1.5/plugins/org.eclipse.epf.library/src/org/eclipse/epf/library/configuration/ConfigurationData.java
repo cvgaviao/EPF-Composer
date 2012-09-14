@@ -183,6 +183,7 @@ public class ConfigurationData {
 	}
 	
 	private void updateChanges_() {
+		ConfigurationHelper.getDelegate().fixupLoadCheckPackages(getConfig());		
 		substractedElemMap.clear();
 		addedElemMap.clear();
 		

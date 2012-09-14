@@ -1,13 +1,10 @@
 package org.eclipse.epf.library.edit.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.epf.library.edit.command.IActionManager;
-import org.eclipse.epf.uma.ContentPackage;
+import org.eclipse.epf.library.edit.uma.MethodElementExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt.MethodConfigurationExt;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPackage;
@@ -75,6 +72,11 @@ public class MethodConfigurationPropUtil extends PropUtil {
 	
 	public void setDeselectedElements(MethodConfiguration config, Set<MethodElement> elements) {
 		setElements(config, Config_deselectedElements, elements, null);
+	}
+	
+	public MethodConfigurationExt getMethocConfigurationExt(MethodConfiguration config) {
+		MethodElementExt ext = getExtendObject(config, true);
+		return ext instanceof MethodConfigurationExt ? (MethodConfigurationExt) ext : null;		
 	}
 	
 }

@@ -27,6 +27,7 @@ import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.uma.DescriptorExt;
 import org.eclipse.epf.library.edit.uma.MethodElementExt;
+import org.eclipse.epf.library.edit.uma.MethodElementExt.MethodConfigurationExt;
 import org.eclipse.epf.library.edit.uma.MethodElementExt.WorkProductStateExt;
 import org.eclipse.epf.library.edit.uma.MethodPluginExt;
 import org.eclipse.epf.library.edit.util.DebugUtil;
@@ -38,6 +39,7 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
 import org.eclipse.epf.uma.Descriptor;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Practice;
@@ -295,6 +297,9 @@ public class TypeDefUtil {
 		}
 		if (element instanceof MethodPlugin) {
 			return new MethodPluginExt((MethodPlugin) element);
+		}
+		if (element instanceof MethodConfiguration) {
+			return new MethodConfigurationExt((MethodConfiguration) element);
 		}
 		return new MethodElementExt(element);
 	}

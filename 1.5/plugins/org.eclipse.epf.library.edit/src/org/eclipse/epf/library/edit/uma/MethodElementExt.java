@@ -12,6 +12,7 @@ import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.Comparators;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.Constraint;
+import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
@@ -106,6 +107,24 @@ public class MethodElementExt extends ExtendObject {
 		}
 		
 	}
+	
+	public static class MethodConfigurationExt extends MethodElementExt {
+		boolean loadCheckPackagesCalled = false;
+
+		public MethodConfigurationExt(MethodConfiguration element) {
+			super(element);
+		}
+
+		public boolean isLoadCheckPackagesCalled() {
+			return loadCheckPackagesCalled;
+		}
+
+		public void setLoadCheckPackagesCalled(boolean loadCheckPackagesCalled) {
+			this.loadCheckPackagesCalled = loadCheckPackagesCalled;
+		}
+		
+	}
+	
 	
 	public IUserDefinedTypeMeta getUserDefinedTypeMeta() {
 		return userDefinedTypeMeta;
