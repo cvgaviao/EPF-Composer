@@ -555,7 +555,7 @@ public class BaseFormPage extends FormPage {
 	 *            The text for the Label.
 	 * @return A new <code>Combobox</code>.
 	 */
-	public Combo createComboWithLabel3(FormToolkit toolkit, Composite parent,
+	public static Combo createComboWithLabel3(FormToolkit toolkit, Composite parent,
 			String labelText) {
 		createLabel(toolkit, parent, labelText, 2);
 		return createCombo(parent, SWT.SINGLE | SWT.FLAT | SWT.READ_ONLY |SWT.TRAVERSE_TAB_NEXT,
@@ -827,7 +827,7 @@ public class BaseFormPage extends FormPage {
 	 *            The GridData style.
 	 * @return A new <code>Combobox</code>.
 	 */
-	protected Combo createCombo(Composite parent, int style, int gridDataStyle) {
+	protected static Combo createCombo(Composite parent, int style, int gridDataStyle) {
 		Combo control = new Combo(parent, style);
 		return control;
 	}
