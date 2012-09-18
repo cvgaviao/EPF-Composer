@@ -104,6 +104,9 @@ public class UserDefinedTypeMeta implements IUserDefinedTypeMeta {
 			return false;
 		}
 		for (String name : rteNames) {
+			if (name.equals(_icon) || name.equals(_shapeIcon)) {
+				continue;
+			}
 			String thisValue = this.getRteNameMap().get(name);
 			String otherValue = other.getRteNameMap().get(name);
 			if (! same(thisValue, otherValue)) {

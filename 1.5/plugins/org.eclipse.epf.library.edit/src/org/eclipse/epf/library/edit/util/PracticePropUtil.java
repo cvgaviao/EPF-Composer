@@ -142,7 +142,14 @@ public class PracticePropUtil extends PropUtil {
 				meta.setId(value);
 			}
 			for (String name : UserDefinedTypeMeta.rteNames) {
-				value = firstElement.getAttribute(name);
+				if (name.equals(UserDefinedTypeMeta._icon) || name.equals(UserDefinedTypeMeta._shapeIcon)) {
+					UserDefinedTypeMeta globalMeta = LibraryEditUtil.getInstance().getUserDefineType(meta.getId());
+					if (globalMeta != null) {
+						value = globalMeta.getRteNameMap().get(name);
+					}
+				} else {				
+					value = firstElement.getAttribute(name);
+				}
 				if (value != null && value.length() > 0) {
 					map.put(name, value);
 				}
