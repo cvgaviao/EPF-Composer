@@ -61,6 +61,9 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 	public void parseElement(Element element)	throws TypeDefException {
 		super.parseElement(element);			
 		type = element.getAttribute(IMetaDef.type);
+		if (IMetaDef.RTE.equals(type)) {
+			type = IMetaDef.ATTRIBUTE;
+		}
 		
 		getReferences().clear();
 		List<Element> referenceElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.REFERENCE);
@@ -72,17 +75,18 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 			}
 		}
 		
-		getRtes().clear();
+		getAttributes().clear();
+//		getRtes().clear();
 		List<Element> rteElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.RTE);
 		if (rteElements != null) {
 			for (Element rElement : rteElements) {
 				ExtendedAttributeImpl rte = new ExtendedAttributeImpl(this);
 				rte.parseElement(rElement);
-				getRtes().add(rte);
+				getAttributes().add(rte);
 			}
 		}
 		
-		getAttributes().clear();
+//		getAttributes().clear();
 		List<Element> attributeElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.ATTRIBUTE);
 		if (attributeElements != null) {
 			for (Element aElement : attributeElements) {
