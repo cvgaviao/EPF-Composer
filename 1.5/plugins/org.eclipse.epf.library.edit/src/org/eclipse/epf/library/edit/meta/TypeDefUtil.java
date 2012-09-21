@@ -451,11 +451,11 @@ public class TypeDefUtil {
 		return extendedReference == null ? null : extendedReference.getOpposite();
 	}
 	
-	public MethodElement getLinkedElement(BreakdownElement be) {
-		if (be instanceof Descriptor) {
-			return ProcessUtil.getAssociatedElement((Descriptor) be);
+	public MethodElement getLinkedElement(MethodElement element) {
+		if (element instanceof Descriptor) {
+			return ProcessUtil.getAssociatedElement((Descriptor) element);
 		}
-		return PropUtil.getPropUtil().getLinkedElement(be);
+		return PropUtil.getPropUtil().getLinkedElement(element);
 	}
 	
 }
