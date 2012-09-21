@@ -33,6 +33,7 @@ import org.eclipse.epf.library.edit.uma.MethodPluginExt;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
+import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Constraint;
@@ -448,6 +449,13 @@ public class TypeDefUtil {
 		}
 		ExtendedReference extendedReference = getAssociatedExtendedReference(oFeature.getTargetFeature());
 		return extendedReference == null ? null : extendedReference.getOpposite();
+	}
+	
+	public MethodElement getLinkedElement(BreakdownElement be) {
+		if (be instanceof Descriptor) {
+			return ProcessUtil.getAssociatedElement((Descriptor) be);
+		}
+		return PropUtil.getPropUtil().getLinkedElement(be);
 	}
 	
 }
