@@ -43,6 +43,7 @@ import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.PresentationContext;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.ReferenceTable;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.CategorySortHelper;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
@@ -1115,6 +1116,20 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 	}
 	
+	boolean skipExtendedSection(ExtendedSection section) {
+		if (! (getElement() instanceof BreakdownElement)) {
+			return false;
+		}
+		if (null != TypeDefUtil.getInstance().getLinkedElement(getElement())) {
+			return false;
+		}
+		MetaElement parent = section.getParent();
+		if (! (parent instanceof ModifiedTypeMeta)) {
+			return false;
+		}
+		return ((ModifiedTypeMeta) parent).isLinkedSection(section);
+	}
+	
 	public void loadExtendedAttributes(XmlElement elementXml) {
 		if (ownerElement == null) {
 			return;
@@ -1127,6 +1142,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		
 		if (!  meta.getAttributeSections().isEmpty()) {
 			for (ExtendedSection section : meta.getAttributeSections()) {
+				if (skipExtendedSection(section)) {
+					continue;
+				}
 				List<ExtendedAttribute> attributes = section.getAttributes();
 				if (attributes == null || attributes.isEmpty()) {
 					continue;
@@ -1161,6 +1179,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 		
 		for (ExtendedSection section : meta.getRteSections()) {
+			if (skipExtendedSection(section)) {
+				continue;
+			}
 			List<ExtendedAttribute> attributes = section.getRtes();
 			if (attributes == null || attributes.isEmpty()) {
 				continue;
@@ -1198,6 +1219,9 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		ElementRealizer realizer = layoutManager.getElementRealizer();
 		
 		for (ExtendedSection section : meta.getReferenceSections()) {
+			if (skipExtendedSection(section)) {
+				continue;
+			}
 			List<ExtendedReference> references = section.getReferences();
 			if (references == null || references.isEmpty()) {
 				continue;
