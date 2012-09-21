@@ -1,8 +1,10 @@
 package org.eclipse.epf.library.edit.meta.internal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.epf.common.utils.XMLUtil;
@@ -222,6 +224,32 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 			sb.append(indent + indent + linkTypes.get(i) + "\n");
 		}		
 		sb.append("\n");		
+	}
+	
+	private static ExtendedAttribute nullExtendedAttributeValue = new ExtendedAttributeImpl(null);
+	private Map<String, ExtendedAttribute> extendedAttributeMap = new HashMap<String, ExtendedAttribute>();	
+	public ExtendedAttribute getExtendedAttribute(String globalId) {
+		if (globalId == null) {
+			return null;
+		}
+		ExtendedAttribute value = extendedAttributeMap.get(globalId);
+		if (value == nullExtendedAttributeValue) {
+			return null;
+		}
+		if (value != null) {
+			return value;
+		}
+		for (ExtendedAttribute att : getAttributes()) {
+			if (globalId.equals(att.getGlobalId())) {
+				value = att;
+				break;
+			}
+		}
+		if (value == null) {
+			value = nullExtendedAttributeValue;
+		} 
+		extendedAttributeMap.put(globalId, value);		
+		return value == nullExtendedAttributeValue ? null : value;
 	}
 	
 }
