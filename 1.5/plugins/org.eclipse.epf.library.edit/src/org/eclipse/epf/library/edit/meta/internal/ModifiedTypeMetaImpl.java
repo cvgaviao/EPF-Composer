@@ -15,6 +15,7 @@ import org.eclipse.epf.uma.util.ExtendedFeature;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.ExtendedTable;
+import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.w3c.dom.Element;
 
@@ -197,18 +198,23 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		getReferenceSections().addAll(linkedMeta.getReferenceSections());;
 		getRteSections().addAll(linkedMeta.getRteSections());
 		getAttributeSections().addAll(linkedMeta.getAttributeSections());
-		if (extendedFeatures == null) {
-			extendedFeatures = new HashSet<ExtendedFeature>();
+		if (linkedMetaElements == null) {
+			linkedMetaElements = new HashSet<MetaElement>();
 		}
-		extendedFeatures.addAll(linkedMeta.getReferences());
-		extendedFeatures.addAll(linkedMeta.getRtes());
-		extendedFeatures.addAll(linkedMeta.getAttributes());
+		linkedMetaElements.addAll(linkedMeta.getReferences());
+		linkedMetaElements.addAll(linkedMeta.getRtes());
+		linkedMetaElements.addAll(linkedMeta.getAttributes());
+		linkedMetaElements.addAll(linkedMeta.getSections());
 		return true;
 	}
 	
-	private Set<ExtendedFeature> extendedFeatures;
+	private Set<MetaElement> linkedMetaElements;
 	public boolean isLinkedFeature(ExtendedFeature feature) {
-		return extendedFeatures == null ? false : extendedFeatures.contains(feature);
+		return linkedMetaElements == null ? false : linkedMetaElements.contains(feature);
+	}
+	
+	public boolean isLinkedSection(ExtendedSection section) {
+		return linkedMetaElements == null ? false : linkedMetaElements.contains(section);
 	}
 	
 	@Override

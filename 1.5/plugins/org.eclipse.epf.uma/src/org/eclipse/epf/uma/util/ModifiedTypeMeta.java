@@ -21,6 +21,8 @@ public interface ModifiedTypeMeta extends MetaElement {
 	
 	public boolean isLinkedFeature(ExtendedFeature feature);
 	
+	public boolean isLinkedSection(ExtendedSection section);
+	
 	public ExtendedAttribute getExtendedAttribute(String globalId);
 	
 }
