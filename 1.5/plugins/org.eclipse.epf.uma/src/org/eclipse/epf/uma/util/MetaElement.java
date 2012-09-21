@@ -48,6 +48,9 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 		public String getTextContent() {
 			return null;
 		}
+		public ModifiedTypeMeta getModifiedTypeMeta() {
+			return null;
+		}
 	};
 		
 	public String getId();	
@@ -63,5 +66,6 @@ public interface MetaElement extends IUserDefinedTypeMeta, Comparable<MetaElemen
 	public String getLayout();
 	public String getDebugString(int ix, String indent);
 	public boolean isAncestorOf(MetaElement element);
+	public ModifiedTypeMeta getModifiedTypeMeta();
 	
 }

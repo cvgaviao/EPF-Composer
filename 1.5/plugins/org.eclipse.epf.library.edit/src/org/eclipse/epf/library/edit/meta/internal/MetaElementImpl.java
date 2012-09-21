@@ -263,4 +263,14 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		return false;
 	}
 	
+	public ModifiedTypeMeta getModifiedTypeMeta() {
+		MetaElement e = this;
+		while (e != null) {
+			if (e instanceof ModifiedTypeMeta) {
+				return (ModifiedTypeMeta) e;
+			}
+			e = e.getParent();
+		}
+		return null;
+	}
 }
