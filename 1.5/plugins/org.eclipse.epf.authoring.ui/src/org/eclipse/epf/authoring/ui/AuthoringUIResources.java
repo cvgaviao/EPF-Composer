@@ -2219,7 +2219,9 @@ public final class AuthoringUIResources extends NLS {
 	
 	public static String ConfigurationPage_RunQuery_label;
 	
-	public static String ConfigurationPage_RunQuery_ToolTip;  
+	public static String ConfigurationPage_RunQuery_ToolTip; 
+	
+	public static String contribution_order_text;
 	
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, AuthoringUIResources.class);

@@ -62,6 +62,8 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -232,6 +234,25 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 		// Button to select
 		selectButton = FormUI.createButton(toolkit, generalComposite,
 				AuthoringUIText.SELECT_BUTTON_TEXT);
+		
+		// Variability Type
+		FormUI.createLabel(toolkit, generalComposite,
+				AuthoringUIResources.contribution_order_text);
+
+		final Text orderText = FormUI.createText(toolkit, generalComposite);
+				orderText.addFocusListener(new FocusAdapter() {
+			public void focusLost(FocusEvent event) {
+//					String text = orderText.getText();
+			}
+		});
+
+		Label blankLabel1 = FormUI.createLabel(toolkit, generalComposite, ""); //$NON-NLS-1$
+		{
+			GridData gridData = new GridData(GridData.BEGINNING);
+			gridData.horizontalSpan = 1;
+			blankLabel1.setLayoutData(gridData);
+		}
+		
 	}
 	
 	private List<AbstractDiagramEditor> getDirtyDiagramEditors() {
