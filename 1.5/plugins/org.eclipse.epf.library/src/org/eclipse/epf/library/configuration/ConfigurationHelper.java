@@ -385,6 +385,34 @@ public class ConfigurationHelper {
 			}
 		}
 
+		if (element instanceof Activity) {
+			Comparator<MethodElement> comparator = new Comparator<MethodElement>() {
+
+				public int compare(MethodElement object1, MethodElement object2) {
+					PropUtil propUtil = PropUtil.getPropUtil();
+					String v1 = propUtil.getContributionOrder(object1);
+					if (v1 == null) {
+						v1 = "";//$NON-NLS-1$
+					}
+					String v2 =  propUtil.getContributionOrder(object2);
+					if (v2 == null) {
+						v2 = "";//$NON-NLS-1$
+					}
+					if (v1.length() == 0) {
+						return v2.length() == 0 ? 0 : 1;
+					} else if (v2.length() == 0) {
+						return v1.length() == 0 ? 0 : -1;	
+					}
+					return v1.compareTo(v2);
+				}
+
+			    public boolean equals(Object object) {
+			    	return this == object;
+			    }
+			};
+			Collections.sort(items, comparator);
+		}		
+		
 		return items;
 	}
 
