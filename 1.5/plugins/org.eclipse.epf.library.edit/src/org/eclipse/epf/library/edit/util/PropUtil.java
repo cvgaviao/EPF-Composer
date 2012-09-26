@@ -10,6 +10,7 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.meta.ReferenceTable;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
@@ -30,6 +31,7 @@ public class PropUtil extends MethodElementPropUtil {
 	public static final String Me_attribute_ = "me_attribute_";			//$NON-NLS-1$
 	public static final String Me_table_ = "me_table_";					//$NON-NLS-1$
 	public static final String Me_linkedElement = "me_linkedElement";	//$NON-NLS-1$
+	public static final String me_ContibutionOrder = "me_ContributionOrder";			//$NON-NLS-1$
 	
 	public static final String Pkg_loadCheck = "pkg_loadCheck";	//$NON-NLS-1$
 	
@@ -47,6 +49,14 @@ public class PropUtil extends MethodElementPropUtil {
 	
 	protected PropUtil(IActionManager actionManager) {
 		super(actionManager);
+	}
+	
+	public String getContributionOrder(MethodElement element) {
+		return getStringValue(element, me_ContibutionOrder);
+	}
+	
+	public void setContributionOrder(MethodElement element, String value) {
+		setStringValue(element, me_ContibutionOrder, value);
 	}
 	
 	public MethodElement getLinkedElement(MethodElement element) {

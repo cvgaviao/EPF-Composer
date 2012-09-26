@@ -39,7 +39,9 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.process.IBSItemProvider;
 import org.eclipse.epf.library.edit.process.command.ActivityVariabilityCommand;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
+import org.eclipse.epf.library.edit.util.WbePropUtil;
 import org.eclipse.epf.library.edit.validation.DependencyChecker;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.library.ui.dialogs.ConvertActivityDialog;
@@ -62,8 +64,8 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -114,6 +116,8 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 	private Text baseText;
 
 	private Button selectButton;
+	
+	private Text orderText;
 
 	protected ILabelProvider variabilityLabelProvider = new AdapterFactoryLabelProvider(
 			TngAdapterFactory.INSTANCE
@@ -239,13 +243,16 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 		FormUI.createLabel(toolkit, generalComposite,
 				AuthoringUIResources.contribution_order_text);
 
-		final Text orderText = FormUI.createText(toolkit, generalComposite);
-				orderText.addFocusListener(new FocusAdapter() {
-			public void focusLost(FocusEvent event) {
-//					String text = orderText.getText();
-			}
-		});
 
+		orderText = FormUI.createText(toolkit, generalComposite);
+		if (getElement() instanceof Activity) {
+			String text = PropUtil.getPropUtil().getContributionOrder((Activity) getElement());
+			if (text == null) {
+				text = "";  //$NON-NLS-1$
+			}
+			orderText.setText(text);
+		}		
+		orderText.addModifyListener(getOrderTextModifyListener());			
 		Label blankLabel1 = FormUI.createLabel(toolkit, generalComposite, ""); //$NON-NLS-1$
 		{
 			GridData gridData = new GridData(GridData.BEGINNING);
@@ -253,6 +260,25 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 			blankLabel1.setLayoutData(gridData);
 		}
 		
+	}
+	
+	private ModifyListener getOrderTextModifyListener() {
+		final PropUtil propUtil = PropUtil.getPropUtil(actionMgr);
+		ModifyListener orderTextModifyListener = new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				String newText = orderText.getText().trim();
+				String oldText = propUtil
+						.getContributionOrder(getElement());
+				if (oldText == null) {
+					oldText = "";//$NON-NLS-1$
+				}
+				if (!newText.equals(oldText)) {
+					propUtil.setContributionOrder((Activity) getElement(),
+							newText);
+				}
+			}
+		};
+		return orderTextModifyListener;
 	}
 	
 	private List<AbstractDiagramEditor> getDirtyDiagramEditors() {
@@ -613,6 +639,15 @@ public class ActivityGeneralSection extends WorkBreakdownElementGeneralSection {
 
 				element = (Activity) getElement();
 
+				String text = PropUtil.getPropUtil()
+						.getContributionOrder(element);
+				if (text == null) {
+					text = ""; //$NON-NLS-1$
+				}
+				if (! text.equals(orderText.getText())) {
+					orderText.setText(text);
+				}
+				
 				modelInfoText.setText(getModelInfo());
 
 				ctrl_type_text.setText(PropertiesUtil.getType(element));
