@@ -1696,12 +1696,19 @@ public final class TngUtil {
 		}
 		
 		//For user defined type
+//		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object))) {
+//			ImageDescriptor desc = getImageForUdt((Practice)object);
+//			if (desc != null) {
+//				return desc;
+//			}
+//		}
+		
 		if ((object instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)object))) {
-			ImageDescriptor desc = getImageForUdt((Practice)object);
-			if (desc != null) {
-				return desc;
+			URL url = getImageForUdt2((Practice)object);
+			if (url != null) {
+				return url;
 			}
-		}		
+		}	
 		
 		Object adapter = null;
 		try {
@@ -1727,6 +1734,21 @@ public final class TngUtil {
 				return null;
 			}
 			return ImageDescriptor.createFromURL(new URL(imageUrl));
+		} catch (Exception e) {
+			LibraryEditPlugin.getDefault().getLogger().logError(e);
+		}
+		
+		return null;
+	}
+	
+	public static URL getImageForUdt2(Practice prac) {
+		try {
+			UserDefinedTypeMeta udtMeta = PracticePropUtil.getPracticePropUtil().getUtdData(prac);
+			String imageUrl = udtMeta.getRteNameMap().get(UserDefinedTypeMeta._icon);
+			if (imageUrl == null) {
+				return null;
+			}
+			return new URL(imageUrl);
 		} catch (Exception e) {
 			LibraryEditPlugin.getDefault().getLogger().logError(e);
 		}
