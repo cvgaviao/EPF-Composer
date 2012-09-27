@@ -24,7 +24,6 @@ import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodPlugin;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.Task;
-import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
@@ -91,7 +90,7 @@ public class FulfillmentTest extends VariablityBaseTestCase {
 		items = ConfigurationHelper.calc0nFeatureValue(a1, ofeature, realizer);
 		assertEquals(2, items.size());
 		
-		items = ConfigurationHelper.calcFulfillableElement_Fulfills(a1, config);
+		items = ConfigurationHelper.calcFulfillableElement_Fulfills(a1, realizer);
 		assertEquals(slot2, items.get(0));
 		assertEquals(slot1, items.get(1));
 		

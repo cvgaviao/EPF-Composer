@@ -800,11 +800,25 @@ public class ConfigurationHelper {
 		}
 	}
 	
+//	public static List<FulfillableElement> calcFulfillableElement_Fulfills(FulfillableElement element,
+//			MethodConfiguration config);
+	
+	//Change the signature and use a try/catch block in case there is any regression with some corner case.
 	public static List<FulfillableElement> calcFulfillableElement_Fulfills(FulfillableElement element,
-					MethodConfiguration config) {
+			ElementRealizer realizer) {
+		try {
+			return calcFulfillableElement_Fulfills_(element, realizer);
+		} catch (Exception e) {
+			return Collections.EMPTY_LIST;
+		}
+	}
+	
+	private static List<FulfillableElement> calcFulfillableElement_Fulfills_(FulfillableElement element,
+					ElementRealizer realizer) {
 		List<FulfillableElement> resultList = new ArrayList<FulfillableElement>();
 		
-		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
+		MethodConfiguration config = realizer.getConfiguration();
+//		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(config);
 		Object fullfillsObj = calc0nFeatureValue(element,
 				UmaPackage.eINSTANCE.getFulfillableElement_Fulfills(),
 				realizer);	
@@ -846,7 +860,7 @@ public class ConfigurationHelper {
 			return;
 		}
 		
-		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(element, config);
+		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(element, realizer);
 
 		for (FulfillableElement slot : slots) {
 			if (slot instanceof WorkProduct) {
@@ -875,7 +889,7 @@ public class ConfigurationHelper {
 			return;
 		}
 		
-		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(OwnerElement, config);
+		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(OwnerElement, realizer);
 
 		for (FulfillableElement slot : slots) {
 			if (slot instanceof WorkProduct) {
@@ -905,7 +919,7 @@ public class ConfigurationHelper {
 			return;
 		}
 		
-		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(element, config);
+		List<FulfillableElement> slots = calcFulfillableElement_Fulfills(element, realizer);
 
 		for (FulfillableElement slot : slots) {
 			slot = (FulfillableElement) getCalculatedElement(slot, config);

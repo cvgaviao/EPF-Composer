@@ -234,7 +234,7 @@ public class WorkProductDescriptorLayout extends DescriptorLayout {
 				EReference feature = UmaPackage.eINSTANCE
 						.getFulfillableElement_Fulfills();
 				List list = ConfigurationHelper
-						.calcFulfillableElement_Fulfills(wp, config);
+						.calcFulfillableElement_Fulfills(wp, layoutManager.getElementRealizer());
 				List<WorkProductDescriptor> wpdList = getWpdList(wpWpdMap, list);
 				addReferences(feature, elementXml, feature.getName(), wpdList);
 				

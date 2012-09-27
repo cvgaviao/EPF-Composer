@@ -218,7 +218,7 @@ public class WorkProductLayout extends AbstractElementLayout {
 			return;
 		}
 		List slots = ConfigurationHelper.calcFulfillableElement_Fulfills(
-				fElement, realizer.getConfiguration());
+				fElement, realizer);
 				
 		addSlotReferences(elementXml,
 				AssociationHelper.WorkProduct_MandatoryInputTo_Tasks,
@@ -250,7 +250,7 @@ public class WorkProductLayout extends AbstractElementLayout {
 			ElementRealizer realizer) {
 		if (feature == UmaPackage.eINSTANCE.getFulfillableElement_Fulfills()) {
 			return ConfigurationHelper.calcFulfillableElement_Fulfills(
-					(FulfillableElement) element, realizer.getConfiguration());
+					(FulfillableElement) element, realizer);
 		}
 		return super.calc0nFeatureValue(element, ownerElement, feature,
 				layoutManager.getElementRealizer());
