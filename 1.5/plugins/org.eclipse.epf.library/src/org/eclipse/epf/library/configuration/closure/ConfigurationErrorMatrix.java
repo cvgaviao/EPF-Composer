@@ -11,6 +11,8 @@
 package org.eclipse.epf.library.configuration.closure;
 
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.configuration.ConfigurationData;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
@@ -48,6 +50,12 @@ public class ConfigurationErrorMatrix {
 	
 	public static ElementError getError(MethodConfiguration config, ElementReference ref) {
 		
+		MethodElement e_ref = (MethodElement)ref.getRefElement();		
+		ConfigurationData cData = ConfigurationHelper.getDelegate().getConfigurationData(config);
+		if (cData != null && cData.isElementSubtracted(e_ref)) {
+			return null;
+		}
+		
 		if ( ref.hasFeature(UmaPackage.eINSTANCE.getVariabilityElement_VariabilityBasedOnElement()) ) {
 			return getVariabilityError(config, ref);
 		} 
@@ -56,7 +64,6 @@ public class ConfigurationErrorMatrix {
 		String messageId = LibraryResources.ElementError_missing_element;
 		
 		MethodElement e = (MethodElement)ref.getElement();
-		MethodElement e_ref = (MethodElement)ref.getRefElement();
 
 		if ( ref.hasFeature(UmaPackage.eINSTANCE.getTask_MandatoryInput()) ) {
 			errorLevel = ErrorInfo.ERROR;
