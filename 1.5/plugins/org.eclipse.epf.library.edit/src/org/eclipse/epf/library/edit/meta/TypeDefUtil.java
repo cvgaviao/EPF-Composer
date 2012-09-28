@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
+import org.eclipse.epf.library.edit.meta.internal.ExtendedReferenceImpl;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.uma.DescriptorExt;
@@ -416,6 +417,10 @@ public class TypeDefUtil {
 	
 	public ModifiedTypeMeta newModifiedTypeMeta() {
 		return new ModifiedTypeMetaImpl();
+	}
+	
+	public ExtendedReference newExtendedReference(MetaElement parent) {
+		return new ExtendedReferenceImpl(parent);
 	}
 	
 	private static String indent0 = "     ";  //$NON-NLS-1$

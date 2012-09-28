@@ -6,6 +6,7 @@ import java.util.List;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedSection;
@@ -69,7 +70,8 @@ public class ExtendedSectionImpl  extends MetaElementImpl implements ExtendedSec
 		List<Element> referenceElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.REFERENCE);
 		if (referenceElements != null) {
 			for (Element rElement : referenceElements) {
-				ExtendedReferenceImpl ref = new ExtendedReferenceImpl(this);
+//				ExtendedReferenceImpl ref = new ExtendedReferenceImpl(this);
+				ExtendedReferenceImpl ref = (ExtendedReferenceImpl) TypeDefUtil.getInstance().newExtendedReference(this);			
 				ref.parseElement(rElement);
 				getReferences().add(ref);
 			}
