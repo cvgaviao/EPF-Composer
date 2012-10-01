@@ -186,6 +186,9 @@ public class ToManyOppositeFeatureValue extends ToManyFeatureValue {
 		if ( items.size() > 0 ) {		
 			for (Iterator it = items.iterator(); it.hasNext();) {
 				MethodElement me = (MethodElement) it.next();
+				if (ConfigurationHelper.getCalculatedElement(me, realizer) == null) {
+					continue;
+				}
 				boolean keep = false;
 				if ( f.isMany() ) {
 					List vx = ConfigurationHelper.calc0nFeatureValue(me, f, realizer);
