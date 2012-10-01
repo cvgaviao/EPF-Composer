@@ -532,7 +532,17 @@ public class ElementLayoutManager {
 			}
 
 			// set configuration filter
-			configurator = new ProcessAdapterFactoryFilter(methodConfig, this);
+			configurator = new ProcessAdapterFactoryFilter(methodConfig, this) {
+				
+				@Override
+				public ElementRealizer getRealizer() {
+					ElementRealizer realizer = ElementLayoutManager.this.getElementRealizer();
+					if (realizer == null) {
+						realizer = super.getRealizer();
+					}
+					return realizer;
+				}
+			};
 			
 			wbsAdapterFactory.setFilter(configurator);
 			tbsAdapterFactory.setFilter(configurator);

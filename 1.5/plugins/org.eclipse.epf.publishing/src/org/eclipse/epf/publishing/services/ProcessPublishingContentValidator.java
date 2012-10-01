@@ -34,6 +34,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Roadmap;
 import org.eclipse.epf.uma.SupportingMaterial;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.UmaPackage;
 
@@ -173,6 +174,11 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 					}
 					if (processed.contains(referenced)) {
 						continue;
+					}
+					if (feature == UmaPackage.eINSTANCE.getActivity_BreakdownElements() && referenced instanceof Descriptor) {
+						if (! (referenced instanceof TaskDescriptor)) {
+							continue;
+						}
 					}
 					if (ConfigurationHelper.inConfig(referenced, config)) {
 						closureElements.add(referenced);
