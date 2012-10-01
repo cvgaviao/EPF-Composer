@@ -588,4 +588,9 @@ public class ConfigurationFilter extends AdapterImpl implements IConfigurator {
 		return null;
 	}
 	
+	public ElementRealizer getRealizer() {
+		ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(methodConfig);
+		return realizer;
+	}
+	
 }

@@ -62,13 +62,13 @@ public class ProcessConfigurator extends ConfigurationFilter {
 			return true;
 
 		if (obj instanceof BreakdownElement) {
-			ElementRealizer realizer = DefaultElementRealizer.newElementRealizer(super.methodConfig);
+			ElementRealizer realizer = getRealizer();
 			return accept((BreakdownElement)obj, realizer);
 		}
 		
 		return super.accept(obj);
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.epf.library.configuration.ProcessConfigurator#accept(org.eclipse.epf.uma.Descriptor)
 	 */
