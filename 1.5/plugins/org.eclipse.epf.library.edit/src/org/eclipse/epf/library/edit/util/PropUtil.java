@@ -52,7 +52,8 @@ public class PropUtil extends MethodElementPropUtil {
 	}
 	
 	public String getContributionOrder(MethodElement element) {
-		return getStringValue(element, me_ContibutionOrder);
+		String value = getStringValue(element, me_ContibutionOrder);
+		return value == null ? null : value.trim();
 	}
 	
 	public void setContributionOrder(MethodElement element, String value) {
