@@ -386,36 +386,120 @@ public class ConfigurationHelper {
 		}
 
 		if (element instanceof Activity) {
-			Comparator<MethodElement> comparator = new Comparator<MethodElement>() {
-
-				public int compare(MethodElement object1, MethodElement object2) {
-					PropUtil propUtil = PropUtil.getPropUtil();
-					String v1 = propUtil.getContributionOrder(object1);
-					if (v1 == null) {
-						v1 = "";//$NON-NLS-1$
-					}
-					String v2 =  propUtil.getContributionOrder(object2);
-					if (v2 == null) {
-						v2 = "";//$NON-NLS-1$
-					}
-					if (v1.length() == 0) {
-						return v2.length() == 0 ? 0 : 1;
-					} else if (v2.length() == 0) {
-						return v1.length() == 0 ? 0 : -1;	
-					}
-					return v1.compareTo(v2);
-				}
-
-			    public boolean equals(Object object) {
-			    	return this == object;
-			    }
-			};
+			Comparator<MethodElement> comparator = getContributorComparator(items);
 			Collections.sort(items, comparator);
 		}		
 		
 		return items;
 	}
 
+	private static Comparator<MethodElement> getContributorComparator(List<MethodElement> contributors) {
+		for (MethodElement contributor : contributors) {			
+			if (! isRefineRuleSyntax(contributor)) {				
+				Comparator<MethodElement> comparator = new Comparator<MethodElement>() {
+
+					public int compare(MethodElement object1, MethodElement object2) {
+						PropUtil propUtil = PropUtil.getPropUtil();
+						String v1 = propUtil.getContributionOrder(object1);
+						if (v1 == null) {
+							v1 = "";//$NON-NLS-1$
+						}
+						String v2 =  propUtil.getContributionOrder(object2);
+						if (v2 == null) {
+							v2 = "";//$NON-NLS-1$
+						}
+						if (v1.length() == 0) {
+							return v2.length() == 0 ? 0 : 1;
+						} else if (v2.length() == 0) {
+							return v1.length() == 0 ? 0 : -1;	
+						}
+						return v1.compareTo(v2);
+					}
+
+				    public boolean equals(Object object) {
+				    	return this == object;
+				    }
+				};
+				
+				return comparator;
+			}			
+		}
+		
+		Comparator<MethodElement> comparator = new Comparator<MethodElement>() {
+
+			public int compare(MethodElement object1, MethodElement object2) {
+				PropUtil propUtil = PropUtil.getPropUtil();
+				String v1 = propUtil.getContributionOrder(object1);
+				if (v1 == null) {
+					v1 = "";//$NON-NLS-1$
+				}
+				String v2 =  propUtil.getContributionOrder(object2);
+				if (v2 == null) {
+					v2 = "";//$NON-NLS-1$
+				}
+				if (v1.length() == 0) {
+					return v2.length() == 0 ? 0 : 1;
+				} else if (v2.length() == 0) {
+					return v1.length() == 0 ? 0 : -1;	
+				}
+				
+				String[] str1 = v1.split(".");	//$NON-NLS-1$
+				String[] str2 = v2.split(".");	//$NON-NLS-1$
+				int sz = Math.min(str1.length, str2.length);
+				for (int i = 0; i < sz; i++) {
+					int n1 = 0;
+					int n2 = 0;
+					try {
+						n1 = Integer.parseInt(str1[i]);
+					} catch (Exception e) {
+					}
+					try {
+						n2 = Integer.parseInt(str2[i]);
+					} catch (Exception e) {						
+					}
+					if (n1 != n2) {
+						return n1 < n2 ? -1 : 1; 
+					}
+				}
+				if (str1.length == str2.length ) {
+					return 0;
+				}
+				return str1.length < str2.length ? -1 : 1;
+			}
+
+		    public boolean equals(Object object) {
+		    	return this == object;
+		    }
+		};
+				
+		return comparator;
+	}
+
+	private static boolean isRefineRuleSyntax(MethodElement contributor) {
+		PropUtil propUtil = PropUtil.getPropUtil();
+		String value = propUtil.getContributionOrder(contributor);		
+		if (value == null || value.length() == 0) {
+			return true;
+		}
+		boolean dotIsAllowed = false;
+		for (int i = 0; i < value.length(); i++) {
+			char c = value.charAt(i);
+			if (c == '.') {
+				if (!dotIsAllowed) {
+					return false;
+				}
+				dotIsAllowed = false;
+				
+			} else if ('9' >= c && c >= '0') {				
+				dotIsAllowed = true;
+				
+			} else {
+				return false;
+			}			
+		}
+		return true;
+	}
+	
 	public static List getExtenders(VariabilityElement element,
 			MethodConfiguration config) {
 		List items = new ArrayList();
