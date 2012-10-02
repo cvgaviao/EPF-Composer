@@ -667,6 +667,7 @@ public class LibraryEditUtil {
 	}
 	
 	//<key: meta, value: set of udt of same meta for update>
+	//Also place those invlid id UDTs under UserDefinedTypeMeta.noneValue entry
 	public Map<UserDefinedTypeMeta, Set<Practice>> getUdtInstanceMap(MethodLibrary lib, Collection<UserDefinedTypeMeta> metas) {
 		Map<UserDefinedTypeMeta, Set<Practice>> map = new HashMap<UserDefinedTypeMeta, Set<Practice>>();
 		if (lib == null || metas == null || metas.isEmpty()) {
@@ -688,16 +689,25 @@ public class LibraryEditUtil {
 			if (oldMeta != null) {
 				UserDefinedTypeMeta meta = idMetaMap.get(oldMeta.getId());
 				if (meta != null && ! meta.same(oldMeta)) {
-					Set<Practice> set = map.get(meta);
-					if (set == null) {
-						set = new HashSet<Practice>();
-						map.put(meta, set);
-					}
-					set.add(practice);
+					addToMap(map, practice, meta);
+					
+				} else if (meta == null) {
+					meta = UserDefinedTypeMeta.noneValue;
+					addToMap(map, practice, meta);
 				}
 			}
 		}
 		return map;
+	}
+
+	private void addToMap(Map<UserDefinedTypeMeta, Set<Practice>> map,
+			Practice practice, UserDefinedTypeMeta meta) {
+		Set<Practice> set = map.get(meta);
+		if (set == null) {
+			set = new HashSet<Practice>();
+			map.put(meta, set);
+		}
+		set.add(practice);
 	}
 	
 	public static boolean save(Collection<Resource> resouresToSave) {
