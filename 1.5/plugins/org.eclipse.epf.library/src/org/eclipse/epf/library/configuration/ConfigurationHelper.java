@@ -443,8 +443,8 @@ public class ConfigurationHelper {
 					return v1.length() == 0 ? 0 : -1;	
 				}
 				
-				String[] str1 = v1.split(".");	//$NON-NLS-1$
-				String[] str2 = v2.split(".");	//$NON-NLS-1$
+				String[] str1 = v1.split("\\.");	//$NON-NLS-1$
+				String[] str2 = v2.split("\\.");	//$NON-NLS-1$
 				int sz = Math.min(str1.length, str2.length);
 				for (int i = 0; i < sz; i++) {
 					int n1 = 0;
