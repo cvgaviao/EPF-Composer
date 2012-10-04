@@ -48,7 +48,7 @@ public class MethodSearchScope {
 
 	public static final String GUIDANCE = LibraryUIText.TEXT_GUIDANCE;
 
-	public static final String UDTs = LibraryUIText.TEXT_UDTs;
+	public static final String UDT = LibraryUIText.TEXT_UDT;
 	
 	public static final String CHECKLIST = LibraryUIText.TEXT_CHECKLIST;
 
@@ -92,10 +92,10 @@ public class MethodSearchScope {
 	
 	private static final Map<String, Collection<EClass>> scopeToEClassesMap = new HashMap<String, Collection<EClass>>();
 
-	private static EClass UDTeClass = EcoreFactory.eINSTANCE.createEClass();
+	public static EClass UDTeClass = EcoreFactory.eINSTANCE.createEClass();
 	
 	static {
-		elementSearchScope.put(UDTeClass, UDTs);
+		elementSearchScope.put(UDTeClass, UDT);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getMethodPlugin(), ROOT);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getContentPackage(), METHOD_CONTENT);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getRole(), ROLE);
@@ -210,7 +210,7 @@ public class MethodSearchScope {
 		return searchScope.contains(ROLE) || searchScope.contains(TASK)
 				|| searchScope.contains(WORK_PRODUCT)
 				|| searchScope.contains(GUIDANCE)
-				|| searchScope.contains(UDTs)
+				|| searchScope.contains(UDT)
 				|| searchScope.contains(CHECKLIST)
 				|| searchScope.contains(CONCEPT)
 				|| searchScope.contains(ESTIMATION_CONSIDERATIONS)
@@ -241,7 +241,7 @@ public class MethodSearchScope {
 		String searchScopeName = (String) elementSearchScope.get(element
 				.eClass());
 		if (PracticePropUtil.getPracticePropUtil().isUdtType(element)) {
-			searchScopeName = UDTs;
+			searchScopeName = UDT;
 		}
 		return searchScope.contains(searchScopeName);
 	}
@@ -272,6 +272,9 @@ public class MethodSearchScope {
 	
 	public static String getTypeText(String typeName) {
 		EClassifier cls = UmaPackage.eINSTANCE.getEClassifier(typeName);
+		if (typeName.equals(UDT)) {
+			return UDT;
+		}
 		return elementSearchScope.get(cls);
 	}
 	
