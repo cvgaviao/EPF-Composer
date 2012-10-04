@@ -46,6 +46,8 @@ public class MethodSearchScope {
 
 	public static final String GUIDANCE = LibraryUIText.TEXT_GUIDANCE;
 
+	public static final String UDTs = LibraryUIText.TEXT_UDTs;
+	
 	public static final String CHECKLIST = LibraryUIText.TEXT_CHECKLIST;
 
 	public static final String CONCEPT = LibraryUIText.TEXT_CONCEPT;
