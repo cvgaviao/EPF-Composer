@@ -343,6 +343,8 @@ public final class LibraryEditResources extends NLS {
 
 	public static String FilterConstants_practices_text;
 
+	public static String FilterConstants_UDTs_text;
+	
 	public static String FilterConstants_templates_text;
 
 	public static String FilterConstants_workproducts_text;

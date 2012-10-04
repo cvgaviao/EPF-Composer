@@ -49,6 +49,8 @@ public class FilterConstants {
 
 	public static final String WORKPRODUCTS = LibraryEditResources.FilterConstants_workproducts_text; 
 
+	public static final String UDTs = LibraryEditResources.FilterConstants_UDTs_text; 
+	
 	public static final String GUIDANCE = LibraryEditResources.FilterConstants_guidance_text; 
 
 	public static final String PROCESSES = LibraryEditResources.FilterConstants_processes_text; 
@@ -71,8 +73,8 @@ public class FilterConstants {
 
 	public static final String CONCEPTS = LibraryEditResources.FilterConstants_concepts_text; 
 
-	public static final String PRACTICES = LibraryEditResources.FilterConstants_practices_text; 
-
+	public static final String PRACTICES = LibraryEditResources.FilterConstants_practices_text; 	
+	
 	public static final String REPORTS = LibraryEditResources.FilterConstants_reports_text; 
 
 	public static final String REUSABLE_ASSETS = LibraryEditResources.FilterConstants_reusableassets_text; 
