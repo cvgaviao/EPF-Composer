@@ -20,6 +20,7 @@ import org.eclipse.epf.library.edit.itemsfilter.FilterConstants;
 import org.eclipse.epf.library.edit.itemsfilter.IAllFilter;
 import org.eclipse.epf.library.edit.itemsfilter.ProcessesItemProvider;
 import org.eclipse.epf.library.edit.navigator.PluginUIPackagesItemProvider;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.Checklist;
@@ -217,6 +218,15 @@ public class AddLinkFilter extends AbstractBaseFilter implements IAllFilter {
 				return true;
 			if (obj instanceof WorkProduct)
 				return true;
+		} else if (filterTypeString.equals(FilterConstants.UDTs)) { 
+
+			if (!helper.matchPatternBasedOnType(obj))
+				return false;
+			if (obj instanceof ContentPackage)
+				return true;
+			if (obj instanceof Practice)
+				return PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj);
+			
 		} else if (filterTypeString.equals(FilterConstants.GUIDANCE)) { 
 
 			if (!helper.matchPatternBasedOnType(obj))
