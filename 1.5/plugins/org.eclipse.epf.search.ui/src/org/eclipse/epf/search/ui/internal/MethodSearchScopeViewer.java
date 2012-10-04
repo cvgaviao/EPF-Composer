@@ -45,6 +45,8 @@ public class MethodSearchScopeViewer {
 
 	private static final String GUIDANCE = MethodSearchScope.GUIDANCE;
 
+	private static final String UDTs = MethodSearchScope.UDTs;
+	
 	private static final String CHECKLIST = MethodSearchScope.CHECKLIST;
 
 	private static final String CONCEPT = MethodSearchScope.CONCEPT;
@@ -95,6 +97,7 @@ public class MethodSearchScopeViewer {
 		methodContentList.add(TASK);
 		methodContentList.add(WORK_PRODUCT);
 		methodContentList.add(GUIDANCE);
+		methodContentList.add(UDTs);
 		methodContentList.add(STANDARD_CATEGORY);
 		methodContentList.add(CUSTOM_CATEGORY);
 	}

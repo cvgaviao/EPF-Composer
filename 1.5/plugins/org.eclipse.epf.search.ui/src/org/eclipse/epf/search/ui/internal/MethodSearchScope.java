@@ -20,7 +20,9 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.UmaPackage;
@@ -90,7 +92,10 @@ public class MethodSearchScope {
 	
 	private static final Map<String, Collection<EClass>> scopeToEClassesMap = new HashMap<String, Collection<EClass>>();
 
+	private static EClass UDTeClass = EcoreFactory.eINSTANCE.createEClass();
+	
 	static {
+		elementSearchScope.put(UDTeClass, UDTs);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getMethodPlugin(), ROOT);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getContentPackage(), METHOD_CONTENT);
 		elementSearchScope.put(UmaPackage.eINSTANCE.getRole(), ROLE);
@@ -205,6 +210,7 @@ public class MethodSearchScope {
 		return searchScope.contains(ROLE) || searchScope.contains(TASK)
 				|| searchScope.contains(WORK_PRODUCT)
 				|| searchScope.contains(GUIDANCE)
+				|| searchScope.contains(UDTs)
 				|| searchScope.contains(CHECKLIST)
 				|| searchScope.contains(CONCEPT)
 				|| searchScope.contains(ESTIMATION_CONSIDERATIONS)
@@ -234,6 +240,9 @@ public class MethodSearchScope {
 			return false;
 		String searchScopeName = (String) elementSearchScope.get(element
 				.eClass());
+		if (PracticePropUtil.getPracticePropUtil().isUdtType(element)) {
+			searchScopeName = UDTs;
+		}
 		return searchScope.contains(searchScopeName);
 	}
 
