@@ -65,7 +65,7 @@ public class LibraryUIResources extends NLS {
 
 	public static String guidance_text;
 
-	public static String UDTs_text;
+	public static String UDT_text;
 	
 	public static String guideline_text;
 
