@@ -795,13 +795,14 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 			filterTypeStr = str[0];
 		} else if (FilterConstants.ONLY_CONTENT_ELEMENTS.equals(tabStr)) {
 			String space = "-"; //$NON-NLS-1$
-			String[] str = new String[26];
+			String[] str = new String[27];
 			int i = 0;
 			str[i++] = FilterConstants.ALL_ELEMENTS;
 			str[i++] = FilterConstants.CONTENT_PACKAGES;
 			str[i++] = space + FilterConstants.ROLES;
 			str[i++] = space + FilterConstants.TASKS;
 			str[i++] = space + FilterConstants.WORKPRODUCTS;
+			str[i++] = space + FilterConstants.UDTs;
 			str[i++] = space + FilterConstants.GUIDANCE;
 			str[i++] = FilterConstants.space + FilterConstants.space
 					+ FilterConstants.CHECKLISTS;
@@ -865,7 +866,7 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 			filterTypeStr = str[0];
 		} else if (FilterConstants.ALL_ELEMENTS.equals(tabStr)) { // 172956
 			String space = "-"; //$NON-NLS-1$
-			String[] str = new String[28];
+			String[] str = new String[29];
 			int i = 0;
 			if (filter instanceof AllFilter) {
 				AllFilter allFilter = (AllFilter) filter;
@@ -885,6 +886,7 @@ public class ItemsFilterDialog extends BaseItemsFilterDialog implements
 			str[i++] = space + FilterConstants.ROLES;
 			str[i++] = space + FilterConstants.TASKS;
 			str[i++] = space + FilterConstants.WORKPRODUCTS;
+			str[i++] = space + FilterConstants.UDTs;
 			str[i++] = space + FilterConstants.GUIDANCE;
 			str[i++] = FilterConstants.space + FilterConstants.space
 					+ FilterConstants.CHECKLISTS;
