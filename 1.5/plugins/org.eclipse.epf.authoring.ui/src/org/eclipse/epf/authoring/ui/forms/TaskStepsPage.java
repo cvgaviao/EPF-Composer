@@ -690,10 +690,10 @@ public class TaskStepsPage extends BaseFormPage {
 //				newContent = ((RichText) control).getCurrentRawText();
 				RichText rt = (RichText) control;
 				oldContent = rt.tidyText(oldContent);
-				oldContent = rt.formatText(oldContent);
+//				oldContent = rt.formatText(oldContent);
 				
 				newContent = rt.tidyText(newContent);
-				newContent = rt.formatText(newContent);
+//				newContent = rt.formatText(newContent);
 			}
 			if (!newContent.equals(oldContent)) {
 				actionMgr.doAction(IActionManager.SET, currentStep,
