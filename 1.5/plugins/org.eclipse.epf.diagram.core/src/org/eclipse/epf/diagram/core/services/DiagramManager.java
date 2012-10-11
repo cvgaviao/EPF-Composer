@@ -1067,7 +1067,14 @@ public class DiagramManager {
 	private void checkActivity(Activity act) {		
 		Process proc = TngUtil.getOwningProcess(act);
 		if(proc != process) {
-			throw new IllegalArgumentException("The specified activity does not belong to the process of this diagram manager."); //$NON-NLS-1$
+			String msg = "The specified activity does not belong to the process of this diagram manager.";
+			String str = process == null ? "null" : TngUtil.getLabelWithPath(process) + ", " + process.getGuid();
+			msg += "\nProcess of this diagram manager: " + str;
+			str = act == null ? "null" : TngUtil.getLabelWithPath(act) + ", " + act.getGuid();
+			msg += "\nActivity of the diagram        : " + str;
+			str = proc == null ? "null" : TngUtil.getLabelWithPath(proc) + ", " + proc.getGuid();
+			msg += "\nActivity's process             : " + str;
+			throw new IllegalArgumentException(msg); //$NON-NLS-1$
 		}
 	}	
 	
