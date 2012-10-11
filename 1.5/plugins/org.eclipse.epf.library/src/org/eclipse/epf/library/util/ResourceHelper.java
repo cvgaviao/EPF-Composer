@@ -1987,9 +1987,10 @@ public class ResourceHelper {
 					str += "</a>";										//$NON-NLS-1$
 					str += "</li>";										//$NON-NLS-1$ 
 				} else {
+					String url = m.group(1);
 					String fileName = m.group(2);
 					str += "<li>";										//$NON-NLS-1$
-					str += "<a  href=\"" + attachmentFile;				//$NON-NLS-1$					
+					str += "<a  href=\"" + url;				//$NON-NLS-1$					
 					str += "\" target=\"_blank\"; >" + fileName;		//$NON-NLS-1$					
 					str += "</a>";										//$NON-NLS-1$
 					str += "</li>";										//$NON-NLS-1$
