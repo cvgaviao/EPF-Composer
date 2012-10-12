@@ -64,13 +64,11 @@ public class CopyPIIFiles {
 	}
 	
 	//Hard coded parameters
-//	private String sourceRootFolderStr = "C:\\Documents and Settings\\wlu\\Desktop\\Dev\\aa_devTemp\\Rmc75SnapshortOn_04022009\\Rmc75SnapshortOn_04022009";
-//	private String targetRootFolderStr = "C:\\Documents and Settings\\wlu\\Desktop\\Dev\\aa_devTemp\\Rmc75SnapshortOn_04022009\\RmcPIIFiles";	
-//	private String sourceRootFolderStr = "C:\\ec\\ec-Rmc7.5.1\\rmc-7.5.1.2-1107-2011";
-//	private String targetRootFolderStr = "C:\\a_dev\\Rmc7.5.2\\TVT\\PIIFileSnapshorts\\rmc-7.5.1.2-1107-2011";	
+//	private String sourceRootFolderStr = "C:\\ec\\ec-Rmc7.5.2\\rmc-7.5.2-0329-2012";
+//	private String targetRootFolderStr = "C:\\a_dev\\Rmc7.5.2\\TVT\\PIIFileSnapshorts\\rmc-7.5.2-0329-2012";
 	
-	private String sourceRootFolderStr = "C:\\ec\\ec-Rmc7.5.2\\rmc-7.5.2-0329-2012";
-	private String targetRootFolderStr = "C:\\a_dev\\Rmc7.5.2\\TVT\\PIIFileSnapshorts\\rmc-7.5.2-0329-2012";	
+	private String sourceRootFolderStr = "C:\\Projects\\RMC\\RMC7.5.2.1-1";
+	private String targetRootFolderStr = "C:\\a_dev\\Rmc7.5.2.1\\TVT\\PIIFileSnapshorts\\rmc-7.5.2.1-1011-2012";
 
 	private File sourceRootFolder;
 	private File targetRootFolder;
