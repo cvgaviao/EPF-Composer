@@ -25,6 +25,7 @@ import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.common.utils.NetUtil;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.edit.util.IResourceScanner;
+import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
 
@@ -268,7 +269,7 @@ public class ResourceScanner implements IResourceScanner {
 			Map.Entry entry = (Map.Entry)it.next();
 			File srcFile = (File) entry.getKey();
 			File tgtFile = (File) entry.getValue();
-			FileUtil.copyFile(srcFile, tgtFile);			
+			FileManager.copyFile(srcFile, tgtFile);			
 			tgtFile.setLastModified(srcFile.lastModified());			
 			
 			if (localDebug) {

@@ -269,7 +269,7 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 		java.net.URI tgtUri = new File(ResourceHelper.getPluginPath(de) + File.separator + iconPath).toURI();
 		File tgtFile = new File(tgtUri);
 		if (!tgtFile.exists()) {
-			FileUtil.copyFile(srcFile, tgtFile);
+			FileManager.copyFile(srcFile, tgtFile);
 		}
 		java.net.URI newIconUri = new java.net.URI(NetUtil
 				.encodeFileURL(FileUtil.getRelativePath(
