@@ -525,4 +525,19 @@ public class FileManager implements IFileManager {
 		IFile file = WorkspaceSynchronizer.getFile(resource);
 		return file != null ? new FileInfo(file) : null;
 	}
+	
+	public static boolean copyFile(File srcFile, File tgtFile) {
+		boolean b = FileUtil.copyFile(srcFile, tgtFile) ;
+		if (b) {
+			IResource wsResource = tgtFile == null ? null : FileManager.getResourceForLocation(tgtFile.getAbsolutePath());
+			if(wsResource != null) {
+				try {
+					FileManager.refresh(wsResource);
+				}
+				catch(Exception e) {
+				}
+			}
+		}
+		return b;
+	}	
 }
