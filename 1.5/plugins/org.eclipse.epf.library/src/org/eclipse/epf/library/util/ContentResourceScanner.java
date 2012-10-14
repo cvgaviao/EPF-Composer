@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.layout.IContentValidator;
+import org.eclipse.epf.persistence.FileManager;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodElement;
@@ -226,7 +227,7 @@ public class ContentResourceScanner {
 		}
 		dest = new File(this.targetRootPath, imageFile);
 
-		FileUtil.copyFile(source, dest);
+		FileManager.copyFile(source, dest);
 
 		return newUrl;
 	}
