@@ -1583,6 +1583,8 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 		private boolean checkContainerResource;
 
 		private boolean disabled = false;
+		
+		private boolean forNameOnly = false;
 
 		/**
 		 * Creates a new instance.
@@ -1593,6 +1595,14 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 			this.element = element;
 		}
 
+		public boolean isForNameOnly() {
+			return forNameOnly;
+		}
+
+		public void setForNameOnly(boolean forNameOnly) {
+			this.forNameOnly = forNameOnly;
+		}
+		
 		private void restoreText(Object control, String txt) {
 			boolean old = disabled;
 			try {
@@ -1654,7 +1664,10 @@ public class MethodElementEditor extends AbstractBaseFormEditor implements
 					}
 
 					status = TngUtil.checkEdit(element, getSite().getShell());
-
+					if (status.isOK() && isForNameOnly() && element instanceof DescribableElement) {
+						ContentDescription presentation = ((DescribableElement) element).getPresentation();
+						status = TngUtil.checkEdit(presentation, getSite().getShell());
+					}
 					if (!status.isOK()) {
 						if (control instanceof IRichText) {
 							((IRichText) control).restoreText();

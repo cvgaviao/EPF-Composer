@@ -355,6 +355,8 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 					.getNavigatorView_ComposedAdapterFactory());
 
 	protected ModifyListener modelModifyListener;
+	
+	protected MethodElementEditor.ModifyListener nameModifyListener;
 
 	protected ModifyListener contentModifyListener;
 	
@@ -1332,6 +1334,9 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 		final MethodElementEditor editor = (MethodElementEditor) getEditor();
 
 		modelModifyListener = editor.createModifyListener(methodElement);
+		nameModifyListener =  editor.createModifyListener(methodElement);
+		nameModifyListener.setForNameOnly(true);
+		
 		contentModifyListener = editor.createModifyListener(methodUnit);
 		actionMgr = editor.getActionManager();
 		
@@ -1578,7 +1583,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}
 	
 	protected void addGeneralSectionListeners() {
-		ctrl_name.addModifyListener(modelModifyListener);
+		ctrl_name.addModifyListener(nameModifyListener);
 		ctrl_name.addFocusListener(nameFocusListener);
 
 		ctrl_presentation_name.addModifyListener(modelModifyListener);
@@ -3164,10 +3169,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	public void refreshName(String newName) {
 		if (newName != null) {
 			if ((ctrl_name != null) && !(ctrl_name.isDisposed())) {
-				if (modelModifyListener != null) {				
-					ctrl_name.removeModifyListener(modelModifyListener);
+				if (nameModifyListener != null) {				
+					ctrl_name.removeModifyListener(nameModifyListener);
 					ctrl_name.setText(newName);
-					ctrl_name.addModifyListener(modelModifyListener);
+					ctrl_name.addModifyListener(nameModifyListener);
 				} else {
 					ctrl_name.setText(newName);
 				}
