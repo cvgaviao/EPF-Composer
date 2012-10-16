@@ -43,7 +43,9 @@ import org.eclipse.epf.library.edit.validation.IValidatorFactory;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.ILibraryPersister.FailSafeMethodLibraryPersister;
+import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.ContentElement;
+import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
@@ -398,6 +400,22 @@ public class RenameAction extends
 			oldName = e.getName();			
 			setName(newName);
 			
+			//Do check at this early point
+			IStatus status = UserInteractionHelper.checkModify(e, 
+					shell == null ? MsgBox.getDefaultShell() : shell);
+			if (status.isOK() && e instanceof DescribableElement) {
+				ContentDescription presentation = ((DescribableElement) e).getPresentation();
+				status = UserInteractionHelper.checkModify(presentation, 
+						shell == null ? MsgBox.getDefaultShell() : shell);
+			}
+			if (!status.isOK()) {
+				AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
+						AuthoringUIResources.renameDialog_title,
+						AuthoringUIResources.renameDialog_renameError,
+						status);
+				return;
+			}
+			
 			renamedResources = new ArrayList<Resource>();
 
 			// rename file(s)
@@ -422,7 +440,7 @@ public class RenameAction extends
 				return;
 			}
 			
-			IStatus status = UserInteractionHelper.checkModify(e, 
+			status = UserInteractionHelper.checkModify(e, 
 					shell == null ? MsgBox.getDefaultShell() : shell);
 			if (!status.isOK()) {
 				AuthoringUIPlugin.getDefault().getMsgDialog().displayError(
