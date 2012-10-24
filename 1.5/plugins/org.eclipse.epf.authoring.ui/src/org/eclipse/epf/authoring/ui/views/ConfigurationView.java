@@ -78,6 +78,8 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.HTMLTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -320,6 +322,15 @@ public class ConfigurationView extends AbstractBaseView implements
 		}
 	}
 
+	private boolean firstButtonClicked = true;
+	public boolean isFirstButtonClicked() {
+		return firstButtonClicked;
+	}
+
+	private void setFirstButtonClicked(boolean firstButtonClicked) {
+		this.firstButtonClicked = firstButtonClicked;
+	}
+
 	/**
 	 * Creates the viewer.
 	 */
@@ -330,7 +341,18 @@ public class ConfigurationView extends AbstractBaseView implements
 		GridLayout layout = new GridLayout();
 		content.setLayout(layout);
 
-		treeViewer = new TreeViewer(content);
+		treeViewer = new TreeViewer(content) {
+			protected void hookControl(Control control) {
+				super.hookControl(control);
+				getTree().addMouseListener(new MouseAdapter() {
+					public void mouseDown(MouseEvent e) {
+						boolean b = e != null && e.button == 1;
+						setFirstButtonClicked(b);
+					}
+				});
+			}
+		};
+		
 		treeViewer.setUseHashlookup(true);
 		treeViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
 
