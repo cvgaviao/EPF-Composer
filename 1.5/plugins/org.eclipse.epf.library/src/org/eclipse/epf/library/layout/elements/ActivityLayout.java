@@ -74,7 +74,6 @@ import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
 import org.eclipse.epf.uma.WorkBreakdownElement;
-import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.AssociationHelper;
@@ -1757,20 +1756,7 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 			if ( item instanceof TaskDescriptor ) {
 				e = ((TaskDescriptor)item).getTask();
 			} else if ( item instanceof RoleDescriptor ) {
-				RoleDescriptor rd = ((RoleDescriptor)item);
 				e = ((RoleDescriptor)item).getRole();
-				List<WorkProductDescriptor> wpdList = rd.getResponsibleFor();
-				for (WorkProductDescriptor wpd : wpdList) {
-					getLayoutMgr().getValidator().addReferencedElement(rd, wpd);
-					WorkProduct wp = wpd.getWorkProduct();					
-					if (wp != null) {
-						MethodElement eWp = ConfigurationHelper.getCalculatedElement(wp,  getLayoutMgr().getElementRealizer());
-						if (eWp != null) {
-							getLayoutMgr().getValidator().addReferencedElement(wpd, eWp);
-						}
-					}
-				}
-				
 			} else if ( item instanceof WorkProductDescriptor ) {
 				e = ((WorkProductDescriptor)item).getWorkProduct();
 			} 
