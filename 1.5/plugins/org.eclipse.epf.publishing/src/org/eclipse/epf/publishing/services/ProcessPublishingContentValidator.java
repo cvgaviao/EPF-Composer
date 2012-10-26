@@ -176,6 +176,11 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 						continue;
 					}
 					if (feature == UmaPackage.eINSTANCE.getActivity_BreakdownElements() && referenced instanceof Descriptor) {
+						//All the descriptors that need to be published have been collected in the initial make process
+						//closure call. Here we simply don't want to introduce extra descriptors for publishing.
+						//All task descriptors need to be published anyway so we let it added even here too even though it is
+						//not necessarily redundant.
+						//Btw, ignore the comment in the last commit, it it no longer valid.
 						if (! (referenced instanceof TaskDescriptor)) {
 							continue;
 						}
