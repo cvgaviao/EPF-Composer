@@ -20,7 +20,7 @@ import org.eclipse.jface.action.IAction;
 
 public class DebugTest {
 
-	public static boolean debugTestMode = true;
+	public static boolean debugTestMode = false;
 	public static void run(IAction action) {
 		LibUtil.trace("LD> Begin: DebugTest.run()");
 		
