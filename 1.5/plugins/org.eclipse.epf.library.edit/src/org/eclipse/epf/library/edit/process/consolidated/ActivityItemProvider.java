@@ -145,15 +145,15 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 	}
 	
 	@Override
-	protected boolean acceptAsChild(Object parent, Object child) {
-		if (parent instanceof Activity) {
-			child = TngUtil.unwrap(child);
-			if(child instanceof Activity || child instanceof TaskDescriptor
-					|| child instanceof Milestone) {
-				return super.acceptAsChild(child);
-			}
-			return false;
-		}			
+	protected boolean acceptAsChild(Object parent, Object child) {		
+//		if (parent instanceof Activity) {
+//			child = TngUtil.unwrap(child);
+//			if(child instanceof Activity || child instanceof TaskDescriptor
+//					|| child instanceof Milestone) {
+//				return super.acceptAsChild(child);
+//			}
+//			return false;
+//		}			
 		return super.acceptAsChild(child);
 	}	
 
