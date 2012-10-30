@@ -37,6 +37,8 @@ import org.eclipse.epf.uma.SupportingMaterial;
 import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TermDefinition;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 
 /**
  * This is the content validator for publishing a process closure. 
@@ -184,6 +186,12 @@ public class ProcessPublishingContentValidator extends PublishingContentValidato
 						if (! (referenced instanceof TaskDescriptor)) {
 							continue;
 						}
+					}
+					if (feature == UmaPackage.eINSTANCE.getRole_ResponsibleFor() && referenced instanceof WorkProduct) {
+						continue;
+					}
+					if (feature == UmaPackage.eINSTANCE.getRoleDescriptor_ResponsibleFor() && referenced instanceof WorkProductDescriptor) {
+						continue;
 					}
 					if (ConfigurationHelper.inConfig(referenced, config)) {
 						closureElements.add(referenced);
