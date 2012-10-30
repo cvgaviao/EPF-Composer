@@ -98,4 +98,12 @@ public class RealizedElement implements IRealizedElement {
 		mgr = null;
 	}
 	
+	private boolean execludedFromPublishBit = false;
+	public boolean execludedFromPublish() {
+		return execludedFromPublishBit;
+	}
+	
+	public void setExecludedFromPublish(boolean b) {
+		execludedFromPublishBit = b;
+	}
 }
