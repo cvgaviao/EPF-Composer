@@ -79,6 +79,7 @@ import org.eclipse.ui.IWorkbenchWindow;
  */
 public class ConfigHelperDelegate {
 
+	private boolean generateHtmlMode = false;
 	private boolean publishingMode = false;
 	private boolean authoringPerspective = false;
 	private MethodConfiguration config;
@@ -364,6 +365,8 @@ public class ConfigHelperDelegate {
 		IElementLayout layout = null;
 		String file_url = "about:blank"; //$NON-NLS-1$
 		Object element = LibraryUtil.unwrap(raw_element);
+		try {
+		setGenerateHtmlMode(true);
 		if ( raw_element instanceof ActivityWrapperItemProvider ) {
 			ActivityWrapperItemProvider wrapper = (ActivityWrapperItemProvider)raw_element;
 			Object proc = wrapper.getTopItem();
@@ -385,6 +388,9 @@ public class ConfigHelperDelegate {
 			file_url = htmlBuilder.generateHtml(layout);
 		} else if (element instanceof MethodElement) {
 				file_url = htmlBuilder.generateHtml((MethodElement)element);
+		} 
+		} finally {
+			setGenerateHtmlMode(false);
 		}
 		
 		if ( file_url == null ) {
@@ -701,6 +707,18 @@ public class ConfigHelperDelegate {
 			collectLoadCheckPkgs(pkg.getChildPackages(), loadCheckPkgs);
 		}
 		
+	}
+	
+	public boolean isGenerateHtmlMode() {
+		return generateHtmlMode;
+	}
+
+	public void setGenerateHtmlMode(boolean generateHtmlMode) {
+		this.generateHtmlMode = generateHtmlMode;
+	}
+	
+	public boolean browseOrPublishMode() {
+		return isPublishingMode() || isGenerateHtmlMode();
 	}
 	
 }
