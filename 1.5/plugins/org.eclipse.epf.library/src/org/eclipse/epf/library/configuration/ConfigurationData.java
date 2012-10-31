@@ -26,14 +26,17 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.epf.common.utils.ExtensionHelper;
+import org.eclipse.epf.library.ConfigHelperDelegate;
 import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.configuration.closure.ConfigurationClosure;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider;
+import org.eclipse.epf.library.edit.realization.IRealizationManager;
 import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
 import org.eclipse.epf.library.util.LibraryUtil;
@@ -57,6 +60,7 @@ import org.eclipse.epf.uma.RoleSetGrouping;
 import org.eclipse.epf.uma.Tool;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.WorkProductType;
 import org.eclipse.epf.uma.util.UmaUtil;
 
@@ -438,6 +442,16 @@ public class ConfigurationData {
 	
 	public boolean isOwnerSelected(MethodElement element, boolean checkSubtracted) {			
 		boolean ret = isOwnerSelected_(element, checkSubtracted);
+		if (ret && element instanceof WorkProductDescriptor) {
+			ConfigHelperDelegate delegate = ConfigurationHelper.getDelegate();
+			IRealizationManager mgr = delegate.getRealizationManager(getConfig());
+			//mgr == null => not auto synchronized -> skip this check
+			if (mgr != null && delegate.browseOrPublishMode()) {
+				if (PropUtil.getPropUtil().isExcludedFromPublish(element)) {
+					ret = false;
+				}
+			}
+		}
 		if (localDebug) {
 			System.out.println("LD> isOwnerSelected: " + ret + ", " +  //$NON-NLS-1$ //$NON-NLS-2$
 					DebugUtil.toString(element, 2));	

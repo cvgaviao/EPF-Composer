@@ -775,6 +775,12 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 
 				MethodElement item = (MethodElement) LibraryUtil
 						.unwrap(rawitem);
+				
+				if (item instanceof WorkProductDescriptor) {
+					if (! ConfigurationHelper.inConfig(item, getLayoutMgr().getConfiguration())) {
+						continue;
+					}
+				}
 
 				boolean aSkipIterCond = false;
 				if ( setting.showTaskOnly && (actLevel > ACTIVITY_SHOW_LEVEL)
