@@ -365,10 +365,15 @@ public class ElementHTMLViewer {
 
 				public void run(IProgressMonitor monitor)
 				throws InvocationTargetException, InterruptedException {
+					boolean oldValue = ConfigurationHelper.getDelegate().isGenerateHtmlMode();
 					try {
 						monitor.beginTask(AuthoringUIResources.ElementHTMLViewer_0, IProgressMonitor.UNKNOWN);
-						getHtmlBuilder().generateHtml(url);
+						ConfigurationHelper.getDelegate().setGenerateHtmlMode(true);
+						getHtmlBuilder().generateHtml(url);		
 					} finally {
+						if (! oldValue) {
+							ConfigurationHelper.getDelegate().setGenerateHtmlMode(false);	
+						}
 						monitor.done();
 					}
 
