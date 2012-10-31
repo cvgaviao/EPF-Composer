@@ -77,6 +77,7 @@ import org.eclipse.epf.persistence.MultiFileResourceSetImpl;
 import org.eclipse.epf.persistence.MultiFileXMISaveImpl;
 import org.eclipse.epf.services.ILibraryPersister;
 import org.eclipse.epf.services.Services;
+import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
 import org.eclipse.epf.uma.ContentCategory;
 import org.eclipse.epf.uma.ContentDescription;
@@ -1591,6 +1592,10 @@ public class LibraryUtil {
 		
 		public void visit(MethodElement element) {
 			PropUtil propUtil = PropUtil.getPropUtil();
+			if (element instanceof WorkProductDescriptor) {
+					boolean b = DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference((WorkProductDescriptor) element);
+					propUtil.setExcludedFromPublish(element, b);
+			}			
 			if (propUtil.getGlobalMdtMeta(element) != null) {
 				elementsToProcess.add(element);
 			
@@ -1602,10 +1607,6 @@ public class LibraryUtil {
 				UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta((Practice) element);
 				if (meta != null && !meta.getQualifiedReferences().isEmpty()) {
 					elementsToProcess.add(element);
-				}
-			} else if (element instanceof WorkProductDescriptor) {
-				if (DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference((WorkProductDescriptor) element)) {
-					propUtil.setExcludedFromPublish(element, true);
 				}
 			}
 		}
