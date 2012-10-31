@@ -22,7 +22,4 @@ public interface IRealizedElement {
 	String getPresentationName();
 	String getBriefDescription();
 	
-	boolean execludedFromPublish();
-	void setExecludedFromPublish(boolean b);
-	
 }
