@@ -7,6 +7,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.library.edit.realization.IRealizedRoleDescriptor;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -51,6 +52,9 @@ public class RealizedRoleDescriptor extends RealizedDescriptor implements
 			wpdList = (List<WorkProductDescriptor>) getDescriptorList(up
 					.getRole_ResponsibleFor(), rdFeatures);
 			storeCachedValue(rdReference, wpdList);
+		}
+		if (! DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference(getDescriptor())) {
+			markWpdsReferenced(wpdList);
 		}
 		return wpdList;
 	}

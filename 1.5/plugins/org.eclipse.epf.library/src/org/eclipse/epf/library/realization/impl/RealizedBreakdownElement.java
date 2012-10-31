@@ -1,5 +1,6 @@
 package org.eclipse.epf.library.realization.impl;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.realization.IRealizedBreakdownElement;
+import org.eclipse.epf.library.edit.realization.IRealizedElement;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.BreakdownElement;
@@ -21,6 +23,7 @@ import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.ContentDescriptionFactory;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
@@ -47,8 +50,14 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 	public Set<Descriptor> updateAndGetAllReferenced() {
 		return updateExtendedReferences();				
 	}
-
+	
 	private Set<Descriptor> updateExtendedReferences() {
+		Set<Descriptor> set = updateExtendedReferences_();
+		markWpdsReferenced(set);
+		return set;
+	}
+	
+	private Set<Descriptor> updateExtendedReferences_() {
 		Set<Descriptor> set = new HashSet<Descriptor>();
 		ContentElement element = getLinkedElement();
 		if (element == null) {
@@ -68,8 +77,19 @@ public class RealizedBreakdownElement extends RealizedElement implements IRealiz
 			 if (! descriptors.isEmpty()) {
 				 set.addAll(descriptors);
 			 }
-		}		
+		}
 		return set;
+	}
+	
+	protected void markWpdsReferenced(Collection<? extends Descriptor> descriptors) {
+		if (descriptors == null) {
+			return;
+		}
+		for (Descriptor des : descriptors) {
+			if (des instanceof WorkProductDescriptor) {
+				PropUtil.getPropUtil().setExcludedFromPublish(des, false);
+			}
+		}
 	}
 
 	protected Set<Descriptor> updateExtendedReference(ExtendedReference eRef) {

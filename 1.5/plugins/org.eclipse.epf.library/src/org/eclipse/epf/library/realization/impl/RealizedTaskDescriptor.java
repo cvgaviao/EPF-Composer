@@ -104,6 +104,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 					.getTask_MandatoryInput(), tdFeatures);
 			storeCachedValue(tdReference, wpdList);
 		}
+		markWpdsReferenced(wpdList);
 		return wpdList;
 	}
 	
@@ -118,6 +119,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 					.getTask_OptionalInput(), tdFeatures);
 			storeCachedValue(tdReference, wpdList);
 		}
+		markWpdsReferenced(wpdList);
 		return wpdList;
 	}
 	
@@ -192,6 +194,7 @@ public class RealizedTaskDescriptor extends RealizedDescriptor implements
 					.getTask_Output(), tdFeatures);
 			storeCachedValue(tdReference, wpdList);
 		}
+		markWpdsReferenced(wpdList);
 		return wpdList;
 	}
 		

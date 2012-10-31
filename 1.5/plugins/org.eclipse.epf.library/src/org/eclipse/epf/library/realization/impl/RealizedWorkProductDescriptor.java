@@ -12,6 +12,8 @@ import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
 import org.eclipse.epf.library.configuration.ElementRealizer;
 import org.eclipse.epf.library.edit.realization.IRealizedWorkProductDescriptor;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
+import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Artifact;
 import org.eclipse.epf.uma.Deliverable;
@@ -94,6 +96,9 @@ public class RealizedWorkProductDescriptor extends
 				}
 			}
 			storeCachedValue(wpdReference, wpdList);
+		}
+		if (! PropUtil.getPropUtil().isExcludedFromPublish(getDescriptor())) {
+			markWpdsReferenced(wpdList);
 		}
 		return wpdList;
 	}
