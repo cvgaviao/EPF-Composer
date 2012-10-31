@@ -10,12 +10,13 @@ import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.meta.ReferenceTable;
 import org.eclipse.epf.library.edit.uma.ExtendReferenceMap;
-import org.eclipse.epf.uma.Activity;
+import org.eclipse.epf.library.edit.uma.MethodElementExt;
 import org.eclipse.epf.uma.ContentDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.VariabilityElement;
 import org.eclipse.epf.uma.VariabilityType;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedReference;
 import org.eclipse.epf.uma.util.ExtendedTable;
@@ -233,6 +234,20 @@ public class PropUtil extends MethodElementPropUtil {
 	public Set<MethodElement> getExtendedReferencingSet(MethodElement element) {
 		ExtendReferenceMap map = getCachedExtendReferenceMap(element, false);
 		return map == null ? Collections.EMPTY_SET : map.getExtendedReferencingSet(element);
+	}
+	
+	public boolean isExcludedFromPublish(MethodElement element) {
+		MethodElementExt extObj = getExtendObject(element, false);
+		return extObj == null ? MethodElementExt.excludedFromPublishDefault(element) : extObj.isExcludedFromPublish();
+	}
+
+	public void setExcludedFromPublish(MethodElement element, boolean excludedFromPublish) {
+		if (excludedFromPublish == MethodElementExt.excludedFromPublishDefault(element) 
+				&& getExtendObject(element, false) == null) {
+			return;
+		}
+		MethodElementExt extObj = getExtendObject(element, true);
+		extObj.setExcludedFromPublish(excludedFromPublish);
 	}
 	
 }

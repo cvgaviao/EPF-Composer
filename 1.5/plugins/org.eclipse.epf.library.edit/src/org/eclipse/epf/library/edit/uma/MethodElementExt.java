@@ -15,6 +15,7 @@ import org.eclipse.epf.uma.Constraint;
 import org.eclipse.epf.uma.MethodConfiguration;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.IUserDefinedTypeMeta;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject.ExtendObject;
 import org.eclipse.epf.uma.ecore.util.OppositeFeature;
@@ -31,10 +32,19 @@ public class MethodElementExt extends ExtendObject {
 		
 	private Map<Object, Object> extendedPropertyMap;
 	private IUserDefinedTypeMeta modifiedTypeMeta;
+	private boolean excludedFromPublish = false;
 
 	public MethodElementExt(MethodElement element) {
 		this.element = element;
+		excludedFromPublish = excludedFromPublishDefault(element);
 	}	
+	
+	public static boolean excludedFromPublishDefault(MethodElement element) {
+		if (element instanceof WorkProductDescriptor) {
+			return true;
+		}
+		return false;
+	}
 	
 	public ExtendReferenceMap getExtendReferenceMap(boolean create) {
 		if (create && extendReferenceMap == null) {
@@ -167,6 +177,14 @@ public class MethodElementExt extends ExtendObject {
 			return PropUtil.getPropUtil().getReferencingList(element, extendedOpposite.getTargetReference());
 		}
 		return super.getOppositeFeatureValue(feature);
+	}
+	
+	public boolean isExcludedFromPublish() {
+		return excludedFromPublish;
+	}
+
+	public void setExcludedFromPublish(boolean excludedFromPublish) {
+		this.excludedFromPublish = excludedFromPublish;
 	}
 	
 }
