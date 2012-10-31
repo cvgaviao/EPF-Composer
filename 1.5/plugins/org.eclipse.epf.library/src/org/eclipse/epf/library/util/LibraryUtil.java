@@ -58,6 +58,7 @@ import org.eclipse.epf.library.edit.configuration.GuidanceGroupingItemProvider;
 import org.eclipse.epf.library.edit.configuration.GuidanceItemProvider;
 import org.eclipse.epf.library.edit.configuration.MethodConfigurationItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropUtil;
 import org.eclipse.epf.library.edit.util.MethodElementPropertyHelper;
@@ -99,6 +100,7 @@ import org.eclipse.epf.uma.Task;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
+import org.eclipse.epf.uma.WorkProductDescriptor;
 import org.eclipse.epf.uma.ecore.EProperty;
 import org.eclipse.epf.uma.ecore.impl.MultiResourceEObject;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
@@ -1600,6 +1602,10 @@ public class LibraryUtil {
 				UserDefinedTypeMeta meta = practicePropUtil.getUdtMeta((Practice) element);
 				if (meta != null && !meta.getQualifiedReferences().isEmpty()) {
 					elementsToProcess.add(element);
+				}
+			} else if (element instanceof WorkProductDescriptor) {
+				if (DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference((WorkProductDescriptor) element)) {
+					propUtil.setExcludedFromPublish(element, true);
 				}
 			}
 		}
