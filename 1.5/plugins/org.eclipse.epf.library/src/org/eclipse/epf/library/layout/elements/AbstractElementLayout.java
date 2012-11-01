@@ -1116,18 +1116,14 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 	}
 	
-	boolean skipExtendedSection(ExtendedSection section) {
-		if (! (getElement() instanceof BreakdownElement)) {
+	boolean skipExtendedSection(ModifiedTypeMeta meta, ExtendedSection section, MethodElement e) {
+		if (! (e instanceof BreakdownElement)) {
 			return false;
 		}
-		if (null != TypeDefUtil.getInstance().getLinkedElement(getElement())) {
+		if (null != TypeDefUtil.getInstance().getLinkedElement(e)) {
 			return false;
 		}
-		MetaElement parent = section.getParent();
-		if (! (parent instanceof ModifiedTypeMeta)) {
-			return false;
-		}
-		return ((ModifiedTypeMeta) parent).isLinkedSection(section);
+		return meta.isLinkedSection(section);
 	}
 	
 	public void loadExtendedAttributes(XmlElement elementXml) {
@@ -1142,7 +1138,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		
 		if (!  meta.getAttributeSections().isEmpty()) {
 			for (ExtendedSection section : meta.getAttributeSections()) {
-				if (skipExtendedSection(section)) {
+				if (skipExtendedSection(meta, section, ownerElement)) {
 					continue;
 				}
 				List<ExtendedAttribute> attributes = section.getAttributes();
@@ -1179,7 +1175,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		}
 		
 		for (ExtendedSection section : meta.getRteSections()) {
-			if (skipExtendedSection(section)) {
+			if (skipExtendedSection(meta, section, ownerElement)) {
 				continue;
 			}
 			List<ExtendedAttribute> attributes = section.getRtes();
@@ -1219,7 +1215,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		ElementRealizer realizer = layoutManager.getElementRealizer();
 		
 		for (ExtendedSection section : meta.getReferenceSections()) {
-			if (skipExtendedSection(section)) {
+			if (skipExtendedSection(meta, section, element)) {
 				continue;
 			}
 			List<ExtendedReference> references = section.getReferences();
