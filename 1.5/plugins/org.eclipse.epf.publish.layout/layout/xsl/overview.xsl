@@ -175,6 +175,10 @@
 		<xsl:param name="elementType"/>
 		<xsl:param name="elementTypeName"/>
 		<xsl:choose>										
+		    <!-- Alex: workaround for RATLC00330706 [Light] searching workproductslot missing Icon in result -->						
+			<xsl:when test="$elementTypeName = $workProductSlotText">
+				<xsl:value-of select="$workProductSlotText"/>
+			</xsl:when>		
 			<xsl:when test="$elementType = 'Activity'">
 					<xsl:value-of select="$activityText"/>
 			</xsl:when>
@@ -211,7 +215,6 @@
 			<xsl:when test="$elementType = 'Domain'">
 					<xsl:value-of select="$domainText"/>
 			</xsl:when>
-			
 			<xsl:when test="$elementType = 'EstimationConsiderations'">
 					<xsl:value-of select="$estimationConsiderationsText"/>
 			</xsl:when>
