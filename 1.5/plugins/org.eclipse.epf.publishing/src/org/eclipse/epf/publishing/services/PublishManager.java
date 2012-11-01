@@ -134,14 +134,15 @@ public class PublishManager extends AbstractPublishManager {
 	}
 	
 	private void doPublish_(IProgressMonitor monitor) throws Exception {
+		// before doing publishing, load the whole library and remember the resouces loaded
+		// so we can unload those resources later to free memory
+		Collection<Resource> changedResources = loadLibrary(monitor);
+		
 		IRealizationManager mgr = ConfigurationHelper.getDelegate().getRealizationManager(config);
 		if (mgr != null) {
 			mgr.updateAllProcesseModels();
 		}
 		
-		// before doing publishing, load the whole library and remember the resouces loaded
-		// so we can unload those resources later to free memory
-		Collection<Resource> changedResources = loadLibrary(monitor);
 		Collection<DiagramManager> existingMgrs = DiagramManager.getDiagramManagers();
 
 		// don't copy all the content resources
