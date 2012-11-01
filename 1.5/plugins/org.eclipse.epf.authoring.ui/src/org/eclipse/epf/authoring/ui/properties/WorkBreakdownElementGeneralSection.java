@@ -39,6 +39,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.LibraryUIText;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Milestone;
+import org.eclipse.epf.uma.TaskDescriptor;
 import org.eclipse.epf.uma.TeamProfile;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
@@ -603,6 +604,11 @@ public class WorkBreakdownElementGeneralSection extends
 				// re-initialize predList
 				predMapList = new ArrayList();
 				initializePredList();
+				
+				if (ctrl_method_element != null) {
+					String linkedString = getLinkedElementName(element);
+					ctrl_method_element.setText(linkedString);
+				}
 				viewer.refresh();
 			}
 
