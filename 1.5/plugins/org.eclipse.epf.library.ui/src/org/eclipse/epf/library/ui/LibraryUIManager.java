@@ -775,6 +775,10 @@ public class LibraryUIManager {
 				// combobox contribution.
 				configCombo = new ConfigurationContributionItem(
 						null);
+				if (DebugUtil.uiDebug) {
+					DebugUtil.print("showConfigurationContribution, configCombo 1: " + configCombo);//$NON-NLS-1$
+					DebugUtil.print();
+				}
 				configCombo.setId(ConfigurationContributionItem.class.getName());
 				toolBarMgr.add(configCombo);
 				configToolBar.setVisible(true);
@@ -786,6 +790,10 @@ public class LibraryUIManager {
 		IToolBarManager toolBarMgr = new ToolBarManager(SWT.FLAT | SWT.LEFT);
 		configCombo = new ConfigurationContributionItem(
 				null);
+		if (DebugUtil.uiDebug) {
+			DebugUtil.print("showConfigurationContribution, configCombo 2: " + configCombo);//$NON-NLS-1$
+			DebugUtil.print();
+		}
 		configCombo.setId(ConfigurationContributionItem.class.getName());
 		toolBarMgr.add(configCombo);
 		ToolBarContributionItem configComboToolBar = new ToolBarContributionItem(
