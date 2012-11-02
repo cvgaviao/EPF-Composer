@@ -22,6 +22,7 @@ import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.util.Comparators;
+import org.eclipse.epf.library.edit.util.DebugUtil;
 import org.eclipse.epf.library.prefs.PreferenceUtil;
 import org.eclipse.epf.library.ui.LibraryUIResources;
 import org.eclipse.epf.uma.MethodConfiguration;
@@ -207,6 +208,8 @@ public class ConfigurationContributionItem extends ContributionItem {
 		configComboViewer.setLabelProvider(labelProvider);
 		configComboViewer.setInput(LibraryService.getInstance()
 				.getCurrentMethodLibrary());
+		setInputDebugLog("createControl", LibraryService.getInstance()
+				.getCurrentMethodLibrary());
 
 		String savedConfigName = PreferenceUtil.getSavedLastConfig();
 		MethodConfiguration savedConfig = LibraryServiceUtil
@@ -254,6 +257,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 					return;
 				}
 				configComboViewer.setInput(null);
+				setInputDebugLog("libraryClosed", null);
 			}
 
 			public void libraryCreated(MethodLibrary library) {
@@ -261,6 +265,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 					return;
 				}
 				configComboViewer.setInput(library);
+				setInputDebugLog("libraryCreated", library);
 				selectConfiguration(null);
 			}
 
@@ -270,6 +275,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 				}
 				configComboViewer.setInput(library);
 				refresh();
+				setInputDebugLog("libraryOpened", library);
 				MethodConfiguration config = LibraryService.getInstance().getCurrentMethodConfiguration();					
 				configComboViewer.setSelection(new StructuredSelection(
 						config != null ? config : LibraryUIResources.selectConfigLabel_text), true);
@@ -283,6 +289,7 @@ public class ConfigurationContributionItem extends ContributionItem {
 				if (library != configComboViewer.getInput()) {
 					configComboViewer.setInput(library);
 					refresh();
+					setInputDebugLog("libraryReopened", library);
 				}
 			}
 
@@ -297,11 +304,16 @@ public class ConfigurationContributionItem extends ContributionItem {
 					} else {
 						refresh();
 					}
+					setInputDebugLog("librarySet", library);
 				}
 			}
 
 		};
 		LibraryService.getInstance().addListener(libSvcListener);
+		if (DebugUtil.uiDebug) {
+			DebugUtil.print("libSvcListener added at createControl");//$NON-NLS-1$
+			DebugUtil.print();
+		}
 		libSvcListenerAdded = true;
 		
 		return configCombo;
@@ -317,9 +329,19 @@ public class ConfigurationContributionItem extends ContributionItem {
 		}
 		if (visible && !libSvcListenerAdded && !configCombo.isDisposed()) {
 			LibraryService.getInstance().addListener(libSvcListener);
-		} else {
+			if (DebugUtil.uiDebug) {
+				DebugUtil.print("libSvcListener added at setVisible");//$NON-NLS-1$
+				DebugUtil.print();
+			}
+			
+//		} else {
+		} else if (!visible || configCombo.isDisposed()) {
 			LibraryService.getInstance().removeListener(libSvcListener);
 			libSvcListenerAdded = false;
+			if (DebugUtil.uiDebug) {
+				DebugUtil.print("libSvcListener removed at setVisible");//$NON-NLS-1$
+				DebugUtil.print();
+			}
 		}
 		super.setVisible(visible);
 	}
@@ -427,5 +449,12 @@ public class ConfigurationContributionItem extends ContributionItem {
 
 	public void setEnabled(boolean enabled) {
 		configCombo.setEnabled(enabled);
+	}
+	
+	public void setInputDebugLog(String caller, Object input) {
+		if (DebugUtil.uiDebug) {
+			DebugUtil.print(caller + ", configComboViewer input set: " + input);//$NON-NLS-1$
+			DebugUtil.print();
+		}
 	}
 }
