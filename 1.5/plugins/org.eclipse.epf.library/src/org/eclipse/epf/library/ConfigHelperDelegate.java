@@ -631,7 +631,7 @@ public class ConfigHelperDelegate {
 			MethodConfiguration config) {
 		MethodConfigurationPropUtil propUtil = MethodConfigurationPropUtil.getMethodConfigurationPropUtil();
 		MethodConfigurationExt ext = propUtil.getMethocConfigurationExt(config);
-		if (ext == null && ext.isLoadCheckPackagesCalled()) {
+		if (ext == null || ext.isLoadCheckPackagesCalled()) {
 			return;
 		}
 		ext.setLoadCheckPackagesCalled(true);
