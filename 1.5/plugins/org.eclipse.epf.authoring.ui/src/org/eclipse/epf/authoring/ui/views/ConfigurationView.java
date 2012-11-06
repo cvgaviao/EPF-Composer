@@ -24,10 +24,12 @@ import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.epf.authoring.ui.AuthoringPerspective;
 import org.eclipse.epf.authoring.ui.AuthoringUIExtensionManager;
 import org.eclipse.epf.authoring.ui.AuthoringUIHelpContexts;
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
+import org.eclipse.epf.authoring.ui.BrowsingPerspective;
 import org.eclipse.epf.authoring.ui.PerspectiveListUtil;
 import org.eclipse.epf.authoring.ui.UIActionDispatcher;
 import org.eclipse.epf.authoring.ui.actions.ConfigurationViewEditAction;
@@ -85,8 +87,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IPerspectiveListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -120,12 +126,37 @@ public class ConfigurationView extends AbstractBaseView implements
 
 	private List<Action> menuActionProviders;
 	
+	private String refreshedPersID;
 
 	/**
 	 * Creates a new instance.
 	 */
 	public ConfigurationView() {
-		extender = AuthoringUIExtensionManager.getInstance().createConfigurationViewExtender(this);
+		extender = AuthoringUIExtensionManager.getInstance()
+				.createConfigurationViewExtender(this);
+		
+		IWorkbenchWindow window = AuthoringUIPlugin.getDefault().getWorkbench()
+				.getActiveWorkbenchWindow();
+		if (window != null) {
+			window.addPerspectiveListener(new IPerspectiveListener() {
+				public void perspectiveActivated(IWorkbenchPage page,
+						IPerspectiveDescriptor desc) {
+				}
+
+				public void perspectiveChanged(IWorkbenchPage page,
+						IPerspectiveDescriptor desc, String id) {
+					String newID = desc.getId();
+					if (AuthoringPerspective.PERSPECTIVE_ID.equals(newID)
+							|| BrowsingPerspective.PERSPECTIVE_ID.equals(newID)) {
+						if (! newID.equals(refreshedPersID)) {
+							refreshedPersID = newID;
+							refresh();
+						}
+					}
+
+				}
+			});
+		}
 	}
 
 	/**
