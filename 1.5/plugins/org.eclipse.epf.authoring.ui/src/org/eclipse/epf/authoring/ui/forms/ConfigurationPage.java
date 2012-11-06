@@ -57,10 +57,10 @@ import org.eclipse.epf.library.edit.TngAdapterFactory;
 import org.eclipse.epf.library.edit.command.IActionManager;
 import org.eclipse.epf.library.edit.command.MethodElementSetPropertyCommand;
 import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider;
+import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.library.edit.navigator.ConfigPageCategoriesItemProvider;
 import org.eclipse.epf.library.edit.navigator.ContentItemProvider;
 import org.eclipse.epf.library.edit.navigator.MethodPackagesItemProvider;
-import org.eclipse.epf.library.edit.navigator.ConfigContentPackageItemProvider.LeafElementsItemProvider;
 import org.eclipse.epf.library.edit.ui.UserInteractionHelper;
 import org.eclipse.epf.library.edit.util.ConfigurationUtil;
 import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
@@ -939,6 +939,10 @@ public class ConfigurationPage extends FormPage implements IGotoMarker {
 	}
 	
 	private void collapseConfigView() {
+		collapseConfigView(config);
+	}
+	
+	public static void collapseConfigView(MethodConfiguration config) {
 		final ConfigurationView configView = ConfigurationView.getView();
 		if (configView == null) {
 			return;
