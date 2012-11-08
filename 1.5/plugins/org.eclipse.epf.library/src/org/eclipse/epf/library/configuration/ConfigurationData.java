@@ -39,6 +39,7 @@ import org.eclipse.epf.library.edit.util.MethodConfigurationPropUtil;
 import org.eclipse.epf.library.edit.util.PropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.events.ILibraryChangeListener;
+import org.eclipse.epf.library.layout.BrowsingLayoutSettings;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.ContentCategory;
@@ -442,7 +443,7 @@ public class ConfigurationData {
 	
 	public boolean isOwnerSelected(MethodElement element, boolean checkSubtracted) {			
 		boolean ret = isOwnerSelected_(element, checkSubtracted);
-		if (ret && element instanceof WorkProductDescriptor) {
+		if (BrowsingLayoutSettings.INSTANCE.isExcludeUnusedWPDs() && ret && element instanceof WorkProductDescriptor) {
 			ConfigHelperDelegate delegate = ConfigurationHelper.getDelegate();
 			IRealizationManager mgr = delegate.getRealizationManager(getConfig());
 			//mgr == null => not auto synchronized -> skip this check
