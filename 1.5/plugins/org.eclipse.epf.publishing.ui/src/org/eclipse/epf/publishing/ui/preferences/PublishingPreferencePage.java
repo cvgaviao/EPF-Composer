@@ -57,6 +57,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 	
 	private Button ignoreDynamicParentsCheckbox;
 	
+	private Button excludeUnusedWPDsCheckbox;
+	
 	private Button fulfillDescriptorSlotByContentCheckbox;
 	
 	private Text forbiddenURLChars;
@@ -99,6 +101,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				
 		ignoreDynamicParentsCheckbox = createCheckbox(browsingGroup,
 				PublishingUIResources.ignoreDynamicParentsCheckbox_text, 1);		
+				
+		excludeUnusedWPDsCheckbox = createCheckbox(browsingGroup,
+				PublishingUIResources.excludeUnusedWPDsCheckbox_text, 1);			
 		
 		// Create the slot fulfillment rule group.
 		Group wpSlotDpRuleGroup = createGridLayoutGroup(composite, PublishingUIResources.wpSlotDpRuleGroup_text, 1);
@@ -129,6 +134,8 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				.getShowLinkedElementForDescriptor());		
 		ignoreDynamicParentsCheckbox.setSelection(PublishingUIPreferences
 				.getIgnoreDynamicParents());
+		excludeUnusedWPDsCheckbox.setSelection(PublishingUIPreferences
+				.getExcludeUnusedWPDs());
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
 				.getFulfillDescriptorSlotByContent());
 		forbiddenURLChars.setText(PublishingUIPreferences.getForbiddenChars());
@@ -195,6 +202,9 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				.setIgnoreDynamicParents(ignoreDynamicParentsCheckbox
 						.getSelection());
 		
+		PublishingUIPreferences.setExcludeUnusedWPDs(excludeUnusedWPDsCheckbox
+				.getSelection());
+		
 		PublishingUIPreferences
 			.setFulfillDescriptorSlotByContent(fulfillDescriptorSlotByContentCheckbox
 				.getSelection());
@@ -224,6 +234,11 @@ public class PublishingPreferencePage extends BasePreferencePage {
 				.getDefaultIgnoreDynamicParents());
 		PublishingUIPreferences
 			.setIgnoreDynamicParents(ignoreDynamicParentsCheckbox
+				.getSelection());
+		excludeUnusedWPDsCheckbox.setSelection(PublishingUIPreferences
+				.getDefaultExcludeUnusedWPDs());
+		PublishingUIPreferences
+			.setExcludeUnusedWPDs(excludeUnusedWPDsCheckbox
 				.getSelection());
 		fulfillDescriptorSlotByContentCheckbox.setSelection(PublishingUIPreferences
 				.getDefaultFulfillDescriptorSlotByContent());

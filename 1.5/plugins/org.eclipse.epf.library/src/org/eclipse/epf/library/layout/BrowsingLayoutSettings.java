@@ -32,6 +32,7 @@ public class BrowsingLayoutSettings {
 	private boolean showLinkedPageForDescriptor = false;
 	private String forbiddenUrlChars;
 	private boolean ignoreDynamicParents = true;
+	private boolean excludeUnusedWPDs = true;
 
 	// if true, the to-many outgoing association from base will be ignored if the extender has its own
 	private boolean useNewExtendSemantics = false;
@@ -173,6 +174,14 @@ public class BrowsingLayoutSettings {
 
 	public void setIgnoreDynamicParents(boolean ignoreDynamicParents) {
 		this.ignoreDynamicParents = ignoreDynamicParents;
+	}
+	
+	public boolean isExcludeUnusedWPDs() {
+		return excludeUnusedWPDs;
+	}
+
+	public void setExcludeUnusedWPDs(boolean excludeUnusedWPDs) {
+		this.excludeUnusedWPDs = excludeUnusedWPDs;
 	}
 	
 }

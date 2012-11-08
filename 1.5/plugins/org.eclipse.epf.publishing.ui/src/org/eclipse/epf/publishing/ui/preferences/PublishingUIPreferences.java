@@ -60,6 +60,8 @@ public class PublishingUIPreferences {
 	
 	private static final String Ignore_Dynamic_Parents = "ignoreDynamicParents"; //$NON-NLS-1$	
 	
+	private static final String Exclude_Unused_WPDs = "excludeUnusedWPDs"; //$NON-NLS-1$	
+	
 	private static final String FULFILL_DESCRIPTOR_SLOT_BY_CONTENT = "fulfillDescriptorSlotByContent"; //$NON-NLS-1$
 
 	private static final String PUBLISH_UNOPEN_ACTIVITY_DD = "publishUnopenActivityDD"; //$NON-NLS-1$
@@ -126,6 +128,8 @@ public class PublishingUIPreferences {
 				getDefaultShowLinkedElementForDescriptor());				
 		prefStore.setDefault(Ignore_Dynamic_Parents,
 				getDefaultIgnoreDynamicParents());
+		prefStore.setDefault(Exclude_Unused_WPDs,
+				getDefaultExcludeUnusedWPDs());
 		prefStore.setDefault(FULFILL_DESCRIPTOR_SLOT_BY_CONTENT,
 				getDefaultFulfillDescriptorSlotByContent());
 		
@@ -798,6 +802,18 @@ public class PublishingUIPreferences {
 	
 	public static boolean getIgnoreDynamicParents() {
 		return prefStore.getBoolean(Ignore_Dynamic_Parents);
+	}
+	
+	public static void setExcludeUnusedWPDs(boolean value) {
+		prefStore.setValue(Exclude_Unused_WPDs, value);
+	}
+	
+	public static boolean getDefaultExcludeUnusedWPDs() {
+		return false;
+	}
+	
+	public static boolean getExcludeUnusedWPDs() {
+		return prefStore.getBoolean(Exclude_Unused_WPDs);
 	}
 	
 	/**

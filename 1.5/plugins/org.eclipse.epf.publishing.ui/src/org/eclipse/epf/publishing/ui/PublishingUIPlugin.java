@@ -90,5 +90,8 @@ public class PublishingUIPlugin extends AbstractPlugin {
 		
 		boolean ignoreDynamicParents = PublishingUIPreferences.getIgnoreDynamicParents();
 		BrowsingLayoutSettings.INSTANCE.setIgnoreDynamicParents(ignoreDynamicParents);
+		
+		boolean excludeUnusedWPDs = PublishingUIPreferences.getExcludeUnusedWPDs();
+		BrowsingLayoutSettings.INSTANCE.setExcludeUnusedWPDs(excludeUnusedWPDs);
 	}
 }
