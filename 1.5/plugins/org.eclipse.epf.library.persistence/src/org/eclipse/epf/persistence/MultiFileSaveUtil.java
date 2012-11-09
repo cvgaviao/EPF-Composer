@@ -608,6 +608,9 @@ public final class MultiFileSaveUtil {
 	private static ResourceManager addNewResourceManager(Resource resource) {
 		ResourceManager resMgr = getResourceManager(resource);
 		MethodElement e = PersistenceUtil.getMethodElement(resource);
+		if (e == null) {
+			return null;
+		}
 		EObject container = e.eContainer();
 		if (resMgr != null && container != null && resMgr.eContainer() == null) {
 			// new ResourceManager is added to the resource
