@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.epf.library.edit.process.BSActivityItemProvider;
+import org.eclipse.epf.library.edit.util.DescriptorPropUtil;
 import org.eclipse.epf.library.edit.util.ExposedAdapterFactory;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -103,6 +104,8 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 						AssociationHelper.getAssistedTaskDescriptors(roleDesc).isEmpty()) 
 				{
 					roleDescriptors.add(object);
+				} else if (ProcessUtil.isSynFree() && ! DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference(roleDesc)) {
+					roleDescriptors.add(object);	
 				}
 			}
 			// don't return wpdescriptor which are linked to either
@@ -116,6 +119,8 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 						AssociationHelper.getResponsibleRoleDescriptors(wpDesc).isEmpty())
 				{
 					wpDescriptors.add(object);
+				} else if (ProcessUtil.isSynFree() && ! DescriptorPropUtil.getDesciptorPropUtil().isCreatedByReference(wpDesc)) {
+					wpDescriptors.add(object);	
 				}
 			} else {
 				newChildren.add(object);
@@ -145,7 +150,8 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 	}
 	
 	@Override
-	protected boolean acceptAsChild(Object parent, Object child) {		
+	protected boolean acceptAsChild(Object parent, Object child) {	
+		System.out.println("LD> child: " + child);
 //		if (parent instanceof Activity) {
 //			child = TngUtil.unwrap(child);
 //			if(child instanceof Activity || child instanceof TaskDescriptor
