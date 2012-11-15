@@ -151,7 +151,6 @@ public class ActivityItemProvider extends BSActivityItemProvider {
 	
 	@Override
 	protected boolean acceptAsChild(Object parent, Object child) {	
-		System.out.println("LD> child: " + child);
 //		if (parent instanceof Activity) {
 //			child = TngUtil.unwrap(child);
 //			if(child instanceof Activity || child instanceof TaskDescriptor
