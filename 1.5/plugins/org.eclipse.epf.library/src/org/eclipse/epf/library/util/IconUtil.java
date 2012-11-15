@@ -125,6 +125,7 @@ public class IconUtil {
 
 	public static final String ICON_Processes = "full/obj16/Process"; //$NON-NLS-1$
 	
+	public static final String ICON_UDT = "full/obj16/UdtPublishNode"; //$NON-NLS-1$
 	
 	// map of image type to image
 	private static Map nodeIconUrlMap = new HashMap();
@@ -180,6 +181,7 @@ public class IconUtil {
 
 		nodeIconUrlMap.put("guidances", ICON_Guidance); //$NON-NLS-1$
 		nodeIconUrlMap.put("processes", ICON_Processes); //$NON-NLS-1$
+		nodeIconUrlMap.put("UDT", ICON_UDT); //$NON-NLS-1$
 		
 		try {
 			nodeIconPluginRoot = FileLocator.resolve(UmaEditPlugin.INSTANCE

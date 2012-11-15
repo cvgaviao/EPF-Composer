@@ -27,6 +27,7 @@ import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.UmaFactory;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 /**
@@ -74,7 +75,9 @@ public class UdtElementsItemProvider extends TransientContentPackageItemProvider
 	 * @see org.eclipse.emf.edit.provider.ItemProviderAdapter#getImage(java.lang.Object)
 	 */
 	public Object getImage(Object object) {
-		return LibraryEditPlugin.INSTANCE.getImage("full/obj16/Practices"); //$NON-NLS-1$
+		return overlayImage(object,  UmaEditPlugin.INSTANCE.getImage(
+		"full/obj16/UdtNode")); //$NON-NLS-1$
+//		return LibraryEditPlugin.INSTANCE.getImage("full/obj16/Practices"); //$NON-NLS-1$
 	}
 
 	/*

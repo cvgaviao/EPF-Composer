@@ -382,6 +382,7 @@ public abstract class AbstractViewBuilder {
 				}
 				
 				if ((obj instanceof Practice) && (PracticePropUtil.getPracticePropUtil().isUdtType((Practice)obj))) {
+					type = "UDT"; //$NON-NLS-1$
 					//for user defined type
 					try {
 						boolean debug = PublishingPlugin.getDefault().isDebugging();

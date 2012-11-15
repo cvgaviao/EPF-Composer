@@ -126,8 +126,11 @@ public class PracticeItemProvider extends
 				return img;
 			}
 		}
+				
+//		return super.getImage(object);
+		return overlayImage(object, getResourceLocator().getImage(
+		"full/obj16/UdtNode")); //$NON-NLS-1$
 		
-		return super.getImage(object);
 	}
 
 	/*

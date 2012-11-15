@@ -339,7 +339,10 @@ public class PracticeItemProvider extends
 			}
 		}
 		
-		return super.getImage(object);
+//		return super.getImage(object);
+		
+		return overlayImage(object, getResourceLocator().getImage(
+		"full/obj16/UdtNode")); //$NON-NLS-1$
 	}
 	
 	public static class GroupingHelper {

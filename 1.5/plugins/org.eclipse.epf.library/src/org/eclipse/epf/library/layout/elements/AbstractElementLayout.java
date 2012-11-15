@@ -1513,6 +1513,7 @@ public abstract class AbstractElementLayout implements IElementLayout {
 						return "images/" + shapeIconFile.getName(); //$NON-NLS-1$
 					}					
 				}
+				type = "UDT";	//$NON-NLS-1$
 			} catch (Exception e) {
 				LibraryPlugin.getDefault().getLogger().logError(e);
 			}			

@@ -44,6 +44,7 @@ import org.eclipse.epf.uma.ToolMentor;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductType;
+import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.AssociationHelper;
 
 /**
@@ -351,8 +352,13 @@ public class MethodConfigurationItemProvider extends
 			groupItemProviderMap.put(name, child);
 
 			name = LibraryEditPlugin.INSTANCE.getString("_UI_UdtElements_group"); //$NON-NLS-1$
+//			GuidanceItemProvider child2 = new GuidanceItemProvider(
+//					adapterFactory, conf, name, LibraryEditPlugin.INSTANCE.getImage("full/obj16/Practices"));
+			Object image = overlayImage(object,  UmaEditPlugin.INSTANCE.getImage(
+			"full/obj16/UdtNode")); //$NON-NLS-1$
 			GuidanceItemProvider child2 = new GuidanceItemProvider(
-					adapterFactory, conf, name, LibraryEditPlugin.INSTANCE.getImage("full/obj16/Practices"));
+			adapterFactory, conf, name, image);
+			
 			IFilter udtFilter = new IFilter() {
 				public boolean accept(Object obj) {
 					if (! (obj instanceof Practice)) {

@@ -31,6 +31,7 @@ import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.ui.actions.LibraryLockingOperationRunner;
 import org.eclipse.epf.uma.Practice;
 import org.eclipse.epf.uma.ProcessComponent;
+import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -107,7 +108,7 @@ public final class MethodCreateChildAction extends StaticSelectionCommandAction 
 					}
 					
 					public Object getImage() {
-						ImageDescriptor img = getImageForUserDefinedType();
+						Object img = getImageForUserDefinedType();
 						if (img != null) {
 							return img;
 						} else {
@@ -171,12 +172,15 @@ public final class MethodCreateChildAction extends StaticSelectionCommandAction 
 		return null;
 	}
 	
-	private ImageDescriptor getImageForUserDefinedType() {
+	private Object getImageForUserDefinedType() {
 		if (isUserDefinedType()) {
 			Practice prac = (Practice) ((CommandParameter) descriptor).getValue();
-			return TngUtil.getImageForUdt(prac);
+			Object image = TngUtil.getImageForUdt(prac);
+			if (image == null) {
+				return UmaEditPlugin.INSTANCE.getImage("full/obj16/UdtNode");
+			}
+			return image;
 		}
-
 		return null;
 	}
 	
