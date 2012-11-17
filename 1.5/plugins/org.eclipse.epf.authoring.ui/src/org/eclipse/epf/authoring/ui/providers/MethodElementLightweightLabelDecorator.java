@@ -12,7 +12,8 @@ package org.eclipse.epf.authoring.ui.providers;
 
 import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.util.LibraryValidationMarkerHelper;
-import org.eclipse.epf.authoring.ui.util.MethodRichTextMarkerHelper;
+import org.eclipse.epf.authoring.ui.views.LibraryView;
+import org.eclipse.epf.authoring.ui.views.LibraryViewExtender;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -45,6 +46,11 @@ public class MethodElementLightweightLabelDecorator implements
 		}
 		catch(Exception e) {
 			AuthoringUIPlugin.getDefault().getLogger().logError(e);
+		}
+		LibraryView libaryView = LibraryView.getViewInstance();
+		LibraryViewExtender extender = libaryView == null ? null : libaryView.getExtender();
+		if (extender != null) {
+			extender.decorate(element, decoration);
 		}
 	}	
 

@@ -1,6 +1,7 @@
 package org.eclipse.epf.authoring.ui.views;
 
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ISelection;
 
 public class LibraryViewExtender {
@@ -47,7 +48,14 @@ public class LibraryViewExtender {
 		public void contributeToViewMenu(IMenuManager viewMenu) {			
 		}
 		
+		public void decorate(Object element, IDecoration decoration) {
+			
+		}
+		
 	}
 	
+	public void decorate(Object element, IDecoration decoration) {
+		 getActionBarExtender().decorate(element, decoration);
+	}
 	
 }
