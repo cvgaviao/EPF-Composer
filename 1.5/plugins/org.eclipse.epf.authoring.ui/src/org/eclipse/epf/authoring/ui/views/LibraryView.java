@@ -434,7 +434,7 @@ public class LibraryView extends AbstractBaseView implements IShowInTarget, IRef
 
 	
 	private LibraryViewExtender extender;
-	protected LibraryViewExtender getExtender() {
+	public LibraryViewExtender getExtender() {
 		return extender;
 	}
 
