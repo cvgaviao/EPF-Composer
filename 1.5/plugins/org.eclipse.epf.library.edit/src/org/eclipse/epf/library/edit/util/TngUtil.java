@@ -1708,6 +1708,7 @@ public final class TngUtil {
 			if (url != null) {
 				return url;
 			}
+			return UmaEditPlugin.INSTANCE.getImage("full/obj16/UdtNode");
 		}	
 		
 		Object adapter = null;

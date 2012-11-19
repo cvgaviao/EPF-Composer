@@ -125,12 +125,11 @@ public class PracticeItemProvider extends
 			if (img != null) {
 				return img;
 			}
+			return overlayImage(object, getResourceLocator().getImage(
+			"full/obj16/UdtNode")); //$NON-NLS-1$
 		}
 				
-//		return super.getImage(object);
-		return overlayImage(object, getResourceLocator().getImage(
-		"full/obj16/UdtNode")); //$NON-NLS-1$
-		
+		return super.getImage(object);		
 	}
 
 	/*
