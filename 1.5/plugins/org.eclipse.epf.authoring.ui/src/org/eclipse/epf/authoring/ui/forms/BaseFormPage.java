@@ -450,7 +450,7 @@ public class BaseFormPage extends FormPage {
 	 *            the text for the label.
 	 * @return A new <code>Text</code> control.
 	 */
-	protected static Text createTextEditWithLabel2(FormToolkit toolkit,
+	public static Text createTextEditWithLabel2(FormToolkit toolkit,
 			Composite parent, String labelText) {
 		createLabel(toolkit, parent, labelText, 2);
 		return createTextEdit(toolkit, parent, SWT.MULTI | SWT.WRAP
