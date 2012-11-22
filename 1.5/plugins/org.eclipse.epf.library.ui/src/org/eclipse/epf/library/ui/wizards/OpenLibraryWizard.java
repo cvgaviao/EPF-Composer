@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
 import org.eclipse.epf.common.service.versioning.VersionUtil;
 import org.eclipse.epf.common.ui.util.MsgDialog;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.ui.LibraryUIManager;
@@ -137,6 +138,13 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	public boolean performFinish() {
+		boolean b = performFinish_();
+		if (b) {
+			FileUtil.getValidateEdit().sychnConneciton();
+		}
+		return b;
+	}
+	private boolean performFinish_() {
 		if (LibraryService.getInstance().getCurrentMethodConfiguration() != null) {
 			LibraryService.getInstance().setCurrentMethodConfiguration(null);
 		}		

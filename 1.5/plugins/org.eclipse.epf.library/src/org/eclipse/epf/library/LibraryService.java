@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.epf.common.service.utils.CommandLineRunUtil;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.preferences.LibraryPreferences;
@@ -304,6 +305,7 @@ public class LibraryService implements ILibraryService {
 				setCurrentMethodLibrary(library);
 
 				notifyListeners(library, EVENT_REOPEN_LIBRARY);
+				FileUtil.getValidateEdit().sychnConneciton();
 			} catch (Exception e) {
 				throw new LibraryServiceException(e);
 			}

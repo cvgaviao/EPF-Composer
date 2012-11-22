@@ -17,4 +17,7 @@ public class ValidateEdit {
 		return true;
 	}
 	
+	public void sychnConneciton() {		
+	}	
+	
 }
