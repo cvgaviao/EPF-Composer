@@ -1161,8 +1161,11 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}
 
 	protected void refresh(boolean editable) {
-		ctrl_name.setEditable(editable);
-		ctrl_presentation_name.setEditable(editable);
+		if (generalSectionOn) {
+			ctrl_name.setEditable(editable);
+			ctrl_presentation_name.setEditable(editable);
+		}
+		
 		if (longPresentationNameOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_long_presentation_name.setEditable(editable);
 		}
@@ -1549,7 +1552,10 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	
 	private void refreshForContributor() {
 		boolean editable = true;
-		ctrl_presentation_name.setEditable(editable);
+		if (generalSectionOn) {
+			ctrl_presentation_name.setEditable(editable);
+		}
+		
 		if (externalIdOn && AuthoringUIPreferences.getEnableUIFields()) {
 			ctrl_external_id.setEditable(editable);
 		}
