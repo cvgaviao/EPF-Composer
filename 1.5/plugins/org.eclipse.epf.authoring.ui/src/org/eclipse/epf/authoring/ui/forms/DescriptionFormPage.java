@@ -1161,7 +1161,7 @@ public abstract class DescriptionFormPage extends BaseFormPage implements IRefre
 	}
 
 	protected void refresh(boolean editable) {
-		if (generalSectionOn) {
+		if (generalSectionOn) { 
 			ctrl_name.setEditable(editable);
 			ctrl_presentation_name.setEditable(editable);
 		}
