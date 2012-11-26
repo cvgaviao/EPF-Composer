@@ -776,6 +776,13 @@ public class ActivityLayout extends AbstractProcessElementLayout {
 				MethodElement item = (MethodElement) LibraryUtil
 						.unwrap(rawitem);
 				
+				//Filter out WPDs and RDs from WBS page 
+				if (setting.adapterFactory == layoutManager.getCBSAdapterFactory()) {
+					if (item instanceof WorkProductDescriptor || item instanceof RoleDescriptor) {
+						continue;
+					}
+				} 
+				
 				if (item instanceof WorkProductDescriptor) {
 					if (! ConfigurationHelper.inConfig(item, getLayoutMgr().getConfiguration())) {
 						continue;
