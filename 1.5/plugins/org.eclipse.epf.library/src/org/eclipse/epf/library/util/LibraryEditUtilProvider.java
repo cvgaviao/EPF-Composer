@@ -1,10 +1,12 @@
 package org.eclipse.epf.library.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.epf.library.ILibraryManager;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.configuration.DefaultElementRealizer;
@@ -219,15 +221,18 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 	}
 	
 	public UserDefinedTypeMeta getUserDefineType(String id) {
-		return LibraryService.getInstance().getCurrentLibraryManager().getUserDefineType(id);
+		ILibraryManager manager = LibraryService.getInstance().getCurrentLibraryManager();
+		return manager == null ? null : manager.getUserDefineType(id);
 	}
 	
 	public ModifiedTypeMeta getModifiedType(String id) {
-		return LibraryService.getInstance().getCurrentLibraryManager().getModifiedType(id);
+		ILibraryManager manager = LibraryService.getInstance().getCurrentLibraryManager();
+		return manager == null ? null : manager.getModifiedType(id);
 	}
 	
 	public Collection<ModifiedTypeMeta> getModifiedTypes() {
-		return LibraryService.getInstance().getCurrentLibraryManager().getModifiedTypes();
+		ILibraryManager manager = LibraryService.getInstance().getCurrentLibraryManager();
+		return manager == null ? new ArrayList<ModifiedTypeMeta>() : manager.getModifiedTypes();
 	}
 	
 }
