@@ -186,7 +186,14 @@ public class ImportPluginWizard extends BaseWizard implements IImportWizard {
 
 		StringBuffer buffer = new StringBuffer();
 		PluginImportData.PluginInfo info;
+		int i = 0;
 		for (Iterator it = data.getPlugins().iterator(); it.hasNext();) {
+			i++;
+			if (i > 20) {
+				String msg = "\n\t. . ."; //$NON-NLS-1$
+				buffer.append(msg);
+				break;
+			}
 			info = (PluginImportData.PluginInfo) it.next();
 			if ((info.existingPlugin != null) && info.selected) {
 				if (buffer.length() > 0) {
