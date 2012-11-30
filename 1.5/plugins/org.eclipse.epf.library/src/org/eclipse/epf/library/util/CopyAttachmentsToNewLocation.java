@@ -31,6 +31,7 @@ import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand.BasicResourceManager;
+import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.IContentValidator;
@@ -40,6 +41,7 @@ import org.eclipse.epf.uma.DescribableElement;
 import org.eclipse.epf.uma.GuidanceDescription;
 import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.MethodPlugin;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -207,6 +209,12 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 								TypeDefUtil.getInstance().eSet(elementToProcess, attrib, newContent);
 								modifiedResourceSet.add(elementToProcess
 										.eResource());
+							}
+							
+							ExtendedAttribute eAtt = TypeDefUtil.getInstance().getAssociatedExtendedAttribute(attrib);
+							if (eAtt != null && IMetaDef.attachment.equalsIgnoreCase(eAtt.getValueType())) {
+								processAttachmentString(elementToProcess, resMgr,
+										lastOldPluginResMgr, oldContentPath, newContent);
 							}
 						}
 					}
