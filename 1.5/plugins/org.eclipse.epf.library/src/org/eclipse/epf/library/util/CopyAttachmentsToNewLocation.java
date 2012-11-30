@@ -217,26 +217,9 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 				if (elementToProcess instanceof GuidanceDescription) {
 					String attachmentString = ((GuidanceDescription) elementToProcess)
 							.getAttachments();
-					List attachmentList = TngUtil
-							.convertGuidanceAttachmentsToList(attachmentString);
-					for (iter = attachmentList.iterator(); iter.hasNext();) {
-						String attachment = (String) iter.next();
-						if (attachment != null
-								&& attachment.trim().length() > 0) {
-							Matcher m = ResourceHelper.p_template_attachment_url.matcher(attachment);
-							if (!m.find()) {
-								File srcContentPath = new File(lastOldPluginResMgr.resolve(lastOldPlugin, oldContentPath));
-								File srcFile = new File(srcContentPath,
-										attachment);
-								File tgtContentPath = new File(resMgr.getPhysicalPath(elementToProcess));
-								File tgtFile = new File(tgtContentPath,
-										attachment);
-								if (!tgtFile.exists()) {
-									FileManager.copyFile(srcFile, tgtFile);
-								}
-							}
-						}
-					}
+					processAttachmentString(elementToProcess, resMgr,
+							lastOldPluginResMgr, oldContentPath,
+							attachmentString);
 				}
 			}
 		}
@@ -250,6 +233,33 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 		while (iter.hasNext()) {
 			EObject child = (EObject) iter.next();
 			HandleAttachmentsPlugin(child);
+		}
+	}
+
+	private void processAttachmentString(MethodElement elementToProcess,
+			ILibraryResourceManager resMgr,
+			ILibraryResourceManager lastOldPluginResMgr, String oldContentPath,
+			String attachmentString) {
+		Iterator iter;
+		List attachmentList = TngUtil
+				.convertGuidanceAttachmentsToList(attachmentString);
+		for (iter = attachmentList.iterator(); iter.hasNext();) {
+			String attachment = (String) iter.next();
+			if (attachment != null
+					&& attachment.trim().length() > 0) {
+				Matcher m = ResourceHelper.p_template_attachment_url.matcher(attachment);
+				if (!m.find()) {
+					File srcContentPath = new File(lastOldPluginResMgr.resolve(lastOldPlugin, oldContentPath));
+					File srcFile = new File(srcContentPath,
+							attachment);
+					File tgtContentPath = new File(resMgr.getPhysicalPath(elementToProcess));
+					File tgtFile = new File(tgtContentPath,
+							attachment);
+					if (!tgtFile.exists()) {
+						FileManager.copyFile(srcFile, tgtFile);
+					}
+				}
+			}
 		}
 	}
 
