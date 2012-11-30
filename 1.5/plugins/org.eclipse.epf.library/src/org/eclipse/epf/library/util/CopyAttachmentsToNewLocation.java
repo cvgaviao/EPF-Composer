@@ -31,6 +31,7 @@ import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
 import org.eclipse.epf.library.edit.command.MethodElementAddCommand.BasicResourceManager;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.layout.IContentValidator;
 import org.eclipse.epf.persistence.FileManager;
@@ -187,11 +188,13 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 				//String oldContentPath = ResourceHelper
 				//	.getElementPath(lastOldPlugin);				
 
-				Iterator iter = elementToProcess.eClass().getEAllAttributes()
-						.iterator();
+//				Iterator iter = elementToProcess.eClass().getEAllAttributes()
+//						.iterator();
+				Iterator iter = TypeDefUtil.getInstance().getEAllAttributes(elementToProcess).iterator();
 				while (iter.hasNext()) {
 					EAttribute attrib = (EAttribute) iter.next();
-					Object o = elementToProcess.eGet(attrib);
+//					Object o = elementToProcess.eGet(attrib);
+					Object o = TypeDefUtil.getInstance().eGet(elementToProcess, attrib);
 					if (o instanceof String) {
 						String content = (String) o;
 						if (content.length() > 0) {
@@ -200,7 +203,8 @@ public class CopyAttachmentsToNewLocation extends BasicResourceManager {
 							if (newContent != null
 									&& newContent.trim().length() != 0
 									&& !content.equals(newContent)) {
-								elementToProcess.eSet(attrib, newContent);
+//								elementToProcess.eSet(attrib, newContent);
+								TypeDefUtil.getInstance().eSet(elementToProcess, attrib, newContent);
 								modifiedResourceSet.add(elementToProcess
 										.eResource());
 							}
