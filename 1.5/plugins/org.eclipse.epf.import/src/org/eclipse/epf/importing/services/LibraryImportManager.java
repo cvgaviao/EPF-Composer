@@ -35,6 +35,7 @@ import org.eclipse.epf.importing.ImportPlugin;
 import org.eclipse.epf.importing.ImportResources;
 import org.eclipse.epf.library.ILibraryResourceManager;
 import org.eclipse.epf.library.LibraryService;
+import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.MethodPluginPropUtil;
 import org.eclipse.epf.library.edit.util.ProcessUtil;
@@ -61,6 +62,7 @@ import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.ProcessComponent;
 import org.eclipse.epf.uma.ProcessPackage;
 import org.eclipse.epf.uma.UmaPackage;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.UmaUtil;
 
 
@@ -925,8 +927,12 @@ public class LibraryImportManager {
 	private void scanResources(MethodElement element, EStructuralFeature feature, Object newValue) {
 		diagramHandler.registerElement(element);
 		
+		ExtendedAttribute eAtt = TypeDefUtil.getInstance().getAssociatedExtendedAttribute(feature);
+		
 		// scan the resources
-		if ( feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments() ) {
+		if ( feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments() ||
+				(eAtt != null && eAtt.getValueType().equalsIgnoreCase(IMetaDef.attachment))) {
+			
 			// process the attachments
 			String urls = (String)newValue;
 			if ( (urls != null) && urls.length() != 0 ) {
