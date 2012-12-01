@@ -15,7 +15,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.epf.common.utils.StrUtil;
+import org.eclipse.epf.library.edit.meta.IMetaDef;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
 import org.eclipse.epf.library.util.LibraryUtil;
 import org.eclipse.epf.library.util.ResourceHelper;
@@ -24,6 +27,7 @@ import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Section;
 import org.eclipse.epf.uma.UmaPackage;
 import org.eclipse.epf.uma.VariabilityElement;
+import org.eclipse.epf.uma.util.ExtendedAttribute;
 
 /**
  * for a given method element and attribute feature, 
@@ -112,7 +116,11 @@ public class AttributeFeatureValue extends FeatureValue {
 				}
 				return v;
 			}
-			if (feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments() 
+			ExtendedAttribute eAtt = null;
+			if (feature instanceof EAttribute) {
+				eAtt = TypeDefUtil.getInstance().getAssociatedExtendedAttribute((EAttribute) feature);
+			}
+			if (eAtt != null && eAtt.getValueType().equalsIgnoreCase(IMetaDef.attachment) || feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments() 
 					&& v instanceof String) {
 				List<String> vList = TngUtil.convertGuidanceAttachmentsToList((String) v);
 				for (String str: vList) {
@@ -145,7 +153,11 @@ public class AttributeFeatureValue extends FeatureValue {
 							: (MethodElement) element.eContainer())
 							: element);
 
-			if (feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments()) {
+			ExtendedAttribute eAtt = null;
+			if (feature instanceof EAttribute) {
+				eAtt = TypeDefUtil.getInstance().getAssociatedExtendedAttribute((EAttribute) feature);
+			}
+			if (eAtt != null && eAtt.getValueType().equalsIgnoreCase(IMetaDef.attachment) || feature == UmaPackage.eINSTANCE.getGuidanceDescription_Attachments()) {
 				buffer.append(ResourceHelper.resolveUrl(v.toString(), contentPath, backPath));
 			} else {
 				buffer.append(ResourceHelper.fixContentUrlPath(v.toString(),
