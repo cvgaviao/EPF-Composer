@@ -26,6 +26,7 @@ import org.eclipse.epf.authoring.ui.AuthoringUIPlugin;
 import org.eclipse.epf.authoring.ui.AuthoringUIResources;
 import org.eclipse.epf.authoring.ui.editors.IEditorKeeper;
 import org.eclipse.epf.authoring.ui.views.LibraryView;
+import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.library.LibraryService;
 import org.eclipse.epf.library.LibraryServiceUtil;
 import org.eclipse.epf.library.edit.FeatureValueWrapperItemProvider;
@@ -194,6 +195,7 @@ public class LibraryViewDeleteAction extends MethodElementDeleteAction {
 						modifiedResources.add(container.eResource());
 					}
 				}
+				FileUtil.getValidateEdit().addDeleteResourceToCheck(modifiedResources, object);
 			}
 		}
 

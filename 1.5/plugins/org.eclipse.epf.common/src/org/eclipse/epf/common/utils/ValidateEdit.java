@@ -1,5 +1,7 @@
 package org.eclipse.epf.common.utils;
 
+import java.util.Set;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.IStatus;
@@ -18,6 +20,9 @@ public class ValidateEdit {
 	}
 	
 	public void sychnConneciton() {		
-	}	
+	}
+	
+	public void addDeleteResourceToCheck(Set modifiedResources, Object deleteObject) {		
+	}
 	
 }
