@@ -11,7 +11,7 @@
 
 ContentPageSection = function(){
 
-this.collapseSectionsByDefault = false;
+this.collapseSectionsByDefault = false;		// 2012-12-05 Change it to true to collapse all sections by default
 this.firstSection = null;
 this.expandImage = null;
 this.collapseImage = null;
@@ -67,6 +67,7 @@ ContentPageSection.prototype.createSectionLinks = function(tagName, classSelecto
 		this.firstSection = sectionElements[0];
 		for (var i = 0; i < sectionElements.length; i++) {
 			var element = sectionElements[i];
+			//var sectionTitle = element.innerHTML;		// 2012-12-05 Get the section title
 			var siblingContainer;
 			if (document.createElement && (siblingContainer = document.createElement('div')) && siblingContainer.style) {	
 				var nextSibling = element.nextSibling;
@@ -80,6 +81,20 @@ ContentPageSection.prototype.createSectionLinks = function(tagName, classSelecto
 				if (this.collapseSectionsByDefault) {
     				siblingContainer.style.display = 'none';
     			}
+				// 2012-12-05 if by default, collapsing all sections is false, then check individual sections.
+				/*
+				else {
+					switch(sectionTitle) {
+					case "Purpose":
+					case "Relationships":
+					case "Main Description":
+						siblingContainer.style.display = 'none';
+						break;
+					default:
+						break;
+					}
+				}
+				*/
     			this.sectionCollapseDivs[i] = siblingContainer;
     			this.createCollapsibleSection(element, siblingContainer, i);
 			}
@@ -219,7 +234,15 @@ ContentPageSection.prototype.createCollapsibleSection = function(element, siblin
 			image.src = this.expandImage;
 			image.alt = contentPage.res.expandText;
 			image.title = contentPage.res.expandText;
-		}
+		} 
+		// 2012-12-05 addition to set the right expand icon
+		/*
+		else if (siblingContainer.style.display == "none"){		
+			image.src = this.expandImage;
+			image.alt = contentPage.res.expandText;
+			image.title = contentPage.res.expandText;
+		} 
+		*/
 		else {
 			image.src = this.collapseImage;
 			image.alt = contentPage.res.collapseText;
