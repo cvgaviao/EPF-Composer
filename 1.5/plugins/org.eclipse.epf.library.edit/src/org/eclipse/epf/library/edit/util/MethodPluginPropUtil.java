@@ -174,6 +174,9 @@ public class MethodPluginPropUtil extends PropUtil {
 			stateIDs.add(getStateId(state));
 		}
 		MethodLibrary lib = UmaUtil.getMethodLibrary(activePlugin);
+		if (lib == null) {
+			return resultList;
+		}
 		for (MethodPlugin plugin : lib.getMethodPlugins()) {
 			List<Constraint> list = getWorkProductStatesInPlugin(plugin);
 			for (Constraint state : list) {
