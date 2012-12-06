@@ -30,6 +30,7 @@ import org.eclipse.epf.library.edit.IStatefulItemProvider;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.category.DisciplineCategoriesItemProvider;
 import org.eclipse.epf.library.edit.category.RoleSetsItemProvider;
+import org.eclipse.epf.library.edit.util.LibraryEditUtil;
 import org.eclipse.epf.library.edit.util.ModelStructure;
 import org.eclipse.epf.library.edit.util.PracticePropUtil;
 import org.eclipse.epf.library.edit.util.TngUtil;
@@ -46,6 +47,7 @@ import org.eclipse.epf.uma.WorkProduct;
 import org.eclipse.epf.uma.WorkProductType;
 import org.eclipse.epf.uma.provider.UmaEditPlugin;
 import org.eclipse.epf.uma.util.AssociationHelper;
+import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
 
 /**
  * The item provider adapter for a method configuration in the Configuration
@@ -351,25 +353,28 @@ public class MethodConfigurationItemProvider extends
 			children.add(child);
 			groupItemProviderMap.put(name, child);
 
-			name = LibraryEditPlugin.INSTANCE.getString("_UI_UdtElements_group"); //$NON-NLS-1$
-//			GuidanceItemProvider child2 = new GuidanceItemProvider(
-//					adapterFactory, conf, name, LibraryEditPlugin.INSTANCE.getImage("full/obj16/Practices"));
-			Object image = overlayImage(object,  UmaEditPlugin.INSTANCE.getImage(
-			"full/obj16/UdtNode")); //$NON-NLS-1$
-			GuidanceItemProvider child2 = new GuidanceItemProvider(
-			adapterFactory, conf, name, image);
-			
-			IFilter udtFilter = new IFilter() {
-				public boolean accept(Object obj) {
-					if (! (obj instanceof Practice)) {
-						return false;
+			Collection<UserDefinedTypeMeta> udtTypes = LibraryEditUtil.getInstance().getUserDefinedTypes();		
+			if (udtTypes != null && !udtTypes.isEmpty()) {
+				name = LibraryEditPlugin.INSTANCE.getString("_UI_UdtElements_group"); //$NON-NLS-1$
+	//			GuidanceItemProvider child2 = new GuidanceItemProvider(
+	//					adapterFactory, conf, name, LibraryEditPlugin.INSTANCE.getImage("full/obj16/Practices"));
+				Object image = overlayImage(object,  UmaEditPlugin.INSTANCE.getImage(
+				"full/obj16/UdtNode")); //$NON-NLS-1$
+				GuidanceItemProvider child2 = new GuidanceItemProvider(
+				adapterFactory, conf, name, image);
+				
+				IFilter udtFilter = new IFilter() {
+					public boolean accept(Object obj) {
+						if (! (obj instanceof Practice)) {
+							return false;
+						}
+						return PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj);
 					}
-					return PracticePropUtil.getPracticePropUtil().isUdtType((Practice) obj);
-				}
-			};
-			child2.setGuidanceFilter(udtFilter);
-			children.add(child2);
-			groupItemProviderMap.put(name, child2);
+				};
+				child2.setGuidanceFilter(udtFilter);
+				children.add(child2);
+				groupItemProviderMap.put(name, child2);
+			}
 			
 			name = LibraryEditPlugin.INSTANCE.getString("_UI_Guidances_group"); //$NON-NLS-1$
 			GuidanceGroupingItemProvider child1 = new GuidanceGroupingItemProvider(

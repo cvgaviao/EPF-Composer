@@ -50,6 +50,8 @@ public interface ILibraryEditUtilProvider {
 	
 	public void createUserDefinedTypeContextMenuOnGuidanceNode(Collection<Object> newChildDescriptors);
 		
+	public Collection<UserDefinedTypeMeta> getUserDefinedTypes();
+	
 	public UserDefinedTypeMeta getUserDefineType(String id);
 	
 	public ModifiedTypeMeta getModifiedType(String id);

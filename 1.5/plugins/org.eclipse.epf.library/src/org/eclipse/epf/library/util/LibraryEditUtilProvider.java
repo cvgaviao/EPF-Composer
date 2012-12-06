@@ -220,6 +220,11 @@ public class LibraryEditUtilProvider implements ILibraryEditUtilProvider {
 		UserDefinedTypeContextMenuUtil.getInstance().addDescriptorsForUserDefinedType(newChildDescriptors);
 	}
 	
+	public Collection<UserDefinedTypeMeta> getUserDefinedTypes() {
+		ILibraryManager manager = LibraryService.getInstance().getCurrentLibraryManager();
+		return manager == null ? null : manager.getUserDefinedTypes();
+	}
+	
 	public UserDefinedTypeMeta getUserDefineType(String id) {
 		ILibraryManager manager = LibraryService.getInstance().getCurrentLibraryManager();
 		return manager == null ? null : manager.getUserDefineType(id);
