@@ -139,9 +139,9 @@ public class OpenLibraryWizard extends BaseWizard implements INewWizard {
 	 */
 	public boolean performFinish() {
 		boolean b = performFinish_();
-		if (b) {
-			FileUtil.getValidateEdit().sychnConneciton();
-		}
+//		if (b) {
+//			FileUtil.getValidateEdit().sychnConneciton();
+//		}
 		return b;
 	}
 	private boolean performFinish_() {
