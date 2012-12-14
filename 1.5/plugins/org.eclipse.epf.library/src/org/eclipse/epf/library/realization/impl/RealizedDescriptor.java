@@ -68,9 +68,10 @@ public class RealizedDescriptor extends RealizedBreakdownElement implements
 		if (getLinkedElement() == null) {
 			return null;
 		}
-		if (! ContentDescriptionFactory.hasPresentation(getLinkedElement())) {
-			return null;
-		}
+//	Cannot do this if the linked element has variability, e.g. an extend-replacer		
+//		if (! ContentDescriptionFactory.hasPresentation(getLinkedElement())) {
+//			return null;
+//		}
 				
 		EStructuralFeature elementFeature = contentFeatureMap.get(feature);
 		
@@ -98,8 +99,12 @@ public class RealizedDescriptor extends RealizedBreakdownElement implements
 			Descriptor greenParent = propUtil.getGreenParentDescriptor(getDescriptor());			
 			Object linkedValue;
 			if (greenParent == null) {
+				
+//	This API would not combine owner element's variability's effect				
+//				linkedValue = ConfigurationHelper.calcAttributeFeatureValue(
+//						getLinkedElement().getPresentation(), elementFeature, getConfig());
 				linkedValue = ConfigurationHelper.calcAttributeFeatureValue(
-						getLinkedElement().getPresentation(), elementFeature, getConfig());
+						getLinkedElement().getPresentation(), getLinkedElement(), elementFeature, getConfig());
 			} else {
 				linkedValue = greenParent.getPresentation().eGet(feature);
 			}
