@@ -238,12 +238,19 @@ public abstract class AbstractElementLayout implements IElementLayout {
 				|| element instanceof MethodConfiguration) )
 		{
 			try {
-				String html_file = this.layoutManager.getPublishDir() + this.getFilePath() + getFileName(ResourceHelper.FILE_EXT_HTML);
+				String path = this.getFilePath() + getFileName(ResourceHelper.FILE_EXT_HTML);
+				String html_file = this.layoutManager.getPublishDir() + path;
 				File f = new File(html_file);
 				if ( !f.exists() )
 				{
 					f.getParentFile().mkdirs();
 					f.createNewFile();
+				}
+				if (ConfigurationHelper.serverMode) {
+					Map<String, MethodElement> htmlElementMap = layoutManager.getUriElementMap();
+					if (htmlElementMap != null) {
+						htmlElementMap.put("/" + path, element);
+					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

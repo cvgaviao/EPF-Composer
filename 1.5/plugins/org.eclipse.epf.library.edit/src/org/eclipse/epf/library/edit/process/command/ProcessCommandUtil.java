@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.epf.common.utils.StrUtil;
 import org.eclipse.epf.library.edit.IConfigurationApplicator;
 import org.eclipse.epf.library.edit.Providers;
 import org.eclipse.epf.library.edit.command.BatchCommand;
@@ -41,6 +40,7 @@ import org.eclipse.epf.uma.Activity;
 import org.eclipse.epf.uma.Deliverable;
 import org.eclipse.epf.uma.Descriptor;
 import org.eclipse.epf.uma.MethodConfiguration;
+import org.eclipse.epf.uma.MethodElement;
 import org.eclipse.epf.uma.Process;
 import org.eclipse.epf.uma.Role;
 import org.eclipse.epf.uma.RoleDescriptor;
@@ -250,7 +250,13 @@ public final class ProcessCommandUtil {
 			}
 
 			Object elementObj = ProcessUtil.getAssociatedElement(desc);
-			elementObj = Providers.getConfigurationApplicator().resolve(elementObj, config);
+			
+			if (Providers.getConfigurationApplicator() == null) {	//ConfigurationHelper.serverMode == true
+				elementObj = LibraryEditUtil.getInstance().getCalcualtedElement((MethodElement) elementObj, config);				
+			} else {	
+				elementObj = Providers.getConfigurationApplicator().resolve(elementObj, config);
+			}
+			
 			return element == elementObj;
 		}
 		return false;

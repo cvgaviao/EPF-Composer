@@ -38,6 +38,7 @@ import org.eclipse.epf.common.utils.I18nUtil;
 import org.eclipse.epf.common.utils.ImageUtil;
 import org.eclipse.epf.library.LibraryPlugin;
 import org.eclipse.epf.library.LibraryResources;
+import org.eclipse.epf.library.configuration.ConfigurationHelper;
 import org.eclipse.epf.library.diagram.providers.DiagramIconProviderManager;
 import org.eclipse.epf.library.layout.IElementLayout;
 import org.eclipse.epf.library.layout.elements.RoleLayout;
@@ -548,7 +549,11 @@ public class RoleDiagramPublisher {
 	
 	private Image getShapeIcon(MethodElement element) {
 		final MethodElement e = element;
-	
+		if (ConfigurationHelper.serverMode) {
+			return DiagramIconProviderManager.getInstance().getIcon(
+    				e, false);
+		}
+		
 		// add display.async since it's getting called from non-ui thread
 		Display.getDefault().syncExec(new Runnable() {
             public void run() {

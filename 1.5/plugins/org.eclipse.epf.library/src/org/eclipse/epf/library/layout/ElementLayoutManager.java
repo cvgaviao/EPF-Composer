@@ -789,5 +789,9 @@ public class ElementLayoutManager {
 	    }
 	}
 	
+	private Map<String, MethodElement> uriElementMap = new HashMap<String, MethodElement>();
+	public Map<String, MethodElement> getUriElementMap() {
+		return uriElementMap;
+	}
 }
 

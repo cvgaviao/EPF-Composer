@@ -80,6 +80,7 @@ import org.eclipse.epf.uma.util.UserDefinedTypeMeta;
  */
 public class ConfigurationHelper {
 	
+	public static boolean serverMode = false;
 	private static ConfigHelperDelegate delegate;
 
 	static {

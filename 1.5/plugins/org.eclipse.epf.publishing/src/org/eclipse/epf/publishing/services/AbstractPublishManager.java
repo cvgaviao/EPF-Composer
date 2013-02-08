@@ -135,15 +135,17 @@ public abstract class AbstractPublishManager {
 		
 		try {
 			ConfigurationHelper.getDelegate().setPublishingMode(true);
-			SafeUpdateController.syncExec(new Runnable() {	
-				public void run() {
-					PlatformUI.
-					getWorkbench().
-					getActiveWorkbenchWindow().
-					getActivePage().
-					closeAllEditors(true);
-				}
-			});	
+			if (! ConfigurationHelper.serverMode) {
+				SafeUpdateController.syncExec(new Runnable() {	
+					public void run() {
+						PlatformUI.
+						getWorkbench().
+						getActiveWorkbenchWindow().
+						getActivePage().
+						closeAllEditors(true);
+					}
+				});
+			}
 			
 			if (profiling) {
 				beginTime = startTime = System.currentTimeMillis();
