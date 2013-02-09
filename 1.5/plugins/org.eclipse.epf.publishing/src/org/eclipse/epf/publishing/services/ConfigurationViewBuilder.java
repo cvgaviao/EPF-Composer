@@ -253,7 +253,9 @@ public class ConfigurationViewBuilder extends AbstractViewBuilder {
 		if (profiling) {
 			startTime = System.currentTimeMillis();
 		}
-		publishReferenceElements();
+		if (! ConfigurationHelper.serverMode) {
+			publishReferenceElements();
+		}		
 		if (profiling) {
 			DebugTrace.print(this, "publishReferenceElements", //$NON-NLS-1$
 					(System.currentTimeMillis() - startTime) + " ms"); //$NON-NLS-1$

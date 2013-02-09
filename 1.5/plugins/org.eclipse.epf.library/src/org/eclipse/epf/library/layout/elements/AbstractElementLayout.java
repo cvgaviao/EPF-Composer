@@ -232,10 +232,11 @@ public abstract class AbstractElementLayout implements IElementLayout {
 		// we need to pass parameters in the file url, 
 		// however, if the file does not exist, the parameters is not passed over in browsing
 		// so create a dummy file
-		if (!this.layoutManager.isPublishingMode() && !(
+		
+		if ((!this.layoutManager.isPublishingMode() || ConfigurationHelper.serverMode )&& !(
 					element instanceof ContentDescription 
 				|| element.eContainer() instanceof ContentDescription
-				|| element instanceof MethodConfiguration) )
+				|| element instanceof MethodConfiguration) )			
 		{
 			try {
 				String path = this.getFilePath() + getFileName(ResourceHelper.FILE_EXT_HTML);

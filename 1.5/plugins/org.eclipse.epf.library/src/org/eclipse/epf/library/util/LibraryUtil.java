@@ -1572,18 +1572,27 @@ public class LibraryUtil {
 		return guidanceList;
 	}
 	
-	public 	static IWorkbenchWindow getActiveWorkbenchWindow() {		
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		if (window == null) {
-			final IWorkbenchWindow[] windows = new IWorkbenchWindow[1]; 
-			SafeUpdateController.syncExec(new Runnable() {	
-				public void run() {
-					windows[0] = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-				}
-			});
-			window = windows[0];
-		}		
-		return window;
+	public 	static IWorkbenchWindow getActiveWorkbenchWindow() {
+		if (ConfigurationHelper.serverMode) {
+			return null;
+		}
+		try {
+			IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+			if (window == null) {
+				final IWorkbenchWindow[] windows = new IWorkbenchWindow[1]; 
+				SafeUpdateController.syncExec(new Runnable() {	
+					public void run() {
+						windows[0] = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+					}
+				});
+				window = windows[0];
+			}		
+			return window;
+		} catch (Exception e) {
+			
+		}
+		
+		return null;
 	}
 	
 	public static class MeVisitor implements IMeVisitor {
