@@ -564,7 +564,7 @@ public class FileManager implements IFileManager {
 	}
 	
 	public static IStatus checkModifyElements(Set<MethodElement> elements, Object context) {
-		Set<Resource> resources = UmaUtil.getResources(elements);
+		Set<Resource> resources = UmaUtil.getElementResources(elements);
 		return checkModifyResources(resources, context);
 	}
 	

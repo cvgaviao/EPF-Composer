@@ -993,7 +993,7 @@ public class UmaUtil {
 		}
 	}
 	
-	public static Set<Resource> getResources(Set<MethodElement> elements) {
+	public static Set<Resource> getElementResources(Set<? extends MethodElement> elements) {
 		if (elements == null || elements.isEmpty()) {
 			return Collections.EMPTY_SET;
 		}
