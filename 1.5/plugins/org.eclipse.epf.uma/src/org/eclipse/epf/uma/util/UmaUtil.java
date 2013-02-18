@@ -993,4 +993,29 @@ public class UmaUtil {
 		}
 	}
 	
+	public static Set<Resource> getResources(Set<MethodElement> elements) {
+		if (elements == null || elements.isEmpty()) {
+			return Collections.EMPTY_SET;
+		}
+		Set<Resource> resources = new HashSet<Resource>();
+		for (MethodElement element : elements) {
+			Resource res = element.eResource();
+			if (res != null) {
+				resources.add(res);
+			}
+		}		
+		return resources;
+	}
+	
+	public static List<String> getResourceFilePaths(Set<Resource> resources) {
+		if (resources == null || resources.isEmpty()) {
+			return Collections.EMPTY_LIST;
+		}
+		List<String> ret = new ArrayList();
+		for (Resource res : resources) {
+			ret.add(res.getURI().toFileString());
+		}
+		return ret;
+	}	
+	
 }

@@ -15,6 +15,8 @@ import java.security.AccessController;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.internal.resources.ResourceStatus;
@@ -43,6 +45,9 @@ import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.epf.common.utils.FileUtil;
 import org.eclipse.epf.persistence.util.PersistenceResources;
 import org.eclipse.epf.services.IFileManager;
+import org.eclipse.epf.services.Services;
+import org.eclipse.epf.uma.MethodElement;
+import org.eclipse.epf.uma.util.UmaUtil;
 import org.eclipse.osgi.util.NLS;
 
 import sun.security.action.GetPropertyAction;
@@ -539,5 +544,28 @@ public class FileManager implements IFileManager {
 			}
 		}
 		return b;
-	}	
+	}		
+	
+	public static IStatus checkModifyPathList(List<String> modifiedFiles, Object context) {
+		if (modifiedFiles == null || modifiedFiles.isEmpty()) {
+			return Status.OK_STATUS;
+		}
+		String[] paths = new String[modifiedFiles.size()];
+		modifiedFiles.toArray(paths);
+		IFileManager fileMgr = Services.getFileManager();
+		IStatus status = fileMgr.checkModify(paths, context);
+		return status;
+	}
+	
+	public static IStatus checkModifyResources(Set<Resource> resources, Object context) {
+		List<String> modifiedFiles = UmaUtil.getResourceFilePaths(resources);
+		IStatus status = checkModifyPathList(modifiedFiles, context);
+		return status;
+	}
+	
+	public static IStatus checkModifyElements(Set<MethodElement> elements, Object context) {
+		Set<Resource> resources = UmaUtil.getResources(elements);
+		return checkModifyResources(resources, context);
+	}
+	
 }
