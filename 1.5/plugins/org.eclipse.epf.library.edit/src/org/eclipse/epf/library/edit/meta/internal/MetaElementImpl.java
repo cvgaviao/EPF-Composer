@@ -273,4 +273,18 @@ public class MetaElementImpl implements MetaElement, IMetaDef, Adapter {
 		}
 		return null;
 	}
+	
+	protected Boolean parseBoolean(Element element, String att) {
+		String value = element.getAttribute(att);
+		if (value == null) {
+			return null;
+		}
+		if (value.trim().equalsIgnoreCase("true")) {		//$NON-NLS-1$
+			return Boolean.TRUE;
+		} else if (value.trim().equalsIgnoreCase("false")) {//$NON-NLS-1$
+			return Boolean.FALSE;	
+		}
+		return null;
+	}
+	
 }
