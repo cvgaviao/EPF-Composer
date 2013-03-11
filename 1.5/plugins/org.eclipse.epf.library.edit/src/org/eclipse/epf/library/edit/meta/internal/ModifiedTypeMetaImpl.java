@@ -10,6 +10,7 @@ import java.util.Set;
 import org.eclipse.epf.common.utils.XMLUtil;
 import org.eclipse.epf.library.edit.meta.IMetaDef;
 import org.eclipse.epf.library.edit.meta.TypeDefException;
+import org.eclipse.epf.library.edit.meta.TypeDefUtil;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedFeature;
 import org.eclipse.epf.uma.util.ExtendedReference;
@@ -124,7 +125,7 @@ public class ModifiedTypeMetaImpl extends MetaElementImpl implements ModifiedTyp
 		List<Element> sectionElements = XMLUtil.getChildElementsByTagName(element, IMetaDef.SECTION);
 		if (sectionElements != null) {
 			for (Element sElement : sectionElements) {
-				ExtendedSectionImpl ses = new ExtendedSectionImpl(this);
+				ExtendedSectionImpl ses = (ExtendedSectionImpl) TypeDefUtil.getInstance().newExtendedSection(this);			
 				ses.parseElement(sElement);				
 				getSections().add(ses);
 			}

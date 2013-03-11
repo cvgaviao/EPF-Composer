@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.library.edit.LibraryEditPlugin;
 import org.eclipse.epf.library.edit.meta.internal.ExtendedReferenceImpl;
+import org.eclipse.epf.library.edit.meta.internal.ExtendedSectionImpl;
 import org.eclipse.epf.library.edit.meta.internal.ModifiedTypeMetaImpl;
 import org.eclipse.epf.library.edit.meta.internal.TypeDefParserImpl;
 import org.eclipse.epf.library.edit.uma.DescriptorExt;
@@ -50,6 +51,7 @@ import org.eclipse.epf.uma.ecore.util.OppositeFeature;
 import org.eclipse.epf.uma.util.ExtendedAttribute;
 import org.eclipse.epf.uma.util.ExtendedOpposite;
 import org.eclipse.epf.uma.util.ExtendedReference;
+import org.eclipse.epf.uma.util.ExtendedSection;
 import org.eclipse.epf.uma.util.MetaElement;
 import org.eclipse.epf.uma.util.ModifiedTypeMeta;
 import org.eclipse.epf.uma.util.QualifiedReference;
@@ -421,6 +423,10 @@ public class TypeDefUtil {
 	
 	public ExtendedReference newExtendedReference(MetaElement parent) {
 		return new ExtendedReferenceImpl(parent);
+	}
+	
+	public ExtendedSection newExtendedSection(MetaElement parent) {
+		return new ExtendedSectionImpl(parent);
 	}
 	
 	private static String indent0 = "     ";  //$NON-NLS-1$
