@@ -229,7 +229,16 @@ public class RichText implements IRichText {
 		setBasePath(basePath);
 
 		try {
-			editor = new Browser(parent, SWT.NONE);
+			boolean enableMozilla = false;
+			String enableMozillaProperty = System.getProperty("rte.enable.mozilla");
+			if (enableMozillaProperty != null) {
+				enableMozilla = Boolean.valueOf(enableMozillaProperty);
+			}
+			if (enableMozilla) {
+				editor = new Browser(parent, SWT.MOZILLA);
+			} else {
+				editor = new Browser(parent, SWT.NONE);
+			}
 			if (debug) {
 				printDebugMessage("RichText", "basePath=" + basePath); //$NON-NLS-1$ //$NON-NLS-2$
 			}
