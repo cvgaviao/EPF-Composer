@@ -1605,7 +1605,7 @@ public class RichText implements IRichText {
 	 */
 	protected void printDebugMessage(String method, String msg, String text) {
 		StringBuffer strBuf = new StringBuffer();
-		strBuf.append("RichText[").append(editor.handle).append(']') //$NON-NLS-1$
+		strBuf.append("RichText[").append(editor.toString()).append(']') //$NON-NLS-1$
 				.append('.').append(method);
 		if (msg != null && msg.length() > 0) {
 			strBuf.append(": ").append(msg); //$NON-NLS-1$

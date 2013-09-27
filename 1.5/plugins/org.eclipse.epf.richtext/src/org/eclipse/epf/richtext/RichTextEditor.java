@@ -1237,7 +1237,7 @@ public class RichTextEditor implements IRichTextEditor {
 	 */
 	private void printDebugMessage(String method, String msg, String text) {
 		StringBuffer strBuf = new StringBuffer();
-		strBuf.append("RichTextEditor[").append(richText.getControl().handle).append(']') //$NON-NLS-1$
+		strBuf.append("RichTextEditor[").append(richText.getControl().toString()).append(']') //$NON-NLS-1$
 				.append('.').append(method);
 		if (msg != null && msg.length() > 0) {
 			strBuf.append(": ").append(msg); //$NON-NLS-1$
