@@ -33,7 +33,7 @@ public class ActivityParameterMapeNode extends MapNode {
 	 */
 	public void updateNode() {
 		super.updateNode();
-		umlNode = (ActivityParameterNode) getActivity().createNode(name,
+		umlNode = (ActivityParameterNode) getActivity().createStructuredNode(name,
 				UMLPackage.eINSTANCE.getActivityParameterNode());
 		Object obj = (Object) node.getObject();
 		if (obj instanceof MethodElement) {

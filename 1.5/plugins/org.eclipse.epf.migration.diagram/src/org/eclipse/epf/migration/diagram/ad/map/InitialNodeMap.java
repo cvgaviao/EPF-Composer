@@ -34,7 +34,7 @@ public class InitialNodeMap extends MapNode {
 	 */
 	public void updateNode() {
 		super.updateNode();
-		umlNode = (InitialNode)getActivity().createNode(name = (name != null)? name : GRAPH_NODE_INITIAL, 
+		umlNode = (InitialNode)getActivity().createStructuredNode(name = (name != null)? name : GRAPH_NODE_INITIAL, 
 						UMLPackage.eINSTANCE.getInitialNode());
 		
 		if(umlNode != null){

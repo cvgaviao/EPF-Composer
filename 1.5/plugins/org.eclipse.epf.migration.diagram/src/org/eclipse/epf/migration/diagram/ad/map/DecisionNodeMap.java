@@ -36,7 +36,7 @@ public class DecisionNodeMap extends MapNode {
 	public void updateNode() {
 		super.updateNode();
 
-		umlNode = (DecisionNode)getActivity().createNode(name = (name != null)? name : " ", //$NON-NLS-1$ 
+		umlNode = (DecisionNode)getActivity().createStructuredNode(name = (name != null)? name : " ", //$NON-NLS-1$ 
 						UMLPackage.eINSTANCE.getDecisionNode());
 		
 		if(umlNode != null){

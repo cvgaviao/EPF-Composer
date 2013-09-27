@@ -31,7 +31,7 @@ public class JoinNodeMap extends MapNode {
 	 */
 	public void updateNode() {
 		super.updateNode();
-		umlNode = (JoinNode)getActivity().createNode(name = (name != null)? name : GRAPH_NODE_JOIN, 
+		umlNode = (JoinNode)getActivity().createStructuredNode(name = (name != null)? name : GRAPH_NODE_JOIN, 
 						UMLPackage.eINSTANCE.getJoinNode());
 		
 		if(umlNode != null){

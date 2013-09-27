@@ -31,7 +31,7 @@ public class MergeNodeMap extends MapNode {
 	 */
 	public void updateNode() {
 		super.updateNode();
-		umlNode = (MergeNode)getActivity().createNode(name = (name != null)? name : " ", //$NON-NLS-1$ 
+		umlNode = (MergeNode)getActivity().createStructuredNode(name = (name != null)? name : " ", //$NON-NLS-1$ 
 						UMLPackage.eINSTANCE.getMergeNode());
 		
 		if(umlNode != null){

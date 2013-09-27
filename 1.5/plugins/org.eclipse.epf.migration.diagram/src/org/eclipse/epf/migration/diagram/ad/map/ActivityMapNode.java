@@ -35,7 +35,7 @@ public class ActivityMapNode extends MapNode {
 	 */
 	public void updateNode() {
 		super.updateNode();
-		umlNode = (StructuredActivityNode) getActivity().createNode(name,
+		umlNode = (StructuredActivityNode) getActivity().createStructuredNode(name,
 				UMLPackage.eINSTANCE.getStructuredActivityNode());
 		Object obj = (Object) node.getObject();
 /*		if (obj instanceof MethodElement) {

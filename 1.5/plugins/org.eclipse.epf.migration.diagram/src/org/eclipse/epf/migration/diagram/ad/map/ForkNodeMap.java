@@ -34,7 +34,7 @@ public class ForkNodeMap extends MapNode {
 	public void updateNode() {
 		super.updateNode();
 
-		umlNode = (ForkNode)getActivity().createNode(name = (name != null)? name : GRAPH_NODE_FORK_NODE, 
+		umlNode = (ForkNode)getActivity().createStructuredNode(name = (name != null)? name : GRAPH_NODE_FORK_NODE, 
 						UMLPackage.eINSTANCE.getForkNode());
 	
 		if(umlNode != null){
