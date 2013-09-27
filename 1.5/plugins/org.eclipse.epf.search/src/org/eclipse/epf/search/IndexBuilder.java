@@ -31,7 +31,9 @@ import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 import org.eclipse.epf.search.analysis.TextAnalyzer;
 import org.eclipse.epf.search.utils.JarCreator;
 import org.eclipse.epf.search.utils.LHTMLParser;
@@ -148,13 +150,14 @@ public class IndexBuilder {
 				lang.equals(Locale.KOREA.getLanguage())) {
 				jako = true;
 			}
-			Analyzer analyzer = jako ? new CJKAnalyzer() : new TextAnalyzer();
+			Analyzer analyzer = jako ? new CJKAnalyzer(Version.LUCENE_35) : new TextAnalyzer();
 			
 			try {
+				Directory directory = FSDirectory.open(new File(indexFolder.toString()));
+				
 				// RAMDirectory ramDir = new RAMDirectory();
-				IndexWriter fsWriter = new IndexWriter(FSDirectory
-						.getDirectory(indexFolder.toString(), true),
-						analyzer, true);
+				IndexWriter fsWriter = new IndexWriter(directory,
+						analyzer, true, IndexWriter.MaxFieldLength.LIMITED);
 
 				// IndexWriter ramWriter = new IndexWriter(ramDir,
 				// new TextAnalyzer(), true);
@@ -360,27 +363,27 @@ public class IndexBuilder {
 			String url = productName
 					+ file.getPath().substring(parentFolder.getPath().length())
 							.replace(File.separatorChar, '/'); //$NON-NLS-1$
-			luceneDocument.add(Field.UnIndexed(URL_FIELD, url));
+			luceneDocument.add(new Field(URL_FIELD, url, Field.Store.YES, Field.Index.NO));
 			
 //			luceneDocument.add(Field.Text(CONTENT_FIELD, reader));
-			luceneDocument.add(Field.UnStored(CONTENT_FIELD, htmlContent.toString()));
+			luceneDocument.add(new Field(CONTENT_FIELD, htmlContent.toString(), Field.Store.NO, Field.Index.ANALYZED));
 
 			String title = parser.getTitle();
 			if (title != null && title.length() > 0) {
 				// Workaround a Linux specific issue.
 				title = title.replaceAll("\\xa0", " "); //$NON-NLS-1$ //$NON-NLS-2$
-				luceneDocument.add(Field.Keyword(TITLE_FIELD, title));
+				luceneDocument.add(new Field(TITLE_FIELD, title, Field.Store.YES, Field.Index.NOT_ANALYZED));
 			} else {
 				return null;
 			}
 
 			String summary = parser.getSummary();
 			if (summary.startsWith(title) && summary.length() > title.length()) {
-				luceneDocument.add(Field.Keyword(SUMMARY_FIELD, summary
-						.substring(title.length() + 1)));
+				luceneDocument.add(new Field(SUMMARY_FIELD, summary
+						.substring(title.length() + 1), Field.Store.YES, Field.Index.NOT_ANALYZED));
 			} else
-				luceneDocument.add(Field.Keyword(SUMMARY_FIELD, parser
-						.getSummary()));
+				luceneDocument.add(new Field(SUMMARY_FIELD, parser
+						.getSummary(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
 			for (Enumeration names = metaTags.propertyNames(); names
 					.hasMoreElements();) {
@@ -389,12 +392,12 @@ public class IndexBuilder {
 					if (tagName.equals(ROLE_FIELD)) {
 						String roleName = metaTags.getProperty(tagName);
 						if (roleName != null) {
-							luceneDocument.add(Field.Text(tagName, roleName));
+							luceneDocument.add(new Field(tagName, roleName, Field.Store.YES, Field.Index.ANALYZED));
 						}
 					} else {
 						String tagValue = metaTags.getProperty(tagName);
 						if (tagValue != null) {
-							luceneDocument.add(Field.Text(tagName, tagValue));
+							luceneDocument.add(new Field(tagName, tagValue, Field.Store.YES, Field.Index.ANALYZED));
 						}
 					}
 				}
@@ -403,15 +406,15 @@ public class IndexBuilder {
 			if (luceneDocument.getField(ROLE_FIELD) == null) {
 				// Default to "na" to support searching for files without
 				// role meta tags.
-				luceneDocument.add(Field.Text(ROLE_FIELD, "NORUPROLE")); //$NON-NLS-1$
+				luceneDocument.add(new Field(ROLE_FIELD, "NORUPROLE", Field.Store.YES, Field.Index.ANALYZED)); //$NON-NLS-1$
 			}
 
 			Field umaTypeField = luceneDocument
 					.getField(UMA_ELEMENT_TYPE_FIELD);
 			if (umaTypeField == null) {
 				// Default to general content.
-				luceneDocument.add(Field.Text(UMA_ELEMENT_TYPE_FIELD,
-						GENERAL_CONTENT));
+				luceneDocument.add(new Field(UMA_ELEMENT_TYPE_FIELD,
+						GENERAL_CONTENT, Field.Store.YES, Field.Index.ANALYZED));
 			} 
 
 			parser = null;

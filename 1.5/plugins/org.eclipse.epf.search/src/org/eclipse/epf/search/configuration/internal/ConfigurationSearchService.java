@@ -14,20 +14,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-
-import org.apache.lucene.demo.html.HTMLParser;
-import org.apache.lucene.document.DateField;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Searcher;
+import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.epf.common.CommonPlugin;
-import org.eclipse.epf.common.IHTMLFormatter;
 import org.eclipse.epf.common.IHTMLParser;
 import org.eclipse.epf.common.utils.ExtensionHelper;
 import org.eclipse.epf.search.GenerateSearchIndexException;
@@ -142,24 +144,29 @@ public class ConfigurationSearchService {
 			throws SearchServiceException {
 		Searcher searcher = null;
 		try {
-			searcher = new IndexSearcher(indexDir);
-			Query query = QueryParser.parse(qstr, CONTENT_FIELD,
-					new TextAnalyzer());
+			Directory directory = FSDirectory.open(new File(indexDir));
+			searcher = new IndexSearcher(directory);
+			
+			Query query = new QueryParser(Version.LUCENE_35, CONTENT_FIELD, new TextAnalyzer()).parse(qstr);
 
-			Hits lhits = searcher.search(query);
-			ConfigurationHitEntry[] hits = new ConfigurationHitEntry[lhits
-					.length()];
-
+			int hitsPerPage = 10;
+			TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
+		    searcher.search(query, hitsPerPage);
+		    ScoreDoc[] hits = collector.topDocs().scoreDocs;
+			
+		    ConfigurationHitEntry[] chits = new ConfigurationHitEntry[hits.length];
 			for (int i = 0; i < hits.length; i++) {
-				Document doc = lhits.doc(i);
-				hits[i] = new ConfigurationHitEntry();
-				hits[i].setName(doc.get(NAME_FIELD));
-				hits[i].setUrl(doc.get(URL_FIELD));
-				hits[i].setBriefDesc(doc.get(BRIEF_DESCRIPTION_FIELD));
-				hits[i].setId(doc.get(ID_FIELD));
-				hits[i].setType(doc.get(TYPE_FIELD));
+				
+				int docId = hits[i].doc;
+				Document doc = searcher.doc(docId);
+				chits[i] = new ConfigurationHitEntry();
+				chits[i].setName(doc.get(NAME_FIELD));
+				chits[i].setUrl(doc.get(URL_FIELD));
+				chits[i].setBriefDesc(doc.get(BRIEF_DESCRIPTION_FIELD));
+				chits[i].setId(doc.get(ID_FIELD));
+				chits[i].setType(doc.get(TYPE_FIELD));
 			}
-			return hits;
+			return chits;
 		} catch (Exception e) {
 			throw new SearchConfigurationException(e);
 		} finally {
@@ -233,9 +240,11 @@ public class ConfigurationSearchService {
 			try {
 				deleteAllIndexDirs();
 				new File(indexDir).mkdirs();
-				IndexWriter writer = new IndexWriter(indexDir,
-						new TextAnalyzer(), true);
-				writer.maxFieldLength = 1000000;
+				Directory directory = FSDirectory.open(new File(indexDir));
+				IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35,new TextAnalyzer());
+				IndexWriter writer = new IndexWriter(directory,
+						conf);
+				writer.setMaxFieldLength(1000000);
 //				parser = new HTMLParser();
 				parser = (IHTMLParser) ExtensionHelper.createExtensionForJTidy(
 						CommonPlugin.getDefault().getId(), "htmlParser");  //$NON-NLS-1$
@@ -379,27 +388,27 @@ public class ConfigurationSearchService {
 	public Document getHTMLDocument(File file) throws IOException,
 			InterruptedException {
 		Document doc = new Document();
-		doc.add(Field.UnIndexed(URL_FIELD, file.getPath().replace(
-				File.pathSeparatorChar, '/')));
-		doc.add(Field.Keyword(MODIFIED_FIELD, DateField.timeToString(file
-				.lastModified())));
+		doc.add(new Field(URL_FIELD, file.getPath().replace(
+				File.pathSeparatorChar, '/'), Field.Store.YES, Field.Index.NO));
+		doc.add(new Field(MODIFIED_FIELD, DateTools.timeToString(file
+				.lastModified(), DateTools.Resolution.MILLISECOND), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
 		try {
 			parser.parse(file);
 		} catch (Exception e) {
 		}
 
-		doc.add(Field.Text(CONTENT_FIELD, parser.getText()));
-		doc.add(Field.UnIndexed(SUMMARY_FIELD, parser.getSummary()));
+		doc.add(new Field(CONTENT_FIELD, parser.getText(), Field.Store.YES, Field.Index.ANALYZED));
+		doc.add(new Field(SUMMARY_FIELD, parser.getSummary(), Field.Store.YES, Field.Index.NO));
 
 		Properties metaTags = parser.getMetaTags();
 		for (Enumeration e = metaTags.propertyNames(); e.hasMoreElements();) {
 			String tagName = (String) e.nextElement();
-			doc.add(Field.Text(tagName, metaTags.getProperty(tagName)));
+			doc.add(new Field(tagName, metaTags.getProperty(tagName), Field.Store.YES, Field.Index.ANALYZED));
 		}
 
 		if (doc.getField(ROLE_FIELD) == null) {
-			doc.add(Field.Text(ROLE_FIELD, "NORUPROLE")); //$NON-NLS-1$
+			doc.add(new Field(ROLE_FIELD, "NORUPROLE", Field.Store.YES, Field.Index.ANALYZED)); //$NON-NLS-1$
 		}
 
 		return doc;

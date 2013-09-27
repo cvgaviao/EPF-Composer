@@ -37,38 +37,44 @@ public final class TextFilter extends TokenFilter {
 	public TextFilter(TokenStream in) {
 		super(in);
 		if (stopWords == null) {
-			loadStopWords();
+//			loadStopWords();
 		}
+	}
+
+	@Override
+	public boolean incrementToken() throws IOException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**
 	 * @see org.apache.lucene.analysis.TokenStream#next()
 	 */
-	public final Token next() throws IOException {
-		for (Token token = input.next(); token != null; token = input.next()) {
-			String tokenText = token.termText();
-			if (!stopWords.contains(tokenText)) {
-				return token;
-			}
-		}
-		return null;
-	}
+//	public final Token next() throws IOException {
+//		for (Token token = input.next(); token != null; token = input.next()) {
+//			String tokenText = token.termText();
+//			if (!stopWords.contains(tokenText)) {
+//				return token;
+//			}
+//		}
+//		return null;
+//	}
 
 	/**
 	 * Loads the stop words defined in the StopWords.properties file.
 	 */
-	private void loadStopWords() {
-		String[] words = null;
-		try {
-			ResourceBundle bundle = ResourceBundle.getBundle(TextFilter.class
-					.getPackage().getName()
-					+ ".StopWords"); //$NON-NLS-1$				
-			String property = bundle.getString("Search.stopWords"); //$NON-NLS-1$
-			words = StrUtil.split(property, " ,"); //$NON-NLS-1$		
-		} catch (Exception e) {
-			words = StopAnalyzer.ENGLISH_STOP_WORDS;
-		}
-		stopWords = StopFilter.makeStopSet(words);
-	}
+//	private void loadStopWords() {
+//		String[] words = null;
+//		try {
+//			ResourceBundle bundle = ResourceBundle.getBundle(TextFilter.class
+//					.getPackage().getName()
+//					+ ".StopWords"); //$NON-NLS-1$				
+//			String property = bundle.getString("Search.stopWords"); //$NON-NLS-1$
+//			words = StrUtil.split(property, " ,"); //$NON-NLS-1$		
+//		} catch (Exception e) {
+//			words = StopAnalyzer.ENGLISH_STOP_WORDS;
+//		}
+//		stopWords = StopFilter.makeStopSet(words);
+//	}
 
 }
