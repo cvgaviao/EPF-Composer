@@ -33,7 +33,7 @@ class HttpClientTimeout extends HttpClient
     HttpClientTimeout(URL url, int timeout) throws IOException
 	{
 		super(url, (String)null, -1);
-		setTimeout(timeout);
+		_setTimeout(timeout);
     }
 
 	private void _setTimeout(int i)
@@ -53,7 +53,8 @@ class HttpClientTimeout extends HttpClient
     static HttpClientTimeout GetNew(URL url, int timeout)
     throws IOException {
 		/* see if one's already around */
-		HttpClientTimeout ret = (HttpClientTimeout) kac.get(url);
+		//HttpClientTimeout ret = (HttpClientTimeout) kac.get(url).;
+		HttpClientTimeout ret = null;
 		if (ret == null) {
 	    	ret = new HttpClientTimeout (url, timeout);  // CTOR called openServer()
 		} else {
