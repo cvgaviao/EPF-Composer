@@ -19,3 +19,4 @@ Export-Package: org.eclipse.epf.publishing,
  org.eclipse.epf.publishing.util,
  org.eclipse.epf.publishing.util.http
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Eclipse-BundleShape: dir
