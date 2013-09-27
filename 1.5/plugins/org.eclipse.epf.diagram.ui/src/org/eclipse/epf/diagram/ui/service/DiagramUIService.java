@@ -189,7 +189,7 @@ public class DiagramUIService implements IDiagramUIService {
 
 		if (parentActivity != null) {
 			if (nodeType == INITIAL_NODE) {
-				ActivityNode umlNode = (InitialNode) parentActivity.createNode(
+				ActivityNode umlNode = (InitialNode) parentActivity.createStructuredNode(
 						nodeName = (nodeName != null) ? nodeName : "",	//$NON-NLS-1$
 						UMLPackage.eINSTANCE.getInitialNode());
 				notationNode = ViewService.createNode(diagram, umlNode,
@@ -200,7 +200,7 @@ public class DiagramUIService implements IDiagramUIService {
 						ActivityDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 			} else if (nodeType == FINAL_NODE) {
 				ActivityNode umlNode = (ActivityFinalNode) parentActivity
-						.createNode(nodeName = (nodeName != null) ? nodeName
+						.createStructuredNode(nodeName = (nodeName != null) ? nodeName
 								: "", UMLPackage.eINSTANCE.getActivityFinalNode());	//$NON-NLS-1$
 				notationNode = ViewService.createNode(diagram, umlNode,
 						new Integer(ActivityFinalNodeEditPart.VISUAL_ID)
@@ -210,14 +210,14 @@ public class DiagramUIService implements IDiagramUIService {
 						ActivityFinalNodeNameEditPart.VISUAL_ID).toString(),
 						ActivityDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 			} else if (nodeType == FORK_NODE) {
-				ActivityNode umlNode = (ForkNode) parentActivity.createNode(
+				ActivityNode umlNode = (ForkNode) parentActivity.createStructuredNode(
 						nodeName = (nodeName != null) ? nodeName : "",	//$NON-NLS-1$
 						UMLPackage.eINSTANCE.getForkNode());
 				notationNode = ViewService.createNode(diagram, umlNode,
 						new Integer(ForkNodeEditPart.VISUAL_ID).toString(),
 						ActivityDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 			} else if (nodeType == JOIN_NODE) {
-				ActivityNode umlNode = (JoinNode) parentActivity.createNode(
+				ActivityNode umlNode = (JoinNode) parentActivity.createStructuredNode(
 						nodeName = (nodeName != null) ? nodeName : "",	//$NON-NLS-1$
 						UMLPackage.eINSTANCE.getJoinNode());
 				notationNode = ViewService.createNode(diagram, umlNode,
@@ -225,7 +225,7 @@ public class DiagramUIService implements IDiagramUIService {
 						ActivityDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 			} else if (nodeType == DECISION_NODE) {
 				ActivityNode umlNode = (DecisionNode) parentActivity
-						.createNode(nodeName = (nodeName != null) ? nodeName
+						.createStructuredNode(nodeName = (nodeName != null) ? nodeName
 								: "", UMLPackage.eINSTANCE.getDecisionNode());	//$NON-NLS-1$
 				notationNode = ViewService.createNode(diagram, umlNode,
 						new Integer(DecisionNodeEditPart.VISUAL_ID).toString(),
@@ -234,7 +234,7 @@ public class DiagramUIService implements IDiagramUIService {
 						DecisionNodeNameEditPart.VISUAL_ID).toString(),
 						ActivityDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 			} else if (nodeType == MERGE_NODE) {
-				ActivityNode umlNode = (MergeNode) parentActivity.createNode(
+				ActivityNode umlNode = (MergeNode) parentActivity.createStructuredNode(
 						nodeName = (nodeName != null) ? nodeName : "",			//$NON-NLS-1$
 						UMLPackage.eINSTANCE.getMergeNode());
 				notationNode = ViewService.createNode(diagram, umlNode,
@@ -273,7 +273,7 @@ public class DiagramUIService implements IDiagramUIService {
 			if (e instanceof Phase) {
 				// Phase
 				ActivityNode umlNode = (StructuredActivityNode) parentActivity
-						.createNode(name,
+						.createStructuredNode(name,
 								UMLPackage.eINSTANCE
 										.getStructuredActivityNode());
 
@@ -291,7 +291,7 @@ public class DiagramUIService implements IDiagramUIService {
 			} else if (e instanceof Iteration) {
 				// Iteration
 				ActivityNode umlNode = (StructuredActivityNode) parentActivity
-						.createNode(name,
+						.createStructuredNode(name,
 								UMLPackage.eINSTANCE
 										.getStructuredActivityNode());
 
@@ -308,7 +308,7 @@ public class DiagramUIService implements IDiagramUIService {
 			} else if (e instanceof Activity) {
 				// Activity
 				ActivityNode umlNode = (StructuredActivityNode) parentActivity
-						.createNode(name,
+						.createStructuredNode(name,
 								UMLPackage.eINSTANCE
 										.getStructuredActivityNode());
 
@@ -325,7 +325,7 @@ public class DiagramUIService implements IDiagramUIService {
 			} else if (e instanceof TaskDescriptor) {
 				// Task descriptor
 				ActivityNode umlNode = (ActivityParameterNode) parentActivity
-						.createNode(name,
+						.createStructuredNode(name,
 								UMLPackage.eINSTANCE.getActivityParameterNode());
 
 				BridgeHelper.associate(umlNode, ((MethodElement) e));
@@ -345,7 +345,7 @@ public class DiagramUIService implements IDiagramUIService {
 			} else if (e instanceof Milestone) {
 				// Milestone
 				ActivityNode umlNode = (ActivityParameterNode) parentActivity
-						.createNode(name,
+						.createStructuredNode(name,
 								UMLPackage.eINSTANCE.getActivityParameterNode());
 
 				BridgeHelper.associate(umlNode, ((MethodElement) e));
